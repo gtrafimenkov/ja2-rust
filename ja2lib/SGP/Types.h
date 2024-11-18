@@ -8,13 +8,6 @@
 #include "BuildDefines.h"
 #include "LeanTypes.h"
 
-// *** SIR-TECH TYPE DEFINITIONS ***
-
-// These two types are defined by VC6 and were causing redefinition
-// problems, but JA2 is compiled with VC5
-
-// HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
-
 // flags (individual bits used)
 typedef unsigned char FLAGS8;
 typedef uint16_t FLAGS16;
@@ -22,7 +15,7 @@ typedef unsigned long FLAGS32;
 // other
 typedef unsigned char BOOLEAN;
 typedef uint16_t HNDL;
-typedef uint8_t BYTE;
+typedef uint8_t uint8_t;
 typedef char STRING512[512];
 typedef uint32_t FileID;
 

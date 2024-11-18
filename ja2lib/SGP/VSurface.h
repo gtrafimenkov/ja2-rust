@@ -143,7 +143,7 @@ struct BufferLockInfo {
 
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
 void VSurfaceUnlock(struct VSurface *vs);
-BYTE *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch);
+uint8_t *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch);
 
 struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height);
 struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex);

@@ -475,8 +475,7 @@ BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
   // is the file long enough?
   //  if( ( File_GetSize( hFileHandle ) - 1 ) / ( NUM_RECORDS_PER_PAGE * ( sizeof( uint8_t ) +
   //  sizeof( uint32_t ) + 3*sizeof( uint8_t )+ sizeof(int16_t) + sizeof( int16_t ) ) ) + 1 < (
-  //  uint32_t
-  //  )( iCurrentHistoryPage + 1 ) )
+  //  uint32_t )( iCurrentHistoryPage + 1 ) )
   if (uiFileSize / uiSizeOfRecordsOnEachPage + 1 < (uint32_t)(iCurrentHistoryPage + 1)) {
     // nope
     File_Close(hFileHandle);

@@ -431,7 +431,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
 }
 
 // Old interface to locking VSurface
-BYTE *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch) {
+uint8_t *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch) {
   struct BufferLockInfo res = VSurfaceLock(vs);
   *pitch = res.pitch;
   return res.dest;

@@ -1470,10 +1470,10 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
           break;
       }
 
-      if (fError) {  // strategic insertion failed because it expected to find an entry point.
-                     // This is likely
-        // a missing part of the map or possible fault in strategic movement costs, traversal
-        // logic, etc.
+      if (fError) {  // strategic insertion failed because it expected to find an entry point.  This
+                     // is likely
+        // a missing part of the map or possible fault in strategic movement costs, traversal logic,
+        // etc.
         wchar_t szEntry[10];
         wchar_t szSector[10];
         int16_t sGridNo;
@@ -2279,11 +2279,10 @@ void AllMercsHaveWalkedOffSector() {
     if (fEnemiesInLoadedSector) {  // We are retreating from a sector with enemies in it and there
                                    // are no mercs left  so
       // warp the game time by 5 minutes to simulate the actual retreat.  This restricts the
-      // player from immediately coming back to the same sector they left to perhaps take
-      // advantage of the tactical placement gui to get into better position.  Additionally, if
-      // there are any enemies in this sector that are part of a movement group, reset that
-      // movement group so that they are "in" the sector rather than 75% of the way to the next
-      // sector if that is the case.
+      // player from immediately coming back to the same sector they left to perhaps take advantage
+      // of the tactical placement gui to get into better position.  Additionally, if there are any
+      // enemies in this sector that are part of a movement group, reset that movement group so that
+      // they are "in" the sector rather than 75% of the way to the next sector if that is the case.
       ResetMovementForEnemyGroupsInLocation((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 
       if (guiAdjacentTraverseTime > 5) {

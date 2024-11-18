@@ -592,7 +592,7 @@ void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_
   static RECT StripRegions[2], MouseRegion;
   uint16_t usNumStrips = 0;
   int32_t cnt;
-  int16_t sShiftX, sShiftY;
+  INT16 sShiftX, sShiftY;
   int32_t uiCountY;
 
   GetCurrentVideoSettings(&usWidth, &usHeight);

@@ -2266,9 +2266,9 @@ uint16_t HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
                                   // The medFactor here doesn't affect how much the doctor can
   heal (that's already factored into lower healing pts)
                                   // but it does effect how fast the medkit is used up!  First aid
-  kits disappear at double their doctoring rate! bPointsUsed = (int8_t) UseKitPoints( &( pDoctor
-  -> inv[ bPocket ] ), (uint16_t) (bPointsToUse * bMedFactor), pDoctor ); bPointsHealed =
-  bPointsUsed / bMedFactor;
+  kits disappear at double their doctoring rate! bPointsUsed = (int8_t) UseKitPoints( &( pDoctor ->
+  inv[ bPocket ] ), (uint16_t) (bPointsToUse * bMedFactor), pDoctor ); bPointsHealed = bPointsUsed /
+  bMedFactor;
 
                                   bPointsToUse -= bPointsHealed;
                                   pPatient -> bBleeding -= bPointsHealed;
@@ -2592,8 +2592,7 @@ BOOLEAN RepairObject(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOwner,
       // repairable, try to repair it
 
       // void DoActualRepair( struct SOLDIERTYPE * pSoldier, uint16_t usItem, int8_t * pbStatus,
-      // uint8_t
-      // * pubRepairPtsLeft )
+      // uint8_t * pubRepairPtsLeft )
       DoActualRepair(pSoldier, pObj->usItem, &(pObj->bStatus[ubLoop]), pubRepairPtsLeft);
 
       fSomethingWasRepaired = TRUE;
@@ -6186,8 +6185,8 @@ void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
     }
 
     bCanJoinSquad = CanCharacterSquad(pSoldier, (int8_t)iValue);
-    // can the character join this squad?  (If already in it, accept that as a legal choice and
-    // exit menu)
+    // can the character join this squad?  (If already in it, accept that as a legal choice and exit
+    // menu)
     if ((bCanJoinSquad == CHARACTER_CAN_JOIN_SQUAD) ||
         (bCanJoinSquad == CHARACTER_CANT_JOIN_SQUAD_ALREADY_IN_IT)) {
       if (bCanJoinSquad == CHARACTER_CAN_JOIN_SQUAD) {
