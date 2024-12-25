@@ -39,25 +39,22 @@ On Linux:
 
 ## How to build
 
-On Windows:
-
 ```
-build.bat
+python xx.py build test
 ```
 
-On Linux:
+## How to run
 
 ```
-make build
+python xx.py build test copy-data run
 ```
 
 ## How to play the game
 
 - install the original version of the game (from the original game CDs, Steam, gog.com, etc.)
-- open `JA2.sln` in Visual Studio 2022, build `Release` or `ReleaseWithDebug` configuration of the solution
-- copy the builded `ja2-win32.exe` and `rustlib.dll` to the game directory alongside the original ja2.exe
-- (for Windows 10) copy Windows 10 compatibility files from `tools/dxwrapper` to the game directory
-- launch the builded exe file
+- `python xx.py build`
+- copy content of `build\bin-win32\RelWithDebInfo` folder to the game directory alongside the original ja2.exe
+- run `ja2v.exe`
 
 The game is tested on Windows 10.
 

@@ -18,6 +18,8 @@ TEST(Bugfixes, SectorName) {
 
   GetSectorIDString(1, 1, 0, buf, ARR_SIZE(buf), false);
   EXPECT_STREQ(L"A1: Urban", buf);
+  ;
+  ;
 
   GetSectorIDString(9, 1, 0, buf, ARR_SIZE(buf), false);
   EXPECT_STREQ(L"A9: Omerta", buf);
