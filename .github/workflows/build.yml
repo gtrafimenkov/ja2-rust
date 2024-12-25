@@ -9,55 +9,25 @@ on:
 
 jobs:
 
+  build-on-linux:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: 1.81.0
+    - run: python xx.py build-debug
+    - run: python xx.py build-release
+    - run: python xx.py test
+
   build-on-windows:
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v3
-
-    - name: Install latest rust toolchain
-      uses: dtolnay/rust-toolchain@stable
-    #   uses: actions-rs/toolchain@v1
-    #   with:
-    #     toolchain: stable
-    #     default: true
-    #     override: true
-
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Build
-      run: .\build.bat
-
-    - name: Run Tests Debug
-      run: .\Debug\unittester.exe
-
-    - name: Run Tests Release
-      run: .\Release\unittester.exe
-
-  build-on-linux:
-
-    runs-on: ubuntu-20.04
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Install latest rust toolchain
-      uses: dtolnay/rust-toolchain@stable
-    #   uses: actions-rs/toolchain@v1
-    #   with:
-    #     toolchain: stable
-    #     default: true
-    #     override: true
-
-    - name: Install build dependencies
-      run: make install-build-dependencies-deb
-
-    - name: Build linux-bin
-      run: make linux-bin
-
-    - name: Build unittester
-      run: make unittester-bin
-
-    - name: Run unit tests
-      run: make run-unittester
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: 1.81.0
+        targets: i686-pc-windows-msvc
+    - run: python xx.py build-debug
+    - run: python xx.py build-release
+    - run: python xx.py test

@@ -7,7 +7,16 @@ edition = "2021"
 
 [lib]
 name = "rustlib"
-crate-type = ["cdylib"]      # Creates dynamic lib
+crate-type = ["staticlib"]
+
+# [build]
+# rustflags = ["-C", "target-feature=+crt-static"]
+
+# [target.i686-pc-windows-msvc]
+# rustflags = ["-C", "target-feature=+crt-static"]
+
+# [target.x86_64-pc-windows-msvc]
+# rustflags = ["-C", "target-feature=+crt-static"]
 
 [build-dependencies]
 cbindgen = { git = "https://github.com/gtrafimenkov/cbindgen-ggstd.git", branch="main" }
