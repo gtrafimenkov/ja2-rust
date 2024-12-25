@@ -83,32 +83,27 @@ TEST(RustExport, FileMan) {
   }
 
   {
-    auto id = File_OpenForReading("JA2.sln");
+    auto id = File_OpenForReading("SFI-SCLA.txt");
     EXPECT_NE(id, FILE_ID_ERR);
     uint8_t buf[4];
     uint32_t read_bytes;
     auto res = File_Read(id, buf, sizeof(buf), &read_bytes);
     EXPECT_TRUE(res);
     EXPECT_EQ(sizeof(buf), read_bytes);
-    EXPECT_EQ('M', buf[0]);
-    EXPECT_EQ('i', buf[1]);
-    EXPECT_EQ('c', buf[2]);
-    EXPECT_EQ('r', buf[3]);
+    EXPECT_EQ('T', buf[0]);
+    EXPECT_EQ('h', buf[1]);
+    EXPECT_EQ('i', buf[2]);
+    EXPECT_EQ('s', buf[3]);
 
-    // seek backward from current position is not supported (because distance is u32)
+    EXPECT_TRUE(File_Read(id, buf, 1, &read_bytes));
+    EXPECT_EQ(1, read_bytes);
+    EXPECT_EQ(' ', buf[0]);
 
     // seek forward
-    {
-      EXPECT_TRUE(File_Read(id, buf, 1, &read_bytes));
-      EXPECT_EQ(1, read_bytes);
-      EXPECT_EQ('o', buf[0]);
-
-      // skip "sof"
-      EXPECT_TRUE(File_Seek(id, 3, FILE_SEEK_CURRENT));
-      EXPECT_TRUE(File_Read(id, buf, 1, &read_bytes));
-      EXPECT_EQ(1, read_bytes);
-      EXPECT_EQ('t', buf[0]);
-    }
+    EXPECT_TRUE(File_Seek(id, 3, FILE_SEEK_CURRENT));
+    EXPECT_TRUE(File_Read(id, buf, 1, &read_bytes));
+    EXPECT_EQ(1, read_bytes);
+    EXPECT_EQ('a', buf[0]);
 
     EXPECT_TRUE(File_Close(id));
   }
