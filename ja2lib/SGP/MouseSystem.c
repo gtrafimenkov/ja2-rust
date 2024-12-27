@@ -38,9 +38,9 @@ uint32_t guiRegionLastLButtonDownTime = 0;
 extern void ReleaseAnchorMode();  // private function used here (implemented in Button System.c)
 
 // number of lines in height help text will be
-int16_t GetNumberOfLinesInHeight(STR16 pStringA);
-int16_t GetWidthOfString(STR16 pStringA);
-void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY);
+int16_t GetNumberOfLinesInHeight(wchar_t *pStringA);
+int16_t GetWidthOfString(wchar_t *pStringA);
+void DisplayHelpTokenizedString(wchar_t *pStringA, int16_t sX, int16_t sY);
 
 int32_t MSYS_ScanForID = FALSE;
 int32_t MSYS_CurrentID = MSYS_ID_SYSTEM;
@@ -996,7 +996,7 @@ void RefreshMouseRegions() {
   MSYS_UpdateMouseRegion();
 }
 
-void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
+void SetRegionFastHelpText(struct MOUSE_REGION *region, wchar_t *szText) {
   Assert(region);
 
   if (region->FastHelpText) MemFree(region->FastHelpText);
@@ -1012,7 +1012,7 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
   if (!szText || !wcslen(szText)) return;  // blank (or clear)
 
   // Allocate memory for the button's FastHelp text string...
-  region->FastHelpText = (STR16)MemAlloc((wcslen(szText) + 1) * sizeof(wchar_t));
+  region->FastHelpText = (wchar_t *)MemAlloc((wcslen(szText) + 1) * sizeof(wchar_t));
   Assert(region->FastHelpText);
 
   wcscpy(region->FastHelpText, szText);
@@ -1029,8 +1029,8 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
   // region->FastHelpTimer = gsFastHelpDelay;
 }
 
-int16_t GetNumberOfLinesInHeight(STR16 pStringA) {
-  STR16 pToken;
+int16_t GetNumberOfLinesInHeight(wchar_t *pStringA) {
+  wchar_t *pToken;
   int16_t sCounter = 0;
   wchar_t pString[512];
 
@@ -1099,9 +1099,9 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
   }
 }
 
-int16_t GetWidthOfString(STR16 pStringA) {
+int16_t GetWidthOfString(wchar_t *pStringA) {
   wchar_t pString[512];
-  STR16 pToken;
+  wchar_t *pToken;
   int16_t sWidth = 0;
   wcscpy(pString, pStringA);
 
@@ -1120,8 +1120,8 @@ int16_t GetWidthOfString(STR16 pStringA) {
   return (sWidth);
 }
 
-void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY) {
-  STR16 pToken;
+void DisplayHelpTokenizedString(wchar_t *pStringA, int16_t sX, int16_t sY) {
+  wchar_t *pToken;
   int32_t iCounter = 0, i;
   uint32_t uiCursorXPos;
   wchar_t pString[512];

@@ -42,7 +42,7 @@ enum {
   NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE,
 };
 
-// extern STR16 sCritLocationStrings[];
+// extern wchar_t* sCritLocationStrings[];
 
 // extern int8_t bInternalCritHitsByLocation[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE][
 // NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ];

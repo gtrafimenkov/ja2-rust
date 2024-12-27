@@ -72,7 +72,7 @@ BOOLEAN fRestoreBackgroundForMessageBox = FALSE;
 BOOLEAN gfDontOverRideSaveBuffer = TRUE;  // this variable can be unset if ur in a non gamescreen
                                           // and DONT want the msg box to use the save buffer
 extern void HandleTacticalUILoseCursorFromOtherScreen();
-extern STR16 pUpdatePanelButtons[];
+extern wchar_t *pUpdatePanelButtons[];
 
 wchar_t gzUserDefinedButton1[128];
 wchar_t gzUserDefinedButton2[128];

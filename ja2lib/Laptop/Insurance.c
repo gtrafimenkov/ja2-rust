@@ -351,7 +351,7 @@ void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void GetInsuranceText(uint8_t ubNumber, STR16 pString) {
+void GetInsuranceText(uint8_t ubNumber, wchar_t *pString) {
   uint32_t uiStartLoc = 0;
 
   if (ubNumber < INS_MULTI_LINE_BEGINS) {

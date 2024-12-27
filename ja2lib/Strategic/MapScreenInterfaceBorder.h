@@ -61,7 +61,7 @@ BOOLEAN LoadMapBorderGraphics(void);
 void DeleteMapBorderGraphics(void);
 void RenderMapBorder(void);
 // void RenderMapBorderCorner( void );
-// void ShowDestinationOfPlottedPath( STR16 pLoc );
+// void ShowDestinationOfPlottedPath( wchar_t* pLoc );
 // void ResetAircraftButton( void );
 // void HandleMapScrollButtonStates( void );
 

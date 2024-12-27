@@ -1424,7 +1424,7 @@ int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_
 }
 
 // Creates a generic button with text on it.
-int32_t CreateTextButton(STR16 string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
+int32_t CreateTextButton(wchar_t *string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
                          int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w, int16_t h,
                          int32_t Type, int16_t Priority, GUI_CALLBACK MoveCallback,
                          GUI_CALLBACK ClickCallback) {
@@ -1464,7 +1464,7 @@ int32_t CreateTextButton(STR16 string, uint32_t uiFont, int16_t sForeColor, int1
   // Allocate memory for the button's text string...
   b->string = NULL;
   if (string && wcslen(string)) {
-    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
+    b->string = (wchar_t *)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     AssertMsg(b->string, "Out of memory error:  Couldn't allocate string in CreateTextButton.");
     wcscpy(b->string, string);
   }
@@ -1827,7 +1827,7 @@ int32_t CreateSimpleButton(int32_t x, int32_t y, char *filename, int32_t Type, i
   return (ButNum);
 }
 
-int32_t CreateIconAndTextButton(int32_t Image, STR16 string, uint32_t uiFont, int16_t sForeColor,
+int32_t CreateIconAndTextButton(int32_t Image, wchar_t *string, uint32_t uiFont, int16_t sForeColor,
                                 int16_t sShadowColor, int16_t sForeColorDown,
                                 int16_t sShadowColorDown, int8_t bJustification, int16_t xloc,
                                 int16_t yloc, int32_t Type, int16_t Priority,
@@ -1883,7 +1883,7 @@ int32_t CreateIconAndTextButton(int32_t Image, STR16 string, uint32_t uiFont, in
   // Allocate memory for the button's text string...
   b->string = NULL;
   if (string) {
-    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
+    b->string = (wchar_t *)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     AssertMsg(b->string,
               "Out of memory error:  Couldn't allocate string in CreateIconAndTextButton.");
     wcscpy(b->string, string);
@@ -1950,7 +1950,7 @@ int32_t CreateIconAndTextButton(int32_t Image, STR16 string, uint32_t uiFont, in
 }
 
 // New functions
-void SpecifyButtonText(int32_t iButtonID, STR16 string) {
+void SpecifyButtonText(int32_t iButtonID, wchar_t *string) {
   GUI_BUTTON *b;
 
   Assert(iButtonID >= 0);
@@ -1964,7 +1964,7 @@ void SpecifyButtonText(int32_t iButtonID, STR16 string) {
 
   if (string && wcslen(string)) {
     // allocate memory for the new string
-    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
+    b->string = (wchar_t *)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     Assert(b->string);
     // copy the string to the button
     wcscpy(b->string, string);
@@ -2040,7 +2040,7 @@ void SpecifyButtonTextJustification(int32_t iButtonID, int8_t bJustification) {
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyFullButtonTextAttributes(int32_t iButtonID, STR16 string, int32_t uiFont,
+void SpecifyFullButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
                                      int16_t sForeColor, int16_t sShadowColor,
                                      int16_t sForeColorDown, int16_t sShadowColorDown,
                                      int8_t bJustification) {
@@ -2063,7 +2063,7 @@ void SpecifyFullButtonTextAttributes(int32_t iButtonID, STR16 string, int32_t ui
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, STR16 string, int32_t uiFont,
+void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
                                         int16_t sForeColor, int16_t sShadowColor) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
@@ -2209,7 +2209,7 @@ void AllowDisabledButtonFastHelp(int32_t iButtonID, BOOLEAN fAllow) {
 //
 //	Set the text that will be displayed as the FastHelp
 //
-void SetButtonFastHelpText(int32_t iButton, STR16 Text) {
+void SetButtonFastHelpText(int32_t iButton, wchar_t *Text) {
   GUI_BUTTON *b;
   if (iButton < 0 || iButton > MAX_BUTTONS) return;
   b = ButtonList[iButton];

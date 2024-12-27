@@ -307,8 +307,8 @@ void SetBackGroundSurface(int32_t hBoxHandle, int32_t iBackGroundSurfaceIndex) {
 }
 
 // adds a FIRST column string to the CURRENT popup box
-void AddMonoString(uint32_t *hStringHandle, STR16 pString) {
-  STR16 pLocalString = NULL;
+void AddMonoString(uint32_t *hStringHandle, wchar_t *pString) {
+  wchar_t *pLocalString = NULL;
   POPUPSTRINGPTR pStringSt = NULL;
   uint32_t iCounter = 0;
 
@@ -330,7 +330,7 @@ void AddMonoString(uint32_t *hStringHandle, STR16 pString) {
   pStringSt = (POPUPSTRING *)(MemAlloc(sizeof(POPUPSTRING)));
   if (pStringSt == NULL) return;
 
-  pLocalString = (STR16)(MemAlloc(wcslen(pString) * 2 + 2));
+  pLocalString = (wchar_t *)(MemAlloc(wcslen(pString) * 2 + 2));
   if (pLocalString == NULL) return;
 
   wcscpy(pLocalString, pString);
@@ -352,8 +352,8 @@ void AddMonoString(uint32_t *hStringHandle, STR16 pString) {
 }
 
 // adds a SECOND column string to the CURRENT popup box
-void AddSecondColumnMonoString(uint32_t *hStringHandle, STR16 pString) {
-  STR16 pLocalString = NULL;
+void AddSecondColumnMonoString(uint32_t *hStringHandle, wchar_t *pString) {
+  wchar_t *pLocalString = NULL;
   POPUPSTRINGPTR pStringSt = NULL;
   uint32_t iCounter = 0;
 
@@ -375,7 +375,7 @@ void AddSecondColumnMonoString(uint32_t *hStringHandle, STR16 pString) {
   pStringSt = (POPUPSTRING *)(MemAlloc(sizeof(POPUPSTRING)));
   if (pStringSt == NULL) return;
 
-  pLocalString = (STR16)(MemAlloc(wcslen(pString) * 2 + 2));
+  pLocalString = (wchar_t *)(MemAlloc(wcslen(pString) * 2 + 2));
   if (pLocalString == NULL) return;
 
   wcscpy(pLocalString, pString);
@@ -394,8 +394,8 @@ void AddSecondColumnMonoString(uint32_t *hStringHandle, STR16 pString) {
 }
 
 // Adds a COLORED first column string to the CURRENT box
-void AddColorString(int32_t *hStringHandle, STR16 pString) {
-  STR16 pLocalString;
+void AddColorString(int32_t *hStringHandle, wchar_t *pString) {
+  wchar_t *pLocalString;
   POPUPSTRINGPTR pStringSt = NULL;
   int32_t iCounter = 0;
 
@@ -417,7 +417,7 @@ void AddColorString(int32_t *hStringHandle, STR16 pString) {
   pStringSt = (POPUPSTRING *)(MemAlloc(sizeof(POPUPSTRING)));
   if (pStringSt == NULL) return;
 
-  pLocalString = (STR16)(MemAlloc(wcslen(pString) * 2 + 2));
+  pLocalString = (wchar_t *)(MemAlloc(wcslen(pString) * 2 + 2));
   if (pLocalString == NULL) return;
 
   wcscpy(pLocalString, pString);

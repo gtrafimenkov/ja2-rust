@@ -12,6 +12,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
 
 void FilenameForBPP(char* pFilename, char* pDestination);
 
-BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, uint16_t usWidth, int32_t uiFont);
+BOOLEAN WrapString(wchar_t* pStr, wchar_t* pStr2, size_t buf2Size, uint16_t usWidth,
+                   int32_t uiFont);
 
 #endif

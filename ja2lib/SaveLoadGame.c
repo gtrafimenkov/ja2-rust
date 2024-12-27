@@ -439,7 +439,7 @@ extern BOOLEAN ValidateSoldierInitLinks(uint8_t ubCode);
 //
 /////////////////////////////////////////////////////
 
-BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
+BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
   uint32_t uiNumBytesWritten = 0;
   HWFILE hFile = 0;
   SAVED_GAME_HEADER SaveGameHeader;
@@ -2768,7 +2768,7 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
     pTempEmail->iId = SavedEmail.iId;
     pTempEmail->fRead = SavedEmail.fRead;
     pTempEmail->fNew = SavedEmail.fNew;
-    pTempEmail->pSubject = (STR16)pData;
+    pTempEmail->pSubject = (wchar_t *)pData;
     pTempEmail->iFirstData = SavedEmail.iFirstData;
     pTempEmail->uiSecondData = SavedEmail.uiSecondData;
     pTempEmail->iThirdData = SavedEmail.iThirdData;

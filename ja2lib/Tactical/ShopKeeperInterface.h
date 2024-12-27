@@ -84,7 +84,7 @@ void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(uint8_t bExitValue);
 void SkiHelpTextDoneCallBack(void);
 void SetSkiCursor(uint16_t usCursor);
 
-void InitShopKeeperSubTitledText(STR16 pString);
+void InitShopKeeperSubTitledText(wchar_t *pString);
 
 void AddItemToPlayersOfferAreaAfterShopKeeperOpen(struct OBJECTTYPE *pItemObject,
                                                   int8_t bPreviousInvPos);

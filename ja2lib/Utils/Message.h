@@ -6,7 +6,7 @@
 #include "Utils/FontControl.h"
 
 struct stringstruct {
-  STR16 pString16;
+  wchar_t* pString16;
   int32_t iVideoOverlay;
   uint32_t uiFont;
   uint16_t usColor;
@@ -14,8 +14,8 @@ struct stringstruct {
   BOOLEAN fBeginningOfNewString;
   uint32_t uiTimeOfLastUpdate;
   uint32_t uiPadding[5];
-  struct stringstruct *pNext;
-  struct stringstruct *pPrev;
+  struct stringstruct* pNext;
+  struct stringstruct* pPrev;
 };
 
 #define MSG_INTERFACE 0
@@ -37,7 +37,7 @@ struct stringstruct {
 #define MSG_FONT_WHITE FONT_MCOLOR_WHITE
 
 typedef struct stringstruct ScrollStringSt;
-typedef ScrollStringSt *ScrollStringStPtr;
+typedef ScrollStringSt* ScrollStringStPtr;
 
 extern ScrollStringStPtr pStringS;
 extern uint32_t StringCount;
@@ -47,10 +47,10 @@ extern BOOLEAN fDisableJustForIan;
 // are we allowed to beep on message scroll in tactical
 extern BOOLEAN fOkToBeepNewMessage;
 
-void ScreenMsg(uint16_t usColor, uint8_t ubPriority, STR16 pStringA, ...);
+void ScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, ...);
 
 // same as screen message, but only display to mapscreen message system, not tactical
-void MapScreenMessage(uint16_t usColor, uint8_t ubPriority, STR16 pStringA, ...);
+void MapScreenMessage(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, ...);
 
 void ScrollString(void);
 void DisplayStringsInMapScreenMessageList(void);

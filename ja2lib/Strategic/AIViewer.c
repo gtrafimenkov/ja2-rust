@@ -212,7 +212,7 @@ extern int32_t giGarrisonArraySize;
 wchar_t gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING",
                                                        L"PATROL", L"REINFORCE"};
 
-void StringFromValue(STR16 str, int32_t iValue, uint32_t uiMax) {
+void StringFromValue(wchar_t *str, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.

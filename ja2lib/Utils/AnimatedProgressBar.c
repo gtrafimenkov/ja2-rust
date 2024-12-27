@@ -97,7 +97,7 @@ void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
 // panel and vertically centered from the top of the panel, to the top of the progress bar.
-void SetProgressBarTitle(uint32_t ubID, STR16 pString, uint32_t usFont, uint8_t ubForeColor,
+void SetProgressBarTitle(uint32_t ubID, wchar_t *pString, uint32_t usFont, uint8_t ubForeColor,
                          uint8_t ubShadowColor) {
   PROGRESSBAR *pCurr;
   Assert(ubID < MAX_PROGRESSBARS);
@@ -109,7 +109,7 @@ void SetProgressBarTitle(uint32_t ubID, STR16 pString, uint32_t usFont, uint8_t 
   }
   if (pString && wcslen(pString)) {
     int bufSize = wcslen(pString) + 1;
-    pCurr->swzTitle = (STR16)MemAlloc(sizeof(wchar_t) * bufSize);
+    pCurr->swzTitle = (wchar_t *)MemAlloc(sizeof(wchar_t) * bufSize);
     swprintf(pCurr->swzTitle, bufSize, pString);
   }
   pCurr->usTitleFont = (uint16_t)usFont;
@@ -150,7 +150,7 @@ void RemoveProgressBar(uint8_t ubID) {
 // you would go onto the next step, resetting the relative start and end percentage from 30 to
 // whatever, until your done.
 void SetRelativeStartAndEndPercentage(uint8_t ubID, uint32_t uiRelStartPerc, uint32_t uiRelEndPerc,
-                                      STR16 str) {
+                                      wchar_t *str) {
   PROGRESSBAR *pCurr;
   uint16_t usStartX, usStartY;
 

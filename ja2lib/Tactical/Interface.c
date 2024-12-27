@@ -238,7 +238,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, int32_t reason);
 void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-uint32_t CalcUIMessageDuration(STR16 wString);
+uint32_t CalcUIMessageDuration(wchar_t *wString);
 
 BOOLEAN InitializeTacticalInterface() {
   VSURFACE_DESC vs_desc;
@@ -3275,7 +3275,7 @@ void ResetPhysicsTrajectoryUI() {
 
 void DirtyTopMessage() { gTopMessage.fCreated = FALSE; }
 
-uint32_t CalcUIMessageDuration(STR16 wString) {
+uint32_t CalcUIMessageDuration(wchar_t *wString) {
   // base + X per letter
   return (1000 + 50 * wcslen(wString));
 }

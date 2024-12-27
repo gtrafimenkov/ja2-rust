@@ -32,7 +32,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern STR16 gzIntroScreen[];
+extern wchar_t *gzIntroScreen[];
 
 enum {
   INTRO_TXT__CANT_FIND_INTRO,

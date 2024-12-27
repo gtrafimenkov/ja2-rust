@@ -167,7 +167,7 @@ int32_t iHeightOfInitFastHelpText = 0;
 
 extern int32_t giMapContractButton;
 extern int32_t giCharInfoButton[];
-extern STR16 pUpdatePanelButtons[];
+extern wchar_t *pUpdatePanelButtons[];
 
 // the list of soldiers that are moving
 struct SOLDIERTYPE *pSoldierMovingList[MAX_CHARACTER_COUNT];
@@ -1077,7 +1077,7 @@ void InventoryScreenMaskBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReaso
   }
 }
 
-void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString) {
+void GetMoraleString(struct SOLDIERTYPE *pSoldier, wchar_t *sString) {
   int8_t bMorale = pSoldier->bMorale;
 
   if (pSoldier->uiStatusFlags & SOLDIER_DEAD) {
@@ -2038,7 +2038,7 @@ void ShutDownUserDefineHelpTextRegions(void) {
 // user is to pass in the x,y position of the box, the width to wrap the strings and the string
 // itself
 BOOLEAN SetUpFastHelpListRegions(int32_t iXPosition[], int32_t iYPosition[], int32_t iWidth[],
-                                 STR16 sString[], int32_t iSize) {
+                                 wchar_t *sString[], int32_t iSize) {
   int32_t iCounter = 0;
 
   // reset the size

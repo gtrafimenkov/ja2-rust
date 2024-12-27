@@ -149,7 +149,7 @@ void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason);
 void CreateFinanceButtons(void);
 void DestroyFinanceButtons(void);
 void IncrementCurrentPageFinancialDisplay(void);
-void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFinance);
+void ProcessTransactionString(wchar_t *pString, size_t bufSize, FinanceUnitPtr pFinance);
 void DisplayFinancePageNumberAndDateRange(void);
 void GetBalanceFromDisk(void);
 BOOLEAN WriteBalanceToDisk(void);
@@ -1249,7 +1249,7 @@ void IncrementCurrentPageFinancialDisplay(void) {
   return;
 }
 
-void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFinance) {
+void ProcessTransactionString(wchar_t *pString, size_t bufSize, FinanceUnitPtr pFinance) {
   switch (pFinance->ubCode) {
     case ACCRUED_INTEREST:
       swprintf(pString, bufSize, L"%s", pTransactionText[ACCRUED_INTEREST]);
@@ -1712,7 +1712,7 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
   return (TRUE);
 }
 
-void InsertCommasForDollarFigure(STR16 pString) {
+void InsertCommasForDollarFigure(wchar_t *pString) {
   int16_t sCounter = 0;
   int16_t sZeroCount = 0;
   int16_t sTempCounter = 0;
@@ -1767,7 +1767,7 @@ void InsertCommasForDollarFigure(STR16 pString) {
   return;
 }
 
-void InsertDollarSignInToString(STR16 pString) {
+void InsertDollarSignInToString(wchar_t *pString) {
   // run to end of string, copy everything in string 2 places right, insert a space at pString[ 1 ]
   // and a L'$' at pString[ 0 ]
 

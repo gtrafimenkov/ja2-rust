@@ -3,7 +3,7 @@
 #include "SGP/FileMan.h"
 #include "Utils/Text.h"
 
-BOOLEAN LoadItemInfo(uint16_t ubIndex, STR16 pNameString, STR16 pInfoString) {
+BOOLEAN LoadItemInfo(uint16_t ubIndex, wchar_t* pNameString, wchar_t* pInfoString) {
   HWFILE hFile;
   uint32_t uiBytesRead;
   uint16_t i;
@@ -182,7 +182,7 @@ BOOLEAN LoadItemInfo(uint16_t ubIndex, STR16 pNameString, STR16 pInfoString) {
   return (TRUE);
 }
 
-BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, STR16 pNameString) {
+BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, wchar_t* pNameString) {
   HWFILE hFile;
   //  wchar_t		DestString[ SIZE_MERC_BIO_INFO ];
   uint32_t uiBytesRead;
@@ -289,7 +289,7 @@ void LoadAllItemNames(void) {
 
 void LoadAllExternalText(void) { LoadAllItemNames(); }
 
-STR16 GetWeightUnitString(void) {
+wchar_t* GetWeightUnitString(void) {
   if (gGameSettings.fOptions[TOPTION_USE_METRIC_SYSTEM])  // metric
   {
     return (pMessageStrings[MSG_KILOGRAM_ABBREVIATION]);

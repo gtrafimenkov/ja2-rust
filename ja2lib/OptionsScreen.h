@@ -18,7 +18,7 @@ uint32_t OptionsScreenInit(void);
 void SetOptionsScreenToggleBoxes();
 void GetOptionsScreenToggleBoxes();
 
-BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, STR16 zString, uint32_t uiExitScreen, uint16_t usFlags,
-                            MSGBOX_CALLBACK ReturnCallback);
+BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen,
+                            uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
 
 #endif

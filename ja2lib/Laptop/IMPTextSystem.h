@@ -11,10 +11,10 @@ void PrintImpText(void);
 void PrintIMPPersonalityQuizQuestionAndAnsers(void);
 
 // buttons text
-extern STR16 pImpButtonText[];
+extern wchar_t* pImpButtonText[];
 
 // extra strings not found in IMP Text Document
-extern STR16 pExtraIMPStrings[];
+extern wchar_t* pExtraIMPStrings[];
 
 enum {
   IMP_HOME_1,

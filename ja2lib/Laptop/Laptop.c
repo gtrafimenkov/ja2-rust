@@ -523,7 +523,7 @@ void ShouldNewMailBeDisplayed(void);
 void DisplayPlayersBalanceToDate(void);
 void CheckIfNewWWWW(void);
 void HandleLapTopESCKey(void);
-BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
+BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, wchar_t *pTitle,
                                      uint32_t uiIconGraphic, uint16_t usIconGraphicIndex);
 void RemoveTitleBarMaximizeGraphics();
 BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t usTopLeftX,
@@ -3794,7 +3794,7 @@ BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, 
   return (TRUE);
 }
 
-BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
+BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, wchar_t *pTitle,
                                      uint32_t uiIconGraphic, uint16_t usIconGraphicIndex) {
   VSURFACE_DESC vs_desc;
   struct VObject *hImageHandle;

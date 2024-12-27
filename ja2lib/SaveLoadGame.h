@@ -60,7 +60,7 @@ extern uint32_t guiSaveGameVersion;
 
 void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, char *pzNewFileName);
 
-BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize);
+BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize);
 BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
 
 BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,

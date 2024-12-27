@@ -110,7 +110,7 @@ typedef struct _GUI_BUTTON {
   // Button disabled style
   int8_t bDisabledStyle;
   // For buttons with text
-  STR16 string;         // the string
+  wchar_t *string;      // the string
   uint16_t usFont;      // font for text
   BOOLEAN fMultiColor;  // font is a multi-color font
   int16_t sForeColor;   // text colors if there is text
@@ -177,7 +177,7 @@ int16_t FindFreeIconSlot(void);
 int32_t GetNextButtonNumber(void);
 
 // Now used by Wizardry -- DB
-void SetButtonFastHelpText(int32_t iButton, STR16 Text);
+void SetButtonFastHelpText(int32_t iButton, wchar_t *Text);
 
 void SetBtnHelpEndCallback(int32_t iButton, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn);
 // void DisplayFastHelp(GUI_BUTTON *b);
@@ -255,18 +255,18 @@ int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_
 int32_t CreateHotSpot(int16_t xloc, int16_t yloc, int16_t Width, int16_t Height, int16_t Priority,
                       GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 
-int32_t CreateTextButton(STR16 string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
+int32_t CreateTextButton(wchar_t *string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
                          int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w, int16_t h,
                          int32_t Type, int16_t Priority, GUI_CALLBACK MoveCallback,
                          GUI_CALLBACK ClickCallback);
-int32_t CreateIconAndTextButton(int32_t Image, STR16 string, uint32_t uiFont, int16_t sForeColor,
+int32_t CreateIconAndTextButton(int32_t Image, wchar_t *string, uint32_t uiFont, int16_t sForeColor,
                                 int16_t sShadowColor, int16_t sForeColorDown,
                                 int16_t sShadowColorDown, int8_t bJustification, int16_t xloc,
                                 int16_t yloc, int32_t Type, int16_t Priority,
                                 GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 
 // New functions
-void SpecifyButtonText(int32_t iButtonID, STR16 string);
+void SpecifyButtonText(int32_t iButtonID, wchar_t *string);
 void SpecifyButtonFont(int32_t iButtonID, uint32_t uiFont);
 void SpecifyButtonMultiColorFont(int32_t iButtonID, BOOLEAN fMultiColor);
 void SpecifyButtonUpTextColors(int32_t iButtonID, int16_t sForeColor, int16_t sShadowColor);
@@ -275,13 +275,13 @@ void SpecifyButtonDownTextColors(int32_t iButtonID, int16_t sForeColorDown,
 void SpecifyButtonHilitedTextColors(int32_t iButtonID, int16_t sForeColorHilited,
                                     int16_t sShadowColorHilited);
 void SpecifyButtonTextJustification(int32_t iButtonID, int8_t bJustification);
-void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, STR16 string, int32_t uiFont,
+void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
                                         int16_t sForeColor, int16_t sShadowColor);
-void SpecifyFullButtonTextAttributes(int32_t iButtonID, STR16 string, int32_t uiFont,
+void SpecifyFullButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
                                      int16_t sForeColor, int16_t sShadowColor,
                                      int16_t sForeColorDown, int16_t sShadowColorDown,
                                      int8_t bJustification);
-void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, STR16 string, int32_t uiFont,
+void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
                                         int16_t sForeColor, int16_t sShadowColor);
 void SpecifyButtonTextOffsets(int32_t iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                               BOOLEAN fShiftText);

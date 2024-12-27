@@ -4254,7 +4254,7 @@ BOOLEAN IsGunOrAmmoOfSameTypeSelected(struct OBJECTTYPE *pItemObject) {
   return (FALSE);
 }
 
-void InitShopKeeperSubTitledText(STR16 pString) {
+void InitShopKeeperSubTitledText(wchar_t *pString) {
   // Clear the contents of the subtitle text
   memset(gsShopKeeperTalkingText, 0, sizeof(gsShopKeeperTalkingText));
 

@@ -503,7 +503,7 @@ void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReaso
 //*******************************************
 
 BOOLEAN UpdateMercInfo(void);
-BOOLEAN LoadMercBioInfo(uint8_t ubIndex, STR16 pInfoString, STR16 pAddInfo);
+BOOLEAN LoadMercBioInfo(uint8_t ubIndex, wchar_t *pInfoString, wchar_t *pAddInfo);
 BOOLEAN DisplayMercsInventory(uint8_t ubMercID);
 BOOLEAN DisplayMercsFace();
 void DisplayMercStats();
@@ -512,8 +512,8 @@ BOOLEAN DisplayVideoConferencingDisplay();
 BOOLEAN DisplayMercsVideoFace();
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown);
 uint32_t DisplayMercChargeAmount();
-BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, STR16 sString1, STR16 sString2, uint16_t usPosX,
-                                    uint16_t usPosY, uint8_t ubData);
+BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t *sString1, wchar_t *sString2,
+                                    uint16_t usPosX, uint16_t usPosY, uint8_t ubData);
 BOOLEAN InitVideoFaceTalking(uint8_t ubMercID, uint16_t usQuoteNum);
 BOOLEAN InitVideoFace(uint8_t ubMercID);
 BOOLEAN DisplaySnowBackground();
@@ -538,7 +538,7 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons(BOOLEAN fEnable);
 BOOLEAN CanMercBeHired();
 BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit);
 BOOLEAN DisplayBlackBackground(uint8_t ubMaxNumOfLoops);
-void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, STR16 pString);
+void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, wchar_t *pString);
 
 void DelayMercSpeech(uint8_t ubMercID, uint16_t usQuoteNum, uint16_t usDelay, BOOLEAN fNewQuote,
                      BOOLEAN fReset);
@@ -1068,7 +1068,7 @@ BOOLEAN UpdateMercInfo(void) {
   return (TRUE);
 }
 
-BOOLEAN LoadMercBioInfo(uint8_t ubIndex, STR16 pInfoString, STR16 pAddInfo) {
+BOOLEAN LoadMercBioInfo(uint8_t ubIndex, wchar_t *pInfoString, wchar_t *pAddInfo) {
   HWFILE hFile;
   uint32_t uiBytesRead;
   uint16_t i;
@@ -1623,7 +1623,7 @@ uint8_t GetStatColor(int8_t bStat) {
 }
 
 // displays the dots between the stats and the stat name
-void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, STR16 pString) {
+void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, wchar_t *pString) {
   uint16_t usStringLength = StringPixLength(pString, AIM_M_FONT_STATIC_TEXT);
   int16_t i;
   uint16_t usPosX;
@@ -2049,8 +2049,8 @@ uint32_t DisplayMercChargeAmount() {
   return (giContractAmount);
 }
 
-BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, STR16 sString1, STR16 sString2, uint16_t usPosX,
-                                    uint16_t usPosY, uint8_t ubData) {
+BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t *sString1, wchar_t *sString2,
+                                    uint16_t usPosX, uint16_t usPosY, uint8_t ubData) {
   VOBJECT_DESC VObjectDesc;
   struct VObject *hPopupBoxHandle;
   static uint16_t usPopUpBoxPosX, usPopUpBoxPosY;
@@ -2424,7 +2424,7 @@ BOOLEAN DisplayTalkingMercFaceForVideoPopUp(int32_t iFaceIndex) {
   return (fIsTheMercTalking);
 }
 
-void DisplayTextForMercFaceVideoPopUp(STR16 pString) {
+void DisplayTextForMercFaceVideoPopUp(wchar_t *pString) {
 #ifdef TAIWANESE
   swprintf(gsTalkingMercText, ARR_SIZE(gsTalkingMercText), L"%s", pString);
 #else

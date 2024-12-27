@@ -721,8 +721,8 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
 }
 
 // editor doesn't care about the z value.  It uses it's own methods.
-void SetGlobalSectorValues(STR16 szFilename) {
-  STR16 pStr;
+void SetGlobalSectorValues(wchar_t *szFilename) {
+  wchar_t *pStr;
   if (ValidCoordinate()) {
     // convert the coordinate string into into the actual global sector coordinates.
     if (gzFilename[0] >= 'A' && gzFilename[0] <= 'P')
@@ -963,7 +963,7 @@ BOOLEAN ValidFilename() {
   return FALSE;
 }
 
-BOOLEAN ExternalLoadMap(STR16 szFilename) {
+BOOLEAN ExternalLoadMap(wchar_t *szFilename) {
   Assert(szFilename);
   if (!wcslen(szFilename)) return FALSE;
   wcscpy(gzFilename, szFilename);
@@ -977,7 +977,7 @@ BOOLEAN ExternalLoadMap(STR16 szFilename) {
   return FALSE;
 }
 
-BOOLEAN ExternalSaveMap(STR16 szFilename) {
+BOOLEAN ExternalSaveMap(wchar_t *szFilename) {
   Assert(szFilename);
   if (!wcslen(szFilename)) return FALSE;
   wcscpy(gzFilename, szFilename);

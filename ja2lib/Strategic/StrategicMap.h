@@ -62,7 +62,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
 void InitializeMapStructure();
 
 // get short sector name without town name
-void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bufSize);
+void GetShortSectorString(int16_t sMapX, int16_t sMapY, wchar_t *sString, size_t bufSize);
 
 // NEW!
 // Calculates the name of the sector based on the loaded sector values.
@@ -70,7 +70,7 @@ void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bu
 //						A10_B1
 //						J9_B2_A ( >= BETAVERSION ) else J9_B2 (release
 // equivalent)
-void GetLoadedSectorString(STR16 pString, size_t bufSize);
+void GetLoadedSectorString(wchar_t *pString, size_t bufSize);
 
 void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, char *bString,
                     BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter);

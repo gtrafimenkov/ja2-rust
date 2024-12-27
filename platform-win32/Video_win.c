@@ -5170,7 +5170,7 @@ void SetWinFontForeColor(int32_t iFont, COLORVAL *pColor) {
   }
 }
 
-int16_t WinFontStringPixLength(STR16 string2, int32_t iFont) {
+int16_t WinFontStringPixLength(wchar_t *string2, int32_t iFont) {
   struct HWINFONT *pWinFont;
   HDC hdc;
   SIZE RectSize;
@@ -5196,7 +5196,7 @@ int16_t WinFontStringPixLength(STR16 string2, int32_t iFont) {
   return ((int16_t)RectSize.cx);
 }
 
-int16_t GetWinFontHeight(STR16 string2, int32_t iFont) {
+int16_t GetWinFontHeight(wchar_t *string2, int32_t iFont) {
   struct HWINFONT *pWinFont;
   HDC hdc;
   SIZE RectSize;
@@ -5222,7 +5222,7 @@ int16_t GetWinFontHeight(STR16 string2, int32_t iFont) {
   return ((int16_t)RectSize.cy);
 }
 
-uint32_t WinFont_mprintf(int32_t iFont, int32_t x, int32_t y, STR16 pFontString, ...) {
+uint32_t WinFont_mprintf(int32_t iFont, int32_t x, int32_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
 
@@ -5256,7 +5256,8 @@ int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, i
   return TRUE;
 }
 
-void PrintWinFont(uint32_t uiDestBuf, int32_t iFont, int32_t x, int32_t y, STR16 pFontString, ...) {
+void PrintWinFont(uint32_t uiDestBuf, int32_t iFont, int32_t x, int32_t y, wchar_t *pFontString,
+                  ...) {
   va_list argptr;
   wchar_t string2[512];
   char string[512];

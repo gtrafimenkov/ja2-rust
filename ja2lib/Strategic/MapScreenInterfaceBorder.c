@@ -637,7 +637,7 @@ void ToggleShowMilitiaMode(void) {
 
     // check if player has any militia
     if (DoesPlayerHaveAnyMilitia() == FALSE) {
-      STR16 pwString = NULL;
+      wchar_t *pwString = NULL;
 
       // no - so put up a message explaining how it works
 
@@ -708,7 +708,7 @@ void ToggleItemsFilter(void) {
 }
 
 /*
-void ShowDestinationOfPlottedPath( STR16 pLoc )
+void ShowDestinationOfPlottedPath( wchar_t* pLoc )
 {
         int16_t sFontX, sFontY;
 

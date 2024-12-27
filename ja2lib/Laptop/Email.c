@@ -293,7 +293,7 @@ void BtnPreviousEmailPageCallback(GUI_BUTTON *btn, int32_t reason);
 void BtnNextEmailPageCallback(GUI_BUTTON *btn, int32_t reason);
 void DisplayEmailList();
 void ClearOutEmailMessageRecordsList(void);
-void AddEmailRecordToList(STR16 pString);
+void AddEmailRecordToList(wchar_t *pString);
 void UpDateMessageRecordList(void);
 void HandleAnySpecialEmailMessageEvents(int32_t iMessageId);
 BOOLEAN HandleMailSpecialMessages(uint16_t usMessageId, int32_t *iResults, EmailPtr pMail);
@@ -670,8 +670,8 @@ void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubS
   return;
 }
 
-void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, STR16 pSubject, int32_t iDate,
-                     uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t iFirstData,
+void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, wchar_t *pSubject,
+                     int32_t iDate, uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t iFirstData,
                      uint32_t uiSecondData) {
   // will add a message to the list of messages
   EmailPtr pEmail = pEmailList;
@@ -707,7 +707,7 @@ void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, STR16 pSubj
   // pTempEmail->pText[iCounter]=NULL;
 
   // copy subject
-  pTempEmail->pSubject = (STR16)MemAlloc(128 * 2);
+  pTempEmail->pSubject = (wchar_t *)MemAlloc(128 * 2);
   memset(pTempEmail->pSubject, 0, sizeof(wchar_t) * 128);
   wcscpy(pTempEmail->pSubject, pSubject);
 
@@ -1054,7 +1054,7 @@ void SwapMessages(int32_t iIdA, int32_t iIdB) {
   EmailPtr pA = pEmailList;
   EmailPtr pB = pEmailList;
   EmailPtr pTemp = (EmailPtr)MemAlloc(sizeof(Email));
-  pTemp->pSubject = (STR16)MemAlloc(128 * 2);
+  pTemp->pSubject = (wchar_t *)MemAlloc(128 * 2);
 
   memset(pTemp->pSubject, 0, sizeof(wchar_t) * 128);
 
@@ -1162,7 +1162,7 @@ void DrawLetterIcon(int32_t iCounter, BOOLEAN fRead) {
   return;
 }
 
-void DrawSubject(int32_t iCounter, STR16 pSubject, BOOLEAN fRead) {
+void DrawSubject(int32_t iCounter, wchar_t *pSubject, BOOLEAN fRead) {
   wchar_t pTempSubject[320];
 
   // draw subject line of mail being viewed in viewer
@@ -2586,7 +2586,7 @@ void ClearOutEmailMessageRecordsList(void) {
   return;
 }
 
-void AddEmailRecordToList(STR16 pString) {
+void AddEmailRecordToList(wchar_t *pString) {
   RecordPtr pTempRecord;
 
   // set to head of list

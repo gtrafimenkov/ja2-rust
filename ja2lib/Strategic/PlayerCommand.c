@@ -24,7 +24,7 @@
 
 extern BOOLEAN fMapScreenBottomDirty;
 
-void GetSectorFacilitiesFlags(int16_t sMapX, int16_t sMapY, STR16 sFacilitiesString,
+void GetSectorFacilitiesFlags(int16_t sMapX, int16_t sMapY, wchar_t *sFacilitiesString,
                               size_t bufSize) {
   // will build a string stating current facilities present in sector
 

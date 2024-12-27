@@ -1422,7 +1422,7 @@ void RenderSummaryWindow() {
   }
 }
 
-void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate) {
+void UpdateSectorSummary(wchar_t *gszFilename, BOOLEAN fUpdate) {
   wchar_t str[50];
   char szCoord[40];
   wchar_t *ptr;

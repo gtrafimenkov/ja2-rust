@@ -263,7 +263,7 @@ extern void InitializeTacticalStatusAtBattleStart();
 
 extern BOOLEAN gfOverrideSector;
 
-extern STR16 pBullseyeStrings[];
+extern wchar_t *pBullseyeStrings[];
 
 extern void HandleRPCDescription();
 
@@ -596,7 +596,7 @@ void InitializeSAMSites(void) {
 }
 
 // get short sector name without town name
-void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bufSize) {
+void GetShortSectorString(int16_t sMapX, int16_t sMapY, wchar_t *sString, size_t bufSize) {
   // OK, build string id like J11
   swprintf(sString, bufSize, L"%hs%hs", pVertStrings[sMapY], pHortStrings[sMapX]);
 }
@@ -3739,7 +3739,7 @@ int16_t PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDire
   return (NOWHERE);
 }
 
-void GetLoadedSectorString(STR16 pString, size_t bufSize) {
+void GetLoadedSectorString(wchar_t *pString, size_t bufSize) {
   if (!gfWorldLoaded) {
     swprintf(pString, bufSize, L"");
     return;

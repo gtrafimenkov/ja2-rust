@@ -117,9 +117,9 @@ void SetBackgroundRectFilled(uint32_t uiBackgroundID);
 BOOLEAN EmptyBackgroundRects(void);
 
 // GPRINTF DIRTY STUFF
-uint16_t gprintfdirty(int16_t x, int16_t y, STR16 pFontString, ...);
-uint16_t gprintfinvalidate(int16_t x, int16_t y, STR16 pFontString, ...);
-uint16_t gprintfRestore(int16_t x, int16_t y, STR16 pFontString, ...);
+uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t *pFontString, ...);
+uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t *pFontString, ...);
+uint16_t gprintfRestore(int16_t x, int16_t y, wchar_t *pFontString, ...);
 
 // VIDEO OVERLAY STUFF
 int32_t GetFreeVideoOverlay(void);

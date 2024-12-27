@@ -20,7 +20,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
 
-STR16 szClipboard;
+wchar_t *szClipboard;
 BOOLEAN gfNoScroll = FALSE;
 
 // The internal callback functions assigned to each text field.
@@ -32,7 +32,7 @@ void AddChar(uint32_t uiKey);
 void RemoveChar(uint8_t ubArrayIndex);
 void DeleteHilitedText();
 
-void DoublePercentileCharacterFromStringIntoString(STR16 pSrcString, STR16 pDstString);
+void DoublePercentileCharacterFromStringIntoString(wchar_t *pSrcString, wchar_t *pDstString);
 
 // All exclusive input types are handled in this function.
 void HandleExclusiveInput(uint32_t uiKey);
@@ -62,7 +62,7 @@ typedef struct TEXTINPUTNODE {
   uint8_t ubID;
   uint16_t usInputType;
   uint8_t ubMaxChars;
-  STR16 szString;
+  wchar_t *szString;
   size_t szStringBufSize;
   uint8_t ubStrLen;
   BOOLEAN fEnabled;
@@ -222,7 +222,7 @@ void KillAllTextInputModes() {
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
 void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                       int8_t bPriority, STR16 szInitText, uint8_t ubMaxChars,
+                       int8_t bPriority, wchar_t *szInitText, uint8_t ubMaxChars,
                        uint16_t usInputType) {
   TEXTINPUTNODE *pNode;
   pNode = (TEXTINPUTNODE *)MemAlloc(sizeof(TEXTINPUTNODE));
@@ -249,7 +249,7 @@ void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHei
   if (usInputType == INPUTTYPE_EXCLUSIVE_24HOURCLOCK) ubMaxChars = 6;
   // Allocate and copy the string.
   size_t bufSize = (ubMaxChars + 1);
-  pNode->szString = (STR16)MemAlloc(bufSize * sizeof(wchar_t));
+  pNode->szString = (wchar_t *)MemAlloc(bufSize * sizeof(wchar_t));
   pNode->szStringBufSize = bufSize;
   Assert(pNode->szString);
   if (szInitText) {
@@ -354,7 +354,7 @@ int16_t GetActiveFieldID() {
 // example, this call would be made when the user selected a different filename in the list via
 // clicking or scrolling with the arrows, or even using alpha chars to jump to the appropriate
 // filename.
-void SetInputFieldStringWith16BitString(uint8_t ubField, STR16 szNewText) {
+void SetInputFieldStringWith16BitString(uint8_t ubField, wchar_t *szNewText) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {
@@ -396,7 +396,7 @@ void SetInputFieldStringWith8BitString(char ubField, char *szNewText) {
   }
 }
 
-void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize) {
+void Get16BitStringFromField(uint8_t ubField, wchar_t *szString, size_t bufSize) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {
@@ -412,7 +412,7 @@ void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize) {
 // Converts the field's string into a number, then returns that number
 // returns -1 if blank or invalid.  Only works for positive numbers.
 int32_t GetNumericStrictValueFromField(uint8_t ubField) {
-  STR16 ptr;
+  wchar_t *ptr;
   wchar_t str[20];
   int32_t total;
   Get16BitStringFromField(ubField, str, ARR_SIZE(str));
@@ -1316,7 +1316,7 @@ void ExecuteCopyCommand() {
       ubEnd = gubStartHilite;
     }
     ubCount = (uint8_t)(ubEnd - ubStart);
-    szClipboard = (STR16)MemAlloc((ubCount + 1) * sizeof(wchar_t));
+    szClipboard = (wchar_t *)MemAlloc((ubCount + 1) * sizeof(wchar_t));
     Assert(szClipboard);
     for (ubCount = ubStart; ubCount < ubEnd; ubCount++) {
       szClipboard[ubCount - ubStart] = gpActive->szString[ubCount];
@@ -1458,7 +1458,7 @@ void SetExclusive24HourTimeValue(uint8_t ubField, uint16_t usTime) {
   }
 }
 
-void DoublePercentileCharacterFromStringIntoString(STR16 pSrcString, STR16 pDstString) {
+void DoublePercentileCharacterFromStringIntoString(wchar_t *pSrcString, wchar_t *pDstString) {
   int32_t iSrcIndex = 0, iDstIndex = 0;
   while (pSrcString[iSrcIndex] != 0) {
     if (pSrcString[iSrcIndex] == '%') {

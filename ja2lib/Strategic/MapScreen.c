@@ -354,7 +354,7 @@ struct rgbcolor {
 typedef struct rgbcolor RGBCOLOR;
 
 struct lineoftext {
-  STR16 pLineText;
+  wchar_t *pLineText;
   uint32_t uiFont;
   struct lineoftext *pNext;
 };
@@ -618,8 +618,8 @@ extern void HandlePreBattleInterfaceStates();
 
 // the title for the contract button on the character info panel in the upper left portion of the
 // mapscreen
-extern STR16 pContractButtonString[];
-extern STR16 pBullseyeStrings[];
+extern wchar_t *pContractButtonString[];
+extern wchar_t *pBullseyeStrings[];
 
 extern struct OBJECTTYPE *gpItemDescObject;
 
@@ -677,14 +677,14 @@ void MonitorMapUIMessage(void);
 void RenderMapHighlight(int16_t sMapX, int16_t sMapY, uint16_t usLineColor, BOOLEAN fStationary);
 void ShadeMapElem(int16_t sMapX, int16_t sMapY);
 void PopupText(wchar_t *pFontString, ...);
-void DrawString(STR16 pString, uint16_t uiX, uint16_t uiY, uint32_t uiFont);
+void DrawString(wchar_t *pString, uint16_t uiX, uint16_t uiY, uint32_t uiFont);
 
 // Clock
-void SetClock(STR16 pString);
-void SetClockMin(STR16, ...);
-void SetClockHour(STR16 pStringA, ...);
-void SetHourAlternate(STR16 pStringA, ...);
-void SetDayAlternate(STR16 pStringA, ...);
+void SetClock(wchar_t *pString);
+void SetClockMin(wchar_t *, ...);
+void SetClockHour(wchar_t *pStringA, ...);
+void SetHourAlternate(wchar_t *pStringA, ...);
+void SetDayAlternate(wchar_t *pStringA, ...);
 
 void RenderIconsForUpperLeftCornerPiece(int8_t bCharNumber);
 void RenderAttributeStringsForUpperLeftHandCorner(uint32_t uiBufferToRenderTo);
@@ -709,7 +709,7 @@ void GlowFace(void);
 void ResetMapButtons();
 
 // Drawing Strings
-void DrawName(STR16 pName, int16_t sRowIndex, int32_t iFont);
+void DrawName(wchar_t *pName, int16_t sRowIndex, int32_t iFont);
 void DrawAssignment(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont);
 void DrawLocation(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont);
 void DrawDestination(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont);
@@ -897,7 +897,7 @@ BOOLEAN HandleCtrlOrShiftInTeamPanel(int8_t bCharNumber);
 
 int32_t GetContractExpiryTime(struct SOLDIERTYPE *pSoldier);
 
-void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, size_t bufSize);
+void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, wchar_t *sString, size_t bufSize);
 int32_t GetGroundTravelTimeOfCharacter(int8_t bCharNumber);
 
 int16_t CalcLocationValueForChar(int32_t iCounter);
@@ -3540,14 +3540,14 @@ uint32_t MapScreenHandle(void) {
   return (MAP_SCREEN);
 }
 
-void DrawString(STR16 pString, uint16_t uiX, uint16_t uiY, uint32_t uiFont) {
+void DrawString(wchar_t *pString, uint16_t uiX, uint16_t uiY, uint32_t uiFont) {
   // draw monochrome string
   SetFont(uiFont);
   gprintfdirty(uiX, uiY, pString);
   mprintf(uiX, uiY, pString);
 }
 
-void SetDayAlternate(STR16 pStringA, ...) {
+void SetDayAlternate(wchar_t *pStringA, ...) {
   // this sets the clock counter, unwind loop
   uint16_t uiX = 0;
   uint16_t uiY = 0;
@@ -3577,7 +3577,7 @@ void SetDayAlternate(STR16 pStringA, ...) {
   mprintf(uiX, uiY, String);
 }
 
-void SetHourAlternate(STR16 pStringA, ...) {
+void SetHourAlternate(wchar_t *pStringA, ...) {
   // this sets the clock counter, unwind loop
   uint16_t uiX = 0;
   uint16_t uiY = 0;
@@ -3608,7 +3608,7 @@ void SetHourAlternate(STR16 pStringA, ...) {
   mprintf(uiX, uiY, String);
 }
 
-void SetClockHour(STR16 pStringA, ...) {
+void SetClockHour(wchar_t *pStringA, ...) {
   // this sets the clock counter, unwind loop
   uint16_t uiX = 0;
   uint16_t uiY = 0;
@@ -3636,7 +3636,7 @@ void SetClockHour(STR16 pStringA, ...) {
   mprintf(uiX, uiY, String);
 }
 
-void SetClockMin(STR16 pStringA, ...) {
+void SetClockMin(wchar_t *pStringA, ...) {
   // this sets the clock counter, unwind loop
   wchar_t String[10];
   va_list argptr;
@@ -3662,7 +3662,7 @@ void SetClockMin(STR16 pStringA, ...) {
   mprintf(CLOCK_MIN_X_START - 5, CLOCK_Y_START, String);
 }
 
-void DrawName(STR16 pName, int16_t sRowIndex, int32_t iFont) {
+void DrawName(wchar_t *pName, int16_t sRowIndex, int32_t iFont) {
   int16_t usX = 0;
   int16_t usY = 0;
 
@@ -9814,7 +9814,7 @@ void CancelPathsOfAllSelectedCharacters() {
   }
 }
 
-void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, size_t bufSize) {
+void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, wchar_t *sString, size_t bufSize) {
   uint32_t uiDay, uiHour, uiMin;
 
   uiDay = (uiTimeInMin / NUM_MIN_IN_DAY);

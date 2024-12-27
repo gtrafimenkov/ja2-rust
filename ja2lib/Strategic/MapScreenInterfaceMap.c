@@ -471,11 +471,11 @@ int32_t giClickHeliIconBaseTime = 0;
 void DisplayLevelString(void);
 
 void ShowTownText(void);
-void DrawTownLabels(STR16 pString, STR16 pStringA, uint16_t usFirstX, uint16_t usFirstY);
+void DrawTownLabels(wchar_t *pString, wchar_t *pStringA, uint16_t usFirstX, uint16_t usFirstY);
 void ShowTeamAndVehicles(int32_t fShowFlags);
 BOOLEAN ShadeMapElem(int16_t sMapX, int16_t sMapY, int32_t iColor);
 BOOLEAN ShadeMapElemZoomIn(int16_t sMapX, int16_t sMapY, int32_t iColor);
-void AdjustXForLeftMapEdge(STR16 wString, int16_t *psX);
+void AdjustXForLeftMapEdge(wchar_t *wString, int16_t *psX);
 static void BlitTownGridMarkers(void);
 void BlitMineGridMarkers(void);
 void BlitSAMGridMarkers(void);
@@ -902,7 +902,7 @@ void ShowTownText(void) {
   }
 }
 
-void DrawTownLabels(STR16 pString, STR16 pStringA, uint16_t usFirstX, uint16_t usFirstY) {
+void DrawTownLabels(wchar_t *pString, wchar_t *pStringA, uint16_t usFirstX, uint16_t usFirstY) {
   // this procedure will draw the given strings on the screen centered around the given x and at the
   // given y
 
@@ -4160,7 +4160,7 @@ void BlitMineText(int16_t sMapX, int16_t sMapY) {
                     MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 }
 
-void AdjustXForLeftMapEdge(STR16 wString, int16_t *psX) {
+void AdjustXForLeftMapEdge(wchar_t *wString, int16_t *psX) {
   int16_t sStartingX, sPastEdge;
 
   if (fZoomFlag)

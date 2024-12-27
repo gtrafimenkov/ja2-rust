@@ -76,13 +76,13 @@ uint16_t *GetFontObjectPalette16BPP(int32_t iFont);
 void DestroyEnglishTransTable(void);
 
 extern struct VObject *GetFontObject(int32_t iFont);
-extern uint32_t gprintf(int32_t x, int32_t y, STR16 pFontString, ...);
-extern uint32_t gprintfDirty(int32_t x, int32_t y, STR16 pFontString, ...);
-extern uint32_t mprintf(int32_t x, int32_t y, STR16 pFontString, ...);
+extern uint32_t gprintf(int32_t x, int32_t y, wchar_t *pFontString, ...);
+extern uint32_t gprintfDirty(int32_t x, int32_t y, wchar_t *pFontString, ...);
+extern uint32_t mprintf(int32_t x, int32_t y, wchar_t *pFontString, ...);
 extern uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
-                               int32_t x, int32_t y, STR16 pFontString, ...);
+                               int32_t x, int32_t y, wchar_t *pFontString, ...);
 extern uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
-                               int32_t x, int32_t y, STR16 pFontString, ...);
+                               int32_t x, int32_t y, wchar_t *pFontString, ...);
 
 // Function for displaying coded test. Since it's slower to do this, it's separate from  the normal
 // fuctions
@@ -90,8 +90,8 @@ extern uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uin
 #define FONT_CODE_RESETCOLOR 181
 
 uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
-                              int32_t x, int32_t y, STR16 pFontString, ...);
-uint32_t mprintf_coded(int32_t x, int32_t y, STR16 pFontString, ...);
+                              int32_t x, int32_t y, wchar_t *pFontString, ...);
+uint32_t mprintf_coded(int32_t x, int32_t y, wchar_t *pFontString, ...);
 
 extern BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, int32_t x1, int32_t y1, int32_t x2,
                                  int32_t y2, BOOLEAN wrap);

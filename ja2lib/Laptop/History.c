@@ -110,7 +110,7 @@ void DisplayHistoryListBackground(void);
 void DrawAPageofHistoryRecords(void);
 BOOLEAN IncrementCurrentPageHistoryDisplay(void);
 void DisplayPageNumberAndDateRange(void);
-void ProcessHistoryTransactionString(STR16 pString, size_t bufSize, HistoryUnitPtr pHistory);
+void ProcessHistoryTransactionString(wchar_t *pString, size_t bufSize, HistoryUnitPtr pHistory);
 void SetHistoryButtonStates(void);
 BOOLEAN LoadInHistoryRecords(uint32_t uiPage);
 BOOLEAN LoadNextHistoryPage(void);
@@ -119,8 +119,8 @@ void SetLastPageInHistoryRecords(void);
 uint32_t ReadInLastElementOfHistoryListAndReturnIdNumber(void);
 BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory);
 BOOLEAN WriteOutHistoryRecords(uint32_t uiPage);
-void GetQuestStartedString(uint8_t ubQuestValue, STR16 sQuestString);
-void GetQuestEndedString(uint8_t ubQuestValue, STR16 sQuestString);
+void GetQuestStartedString(uint8_t ubQuestValue, wchar_t *sQuestString);
+void GetQuestEndedString(uint8_t ubQuestValue, wchar_t *sQuestString);
 int32_t GetNumberOfHistoryPages();
 
 #ifdef JA2TESTVERSION
@@ -887,7 +887,7 @@ void DisplayPageNumberAndDateRange(void) {
   return;
 }
 
-void ProcessHistoryTransactionString(STR16 pString, size_t bufSize, HistoryUnitPtr pHistory) {
+void ProcessHistoryTransactionString(wchar_t *pString, size_t bufSize, HistoryUnitPtr pHistory) {
   wchar_t sString[128];
 
   switch (pHistory->ubCode) {
@@ -1496,12 +1496,12 @@ uint32_t GetTimeQuestWasStarted(uint8_t ubCode) {
   return (uiTime);
 }
 
-void GetQuestStartedString(uint8_t ubQuestValue, STR16 sQuestString) {
+void GetQuestStartedString(uint8_t ubQuestValue, wchar_t *sQuestString) {
   // open the file and copy the string
   LoadEncryptedDataFromFile("BINARYDATA\\quests.edt", sQuestString, 160 * (ubQuestValue * 2), 160);
 }
 
-void GetQuestEndedString(uint8_t ubQuestValue, STR16 sQuestString) {
+void GetQuestEndedString(uint8_t ubQuestValue, wchar_t *sQuestString) {
   // open the file and copy the string
   LoadEncryptedDataFromFile("BINARYDATA\\quests.edt", sQuestString, 160 * ((ubQuestValue * 2) + 1),
                             160);

@@ -1791,7 +1791,7 @@ BOOLEAN FaceRestoreSavedBackgroundRect(int32_t iFaceIndex, int16_t sDestLeft, in
   return (TRUE);
 }
 
-BOOLEAN SetFaceTalking(int32_t iFaceIndex, char *zSoundFile, STR16 zTextString, uint32_t usRate,
+BOOLEAN SetFaceTalking(int32_t iFaceIndex, char *zSoundFile, wchar_t *zTextString, uint32_t usRate,
                        uint32_t ubVolume, uint32_t ubLoops, uint32_t uiPan) {
   FACETYPE *pFace;
 

@@ -248,7 +248,7 @@ void EVENT_InternalSetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, uint
 #ifdef JA2BETAVERSION
 extern void ValidatePlayersAreInOneGroupOnly();
 extern void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
-void SAIReportError(STR16 wErrorString);
+void SAIReportError(wchar_t *wErrorString);
 #endif
 
 uint32_t SleepDartSuccumbChance(struct SOLDIERTYPE *pSoldier);

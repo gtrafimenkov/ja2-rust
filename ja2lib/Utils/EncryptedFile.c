@@ -4,7 +4,7 @@
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 
-BOOLEAN LoadEncryptedDataFromFile(char* pFileName, STR16 pDestString, uint32_t uiSeekFrom,
+BOOLEAN LoadEncryptedDataFromFile(char* pFileName, wchar_t* pDestString, uint32_t uiSeekFrom,
                                   uint32_t uiSeekAmount) {
   HWFILE hFile;
   uint16_t i;

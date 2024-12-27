@@ -90,7 +90,7 @@ uint16_t GetTextInputCursor();
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
 void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                       int8_t bPriority, STR16 szInitText, uint8_t ubMaxChars,
+                       int8_t bPriority, wchar_t* szInitText, uint8_t ubMaxChars,
                        uint16_t usInputType);
 
 // This allows you to insert special processing functions and modes that can't be determined here.
@@ -116,11 +116,11 @@ void RemoveTextInputField(uint8_t ubField);
 // example, this call would be made when the user selected a different filename in the list via
 // clicking or scrolling with the arrows, or even using alpha chars to jump to the appropriate
 // filename.
-void SetInputFieldStringWith16BitString(uint8_t ubField, STR16 szNewText);
+void SetInputFieldStringWith16BitString(uint8_t ubField, wchar_t* szNewText);
 void SetInputFieldStringWith8BitString(char ubField, char* szNewText);
 
 // Allows external functions to access the strings within the fields at anytime.
-void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize);
+void Get16BitStringFromField(uint8_t ubField, wchar_t* szString, size_t bufSize);
 
 // Utility functions for the INPUTTYPE_EXCLUSIVE_24HOURCLOCK input type.
 uint16_t GetExclusive24HourTimeValueFromField(uint8_t ubField);

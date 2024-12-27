@@ -311,9 +311,9 @@ void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
 void SayQuoteFromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum);
 void SayQuote58FromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum,
                                       int8_t bSex);
-void ExecuteTacticalTextBox(int16_t sLeftPosition, STR16 pString);
-void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, STR16 pString);
-uint32_t FindDelayForString(STR16 sString);
+void ExecuteTacticalTextBox(int16_t sLeftPosition, wchar_t *pString);
+void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, wchar_t *pString);
+uint32_t FindDelayForString(wchar_t *sString);
 void BeginLoggingForBleedMeToos(BOOLEAN fStart);
 
 void UnSetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier);

@@ -340,7 +340,7 @@ void HandleDisplayOfSelectedMercArrows(void);
 void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldier);
 
 // get morale string for this grunt given this morale level
-void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString);
+void GetMoraleString(struct SOLDIERTYPE *pSoldier, wchar_t *sString);
 
 // handle leaving of equipment in sector
 void HandleLeavingOfEquipmentInCurrentSector(uint32_t uiMercId);
@@ -454,7 +454,7 @@ BOOLEAN IsTheInterfaceFastHelpTextActive(void);
 
 // set up the tactical lists
 BOOLEAN SetUpFastHelpListRegions(int32_t iXPosition[], int32_t iYPosition[], int32_t iWidth[],
-                                 STR16 sString[], int32_t iSize);
+                                 wchar_t *sString[], int32_t iSize);
 
 // the alternate mapscreen movement system
 void InitializeMovingLists(void);

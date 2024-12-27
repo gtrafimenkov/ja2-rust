@@ -41,7 +41,7 @@ extern uint8_t gbPlayerNum;
 #endif
 
 #ifdef STAT_CHANGE_DEBUG
-STR16 wDebugStatStrings[] = {
+wchar_t *wDebugStatStrings[] = {
     L"",           L"Life (Max)", L"Agility",      L"Dexterity",        L"Wisdom",   L"Medical",
     L"Explosives", L"Mechanical", L"Marksmanship", L"Experience Level", L"Strength", L"Leadership",
 };
@@ -1305,7 +1305,7 @@ void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType) {
   }
 }
 
-void BuildStatChangeString(STR16 wString, size_t bufSize, STR16 wName, BOOLEAN fIncrease,
+void BuildStatChangeString(wchar_t *wString, size_t bufSize, wchar_t *wName, BOOLEAN fIncrease,
                            int16_t sPtsChanged, uint8_t ubStat) {
   uint8_t ubStringIndex;
 

@@ -54,8 +54,8 @@
 //
 //*******************************
 
-typedef void (*DROP_DOWN_DISPLAY_CALLBACK)(STR16);
-typedef void (*DROP_DOWN_SELECT_CALLBACK)(STR16);
+typedef void (*DROP_DOWN_DISPLAY_CALLBACK)(wchar_t *);
+typedef void (*DROP_DOWN_SELECT_CALLBACK)(wchar_t *);
 
 #define QUEST_DEBUG_FILE "QuestDebugRecordLog.txt"
 
@@ -217,13 +217,13 @@ enum {
   QD_DROP_DOWN_CANCEL,
 };
 
-STR16 QuestStates[] = {
+wchar_t *QuestStates[] = {
     L"N.S.",
     L"In Prog.",
     L"Done",
 };
 
-STR16 QuestDebugText[] = {
+wchar_t *QuestDebugText[] = {
     L"Quest Debug System",
     L"Quests",
     L"Quest Number",
@@ -325,7 +325,7 @@ enum {
   QUEST_DBS_ESC_TOP_STOP_TALKING
 };
 
-STR16 PocketText[] = {
+wchar_t *PocketText[] = {
     L"Helmet",     L"Vest",        L"Leg",        L"Head1",      L"Head2",
     L"Hand",       L"Second Hand", L"Bigpock1",   L"Bigpock2",   L"Bigpock3",
     L"Bigpock4",   L"Smallpock1",  L"Smallpock2", L"Smallpock3", L"Smallpock4",
@@ -557,8 +557,8 @@ void CalcPositionOfNewScrollBoxLocation();
 void DisplaySelectedListBox();
 void DisplaySelectedNPC();
 void DisplaySelectedItem();
-void TextEntryBox(STR16 pString, TEXT_ENTRY_CALLBACK TextEntryCallBack);
-BOOLEAN CreateDestroyDisplayTextEntryBox(uint8_t ubAction, STR16 pString,
+void TextEntryBox(wchar_t *pString, TEXT_ENTRY_CALLBACK TextEntryCallBack);
+BOOLEAN CreateDestroyDisplayTextEntryBox(uint8_t ubAction, wchar_t *pString,
                                          TEXT_ENTRY_CALLBACK TextEntryCallBack);
 void InitQuestDebugTextInputBoxes();
 void DestroyQuestDebugTextInputBoxes();
@@ -587,7 +587,7 @@ void EndMercTalking();
 void EnableFactMouseRegions();
 void DisableFactMouseRegions();
 int32_t GetMaxNumberOfQuotesToPlay();
-void GetDebugLocationString(uint16_t usProfileID, STR16 pzText, size_t bufSize);
+void GetDebugLocationString(uint16_t usProfileID, wchar_t *pzText, size_t bufSize);
 
 // ppp
 
@@ -2428,7 +2428,7 @@ void BtnQuestDebugStartMercTalkingButtonButtonCallback(GUI_BUTTON *btn, int32_t 
   }
 }
 
-BOOLEAN CreateDestroyDisplayTextEntryBox(uint8_t ubAction, STR16 pString,
+BOOLEAN CreateDestroyDisplayTextEntryBox(uint8_t ubAction, wchar_t *pString,
                                          TEXT_ENTRY_CALLBACK EntryCallBack) {
   static BOOLEAN fMouseRegionCreated = FALSE;
   static wchar_t zString[256];
@@ -2562,7 +2562,7 @@ void BtnQuestDebugTextEntryOkBtnButtonCallback(GUI_BUTTON *btn, int32_t reason) 
   }
 }
 
-void TextEntryBox(STR16 pString, TEXT_ENTRY_CALLBACK TextEntryCallBack) {
+void TextEntryBox(wchar_t *pString, TEXT_ENTRY_CALLBACK TextEntryCallBack) {
   CreateDestroyDisplayTextEntryBox(QD_DROP_DOWN_CREATE, pString, TextEntryCallBack);
   gubTextEntryAction = QD_DROP_DOWN_DISPLAY;
 }
@@ -3559,7 +3559,7 @@ int32_t GetMaxNumberOfQuotesToPlay() {
   return (iNumberOfQuotes + 1);
 }
 
-void GetDebugLocationString(uint16_t usProfileID, STR16 pzText, size_t bufSize) {
+void GetDebugLocationString(uint16_t usProfileID, wchar_t *pzText, size_t bufSize) {
   struct SOLDIERTYPE *pSoldier;
 
   // Get a soldier pointer

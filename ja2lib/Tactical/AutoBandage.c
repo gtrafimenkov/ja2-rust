@@ -41,7 +41,7 @@ extern FACETYPE *gpCurrentTalkingFace;
 // max number of merc faces per row in autobandage box
 #define NUMBER_MERC_FACES_AUTOBANDAGE_BOX 4
 
-STR16 sAutoBandageString = NULL;
+wchar_t *sAutoBandageString = NULL;
 int32_t giBoxId = -1;
 uint16_t gusTextBoxWidth = 0;
 uint16_t gusTextBoxHeight = 0;
@@ -270,7 +270,7 @@ BOOLEAN CreateAutoBandageString(void) {
   int32_t cnt;
   uint8_t ubDoctor[20], ubDoctors = 0;
   uint32_t uiDoctorNameStringLength = 1;  // for end-of-string character
-  STR16 sTemp;
+  wchar_t *sTemp;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
@@ -296,7 +296,7 @@ BOOLEAN CreateAutoBandageString(void) {
   }
 
   sAutoBandageString =
-      (STR16)MemRealloc(sAutoBandageString, uiDoctorNameStringLength * sizeof(wchar_t));
+      (wchar_t *)MemRealloc(sAutoBandageString, uiDoctorNameStringLength * sizeof(wchar_t));
   if (!sAutoBandageString) {
     return (FALSE);
   }
@@ -306,7 +306,7 @@ BOOLEAN CreateAutoBandageString(void) {
              MercPtrs[ubDoctor[0]]->name);
   } else {
     // make a temporary string to hold most of the doctors names joined by commas
-    sTemp = (STR16)MemAlloc(uiDoctorNameStringLength * sizeof(wchar_t));
+    sTemp = (wchar_t *)MemAlloc(uiDoctorNameStringLength * sizeof(wchar_t));
     //	sTemp = MemAlloc( 1000 );
     if (!sTemp) {
       return (FALSE);

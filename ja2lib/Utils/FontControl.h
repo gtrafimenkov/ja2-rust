@@ -22,7 +22,7 @@ extern int32_t giCurWinFont;
 
 // ATE: A few winfont wrappers..
 uint16_t WFGetFontHeight(int32_t FontNum);
-int16_t WFStringPixLength(STR16 string, int32_t UseFont);
+int16_t WFStringPixLength(wchar_t* string, int32_t UseFont);
 
 // Global variables for video objects
 extern int32_t gpLargeFontType1;

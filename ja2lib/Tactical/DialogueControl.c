@@ -185,7 +185,7 @@ void FaceOverlayClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void HandleTacticalTextUI(int32_t iFaceIndex, struct SOLDIERTYPE *pSoldier, wchar_t *zQuoteStr);
 void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, wchar_t *zQuoteStr);
 void HandleTacticalSpeechUI(uint8_t ubCharacterNum, int32_t iFaceIndex);
-void DisplayTextForExternalNPC(uint8_t ubCharacterNum, STR16 zQuoteStr);
+void DisplayTextForExternalNPC(uint8_t ubCharacterNum, wchar_t *zQuoteStr);
 void CreateTalkingUI(int8_t bUIHandlerID, int32_t iFaceIndex, uint8_t ubCharacterNum,
                      struct SOLDIERTYPE *pSoldier, wchar_t *zQuoteStr);
 
@@ -1603,7 +1603,7 @@ void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, wchar_t *zQuoteStr) {
 }
 
 // Handlers for tactical UI stuff
-void DisplayTextForExternalNPC(uint8_t ubCharacterNum, STR16 zQuoteStr) {
+void DisplayTextForExternalNPC(uint8_t ubCharacterNum, wchar_t *zQuoteStr) {
   wchar_t zText[QUOTE_MESSAGE_SIZE];
   int16_t sLeft;
 
@@ -1662,7 +1662,7 @@ void HandleTacticalTextUI(int32_t iFaceIndex, struct SOLDIERTYPE *pSoldier, wcha
 #endif
 }
 
-void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, STR16 pString) {
+void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, wchar_t *pString) {
   uint32_t uiDelay = FindDelayForString(pString);
 
   fDialogueBoxDueToLastMessage = TRUE;
@@ -1676,7 +1676,7 @@ void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, STR16 pString) {
   ExecuteTacticalTextBox(sLeftPosition, pString);
 }
 
-void ExecuteTacticalTextBox(int16_t sLeftPosition, STR16 pString) {
+void ExecuteTacticalTextBox(int16_t sLeftPosition, wchar_t *pString) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   // check if mouse region created, if so, do not recreate
@@ -2278,7 +2278,7 @@ void ShutDownLastQuoteTacticalTextBox(void) {
   }
 }
 
-uint32_t FindDelayForString(STR16 sString) { return (wcslen(sString) * TEXT_DELAY_MODIFIER); }
+uint32_t FindDelayForString(wchar_t *sString) { return (wcslen(sString) * TEXT_DELAY_MODIFIER); }
 
 void BeginLoggingForBleedMeToos(BOOLEAN fStart) { gubLogForMeTooBleeds = fStart; }
 

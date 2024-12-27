@@ -301,7 +301,7 @@ uint16_t WFGetFontHeight(int32_t FontNum) {
   }
 }
 
-int16_t WFStringPixLength(STR16 string, int32_t UseFont) {
+int16_t WFStringPixLength(wchar_t* string, int32_t UseFont) {
   if (USE_WINFONTS()) {
     // return how many Y pixels we used
     return (WinFontStringPixLength(string, GET_WINFONT()));

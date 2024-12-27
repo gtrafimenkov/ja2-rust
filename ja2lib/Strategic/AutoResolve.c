@@ -2760,7 +2760,7 @@ void HandleAutoResolveInput() {
 void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   int32_t cnt, cntStart;
   int32_t xp, yp;
-  STR16 pStr;
+  wchar_t *pStr;
   wchar_t str[20];
   uint8_t *pDestBuf, *pSrcBuf;
   uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;

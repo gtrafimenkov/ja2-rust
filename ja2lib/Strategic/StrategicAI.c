@@ -1466,7 +1466,7 @@ void MassFortifyTowns();
 void UpgradeAdminsToTroops();
 
 #ifdef JA2BETAVERSION
-void SAIReportError(STR16 wErrorString);
+void SAIReportError(wchar_t *wErrorString);
 #else
 #define SAIReportError(a)  // define it out
 #endif
@@ -1961,7 +1961,7 @@ void ValidatePlayersAreInOneGroupOnly() {
 #endif
 
 #ifdef JA2BETAVERSION
-void SAIReportError(STR16 wErrorString) {
+void SAIReportError(wchar_t *wErrorString) {
 // runtime static only, don't save
 #ifdef JA2TESTVERSION
   static BOOLEAN fReportedAlready = FALSE;

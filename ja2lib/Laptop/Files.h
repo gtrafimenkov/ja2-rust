@@ -23,7 +23,7 @@ struct files {
 };
 
 struct filestring {
-  STR16 pString;
+  wchar_t *pString;
   struct filestring *Next;
 };
 

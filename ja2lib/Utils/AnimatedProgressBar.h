@@ -11,7 +11,7 @@ typedef struct PROGRESSBAR {
   BOOLEAN fPanel;
   uint16_t usPanelLeft, usPanelTop, usPanelRight, usPanelBottom;
   uint16_t usColor, usLtColor, usDkColor;
-  STR16 swzTitle;
+  wchar_t* swzTitle;
   uint16_t usTitleFont;
   uint8_t ubTitleFontForeColor, ubTitleFontShadowColor;
   uint16_t usMsgFont;
@@ -43,7 +43,7 @@ void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
 // panel and vertically centered from the top of the panel, to the top of the progress bar.
-void SetProgressBarTitle(uint32_t ubID, STR16 pString, uint32_t usFont, uint8_t ubForeColor,
+void SetProgressBarTitle(uint32_t ubID, wchar_t* pString, uint32_t usFont, uint8_t ubForeColor,
                          uint8_t ubShadowColor);
 
 // Unless you set up the attributes, any text you pass to SetRelativeStartAndEndPercentage will
@@ -63,7 +63,7 @@ void RemoveProgressBar(uint8_t ubID);
 // you would go onto the next step, resetting the relative start and end percentage from 30 to
 // whatever, until your done.
 void SetRelativeStartAndEndPercentage(uint8_t ubID, uint32_t uiRelStartPerc, uint32_t uiRelEndPerc,
-                                      STR16 str);
+                                      wchar_t* str);
 
 // This part renders the progress bar at the percentage level that you specify.  If you have set
 // relative percentage values in the above function, then the uiPercentage will be reflected based

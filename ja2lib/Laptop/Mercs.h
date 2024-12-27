@@ -55,7 +55,7 @@ BOOLEAN DrawMecBackGround();
 BOOLEAN RemoveMercBackGround();
 void DailyUpdateOfMercSite(uint16_t usDate);
 uint8_t GetMercIDFromMERCArray(uint8_t ubMercID);
-void DisplayTextForSpeckVideoPopUp(STR16 pString);
+void DisplayTextForSpeckVideoPopUp(wchar_t* pString);
 
 BOOLEAN IsMercMercAvailable(uint8_t ubMercID);
 

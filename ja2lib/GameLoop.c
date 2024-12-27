@@ -40,7 +40,7 @@ uint32_t guiPreviousScreen = NO_PENDING_SCREEN;
 #define DONT_CHECK_FOR_FREE_SPACE 255
 uint8_t gubCheckForFreeSpaceOnHardDriveCount = DONT_CHECK_FOR_FREE_SPACE;
 
-extern BOOLEAN DoSkiMessageBox(uint8_t ubStyle, STR16 zString, uint32_t uiExitScreen,
+extern BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen,
                                uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback);
 extern void NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack(uint8_t bExitValue);
 extern BOOLEAN gfTacticalPlacementGUIActive;

@@ -409,7 +409,7 @@ uint16_t RenderMapScreenSectorInventoryHelpScreen();
 
 void GetHelpScreenTextPositions(uint16_t *pusPosX, uint16_t *pusPosY, uint16_t *pusWidth);
 void DisplayCurrentScreenTitleAndFooter();
-void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText);
+void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t *pText);
 uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY,
                                      uint16_t usWidth);
 void CreateHelpScreenButtons();
@@ -1378,7 +1378,7 @@ void ChangeToHelpScreenSubPage(int8_t bNewPage) {
   ChangeHelpScreenSubPage();
 }
 
-void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText) {
+void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t *pText) {
   int32_t iStartLoc = -1;
 
   iStartLoc = HELPSCREEN_RECORD_SIZE * uiRecordToGet;

@@ -396,8 +396,8 @@ typedef struct {
   int32_t iXPosition[NUM_INV_HELPTEXT_ENTRIES];
   int32_t iYPosition[NUM_INV_HELPTEXT_ENTRIES];
   int32_t iWidth[NUM_INV_HELPTEXT_ENTRIES];
-  STR16 sString1[NUM_INV_HELPTEXT_ENTRIES];
-  STR16 sString2[NUM_INV_HELPTEXT_ENTRIES];
+  wchar_t *sString1[NUM_INV_HELPTEXT_ENTRIES];
+  wchar_t *sString2[NUM_INV_HELPTEXT_ENTRIES];
 } INV_HELPTEXT;
 
 INV_DESC_STATS gWeaponStats[] = {
@@ -644,7 +644,7 @@ uint32_t guiBodyInvVO[4][2];
 uint32_t guiGoldKeyVO;
 int8_t gbCompatibleApplyItem = FALSE;
 
-BOOLEAN AttemptToAddSubstring(STR16 zDest, STR16 zTemp, uint32_t *puiStringLength,
+BOOLEAN AttemptToAddSubstring(wchar_t *zDest, wchar_t *zTemp, uint32_t *puiStringLength,
                               uint32_t uiPixLimit) {
   uint32_t uiRequiredStringLength, uiTempStringLength;
 

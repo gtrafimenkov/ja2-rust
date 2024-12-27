@@ -135,7 +135,7 @@ extern uint32_t guiNumWorldItems;
 // preprocess sector for mercs in it
 extern BOOLEAN fSectorsWithSoldiers[MAP_WORLD_X * MAP_WORLD_X][4];
 
-extern STR16 pTownNames[];
+extern wchar_t *pTownNames[];
 
 // update the loyalty rating of the passed town id
 void UpdateTownLoyaltyRating(TownID bTownId);

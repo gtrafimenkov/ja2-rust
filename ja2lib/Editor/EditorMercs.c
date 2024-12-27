@@ -148,7 +148,7 @@ void SetupTextInputForMercSchedule();
 void ExtractAndUpdateMercAttributes();
 void ExtractAndUpdateMercProfile();
 void ExtractAndUpdateMercSchedule();
-void CalcStringForValue(STR16 str, int bufSize, int32_t iValue, uint32_t uiMax);
+void CalcStringForValue(wchar_t *str, int bufSize, int32_t iValue, uint32_t uiMax);
 void ChangeBodyType(int8_t bOffset);  //+1 or -1 only
 
 // internal merc variables
@@ -1682,7 +1682,7 @@ void SetupTextInputForMercAttributes() {
 // In the merc editing, all detailed placement values for generated attributes are set to -1.
 // When making a generated attribute static, we then set the value to its applicable value.
 // This function is similar to the itoa function except that -1 is converted to a null string.
-void CalcStringForValue(STR16 str, int bufSize, int32_t iValue, uint32_t uiMax) {
+void CalcStringForValue(wchar_t *str, int bufSize, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
@@ -2993,7 +2993,7 @@ void RenderMercStrings() {
   struct SOLDIERTYPE *pSoldier;
   int16_t sXPos, sYPos;
   int16_t sX, sY;
-  STR16 pStr;
+  wchar_t *pStr;
   SOLDIERINITNODE *curr;
   wchar_t str[50];
 

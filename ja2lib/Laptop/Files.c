@@ -153,7 +153,7 @@ void CheckForUnreadFiles(void);
 
 // file string structure manipulations
 void ClearFileStringList(void);
-void AddStringToFilesList(STR16 pString);
+void AddStringToFilesList(wchar_t *pString);
 BOOLEAN HandleSpecialFiles(uint8_t ubFormat);
 BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char *sPictureName);
 
@@ -1081,7 +1081,7 @@ BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
   return (TRUE);
 }
 
-void AddStringToFilesList(STR16 pString) {
+void AddStringToFilesList(wchar_t *pString) {
   FileStringPtr pFileString;
   FileStringPtr pTempString = pFileStringList;
 
@@ -1089,7 +1089,7 @@ void AddStringToFilesList(STR16 pString) {
   pFileString = (FileString *)MemAlloc(sizeof(FileString));
 
   // alloc string and copy
-  pFileString->pString = (STR16)MemAlloc((wcslen(pString) * 2) + 2);
+  pFileString->pString = (wchar_t *)MemAlloc((wcslen(pString) * 2) + 2);
   wcscpy(pFileString->pString, pString);
   pFileString->pString[wcslen(pString)] = 0;
 
