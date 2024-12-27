@@ -423,10 +423,10 @@ void HandleOldBobbyRMailOrders();
 #ifdef JA2BETAVERSION
 void InitSaveGameFilePosition();
 void InitLoadGameFilePosition();
-void SaveGameFilePosition(int32_t iPos, STR pMsg);
-void LoadGameFilePosition(int32_t iPos, STR pMsg);
+void SaveGameFilePosition(int32_t iPos, char *pMsg);
+void LoadGameFilePosition(int32_t iPos, char *pMsg);
 
-void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveGameID);
+void InitShutDownMapTempFileTest(BOOLEAN fInit, char *pNameOfFile, uint8_t ubSaveGameID);
 #endif
 
 #ifdef JA2BETAVERSION
@@ -2496,7 +2496,7 @@ to File" ) ); return(FALSE);
 }
 */
 
-BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
+BOOLEAN SaveFilesToSavedGame(char *pSrcFileName, HWFILE hFile) {
   uint32_t uiFileSize;
   uint32_t uiNumBytesWritten = 0;
   HWFILE hSrcFile;
@@ -2555,7 +2555,7 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
+BOOLEAN LoadFilesFromSavedGame(char *pSrcFileName, HWFILE hFile) {
   uint32_t uiFileSize;
   uint32_t uiNumBytesWritten = 0;
   HWFILE hSrcFile;
@@ -3092,7 +3092,7 @@ BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, STR pzNewFileName) {
+void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, char *pzNewFileName) {
   // if we are creating the QuickSave file
   if (ubSaveGameID == 0) {
 #ifdef JA2BETAVERSION
@@ -3245,7 +3245,7 @@ void InitSaveGameFilePosition() {
   FileMan_Delete(zFileName);
 }
 
-void SaveGameFilePosition(int32_t iPos, STR pMsg) {
+void SaveGameFilePosition(int32_t iPos, char *pMsg) {
   HWFILE hFile;
   char zTempString[512];
   uint32_t uiNumBytesWritten;
@@ -3284,7 +3284,7 @@ void InitLoadGameFilePosition() {
 
   FileMan_Delete(zFileName);
 }
-void LoadGameFilePosition(int32_t iPos, STR pMsg) {
+void LoadGameFilePosition(int32_t iPos, char *pMsg) {
   HWFILE hFile;
   char zTempString[512];
   uint32_t uiNumBytesWritten;
@@ -3866,7 +3866,7 @@ BOOLEAN DoesUserHaveEnoughHardDriveSpace() {
 
 #ifdef JA2BETAVERSION
 
-void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveGameID) {
+void InitShutDownMapTempFileTest(BOOLEAN fInit, char *pNameOfFile, uint8_t ubSaveGameID) {
   char zFileName[128];
   HWFILE hFile;
   char zTempString[512];

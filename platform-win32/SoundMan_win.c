@@ -175,10 +175,10 @@ extern void Sound3DStopAll(void);
 // Local Function Prototypes
 BOOLEAN SoundInitCache(void);
 BOOLEAN SoundShutdownCache(void);
-uint32_t SoundLoadSample(STR pFilename);
-uint32_t SoundFreeSample(STR pFilename);
-uint32_t SoundGetCached(STR pFilename);
-uint32_t SoundLoadDisk(STR pFilename);
+uint32_t SoundLoadSample(char *pFilename);
+uint32_t SoundFreeSample(char *pFilename);
+uint32_t SoundGetCached(char *pFilename);
+uint32_t SoundLoadDisk(char *pFilename);
 
 // Low level
 uint32_t SoundGetEmptySample(void);
@@ -191,9 +191,9 @@ BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, char *cBuf);
 BOOLEAN SoundShutdownHardware(void);
 uint32_t SoundGetFreeChannel(void);
 uint32_t SoundStartSample(uint32_t uiSample, uint32_t uiChannel, SOUNDPARMS *pParms);
-uint32_t SoundStartStream(STR pFilename, uint32_t uiChannel, SOUNDPARMS *pParms);
+uint32_t SoundStartStream(char *pFilename, uint32_t uiChannel, SOUNDPARMS *pParms);
 uint32_t SoundGetUniqueID(void);
-BOOLEAN SoundPlayStreamed(STR pFilename);
+BOOLEAN SoundPlayStreamed(char *pFilename);
 BOOLEAN SoundCleanCache(void);
 BOOLEAN SoundSampleIsPlaying(uint32_t uiSample);
 BOOLEAN SoundIndexIsPlaying(uint32_t uiSound);
@@ -307,7 +307,7 @@ void ShutdownSoundManager(void) {
 //
 //*******************************************************************************
 
-uint32_t SoundPlay(STR pFilename, SOUNDPARMS *pParms) {
+uint32_t SoundPlay(char *pFilename, SOUNDPARMS *pParms) {
   uint32_t uiSample, uiChannel;
 
   if (fSoundSystemInit) {
@@ -350,7 +350,7 @@ uint32_t SoundPlay(STR pFilename, SOUNDPARMS *pParms) {
 //						If an error occured, SOUND_ERROR will be returned
 //
 //*******************************************************************************
-uint32_t SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
+uint32_t SoundPlayStreamedFile(char *pFilename, SOUNDPARMS *pParms) {
   uint32_t uiChannel;
   HANDLE hRealFileHandle;
   char pFileHandlefileName[128];
@@ -421,7 +421,7 @@ uint32_t SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
 //						SOUND_ERROR is returned.
 //
 //*******************************************************************************
-uint32_t SoundPlayRandom(STR pFilename, RANDOMPARMS *pParms) {
+uint32_t SoundPlayRandom(char *pFilename, RANDOMPARMS *pParms) {
   uint32_t uiSample, uiTicks;
 
   if (fSoundSystemInit) {
@@ -1011,7 +1011,7 @@ BOOLEAN SoundEmptyCache(void) {
 //	Returns: TRUE, always
 //
 //*******************************************************************************
-uint32_t SoundLoadSample(STR pFilename) {
+uint32_t SoundLoadSample(char *pFilename) {
   uint32_t uiSample = NO_SAMPLE;
 
   if ((uiSample = SoundGetCached(pFilename)) != NO_SAMPLE) return (uiSample);
@@ -1029,7 +1029,7 @@ uint32_t SoundLoadSample(STR pFilename) {
 //						in the cache.
 //
 //*******************************************************************************
-uint32_t SoundLockSample(STR pFilename) {
+uint32_t SoundLockSample(char *pFilename) {
   uint32_t uiSample;
 
   if ((uiSample = SoundGetCached(pFilename)) != NO_SAMPLE) {
@@ -1049,7 +1049,7 @@ uint32_t SoundLockSample(STR pFilename) {
 //						in the cache.
 //
 //*******************************************************************************
-uint32_t SoundUnlockSample(STR pFilename) {
+uint32_t SoundUnlockSample(char *pFilename) {
   uint32_t uiSample;
 
   if ((uiSample = SoundGetCached(pFilename)) != NO_SAMPLE) {
@@ -1069,7 +1069,7 @@ uint32_t SoundUnlockSample(STR pFilename) {
 //						in the cache.
 //
 //*******************************************************************************
-uint32_t SoundFreeSample(STR pFilename) {
+uint32_t SoundFreeSample(char *pFilename) {
   uint32_t uiSample;
 
   if ((uiSample = SoundGetCached(pFilename)) != NO_SAMPLE) {
@@ -1092,7 +1092,7 @@ uint32_t SoundFreeSample(STR pFilename) {
 //						in the cache.
 //
 //*******************************************************************************
-uint32_t SoundGetCached(STR pFilename) {
+uint32_t SoundGetCached(char *pFilename) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < SOUND_MAX_CACHED; uiCount++) {
@@ -1113,7 +1113,7 @@ uint32_t SoundGetCached(STR pFilename) {
 //						in the cache.
 //
 //*******************************************************************************
-uint32_t SoundLoadDisk(STR pFilename) {
+uint32_t SoundLoadDisk(char *pFilename) {
   HWFILE hFile;
   uint32_t uiSize, uiSample;
   BOOLEAN fRemoved = TRUE;
@@ -1603,7 +1603,7 @@ uint32_t SoundStartSample(uint32_t uiSample, uint32_t uiChannel, SOUNDPARMS *pPa
 //	Returns:	Unique sound ID if successful, SOUND_ERROR if not.
 //
 //*******************************************************************************
-uint32_t SoundStartStream(STR pFilename, uint32_t uiChannel, SOUNDPARMS *pParms) {
+uint32_t SoundStartStream(char *pFilename, uint32_t uiChannel, SOUNDPARMS *pParms) {
   uint32_t uiSoundID, uiSpeed;
   char AILString[200];
 
@@ -1695,7 +1695,7 @@ uint32_t SoundGetUniqueID(void) {
 //	Returns:	TRUE if it should be streamed, FALSE if loaded.
 //
 //*******************************************************************************
-BOOLEAN SoundPlayStreamed(STR pFilename) {
+BOOLEAN SoundPlayStreamed(char *pFilename) {
   HWFILE hDisk;
   uint32_t uiFilesize;
 

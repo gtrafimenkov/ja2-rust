@@ -236,7 +236,7 @@ FLOAT Distance2D(FLOAT dDeltaX, FLOAT dDeltaY) {
 // #define DEBUGLOS
 
 #if defined(JA2BETAVERSION) && defined(DEBUGLOS)
-void DebugLOS(STR szOutput) {
+void DebugLOS(char *szOutput) {
   FILE *DebugFile;
 
   if ((DebugFile = fopen("losdebug.txt", "a+t")) != NULL) {

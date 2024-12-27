@@ -293,11 +293,11 @@ void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel,
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 // // Wiz8 compatible debug messaging
 
-void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
+void _DebugMessage(char *pString, uint32_t uiLineNum, char *pSourceFile) {
   printf("%s [Line %d in %s]\n", pString, uiLineNum, pSourceFile);
 }
 
-// void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
+// void _DebugMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) {
 //   char ubOutputString[512];
 // #ifndef _NO_DEBUG_TXT
 //   FILE *DebugFile;
@@ -335,11 +335,11 @@ void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
 
 // extern struct VObject* FontObjs[25];
 
-void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
+void _FailMessage(char *pString, uint32_t uiLineNum, char *pSourceFile) {
   printf("Assertion Failure [Line %d in %s]\n", uiLineNum, pSourceFile);
 }
 
-// void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
+// void _FailMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) {
 //   MSG Message;
 //   char ubOutputString[512];
 // #ifndef _NO_DEBUG_TXT

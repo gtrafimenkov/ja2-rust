@@ -45,10 +45,10 @@ extern char *String(const char *String, ...);
 // pointer ); Assert( pointer, "This pointer is null and you tried to access it in function A ");
 // It'll make debugging a little simpler.  In anal cases, you could build the string first, then
 // assert with it.
-extern void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile);
+extern void _FailMessage(char *pString, uint32_t uiLineNum, char *pSourceFile);
 
-#define Assert(a) (a) ? _Null() : _FailMessage((STR8)NULL, __LINE__, (STR8)__FILE__)
-#define AssertMsg(a, b) (a) ? _Null() : _FailMessage((STR8)b, __LINE__, (STR8)__FILE__)
+#define Assert(a) (a) ? _Null() : _FailMessage((char *)NULL, __LINE__, (char *)__FILE__)
+#define AssertMsg(a, b) (a) ? _Null() : _FailMessage((char *)b, __LINE__, (char *)__FILE__)
 
 extern char gubAssertString[128];
 
@@ -80,13 +80,13 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 
 #define DbgMessage(a, b, c) \
   DbgMessageReal((uint16_t)(a), (uint8_t)(TOPIC_MESSAGE), (uint8_t)(b), (char *)(c))
-#define FastDebugMsg(a) _DebugMessage((STR8)(a), (uint32_t)(__LINE__), (STR8)(__FILE__))
+#define FastDebugMsg(a) _DebugMessage((char *)(a), (uint32_t)(__LINE__), (char *)(__FILE__))
 
 #define UnRegisterDebugTopic(a, b) \
   DbgTopicRegistration((uint8_t)TOPIC_UNREGISTER, (uint16_t *)(&(a)), (char *)(b))
 #define ClearAllDebugTopics() DbgClearAllTopics()
 
-#define ErrorMsg(a) _DebugMessage((STR8)(a), (uint32_t)(__LINE__), (STR8)(__FILE__))
+#define ErrorMsg(a) _DebugMessage((char *)(a), (uint32_t)(__LINE__), (char *)(__FILE__))
 
 // Enable the debug topic we want
 #define RegisterJA2DebugTopic(a, b) DbgTopicRegistration(TOPIC_REGISTER, &(a), (b))
@@ -102,7 +102,7 @@ extern void DbgFailedAssertion(BOOLEAN fExpression, char *szFile, int nLine);
 // );
 extern void DbgTopicRegistration(uint8_t ubCmd, uint16_t *usTopicID, char *zMessage);
 extern void DbgClearAllTopics(void);
-extern void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile);
+extern void _DebugMessage(char *pString, uint32_t uiLineNum, char *pSourceFile);
 
 //*******************************************************************************************
 

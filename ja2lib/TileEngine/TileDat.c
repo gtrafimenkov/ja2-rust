@@ -146,7 +146,7 @@ uint8_t gFullBaseTileValues[] =
 
 };
 
-STR gTileSurfaceName[NUMBEROFTILETYPES] = {
+char* gTileSurfaceName[NUMBEROFTILETYPES] = {
     "TEXTURE1", "TEXTURE2", "TEXTURE3", "TEXTURE4", "TEXTURE5", "TEXTURE6", "TEXTURE7", "WATER1",
     "DEEP WATER", "FIRSTCLIFFHANG", "FIRSTCLIFF", "FIRSTCLIFFSHADOW", "OSTRUCT1", "OSTRUCT2",
     "OSTRUCT3", "OSTRUCT4", "OSTRUCT5", "OSTRUCT6", "OSTRUCT7", "OSTRUCT8", "OFSTRUCT1",
@@ -331,7 +331,7 @@ uint8_t gTileTypeLogicalHeight[NUMBEROFTILETYPES] = {
     10   // Second water
 };
 
-void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT *TileElement,
+void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT* TileElement,
                                BOOLEAN fUseRaisedObjectType) {
   uint8_t ubLoop;
   int16_t sIndexDiff;

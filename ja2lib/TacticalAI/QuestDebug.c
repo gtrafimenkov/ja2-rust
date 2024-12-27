@@ -66,7 +66,7 @@ void ToggleQuestDebugModes(uint8_t ubType) {
     ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"%s Level %d", sType, ubLevel);
 }
 
-void QuestDebugFileMsg(uint8_t ubQuoteType, uint8_t ubPriority, STR pStringA, ...) {
+void QuestDebugFileMsg(uint8_t ubQuoteType, uint8_t ubPriority, char* pStringA, ...) {
   static BOOLEAN fFirstTimeIn = TRUE;
   static uint32_t uiLineNumber = 1;
   HWFILE hFile;

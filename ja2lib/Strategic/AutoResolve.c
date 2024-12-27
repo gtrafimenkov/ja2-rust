@@ -327,7 +327,7 @@ void PlayAutoResolveSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, u
   }
 }
 
-void PlayAutoResolveSampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+void PlayAutoResolveSampleFromFile(char *szFileName, uint32_t usRate, uint32_t ubVolume,
                                    uint32_t ubLoops, uint32_t uiPan) {
   if (gpAR->fSound) {
     PlayJA2SampleFromFile(szFileName, usRate, ubVolume, ubLoops, uiPan);

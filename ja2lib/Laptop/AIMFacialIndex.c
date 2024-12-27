@@ -65,7 +65,7 @@ BOOLEAN EnterAimFacialIndex() {
   VOBJECT_DESC VObjectDesc;
   uint8_t i;
   uint16_t usPosX, usPosY, x, y;
-  STR sFaceLoc = "FACES\\";
+  char *sFaceLoc = "FACES\\";
   char sTemp[100];
 
   // load the Portait graphic and add it

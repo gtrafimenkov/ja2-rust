@@ -188,18 +188,18 @@ void RenderButtonsFastHelp(void);
 BOOLEAN SetButtonSavedRect(int32_t iButton);
 void FreeButtonSavedRect(int32_t iButton);
 
-int16_t LoadGenericButtonIcon(STR8 filename);
+int16_t LoadGenericButtonIcon(char *filename);
 BOOLEAN UnloadGenericButtonIcon(int16_t GenImg);
-int32_t LoadButtonImage(STR8 filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
+int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
                         int32_t OnNormal, int32_t OnHilite);
 int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNormal,
                              int32_t OffHilite, int32_t OnNormal, int32_t OnHilite);
 int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t OffNormal,
                              int32_t OffHilite, int32_t OnNormal, int32_t OnHilite);
 void UnloadButtonImage(int32_t Index);
-int16_t LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteName,
-                                STR8 OnNormName, STR8 OnHiliteName, STR8 BkGrndName, int16_t Index,
-                                int16_t OffsetX, int16_t OffsetY);
+int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHiliteName,
+                                char *OnNormName, char *OnHiliteName, char *BkGrndName,
+                                int16_t Index, int16_t OffsetX, int16_t OffsetY);
 BOOLEAN UnloadGenericButtonImage(int16_t GenImg);
 
 BOOLEAN SetButtonDestBuffer(uint32_t DestBuffer);
@@ -237,14 +237,14 @@ int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Ty
 // button.  It also uses the default move callback which emulates Win95.  Finally, it sets the
 // priority to normal.  The function you choose also determines the type of button (toggle,
 // notoggle, or newtoggle)
-int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, STR8 filename, GUI_CALLBACK ClickCallback);
-int32_t CreateEasyToggleButton(int32_t x, int32_t y, STR8 filename, GUI_CALLBACK ClickCallback);
-int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, STR8 filename, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback);
 // Same as above, but accepts specify toggle type
-int32_t CreateEasyButton(int32_t x, int32_t y, STR8 filename, int32_t Type,
+int32_t CreateEasyButton(int32_t x, int32_t y, char *filename, int32_t Type,
                          GUI_CALLBACK ClickCallback);
 // Same as above, but accepts priority specification.
-int32_t CreateSimpleButton(int32_t x, int32_t y, STR8 filename, int32_t Type, int16_t Priority,
+int32_t CreateSimpleButton(int32_t x, int32_t y, char *filename, int32_t Type, int16_t Priority,
                            GUI_CALLBACK ClickCallback);
 
 int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Priority,

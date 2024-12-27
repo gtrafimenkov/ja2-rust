@@ -375,7 +375,7 @@ void SetInputFieldStringWith16BitString(uint8_t ubField, STR16 szNewText) {
   }
 }
 
-void SetInputFieldStringWith8BitString(char ubField, STR8 szNewText) {
+void SetInputFieldStringWith8BitString(char ubField, char *szNewText) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {

@@ -3,7 +3,7 @@
 
 #include "SGP/Types.h"
 
-BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, uint32_t uiSeekFrom,
+BOOLEAN LoadEncryptedDataFromFile(char* pFileName, STR16 pDestString, uint32_t uiSeekFrom,
                                   uint32_t uiSeekAmount);
 
 #endif

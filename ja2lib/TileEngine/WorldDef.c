@@ -1345,7 +1345,7 @@ void CompileWorldMovementCosts() {
 }
 
 // SAVING CODE
-BOOLEAN SaveWorld(STR8 puiFilename) {
+BOOLEAN SaveWorld(char *puiFilename) {
 #ifdef JA2EDITOR
   int32_t cnt;
   uint32_t uiSoldierSize;
@@ -2233,7 +2233,7 @@ BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel) {
 extern uint8_t GetCurrentSummaryVersion();
 extern void LoadShadeTablesFromTextFile();
 
-BOOLEAN LoadWorld(STR8 puiFilename) {
+BOOLEAN LoadWorld(char *puiFilename) {
   HWFILE hfile;
   FLOAT dMajorMapVersion;
   uint32_t uiFlags;

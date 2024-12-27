@@ -70,7 +70,7 @@ BOOLEAN LoadPCXFileToImage(HIMAGE hImage, uint16_t fContents) {
   return (TRUE);
 }
 
-PcxObject *LoadPcx(STR8 pFilename) {
+PcxObject *LoadPcx(char *pFilename) {
   PcxHeader Header;
   PcxObject *pCurrentPcxObject;
   HWFILE hFileHandle;

@@ -2315,7 +2315,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) {
   return (TRUE);
 }
 
-void FatalError(STR8 pError, ...) {
+void FatalError(char *pError, ...) {
   va_list argptr;
 
   va_start(argptr, pError);  // Set up variable argument pointer
@@ -5248,7 +5248,7 @@ int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, i
   char szFontName[32];
 
   sprintf(szFontName, "%S", gzFontName);
-  if (!strcmp(szFontName, (STR8)lpelfe->elfFullName)) {
+  if (!strcmp(szFontName, (char *)lpelfe->elfFullName)) {
     gfEnumSucceed = TRUE;
     memcpy(&gLogFont, &(lpelfe->elfLogFont), sizeof(LOGFONT));
   }

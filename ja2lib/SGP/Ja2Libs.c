@@ -6,8 +6,8 @@
 
 int8_t gbLocale = ENGLISH_LANG;
 
-STR8 LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
-                                 "polish",  "french",  "italian"};
+char* LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
+                                  "polish",  "french",  "italian"};
 
 #define _MAX_PATH 260
 

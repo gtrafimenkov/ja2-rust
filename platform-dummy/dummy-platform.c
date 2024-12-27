@@ -66,7 +66,7 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
+HWFILE FileMan_Open(char *strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
 
 void FileMan_Close(HWFILE hFile) {}
 
@@ -97,13 +97,13 @@ BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
 
-BOOLEAN Plat_ClearFileAttributes(STR strFilename) { return FALSE; }
+BOOLEAN Plat_ClearFileAttributes(char *strFilename) { return FALSE; }
 
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
 
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
 
-uint32_t FileMan_Size(STR strFilename) { return 0; }
+uint32_t FileMan_Size(char *strFilename) { return 0; }
 
 void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) { outputBuf[0] = 0; }
 
@@ -165,11 +165,11 @@ void CheckCustomizableTimer(void) {}
 // Sound
 /////////////////////////////////////////////////////////////////////////////////
 
-uint32_t SoundPlay(STR pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlay(char *pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
 
-uint32_t SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlayStreamedFile(char *pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
 
-uint32_t SoundPlayRandom(STR pFilename, RANDOMPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlayRandom(char *pFilename, RANDOMPARMS *pParms) { return (SOUND_ERROR); }
 
 BOOLEAN SoundIsPlaying(uint32_t uiSoundID) { return FALSE; }
 
@@ -191,11 +191,11 @@ BOOLEAN SoundServiceStreams(void) { return FALSE; }
 
 uint32_t SoundGetPosition(uint32_t uiSoundID) { return 0; }
 
-uint32_t SoundLoadSample(STR pFilename) { return (NO_SAMPLE); }
+uint32_t SoundLoadSample(char *pFilename) { return (NO_SAMPLE); }
 
-uint32_t SoundLockSample(STR pFilename) { return (NO_SAMPLE); }
+uint32_t SoundLockSample(char *pFilename) { return (NO_SAMPLE); }
 
-uint32_t SoundUnlockSample(STR pFilename) { return (NO_SAMPLE); }
+uint32_t SoundUnlockSample(char *pFilename) { return (NO_SAMPLE); }
 
 void SoundRemoveSampleFlags(uint32_t uiSample, uint32_t uiFlags) {}
 
@@ -239,7 +239,7 @@ void EndFrameBufferRender(void) {}
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
-void FatalError(STR8 pError, ...) {}
+void FatalError(char *pError, ...) {}
 
 uint32_t guiVSurfaceSize = 0;
 

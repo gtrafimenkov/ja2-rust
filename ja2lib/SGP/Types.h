@@ -18,8 +18,6 @@
 typedef float FLOAT;
 typedef double DOUBLE;
 // strings
-typedef char* STR;
-typedef char* STR8;
 typedef wchar_t* STR16;
 // flags (individual bits used)
 typedef unsigned char FLAGS8;

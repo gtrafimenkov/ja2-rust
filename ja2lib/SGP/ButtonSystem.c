@@ -165,7 +165,7 @@ int32_t FindFreeButtonSlot(void) {
 //
 //	Load images for use with QuickButtons.
 //
-int32_t LoadButtonImage(STR8 filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
+int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
                         int32_t OnNormal, int32_t OnHilite) {
   VOBJECT_DESC vo_desc;
   uint32_t UseSlot;
@@ -740,7 +740,7 @@ int16_t FindFreeIconSlot(void) {
 //
 //	Loads an image file for use as a button icon.
 //
-int16_t LoadGenericButtonIcon(STR8 filename) {
+int16_t LoadGenericButtonIcon(char *filename) {
   int16_t ImgSlot;
   VOBJECT_DESC vo_desc;
 
@@ -850,9 +850,9 @@ BOOLEAN UnloadGenericButtonImage(int16_t GenImg) {
 //
 //	Loads the image files required for displaying a generic button.
 //
-int16_t LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteName,
-                                STR8 OnNormName, STR8 OnHiliteName, STR8 BkGrndName, int16_t Index,
-                                int16_t OffsetX, int16_t OffsetY) {
+int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHiliteName,
+                                char *OnNormName, char *OnHiliteName, char *BkGrndName,
+                                int16_t Index, int16_t OffsetX, int16_t OffsetY) {
   int16_t ImgSlot;
   VOBJECT_DESC vo_desc;
   uint8_t Pix;
@@ -1783,26 +1783,27 @@ int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Ty
 // button.  It also uses the default move callback which emulates Win95.  Finally, it sets the
 // priority to normal.  The function you choose also determines the type of button (toggle,
 // notoggle, or newtoggle)
-int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, STR8 filename, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
-int32_t CreateEasyToggleButton(int32_t x, int32_t y, STR8 filename, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
-int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, STR8 filename, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, char *filename,
+                                  GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, BUTTON_NEWTOGGLE, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
 // Same as above, but accepts specify toggle type
-int32_t CreateEasyButton(int32_t x, int32_t y, STR8 filename, int32_t Type,
+int32_t CreateEasyButton(int32_t x, int32_t y, char *filename, int32_t Type,
                          GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, Type, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
 // Same as above, but accepts priority specification.
-int32_t CreateSimpleButton(int32_t x, int32_t y, STR8 filename, int32_t Type, int16_t Priority,
+int32_t CreateSimpleButton(int32_t x, int32_t y, char *filename, int32_t Type, int16_t Priority,
                            GUI_CALLBACK ClickCallback) {
   int32_t ButPic, ButNum;
 

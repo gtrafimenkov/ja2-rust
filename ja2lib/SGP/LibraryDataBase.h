@@ -40,7 +40,7 @@ typedef struct {
 } RealFileOpenStruct;
 
 typedef struct {
-  STR pFileName;
+  char *pFileName;
   uint32_t uiFileLength;
   uint32_t uiFileOffset;
 } FileHeaderStruct;
@@ -53,7 +53,7 @@ typedef struct {
 } FileOpenStruct;
 
 typedef struct {
-  STR sLibraryPath;
+  char *sLibraryPath;
   SYS_FILE_HANDLE hLibraryHandle;
   uint16_t usNumberOfEntries;
   BOOLEAN fLibraryOpen;
@@ -88,7 +88,7 @@ typedef struct {
 } RealFileHeaderStruct;
 
 typedef struct {
-  STR sManagerName;
+  char *sManagerName;
   LibraryHeaderStruct *pLibraries;
   uint16_t usNumberOfLibraries;
   BOOLEAN fInitialized;
@@ -122,12 +122,13 @@ extern DatabaseManagerHeaderStruct gFileDataBase;
 
 // Function Prototypes
 
-BOOLEAN CheckForLibraryExistence(STR pLibraryName);
-BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibheader, BOOLEAN fCanBeOnCDrom);
+BOOLEAN CheckForLibraryExistence(char *pLibraryName);
+BOOLEAN InitializeLibrary(char *pLibraryName, LibraryHeaderStruct *pLibheader,
+                          BOOLEAN fCanBeOnCDrom);
 
-BOOLEAN CheckIfFileExistInLibrary(STR pFileName);
-int16_t GetLibraryIDFromFileName(STR pFileName);
-HWFILE OpenFileFromLibrary(STR pName);
+BOOLEAN CheckIfFileExistInLibrary(char *pFileName);
+int16_t GetLibraryIDFromFileName(char *pFileName);
+HWFILE OpenFileFromLibrary(char *pName);
 HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile);
 BOOLEAN CloseLibraryFile(int16_t sLibraryID, uint32_t uiFileID);
 BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, int16_t *pLibraryID,

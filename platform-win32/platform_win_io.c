@@ -60,7 +60,7 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
 
 // Gets the free hard drive space from the drive letter passed in.  It has to be the root dir.  (
 // eg. c:\ )
-static uint32_t GetFreeSpaceOnHardDrive(STR pzDriveLetter);
+static uint32_t GetFreeSpaceOnHardDrive(char *pzDriveLetter);
 
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   STRING512 zExecDir;
@@ -83,7 +83,7 @@ uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   return (uiFreeSpace);
 }
 
-static uint32_t GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
+static uint32_t GetFreeSpaceOnHardDrive(char *pzDriveLetter) {
   DWORD uiBytesFree = 0;
   DWORD uiSectorsPerCluster = 0;
   DWORD uiBytesPerSector = 0;
@@ -202,7 +202,7 @@ static void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Str
 //
 // Parameter List :
 //
-//		STR	   -> filename
+//		char*	   -> filename
 //		UIN32		-> access - read or write, or both
 //		BOOLEAN	-> delete on close
 //
@@ -218,7 +218,7 @@ static void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Str
 //
 //**************************************************************************
 
-HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) {
+HWFILE FileMan_Open(char *strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) {
   HWFILE hFile;
   HANDLE hRealFile;
   DWORD dwAccess;
@@ -943,7 +943,7 @@ void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
   }
 }
 
-BOOLEAN Plat_ClearFileAttributes(STR strFilename) {
+BOOLEAN Plat_ClearFileAttributes(char *strFilename) {
   return SetFileAttributes(strFilename, FILE_ATTRIBUTE_NORMAL);
 }
 
@@ -1043,7 +1043,7 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) {
   return (TRUE);
 }
 
-uint32_t FileMan_Size(STR strFilename) {
+uint32_t FileMan_Size(char *strFilename) {
   HWFILE hFile;
   uint32_t uiSize;
 

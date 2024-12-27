@@ -1902,7 +1902,7 @@ STR16 pPersonnelCurrentTeamStatsStrings[] = {
 };
 
 STR16 pPersonnelTeamStatsStrings[] = {
-    L"HLTH", L"AGI", L"DEX", L"STR", L"LDR", L"WIS", L"LVL", L"MRKM", L"MECH", L"EXPL", L"MED",
+    L"HLTH", L"AGI", L"DEX", L"char*", L"LDR", L"WIS", L"LVL", L"MRKM", L"MECH", L"EXPL", L"MED",
 };
 
 // horizontal and vertical indices on the map screen

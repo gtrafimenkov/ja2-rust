@@ -29,7 +29,7 @@ struct VObject;
 
 // functions at the structure database level
 //
-struct STRUCTURE_FILE_REF *LoadStructureFile(STR szFileName);
+struct STRUCTURE_FILE_REF *LoadStructureFile(char *szFileName);
 void FreeAllStructureFiles(void);
 BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile);
 

@@ -111,7 +111,7 @@ void DeleteTileCache() {
   guiCurTileCacheSize = 0;
 }
 
-int16_t FindCacheStructDataIndex(STR8 cFilename) {
+int16_t FindCacheStructDataIndex(char *cFilename) {
   uint32_t cnt;
 
   for (cnt = 0; cnt < guiNumTileCacheStructs; cnt++) {
@@ -123,7 +123,7 @@ int16_t FindCacheStructDataIndex(STR8 cFilename) {
   return (-1);
 }
 
-int32_t GetCachedTile(STR8 cFilename) {
+int32_t GetCachedTile(char *cFilename) {
   uint32_t cnt;
   uint32_t ubLowestIndex = 0;
   int16_t sMostHits = (int16_t)15000;
@@ -253,7 +253,7 @@ struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(int32_t iIndex) {
   return (gpTileCacheStructInfo[gpTileCache[iIndex].sStructRefID].pStructureFileRef);
 }
 
-struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename) {
+struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(char *cFilename) {
   int16_t sStructDataIndex;
 
   // Given filename, look for index
@@ -298,10 +298,10 @@ void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIn
   }
 }
 
-void GetRootName(STR8 pDestStr, STR8 pSrcStr) {
+void GetRootName(char *pDestStr, char *pSrcStr) {
   // Remove path and extension
   char cTempFilename[120];
-  STR cEndOfName;
+  char *cEndOfName;
 
   // Remove path
   strcpy(cTempFilename, pSrcStr);

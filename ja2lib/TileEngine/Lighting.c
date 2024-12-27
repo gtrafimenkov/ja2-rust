@@ -109,7 +109,7 @@ int16_t LightMapLeft[MAX_LIGHT_TEMPLATES];
 int16_t LightMapTop[MAX_LIGHT_TEMPLATES];
 int16_t LightMapRight[MAX_LIGHT_TEMPLATES];
 int16_t LightMapBottom[MAX_LIGHT_TEMPLATES];
-STR pLightNames[MAX_LIGHT_TEMPLATES];
+char *pLightNames[MAX_LIGHT_TEMPLATES];
 
 // Sprite data
 LIGHT_SPRITE LightSprites[MAX_LIGHT_SPRITES];
@@ -1792,7 +1792,7 @@ int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius) {
   }
 
   sprintf(usName, "LTO%d.LHT", iRadius);
-  pLightNames[iLight] = (STR)MemAlloc(strlen(usName) + 1);
+  pLightNames[iLight] = (char *)MemAlloc(strlen(usName) + 1);
   strcpy(pLightNames[iLight], usName);
 
   return (iLight);
@@ -1815,7 +1815,7 @@ int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius
   }
 
   sprintf(usName, "LTS%d-%d.LHT", iRadius1, iRadius2);
-  pLightNames[iLight] = (STR)MemAlloc(strlen(usName) + 1);
+  pLightNames[iLight] = (char *)MemAlloc(strlen(usName) + 1);
   strcpy(pLightNames[iLight], usName);
 
   return (iLight);
@@ -1837,7 +1837,7 @@ int32_t LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRa
                             (int16_t)(iRadius2 * DISTANCE_SCALE));
 
   sprintf(usName, "LTE%d-%d.LHT", iRadius1, iRadius2);
-  pLightNames[iLight] = (STR)MemAlloc(strlen(usName) + 1);
+  pLightNames[iLight] = (char *)MemAlloc(strlen(usName) + 1);
   strcpy(pLightNames[iLight], usName);
 
   return (iLight);
@@ -2565,9 +2565,9 @@ BOOLEAN LightCalcRect(int32_t iLight) {
         filename forces the system to save the light with the internal filename (recommended).
 
 ***************************************************************************************/
-BOOLEAN LightSave(int32_t iLight, STR pFilename) {
+BOOLEAN LightSave(int32_t iLight, char *pFilename) {
   HWFILE hFile;
-  STR pName;
+  char *pName;
 
   if (pLightList[iLight] == NULL)
     return (FALSE);
@@ -2597,7 +2597,7 @@ BOOLEAN LightSave(int32_t iLight, STR pFilename) {
         if the file wasn't loaded.
 
 ***************************************************************************************/
-int32_t LightLoad(STR pFilename) {
+int32_t LightLoad(char *pFilename) {
   HWFILE hFile;
   int32_t iLight;
 
@@ -2625,7 +2625,7 @@ int32_t LightLoad(STR pFilename) {
 
       FileMan_Close(hFile);
 
-      pLightNames[iLight] = (STR)MemAlloc(strlen(pFilename) + 1);
+      pLightNames[iLight] = (char *)MemAlloc(strlen(pFilename) + 1);
       strcpy(pLightNames[iLight], pFilename);
     } else
       return (-1);
@@ -2641,7 +2641,7 @@ int32_t LightLoad(STR pFilename) {
 from disk. Returns the index of the template, or (-1) if it couldn't be loaded.
 
 ***************************************************************************************/
-int32_t LightLoadCachedTemplate(STR pFilename) {
+int32_t LightLoadCachedTemplate(char *pFilename) {
   int32_t iCount;
 
   for (iCount = 0; iCount < MAX_LIGHT_TEMPLATES; iCount++) {
@@ -2764,7 +2764,7 @@ int32_t LightSpriteGetFree(void) {
  * If this function fails (out of sprites, or bad template name) it returns (-1).
  *
  ********************************************************************************/
-int32_t LightSpriteCreate(STR pName, uint32_t uiLightType) {
+int32_t LightSpriteCreate(char *pName, uint32_t uiLightType) {
   int32_t iSprite;
 
   if ((iSprite = LightSpriteGetFree()) != (-1)) {

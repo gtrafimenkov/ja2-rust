@@ -478,7 +478,7 @@ uint32_t PlayJA2StreamingSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolu
   return (SoundPlayStreamedFile(szSoundEffects[usNum], &spParms));
 }
 
-uint32_t PlayJA2SampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+uint32_t PlayJA2SampleFromFile(char *szFileName, uint32_t usRate, uint32_t ubVolume,
                                uint32_t ubLoops, uint32_t uiPan) {
   // does the same thing as PlayJA2Sound, but one only has to pass the filename, not the index of
   // the sound array
@@ -496,7 +496,7 @@ uint32_t PlayJA2SampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolu
   return (SoundPlay(szFileName, &spParms));
 }
 
-uint32_t PlayJA2StreamingSampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+uint32_t PlayJA2StreamingSampleFromFile(char *szFileName, uint32_t usRate, uint32_t ubVolume,
                                         uint32_t ubLoops, uint32_t uiPan,
                                         SOUND_STOP_CALLBACK EndsCallback) {
   // does the same thing as PlayJA2Sound, but one only has to pass the filename, not the index of

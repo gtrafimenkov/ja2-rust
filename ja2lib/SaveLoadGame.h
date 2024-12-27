@@ -58,7 +58,7 @@ typedef struct {
 extern uint32_t guiScreenToGotoAfterLoadingSavedGame;
 extern uint32_t guiSaveGameVersion;
 
-void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, STR pzNewFileName);
+void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, char *pzNewFileName);
 
 BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize);
 BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
@@ -66,8 +66,8 @@ BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
 BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
                                          struct SOLDIERTYPE *pSourceInfo);
 
-BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile);
-BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile);
+BOOLEAN SaveFilesToSavedGame(char *pSrcFileName, HWFILE hFile);
+BOOLEAN LoadFilesFromSavedGame(char *pSrcFileName, HWFILE hFile);
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 

@@ -97,7 +97,7 @@ extern BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, int32_t x1, int32_t y1, in
                                  int32_t y2, BOOLEAN wrap);
 extern BOOLEAN SetFont(int32_t iFontIndex);
 
-extern int32_t LoadFontFile(STR8 pFileName);
+extern int32_t LoadFontFile(char *pFileName);
 extern uint16_t GetFontHeight(int32_t FontNum);
 extern BOOLEAN InitializeFontManager(uint16_t usDefaultPixDepth, FontTranslationTable *pTransTable);
 extern void ShutdownFontManager(void);

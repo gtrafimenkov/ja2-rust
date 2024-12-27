@@ -94,7 +94,7 @@ int8_t gbDiff[MAX_DIFF_PARMS][5] = {
 
 void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier);
 
-void DebugAI(STR szOutput) {
+void DebugAI(char *szOutput) {
 #ifdef JA2BETAVERSION
   // Send regular debug msg AND AI debug message
   FILE *DebugFile;

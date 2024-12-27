@@ -320,7 +320,7 @@ BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 
   if (iResult > 0) {
-    // STR GAIN (20) - Pried open a lock
+    // char* GAIN (20) - Pried open a lock
     StatChange(pSoldier, STRAMT, 20, FALSE);
 
     // succeeded! door can never be locked again, so remove from door list...
@@ -333,7 +333,7 @@ BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     return (TRUE);
   } else {
     if (iResult > -10) {
-      // STR GAIN - Damaged a lock by prying
+      // char* GAIN - Damaged a lock by prying
       StatChange(pSoldier, STRAMT, 5, FALSE);
 
       // we came close... so do some damage to the lock
@@ -389,7 +389,7 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
         (int8_t)(-(int8_t)(LockTable[pDoor->ubLockID].ubSmashDifficulty - pDoor->bLockDamage)));
   }
   if (iResult > 0) {
-    // STR GAIN (20) - Pried open a lock
+    // char* GAIN (20) - Pried open a lock
     StatChange(pSoldier, STRAMT, 20, FALSE);
 
     // succeeded! door can never be locked again, so remove from door list...
@@ -403,7 +403,7 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     return (TRUE);
   } else {
     if (iResult > -10) {
-      // STR GAIN - Damaged a lock by prying
+      // char* GAIN - Damaged a lock by prying
       StatChange(pSoldier, STRAMT, 5, FALSE);
 
       // we came close... so do some damage to the lock

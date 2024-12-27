@@ -63,7 +63,7 @@ enum {
 int32_t giCarPortraits[4] = {-1, -1, -1, -1};
 
 // the car portrait file names
-STR pbCarPortraitFileNames[] = {
+char *pbCarPortraitFileNames[] = {
     "INTERFACE\\eldorado.sti",
     "INTERFACE\\Hummer.sti",
     "INTERFACE\\ice Cream Truck.sti",

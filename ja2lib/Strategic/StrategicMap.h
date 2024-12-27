@@ -72,7 +72,7 @@ void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bu
 // equivalent)
 void GetLoadedSectorString(STR16 pString, size_t bufSize);
 
-void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, STR8 bString,
+void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, char *bString,
                     BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter);
 
 // Called from within tactical.....

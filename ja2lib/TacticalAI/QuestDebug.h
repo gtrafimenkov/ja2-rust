@@ -19,6 +19,6 @@ enum {
 };
 
 void ToggleQuestDebugModes(uint8_t ubType);
-void QuestDebugFileMsg(uint8_t ubQuoteType, uint8_t ubPriority, STR pStringA, ...);
+void QuestDebugFileMsg(uint8_t ubQuoteType, uint8_t ubPriority, char* pStringA, ...);
 
 #endif

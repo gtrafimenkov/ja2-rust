@@ -1417,7 +1417,7 @@ void BtnNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
 BOOLEAN DisplayMercsFace() {
   struct VObject *hFaceHandle;
   struct VObject *hPortraitHandle;
-  STR sFaceLoc = "FACES\\BIGFACES\\";
+  char *sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
   VOBJECT_DESC VObjectDesc;
   struct SOLDIERTYPE *pSoldier = NULL;

@@ -41,7 +41,7 @@ HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
   HIMAGE hImage = NULL;
   SGPFILENAME Extension;
   char ExtensionSep[] = ".";
-  STR StrPtr;
+  char *StrPtr;
   uint32_t iFileLoader;
   SGPFILENAME imageFileCopy;
 

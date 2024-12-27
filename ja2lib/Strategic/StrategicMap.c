@@ -238,11 +238,11 @@ int16_t DirYIncrementer[8] = {
     -1   // NW
 };
 
-STR8 pVertStrings[] = {
+char *pVertStrings[] = {
     "X", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
 };
 
-STR8 pHortStrings[] = {
+char *pHortStrings[] = {
     "X", "1",  "2",  "3",  "4",  "5",  "6",  "7",  "8",
     "9", "10", "11", "12", "13", "14", "15", "16", "17",
 };
@@ -601,7 +601,7 @@ void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bu
   swprintf(sString, bufSize, L"%hs%hs", pVertStrings[sMapY], pHortStrings[sMapX]);
 }
 
-void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, STR8 bString,
+void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, char *bString,
                     BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter) {
   char bTestString[150];
   char bExtensionString[15];

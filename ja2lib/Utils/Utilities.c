@@ -16,7 +16,7 @@
 #include "Tactical/SoldierControl.h"
 #include "Utils/FontControl.h"
 
-void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
+void FilenameForBPP(char *pFilename, char *pDestination) { strcpy(pDestination, pFilename); }
 
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   HWFILE hFileHandle;

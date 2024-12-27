@@ -117,7 +117,7 @@ void RemoveTextInputField(uint8_t ubField);
 // clicking or scrolling with the arrows, or even using alpha chars to jump to the appropriate
 // filename.
 void SetInputFieldStringWith16BitString(uint8_t ubField, STR16 szNewText);
-void SetInputFieldStringWith8BitString(char ubField, STR8 szNewText);
+void SetInputFieldStringWith8BitString(char ubField, char* szNewText);
 
 // Allows external functions to access the strings within the fields at anytime.
 void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize);
@@ -171,7 +171,7 @@ void SetCursorColor(uint16_t usCursorColor);
 //	}
 //}
 // It is only necessary for event loops that contain text input fields.
-BOOLEAN HandleTextInput(InputAtom *Event);
+BOOLEAN HandleTextInput(InputAtom* Event);
 
 // Required in your screen loop to update the values, as well as blinking the cursor.
 void RenderActiveTextField();

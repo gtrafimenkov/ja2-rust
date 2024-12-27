@@ -385,7 +385,7 @@ enum AmbientDefines {
   NUM_AMBIENTS
 };
 
-typedef void (*SOUND_STOP_CALLBACK)(void *pData);
+typedef void (*SOUND_STOP_CALLBACK)(void* pData);
 
 extern uint8_t AmbientVols[NUM_AMBIENTS];
 
@@ -398,9 +398,9 @@ uint32_t PlayJA2Sample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint3
 uint32_t PlayJA2StreamingSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
                                 uint32_t ubLoops, uint32_t uiPan);
 
-uint32_t PlayJA2SampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+uint32_t PlayJA2SampleFromFile(char* szFileName, uint32_t usRate, uint32_t ubVolume,
                                uint32_t ubLoops, uint32_t uiPan);
-uint32_t PlayJA2StreamingSampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+uint32_t PlayJA2StreamingSampleFromFile(char* szFileName, uint32_t usRate, uint32_t ubVolume,
                                         uint32_t ubLoops, uint32_t uiPan,
                                         SOUND_STOP_CALLBACK EndsCallback);
 
@@ -433,7 +433,7 @@ void PlayDelayedJA2Sample(uint32_t uiDelay, uint32_t usNum, uint32_t usRate, uin
 
 #define POSITION_SOUND_FROM_SOLDIER 0x00000001
 
-int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay);
+int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void* uiData, uint32_t iSoundToPlay);
 void DeletePositionSnd(int32_t iPositionSndIndex);
 void SetPositionSndsActive();
 void SetPositionSndsInActive();

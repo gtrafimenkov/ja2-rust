@@ -152,7 +152,7 @@ int16_t ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, int16_t *psGridNo, in
 int16_t ClosestPC(struct SOLDIERTYPE *pSoldier, int16_t *psDistance);
 BOOLEAN CanAutoBandage(BOOLEAN fDoFullCheck);
 
-void DebugAI(STR szOutput);
+void DebugAI(char *szOutput);
 int8_t DecideAction(struct SOLDIERTYPE *pSoldier);
 int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier);
 int8_t DecideActionEscort(struct SOLDIERTYPE *pSoldier);
@@ -230,11 +230,11 @@ int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, int16_t sGridno);
 BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, int8_t bNewDirection);
 #ifdef DEBUGDECISIONS
 extern char tempstr[256];
-void AIPopMessage(STR str);
+void AIPopMessage(char *str);
 
-void AINumMessage(const STR str, int32_t num);
+void AINumMessage(const char *str, int32_t num);
 
-void AINameMessage(struct SOLDIERTYPE *pSoldier, const STR str, int32_t num);
+void AINameMessage(struct SOLDIERTYPE *pSoldier, const char *str, int32_t num);
 
 #endif
 

@@ -3061,7 +3061,7 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
   FileMan_Close(hFile);
 }
 
-void NpcRecordLogging(uint8_t ubApproach, STR pStringA, ...) {
+void NpcRecordLogging(uint8_t ubApproach, char *pStringA, ...) {
   HWFILE hFile;
   uint32_t uiByteWritten;
   va_list argptr;

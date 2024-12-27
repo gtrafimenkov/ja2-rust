@@ -227,7 +227,7 @@ BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadStructureData(STR szFileName, struct STRUCTURE_FILE_REF *pFileRef,
+BOOLEAN LoadStructureData(char *szFileName, struct STRUCTURE_FILE_REF *pFileRef,
                           uint32_t *puiStructureDataSize)
 // uint8_t **ppubStructureData, uint32_t * puiDataSize, STRUCTURE_FILE_HEADER * pHeader )
 {  // Loads a structure file's data as a honking chunk o' memory
@@ -387,8 +387,8 @@ BOOLEAN CreateFileStructureArrays(
 }
 
 struct STRUCTURE_FILE_REF *LoadStructureFile(
-    STR szFileName) {  // NB should be passed in expected number
-                       // of structures so we can check equality
+    char *szFileName) {  // NB should be passed in expected number
+                         // of structures so we can check equality
   uint32_t uiDataSize = 0;
   BOOLEAN fOk;
   struct STRUCTURE_FILE_REF *pFileRef;

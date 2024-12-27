@@ -43,14 +43,14 @@ MercPopUpBox *GetPopUpBoxIndex(int32_t iId);
 // MercTextBox.h
 
 // filenames for border popup .sti's
-STR8 zMercBorderPopupFilenames[] = {
+char *zMercBorderPopupFilenames[] = {
     "INTERFACE\\TactPopUp.sti",     "INTERFACE\\TactRedPopUp.sti", "INTERFACE\\TactBluePopUp.sti",
     "INTERFACE\\TactPopUpMain.sti", "INTERFACE\\LaptopPopup.sti",
 
 };
 
 // filenames for background popup .pcx's
-STR8 zMercBackgroundPopupFilenames[] = {
+char *zMercBackgroundPopupFilenames[] = {
     "INTERFACE\\TactPopupBackground.pcx",     "INTERFACE\\TactPopupWhiteBackground.pcx",
     "INTERFACE\\TactPopupGreyBackground.pcx", "INTERFACE\\TactPopupBackgroundMain.pcx",
     "INTERFACE\\LaptopPopupBackground.pcx",   "INTERFACE\\imp_popup_background.pcx",

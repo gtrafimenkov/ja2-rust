@@ -129,7 +129,7 @@ void RenderFilesBackGround(void);
 BOOLEAN LoadFiles(void);
 void RemoveFiles(void);
 uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
-                                     STR8 pFirstPicFile, STR8 pSecondPicFile, BOOLEAN fRead);
+                                     char *pFirstPicFile, char *pSecondPicFile, BOOLEAN fRead);
 void OpenAndReadFilesFile(void);
 BOOLEAN OpenAndWriteFilesFile(void);
 void ClearFilesList(void);
@@ -155,7 +155,7 @@ void CheckForUnreadFiles(void);
 void ClearFileStringList(void);
 void AddStringToFilesList(STR16 pString);
 BOOLEAN HandleSpecialFiles(uint8_t ubFormat);
-BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, STR sPictureName);
+BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char *sPictureName);
 
 // callbacks
 void FilesBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
@@ -169,8 +169,8 @@ FileRecordWidthPtr CreateWidthRecordsForTerroristFile(void);
 FileRecordWidthPtr CreateRecordWidth(int32_t iRecordNumber, int32_t iRecordWidth,
                                      int32_t iRecordHeightAdjustment, uint8_t ubFlags);
 
-uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, STR8 pFirstPicFile,
-                              STR8 pSecondPicFile) {
+uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
+                              char *pFirstPicFile, char *pSecondPicFile) {
   // adds Files item to player's log(Files List), returns unique id number of it
   // outside of the Files system(the code in this .c file), this is the only function you'll ever
   // need
@@ -350,7 +350,7 @@ void RemoveFiles(void) {
 }
 
 uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
-                                     STR8 pFirstPicFile, STR8 pSecondPicFile, BOOLEAN fRead) {
+                                     char *pFirstPicFile, char *pSecondPicFile, BOOLEAN fRead) {
   uint32_t uiId = 0;
   FilesUnitPtr pFiles = pFilesListHead;
 
@@ -411,7 +411,7 @@ uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ub
   // first file
   if (pFirstPicFile) {
     if ((pFirstPicFile[0]) != 0) {
-      pFiles->pPicFileNameList[0] = (STR8)MemAlloc(strlen(pFirstPicFile) + 1);
+      pFiles->pPicFileNameList[0] = (char *)MemAlloc(strlen(pFirstPicFile) + 1);
       strcpy(pFiles->pPicFileNameList[0], pFirstPicFile);
       pFiles->pPicFileNameList[0][strlen(pFirstPicFile)] = 0;
     }
@@ -421,7 +421,7 @@ uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ub
 
   if (pSecondPicFile) {
     if ((pSecondPicFile[0]) != 0) {
-      pFiles->pPicFileNameList[1] = (STR8)MemAlloc(strlen(pSecondPicFile) + 1);
+      pFiles->pPicFileNameList[1] = (char *)MemAlloc(strlen(pSecondPicFile) + 1);
       strcpy(pFiles->pPicFileNameList[1], pSecondPicFile);
       pFiles->pPicFileNameList[1][strlen(pSecondPicFile)] = 0;
     }
@@ -1400,7 +1400,7 @@ void CheckForUnreadFiles(void) {
   }
 }
 
-BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, STR sPictureName) {
+BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char *sPictureName) {
   int32_t iCounter = 0;
   wchar_t sString[2048];
   FileStringPtr pTempString = NULL;

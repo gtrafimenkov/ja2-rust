@@ -25,8 +25,8 @@ typedef struct {
   uint32_t uiPan;
   uint32_t uiLoop;
   uint32_t uiPriority;
-  void (*EOSCallback)(void *);
-  void *pCallbackData;
+  void (*EOSCallback)(void*);
+  void* pCallbackData;
 } SOUNDPARMS;
 
 // Structure definition for parameters to the random sample playing
@@ -45,19 +45,19 @@ extern BOOLEAN InitializeSoundManager(void);
 extern void ShutdownSoundManager(void);
 
 // Configuration functions
-extern void *SoundGetDriverHandle(void);
+extern void* SoundGetDriverHandle(void);
 
 // Cache control functions
-extern uint32_t SoundLoadSample(STR pFilename);
-extern uint32_t SoundFreeSample(STR pFilename);
-extern uint32_t SoundLockSample(STR pFilename);
-extern uint32_t SoundUnlockSample(STR pFilename);
+extern uint32_t SoundLoadSample(char* pFilename);
+extern uint32_t SoundFreeSample(char* pFilename);
+extern uint32_t SoundLockSample(char* pFilename);
+extern uint32_t SoundUnlockSample(char* pFilename);
 
 // Play/service sample functions
-extern uint32_t SoundPlay(STR pFilename, SOUNDPARMS *pParms);
-extern uint32_t SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms);
+extern uint32_t SoundPlay(char* pFilename, SOUNDPARMS* pParms);
+extern uint32_t SoundPlayStreamedFile(char* pFilename, SOUNDPARMS* pParms);
 
-extern uint32_t SoundPlayRandom(STR pFilename, RANDOMPARMS *pParms);
+extern uint32_t SoundPlayRandom(char* pFilename, RANDOMPARMS* pParms);
 extern BOOLEAN SoundServiceStreams(void);
 
 // Sound instance manipulation functions

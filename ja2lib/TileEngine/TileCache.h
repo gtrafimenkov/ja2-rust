@@ -30,17 +30,17 @@ extern TILE_CACHE_ELEMENT *gpTileCache;
 BOOLEAN InitTileCache();
 void DeleteTileCache();
 
-int32_t GetCachedTile(STR cFilename);
+int32_t GetCachedTile(char *cFilename);
 BOOLEAN RemoveCachedTile(int32_t iCachedTile);
 
-struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename);
+struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(char *cFilename);
 
 struct VObject *GetCachedTileVideoObject(int32_t iIndex);
 struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(int32_t iIndex);
 void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, int16_t sGridNo, uint16_t usIndex,
                                        uint16_t usSubIndex);
 void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIndex);
-void GetRootName(STR8 pDestStr, STR8 pSrcStr);
+void GetRootName(char *pDestStr, char *pSrcStr);
 
 // OF COURSE, FOR SPEED, WE EXPORT OUR ARRAY
 // ACCESS FUNCTIONS IN RENDERER IS NOT TOO NICE

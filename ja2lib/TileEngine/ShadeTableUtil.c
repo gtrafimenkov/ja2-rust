@@ -115,7 +115,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   int32_t i;
   uint32_t uiNumBytesRead;
   char ShadeFileName[100];
-  STR8 ptr;
+  char* ptr;
   // ASSUMPTIONS:
   // We are assuming that the uiTileTypeIndex is referring to the correct file
   // stored in the TileSurfaceFilenames[].  If it isn't, then that is a huge problem
@@ -155,7 +155,7 @@ BOOLEAN SaveShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   int32_t i;
   uint32_t uiNumBytesWritten;
   char ShadeFileName[100];
-  STR8 ptr;
+  char* ptr;
 #ifdef JA2TESTVERSION
   uiNumTablesSaved++;
 #endif

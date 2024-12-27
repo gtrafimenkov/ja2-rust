@@ -90,7 +90,7 @@ void ConvertRGBDistribution555To565(uint16_t *p16BPPData, uint32_t uiNumberOfPix
 }
 
 void WriteSTIFile(uint8_t *pData, struct SGPPaletteEntry *pPalette, int16_t sWidth, int16_t sHeight,
-                  STR cOutputName, uint32_t fFlags, uint32_t uiAppDataSize) {
+                  char *cOutputName, uint32_t fFlags, uint32_t uiAppDataSize) {
   FILE *pOutput;
 
   uint32_t uiOriginalSize;

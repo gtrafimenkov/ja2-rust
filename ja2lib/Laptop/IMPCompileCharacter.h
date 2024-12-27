@@ -21,6 +21,6 @@ void ResetSkillsAttributesAndPersonality(void);
 void ResetIncrementCharacterAttributes(void);
 void HandleMercStatsForChangesInFace(void);
 
-extern STR8 pPlayerSelectedFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS];
-extern STR8 pPlayerSelectedBigFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS];
+extern char* pPlayerSelectedFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS];
+extern char* pPlayerSelectedBigFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS];
 #endif

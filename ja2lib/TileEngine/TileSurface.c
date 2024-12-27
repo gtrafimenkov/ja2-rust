@@ -32,7 +32,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   struct VObject *hVObject;
   HIMAGE hImage;
   SGPFILENAME cStructureFilename;
-  STR cEndOfName;
+  char *cEndOfName;
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   BOOLEAN fOk;
 

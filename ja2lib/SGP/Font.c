@@ -283,7 +283,7 @@ int32_t FindFreeFont(void) {
 //  This function returns (-1) if it fails, and debug msgs for a reason.
 //  Otherwise the font number is returned.
 //*****************************************************************************
-int32_t LoadFontFile(STR8 filename) {
+int32_t LoadFontFile(char *filename) {
   VOBJECT_DESC vo_desc;
   uint32_t LoadIndex;
 
@@ -1491,7 +1491,7 @@ FontTranslationTable *CreateEnglishTransTable() {
 //
 //*****************************************************************************
 
-/*FontBase *LoadFontFile(STR8 pFilename)
+/*FontBase *LoadFontFile(char* pFilename)
 {
   HWFILE           hFileHandle;
   uint32_t           uiFileSize;

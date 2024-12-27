@@ -17,7 +17,7 @@ struct files {
   uint32_t uiIdNumber;  // unique id number
   uint32_t uiDate;      // time in the world in global time (resolution, minutes)
   BOOLEAN fRead;
-  STR8 pPicFileNameList[2];
+  char *pPicFileNameList[2];
 
   struct files *Next;  // next unit in the list
 };
@@ -65,8 +65,8 @@ struct filerecordwidth {
 
 typedef struct filerecordwidth FileRecordWidth;
 typedef struct filerecordwidth *FileRecordWidthPtr;
-uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, STR8 pFirstPicFile,
-                              STR8 pSecondPicFile);
+uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
+                              char *pFirstPicFile, char *pSecondPicFile);
 
 // add a file about this terrorist
 BOOLEAN AddFileAboutTerrorist(int32_t iProfileId);

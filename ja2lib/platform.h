@@ -49,7 +49,7 @@ BOOLEAN Plat_CreateDirectory(const char *pcDirectory);
 BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive);
 BOOLEAN Plat_EraseDirectory(const char *pcDirectory);
 
-BOOLEAN Plat_ClearFileAttributes(STR filename);
+BOOLEAN Plat_ClearFileAttributes(char *filename);
 
 // Check if file (or directory) exists.
 BOOLEAN Plat_FileEntityExists(const char *path);

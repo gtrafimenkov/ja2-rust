@@ -31,7 +31,7 @@ typedef struct {
 } PcxObject;
 
 BOOLEAN LoadPCXFileToImage(HIMAGE hImage, uint16_t fContents);
-PcxObject *LoadPcx(STR8 pFilename);
+PcxObject *LoadPcx(char *pFilename);
 BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
                         uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp);
 

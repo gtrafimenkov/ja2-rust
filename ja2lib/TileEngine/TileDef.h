@@ -131,7 +131,7 @@ extern uint16_t gTileDatabaseSize;
 extern uint8_t gFullBaseTileValues[];
 extern uint16_t gNumTilesPerType[NUMBEROFTILETYPES];
 extern uint16_t gTileTypeStartIndex[NUMBEROFTILETYPES];
-extern STR gTileSurfaceName[NUMBEROFTILETYPES];
+extern char *gTileSurfaceName[NUMBEROFTILETYPES];
 extern uint8_t gTileTypeLogicalHeight[NUMBEROFTILETYPES];
 
 extern uint16_t gusNumAnimatedTiles;
