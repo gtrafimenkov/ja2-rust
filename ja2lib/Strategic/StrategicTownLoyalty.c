@@ -655,7 +655,8 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t 
   return;
 }
 
-void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubChance) {
+void RemoveRandomItemsInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
+                               uint8_t ubChance) {
   // remove random items in sector
   uint32_t uiNumberOfItems = 0, iCounter = 0;
   WORLDITEM *pItemList;
@@ -965,7 +966,7 @@ int32_t IsTownUnderCompleteControlByEnemy(TownID bTownId) {
   return (FALSE);
 }
 
-void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHowMany) {
+void AdjustLoyaltyForCivsEatenByMonsters(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubHowMany) {
   TownID bTownId = 0;
   uint32_t uiLoyaltyChange = 0;
   wchar_t str[256];
@@ -1007,7 +1008,8 @@ void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease) {
   }
 }
 // this applies the change to every town differently, depending on the distance from the event
-void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+void HandleGlobalLoyaltyEvent(uint8_t ubEventType, uint8_t sSectorX, uint8_t sSectorY,
+                              int8_t bSectorZ) {
   int32_t iLoyaltyChange;
   TownID bTownId = 0;
 
@@ -1078,7 +1080,7 @@ void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int
   AffectAllTownsLoyaltyByDistanceFrom(iLoyaltyChange, sSectorX, sSectorY, bSectorZ);
 }
 
-void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, u8 sSectorX, u8 sSectorY,
+void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, uint8_t sSectorX, uint8_t sSectorY,
                                          int8_t bSectorZ) {
   int16_t sEventSector;
   uint8_t ubTempGroupId;
@@ -1171,7 +1173,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, u8 sSectorX, u8
 }
 
 // to be called whenever player gains control of a sector in any way
-void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY) {
+void CheckIfEntireTownHasBeenLiberated(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY) {
   // the whole town is under our control, check if we never libed this town before
   if (!gTownLoyalty[bTownId].fLiberatedAlready && IsTownUnderCompleteControlByPlayer(bTownId)) {
     if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0)) {
@@ -1199,7 +1201,7 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY)
   }
 }
 
-void CheckIfEntireTownHasBeenLost(TownID bTownId, u8 sSectorX, u8 sSectorY) {
+void CheckIfEntireTownHasBeenLost(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY) {
   // NOTE:  only towns which allow you to train militia are important enough to get
   // reported here (and they're the only ones you can protect)
   if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0) &&
@@ -1319,7 +1321,7 @@ uint32_t EnemyStrength(void) {
 // Function assumes that mercs have retreated already.  Handles two cases, one for general merc
 // retreat which slightly demoralizes the mercs, the other handles abandonment of militia forces
 // which poses as a serious loyalty penalty.
-void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, u8 sSectorX, u8 sSectorY,
+void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, uint8_t sSectorX, uint8_t sSectorY,
                                             int16_t sSectorZ) {
   if (CountAllMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
     HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (int8_t)sSectorZ);

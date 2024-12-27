@@ -10,24 +10,24 @@ struct SOLDIERTYPE;
 // Valid indeces are [0..TOTAL_SOLDIERS).
 struct SOLDIERTYPE *GetSoldierByID(int index);
 
-u8 GetSolID(const struct SOLDIERTYPE *s);
-u8 GetSolProfile(const struct SOLDIERTYPE *s);
+uint8_t GetSolID(const struct SOLDIERTYPE *s);
+uint8_t GetSolProfile(const struct SOLDIERTYPE *s);
 
-u8 GetSolSectorX(const struct SOLDIERTYPE *s);
-u8 GetSolSectorY(const struct SOLDIERTYPE *s);
-i8 GetSolSectorZ(const struct SOLDIERTYPE *s);
+uint8_t GetSolSectorX(const struct SOLDIERTYPE *s);
+uint8_t GetSolSectorY(const struct SOLDIERTYPE *s);
+int8_t GetSolSectorZ(const struct SOLDIERTYPE *s);
 SectorID8 GetSolSectorID8(const struct SOLDIERTYPE *s);
 SectorID16 GetSolSectorID16(const struct SOLDIERTYPE *s);
 
-i8 GetSolAssignment(const struct SOLDIERTYPE *s);
-u8 GetSolClass(const struct SOLDIERTYPE *s);
+int8_t GetSolAssignment(const struct SOLDIERTYPE *s);
+uint8_t GetSolClass(const struct SOLDIERTYPE *s);
 
 bool IsSolActive(const struct SOLDIERTYPE *s);
 bool IsSolAlive(const struct SOLDIERTYPE *s);
 bool IsSolInSector(const struct SOLDIERTYPE *s);
 
-u8 GetSolMilitiaKills(const struct SOLDIERTYPE *s);
-void SetSolMilitiaKills(struct SOLDIERTYPE *s, u8 kills);
+uint8_t GetSolMilitiaKills(const struct SOLDIERTYPE *s);
+void SetSolMilitiaKills(struct SOLDIERTYPE *s, uint8_t kills);
 
 void SetSolAssignmentDone(struct SOLDIERTYPE *s);
 

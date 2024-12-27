@@ -28,8 +28,9 @@ BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) {
 }
 
 BOOLEAN Plat_DeleteFile(const char *filename) { return DeleteFile(filename); }
-u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
+uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
+BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
+                      uint32_t *readBytes) {
   return ReadFile(handle, buffer, bytesToRead, (LPDWORD)readBytes, NULL);
 }
 void Plat_CloseFile(SYS_FILE_HANDLE handle) { CloseHandle(handle); }
@@ -40,7 +41,7 @@ BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) {
 
 // Change file pointer.
 // In case of an error returns 0xFFFFFFFF
-u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
+uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekType) {
   DWORD moveMethod;
   switch (seekType) {
     case FILE_SEEK_FROM_START:
@@ -401,7 +402,7 @@ extern uint32_t uiTotalFileReadCalls;
 BOOLEAN FileMan_Read(HWFILE hFile, void *pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
   HANDLE hRealFile;
   DWORD dwNumBytesToRead;
-  u32 dwNumBytesRead;
+  uint32_t dwNumBytesRead;
   BOOLEAN fRet = FALSE;
   int16_t sLibraryID;
   uint32_t uiFileNum;
@@ -1078,7 +1079,7 @@ HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
 }
 
 // Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
+void Plat_FileBaseName(const char *path, char *outputBuf, uint32_t bufSize) {
   char sName[_MAX_FNAME];
   char sPath[_MAX_DIR];
   char sDrive[_MAX_DRIVE];

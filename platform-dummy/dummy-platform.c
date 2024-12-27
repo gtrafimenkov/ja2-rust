@@ -14,7 +14,7 @@
 
 char gzCommandLine[100];
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) { return FALSE; }
+BOOLEAN Plat_GetExecutableDirectory(char *buf, uint16_t bufSize) { return FALSE; }
 
 void DebugPrint(const char *message) {}
 
@@ -22,7 +22,7 @@ int strcasecmp(const char *s1, const char *s2) { return 0; }
 
 int strncasecmp(const char *s1, const char *s2, size_t n) { return 0; }
 
-extern u32 Plat_GetTickCount() { return 0; }
+extern uint32_t Plat_GetTickCount() { return 0; }
 
 uint32_t GetClock(void) { return 0; }
 
@@ -38,9 +38,10 @@ BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_DeleteFile(const char *filename) { return FALSE; }
 
-u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
+uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
 
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
+BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
+                      uint32_t *readBytes) {
   return FALSE;
 }
 
@@ -48,7 +49,7 @@ void Plat_CloseFile(SYS_FILE_HANDLE handle) {}
 
 BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) { return FALSE; }
 
-u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) { return 0; }
+uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekType) { return 0; }
 
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 
@@ -105,7 +106,7 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { retur
 
 uint32_t FileMan_Size(char *strFilename) { return 0; }
 
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) { outputBuf[0] = 0; }
+void Plat_FileBaseName(const char *path, char *outputBuf, uint32_t bufSize) { outputBuf[0] = 0; }
 
 BOOLEAN Plat_FileEntityExists(const char *path) { return FALSE; }
 

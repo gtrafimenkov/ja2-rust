@@ -40,7 +40,7 @@ BOOLEAN ModifyWindowStatus(uint32_t uiMapIndex);
 
 void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap) { gfApplyChangesToTempFile = fAddToMap; }
 
-BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
+BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, uint8_t sSectorX, uint8_t sSectorY,
                                            int8_t bSectorZ) {
   char zMapName[128];
   HWFILE hFile;
@@ -486,7 +486,8 @@ void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
   gpWorldLevelData[pMap->usGridNo].ubSmellInfo = (uint8_t)pMap->usSubImageIndex;
 }
 
-BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                  int8_t bSectorZ) {
   char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;
@@ -734,8 +735,8 @@ void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex,
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSectorX, u8 sSectorY,
-                              uint8_t ubSectorZ) {
+void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, uint8_t sSectorX,
+                              uint8_t sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
 
   if (!gfApplyChangesToTempFile) {
@@ -760,8 +761,8 @@ void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSector
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, u8 sSectorX, u8 sSectorY,
-                                  uint8_t ubSectorZ) {
+BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
+                                  uint8_t sSectorY, uint8_t ubSectorZ) {
   char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;

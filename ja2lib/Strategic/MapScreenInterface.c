@@ -1954,8 +1954,8 @@ void GoToPrevCharacterInList(void) {
   }
 }
 
-void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, int16_t sQuoteNumber,
-                      BOOLEAN fForceMapscreen) {
+void HandleMinerEvent(uint8_t bMinerNumber, uint8_t sSectorX, uint8_t sSectorY,
+                      int16_t sQuoteNumber, BOOLEAN fForceMapscreen) {
   BOOLEAN fFromMapscreen = FALSE;
 
   if (IsMapScreen_2()) {
@@ -2652,7 +2652,7 @@ BOOLEAN IsAnythingSelectedForMoving(void) {
   return (FALSE);
 }
 
-void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   static BOOLEAN fCreated = FALSE;
 
   // not allowed for underground movement!
@@ -2679,7 +2679,7 @@ void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   }
 }
 
-void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+void SetUpMovingListsForSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -3500,7 +3500,8 @@ BOOLEAN AllOtherSoldiersInListAreSelected(void) {
   return (FALSE);
 }
 
-BOOLEAN IsThisSquadInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ, int8_t bSquadValue) {
+BOOLEAN IsThisSquadInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
+                                int8_t bSquadValue) {
   int16_t sX = 0, sY = 0;
   int8_t bZ = 0;
 
@@ -4418,7 +4419,7 @@ void HandleDisplayOfExitToTacticalMessageForFirstEntryToMapScreen(void) {
   return;
 }
 
-BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY,
+BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(uint8_t sSectorX, uint8_t sSectorY,
                                                            int8_t bSectorZ, BOOLEAN fContested) {
   wchar_t sString[128], sStringA[64], sStringB[256], sStringC[64];
   int32_t iValue = 0;
@@ -4500,7 +4501,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSect
   return (TRUE);
 }
 
-void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+void NotifyPlayerOfInvasionByEnemyForces(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback) {
   int16_t sSector = 0;
   TownID bTownId = 0;
@@ -5108,7 +5109,7 @@ void TurnOffSectorLocator() {
   MarkForRedrawalStrategicMap();
 }
 
-void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, int16_t sSectorZ,
+void HandleBlitOfSectorLocatorIcon(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
                                    uint8_t ubLocatorID) {
   static uint8_t ubFrame = 0;
   uint8_t ubBaseFrame = 0;

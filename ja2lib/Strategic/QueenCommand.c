@@ -96,7 +96,7 @@ void ValidateEnemiesHaveWeapons() {
 }
 
 // Counts enemies and crepitus, but not bloodcats.
-uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+uint8_t NumHostilesInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   uint8_t ubNumHostiles = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -133,7 +133,7 @@ uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   return ubNumHostiles;
 }
 
-uint8_t NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+uint8_t NumEnemiesInAnySector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   uint8_t ubNumEnemies = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -168,7 +168,7 @@ uint8_t NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   return ubNumEnemies;
 }
 
-uint8_t NumEnemiesInSector(u8 sSectorX, u8 sSectorY) {
+uint8_t NumEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY) {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
   uint8_t ubNumTroops;
@@ -188,7 +188,7 @@ uint8_t NumEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   return ubNumTroops;
 }
 
-uint8_t NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY) {
+uint8_t NumStationaryEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY) {
   SECTORINFO *pSector;
   Assert(sSectorX >= 1 && sSectorX <= 16);
   Assert(sSectorY >= 1 && sSectorY <= 16);
@@ -208,7 +208,7 @@ uint8_t NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   return (uint8_t)(pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites);
 }
 
-uint8_t NumMobileEnemiesInSector(u8 sSectorX, u8 sSectorY) {
+uint8_t NumMobileEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY) {
   struct GROUP *pGroup;
   SECTORINFO *pSector;
   uint8_t ubNumTroops;
@@ -234,7 +234,7 @@ uint8_t NumMobileEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   return ubNumTroops;
 }
 
-void GetNumberOfMobileEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
+void GetNumberOfMobileEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY, uint8_t *pubNumAdmins,
                                       uint8_t *pubNumTroops, uint8_t *pubNumElites) {
   struct GROUP *pGroup;
   SECTORINFO *pSector;
@@ -263,7 +263,7 @@ void GetNumberOfMobileEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumA
   }
 }
 
-void GetNumberOfStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
+void GetNumberOfStationaryEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY, uint8_t *pubNumAdmins,
                                           uint8_t *pubNumTroops, uint8_t *pubNumElites) {
   SECTORINFO *pSector;
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -276,7 +276,7 @@ void GetNumberOfStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pub
   *pubNumElites = pSector->ubNumElites;
 }
 
-void GetNumberOfEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
+void GetNumberOfEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY, uint8_t *pubNumAdmins,
                                 uint8_t *pubNumTroops, uint8_t *pubNumElites) {
   uint8_t ubNumAdmins, ubNumTroops, ubNumElites;
 

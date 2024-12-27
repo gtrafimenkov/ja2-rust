@@ -2836,7 +2836,7 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN DoesSAMExistHere(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16_t sGridNo) {
+BOOLEAN DoesSAMExistHere(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ, int16_t sGridNo) {
   int32_t cnt;
   int16_t sSectorNo;
 
@@ -2860,8 +2860,8 @@ BOOLEAN DoesSAMExistHere(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16_t sGr
   return (FALSE);
 }
 
-void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16_t sGridNo,
-                               uint8_t ubDamage) {
+void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
+                               int16_t sGridNo, uint8_t ubDamage) {
   int16_t sSectorNo;
 
   // OK, First check if SAM exists, and if not, return
@@ -2884,7 +2884,7 @@ void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16
   // ATE: GRAPHICS UPDATE WILL GET DONE VIA NORMAL EXPLOSION CODE.....
 }
 
-void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   int32_t cnt;
   int16_t sSectorNo;
   BOOLEAN fInSector = FALSE;

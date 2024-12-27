@@ -405,8 +405,8 @@ void GoToPrevCharacterInList(void);
 void GoToNextCharacterInList(void);
 
 // this does the whole miner giving player info speil
-void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, int16_t sQuoteNumber,
-                      BOOLEAN fForceMapscreen);
+void HandleMinerEvent(uint8_t bMinerNumber, uint8_t sSectorX, uint8_t sSectorY,
+                      int16_t sQuoteNumber, BOOLEAN fForceMapscreen);
 
 // set up the event of animating a mine sector
 void SetUpAnimationOfMineSectors(int32_t iEvent);
@@ -436,7 +436,8 @@ extern uint8_t gubBlitSectorLocatorCode;
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };
 
 extern uint32_t guiSectorLocatorGraphicID;
-void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubLocatorID);
+void HandleBlitOfSectorLocatorIcon(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
+                                   uint8_t ubLocatorID);
 
 // the tactical version
 
@@ -469,8 +470,8 @@ void DeselectVehicleForMovement(int32_t iVehicleId);
 void AddVehicleToMovingLists(int32_t iVehicleId);
 void AddSquadToMovingLists(int32_t iSquadNumber);
 void AddSoldierToMovingLists(struct SOLDIERTYPE *pSoldier);
-void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
-void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
+void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ);
+void SetUpMovingListsForSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ);
 void ReBuildMoveBox(void);
 BOOLEAN IsCharacterSelectedForAssignment(int16_t sCharNumber);
 BOOLEAN IsCharacterSelectedForSleep(int16_t sCharNumber);
@@ -513,11 +514,11 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo(void);
 // void HandlePlayerEnteringMapScreenBeforeGoingToTactical( void );
 
 // handle sector being taken over uncontested
-BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY,
+BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(uint8_t sSectorX, uint8_t sSectorY,
                                                            int8_t bSectorZ, BOOLEAN fContested);
 
 // handle notifying player of invasion by enemy
-void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+void NotifyPlayerOfInvasionByEnemyForces(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback);
 
 void ShutDownUserDefineHelpTextRegions(void);

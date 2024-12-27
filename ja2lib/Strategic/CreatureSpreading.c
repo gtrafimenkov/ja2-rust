@@ -1267,7 +1267,8 @@ void CreatureNightPlanning() {  // Check the populations of the mine exits, and 
   }
 }
 
-void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+void CheckConditionsForTriggeringCreatureQuest(uint8_t sSectorX, uint8_t sSectorY,
+                                               int8_t bSectorZ) {
   uint8_t ubValidMines = 0;
   if (!gGameOptions.fSciFi) return;  // No scifi, no creatures...
   if (giLairID) return;              // Creature quest already begun

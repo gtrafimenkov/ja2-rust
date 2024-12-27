@@ -2728,7 +2728,7 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+void HandleVictoryInNPCSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   // handle special cases of victory in certain sector
   int16_t sSector = 0;
 
@@ -2836,7 +2836,7 @@ BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord) {
   }
 }
 
-int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+int8_t FindCivQuoteFileIndex(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
   uint8_t ubLoop;
 
   if (sSectorZ > 0) {
@@ -2851,7 +2851,8 @@ int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   return (-1);
 }
 
-int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, BOOLEAN fSetAsUsed) {
+int8_t ConsiderCivilianQuotes(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
+                              BOOLEAN fSetAsUsed) {
   int8_t bLoop, bCivQuoteSectorIndex;
   NPCQuoteInfo *pCivQuoteInfoArray;
 

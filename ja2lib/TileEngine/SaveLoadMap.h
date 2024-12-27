@@ -56,7 +56,7 @@ typedef struct {
 // Call this function, to set whether the map changes will be added to the  map temp file
 void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap);
 
-BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
+BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, uint8_t sSectorX, uint8_t sSectorY,
                                            int8_t bSectorZ);
 
 // Applies a change TO THE MAP TEMP file
@@ -75,7 +75,8 @@ void AddRemoveObjectToMapTempFile(uint32_t uiMapIndex, uint16_t usIndex);
 
 void SaveBloodSmellAndRevealedStatesFromMapToTempFile();
 
-BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                  int8_t bSectorZ);
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile();
 
@@ -89,13 +90,13 @@ void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16
                                     int16_t sSectorY, uint8_t ubSectorZ);
 
 // Adds the exit grid to
-void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSectorX, u8 sSectorY,
-                              uint8_t ubSectorZ);
+void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, uint8_t sSectorX,
+                              uint8_t sSectorY, uint8_t ubSectorZ);
 
 // This function removes a struct with the same MapIndex and graphic index from the given sectors
 // temp file
-BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, u8 sSectorX, u8 sSectorY,
-                                  uint8_t ubSectorZ);
+BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
+                                  uint8_t sSectorY, uint8_t ubSectorZ);
 
 void SetOpenableStructStatusFromMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened);
 void AddOpenableStructStatusToMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened);

@@ -18,7 +18,7 @@ BOOLEAN PrepareCreaturesForBattle();
 void CreatureNightPlanning();
 void CreatureAttackTown(uint8_t ubSectorID, BOOLEAN fOverrideTest);
 
-void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void CheckConditionsForTriggeringCreatureQuest(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 void ForceCreaturesToAvoidMineTemporarily(uint8_t ubMineIndex);
 

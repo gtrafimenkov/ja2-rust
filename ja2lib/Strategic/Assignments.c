@@ -405,7 +405,7 @@ BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(struct SOLDIERTYPE *pSoldier);
 
 // robot replated stuff
-BOOLEAN IsRobotInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN IsRobotInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 struct SOLDIERTYPE *GetRobotSoldier(void);
 uint8_t RepairRobot(struct SOLDIERTYPE *pRobot, uint8_t ubRepairPts,
                     BOOLEAN *pfNothingLeftToRepair);
@@ -8083,7 +8083,7 @@ BOOLEAN CanCharacterRepairVehicle(struct SOLDIERTYPE *pSoldier, int32_t iVehicle
   return (TRUE);
 }
 
-BOOLEAN IsRobotInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN IsRobotInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetRobotSoldier();
@@ -8511,7 +8511,7 @@ with any less that this
         return( TRUE );
 }
 
-BOOLEAN IsTheSAMSiteInSectorRepairable( u8 sSectorX, u8 sSectorY, int16_t sSectorZ )
+BOOLEAN IsTheSAMSiteInSectorRepairable( uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ )
 {
         int32_t iCounter = 0;
         int8_t bSAMCondition;
@@ -8917,7 +8917,7 @@ BOOLEAN PutMercInAwakeState(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN IsThereASoldierInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN IsThereASoldierInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   if (fSectorsWithSoldiers[GetSectorID16(sSectorX, sSectorY)][bSectorZ] == TRUE) {
     return (TRUE);
   }

@@ -473,7 +473,7 @@ void UpdateTemperature(uint8_t ubTemperatureCode) {
   gfDoLighting = TRUE;
 }
 
-int8_t SectorTemperature(uint32_t uiTime, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+int8_t SectorTemperature(uint32_t uiTime, uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   if (bSectorZ > 0) {
     // cool underground
     return (0);

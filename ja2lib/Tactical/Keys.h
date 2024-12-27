@@ -180,7 +180,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor);
 void UpdateDoorPerceivedValue(DOOR *pDoor);
 
 // Saves the Door Table array to the temp file
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 // Load the door table from the temp file
 BOOLEAN LoadDoorTableFromDoorTableTempFile();
@@ -201,7 +201,8 @@ BOOLEAN IsDoorOpen(int16_t sGridNo);
 BOOLEAN IsDoorPerceivedOpen(int16_t sGridNo);
 
 // Saves the Door Status array to the MapTempfile
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                int8_t bSectorZ);
 
 // Load the door status from the door status temp file
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile();

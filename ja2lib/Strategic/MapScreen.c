@@ -906,7 +906,7 @@ void CancelChangeArrivalSectorMode();
 
 void MakeMapModesSuitableForDestPlotting(int8_t bCharNumber);
 
-BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN AnyMovableCharsInOrBetweenThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 void SwapCharactersInList(int32_t iCharA, int32_t iCharB);
 
@@ -9906,7 +9906,7 @@ void MakeMapModesSuitableForDestPlotting(int8_t bCharNumber) {
   }
 }
 
-BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN AnyMovableCharsInOrBetweenThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   int32_t iFirstId = 0, iLastId = 0;
   int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;

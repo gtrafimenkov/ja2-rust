@@ -160,7 +160,7 @@ void BuildSectorsWithSoldiersList(void);
 void InitSectorsWithSoldiersList(void);
 
 // is there a soldier in this sector?..only use after BuildSectorsWithSoldiersList is called
-BOOLEAN IsThereASoldierInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN IsThereASoldierInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 void CheckIfSoldierUnassigned(struct SOLDIERTYPE *pSoldier);
 

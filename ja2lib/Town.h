@@ -24,8 +24,8 @@ typedef enum {
 
 #define FIRST_TOWN OMERTA
 
-i8 GetTownIdForSector(i16 sMapX, i16 sMapY);
-i8 GetTownIdForStrategicMapIndex(i32 index);
+int8_t GetTownIdForSector(int16_t sMapX, int16_t sMapY);
+int8_t GetTownIdForStrategicMapIndex(int32_t index);
 
 // Mapping townID -> sectorID
 struct TownSector {
@@ -91,9 +91,9 @@ void BuildListOfTownSectors();
 #define LOYALTY_PENALTY_INACTIVE (10 * GAIN_PTS_PER_LOYALTY_PT)
 
 // increment the town loyalty rating (hundredths!)
-void IncrementTownLoyalty(TownID bTownId, u32 uiLoyaltyIncrease);
+void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease);
 
 // decrement the town loyalty rating (hundredths!)
-void DecrementTownLoyalty(TownID bTownId, u32 uiLoyaltyDecrease);
+void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease);
 
 #endif

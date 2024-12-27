@@ -2308,7 +2308,7 @@ uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
 }
 
 // grab the distance from the palace
-uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY) {
+uint8_t GetPythDistanceFromPalace(uint8_t sSectorX, uint8_t sSectorY) {
   uint8_t ubDistance = 0;
   int16_t sRows = 0, sCols = 0;
   float fValue = 0.0;

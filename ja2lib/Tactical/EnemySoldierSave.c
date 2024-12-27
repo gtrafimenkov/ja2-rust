@@ -35,9 +35,9 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
 BOOLEAN gfRestoringEnemySoldiersFromTempFile = FALSE;
 BOOLEAN gfRestoringCiviliansFromTempFile = FALSE;
 
-void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void RemoveCivilianTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
-void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+void RemoveEnemySoldierTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   char zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
@@ -54,7 +54,7 @@ void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   }
 }
 
-void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+void RemoveCivilianTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   // char		zTempName[ 128 ];
   char zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS)) {
@@ -382,7 +382,7 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+BOOLEAN SaveEnemySoldiersToTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
                                     uint8_t ubFirstIdTeam, uint8_t ubLastIdTeam,
                                     BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
@@ -1317,8 +1317,9 @@ FAIL_LOAD:
 
 // If we are saving a game and we are in the sector, we will need to preserve the links between the
 // soldiers and the soldier init list.  Otherwise, the temp file will be deleted.
-BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
-                                                 BOOLEAN fEnemy, BOOLEAN fValidateOnly) {
+BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                 int8_t bSectorZ, BOOLEAN fEnemy,
+                                                 BOOLEAN fValidateOnly) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
   int32_t i;

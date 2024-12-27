@@ -238,17 +238,17 @@ void HandleHelicopterOnGroundSkyriderProfile(void);
 
 BOOLEAN IsHelicopterOnGroundAtRefuelingSite(uint8_t ubRefuelingSite);
 
-BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 // will a sam site under the players control shoot down an airraid?
-// BOOLEAN WillAirRaidBeStopped( u8 sSectorX, u8 sSectorY );
+// BOOLEAN WillAirRaidBeStopped( uint8_t sSectorX, uint8_t sSectorY );
 
 // is the helicopter capable of taking off for the player?
 BOOLEAN CanHelicopterTakeOff(void);
 
 void InitializeHelicopter(void);
 
-BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN IsSkyriderIsFlyingInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup);
 

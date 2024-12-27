@@ -62,7 +62,8 @@ BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(int16_t sMapX, int16_t sMapY, in
                                                 uint32_t *pNumberOfData);
 
 // Call this function to set the new sector a NPC will travel to
-void ChangeNpcToDifferentSector(uint8_t ubNpcId, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void ChangeNpcToDifferentSector(uint8_t ubNpcId, uint8_t sSectorX, uint8_t sSectorY,
+                                int8_t bSectorZ);
 
 // Adds a rotting corpse definition to the end of a sectors rotting corpse temp file
 BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
@@ -86,7 +87,7 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(int16_t sMapX, int16_t sMapY, uint8_t bMa
 
 BOOLEAN GetSectorFlagStatus(int16_t sMapX, int16_t sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
 BOOLEAN SetSectorFlag(int16_t sMapX, int16_t sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
-BOOLEAN ReSetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
+BOOLEAN ReSetUnderGroundSectorFlag(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubSectorZ,
                                    uint32_t uiFlagToSet);
 BOOLEAN ReSetSectorFlag(int16_t sMapX, int16_t sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
 
@@ -111,7 +112,7 @@ BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWr
 // If hacker's mess with our save/temp files, this is our final line of defence.
 void InitExitGameDialogBecauseFileHackDetected();
 
-void HandleAllReachAbleItemsInTheSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void HandleAllReachAbleItemsInTheSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 void GetMapTempFileName(uint32_t uiType, char *pMapName, int16_t sMapX, int16_t sMapY,
                         int8_t bMapZ);

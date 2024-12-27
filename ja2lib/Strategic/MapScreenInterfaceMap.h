@@ -65,7 +65,7 @@ void DisplayThePotentialPathForHelicopter(int16_t sMapX, int16_t sMapY);
 uint32_t ClearPathAfterThisSectorForHelicopter(int16_t sX, int16_t sY);
 
 // check to see if sector is highlightable
-BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN IsTheCursorAllowedToHighLightThisSector(uint8_t sSectorX, uint8_t sSectorY);
 
 // set bad sectors list
 void SetUpBadSectorsList(void);
@@ -112,7 +112,7 @@ BOOLEAN DrawMilitiaPopUpBox(void);
 
 // Returns true if the player knows how many enemies are in the sector if that number is greater
 // than 0. Returns false for all other cases.
-uint32_t WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY);
+uint32_t WhatPlayerKnowsAboutEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 // There is a special case flag used when players encounter enemies in a sector, then retreat.  The
 // number of enemies will display on mapscreen until time is compressed.  When time is compressed,

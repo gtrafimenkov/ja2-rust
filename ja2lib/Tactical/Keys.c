@@ -805,7 +805,7 @@ void UpdateDoorPerceivedValue(DOOR *pDoor) {
   }
 }
 
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   uint32_t uiNumBytesWritten;
   uint32_t uiSizeToSave = 0;
   char zMapName[128];
@@ -1543,7 +1543,8 @@ BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen) {
   }
 }
 
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                int8_t bSectorZ) {
   char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;

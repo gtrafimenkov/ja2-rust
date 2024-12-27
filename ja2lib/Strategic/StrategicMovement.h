@@ -191,12 +191,12 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup);
 void CalculateNextMoveIntention(struct GROUP *pGroup);
 
 // set current sector of the group..used for player controlled mercs
-void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubGroupID);
+void SetGroupSectorValue(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ, uint8_t ubGroupID);
 
 void SetEnemyGroupSector(struct GROUP *pGroup, uint8_t ubSectorID);
 
 // set groups next sector x,y value..used ONLY for teleporting groups
-void SetGroupNextSectorValue(u8 sSectorX, u8 sSectorY, uint8_t ubGroupID);
+void SetGroupNextSectorValue(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubGroupID);
 
 // calculate the eta time in world total mins of this group
 int32_t CalculateTravelTimeOfGroup(struct GROUP *pGroup);

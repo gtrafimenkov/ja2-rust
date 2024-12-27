@@ -75,7 +75,8 @@ void TurnOffPrimeLights();
 extern BOOLEAN gfCaves;
 extern BOOLEAN gfBasement;
 
-extern int8_t SectorTemperature(uint32_t uiTime, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+extern int8_t SectorTemperature(uint32_t uiTime, uint8_t sSectorX, uint8_t sSectorY,
+                                int8_t bSectorZ);
 
 extern void UpdateTemperature(uint8_t ubTemperatureCode);
 

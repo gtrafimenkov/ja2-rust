@@ -2094,7 +2094,7 @@ void SayQuoteFromAnyBodyInSector(uint16_t usQuoteNum) {
   }
 }
 
-void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+void SayQuoteFromAnyBodyInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
                                      uint16_t usQuoteNum) {
   uint8_t ubMercsInSector[20] = {0};
   uint8_t ubNumMercs = 0;

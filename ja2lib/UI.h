@@ -24,7 +24,7 @@ void SwitchMapToMilitiaMode();
 bool IsGoingToAutoresolve();
 
 // Return index of the character selected for assignment
-i8 GetCharForAssignmentIndex();
+int8_t GetCharForAssignmentIndex();
 
 ///////////////////////////////////////////////////////////////////
 // message boxes

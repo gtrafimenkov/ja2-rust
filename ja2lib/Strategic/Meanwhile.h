@@ -58,7 +58,7 @@ void HandleMeanWhileEventPostingForSAMLiberation(int8_t bSAMId);
 void HandleFirstMeanWhileSetUpWithTrashWorld(void);
 
 // battle ended, check if we should set up a meanwhile?
-void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, int16_t bSectorZ,
+void HandleFirstBattleEndingWhileInTown(uint8_t sSectorX, uint8_t sSectorY, int16_t bSectorZ,
                                         BOOLEAN fFromAutoResolve);
 
 // lost an entire town to the enemy!

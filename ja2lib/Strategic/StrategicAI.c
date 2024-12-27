@@ -4246,7 +4246,7 @@ void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
   }
 }
 
-void ExecuteStrategicAIAction(uint16_t usActionCode, u8 sSectorX, u8 sSectorY) {
+void ExecuteStrategicAIAction(uint16_t usActionCode, uint8_t sSectorX, uint8_t sSectorY) {
   struct GROUP *pGroup, *pPendingGroup = NULL;
   SECTORINFO *pSector;
   uint8_t ubSectorID;
@@ -4589,7 +4589,8 @@ void InvestigateSector(uint8_t ubSectorID) {
   */
 }
 
-void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+void StrategicHandleQueenLosingControlOfSector(uint8_t sSectorX, uint8_t sSectorY,
+                                               int16_t sSectorZ) {
   SECTORINFO *pSector;
   uint8_t ubSectorID;
   if (sSectorZ) {  // The queen doesn't care about anything happening under the ground.

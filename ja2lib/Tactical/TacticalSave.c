@@ -115,8 +115,9 @@ BOOLEAN DoesTempFileExistsForMap(uint32_t uiType, int16_t sMapX, int16_t sMapY, 
 
 int16_t GetSoldierIDFromAnyMercID(uint8_t ubMercID);
 
-BOOLEAN SetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ, uint32_t uiFlagToSet);
-BOOLEAN GetUnderGroundSectorFlagStatus(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
+BOOLEAN SetUnderGroundSectorFlag(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubSectorZ,
+                                 uint32_t uiFlagToSet);
+BOOLEAN GetUnderGroundSectorFlagStatus(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubSectorZ,
                                        uint32_t uiFlagToCheck);
 
 BOOLEAN LoadAndAddWorldItemsFromTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
@@ -828,7 +829,7 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   return (TRUE);
 }
 
-void HandleAllReachAbleItemsInTheSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+void HandleAllReachAbleItemsInTheSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   // find out which items in the list are reachable
   uint32_t uiCounter = 0;
   uint8_t ubDir, ubMovementCost;
@@ -1916,7 +1917,8 @@ BOOLEAN LoadTempNpcQuoteInfoForNPCFromTempFile(uint8_t ubNpcId) {
   return (TRUE);
 }
 
-void ChangeNpcToDifferentSector(uint8_t ubNpcId, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+void ChangeNpcToDifferentSector(uint8_t ubNpcId, uint8_t sSectorX, uint8_t sSectorY,
+                                int8_t bSectorZ) {
   if (gMercProfiles[ubNpcId].ubMiscFlags2 & PROFILE_MISC_FLAG2_LEFT_COUNTRY) {
     // override location, this person is OUTTA here
     sSectorX = 0;
@@ -2012,7 +2014,7 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
   return (TRUE);
 }
 
-BOOLEAN SetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
+BOOLEAN SetUnderGroundSectorFlag(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubSectorZ,
                                  uint32_t uiFlagToSet) {
   UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 
@@ -2033,7 +2035,7 @@ BOOLEAN SetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
   return (FALSE);
 }
 
-BOOLEAN ReSetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
+BOOLEAN ReSetUnderGroundSectorFlag(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubSectorZ,
                                    uint32_t uiFlagToSet) {
   UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 
@@ -2054,7 +2056,7 @@ BOOLEAN ReSetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
   return (FALSE);
 }
 
-BOOLEAN GetUnderGroundSectorFlagStatus(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
+BOOLEAN GetUnderGroundSectorFlagStatus(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubSectorZ,
                                        uint32_t uiFlagToCheck) {
   UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 

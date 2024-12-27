@@ -11,7 +11,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
+BOOLEAN Plat_GetExecutableDirectory(char *buf, uint16_t bufSize) {
   char ModuleFilename[100];
   uint32_t cnt;
 
@@ -46,7 +46,7 @@ int strncasecmp(const char *s1, const char *s2, size_t n) { return _strnicmp(s1,
 // Timers
 /////////////////////////////////////////////////////////////////////////////////
 
-extern u32 Plat_GetTickCount() { return GetTickCount(); }
+extern uint32_t Plat_GetTickCount() { return GetTickCount(); }
 
 /////////////////////////////////////////////////////////////////////////////////
 //

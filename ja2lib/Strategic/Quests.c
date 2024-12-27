@@ -421,7 +421,7 @@ BOOLEAN CheckPlayerHasHead(void) {
   return (FALSE);
 }
 
-BOOLEAN CheckNPCSector(uint8_t ubProfileID, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN CheckNPCSector(uint8_t ubProfileID, uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ubProfileID, TRUE);
@@ -500,7 +500,7 @@ BOOLEAN NPCHeardShot(uint8_t ubProfileID) {
   return (pNPC->ubMiscSoldierFlags & SOLDIER_MISC_HEARD_GUNSHOT);
 }
 
-BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
+BOOLEAN InTownSectorWithTrainingLoyalty(uint8_t sSectorX, uint8_t sSectorY) {
   uint8_t ubTown;
 
   ubTown = GetTownIdForSector(sSectorX, sSectorY);
@@ -1126,11 +1126,12 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
   return (gubFact[usFact]);
 }
 
-void StartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY) {
+void StartQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY) {
   InternalStartQuest(ubQuest, sSectorX, sSectorY, TRUE);
 }
 
-void InternalStartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
+void InternalStartQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY,
+                        BOOLEAN fUpdateHistory) {
   if (gubQuest[ubQuest] == QUESTNOTSTARTED) {
     gubQuest[ubQuest] = QUESTINPROGRESS;
 
@@ -1142,11 +1143,11 @@ void InternalStartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpda
   }
 }
 
-void EndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY) {
+void EndQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY) {
   InternalEndQuest(ubQuest, sSectorX, sSectorY, TRUE);
 }
 
-void InternalEndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
+void InternalEndQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY, BOOLEAN fUpdateHistory) {
   if (gubQuest[ubQuest] == QUESTINPROGRESS) {
     gubQuest[ubQuest] = QUESTDONE;
 

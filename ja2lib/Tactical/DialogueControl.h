@@ -306,7 +306,7 @@ void InitalizeStaticExternalNPCFaces(void);
 void ShutdownStaticExternalNPCFaces(void);
 
 void SayQuoteFromAnyBodyInSector(uint16_t usQuoteNum);
-void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+void SayQuoteFromAnyBodyInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
                                      uint16_t usQuoteNum);
 void SayQuoteFromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum);
 void SayQuote58FromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum,

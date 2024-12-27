@@ -118,7 +118,7 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup);
 
 extern void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum);
 
-void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, u8 sSectorX, u8 sSectorZ,
+void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, uint8_t sSectorX, uint8_t sSectorZ,
                                            int8_t bSectorZ);
 
 // If there are bloodcats in this sector, then it internally
@@ -131,7 +131,8 @@ BOOLEAN GroupBetweenSectorsAndSectorXYIsInDifferentDirection(struct GROUP *pGrou
 void CancelEmptyPersistentGroupMovement(struct GROUP *pGroup);
 
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup);
-BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(uint8_t sSectorX, uint8_t sSectorY,
+                                                         int8_t bSectorZ);
 void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(uint8_t ubExitValue);
 void DelayEnemyGroupsIfPathsCross(struct GROUP *pPlayerGroup);
 
@@ -1210,7 +1211,7 @@ void AwardExperienceForTravelling(struct GROUP *pGroup) {
   }
 }
 
-void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
+void AddCorpsesToBloodcatLair(uint8_t sSectorX, uint8_t sSectorY) {
   ROTTING_CORPSE_DEFINITION Corpse;
   int16_t sXPos, sYPos;
 
@@ -2198,7 +2199,7 @@ void RemoveAllGroups() {
   gfRemovingAllGroups = FALSE;
 }
 
-void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubGroupID) {
+void SetGroupSectorValue(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ, uint8_t ubGroupID) {
   struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
 
@@ -2253,7 +2254,7 @@ void SetEnemyGroupSector(struct GROUP *pGroup, uint8_t ubSectorID) {
   // pGroup->fWaypointsCancelled = FALSE;
 }
 
-void SetGroupNextSectorValue(u8 sSectorX, u8 sSectorY, uint8_t ubGroupID) {
+void SetGroupNextSectorValue(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubGroupID) {
   struct GROUP *pGroup;
 
   // get the group
@@ -3834,7 +3835,7 @@ void ReportVehicleOutOfGas(int32_t iVehicleID, uint8_t ubSectorX, uint8_t ubSect
   DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
 }
 
-void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, u8 sSectorX, u8 sSectorY,
+void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, uint8_t sSectorX, uint8_t sSectorY,
                                            int8_t bSectorZ) {
   PLAYERGROUP *pPlayer = NULL;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -4246,7 +4247,7 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup
   return (TRUE);
 }
 
-BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(u8 sSectorX, u8 sSectorY,
+BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(uint8_t sSectorX, uint8_t sSectorY,
                                                          int8_t bSectorZ) {
   uint8_t ubProfile;
   MERCPROFILESTRUCT *pProfile;
