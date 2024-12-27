@@ -1256,7 +1256,7 @@ void SoldierInSectorRepair(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
 }
 
 extern void EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination(
-    struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos, BOOLEAN fUpdateDest,
+    struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos, BOOLEAN fUpdateDest,
     BOOLEAN fUpdateFinalDest);
 
 void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection,
@@ -1347,7 +1347,7 @@ void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uin
       // ATE: Double check if we are on the roof that there is a roof there!
       if (pSoldier->bLevel == 1) {
         if (!FindStructure(pSoldier->sGridNo, STRUCTURE_ROOF)) {
-          SetSoldierHeight(pSoldier, (FLOAT)(0));
+          SetSoldierHeight(pSoldier, (float)(0));
         }
       }
 

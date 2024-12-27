@@ -2103,7 +2103,7 @@ uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemInde
   // calculate repair cost, the more broken it is the more it costs, and the difficulty of repair it
   // is also a factor
   uiRepairCost =
-      (uint32_t)(uiItemCost * (sRepairCostAdj * (100 - bItemCondition) / ((FLOAT)100 * 100)));
+      (uint32_t)(uiItemCost * (sRepairCostAdj * (100 - bItemCondition) / ((float)100 * 100)));
 
   /*
           //if the price is not diviseble by 10, make it so

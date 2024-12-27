@@ -41,8 +41,8 @@ void SetClippingRegionAndImageWidth(int iImageWidth, int iClipStartX, int iClipS
   giClipYMax = iClipStartY + iClipHeight - 1;
 }
 
-BOOLEAN Clipt(FLOAT denom, FLOAT num, FLOAT *tE, FLOAT *tL) {
-  FLOAT t;
+BOOLEAN Clipt(float denom, float num, float *tE, float *tL) {
+  float t;
   BOOLEAN accept;
 
   accept = TRUE;
@@ -71,14 +71,14 @@ BOOLEAN ClipPoint(int x, int y) {
 
 BOOLEAN Clip2D(int *ix0, int *iy0, int *ix1, int *iy1) {
   BOOLEAN visible;
-  FLOAT te, tl;
-  FLOAT dx, dy;
-  FLOAT x0, y0, x1, y1;
+  float te, tl;
+  float dx, dy;
+  float x0, y0, x1, y1;
 
-  x0 = (FLOAT)*ix0;
-  x1 = (FLOAT)*ix1;
-  y0 = (FLOAT)*iy0;
-  y1 = (FLOAT)*iy1;
+  x0 = (float)*ix0;
+  x1 = (float)*ix1;
+  y0 = (float)*iy0;
+  y1 = (float)*iy1;
 
   dx = x1 - x0;
   dy = y1 - y0;
@@ -89,10 +89,10 @@ BOOLEAN Clip2D(int *ix0, int *iy0, int *ix1, int *iy1) {
   else {
     te = 0.0f;
     tl = 1.0f;
-    if (Clipt(dx, (FLOAT)giClipXMin - x0, &te, &tl)) {
-      if (Clipt(-dx, x0 - (FLOAT)giClipXMax, &te, &tl)) {
-        if (Clipt(dy, (FLOAT)giClipYMin - y0, &te, &tl)) {
-          if (Clipt(-dy, y0 - (FLOAT)giClipYMax, &te, &tl)) {
+    if (Clipt(dx, (float)giClipXMin - x0, &te, &tl)) {
+      if (Clipt(-dx, x0 - (float)giClipXMax, &te, &tl)) {
+        if (Clipt(dy, (float)giClipYMin - y0, &te, &tl)) {
+          if (Clipt(-dy, y0 - (float)giClipYMax, &te, &tl)) {
             visible = TRUE;
             if (tl < 1.0f) {
               x1 = x0 + tl * dx;

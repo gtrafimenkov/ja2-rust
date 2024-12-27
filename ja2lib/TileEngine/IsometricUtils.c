@@ -157,9 +157,9 @@ void FromScreenToCellCoordinates(int16_t sScreenX, int16_t sScreenY, int16_t *ps
 // to the screen (0,0) in a specific way, and we MUSt take that into account then
 // determining screen coords
 
-void FloatFromCellToScreenCoordinates(FLOAT dCellX, FLOAT dCellY, FLOAT *pdScreenX,
-                                      FLOAT *pdScreenY) {
-  FLOAT dScreenX, dScreenY;
+void FloatFromCellToScreenCoordinates(float dCellX, float dCellY, float *pdScreenX,
+                                      float *pdScreenY) {
+  float dScreenX, dScreenY;
 
   dScreenX = (2 * dCellX) - (2 * dCellY);
   dScreenY = dCellX + dCellY;
@@ -168,9 +168,9 @@ void FloatFromCellToScreenCoordinates(FLOAT dCellX, FLOAT dCellY, FLOAT *pdScree
   *pdScreenY = dScreenY;
 }
 
-void FloatFromScreenToCellCoordinates(FLOAT dScreenX, FLOAT dScreenY, FLOAT *pdCellX,
-                                      FLOAT *pdCellY) {
-  FLOAT dCellX, dCellY;
+void FloatFromScreenToCellCoordinates(float dScreenX, float dScreenY, float *pdCellX,
+                                      float *pdCellY) {
+  float dCellX, dCellY;
 
   dCellX = ((dScreenX + (2 * dScreenY)) / 4);
   dCellY = ((2 * dScreenY) - dScreenX) / 4;

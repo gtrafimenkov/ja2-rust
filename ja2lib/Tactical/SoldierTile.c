@@ -688,7 +688,7 @@ BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN f
     // TELEPORT TO THIS LOCATION!
     sX = CenterX(sGridNo);
     sY = CenterY(sGridNo);
-    EVENT_SetSoldierPosition(pSoldier, (FLOAT)sX, (FLOAT)sY);
+    EVENT_SetSoldierPosition(pSoldier, (float)sX, (float)sY);
 
     pSoldier->sFinalDestination = sGridNo;
 

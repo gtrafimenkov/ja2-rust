@@ -116,7 +116,7 @@ extern int16_t gCenterWorldX, gCenterWorldY;
 extern int16_t gsTLX, gsTLY, gsTRX, gsTRY;
 extern int16_t gsBLX, gsBLY, gsBRX, gsBRY;
 extern int16_t gsCX, gsCY;
-extern DOUBLE gdScaleX, gdScaleY;
+extern double gdScaleX, gdScaleY;
 
 extern BOOLEAN fLandLayerDirty;
 

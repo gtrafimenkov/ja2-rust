@@ -283,9 +283,9 @@ void QueryRTLeftButton(uint32_t *puiNewEvent) {
       if (fLeftButtonDown) {
         if (!fIgnoreLeftUp) {
           // set flag for handling single clicks
-          // OK , FOR DOUBLE CLICKS - TAKE TIME STAMP & RECORD EVENT
+          // OK , FOR double CLICKS - TAKE TIME STAMP & RECORD EVENT
           if ((GetJA2Clock() - uiSingleClickTime) < 300) {
-            // CHECK HERE FOR DOUBLE CLICK EVENTS
+            // CHECK HERE FOR double CLICK EVENTS
             if (fValidDoubleClickPossible) {
               if (gpItemPointer == NULL) {
                 fDoubleClickIntercepted = TRUE;
@@ -889,9 +889,9 @@ void QueryRTRightButton(uint32_t *puiNewEvent) {
 
     } else {
       if (fRightButtonDown) {
-        // OK , FOR DOUBLE CLICKS - TAKE TIME STAMP & RECORD EVENT
+        // OK , FOR double CLICKS - TAKE TIME STAMP & RECORD EVENT
         if ((GetJA2Clock() - uiSingleClickTime) < 300) {
-          // CHECK HERE FOR DOUBLE CLICK EVENTS
+          // CHECK HERE FOR double CLICK EVENTS
           if (fValidDoubleClickPossible) {
             fDoubleClickIntercepted = TRUE;
 

@@ -122,12 +122,12 @@ enum {
 typedef struct {
   union {
     struct {
-      FLOAT dBuyModifier;   // The price modifier used when this dealer is BUYING something.
-      FLOAT dSellModifier;  // The price modifier used when this dealer is SELLING something.
+      float dBuyModifier;   // The price modifier used when this dealer is BUYING something.
+      float dSellModifier;  // The price modifier used when this dealer is SELLING something.
     };
     struct {
-      FLOAT dRepairSpeed;  // Modifier to the speed at which a repairman repairs things
-      FLOAT dRepairCost;   // Modifier to the price a repairman charges for repairs
+      float dRepairSpeed;  // Modifier to the speed at which a repairman repairs things
+      float dRepairCost;   // Modifier to the price a repairman charges for repairs
     };
   };
 

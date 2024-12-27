@@ -1292,6 +1292,6 @@ extern wchar_t* gzCreditNameTitle[];
 extern wchar_t* gzCreditNameFunny[];
 
 extern wchar_t* GetWeightUnitString(void);
-FLOAT GetWeightBasedOnMetricOption(uint32_t uiObjectWeight);
+float GetWeightBasedOnMetricOption(uint32_t uiObjectWeight);
 
 #endif

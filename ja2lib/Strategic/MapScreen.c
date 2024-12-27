@@ -1869,7 +1869,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
   // what kind of merc
   else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||
            GetSolProfile(pSoldier) == SLAY) {
-    FLOAT dTimeLeft = 0.0;
+    float dTimeLeft = 0.0;
 
     // amount of time left on contract
     iTimeRemaining = pSoldier->iEndofContractTime - GetWorldTotalMin();
@@ -1884,7 +1884,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
 
     if (iTimeRemaining >= (24 * 60)) {
       // calculate the exact time left on the contract ( ex 1.8 days )
-      dTimeLeft = (FLOAT)(iTimeRemaining / (60 * 24.0));
+      dTimeLeft = (float)(iTimeRemaining / (60 * 24.0));
 
       // more than a day, display in green
       iTimeRemaining /= (60 * 24);

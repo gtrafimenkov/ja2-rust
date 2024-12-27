@@ -30,7 +30,7 @@
 
 #define WINDOW_SIZE 2
 
-FLOAT gdXStep, gdYStep;
+float gdXStep, gdYStep;
 uint32_t giMiniMap, gi8BitMiniMap;
 struct VSurface *ghvSurface;
 
@@ -77,7 +77,7 @@ uint32_t MapUtilScreenHandle() {
 
   int16_t sX1, sX2, sY1, sY2, sTop, sBottom, sLeft, sRight;
 
-  FLOAT dX, dY, dStartX, dStartY;
+  float dX, dY, dStartX, dStartY;
   int32_t iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
   struct SGPPaletteEntry pPalette[256];
 

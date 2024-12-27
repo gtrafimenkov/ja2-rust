@@ -904,7 +904,7 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint1
       // weight
       swprintf(sTemp, ARR_SIZE(sTemp), L"%3.1f",
                GetWeightBasedOnMetricOption(Item[pBobbyRayPurchase[i].usItemIndex].ubWeight) /
-                   (FLOAT)(10.0) * pBobbyRayPurchase[i].ubNumberPurchased);
+                   (float)(10.0) * pBobbyRayPurchase[i].ubNumberPurchased);
       DrawTextToScreen(sTemp, (uint16_t)(usGridX + BOBBYR_GRID_SECOND_COLUMN_X - 2), usPosY,
                        BOBBYR_GRID_SECOND_COLUMN_WIDTH, BOBBYR_ORDER_DYNAMIC_TEXT_FONT,
                        BOBBYR_ORDER_DYNAMIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
@@ -1025,7 +1025,7 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, int32_t iSubTotal, uint1
     }
 
     iShippingCost =
-        (int32_t)((gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (FLOAT)10) * usStandardCost +
+        (int32_t)((gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (float)10) * usStandardCost +
                   .5);
   }
 
@@ -1782,7 +1782,7 @@ void DrawGoldRectangle(int8_t bCityNum) {
   usHeight = usTempHeight / (BOBBYR_ORDER_NUM_SHIPPING_CITIES + 1);
 
   usPosY = usTempPosY + (uint16_t)(((BOBBYR_SCROLL_AREA_HEIGHT - 2 * BOBBYR_SCROLL_ARROW_HEIGHT) /
-                                    (FLOAT)(BOBBYR_ORDER_NUM_SHIPPING_CITIES + 1)) *
+                                    (float)(BOBBYR_ORDER_NUM_SHIPPING_CITIES + 1)) *
                                    bCityNum);
 
   temp =
@@ -1866,7 +1866,7 @@ uint32_t CalcCostFromWeightOfPackage(uint8_t ubTypeOfService) {
     uiTotalWeight = MIN_SHIPPING_WEIGHT;
   }
 
-  uiTotalCost = (uint32_t)((uiTotalWeight / (FLOAT)10) * usStandardCost + .5);
+  uiTotalCost = (uint32_t)((uiTotalWeight / (float)10) * usStandardCost + .5);
 
   return (uiTotalCost);
 }
@@ -2100,7 +2100,7 @@ uint32_t CalcPackageTotalWeight() {
 void DisplayPackageWeight() {
   wchar_t zTemp[32];
   uint32_t uiTotalWeight = CalcPackageTotalWeight();
-  //	FLOAT			fWeight = (FLOAT)(uiTotalWeight / 10.0);
+  //	float			fWeight = (float)(uiTotalWeight / 10.0);
 
   // Display the 'Package Weight' text
   DrawTextToScreen(BobbyROrderFormText[BOBBYR_PACKAGE_WEIGHT], BOBBYR_PACKAXGE_WEIGHT_X + 8,

@@ -968,7 +968,7 @@ void PutDownMercPiece(int32_t iPlacement) {
   sGridNo = FindGridNoFromSweetSpot(pSoldier, pSoldier->sInsertionGridNo, 4, &ubDirection);
   if (sGridNo != NOWHERE) {
     ConvertGridNoToCellXY(sGridNo, &sCellX, &sCellY);
-    EVENT_SetSoldierPosition(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+    EVENT_SetSoldierPosition(pSoldier, (float)sCellX, (float)sCellY);
     EVENT_SetSoldierDirection(pSoldier, ubDirection);
     pSoldier->ubInsertionDirection = pSoldier->bDirection;
     gMercPlacement[iPlacement].fPlaced = TRUE;

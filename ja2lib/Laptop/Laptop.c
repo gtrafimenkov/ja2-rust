@@ -3833,7 +3833,7 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t
   SGPRect SrcRect;
   SGPRect DestRect;
   static SGPRect LastRect;
-  FLOAT dTemp;
+  float dTemp;
 
   if (fInit) {
     if (gfTitleBarSurfaceAlreadyActive) return (FALSE);
@@ -3846,14 +3846,14 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t
     }
   }
 
-  dTemp = (LAPTOP_TITLE_BAR_TOP_LEFT_X - usTopLeftX) / (FLOAT)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
+  dTemp = (LAPTOP_TITLE_BAR_TOP_LEFT_X - usTopLeftX) / (float)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
   sPosX = (int16_t)(usTopLeftX + dTemp * ubCount);
 
   dTemp =
-      (LAPTOP_TITLE_BAR_TOP_RIGHT_X - usTopRightX) / (FLOAT)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
+      (LAPTOP_TITLE_BAR_TOP_RIGHT_X - usTopRightX) / (float)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
   sPosRightX = (int16_t)(usTopRightX + dTemp * ubCount);
 
-  dTemp = (LAPTOP_TITLE_BAR_TOP_LEFT_Y - usTopLeftY) / (FLOAT)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
+  dTemp = (LAPTOP_TITLE_BAR_TOP_LEFT_Y - usTopLeftY) / (float)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
   sPosY = (int16_t)(usTopLeftY + dTemp * ubCount);
 
   sPosBottomY = LAPTOP_TITLE_BAR_HEIGHT;
@@ -5381,9 +5381,9 @@ int32_t WWaitDelayIncreasedIfRaining(int32_t iUnitTime) {
   int32_t iRetVal = 0;
 
   if (guiEnvWeather & WEATHER_FORECAST_THUNDERSHOWERS) {
-    iRetVal = (int32_t)(iUnitTime * (FLOAT)0.80);
+    iRetVal = (int32_t)(iUnitTime * (float)0.80);
   } else if (guiEnvWeather & WEATHER_FORECAST_SHOWERS) {
-    iRetVal = (int32_t)(iUnitTime * (FLOAT)0.6);
+    iRetVal = (int32_t)(iUnitTime * (float)0.6);
   }
 
   return (iRetVal);

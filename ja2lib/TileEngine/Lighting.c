@@ -69,7 +69,7 @@ BOOLEAN LightDraw(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, 
 BOOLEAN LightDelete(int32_t iLight);
 int32_t LightGetFree(void);
 int32_t LinearDistance(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2);
-DOUBLE LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2);
+double LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2);
 BOOLEAN LightAddTile(uint32_t uiLightType, int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY,
                      uint8_t ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls);
 BOOLEAN LightSubtractTile(uint32_t uiLightType, int16_t iSrcX, int16_t iSrcY, int16_t iX,
@@ -596,17 +596,17 @@ int32_t LinearDistance(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2) {
   iDy = abs(iY1 - iY2);
   iDy *= iDy;
 
-  return ((int32_t)sqrt((DOUBLE)(iDx + iDy)));
+  return ((int32_t)sqrt((double)(iDx + iDy)));
 }
 
 /****************************************************************************************
         LinearDistanceDouble
 
-                Calculates the 2D linear distance between two points. Returns the result in a DOUBLE
+                Calculates the 2D linear distance between two points. Returns the result in a double
         for greater accuracy.
 
 ***************************************************************************************/
-DOUBLE LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2) {
+double LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2) {
   int32_t iDx, iDy;
 
   iDx = abs(iX1 - iX2);
@@ -614,7 +614,7 @@ DOUBLE LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2) 
   iDy = abs(iY1 - iY2);
   iDy *= iDy;
 
-  return (sqrt((DOUBLE)(iDx + iDy)));
+  return (sqrt((double)(iDx + iDy)));
 }
 
 /****************************************************************************************
@@ -1197,7 +1197,7 @@ uint16_t LightGetLastNode(int32_t iLight) { return (usRaySize[iLight]); }
 ***************************************************************************************/
 BOOLEAN LightAddNode(int32_t iLight, int16_t iHotSpotX, int16_t iHotSpotY, int16_t iX, int16_t iY,
                      uint8_t ubIntensity, uint16_t uiFlags) {
-  DOUBLE dDistance;
+  double dDistance;
   uint8_t ubShade;
   int32_t iLightDecay;
 
@@ -1226,7 +1226,7 @@ BOOLEAN LightAddNode(int32_t iLight, int16_t iHotSpotX, int16_t iHotSpotY, int16
 ***************************************************************************************/
 BOOLEAN LightInsertNode(int32_t iLight, uint16_t usLightIns, int16_t iHotSpotX, int16_t iHotSpotY,
                         int16_t iX, int16_t iY, uint8_t ubIntensity, uint16_t uiFlags) {
-  DOUBLE dDistance;
+  double dDistance;
   uint8_t ubShade;
   int32_t iLightDecay;
 
@@ -1563,14 +1563,14 @@ and to avoid nasty boundary conditions and division by 0 */
 BOOLEAN LightGenerateElliptical(int32_t iLight, uint8_t iIntensity, int16_t iA, int16_t iB) {
   int16_t iX, iY;
   int32_t WorkingX, WorkingY;
-  DOUBLE ASquared;
-  DOUBLE BSquared;
-  DOUBLE Temp;
+  double ASquared;
+  double BSquared;
+  double Temp;
 
   iX = 0;
   iY = 0;
-  ASquared = (DOUBLE)iA * iA;
-  BSquared = (DOUBLE)iB * iB;
+  ASquared = (double)iA * iA;
+  BSquared = (double)iB * iB;
 
   /* Draw the four symmetric arcs for which X advances faster (that is,
      for which X is the major axis) */
@@ -1595,7 +1595,7 @@ BOOLEAN LightGenerateElliptical(int32_t iLight, uint8_t iIntensity, int16_t iA, 
 
     /* Stop if X is no longer the major axis (the arc has passed the
        45-degree point) */
-    if (((DOUBLE)WorkingY / BSquared) <= ((DOUBLE)WorkingX / ASquared)) break;
+    if (((double)WorkingY / BSquared) <= ((double)WorkingX / ASquared)) break;
 
     /* Draw the 4 symmetries of the current point */
     LightCastRay(iLight, iX, iY, (int16_t)(iX + WorkingX), (int16_t)(iY - WorkingY), iIntensity, 1);
@@ -1627,7 +1627,7 @@ BOOLEAN LightGenerateElliptical(int32_t iLight, uint8_t iIntensity, int16_t iA, 
 
     /* Stop if Y is no longer the major axis (the arc has passed the
        45-degree point) */
-    if (((DOUBLE)WorkingX / ASquared) < ((DOUBLE)WorkingY / BSquared)) break;
+    if (((double)WorkingX / ASquared) < ((double)WorkingY / BSquared)) break;
 
     /* Draw the 4 symmetries of the current point */
     LightCastRay(iLight, iX, iY, (int16_t)(iX + WorkingX), (int16_t)(iY - WorkingY), iIntensity, 1);

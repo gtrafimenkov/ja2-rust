@@ -358,10 +358,10 @@ struct SOLDIERTYPE {
   // 23 bytes so far
 
   // WORLD POSITION STUFF
-  FLOAT dXPos;
-  FLOAT dYPos;
-  FLOAT dOldXPos;
-  FLOAT dOldYPos;
+  float dXPos;
+  float dYPos;
+  float dOldXPos;
+  float dOldYPos;
   int16_t sInitialGridNo;
   int16_t sGridNo;
   int8_t bDirection;
@@ -443,7 +443,7 @@ struct SOLDIERTYPE {
   int16_t sLastTarget;
   int8_t bTilesMoved;
   int8_t bLeadership;
-  FLOAT dNextBleed;
+  float dNextBleed;
   BOOLEAN fWarnedAboutBleeding;
   BOOLEAN fDyingComment;
 
@@ -569,7 +569,7 @@ struct SOLDIERTYPE {
   uint8_t ubNoiseVolume;
   int8_t bLastAttackHit;
   uint8_t ubXRayedBy;
-  FLOAT dHeightAdjustment;
+  float dHeightAdjustment;
   int8_t bMorale;
   int8_t bTeamMoraleMod;
   int8_t bTacticalMoraleMod;
@@ -954,7 +954,7 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, uint16_t usNewSta
 
 BOOLEAN ChangeSoldierState(struct SOLDIERTYPE *pSoldier, uint16_t usNewState,
                            uint16_t usStartingAniCode, BOOLEAN fForce);
-void EVENT_SetSoldierPosition(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos);
+void EVENT_SetSoldierPosition(struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos);
 void EVENT_SetSoldierDestination(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection);
 void EVENT_GetNewSoldierPath(struct SOLDIERTYPE *pSoldier, uint16_t sDestGridNo,
                              uint16_t usMovementAnim);
@@ -981,7 +981,7 @@ void EVENT_SoldierBeginRefuel(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uin
 
 BOOLEAN SoldierReadyWeapon(struct SOLDIERTYPE *pSoldier, int16_t sTargetXPos, int16_t sTargetYPos,
                            BOOLEAN fEndReady);
-void SetSoldierHeight(struct SOLDIERTYPE *pSoldier, FLOAT dNewHeight);
+void SetSoldierHeight(struct SOLDIERTYPE *pSoldier, float dNewHeight);
 void BeginSoldierClimbUpRoof(struct SOLDIERTYPE *pSoldier);
 void BeginSoldierClimbDownRoof(struct SOLDIERTYPE *pSoldier);
 void BeginSoldierClimbFence(struct SOLDIERTYPE *pSoldier);
@@ -1013,13 +1013,13 @@ BOOLEAN LoadPaletteData();
 BOOLEAN DeletePaletteData();
 
 // UTILITY FUNCTUIONS
-void MoveMerc(struct SOLDIERTYPE *pSoldier, FLOAT dMovementChange, FLOAT dAngle,
+void MoveMerc(struct SOLDIERTYPE *pSoldier, float dMovementChange, float dAngle,
               BOOLEAN fCheckRange);
-void MoveMercFacingDirection(struct SOLDIERTYPE *pSoldier, BOOLEAN fReverse, FLOAT dMovementDist);
+void MoveMercFacingDirection(struct SOLDIERTYPE *pSoldier, BOOLEAN fReverse, float dMovementDist);
 int16_t GetDirectionFromXY(int16_t sXPos, int16_t sYPos, struct SOLDIERTYPE *pSoldier);
 int16_t GetDirectionFromGridNo(int16_t sGridNo, struct SOLDIERTYPE *pSoldier);
 uint8_t atan8(int16_t sXPos, int16_t sYPos, int16_t sXPos2, int16_t sYPos2);
-uint8_t atan8FromAngle(DOUBLE dAngle);
+uint8_t atan8FromAngle(double dAngle);
 int8_t CalcActionPoints(struct SOLDIERTYPE *pSold);
 BOOLEAN IsActionInterruptable(struct SOLDIERTYPE *pSoldier);
 int16_t GetDirectionToGridNoFromGridNo(int16_t sGridNoDest, int16_t sGridNoSrc);
@@ -1042,7 +1042,7 @@ void InternalReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEA
 void InternalGivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEAN fPlayEndAnim);
 
 // WRAPPERS FOR SOLDIER EVENTS
-void SendSoldierPositionEvent(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos);
+void SendSoldierPositionEvent(struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos);
 void SendSoldierDestinationEvent(struct SOLDIERTYPE *pSoldier, uint16_t usNewDestination);
 void SendGetNewSoldierPathEvent(struct SOLDIERTYPE *pSoldier, uint16_t sDestGridNo,
                                 uint16_t usMovementAnim);
@@ -1102,17 +1102,17 @@ void SetSoldierCowerState(struct SOLDIERTYPE *pSoldier, BOOLEAN fOn);
 BOOLEAN PlayerSoldierStartTalking(struct SOLDIERTYPE *pSoldier, uint8_t ubTargetID,
                                   BOOLEAN fValidate);
 
-void EVENT_InternalSetSoldierPosition(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos,
+void EVENT_InternalSetSoldierPosition(struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos,
                                       BOOLEAN fUpdateDest, BOOLEAN fUpdateFinalDest,
                                       BOOLEAN fForceDelete);
 
 void InternalRemoveSoldierFromGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN fForce);
 
-void EVENT_SetSoldierPositionAndMaybeFinalDest(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos,
-                                               FLOAT dNewYPos, BOOLEAN fUpdateFinalDest);
+void EVENT_SetSoldierPositionAndMaybeFinalDest(struct SOLDIERTYPE *pSoldier, float dNewXPos,
+                                               float dNewYPos, BOOLEAN fUpdateFinalDest);
 
-void EVENT_SetSoldierPositionForceDelete(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos,
-                                         FLOAT dNewYPos);
+void EVENT_SetSoldierPositionForceDelete(struct SOLDIERTYPE *pSoldier, float dNewXPos,
+                                         float dNewYPos);
 
 void CalcNewActionPoints(struct SOLDIERTYPE *pSoldier);
 

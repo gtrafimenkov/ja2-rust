@@ -556,8 +556,8 @@ void GetSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, int16_t *sOffsetX, int1
 
 void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16_t *psScreenY) {
   int16_t sMercScreenX, sMercScreenY;
-  FLOAT dOffsetX, dOffsetY;
-  FLOAT dTempX_S, dTempY_S;
+  float dOffsetX, dOffsetY;
+  float dTempX_S, dTempY_S;
   uint16_t usAnimSurface;
   //		ETRLEObject *pTrav;
 
@@ -604,8 +604,8 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16
 // THE TRUE SCREN RECT DOES NOT TAKE THE OFFSETS OF BUDDY INTO ACCOUNT!
 void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16_t *psScreenY) {
   int16_t sMercScreenX, sMercScreenY;
-  FLOAT dOffsetX, dOffsetY;
-  FLOAT dTempX_S, dTempY_S;
+  float dOffsetX, dOffsetY;
+  float dTempX_S, dTempY_S;
   uint16_t usAnimSurface;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
@@ -759,13 +759,13 @@ BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFl
                                     int16_t sY) {
   SGPRect aRect;
   int16_t sRelX, sRelY;
-  FLOAT dRelPer;
+  float dRelPer;
 
   // Get Rect contained in the soldier
   GetSoldierScreenRect(pSoldier, &aRect);
 
   if (IsPointInScreenRectWithRelative(sX, sY, &aRect, &sRelX, &sRelY)) {
-    dRelPer = (FLOAT)sRelY / (aRect.iBottom - aRect.iTop);
+    dRelPer = (float)sRelY / (aRect.iBottom - aRect.iTop);
 
     // Determine relative positions
     switch (gAnimControl[pSoldier->usAnimState].ubHeight) {
@@ -823,12 +823,12 @@ uint8_t QuickFindSoldier(int16_t sGridNo) {
 
 void GetGridNoScreenPos(int16_t sGridNo, uint8_t ubLevel, int16_t *psScreenX, int16_t *psScreenY) {
   int16_t sScreenX, sScreenY;
-  FLOAT dOffsetX, dOffsetY;
-  FLOAT dTempX_S, dTempY_S;
+  float dOffsetX, dOffsetY;
+  float dTempX_S, dTempY_S;
 
   // Get 'TRUE' merc position
-  dOffsetX = (FLOAT)(CenterX(sGridNo) - gsRenderCenterX);
-  dOffsetY = (FLOAT)(CenterY(sGridNo) - gsRenderCenterY);
+  dOffsetX = (float)(CenterX(sGridNo) - gsRenderCenterX);
+  dOffsetY = (float)(CenterY(sGridNo) - gsRenderCenterY);
 
   // OK, DONT'T ASK... CONVERSION TO PROPER Y NEEDS THIS...
   dOffsetX -= CELL_Y_SIZE;

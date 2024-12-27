@@ -55,8 +55,8 @@ void AccumulateBurstLocation(int16_t sGridNo) {
 
 void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubShotsPerBurst;
-  FLOAT dAccululator = 0;
-  FLOAT dStep = 0;
+  float dAccululator = 0;
+  float dStep = 0;
   int32_t cnt;
   uint8_t ubLocationNum;
 
@@ -67,7 +67,7 @@ void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
   ubShotsPerBurst = Weapon[pSoldier->inv[HANDPOS].usItem].ubShotsPerBurst;
 
   // Use # gridnos accululated and # burst shots to determine accululator
-  dStep = gbNumBurstLocations / (FLOAT)ubShotsPerBurst;
+  dStep = gbNumBurstLocations / (float)ubShotsPerBurst;
 
   // Loop through our shots!
   for (cnt = 0; cnt < ubShotsPerBurst; cnt++) {
@@ -87,8 +87,8 @@ void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
 void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, int8_t bTargets,
                           struct SOLDIERTYPE *pTargets[5]) {
   uint8_t ubShotsPerBurst;
-  FLOAT dAccululator = 0;
-  FLOAT dStep = 0;
+  float dAccululator = 0;
+  float dStep = 0;
   int32_t cnt;
   uint8_t ubLocationNum;
 
@@ -99,9 +99,9 @@ void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, int8_t bTargets,
   ubShotsPerBurst = Weapon[pSoldier->inv[HANDPOS].usItem].ubShotsPerBurst;
 
   // Use # gridnos accululated and # burst shots to determine accululator
-  // dStep = gbNumBurstLocations / (FLOAT)ubShotsPerBurst;
+  // dStep = gbNumBurstLocations / (float)ubShotsPerBurst;
   // CJC: tweak!
-  dStep = bTargets / (FLOAT)ubShotsPerBurst;
+  dStep = bTargets / (float)ubShotsPerBurst;
 
   // Loop through our shots!
   for (cnt = 0; cnt < ubShotsPerBurst; cnt++) {
@@ -143,13 +143,13 @@ void RenderAccumulatedBurstLocations() {
     sGridNo = gsBurstLocations[cnt].sGridNo;
 
     if (GridNoOnScreen(sGridNo)) {
-      FLOAT dOffsetX, dOffsetY;
-      FLOAT dTempX_S, dTempY_S;
+      float dOffsetX, dOffsetY;
+      float dTempX_S, dTempY_S;
       int16_t sXPos, sYPos;
       int32_t iBack;
 
-      dOffsetX = (FLOAT)(gsBurstLocations[cnt].sX - gsRenderCenterX);
-      dOffsetY = (FLOAT)(gsBurstLocations[cnt].sY - gsRenderCenterY);
+      dOffsetX = (float)(gsBurstLocations[cnt].sX - gsRenderCenterX);
+      dOffsetY = (float)(gsBurstLocations[cnt].sY - gsRenderCenterY);
 
       // Calculate guy's position
       FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);

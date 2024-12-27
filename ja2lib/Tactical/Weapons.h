@@ -259,7 +259,7 @@ extern int32_t TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERT
 extern int8_t ArmourPercent(struct SOLDIERTYPE *pSoldier);
 
 extern void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo,
-                                    FLOAT *pdXPos, FLOAT *pdYPos, FLOAT *pdZPos);
+                                    float *pdXPos, float *pdYPos, float *pdZPos);
 
 extern BOOLEAN OKFireWeapon(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN CheckForGunJam(struct SOLDIERTYPE *pSoldier);

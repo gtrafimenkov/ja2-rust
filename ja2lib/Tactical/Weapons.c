@@ -955,11 +955,11 @@ BOOLEAN FireWeapon(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
   return (TRUE);
 }
 
-void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, FLOAT *pdXPos,
-                             FLOAT *pdYPos, FLOAT *pdZPos) {
-  FLOAT dTargetX;
-  FLOAT dTargetY;
-  FLOAT dTargetZ;
+void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, float *pdXPos,
+                             float *pdYPos, float *pdZPos) {
+  float dTargetX;
+  float dTargetY;
+  float dTargetZ;
   struct SOLDIERTYPE *pTargetSoldier;
   int8_t bStructHeight;
   int16_t sXMapPos, sYMapPos;
@@ -969,8 +969,8 @@ void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo
   if (pTargetSoldier) {
     // SAVE OPP ID
     pSoldier->ubOppNum = pTargetSoldier->ubID;
-    dTargetX = (FLOAT)CenterX(pTargetSoldier->sGridNo);
-    dTargetY = (FLOAT)CenterY(pTargetSoldier->sGridNo);
+    dTargetX = (float)CenterX(pTargetSoldier->sGridNo);
+    dTargetY = (float)CenterY(pTargetSoldier->sGridNo);
     if (pSoldier->bAimShotLocation == AIM_SHOT_RANDOM) {
       uiRoll = PreRandom(100);
       if (uiRoll < 15) {
@@ -1014,12 +1014,12 @@ void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo
     ConvertGridNoToCenterCellXY(sTargetGridNo, &sXMapPos, &sYMapPos);
 
     // fire at centre of tile
-    dTargetX = (FLOAT)sXMapPos;
-    dTargetY = (FLOAT)sYMapPos;
+    dTargetX = (float)sXMapPos;
+    dTargetY = (float)sYMapPos;
     if (pSoldier->bTargetCubeLevel) {
       // fire at the centre of the cube specified
       dTargetZ =
-          ((FLOAT)(pSoldier->bTargetCubeLevel + pSoldier->bTargetLevel * PROFILE_Z_SIZE) - 0.5f) *
+          ((float)(pSoldier->bTargetCubeLevel + pSoldier->bTargetLevel * PROFILE_Z_SIZE) - 0.5f) *
           HEIGHT_UNITS_PER_INDEX;
     } else {
       bStructHeight =
@@ -1030,11 +1030,11 @@ void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo
           // reduce target level by 1
           bStructHeight--;
         }
-        dTargetZ = ((FLOAT)(bStructHeight + pSoldier->bTargetLevel * PROFILE_Z_SIZE) - 0.5f) *
+        dTargetZ = ((float)(bStructHeight + pSoldier->bTargetLevel * PROFILE_Z_SIZE) - 0.5f) *
                    HEIGHT_UNITS_PER_INDEX;
       } else {
         // fire at 1 unit above the level of the ground
-        dTargetZ = (FLOAT)(pSoldier->bTargetLevel * PROFILE_Z_SIZE) * HEIGHT_UNITS_PER_INDEX + 1;
+        dTargetZ = (float)(pSoldier->bTargetLevel * PROFILE_Z_SIZE) * HEIGHT_UNITS_PER_INDEX + 1;
       }
     }
     // adjust for terrain height
@@ -1050,9 +1050,9 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
   uint32_t uiHitChance, uiDiceRoll;
   int16_t sXMapPos, sYMapPos;
   int16_t sAPCost;
-  FLOAT dTargetX;
-  FLOAT dTargetY;
-  FLOAT dTargetZ;
+  float dTargetX;
+  float dTargetY;
+  float dTargetZ;
   uint16_t usItemNum;
   BOOLEAN fBuckshot;
   uint8_t ubVolume;

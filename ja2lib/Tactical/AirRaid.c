@@ -112,8 +112,8 @@ typedef struct {
   int8_t bSide;
   uint8_t ubAttackerID;
   uint16_t usAttackingWeapon;
-  FLOAT dXPos;
-  FLOAT dYPos;
+  float dXPos;
+  float dYPos;
   int16_t sX;
   int16_t sY;
   int16_t sGridNo;
@@ -531,17 +531,17 @@ void BeginDive() {
   gsNotLocatedYet = TRUE;
 }
 
-void MoveDiveAirplane(FLOAT dAngle) {
-  FLOAT dDeltaPos;
+void MoveDiveAirplane(float dAngle) {
+  float dDeltaPos;
 
   // Find delta Movement for X pos
-  dDeltaPos = MOVE_X * (FLOAT)sin(dAngle);
+  dDeltaPos = MOVE_X * (float)sin(dAngle);
 
   // Find new position
   gsDiveX = (int16_t)(gsDiveX + dDeltaPos);
 
   // Find delta Movement for Y pos
-  dDeltaPos = MOVE_X * (FLOAT)cos(dAngle);
+  dDeltaPos = MOVE_X * (float)cos(dAngle);
 
   // Find new pos
   gsDiveY = (int16_t)(gsDiveY + dDeltaPos);
@@ -553,7 +553,7 @@ void DoDive() {
 
   int16_t sTargetX, sTargetY;
   int16_t sStrafeX, sStrafeY;
-  FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
+  float dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
   int16_t sX, sY;
 
   // Delay for a specific perion of time to allow sound to Q up...
@@ -592,11 +592,11 @@ void DoDive() {
       sTargetY = CenterY(gsDiveTargetLocation);
 
       // Determine deltas
-      dDeltaX = (FLOAT)(sTargetX - gsDiveX);
-      dDeltaY = (FLOAT)(sTargetY - gsDiveY);
+      dDeltaX = (float)(sTargetX - gsDiveX);
+      dDeltaY = (float)(sTargetY - gsDiveY);
 
       // Determine angle
-      dAngle = (FLOAT)atan2(dDeltaX, dDeltaY);
+      dAngle = (float)atan2(dDeltaX, dDeltaY);
 
       MoveDiveAirplane(dAngle);
 
@@ -618,11 +618,11 @@ void DoDive() {
         // Get positions of guns...
 
         // Get target.....
-        dDeltaXPos = STRAFE_DIST * (FLOAT)sin(dAngle);
+        dDeltaXPos = STRAFE_DIST * (float)sin(dAngle);
         sStrafeX = (int16_t)(gsDiveX + dDeltaXPos);
 
         // Find delta Movement for Y pos
-        dDeltaYPos = STRAFE_DIST * (FLOAT)cos(dAngle);
+        dDeltaYPos = STRAFE_DIST * (float)cos(dAngle);
         sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
         if ((gTacticalStatus.uiFlags & INCOMBAT)) {
@@ -655,8 +655,8 @@ void DoDive() {
         }
 
         // Do second one.... ( ll )
-        sX = (int16_t)(gsDiveX + ((FLOAT)sin(dAngle + (PI / 2)) * 40));
-        sY = (int16_t)(gsDiveY + ((FLOAT)cos(dAngle + (PI / 2)) * 40));
+        sX = (int16_t)(gsDiveX + ((float)sin(dAngle + (PI / 2)) * 40));
+        sY = (int16_t)(gsDiveY + ((float)cos(dAngle + (PI / 2)) * 40));
 
         gpRaidSoldier->dXPos = sX;
         gpRaidSoldier->sX = sX;
@@ -709,7 +709,7 @@ void DoBombing() {
   int16_t sTargetX, sTargetY;
   uint16_t usItem;
   int16_t sStrafeX, sStrafeY;
-  FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
+  float dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
   BOOLEAN fLocate = FALSE;
 
   // Delay for a specific perion of time to allow sound to Q up...
@@ -748,11 +748,11 @@ void DoBombing() {
       sTargetY = CenterY(gsDiveTargetLocation);
 
       // Determine deltas
-      dDeltaX = (FLOAT)(sTargetX - gsDiveX);
-      dDeltaY = (FLOAT)(sTargetY - gsDiveY);
+      dDeltaX = (float)(sTargetX - gsDiveX);
+      dDeltaY = (float)(sTargetY - gsDiveY);
 
       // Determine angle
-      dAngle = (FLOAT)atan2(dDeltaX, dDeltaY);
+      dAngle = (float)atan2(dDeltaX, dDeltaY);
 
       MoveDiveAirplane(dAngle);
 
@@ -773,11 +773,11 @@ void DoBombing() {
 
         if ((gsNumGridNosMoved % 4) == 0) {
           // Get target.....
-          dDeltaXPos = BOMB_DIST * (FLOAT)sin(dAngle);
+          dDeltaXPos = BOMB_DIST * (float)sin(dAngle);
           sStrafeX = (int16_t)(gsDiveX + dDeltaXPos);
 
           // Find delta Movement for Y pos
-          dDeltaYPos = BOMB_DIST * (FLOAT)cos(dAngle);
+          dDeltaYPos = BOMB_DIST * (float)cos(dAngle);
           sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
           if (GridNoOnVisibleWorldTile(

@@ -54,7 +54,7 @@ typedef struct SUMMARYFILE {
   uint8_t ubAdminExistance;
   uint8_t ubTroopExistance;
   // start version 7
-  FLOAT dMajorMapVersion;
+  float dMajorMapVersion;
   // start version 8
   uint8_t ubCivSchedules;
   // start version 9

@@ -349,7 +349,7 @@ uint32_t uiSoundSample;
 int16_t gsGridNoSweetSpot;
 int16_t gsHeliXPos;
 int16_t gsHeliYPos;
-FLOAT gdHeliZPos;
+float gdHeliZPos;
 int16_t gsHeliScript;
 uint8_t gubHeliState;
 uint32_t guiHeliLastUpdate;

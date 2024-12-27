@@ -298,13 +298,13 @@ wchar_t* GetWeightUnitString(void) {
   }
 }
 
-FLOAT GetWeightBasedOnMetricOption(uint32_t uiObjectWeight) {
-  FLOAT fWeight = 0.0f;
+float GetWeightBasedOnMetricOption(uint32_t uiObjectWeight) {
+  float fWeight = 0.0f;
 
   // if the user is smart and wants things displayed in 'metric'
   if (gGameSettings.fOptions[TOPTION_USE_METRIC_SYSTEM])  // metric
   {
-    fWeight = (FLOAT)uiObjectWeight;
+    fWeight = (float)uiObjectWeight;
   }
 
   // else the user is a caveman and display it in pounds

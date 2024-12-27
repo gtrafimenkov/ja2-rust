@@ -1386,7 +1386,7 @@ BOOLEAN SaveWorld(char *puiFilename) {
   }
 
   // Write JA2 Version ID
-  FileMan_Write(hfile, &gdMajorMapVersion, sizeof(FLOAT), &uiBytesWritten);
+  FileMan_Write(hfile, &gdMajorMapVersion, sizeof(float), &uiBytesWritten);
   if (gdMajorMapVersion >= 4.00) {
     FileMan_Write(hfile, &gubMinorMapVersion, sizeof(uint8_t), &uiBytesWritten);
   }
@@ -1858,7 +1858,7 @@ extern double MasterStart, MasterEnd;
 extern BOOLEAN gfUpdatingNow;
 
 BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel) {
-  FLOAT dMajorMapVersion;
+  float dMajorMapVersion;
   SUMMARYFILE *pSummary;
   HWFILE hfile;
   MAPCREATE_STRUCT mapInfo;
@@ -1922,7 +1922,7 @@ BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel) {
   pSummary->dMajorMapVersion = gdMajorMapVersion;
 
   // skip JA2 Version ID
-  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(FLOAT));
+  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(float));
   if (dMajorMapVersion >= 4.00) {
     LOADDATA(&ubMinorMapVersion, pBuffer, sizeof(uint8_t));
   }
@@ -2235,7 +2235,7 @@ extern void LoadShadeTablesFromTextFile();
 
 BOOLEAN LoadWorld(char *puiFilename) {
   HWFILE hfile;
-  FLOAT dMajorMapVersion;
+  float dMajorMapVersion;
   uint32_t uiFlags;
   uint32_t uiBytesRead;
   uint32_t uiSoldierSize;
@@ -2305,7 +2305,7 @@ BOOLEAN LoadWorld(char *puiFilename) {
   FileMan_Close(hfile);
 
   // Read JA2 Version ID
-  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(FLOAT));
+  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(float));
 
 #ifdef RUSSIAN
   if (dMajorMapVersion != 6.00) {

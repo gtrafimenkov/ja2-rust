@@ -85,7 +85,7 @@ typedef struct {
   char zAnimStr[MAX_ANIM_STR_SIZE + 1];
   int16_t sAP;
   int16_t sSpeed;
-  FLOAT dMovementChange;
+  float dMovementChange;
   uint32_t uiFlags;
   uint8_t ubHeight;
   uint8_t ubEndHeight;
@@ -95,7 +95,7 @@ typedef struct {
 
 typedef struct {
   int16_t sSpeed;
-  FLOAT dMovementChange;
+  float dMovementChange;
 
 } ANI_SPEED_DEF;
 

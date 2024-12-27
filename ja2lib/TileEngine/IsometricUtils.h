@@ -75,10 +75,10 @@ void FromScreenToCellCoordinates(int16_t sScreenX, int16_t sScreenY, int16_t *ps
                                  int16_t *psCellY);
 
 // Higher resolution convertion functions
-void FloatFromCellToScreenCoordinates(FLOAT dCellX, FLOAT dCellY, FLOAT *pdScreenX,
-                                      FLOAT *pdScreenY);
-void FloatFromScreenToCellCoordinates(FLOAT dScreenX, FLOAT dScreenY, FLOAT *pdCellX,
-                                      FLOAT *pdCellY);
+void FloatFromCellToScreenCoordinates(float dCellX, float dCellY, float *pdScreenX,
+                                      float *pdScreenY);
+void FloatFromScreenToCellCoordinates(float dScreenX, float dScreenY, float *pdCellX,
+                                      float *pdCellY);
 
 BOOLEAN GridNoOnVisibleWorldTile(int16_t sGridNo);
 BOOLEAN GridNoOnVisibleWorldTileGivenYLimits(int16_t sGridNo);

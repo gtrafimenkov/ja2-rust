@@ -1405,7 +1405,7 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, uint16_t usNewSta
         HandleVehicleMovementSound(pSoldier, FALSE);
 
         // If a vehicle, set hewight to 0
-        SetSoldierHeight(pSoldier, (FLOAT)(0));
+        SetSoldierHeight(pSoldier, (float)(0));
       }
     }
 
@@ -1626,7 +1626,7 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, uint16_t usNewSta
       case CROW_EAT:
 
         // ATE: Make sure height level is 0....
-        SetSoldierHeight(pSoldier, (FLOAT)(0));
+        SetSoldierHeight(pSoldier, (float)(0));
         HandleCrowShadowRemoveGridNo(pSoldier);
         break;
 
@@ -1902,7 +1902,7 @@ void RemoveSoldierFromGridNo(struct SOLDIERTYPE *pSoldier) {
   InternalRemoveSoldierFromGridNo(pSoldier, FALSE);
 }
 
-void EVENT_InternalSetSoldierPosition(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos,
+void EVENT_InternalSetSoldierPosition(struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos,
                                       BOOLEAN fUpdateDest, BOOLEAN fUpdateFinalDest,
                                       BOOLEAN fForceRemove) {
   int16_t sNewGridNo;
@@ -1948,29 +1948,29 @@ void EVENT_InternalSetSoldierPosition(struct SOLDIERTYPE *pSoldier, FLOAT dNewXP
   UpdateAllVehiclePassengersGridNo(pSoldier);
 }
 
-void EVENT_SetSoldierPosition(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos) {
+void EVENT_SetSoldierPosition(struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos) {
   EVENT_InternalSetSoldierPosition(pSoldier, dNewXPos, dNewYPos, TRUE, TRUE, FALSE);
 }
 
-void EVENT_SetSoldierPositionForceDelete(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos,
-                                         FLOAT dNewYPos) {
+void EVENT_SetSoldierPositionForceDelete(struct SOLDIERTYPE *pSoldier, float dNewXPos,
+                                         float dNewYPos) {
   EVENT_InternalSetSoldierPosition(pSoldier, dNewXPos, dNewYPos, TRUE, TRUE, TRUE);
 }
 
-void EVENT_SetSoldierPositionAndMaybeFinalDest(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos,
-                                               FLOAT dNewYPos, BOOLEAN fUpdateFinalDest) {
+void EVENT_SetSoldierPositionAndMaybeFinalDest(struct SOLDIERTYPE *pSoldier, float dNewXPos,
+                                               float dNewYPos, BOOLEAN fUpdateFinalDest) {
   EVENT_InternalSetSoldierPosition(pSoldier, dNewXPos, dNewYPos, TRUE, fUpdateFinalDest, FALSE);
 }
 
 void EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination(struct SOLDIERTYPE *pSoldier,
-                                                                     FLOAT dNewXPos, FLOAT dNewYPos,
+                                                                     float dNewXPos, float dNewYPos,
                                                                      BOOLEAN fUpdateDest,
                                                                      BOOLEAN fUpdateFinalDest) {
   EVENT_InternalSetSoldierPosition(pSoldier, dNewXPos, dNewYPos, fUpdateDest, fUpdateFinalDest,
                                    FALSE);
 }
 
-void InternalSetSoldierHeight(struct SOLDIERTYPE *pSoldier, FLOAT dNewHeight,
+void InternalSetSoldierHeight(struct SOLDIERTYPE *pSoldier, float dNewHeight,
                               BOOLEAN fUpdateLevel) {
   int8_t bOldLevel = pSoldier->bLevel;
 
@@ -2009,7 +2009,7 @@ void InternalSetSoldierHeight(struct SOLDIERTYPE *pSoldier, FLOAT dNewHeight,
   }
 }
 
-void SetSoldierHeight(struct SOLDIERTYPE *pSoldier, FLOAT dNewHeight) {
+void SetSoldierHeight(struct SOLDIERTYPE *pSoldier, float dNewHeight) {
   InternalSetSoldierHeight(pSoldier, dNewHeight, TRUE);
 }
 
@@ -2401,9 +2401,9 @@ void EVENT_FireSoldierWeapon(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo
 
 uint16_t SelectFireAnimation(struct SOLDIERTYPE *pSoldier, uint8_t ubHeight) {
   int16_t sDist;
-  FLOAT dTargetX;
-  FLOAT dTargetY;
-  FLOAT dTargetZ;
+  float dTargetX;
+  float dTargetY;
+  float dTargetZ;
   BOOLEAN fDoLowShot = FALSE;
 
   // Do different things if we are a monster
@@ -4379,7 +4379,7 @@ void TurnSoldier(struct SOLDIERTYPE *pSoldier) {
 
   // IF WE ARE HERE, WE ARE IN THE PROCESS OF TURNING
 
-  // DOUBLE CHECK TO UNSET fNOAPs...
+  // double CHECK TO UNSET fNOAPs...
   if (pSoldier->fNoAPToFinishMove) {
     AdjustNoAPToFinishMove(pSoldier, FALSE);
   }
@@ -5067,42 +5067,42 @@ uint16_t GetNewSoldierStateFromNewStance(struct SOLDIERTYPE *pSoldier, uint8_t u
   return (usNewState);
 }
 
-void MoveMercFacingDirection(struct SOLDIERTYPE *pSoldier, BOOLEAN fReverse, FLOAT dMovementDist) {
-  FLOAT dAngle = (FLOAT)0;
+void MoveMercFacingDirection(struct SOLDIERTYPE *pSoldier, BOOLEAN fReverse, float dMovementDist) {
+  float dAngle = (float)0;
 
   // Determine which direction we are in
   switch (pSoldier->bDirection) {
     case NORTH:
-      dAngle = (FLOAT)(-1 * PI);
+      dAngle = (float)(-1 * PI);
       break;
 
     case NORTHEAST:
-      dAngle = (FLOAT)(PI * .75);
+      dAngle = (float)(PI * .75);
       break;
 
     case EAST:
-      dAngle = (FLOAT)(PI / 2);
+      dAngle = (float)(PI / 2);
       break;
 
     case SOUTHEAST:
-      dAngle = (FLOAT)(PI / 4);
+      dAngle = (float)(PI / 4);
       break;
 
     case SOUTH:
-      dAngle = (FLOAT)0;
+      dAngle = (float)0;
       break;
 
     case SOUTHWEST:
-      // dAngle = (FLOAT)(  PI * -.25 );
-      dAngle = (FLOAT)-0.786;
+      // dAngle = (float)(  PI * -.25 );
+      dAngle = (float)-0.786;
       break;
 
     case WEST:
-      dAngle = (FLOAT)(PI * -.5);
+      dAngle = (float)(PI * -.5);
       break;
 
     case NORTHWEST:
-      dAngle = (FLOAT)(PI * -.75);
+      dAngle = (float)(PI * -.75);
       break;
   }
 
@@ -6128,14 +6128,14 @@ void BeginSoldierClimbDownRoof(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void MoveMerc(struct SOLDIERTYPE *pSoldier, FLOAT dMovementChange, FLOAT dAngle,
+void MoveMerc(struct SOLDIERTYPE *pSoldier, float dMovementChange, float dAngle,
               BOOLEAN fCheckRange) {
-  FLOAT dDeltaPos;
-  FLOAT dXPos, dYPos;
+  float dDeltaPos;
+  float dXPos, dYPos;
   BOOLEAN fStop = FALSE;
 
   // Find delta Movement for X pos
-  dDeltaPos = (FLOAT)(dMovementChange * sin(dAngle));
+  dDeltaPos = (float)(dMovementChange * sin(dAngle));
 
   // Find new position
   dXPos = pSoldier->dXPos + dDeltaPos;
@@ -6180,7 +6180,7 @@ void MoveMerc(struct SOLDIERTYPE *pSoldier, FLOAT dMovementChange, FLOAT dAngle,
   }
 
   // Find delta Movement for Y pos
-  dDeltaPos = (FLOAT)(dMovementChange * cos(dAngle));
+  dDeltaPos = (float)(dMovementChange * cos(dAngle));
 
   // Find new pos
   dYPos = pSoldier->dYPos + dDeltaPos;
@@ -6281,10 +6281,10 @@ static int trig[8] = { 2, 3, 4, 5, 6, 7, 8, 1 };
 
 // #if 0
 uint8_t atan8(int16_t sXPos, int16_t sYPos, int16_t sXPos2, int16_t sYPos2) {
-  DOUBLE test_x = sXPos2 - sXPos;
-  DOUBLE test_y = sYPos2 - sYPos;
+  double test_x = sXPos2 - sXPos;
+  double test_y = sYPos2 - sYPos;
   uint8_t mFacing = WEST;
-  DOUBLE angle;
+  double angle;
 
   if (test_x == 0) {
     test_x = 0.04;
@@ -6331,7 +6331,7 @@ uint8_t atan8(int16_t sXPos, int16_t sYPos, int16_t sXPos2, int16_t sYPos2) {
   return (mFacing);
 }
 
-uint8_t atan8FromAngle(DOUBLE angle) {
+uint8_t atan8FromAngle(double angle) {
   uint8_t mFacing = WEST;
 
   if (angle > PI) {
@@ -6503,7 +6503,7 @@ BOOLEAN IsActionInterruptable(struct SOLDIERTYPE *pSoldier) {
 }
 
 // WRAPPER FUNCTIONS FOR SOLDIER EVENTS
-void SendSoldierPositionEvent(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos) {
+void SendSoldierPositionEvent(struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos) {
   // Sent event for position update
   EV_S_SETPOSITION SSetPosition;
 
@@ -6685,7 +6685,7 @@ void ReviveSoldier(struct SOLDIERTYPE *pSoldier) {
     sX = CenterX(pSoldier->sGridNo);
     sY = CenterY(pSoldier->sGridNo);
 
-    EVENT_SetSoldierPosition(pSoldier, (FLOAT)sX, (FLOAT)sY);
+    EVENT_SetSoldierPosition(pSoldier, (float)sX, (float)sY);
 
     // Dirty INterface
     fInterfacePanelDirty = DIRTYLEVEL2;
@@ -7580,7 +7580,7 @@ void EVENT_StopMerc(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bDirec
   // Turn off reverse...
   pSoldier->bReverse = FALSE;
 
-  EVENT_SetSoldierPosition(pSoldier, (FLOAT)sX, (FLOAT)sY);
+  EVENT_SetSoldierPosition(pSoldier, (float)sX, (float)sY);
   pSoldier->sDestXPos = (int16_t)pSoldier->dXPos;
   pSoldier->sDestYPos = (int16_t)pSoldier->dYPos;
   EVENT_SetSoldierDirection(pSoldier, bDirection);
@@ -8088,7 +8088,7 @@ int32_t CheckBleeding(struct SOLDIERTYPE *pSoldier) {
 
         // Are we in a different mode?
         if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-          pSoldier->dNextBleed -= (FLOAT)RT_NEXT_BLEED_MODIFIER;
+          pSoldier->dNextBleed -= (float)RT_NEXT_BLEED_MODIFIER;
         } else {
           // Do a single step descrease
           pSoldier->dNextBleed--;
@@ -8280,7 +8280,7 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
   //}
 }
 
-FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier) {
+float CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier) {
   int8_t bBandaged;
 
   // calculate how many turns before he bleeds again
@@ -8290,11 +8290,11 @@ FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier) {
   // if bandaged, give 1/2 of the bandaged life points back into equation
   bBandaged = pSoldier->bLifeMax - pSoldier->bLife - pSoldier->bBleeding;
 
-  return ((FLOAT)1 +
-          (FLOAT)((pSoldier->bLife + bBandaged / 2) / (10 + pSoldier->bTilesMoved)));  // min = 1
+  return ((float)1 +
+          (float)((pSoldier->bLife + bBandaged / 2) / (10 + pSoldier->bTilesMoved)));  // min = 1
 }
 
-FLOAT CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier) {
+float CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier) {
   int8_t bBandaged;
 
   // calculate bleeding rate without the penalty for tiles moved
@@ -8302,7 +8302,7 @@ FLOAT CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier) {
   // if bandaged, give 1/2 of the bandaged life points back into equation
   bBandaged = pSoldier->bLifeMax - pSoldier->bLife - pSoldier->bBleeding;
 
-  return ((FLOAT)1 + (FLOAT)((pSoldier->bLife + bBandaged / 2) / 10));  // min = 1
+  return ((float)1 + (float)((pSoldier->bLife + bBandaged / 2) / 10));  // min = 1
 }
 
 void HandlePlacingRoofMarker(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fSet,

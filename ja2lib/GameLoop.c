@@ -220,7 +220,7 @@ void GameLoop(void) {
           uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
           swprintf(zSpaceOnDrive, ARR_SIZE(zSpaceOnDrive), L"%.2f",
-                   uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE);
+                   uiSpaceOnDrive / (float)BYTESINMEGABYTE);
 
           swprintf(zText, ARR_SIZE(zText), pMessageStrings[MSG_LOWDISKSPACE_WARNING], zSpaceOnDrive,
                    zSizeNeeded);

@@ -682,10 +682,10 @@ void UnPauseAI(void) {
   giPauseAllAITimer = 0;
 }
 
-FLOAT gdRadiansForAngle[] = {
-    (FLOAT)PI, (FLOAT)(3 * PI / 4), (FLOAT)(PI / 2),  (FLOAT)((PI) / 4),
+float gdRadiansForAngle[] = {
+    (float)PI, (float)(3 * PI / 4), (float)(PI / 2),  (float)((PI) / 4),
 
-    (FLOAT)0,  (FLOAT)((-PI) / 4),  (FLOAT)(-PI / 2), (FLOAT)(-3 * PI / 4),
+    (float)0,  (float)((-PI) / 4),  (float)(-PI / 2), (float)(-3 * PI / 4),
 
 };
 
@@ -694,8 +694,8 @@ BOOLEAN ExecuteOverhead() {
   struct SOLDIERTYPE *pSoldier;
   int16_t sAPCost;
   int16_t sBPCost;
-  FLOAT dXPos, dYPos;
-  FLOAT dAngle;
+  float dXPos, dYPos;
+  float dAngle;
   BOOLEAN fKeepMoving;
   int8_t bShadeLevel;
   BOOLEAN fNoAPsForPendingAction;
@@ -1109,7 +1109,7 @@ BOOLEAN ExecuteOverhead() {
                           }
                         }
 
-                        // OK MORON, DOUBLE CHECK THAT THE ITEM EXISTS HERE...
+                        // OK MORON, double CHECK THAT THE ITEM EXISTS HERE...
                         if (pSoldier->uiPendingActionData1 != ITEM_PICKUP_ACTION_ALL) {
                           // if ( ItemExistsAtLocation( (int16_t)( pSoldier->uiPendingActionData4 ),
                           // pSoldier->uiPendingActionData1, pSoldier->bLevel ) )
@@ -1314,7 +1314,7 @@ BOOLEAN ExecuteOverhead() {
                 // dDeltaY = pSoldier->sDestYPos - pSoldier->dYPos;
 
                 // Determine angle
-                //	dAngle = (FLOAT)atan2( dDeltaX, dDeltaY );
+                //	dAngle = (float)atan2( dDeltaX, dDeltaY );
 
                 dAngle = gdRadiansForAngle[pSoldier->bMovementDirection];
 

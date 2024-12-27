@@ -1428,7 +1428,7 @@ BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, int16_t sEdgepoint) {
   // so we don't consider it
   // gpWorldLevelData[sEdgepoint].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno

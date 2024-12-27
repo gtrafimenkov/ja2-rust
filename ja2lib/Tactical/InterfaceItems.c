@@ -2625,7 +2625,7 @@ void RenderItemDescriptionBox() {
   uint16_t uiStringLength, uiRightLength;
   static wchar_t pStr[100];
   int32_t cnt;
-  FLOAT fWeight;
+  float fWeight;
   int16_t usX, usY;
   uint8_t ubAttackAPs;
   BOOLEAN fHatchOutAttachments =

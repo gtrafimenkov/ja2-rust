@@ -336,7 +336,7 @@ int16_t Slide;
 int16_t gsTLX, gsTLY, gsTRX, gsTRY;
 int16_t gsBLX, gsBLY, gsBRX, gsBRY;
 int16_t gsCX, gsCY;
-DOUBLE gdScaleX, gdScaleY;
+double gdScaleX, gdScaleY;
 
 #define FASTMAPROWCOLTOPOS(r, c) ((r) * WORLD_COLS + (c))
 
@@ -643,8 +643,8 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
   int32_t iAnchorPosX_S, iAnchorPosY_S;
   int32_t iTempPosX_M, iTempPosY_M;
   int32_t iTempPosX_S, iTempPosY_S;
-  FLOAT dOffsetX, dOffsetY;
-  FLOAT dTempX_S, dTempY_S;
+  float dOffsetX, dOffsetY;
+  float dTempX_S, dTempY_S;
   uint32_t uiTileIndex;
   uint16_t usImageIndex, *pShadeTable, *pDirtyBackPtr;
   uint32_t uiBrushWidth, uiBrushHeight, uiDirtyFlags;
@@ -1015,8 +1015,8 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                         continue;
                       }
                     } else {
-                      dOffsetX = (FLOAT)(pNode->pAniTile->sRelativeX - gsRenderCenterX);
-                      dOffsetY = (FLOAT)(pNode->pAniTile->sRelativeY - gsRenderCenterY);
+                      dOffsetX = (float)(pNode->pAniTile->sRelativeX - gsRenderCenterX);
+                      dOffsetY = (float)(pNode->pAniTile->sRelativeY - gsRenderCenterY);
                     }
 
                     // Calculate guy's position
@@ -1064,8 +1064,8 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
 
                   // ADJUST FOR ABSOLUTE POSITIONING
                   if (uiLevelNodeFlags & LEVELNODE_USEABSOLUTEPOS) {
-                    dOffsetX = (FLOAT)(pNode->sRelativeX - gsRenderCenterX);
-                    dOffsetY = (FLOAT)(pNode->sRelativeY - gsRenderCenterY);
+                    dOffsetX = (float)(pNode->sRelativeX - gsRenderCenterX);
+                    dOffsetY = (float)(pNode->sRelativeY - gsRenderCenterY);
 
                     // OK, DONT'T ASK... CONVERSION TO PROPER Y NEEDS THIS...
                     dOffsetX -= CELL_Y_SIZE;
@@ -3094,7 +3094,7 @@ void ScrollWorld() {
 void InitRenderParams(uint8_t ubRestrictionID) {
   int16_t gsTilesX, gsTilesY;
   uint32_t cnt, cnt2;
-  DOUBLE dWorldX, dWorldY;
+  double dWorldX, dWorldY;
 
   switch (ubRestrictionID) {
     case 0:  // Default!
@@ -3152,11 +3152,11 @@ void InitRenderParams(uint8_t ubRestrictionID) {
 
   // Determine scale factors
   // First scale world screen coords for VIEWPORT ratio
-  dWorldX = (DOUBLE)(gsTRX - gsTLX);
-  dWorldY = (DOUBLE)(gsBRY - gsTRY);
+  dWorldX = (double)(gsTRX - gsTLX);
+  dWorldY = (double)(gsBRY - gsTRY);
 
-  gdScaleX = (DOUBLE)RADAR_WINDOW_WIDTH / dWorldX;
-  gdScaleY = (DOUBLE)RADAR_WINDOW_HEIGHT / dWorldY;
+  gdScaleX = (double)RADAR_WINDOW_WIDTH / dWorldX;
+  gdScaleY = (double)RADAR_WINDOW_HEIGHT / dWorldY;
 
   for (cnt = 0, cnt2 = 0; cnt2 < NUM_ITEM_CYCLE_COLORS; cnt += 3, cnt2++) {
     us16BPPItemCycleWhiteColors[cnt2] =

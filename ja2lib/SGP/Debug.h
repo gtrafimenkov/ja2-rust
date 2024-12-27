@@ -24,7 +24,7 @@ extern int32_t giProfileCount;
   guiProfileTime = (Plat_GetTickCount() - guiProfileStart);                                \
   _RPT3(_CRT_WARN,                                                                         \
         "*** PROFILE REPORT: %d executions took %dms, average of %.2fms per iteration.\n", \
-        guiExecutions, guiProfileTime, (FLOAT)guiProfileTime / guiExecutions);
+        guiExecutions, guiProfileTime, (float)guiProfileTime / guiExecutions);
 
 extern void _Null(void);
 extern char *String(const char *String, ...);

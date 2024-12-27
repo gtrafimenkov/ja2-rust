@@ -427,7 +427,7 @@ int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier,
     }
 
     iBulletGetThrough =
-        min(max((int32_t)(((((usMaxRange - usRange) / (FLOAT)(usMaxRange)) + .3) * 100)), 0), 100);
+        min(max((int32_t)(((((usMaxRange - usRange) / (float)(usMaxRange)) + .3) * 100)), 0), 100);
 
     if (iBulletGetThrough > 5 && iGetThrough > 0) {
       iCover = (iGetThrough * iBulletGetThrough / 100);

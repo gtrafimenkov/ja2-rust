@@ -10,8 +10,8 @@ void ContinueMercMovement(struct SOLDIERTYPE *pSoldier);
 BOOLEAN IsValidStance(struct SOLDIERTYPE *pSoldier, int8_t bNewStance);
 void SelectMoveAnimationFromStance(struct SOLDIERTYPE *pSoldier);
 BOOLEAN IsValidMovementMode(struct SOLDIERTYPE *pSoldier, int16_t usMovementMode);
-FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
-FLOAT CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier);
+float CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
+float CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier);
 void SoldierCollapse(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);

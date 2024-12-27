@@ -230,7 +230,7 @@ void RenderProgressBar(uint8_t ubID, uint32_t uiPercentage) {
       return;
     }
 
-    pCurr->rLastActual = (DOUBLE)((int32_t)(rActual * 100) * 0.01);
+    pCurr->rLastActual = (double)((int32_t)(rActual * 100) * 0.01);
 
     end = (int32_t)(pCurr->usBarLeft + 2.0 + rActual * (pCurr->usBarRight - pCurr->usBarLeft - 4));
     if (end < pCurr->usBarLeft + 2 || end > pCurr->usBarRight - 2) {

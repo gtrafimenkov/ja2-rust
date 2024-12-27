@@ -2040,7 +2040,7 @@ BOOLEAN DoQuickSave() {
 
                   uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
 
-                  swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE );
+                  swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (float)BYTESINMEGABYTE );
 
                   swprintf( zText, pMessageStrings[ MSG_LOWDISKSPACE_WARNING ], zSpaceOnDrive,
      zSizeNeeded );
@@ -2215,7 +2215,7 @@ void SaveGameToSlotNum() {
 
                   uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
 
-                  swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE );
+                  swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (float)BYTESINMEGABYTE );
 
                   swprintf( zText, pMessageStrings[ MSG_LOWDISKSPACE_WARNING ], zSpaceOnDrive,
      zSizeNeeded );

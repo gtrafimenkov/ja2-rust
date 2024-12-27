@@ -912,7 +912,7 @@ uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHei
   usPosY += usFontHeight + 2;
 
   swprintf(sTemp, ARR_SIZE(sTemp), L"%3.2f",
-           GetWeightBasedOnMetricOption(Item[usIndex].ubWeight) / (FLOAT)(10.0));
+           GetWeightBasedOnMetricOption(Item[usIndex].ubWeight) / (float)(10.0));
   DrawTextToScreen(sTemp, BOBBYR_ITEM_STOCK_TEXT_X, (uint16_t)(usPosY), BOBBYR_ITEM_COST_TEXT_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
@@ -1198,7 +1198,7 @@ void SetFirstLastPagesForNew(uint32_t uiClassMask) {
 
   gusFirstItemIndex = (uint16_t)sFirst;
   gusLastItemIndex = (uint16_t)sLast;
-  gubNumPages = (uint8_t)(ubNumItems / (FLOAT)BOBBYR_NUM_WEAPONS_ON_PAGE);
+  gubNumPages = (uint8_t)(ubNumItems / (float)BOBBYR_NUM_WEAPONS_ON_PAGE);
   if ((ubNumItems % BOBBYR_NUM_WEAPONS_ON_PAGE) != 0) gubNumPages += 1;
 }
 
@@ -1230,7 +1230,7 @@ void SetFirstLastPagesForUsed() {
 
   gusFirstItemIndex = (uint16_t)sFirst;
   gusLastItemIndex = (uint16_t)sLast;
-  gubNumPages = (uint8_t)(ubNumItems / (FLOAT)BOBBYR_NUM_WEAPONS_ON_PAGE);
+  gubNumPages = (uint8_t)(ubNumItems / (float)BOBBYR_NUM_WEAPONS_ON_PAGE);
   if ((ubNumItems % BOBBYR_NUM_WEAPONS_ON_PAGE) != 0) gubNumPages += 1;
 }
 
@@ -1507,7 +1507,7 @@ void UpdateButtonText(uint32_t uiCurPage) {
 }
 
 uint16_t CalcBobbyRayCost(uint16_t usIndex, uint16_t usBobbyIndex, BOOLEAN fUsed) {
-  DOUBLE value;
+  double value;
   if (fUsed)
     value =
         Item[LaptopSaveInfo.BobbyRayUsedInventory[usBobbyIndex].usItemIndex].usPrice *

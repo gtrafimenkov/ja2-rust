@@ -620,7 +620,7 @@ uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile) {
       ((pProfile->bSkillTrait != 0) ? 1 : 0) + ((pProfile->bSkillTrait2 != 0) ? 1 : 0);
 
   usCompetence = (uint16_t)((pow(pProfile->bExpLevel, 0.2) * uiStats * uiSkills *
-                             (uiActionPoints - 6) * (1 + (0.05 * (FLOAT)uiSpecialSkills))) /
+                             (uiActionPoints - 6) * (1 + (0.05 * (float)uiSpecialSkills))) /
                             1000);
 
   // this currently varies from about 10 (Flo) to 1200 (Gus)

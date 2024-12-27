@@ -74,7 +74,7 @@ BOOLEAN gfMustForceUpdateAllMaps = FALSE;
 uint16_t gusNumberOfMapsToBeForceUpdated = 0;
 BOOLEAN gfMajorUpdate = FALSE;
 
-void LoadSummary(char *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion);
+void LoadSummary(char *pSector, uint8_t ubLevel, float dMajorMapVersion);
 void RegenerateSummaryInfoForAllOutdatedMaps();
 
 void SetupItemDetailsMode(BOOLEAN fAllowRecursion);
@@ -635,7 +635,7 @@ void RenderSectorInformation() {
 
 // 2)  CODE TRIGGER/ACTION NAMES
 void RenderItemDetails() {
-  FLOAT dAvgExistChance, dAvgStatus;
+  float dAvgExistChance, dAvgStatus;
   struct OBJECTTYPE *pItem;
   int32_t index, i;
   wchar_t str[100];
@@ -719,8 +719,8 @@ void RenderItemDetails() {
         else
           SetFontForeground(FONT_GRAY2);
         // calc averages
-        dAvgExistChance = (FLOAT)(uiExistChance / 100.0);
-        dAvgStatus = uiStatus / (FLOAT)uiQuantity;
+        dAvgExistChance = (float)(uiExistChance / 100.0);
+        dAvgStatus = uiStatus / (float)uiQuantity;
         // Display stats.
         LoadShortNameItemInfo((uint16_t)index, str);
         mprintf(xp, yp, L"%s", str);
@@ -774,12 +774,12 @@ void RenderItemDetails() {
             break;
         }
         if (i < 7) {
-          dAvgExistChance = (FLOAT)(uiTriggerExistChance[i] / 100.0);
-          dAvgStatus = (FLOAT)(uiActionExistChance[i] / 100.0);
+          dAvgExistChance = (float)(uiTriggerExistChance[i] / 100.0);
+          dAvgStatus = (float)(uiActionExistChance[i] / 100.0);
           mprintf(xp, yp, L"%s:  %3.02f trigger(s), %3.02f action(s)", str, dAvgExistChance,
                   dAvgStatus);
         } else {
-          dAvgExistChance = (FLOAT)(uiActionExistChance[i] / 100.0);
+          dAvgExistChance = (float)(uiActionExistChance[i] / 100.0);
           mprintf(xp, yp, L"%s:  %3.02f", str, dAvgExistChance);
         }
         yp += 10;
@@ -823,8 +823,8 @@ void RenderItemDetails() {
           else
             SetFontForeground(FONT_GRAY2);
           // calc averages
-          dAvgExistChance = (FLOAT)(uiExistChance / 100.0);
-          dAvgStatus = uiStatus / (FLOAT)uiQuantity;
+          dAvgExistChance = (float)(uiExistChance / 100.0);
+          dAvgStatus = uiStatus / (float)uiQuantity;
           // Display stats.
           LoadShortNameItemInfo((uint16_t)index, str);
           mprintf(xp, yp, L"%s", str);
@@ -882,8 +882,8 @@ void RenderItemDetails() {
         else
           SetFontForeground(FONT_GRAY2);
         // calc averages
-        dAvgExistChance = (FLOAT)(uiExistChance / 100.0);
-        dAvgStatus = uiStatus / (FLOAT)uiQuantity;
+        dAvgExistChance = (float)(uiExistChance / 100.0);
+        dAvgStatus = uiStatus / (float)uiQuantity;
         // Display stats.
         LoadShortNameItemInfo((uint16_t)index, str);
         mprintf(xp, yp, L"%s", str);
@@ -2019,7 +2019,7 @@ void LoadGlobalSummary() {
   char DevInfoDir[300];
   char MapsDir[300];
   uint32_t uiNumBytesRead;
-  FLOAT dMajorVersion;
+  float dMajorVersion;
   int32_t x, y;
   char szFilename[40];
   char szSector[6];
@@ -2061,7 +2061,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= GROUND_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 0, dMajorVersion);
       } else {
@@ -2075,7 +2075,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT1_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 1, dMajorVersion);
       } else {
@@ -2089,7 +2089,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT2_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 2, dMajorVersion);
       } else {
@@ -2103,7 +2103,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT3_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 3, dMajorVersion);
       } else {
@@ -2117,7 +2117,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_GROUND_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 4, dMajorVersion);
       } else {
@@ -2131,7 +2131,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B1_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 5, dMajorVersion);
       } else {
@@ -2145,7 +2145,7 @@ void LoadGlobalSummary() {
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B2_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 6, dMajorVersion);
       } else {
@@ -2160,7 +2160,7 @@ void LoadGlobalSummary() {
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B1_MASK;
         ;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        FileMan_Read(hfile, &dMajorVersion, sizeof(float), &uiNumBytesRead);
         FileMan_Close(hfile);
         LoadSummary(szSector, 7, dMajorVersion);
       } else {
@@ -2274,7 +2274,7 @@ void SummaryNewCaveLevelCallback(GUI_BUTTON *btn, int32_t reason) {
   }
 }
 
-void LoadSummary(char *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion) {
+void LoadSummary(char *pSector, uint8_t ubLevel, float dMajorMapVersion) {
   char filename[40];
   SUMMARYFILE temp;
   int32_t x, y;

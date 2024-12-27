@@ -31,7 +31,7 @@ typedef struct {
   FIXEDPT qIncrX;
   FIXEDPT qIncrY;
   FIXEDPT qIncrZ;
-  DOUBLE ddHorizAngle;
+  double ddHorizAngle;
   int32_t iCurrTileX;
   int32_t iCurrTileY;
   int8_t bLOSIndexX;

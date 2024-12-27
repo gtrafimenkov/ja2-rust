@@ -15,10 +15,6 @@
 
 // HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
 
-typedef float FLOAT;
-typedef double DOUBLE;
-// strings
-typedef wchar_t* wchar_t*;
 // flags (individual bits used)
 typedef unsigned char FLAGS8;
 typedef uint16_t FLAGS16;
@@ -71,9 +67,9 @@ typedef struct {
 
 } SGPRange;
 
-typedef FLOAT VECTOR2[2];  // 2d vector (2x1 matrix)
-typedef FLOAT VECTOR3[3];  // 3d vector (3x1 matrix)
-typedef FLOAT VECTOR4[4];  // 4d vector (4x1 matrix)
+typedef float VECTOR2[2];  // 2d vector (2x1 matrix)
+typedef float VECTOR3[3];  // 3d vector (3x1 matrix)
+typedef float VECTOR4[4];  // 4d vector (4x1 matrix)
 
 typedef int32_t IVECTOR2[2];  // 2d vector (2x1 matrix)
 typedef int32_t IVECTOR3[3];  // 3d vector (3x1 matrix)

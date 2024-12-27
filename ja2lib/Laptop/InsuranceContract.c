@@ -162,7 +162,7 @@ int8_t CountInsurableMercs();
 void DisableInsuranceContractNextPreviousbuttons();
 void CreateDestroyInsuranceContractFormButtons(BOOLEAN fCreate);
 void HandleAcceptButton(uint8_t ubSoldierID, uint8_t ubFormID);
-FLOAT DiffFromNormRatio(int16_t sThisValue, int16_t sNormalValue);
+float DiffFromNormRatio(int16_t sThisValue, int16_t sNormalValue);
 void InsContractNoMercsPopupCallBack(uint8_t bExitValue);
 void BuildInsuranceArray();
 BOOLEAN MercIsInsurable(struct SOLDIERTYPE *pSoldier);
@@ -1050,8 +1050,8 @@ void DailyUpdateOfInsuredMercs() {
 int32_t CalculateInsuranceContractCost(int32_t iLength, uint8_t ubMercID) {
   MERCPROFILESTRUCT *pProfile;
   int16_t sTotalSkill = 0;
-  FLOAT flSkillFactor, flFitnessFactor, flExpFactor, flSurvivalFactor;
-  FLOAT flRiskFactor;
+  float flSkillFactor, flFitnessFactor, flExpFactor, flSurvivalFactor;
+  float flRiskFactor;
   uint32_t uiDailyInsurancePremium;
   uint32_t uiTotalInsurancePremium;
   struct SOLDIERTYPE *pSoldier;
@@ -1117,11 +1117,11 @@ int32_t CalculateInsuranceContractCost(int32_t iLength, uint8_t ubMercID) {
 }
 
 // values passed in must be such that exceeding the normal value REDUCES insurance premiums
-FLOAT DiffFromNormRatio(int16_t sThisValue, int16_t sNormalValue) {
-  FLOAT flRatio;
+float DiffFromNormRatio(int16_t sThisValue, int16_t sNormalValue) {
+  float flRatio;
 
   if (sThisValue > 0) {
-    flRatio = (FLOAT)sNormalValue / sThisValue;
+    flRatio = (float)sNormalValue / sThisValue;
 
     // restrict each ratio to within a reasonable range
     if (flRatio < MIN_INSURANCE_RATIO) {

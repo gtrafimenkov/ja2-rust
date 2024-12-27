@@ -45,8 +45,8 @@ typedef struct {
   int16_t sConsecutiveZeroVelocityCollisions;
   int32_t iOldCollisionCode;
 
-  FLOAT dLifeLength;
-  FLOAT dLifeSpan;
+  float dLifeLength;
+  float dLifeSpan;
   struct OBJECTTYPE Obj;
   BOOLEAN fFirstTimeMoved;
   int16_t sFirstGridNo;
@@ -81,7 +81,7 @@ int32_t CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real
 BOOLEAN RemoveObjectSlot(int32_t iObject);
 void RemoveAllPhysicsObjects();
 
-FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubHeight,
+float CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubHeight,
                                real dForce, struct OBJECTTYPE *pItem, int16_t *psGridNo);
 
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,

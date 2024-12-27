@@ -31,8 +31,8 @@ uint8_t ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
 uint16_t IntensityTable[65536];
 uint16_t ShadeTable[65536];
 uint16_t White16BPPPalette[256];
-FLOAT guiShadePercent = (FLOAT)0.48;
-FLOAT guiBrightPercent = (FLOAT)1.1;
+float guiShadePercent = (float)0.48;
+float guiBrightPercent = (float)1.1;
 
 BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette) {
   uint32_t uiCount;
@@ -235,7 +235,7 @@ void BuildShadeTable(void) {
 void BuildIntensityTable(void) {
   uint16_t red, green, blue;
   uint16_t index;
-  FLOAT dShadedPercent = (FLOAT)0.80;
+  float dShadedPercent = (float)0.80;
 
 #if 0
 
@@ -270,7 +270,7 @@ void BuildIntensityTable(void) {
       }
 }
 
-void SetShadeTablePercent(FLOAT uiShadePercent) {
+void SetShadeTablePercent(float uiShadePercent) {
   guiShadePercent = uiShadePercent;
   BuildShadeTable();
 }

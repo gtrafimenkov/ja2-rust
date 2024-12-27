@@ -535,8 +535,8 @@ void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pReg
 void RestoreTacticalBackGround();
 void DisplayPlayersOfferArea();
 uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, uint16_t usItemID,
-                                 FLOAT dModifier, struct OBJECTTYPE *pItemObject);
-FLOAT ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus);
+                                 float dModifier, struct OBJECTTYPE *pItemObject);
+float ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus);
 BOOLEAN RemoveItemFromPlayersOfferArea(int8_t bSlotIdInOtherLocation);
 
 // Evaluate:
@@ -2799,7 +2799,7 @@ void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, 
 }
 
 uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, uint16_t usItemID,
-                                 FLOAT dModifier, struct OBJECTTYPE *pItemObject) {
+                                 float dModifier, struct OBJECTTYPE *pItemObject) {
   uint8_t ubCnt;
   uint32_t uiUnitPrice = 0;
   uint32_t uiTotalPrice = 0;
@@ -2935,13 +2935,13 @@ uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly,
   return (uiTotalPrice);
 }
 
-FLOAT ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus) {
-  FLOAT dConditionModifier = 1.0f;
+float ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus) {
+  float dConditionModifier = 1.0f;
 
   // if the item is ammo, the condition modifier is based on how many shots are left
   if (Item[usItemIndex].usItemClass == IC_AMMO) {
     // # bullets left / max magazine capacity
-    dConditionModifier = (bStatus / (FLOAT)Magazine[Item[usItemIndex].ubClassIndex].ubMagSize);
+    dConditionModifier = (bStatus / (float)Magazine[Item[usItemIndex].ubClassIndex].ubMagSize);
   } else  // non-ammo
   {
     // handle non-ammo payloads in jammed guns as if they weren't
@@ -2953,10 +2953,10 @@ FLOAT ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus) {
 
     if (Item[usItemIndex].fFlags & ITEM_REPAIRABLE) {
       // a REPAIRABLE item at 0% is still worth 50% of its full price, not 0%
-      dConditionModifier = 0.5f + (bStatus / (FLOAT)200);
+      dConditionModifier = 0.5f + (bStatus / (float)200);
     } else {
       // an UNREPAIRABLE item is worth precisely its condition percentage
-      dConditionModifier = bStatus / (FLOAT)100;
+      dConditionModifier = bStatus / (float)100;
     }
   }
 
@@ -6682,7 +6682,7 @@ void DisplayTheSkiDropItemToGroundString() {
 
 uint32_t EvaluateInvSlot(INVENTORY_IN_SLOT *pInvSlot) {
   uint32_t uiEvalResult = EVAL_RESULT_NORMAL;
-  FLOAT dPriceModifier;
+  float dPriceModifier;
   uint32_t uiBuyingPrice;
 
   // if the dealer is Micky

@@ -78,15 +78,15 @@ BOOLEAN gfLastMercTalkedAboutKillingID = NOBODY;
 
 extern void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle);
 
-DOUBLE gHopFenceForwardSEDist[NUMSOLDIERBODYTYPES] = {2.2, 0.7, 3.2, 0.7};
-DOUBLE gHopFenceForwardNWDist[NUMSOLDIERBODYTYPES] = {2.7, 1.0, 2.7, 1.0};
-DOUBLE gHopFenceForwardFullSEDist[NUMSOLDIERBODYTYPES] = {1.1, 1.0, 2.1, 1.1};
-DOUBLE gHopFenceForwardFullNWDist[NUMSOLDIERBODYTYPES] = {0.8, 0.2, 2.7, 0.8};
-DOUBLE gFalloffBackwardsDist[NUMSOLDIERBODYTYPES] = {1, 0.8, 1, 1};
-DOUBLE gClimbUpRoofDist[NUMSOLDIERBODYTYPES] = {2, 0.1, 2, 2};
-DOUBLE gClimbUpRoofLATDist[NUMSOLDIERBODYTYPES] = {0.7, 0.5, 0.7, 0.5};
-DOUBLE gClimbDownRoofStartDist[NUMSOLDIERBODYTYPES] = {5.0, 1.0, 1, 1};
-DOUBLE gClimbUpRoofDistGoingLower[NUMSOLDIERBODYTYPES] = {0.9, 0.1, 1, 1};
+double gHopFenceForwardSEDist[NUMSOLDIERBODYTYPES] = {2.2, 0.7, 3.2, 0.7};
+double gHopFenceForwardNWDist[NUMSOLDIERBODYTYPES] = {2.7, 1.0, 2.7, 1.0};
+double gHopFenceForwardFullSEDist[NUMSOLDIERBODYTYPES] = {1.1, 1.0, 2.1, 1.1};
+double gHopFenceForwardFullNWDist[NUMSOLDIERBODYTYPES] = {0.8, 0.2, 2.7, 0.8};
+double gFalloffBackwardsDist[NUMSOLDIERBODYTYPES] = {1, 0.8, 1, 1};
+double gClimbUpRoofDist[NUMSOLDIERBODYTYPES] = {2, 0.1, 2, 2};
+double gClimbUpRoofLATDist[NUMSOLDIERBODYTYPES] = {0.7, 0.5, 0.7, 0.5};
+double gClimbDownRoofStartDist[NUMSOLDIERBODYTYPES] = {5.0, 1.0, 1, 1};
+double gClimbUpRoofDistGoingLower[NUMSOLDIERBODYTYPES] = {0.9, 0.1, 1, 1};
 
 BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
 
@@ -194,7 +194,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 403:
 
           // MOVE GUY FORWARD SOME VALUE
-          MoveMercFacingDirection(pSoldier, FALSE, (FLOAT)0.7);
+          MoveMercFacingDirection(pSoldier, FALSE, (float)0.7);
 
           break;
 
@@ -202,7 +202,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // MOVE GUY BACKWARD SOME VALUE
           // Use same function as forward, but is -ve values!
-          MoveMercFacingDirection(pSoldier, TRUE, (FLOAT)1);
+          MoveMercFacingDirection(pSoldier, TRUE, (float)1);
           break;
 
         case 405:
@@ -213,9 +213,9 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // Move merc up
           if (pSoldier->bDirection == NORTH) {
-            SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->sHeightAdjustment + 2));
+            SetSoldierHeight(pSoldier, (float)(pSoldier->sHeightAdjustment + 2));
           } else {
-            SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->sHeightAdjustment + 3));
+            SetSoldierHeight(pSoldier, (float)(pSoldier->sHeightAdjustment + 3));
           }
           break;
 
@@ -231,7 +231,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             // usNewGridNo = NewGridNo( (uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(
             // pSoldier->bDirection ) );
             ConvertMapPosToWorldTileCenter(pSoldier->sTempNewGridNo, &sXPos, &sYPos);
-            EVENT_SetSoldierPosition(pSoldier, (FLOAT)sXPos, (FLOAT)sYPos);
+            EVENT_SetSoldierPosition(pSoldier, (float)sXPos, (float)sYPos);
           }
           // Move two CC directions
           EVENT_SetSoldierDirection(pSoldier, gTwoCCDirection[pSoldier->bDirection]);
@@ -242,7 +242,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           pSoldier->ubDesiredHeight = ANIM_CROUCH;
 
           // Move merc up specific height
-          SetSoldierHeight(pSoldier, (FLOAT)50);
+          SetSoldierHeight(pSoldier, (float)50);
 
           // ATE: Change interface level.....
           // CJC: only if we are a player merc
@@ -271,13 +271,13 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 409:
 
           // CODE: MOVE DOWN
-          SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->sHeightAdjustment - 2));
+          SetSoldierHeight(pSoldier, (float)(pSoldier->sHeightAdjustment - 2));
           break;
 
         case 410:
 
           // Move merc down specific height
-          SetSoldierHeight(pSoldier, (FLOAT)0);
+          SetSoldierHeight(pSoldier, (float)0);
           break;
 
         case 411:
@@ -288,21 +288,21 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           EVENT_SetSoldierDesiredDirection(pSoldier, pSoldier->bDirection);
           // Adjust height
-          SetSoldierHeight(pSoldier, (FLOAT)gClimbDownRoofStartDist[pSoldier->ubBodyType]);
+          SetSoldierHeight(pSoldier, (float)gClimbDownRoofStartDist[pSoldier->ubBodyType]);
           // Adjust position
-          MoveMercFacingDirection(pSoldier, TRUE, (FLOAT)3.5);
+          MoveMercFacingDirection(pSoldier, TRUE, (float)3.5);
           break;
 
         case 412:
 
           // CODE: HANDLING PRONE DOWN - NEED TO MOVE GUY BACKWARDS!
-          MoveMercFacingDirection(pSoldier, FALSE, (FLOAT).2);
+          MoveMercFacingDirection(pSoldier, FALSE, (float).2);
           break;
 
         case 413:
 
           // CODE: HANDLING PRONE UP - NEED TO MOVE GUY FORWARDS!
-          MoveMercFacingDirection(pSoldier, TRUE, (FLOAT).2);
+          MoveMercFacingDirection(pSoldier, TRUE, (float).2);
           break;
 
         case 430:
@@ -391,7 +391,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // CHANGE DIRECTION AND GET-UP
           // sGridNo = NewGridNo( (uint16_t)pSoldier->sGridNo, (uint16_t)(-1 * DirectionInc(
           // pSoldier->bDirection ) ) ); ConvertMapPosToWorldTileCenter( pSoldier->sGridNo, &sXPos,
-          // &sYPos ); SetSoldierPosition( pSoldier, (FLOAT)sXPos, (FLOAT)sYPos );
+          // &sYPos ); SetSoldierPosition( pSoldier, (float)sXPos, (float)sYPos );
 
           // Reverse direction
           EVENT_SetSoldierDirection(pSoldier, gOppositeDirection[pSoldier->bDirection]);
@@ -485,13 +485,13 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             case EAST:
 
               MoveMercFacingDirection(pSoldier, FALSE,
-                                      (FLOAT)gHopFenceForwardSEDist[pSoldier->ubBodyType]);
+                                      (float)gHopFenceForwardSEDist[pSoldier->ubBodyType]);
               break;
 
             case NORTH:
             case WEST:
               MoveMercFacingDirection(pSoldier, FALSE,
-                                      (FLOAT)gHopFenceForwardNWDist[pSoldier->ubBodyType]);
+                                      (float)gHopFenceForwardNWDist[pSoldier->ubBodyType]);
               break;
           }
           break;
@@ -503,7 +503,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           sX = CenterX(pSoldier->sForcastGridno);
           sY = CenterY(pSoldier->sForcastGridno);
 
-          EVENT_InternalSetSoldierPosition(pSoldier, (FLOAT)sX, (FLOAT)sY, FALSE, FALSE, FALSE);
+          EVENT_InternalSetSoldierPosition(pSoldier, (float)sX, (float)sY, FALSE, FALSE, FALSE);
           EVENT_SetSoldierDirection(pSoldier, gTwoCDirection[pSoldier->bDirection]);
           pSoldier->sZLevelOverride = -1;
           EVENT_SetSoldierDesiredDirection(pSoldier, pSoldier->bDirection);
@@ -548,14 +548,14 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             case EAST:
 
               MoveMercFacingDirection(pSoldier, FALSE,
-                                      (FLOAT)gHopFenceForwardFullSEDist[pSoldier->ubBodyType]);
+                                      (float)gHopFenceForwardFullSEDist[pSoldier->ubBodyType]);
               break;
 
             case NORTH:
             case WEST:
 
               MoveMercFacingDirection(pSoldier, FALSE,
-                                      (FLOAT)gHopFenceForwardFullNWDist[pSoldier->ubBodyType]);
+                                      (float)gHopFenceForwardFullNWDist[pSoldier->ubBodyType]);
               break;
           }
           break;
@@ -773,7 +773,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // CODE: FALLOFF ROOF ( BACKWARDS ) - MOVE BACK SOME!
           // Use same function as forward, but is -ve values!
           MoveMercFacingDirection(pSoldier, TRUE,
-                                  (FLOAT)gFalloffBackwardsDist[pSoldier->ubBodyType]);
+                                  (float)gFalloffBackwardsDist[pSoldier->ubBodyType]);
           break;
 
         case 454:
@@ -781,10 +781,10 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // CODE: HANDLE CLIMBING ROOF,
           // Move merc up
           if (pSoldier->bDirection == NORTH) {
-            SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment +
+            SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment +
                                                gClimbUpRoofDist[pSoldier->ubBodyType]));
           } else {
-            SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment +
+            SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment +
                                                gClimbUpRoofDist[pSoldier->ubBodyType]));
           }
           break;
@@ -793,10 +793,10 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // MOVE GUY FORWARD SOME VALUE
           MoveMercFacingDirection(pSoldier, FALSE,
-                                  (FLOAT)gClimbUpRoofLATDist[pSoldier->ubBodyType]);
+                                  (float)gClimbUpRoofLATDist[pSoldier->ubBodyType]);
 
           // MOVE DOWN SOME VALUE TOO!
-          SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment -
+          SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment -
                                              gClimbUpRoofDistGoingLower[pSoldier->ubBodyType]));
 
           break;
@@ -806,10 +806,10 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // CODE: HANDLE CLIMBING ROOF,
           // Move merc DOWN
           if (pSoldier->bDirection == NORTH) {
-            SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment -
+            SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment -
                                                gClimbUpRoofDist[pSoldier->ubBodyType]));
           } else {
-            SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment -
+            SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment -
                                                gClimbUpRoofDist[pSoldier->ubBodyType]));
           }
           break;
@@ -880,14 +880,14 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           pSoldier->dHeightAdjustment += (float)2.1;
           pSoldier->sHeightAdjustment = (int16_t)pSoldier->dHeightAdjustment;
           // Move over some...
-          // MoveMercFacingDirection( pSoldier , FALSE, (FLOAT)0.5 );
+          // MoveMercFacingDirection( pSoldier , FALSE, (float)0.5 );
           break;
 
         case 463:
 
           // MOVE GUY FORWARD SOME VALUE
           // Creature move
-          MoveMercFacingDirection(pSoldier, FALSE, (FLOAT)1.5);
+          MoveMercFacingDirection(pSoldier, FALSE, (float)1.5);
           break;
 
         case 464:
@@ -935,14 +935,14 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             if (abs(sDiff) > 4) {
               if (sDiff > 0) {
                 // Adjust!
-                SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment - 2));
+                SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment - 2));
               } else {
                 // Adjust!
-                SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->dHeightAdjustment + 2));
+                SetSoldierHeight(pSoldier, (float)(pSoldier->dHeightAdjustment + 2));
               }
             } else {
               // Adjust!
-              SetSoldierHeight(pSoldier, (FLOAT)(pSoldier->sDesiredHeight));
+              SetSoldierHeight(pSoldier, (float)(pSoldier->sDesiredHeight));
             }
           } else {
             // Goto eating animation
@@ -2258,7 +2258,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // CODE: Move Vehicle UP
           if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
-            //	SetSoldierHeight( pSoldier, (FLOAT)( pSoldier->sHeightAdjustment + 1 ) );
+            //	SetSoldierHeight( pSoldier, (float)( pSoldier->sHeightAdjustment + 1 ) );
           }
           break;
 
@@ -2266,7 +2266,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // CODE: Move vehicle down
           if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
-            //		SetSoldierHeight( pSoldier, (FLOAT)( pSoldier->sHeightAdjustment - 1 ) );
+            //		SetSoldierHeight( pSoldier, (float)( pSoldier->sHeightAdjustment - 1 ) );
           }
           break;
 

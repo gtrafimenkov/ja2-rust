@@ -84,7 +84,7 @@ int32_t CreateBullet(uint8_t ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
 void HandleBulletSpecialFlags(int32_t iBulletIndex) {
   BULLET *pBullet;
   ANITILE_PARAMS AniParams;
-  FLOAT dX, dY;
+  float dX, dY;
   uint8_t ubDirection;
 
   pBullet = &(gBullets[iBulletIndex]);
@@ -112,8 +112,8 @@ void HandleBulletSpecialFlags(int32_t iBulletIndex) {
       }
 
       // Get direction to use for this guy....
-      dX = ((FLOAT)(pBullet->qIncrX) / FIXEDPT_FRACTIONAL_RESOLUTION);
-      dY = ((FLOAT)(pBullet->qIncrY) / FIXEDPT_FRACTIONAL_RESOLUTION);
+      dX = ((float)(pBullet->qIncrX) / FIXEDPT_FRACTIONAL_RESOLUTION);
+      dY = ((float)(pBullet->qIncrY) / FIXEDPT_FRACTIONAL_RESOLUTION);
 
       ubDirection = atan8(0, 0, (int16_t)(dX * 100), (int16_t)(dY * 100));
 

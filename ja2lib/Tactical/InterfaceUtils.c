@@ -103,7 +103,7 @@ void UnLoadCarPortraits(void) {
 
 void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
                      int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
-  FLOAT dStart, dEnd, dPercentage;
+  float dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
@@ -125,7 +125,7 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // FIRST DO MAX LIFE
-  dPercentage = (FLOAT)pSoldier->bLife / (FLOAT)100;
+  dPercentage = (float)pSoldier->bLife / (float)100;
   dEnd = dPercentage * sHeight;
   dStart = sYPos;
 
@@ -147,8 +147,8 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
   bBandage = pSoldier->bLifeMax - pSoldier->bLife - pSoldier->bBleeding;
 
   if (bBandage) {
-    dPercentage = (FLOAT)bBandage / (FLOAT)100;
-    dStart = (FLOAT)(sYPos - dEnd);
+    dPercentage = (float)bBandage / (float)100;
+    dStart = (float)(sYPos - dEnd);
     dEnd = (dPercentage * sHeight);
 
     usLineColor = Get16BPPColor(BANDAGE_BAR_SHADOW);
@@ -166,8 +166,8 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
 
   // NOW DO BLEEDING
   if (pSoldier->bBleeding) {
-    dPercentage = (FLOAT)pSoldier->bBleeding / (FLOAT)100;
-    dStart = (FLOAT)(dStart - dEnd);
+    dPercentage = (float)pSoldier->bBleeding / (float)100;
+    dStart = (float)(dStart - dEnd);
     dEnd = (dPercentage * sHeight);
 
     usLineColor = Get16BPPColor(BLEEDING_BAR_SHADOW);
@@ -188,7 +188,7 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
 
 void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
                        int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
-  FLOAT dStart, dEnd, dPercentage;
+  float dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
@@ -237,7 +237,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   if (pSoldier->bBreathMax <= 97) {
-    dPercentage = (FLOAT)((pSoldier->bBreathMax + 3)) / (FLOAT)100;
+    dPercentage = (float)((pSoldier->bBreathMax + 3)) / (float)100;
     dEnd = dPercentage * sHeight;
     dStart = sYPos;
 
@@ -255,7 +255,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
                   usLineColor, pDestBuf);
   }
 
-  dPercentage = (FLOAT)pSoldier->bBreathMax / (FLOAT)100;
+  dPercentage = (float)pSoldier->bBreathMax / (float)100;
   dEnd = dPercentage * sHeight;
   dStart = sYPos;
 
@@ -272,7 +272,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
                 pDestBuf);
 
   // NOW DO BREATH
-  dPercentage = (FLOAT)pSoldier->bBreath / (FLOAT)100;
+  dPercentage = (float)pSoldier->bBreath / (float)100;
   dEnd = dPercentage * sHeight;
   dStart = sYPos;
 
@@ -293,7 +293,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
 
 void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
                        int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
-  FLOAT dStart, dEnd, dPercentage;
+  float dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
@@ -314,7 +314,7 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // FIRST DO BREATH
-  dPercentage = (FLOAT)pSoldier->bMorale / (FLOAT)100;
+  dPercentage = (float)pSoldier->bMorale / (float)100;
   dEnd = dPercentage * sHeight;
   dStart = sYPos;
 
@@ -336,7 +336,7 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
 void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, int16_t sXPos, int16_t sYPos,
                      int16_t sWidth, int16_t sHeight, int16_t sColor1, int16_t sColor2,
                      BOOLEAN fErase, uint32_t uiBuffer) {
-  FLOAT dStart, dEnd, dPercentage;
+  float dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
@@ -379,7 +379,7 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, int16_t sXPos
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // FIRST DO BREATH
-  dPercentage = (FLOAT)sValue / (FLOAT)100;
+  dPercentage = (float)sValue / (float)100;
   dEnd = dPercentage * sHeight;
   dStart = sYPos;
 

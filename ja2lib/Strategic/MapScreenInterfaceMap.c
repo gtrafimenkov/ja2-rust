@@ -3785,7 +3785,7 @@ void DisplayDistancesForHelicopter(void) {
 void DisplayPositionOfHelicopter(void) {
   static int16_t sOldMapX = 0, sOldMapY = 0;
   //	int16_t sX =0, sY = 0;
-  FLOAT flRatio = 0.0;
+  float flRatio = 0.0;
   uint32_t x, y;
   uint16_t minX, minY, maxX, maxY;
   struct GROUP *pGroup;
@@ -3982,7 +3982,7 @@ void DisplayDestinationOfHelicopter(void) {
 BOOLEAN CheckForClickOverHelicopterIcon(int16_t sClickedSectorX, int16_t sClickedSectorY) {
   struct GROUP *pGroup = NULL;
   BOOLEAN fHelicopterOverNextSector = FALSE;
-  FLOAT flRatio = 0.0;
+  float flRatio = 0.0;
   int16_t sSectorX;
   int16_t sSectorY;
 

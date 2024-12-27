@@ -1541,7 +1541,7 @@ void SaveNPCInformationToProfileStruct() {
 }
 
 extern void EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination(
-    struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos, BOOLEAN fUpdateDest,
+    struct SOLDIERTYPE *pSoldier, float dNewXPos, float dNewYPos, BOOLEAN fUpdateDest,
     BOOLEAN fUpdateFinalDest);
 
 void LoadNPCInformationFromProfileStruct() {
@@ -1638,7 +1638,7 @@ void LoadNPCInformationFromProfileStruct() {
   QUOTE_ACTION_ID_CHECKFORDEST )
                                   {
                                           //the mercs gridno has to be the same as the final
-  destination EVENT_SetSoldierPosition( pSoldier, (FLOAT) sX, (FLOAT) sY );
+  destination EVENT_SetSoldierPosition( pSoldier, (float) sX, (float) sY );
 
                                           NPCReachedDestination( pSoldier, FALSE );
                                   }
@@ -1657,7 +1657,7 @@ void LoadNPCInformationFromProfileStruct() {
                                           // We have moved to a diferent sector and are returning to
   it, therefore the merc should be in the final dest
                                           EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination(
-  pSoldier, (FLOAT) sX, (FLOAT) sY, FALSE, TRUE );
+  pSoldier, (float) sX, (float) sY, FALSE, TRUE );
                                   }
 
                                   //else we are saving
@@ -1665,8 +1665,8 @@ void LoadNPCInformationFromProfileStruct() {
                                   {
 
                                           //Set the NPC's position
-          //				EVENT_SetSoldierPosition( pSoldier, (FLOAT) sX, (FLOAT) sY
-  ); EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination( pSoldier, (FLOAT) sX, (FLOAT)
+          //				EVENT_SetSoldierPosition( pSoldier, (float) sX, (float) sY
+  ); EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination( pSoldier, (float) sX, (float)
   sY, FALSE, FALSE );
                                   }
                           }
@@ -2231,8 +2231,8 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(int16_t sMapX, int16_t sMapY, uint8_t bMa
 
   ConvertGridNoToXY(sGridNo, &sXPos, &sYPos);
 
-  Corpse.dXPos = (FLOAT)(CenterX(sXPos));
-  Corpse.dYPos = (FLOAT)(CenterY(sYPos));
+  Corpse.dXPos = (float)(CenterX(sXPos));
+  Corpse.dYPos = (float)(CenterY(sYPos));
   Corpse.sHeightAdjustment = pSoldier->sHeightAdjustment;
   Corpse.bVisible = TRUE;
 

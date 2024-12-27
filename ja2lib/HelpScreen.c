@@ -2217,11 +2217,11 @@ void DeleteScrollArrowButtons() {
 void CalculateHeightAndPositionForHelpScreenScrollBox(int32_t *piHeightOfScrollBox,
                                                       int32_t *piTopOfScrollBox) {
   int32_t iSizeOfBox, iTopPosScrollBox;
-  FLOAT dPercentSizeOfBox = 0;
-  FLOAT dTemp = 0;
+  float dPercentSizeOfBox = 0;
+  float dTemp = 0;
 
   dPercentSizeOfBox = HLP_SCRN__MAX_NUMBER_DISPLAYED_LINES_IN_BUFFER /
-                      (FLOAT)gHelpScreen.usTotalNumberOfLinesInBuffer;
+                      (float)gHelpScreen.usTotalNumberOfLinesInBuffer;
 
   // if the # is >= 1 then the box is the full size of the scroll area
   if (dPercentSizeOfBox >= 1.0) {
@@ -2235,7 +2235,7 @@ void CalculateHeightAndPositionForHelpScreenScrollBox(int32_t *piHeightOfScrollB
     //
     // next, calculate the top position of the box
     //
-    dTemp = (HLP_SCRN__HEIGHT_OF_SCROLL_AREA / (FLOAT)gHelpScreen.usTotalNumberOfLinesInBuffer) *
+    dTemp = (HLP_SCRN__HEIGHT_OF_SCROLL_AREA / (float)gHelpScreen.usTotalNumberOfLinesInBuffer) *
             gHelpScreen.iLineAtTopOfTextBuffer;
 
     iTopPosScrollBox = (int32_t)(dTemp + .5) + HLP_SCRN__SCROLL_POSY;
@@ -2273,9 +2273,9 @@ void SelectHelpScrollAreaMovementCallBack(struct MOUSE_REGION *pRegion, int32_t 
 void HelpScreenMouseMoveScrollBox(int32_t usMousePosY) {
   int32_t iPosY, iHeight;
   int32_t iNumberOfIncrements = 0;
-  FLOAT dSizeOfIncrement =
-      (HLP_SCRN__HEIGHT_OF_SCROLL_AREA / (FLOAT)gHelpScreen.usTotalNumberOfLinesInBuffer);
-  FLOAT dTemp;
+  float dSizeOfIncrement =
+      (HLP_SCRN__HEIGHT_OF_SCROLL_AREA / (float)gHelpScreen.usTotalNumberOfLinesInBuffer);
+  float dTemp;
   int32_t iNewPosition;
 
   CalculateHeightAndPositionForHelpScreenScrollBox(&iHeight, &iPosY);

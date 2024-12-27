@@ -31,7 +31,7 @@
 #define MAJOR_MAP_VERSION 5.00
 #endif
 
-FLOAT gdMajorMapVersion = MAJOR_MAP_VERSION;
+float gdMajorMapVersion = MAJOR_MAP_VERSION;
 
 BOOLEAN gfWorldLoaded;
 

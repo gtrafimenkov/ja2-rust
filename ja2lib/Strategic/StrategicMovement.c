@@ -1238,8 +1238,8 @@ void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
   // 1st gridno
   Corpse.sGridNo = 14319;
   ConvertGridNoToXY(Corpse.sGridNo, &sXPos, &sYPos);
-  Corpse.dXPos = (FLOAT)(CenterX(sXPos));
-  Corpse.dYPos = (FLOAT)(CenterY(sYPos));
+  Corpse.dXPos = (float)(CenterX(sXPos));
+  Corpse.dYPos = (float)(CenterY(sYPos));
 
   // Add the rotting corpse info to the sectors unloaded rotting corpse file
   AddRottingCorpseToUnloadedSectorsRottingCorpseFile(sSectorX, sSectorY, 0, &Corpse);
@@ -1247,8 +1247,8 @@ void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
   // 2nd gridno
   Corpse.sGridNo = 9835;
   ConvertGridNoToXY(Corpse.sGridNo, &sXPos, &sYPos);
-  Corpse.dXPos = (FLOAT)(CenterX(sXPos));
-  Corpse.dYPos = (FLOAT)(CenterY(sYPos));
+  Corpse.dXPos = (float)(CenterX(sXPos));
+  Corpse.dYPos = (float)(CenterY(sYPos));
 
   // Add the rotting corpse info to the sectors unloaded rotting corpse file
   AddRottingCorpseToUnloadedSectorsRottingCorpseFile(sSectorX, sSectorY, 0, &Corpse);
@@ -1256,8 +1256,8 @@ void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
   // 3rd gridno
   Corpse.sGridNo = 11262;
   ConvertGridNoToXY(Corpse.sGridNo, &sXPos, &sYPos);
-  Corpse.dXPos = (FLOAT)(CenterX(sXPos));
-  Corpse.dYPos = (FLOAT)(CenterY(sYPos));
+  Corpse.dXPos = (float)(CenterX(sXPos));
+  Corpse.dYPos = (float)(CenterY(sYPos));
 
   // Add the rotting corpse info to the sectors unloaded rotting corpse file
   AddRottingCorpseToUnloadedSectorsRottingCorpseFile(sSectorX, sSectorY, 0, &Corpse);

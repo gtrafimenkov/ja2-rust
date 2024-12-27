@@ -3,7 +3,7 @@
 
 #include "SGP/Types.h"
 
-extern FLOAT gdMajorMapVersion;
+extern float gdMajorMapVersion;
 extern uint8_t gubMinorMapVersion;
 
 enum  // for use with MAPCREATE_STRUCT.ubEditorSmoothingType

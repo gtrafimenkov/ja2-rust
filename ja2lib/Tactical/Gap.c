@@ -221,7 +221,7 @@ uint32_t PlayJA2GapSample(char *zSoundFile, uint32_t usRate, uint32_t ubVolume, 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));
 
   spParms.uiSpeed = usRate;
-  spParms.uiVolume = (uint32_t)((ubVolume / (FLOAT)HIGHVOLUME) * GetSpeechVolume());
+  spParms.uiVolume = (uint32_t)((ubVolume / (float)HIGHVOLUME) * GetSpeechVolume());
   spParms.uiLoop = ubLoops;
   spParms.uiPan = uiPan;
   spParms.uiPriority = GROUP_PLAYER;

@@ -547,7 +547,7 @@ void HandleRightClickOnMerc(int32_t iMapIndex) {
                  gfRoofPlacement))  // We want to move the selected merc to this new location.
   {
     RemoveAllObjectsOfTypeRange(gsSelectedMercGridNo, CONFIRMMOVE, CONFIRMMOVE);
-    EVENT_SetSoldierPosition(gpSelected->pSoldier, (FLOAT)(sCellX + 5), (FLOAT)(sCellY + 5));
+    EVENT_SetSoldierPosition(gpSelected->pSoldier, (float)(sCellX + 5), (float)(sCellY + 5));
     if (gfRoofPlacement && FlatRoofAboveGridNo(iMapIndex)) {
       gpSelected->pBasicPlacement->fOnRoof = TRUE;
       if (gpSelected->pDetailedPlacement) gpSelected->pDetailedPlacement->fOnRoof = TRUE;
@@ -587,7 +587,7 @@ void ResetAllMercPositions() {
     // ConvertGridNoToCellXY( usMapIndex, &sCellX, &sCellY );
     // if( gpSelected->pSoldier )
     //{
-    //	EVENT_SetSoldierPosition( gpSelected->pSoldier, (FLOAT)(sCellX + 5), (FLOAT)(sCellY + 5) );
+    //	EVENT_SetSoldierPosition( gpSelected->pSoldier, (float)(sCellX + 5), (float)(sCellY + 5) );
     //	if( gpSelected->pBasicPlacement->fOnRoof )
     //		SetSoldierHeight( gpSelected->pSoldier, 58.0 );
     //	SetMercDirection( gpSelected->pBasicPlacement->bDirection );
@@ -1173,7 +1173,7 @@ void DisplayWayPoints(void) {
   int16_t sX, sY;
   int16_t sXMapPos, sYMapPos;
   int16_t sScreenX, sScreenY;
-  FLOAT ScrnX, ScrnY, dOffsetX, dOffsetY;
+  float ScrnX, ScrnY, dOffsetX, dOffsetY;
   int8_t bPoint;
   struct SOLDIERTYPE *pSoldier;
   int16_t sGridNo;
@@ -1199,8 +1199,8 @@ void DisplayWayPoints(void) {
     // Convert it's location to screen coordinates
     ConvertGridNoToXY(sGridNo, &sXMapPos, &sYMapPos);
 
-    dOffsetX = (FLOAT)(sXMapPos * CELL_X_SIZE) - gsRenderCenterX;
-    dOffsetY = (FLOAT)(sYMapPos * CELL_Y_SIZE) - gsRenderCenterY;
+    dOffsetX = (float)(sXMapPos * CELL_X_SIZE) - gsRenderCenterX;
+    dOffsetY = (float)(sYMapPos * CELL_Y_SIZE) - gsRenderCenterY;
 
     FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &ScrnX, &ScrnY);
 
@@ -3336,8 +3336,8 @@ void ClearCurrentSchedule() {
 }
 
 void RenderCurrentSchedule() {
-  FLOAT dOffsetX, dOffsetY;
-  FLOAT ScrnX, ScrnY;
+  float dOffsetX, dOffsetY;
+  float ScrnX, ScrnY;
   int32_t i;
   int32_t iMapIndex;
   int16_t sXMapPos, sYMapPos;
@@ -3355,8 +3355,8 @@ void RenderCurrentSchedule() {
     // Convert it's location to screen coordinates
     ConvertGridNoToXY((int16_t)iMapIndex, &sXMapPos, &sYMapPos);
 
-    dOffsetX = (FLOAT)(sXMapPos * CELL_X_SIZE) - gsRenderCenterX;
-    dOffsetY = (FLOAT)(sYMapPos * CELL_Y_SIZE) - gsRenderCenterY;
+    dOffsetX = (float)(sXMapPos * CELL_X_SIZE) - gsRenderCenterX;
+    dOffsetY = (float)(sYMapPos * CELL_Y_SIZE) - gsRenderCenterY;
 
     FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &ScrnX, &ScrnY);
 

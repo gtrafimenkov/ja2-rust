@@ -2021,11 +2021,11 @@ void DrawQdsScrollRectangle()  // int16_t sSelectedEntry, uint16_t usStartPosX, 
   usWidth = gpActiveListBox->usScrollBarWidth;
 
   usHeight =
-      (uint16_t)(gpActiveListBox->usScrollBarHeight / (FLOAT)(usNumEntries) + .5);  // qq+ 1 );
+      (uint16_t)(gpActiveListBox->usScrollBarHeight / (float)(usNumEntries) + .5);  // qq+ 1 );
 
   if (usNumEntries > gpActiveListBox->usMaxNumDisplayedItems)
     usPosY = usTempPosY +
-             (uint16_t)((gpActiveListBox->usScrollBarHeight / (FLOAT)(usNumEntries + 1)) *
+             (uint16_t)((gpActiveListBox->usScrollBarHeight / (float)(usNumEntries + 1)) *
                         (gpActiveListBox->sCurSelectedItem - gpActiveListBox->usStartIndex));
   else
     usPosY = usTempPosY;
@@ -2136,7 +2136,7 @@ void ScrollAreaMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
 void CalcPositionOfNewScrollBoxLocation() {
   int16_t sMouseYPos;
   int16_t sIncrementValue;
-  FLOAT dValue;
+  float dValue;
   int16_t sHeight = 0;
   int16_t sStartPosOfScrollArea =
       gpActiveListBox->usScrollPosY + gpActiveListBox->usScrollArrowHeight;
@@ -2149,7 +2149,7 @@ void CalcPositionOfNewScrollBoxLocation() {
     // Calculate the number of items we have to move
     sHeight = sMouseYPos - sStartPosOfScrollArea;
 
-    dValue = sHeight / (FLOAT)(gpActiveListBox->usScrollBarHeight);
+    dValue = sHeight / (float)(gpActiveListBox->usScrollBarHeight);
     sIncrementValue =
         (int16_t)((dValue) * (gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex) +
                   .5) +

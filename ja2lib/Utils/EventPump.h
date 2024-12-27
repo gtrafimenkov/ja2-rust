@@ -75,8 +75,8 @@ typedef struct {
 typedef struct {
   uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  FLOAT dNewXPos;
-  FLOAT dNewYPos;
+  float dNewXPos;
+  float dNewYPos;
 
 } EV_S_SETPOSITION;
 

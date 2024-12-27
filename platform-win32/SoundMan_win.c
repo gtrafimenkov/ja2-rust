@@ -169,7 +169,7 @@ extern BOOLEAN Sound3DInitProvider(char *pProviderName);
 extern void Sound3DShutdownProvider(void);
 
 // 3D sound control
-extern void Sound3DSetListener(FLOAT flX, FLOAT flY, FLOAT flZ);
+extern void Sound3DSetListener(float flX, float flY, float flZ);
 extern void Sound3DStopAll(void);
 
 // Local Function Prototypes
@@ -1939,13 +1939,13 @@ void Sound3DShutdownProvider(void) {
 //
 // Returns nothing.
 //
-// FLOAT flX                  - X coordinate
-// FLOAT flY                  - Y coordinate
-// FLOAT flZ                  - Z coordinate
+// float flX                  - X coordinate
+// float flY                  - Y coordinate
+// float flZ                  - Z coordinate
 //
 // Created:  8/17/99 Derek Beland
 //*****************************************************************************************
-void Sound3DSetListener(FLOAT flX, FLOAT flY, FLOAT flZ) {
+void Sound3DSetListener(float flX, float flY, float flZ) {
   if (fSoundSystemInit && gh3DListener) AIL_set_3D_position(gh3DListener, flX, flY, flZ);
 }
 

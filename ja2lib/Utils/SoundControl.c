@@ -563,11 +563,11 @@ void SetSoundEffectsVolume(uint32_t uiNewVolume) { guiSoundEffectsVolume = min(u
 uint32_t GetSoundEffectsVolume() { return (guiSoundEffectsVolume); }
 
 uint32_t CalculateSpeechVolume(uint32_t uiVolume) {
-  return ((uint32_t)((uiVolume / (FLOAT)HIGHVOLUME) * guiSpeechVolume + .5));
+  return ((uint32_t)((uiVolume / (float)HIGHVOLUME) * guiSpeechVolume + .5));
 }
 
 uint32_t CalculateSoundEffectsVolume(uint32_t uiVolume) {
-  return ((uint32_t)((uiVolume / (FLOAT)HIGHVOLUME) * guiSoundEffectsVolume + .5));
+  return ((uint32_t)((uiVolume / (float)HIGHVOLUME) * guiSoundEffectsVolume + .5));
 }
 
 #if 0

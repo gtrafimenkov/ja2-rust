@@ -3382,7 +3382,7 @@ void GrenadeTest1() {
     Object.usItem = MUSTARD_GRENADE;
     Object.bStatus[0] = 100;
     Object.ubNumberOfObjects = 1;
-    CreatePhysicalObject(&Object, 60, (FLOAT)(sX * CELL_X_SIZE), (FLOAT)(sY * CELL_Y_SIZE), 256,
+    CreatePhysicalObject(&Object, 60, (float)(sX * CELL_X_SIZE), (float)(sY * CELL_Y_SIZE), 256,
                          -20, 20, 158, NOBODY, THROW_ARM_ITEM, 0);
   }
 }
@@ -3395,7 +3395,7 @@ void GrenadeTest2() {
     Object.usItem = HAND_GRENADE;
     Object.bStatus[0] = 100;
     Object.ubNumberOfObjects = 1;
-    CreatePhysicalObject(&Object, 60, (FLOAT)(sX * CELL_X_SIZE), (FLOAT)(sY * CELL_Y_SIZE), 256, 0,
+    CreatePhysicalObject(&Object, 60, (float)(sX * CELL_X_SIZE), (float)(sY * CELL_Y_SIZE), 256, 0,
                          -30, 158, NOBODY, THROW_ARM_ITEM, 0);
   }
 }
@@ -3408,7 +3408,7 @@ void GrenadeTest3() {
     Object.usItem = HAND_GRENADE;
     Object.bStatus[0] = 100;
     Object.ubNumberOfObjects = 1;
-    CreatePhysicalObject(&Object, 60, (FLOAT)(sX * CELL_X_SIZE), (FLOAT)(sY * CELL_Y_SIZE), 256,
+    CreatePhysicalObject(&Object, 60, (float)(sX * CELL_X_SIZE), (float)(sY * CELL_Y_SIZE), 256,
                          -10, 10, 158, NOBODY, THROW_ARM_ITEM, 0);
   }
 }

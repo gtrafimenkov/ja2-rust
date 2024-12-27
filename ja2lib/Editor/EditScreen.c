@@ -124,7 +124,7 @@ int16_t gsOldCliffsSubIndex = 1;
 BOOLEAN gfSwitchScreen = FALSE;
 BOOLEAN gDoTest = FALSE;
 BOOLEAN gDoTest2 = FALSE;
-FLOAT gShadePercent = (FLOAT)0.65;
+float gShadePercent = (float)0.65;
 int16_t gusCurrentRoofType = ONELEVELTYPEONEROOF;
 
 uint16_t gusLightLevel = 0;
@@ -2045,26 +2045,26 @@ uint32_t PerformSelectedAction(void) {
 
     case ACTION_SHADE_UP:
       if (EditorInputEvent.usKeyState & SHIFT_DOWN) {
-        gShadePercent += (FLOAT).05;
+        gShadePercent += (float).05;
       } else {
-        gShadePercent += (FLOAT).01;
+        gShadePercent += (float).01;
       }
 
       if (gShadePercent > 1) {
-        gShadePercent = (FLOAT)0;
+        gShadePercent = (float)0;
       }
       SetShadeTablePercent(gShadePercent);
       break;
 
     case ACTION_SHADE_DWN:
       if (EditorInputEvent.usKeyState & SHIFT_DOWN) {
-        gShadePercent -= (FLOAT).05;
+        gShadePercent -= (float).05;
       } else {
-        gShadePercent -= (FLOAT).01;
+        gShadePercent -= (float).01;
       }
 
       if (gShadePercent < 0) {
-        gShadePercent = (FLOAT)1;
+        gShadePercent = (float)1;
       }
       SetShadeTablePercent(gShadePercent);
       break;

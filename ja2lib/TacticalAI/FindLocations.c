@@ -99,14 +99,14 @@ int32_t CalcPercentBetter(int32_t iOldValue, int32_t iNewValue, int32_t iOldScal
   return (iPercentBetter);
 }
 
-void AICenterXY(int16_t sGridNo, FLOAT *pdX, FLOAT *pdY) {
+void AICenterXY(int16_t sGridNo, float *pdX, float *pdY) {
   int16_t sXPos, sYPos;
 
   sXPos = sGridNo % WORLD_COLS;
   sYPos = sGridNo / WORLD_COLS;
 
-  *pdX = (FLOAT)(sXPos * CELL_X_SIZE + CELL_X_SIZE / 2);
-  *pdY = (FLOAT)(sYPos * CELL_Y_SIZE + CELL_Y_SIZE / 2);
+  *pdX = (float)(sXPos * CELL_X_SIZE + CELL_X_SIZE / 2);
+  *pdY = (float)(sYPos * CELL_Y_SIZE + CELL_Y_SIZE / 2);
 }
 
 int8_t CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo,
@@ -256,7 +256,7 @@ int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyTh
   int32_t iReductionFactor, iThisScale;
   int16_t sHisGridNo, sMyRealGridNo = NOWHERE, sHisRealGridNo = NOWHERE;
   int16_t sTempX, sTempY;
-  FLOAT dMyX, dMyY, dHisX, dHisY;
+  float dMyX, dMyY, dHisX, dHisY;
   int8_t bHisBestCTGT, bHisActualCTGT, bHisCTGT, bMyCTGT;
   int32_t iRangeChange, iRangeFactor, iRangeFactorMultiplier;
   struct SOLDIERTYPE *pHim;
@@ -277,8 +277,8 @@ int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyTh
 
     pMe->sGridNo = sMyGridNo;  // but pretend I'm standing at sMyGridNo
     ConvertGridNoToCenterCellXY(sMyGridNo, &sTempX, &sTempY);
-    pMe->dXPos = (FLOAT)sTempX;
-    pMe->dYPos = (FLOAT)sTempY;
+    pMe->dXPos = (float)sTempX;
+    pMe->dYPos = (float)sTempY;
   }
 
   // if this is theoretical, and he's not actually at hisGrid right now
@@ -289,8 +289,8 @@ int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyTh
 
     pHim->sGridNo = sHisGridNo;  // but pretend he's standing at sHisGridNo
     ConvertGridNoToCenterCellXY(sHisGridNo, &sTempX, &sTempY);
-    pHim->dXPos = (FLOAT)sTempX;
-    pHim->dYPos = (FLOAT)sTempY;
+    pHim->dXPos = (float)sTempX;
+    pHim->dYPos = (float)sTempY;
   }
 
   if (InWaterOrGas(pHim, sHisGridNo)) {
@@ -336,8 +336,8 @@ int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyTh
     if (pHim->sGridNo != sHisGridNo) {
       pHim->sGridNo = sHisGridNo;
       ConvertGridNoToCenterCellXY(sHisGridNo, &sTempX, &sTempY);
-      pHim->dXPos = (FLOAT)sTempX;
-      pHim->dYPos = (FLOAT)sTempY;
+      pHim->dXPos = (float)sTempX;
+      pHim->dYPos = (float)sTempY;
     }
     // bMyCTGT = ChanceToGetThrough(pMe,sHisGridNo,FAKE,ACTUAL,TESTWALLS,9999,M9PISTOL,NOT_FOR_LOS);
     // // assume a gunshot bMyCTGT = SoldierToLocationChanceToGetThrough( pMe, sHisGridNo,
@@ -800,7 +800,7 @@ int16_t FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, int32_t morale,
   // so we don't consider it
   gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // HandleMyMouseCursor(KEYBOARDALSO);
@@ -1311,7 +1311,7 @@ int16_t FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier) {
     // so we don't consider it
     gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-    // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+    // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
     for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
       for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
         // calculate the next potential gridno
@@ -1413,7 +1413,7 @@ int16_t FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
     // so we don't consider it
     gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-    // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+    // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
     for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
       for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
         // calculate the next potential gridno
@@ -1577,7 +1577,7 @@ int8_t SearchForItems(struct SOLDIERTYPE *pSoldier, int8_t bReason, uint16_t usI
   FindBestPath(pSoldier, NOWHERE, pSoldier->bLevel,
                DetermineMovementMode(pSoldier, AI_ACTION_PICKUP_ITEM), COPYREACHABLE, 0);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno
@@ -1797,7 +1797,7 @@ int16_t FindClosestDoor(struct SOLDIERTYPE *pSoldier) {
   // NumMessage("sMaxUp = ",sMaxUp);
   sMaxDown = min(iSearchRange, MAXROW - ((pSoldier->sGridNo / MAXROW) + 1));
   // NumMessage("sMaxDown = ",sMaxDown);
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno
@@ -1973,7 +1973,7 @@ int16_t FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, int8_t *pbDirec
   // so we don't consider it
   gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno

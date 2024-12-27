@@ -177,9 +177,9 @@ void DisableAimPolicyButton();
 void ResetAimPolicyButtons();
 void ChangingAimPoliciesSubPage(uint8_t ubSubPageNumber);
 
-BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber);
-uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber);
-uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber);
+BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, uint8_t ubPageNum, float fNumber);
+uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, uint8_t ubPageNum, float fNumber);
+uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, uint8_t ubPageNum, float fNumber);
 
 void GameInitAimPolicies() {}
 
@@ -269,132 +269,132 @@ void RenderAimPolicies() {
 
     case 2:
       // Display the Definitions title
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, DEFINITIONS, (FLOAT)1.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, DEFINITIONS, (float)1.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_1, (FLOAT)1.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_1, (float)1.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_2, (FLOAT)1.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_2, (float)1.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_3, (FLOAT)1.3) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_3, (float)1.3) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_4, (FLOAT)1.4);
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, DEFINITIONS_4, (float)1.4);
       break;
 
     case 3:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, LENGTH_OF_ENGAGEMENT, (FLOAT)2.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, LENGTH_OF_ENGAGEMENT, (float)2.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1, (FLOAT)2.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1, (float)2.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_1, (FLOAT)2.11) +
+          DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_1, (float)2.11) +
           AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_2, (FLOAT)2.12) +
+          DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_2, (float)2.12) +
           AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_3, (FLOAT)2.13) +
+          DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_3, (float)2.13) +
           AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_2, (FLOAT)2.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_2, (float)2.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 4:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, LOCATION_0F_ENGAGEMENT, (FLOAT)3.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, LOCATION_0F_ENGAGEMENT, (float)3.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_1, (FLOAT)3.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_1, (float)3.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2, (FLOAT)3.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2, (float)3.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
 
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_1, (FLOAT)3.21) +
+          DisplayAimPolicySubParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_1, (float)3.21) +
           AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_2, (FLOAT)3.22) +
+          DisplayAimPolicySubParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_2, (float)3.22) +
           AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_3, (FLOAT)3.23) +
+          DisplayAimPolicySubParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_3, (float)3.23) +
           AIM_POLICY_PARAGRAPH_GAP;
       //			usNumPixles += DisplayAimPolicySubParagraph(usNumPixles,
-      // LOCATION_0F_ENGAGEMENT_2_4, (FLOAT)3.24) + AIM_POLICY_PARAGRAPH_GAP;
+      // LOCATION_0F_ENGAGEMENT_2_4, (float)3.24) + AIM_POLICY_PARAGRAPH_GAP;
 
       usNumPixles +=
-          DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_4, (FLOAT)3.3) +
+          DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_2_4, (float)3.3) +
           AIM_POLICY_PARAGRAPH_GAP;
 
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_3, (FLOAT)3.4) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LOCATION_0F_ENGAGEMENT_3, (float)3.4) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 5:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, CONTRACT_EXTENSIONS, (FLOAT)4.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, CONTRACT_EXTENSIONS, (float)4.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_1, (FLOAT)4.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_1, (float)4.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_2, (FLOAT)4.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_2, (float)4.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_3, (FLOAT)4.3) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_3, (float)4.3) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 6:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, TERMS_OF_PAYMENT, (FLOAT)5.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, TERMS_OF_PAYMENT, (float)5.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_PAYMENT_1, (FLOAT)5.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_PAYMENT_1, (float)5.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 7:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, TERMS_OF_ENGAGEMENT, (FLOAT)6.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, TERMS_OF_ENGAGEMENT, (float)6.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_ENGAGEMENT_1, (FLOAT)6.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_ENGAGEMENT_1, (float)6.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_ENGAGEMENT_2A, (FLOAT)6.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_ENGAGEMENT_2A, (float)6.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_ENGAGEMENT_2B, (FLOAT)0.0) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, TERMS_OF_ENGAGEMENT_2B, (float)0.0) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 8:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, ENGAGEMENT_TERMINATION, (FLOAT)7.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, ENGAGEMENT_TERMINATION, (float)7.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1, (FLOAT)7.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1, (float)7.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
 
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1_1, (FLOAT)7.11) +
+          DisplayAimPolicySubParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1_1, (float)7.11) +
           AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1_2, (FLOAT)7.12) +
+          DisplayAimPolicySubParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1_2, (float)7.12) +
           AIM_POLICY_PARAGRAPH_GAP;
       usNumPixles +=
-          DisplayAimPolicySubParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1_3, (FLOAT)7.13) +
+          DisplayAimPolicySubParagraph(usNumPixles, ENGAGEMENT_TERMINATION_1_3, (float)7.13) +
           AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 9:
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, EQUIPMENT_AND_INVENTORY, (FLOAT)8.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, EQUIPMENT_AND_INVENTORY, (float)8.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_1, (FLOAT)8.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_1, (float)8.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_2, (FLOAT)8.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_2, (float)8.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
 
     case 10:
       DisableAimPolicyButton();
 
-      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, POLICY_MEDICAL, (FLOAT)9.0);
+      DisplayAimPolicyTitle(AIM_POLICY_SUBTITLE_Y, POLICY_MEDICAL, (float)9.0);
       usNumPixles = AIM_POLICY_PARAGRAPH_Y;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_1, (FLOAT)9.1) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_1, (float)9.1) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_2, (FLOAT)9.2) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_2, (float)9.2) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_3A, (FLOAT)9.3) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_3A, (float)9.3) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_3B, (FLOAT)0.0) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_3B, (float)0.0) +
                      AIM_POLICY_PARAGRAPH_GAP;
-      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_4, (FLOAT)9.4) +
+      usNumPixles += DisplayAimPolicyParagraph(usNumPixles, POLICY_MEDICAL_4, (float)9.4) +
                      AIM_POLICY_PARAGRAPH_GAP;
       break;
   }
@@ -620,7 +620,7 @@ BOOLEAN ExitAgreementButton(void) {
   return (TRUE);
 }
 
-BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber) {
+BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, uint8_t ubPageNum, float fNumber) {
   wchar_t sText[400];
   uint32_t uiStartLoc = 0;
 
@@ -633,7 +633,7 @@ BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber)
   return (TRUE);
 }
 
-uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber) {
+uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, uint8_t ubPageNum, float fNumber) {
   wchar_t sText[400];
   wchar_t sTemp[20];
   uint32_t uiStartLoc = 0;
@@ -657,7 +657,7 @@ uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNu
   return (usNumPixels);
 }
 
-uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, uint8_t ubPageNum, FLOAT fNumber) {
+uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, uint8_t ubPageNum, float fNumber) {
   wchar_t sText[400];
   wchar_t sTemp[20];
   uint32_t uiStartLoc = 0;

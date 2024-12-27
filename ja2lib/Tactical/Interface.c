@@ -1604,7 +1604,7 @@ void EndOverlayMessage() {
 
 void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
                      int16_t sHeight) {
-  FLOAT dWidth, dPercentage;
+  float dWidth, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
@@ -1624,7 +1624,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
 
   // NOW DO BLEEDING
   if (pSoldier->bBleeding) {
-    dPercentage = (FLOAT)(pSoldier->bBleeding + pSoldier->bLife + bBandage) / (FLOAT)100;
+    dPercentage = (float)(pSoldier->bBleeding + pSoldier->bLife + bBandage) / (float)100;
     dWidth = dPercentage * sWidth;
     usLineColor = Get16BPPColor(FROMRGB(240, 240, 20));
     RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (int32_t)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
@@ -1632,26 +1632,26 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
   }
 
   if (bBandage) {
-    dPercentage = (FLOAT)(pSoldier->bLife + bBandage) / (FLOAT)100;
+    dPercentage = (float)(pSoldier->bLife + bBandage) / (float)100;
     dWidth = dPercentage * sWidth;
     usLineColor = Get16BPPColor(FROMRGB(222, 132, 132));
     RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (int32_t)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
                   pDestBuf);
   }
 
-  dPercentage = (FLOAT)pSoldier->bLife / (FLOAT)100;
+  dPercentage = (float)pSoldier->bLife / (float)100;
   dWidth = dPercentage * sWidth;
   usLineColor = Get16BPPColor(FROMRGB(200, 0, 0));
   RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (int32_t)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
                 pDestBuf);
 
-  dPercentage = (FLOAT)(pSoldier->bBreathMax) / (FLOAT)100;
+  dPercentage = (float)(pSoldier->bBreathMax) / (float)100;
   dWidth = dPercentage * sWidth;
   usLineColor = Get16BPPColor(FROMRGB(20, 20, 150));
   RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (int32_t)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
                 pDestBuf);
 
-  dPercentage = (FLOAT)(pSoldier->bBreath) / (FLOAT)100;
+  dPercentage = (float)(pSoldier->bBreath) / (float)100;
   dWidth = dPercentage * sWidth;
   usLineColor = Get16BPPColor(FROMRGB(100, 100, 220));
   RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (int32_t)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
@@ -2483,7 +2483,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, wchar_t *psString) {
   uint32_t uiBarToUseInUpDate = 0;
   BOOLEAN fDoLimitBar = FALSE;
 
-  FLOAT dNumStepsPerEnemy, dLength, dCurSize;
+  float dNumStepsPerEnemy, dLength, dCurSize;
 
   memset(&VObjectDesc, 0, sizeof(VObjectDesc));
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -2608,7 +2608,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, wchar_t *psString) {
 
   if (fDoLimitBar) {
     dNumStepsPerEnemy =
-        (FLOAT)((FLOAT)PROG_BAR_LENGTH / (FLOAT)gTacticalStatus.usTactialTurnLimitMax);
+        (float)((float)PROG_BAR_LENGTH / (float)gTacticalStatus.usTactialTurnLimitMax);
 
     // Alrighty, do some fun stuff!
 
@@ -3027,10 +3027,10 @@ typedef struct {
   BOOLEAN fActivePowerBar;
   BOOLEAN fAtEndHeight;
   int16_t sTargetGridNo;
-  FLOAT dInitialForce;
-  FLOAT dForce;
-  FLOAT dDegrees;
-  FLOAT dMaxForce;
+  float dInitialForce;
+  float dForce;
+  float dDegrees;
+  float dMaxForce;
   uint8_t ubPowerIndex;
 
 } AIMCUBE_UI_DATA;
@@ -3052,14 +3052,14 @@ void CalculateAimCubeUIPhysics() {
   }
 
   if (gCubeUIData.fActivePowerBar) {
-    gCubeUIData.dForce = (gCubeUIData.dMaxForce * ((FLOAT)gCubeUIData.ubPowerIndex / (FLOAT)10));
+    gCubeUIData.dForce = (gCubeUIData.dMaxForce * ((float)gCubeUIData.ubPowerIndex / (float)10));
 
     // Limit to the max force...
     if (gCubeUIData.dForce > gCubeUIData.dMaxForce) {
       gCubeUIData.dForce = gCubeUIData.dMaxForce;
     }
 
-    gCubeUIData.dDegrees = (FLOAT)CalculateLaunchItemAngle(
+    gCubeUIData.dDegrees = (float)CalculateLaunchItemAngle(
         gCubeUIData.pSoldier, gCubeUIData.sGridNo, ubHeight, gCubeUIData.dForce,
         &(gCubeUIData.pSoldier->inv[HANDPOS]), &(gCubeUIData.sTargetGridNo));
   }
@@ -3128,7 +3128,7 @@ void IncrementAimCubeUI() {
   if (gCubeUIData.fActivePowerBar) {
     if (gCubeUIData.ubPowerIndex == 10) {
       // Start back to basic7
-      gCubeUIData.dDegrees = (FLOAT)(PI / 4);
+      gCubeUIData.dDegrees = (float)(PI / 4);
       gCubeUIData.dInitialForce = gCubeUIData.dForce;
 
       // OK, determine which power to use.....
@@ -3340,8 +3340,8 @@ void HandleMultiPurposeLocator() {
 }
 
 void RenderTopmostMultiPurposeLocator() {
-  FLOAT dOffsetX, dOffsetY;
-  FLOAT dTempX_S, dTempY_S;
+  float dOffsetX, dOffsetY;
+  float dTempX_S, dTempY_S;
   int16_t sX, sY, sXPos, sYPos;
   int32_t iBack;
 
@@ -3351,8 +3351,8 @@ void RenderTopmostMultiPurposeLocator() {
 
   ConvertGridNoToCenterCellXY(gsMultiPurposeLocatorGridNo, &sX, &sY);
 
-  dOffsetX = (FLOAT)(sX - gsRenderCenterX);
-  dOffsetY = (FLOAT)(sY - gsRenderCenterY);
+  dOffsetX = (float)(sX - gsRenderCenterX);
+  dOffsetY = (float)(sY - gsRenderCenterY);
 
   // Calculate guy's position
   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);

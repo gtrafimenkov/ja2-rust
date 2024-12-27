@@ -3641,31 +3641,31 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
   SGPRect SrcRect;
   SGPRect DestRect;
   static SGPRect LastRect;
-  FLOAT usTemp;
+  float usTemp;
 
   if (fForward) {
     if (fInit) ubCount = 1;
 
-    usTemp = (331 - 125) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
+    usTemp = (331 - 125) / (float)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
     usPosX = (uint16_t)(331 - usTemp * ubCount);
 
-    usTemp = (490 - 405) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
+    usTemp = (490 - 405) / (float)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
     usPosRightX = (uint16_t)(405 + usTemp * ubCount);
 
-    usTemp = (AIM_MEMBER_VIDEO_TITLE_START_Y - 96) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
+    usTemp = (AIM_MEMBER_VIDEO_TITLE_START_Y - 96) / (float)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
     usPosY = (uint16_t)(AIM_MEMBER_VIDEO_TITLE_START_Y - usTemp * ubCount);
 
     usPosBottomY = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
   } else {
     if (fInit) ubCount = AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1;
 
-    usTemp = (331 - 125) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
+    usTemp = (331 - 125) / (float)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
     usPosX = (uint16_t)(331 - usTemp * ubCount);
 
-    usTemp = (490 - 405) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
+    usTemp = (490 - 405) / (float)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
     usPosRightX = (uint16_t)(405 + usTemp * ubCount);
 
-    usTemp = (AIM_MEMBER_VIDEO_TITLE_START_Y - 96) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
+    usTemp = (AIM_MEMBER_VIDEO_TITLE_START_Y - 96) / (float)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
     usPosY = (uint16_t)(AIM_MEMBER_VIDEO_TITLE_START_Y - usTemp * ubCount);
 
     usPosBottomY = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;

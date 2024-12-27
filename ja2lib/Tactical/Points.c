@@ -276,7 +276,7 @@ int16_t ActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bD
       case RUNNING:
       case ADULTMONSTER_WALKING:
       case BLOODCAT_RUN:
-        sPoints = (int16_t)(DOUBLE)((sTileCost / RUNDIVISOR));
+        sPoints = (int16_t)(double)((sTileCost / RUNDIVISOR));
         break;
 
       case CROW_FLY:
@@ -343,7 +343,7 @@ int16_t EstimateActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, i
       case RUNNING:
       case ADULTMONSTER_WALKING:
       case BLOODCAT_RUN:
-        sPoints = (int16_t)(DOUBLE)((sTileCost / RUNDIVISOR));
+        sPoints = (int16_t)(double)((sTileCost / RUNDIVISOR));
         break;
 
       case CROW_FLY:
@@ -520,7 +520,7 @@ void DeductPoints(struct SOLDIERTYPE *pSoldier, int16_t sAPCost, int16_t sBPCost
     }
 
     // Get new breath
-    bNewBreath = (uint8_t)(pSoldier->bBreathMax - ((FLOAT)pSoldier->sBreathRed / (FLOAT)100));
+    bNewBreath = (uint8_t)(pSoldier->bBreathMax - ((float)pSoldier->sBreathRed / (float)100));
 
     if (bNewBreath > 100) {
       bNewBreath = 100;

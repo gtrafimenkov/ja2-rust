@@ -1308,7 +1308,7 @@ int32_t FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel
           case ADULTMONSTER_WALKING:
             // save on casting
             ubAPCost = ubAPCost * 10 / ((uint8_t)(RUNDIVISOR * 10));
-            // ubAPCost = (int16_t)(DOUBLE)( (sTileCost / RUNDIVISOR) );	break;
+            // ubAPCost = (int16_t)(double)( (sTileCost / RUNDIVISOR) );	break;
             break;
           case WALKING:
           case ROBOT_WALK:
@@ -2078,7 +2078,7 @@ int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRou
           // so, then we must modify it for other movement styles and accumulate
           switch (usMovementModeToUseForAPs) {
             case RUNNING:
-              sPoints += (int16_t)(DOUBLE)((sTileCost / RUNDIVISOR)) + sExtraCostStand;
+              sPoints += (int16_t)(double)((sTileCost / RUNDIVISOR)) + sExtraCostStand;
               break;
             case WALKING:
               sPoints += (sTileCost + WALKCOST) + sExtraCostStand;
@@ -2114,7 +2114,7 @@ int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRou
         sPointsSwat += (sTileCost + SWATCOST) + sExtraCostSwat;
 
         // now get cost as if RUNNING
-        sPointsRun += (int16_t)(DOUBLE)((sTileCost / RUNDIVISOR)) + sExtraCostStand;
+        sPointsRun += (int16_t)(double)((sTileCost / RUNDIVISOR)) + sExtraCostStand;
       }
 
       if (iCnt == 0 && bPlot) {

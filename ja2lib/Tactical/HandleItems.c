@@ -3022,15 +3022,15 @@ void RenderTopmostFlashingItems() {
 
         // Update radio locator
         {
-          FLOAT dOffsetX, dOffsetY;
-          FLOAT dTempX_S, dTempY_S;
+          float dOffsetX, dOffsetY;
+          float dTempX_S, dTempY_S;
           int16_t sX, sY, sXPos, sYPos;
           int32_t iBack;
 
           ConvertGridNoToCenterCellXY(pItemPool->sGridNo, &sX, &sY);
 
-          dOffsetX = (FLOAT)(sX - gsRenderCenterX);
-          dOffsetY = (FLOAT)(sY - gsRenderCenterY);
+          dOffsetX = (float)(sX - gsRenderCenterX);
+          dOffsetY = (float)(sY - gsRenderCenterY);
 
           // Calculate guy's position
           FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);

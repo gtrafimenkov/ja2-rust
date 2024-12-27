@@ -512,7 +512,7 @@ void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, int32_t iReason)
 }
 
 void CalculateNewSliderIncrement(uint32_t uiSliderID, uint16_t usPos) {
-  FLOAT dNewIncrement = 0.0;
+  float dNewIncrement = 0.0;
   SLIDER *pSlider;
   uint16_t usOldIncrement;
   BOOLEAN fLastSpot = FALSE;
@@ -524,9 +524,9 @@ void CalculateNewSliderIncrement(uint32_t uiSliderID, uint16_t usPos) {
   usOldIncrement = pSlider->usCurrentIncrement;
 
   if (pSlider->uiFlags & SLIDER_VERTICAL) {
-    if (usPos >= (uint16_t)(pSlider->usHeight * (FLOAT).99)) fLastSpot = TRUE;
+    if (usPos >= (uint16_t)(pSlider->usHeight * (float).99)) fLastSpot = TRUE;
 
-    if (usPos <= (uint16_t)(pSlider->usHeight * (FLOAT).01)) fFirstSpot = TRUE;
+    if (usPos <= (uint16_t)(pSlider->usHeight * (float).01)) fFirstSpot = TRUE;
 
     // pSlider->usNumberOfIncrements
     if (fFirstSpot)
@@ -534,9 +534,9 @@ void CalculateNewSliderIncrement(uint32_t uiSliderID, uint16_t usPos) {
     else if (fLastSpot)
       dNewIncrement = pSlider->usNumberOfIncrements;
     else
-      dNewIncrement = (usPos / (FLOAT)pSlider->usHeight) * pSlider->usNumberOfIncrements;
+      dNewIncrement = (usPos / (float)pSlider->usHeight) * pSlider->usNumberOfIncrements;
   } else {
-    dNewIncrement = (usPos / (FLOAT)pSlider->usWidth) * pSlider->usNumberOfIncrements;
+    dNewIncrement = (usPos / (float)pSlider->usWidth) * pSlider->usNumberOfIncrements;
   }
 
   pSlider->usCurrentIncrement = (uint16_t)(dNewIncrement + .5);
@@ -588,7 +588,7 @@ void CalculateNewSliderBoxPosition(SLIDER *pSlider) {
       pSlider->usCurrentSliderBoxPosition = pSlider->usPosY;  // - pSlider->ubSliderHeight / 2;
     } else {
       pSlider->usCurrentSliderBoxPosition =
-          pSlider->usPosY + (uint16_t)((pSlider->usHeight / (FLOAT)pSlider->usNumberOfIncrements) *
+          pSlider->usPosY + (uint16_t)((pSlider->usHeight / (float)pSlider->usNumberOfIncrements) *
                                        pSlider->usCurrentIncrement);
     }
 
@@ -604,7 +604,7 @@ void CalculateNewSliderBoxPosition(SLIDER *pSlider) {
           pSlider->usPosX + pSlider->usWidth - 8 + 1;  // - minus box width
     } else {
       pSlider->usCurrentSliderBoxPosition =
-          pSlider->usPosX + (uint16_t)((pSlider->usWidth / (FLOAT)pSlider->usNumberOfIncrements) *
+          pSlider->usPosX + (uint16_t)((pSlider->usWidth / (float)pSlider->usNumberOfIncrements) *
                                        pSlider->usCurrentIncrement);
     }
     usMaxPos = pSlider->usPosX + pSlider->usWidth - 8 + 1;

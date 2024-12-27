@@ -198,7 +198,7 @@ BOOLEAN InitializeInputManager(void) {
   gfShiftState = FALSE;
   gfAltState = FALSE;
   gfCtrlState = FALSE;
-  // Initialize variables pertaining to DOUBLE CLIK stuff
+  // Initialize variables pertaining to double CLIK stuff
   gfTrackDblClick = TRUE;
   guiDoubleClkDelay = DBL_CLK_TIME;
   guiSingleClickTimer = 0;
@@ -1035,7 +1035,7 @@ void GetRestrictedClipCursor(SGPRect *pRectangle) { GetClipCursor((RECT *)pRecta
 BOOLEAN IsCursorRestricted(void) { return (fCursorWasClipped); }
 
 void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {
-  FLOAT flNewXPos, flNewYPos;
+  float flNewXPos, flNewYPos;
 
   // Wizardry NOTE: This function currently doesn't quite work right for in any Windows resolution
   // other than 640x480. mouse_event() uses your current Windows resolution to calculate the
@@ -1050,8 +1050,8 @@ void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {
   // Alex Meduna, Dec. 3, 1997
 
   // Adjust coords based on our resolution
-  flNewXPos = ((FLOAT)uiNewXPos / SCREEN_WIDTH) * 65536;
-  flNewYPos = ((FLOAT)uiNewYPos / SCREEN_HEIGHT) * 65536;
+  flNewXPos = ((float)uiNewXPos / SCREEN_WIDTH) * 65536;
+  flNewYPos = ((float)uiNewYPos / SCREEN_HEIGHT) * 65536;
 
   mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, (uint32_t)flNewXPos, (uint32_t)flNewYPos, 0,
               0);

@@ -84,8 +84,8 @@ typedef struct {
   uint8_t ubType;
   uint8_t ubBodyType;
   int16_t sGridNo;
-  FLOAT dXPos;
-  FLOAT dYPos;
+  float dXPos;
+  float dYPos;
   int16_t sHeightAdjustment;
 
   PaletteRepID HeadPal;  // Palette reps
@@ -121,8 +121,8 @@ typedef struct {
   uint16_t *pShades[NUM_CORPSE_SHADES];
   int16_t sGraphicNum;
   int32_t iCachedTileID;
-  FLOAT dXPos;
-  FLOAT dYPos;
+  float dXPos;
+  float dYPos;
 
   BOOLEAN fAttractCrowsOnlyWhenOnScreen;
   int32_t iID;
