@@ -24,14 +24,14 @@ void SetQueue(uint8_t ubQueueID, HLIST hQueue);
 
 BOOLEAN InitializeEventManager() {
   // Create Queue
-  hEventQueue = CreateList(QUEUE_RESIZE, sizeof(PTR));
+  hEventQueue = CreateList(QUEUE_RESIZE, sizeof(void *));
 
   if (hEventQueue == NULL) {
     return (FALSE);
   }
 
   // Create Delay Queue
-  hDelayEventQueue = CreateList(QUEUE_RESIZE, sizeof(PTR));
+  hDelayEventQueue = CreateList(QUEUE_RESIZE, sizeof(void *));
 
   if (hDelayEventQueue == NULL) {
     return (FALSE);
@@ -39,7 +39,7 @@ BOOLEAN InitializeEventManager() {
 
   // Create Demand Queue (events on this queue are only processed when specifically
   // called for by code)
-  hDemandEventQueue = CreateList(QUEUE_RESIZE, sizeof(PTR));
+  hDemandEventQueue = CreateList(QUEUE_RESIZE, sizeof(void *));
 
   if (hDemandEventQueue == NULL) {
     return (FALSE);
@@ -64,7 +64,7 @@ BOOLEAN ShutdownEventManager() {
   return (TRUE);
 }
 
-BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
+BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, void *pEventData, uint32_t uiDataSize,
                  uint8_t ubQueueID) {
   EVENT *pEvent;
   uint32_t uiEventSize = sizeof(EVENT);

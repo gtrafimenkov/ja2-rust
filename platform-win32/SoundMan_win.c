@@ -40,8 +40,8 @@ typedef struct {
   uint32_t uiSpeed;      // Playback frequency
   BOOLEAN fStereo;       // Stereo/Mono
   uint8_t ubBits;        // 8/16 bits
-  PTR pData;             // pointer to sample data memory
-  PTR pSoundStart;       // pointer to start of sound data
+  void *pData;           // pointer to sample data memory
+  void *pSoundStart;     // pointer to start of sound data
   uint32_t uiCacheHits;
 
   uint32_t uiTimeNext;  // Random sound data
@@ -1268,7 +1268,7 @@ BOOLEAN SoundProcessWAVHeader(uint32_t uiSample) {
   pSampleList[uiSample].fStereo = (BOOLEAN)(ailInfo.channels == 2);
   pSampleList[uiSample].ubBits = (uint8_t)ailInfo.bits;
 
-  pSampleList[uiSample].pSoundStart = (PTR)ailInfo.data_ptr;
+  pSampleList[uiSample].pSoundStart = (void *)ailInfo.data_ptr;
   pSampleList[uiSample].uiSoundSize = ailInfo.data_len;
 
   pSampleList[uiSample].uiAilWaveFormat = ailInfo.format;

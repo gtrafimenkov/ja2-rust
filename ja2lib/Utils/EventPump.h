@@ -217,8 +217,8 @@ typedef struct {
 } EV_S_UPDATENETWORKSOLDIER;
 
 // FUNCTIONS
-BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData);
-BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, PTR pEventData);
+BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, void* pEventData);
+BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, void* pEventData);
 BOOLEAN DequeAllGameEvents(BOOLEAN fExecute);
 BOOLEAN DequeueAllDemandGameEvents(BOOLEAN fExecute);
 

@@ -30,9 +30,9 @@ extern BOOLEAN FileMan_Delete(STR strFilename);
 extern HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose);
 extern void FileMan_Close(HWFILE);
 
-extern BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
+extern BOOLEAN FileMan_Read(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
                             uint32_t *puiBytesRead);
-extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
+extern BOOLEAN FileMan_Write(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
                              uint32_t *puiBytesWritten);
 
 extern BOOLEAN FileMan_Seek(HWFILE, uint32_t uiDistance, uint8_t uiHow);

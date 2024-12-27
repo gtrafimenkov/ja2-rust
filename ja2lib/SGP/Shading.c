@@ -125,7 +125,7 @@ __asm {
 		mov		edi, pMapPalette
 		mov		ebx, pTable
 
-		mov		uint8_t PTR [ebx],0						; Index 0 is always 0, for trans col
+		mov		uint8_t void* [ebx],0						; Index 0 is always 0, for trans col
 		inc		ebx
 
 		add		esi,4												; Goto next color entry

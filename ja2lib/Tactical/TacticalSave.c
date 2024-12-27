@@ -2359,7 +2359,7 @@ uint8_t *GetRotationArray(void) {
   }
 }
 
-BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
+BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
                                 uint32_t *puiBytesRead) {
   uint32_t uiLoop;
   uint8_t ubArrayIndex = 0;
@@ -2388,7 +2388,7 @@ BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
   return (fRet);
 }
 
-BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
+BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
                                  uint32_t *puiBytesWritten) {
   uint32_t uiLoop;
   uint8_t ubArrayIndex = 0;
@@ -2429,7 +2429,7 @@ uint8_t ubRotationArray[46] = {132, 235, 125, 99,  15,  220, 140, 89,  205, 132,
                                156, 140, 201, 68,  184, 13,  45,  69,  102, 185, 122, 225,
                                23,  250, 160, 220, 114, 240, 64,  175, 057, 233};
 
-BOOLEAN JA2EncryptedFileRead(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
+BOOLEAN JA2EncryptedFileRead(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
                              uint32_t *puiBytesRead) {
   uint32_t uiLoop;
   uint8_t ubArrayIndex = 0;
@@ -2456,7 +2456,7 @@ BOOLEAN JA2EncryptedFileRead(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
   return (fRet);
 }
 
-BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
+BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
                               uint32_t *puiBytesWritten) {
   uint32_t uiLoop;
   uint8_t ubArrayIndex = 0;

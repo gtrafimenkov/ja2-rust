@@ -58,7 +58,7 @@ void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurf
 void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *ppOldSurface2);
 void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACEDESC pSurfaceDesc,
                    uint32_t uiFlags, HANDLE hEvent);
-void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
+void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, void *pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
 void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, uint32_t uiX, uint32_t uiY,
                       LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, uint32_t uiTrans);
@@ -246,7 +246,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   CHAR8 ClassName[] = APPLICATION_NAME;
   DDSURFACEDESC SurfaceDescription;
   DDCOLORKEY ColorKey;
-  PTR pTmpPointer;
+  void *pTmpPointer;
 
 #ifndef WINDOWED_MODE
   DDSCAPS SurfaceCaps;
@@ -1982,7 +1982,7 @@ LPDIRECTDRAWSURFACE2 GetMouseBufferObject(void) {
   return gpMouseCursor;
 }
 
-PTR LockPrimarySurface(uint32_t *uiPitch) {
+void *LockPrimarySurface(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2015,7 +2015,7 @@ void UnlockPrimarySurface(void) {
   }
 }
 
-PTR LockBackBuffer(uint32_t *uiPitch) {
+void *LockBackBuffer(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2064,7 +2064,7 @@ void UnlockBackBuffer(void) {
   }
 }
 
-PTR LockFrameBuffer(uint32_t *uiPitch) {
+void *LockFrameBuffer(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2098,7 +2098,7 @@ void UnlockFrameBuffer(void) {
   }
 }
 
-PTR LockMouseBuffer(uint32_t *uiPitch) {
+void *LockMouseBuffer(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2192,7 +2192,7 @@ BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitM
 }
 
 BOOLEAN EraseMouseCursor() {
-  PTR pTmpPointer;
+  void *pTmpPointer;
   uint32_t uiPitch;
 
   //
@@ -2220,7 +2220,7 @@ void DirtyCursor() { guiMouseBufferState = BUFFER_DIRTY; }
 
 BOOLEAN SetCurrentCursor(uint16_t usVideoObjectSubIndex, uint16_t usOffsetX, uint16_t usOffsetY) {
   BOOLEAN ReturnValue;
-  PTR pTmpPointer;
+  void *pTmpPointer;
   uint32_t uiPitch;
   ETRLEObject pETRLEPointer;
 
@@ -3347,8 +3347,8 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->usHeight = usHeight;
   hVSurface->usWidth = usWidth;
   hVSurface->ubBitDepth = ubBitDepth;
-  hVSurface->pSurfaceData1 = (PTR)lpDDS;
-  hVSurface->pSurfaceData = (PTR)lpDDS2;
+  hVSurface->pSurfaceData1 = (void *)lpDDS;
+  hVSurface->pSurfaceData = (void *)lpDDS2;
   hVSurface->pSavedSurfaceData1 = NULL;
   hVSurface->pSavedSurfaceData = NULL;
   hVSurface->pPalette = NULL;
@@ -4239,7 +4239,7 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
   hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
   hVSurface->ubBitDepth = (uint8_t)PixelFormat.dwRGBBitCount;
-  hVSurface->pSurfaceData = (PTR)lpDDSurface;
+  hVSurface->pSurfaceData = (void *)lpDDSurface;
   hVSurface->pSurfaceData1 = NULL;
   hVSurface->pSavedSurfaceData = NULL;
   hVSurface->RegionList = CreateList(DEFAULT_NUM_REGIONS, sizeof(VSURFACE_REGION));
@@ -5342,7 +5342,7 @@ void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACED
   ATTEMPT(ReturnCode);
 }
 
-void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData) {
+void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, void *pSurfaceData) {
   Assert(pSurface != NULL);
 
   ATTEMPT(IDirectDrawSurface2_Unlock(pSurface, pSurfaceData));

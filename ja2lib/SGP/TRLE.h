@@ -16,7 +16,7 @@ typedef struct {
   uint32_t uiHeightEach;
   uint32_t uiTotalElements;
   TRLEObject *pTRLEObject;
-  PTR pPixData;
+  void *pPixData;
   uint32_t uiSizePixDataElem;
 
 } TRLEData;

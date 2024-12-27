@@ -132,7 +132,7 @@ HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile);
 BOOLEAN CloseLibraryFile(int16_t sLibraryID, uint32_t uiFileID);
 BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, int16_t *pLibraryID,
                                                  uint32_t *pFileNum);
-BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileIndex, PTR pData,
+BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileIndex, void *pData,
                             uint32_t uiBytesToRead, uint32_t *pBytesRead);
 BOOLEAN LibraryFileSeek(int16_t sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
                         uint8_t uiHowToSeek);

@@ -54,11 +54,12 @@ HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose)
 
 void FileMan_Close(HWFILE hFile) {}
 
-BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
+BOOLEAN FileMan_Read(HWFILE hFile, void *pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
   return FALSE;
 }
 
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t *puiBytesWritten) {
+BOOLEAN FileMan_Write(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
+                      uint32_t *puiBytesWritten) {
   return FALSE;
 }
 

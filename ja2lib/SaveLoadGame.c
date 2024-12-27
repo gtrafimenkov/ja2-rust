@@ -386,8 +386,8 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hwFile);
 BOOLEAN SaveSoldierStructure(HWFILE hFile);
 BOOLEAN LoadSoldierStructure(HWFILE hFile);
 
-// BOOLEAN		SavePtrInfo( PTR *pData, uint32_t uiSizeOfObject, HWFILE hFile );
-// BOOLEAN		LoadPtrInfo( PTR *pData, uint32_t uiSizeOfObject, HWFILE hFile );
+// BOOLEAN		SavePtrInfo( void* *pData, uint32_t uiSizeOfObject, HWFILE hFile );
+// BOOLEAN		LoadPtrInfo( void* *pData, uint32_t uiSizeOfObject, HWFILE hFile );
 
 BOOLEAN SaveEmailToSavedGame(HWFILE hFile);
 BOOLEAN LoadEmailFromSavedGame(HWFILE hFile);
@@ -2409,7 +2409,7 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
 }
 
 /*
-BOOLEAN SavePtrInfo( PTR *pData, uint32_t uiSizeOfObject, HWFILE hFile )
+BOOLEAN SavePtrInfo( void* *pData, uint32_t uiSizeOfObject, HWFILE hFile )
 {
         uint8_t		ubOne = 1;
         uint8_t		ubZero = 0;
@@ -2449,7 +2449,7 @@ to File" ) ); return(FALSE);
 
 
 
-BOOLEAN LoadPtrInfo( PTR *pData, uint32_t uiSizeOfObject, HWFILE hFile )
+BOOLEAN LoadPtrInfo( void* *pData, uint32_t uiSizeOfObject, HWFILE hFile )
 {
         uint8_t		ubOne = 1;
         uint8_t		ubZero = 0;

@@ -880,7 +880,7 @@ struct STRUCTURE *InternalAddStructureToWorld(
 }
 
 BOOLEAN AddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
-                            struct DB_STRUCTURE_REF *pDBStructureRef, PTR pLevelN) {
+                            struct DB_STRUCTURE_REF *pDBStructureRef, void *pLevelN) {
   struct STRUCTURE *pStructure;
 
   pStructure = InternalAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef,

@@ -23,7 +23,7 @@ typedef struct {
 BOOLEAN InitializeEventManager();
 BOOLEAN ShutdownEventManager();
 
-BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
+BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, void *pEventData, uint32_t uiDataSize,
                  uint8_t ubQueueID);
 BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID);
 BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID);

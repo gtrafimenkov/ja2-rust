@@ -283,7 +283,7 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
   return (TRUE);
 }
 
-BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileNum, PTR pData,
+BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileNum, void *pData,
                             uint32_t uiBytesToRead, uint32_t *pBytesRead) {
   uint32_t uiOffsetInLibrary, uiLength;
   SYS_FILE_HANDLE hLibraryFile;

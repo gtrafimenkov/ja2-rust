@@ -77,7 +77,7 @@ typedef struct tagETRLEObject {
 } ETRLEObject;
 
 typedef struct tagETRLEData {
-  PTR pPixData;
+  void *pPixData;
   uint32_t uiSizePixData;
   ETRLEObject *pETRLEObject;
   uint16_t usNumberOfObjects;
@@ -99,10 +99,10 @@ typedef struct {
   // data strucutre of the compresssed format, once developed.
   union {
     struct {
-      PTR pImageData;
+      void *pImageData;
     };
     struct {
-      PTR pCompressedImageData;
+      void *pCompressedImageData;
     };
     struct {
       uint8_t *p8BPPData;

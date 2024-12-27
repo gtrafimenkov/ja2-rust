@@ -98,14 +98,14 @@ BOOLEAN SaveTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
 
 uint32_t MercChecksum(struct SOLDIERTYPE *pSoldier);
 uint32_t ProfileChecksum(MERCPROFILESTRUCT *pProfile);
-BOOLEAN JA2EncryptedFileRead(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
+BOOLEAN JA2EncryptedFileRead(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
                              uint32_t *puiBytesRead);
-BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
+BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
                               uint32_t *puiBytesWritten);
 
-BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
+BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
                                 uint32_t *puiBytesRead);
-BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
+BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
                                  uint32_t *puiBytesWritten);
 
 // If hacker's mess with our save/temp files, this is our final line of defence.

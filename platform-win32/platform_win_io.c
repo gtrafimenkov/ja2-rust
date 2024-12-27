@@ -398,7 +398,7 @@ extern uint32_t uiTotalFileReadCalls;
 #include "Utils/TimerControl.h"
 #endif
 
-BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
+BOOLEAN FileMan_Read(HWFILE hFile, void *pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
   HANDLE hRealFile;
   DWORD dwNumBytesToRead;
   u32 dwNumBytesRead;
@@ -487,7 +487,8 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead, uint32_t *
 //
 //**************************************************************************
 
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t *puiBytesWritten) {
+BOOLEAN FileMan_Write(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
+                      uint32_t *puiBytesWritten) {
   HANDLE hRealFile;
   DWORD dwNumBytesToWrite, dwNumBytesWritten;
   BOOLEAN fRet;
