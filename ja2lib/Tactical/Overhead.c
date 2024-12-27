@@ -157,7 +157,7 @@ extern BOOLEAN gfSurrendered;
 #define NUM_RANDOM_SCENES 4
 
 #ifdef NETWORKED
-extern BYTE gfAmIHost;
+extern uint8_t gfAmIHost;
 extern BOOLEAN gfAmINetworked;
 #endif
 

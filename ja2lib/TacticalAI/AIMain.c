@@ -72,7 +72,7 @@ uint8_t gubAICounter;
 #define DEADLOCK_DELAY 15000
 
 // Very representing if this computer is the host, therefore controlling the ai
-extern BYTE gfAmIHost;
+extern uint8_t gfAmIHost;
 
 // #define TESTAI
 

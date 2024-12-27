@@ -62,7 +62,7 @@ typedef struct MINE_LOCATION_TYPE {
 
 typedef struct MINE_STATUS_TYPE {
   uint8_t ubMineType;  // type of mine (silver or gold)
-  BYTE filler1[3];
+  uint8_t filler1[3];
   uint32_t uiMaxRemovalRate;  // fastest rate we can move ore from this mine in period
 
   uint32_t uiRemainingOreSupply;  // the total value left to this mine (-1 means unlimited)
@@ -90,7 +90,7 @@ typedef struct MINE_STATUS_TYPE {
   uint32_t uiTimePlayerProductionStarted;  // time in minutes when 'fMineHasProducedForPlayer' was
                                            // first set
 
-  BYTE filler[11];  // reserved for expansion
+  uint8_t filler[11];  // reserved for expansion
 
 } MINE_STATUS_TYPE;
 

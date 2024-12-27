@@ -2414,7 +2414,7 @@ void SnapshotSmall(void) {
       //	fwrite( &usPixel555, sizeof(uint16_t), 1, disk);
       //		fwrite(	(void *)(((uint8_t *)SurfaceDescription.lpSurface) + ( iCountY * 640
       //*
-      // 2) + ( iCountX * 2 ) ), 2 * sizeof( BYTE ), 1, disk );
+      // 2) + ( iCountX * 2 ) ), 2 * sizeof( uint8_t ), 1, disk );
 
       *(pDest + (iCountY * 640) + (iCountX)) = *(pVideo + (iCountY * 640) + (iCountX));
     }
@@ -2790,26 +2790,26 @@ BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, uint32_t *puiIndex
   return TRUE;
 }
 
-BYTE *LockVideoSurface(uint32_t uiVSurface, uint32_t *puiPitch) {
+uint8_t *LockVideoSurface(uint32_t uiVSurface, uint32_t *puiPitch) {
   VSURFACE_NODE *curr;
 
   //
   // Check if given backbuffer or primary buffer
   //
   if (uiVSurface == PRIMARY_SURFACE) {
-    return (BYTE *)LockPrimarySurface(puiPitch);
+    return (uint8_t *)LockPrimarySurface(puiPitch);
   }
 
   if (uiVSurface == BACKBUFFER) {
-    return (BYTE *)LockBackBuffer(puiPitch);
+    return (uint8_t *)LockBackBuffer(puiPitch);
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    return (BYTE *)LockFrameBuffer(puiPitch);
+    return (uint8_t *)LockFrameBuffer(puiPitch);
   }
 
   if (uiVSurface == MOUSE_BUFFER) {
-    return (BYTE *)LockMouseBuffer(puiPitch);
+    return (uint8_t *)LockMouseBuffer(puiPitch);
   }
 
   //
@@ -3525,7 +3525,7 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
 // Lock must be followed by release
 // Pitch MUST be used for all width calculations ( Pitch is in bytes )
 // The time between Locking and unlocking must be minimal
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch) {
+uint8_t *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch) {
   DDSURFACEDESC SurfaceDescription;
 
   // Assertions
@@ -3540,7 +3540,7 @@ BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch) {
 
   *pPitch = SurfaceDescription.lPitch;
 
-  return (BYTE *)SurfaceDescription.lpSurface;
+  return (uint8_t *)SurfaceDescription.lpSurface;
 }
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
@@ -3558,7 +3558,7 @@ void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
 // Given an HIMAGE object, blit imagery into existing Video Surface. Can be from 8->16 BPP
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, uint16_t usX,
                                       uint16_t usY, SGPRect *pSrcRect) {
-  BYTE *pDest;
+  uint8_t *pDest;
   uint32_t fBufferBPP = 0;
   uint32_t uiPitch;
   uint16_t usEffectiveWidth;

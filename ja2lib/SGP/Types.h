@@ -31,7 +31,6 @@ typedef unsigned long FLAGS32;
 typedef unsigned char BOOLEAN;
 typedef void* PTR;
 typedef uint16_t HNDL;
-typedef uint8_t BYTE;
 typedef CHAR8 STRING512[512];
 typedef uint32_t HWFILE;
 

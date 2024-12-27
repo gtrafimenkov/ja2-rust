@@ -120,9 +120,9 @@ typedef struct {
 
 } image_type, *HIMAGE;
 
-#define SGPGetRValue(rgb) ((BYTE)(rgb))
-#define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
-#define SGPGetGValue(rgb) ((BYTE)(((uint16_t)(rgb)) >> 8))
+#define SGPGetRValue(rgb) ((uint8_t)(rgb))
+#define SGPGetBValue(rgb) ((uint8_t)((rgb) >> 16))
+#define SGPGetGValue(rgb) ((uint8_t)(((uint16_t)(rgb)) >> 8))
 
 // This function will return NULL if it fails, and call SetLastError() to set
 // error information
@@ -141,18 +141,19 @@ BOOLEAN ReleaseImageData(HIMAGE hImage, uint16_t fContents);
 BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents);
 
 // This function will run the appropriate copy function based on the type of HIMAGE object
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, uint16_t usDestWidth,
-                          uint16_t usDestHeight, uint16_t usX, uint16_t usY, SGPRect *srcRect);
+BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf,
+                          uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                          SGPRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   SGPRect *srcRect);
-BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    SGPRect *srcRect);
-BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     SGPRect *srcRect);
 

@@ -711,7 +711,7 @@ struct SOLDIERTYPE {
   BOOLEAN fIsSoldierDelayed;  // Is the soldier delayed Soldier
   BOOLEAN fSoldierUpdatedFromNetwork;
   uint32_t uiSoldierUpdateNumber;
-  BYTE ubSoldierUpdateType;
+  uint8_t ubSoldierUpdateType;
   // END
 
   int32_t iStartOfInsuranceContract;

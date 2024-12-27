@@ -72,10 +72,10 @@ struct TILE_IMAGERY {
   struct RelTileLoc *pTileLocData;
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   uint8_t ubTerrainID;
-  BYTE bRaisedObjectType;
+  uint8_t bRaisedObjectType;
 
   // Reserved for added room and 32-byte boundaries
-  BYTE bReserved[2];
+  uint8_t bReserved[2];
 };
 
 typedef struct {
@@ -114,7 +114,7 @@ typedef struct {
   };
 
   // Reserved for added room and 32-byte boundaries
-  BYTE bReserved[3];
+  uint8_t bReserved[3];
 
 } TILE_ELEMENT, *PTILE_ELEMENT;
 

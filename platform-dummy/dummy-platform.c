@@ -244,7 +244,7 @@ uint32_t guiVSurfaceSize = 0;
 
 BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, uint32_t *puiIndex) { return FALSE; };
 
-BYTE *LockVideoSurface(uint32_t uiVSurface, uint32_t *puiPitch) { return NULL; }
+uint8_t *LockVideoSurface(uint32_t uiVSurface, uint32_t *puiPitch) { return NULL; }
 
 void UnLockVideoSurface(uint32_t uiVSurface) {}
 

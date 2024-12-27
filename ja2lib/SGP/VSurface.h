@@ -154,7 +154,7 @@ BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex);
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex);
 
-BYTE *LockVideoSurface(uint32_t uiVSurface, uint32_t *uiPitch);
+uint8_t *LockVideoSurface(uint32_t uiVSurface, uint32_t *uiPitch);
 void UnLockVideoSurface(uint32_t uiVSurface);
 
 // Blits a video Surface to another video Surface
@@ -200,7 +200,7 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
 // Returns a flat pointer for direct manipulation of data
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch);
+uint8_t *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch);
 
 // Must be called after Locking buffer call above
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);

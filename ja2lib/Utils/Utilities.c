@@ -20,7 +20,7 @@ void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFil
 
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   HWFILE hFileHandle;
-  BYTE bColHeader[8];
+  uint8_t bColHeader[8];
   uint32_t cnt;
 
   // See if files exists, if not, return error

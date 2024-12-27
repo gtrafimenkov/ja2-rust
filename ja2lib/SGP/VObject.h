@@ -93,7 +93,7 @@ struct VObject {
   uint8_t ubBitDepth;          // BPP
 
   // Reserved for added room and 32-byte boundaries
-  BYTE bReserved[1];
+  uint8_t bReserved[1];
 };
 
 // This structure describes the creation parameters for a Video Object

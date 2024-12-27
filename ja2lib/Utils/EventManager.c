@@ -81,7 +81,7 @@ BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t ui
   pEvent->uiEvent = uiEvent;
   pEvent->uiFlags = 0;
   pEvent->uiDataSize = uiDataSize;
-  pEvent->pData = (BYTE *)pEvent;
+  pEvent->pData = (uint8_t *)pEvent;
   pEvent->pData = pEvent->pData + uiEventSize;
 
   memcpy(pEvent->pData, pEventData, uiDataSize);

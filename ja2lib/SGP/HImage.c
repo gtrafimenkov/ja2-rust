@@ -200,8 +200,9 @@ BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents) {
   return (fReturnVal);
 }
 
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, uint16_t usDestWidth,
-                          uint16_t usDestHeight, uint16_t usX, uint16_t usY, SGPRect *srcRect) {
+BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf,
+                          uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                          SGPRect *srcRect) {
   // Use blitter based on type of image
   Assert(hImage != NULL);
 
@@ -228,7 +229,7 @@ BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, u
   return (FALSE);
 }
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -271,7 +272,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDest
   return (TRUE);
 }
 
-BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -313,11 +314,11 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDe
   return (TRUE);
 }
 
-BOOLEAN Extract8BPPCompressedImageToBuffer(HIMAGE hImage, BYTE *pDestBuf) { return (FALSE); }
+BOOLEAN Extract8BPPCompressedImageToBuffer(HIMAGE hImage, uint8_t *pDestBuf) { return (FALSE); }
 
-BOOLEAN Extract16BPPCompressedImageToBuffer(HIMAGE hImage, BYTE *pDestBuf) { return (FALSE); }
+BOOLEAN Extract16BPPCompressedImageToBuffer(HIMAGE hImage, uint8_t *pDestBuf) { return (FALSE); }
 
-BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;

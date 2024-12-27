@@ -9,7 +9,7 @@ typedef struct {
   uint16_t usDelay;
   uint32_t uiEvent;
   uint32_t uiDataSize;
-  BYTE *pData;
+  uint8_t *pData;
 
 } EVENT;
 

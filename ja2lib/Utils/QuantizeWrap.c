@@ -12,10 +12,10 @@
 
 // copied from wingdi.h
 typedef struct tagRGBQUAD {
-  BYTE rgbBlue;
-  BYTE rgbGreen;
-  BYTE rgbRed;
-  BYTE rgbReserved;
+  uint8_t rgbBlue;
+  uint8_t rgbGreen;
+  uint8_t rgbRed;
+  uint8_t rgbReserved;
 } RGBQUAD;
 
 typedef struct _NODE {

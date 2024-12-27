@@ -131,7 +131,7 @@ typedef struct TAG_STRUCTURE_TILE {
   PROFILE Shape;  // 25 bytes
   uint8_t fFlags;
   uint8_t ubVehicleHitLocation;
-  BYTE bUnused[1];
+  uint8_t bUnused[1];
 } DB_STRUCTURE_TILE;  // 32 bytes
 
 #define BASE_TILE 0
@@ -150,7 +150,7 @@ struct DB_STRUCTURE {
   int8_t bPartnerDelta;        // opened/closed version, etc... 0 for unused
   int8_t bZTileOffsetX;
   int8_t bZTileOffsetY;
-  BYTE bUnused[1];
+  uint8_t bUnused[1];
 };  // 16 bytes
 
 struct DB_STRUCTURE_REF {

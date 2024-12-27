@@ -281,7 +281,7 @@ HSTACK Push(HSTACK hStack, void *pdata) {
   uint32_t uiOffset;
   uint32_t uiNew_size;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // check for a NULL pointer
 
@@ -309,7 +309,7 @@ HSTACK Push(HSTACK hStack, void *pdata) {
     }
     pTemp_cont = (StackHeader *)hStack;
   }
-  pbyte = (BYTE *)hStack;
+  pbyte = (uint8_t *)hStack;
   pbyte += uiOffset;
   pvoid = (void *)pbyte;
   // copy data from pdata to pvoid - the stack
@@ -339,7 +339,7 @@ BOOLEAN Pop(HSTACK hStack, void *pdata) {
   uint32_t uiSize_of_each;
   uint32_t uiTotal;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // check for a NULL queue
 
@@ -362,7 +362,7 @@ BOOLEAN Pop(HSTACK hStack, void *pdata) {
   // calculate offsets to decide if the page should be rezied
   uiOffset = (uiSize_of_each * uiTotal) + sizeof(StackHeader);
   uiOffset -= uiSize_of_each;
-  pbyte = (BYTE *)hStack;
+  pbyte = (uint8_t *)hStack;
   pbyte += uiOffset;
   pvoid = (void *)pbyte;
   // get the data from pvoid and store in pdata
@@ -389,7 +389,7 @@ BOOLEAN PeekStack(HSTACK hStack, void *pdata) {
   uint32_t uiSize_of_each;
   uint32_t uiTotal;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // check for a NULL queue
 
@@ -412,7 +412,7 @@ BOOLEAN PeekStack(HSTACK hStack, void *pdata) {
   // calculate offsets to decide if the page should be rezied
   uiOffset = (uiSize_of_each * uiTotal) + sizeof(StackHeader);
   uiOffset -= uiSize_of_each;
-  pbyte = (BYTE *)hStack;
+  pbyte = (uint8_t *)hStack;
   pbyte += uiOffset;
   pvoid = (void *)pbyte;
   // get the data from pvoid and store in pdata
@@ -564,7 +564,7 @@ void ShutdownContainers(void) {
 BOOLEAN PeekQueue(HQUEUE hQueue, void *pdata) {
   QueueHeader *pTemp_cont;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hQueue == NULL) {
@@ -588,7 +588,7 @@ BOOLEAN PeekQueue(HQUEUE hQueue, void *pdata) {
 
   // copy the element pointed to by uiHead
 
-  pbyte = (BYTE *)hQueue;
+  pbyte = (uint8_t *)hQueue;
   pbyte += pTemp_cont->uiHead;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -616,7 +616,7 @@ BOOLEAN PeekList(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
   void *pvoid;
   uint32_t uiOffsetSrc;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hList == NULL) {
@@ -647,7 +647,7 @@ BOOLEAN PeekList(HLIST hList, void *pdata, uint32_t uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(ListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   pbyte += uiOffsetSrc;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -681,9 +681,9 @@ BOOLEAN PeekList(HLIST hList, void *pdata, uint32_t uiPos) {
 //*****************************************************************************
 BOOLEAN SwapListNode(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
-  BYTE *pvoid;
+  uint8_t *pvoid;
   uint32_t uiOffsetSrc;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle, only 0
   if (hList == NULL) {
@@ -714,7 +714,7 @@ BOOLEAN SwapListNode(HLIST hList, void *pdata, uint32_t uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(ListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   pbyte += uiOffsetSrc;
   pvoid = pbyte;
 
@@ -750,7 +750,7 @@ BOOLEAN SwapListNode(HLIST hList, void *pdata, uint32_t uiPos) {
 BOOLEAN StoreListNode(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
   uint32_t uiOffsetSrc;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hList == NULL) {
@@ -781,7 +781,7 @@ BOOLEAN StoreListNode(HLIST hList, void *pdata, uint32_t uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(ListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   pbyte += uiOffsetSrc;
 
   memmove(pbyte, pdata, pTemp_cont->uiSiz_of_elem);
@@ -810,7 +810,7 @@ BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   OrdListHeader *pTemp_cont;
   void *pvoid;
   uint32_t uiOffsetSrc;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hOrdList == NULL) {
@@ -842,7 +842,7 @@ BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(OrdListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hOrdList;
+  pbyte = (uint8_t *)hOrdList;
   pbyte += uiOffsetSrc;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -868,7 +868,7 @@ BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
 BOOLEAN RemfromQueue(HQUEUE hQueue, void *pdata) {
   QueueHeader *pTemp_cont;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hQueue == NULL) {
@@ -892,7 +892,7 @@ BOOLEAN RemfromQueue(HQUEUE hQueue, void *pdata) {
 
   // remove the element pointed to by uiHead
 
-  pbyte = (BYTE *)hQueue;
+  pbyte = (uint8_t *)hQueue;
   pbyte += pTemp_cont->uiHead;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -937,9 +937,9 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
   uint32_t uiHead;
   uint32_t uiTail;
   void *pvoid;
-  BYTE *pbyte;
-  BYTE *pmaxsize;
-  BYTE *presize;
+  uint8_t *pbyte;
+  uint8_t *pmaxsize;
+  uint8_t *presize;
   BOOLEAN fresize;
 
   // check for invalid handle = 0
@@ -977,14 +977,14 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
     // so that all the data is in one continuous block
 
     pTemp_cont = (QueueHeader *)hQueue;
-    presize = (BYTE *)hQueue;
-    pmaxsize = (BYTE *)hQueue;
+    presize = (uint8_t *)hQueue;
+    pmaxsize = (uint8_t *)hQueue;
     presize += sizeof(QueueHeader);
     pmaxsize += uiMax_size;
     if (uiHead > sizeof(QueueHeader)) memmove(pmaxsize, presize, uiHead - sizeof(QueueHeader));
     pTemp_cont->uiTail = uiMax_size + (uiHead - sizeof(QueueHeader));
   }
-  pbyte = (BYTE *)hQueue;
+  pbyte = (uint8_t *)hQueue;
   pbyte += pTemp_cont->uiTail;
   pvoid = (void *)pbyte;
   memmove(pvoid, pdata, uiSize_of_each);
@@ -1007,8 +1007,8 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
 //
 //*****************************************************************************
 BOOLEAN do_copy(void *pmem_void, uint32_t uiSourceOfst, uint32_t uiDestOfst, uint32_t uiSize) {
-  BYTE *pOffsetSrc;
-  BYTE *pOffsetDst;
+  uint8_t *pOffsetSrc;
+  uint8_t *pOffsetDst;
   void *pvoid_src;
   void *pvoid_dest;
 
@@ -1021,9 +1021,9 @@ BOOLEAN do_copy(void *pmem_void, uint32_t uiSourceOfst, uint32_t uiDestOfst, uin
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Invalid pointer passed to do_copy");
     return FALSE;
   }
-  pOffsetSrc = (BYTE *)pmem_void;
+  pOffsetSrc = (uint8_t *)pmem_void;
   pOffsetSrc += uiSourceOfst;
-  pOffsetDst = (BYTE *)pmem_void;
+  pOffsetDst = (uint8_t *)pmem_void;
   pOffsetDst += uiDestOfst;
   pvoid_src = (void *)pOffsetSrc;
   pvoid_dest = (void *)pOffsetDst;
@@ -1044,7 +1044,7 @@ BOOLEAN do_copy(void *pmem_void, uint32_t uiSourceOfst, uint32_t uiDestOfst, uin
 //
 //*****************************************************************************
 BOOLEAN do_copy_data(void *pmem_void, void *data, uint32_t uiSrcOfst, uint32_t uiSize) {
-  BYTE *pOffsetSrc;
+  uint8_t *pOffsetSrc;
   void *pvoid_src;
 
   if ((uiSrcOfst < 0) || (uiSize < 0)) {
@@ -1056,7 +1056,7 @@ BOOLEAN do_copy_data(void *pmem_void, void *data, uint32_t uiSrcOfst, uint32_t u
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Invalid pointer passed to do_copy_data");
     return FALSE;
   }
-  pOffsetSrc = (BYTE *)pmem_void;
+  pOffsetSrc = (uint8_t *)pmem_void;
   pOffsetSrc += uiSrcOfst;
   pvoid_src = (void *)pOffsetSrc;
   memmove(data, pvoid_src, uiSize);
@@ -1175,7 +1175,7 @@ HLIST AddtoList(HLIST hList, void *pdata, uint32_t uiPos) {
   uint32_t uiHead;
   uint32_t uiTail;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
   uint32_t uiOffsetSrc;
   uint32_t uiOffsetDst;
   uint32_t uiFinalLoc = 0;
@@ -1297,7 +1297,7 @@ HLIST AddtoList(HLIST hList, void *pdata, uint32_t uiPos) {
 
   // finally insert data at position uiFinalLoc
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   if (uiFinalLoc == 0) {
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0,
                "This should never happen! report this problem!");
@@ -1602,7 +1602,7 @@ HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   uint32_t uiHead;
   uint32_t uiTail;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
   uint32_t uiOffsetSrc;
   uint32_t uiOffsetDst;
   uint32_t uiFinalLoc = 0;
@@ -1752,7 +1752,7 @@ HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   }
 
   // finally insert data at position uiFinalLoc
-  pbyte = (BYTE *)hOrdList;
+  pbyte = (uint8_t *)hOrdList;
   pbyte += uiFinalLoc;
   pvoid = (void *)pbyte;
   memmove(pvoid, pdata, pTemp_cont->uiSiz_of_elem);

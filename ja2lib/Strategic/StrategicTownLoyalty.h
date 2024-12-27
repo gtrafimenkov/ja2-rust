@@ -34,7 +34,7 @@ typedef struct TOWN_LOYALTY {
   uint8_t UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
                                    // value...
   BOOLEAN fLiberatedAlready;
-  BYTE filler[19];  // reserved for expansion
+  uint8_t filler[19];  // reserved for expansion
 
 } TOWN_LOYALTY;
 
