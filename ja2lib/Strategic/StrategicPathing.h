@@ -29,8 +29,8 @@ enum {
   MVT_MODE_FOOT,
 };
 
-int32_t FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, int16_t sMvtGroupNumber,
-                    BOOLEAN fTacticalTraversal);
+int32_t FindStratPath(uint8_t startX, uint8_t startY, uint8_t destX, uint8_t destY,
+                      int16_t sMvtGroupNumber, BOOLEAN fTacticalTraversal);
 
 BOOLEAN AddSectorToPathList(struct path* pPath, uint16_t uiSectorNum);
 
@@ -58,11 +58,11 @@ struct path* RemoveTailFromStrategicPath(struct path* pHeadOfList);
 struct path* RemoveHeadFromStrategicPath(struct path* pList);
 
 // remove node with this value.. starting at end and working it's way back
-struct path* RemoveSectorFromStrategicPathList(struct path* pList, u8 sX, u8 sY);
+struct path* RemoveSectorFromStrategicPathList(struct path* pList, uint8_t sX, uint8_t sY);
 
 // clear out path list after/including this sector sX, sY..will start at end of path and work it's
 // way back till sector is found...removes most recent sectors first
-struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, u8 sX, u8 sY,
+struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, uint8_t sX, uint8_t sY,
                                                    int16_t sMvtGroup);
 
 // get id of last sector in mercs path list
@@ -94,13 +94,14 @@ void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, int16_t sMvtGroup);
 void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier);
 
 // start movement of this group to this sector...not to be used by the player merc groups.
-BOOLEAN MoveGroupFromSectorToSector(u8 ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY);
+BOOLEAN MoveGroupFromSectorToSector(uint8_t ubGroupID, uint8_t sStartX, uint8_t sStartY,
+                                    uint8_t sDestX, uint8_t sDestY);
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID, u8 sStartX,
-                                                                   u8 sStartY, u8 sDestX,
-                                                                   u8 sDestY);
+BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID,
+                                                                   uint8_t sStartX, uint8_t sStartY,
+                                                                   uint8_t sDestX, uint8_t sDestY);
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
-    uint8_t ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY);
+    uint8_t ubGroupID, uint8_t sStartX, uint8_t sStartY, uint8_t sDestX, uint8_t sDestY);
 
 // get length of path
 int32_t GetLengthOfPath(struct path* pHeadPath);

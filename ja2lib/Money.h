@@ -8,9 +8,9 @@
 #include "LeanTypes.h"
 
 // Get money balance (what is shown on the laptop screen).
-i32 LaptopMoneyGetBalance();
+int32_t LaptopMoneyGetBalance();
 
 // Get money balance (what is shown on the laptop screen).
-void LaptopMoneySetBalance(i32 value);
+void LaptopMoneySetBalance(int32_t value);
 
 #endif

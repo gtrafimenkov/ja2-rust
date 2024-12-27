@@ -6,6 +6,7 @@
 #define _KEYS_H_
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct OBJECTTYPE;
 struct SOLDIERTYPE;
@@ -62,13 +63,13 @@ typedef struct {
 
 typedef struct {
   int16_t sGridNo;
-  BOOLEAN fLocked;         // is the door locked
+  BOOLEAN fLocked;           // is the door locked
   uint8_t ubTrapLevel;       // difficulty of finding the trap, 0-10
   uint8_t ubTrapID;          // the trap type (0 is no trap)
   uint8_t ubLockID;          // the lock (0 is no lock)
   int8_t bPerceivedLocked;   // The perceived lock value can be different than the fLocked.
-                           // Values for this include the fact that we don't know the status of
-                           // the door, etc
+                             // Values for this include the fact that we don't know the status of
+                             // the door, etc
   int8_t bPerceivedTrapped;  // See above, but with respect to traps rather than locked status
   int8_t bLockDamage;        // Damage to the lock
   int8_t bPadding[4];        // extra bytes
@@ -132,7 +133,7 @@ extern BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyI
 extern BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID, uint8_t *pubPos);
 extern BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID);
 
-extern wchar_t* sKeyDescriptionStrings[];
+extern wchar_t *sKeyDescriptionStrings[];
 /**********************************
  * Door utils add by Kris Morness *
  **********************************/
@@ -184,7 +185,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor);
 void UpdateDoorPerceivedValue(DOOR *pDoor);
 
 // Saves the Door Table array to the temp file
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 // Load the door table from the temp file
 BOOLEAN LoadDoorTableFromDoorTableTempFile();
@@ -205,7 +206,8 @@ BOOLEAN IsDoorOpen(int16_t sGridNo);
 BOOLEAN IsDoorPerceivedOpen(int16_t sGridNo);
 
 // Saves the Door Status array to the MapTempfile
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                int8_t bSectorZ);
 
 // Load the door status from the door status temp file
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile();
@@ -243,7 +245,8 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded();
 
 void AttachStringToDoor(int16_t sGridNo);
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel, int8_t bVisible,
-                       BOOLEAN fAddToDropList, int32_t iDropListSlot, BOOLEAN fUseUnLoaded);
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
+                       int8_t bVisible, BOOLEAN fAddToDropList, int32_t iDropListSlot,
+                       BOOLEAN fUseUnLoaded);
 
 #endif

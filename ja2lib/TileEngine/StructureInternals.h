@@ -135,7 +135,7 @@ typedef struct TAG_STRUCTURE_TILE {
   PROFILE Shape;  // 25 bytes
   uint8_t fFlags;
   uint8_t ubVehicleHitLocation;
-  BYTE bUnused[1];
+  uint8_t bUnused[1];
 } DB_STRUCTURE_TILE;  // 32 bytes
 
 #define BASE_TILE 0
@@ -154,13 +154,13 @@ struct DB_STRUCTURE {
   int8_t bPartnerDelta;        // opened/closed version, etc... 0 for unused
   int8_t bZTileOffsetX;
   int8_t bZTileOffsetY;
-  BYTE bUnused[1];
+  uint8_t bUnused[1];
 };  // 16 bytes
 
 struct DB_STRUCTURE_REF {
   struct DB_STRUCTURE* pDBStructure;
   DB_STRUCTURE_TILE** ppTile;  // dynamic array
-};                             // 8 bytes
+};  // 8 bytes
 
 struct STRUCTURE {
   struct STRUCTURE* pPrev;
@@ -176,14 +176,14 @@ struct STRUCTURE {
     struct {
       int16_t sBaseGridNo;
     };
-  };                  // 2 bytes
+  };  // 2 bytes
   int16_t sCubeOffset;  // height of bottom of object in profile "cubes"
   uint32_t fFlags;      // need to have something to indicate base tile/not
   PROFILE* pShape;
   uint8_t ubWallOrientation;
   uint8_t ubVehicleHitLocation;
   uint8_t ubStructureHeight;  // if 0, then unset; otherwise stores height of structure when last
-                            // calculated
+                              // calculated
   uint8_t ubUnused[1];
 };  // 32 bytes
 

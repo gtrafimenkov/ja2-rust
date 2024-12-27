@@ -46,7 +46,8 @@ bit, and must be the same dimensions (including Pitch) as the destination.
         Blits every second pixel ("Translucents").
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(uint16_t *pBuffer,
+                                                        uint32_t uiDestPitchBYTES,
                                                         uint16_t *pZBuffer, uint16_t usZValue,
                                                         struct VObject *hSrcVObject, int32_t iX,
                                                         int32_t iY, uint16_t usIndex,
@@ -103,7 +104,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(uint16_t *pBuffer, uint3
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -310,8 +312,8 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTranslucent(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                   uint16_t *pZBuffer, uint16_t usZValue,
-                                                  struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                                  uint16_t usIndex) {
+                                                  struct VObject *hSrcVObject, int32_t iX,
+                                                  int32_t iY, uint16_t usIndex) {
   uint32_t usHeight, usWidth, uiOffset, LineSkip;
   int32_t iTempX, iTempY;
   uint16_t *p16BPPPalette;
@@ -444,8 +446,8 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBTranslucent(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                     uint16_t *pZBuffer, uint16_t usZValue,
-                                                    struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                                    uint16_t usIndex) {
+                                                    struct VObject *hSrcVObject, int32_t iX,
+                                                    int32_t iY, uint16_t usIndex) {
   uint32_t usHeight, usWidth, uiOffset, LineSkip;
   int32_t iTempX, iTempY;
   uint16_t *p16BPPPalette;
@@ -658,7 +660,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadowClip(uint16_t *pBuffer, uint32_t uiDes
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
 #ifdef _WINDOWS
@@ -882,8 +885,8 @@ BOOLEAN Blt16BPPTo16BPP(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *pSrc, u
     return FALSE;
   }
 
-  i32 uiWidth = sourceRect.iRight - sourceRect.iLeft;
-  i32 uiHeight = sourceRect.iBottom - sourceRect.iTop;
+  int32_t uiWidth = sourceRect.iRight - sourceRect.iLeft;
+  int32_t uiHeight = sourceRect.iBottom - sourceRect.iTop;
 
   pSrcPtr = (uint16_t *)((uint8_t *)pSrc + (sourceRect.iTop * uiSrcPitch) + (sourceRect.iLeft * 2));
   pDestPtr = (uint16_t *)((uint8_t *)pDest + (iDestYPos * uiDestPitch) + (iDestXPos * 2));
@@ -948,9 +951,10 @@ BlitDone:
         not copied.
 
 **********************************************************************************************/
-BOOLEAN Blt16BPPTo16BPPTrans(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *pSrc, uint32_t uiSrcPitch,
-                             int32_t iDestXPos, int32_t iDestYPos, int32_t iSrcXPos, int32_t iSrcYPos,
-                             uint32_t uiWidth, uint32_t uiHeight, uint16_t usTrans) {
+BOOLEAN Blt16BPPTo16BPPTrans(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *pSrc,
+                             uint32_t uiSrcPitch, int32_t iDestXPos, int32_t iDestYPos,
+                             int32_t iSrcXPos, int32_t iSrcYPos, uint32_t uiWidth,
+                             uint32_t uiHeight, uint16_t usTrans) {
   uint16_t *pSrcPtr, *pDestPtr;
   uint32_t uiLineSkipDest, uiLineSkipSrc;
 
@@ -1370,8 +1374,8 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBPixelate(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                  uint16_t *pZBuffer, uint16_t usZValue,
-                                                 struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                                 uint16_t usIndex) {
+                                                 struct VObject *hSrcVObject, int32_t iX,
+                                                 int32_t iY, uint16_t usIndex) {
   uint32_t usHeight, usWidth, uiOffset, LineSkip;
   int32_t iTempX, iTempY;
   uint16_t *p16BPPPalette;
@@ -1563,7 +1567,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipPixelate(uint16_t *pBuffer, uint32_t
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -1773,9 +1778,10 @@ BlitDone:
         must be the same dimensions (including Pitch) as the destination.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer,
-                                       uint16_t usZValue, struct VObject *hSrcVObject, int32_t iX,
-                                       int32_t iY, uint16_t usIndex) {
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+                                       uint16_t *pZBuffer, uint16_t usZValue,
+                                       struct VObject *hSrcVObject, int32_t iX, int32_t iY,
+                                       uint16_t usIndex) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -1898,9 +1904,10 @@ BlitDone:
         (including Pitch) as the destination.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer,
-                                         uint16_t usZValue, struct VObject *hSrcVObject, int32_t iX,
-                                         int32_t iY, uint16_t usIndex) {
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+                                         uint16_t *pZBuffer, uint16_t usZValue,
+                                         struct VObject *hSrcVObject, int32_t iX, int32_t iY,
+                                         uint16_t usIndex) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -2566,8 +2573,9 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                  uint16_t *pZBuffer, uint16_t usZValue,
-                                                 struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                                 uint16_t usIndex, struct GRect *clipregion,
+                                                 struct VObject *hSrcVObject, int32_t iX,
+                                                 int32_t iY, uint16_t usIndex,
+                                                 struct GRect *clipregion,
                                                  uint16_t *p16BPPPalette) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
@@ -2620,7 +2628,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(uint16_t *pBuffer, uint32_t uiD
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -2880,7 +2889,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowClip(uint16_t *pBuffer, uint32_t uiDe
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
 #ifdef _WINDOWS
@@ -3074,8 +3084,9 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                    uint16_t *pZBuffer, uint16_t usZValue,
-                                                   struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                                   uint16_t usIndex, struct GRect *clipregion,
+                                                   struct VObject *hSrcVObject, int32_t iX,
+                                                   int32_t iY, uint16_t usIndex,
+                                                   struct GRect *clipregion,
                                                    uint16_t *p16BPPPalette) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
@@ -3128,7 +3139,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(uint16_t *pBuffer, uint32_t u
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -3334,12 +3346,10 @@ BlitDone:
         NOT updated.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                                           uint16_t *pZBuffer, uint16_t usZValue,
-                                                           struct VObject *hSrcVObject, int32_t iX,
-                                                           int32_t iY, uint16_t usIndex,
-                                                           struct GRect *clipregion,
-                                                           uint16_t *p16BPPPalette) {
+BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(
+    uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, struct GRect *clipregion,
+    uint16_t *p16BPPPalette) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted, uiLineFlag;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
@@ -3391,7 +3401,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(uint16_t *pBuffer, ui
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -3618,9 +3629,10 @@ BlitDone:
         updates the Z buffer with the new Z level.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer,
-                                        uint16_t usZValue, struct VObject *hSrcVObject, int32_t iX,
-                                        int32_t iY, uint16_t usIndex) {
+BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+                                        uint16_t *pZBuffer, uint16_t usZValue,
+                                        struct VObject *hSrcVObject, int32_t iX, int32_t iY,
+                                        uint16_t usIndex) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -3794,7 +3806,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZClip(uint16_t *pBuffer, uint32_t uiDestPi
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -4163,7 +4176,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNBClip(uint16_t *pBuffer, uint32_t uiDest
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -4412,7 +4426,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClip(uint16_t *pBuffer, uint32_t uiDestPit
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -4664,7 +4679,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClip(uint16_t *pBuffer, uint32_t uiDestP
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -4847,15 +4863,15 @@ BlitDone:
   return (TRUE);
 }
 
-void Blt16bppTo16bppRect(const struct ImageDataParams *source, u16 *dest, u32 destPitch, i32 x,
-                         i32 y, struct GRect sourceRect) {
-  Blt16BPPTo16BPP((u16 *)dest, destPitch, source->data, source->pitch, x, y, sourceRect);
+void Blt16bppTo16bppRect(const struct ImageDataParams *source, uint16_t *dest, uint32_t destPitch,
+                         int32_t x, int32_t y, struct GRect sourceRect) {
+  Blt16BPPTo16BPP((uint16_t *)dest, destPitch, source->data, source->pitch, x, y, sourceRect);
 }
 
 // Blits a subrect from a flat 8 bit surface to a 16-bit buffer.
 // This is the same as Blt8bppTo16bp with support of source rect.
-bool Blt8bppTo16bppRect(const struct ImageDataParams *source, uint16_t *dest, u32 destPitch, int32_t iX,
-                        int32_t iY, struct GRect sourceRect) {
+bool Blt8bppTo16bppRect(const struct ImageDataParams *source, uint16_t *dest, uint32_t destPitch,
+                        int32_t iX, int32_t iY, struct GRect sourceRect) {
   uint16_t *p16BPPPalette;
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *DestPtr;
@@ -4939,30 +4955,30 @@ BlitLoop:
 
 // Blits from 8bpp to 16bpp.
 // This function is only used for drawing strategic map.
-bool Blt8bppTo16bp(struct ImageDataParams *source, u16 *destBuffer, u32 destPitch, int32_t x,
-                   int32_t y) {
+bool Blt8bppTo16bp(struct ImageDataParams *source, uint16_t *destBuffer, uint32_t destPitch,
+                   int32_t x, int32_t y) {
   if (x < 0 || y < 0) {
     return false;
   }
 
-  u16 height = source->height;
-  u16 width = source->width;
+  uint16_t height = source->height;
+  uint16_t width = source->width;
 
   if (destPitch / 2 < width) {
     return false;
   }
 
-  u8 *srcPtr = (uint8_t *)source->data;
-  u16 *destPtr = destBuffer + (destPitch / 2 * y) + x;
+  uint8_t *srcPtr = (uint8_t *)source->data;
+  uint16_t *destPtr = destBuffer + (destPitch / 2 * y) + x;
   uint16_t *p16BPPPalette = source->palette16bpp;
 
-  u32 destSkip = destPitch / 2 - width;
-  u32 srcSkip = source->pitch - width;
+  uint32_t destSkip = destPitch / 2 - width;
+  uint32_t srcSkip = source->pitch - width;
 
-  for (u16 y = 0; y < height; y++) {
-    for (u16 x = 0; x < width; x++) {
-      u8 index = *srcPtr++;
-      u16 color = p16BPPPalette[index];
+  for (uint16_t y = 0; y < height; y++) {
+    for (uint16_t x = 0; x < width; x++) {
+      uint8_t index = *srcPtr++;
+      uint16_t color = p16BPPPalette[index];
       *destPtr++ = color;
     }
     srcPtr += srcSkip;
@@ -5091,9 +5107,9 @@ BOOLEAN Blt16BPPBufferPixelateRect(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
 // Uses black hatch color
 BOOLEAN Blt16BPPBufferHatchRect(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, struct GRect *area) {
   uint8_t Pattern[8][8] = {{1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
-                         {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
-                         {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
-                         {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1}};
+                           {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
+                           {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
+                           {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1}};
   return Blt16BPPBufferPixelateRectWithColor(pBuffer, uiDestPitchBYTES, area, Pattern, 0);
 }
 
@@ -5470,7 +5486,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparentClip(uint16_t *pBuffer, uint32_t uiDe
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -5806,7 +5823,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(uint16_t *pBuffer, uint32_t uiDestPit
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -6170,7 +6188,7 @@ BlitLine:
 
 **********************************************************************************************/
 char BltIsClippedOrOffScreen(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
-                              struct GRect *clipregion) {
+                             struct GRect *clipregion) {
   uint32_t usHeight, usWidth;
   struct Subimage *pTrav;
   int32_t iTempX, iTempY;
@@ -6346,8 +6364,8 @@ BlitDone:
 // is FALSE
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                             struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                            uint16_t usIndex, int16_t s16BPPColor, BOOLEAN fDoOutline,
-                                            struct GRect *clipregion) {
+                                            uint16_t usIndex, int16_t s16BPPColor,
+                                            BOOLEAN fDoOutline, struct GRect *clipregion) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr;
@@ -6400,7 +6418,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(uint16_t *pBuffer, uint32_t uiDestPi
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
   p16BPPPalette = hSrcVObject->pShadeCurrent;
 
@@ -6590,8 +6609,8 @@ BlitDone:
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                              uint16_t *pZBuffer, uint16_t usZValue,
                                              struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                             uint16_t usIndex, int16_t s16BPPColor, BOOLEAN fDoOutline,
-                                             struct GRect *clipregion) {
+                                             uint16_t usIndex, int16_t s16BPPColor,
+                                             BOOLEAN fDoOutline, struct GRect *clipregion) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
@@ -6644,7 +6663,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(uint16_t *pBuffer, uint32_t uiDestP
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
 
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -6906,7 +6926,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
 
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -7242,8 +7263,9 @@ BlitDone:
 }
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                                  struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                                  uint16_t usIndex, struct GRect *clipregion) {
+                                                  struct VObject *hSrcVObject, int32_t iX,
+                                                  int32_t iY, uint16_t usIndex,
+                                                  struct GRect *clipregion) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
@@ -7296,7 +7318,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(uint16_t *pBuffer, uint32_t ui
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -7518,9 +7541,10 @@ BlitDone:
   return (TRUE);
 }
 
-BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer,
-                                         uint16_t usZValue, struct VObject *hSrcVObject, int32_t iX,
-                                         int32_t iY, uint16_t usIndex, int16_t s16BPPColor,
+BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+                                         uint16_t *pZBuffer, uint16_t usZValue,
+                                         struct VObject *hSrcVObject, int32_t iX, int32_t iY,
+                                         uint16_t usIndex, int16_t s16BPPColor,
                                          BOOLEAN fDoOutline) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
@@ -7652,7 +7676,8 @@ BlitDone:
   return (TRUE);
 }
 
-BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(uint16_t *pBuffer,
+                                                         uint32_t uiDestPitchBYTES,
                                                          uint16_t *pZBuffer, uint16_t usZValue,
                                                          struct VObject *hSrcVObject, int32_t iX,
                                                          int32_t iY, uint16_t usIndex,
@@ -7815,7 +7840,8 @@ BlitDone:
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                            uint16_t *pZBuffer, uint16_t usZValue,
                                            struct VObject *hSrcVObject, int32_t iX, int32_t iY,
-                                           uint16_t usIndex, int16_t s16BPPColor, BOOLEAN fDoOutline) {
+                                           uint16_t usIndex, int16_t s16BPPColor,
+                                           BOOLEAN fDoOutline) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -8131,7 +8157,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZClip(uint16_t *pBuffer, uint32_t uiDes
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -8497,7 +8524,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityClip(uint16_t *pBuffer, uint32_t uiDest
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
@@ -8875,7 +8903,8 @@ bit, and must be the same dimensions (including Pitch) as the destination.
         Blits every second pixel ("pixelates").
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(uint16_t *pBuffer,
+                                                           uint32_t uiDestPitchBYTES,
                                                            uint16_t *pZBuffer, uint16_t usZValue,
                                                            struct VObject *hSrcVObject, int32_t iX,
                                                            int32_t iY, uint16_t usIndex,
@@ -8932,7 +8961,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(uint16_t *pBuffer, ui
   if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->image_data + uiOffset;
-  DestPtr = (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
+  DestPtr =
+      (uint8_t *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (uint8_t *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));

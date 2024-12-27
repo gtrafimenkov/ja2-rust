@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Tactical/ItemTypes.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -71,32 +72,32 @@ typedef struct STRATEGIC_STATUS {
   uint8_t ubNumCapturedForRescue;
 
   uint8_t ubHighestProgress;  // the highest level of progress player has attained thus far in the
-                            // game (0-100)
+                              // game (0-100)
 
-  uint8_t ubStandardArmyGunIndex[ARMY_GUN_LEVELS];  // type of gun in each group that Queen's army is
-                                                  // using this game
+  uint8_t ubStandardArmyGunIndex[ARMY_GUN_LEVELS];  // type of gun in each group that Queen's army
+                                                    // is using this game
   BOOLEAN fWeaponDroppedAlready[MAX_WEAPONS];  // flag that tracks whether this weapon type has been
                                                // dropped before
 
   uint8_t ubMercDeaths;      // how many soldiers have bit it while in the player's employ (0-100)
-  uint32_t uiManDaysPlayed;  // once per day, # living mercs on player's team is added to this running
-                           // total
+  uint32_t uiManDaysPlayed;  // once per day, # living mercs on player's team is added to this
+                             // running total
 
   uint8_t ubBadReputation;  // how bad a reputation player has earned through his actions,
-                          // performance, etc. (0-100)
+                            // performance, etc. (0-100)
 
   uint16_t usEnricoEmailFlags;  // bit flags that control progress-related E-mails from Enrico
 
   uint8_t ubInsuranceInvestigationsCnt;  // how many times merc has been investigated for possible
-                                       // insurance fraud
+                                         // insurance fraud
 
   uint8_t ubUnhiredMercDeaths;  // how many mercs have died while NOT working for the player
 
   uint16_t usPlayerKills;  // kills achieved by all mercs controlled by player together.  *Excludes*
-                         // militia kills!
+                           // militia kills!
 
   uint16_t usEnemiesKilled[NUM_WAYS_ENEMIES_KILLED]
-                        [NUM_ENEMY_RANKS];  // admin/troop/elite.  Includes kills by militia, too
+                          [NUM_ENEMY_RANKS];  // admin/troop/elite.  Includes kills by militia, too
   uint16_t usLastDayOfPlayerActivity;
   uint8_t ubNumNewSectorsVisitedToday;
   uint8_t ubNumberOfDaysOfInactivity;

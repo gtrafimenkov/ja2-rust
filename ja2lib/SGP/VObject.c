@@ -251,7 +251,8 @@ BOOLEAN DeleteVideoObjectFromIndex(uint32_t uiVObject) {
   return FALSE;
 }
 
-bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x, i32 y) {
+bool BltVObject(struct VSurface *dest, struct VObject *vobj, uint16_t regionIndex, int32_t x,
+                int32_t y) {
   bool res = false;
   if (dest) {
     struct BufferLockInfo lock = VSurfaceLock(dest);
@@ -260,7 +261,7 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i3
       return false;
     }
 
-    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, regionIndex, x, y);
+    res = BltVideoObjectToBuffer((uint16_t *)lock.dest, lock.pitch, vobj, regionIndex, x, y);
     VSurfaceUnlock(dest);
   }
   return res;
@@ -466,8 +467,7 @@ uint16_t CreateObjectPaletteTables(struct VObject *pObj, uint32_t uiType) {
   pObj->pShadeCurrent = pObj->pShades[4];
 
   // check to make sure every table got a palette
-  for (count = 0; (count < HVOBJECT_SHADE_TABLES) && (pObj->pShades[count] != NULL); count++)
-    ;
+  for (count = 0; (count < HVOBJECT_SHADE_TABLES) && (pObj->pShades[count] != NULL); count++);
 
   // return the result of the check
   return (count == HVOBJECT_SHADE_TABLES);
@@ -574,8 +574,8 @@ uint16_t SetObjectHandleShade(uint32_t uiHandle, uint32_t uiShade) {
         Given a VOBJECT and ETRLE image index, retrieves the value of the pixel located at the
         given image coordinates. The value returned is an 8-bit palette index
 ********************************************************************************************/
-BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETRLEIndex, uint16_t usX,
-                           uint16_t usY) {
+BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETRLEIndex,
+                           uint16_t usX, uint16_t usY) {
   uint8_t *pCurrent;
   uint16_t usLoopX = 0;
   uint16_t usLoopY = 0;
@@ -691,9 +691,9 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, struct Su
   return (TRUE);
 }
 
-BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, uint32_t uiSrcVObject, uint16_t usIndex,
-                                       int32_t iDestX, int32_t iDestY, int16_t s16BPPColor,
-                                       BOOLEAN fDoOutline) {
+BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, uint32_t uiSrcVObject,
+                                       uint16_t usIndex, int32_t iDestX, int32_t iDestY,
+                                       int16_t s16BPPColor, BOOLEAN fDoOutline) {
   uint16_t *pBuffer;
   uint32_t uiPitch;
   struct VObject *hSrcVObject;
@@ -723,7 +723,8 @@ BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, uint32_t uiSrcVObj
 }
 
 BOOLEAN BltVideoObjectOutline(struct VSurface *dest, struct VObject *hSrcVObject, uint16_t usIndex,
-                              int32_t iDestX, int32_t iDestY, int16_t s16BPPColor, BOOLEAN fDoOutline) {
+                              int32_t iDestX, int32_t iDestY, int16_t s16BPPColor,
+                              BOOLEAN fDoOutline) {
   uint16_t *pBuffer;
   uint32_t uiPitch;
   // Lock video surface
@@ -774,8 +775,8 @@ BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, uint32_t uiS
   return (TRUE);
 }
 
-void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,
-                        BOOLEAN mono) {
+void VObjectUpdateShade(struct VObject *obj, uint8_t shade_num, uint32_t rscale, uint32_t gscale,
+                        uint32_t bscale, BOOLEAN mono) {
   obj->pShades[shade_num] =
       Create16BPPPaletteShaded(obj->pPaletteEntry, rscale, gscale, bscale, mono);
 }

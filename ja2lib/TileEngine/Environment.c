@@ -73,29 +73,29 @@ uint8_t ubLightningTable[3][10][2] = {
 
 // CJC: I don't think these are used anywhere!
 uint8_t guiTODFlags[ENV_NUM_TIMES] = {ENV_TOD_FLAGS_NIGHT,   // 00
-                                    ENV_TOD_FLAGS_NIGHT,   // 01
-                                    ENV_TOD_FLAGS_NIGHT,   // 02
-                                    ENV_TOD_FLAGS_NIGHT,   // 03
-                                    ENV_TOD_FLAGS_NIGHT,   // 04
-                                    ENV_TOD_FLAGS_DAWN,    // 05
-                                    ENV_TOD_FLAGS_DAWN,    // 06
-                                    ENV_TOD_FLAGS_DAWN,    // 07
-                                    ENV_TOD_FLAGS_DAY,     // 08
-                                    ENV_TOD_FLAGS_DAY,     // 09
-                                    ENV_TOD_FLAGS_DAY,     // 10
-                                    ENV_TOD_FLAGS_DAY,     // 11
-                                    ENV_TOD_FLAGS_DAY,     // 12
-                                    ENV_TOD_FLAGS_DAY,     // 13
-                                    ENV_TOD_FLAGS_DAY,     // 14
-                                    ENV_TOD_FLAGS_DAY,     // 15
-                                    ENV_TOD_FLAGS_DAY,     // 16
-                                    ENV_TOD_FLAGS_DAY,     // 17
-                                    ENV_TOD_FLAGS_DAY,     // 18
-                                    ENV_TOD_FLAGS_DUSK,    // 19
-                                    ENV_TOD_FLAGS_DUSK,    // 20
-                                    ENV_TOD_FLAGS_DUSK,    // 21
-                                    ENV_TOD_FLAGS_NIGHT,   // 22
-                                    ENV_TOD_FLAGS_NIGHT};  // 23
+                                      ENV_TOD_FLAGS_NIGHT,   // 01
+                                      ENV_TOD_FLAGS_NIGHT,   // 02
+                                      ENV_TOD_FLAGS_NIGHT,   // 03
+                                      ENV_TOD_FLAGS_NIGHT,   // 04
+                                      ENV_TOD_FLAGS_DAWN,    // 05
+                                      ENV_TOD_FLAGS_DAWN,    // 06
+                                      ENV_TOD_FLAGS_DAWN,    // 07
+                                      ENV_TOD_FLAGS_DAY,     // 08
+                                      ENV_TOD_FLAGS_DAY,     // 09
+                                      ENV_TOD_FLAGS_DAY,     // 10
+                                      ENV_TOD_FLAGS_DAY,     // 11
+                                      ENV_TOD_FLAGS_DAY,     // 12
+                                      ENV_TOD_FLAGS_DAY,     // 13
+                                      ENV_TOD_FLAGS_DAY,     // 14
+                                      ENV_TOD_FLAGS_DAY,     // 15
+                                      ENV_TOD_FLAGS_DAY,     // 16
+                                      ENV_TOD_FLAGS_DAY,     // 17
+                                      ENV_TOD_FLAGS_DAY,     // 18
+                                      ENV_TOD_FLAGS_DUSK,    // 19
+                                      ENV_TOD_FLAGS_DUSK,    // 20
+                                      ENV_TOD_FLAGS_DUSK,    // 21
+                                      ENV_TOD_FLAGS_NIGHT,   // 22
+                                      ENV_TOD_FLAGS_NIGHT};  // 23
 
 typedef enum { COOL, WARM, HOT } Temperatures;
 
@@ -377,9 +377,8 @@ void EnvDoLightning(void) {
 }
 
 uint8_t GetTimeOfDayAmbientLightLevel() {
-  if (SectorTemperature(GetMinutesSinceDayStart(), (u8)gWorldSectorX, (u8)gWorldSectorY,
-                        gbWorldSectorZ) ==
-      HOT) {
+  if (SectorTemperature(GetMinutesSinceDayStart(), (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                        gbWorldSectorZ) == HOT) {
     return (HOT_DAY_LIGHTLEVEL);
   } else {
     return (gubEnvLightValue);
@@ -478,7 +477,7 @@ void UpdateTemperature(uint8_t ubTemperatureCode) {
   gfDoLighting = TRUE;
 }
 
-int8_t SectorTemperature(uint32_t uiTime, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+int8_t SectorTemperature(uint32_t uiTime, uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   if (bSectorZ > 0) {
     // cool underground
     return (0);

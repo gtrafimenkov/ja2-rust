@@ -227,8 +227,8 @@ void SetConfirmMovementModeCursor(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromMov
 void SetUIbasedOnStance(struct SOLDIERTYPE *pSoldier, int8_t bNewStance);
 int8_t DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiFlags);
 int8_t UIHandleInteractiveTilesAndItemsOnTerrain(struct SOLDIERTYPE *pSoldier, int16_t usMapPos,
-                                               BOOLEAN fUseOKCursor,
-                                               BOOLEAN fItemsOnlyIfOnIntTiles);
+                                                 BOOLEAN fUseOKCursor,
+                                                 BOOLEAN fItemsOnlyIfOnIntTiles);
 
 extern void EVENT_InternalSetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier,
                                                      uint16_t usNewDirection, BOOLEAN fInitalMove,
@@ -1128,7 +1128,8 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
     // Add soldier strategic info, so it doesn't break the counters!
     if (pSoldier) {
       if (!gbWorldSectorZ) {
-        SECTORINFO *pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
+        SECTORINFO *pSector =
+            &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
         switch (pSoldier->ubSoldierClass) {
           case SOLDIER_CLASS_ADMINISTRATOR:
             pSector->ubNumAdmins++;
@@ -1145,7 +1146,7 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
         }
       } else {
         UNDERGROUND_SECTORINFO *pSector =
-            FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
+            FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
         if (pSector) {
           switch (pSoldier->ubSoldierClass) {
             case SOLDIER_CLASS_ADMINISTRATOR:
@@ -1166,7 +1167,7 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
 
       pSoldier->ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
       pSoldier->usStrategicInsertionData = usMapPos;
-      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
       AllTeamsLookForAll(NO_INTERRUPTS);
     }
   }
@@ -1263,8 +1264,8 @@ uint32_t UIHandleChangeLevel(UI_EVENT *pUIEvent) {
   return (GAME_SCREEN);
 }
 
-extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect,
-                                  BOOLEAN fFromUI);
+extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge,
+                                  BOOLEAN fForceReselect, BOOLEAN fFromUI);
 
 uint32_t UIHandleSelectMerc(UI_EVENT *pUIEvent) {
   int32_t iCurrentSquad;
@@ -1319,7 +1320,8 @@ uint32_t UIHandleMOnTerrain(UI_EVENT *pUIEvent) {
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (!UIHandleOnMerc(TRUE)) {
     // Are we over items...
-    if (GetItemPool(usMapPos, &pItemPool, (uint8_t)gsInterfaceLevel) && ITEMPOOL_VISIBLE(pItemPool)) {
+    if (GetItemPool(usMapPos, &pItemPool, (uint8_t)gsInterfaceLevel) &&
+        ITEMPOOL_VISIBLE(pItemPool)) {
       // Are we already in...
       if (fOverItems) {
         // Is this the same level & gridno...
@@ -3009,8 +3011,8 @@ void GetCursorMovementFlags(uint32_t *puiCursorFlags) {
   uiSameFrameCursorFlags = (*puiCursorFlags);
 }
 
-BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags, uint16_t usMapPos,
-                               uint32_t uiFlags) {
+BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags,
+                               uint16_t usMapPos, uint32_t uiFlags) {
   BOOLEAN fSetCursor = FALSE;
   static uint16_t usTargetID = NOBODY;
   static BOOLEAN fTargetFound = FALSE;
@@ -4832,8 +4834,8 @@ void BeginDisplayTimedCursor(uint32_t uiCursorID, uint32_t uiDelay) {
 }
 
 int8_t UIHandleInteractiveTilesAndItemsOnTerrain(struct SOLDIERTYPE *pSoldier, int16_t usMapPos,
-                                               BOOLEAN fUseOKCursor,
-                                               BOOLEAN fItemsOnlyIfOnIntTiles) {
+                                                 BOOLEAN fUseOKCursor,
+                                                 BOOLEAN fItemsOnlyIfOnIntTiles) {
   struct ITEM_POOL *pItemPool;
   uint32_t uiCursorFlags;
   struct LEVELNODE *pIntTile;

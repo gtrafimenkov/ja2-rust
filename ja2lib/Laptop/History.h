@@ -115,13 +115,14 @@ typedef struct history *HistoryUnitPtr;
 extern HistoryUnitPtr pHistoryListHead;
 
 // reset history fact..for quests
-void ResetHistoryFact(uint8_t ubCode, u8 sSectorX, u8 sSectorY);
+void ResetHistoryFact(uint8_t ubCode, uint8_t sSectorX, uint8_t sSectorY);
 
 // set history fact...to allow for a different color for in progress quests
-uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, u8 sSectorX, u8 sSectorY);
+uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, uint8_t sSectorX,
+                        uint8_t sSectorY);
 
-uint32_t AddHistoryToPlayersLog(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, u8 sSectorX,
-                              u8 sSectorY);
+uint32_t AddHistoryToPlayersLog(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate,
+                                uint8_t sSectorX, uint8_t sSectorY);
 uint32_t GetTimeQuestWasStarted(uint8_t ubCode);
 
 #endif

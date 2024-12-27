@@ -8,6 +8,7 @@
 #include "SGP/Types.h"
 #include "Tactical/Items.h"
 #include "TileEngine/PhysMath.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -80,8 +81,8 @@ extern REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
 
 // OBJECT LIST STUFF
 int32_t CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
-                           real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
-                           uint8_t ubActionCode, uint32_t uiActionData);
+                             real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
+                             uint8_t ubActionCode, uint32_t uiActionData);
 BOOLEAN RemoveObjectSlot(int32_t iObject);
 void RemoveAllPhysicsObjects();
 
@@ -90,12 +91,13 @@ float CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, ui
 
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
                                               struct OBJECTTYPE *pItem, int16_t sGridNo,
-                                              uint8_t ubLevel, int16_t sEndZ, int16_t *psFinalGridNo,
-                                              BOOLEAN fArmed, int8_t *pbLevel, BOOLEAN fFromUI);
+                                              uint8_t ubLevel, int16_t sEndZ,
+                                              int16_t *psFinalGridNo, BOOLEAN fArmed,
+                                              int8_t *pbLevel, BOOLEAN fFromUI);
 
-void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubLevel,
-                                       int16_t sZPos, struct OBJECTTYPE *pItem, int8_t bMissBy,
-                                       uint8_t ubActionCode, uint32_t uiActionData);
+void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                       uint8_t ubLevel, int16_t sZPos, struct OBJECTTYPE *pItem,
+                                       int8_t bMissBy, uint8_t ubActionCode, uint32_t uiActionData);
 
 // SIMULATE WORLD
 void SimulateWorld();

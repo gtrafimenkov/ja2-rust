@@ -85,10 +85,10 @@ uint8_t gubTeamPenalty;
 BOOLEAN EnsureQuoteFileLoaded(uint8_t ubNPC);
 NPCQuoteInfo *LoadQuoteFile(uint8_t ubNPC);
 uint8_t NPCConsiderQuote(uint8_t ubNPC, uint8_t ubMerc, uint8_t ubApproach, uint8_t ubQuoteNum,
-                       uint8_t ubTalkDesire, NPCQuoteInfo *pNPCQuoteInfoArray);
+                         uint8_t ubTalkDesire, NPCQuoteInfo *pNPCQuoteInfoArray);
 uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct OBJECTTYPE *pObj,
-                                       NPCQuoteInfo *pNPCQuoteInfoArray,
-                                       NPCQuoteInfo **ppResultQuoteInfo, uint8_t *pubQuoteNum);
+                                         NPCQuoteInfo *pNPCQuoteInfoArray,
+                                         NPCQuoteInfo **ppResultQuoteInfo, uint8_t *pubQuoteNum);
 void PCsNearNPC(uint8_t ubNPC);
 void TriggerClosestMercWhoCanSeeNPC(uint8_t ubNPC, NPCQuoteInfo *pQuotePtr);
 BOOLEAN NPCHasUnusedRecordWithGivenApproach(uint8_t ubNPC, uint8_t ubApproach);
@@ -96,9 +96,9 @@ BOOLEAN NPCHasUnusedRecordWithGivenApproach(uint8_t ubNPC, uint8_t ubApproach);
 int8_t gbFirstApproachFlags[4] = {0x01, 0x02, 0x04, 0x08};
 
 uint8_t gubAlternateNPCFileNumsForQueenMeanwhiles[] = {160, 161, 162, 163, 164, 165, 166, 167, 168,
-                                                     169, 170, 171, 172, 173, 174, 175, 176};
+                                                       169, 170, 171, 172, 173, 174, 175, 176};
 uint8_t gubAlternateNPCFileNumsForElliotMeanwhiles[] = {180, 181, 182, 183, 184, 185, 186, 187, 188,
-                                                      189, 190, 191, 192, 193, 194, 195, 196};
+                                                        189, 190, 191, 192, 193, 194, 195, 196};
 
 #ifdef JA2BETAVERSION
 BOOLEAN gfDisplayScreenMsgOnRecordUsage = FALSE;
@@ -503,8 +503,8 @@ void ApproachedForFirstTime(MERCPROFILESTRUCT *pNPCProfile, int8_t bApproach) {
 }
 
 uint8_t NPCConsiderTalking(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uint8_t ubRecord,
-                         NPCQuoteInfo *pNPCQuoteInfoArray, NPCQuoteInfo **ppResultQuoteInfo,
-                         uint8_t *pubQuoteNum) {
+                           NPCQuoteInfo *pNPCQuoteInfoArray, NPCQuoteInfo **ppResultQuoteInfo,
+                           uint8_t *pubQuoteNum) {
   // This function returns the opinion level required of the "most difficult" quote
   // that the NPC is willing to say to the merc.  It can also provide the quote #.
   MERCPROFILESTRUCT *pNPCProfile = NULL;
@@ -624,8 +624,8 @@ uint8_t NPCConsiderTalking(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uint
 }
 
 uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct OBJECTTYPE *pObj,
-                                       NPCQuoteInfo *pNPCQuoteInfoArray,
-                                       NPCQuoteInfo **ppResultQuoteInfo, uint8_t *pubQuoteNum) {
+                                         NPCQuoteInfo *pNPCQuoteInfoArray,
+                                         NPCQuoteInfo **ppResultQuoteInfo, uint8_t *pubQuoteNum) {
   // This function returns the opinion level required of the "most difficult" quote
   // that the NPC is willing to say to the merc.  It can also provide the quote #.
   NPCQuoteInfo *pNPCQuoteInfo;
@@ -943,7 +943,8 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
   return (0);
 }
 
-BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPC, uint32_t uiMoneyAmount, uint8_t *pQuoteValue) {
+BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPC, uint32_t uiMoneyAmount,
+                                         uint8_t *pQuoteValue) {
   switch (ubNPC) {
     // handle for STEVE and VINCE
     case STEVE:
@@ -1020,7 +1021,7 @@ BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPC, uint32_t uiMoneyAmount, 
 }
 
 uint8_t NPCConsiderQuote(uint8_t ubNPC, uint8_t ubMerc, uint8_t ubApproach, uint8_t ubQuoteNum,
-                       uint8_t ubTalkDesire, NPCQuoteInfo *pNPCQuoteInfoArray) {
+                         uint8_t ubTalkDesire, NPCQuoteInfo *pNPCQuoteInfoArray) {
   // This function looks at a quote and determines if conditions for it have been met.
   // Returns 0 if none , 1 if one is found
   MERCPROFILESTRUCT *pNPCProfile;
@@ -1631,10 +1632,10 @@ void Converse(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uintptr_t uiAppro
           SetFactTrue(pQuotePtr->usSetFactTrue);
         }
         if (pQuotePtr->ubEndQuest != NO_QUEST) {
-          EndQuest(pQuotePtr->ubEndQuest, (u8)gWorldSectorX, (u8)gWorldSectorY);
+          EndQuest(pQuotePtr->ubEndQuest, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         }
         if (pQuotePtr->ubStartQuest != NO_QUEST) {
-          StartQuest(pQuotePtr->ubStartQuest, (u8)gWorldSectorX, (u8)gWorldSectorY);
+          StartQuest(pQuotePtr->ubStartQuest, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         }
 
         // Give item to merc?
@@ -2679,8 +2680,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_SOUTH:
@@ -2688,8 +2689,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_WEST:
@@ -2697,8 +2698,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_NORTH:
@@ -2706,8 +2707,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 (u8)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     default:
@@ -2715,7 +2716,7 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
+void HandleVictoryInNPCSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   // handle special cases of victory in certain sector
   int16_t sSector = 0;
 
@@ -2823,7 +2824,7 @@ BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord) {
   }
 }
 
-int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
+int8_t FindCivQuoteFileIndex(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   uint8_t ubLoop;
 
   if (sSectorZ > 0) {
@@ -2838,7 +2839,8 @@ int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   return (-1);
 }
 
-int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, i8 sSectorZ, BOOLEAN fSetAsUsed) {
+int8_t ConsiderCivilianQuotes(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ,
+                              BOOLEAN fSetAsUsed) {
   int8_t bLoop, bCivQuoteSectorIndex;
   NPCQuoteInfo *pCivQuoteInfoArray;
 
@@ -2862,7 +2864,8 @@ int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, i8 sSectorZ, BOOLEAN fSe
       }
 
       if (pCivQuoteInfoArray[bLoop].ubStartQuest != NO_QUEST) {
-        StartQuest(pCivQuoteInfoArray[bLoop].ubStartQuest, (u8)gWorldSectorX, (u8)gWorldSectorY);
+        StartQuest(pCivQuoteInfoArray[bLoop].ubStartQuest, (uint8_t)gWorldSectorX,
+                   (uint8_t)gWorldSectorY);
       }
 
       // return quote #

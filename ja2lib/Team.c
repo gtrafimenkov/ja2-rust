@@ -6,8 +6,8 @@
 
 #include "Tactical/Overhead.h"
 
-u8 GetTeamSide(u8 teamID) { return gTacticalStatus.Team[teamID].bSide; }
-void SetTeamSide(u8 teamID, u8 side) { gTacticalStatus.Team[teamID].bSide = side; }
+uint8_t GetTeamSide(uint8_t teamID) { return gTacticalStatus.Team[teamID].bSide; }
+void SetTeamSide(uint8_t teamID, uint8_t side) { gTacticalStatus.Team[teamID].bSide = side; }
 
 void GetTeamSoldiers(TeamID teamID, struct SoldierList* list) {
   const TacticalTeamType* team = &gTacticalStatus.Team[teamID];

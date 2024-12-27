@@ -33,7 +33,7 @@ struct VObject;
 
 // functions at the structure database level
 //
-struct STRUCTURE_FILE_REF *LoadStructureFile(char* szFileName);
+struct STRUCTURE_FILE_REF *LoadStructureFile(char *szFileName);
 void FreeAllStructureFiles(void);
 BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile);
 
@@ -43,9 +43,9 @@ BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile);
 BOOLEAN OkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
                                   struct DB_STRUCTURE_REF *pDBStructureRef, int16_t sExclusionID);
 
-// for the PTR argument of AddStructureToWorld, pass in a struct LEVELNODE * please!
+// for the void* argument of AddStructureToWorld, pass in a struct LEVELNODE * please!
 BOOLEAN AddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
-                            struct DB_STRUCTURE_REF *pDBStructureRef, PTR pLevelN);
+                            struct DB_STRUCTURE_REF *pDBStructureRef, void *pLevelN);
 BOOLEAN DeleteStructureFromWorld(struct STRUCTURE *pStructure);
 
 //
@@ -87,11 +87,11 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
 
 // FUNCTIONS FOR DETERMINING STUFF THAT BLOCKS VIEW FOR TILE_bASED LOS
 int8_t GetBlockingStructureInfo(int16_t sGridNo, int8_t bDir, int8_t bNextDir, int8_t bLevel,
-                              int8_t *pStructHeight, struct STRUCTURE **ppTallestStructure,
-                              BOOLEAN fWallsBlock);
+                                int8_t *pStructHeight, struct STRUCTURE **ppTallestStructure,
+                                BOOLEAN fWallsBlock);
 
-BOOLEAN DamageStructure(struct STRUCTURE *pStructure, uint8_t ubDamage, uint8_t ubReason, int16_t sGridNo,
-                        int16_t sX, int16_t sY, uint8_t ubOwner);
+BOOLEAN DamageStructure(struct STRUCTURE *pStructure, uint8_t ubDamage, uint8_t ubReason,
+                        int16_t sGridNo, int16_t sX, int16_t sY, uint8_t ubOwner);
 
 // Material armour type enumeration
 enum {
@@ -129,8 +129,8 @@ enum {
 
 extern int32_t guiMaterialHitSound[NUM_MATERIAL_TYPES];
 
-struct STRUCTURE *FindStructureBySavedInfo(int16_t sGridNo, uint8_t ubType, uint8_t ubWallOrientation,
-                                           int8_t bLevel);
+struct STRUCTURE *FindStructureBySavedInfo(int16_t sGridNo, uint8_t ubType,
+                                           uint8_t ubWallOrientation, int8_t bLevel);
 uint32_t StructureTypeToFlag(uint8_t ubType);
 uint8_t StructureFlagToType(uint32_t uiFlag);
 

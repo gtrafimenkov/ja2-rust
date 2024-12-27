@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Town.h"
+#include "rust_fileman.h"
 
 // the mines
 enum {
@@ -58,20 +59,20 @@ enum {
 
 // the strategic mine structures
 typedef struct MINE_LOCATION_TYPE {
-  u8 sSectorX;           // x value of sector mine is in
-  u8 sSectorY;           // y value of sector mine is in
+  uint8_t sSectorX;        // x value of sector mine is in
+  uint8_t sSectorY;        // y value of sector mine is in
   int8_t bAssociatedTown;  // associated town of this mine
 
 } MINE_LOCATION_TYPE;
 
 typedef struct MINE_STATUS_TYPE {
   uint8_t ubMineType;  // type of mine (silver or gold)
-  BYTE filler1[3];
+  uint8_t filler1[3];
   uint32_t uiMaxRemovalRate;  // fastest rate we can move ore from this mine in period
 
   uint32_t uiRemainingOreSupply;  // the total value left to this mine (-1 means unlimited)
   uint32_t uiOreRunningOutPoint;  // when supply drop below this, workers tell player the mine is
-                                // running out of ore
+                                  // running out of ore
 
   BOOLEAN fEmpty;       // whether no longer minable
   BOOLEAN fRunningOut;  // whether mine is beginning to run out
@@ -89,12 +90,12 @@ typedef struct MINE_STATUS_TYPE {
                                       // produced from it
   BOOLEAN fAttackedHeadMiner;         // player has attacked the head miner, shutting down mine &
                                       // decreasing loyalty
-  uint16_t usValidDayCreaturesCanInfest;   // Creatures will be permitted to spread if the game day is
-                                         // greater than this value.
+  uint16_t usValidDayCreaturesCanInfest;   // Creatures will be permitted to spread if the game day
+                                           // is greater than this value.
   uint32_t uiTimePlayerProductionStarted;  // time in minutes when 'fMineHasProducedForPlayer' was
-                                         // first set
+                                           // first set
 
-  BYTE filler[11];  // reserved for expansion
+  uint8_t filler[11];  // reserved for expansion
 
 } MINE_STATUS_TYPE;
 
@@ -168,7 +169,7 @@ uint8_t GetHeadMinerIndexForMine(int8_t bMineIndex);
 uint16_t GetHeadMinerProfileIdForMine(int8_t bMineIndex);
 
 // Find the sector location of a mine
-void GetMineSector(uint8_t ubMineIndex, u8* psX, u8* psY);
+void GetMineSector(uint8_t ubMineIndex, uint8_t* psX, uint8_t* psY);
 
 void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType);
 
@@ -193,7 +194,7 @@ void PlayerAttackedHeadMiner(uint8_t ubMinerProfileId);
 BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId);
 
 // given sector value, get mine id value
-int8_t GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+int8_t GetIdOfMineForSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 // use this for miner (civilian) quotes when *underground* in a mine
 BOOLEAN PlayerForgotToTakeOverMine(uint8_t ubMineIndex);

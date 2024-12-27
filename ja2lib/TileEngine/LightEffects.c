@@ -282,7 +282,7 @@ BOOLEAN LoadLightEffectsFromLoadGameFile(FileID hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
+BOOLEAN SaveLightEffectsToMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   uint32_t uiNumLightEffects = 0;
   FileID hFile = FILE_ID_ERR;
   uint32_t uiNumBytesWritten = 0;
@@ -347,7 +347,7 @@ BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadLightEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
+BOOLEAN LoadLightEffectsFromMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   uint32_t uiNumBytesRead;
   uint32_t uiCount;
   uint32_t uiCnt = 0;

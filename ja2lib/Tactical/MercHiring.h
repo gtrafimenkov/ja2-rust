@@ -40,8 +40,8 @@ typedef struct {
 } MERC_HIRE_STRUCT;
 
 // ATE: Globals that dictate where the mercs will land once being hired
-extern u8 gsMercArriveSectorX;
-extern u8 gsMercArriveSectorY;
+extern uint8_t gsMercArriveSectorX;
+extern uint8_t gsMercArriveSectorY;
 
 int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc);
 void MercArrivesCallback(uint8_t ubSoldierID);

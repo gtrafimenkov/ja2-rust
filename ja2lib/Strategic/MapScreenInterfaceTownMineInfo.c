@@ -35,8 +35,8 @@
 #include "Utils/PopUpBox.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
-#include "rust_sam_sites.h"
 #include "rust_images.h"
+#include "rust_sam_sites.h"
 
 #define BOX_BUTTON_WIDTH 100
 #define BOX_BUTTON_HEIGHT 20
@@ -94,7 +94,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason);
 void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason);
 void MinWidthOfTownMineInfoBox(void);
 
-void DisplayTownInfo(u8 sMapX, u8 sMapY, i8 bMapZ) {
+void DisplayTownInfo(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   // will display town info for a particular town
 
   // set current sector
@@ -734,11 +734,11 @@ void AddInventoryButtonForMapPopUpBox(void) {
 
   guiMapButtonInventoryImage[1] = LoadButtonImage("INTERFACE\\mapinvbtns.sti", -1, 1, -1, 3, -1);
 
-  guiMapButtonInventory[1] =
-      CreateIconAndTextButton(guiMapButtonInventoryImage[1], pMapPopUpInventoryText[1], BLOCKFONT2,
-                              FONT_WHITE, FONT_BLACK, FONT_WHITE, FONT_BLACK, TEXT_CJUSTIFIED,
-                              (int16_t)(sX), (int16_t)(sY), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-                              DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)MapTownMineExitButtonCallBack);
+  guiMapButtonInventory[1] = CreateIconAndTextButton(
+      guiMapButtonInventoryImage[1], pMapPopUpInventoryText[1], BLOCKFONT2, FONT_WHITE, FONT_BLACK,
+      FONT_WHITE, FONT_BLACK, TEXT_CJUSTIFIED, (int16_t)(sX), (int16_t)(sY), BUTTON_TOGGLE,
+      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK,
+      (GUI_CALLBACK)MapTownMineExitButtonCallBack);
 
   // delete video object
   DeleteVideoObjectFromIndex(uiObject);

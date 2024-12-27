@@ -86,7 +86,7 @@ uint32_t guiCurrentUniqueSoldierId = 1;
 // CJC note: trust me, it's easiest just to put this here; this is the only
 // place it should need to be used
 uint8_t gubItemDroppableFlag[NUM_INV_SLOTS] = {0x01, 0x02, 0x04, 0, 0, 0x08, 0, 0x10, 0x20, 0x40,
-                                             0x80, 0,    0,    0, 0, 0,    0, 0,    0};
+                                               0x80, 0,    0,    0, 0, 0,    0, 0,    0};
 
 void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct) {
   pCreateStruct->bLifeMax = (uint8_t)Random(50) + 50;
@@ -474,8 +474,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, u
           Soldier.bVehicleID = pCreateStruct->bUseGivenVehicleID;
         } else {
           // Add vehicle to list....
-          Soldier.bVehicleID = (int8_t)AddVehicleToList((u8)Soldier.sSectorX, (u8)Soldier.sSectorY,
-                                                      Soldier.bSectorZ, ubVehicleID);
+          Soldier.bVehicleID = (int8_t)AddVehicleToList(
+              (uint8_t)Soldier.sSectorX, (uint8_t)Soldier.sSectorY, Soldier.bSectorZ, ubVehicleID);
         }
         SetVehicleValuesIntoSoldierType(&Soldier);
         break;
@@ -1434,7 +1434,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 
         case BLOODCAT:
           pp->bExpLevel = 5 + bExpLevelModifier;
-          if (GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY) == SEC_I16) {
+          if (GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY) == SEC_I16) {
             pp->bExpLevel += gGameOptions.ubDifficultyLevel;
           }
           break;
@@ -1875,7 +1875,7 @@ struct SOLDIERTYPE *TacticalCreateAdministrator() {
     // send soldier to centre of map, roughly
     pSoldier->sNoiseGridno =
         (int16_t)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
-                (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
+                  (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
     pSoldier->ubNoiseVolume = MAX_MISC_NOISE_DURATION;
   }
   return (pSoldier);
@@ -1907,7 +1907,7 @@ struct SOLDIERTYPE *TacticalCreateArmyTroop() {
     // send soldier to centre of map, roughly
     pSoldier->sNoiseGridno =
         (int16_t)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
-                (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
+                  (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
     pSoldier->ubNoiseVolume = MAX_MISC_NOISE_DURATION;
   }
   return (pSoldier);
@@ -1948,7 +1948,7 @@ struct SOLDIERTYPE *TacticalCreateEliteEnemy() {
     // send soldier to centre of map, roughly
     pSoldier->sNoiseGridno =
         (int16_t)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
-                (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
+                  (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
     pSoldier->ubNoiseVolume = MAX_MISC_NOISE_DURATION;
   }
   return (pSoldier);
@@ -2090,7 +2090,7 @@ void QuickCreateProfileMerc(int8_t bTeam, uint8_t ubProfileID) {
   // Create guy # X
   SOLDIERCREATE_STRUCT MercCreateStruct;
   int16_t sWorldX, sWorldY;
-  u8 sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
   int16_t sGridX, sGridY;
   uint8_t ubID;
   uint16_t usMapPos;
@@ -2275,8 +2275,8 @@ void TrashAllSoldiers() {
 uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
   uint8_t ubLocationModifier;
   uint8_t ubPalaceDistance;
-  u8 sSectorX, sSectorY;
-  i8 sSectorZ;
+  uint8_t sSectorX, sSectorY;
+  int8_t sSectorZ;
   TownID bTownId;
   BOOLEAN fSuccess;
 
@@ -2316,7 +2316,7 @@ uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
 }
 
 // grab the distance from the palace
-uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY) {
+uint8_t GetPythDistanceFromPalace(uint8_t sSectorX, uint8_t sSectorY) {
   uint8_t ubDistance = 0;
   int16_t sRows = 0, sCols = 0;
   float fValue = 0.0;

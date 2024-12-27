@@ -22,7 +22,7 @@ int strcasecmp(const char *s1, const char *s2) { return 0; }
 
 int strncasecmp(const char *s1, const char *s2, size_t n) { return 0; }
 
-extern u32 Plat_GetTickCount() { return 0; }
+extern uint32_t Plat_GetTickCount() { return 0; }
 
 uint32_t GetClock(void) { return 0; }
 
@@ -108,11 +108,11 @@ void CheckCustomizableTimer(void) {}
 // Sound
 /////////////////////////////////////////////////////////////////////////////////
 
-uint32_t SoundPlay(char* pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlay(char *pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
 
-uint32_t SoundPlayStreamedFile(char* pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlayStreamedFile(char *pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
 
-uint32_t SoundPlayRandom(char* pFilename, RANDOMPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlayRandom(char *pFilename, RANDOMPARMS *pParms) { return (SOUND_ERROR); }
 
 BOOLEAN SoundIsPlaying(uint32_t uiSoundID) { return FALSE; }
 
@@ -134,11 +134,11 @@ BOOLEAN SoundServiceStreams(void) { return FALSE; }
 
 uint32_t SoundGetPosition(uint32_t uiSoundID) { return 0; }
 
-uint32_t SoundLoadSample(char* pFilename) { return (NO_SAMPLE); }
+uint32_t SoundLoadSample(char *pFilename) { return (NO_SAMPLE); }
 
-uint32_t SoundLockSample(char* pFilename) { return (NO_SAMPLE); }
+uint32_t SoundLockSample(char *pFilename) { return (NO_SAMPLE); }
 
-uint32_t SoundUnlockSample(char* pFilename) { return (NO_SAMPLE); }
+uint32_t SoundUnlockSample(char *pFilename) { return (NO_SAMPLE); }
 
 void SoundRemoveSampleFlags(uint32_t uiSample, uint32_t uiFlags) {}
 
@@ -150,18 +150,19 @@ void RefreshScreen() {}
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
-void FatalError(char* pError, ...) {}
+void FatalError(char *pError, ...) {}
 
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height) { return NULL; }
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) { return NULL; }
 
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           uint32_t fBltFlags, int32_t iDestX, int32_t iDestY, struct Rect *SrcRect) {
+                           uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                           struct Rect *SrcRect) {
   return FALSE;
 }
 
@@ -185,7 +186,7 @@ struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   return res;
 }
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY, struct Rect *SrcRect,
-                              struct Rect *DestRect) {
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, struct Rect *DestRect) {
   return FALSE;
 }

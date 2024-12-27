@@ -8,6 +8,7 @@
 #include "SGP/MouseSystem.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/Items.h"
+#include "rust_fileman.h"
 
 struct VSurface;
 
@@ -93,8 +94,8 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
 extern BOOLEAN gfInItemDescBox;
 
 BOOLEAN InItemDescriptionBox();
-BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX, int16_t sY,
-                               uint8_t ubStatusIndex);
+BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX,
+                               int16_t sY, uint8_t ubStatusIndex);
 BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, int16_t sY,
                                        uint8_t ubStatusIndex, struct SOLDIERTYPE *pSoldier);
 BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX,
@@ -104,16 +105,16 @@ void HandleItemDescriptionBox(BOOLEAN *pfDirty);
 void DeleteItemDescriptionBox();
 
 BOOLEAN InItemStackPopup();
-BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sInvX, int16_t sInvY,
-                           int16_t sInvWidth, int16_t sInvHeight);
+BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sInvX,
+                           int16_t sInvY, int16_t sInvWidth, int16_t sInvHeight);
 void RenderItemStackPopup(BOOLEAN fFullRender);
 void HandleItemStackPopup();
 void DeleteItemStackPopup();
 void EndItemStackPopupWithItemInHand();
 
 // keyring handlers
-BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY, int16_t sInvWidth,
-                         int16_t sInvHeight);
+BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY,
+                         int16_t sInvWidth, int16_t sInvHeight);
 void RenderKeyRingPopup(BOOLEAN fFullRender);
 void InitKeyRingInterface(MOUSE_CALLBACK KeyRingClickCallback);
 void InitMapKeyRingInterface(MOUSE_CALLBACK KeyRingClickCallback);
@@ -159,8 +160,8 @@ BOOLEAN SaveItemCursorToSavedGame(FileID hFile);
 void EnableKeyRing(BOOLEAN fEnable);
 
 // handle compatable items for merc and map inventory
-BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, int32_t bInvPos, BOOLEAN fOn,
-                                           BOOLEAN fFromMerc);
+BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, int32_t bInvPos,
+                                           BOOLEAN fOn, BOOLEAN fFromMerc);
 BOOLEAN HandleCompatibleAmmoUIForMapInventory(struct SOLDIERTYPE *pSoldier, int32_t bInvPos,
                                               int32_t iStartSlotNumber, BOOLEAN fOn,
                                               BOOLEAN fFromMerc);

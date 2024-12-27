@@ -6,6 +6,7 @@
 #define __SMOKE_EFFECTS
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 // Smoke effect types
 enum {
@@ -53,8 +54,8 @@ int32_t NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t 
 BOOLEAN SaveSmokeEffectsToSaveGameFile(FileID hFile);
 BOOLEAN LoadSmokeEffectsFromLoadGameFile(FileID hFile);
 
-BOOLEAN SaveSmokeEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
-BOOLEAN LoadSmokeEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
+BOOLEAN SaveSmokeEffectsToMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
+BOOLEAN LoadSmokeEffectsFromMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 
 void ResetSmokeEffects();
 

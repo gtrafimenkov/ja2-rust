@@ -69,8 +69,8 @@ extern BOOLEAN gfFirstHeliRun;
 // ATE: Globals that dictate where the mercs will land once being hired
 // Default to Omerta
 // Saved in general saved game structure
-u8 gsMercArriveSectorX = 9;
-u8 gsMercArriveSectorY = 1;
+uint8_t gsMercArriveSectorX = 9;
+uint8_t gsMercArriveSectorY = 1;
 
 static void CheckForValidArrivalSector();
 
@@ -304,7 +304,7 @@ void MercArrivesCallback(uint8_t ubSoldierID) {
       // OK, If we are in mapscreen, get out...
       if (IsMapScreen_2()) {
         // ATE: Make sure the current one is selected!
-        ChangeSelectedMapSector((u8)gWorldSectorX, (u8)gWorldSectorY, 0);
+        ChangeSelectedMapSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, 0);
 
         RequestTriggerExitFromMapscreen(MAP_EXIT_TO_TACTICAL);
       }
@@ -569,10 +569,10 @@ static void CheckForValidArrivalSector() {
   sRight = ubRadius;
 
   for (cnt1 = sBottom; cnt1 <= sTop; cnt1++) {
-    leftmost = ((GetSectorID16((u8)sSector, (u8)cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
+    leftmost = ((GetSectorID16((uint8_t)sSector, (uint8_t)cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
 
     for (cnt2 = sLeft; cnt2 <= sRight; cnt2++) {
-      sSector2 = GetSectorID16((u8)sSector, (u8)cnt1) + cnt2;
+      sSector2 = GetSectorID16((uint8_t)sSector, (uint8_t)cnt1) + cnt2;
 
       if (sSector2 >= 1 && sSector2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
           sSector2 >= leftmost && sSector2 < (leftmost + MAP_WORLD_X)) {

@@ -70,7 +70,7 @@ BOOLEAN gfJustFinishedAPause = FALSE;
 // clock mouse region
 struct MOUSE_REGION gClockMouseRegion;
 struct MOUSE_REGION gClockScreenMaskMouseRegion;
-void AdvanceClock(uint8_t ubWarpCode, u32 game_seconds);
+void AdvanceClock(uint8_t ubWarpCode, uint32_t game_seconds);
 
 #define SECONDS_PER_COMPRESSION_IN_RTCOMBAT 10
 #define SECONDS_PER_COMPRESSION_IN_TBCOMBAT 10
@@ -121,9 +121,11 @@ void InitNewGameClock() {
 }
 
 // Not to be used too often by things other than internally
-void WarpGameTime(uint32_t uiAdjustment, uint8_t ubWarpCode) { AdvanceClock(ubWarpCode, uiAdjustment); }
+void WarpGameTime(uint32_t uiAdjustment, uint8_t ubWarpCode) {
+  AdvanceClock(ubWarpCode, uiAdjustment);
+}
 
-void AdvanceClock(uint8_t ubWarpCode, u32 game_seconds) {
+void AdvanceClock(uint8_t ubWarpCode, uint32_t game_seconds) {
   if (ubWarpCode != WARPTIME_NO_PROCESSING_OF_EVENTS) {
     guiTimeOfLastEventQuery = GetGameTimeInSec();
     // First of all, events are posted for movements, pending attacks, equipment arrivals, etc. This
@@ -333,7 +335,7 @@ void UpdateClock() {
   static uint32_t uiLastSecondTime = 0;
   static uint32_t uiLastTimeProcessed = 0;
 
-  u32 seconds_per_real_second = GetGameSecondsPerRealSecond();
+  uint32_t seconds_per_real_second = GetGameSecondsPerRealSecond();
 
   // check game state for pause screen masks
   CreateDestroyScreenMaskForPauseGame();
@@ -405,13 +407,13 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   uint32_t uiNumBytesWritten = 0;
 
   {
-    i32 time_compress_mode = GetTimeCompressMode();
+    int32_t time_compress_mode = GetTimeCompressMode();
     File_Write(hFile, &time_compress_mode, sizeof(int32_t), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(int32_t)) return (FALSE);
   }
 
   {
-    u8 clock_resolution = GetClockResolution();
+    uint8_t clock_resolution = GetClockResolution();
     File_Write(hFile, &clock_resolution, sizeof(uint8_t), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(uint8_t)) return (FALSE);
   }
@@ -429,13 +431,13 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   }
 
   {
-    i32 gameClock = GetGameTimeInSec();
+    int32_t gameClock = GetGameTimeInSec();
     File_Write(hFile, &gameClock, sizeof(uint32_t), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
   }
 
   {
-    u32 seconds_per_real_second = GetGameSecondsPerRealSecond();
+    uint32_t seconds_per_real_second = GetGameSecondsPerRealSecond();
     File_Write(hFile, &seconds_per_real_second, sizeof(uint32_t), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
   }

@@ -4,12 +4,14 @@
 
 #ifndef __TALKING_H_
 #define __TALKING_H_
+
+#include "SGP/Types.h"
+#include "rust_fileman.h"
+
 #define NO_EXPRESSION 0
 #define BLINKING 1
 #define ANGRY 2
 #define SURPRISED 3
-
-#include "SGP/Types.h"
 
 struct SOLDIERTYPE;
 
@@ -93,12 +95,12 @@ typedef struct {
   uint16_t usFaceY;  // Y location to render face
   uint16_t usFaceWidth;
   uint16_t usFaceHeight;
-  uint32_t uiAutoDisplayBuffer;   // Display buffer for face
-  uint32_t uiAutoRestoreBuffer;   // Restore buffer
-  BOOLEAN fAutoRestoreBuffer;   // Flag to indicate our own restorebuffer or not
-  BOOLEAN fAutoDisplayBuffer;   // Flag to indicate our own display buffer or not
-  BOOLEAN fDisplayTextOver;     // Boolean indicating to display text on face
-  BOOLEAN fOldDisplayTextOver;  // OLD Boolean indicating to display text on face
+  uint32_t uiAutoDisplayBuffer;  // Display buffer for face
+  uint32_t uiAutoRestoreBuffer;  // Restore buffer
+  BOOLEAN fAutoRestoreBuffer;    // Flag to indicate our own restorebuffer or not
+  BOOLEAN fAutoDisplayBuffer;    // Flag to indicate our own display buffer or not
+  BOOLEAN fDisplayTextOver;      // Boolean indicating to display text on face
+  BOOLEAN fOldDisplayTextOver;   // OLD Boolean indicating to display text on face
   BOOLEAN fCanHandleInactiveNow;
   wchar_t zDisplayText[30];  // String of text that can be displayed
 
@@ -172,7 +174,8 @@ int32_t InitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFl
 
 // INternal init face, called if you don;t want to give a profile ID ( send NO_PROFILE ) for ID
 int32_t InternalInitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags,
-                       int32_t iFaceFileID, uint32_t uiBlinkFrequency, uint32_t uiExpressionFrequency);
+                         int32_t iFaceFileID, uint32_t uiBlinkFrequency,
+                         uint32_t uiExpressionFrequency);
 
 // Removes the face from the internal table, deletes any memory allocated if any.
 void DeleteFace(int32_t iFaceIndex);
@@ -188,9 +191,10 @@ void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, int32
 
 // Same as above, yet used mostly internally. Is compatible with the fact that a soldier profile ID
 // is not required...
-void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, int32_t iFaceIndex,
-                               uint16_t usFaceX, uint16_t usFaceY, uint16_t usEyesX, uint16_t usEyesY,
-                               uint16_t usMouthX, uint16_t usMouthY);
+void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
+                               int32_t iFaceIndex, uint16_t usFaceX, uint16_t usFaceY,
+                               uint16_t usEyesX, uint16_t usEyesY, uint16_t usMouthX,
+                               uint16_t usMouthY);
 
 // To begin rendering of the face sprite, call this function once:
 BOOLEAN RenderAutoFace(int32_t iFaceIndex);
@@ -201,7 +205,7 @@ BOOLEAN RenderAutoFace(int32_t iFaceIndex);
 // If you want to setup the face to talking, ( most times this call is done in JA2 by other
 // functions, not
 // directly), you call
-BOOLEAN SetFaceTalking(int32_t iFaceIndex, char *zSoundFile, wchar_t* zTextString, uint32_t usRate,
+BOOLEAN SetFaceTalking(int32_t iFaceIndex, char *zSoundFile, wchar_t *zTextString, uint32_t usRate,
                        uint32_t ubVolume, uint32_t ubLoops, uint32_t uiPan);
 // This function will setup appropriate face data and begin the speech process. It can fail if the
 // sound
@@ -243,8 +247,8 @@ void HandleTalkingAutoFaces();
 // Same Functions but taking soldier ID first to get profile ID
 int32_t InitSoldierFace(struct SOLDIERTYPE *pSoldier);
 void DeleteSoldierFace(struct SOLDIERTYPE *pSoldier);
-void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, uint8_t ubSoldierID,
-                                  uint16_t usFaceX, uint16_t usFaceY);
+void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
+                                  uint8_t ubSoldierID, uint16_t usFaceX, uint16_t usFaceY);
 void SetAutoFaceInActiveFromSoldier(uint8_t ubSoldierID);
 BOOLEAN RenderAutoFaceFromSoldier(uint8_t ubSoldierID);
 BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, uint8_t ubSoldierID, int16_t sX, int16_t sY);

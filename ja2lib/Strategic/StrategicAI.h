@@ -6,6 +6,7 @@
 #define __STRATEGIC_AI_H
 
 #include "Strategic/StrategicMovement.h"
+#include "rust_fileman.h"
 
 void InitStrategicAI();
 void KillStrategicAI();
@@ -21,7 +22,7 @@ enum {
 
 };
 
-void ExecuteStrategicAIAction(uint16_t usActionCode, u8 sSectorX, u8 sSectorY);
+void ExecuteStrategicAIAction(uint16_t usActionCode, uint8_t sSectorX, uint8_t sSectorY);
 
 void CheckEnemyControlledSector(uint8_t ubSectorID);
 void EvaluateQueenSituation();
@@ -37,7 +38,7 @@ void RecalculateGroupWeight(struct GROUP *pGroup);
 BOOLEAN OkayForEnemyToMoveThroughSector(uint8_t ubSectorID);
 BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, uint8_t ubSectorID);
 
-void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
+void StrategicHandleQueenLosingControlOfSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ);
 
 void WakeUpQueen();
 

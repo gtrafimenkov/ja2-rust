@@ -192,13 +192,13 @@ BOOLEAN gfOverrideDirty;
 BOOLEAN gfOverride;
 
 // The sector coordinates of the map currently loaded in memory (blue)
-u8 gsSectorX, gsSectorY;
+uint8_t gsSectorX, gsSectorY;
 // The layer of the sector that is currently loaded in memory.
 int32_t gsSectorLayer;
 // The sector coordinates of the mouse position (yellow)
 int16_t gsHiSectorX = 0, gsHiSectorY = 0;
 // The sector coordinates of the selected sector (red)
-u8 gsSelSectorX = 0, gsSelSectorY = 0;
+uint8_t gsSelSectorX = 0, gsSelSectorY = 0;
 
 // Used to determine how long the F5 key has been held down for to determine whether or not the
 // summary is going to be persistant or not.
@@ -278,8 +278,8 @@ void CreateSummaryWindow() {
   gfRenderGrid = TRUE;
 
   iSummaryButton[SUMMARY_PROGRESSCHECKBOX] = CreateCheckBoxButton(
-      (int16_t)(MAP_LEFT + 50), (int16_t)(MAP_BOTTOM + 5), "EDITOR//smcheckbox.sti", MSYS_PRIORITY_HIGH,
-      SummaryToggleProgressCallback);
+      (int16_t)(MAP_LEFT + 50), (int16_t)(MAP_BOTTOM + 5), "EDITOR//smcheckbox.sti",
+      MSYS_PRIORITY_HIGH, SummaryToggleProgressCallback);
   ButtonList[iSummaryButton[SUMMARY_PROGRESSCHECKBOX]]->uiFlags |= BUTTON_CLICKED_ON;
   gfRenderProgress = TRUE;
 
@@ -645,7 +645,8 @@ void RenderItemDetails() {
   int32_t index, i;
   wchar_t str[100];
   uint32_t uiQuantity, uiExistChance, uiStatus;
-  uint32_t uiTriggerQuantity[8], uiActionQuantity[8], uiTriggerExistChance[8], uiActionExistChance[8];
+  uint32_t uiTriggerQuantity[8], uiActionQuantity[8], uiTriggerExistChance[8],
+      uiActionExistChance[8];
   uint32_t xp, yp;
   int8_t bFreqIndex;
   SetFont(FONT10ARIAL);
@@ -1421,11 +1422,11 @@ void RenderSummaryWindow() {
   }
 }
 
-void UpdateSectorSummary(wchar_t* gszFilename, BOOLEAN fUpdate) {
+void UpdateSectorSummary(wchar_t *gszFilename, BOOLEAN fUpdate) {
   wchar_t str[50];
   char szCoord[40];
   wchar_t *ptr;
-  u8 x, y;
+  uint8_t x, y;
 
   gfRenderSummary = TRUE;
   // Extract the sector

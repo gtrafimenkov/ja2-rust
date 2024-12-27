@@ -440,8 +440,8 @@ void AddSecondAirportAttendant(void) {
 void SetPabloToUnbribed(void) {
   if (guiPabloExtraDaysBribed > 0) {
     // set new event for later on, because the player gave Pablo more money!
-    AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(), FACT_PABLOS_BRIBED,
-                               guiPabloExtraDaysBribed);
+    AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
+                               FACT_PABLOS_BRIBED, guiPabloExtraDaysBribed);
     guiPabloExtraDaysBribed = 0;
   } else {
     SetFactFalse(FACT_PABLOS_BRIBED);
@@ -483,8 +483,8 @@ void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
 
     if (uiTotalCash < 30000) {
       // add history log here
-      AddHistoryToPlayersLog(HISTORY_FOUND_MONEY, 0, GetGameTimeInMin(), (u8)gWorldSectorX,
-                             (u8)gWorldSectorY);
+      AddHistoryToPlayersLog(HISTORY_FOUND_MONEY, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY);
 
       SetFactTrue(FACT_KINGPIN_WILL_LEARN_OF_MONEY_GONE);
     }

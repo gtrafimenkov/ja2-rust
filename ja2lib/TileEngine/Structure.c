@@ -235,7 +235,7 @@ BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadStructureData(char* szFileName, struct STRUCTURE_FILE_REF *pFileRef,
+BOOLEAN LoadStructureData(char *szFileName, struct STRUCTURE_FILE_REF *pFileRef,
                           uint32_t *puiStructureDataSize)
 // uint8_t **ppubStructureData, uint32_t * puiDataSize, STRUCTURE_FILE_HEADER * pHeader )
 {  // Loads a structure file's data as a honking chunk o' memory
@@ -329,7 +329,7 @@ BOOLEAN LoadStructureData(char* szFileName, struct STRUCTURE_FILE_REF *pFileRef,
 BOOLEAN CreateFileStructureArrays(
     struct STRUCTURE_FILE_REF *pFileRef,
     uint32_t uiDataSize) {  // Based on a file chunk, creates all the dynamic arrays for the
-                          // structure definitions contained within
+                            // structure definitions contained within
 
   uint8_t *pCurrent;
   struct DB_STRUCTURE_REF *pDBStructureRef;
@@ -399,8 +399,8 @@ BOOLEAN CreateFileStructureArrays(
 }
 
 struct STRUCTURE_FILE_REF *LoadStructureFile(
-    char* szFileName) {  // NB should be passed in expected number
-                       // of structures so we can check equality
+    char *szFileName) {  // NB should be passed in expected number
+                         // of structures so we can check equality
   uint32_t uiDataSize = 0;
   BOOLEAN fOk;
   struct STRUCTURE_FILE_REF *pFileRef;
@@ -736,7 +736,7 @@ BOOLEAN OkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
 BOOLEAN AddStructureToTile(
     MAP_ELEMENT *pMapElement, struct STRUCTURE *pStructure,
     uint16_t usStructureID) {  // adds a struct STRUCTURE to a MAP_ELEMENT (adds part
-                             // of a structure to a location on the map)
+                               // of a structure to a location on the map)
   struct STRUCTURE *pStructureTail;
 
   if (!(pMapElement)) {
@@ -916,7 +916,7 @@ struct STRUCTURE *InternalAddStructureToWorld(
 }
 
 BOOLEAN AddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
-                            struct DB_STRUCTURE_REF *pDBStructureRef, PTR pLevelN) {
+                            struct DB_STRUCTURE_REF *pDBStructureRef, void *pLevelN) {
   struct STRUCTURE *pStructure;
 
   pStructure = InternalAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef,
@@ -1153,7 +1153,8 @@ struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, uint32_t fFlag
 }
 
 struct STRUCTURE *FindStructureByID(
-    int16_t sGridNo, uint16_t usStructureID) {  // finds a structure that matches any of the given flags
+    int16_t sGridNo,
+    uint16_t usStructureID) {  // finds a structure that matches any of the given flags
   struct STRUCTURE *pCurrent;
 
   pCurrent = gpWorldLevelData[sGridNo].pStructureHead;
@@ -1389,7 +1390,8 @@ BOOLEAN StructureDensity(struct STRUCTURE *pStructure, uint8_t *pubLevel0, uint8
 }
 
 BOOLEAN DamageStructure(
-    struct STRUCTURE *pStructure, uint8_t ubDamage, uint8_t ubReason, int16_t sGridNo, int16_t sX, int16_t sY,
+    struct STRUCTURE *pStructure, uint8_t ubDamage, uint8_t ubReason, int16_t sGridNo, int16_t sX,
+    int16_t sY,
     uint8_t ubOwner) {  // do damage to a structure; returns TRUE if the structure should be removed
 
   struct STRUCTURE *pBase;
@@ -1470,7 +1472,7 @@ BOOLEAN DamageStructure(
   }
 
   // OK, LOOK FOR A SAM SITE, UPDATE....
-  UpdateAndDamageSAMIfFound((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, sGridNo,
+  UpdateAndDamageSAMIfFound((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ, sGridNo,
                             ubDamage);
 
   // find the base so we can reduce the hit points!
@@ -1502,7 +1504,7 @@ void DebugStructurePage1(void) {
   int8_t bStructures;
 
   static wchar_t WallOrientationString[5][15] = {L"None", L"Inside left", L"Inside right",
-                                                L"Outside left", L"Outside right"};
+                                                 L"Outside left", L"Outside right"};
 
   SetFont(LARGEFONT1);
   gprintf(0, 0, L"DEBUG STRUCTURES PAGE 1 OF 1");
@@ -1902,8 +1904,8 @@ BOOLEAN FiniStructureDB(void) {
 }
 
 int8_t GetBlockingStructureInfo(int16_t sGridNo, int8_t bDir, int8_t bNextDir, int8_t bLevel,
-                              int8_t *pStructHeight, struct STRUCTURE **ppTallestStructure,
-                              BOOLEAN fWallsBlock) {
+                                int8_t *pStructHeight, struct STRUCTURE **ppTallestStructure,
+                                BOOLEAN fWallsBlock) {
   struct STRUCTURE *pCurrent, *pStructure;
   int16_t sDesiredLevel;
   BOOLEAN fOKStructOnLevel = FALSE;
@@ -2052,8 +2054,8 @@ uint32_t StructureTypeToFlag(uint8_t ubType) {
   return (uiFlag);
 }
 
-struct STRUCTURE *FindStructureBySavedInfo(int16_t sGridNo, uint8_t ubType, uint8_t ubWallOrientation,
-                                           int8_t bLevel) {
+struct STRUCTURE *FindStructureBySavedInfo(int16_t sGridNo, uint8_t ubType,
+                                           uint8_t ubWallOrientation, int8_t bLevel) {
   struct STRUCTURE *pCurrent;
   uint32_t uiTypeFlag;
 

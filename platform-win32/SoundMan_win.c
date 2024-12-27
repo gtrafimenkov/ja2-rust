@@ -44,8 +44,8 @@ typedef struct {
   uint32_t uiSpeed;      // Playback frequency
   BOOLEAN fStereo;       // Stereo/Mono
   UINT8 ubBits;          // 8/16 bits
-  PTR pData;             // pointer to sample data memory
-  PTR pSoundStart;       // pointer to start of sound data
+  void *pData;           // pointer to sample data memory
+  void *pSoundStart;     // pointer to start of sound data
   uint32_t uiCacheHits;
 
   uint32_t uiTimeNext;  // Random sound data
@@ -379,7 +379,7 @@ uint32_t SoundPlayStreamedFile(char *pFilename, SOUNDPARMS *pParms) {
       }
 
       // Get the real file handle of the file
-      u64 hRealFileHandle = File_GetWinHandleToReadFile(hFile);
+      uint64_t hRealFileHandle = File_GetWinHandleToReadFile(hFile);
       if (hRealFileHandle == 0) {
         FastDebugMsg(
             String("\n*******\nSoundPlayStreamedFile():  ERROR:  Couldnt get a real file handle "
@@ -1270,7 +1270,7 @@ BOOLEAN SoundProcessWAVHeader(uint32_t uiSample) {
   pSampleList[uiSample].fStereo = (BOOLEAN)(ailInfo.channels == 2);
   pSampleList[uiSample].ubBits = (UINT8)ailInfo.bits;
 
-  pSampleList[uiSample].pSoundStart = (PTR)ailInfo.data_ptr;
+  pSampleList[uiSample].pSoundStart = (void *)ailInfo.data_ptr;
   pSampleList[uiSample].uiSoundSize = ailInfo.data_len;
 
   pSampleList[uiSample].uiAilWaveFormat = ailInfo.format;

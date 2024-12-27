@@ -79,7 +79,8 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
 struct VSurface *GetVSByID(VSurfID id);
 
-BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP);
+BOOLEAN VSurfaceColorFill(struct VSurface *dest, int32_t x1, int32_t y1, int32_t x2, int32_t y2,
+                          uint16_t Color16BPP);
 
 // Sets transparency
 BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor);
@@ -91,8 +92,8 @@ BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Set data from struct Image*.
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, uint16_t usX,
-                                      uint16_t usY, struct GRect *pSrcRect);
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage,
+                                      uint16_t usX, uint16_t usY, struct GRect *pSrcRect);
 
 // Sets Transparency color into HVSurface and the underlying DD surface
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor);
@@ -110,10 +111,11 @@ BOOLEAN DeleteVideoSurfaceFromIndex(VSurfID uiIndex);
 // These blitting functions more-or less encapsolate all of the functionality of DirectDraw
 // Blitting, giving an API layer for portability.
 
-BOOLEAN BltVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface, int32_t iDestX,
-                        int32_t iDestY, int32_t fBltFlags, struct BltOpts *pBltFx);
+BOOLEAN BltVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                        int32_t iDestX, int32_t iDestY, int32_t fBltFlags, struct BltOpts *pBltFx);
 
-BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2, int32_t Y2);
+BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2,
+                               int32_t Y2);
 
 // If the Dest Rect and the source rect are not the same size, the source surface will be either
 // enlraged or shunk.
@@ -129,7 +131,7 @@ BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, int32_
 typedef struct {
   struct GRect RegionCoords;  // Rectangle describing coordinates of region
   SGPPoint Origin;            // Origin used for hot spots, etc
-  uint8_t ubHitMask;            // Byte flags for hit detection
+  uint8_t ubHitMask;          // Byte flags for hit detection
 } VSURFACE_REGION;
 
 void SetClippingRect(struct GRect *clip);
@@ -145,10 +147,10 @@ struct BufferLockInfo {
 
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
 void VSurfaceUnlock(struct VSurface *vs);
-BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch);
+uint8_t *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch);
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height);
-struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex);
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height);
+struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex);
 
 // Global variables for video objects
 extern uint32_t guiRIGHTPANEL;
@@ -157,8 +159,8 @@ extern uint32_t guiSAVEBUFFER;
 BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();
 
-void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y);
-void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, i32 y,
+void BlitImageToSurface(struct Image *source, struct VSurface *dest, int32_t x, int32_t y);
+void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, int32_t x, int32_t y,
                             struct GRect sourceRect);
 
 #endif

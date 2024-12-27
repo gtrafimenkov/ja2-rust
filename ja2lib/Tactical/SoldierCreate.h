@@ -40,8 +40,8 @@ struct VObject;
 // what is used to define these values.
 typedef struct {
   BOOLEAN fDetailedPlacement;  // Specialized information.  Has a counterpart containing all info.
-  uint16_t usStartingGridNo;     // Where the placement position is.
-  int8_t bTeam;                  // The team this individual is part of.
+  uint16_t usStartingGridNo;   // Where the placement position is.
+  int8_t bTeam;                // The team this individual is part of.
   int8_t bRelativeAttributeLevel;
   int8_t bRelativeEquipmentLevel;
   int8_t bDirection;  // 1 of 8 values (always mandatory)
@@ -161,7 +161,7 @@ struct SOLDIERTYPE *TacticalCreateCreature(int8_t bCreatureBodyType);
 void RandomizeRelativeLevel(int8_t *pbRelLevel, uint8_t ubSoldierClass);
 
 // get the pythag. distance from the passed sector to the palace..
-uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY);
+uint8_t GetPythDistanceFromPalace(uint8_t sSectorX, uint8_t sSectorY);
 
 // These following functions are currently used exclusively by the editor.
 // Now, this will be useful for the strategic AI.

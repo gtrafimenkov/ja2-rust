@@ -265,7 +265,7 @@ BOOLEAN RemoveSoldierFromHelicopter(struct SOLDIERTYPE *pSoldier) {
   return (TakeSoldierOutOfVehicle(pSoldier));
 }
 
-BOOLEAN HandleHeliEnteringSector(u8 sX, u8 sY) {
+BOOLEAN HandleHeliEnteringSector(uint8_t sX, uint8_t sY) {
   uint8_t ubNumEnemies;
 
   // check for SAM attack upon the chopper.  If it's destroyed by the attack, do nothing else here
@@ -378,10 +378,10 @@ int32_t FindLocationOfClosestRefuelSite(BOOLEAN fMustBeAvailable) {
     // if this refuelling site is available
     if ((fRefuelingSiteAvailable[iCounter]) || (fMustBeAvailable == FALSE)) {
       // find if sector is under control, find distance from heli to it
-      iDistance = (int32_t)FindStratPath((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                                       (u8)pVehicleList[iHelicopterVehicleId].sSectorY,
-                                       ubRefuelList[iCounter][0], ubRefuelList[iCounter][1],
-                                       pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
+      iDistance = (int32_t)FindStratPath((uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX,
+                                         (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY,
+                                         ubRefuelList[iCounter][0], ubRefuelList[iCounter][1],
+                                         pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
 
       if (iDistance < iShortestDistance) {
         // shorter, copy over
@@ -395,7 +395,7 @@ int32_t FindLocationOfClosestRefuelSite(BOOLEAN fMustBeAvailable) {
   return (iClosestLocation);
 }
 
-int32_t DistanceToNearestRefuelPoint(u8 sX, u8 sY) {
+int32_t DistanceToNearestRefuelPoint(uint8_t sX, uint8_t sY) {
   int32_t iClosestLocation;
   int32_t iDistance;
 
@@ -403,8 +403,8 @@ int32_t DistanceToNearestRefuelPoint(u8 sX, u8 sY) {
   iClosestLocation = LocationOfNearestRefuelPoint(FALSE);
 
   iDistance = (int32_t)FindStratPath(sX, sY, ubRefuelList[iClosestLocation][0],
-                                   ubRefuelList[iClosestLocation][1],
-                                   pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
+                                     ubRefuelList[iClosestLocation][1],
+                                     pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
   return (iDistance);
 }
 
@@ -414,7 +414,7 @@ void ReFuelHelicopter(void) {
   LandHelicopter();
 }
 
-int32_t GetCostOfPassageForHelicopter(u8 sX, u8 sY) {
+int32_t GetCostOfPassageForHelicopter(uint8_t sX, uint8_t sY) {
   // check if sector is air controlled or not, if so, then normal cost, otherwise increase the cost
   int32_t iCost = 0;
 
@@ -587,8 +587,8 @@ void HandleHeliHoverTooLong(void) {
   HeliCharacterDialogue(pSkyRider, RETURN_TO_BASE);
 
   // If the sector is safe
-  if (NumEnemiesInSector((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                         (u8)pVehicleList[iHelicopterVehicleId].sSectorY) == 0) {
+  if (NumEnemiesInSector((uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX,
+                         (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY) == 0) {
     // kick everyone out!
     MoveAllInHelicopterToFootMovementGroup();
   }
@@ -663,8 +663,8 @@ BOOLEAN CheckForArrivalAtRefuelPoint(void) {
   }
 
   // check if we're at a refuel site
-  if (DistanceToNearestRefuelPoint((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                                   (u8)pVehicleList[iHelicopterVehicleId].sSectorY) > 0) {
+  if (DistanceToNearestRefuelPoint((uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX,
+                                   (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY) > 0) {
     // not at a refuel point
     return (FALSE);
   }
@@ -716,7 +716,7 @@ int32_t GetNumberOfPassengersInHelicopter(void) {
   return (iNumber);
 }
 
-BOOLEAN IsRefuelSiteInSector(u8 sMapX, u8 sMapY) {
+BOOLEAN IsRefuelSiteInSector(uint8_t sMapX, uint8_t sMapY) {
   int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < NUMBER_OF_REFUEL_SITES; iCounter++) {
@@ -759,7 +759,7 @@ void UpdateRefuelSiteAvailability(void) {
   }
 }
 
-void SetUpHelicopterForPlayer(u8 sX, u8 sY) {
+void SetUpHelicopterForPlayer(uint8_t sX, uint8_t sY) {
   if (fSkyRiderSetUp == FALSE) {
     fHelicopterAvailable = TRUE;
     fSkyRiderAvailable = TRUE;
@@ -1294,7 +1294,7 @@ BOOLEAN IsHelicopterOnGroundAtRefuelingSite(uint8_t ubRefuelingSite) {
 
 void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
-BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
+BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(uint8_t sSectorX, uint8_t sSectorY) {
   uint8_t ubChance;
 
   // if this sector is in friendly airspace, we're safe
@@ -1311,7 +1311,7 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
     return (FALSE);
   }
 
-  u8 bSAMCondition = GetSamCondition(samSite.some);
+  uint8_t bSAMCondition = GetSamCondition(samSite.some);
 
   // if the SAM site is too damaged to be a threat
   if (bSAMCondition < MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
@@ -1399,8 +1399,8 @@ BOOLEAN CanHelicopterTakeOff(void) {
     return (TRUE);
   }
 
-  if (!IsSectorEnemyControlled((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                               (u8)pVehicleList[iHelicopterVehicleId].sSectorY)) {
+  if (!IsSectorEnemyControlled((uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX,
+                               (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY)) {
     return (TRUE);
   }
 
@@ -1469,7 +1469,7 @@ void AddHelicopterToMaps(BOOLEAN fAdd, uint8_t ubSite) {
   }
 }
 
-BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY) {
+BOOLEAN IsSkyriderIsFlyingInSector(uint8_t sSectorX, uint8_t sSectorY) {
   struct GROUP *pGroup;
 
   // up and about?
@@ -1512,8 +1512,8 @@ int16_t GetNumSafeSectorsInPath(void) {
   }
 
   // may need to skip the sector the chopper is currently in
-  iHeliSector = GetSectorID16((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                              (u8)pVehicleList[iHelicopterVehicleId].sSectorY);
+  iHeliSector = GetSectorID16((uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX,
+                              (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY);
 
   // get chopper's group ptr
   pGroup = GetGroup(pVehicleList[iHelicopterVehicleId].ubMovementGroup);
@@ -1588,8 +1588,8 @@ int16_t GetNumUnSafeSectorsInPath(void) {
   }
 
   // may need to skip the sector the chopper is currently in
-  iHeliSector = GetSectorID16((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                              (u8)pVehicleList[iHelicopterVehicleId].sSectorY);
+  iHeliSector = GetSectorID16((uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX,
+                              (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY);
 
   // get chopper's group ptr
   pGroup = GetGroup(pVehicleList[iHelicopterVehicleId].ubMovementGroup);

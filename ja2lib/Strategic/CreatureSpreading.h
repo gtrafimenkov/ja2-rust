@@ -6,6 +6,7 @@
 #define __CREATURE_SPREADING_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 void InitCreatureQuest();
 void SpreadCreatures();
@@ -22,7 +23,7 @@ BOOLEAN PrepareCreaturesForBattle();
 void CreatureNightPlanning();
 void CreatureAttackTown(uint8_t ubSectorID, BOOLEAN fOverrideTest);
 
-void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void CheckConditionsForTriggeringCreatureQuest(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 void ForceCreaturesToAvoidMineTemporarily(uint8_t ubMineIndex);
 
@@ -31,7 +32,7 @@ extern BOOLEAN gfUseCreatureMusic;
 BOOLEAN MineClearOfMonsters(uint8_t ubMineIndex);
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(u8 *psSectorX, u8 *psSectorY, int8_t *pbSectorZ,
+BOOLEAN GetWarpOutOfMineCodes(uint8_t *psSectorX, uint8_t *psSectorY, int8_t *pbSectorZ,
                               int16_t *psInsertionGridNo);
 
 extern int16_t gsCreatureInsertionCode;

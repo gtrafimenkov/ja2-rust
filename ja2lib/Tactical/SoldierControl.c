@@ -130,7 +130,7 @@ enum {
 
 // LUT for conversion from 8-direction to extended direction
 uint8_t ubExtDirection[] = {EX_NORTH, EX_NORTHEAST, EX_EAST, EX_SOUTHEAST,
-                          EX_SOUTH, EX_SOUTHWEST, EX_WEST, EX_NORTHWEST};
+                            EX_SOUTH, EX_SOUTHWEST, EX_WEST, EX_NORTHWEST};
 
 uint8_t gExtOneCDirection[EX_NUM_WORLD_DIRECTIONS] = {
     4,  5,  6,  7,
@@ -226,25 +226,25 @@ uint16_t SelectFireAnimation(struct SOLDIERTYPE *pSoldier, uint8_t ubHeight);
 void SelectFallAnimation(struct SOLDIERTYPE *pSoldier);
 BOOLEAN FullStructAlone(int16_t sGridNo, uint8_t ubRadius);
 void SoldierGotHitGunFire(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                          uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                          uint8_t ubHitLocation);
+                          uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                          uint8_t ubSpecial, uint8_t ubHitLocation);
 void SoldierGotHitBlade(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                        uint8_t ubHitLocation);
+                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                        uint8_t ubSpecial, uint8_t ubHitLocation);
 void SoldierGotHitPunch(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                        uint8_t ubHitLocation);
+                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                        uint8_t ubSpecial, uint8_t ubHitLocation);
 void SoldierGotHitExplosion(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                            uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                            uint8_t ubHitLocation);
+                            uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                            uint8_t ubSpecial, uint8_t ubHitLocation);
 uint8_t CalcScreamVolume(struct SOLDIERTYPE *pSoldier, uint8_t ubCombinedLoss);
 void PlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
 void HandleSystemNewAISituation(struct SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
 
-uint16_t *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
-                                    BOOLEAN fAdjustGreen);
+uint16_t *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                      uint32_t gscale, BOOLEAN fAdjustGreen);
 uint16_t *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
-                                        uint32_t gscale, BOOLEAN fAdjustGreen);
+                                          uint32_t gscale, BOOLEAN fAdjustGreen);
 
 void SoldierBleed(struct SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed);
 int32_t CheckBleeding(struct SOLDIERTYPE *pSoldier);
@@ -255,7 +255,7 @@ void EVENT_InternalSetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, uint
 #ifdef JA2BETAVERSION
 extern void ValidatePlayersAreInOneGroupOnly();
 extern void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
-void SAIReportError(wchar_t* wErrorString);
+void SAIReportError(wchar_t *wErrorString);
 #endif
 
 uint32_t SleepDartSuccumbChance(struct SOLDIERTYPE *pSoldier);
@@ -1995,8 +1995,8 @@ void InternalSetSoldierHeight(struct SOLDIERTYPE *pSoldier, float dNewHeight,
 
     ApplyTranslucencyToWalls((int16_t)(pSoldier->dXPos / CELL_X_SIZE),
                              (int16_t)(pSoldier->dYPos / CELL_Y_SIZE));
-    // LightHideTrees((int16_t)(pSoldier->dXPos/CELL_X_SIZE), (int16_t)(pSoldier->dYPos/CELL_Y_SIZE));
-    // ConcealAllWalls();
+    // LightHideTrees((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+    // (int16_t)(pSoldier->dYPos/CELL_Y_SIZE)); ConcealAllWalls();
 
     // pSoldier->pLevelNode->ubShadeLevel=gpWorldLevelData[pSoldier->sGridNo].pRoofHead->ubShadeLevel;
     // pSoldier->pLevelNode->ubSumLights=gpWorldLevelData[pSoldier->sGridNo].pRoofHead->ubSumLights;
@@ -2774,9 +2774,9 @@ extern struct SOLDIERTYPE *ReduceAttackBusyGivenTarget(uint8_t ubID, uint8_t ubT
 
 // ATE: THIS FUNCTION IS USED FOR ALL SOLDIER TAKE DAMAGE FUNCTIONS!
 void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                         int16_t sBreathLoss, uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
-                         uint8_t ubSpecial, uint8_t ubHitLocation, int16_t sSubsequent,
-                         int16_t sLocationGrid) {
+                         int16_t sBreathLoss, uint16_t bDirection, uint16_t sRange,
+                         uint8_t ubAttackerID, uint8_t ubSpecial, uint8_t ubHitLocation,
+                         int16_t sSubsequent, int16_t sLocationGrid) {
   uint8_t ubCombinedLoss, ubVolume, ubReason;
   struct SOLDIERTYPE *pNewSoldier;
 
@@ -2827,8 +2827,8 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, i
     if (pSoldier->ubAttackerID != NOBODY &&
         MercPtrs[pSoldier->ubAttackerID]->bTeam == gbPlayerNum) {
       HandleMoraleEvent(MercPtrs[pSoldier->ubAttackerID], MORALE_DID_LOTS_OF_DAMAGE,
-                        (u8)MercPtrs[pSoldier->ubAttackerID]->sSectorX,
-                        (u8)MercPtrs[pSoldier->ubAttackerID]->sSectorY,
+                        (uint8_t)MercPtrs[pSoldier->ubAttackerID]->sSectorX,
+                        (uint8_t)MercPtrs[pSoldier->ubAttackerID]->sSectorY,
                         MercPtrs[pSoldier->ubAttackerID]->bSectorZ);
     }
     if (pSoldier->bTeam == gbPlayerNum) {
@@ -2964,8 +2964,8 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, i
     LocateSoldier(pSoldier->ubID, DONTSETLOCATOR);
 
   if (Item[usWeaponIndex].usItemClass & IC_BLADE) {
-    PlayJA2Sample((uint32_t)(KNIFE_IMPACT), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
-                  SoundDir(pSoldier->sGridNo));
+    PlayJA2Sample((uint32_t)(KNIFE_IMPACT), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo),
+                  1, SoundDir(pSoldier->sGridNo));
   } else {
     PlayJA2Sample((uint32_t)(BULLET_IMPACT_1 + Random(3)), RATE_11025,
                   SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1, SoundDir(pSoldier->sGridNo));
@@ -3236,8 +3236,8 @@ void DoGenericHit(struct SOLDIERTYPE *pSoldier, uint8_t ubSpecial, int16_t bDire
 }
 
 void SoldierGotHitGunFire(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                          uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                          uint8_t ubHitLocation) {
+                          uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                          uint8_t ubSpecial, uint8_t ubHitLocation) {
   uint16_t usNewGridNo;
   BOOLEAN fBlownAway = FALSE;
   BOOLEAN fHeadHit = FALSE;
@@ -3252,8 +3252,8 @@ void SoldierGotHitGunFire(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, 
         if (gGameSettings.fOptions[TOPTION_BLOOD_N_GORE]) {
           if (SpacesAway(pSoldier->sGridNo, Menptr[ubAttackerID].sGridNo) <=
               MAX_DISTANCE_FOR_MESSY_DEATH) {
-            usNewGridNo =
-                NewGridNo((uint16_t)pSoldier->sGridNo, (int8_t)(DirectionInc(pSoldier->bDirection)));
+            usNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                    (int8_t)(DirectionInc(pSoldier->bDirection)));
 
             // CHECK OK DESTINATION!
             if (OKFallDirection(pSoldier, usNewGridNo, pSoldier->bLevel, pSoldier->bDirection,
@@ -3339,8 +3339,8 @@ void SoldierGotHitGunFire(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, 
 }
 
 void SoldierGotHitExplosion(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                            uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                            uint8_t ubHitLocation) {
+                            uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                            uint8_t ubSpecial, uint8_t ubHitLocation) {
   int16_t sNewGridNo;
 
   // IF HERE AND GUY IS DEAD, RETURN!
@@ -3408,8 +3408,8 @@ void SoldierGotHitExplosion(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex
 }
 
 void SoldierGotHitBlade(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                        uint8_t ubHitLocation) {
+                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                        uint8_t ubSpecial, uint8_t ubHitLocation) {
   // IF HERE AND GUY IS DEAD, RETURN!
   if (pSoldier->uiStatusFlags & SOLDIER_DEAD) {
     return;
@@ -3438,8 +3438,8 @@ void SoldierGotHitBlade(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, in
 }
 
 void SoldierGotHitPunch(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t sDamage,
-                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID, uint8_t ubSpecial,
-                        uint8_t ubHitLocation) {
+                        uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
+                        uint8_t ubSpecial, uint8_t ubHitLocation) {
   // IF HERE AND GUY IS DEAD, RETURN!
   if (pSoldier->uiStatusFlags & SOLDIER_DEAD) {
     return;
@@ -3770,7 +3770,7 @@ void EVENT_SetSoldierDestination(struct SOLDIERTYPE *pSoldier, uint16_t usNewDir
 
 // function to determine which direction a creature can turn in
 int8_t MultiTiledTurnDirection(struct SOLDIERTYPE *pSoldier, int8_t bStartDirection,
-                             int8_t bDesiredDirection) {
+                               int8_t bDesiredDirection) {
   int8_t bTurningIncrement;
   int8_t bCurrentDirection;
   int8_t bLoop;
@@ -3921,7 +3921,7 @@ void EVENT_InternalSetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, uint
   } else {
     if (pSoldier->uiStatusFlags & SOLDIER_MULTITILE) {
       pSoldier->bTurningIncrement = (int8_t)MultiTiledTurnDirection(pSoldier, pSoldier->bDirection,
-                                                                  pSoldier->bDesiredDirection);
+                                                                    pSoldier->bDesiredDirection);
     } else {
       pSoldier->bTurningIncrement =
           (int8_t)QuickestDirection(pSoldier->bDirection, pSoldier->bDesiredDirection);
@@ -5331,8 +5331,8 @@ void HandleTakeDamageDeath(struct SOLDIERTYPE *pSoldier, uint8_t bOldLife, uint8
 }
 
 uint8_t SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, int8_t bHeight, int16_t sLifeDeduct,
-                        int16_t sBreathLoss, uint8_t ubReason, uint8_t ubAttacker, int16_t sSourceGrid,
-                        int16_t sSubsequent, BOOLEAN fShowDamage) {
+                          int16_t sBreathLoss, uint8_t ubReason, uint8_t ubAttacker,
+                          int16_t sSourceGrid, int16_t sSubsequent, BOOLEAN fShowDamage) {
   int8_t bOldLife;
   uint8_t ubCombinedLoss;
   int8_t bBandage;
@@ -5346,8 +5346,8 @@ uint8_t SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, int8_t bHeight, int16_t 
   switch (pSoldier->bTeam) {
     case ENEMY_TEAM:
       // if we're in the wilderness this always counts
-      if (IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY) ||
-          SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
+      if (IsSectorEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY) ||
+          SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)]
                   .ubTraversability[THROUGH_STRATEGIC_MOVE] != TOWN) {
         // update current day of activity!
         UpdateLastDayOfPlayerActivity((uint16_t)GetGameTimeInDays());
@@ -5647,7 +5647,8 @@ uint8_t SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, int8_t bHeight, int16_t 
       else if ( ubReason == TAKE_DAMAGE_GUNFIRE )
       {
               // MARKSMANSHIP GAIN (combLoss):  Causing wounds in battle
-              StatChange( MercPtrs[ ubAttacker ], MARKAMT, (uint16_t)( 5 * ubCombinedLoss ), FALSE );
+              StatChange( MercPtrs[ ubAttacker ], MARKAMT, (uint16_t)( 5 * ubCombinedLoss ), FALSE
+      );
       }
       */
     }
@@ -6096,8 +6097,8 @@ BOOLEAN CheckSoldierHitRoof(struct SOLDIERTYPE *pSoldier) {
       if (fDoForwards) {
         pSoldier->sTempNewGridNo =
             NewGridNo((uint16_t)pSoldier->sGridNo, (int16_t)(-1 * DirectionInc(bNewDirection)));
-        pSoldier->sTempNewGridNo =
-            NewGridNo((uint16_t)pSoldier->sTempNewGridNo, (int16_t)(-1 * DirectionInc(bNewDirection)));
+        pSoldier->sTempNewGridNo = NewGridNo((uint16_t)pSoldier->sTempNewGridNo,
+                                             (int16_t)(-1 * DirectionInc(bNewDirection)));
         EVENT_SetSoldierDesiredDirection(pSoldier, gOppositeDirection[bNewDirection]);
         pSoldier->fTurningUntilDone = TRUE;
         pSoldier->usPendingAnimation = FALLFORWARD_ROOF;
@@ -6112,8 +6113,8 @@ BOOLEAN CheckSoldierHitRoof(struct SOLDIERTYPE *pSoldier) {
       } else {
         pSoldier->sTempNewGridNo =
             NewGridNo((uint16_t)pSoldier->sGridNo, (int16_t)(-1 * DirectionInc(bNewDirection)));
-        pSoldier->sTempNewGridNo =
-            NewGridNo((uint16_t)pSoldier->sTempNewGridNo, (int16_t)(-1 * DirectionInc(bNewDirection)));
+        pSoldier->sTempNewGridNo = NewGridNo((uint16_t)pSoldier->sTempNewGridNo,
+                                             (int16_t)(-1 * DirectionInc(bNewDirection)));
         EVENT_SetSoldierDesiredDirection(pSoldier, bNewDirection);
         pSoldier->fTurningUntilDone = TRUE;
         pSoldier->usPendingAnimation = FALLOFF;
@@ -6565,7 +6566,8 @@ void SendSoldierSetDirectionEvent(struct SOLDIERTYPE *pSoldier, uint16_t usNewDi
   AddGameEvent(S_SETDIRECTION, 0, &SSetDirection);
 }
 
-void SendSoldierSetDesiredDirectionEvent(struct SOLDIERTYPE *pSoldier, uint16_t usDesiredDirection) {
+void SendSoldierSetDesiredDirectionEvent(struct SOLDIERTYPE *pSoldier,
+                                         uint16_t usDesiredDirection) {
   // Sent event for position update
   EV_S_SETDESIREDDIRECTION SSetDesiredDirection;
 
@@ -6866,7 +6868,8 @@ void EVENT_SoldierBeginGiveItem(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection) {
+void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                   uint8_t ubDirection) {
   struct SOLDIERTYPE *pTSoldier;
   // uint32_t uiMercFlags;
   uint16_t usSoldierIndex;
@@ -6999,7 +7002,8 @@ void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo
   pSoldier->ubTargetID = WhoIsThere2(sGridNo, pSoldier->bTargetLevel);
 }
 
-void EVENT_SoldierBeginPunchAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection) {
+void EVENT_SoldierBeginPunchAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                   uint8_t ubDirection) {
   BOOLEAN fMartialArtist = FALSE;
   struct SOLDIERTYPE *pTSoldier;
   // uint32_t uiMercFlags;
@@ -7167,7 +7171,8 @@ void EVENT_SoldierBeginUseDetonator(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection) {
+void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                uint8_t ubDirection) {
   struct SOLDIERTYPE *pTSoldier;
   // uint32_t uiMercFlags;
   uint16_t usSoldierIndex;
@@ -7255,8 +7260,8 @@ void EVENT_SoldierEnterVehicle(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, ui
   UnSetUIBusy(pSoldier->ubID);
 }
 
-uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim, int16_t sKitPts,
-                         int16_t sStatus) {
+uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                           int16_t sKitPts, int16_t sStatus) {
   uint32_t uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
   uint8_t ubBelowOKlife, ubPtsLeft;
 
@@ -7697,8 +7702,8 @@ void ReLoadSoldierAnimationDueToHandItemChange(struct SOLDIERTYPE *pSoldier, uin
   }
 }
 
-uint16_t *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
-                                    BOOLEAN fAdjustGreen) {
+uint16_t *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                      uint32_t gscale, BOOLEAN fAdjustGreen) {
   uint16_t *p16BPPPalette, r16, g16, b16, usColor;
   uint32_t cnt;
   uint32_t rmod, gmod, bmod;
@@ -7737,7 +7742,7 @@ uint16_t *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t
 }
 
 uint16_t *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
-                                        uint32_t gscale, BOOLEAN fAdjustGreen) {
+                                          uint32_t gscale, BOOLEAN fAdjustGreen) {
   uint16_t *p16BPPPalette, r16, g16, b16, usColor;
   uint32_t cnt, lumin;
   uint32_t rmod, gmod, bmod;
@@ -8014,7 +8019,8 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, int16_t *psHeight, i
   *psWidth = (int16_t)pTrav->width;
 }
 
-void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, int16_t *sOffsetX, int16_t *sOffsetY) {
+void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, int16_t *sOffsetX,
+                                 int16_t *sOffsetY) {
   uint16_t usAnimSurface;
   struct Subimage *pTrav;
 
@@ -8532,7 +8538,8 @@ void PickDropItemAnimation(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void EVENT_SoldierBeginCutFence(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection) {
+void EVENT_SoldierBeginCutFence(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                uint8_t ubDirection) {
   // Make sure we have a structure here....
   if (IsCuttableWireFenceAtGridNo(sGridNo)) {
     // CHANGE DIRECTION AND GOTO ANIMATION NOW
@@ -8603,7 +8610,8 @@ void EVENT_SoldierBeginRefuel(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uin
   }
 }
 
-void EVENT_SoldierBeginTakeBlood(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection) {
+void EVENT_SoldierBeginTakeBlood(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t ubDirection) {
   ROTTING_CORPSE *pCorpse;
 
   // See if these is a corpse here....
@@ -8623,7 +8631,8 @@ void EVENT_SoldierBeginTakeBlood(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, 
   }
 }
 
-void EVENT_SoldierBeginAttachCan(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection) {
+void EVENT_SoldierBeginAttachCan(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t ubDirection) {
   struct STRUCTURE *pStructure;
   DOOR_STATUS *pDoorStatus;
 
@@ -8669,8 +8678,8 @@ void EVENT_SoldierBeginAttachCan(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, 
   fInterfacePanelDirty = DIRTYLEVEL2;
 }
 
-void EVENT_SoldierBeginReloadRobot(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection,
-                                   uint8_t ubMercSlot) {
+void EVENT_SoldierBeginReloadRobot(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                   uint8_t ubDirection, uint8_t ubMercSlot) {
   uint8_t ubPerson;
 
   // Make sure we have a robot here....
@@ -8706,7 +8715,8 @@ void ChangeToFlybackAnimation(struct SOLDIERTYPE *pSoldier, int8_t bDirection) {
   uint16_t usNewGridNo;
 
   // Get dest gridno, convert to center coords
-  usNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc(gOppositeDirection[bDirection]));
+  usNewGridNo =
+      NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc(gOppositeDirection[bDirection]));
   usNewGridNo = NewGridNo((uint16_t)usNewGridNo, DirectionInc(gOppositeDirection[bDirection]));
 
   // Remove any previous actions
@@ -8731,7 +8741,8 @@ void ChangeToFallbackAnimation(struct SOLDIERTYPE *pSoldier, int8_t bDirection) 
   uint16_t usNewGridNo;
 
   // Get dest gridno, convert to center coords
-  usNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc(gOppositeDirection[bDirection]));
+  usNewGridNo =
+      NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc(gOppositeDirection[bDirection]));
   // usNewGridNo = NewGridNo( (uint16_t)usNewGridNo, (uint16_t)(-1 * DirectionInc( bDirection ) ) );
 
   // Remove any previous actions

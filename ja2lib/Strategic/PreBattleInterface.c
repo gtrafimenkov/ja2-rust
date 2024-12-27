@@ -103,8 +103,8 @@ void AutoResolveBattleCallback(GUI_BUTTON *btn, int32_t reason);
 void GoToSectorCallback(GUI_BUTTON *btn, int32_t reason);
 void RetreatMercsCallback(GUI_BUTTON *btn, int32_t reason);
 
-void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, wchar_t *szCondition, int szConditionSize,
-                             uint8_t *pubHPPercent, uint8_t *pubBPPercent);
+void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, wchar_t *szCondition,
+                             int szConditionSize, uint8_t *pubHPPercent, uint8_t *pubBPPercent);
 
 void CheckForRobotAndIfItsControlled(void);
 
@@ -508,7 +508,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
               pSector = &SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)];
               if (!(pSector->uiFlags & SF_ALREADY_VISITED)) {
                 iChance = (uint8_t)(4 - bBestExpLevel + 2 * gGameOptions.ubDifficultyLevel +
-                                  CurrentPlayerProgressPercentage() / 10);
+                                    CurrentPlayerProgressPercentage() / 10);
                 if (pSector->uiFlags & SF_ENEMY_AMBUSH_LOCATION) {
                   iChance += 20;
                 }
@@ -1273,8 +1273,8 @@ enum {
   COND_DEAD
 };
 
-void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, wchar_t *szCondition, int szConditionSize,
-                             uint8_t *pubHPPercent, uint8_t *pubBPPercent) {
+void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, wchar_t *szCondition,
+                             int szConditionSize, uint8_t *pubHPPercent, uint8_t *pubBPPercent) {
   Assert(pSoldier);
   *pubHPPercent = (uint8_t)(pSoldier->bLife * 100 / pSoldier->bLifeMax);
   *pubBPPercent = pSoldier->bBreath;
@@ -1479,7 +1479,7 @@ void CalculateNonPersistantPBIInfo() {
       gubExplicitEnemyEncounterCode = HOSTILE_BLOODCATS_CODE;
     } else if (gbWorldSectorZ) {
       UNDERGROUND_SECTORINFO *pSector =
-          FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
+          FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
       Assert(pSector);
       if (pSector->ubCreaturesInBattle) {
         gubExplicitEnemyEncounterCode = FIGHTING_CREATURES_CODE;
@@ -1489,7 +1489,8 @@ void CalculateNonPersistantPBIInfo() {
         gubEnemyEncounterCode = ENTERING_ENEMY_SECTOR_CODE;
       }
     } else {
-      SECTORINFO *pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
+      SECTORINFO *pSector =
+          &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
       Assert(pSector);
       if (pSector->ubCreaturesInBattle) {
         gubExplicitEnemyEncounterCode = FIGHTING_CREATURES_CODE;
@@ -1695,9 +1696,9 @@ BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup) {
   return (FALSE);
 }
 
-BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
-  u8 sBattleSectorX, sBattleSectorY;
-  i8 sBattleSectorZ;
+BOOLEAN CurrentBattleSectorIs(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
+  uint8_t sBattleSectorX, sBattleSectorY;
+  int8_t sBattleSectorZ;
   BOOLEAN fSuccess;
 
   fSuccess = GetCurrentBattleSectorXYZ(&sBattleSectorX, &sBattleSectorY, &sBattleSectorZ);
@@ -1734,8 +1735,8 @@ void CheckForRobotAndIfItsControlled(void) {
 }
 
 void LogBattleResults(uint8_t ubVictoryCode) {
-  u8 sSectorX, sSectorY;
-  i8 sSectorZ;
+  uint8_t sSectorX, sSectorY;
+  int8_t sSectorZ;
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   if (ubVictoryCode == LOG_VICTORY) {
     switch (gubEnemyEncounterCode) {

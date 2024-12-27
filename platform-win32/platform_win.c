@@ -30,7 +30,7 @@ int strncasecmp(const char *s1, const char *s2, size_t n) { return _strnicmp(s1,
 // Timers
 /////////////////////////////////////////////////////////////////////////////////
 
-extern u32 Plat_GetTickCount() { return GetTickCount(); }
+extern uint32_t Plat_GetTickCount() { return GetTickCount(); }
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -49,8 +49,8 @@ HWND ghWindow;
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-UINT32 guiStartupTime;
-UINT32 guiCurrentTime;
+uint32_t guiStartupTime;
+uint32_t guiCurrentTime;
 
 void CALLBACK Clock(HWND hWindow, UINT uMessage, UINT idEvent, DWORD dwTime) {
   guiCurrentTime = Plat_GetTickCount();
@@ -76,7 +76,7 @@ void ShutdownClockManager(void) {
   KillTimer(ghWindow, MAIN_TIMER_ID);
 }
 
-UINT32 GetClock(void) { return guiCurrentTime; }
+uint32_t GetClock(void) { return guiCurrentTime; }
 
 /////////////////////////////////////////////////////////////////////////////////
 //

@@ -6,6 +6,7 @@
 #define __CIV_QUOTES_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 

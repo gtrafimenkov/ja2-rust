@@ -27,7 +27,8 @@
 #include "Utils/Text.h"
 #include "rust_sam_sites.h"
 
-void GetSectorFacilitiesFlags(u8 sMapX, u8 sMapY, wchar_t* sFacilitiesString, size_t bufSize) {
+void GetSectorFacilitiesFlags(uint8_t sMapX, uint8_t sMapY, wchar_t *sFacilitiesString,
+                              size_t bufSize) {
   // will build a string stating current facilities present in sector
 
   if (SectorInfo[GetSectorID8(sMapX, sMapY)].uiFacilitiesFlags == 0) {
@@ -87,7 +88,8 @@ void GetSectorFacilitiesFlags(u8 sMapX, u8 sMapY, wchar_t* sFacilitiesString, si
 }
 
 // ALL changes of control to player must be funneled through here!
-BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, int8_t bMapZ, BOOLEAN fContested) {
+BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ,
+                                        BOOLEAN fContested) {
   BOOLEAN fWasEnemyControlled = FALSE;
   TownID bTownId = 0;
 
@@ -222,7 +224,8 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, int8_t bMapZ, BOOLEA
 }
 
 // ALL changes of control to enemy must be funneled through here!
-BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, int8_t bMapZ, BOOLEAN fContested) {
+BOOLEAN SetThisSectorAsEnemyControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ,
+                                       BOOLEAN fContested) {
   BOOLEAN fWasPlayerControlled = FALSE;
   TownID bTownId = 0;
   uint8_t ubTheftChance;
@@ -327,7 +330,8 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, int8_t bMapZ, BOOLEAN
   return fWasPlayerControlled;
 }
 
-void ReplaceSoldierProfileInPlayerGroup(uint8_t ubGroupID, uint8_t ubOldProfile, uint8_t ubNewProfile) {
+void ReplaceSoldierProfileInPlayerGroup(uint8_t ubGroupID, uint8_t ubOldProfile,
+                                        uint8_t ubNewProfile) {
   struct GROUP *pGroup;
   PLAYERGROUP *curr;
 

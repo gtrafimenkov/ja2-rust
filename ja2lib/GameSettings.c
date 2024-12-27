@@ -300,7 +300,7 @@ BOOLEAN CanGameBeSaved() {
 
     // if there are enemies in the current sector
     if (gWorldSectorX != -1 && gWorldSectorY != -1 && gWorldSectorX != 0 && gWorldSectorY != 0 &&
-        NumEnemiesInAnySector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ) > 0) {
+        NumEnemiesInAnySector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ) > 0) {
       // no save for you
       return (FALSE);
     }

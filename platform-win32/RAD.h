@@ -220,12 +220,21 @@ static u32 inline radsqr(s32 a) { return (a * a); }
 #ifdef __RAD68K__
 
 #pragma parameter __D0 mult64anddiv(__D0, __D1, __D2)
-u32 mult64anddiv(u32 m1, u32 m2, u32 d) = {0x4C01, 0x0C01, 0x4C42, 0x0C01};
+u32 mult64anddiv(u32 m1, u32 m2, u32 d) = { 0x4C01, 0x0C01, 0x4C42, 0x0C01 };
 //  muls.l d1,d1:d0  divs.l d2,d1:d0
 
 #pragma parameter radconv32a(__A0, __D0)
-void radconv32a(void* p, u32 n) = {0x4A80, 0x600C, 0x2210, 0xE059, 0x4841,
-                                   0xE059, 0x20C1, 0x5380, 0x6EF2};
+void radconv32a(void* p, u32 n) = {
+  0x4A80,
+  0x600C,
+  0x2210,
+  0xE059,
+  0x4841,
+  0xE059,
+  0x20C1,
+  0x5380,
+  0x6EF2
+};
 // tst.l d0  bra.s @loope  @loop:  move.l (a0),d1  ror.w #8,d1  swap d1 ror.w #8,d1  move.l d1,(a0)+
 // sub.l #1,d0  bgt.s @loop  @loope:
 
@@ -640,7 +649,7 @@ u16 GetDS();
 #define radstrchr strchr
 #define radtoupper toupper
 #define radstru32(s) ((u32)atol(s))
-#define radstricmp strcasecmp
+#define radstricmp _stricmp
 #define radstrcmp strcmp
 #define radstrupr _strupr
 #define radstrlwr _strlwr
@@ -989,7 +998,7 @@ u32 mult64anddiv(u32 m1, u32 m2, u32 d);
 
 RADDEFEND
 
-#define u32neg1 ((u32)(s32)-1)
+#define u32neg1 ((u32)(s32) - 1)
 #define RAD_align(var) \
   var;                 \
   u8 junk##var[4 - (sizeof(var) & 3)];

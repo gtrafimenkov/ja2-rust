@@ -94,8 +94,8 @@ uint16_t SetObjectShade(struct VObject *pObj, uint32_t uiShade);
 uint16_t SetObjectHandleShade(uint32_t uiHandle, uint32_t uiShade);
 
 // Retrieves an struct VObject* pixel value
-BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETLREIndex, uint16_t usX,
-                           uint16_t usY);
+BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETLREIndex,
+                           uint16_t usX, uint16_t usY);
 
 // ****************************************************************************
 //
@@ -113,16 +113,17 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, struct Su
 BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t usIndex,
                                                uint16_t *pusWidth, uint16_t *pusHeight);
 
-BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, uint32_t uiSrcVObject, uint16_t usIndex,
-                                       int32_t iDestX, int32_t iDestY, int16_t s16BPPColor,
-                                       BOOLEAN fDoOutline);
+BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, uint32_t uiSrcVObject,
+                                       uint16_t usIndex, int32_t iDestX, int32_t iDestY,
+                                       int16_t s16BPPColor, BOOLEAN fDoOutline);
 BOOLEAN BltVideoObjectOutline(struct VSurface *dest, struct VObject *hSrcVObject, uint16_t usIndex,
-                              int32_t iDestX, int32_t iDestY, int16_t s16BPPColor, BOOLEAN fDoOutline);
+                              int32_t iDestX, int32_t iDestY, int16_t s16BPPColor,
+                              BOOLEAN fDoOutline);
 BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, uint32_t uiSrcVObject,
                                              uint16_t usIndex, int32_t iDestX, int32_t iDestY);
 
-void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,
-                        BOOLEAN mono);
+void VObjectUpdateShade(struct VObject *obj, uint8_t shade_num, uint32_t rscale, uint32_t gscale,
+                        uint32_t bscale, BOOLEAN mono);
 
 // ****************************************************************************
 //
@@ -131,7 +132,8 @@ void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscal
 // ****************************************************************************
 
 struct VObject *LoadVObjectFromFile(const char *path);
-bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x, i32 y);
+bool BltVObject(struct VSurface *dest, struct VObject *vobj, uint16_t regionIndex, int32_t x,
+                int32_t y);
 bool BltVObjectFromIndex(struct VSurface *dest, uint32_t uiSrcVObject, uint16_t usRegionIndex,
                          int32_t iDestX, int32_t iDestY);
 

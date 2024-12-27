@@ -86,12 +86,12 @@ MEANWHILE_DEFINITION gMeanwhileDef[NUM_MEANWHILES];
 BOOLEAN gfMeanwhileTryingToStart = FALSE;
 BOOLEAN gfInMeanwhile = FALSE;
 // END SERIALIZATION
-u8 gsOldSectorX;
-u8 gsOldSectorY;
-u8 gsOldSectorZ;
-u8 gsOldSelectedSectorX;
-u8 gsOldSelectedSectorY;
-u8 gsOldSelectedSectorZ;
+uint8_t gsOldSectorX;
+uint8_t gsOldSectorY;
+uint8_t gsOldSectorZ;
+uint8_t gsOldSelectedSectorX;
+uint8_t gsOldSelectedSectorY;
+uint8_t gsOldSelectedSectorZ;
 
 uint32_t guiOldScreen;
 NPC_SAVE_INFO gNPCSaveData[MAX_MEANWHILE_PROFILES];
@@ -385,9 +385,9 @@ void StartMeanwhile() {
 
   // OK, save old position...
   if (gfWorldLoaded) {
-    gsOldSectorX = (u8)gWorldSectorX;
-    gsOldSectorY = (u8)gWorldSectorY;
-    gsOldSectorZ = (i8)gbWorldSectorZ;
+    gsOldSectorX = (uint8_t)gWorldSectorX;
+    gsOldSectorY = (uint8_t)gWorldSectorY;
+    gsOldSectorZ = (int8_t)gbWorldSectorZ;
   }
 
   gsOldSelectedSectorX = sSelMapX;
@@ -532,7 +532,8 @@ void StartMeanwhile() {
 void DoneFadeOutMeanwhile() {
   // OK, insertion data found, enter sector!
 
-  SetCurrentWorldSector((u8)gCurrentMeanwhileDef.sSectorX, (u8)gCurrentMeanwhileDef.sSectorY, 0);
+  SetCurrentWorldSector((uint8_t)gCurrentMeanwhileDef.sSectorX,
+                        (uint8_t)gCurrentMeanwhileDef.sSectorY, 0);
 
   // LocateToMeanwhileCharacter( );
   LocateMeanWhileGrid();
@@ -628,7 +629,7 @@ void ProcessImplicationsOfMeanwhile(void) {
       HandleNPCDoAction(QUEEN, NPC_ACTION_ADD_RAT, 0);
       break;
     case AWOL_SCIENTIST: {
-      u8 sSectorX, sSectorY;
+      uint8_t sSectorX, sSectorY;
 
       StartQuest(QUEST_FIND_SCIENTIST, -1, -1);
       // place Madlab and robot!
@@ -1113,7 +1114,7 @@ void HandleDelayedFirstBattleVictory(void) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, int16_t bSectorZ,
+void HandleFirstBattleEndingWhileInTown(uint8_t sSectorX, uint8_t sSectorY, int16_t bSectorZ,
                                         BOOLEAN fFromAutoResolve) {
   TownID bTownId = 0;
 

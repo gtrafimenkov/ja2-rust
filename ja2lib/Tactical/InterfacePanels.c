@@ -367,16 +367,16 @@ INV_REGION_DESC gSMCamoXY = {
 };
 
 int16_t sTEAMAPPanelXY[] = {69,  (6 + INTERFACE_START_Y), 151, (6 + INTERFACE_START_Y),
-                          234, (6 + INTERFACE_START_Y), 317, (6 + INTERFACE_START_Y),
-                          401, (6 + INTERFACE_START_Y), 484, (6 + INTERFACE_START_Y)};
+                            234, (6 + INTERFACE_START_Y), 317, (6 + INTERFACE_START_Y),
+                            401, (6 + INTERFACE_START_Y), 484, (6 + INTERFACE_START_Y)};
 
 int16_t sTEAMFacesXY[] = {13, (366), 97, (366), 180, (366), 263, (366), 346, (366), 429, (366)};
 
 int16_t sTEAMNamesXY[] = {7, (415), 90, (415), 173, (415), 256, (415), 339, (415), 422, (415)};
 
 int16_t sTEAMFaceHighlXY[] = {4,   (2 + INTERFACE_START_Y), 87,  (2 + INTERFACE_START_Y),
-                            170, (2 + INTERFACE_START_Y), 253, (2 + INTERFACE_START_Y),
-                            336, (2 + INTERFACE_START_Y), 419, (2 + INTERFACE_START_Y)};
+                              170, (2 + INTERFACE_START_Y), 253, (2 + INTERFACE_START_Y),
+                              336, (2 + INTERFACE_START_Y), 419, (2 + INTERFACE_START_Y)};
 
 int16_t sTEAMLifeXY[] = {
     69,  (365 + TM_LIFEBAR_HEIGHT), 152, (365 + TM_LIFEBAR_HEIGHT), 235, (365 + TM_LIFEBAR_HEIGHT),
@@ -398,11 +398,11 @@ int16_t sTEAMApXY[] = {70, (413), 153, (413), 235, (413), 319, (413), 402, (413)
 int16_t sTEAMBarsXY[] = {61, (363), 145, (363), 228, (363), 311, (363), 394, (363), 477, (362)};
 
 int16_t sTEAMHandInvXY[] = {TM_INV_HAND1STARTX + (0 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (1 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (2 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (3 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (4 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (5 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY};
+                            TM_INV_HAND1STARTX + (1 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (2 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (3 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (4 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (5 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY};
 
 int32_t iSMPanelButtons[NUM_SM_BUTTONS];
 int32_t iTEAMPanelButtons[NUM_TEAM_BUTTONS];
@@ -2348,8 +2348,8 @@ void HandleMouseOverSoldierFaceForContMove(struct SOLDIERTYPE *pSoldier, BOOLEAN
       }
 
       // While our mouse is here, draw a path!
-      PlotPath(pSoldier, sGridNo, NO_COPYROUTE, PLOT, TEMPORARY, (uint16_t)pSoldier->usUIMovementMode,
-               NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
+      PlotPath(pSoldier, sGridNo, NO_COPYROUTE, PLOT, TEMPORARY,
+               (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
     }
   } else {
     // Remove 'cont' on face....
@@ -3019,8 +3019,8 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
         // RENDER ON SAVE BUFFER!
         SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
         VarFindFontCenterCoordinates(
-            (int16_t)(sTEAMNamesXY[posIndex] + 2), (int16_t)(sTEAMNamesXY[posIndex + 1]), TM_NAME_WIDTH,
-            TM_NAME_HEIGHT, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name);
+            (int16_t)(sTEAMNamesXY[posIndex] + 2), (int16_t)(sTEAMNamesXY[posIndex + 1]),
+            TM_NAME_WIDTH, TM_NAME_HEIGHT, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name);
         mprintf(sFontX, sFontY, L"%s", pSoldier->name);
         gprintfRestore(sFontX, sFontY, L"%s", pSoldier->name);
         // reset to frame buffer!
@@ -3480,8 +3480,8 @@ void MercFacePanelCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   }
 }
 
-extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect,
-                                  BOOLEAN fFromUI);
+extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge,
+                                  BOOLEAN fForceReselect, BOOLEAN fFromUI);
 
 void HandleLocateSelectMerc(uint8_t ubID, int8_t bFlag) {
   BOOLEAN fSelect = FALSE;
@@ -4038,7 +4038,7 @@ void RenderTownIDString() {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  GetSectorIDString((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, zTownIDString,
+  GetSectorIDString((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ, zTownIDString,
                     ARR_SIZE(zTownIDString), TRUE);
   ReduceStringLength(zTownIDString, ARR_SIZE(zTownIDString), 80, COMPFONT);
   VarFindFontCenterCoordinates(548, 425, 80, 16, COMPFONT, &sFontX, &sFontY, zTownIDString);
@@ -4083,7 +4083,7 @@ void CheckForAndAddMercToTeamPanel(struct SOLDIERTYPE *pSoldier) {
 }
 
 uint8_t FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                              BOOLEAN fOnlyRegularMercs) {
+                                BOOLEAN fOnlyRegularMercs) {
   int32_t cnt;
   int32_t bFirstID;
   struct SOLDIERTYPE *pTeamSoldier;

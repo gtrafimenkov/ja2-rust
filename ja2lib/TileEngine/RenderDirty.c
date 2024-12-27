@@ -147,7 +147,7 @@ void RecountBackgrounds(void) {
 }
 
 int32_t RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
-                             int16_t sRight, int16_t sBottom) {
+                               int16_t sRight, int16_t sBottom) {
   uint32_t uiBufSize;
   int32_t iBackIndex;
   int32_t ClipX1, ClipY1, ClipX2, ClipY2;
@@ -208,7 +208,8 @@ int32_t RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLe
     }
 
     if (uiFlags & BGND_FLAG_SAVE_Z) {
-      if ((gBackSaves[iBackIndex].pZSaveArea = (uint16_t *)MemAlloc(uiBufSize)) == NULL) return (-1);
+      if ((gBackSaves[iBackIndex].pZSaveArea = (uint16_t *)MemAlloc(uiBufSize)) == NULL)
+        return (-1);
       gBackSaves[iBackIndex].fZBuffer = TRUE;
     }
 
@@ -259,14 +260,14 @@ BOOLEAN RestoreBackgroundRects(void) {
         }
       } else if (gBackSaves[uiCount].uiFlags & BGND_FLAG_SAVE_Z) {
         if (gBackSaves[uiCount].fZBuffer) {
-          Blt16BPPTo16BPP((uint16_t *)gpZBuffer, uiDestPitchBYTES,
-                          (uint16_t *)gBackSaves[uiCount].pZSaveArea, gBackSaves[uiCount].sWidth * 2,
-                          gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
-                          NewGRect(0, 0, gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
+          Blt16BPPTo16BPP(
+              (uint16_t *)gpZBuffer, uiDestPitchBYTES, (uint16_t *)gBackSaves[uiCount].pZSaveArea,
+              gBackSaves[uiCount].sWidth * 2, gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+              NewGRect(0, 0, gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
         }
       } else {
-        Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
-                        gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+        Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf,
+                        uiSrcPitchBYTES, gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                         NewGRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                                  gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
 
@@ -483,8 +484,8 @@ BOOLEAN RestoreExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth,
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   pSrcBuf = VSurfaceLockOld(vsSB, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                  sLeft, sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);
 
@@ -513,8 +514,8 @@ BOOLEAN RestoreExternBackgroundRectGivenID(int32_t iBack) {
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   pSrcBuf = VSurfaceLockOld(vsSB, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                  sLeft, sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);
 
@@ -533,8 +534,8 @@ BOOLEAN CopyExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth, in
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                  sLeft, sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
   VSurfaceUnlock(vsSB);
   VSurfaceUnlock(vsFB);
 
@@ -550,7 +551,7 @@ BOOLEAN CopyExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth, in
 // to the video buffer.
 //
 //*****************************************************************************
-uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t* pFontString, ...) {
+uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -578,7 +579,7 @@ uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t* pFontString, ...) {
   return (uiStringLength);
 }
 
-uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t* pFontString, ...) {
+uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -599,7 +600,7 @@ uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t* pFontString, ...) {
   return (uiStringLength);
 }
 
-uint16_t gprintfRestore(int16_t x, int16_t y, wchar_t* pFontString, ...) {
+uint16_t gprintfRestore(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -910,7 +911,8 @@ void SaveVideoOverlaysArea(struct VSurface *src) {
 
         // Save data from frame buffer!
         Blt16BPPTo16BPP((uint16_t *)gVideoOverlays[uiCount].pSaveArea,
-                        gBackSaves[iBackIndex].sWidth * 2, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
+                        gBackSaves[iBackIndex].sWidth * 2, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
+                        0,
                         NewGRect(gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
                                  gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight));
       }
@@ -1076,8 +1078,8 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
 }
 
-bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u16 y, u16 width,
-                          u16 height) {
+bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, uint16_t x, uint16_t y,
+                          uint16_t width, uint16_t height) {
   struct BufferLockInfo srcLock = VSurfaceLock(src);
   struct BufferLockInfo destLock = VSurfaceLock(dest);
 

@@ -109,7 +109,7 @@ void DisableBackgroundRect(int32_t iIndex, BOOLEAN fDisabled);
 BOOLEAN InitializeBackgroundRects(void);
 BOOLEAN ShutdownBackgroundRects(void);
 int32_t RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
-                             int16_t sRight, int16_t sBottom);
+                               int16_t sRight, int16_t sBottom);
 BOOLEAN FreeBackgroundRect(int32_t iIndex);
 BOOLEAN FreeBackgroundRectPending(int32_t iIndex);
 BOOLEAN FreeBackgroundRectType(uint32_t uiFlags);
@@ -122,9 +122,9 @@ void SetBackgroundRectFilled(uint32_t uiBackgroundID);
 BOOLEAN EmptyBackgroundRects(void);
 
 // GPRINTF DIRTY STUFF
-uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t* pFontString, ...);
-uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t* pFontString, ...);
-uint16_t gprintfRestore(int16_t x, int16_t y, wchar_t* pFontString, ...);
+uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t *pFontString, ...);
+uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t *pFontString, ...);
+uint16_t gprintfRestore(int16_t x, int16_t y, wchar_t *pFontString, ...);
 
 // VIDEO OVERLAY STUFF
 int32_t GetFreeVideoOverlay(void);
@@ -144,6 +144,6 @@ void EnableVideoOverlay(BOOLEAN fEnable, int32_t iOverlayIndex);
 
 void BlitMFont(VIDEO_OVERLAY *pBlitter);
 
-bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u16 y, u16 width,
-                          u16 height);
+bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, uint16_t x, uint16_t y,
+                          uint16_t width, uint16_t height);
 #endif

@@ -24,9 +24,9 @@
 
 void CopyFilename(char* pFilename, char* pDestination) { strcpy(pDestination, pFilename); }
 
-BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
+BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry* pPalette, SGPFILENAME ColFile) {
   FileID hFileHandle = FILE_ID_ERR;
-  BYTE bColHeader[8];
+  uint8_t bColHeader[8];
   uint32_t cnt;
 
   // See if files exists, if not, return error
@@ -59,7 +59,8 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
   return (TRUE);
 }
 
-BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos, uint32_t uiDestSurface) {
+BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
+                          uint32_t uiDestSurface) {
   uint16_t us16BPPColor;
   uint32_t cnt1;
   uint8_t ubSize;
@@ -93,11 +94,12 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos, 
   return (TRUE);
 }
 
-BOOLEAN WrapString(wchar_t* pStr, wchar_t* pStr2, size_t buf2Size, uint16_t usWidth, int32_t uiFont) {
+BOOLEAN WrapString(wchar_t* pStr, wchar_t* pStr2, size_t buf2Size, uint16_t usWidth,
+                   int32_t uiFont) {
   uint32_t Cur, uiLet, uiNewLet, uiHyphenLet;
   wchar_t *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;
-  struct VObject *hFont;
+  struct VObject* hFont;
 
   // CHECK FOR WRAP
   Cur = 0;

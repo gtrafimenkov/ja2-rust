@@ -6,6 +6,7 @@
 #define __GAME_EVENTS_H
 
 #include "Strategic/GameEventHook.h"
+#include "rust_fileman.h"
 
 #define SEF_PREVENT_DELETION 0x01
 #define SEF_DELETION_PENDING 0x02
@@ -30,8 +31,8 @@ void UnlockStrategicEventFromDeletion(STRATEGICEVENT *pEvent);
 BOOLEAN SaveStrategicEventsToSavedGame(FileID hFile);
 BOOLEAN LoadStrategicEventsFromSavedGame(FileID hFile);
 
-STRATEGICEVENT *AddAdvancedStrategicEvent(uint8_t ubEventType, uint8_t ubCallbackID, uint32_t uiTimeStamp,
-                                          uint32_t uiParam);
+STRATEGICEVENT *AddAdvancedStrategicEvent(uint8_t ubEventType, uint8_t ubCallbackID,
+                                          uint32_t uiTimeStamp, uint32_t uiParam);
 
 BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent);
 

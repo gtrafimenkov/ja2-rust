@@ -12,29 +12,29 @@
 // Valid indeces are [0..TOTAL_SOLDIERS).
 struct SOLDIERTYPE *GetSoldierByID(int index) { return &Menptr[index]; }
 
-u8 GetSolID(const struct SOLDIERTYPE *s) { return s->ubID; }
-u8 GetSolProfile(const struct SOLDIERTYPE *s) { return s->ubProfile; }
+uint8_t GetSolID(const struct SOLDIERTYPE *s) { return s->ubID; }
+uint8_t GetSolProfile(const struct SOLDIERTYPE *s) { return s->ubProfile; }
 
 // Get town where the soldier is located
 TownID GetSolTown(const struct SOLDIERTYPE *s) {
   return GetTownIdForSector(GetSolSectorX(s), GetSolSectorY(s));
 }
 
-u8 GetSolSectorX(const struct SOLDIERTYPE *s) { return (u8)s->sSectorX; }
-u8 GetSolSectorY(const struct SOLDIERTYPE *s) { return (u8)s->sSectorY; }
-i8 GetSolSectorZ(const struct SOLDIERTYPE *s) { return s->bSectorZ; }
+uint8_t GetSolSectorX(const struct SOLDIERTYPE *s) { return (uint8_t)s->sSectorX; }
+uint8_t GetSolSectorY(const struct SOLDIERTYPE *s) { return (uint8_t)s->sSectorY; }
+int8_t GetSolSectorZ(const struct SOLDIERTYPE *s) { return s->bSectorZ; }
 SectorID8 GetSolSectorID8(const struct SOLDIERTYPE *s) {
-  return GetSectorID8((u8)s->sSectorX, (u8)s->sSectorY);
+  return GetSectorID8((uint8_t)s->sSectorX, (uint8_t)s->sSectorY);
 }
-i8 GetSolAssignment(const struct SOLDIERTYPE *s) { return s->bAssignment; }
-u8 GetSolClass(const struct SOLDIERTYPE *s) { return s->ubSoldierClass; }
+int8_t GetSolAssignment(const struct SOLDIERTYPE *s) { return s->bAssignment; }
+uint8_t GetSolClass(const struct SOLDIERTYPE *s) { return s->ubSoldierClass; }
 
 bool IsSolActive(const struct SOLDIERTYPE *s) { return s->bActive; }
 bool IsSolAlive(const struct SOLDIERTYPE *s) { return s->bLife > 0; }
 bool IsSolInSector(const struct SOLDIERTYPE *s) { return s->bInSector; }
 
-u8 GetSolMilitiaKills(const struct SOLDIERTYPE *s) { return s->ubMilitiaKills; }
-void SetSolMilitiaKills(struct SOLDIERTYPE *s, u8 kills) { s->ubMilitiaKills = kills; };
+uint8_t GetSolMilitiaKills(const struct SOLDIERTYPE *s) { return s->ubMilitiaKills; }
+void SetSolMilitiaKills(struct SOLDIERTYPE *s, uint8_t kills) { s->ubMilitiaKills = kills; };
 
 void SetSolAssignmentDone(struct SOLDIERTYPE *s) {
   s->fDoneAssignmentAndNothingToDoFlag = FALSE;

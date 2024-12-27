@@ -52,8 +52,8 @@ uint32_t guiVSurfaceTotalAdded = 0;
 
 // Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
 // BPP
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, uint16_t usX,
-                                      uint16_t usY, struct GRect *pSrcRect) {
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage,
+                                      uint16_t usX, uint16_t usY, struct GRect *pSrcRect) {
   uint16_t usEffectiveWidth;
   struct GRect aRect;
 
@@ -329,7 +329,8 @@ BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2, int32_t Y2) {
+BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2,
+                               int32_t Y2) {
   return (InternalShadowVideoSurfaceRect(dest, X1, Y1, X2, Y2, FALSE));
 }
 
@@ -356,7 +357,8 @@ BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, int3
   return (TRUE);
 }
 
-BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP) {
+BOOLEAN VSurfaceColorFill(struct VSurface *dest, int32_t x1, int32_t y1, int32_t x2, int32_t y2,
+                          uint16_t Color16BPP) {
   struct GRect Clip;
   GetClippingRect(&Clip);
   if (x1 < Clip.iLeft) x1 = Clip.iLeft;
@@ -405,7 +407,7 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
   return gpVSurfaceTail->uiIndex;
 }
 
-struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
+struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex) {
   struct VSurface *vs = CreateVideoSurface(width, height);
   if (vs) {
     SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
@@ -433,7 +435,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
 }
 
 // Old interface to locking VSurface
-BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch) {
+uint8_t *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch) {
   struct BufferLockInfo res = VSurfaceLock(vs);
   *pitch = res.pitch;
   return res.dest;
@@ -564,9 +566,11 @@ void InvalidateRegion(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBott
   }
 }
 
-static void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags);
+static void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                        uint32_t uiFlags);
 
-void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags) {
+void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                        uint32_t uiFlags) {
   int32_t iOldBottom;
 
   iOldBottom = iBottom;
@@ -587,7 +591,8 @@ void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBo
   }
 }
 
-static void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags) {
+static void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                        uint32_t uiFlags) {
   if (guiDirtyRegionExCount < MAX_DIRTY_REGIONS) {
     // DO SOME PREMIMARY CHECKS FOR VALID RECTS
     if (iLeft < 0) iLeft = 0;
@@ -657,15 +662,15 @@ BOOLEAN InitializeGameVideoObjects() {
   return (TRUE);
 }
 
-void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y) {
+void BlitImageToSurface(struct Image *source, struct VSurface *dest, int32_t x, int32_t y) {
   struct GRect sourceRect = {
       .iLeft = 0, .iTop = 0, .iRight = source->width, .iBottom = source->height};
   BlitImageToSurfaceRect(source, dest, x, y, sourceRect);
 }
 
-void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, i32 y,
+void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, int32_t x, int32_t y,
                             struct GRect sourceRect) {
-  u32 destPitch;
+  uint32_t destPitch;
   void *destBuf = VSurfaceLockOld(dest, &destPitch);
 
   {
@@ -699,7 +704,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
         .pitch = source->width * 1,
         .data = source->image_data,
     };
-    Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
+    Blt8bppTo16bppRect(&src, (uint16_t *)destBuf, destPitch, x, y, sourceRect);
   } else if (source->bit_depth == 16) {
     struct ImageDataParams src = {
         .width = source->width,
@@ -708,7 +713,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
         .pitch = source->width * 2,
         .data = source->image_data,
     };
-    Blt16bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
+    Blt16bppTo16bppRect(&src, (uint16_t *)destBuf, destPitch, x, y, sourceRect);
   } else {
     DebugLogWrite("BlitImageToSurfaceRect: unsupported bit depth combination");
   }

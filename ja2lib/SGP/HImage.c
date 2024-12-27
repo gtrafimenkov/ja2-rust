@@ -36,7 +36,7 @@ typedef union {
 struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
   SGPFILENAME Extension;
   char ExtensionSep[] = ".";
-  char* StrPtr;
+  char *StrPtr;
   SGPFILENAME imageFileCopy;
 
   strcopy(imageFileCopy, ARR_SIZE(imageFileCopy), ImageFile);
@@ -90,7 +90,7 @@ void DestroyImage(struct Image *image) {
   MemFree(image);
 }
 
-BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, uint8_t bufferBitDepth, uint8_t *pDestBuf,
                           uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                           struct GRect *srcRect) {
   Assert(hImage != NULL);
@@ -116,7 +116,7 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBu
   return (FALSE);
 }
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   struct GRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -171,7 +171,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t
   return (TRUE);
 }
 
-BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     struct GRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -229,7 +229,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16
   return (TRUE);
 }
 
-BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    struct GRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -354,8 +354,8 @@ shaded according to each pixel's brightness.
         4) For gamma correction, pass in weighted values for each color.
 
 **********************************************************************************************/
-uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
-                                 uint32_t bscale, BOOLEAN mono) {
+uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                   uint32_t gscale, uint32_t bscale, BOOLEAN mono) {
   uint16_t *p16BPPPalette, r16, g16, b16, usColor;
   uint32_t cnt, lumin;
   uint32_t rmod, gmod, bmod;
@@ -411,7 +411,8 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
 //
 //*****************************************************************************
 
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd, uint8_t *pOldPalette) {
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
+                                                 uint8_t *pOldPalette) {
   uint16_t Index;
   struct SGPPaletteEntry *pPalEntry;
   struct SGPPaletteEntry *pInitEntry;
@@ -478,7 +479,7 @@ struct Image *ScaleImageDown2x(struct Image *image) {
   res->height = image->height / 2;
   res->bit_depth = image->bit_depth;
 
-  u32 palette_size = sizeof(struct SGPPaletteEntry) * 256;
+  uint32_t palette_size = sizeof(struct SGPPaletteEntry) * 256;
   res->palette = zmalloc(palette_size);
   if (!res->palette) {
     MemFree(res);
@@ -494,10 +495,10 @@ struct Image *ScaleImageDown2x(struct Image *image) {
     return NULL;
   }
 
-  u8 *data = res->image_data;
-  for (u16 y = 0; y < image->height; y += 2) {
-    for (u16 x = 0; x < image->width; x += 2) {
-      *data++ = ((u8 *)image->image_data)[y * image->width + x];
+  uint8_t *data = res->image_data;
+  for (uint16_t y = 0; y < image->height; y += 2) {
+    for (uint16_t x = 0; x < image->width; x += 2) {
+      *data++ = ((uint8_t *)image->image_data)[y * image->width + x];
     }
   }
 

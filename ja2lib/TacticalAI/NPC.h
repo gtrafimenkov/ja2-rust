@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
+#include "rust_fileman.h"
 
 #define NUM_NPC_QUOTE_RECORDS 50
 
@@ -169,7 +170,8 @@ BOOLEAN LoadNPCInfoFromSavedGameFile(FileID hFile, uint32_t uiSaveGameVersion);
 
 extern void TriggerFriendWithHostileQuote(uint8_t ubNPC);
 
-extern void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, int16_t sOldGridNo, int16_t sNewGridNo);
+extern void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, int16_t sOldGridNo,
+                                                  int16_t sNewGridNo);
 
 extern uint8_t ActionIDForMovementRecord(uint8_t ubNPC, uint8_t ubRecord);
 
@@ -181,7 +183,7 @@ extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPCId, uint32_t uiMone
                                                 uint8_t *pQuoteValue);
 
 // given a victory in this sector, handle specific facts
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
+void HandleVictoryInNPCSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ);
 
 // check if this shopkeep has been shutdown, if so do soething and return the fact
 BOOLEAN HandleShopKeepHasBeenShutDown(uint8_t ubCharNum);
@@ -204,7 +206,8 @@ BOOLEAN GetInfoForAbandoningEPC(uint8_t ubNPC, uint16_t *pusQuoteNum, uint16_t *
 
 BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord);
 
-int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, i8 sSectorZ, BOOLEAN fSetAsUsed);
+int8_t ConsiderCivilianQuotes(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ,
+                              BOOLEAN fSetAsUsed);
 
 void ResetOncePerConvoRecordsForNPC(uint8_t ubNPC);
 

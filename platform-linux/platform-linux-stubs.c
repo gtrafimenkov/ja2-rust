@@ -24,7 +24,7 @@ int strcasecmp(const char *s1, const char *s2) { return 0; }
 
 int strncasecmp(const char *s1, const char *s2, size_t n) { return 0; }
 
-extern u32 Plat_GetTickCount() { return 0; }
+extern uint32_t Plat_GetTickCount() { return 0; }
 
 uint32_t GetClock(void) { return 0; }
 
@@ -158,7 +158,7 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height) { return NULL; }
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) { return NULL; }
 
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 

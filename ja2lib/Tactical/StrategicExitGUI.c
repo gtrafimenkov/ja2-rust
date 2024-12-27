@@ -108,8 +108,8 @@ EXIT_DIALOG_STRUCT gExitDialog;
 
 uint8_t gubExitGUIDirection;
 int16_t gsExitGUIAdditionalData;
-u8 gsWarpWorldX;
-u8 gsWarpWorldY;
+uint8_t gsWarpWorldX;
+uint8_t gsWarpWorldY;
 int8_t gbWarpWorldZ;
 int16_t gsWarpGridNo;
 
@@ -275,7 +275,8 @@ BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData)
                                                 // means that we can't load the adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
       gExitDialog.fGotoSector = FALSE;
-    } else if (CountMilitiaInSector3D((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
+    } else if (CountMilitiaInSector3D((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                      gbWorldSectorZ)) {
       // Leaving this sector will result in militia being forced to
       // fight the battle, can't load adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
@@ -424,7 +425,7 @@ BOOLEAN InitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData) {
   gsExitGUIAdditionalData = sAdditionalData;
 
   if (gbWorldSectorZ >= 2 && gubQuest[QUEST_CREATURES] == QUESTDONE) {
-    u8 mapX, mapY;
+    uint8_t mapX, mapY;
     if (GetWarpOutOfMineCodes(&mapX, &mapY, &gbWarpWorldZ, &gsWarpGridNo)) {
       gsWarpWorldX = mapX;
       gsWarpWorldY = mapY;

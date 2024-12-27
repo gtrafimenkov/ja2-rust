@@ -93,7 +93,8 @@ enum {
 #define BTN_Y 53
 
 // sizeof one record
-#define RECORD_SIZE (sizeof(uint32_t) + sizeof(int32_t) + sizeof(int32_t) + sizeof(uint8_t) + sizeof(uint8_t))
+#define RECORD_SIZE \
+  (sizeof(uint32_t) + sizeof(int32_t) + sizeof(int32_t) + sizeof(uint8_t) + sizeof(uint8_t))
 
 // the financial record list
 struct finance *pFinanceListHead = NULL;
@@ -126,7 +127,7 @@ int32_t giFinanceButtonImage[4];
 
 // internal functions
 uint32_t ProcessAndEnterAFinacialRecord(uint8_t ubCode, uint32_t uiDate, int32_t iAmount,
-                                      uint8_t ubSecondCode, int32_t iBalanceToDate);
+                                        uint8_t ubSecondCode, int32_t iBalanceToDate);
 void RenderBackGround(void);
 BOOLEAN LoadFinances();
 void DrawSummary(void);
@@ -148,7 +149,7 @@ void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason);
 void CreateFinanceButtons(void);
 void DestroyFinanceButtons(void);
 void IncrementCurrentPageFinancialDisplay(void);
-void ProcessTransactionString(wchar_t* pString, size_t bufSize, struct finance *pFinance);
+void ProcessTransactionString(wchar_t *pString, size_t bufSize, struct finance *pFinance);
 void DisplayFinancePageNumberAndDateRange(void);
 BOOLEAN WriteBalanceToDisk(void);
 BOOLEAN AppendFinanceToEndOfFile(struct finance *pFinance);
@@ -972,7 +973,7 @@ void OpenAndReadFinancesFile(void) {
 
   // read in balance
   // write balance to disk first
-  i32 currentBalance = 0;
+  int32_t currentBalance = 0;
   File_Read(hFileHandle, &currentBalance, sizeof(int32_t), &iBytesRead);
   LaptopMoneySetBalance(currentBalance);
   uiByteCount += sizeof(int32_t);
@@ -994,7 +995,8 @@ void OpenAndReadFinancesFile(void) {
     ProcessAndEnterAFinacialRecord(ubCode, uiDate, iAmount, ubSecondCode, iBalanceToDate);
 
     // increment byte counter
-    uiByteCount += sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t);
+    uiByteCount +=
+        sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t);
   }
 
   // close file
@@ -1025,7 +1027,7 @@ void ClearFinanceList(void) {
 }
 
 uint32_t ProcessAndEnterAFinacialRecord(uint8_t ubCode, uint32_t uiDate, int32_t iAmount,
-                                      uint8_t ubSecondCode, int32_t iBalanceToDate) {
+                                        uint8_t ubSecondCode, int32_t iBalanceToDate) {
   uint32_t uiId = 0;
   struct finance *pFinance = pFinanceListHead;
 
@@ -1217,7 +1219,7 @@ void IncrementCurrentPageFinancialDisplay(void) {
   return;
 }
 
-void ProcessTransactionString(wchar_t* pString, size_t bufSize, struct finance *pFinance) {
+void ProcessTransactionString(wchar_t *pString, size_t bufSize, struct finance *pFinance) {
   switch (pFinance->ubCode) {
     case ACCRUED_INTEREST:
       swprintf(pString, bufSize, L"%s", pTransactionText[ACCRUED_INTEREST]);
@@ -1398,7 +1400,7 @@ BOOLEAN WriteBalanceToDisk(void) {
   hFileHandle = File_OpenForWriting(FINANCES_DATA_FILE);
 
   // write balance to disk
-  i32 currentBalance = LaptopMoneyGetBalance();
+  int32_t currentBalance = LaptopMoneyGetBalance();
   File_Write(hFileHandle, &currentBalance, sizeof(int32_t), NULL);
 
   // close file
@@ -1478,8 +1480,8 @@ uint32_t ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
   File_Close(hFileHandle);
 
   // file size -1 / sizeof record in bytes is id
-  return ((iFileSize - 1) /
-          (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t)));
+  return ((iFileSize - 1) / (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                             sizeof(uint8_t) + sizeof(int32_t)));
 }
 
 void SetLastPageInRecords(void) {
@@ -1588,8 +1590,8 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
 
   // is the file long enough?
   if ((File_GetSize(hFileHandle) - sizeof(int32_t) - 1) /
-              (NUM_RECORDS_PER_PAGE *
-               (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t))) +
+              (NUM_RECORDS_PER_PAGE * (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                                       sizeof(uint8_t) + sizeof(int32_t))) +
           1 <
       uiPage) {
     // nope
@@ -1599,13 +1601,13 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
 
   File_Seek(hFileHandle,
             sizeof(int32_t) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
-                                (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) +
-                                 sizeof(int32_t)),
+                                  (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                                   sizeof(uint8_t) + sizeof(int32_t)),
             FILE_SEEK_START);
 
   uiByteCount = sizeof(int32_t) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
-                                    (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
-                                     sizeof(uint8_t) + sizeof(int32_t));
+                                      (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                                       sizeof(uint8_t) + sizeof(int32_t));
   // file exists, read in data, continue until end of page
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue) &&
          (uiByteCount < File_GetSize(hFileHandle))) {
@@ -1622,7 +1624,8 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
     ProcessAndEnterAFinacialRecord(ubCode, uiDate, iAmount, ubSecondCode, iBalanceToDate);
 
     // increment byte counter
-    uiByteCount += sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t);
+    uiByteCount +=
+        sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t);
 
     // we've overextended our welcome, and bypassed end of file, get out
     if (uiByteCount >= File_GetSize(hFileHandle)) {
@@ -1648,7 +1651,7 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
   return (TRUE);
 }
 
-void InsertCommasForDollarFigure(wchar_t* pString) {
+void InsertCommasForDollarFigure(wchar_t *pString) {
   int16_t sCounter = 0;
   int16_t sZeroCount = 0;
   int16_t sTempCounter = 0;
@@ -1703,7 +1706,7 @@ void InsertCommasForDollarFigure(wchar_t* pString) {
   return;
 }
 
-void InsertDollarSignInToString(wchar_t* pString) {
+void InsertDollarSignInToString(wchar_t *pString) {
   // run to end of string, copy everything in string 2 places right, insert a space at pString[ 1 ]
   // and a L'$' at pString[ 0 ]
 

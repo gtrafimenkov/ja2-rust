@@ -6,6 +6,7 @@
 #define __LIGHT_EFFECTS
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 // Light effect types
 enum {
@@ -40,8 +41,8 @@ int32_t NewLightEffect(int16_t sGridNo, int8_t bType);
 BOOLEAN SaveLightEffectsToSaveGameFile(FileID hFile);
 BOOLEAN LoadLightEffectsFromLoadGameFile(FileID hFile);
 
-BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
-BOOLEAN LoadLightEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
+BOOLEAN SaveLightEffectsToMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
+BOOLEAN LoadLightEffectsFromMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 void ResetLightEffects();
 
 #endif

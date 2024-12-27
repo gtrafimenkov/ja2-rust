@@ -21,16 +21,16 @@
 
 // Gets the free hard drive space from the drive letter passed in.  It has to be the root dir.  (
 // eg. c:\ )
-static UINT32 GetFreeSpaceOnHardDrive(char *pzDriveLetter);
+static uint32_t GetFreeSpaceOnHardDrive(char *pzDriveLetter);
 
-UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
+uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   struct Str512 zExecDir;
   STRING512 zDrive;
   STRING512 zDir;
   STRING512 zFileName;
   STRING512 zExt;
 
-  UINT32 uiFreeSpace = 0;
+  uint32_t uiFreeSpace = 0;
 
   if (!Plat_GetExecutableDirectory(&zExecDir)) {
     return 0;
@@ -46,7 +46,7 @@ UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   return (uiFreeSpace);
 }
 
-static UINT32 GetFreeSpaceOnHardDrive(char *pzDriveLetter) {
+static uint32_t GetFreeSpaceOnHardDrive(char *pzDriveLetter) {
   DWORD uiBytesFree = 0;
   DWORD uiSectorsPerCluster = 0;
   DWORD uiBytesPerSector = 0;
@@ -55,7 +55,7 @@ static UINT32 GetFreeSpaceOnHardDrive(char *pzDriveLetter) {
 
   if (!GetDiskFreeSpace(pzDriveLetter, &uiSectorsPerCluster, &uiBytesPerSector,
                         &uiNumberOfFreeClusters, &uiTotalNumberOfClusters)) {
-    UINT32 uiLastError = GetLastError();
+    uint32_t uiLastError = GetLastError();
     char zString[1024];
     FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
 
@@ -139,8 +139,8 @@ HANDLE hFindInfoHandle[20] = {
 static void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct);
 
 #ifdef JA2TESTVERSION
-extern UINT32 uiTotalFileReadTime;
-extern UINT32 uiTotalFileReadCalls;
+extern uint32_t uiTotalFileReadTime;
+extern uint32_t uiTotalFileReadCalls;
 #include "Utils/TimerControl.h"
 #endif
 
@@ -201,7 +201,7 @@ void Plat_GetFileClose(struct GetFile *pGFStruct) {
 }
 
 void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
-  UINT32 uiAttribMask;
+  uint32_t uiAttribMask;
 
   // Copy the filename
   strcpy(pGFStruct->zFileName, pW32Struct->cFileName);

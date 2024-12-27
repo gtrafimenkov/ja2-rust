@@ -7,6 +7,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -58,20 +59,20 @@ typedef struct {
 extern uint32_t guiScreenToGotoAfterLoadingSavedGame;
 extern uint32_t guiSaveGameVersion;
 
-void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, char* pzNewFileName);
+void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, char *pzNewFileName);
 
-BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t* pGameDesc, size_t bufSize);
+BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize);
 BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
 
 BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
                                          struct SOLDIERTYPE *pSourceInfo);
 
-BOOLEAN SaveFilesToSavedGame(char* pSrcFileName, FileID hFile);
-BOOLEAN LoadFilesFromSavedGame(char* pSrcFileName, FileID hFile);
+BOOLEAN SaveFilesToSavedGame(char *pSrcFileName, FileID hFile);
+BOOLEAN LoadFilesFromSavedGame(char *pSrcFileName, FileID hFile);
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 
-void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, int8_t *pbSectorZ);
+void GetBestPossibleSectorXYZValues(uint8_t *psSectorX, uint8_t *psSectorY, int8_t *pbSectorZ);
 
 extern uint32_t guiLastSaveGameNum;
 

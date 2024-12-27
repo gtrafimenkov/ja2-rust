@@ -32,10 +32,10 @@ def find_substring_and_include_text(src_dir, extensions, substring, include_text
 
 def main():
     find_substring_and_include_text(
-        "platform-win32",
-        [".h", ".c"],
-        " ",
-        "// This is not free software.\n// This file contains code derived from the code released under the terms\n// of Strategy First Inc. Source Code License Agreement. See SFI-SCLA.txt.\n\n",
+        "ja2lib",
+        [".h"],
+        "FileID",
+        '#include "rust_fileman.h"\n',
     )
     # find_substring_and_include_text(
     #     "rustlib",

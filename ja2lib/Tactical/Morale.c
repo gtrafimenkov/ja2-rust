@@ -376,8 +376,8 @@ void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEve
                       gbMoraleEvent[bMoraleEvent].bChange);
 }
 
-void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent, u8 sMapX, u8 sMapY,
-                       int8_t bMapZ) {
+void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent, uint8_t sMapX,
+                       uint8_t sMapY, int8_t bMapZ) {
   uint8_t ubLoop;
   struct SOLDIERTYPE *pTeamSoldier;
   MERCPROFILESTRUCT *pProfile;

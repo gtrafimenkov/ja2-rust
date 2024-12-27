@@ -8,6 +8,7 @@
 #include "Laptop/StoreInventory.h"
 #include "SGP/Types.h"
 #include "Tactical/ItemTypes.h"
+#include "rust_fileman.h"
 
 #define MAX_BOOKMARKS 20
 

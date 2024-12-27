@@ -6,6 +6,7 @@
 #define __EXIT_GRIDS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct LEVELNODE;
 struct SOLDIERTYPE;
@@ -37,7 +38,7 @@ extern BOOLEAN gfOverrideInsertionWithExitGrid;
 // Finds closest ExitGrid of same type as is at gridno, within a radius.  Checks
 // valid paths, destinations, etc.
 uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
-                                              int8_t ubRadius, uint8_t *pubDirection);
+                                                int8_t ubRadius, uint8_t *pubDirection);
 
 uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubRadius);
 

@@ -153,7 +153,7 @@ BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pCharacter);
 void UpdateAssignments();
 
 // how many people in this secotr have this assignment?
-uint8_t FindNumberInSectorWithAssignment(u8 sX, u8 sY, int8_t bAssignment);
+uint8_t FindNumberInSectorWithAssignment(uint8_t sX, uint8_t sY, int8_t bAssignment);
 
 void MakeSoldiersTacticalAnimationReflectAssignment(struct SOLDIERTYPE *pSoldier);
 
@@ -164,7 +164,7 @@ void BuildSectorsWithSoldiersList(void);
 void InitSectorsWithSoldiersList(void);
 
 // is there a soldier in this sector?..only use after BuildSectorsWithSoldiersList is called
-BOOLEAN IsThereASoldierInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN IsThereASoldierInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
 void CheckIfSoldierUnassigned(struct SOLDIERTYPE *pSoldier);
 
@@ -179,24 +179,24 @@ int16_t GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, uint16_t *pusM
 
 // find number of healing pts
 uint16_t CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pSoldier, uint16_t *pusMaxPts,
-                                       BOOLEAN fMakeSureKitIsInHand);
+                                         BOOLEAN fMakeSureKitIsInHand);
 
 // find number of repair pts repairman has available
 uint8_t CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, uint16_t *pusMaxPts,
-                                        BOOLEAN fMakeSureKitIsInHand);
+                                          BOOLEAN fMakeSureKitIsInHand);
 
 // get bonus tarining pts due to an instructor for this student
 int16_t GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
-                                         struct SOLDIERTYPE *pStudent, int8_t bTrainStat,
-                                         BOOLEAN fAtGunRange, uint16_t *pusMaxPts);
+                                           struct SOLDIERTYPE *pStudent, int8_t bTrainStat,
+                                           BOOLEAN fAtGunRange, uint16_t *pusMaxPts);
 
 // get training pts for this soldier
 int16_t GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, int8_t bTrainStat, BOOLEAN fAtGunRange,
-                            uint16_t *pusMaxPts);
+                              uint16_t *pusMaxPts);
 
 // pts for being a student for this soldier
 int16_t GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, int8_t bTrainStat, BOOLEAN fAtGunRange,
-                           uint16_t *pusMaxPts);
+                             uint16_t *pusMaxPts);
 
 // reset these soldiers
 void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(struct SOLDIERTYPE *pSoldier);

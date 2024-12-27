@@ -8,6 +8,7 @@
 #include "BuildDefines.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierInitList.h"
+#include "rust_fileman.h"
 
 // Merc scheduling actions
 // NOTE:  Any modifications to this enumeration also require updating the text in EditorMercs.c used

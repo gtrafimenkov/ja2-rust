@@ -25,8 +25,8 @@
 
 BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette);
 BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
-                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed, uint16_t usGreen,
-                               uint16_t usBlue, BOOLEAN fMono);
+                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
+                               uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono);
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
                   uint8_t *pTable);
 void FindMaskIndecies(uint8_t *, uint8_t *, uint8_t *);
@@ -85,8 +85,8 @@ BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette) {
 }
 
 BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
-                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed, uint16_t usGreen,
-                               uint16_t usBlue, BOOLEAN fMono) {
+                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
+                               uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono) {
   uint32_t cnt, lumin;
   uint32_t rmod, gmod, bmod;
 

@@ -121,8 +121,8 @@ void AddExitGridToWorld(int32_t iMapIndex, EXITGRID *pExitGrid) {
 
   // Add the exit grid to the sector, only if we call ApplyMapChangesToMapTempFile() first.
   if (!gfEditMode && !gfLoadingExitGrids) {
-    AddExitGridToMapTempFile((uint16_t)iMapIndex, pExitGrid, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                             gbWorldSectorZ);
+    AddExitGridToMapTempFile((uint16_t)iMapIndex, pExitGrid, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
   }
 }
 
@@ -198,7 +198,7 @@ void AttemptToChangeFloorLevel(int8_t bRelativeZLevel) {
         else
           ScreenMsg(FONT_YELLOW, MSG_INTERFACE, pMessageStrings[MSG_LEAVING_BASEMENT]);
 
-        SetCurrentWorldSector((u8)gWorldSectorX, (u8)gWorldSectorY, ubLookForLevel);
+        SetCurrentWorldSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, ubLookForLevel);
         gfOverrideInsertionWithExitGrid = FALSE;
       }
     }
@@ -206,7 +206,7 @@ void AttemptToChangeFloorLevel(int8_t bRelativeZLevel) {
 }
 
 uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
-                                              int8_t ubRadius, uint8_t *pubDirection) {
+                                                int8_t ubRadius, uint8_t *pubDirection) {
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;

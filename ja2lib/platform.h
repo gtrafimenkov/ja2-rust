@@ -7,8 +7,8 @@
 #ifndef __PLATFORM_H
 #define __PLATFORM_H
 
-#include "rust_geometry.h"
 #include "SGP/Types.h"
+#include "rust_geometry.h"
 #include "rust_platform.h"
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ struct FileDialogList {
 // Timers
 /////////////////////////////////////////////////////////////////////////////////
 
-extern u32 Plat_GetTickCount();
+extern uint32_t Plat_GetTickCount();
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -69,8 +69,8 @@ struct BltOpts;
 #define MAX_DIRTY_REGIONS 128
 
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY, struct Rect *SrcRect,
-                              struct Rect *DestRect);
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, struct Rect *DestRect);
 
 extern BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx);
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,

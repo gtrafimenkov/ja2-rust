@@ -8,6 +8,7 @@
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
 #include "Town.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -43,7 +44,8 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional);
 void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier);
 
 // remove random item from this sector
-void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubChance);
+void RemoveRandomItemsInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
+                               uint8_t ubChance);
 
 // get the shortest distance between these two towns via roads
 int32_t GetTownDistances(uint8_t ubTown, uint8_t ubTownA);
@@ -83,18 +85,19 @@ int32_t GetNumberOfWholeTownsUnderControl(void);
 int32_t IsTownUnderCompleteControlByPlayer(TownID bTownId);
 
 // used when monsters attack a town sector without going through tactical and they win
-void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHowMany);
+void AdjustLoyaltyForCivsEatenByMonsters(uint8_t sSectorX, uint8_t sSectorY, uint8_t ubHowMany);
 
 // these are used to handle global loyalty events (ones that effect EVERY town on the map)
 void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease);
 void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease);
-void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
-void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, u8 sSectorX, u8 sSectorY,
+void HandleGlobalLoyaltyEvent(uint8_t ubEventType, uint8_t sSectorX, uint8_t sSectorY,
+                              int8_t bSectorZ);
+void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, uint8_t sSectorX, uint8_t sSectorY,
                                          int8_t bSectorZ);
 
 // handle a town being liberated for the first time
-void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY);
-void CheckIfEntireTownHasBeenLost(TownID bTownId, u8 sSectorX, u8 sSectorY);
+void CheckIfEntireTownHasBeenLiberated(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY);
+void CheckIfEntireTownHasBeenLost(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY);
 
 void HandleLoyaltyChangeForNPCAction(uint8_t ubNPCProfileId);
 
@@ -111,7 +114,7 @@ int32_t GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude);
 #define RETREAT_TACTICAL_TRAVERSAL 0
 #define RETREAT_PBI 1
 #define RETREAT_AUTORESOLVE 2
-void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, u8 sSectorX, u8 sSectorY,
+void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, uint8_t sSectorX, uint8_t sSectorY,
                                             int16_t sSectorZ);
 
 void MaximizeLoyaltyForDeidrannaKilled(void);

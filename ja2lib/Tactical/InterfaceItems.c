@@ -401,8 +401,8 @@ typedef struct {
   int32_t iXPosition[NUM_INV_HELPTEXT_ENTRIES];
   int32_t iYPosition[NUM_INV_HELPTEXT_ENTRIES];
   int32_t iWidth[NUM_INV_HELPTEXT_ENTRIES];
-  wchar_t* sString1[NUM_INV_HELPTEXT_ENTRIES];
-  wchar_t* sString2[NUM_INV_HELPTEXT_ENTRIES];
+  wchar_t *sString1[NUM_INV_HELPTEXT_ENTRIES];
+  wchar_t *sString2[NUM_INV_HELPTEXT_ENTRIES];
 } INV_HELPTEXT;
 
 INV_DESC_STATS gWeaponStats[] = {
@@ -649,7 +649,7 @@ uint32_t guiBodyInvVO[4][2];
 uint32_t guiGoldKeyVO;
 int8_t gbCompatibleApplyItem = FALSE;
 
-BOOLEAN AttemptToAddSubstring(wchar_t* zDest, wchar_t* zTemp, uint32_t *puiStringLength,
+BOOLEAN AttemptToAddSubstring(wchar_t *zDest, wchar_t *zTemp, uint32_t *puiStringLength,
                               uint32_t uiPixLimit) {
   uint32_t uiRequiredStringLength, uiTempStringLength;
 
@@ -1199,8 +1199,8 @@ void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *
   }
 }
 
-BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, int32_t bInvPos, BOOLEAN fOn,
-                                           BOOLEAN fFromMerc) {
+BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, int32_t bInvPos,
+                                           BOOLEAN fOn, BOOLEAN fFromMerc) {
   BOOLEAN fFound = FALSE;
   int32_t cnt;
   struct OBJECTTYPE *pObject, *pTestObject;
@@ -1938,8 +1938,8 @@ void CycleItemDescriptionItem() {
                                  gpItemDescSoldier);
 }
 
-BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX, int16_t sY,
-                               uint8_t ubStatusIndex) {
+BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX,
+                               int16_t sY, uint8_t ubStatusIndex) {
   struct OBJECTTYPE *pObject;
 
   // DEF:
@@ -2010,8 +2010,9 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, i
     fShowDescriptionFlag = TRUE;
   } else {
     MSYS_DefineRegion(&gInvDesc, (uint16_t)gsInvDescX, (uint16_t)gsInvDescY,
-                      (uint16_t)(gsInvDescX + ITEMDESC_WIDTH), (uint16_t)(gsInvDescY + ITEMDESC_HEIGHT),
-                      MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, ItemDescCallback);
+                      (uint16_t)(gsInvDescX + ITEMDESC_WIDTH),
+                      (uint16_t)(gsInvDescY + ITEMDESC_HEIGHT), MSYS_PRIORITY_HIGHEST,
+                      MSYS_NO_CURSOR, MSYS_NO_CALLBACK, ItemDescCallback);
     MSYS_AddRegion(&gInvDesc);
   }
   // Add region
@@ -2044,15 +2045,15 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, i
       giItemDescAmmoButton = CreateIconAndTextButton(
           giItemDescAmmoButtonImages, pStr, TINYFONT1, sForeColour, FONT_MCOLOR_BLACK, sForeColour,
           FONT_MCOLOR_BLACK, TEXT_CJUSTIFIED, (int16_t)(ITEMDESC_AMMO_X + 18),
-          (int16_t)(ITEMDESC_AMMO_Y - 5), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK,
-          (GUI_CALLBACK)ItemDescAmmoCallback);
+          (int16_t)(ITEMDESC_AMMO_Y - 5), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
+          DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)ItemDescAmmoCallback);
 
     } else {
       // not in mapscreen
       giItemDescAmmoButton = CreateIconAndTextButton(
           giItemDescAmmoButtonImages, pStr, TINYFONT1, sForeColour, FONT_MCOLOR_BLACK, sForeColour,
-          FONT_MCOLOR_BLACK, TEXT_CJUSTIFIED, (int16_t)(ITEMDESC_AMMO_X), (int16_t)(ITEMDESC_AMMO_Y),
-          BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK,
+          FONT_MCOLOR_BLACK, TEXT_CJUSTIFIED, (int16_t)(ITEMDESC_AMMO_X),
+          (int16_t)(ITEMDESC_AMMO_Y), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK,
           (GUI_CALLBACK)ItemDescAmmoCallback);
 
       // if we are being called from the
@@ -2168,19 +2169,20 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, i
                           (int16_t)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX),
                           (int16_t)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY),
                           (int16_t)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX +
-                                  gMapItemDescAttachmentsXY[cnt].sWidth),
+                                    gMapItemDescAttachmentsXY[cnt].sWidth),
                           (int16_t)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY +
-                                  gMapItemDescAttachmentsXY[cnt].sHeight),
+                                    gMapItemDescAttachmentsXY[cnt].sHeight),
                           MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                           ItemDescAttachmentsCallback);
       else
         MSYS_DefineRegion(
-            &gItemDescAttachmentRegions[cnt], (int16_t)(gsInvDescX + gItemDescAttachmentsXY[cnt].sX),
+            &gItemDescAttachmentRegions[cnt],
+            (int16_t)(gsInvDescX + gItemDescAttachmentsXY[cnt].sX),
             (int16_t)(gsInvDescY + gItemDescAttachmentsXY[cnt].sY),
             (int16_t)(gsInvDescX + gItemDescAttachmentsXY[cnt].sX +
-                    gItemDescAttachmentsXY[cnt].sBarDx + gItemDescAttachmentsXY[cnt].sWidth),
+                      gItemDescAttachmentsXY[cnt].sBarDx + gItemDescAttachmentsXY[cnt].sWidth),
             (int16_t)(gsInvDescY + gItemDescAttachmentsXY[cnt].sY +
-                    gItemDescAttachmentsXY[cnt].sHeight),
+                      gItemDescAttachmentsXY[cnt].sHeight),
             MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, ItemDescAttachmentsCallback);
       // Add region
       MSYS_AddRegion(&gItemDescAttachmentRegions[cnt]);
@@ -2257,7 +2259,8 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, i
       guiMoneyDoneButtonImage = UseLoadedButtonImage(guiMoneyButtonImage, -1, 3, 6, 4, 5);
       guiMoneyButtonBtn[cnt] = CreateIconAndTextButton(
           guiMoneyDoneButtonImage, gzMoneyAmounts[cnt], BLOCKFONT2, 5, DEFAULT_SHADOW, 5,
-          DEFAULT_SHADOW, TEXT_CJUSTIFIED, (uint16_t)(gMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
+          DEFAULT_SHADOW, TEXT_CJUSTIFIED,
+          (uint16_t)(gMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
           (uint16_t)(gMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
           MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, BtnMoneyButtonCallback);
       MSYS_SetBtnUserData(guiMoneyButtonBtn[cnt], 0, cnt);
@@ -2599,8 +2602,8 @@ void RenderItemDescriptionBox() {
     // REMOVE OFFSETS!
     sCenX =
         MAP_ITEMDESC_ITEM_X + (abs((int16_t)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->x_offset;
-    sCenY =
-        MAP_ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->y_offset;
+    sCenY = MAP_ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) -
+            pTrav->y_offset;
 
     BltVObjectFromIndex(vsSB, guiMapItemDescBox, 0, gsInvDescX, gsInvDescY);
 
@@ -2670,11 +2673,12 @@ void RenderItemDescriptionBox() {
       }
 
       if (fHatchOutAttachments) {
-        DrawHatchOnInventory(
-            guiSAVEBUFFER, (int16_t)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX),
-            (int16_t)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 2),
-            (int16_t)(gMapItemDescAttachmentsXY[cnt].sWidth + gMapItemDescAttachmentsXY[cnt].sBarDx),
-            (int16_t)(gMapItemDescAttachmentsXY[cnt].sHeight + 2));
+        DrawHatchOnInventory(guiSAVEBUFFER,
+                             (int16_t)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX),
+                             (int16_t)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 2),
+                             (int16_t)(gMapItemDescAttachmentsXY[cnt].sWidth +
+                                       gMapItemDescAttachmentsXY[cnt].sBarDx),
+                             (int16_t)(gMapItemDescAttachmentsXY[cnt].sHeight + 2));
       }
     }
 
@@ -2877,8 +2881,8 @@ void RenderItemDescriptionBox() {
         swprintf(pStr, ARR_SIZE(pStr), L"%2d", (GunRange(gpItemDescObject)) / 10);
         FindFontRightCoordinates(
             (int16_t)(gMapWeaponStats[3].sX + gsInvDescX + gMapWeaponStats[3].sValDx),
-            (int16_t)(gMapWeaponStats[3].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
-            BLOCKFONT2, &usX, &usY);
+            (int16_t)(gMapWeaponStats[3].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT,
+            pStr, BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       }
 
@@ -2894,8 +2898,8 @@ void RenderItemDescriptionBox() {
         swprintf(pStr, ARR_SIZE(pStr), L"%2d", Weapon[gpItemDescObject->usItem].ubImpact);
         FindFontRightCoordinates(
             (int16_t)(gMapWeaponStats[4].sX + gsInvDescX + gMapWeaponStats[4].sValDx),
-            (int16_t)(gMapWeaponStats[4].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
-            BLOCKFONT2, &usX, &usY);
+            (int16_t)(gMapWeaponStats[4].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT,
+            pStr, BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       }
 
@@ -2927,8 +2931,8 @@ void RenderItemDescriptionBox() {
                  ubAttackAPs + CalcAPsToBurst(DEFAULT_APS, gpItemDescObject));
         FindFontRightCoordinates(
             (int16_t)(gMapWeaponStats[6].sX + gsInvDescX + gMapWeaponStats[6].sValDx),
-            (int16_t)(gMapWeaponStats[6].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
-            BLOCKFONT2, &usX, &usY);
+            (int16_t)(gMapWeaponStats[6].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT,
+            pStr, BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       }
 
@@ -3040,8 +3044,8 @@ void RenderItemDescriptionBox() {
         //].sValDx + ( uiRightLength - uiStringLength );
         FindFontRightCoordinates(
             (int16_t)(gMapWeaponStats[2].sX + gsInvDescX + gMapWeaponStats[2].sValDx + 6),
-            (int16_t)(gMapWeaponStats[2].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
-            BLOCKFONT2, &sStrX, &usY);
+            (int16_t)(gMapWeaponStats[2].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT,
+            pStr, BLOCKFONT2, &sStrX, &usY);
         mprintf(sStrX, gMapWeaponStats[2].sY + gsInvDescY, pStr);
       } else {
         // Status
@@ -3051,8 +3055,8 @@ void RenderItemDescriptionBox() {
         //].sValDx + ( uiRightLength - uiStringLength );
         FindFontRightCoordinates(
             (int16_t)(gMapWeaponStats[1].sX + gsInvDescX + gMapWeaponStats[1].sValDx + 6),
-            (int16_t)(gMapWeaponStats[1].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
-            BLOCKFONT2, &sStrX, &usY);
+            (int16_t)(gMapWeaponStats[1].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT,
+            pStr, BLOCKFONT2, &sStrX, &usY);
         wcscat(pStr, L"%%");
         mprintf(sStrX, gMapWeaponStats[1].sY + gsInvDescY, pStr);
       }
@@ -3079,9 +3083,10 @@ void RenderItemDescriptionBox() {
                 gMapWeaponStats[4].sY + gsInvDescY + GetFontHeight(BLOCKFONT) + 2, pStr);
 
         SetFontForeground(5);
-        GetShortSectorString(SectorID8_X((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             SectorID8_Y((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             sTempString, ARR_SIZE(sTempString));
+        GetShortSectorString(
+            SectorID8_X((uint8_t)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+            SectorID8_Y((uint8_t)KeyTable[gpItemDescObject->ubKeyID].usSectorFound), sTempString,
+            ARR_SIZE(sTempString));
         swprintf(pStr, ARR_SIZE(pStr), L"%s", sTempString);
         FindFontRightCoordinates((int16_t)(gMapWeaponStats[4].sX + gsInvDescX),
                                  (int16_t)(gMapWeaponStats[4].sY + gsInvDescY), 110,
@@ -3107,7 +3112,8 @@ void RenderItemDescriptionBox() {
 
     // CENTER IN SLOT!
     sCenX = ITEMDESC_ITEM_X + (abs((int16_t)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->x_offset;
-    sCenY = ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->y_offset;
+    sCenY =
+        ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->y_offset;
 
     BltVObjectFromIndex(vsSB, guiItemDescBox, 0, gsInvDescX, gsInvDescY);
 
@@ -3151,8 +3157,8 @@ void RenderItemDescriptionBox() {
 
         sCenX = sCenX - gItemDescAttachmentsXY[cnt].sBarDx;
         sCenY = sCenY + gItemDescAttachmentsXY[cnt].sBarDy;
-        DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX, sCenY,
-                        ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+        DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
+                        sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
                         rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
         SetRegionFastHelpText(&(gItemDescAttachmentRegions[cnt]),
@@ -3344,9 +3350,10 @@ void RenderItemDescriptionBox() {
         }
 
         swprintf(pStr, ARR_SIZE(pStr), L"%2d", (GunRange(gpItemDescObject)) / 10);
-        FindFontRightCoordinates((int16_t)(gWeaponStats[3].sX + gsInvDescX + gWeaponStats[3].sValDx),
-                                 (int16_t)(gWeaponStats[3].sY + gsInvDescY), ITEM_STATS_WIDTH,
-                                 ITEM_STATS_HEIGHT, pStr, BLOCKFONT2, &usX, &usY);
+        FindFontRightCoordinates(
+            (int16_t)(gWeaponStats[3].sX + gsInvDescX + gWeaponStats[3].sValDx),
+            (int16_t)(gWeaponStats[3].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
+            BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       }
 
@@ -3359,9 +3366,10 @@ void RenderItemDescriptionBox() {
         }
 
         swprintf(pStr, ARR_SIZE(pStr), L"%2d", Weapon[gpItemDescObject->usItem].ubImpact);
-        FindFontRightCoordinates((int16_t)(gWeaponStats[4].sX + gsInvDescX + gWeaponStats[4].sValDx),
-                                 (int16_t)(gWeaponStats[4].sY + gsInvDescY), ITEM_STATS_WIDTH,
-                                 ITEM_STATS_HEIGHT, pStr, BLOCKFONT2, &usX, &usY);
+        FindFontRightCoordinates(
+            (int16_t)(gWeaponStats[4].sX + gsInvDescX + gWeaponStats[4].sValDx),
+            (int16_t)(gWeaponStats[4].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
+            BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       }
 
@@ -3389,9 +3397,10 @@ void RenderItemDescriptionBox() {
 
         swprintf(pStr, ARR_SIZE(pStr), L"%2d",
                  ubAttackAPs + CalcAPsToBurst(DEFAULT_APS, gpItemDescObject));
-        FindFontRightCoordinates((int16_t)(gWeaponStats[6].sX + gsInvDescX + gWeaponStats[6].sValDx),
-                                 (int16_t)(gWeaponStats[6].sY + gsInvDescY), ITEM_STATS_WIDTH,
-                                 ITEM_STATS_HEIGHT, pStr, BLOCKFONT2, &usX, &usY);
+        FindFontRightCoordinates(
+            (int16_t)(gWeaponStats[6].sX + gsInvDescX + gWeaponStats[6].sValDx),
+            (int16_t)(gWeaponStats[6].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
+            BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       }
 
@@ -3466,8 +3475,8 @@ void RenderItemDescriptionBox() {
       InsertDollarSignInToString(pStr);
       FindFontRightCoordinates((int16_t)(gMoneyStats[1].sX + gsInvDescX + gMoneyStats[1].sValDx),
                                (int16_t)(gMoneyStats[1].sY + gsInvDescY),
-                               (uint16_t)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr, BLOCKFONT2,
-                               &usX, &usY);
+                               (uint16_t)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr,
+                               BLOCKFONT2, &usX, &usY);
       mprintf(usX, usY, pStr);
 
       // Display the total amount of money removing
@@ -3476,8 +3485,8 @@ void RenderItemDescriptionBox() {
       InsertDollarSignInToString(pStr);
       FindFontRightCoordinates((int16_t)(gMoneyStats[3].sX + gsInvDescX + gMoneyStats[3].sValDx),
                                (int16_t)(gMoneyStats[3].sY + gsInvDescY),
-                               (uint16_t)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr, BLOCKFONT2,
-                               &usX, &usY);
+                               (uint16_t)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr,
+                               BLOCKFONT2, &usX, &usY);
       mprintf(usX, usY, pStr);
 
     } else if (Item[gpItemDescObject->usItem].usItemClass == IC_MONEY) {
@@ -3517,16 +3526,18 @@ void RenderItemDescriptionBox() {
         // Status
         swprintf(pStr, ARR_SIZE(pStr), L"%d/%d", gpItemDescObject->ubShotsLeft[0],
                  Magazine[Item[gpItemDescObject->usItem].ubClassIndex].ubMagSize);
-        FindFontRightCoordinates((int16_t)(gWeaponStats[2].sX + gsInvDescX + gWeaponStats[2].sValDx),
-                                 (int16_t)(gWeaponStats[2].sY + gsInvDescY), ITEM_STATS_WIDTH,
-                                 ITEM_STATS_HEIGHT, pStr, BLOCKFONT2, &usX, &usY);
+        FindFontRightCoordinates(
+            (int16_t)(gWeaponStats[2].sX + gsInvDescX + gWeaponStats[2].sValDx),
+            (int16_t)(gWeaponStats[2].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
+            BLOCKFONT2, &usX, &usY);
         mprintf(usX, usY, pStr);
       } else {
         // Status
         swprintf(pStr, ARR_SIZE(pStr), L"%2d%%", gpItemDescObject->bStatus[gubItemDescStatusIndex]);
-        FindFontRightCoordinates((int16_t)(gWeaponStats[1].sX + gsInvDescX + gWeaponStats[1].sValDx),
-                                 (int16_t)(gWeaponStats[1].sY + gsInvDescY), ITEM_STATS_WIDTH,
-                                 ITEM_STATS_HEIGHT, pStr, BLOCKFONT2, &usX, &usY);
+        FindFontRightCoordinates(
+            (int16_t)(gWeaponStats[1].sX + gsInvDescX + gWeaponStats[1].sValDx),
+            (int16_t)(gWeaponStats[1].sY + gsInvDescY), ITEM_STATS_WIDTH, ITEM_STATS_HEIGHT, pStr,
+            BLOCKFONT2, &usX, &usY);
         wcscat(pStr, L"%%");
         mprintf(usX, usY, pStr);
       }
@@ -3542,9 +3553,10 @@ void RenderItemDescriptionBox() {
                 gWeaponStats[4].sY + gsInvDescY + GetFontHeight(BLOCKFONT) + 2, pStr);
 
         SetFontForeground(5);
-        GetShortSectorString(SectorID8_X((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             SectorID8_Y((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             sTempString, ARR_SIZE(sTempString));
+        GetShortSectorString(
+            SectorID8_X((uint8_t)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+            SectorID8_Y((uint8_t)KeyTable[gpItemDescObject->ubKeyID].usSectorFound), sTempString,
+            ARR_SIZE(sTempString));
         swprintf(pStr, ARR_SIZE(pStr), L"%s", sTempString);
         FindFontRightCoordinates((int16_t)(gWeaponStats[4].sX + gsInvDescX),
                                  (int16_t)(gWeaponStats[4].sY + gsInvDescY), 110, ITEM_STATS_HEIGHT,
@@ -3843,9 +3855,11 @@ BOOLEAN SoldierCanSeeCatchComing(struct SOLDIERTYPE *pSoldier, int16_t sSrcGridN
   return (TRUE);
   /*-
           int32_t							cnt;
-          int8_t							bDirection, bTargetDirection;
+          int8_t							bDirection,
+  bTargetDirection;
 
-          bTargetDirection = (int8_t)GetDirectionToGridNoFromGridNo( pSoldier->sGridNo, sSrcGridNo );
+          bTargetDirection = (int8_t)GetDirectionToGridNoFromGridNo( pSoldier->sGridNo, sSrcGridNo
+  );
 
           // Look 3 directions Clockwise from what we are facing....
           bDirection = pSoldier->bDirection;
@@ -4534,8 +4548,8 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
 
       // Given our gridno, throw grenate!
       CalculateLaunchItemParamsForThrow(gpItemPointerSoldier, sGridNo, gpItemPointerSoldier->bLevel,
-                                        (int16_t)((gsInterfaceLevel * 256) + sEndZ), gpItemPointer, 0,
-                                        ubThrowActionCode, uiThrowActionData);
+                                        (int16_t)((gsInterfaceLevel * 256) + sEndZ), gpItemPointer,
+                                        0, ubThrowActionCode, uiThrowActionData);
 
       // OK, goto throw animation
       HandleSoldierThrowItem(gpItemPointerSoldier, usMapPos);
@@ -4561,8 +4575,8 @@ BOOLEAN InItemStackPopup() { return (gfInItemStackPopup); }
 
 BOOLEAN InKeyRingPopup() { return (gfInKeyRingPopup); }
 
-BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sInvX, int16_t sInvY,
-                           int16_t sInvWidth, int16_t sInvHeight) {
+BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sInvX,
+                           int16_t sInvY, int16_t sInvWidth, int16_t sInvHeight) {
   int16_t sX, sY, sCenX, sCenY;
   struct GRect aRect;
   uint8_t ubLimit;
@@ -4725,9 +4739,9 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
       // Do status bar here...
       sNewX = (int16_t)(gsItemPopupX + (cnt * usWidth) + 7);
       sNewY = gsItemPopupY + INV_BAR_DY + 3;
-      DrawItemUIBarEx(gpItemPopupObject, (uint8_t)cnt, sNewX, sNewY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT,
-                      rgb32_to_rgb565(STATUS_BAR), rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE,
-                      FRAME_BUFFER);
+      DrawItemUIBarEx(gpItemPopupObject, (uint8_t)cnt, sNewX, sNewY, ITEM_BAR_WIDTH,
+                      ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+                      rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, FRAME_BUFFER);
     }
   }
 
@@ -4764,8 +4778,8 @@ void DeleteItemStackPopup() {
   FreeMouseCursor();
 }
 
-BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY, int16_t sInvWidth,
-                         int16_t sInvHeight) {
+BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY,
+                         int16_t sInvWidth, int16_t sInvHeight) {
   struct GRect aRect;
   struct Subimage *pTrav;
   struct VObject *hVObject;
@@ -4811,12 +4825,12 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sI
     MSYS_DefineRegion(
         &gKeyRingRegions[cnt],
         (int16_t)(gsKeyRingPopupInvX + (cnt % sKeyRingItemWidth * usPopupWidth) +
-                sOffSetX),                                                      // top left
+                  sOffSetX),                                                      // top left
         (int16_t)(sInvY + sOffSetY + (cnt / sKeyRingItemWidth * usPopupHeight)),  // top right
         (int16_t)(gsKeyRingPopupInvX + ((cnt % sKeyRingItemWidth) + 1) * usPopupWidth +
-                sOffSetX),  // bottom left
+                  sOffSetX),  // bottom left
         (int16_t)(sInvY + ((cnt / sKeyRingItemWidth + 1) * usPopupHeight) +
-                sOffSetY),  // bottom right
+                  sOffSetY),  // bottom right
         MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, KeyRingSlotInvClickCallback);
     // Add region
     MSYS_AddRegion(&gKeyRingRegions[cnt]);
@@ -5187,7 +5201,8 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
       RestoreExternBackgroundRect(gsItemPopupInvX, gsItemPopupInvY, gsItemPopupInvWidth,
                                   gsItemPopupInvHeight);
       if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
-        MAPInternalInitItemDescriptionBox(gpItemPopupObject, (uint8_t)uiItemPos, gpItemPopupSoldier);
+        MAPInternalInitItemDescriptionBox(gpItemPopupObject, (uint8_t)uiItemPos,
+                                          gpItemPopupSoldier);
       } else {
         InternalInitItemDescriptionBox(gpItemPopupObject, (int16_t)ITEMDESC_START_X,
                                        (int16_t)ITEMDESC_START_Y, (uint8_t)uiItemPos,

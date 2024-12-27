@@ -377,7 +377,7 @@ BOOLEAN IsRepairableStructAtGridNo(int16_t sGridNo, uint8_t *pubID) {
   // Then for over a robot....
 
   // then for SAM site....
-  if (DoesSAMExistHere((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, sGridNo)) {
+  if (DoesSAMExistHere((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ, sGridNo)) {
     return (3);
   }
 

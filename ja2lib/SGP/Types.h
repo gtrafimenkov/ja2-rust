@@ -13,16 +13,13 @@
 #include "LeanTypes.h"
 
 // flags (individual bits used)
-typedef unsigned char FLAGS8;
+typedef uint8_t FLAGS8;
 typedef uint16_t FLAGS16;
-typedef unsigned long FLAGS32;
+typedef uint32_t FLAGS32;
 // other
-typedef unsigned char BOOLEAN;
-typedef void* PTR;
+typedef uint8_t BOOLEAN;
 typedef uint16_t HNDL;
-typedef uint8_t BYTE;
 typedef char STRING512[512];
-typedef uint32_t FileID;
 
 #define SGPFILENAME_LEN 100
 typedef char SGPFILENAME[SGPFILENAME_LEN];
@@ -79,15 +76,6 @@ typedef VECTOR4 COLOR;  // rgba color array
 #if !defined(min)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif
-
-typedef uint8_t u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
 
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
 typedef uint32_t COLORVAL;

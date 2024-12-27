@@ -26,19 +26,19 @@
 
 #ifndef radmalloc
 
-RADEXPFUNC void PTR4* RADEXPLINK radmalloc(u32 numbytes)
+RADEXPFUNC void PTR4* RADEXPLINK radmalloc(uint32_t numbytes)
 {
-  u8 PTR4* temp;
-  u8 i;
+  uint8_t PTR4* temp;
+  uint8_t i;
 
   if ((numbytes==0) || (numbytes==0xffffffff))
     return(0);
 
-  temp=(u8 PTR4*)radmalrad(numbytes+16);
+  temp=(uint8_t PTR4*)radmalrad(numbytes+16);
   if (temp==0)
     return(0);
 
-  i=(u8)(16-((u32)temp&15));
+  i=(uint8_t)(16-((uint32_t)temp&15));
   temp+=i;
   temp[-1]=i;
 
@@ -48,7 +48,7 @@ RADEXPFUNC void PTR4* RADEXPLINK radmalloc(u32 numbytes)
 RADEXPFUNC void RADEXPLINK radfree(void PTR4* ptr)
 {
   if (ptr)
-    radfrrad( ((u8 PTR4*)ptr)-((u8 PTR4*)ptr)[-1] );
+    radfrrad( ((uint8_t PTR4*)ptr)-((uint8_t PTR4*)ptr)[-1] );
 }
 
 #endif

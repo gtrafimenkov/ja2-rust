@@ -277,8 +277,8 @@ SKIRGBCOLOR SkiGlowColorsA[] = {
 ///////////////////////////////////////////
 
 uint32_t guiMainTradeScreenImage;
-uint32_t guiCornerWhereTacticalIsStillSeenImage;  // This image is for where the corner of tactical is
-                                                // still seen through the shop keeper interface
+uint32_t guiCornerWhereTacticalIsStillSeenImage;  // This image is for where the corner of tactical
+                                                  // is still seen through the shop keeper interface
 
 // ATM:
 // uint32_t		guiSkiAtmImage;
@@ -293,7 +293,8 @@ BOOLEAN gfRenderScreenOnNextLoop = FALSE;
 uint8_t gubSkiDirtyLevel = SKI_DIRTY_LEVEL0;
 int32_t giSKIMessageBox = -1;
 
-int8_t gbSelectedArmsDealerID = -1;  // Contains the enum value for the currently selected arms dealer
+int8_t gbSelectedArmsDealerID =
+    -1;  // Contains the enum value for the currently selected arms dealer
 
 // the quote that is in progress, in certain circumstances, we don't want queuing of related but
 // different quotes
@@ -484,7 +485,8 @@ struct MOUSE_REGION gDealersOfferSlotsSmallFaceMouseRegions[SKI_NUM_TRADING_INV_
 struct MOUSE_REGION gPlayersOfferSlotsSmallFaceMouseRegions[SKI_NUM_TRADING_INV_SLOTS];
 
 struct MOUSE_REGION gSkiInventoryMovementAreaMouseRegions;
-// void SelectSkiInventoryMovementAreaRegionCallBack(struct MOUSE_REGION * pRegion, int32_t iReason );
+// void SelectSkiInventoryMovementAreaRegionCallBack(struct MOUSE_REGION * pRegion, int32_t iReason
+// );
 
 // Mouse region for the subtitles region when the merc is talking
 struct MOUSE_REGION gShopKeeperSubTitleMouseRegion;
@@ -520,13 +522,14 @@ void CalculateFirstItemIndexOnPage();
 void DisplayArmsDealerCurrentInventoryPage();
 BOOLEAN DetermineArmsDealersSellingInventory();
 void StoreObjectsInNextFreeDealerInvSlot(uint16_t usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
-                                         int16_t sSpecialItemElement, uint8_t ubHowMany, uint8_t ubOwner);
+                                         int16_t sSpecialItemElement, uint8_t ubHowMany,
+                                         uint8_t ubOwner);
 void AddItemsToTempDealerInventory(uint16_t usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
                                    int16_t sSpecialItemElement, uint8_t ubHowMany, uint8_t ubOwner);
 BOOLEAN RepairIsDone(uint16_t usItemIndex, uint8_t ubElement);
 
 uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX, uint16_t usPosY,
-                      struct OBJECTTYPE *ItemObject, BOOLEAN fHatchedOut, uint8_t ubItemArea);
+                        struct OBJECTTYPE *ItemObject, BOOLEAN fHatchedOut, uint8_t ubItemArea);
 void DisplayArmsDealerOfferArea();
 int8_t AddItemToArmsDealerOfferArea(INVENTORY_IN_SLOT *pInvSlot, int8_t bSlotIdInOtherLocation);
 BOOLEAN RemoveItemFromArmsDealerOfferArea(int8_t bSlotId, BOOLEAN fKeepItem);
@@ -537,7 +540,7 @@ void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pReg
 void RestoreTacticalBackGround();
 void DisplayPlayersOfferArea();
 uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, uint16_t usItemID,
-                               float dModifier, struct OBJECTTYPE *pItemObject);
+                                 float dModifier, struct OBJECTTYPE *pItemObject);
 float ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus);
 BOOLEAN RemoveItemFromPlayersOfferArea(int8_t bSlotIdInOtherLocation);
 
@@ -596,7 +599,8 @@ void CrossOutUnwantedItems(void);
 BOOLEAN CanShopkeeperOverrideDialogue(void);
 int16_t GetNumberOfItemsInPlayerOfferArea(void);
 void HandleCheckIfEnoughOnTheTable(void);
-void InitShopKeeperItemDescBox(struct OBJECTTYPE *pObject, uint8_t ubPocket, uint8_t ubFromLocation);
+void InitShopKeeperItemDescBox(struct OBJECTTYPE *pObject, uint8_t ubPocket,
+                               uint8_t ubFromLocation);
 void StartSKIDescriptionBox(void);
 
 BOOLEAN ShopkeeperAutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj,
@@ -946,9 +950,9 @@ BOOLEAN EnterShopKeeperInterface() {
 
   // Create the mouse region for the shopkeeper's face
   MSYS_DefineRegion(&gArmsDealersFaceMouseRegions, SKI_FACE_X, SKI_FACE_Y,
-                    (uint16_t)(SKI_FACE_X + SKI_FACE_WIDTH), (uint16_t)(SKI_FACE_Y + SKI_FACE_HEIGHT),
-                    MSYS_PRIORITY_HIGH - 1, CURSOR_NORMAL, MSYS_NO_CALLBACK,
-                    SelectArmsDealersFaceRegionCallBack);
+                    (uint16_t)(SKI_FACE_X + SKI_FACE_WIDTH),
+                    (uint16_t)(SKI_FACE_Y + SKI_FACE_HEIGHT), MSYS_PRIORITY_HIGH - 1, CURSOR_NORMAL,
+                    MSYS_NO_CALLBACK, SelectArmsDealersFaceRegionCallBack);
   MSYS_AddRegion(&gArmsDealersFaceMouseRegions);
 
   // Create the atm button
@@ -1590,8 +1594,8 @@ void CreateSkiInventorySlotMouseRegions() {
 
     for (x = 0; x < SKI_NUM_ARMS_DEALERS_INV_COLS; x++) {
       MSYS_DefineRegion(&gDealersInventoryMouseRegions[ubCnt], usPosX, usPosY,
-                        (int16_t)(usPosX + SKI_INV_SLOT_WIDTH), (int16_t)(usPosY + SKI_INV_SLOT_HEIGHT),
-                        MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        (int16_t)(usPosX + SKI_INV_SLOT_WIDTH),
+                        (int16_t)(usPosY + SKI_INV_SLOT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectDealersInventoryMovementRegionCallBack,
                         SelectDealersInventoryRegionCallBack);
       MSYS_AddRegion(&gDealersInventoryMouseRegions[ubCnt]);
@@ -1626,8 +1630,8 @@ void CreateSkiInventorySlotMouseRegions() {
 
     for (x = 0; x < SKI_NUM_TRADING_INV_COLS; x++) {
       MSYS_DefineRegion(&gDealersOfferSlotsMouseRegions[ubCnt], usPosX, usPosY,
-                        (int16_t)(usPosX + SKI_INV_SLOT_WIDTH), (int16_t)(usPosY + SKI_INV_SLOT_HEIGHT),
-                        MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        (int16_t)(usPosX + SKI_INV_SLOT_WIDTH),
+                        (int16_t)(usPosY + SKI_INV_SLOT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectDealersOfferSlotsMovementRegionCallBack,
                         SelectDealersOfferSlotsRegionCallBack);
       MSYS_AddRegion(&gDealersOfferSlotsMouseRegions[ubCnt]);
@@ -1663,8 +1667,8 @@ void CreateSkiInventorySlotMouseRegions() {
     for (x = 0; x < SKI_NUM_TRADING_INV_COLS; x++) {
       // Trading Slots
       MSYS_DefineRegion(&gPlayersOfferSlotsMouseRegions[ubCnt], usPosX, usPosY,
-                        (int16_t)(usPosX + SKI_INV_SLOT_WIDTH), (int16_t)(usPosY + SKI_INV_SLOT_HEIGHT),
-                        MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        (int16_t)(usPosX + SKI_INV_SLOT_WIDTH),
+                        (int16_t)(usPosY + SKI_INV_SLOT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectPlayersOfferSlotsMovementRegionCallBack,
                         SelectPlayersOfferSlotsRegionCallBack);
       MSYS_AddRegion(&gPlayersOfferSlotsMouseRegions[ubCnt]);
@@ -2336,7 +2340,7 @@ void DisplayArmsDealerCurrentInventoryPage() {
 }
 
 uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX, uint16_t usPosY,
-                      struct OBJECTTYPE *pItemObject, BOOLEAN fHatchedOut, uint8_t ubItemArea) {
+                        struct OBJECTTYPE *pItemObject, BOOLEAN fHatchedOut, uint8_t ubItemArea) {
   wchar_t zTemp[64];
   struct VObject *hVObject;
   struct VObject *hPixHandle;
@@ -2365,9 +2369,10 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
   usHeight = (uint32_t)pTrav->height;
   usWidth = (uint32_t)pTrav->width;
 
-  sCenX =
-      usPosX + 7 + (int16_t)(abs((int32_t)SKI_INV_WIDTH - 3 - (int32_t)usWidth) / 2) - pTrav->x_offset;
-  sCenY = usPosY + (int16_t)(abs((int32_t)SKI_INV_HEIGHT - (int32_t)usHeight) / 2) - pTrav->y_offset;
+  sCenX = usPosX + 7 + (int16_t)(abs((int32_t)SKI_INV_WIDTH - 3 - (int32_t)usWidth) / 2) -
+          pTrav->x_offset;
+  sCenY =
+      usPosY + (int16_t)(abs((int32_t)SKI_INV_HEIGHT - (int32_t)usHeight) / 2) - pTrav->y_offset;
 
   // Restore the background region
   RestoreExternBackgroundRect(usPosX, usPosY, SKI_INV_SLOT_WIDTH, SKI_INV_HEIGHT);
@@ -2629,7 +2634,8 @@ BOOLEAN DetermineArmsDealersSellingInventory() {
 }
 
 void AddItemsToTempDealerInventory(uint16_t usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
-                                   int16_t sSpecialItemElement, uint8_t ubHowMany, uint8_t ubOwner) {
+                                   int16_t sSpecialItemElement, uint8_t ubHowMany,
+                                   uint8_t ubOwner) {
   uint8_t ubCnt;
 
   Assert(ubHowMany > 0);
@@ -2788,7 +2794,7 @@ void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, 
 }
 
 uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, uint16_t usItemID,
-                               float dModifier, struct OBJECTTYPE *pItemObject) {
+                                 float dModifier, struct OBJECTTYPE *pItemObject) {
   uint8_t ubCnt;
   uint32_t uiUnitPrice = 0;
   uint32_t uiTotalPrice = 0;
@@ -2803,7 +2809,7 @@ uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly,
       // add value of the gun
       uiUnitPrice +=
           (uint32_t)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, usItemID, fDealerSelling) *
-                   ItemConditionModifier(usItemID, pItemObject->bGunStatus) * dModifier);
+                     ItemConditionModifier(usItemID, pItemObject->bGunStatus) * dModifier);
 
       // if any ammo is loaded
       if (pItemObject->usGunAmmoItem != NONE) {
@@ -2812,19 +2818,19 @@ uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly,
           // add value of its remaining ammo
           uiUnitPrice +=
               (uint32_t)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usGunAmmoItem,
-                                               fDealerSelling) *
-                       ItemConditionModifier(pItemObject->usGunAmmoItem,
-                                             pItemObject->ubGunShotsLeft) *
-                       dModifier);
+                                                 fDealerSelling) *
+                         ItemConditionModifier(pItemObject->usGunAmmoItem,
+                                               pItemObject->ubGunShotsLeft) *
+                         dModifier);
         } else  // assume it's attached ammo (mortar shells, grenades)
         {
           // add its value (uses normal status 0-100)
           uiUnitPrice +=
               (uint32_t)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usGunAmmoItem,
-                                               fDealerSelling) *
-                       ItemConditionModifier(pItemObject->usGunAmmoItem,
-                                             pItemObject->bGunAmmoStatus) *
-                       dModifier);
+                                                 fDealerSelling) *
+                         ItemConditionModifier(pItemObject->usGunAmmoItem,
+                                               pItemObject->bGunAmmoStatus) *
+                         dModifier);
         }
       }
 
@@ -2852,7 +2858,7 @@ uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly,
         // for bullets, ItemConditionModifier will convert the #ShotsLeft into a percentage
         uiUnitPrice +=
             (uint32_t)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, usItemID, fDealerSelling) *
-                     ItemConditionModifier(usItemID, pItemObject->bStatus[ubCnt]) * dModifier);
+                       ItemConditionModifier(usItemID, pItemObject->bStatus[ubCnt]) * dModifier);
 
         if (fUnitPriceOnly) {
           // want price for only one of them.  All statuses must be the same in order to use this
@@ -2868,11 +2874,11 @@ uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly,
     if (pItemObject->usAttachItem[ubCnt] != NONE) {
       // add value of this particular attachment
       uiUnitPrice +=
-          (uint32_t)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usAttachItem[ubCnt],
-                                           fDealerSelling) *
-                   ItemConditionModifier(pItemObject->usAttachItem[ubCnt],
-                                         pItemObject->bAttachStatus[ubCnt]) *
-                   dModifier);
+          (uint32_t)(CalcValueOfItemToDealer(gbSelectedArmsDealerID,
+                                             pItemObject->usAttachItem[ubCnt], fDealerSelling) *
+                     ItemConditionModifier(pItemObject->usAttachItem[ubCnt],
+                                           pItemObject->bAttachStatus[ubCnt]) *
+                     dModifier);
     }
   }
 
@@ -3020,8 +3026,9 @@ void DisplayArmsDealerOfferArea() {
     InsertCommasForDollarFigure(zTemp);
     InsertDollarSignInToString(zTemp);
     DrawTextToScreen(zTemp, SKI_ARMS_DEALER_TOTAL_COST_X,
-                     (uint16_t)(SKI_ARMS_DEALER_TOTAL_COST_Y + 5), SKI_INV_SLOT_WIDTH, SKI_LABEL_FONT,
-                     SKI_ITEM_PRICE_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
+                     (uint16_t)(SKI_ARMS_DEALER_TOTAL_COST_Y + 5), SKI_INV_SLOT_WIDTH,
+                     SKI_LABEL_FONT, SKI_ITEM_PRICE_COLOR, FONT_MCOLOR_BLACK, FALSE,
+                     CENTER_JUSTIFIED);
   }
 }
 
@@ -3128,7 +3135,7 @@ void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pReg
 void SkiHelpTextDoneCallBack(void) { gubSkiDirtyLevel = SKI_DIRTY_LEVEL2; }
 
 int8_t AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
-                               int8_t bSlotIdInOtherLocation) {
+                                 int8_t bSlotIdInOtherLocation) {
   int8_t bCnt;
 
   // if we are to check for a previous slot
@@ -3231,7 +3238,8 @@ void DisplayPlayersOfferArea() {
         // if non-repairman
         if (ArmsDealerInfo[gbSelectedArmsDealerID].ubTypeOfArmsDealer != ARMS_DEALER_REPAIRS) {
           // don't evaluate anything he wouldn't buy!
-          if (WillShopKeeperRejectObjectsFromPlayer(gbSelectedArmsDealerID, (int8_t)sCnt) == FALSE) {
+          if (WillShopKeeperRejectObjectsFromPlayer(gbSelectedArmsDealerID, (int8_t)sCnt) ==
+              FALSE) {
             // skip purchased items!
             if (!(PlayersOfferArea[sCnt].uiFlags & ARMS_INV_JUST_PURCHASED)) {
               // re-evaluate the value of the item (needed for Flo's discount handling)
@@ -4241,7 +4249,7 @@ BOOLEAN IsGunOrAmmoOfSameTypeSelected(struct OBJECTTYPE *pItemObject) {
   return (FALSE);
 }
 
-void InitShopKeeperSubTitledText(wchar_t* pString) {
+void InitShopKeeperSubTitledText(wchar_t *pString) {
   // Clear the contents of the subtitle text
   memset(gsShopKeeperTalkingText, 0, sizeof(gsShopKeeperTalkingText));
 
@@ -4269,7 +4277,8 @@ void InitShopKeeperSubTitledText(wchar_t* pString) {
     // check to make sure the region is not already initialized
     if (!(gShopKeeperSubTitleMouseRegion.uiFlags & MSYS_REGION_EXISTS)) {
       MSYS_DefineRegion(&gShopKeeperSubTitleMouseRegion, gusPositionOfSubTitlesX,
-                        SKI_POSITION_SUBTITLES_Y, (int16_t)(gusPositionOfSubTitlesX + usActualWidth),
+                        SKI_POSITION_SUBTITLES_Y,
+                        (int16_t)(gusPositionOfSubTitlesX + usActualWidth),
                         (int16_t)(SKI_POSITION_SUBTITLES_Y + usActualHeight), MSYS_PRIORITY_HIGH,
                         CURSOR_NORMAL, MSYS_NO_CALLBACK, ShopKeeperSubTitleRegionCallBack);
       MSYS_AddRegion(&gShopKeeperSubTitleMouseRegion);
@@ -5384,8 +5393,8 @@ BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen
 
   // do message box and return
   giSKIMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                 (uint8_t)(ubFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
-                                 &pCenteringRect);
+                                 (uint8_t)(ubFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                 ReturnCallback, &pCenteringRect);
 
   // send back return state
   return ((giSKIMessageBox != -1));
@@ -5566,7 +5575,8 @@ void HandleCheckIfEnoughOnTheTable(void) {
   return;
 }
 
-void InitShopKeeperItemDescBox(struct OBJECTTYPE *pObject, uint8_t ubPocket, uint8_t ubFromLocation) {
+void InitShopKeeperItemDescBox(struct OBJECTTYPE *pObject, uint8_t ubPocket,
+                               uint8_t ubFromLocation) {
   int16_t sPosX, sPosY;
 
   switch (ubFromLocation) {
@@ -5975,7 +5985,8 @@ void SplitComplexObjectIntoSubObjects(struct OBJECTTYPE *pComplexObject) {
 }
 
 void CountSubObjectsInObject(struct OBJECTTYPE *pComplexObject, uint8_t *pubTotalSubObjects,
-                             uint8_t *pubRepairableSubObjects, uint8_t *pubNonRepairableSubObjects) {
+                             uint8_t *pubRepairableSubObjects,
+                             uint8_t *pubNonRepairableSubObjects) {
   uint8_t ubSubObject;
 
   *pubTotalSubObjects = 0;
@@ -6262,7 +6273,7 @@ BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier) {
 
 void AddShopkeeperToGridNo(uint8_t ubProfile, int16_t sGridNo) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  u8 sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
   uint8_t ubID;
 
   GetCurrentWorldSector(&sSectorX, &sSectorY);
@@ -6579,7 +6590,8 @@ void DelayRepairsInProgressBy(uint32_t uiMinutesDelayed) {
 }
 
 // Mouse Call back for the Arms delaers face
-void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegion,
+                                                     int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct SOLDIERTYPE *pDropSoldier;

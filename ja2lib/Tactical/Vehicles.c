@@ -185,7 +185,7 @@ void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle) {
   pVehicle->ubWhatKindOfMercAmI = MERC_TYPE__VEHICLE;
 }
 
-int32_t AddVehicleToList(u8 sMapX, u8 sMapY, int16_t sGridNo, uint8_t ubType) {
+int32_t AddVehicleToList(uint8_t sMapX, uint8_t sMapY, int16_t sGridNo, uint8_t ubType) {
   // insert this vehicle into the list
   // how many vehicles are there?
   int32_t iVehicleIdValue = -1;
@@ -658,7 +658,7 @@ BOOLEAN RemoveSoldierFromVehicle(struct SOLDIERTYPE *pSoldier, int32_t iId) {
     // Update in sector if this is the current sector.....
     if (GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
         GetSolSectorZ(pSoldier) == gbWorldSectorZ) {
-      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     }
   }
 
@@ -805,8 +805,9 @@ BOOLEAN SetUpMvtGroupForVehicle(struct SOLDIERTYPE *pSoldier) {
   //{
   // get the vehicle a mvt group
   // pVehicleList[ iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( uint8_t )(
-  // pVehicleList[ iId ].sSectorX ), ( uint8_t )( pVehicleList[ iId ].sSectorY ), iId ); pVehicleList[
-  // iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( uint8_t )( pVehicleList[ iId
+  // pVehicleList[ iId ].sSectorX ), ( uint8_t )( pVehicleList[ iId ].sSectorY ), iId );
+  // pVehicleList[ iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( uint8_t )(
+  // pVehicleList[ iId
   // ].sSectorX ), ( uint8_t )( pVehicleList[ iId ].sSectorY ), iId );
 
   // add everyone in vehicle to this mvt group
@@ -1076,9 +1077,7 @@ BOOLEAN AnyAccessibleVehiclesInSoldiersSector(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-struct SOLDIERTYPE *GetDriver(int32_t iID) {
-  return (MercPtrs[pVehicleList[iID].ubDriver]);
-}
+struct SOLDIERTYPE *GetDriver(int32_t iID) { return (MercPtrs[pVehicleList[iID].ubDriver]); }
 
 void SetDriver(int32_t iID, uint8_t ubID) { pVehicleList[iID].ubDriver = ubID; }
 
@@ -1775,7 +1774,7 @@ void TeleportVehicleToItsClosestSector(int32_t iVehicleId, uint8_t ubGroupID) {
   struct GROUP *pGroup = NULL;
   uint32_t uiTimeToNextSector;
   uint32_t uiTimeToLastSector;
-  u8 sPrevX, sPrevY, sNextX, sNextY;
+  uint8_t sPrevX, sPrevY, sNextX, sNextY;
 
   pGroup = GetGroup(ubGroupID);
   Assert(pGroup);

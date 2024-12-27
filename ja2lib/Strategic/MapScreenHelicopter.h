@@ -144,7 +144,7 @@ BOOLEAN IsSectorOutOfTheWay( int16_t sX, int16_t sY );
 */
 
 // how far to nearest refuel point from this sector?
-int32_t DistanceToNearestRefuelPoint(u8 sX, u8 sY);
+int32_t DistanceToNearestRefuelPoint(uint8_t sX, uint8_t sY);
 
 // location of closest
 int32_t LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
@@ -153,7 +153,7 @@ int32_t LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
 void ReFuelHelicopter(void);
 
 // how much will it cost for helicopter to travel through this sector?
-int32_t GetCostOfPassageForHelicopter(u8 sX, u8 sY);
+int32_t GetCostOfPassageForHelicopter(uint8_t sX, uint8_t sY);
 
 // helicopter shot down, kill all on board
 void SkyriderDestroyed(void);
@@ -174,13 +174,13 @@ void LandHelicopter(void);
 void TakeOffHelicopter(void);
 
 // test whether or not a sector contains a fuel site
-BOOLEAN IsRefuelSiteInSector(u8 sMapX, u8 sMapY);
+BOOLEAN IsRefuelSiteInSector(uint8_t sMapX, uint8_t sMapY);
 
 // update which refueling sites are controlled by player & therefore available
 void UpdateRefuelSiteAvailability(void);
 
 // setup helicopter for player
-void SetUpHelicopterForPlayer(u8 sX, u8 sY);
+void SetUpHelicopterForPlayer(uint8_t sX, uint8_t sY);
 
 // the intended path of the helicopter
 int32_t DistanceOfIntendedHelicopterPath(void);
@@ -198,7 +198,7 @@ void StartHoverTime(void);
 void DropOffEveryOneInHelicopter(void);
 
 // handle heli entering this sector
-BOOLEAN HandleHeliEnteringSector(u8 sX, u8 sY);
+BOOLEAN HandleHeliEnteringSector(uint8_t sX, uint8_t sY);
 
 // check for arrival at refuel
 BOOLEAN CheckForArrivalAtRefuelPoint(void);
@@ -233,17 +233,17 @@ void HandleHelicopterOnGroundSkyriderProfile(void);
 
 BOOLEAN IsHelicopterOnGroundAtRefuelingSite(uint8_t ubRefuelingSite);
 
-BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 // will a sam site under the players control shoot down an airraid?
-// BOOLEAN WillAirRaidBeStopped( u8 sSectorX, u8 sSectorY );
+// BOOLEAN WillAirRaidBeStopped( uint8_t sSectorX, uint8_t sSectorY );
 
 // is the helicopter capable of taking off for the player?
 BOOLEAN CanHelicopterTakeOff(void);
 
 void InitializeHelicopter(void);
 
-BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN IsSkyriderIsFlyingInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup);
 

@@ -161,7 +161,7 @@ extern BOOLEAN gfSurrendered;
 #define NUM_RANDOM_SCENES 4
 
 #ifdef NETWORKED
-extern BYTE gfAmIHost;
+extern uint8_t gfAmIHost;
 extern BOOLEAN gfAmINetworked;
 #endif
 
@@ -260,7 +260,7 @@ char gzActionStr[][30] = {
 };
 
 char gzDirectionStr[][30] = {"NORTHEAST", "EAST", "SOUTHEAST", "SOUTH",
-                              "SOUTHWEST", "WEST", "NORTHWEST", "NORTH"};
+                             "SOUTHWEST", "WEST", "NORTHWEST", "NORTH"};
 
 // TEMP VALUES FOR TEAM DEAFULT POSITIONS
 uint8_t bDefaultTeamRanges[MAXTEAMS][2] = {
@@ -1606,8 +1606,9 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
     // OK, based on the direction, get door gridno
     if (bDirection == NORTH || bDirection == WEST) {
-      sDoorGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
-                              DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
+      sDoorGridNo =
+          NewGridNo((uint16_t)pSoldier->sGridNo,
+                    DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
     } else if (bDirection == SOUTH || bDirection == EAST) {
       sDoorGridNo = pSoldier->sGridNo;
     } else {
@@ -1657,8 +1658,8 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
   // Find out how much it takes to move here!
   sAPCost = ActionPointCost(pSoldier, usNewGridNo,
                             (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
-  sBPCost = TerrainBreathPoints(pSoldier, usNewGridNo,
-                                (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
+  sBPCost = TerrainBreathPoints(
+      pSoldier, usNewGridNo, (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
 
   // CHECK IF THIS TILE IS A GOOD ONE!
   if (!HandleNextTile(pSoldier, (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usNewGridNo,
@@ -1795,11 +1796,12 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
           EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
           fDontContinue = TRUE;
 
-          DishOutGasDamage(pSoldier, pExplosive, TRUE, FALSE,
-                           (int16_t)(pExplosive->ubDamage + (uint8_t)PreRandom(pExplosive->ubDamage)),
-                           (int16_t)(100 * (pExplosive->ubStunDamage +
-                                          (int16_t)PreRandom((pExplosive->ubStunDamage / 2)))),
-                           NOBODY);
+          DishOutGasDamage(
+              pSoldier, pExplosive, TRUE, FALSE,
+              (int16_t)(pExplosive->ubDamage + (uint8_t)PreRandom(pExplosive->ubDamage)),
+              (int16_t)(100 * (pExplosive->ubStunDamage +
+                               (int16_t)PreRandom((pExplosive->ubStunDamage / 2)))),
+              NOBODY);
         }
       }
 
@@ -1839,9 +1841,9 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
           }
           return (FALSE);
         } else if ((GetDrunkLevel(pSoldier) == DRUNK) && (Random(5) == 0) &&
-                   OKFallDirection(pSoldier,
-                                   (int16_t)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
-                                   pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
+                   OKFallDirection(
+                       pSoldier, (int16_t)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
+                       pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
           // 20% chance of falling over!
           DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
           ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[37], pSoldier->name);
@@ -1887,7 +1889,8 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
       // OK, let's check for monsters....
       if (pSoldier->uiStatusFlags & SOLDIER_MONSTER) {
-        if (!ValidCreatureTurn(pSoldier, (int8_t)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
+        if (!ValidCreatureTurn(pSoldier,
+                               (int8_t)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
           if (!pSoldier->bReverse) {
             pSoldier->bReverse = TRUE;
 
@@ -1904,7 +1907,8 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
       // OK, let's check for monsters....
       if (pSoldier->ubBodyType == BLOODCAT) {
-        if (!ValidCreatureTurn(pSoldier, (int8_t)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
+        if (!ValidCreatureTurn(pSoldier,
+                               (int8_t)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
           if (!pSoldier->bReverse) {
             pSoldier->bReverse = TRUE;
             ChangeSoldierState(pSoldier, BLOODCAT_WALK_BACKWARDS, 1, TRUE);
@@ -2354,8 +2358,8 @@ void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN f
 
     // DB This used to say pSoldier... I fixed it
     if (pOldSoldier->bLevel == 0) {
-      // ConcealWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE), (int16_t)(pSoldier->dYPos/CELL_Y_SIZE),
-      // REVEAL_WALLS_RADIUS);
+      // ConcealWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+      // (int16_t)(pSoldier->dYPos/CELL_Y_SIZE), REVEAL_WALLS_RADIUS);
       //	ApplyTranslucencyToWalls((int16_t)(pOldSoldier->dXPos/CELL_X_SIZE),
       //(int16_t)(pOldSoldier->dYPos/CELL_Y_SIZE));
       // LightHideTrees((int16_t)(pOldSoldier->dXPos/CELL_X_SIZE),
@@ -2676,10 +2680,10 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       }
       if (pKiller && pKiller->bTeam == OUR_TEAM) {
         AddHistoryToPlayersLog(HISTORY_MERC_KILLED_CHARACTER, pSoldierOld->ubProfile,
-                               GetGameTimeInMin(), (u8)gWorldSectorX, (u8)gWorldSectorY);
+                               GetGameTimeInMin(), (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
       } else {
         AddHistoryToPlayersLog(HISTORY_NPC_KILLED, pSoldierOld->ubProfile, GetGameTimeInMin(),
-                               (u8)gWorldSectorX, (u8)gWorldSectorY);
+                               (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
       }
     }
   }
@@ -2787,13 +2791,15 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       case DYNAMO:
         // check to see if dynamo quest is on
         if (gubQuest[QUEST_FREE_DYNAMO] == QUESTINPROGRESS) {
-          EndQuest(QUEST_FREE_DYNAMO, (u8)pSoldierOld->sSectorX, (u8)pSoldierOld->sSectorY);
+          EndQuest(QUEST_FREE_DYNAMO, (uint8_t)pSoldierOld->sSectorX,
+                   (uint8_t)pSoldierOld->sSectorY);
         }
         break;
       case KINGPIN:
         // check to see if Kingpin money quest is on
         if (gubQuest[QUEST_KINGPIN_MONEY] == QUESTINPROGRESS) {
-          EndQuest(QUEST_KINGPIN_MONEY, (u8)pSoldierOld->sSectorX, (u8)pSoldierOld->sSectorY);
+          EndQuest(QUEST_KINGPIN_MONEY, (uint8_t)pSoldierOld->sSectorX,
+                   (uint8_t)pSoldierOld->sSectorY);
           HandleNPCDoAction(KINGPIN, NPC_ACTION_GRANT_EXPERIENCE_3, 0);
         }
         SetFactTrue(FACT_KINGPIN_DEAD);
@@ -2809,7 +2815,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
         IncrementTownLoyalty(DRASSEN, LOYALTY_BONUS_CHILDREN_FREED_DOREEN_KILLED);
         // set the fact true so we have a universal check for whether the kids can go
         SetFactTrue(FACT_DOREEN_HAD_CHANGE_OF_HEART);
-        EndQuest(QUEST_FREE_CHILDREN, (u8)gWorldSectorX, (u8)gWorldSectorY);
+        EndQuest(QUEST_FREE_CHILDREN, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         if (CheckFact(FACT_KIDS_ARE_FREE, 0) == FALSE) {
           HandleNPCDoAction(DOREEN, NPC_ACTION_FREE_KIDS, 0);
         }
@@ -2840,7 +2846,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
 
     if (bMilitiaRank != -1) {
       // remove this militia from the strategic records
-      RemoveMilitiaFromSector((u8)gWorldSectorX, (u8)gWorldSectorY, bMilitiaRank, 1);
+      RemoveMilitiaFromSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, bMilitiaRank, 1);
     }
 
     // If the militia's killer is known
@@ -2850,8 +2856,8 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       HandleMurderOfCivilian(pSoldierOld, pSoldierOld->fIntendedTarget);
     }
 
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                             gbWorldSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
   } else  // enemies and creatures... should any of this stuff not be called if a creature dies?
   {
     if (pSoldierOld->ubBodyType == QUEENMONSTER) {
@@ -2871,12 +2877,12 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
     // If enemy guy was killed by the player, give morale boost to player's team!
     if (pSoldierOld->ubAttackerID != NOBODY &&
         MercPtrs[pSoldierOld->ubAttackerID]->bTeam == gbPlayerNum) {
-      HandleMoraleEvent(MercPtrs[pSoldierOld->ubAttackerID], MORALE_KILLED_ENEMY, (u8)gWorldSectorX,
-                        (u8)gWorldSectorY, gbWorldSectorZ);
+      HandleMoraleEvent(MercPtrs[pSoldierOld->ubAttackerID], MORALE_KILLED_ENEMY,
+                        (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     }
 
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ENEMY_KILLED, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                             gbWorldSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ENEMY_KILLED, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
     CheckForAlertWhenEnemyDies(pSoldierOld);
 
@@ -2886,12 +2892,12 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
     }
 
     if (pSoldierOld->ubProfile == QUEEN) {
-      HandleMoraleEvent(NULL, MORALE_DEIDRANNA_KILLED, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                        gbWorldSectorZ);
+      HandleMoraleEvent(NULL, MORALE_DEIDRANNA_KILLED, (uint8_t)gWorldSectorX,
+                        (uint8_t)gWorldSectorY, gbWorldSectorZ);
       MaximizeLoyaltyForDeidrannaKilled();
     } else if (pSoldierOld->ubBodyType == QUEENMONSTER) {
-      HandleMoraleEvent(NULL, MORALE_MONSTER_QUEEN_KILLED, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                        gbWorldSectorZ);
+      HandleMoraleEvent(NULL, MORALE_MONSTER_QUEEN_KILLED, (uint8_t)gWorldSectorX,
+                        (uint8_t)gWorldSectorY, gbWorldSectorZ);
       IncrementTownLoyaltyEverywhere(LOYALTY_BONUS_KILL_QUEEN_MONSTER);
 
       // Grant experience gain.....
@@ -3226,7 +3232,8 @@ void HickCowAttacked(struct SOLDIERTYPE *pNastyGuy, struct SOLDIERTYPE *pTarget)
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[CIV_TEAM].bLastID; cnt++, pSoldier++) {
     if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife && pSoldier->bNeutral &&
         pSoldier->ubCivilianGroup == HICKS_CIV_GROUP) {
-      if (SoldierToSoldierLineOfSightTest(pSoldier, pNastyGuy, (uint8_t)MaxDistanceVisible(), TRUE)) {
+      if (SoldierToSoldierLineOfSightTest(pSoldier, pNastyGuy, (uint8_t)MaxDistanceVisible(),
+                                          TRUE)) {
         CivilianGroupMemberChangesSides(pSoldier);
         break;
       }
@@ -3273,7 +3280,7 @@ int8_t NumActiveAndConsciousTeamMembers(uint8_t ubTeam) {
 }
 
 uint8_t FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                                 BOOLEAN fOnlyRegularMercs) {
+                                   BOOLEAN fOnlyRegularMercs) {
   uint8_t bLastTeamID;
   int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
@@ -3365,7 +3372,7 @@ struct SOLDIERTYPE *FindNextActiveSquad(struct SOLDIERTYPE *pSoldier) {
 }
 
 uint8_t FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                                 BOOLEAN fOnlyRegularMercs) {
+                                   BOOLEAN fOnlyRegularMercs) {
   uint8_t bLastTeamID;
   int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
@@ -3515,7 +3522,7 @@ extern BOOLEAN InternalOkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLe
 
 // NB if making changes don't forget to update NewOKDestinationAndDirection
 int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOLEAN fPeopleToo,
-                       int8_t bLevel) {
+                         int8_t bLevel) {
   uint8_t bPerson;
   struct STRUCTURE *pStructure;
   int16_t sDesiredLevel;
@@ -3624,8 +3631,8 @@ int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOL
 }
 
 // NB if making changes don't forget to update NewOKDestination
-int16_t NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, int8_t bDirection,
-                                   BOOLEAN fPeopleToo, int8_t bLevel) {
+int16_t NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo,
+                                     int8_t bDirection, BOOLEAN fPeopleToo, int8_t bLevel) {
   uint8_t bPerson;
   struct STRUCTURE *pStructure;
   int16_t sDesiredLevel;
@@ -3811,7 +3818,7 @@ BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, int32_t iRange) {
 }
 
 int16_t FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
-                         int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
+                           int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
   // psAdjustedGridNo gets the original gridno or the new one if updated
   // It will ONLY be updated IF we were over a merc, ( it's updated to their gridno )
   // pubDirection gets the direction to the final gridno
@@ -4051,8 +4058,9 @@ int16_t FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_
     return (-1);
 }
 
-int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
-                               int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
+int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t *pubDirection, int16_t *psAdjustedGridNo,
+                                 BOOLEAN fForceToPerson, BOOLEAN fDoor) {
   // This function works in a similar way as FindAdjacentGridEx, but looks for a location 2 tiles
   // away
 
@@ -4285,7 +4293,7 @@ int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, 
 }
 
 int16_t FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                              int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection) {
+                                int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection) {
   int16_t cnt;
   int16_t sSpot;
   uint8_t ubGuyThere;
@@ -5019,8 +5027,8 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
 
   if ((fBattleLost) || (fBattleWon)) {
     if (!gbWorldSectorZ) {
-      SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)].bLastKnownEnemies =
-          NumEnemiesInSector((u8)gWorldSectorX, (u8)gWorldSectorY);
+      SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)].bLastKnownEnemies =
+          NumEnemiesInSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
     }
   }
 
@@ -5043,10 +5051,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       ExitCombatMode();
     }
 
-    HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                      gbWorldSectorZ);
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                             gbWorldSectorZ);
+    HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, (uint8_t)gWorldSectorX,
+                      (uint8_t)gWorldSectorY, gbWorldSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
     // Play death music
     SetMusicMode(MUSIC_TACTICAL_DEATH);
@@ -5056,13 +5064,15 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       // this is our first battle... and we lost it!
       SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
       SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-      SetTheFirstBattleSector((int16_t)(GetSectorID16((u8)gWorldSectorX, (u8)gWorldSectorY)));
-      HandleFirstBattleEndingWhileInTown((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
-                                         FALSE);
+      SetTheFirstBattleSector(
+          (int16_t)(GetSectorID16((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)));
+      HandleFirstBattleEndingWhileInTown((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                         gbWorldSectorZ, FALSE);
     }
 
     if (NumEnemyInSectorExceptCreatures()) {
-      SetThisSectorAsEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, TRUE);
+      SetThisSectorAsEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
+                                     TRUE);
     }
 
     // ATE: Important! THis is delayed until music ends so we can have proper effect!
@@ -5156,10 +5166,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
           }
         }
 
-        HandleMoraleEvent(NULL, MORALE_BATTLE_WON, (u8)gWorldSectorX, (u8)gWorldSectorY,
+        HandleMoraleEvent(NULL, MORALE_BATTLE_WON, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                           gbWorldSectorZ);
-        HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_WON, (u8)gWorldSectorX, (u8)gWorldSectorY,
-                                 gbWorldSectorZ);
+        HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_WON, (uint8_t)gWorldSectorX,
+                                 (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
         // Change music modes
         if (gfLastMercTalkedAboutKillingID == NOBODY ||
@@ -5236,8 +5246,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
     {
       LogBattleResults(LOG_VICTORY);
 
-      SetThisSectorAsPlayerControlled((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, TRUE);
-      HandleVictoryInNPCSector((u8)gWorldSectorX, (u8)gWorldSectorY, (int16_t)gbWorldSectorZ);
+      SetThisSectorAsPlayerControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                      gbWorldSectorZ, TRUE);
+      HandleVictoryInNPCSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                               (int16_t)gbWorldSectorZ);
       if (CheckFact(FACT_FIRST_BATTLE_BEING_FOUGHT, 0)) {
         // ATE: Need to trigger record for this event .... for NPC scripting
         TriggerNPCRecord(PACOS, 18);
@@ -5246,9 +5258,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
         SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
         SetFactTrue(FACT_FIRST_BATTLE_WON);
         SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-        SetTheFirstBattleSector((int16_t)(GetSectorID16((u8)gWorldSectorX, (u8)gWorldSectorY)));
-        HandleFirstBattleEndingWhileInTown((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
-                                           FALSE);
+        SetTheFirstBattleSector(
+            (int16_t)(GetSectorID16((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)));
+        HandleFirstBattleEndingWhileInTown((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                           gbWorldSectorZ, FALSE);
       }
     }
 
@@ -5929,7 +5942,7 @@ void HandleSuppressionFire(uint8_t ubTargetedMerc, uint8_t ubCausedAttacker) {
       }
 
     }  // end of examining one soldier
-  }    // end of loop
+  }  // end of loop
 }
 
 BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
@@ -6405,8 +6418,8 @@ void ResetAllMercSpeeds() {
   }
 }
 
-void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, int8_t bNumMercsWaiting, uint32_t uiData1,
-                                         uint32_t uiData2, uint32_t uiData3) {
+void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, int8_t bNumMercsWaiting,
+                                         uint32_t uiData1, uint32_t uiData2, uint32_t uiData3) {
   gubWaitingForAllMercsToExitCode = ubActionCode;
   gbNumMercsUntilWaitingOver = bNumMercsWaiting;
   guiWaitingForAllMercsToExitData[0] = uiData1;

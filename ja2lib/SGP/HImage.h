@@ -53,16 +53,17 @@ struct ImageData {
 };
 
 struct ImageDataParams {
-  u16 width;
-  u16 height;
-  u16 *palette16bpp;
+  uint16_t width;
+  uint16_t height;
+  uint16_t *palette16bpp;
   void *data;
-  u32 pitch;  // amount of bytes per line; it is at least widht * bytes_per_pixel, but can be more
+  uint32_t
+      pitch;  // amount of bytes per line; it is at least widht * bytes_per_pixel, but can be more
 };
 
-#define SGPGetRValue(rgb) ((BYTE)(rgb))
-#define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
-#define SGPGetGValue(rgb) ((BYTE)(((uint16_t)(rgb)) >> 8))
+#define SGPGetRValue(rgb) ((uint8_t)(rgb))
+#define SGPGetBValue(rgb) ((uint8_t)((rgb) >> 16))
+#define SGPGetGValue(rgb) ((uint8_t)(((uint16_t)(rgb)) >> 8))
 
 // This function will return NULL if it fails, and call SetLastError() to set
 // error information
@@ -75,19 +76,19 @@ BOOLEAN ReleaseImageData(struct Image *hImage);
 
 // This function will run the appropriate copy function based on the type of struct Image*
 // object
-BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, uint8_t bufferBitDepth, uint8_t *pDestBuf,
                           uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                           struct GRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   struct GRect *srcRect);
-BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    struct GRect *srcRect);
-BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     struct GRect *srcRect);
 
@@ -97,10 +98,11 @@ BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer);
 // UTILITY FUNCTIONS
 
 // Used to create a 16BPP Palette from an 8 bit palette, found in himage.c
-uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
-                                 uint32_t bscale, BOOLEAN mono);
+uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                   uint32_t gscale, uint32_t bscale, BOOLEAN mono);
 uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd, uint8_t *pOldPalette);
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
+                                                 uint8_t *pOldPalette);
 
 // Create a scaled down copy of an image.
 struct Image *ScaleImageDown2x(struct Image *image);

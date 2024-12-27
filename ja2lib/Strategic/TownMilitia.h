@@ -19,10 +19,11 @@ struct SOLDIERTYPE;
 #define MIN_RATING_TO_TRAIN_TOWN 20
 
 // this handles what happens when a new militia unit is finishes getting trained
-void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY);
+void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, uint8_t mapX, uint8_t mapY);
 
 // this will check for promotions and handle them for you
-uint8_t CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, uint8_t ubCurrentRank, uint8_t ubRecentKillPts);
+uint8_t CheckOneMilitiaForPromotion(uint8_t mapX, uint8_t mapY, uint8_t ubCurrentRank,
+                                    uint8_t ubRecentKillPts);
 
 void BuildMilitiaPromotionsString(wchar_t *str, size_t bufSize);
 
@@ -33,12 +34,12 @@ void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier
 void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSoldier);
 
 // is there a town with militia here or nearby?
-BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY);
+BOOLEAN CanNearbyMilitiaScoutThisSector(uint8_t mapX, uint8_t mapY);
 
 // is the town militia full?
 BOOLEAN IsTownFullMilitia(TownID bTownId);
 // is the SAM site full of militia?
-BOOLEAN IsSAMSiteFullOfMilitia(u8 mapX, u8 mapY);
+BOOLEAN IsSAMSiteFullOfMilitia(uint8_t mapX, uint8_t mapY);
 
 // now that town training is complete, handle the continue boxes
 void HandleContinueOfTownTraining(void);
@@ -46,13 +47,13 @@ void HandleContinueOfTownTraining(void);
 // clear the list of training completed sectors
 void ClearSectorListForCompletedTrainingOfMilitia(void);
 
-BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, int8_t bSectorZ);
+BOOLEAN MilitiaTrainingAllowedInSector(uint8_t mapX, uint8_t mapY, int8_t bSectorZ);
 
-void HandleMilitiaPromotions(u8 mapX, u8 mapY);
-void HandleMilitiaDefections(u8 mapX, u8 mapY);
+void HandleMilitiaPromotions(uint8_t mapX, uint8_t mapY);
+void HandleMilitiaDefections(uint8_t mapX, uint8_t mapY);
 
 void PrepMilitiaPromotion();
-void HandleSingleMilitiaPromotion(u8 mapX, u8 mapY, u8 soldierClass, u8 kills);
+void HandleSingleMilitiaPromotion(uint8_t mapX, uint8_t mapY, uint8_t soldierClass, uint8_t kills);
 bool HasNewMilitiaPromotions();
 
 BOOLEAN DoesPlayerHaveAnyMilitia();

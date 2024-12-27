@@ -77,9 +77,9 @@ void DetermineRGBDistributionSettings() {
     }
   }
 
-  u16 uiRBitMask = 0xf800;
-  u16 uiGBitMask = 0x07e0;
-  u16 uiBBitMask = 0x001f;
+  uint16_t uiRBitMask = 0xf800;
+  uint16_t uiGBitMask = 0x07e0;
+  uint16_t uiBBitMask = 0x001f;
   if (fLoadedPrevRGBDist) {
     if (uiRBitMask != uiPrevRBitMask || uiGBitMask != uiPrevGBitMask ||
         uiBBitMask != uiPrevBBitMask) {

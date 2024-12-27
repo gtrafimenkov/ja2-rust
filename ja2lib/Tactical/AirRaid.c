@@ -205,7 +205,7 @@ BOOLEAN BeginAirRaid() {
     return (FALSE);
   }
 
-  ChangeSelectedMapSector((u8)gAirRaidDef.sSectorX, (u8)gAirRaidDef.sSectorY,
+  ChangeSelectedMapSector((uint8_t)gAirRaidDef.sSectorX, (uint8_t)gAirRaidDef.sSectorY,
                           (int8_t)gAirRaidDef.sSectorZ);
 
   if (gAirRaidDef.sSectorX != gWorldSectorX || gAirRaidDef.sSectorY != gWorldSectorY ||
@@ -214,7 +214,7 @@ BOOLEAN BeginAirRaid() {
     // Set flag for handling raid....
     gubAirRaidMode = AIR_RAID_TRYING_TO_START;
     gfQuoteSaid = TRUE;
-    SayQuoteFromAnyBodyInThisSector((u8)gAirRaidDef.sSectorX, (u8)gAirRaidDef.sSectorY,
+    SayQuoteFromAnyBodyInThisSector((uint8_t)gAirRaidDef.sSectorX, (uint8_t)gAirRaidDef.sSectorY,
                                     (int8_t)gAirRaidDef.sSectorZ, QUOTE_AIR_RAID);
     SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_EXIT_MAP_SCREEN, gAirRaidDef.sSectorX,
                                   gAirRaidDef.sSectorY, gAirRaidDef.sSectorZ, 0, 0);
@@ -383,8 +383,8 @@ void AirRaidLookForDive() {
     giNumTurnsSinceLastDive = 0;
 
     // Do morale hit on our guys
-    HandleMoraleEvent(NULL, MORALE_AIRSTRIKE, (u8)gAirRaidDef.sSectorX, (u8)gAirRaidDef.sSectorY,
-                      (int8_t)gAirRaidDef.sSectorZ);
+    HandleMoraleEvent(NULL, MORALE_AIRSTRIKE, (uint8_t)gAirRaidDef.sSectorX,
+                      (uint8_t)gAirRaidDef.sSectorY, (int8_t)gAirRaidDef.sSectorZ);
   }
 
   // If NOT in combat....
@@ -786,7 +786,8 @@ void DoBombing() {
           dDeltaYPos = BOMB_DIST * (float)cos(dAngle);
           sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
-          if (GridNoOnVisibleWorldTile((int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+          if (GridNoOnVisibleWorldTile(
+                  (int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
             // if ( gsNotLocatedYet && !( gTacticalStatus.uiFlags & INCOMBAT ) )
             //{
             //	gsNotLocatedYet = FALSE;
@@ -1199,8 +1200,8 @@ void EndAirRaid() {
                                   // struct GROUP *pGroup;
                                   // Create a patrol group originating from sector B9
                                   // pGroup = CreateNewEnemyGroupDepartingFromSector( SEC_B9,
-                                  // (uint8_t)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0 );
-                                  // Move the patrol group north to attack Omerta
+                                  // (uint8_t)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0
+                                  // ); Move the patrol group north to attack Omerta
                                   // AddWaypointToPGroup( pGroup, 9, 1 ); //A9
                                   // Because we want them to arrive right away, we will toast the
                                   // arrival event.  The information is already set up though.

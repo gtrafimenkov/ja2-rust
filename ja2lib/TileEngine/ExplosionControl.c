@@ -71,8 +71,9 @@
 // MODULE FOR EXPLOSIONS
 
 // Spreads the effects of explosions...
-BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_t usItem, uint8_t ubOwner,
-                  int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel, int32_t iSmokeEffectID);
+BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_t usItem,
+                  uint8_t ubOwner, int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel,
+                  int32_t iSmokeEffectID);
 
 extern void AddToShouldBecomeHostileOrSayQuoteList(uint8_t ubID);
 extern void RecompileLocalMovementCostsForWall(int16_t sGridNo, uint8_t ubOrientation);
@@ -195,8 +196,8 @@ void InternalIgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ
   GenerateExplosion(&ExpParams);
 }
 
-void IgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ, int16_t sGridNo, uint16_t usItem,
-                     int8_t bLevel) {
+void IgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ, int16_t sGridNo,
+                     uint16_t usItem, int8_t bLevel) {
   InternalIgniteExplosion(ubOwner, sX, sY, sZ, sGridNo, usItem, TRUE, bLevel);
 }
 
@@ -444,8 +445,9 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
     }
   } else if (!(pCurrent->fFlags & STRUCTURE_PERSON)) {
     // Damage structure!
-    if ((bDamageReturnVal = DamageStructure(pCurrent, (uint8_t)sWoundAmt, STRUCTURE_DAMAGE_EXPLOSION,
-                                            sGridNo, sX, sY, NOBODY)) != 0) {
+    if ((bDamageReturnVal = DamageStructure(pCurrent, (uint8_t)sWoundAmt,
+                                            STRUCTURE_DAMAGE_EXPLOSION, sGridNo, sX, sY, NOBODY)) !=
+        0) {
       fContinue = FALSE;
 
       pBase = FindBaseStructure(pCurrent);
@@ -1103,8 +1105,9 @@ void ExplosiveDamageGridNo(int16_t sGridNo, int16_t sWoundAmt, uint32_t uiDist,
   }
 }
 
-BOOLEAN DamageSoldierFromBlast(uint8_t ubPerson, uint8_t ubOwner, int16_t sBombGridNo, int16_t sWoundAmt,
-                               int16_t sBreathAmt, uint32_t uiDist, uint16_t usItem, int16_t sSubsequent) {
+BOOLEAN DamageSoldierFromBlast(uint8_t ubPerson, uint8_t ubOwner, int16_t sBombGridNo,
+                               int16_t sWoundAmt, int16_t sBreathAmt, uint32_t uiDist,
+                               uint16_t usItem, int16_t sSubsequent) {
   struct SOLDIERTYPE *pSoldier;
   int16_t sNewWoundAmt = 0;
   uint8_t ubDirection;
@@ -1144,9 +1147,9 @@ BOOLEAN DamageSoldierFromBlast(uint8_t ubPerson, uint8_t ubOwner, int16_t sBombG
   return (TRUE);
 }
 
-BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive, int16_t sSubsequent,
-                         BOOLEAN fRecompileMovementCosts, int16_t sWoundAmt, int16_t sBreathAmt,
-                         uint8_t ubOwner) {
+BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive,
+                         int16_t sSubsequent, BOOLEAN fRecompileMovementCosts, int16_t sWoundAmt,
+                         int16_t sBreathAmt, uint8_t ubOwner) {
   int8_t bPosOfMask = NO_SLOT;
 
   if (!IsSolActive(pSoldier) || !pSoldier->bInSector || !pSoldier->bLife || AM_A_ROBOT(pSoldier)) {
@@ -1256,8 +1259,9 @@ BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive
   return (fRecompileMovementCosts);
 }
 
-BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_t usItem, uint8_t ubOwner,
-                  int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel, int32_t iSmokeEffectID) {
+BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_t usItem,
+                  uint8_t ubOwner, int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel,
+                  int32_t iSmokeEffectID) {
   int16_t sWoundAmt = 0, sBreathAmt = 0, sStructDmgAmt;
   uint8_t ubPerson;
   struct SOLDIERTYPE *pSoldier;
@@ -1593,7 +1597,8 @@ BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_
          sBreathAmt, TAKE_DAMAGE_GAS, NOBODY, NOWHERE, 0, TRUE ); if ( pSoldier->bLife >=
          CONSCIOUSNESS )
                                       {
-                                              DoMercBattleSound( pSoldier, (int8_t)( BATTLE_SOUND_HIT1
+                                              DoMercBattleSound( pSoldier, (int8_t)(
+         BATTLE_SOUND_HIT1
          + Random( 2 ) ) );
                                       }
                               }
@@ -1661,8 +1666,8 @@ void GetRayStopInfo(uint32_t uiNewSpot, uint8_t ubDir, int8_t bLevel, BOOLEAN fS
         // will override there...
         sNewGridNo = NewGridNo((int16_t)uiNewSpot, DirectionInc(WEST));
 
-        BlockingTemp = GetBlockingStructureInfo((int16_t)sNewGridNo, ubDir, 0, bLevel, &bStructHeight,
-                                                &pBlockingStructure, TRUE);
+        BlockingTemp = GetBlockingStructureInfo((int16_t)sNewGridNo, ubDir, 0, bLevel,
+                                                &bStructHeight, &pBlockingStructure, TRUE);
         if (BlockingTemp == BLOCKING_TOPRIGHT_OPEN_WINDOW ||
             BlockingTemp == BLOCKING_TOPLEFT_OPEN_WINDOW) {
           // If open, fTravelCostObs set to false and reduce range....
@@ -1679,8 +1684,8 @@ void GetRayStopInfo(uint32_t uiNewSpot, uint8_t ubDir, int8_t bLevel, BOOLEAN fS
       if (fTravelCostObs) {
         sNewGridNo = NewGridNo((int16_t)uiNewSpot, DirectionInc(NORTH));
 
-        BlockingTemp = GetBlockingStructureInfo((int16_t)sNewGridNo, ubDir, 0, bLevel, &bStructHeight,
-                                                &pBlockingStructure, TRUE);
+        BlockingTemp = GetBlockingStructureInfo((int16_t)sNewGridNo, ubDir, 0, bLevel,
+                                                &bStructHeight, &pBlockingStructure, TRUE);
         if (BlockingTemp == BLOCKING_TOPRIGHT_OPEN_WINDOW ||
             BlockingTemp == BLOCKING_TOPLEFT_OPEN_WINDOW) {
           // If open, fTravelCostObs set to false and reduce range....
@@ -1789,8 +1794,8 @@ void GetRayStopInfo(uint32_t uiNewSpot, uint8_t ubDir, int8_t bLevel, BOOLEAN fS
   }
 }
 
-void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ubOwner, BOOLEAN fSubsequent,
-                  int8_t bLevel, int32_t iSmokeEffectID) {
+void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ubOwner,
+                  BOOLEAN fSubsequent, int8_t bLevel, int32_t iSmokeEffectID) {
   int32_t uiNewSpot, uiTempSpot, uiBranchSpot, cnt, branchCnt;
   int32_t uiTempRange, ubBranchRange;
   uint8_t ubDir, ubBranchDir, ubKeepGoing;
@@ -2835,7 +2840,7 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(FileID hFile) {
   return (TRUE);
 }
 
-void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, i8 sSectorZ, int16_t sGridNo,
+void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ, int16_t sGridNo,
                                uint8_t ubDamage) {
   // OK, First check if SAM exists, and if not, return
   if (!DoesSAMExistHere(sSectorX, sSectorY, sSectorZ, sGridNo)) {
@@ -2844,7 +2849,7 @@ void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, i8 sSectorZ, int16_t sG
 
   struct OptionalSamSite samID = GetSamAtSector(sSectorX, sSectorY, sSectorZ);
   if (samID.tag == Some) {
-    u8 condition = GetSamCondition(samID.some);
+    uint8_t condition = GetSamCondition(samID.some);
     if (condition >= ubDamage) {
       SetSamCondition(samID.some, condition - ubDamage);
     } else {
@@ -2858,7 +2863,7 @@ void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, i8 sSectorZ, int16_t sG
   }
 }
 
-void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
+void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   BOOLEAN fInSector = FALSE;
   uint16_t usGoodGraphic, usDamagedGraphic;
 

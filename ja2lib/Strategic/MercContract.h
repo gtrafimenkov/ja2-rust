@@ -6,6 +6,7 @@
 #define _MERC_CONTRACT_H_
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 

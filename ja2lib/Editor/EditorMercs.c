@@ -138,7 +138,7 @@ struct OBJECTTYPE *gpMercSlotItem[9] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL
 // Because we only support these nine slots, they aren't continuous values, so this array helps
 // processing functions by referring to this array to get the appropriate slot.
 int8_t gbMercSlotTypes[9] = {HELMETPOS,   VESTPOS,     LEGPOS,      HANDPOS,    SECONDHANDPOS,
-                           BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS};
+                             BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS};
 // returns the usItem index of specified slot in the currently selected merc.
 #define GetSelectedMercSlotItemIndex(x) \
   (gpSelected->pDetailedPlacement->Inv[gbMercSlotTypes[x]].usItem)
@@ -157,7 +157,7 @@ void SetupTextInputForMercSchedule();
 void ExtractAndUpdateMercAttributes();
 void ExtractAndUpdateMercProfile();
 void ExtractAndUpdateMercSchedule();
-void CalcStringForValue(wchar_t* str, int bufSize, int32_t iValue, uint32_t uiMax);
+void CalcStringForValue(wchar_t *str, int bufSize, int32_t iValue, uint32_t uiMax);
 void ChangeBodyType(int8_t bOffset);  //+1 or -1 only
 
 // internal merc variables
@@ -236,20 +236,22 @@ BOOLEAN gfShowCivilians = TRUE;
 
 int16_t sCurBaseDiff = DEFAULT_DIFF;
 BOOLEAN fAskForBaseDifficulty = TRUE;
-wchar_t *zDiffNames[NUM_DIFF_LVLS] = {L"Wimp", L"Easy", L"Average", L"Tough", L"Steroid Users Only"};
+wchar_t *zDiffNames[NUM_DIFF_LVLS] = {L"Wimp", L"Easy", L"Average", L"Tough",
+                                      L"Steroid Users Only"};
 int16_t sBaseStat[NUM_DIFF_LVLS] = {50, 60, 70, 80, 90};
 int16_t sBaseExpLvl[NUM_DIFF_LVLS] = {1, 3, 5, 7, 9};
 
 wchar_t *EditMercStat[12] = {L"Max Health", L"Cur Health", L"Strength",   L"Agility",
-                            L"Dexterity",  L"Charisma",   L"Wisdom",     L"Marksmanship",
-                            L"Explosives", L"Medical",    L"Scientific", L"Exp Level"};
+                             L"Dexterity",  L"Charisma",   L"Wisdom",     L"Marksmanship",
+                             L"Explosives", L"Medical",    L"Scientific", L"Exp Level"};
 
 #define NUM_MERC_ORDERS 8
-wchar_t *EditMercOrders[8] = {L"Stationary",   L"On Guard", L"Close Patrol", L"Far Patrol",
-                             L"Point Patrol", L"On Call",  L"Seek Enemy",   L"Random Point Patrol"};
+wchar_t *EditMercOrders[8] = {L"Stationary", L"On Guard",           L"Close Patrol",
+                              L"Far Patrol", L"Point Patrol",       L"On Call",
+                              L"Seek Enemy", L"Random Point Patrol"};
 
 wchar_t *EditMercAttitudes[6] = {L"Defensive",     L"Brave Loner",   L"Brave Buddy",
-                                L"Cunning Loner", L"Cunning Buddy", L"Aggressive"};
+                                 L"Cunning Loner", L"Cunning Buddy", L"Aggressive"};
 
 // information for bodytypes.
 #ifdef RANDOM
@@ -263,16 +265,16 @@ wchar_t *EditMercAttitudes[6] = {L"Defensive",     L"Brave Loner",   L"Brave Bud
 #define MAX_CIVTYPES 18
 // #define MAX_CIVRANDOMTYPES		11
 int8_t bEnemyArray[MAX_ENEMYTYPES] = {RANDOM,    REGMALE, BIGMALE, STOCKYMALE,
-                                    REGFEMALE, TANK_NW, TANK_NE};
+                                      REGFEMALE, TANK_NW, TANK_NE};
 int8_t bCreatureArray[MAX_CREATURETYPES] = {BLOODCAT,    LARVAE_MONSTER, INFANT_MONSTER,
-                                          YAF_MONSTER, YAM_MONSTER,    ADULTFEMALEMONSTER,
-                                          AM_MONSTER,  QUEENMONSTER};
+                                            YAF_MONSTER, YAM_MONSTER,    ADULTFEMALEMONSTER,
+                                            AM_MONSTER,  QUEENMONSTER};
 int8_t bRebelArray[MAX_REBELTYPES] = {RANDOM,  FATCIV,     MANCIV,   REGMALE,
-                                    BIGMALE, STOCKYMALE, REGFEMALE};
+                                      BIGMALE, STOCKYMALE, REGFEMALE};
 int8_t bCivArray[MAX_CIVTYPES] = {RANDOM,     FATCIV,        MANCIV,   MINICIV,       DRESSCIV,
-                                HATKIDCIV,  KIDCIV,        REGMALE,  BIGMALE,       STOCKYMALE,
-                                REGFEMALE,  HUMVEE,        ELDORADO, ICECREAMTRUCK, JEEP,
-                                CRIPPLECIV, ROBOTNOWEAPON, COW};
+                                  HATKIDCIV,  KIDCIV,        REGMALE,  BIGMALE,       STOCKYMALE,
+                                  REGFEMALE,  HUMVEE,        ELDORADO, ICECREAMTRUCK, JEEP,
+                                  CRIPPLECIV, ROBOTNOWEAPON, COW};
 int8_t gbCurrCreature = BLOODCAT;
 
 BOOLEAN gfSaveBuffer = FALSE;
@@ -337,7 +339,8 @@ void ProcessMercEditing() {
           if ((ubPaletteRep < (uint8_t)iEditColorStart[ubType]) ||
               (ubPaletteRep >
                ((uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType])))
-            ubPaletteRep = (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
+            ubPaletteRep =
+                (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
 
           SET_PALETTEREP_ID(pSoldier->HeadPal, gpPalRep[ubPaletteRep].ID);
           memcpy(gpSelected->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
@@ -363,7 +366,8 @@ void ProcessMercEditing() {
 
           ubPaletteRep--;
           if (ubPaletteRep < (uint8_t)iEditColorStart[ubType])
-            ubPaletteRep = (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
+            ubPaletteRep =
+                (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
 
           SET_PALETTEREP_ID(pSoldier->SkinPal, gpPalRep[ubPaletteRep].ID);
           memcpy(gpSelected->pDetailedPlacement->SkinPal, pSoldier->SkinPal, sizeof(PaletteRepID));
@@ -389,7 +393,8 @@ void ProcessMercEditing() {
 
           ubPaletteRep--;
           if (ubPaletteRep < (uint8_t)iEditColorStart[ubType])
-            ubPaletteRep = (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
+            ubPaletteRep =
+                (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
 
           SET_PALETTEREP_ID(pSoldier->VestPal, gpPalRep[ubPaletteRep].ID);
           memcpy(gpSelected->pDetailedPlacement->VestPal, pSoldier->VestPal, sizeof(PaletteRepID));
@@ -415,7 +420,8 @@ void ProcessMercEditing() {
 
           ubPaletteRep--;
           if (ubPaletteRep < (uint8_t)iEditColorStart[ubType])
-            ubPaletteRep = (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
+            ubPaletteRep =
+                (uint8_t)iEditColorStart[ubType] + gubpNumReplacementsPerRange[ubType] - 1;
 
           SET_PALETTEREP_ID(pSoldier->PantsPal, gpPalRep[ubPaletteRep].ID);
           memcpy(gpSelected->pDetailedPlacement->PantsPal, pSoldier->PantsPal,
@@ -478,7 +484,7 @@ void AddMercToWorld(int32_t iMapIndex) {
 
   if (IsLocationSittable(iMapIndex, gfRoofPlacement)) {
     uint8_t ubID;
-    u8 sSectorX, sSectorY;
+    uint8_t sSectorX, sSectorY;
     SOLDIERINITNODE *pNode;
 
     GetCurrentWorldSector(&sSectorX, &sSectorY);
@@ -677,7 +683,7 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier == NULL) return;
 
   pSoldier->bLifeMax = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                               (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                                 (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bLife = pSoldier->bLifeMax;
 
   pSoldier->bBleeding = 0;
@@ -685,26 +691,32 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
 
   pSoldier->bMarksmanship =
       (uint8_t)(sBaseStat[sCurBaseDiff] +
-              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bMedical = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                               (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bMechanical = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                                  (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bExplosive = (uint8_t)(sBaseStat[sCurBaseDiff] +
                                  (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bMechanical =
+      (uint8_t)(sBaseStat[sCurBaseDiff] +
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bExplosive =
+      (uint8_t)(sBaseStat[sCurBaseDiff] +
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bAgility = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                               (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bDexterity = (uint8_t)(sBaseStat[sCurBaseDiff] +
                                  (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bDexterity =
+      (uint8_t)(sBaseStat[sCurBaseDiff] +
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
 
-  pSoldier->bStrength = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bLeadership = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                                  (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bStrength =
+      (uint8_t)(sBaseStat[sCurBaseDiff] +
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bLeadership =
+      (uint8_t)(sBaseStat[sCurBaseDiff] +
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bWisdom = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bScientific = (uint8_t)(sBaseStat[sCurBaseDiff] +
-                                  (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bScientific =
+      (uint8_t)(sBaseStat[sCurBaseDiff] +
+                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
 
   pSoldier->bExpLevel = (uint8_t)sBaseExpLvl[sCurBaseDiff];
   pSoldier->bGunType = (int8_t)Random(BASE_GUNTYPE_DEVIATION);
@@ -1237,26 +1249,26 @@ void CreateEditMercWindow(void) {
   gpWorldLevelData[iEditMercLocation].pObjectHead->ubShadeLevel = DEFAULT_SHADE_LEVEL;
 
   iEditMercBkgrndArea =
-      CreateHotSpot((int16_t)iXPos, (int16_t)iYPos, (int16_t)iWidth, (int16_t)iHeight, MSYS_PRIORITY_NORMAL,
-                    DEFAULT_MOVE_CALLBACK, EditMercBkgrndCallback);
+      CreateHotSpot((int16_t)iXPos, (int16_t)iYPos, (int16_t)iWidth, (int16_t)iHeight,
+                    MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, EditMercBkgrndCallback);
 
   iEditMercColorPage = CreateTextButton(
       L"Merc Colors", (int16_t)FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
       (int16_t)(iXPos + 183), (int16_t)(iYPos + 315), 80, 20, BUTTON_NO_TOGGLE,
       MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercChangeToColorPageCallback);
-  iEditMercEnd = CreateTextButton(L"Done", (int16_t)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK,
-                                  BUTTON_USE_DEFAULT, (int16_t)(iXPos + 183), (int16_t)(iYPos + 337),
-                                  80, 20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1,
-                                  DEFAULT_MOVE_CALLBACK, EditMercDoneEditCallback);
+  iEditMercEnd = CreateTextButton(
+      L"Done", (int16_t)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
+      (int16_t)(iXPos + 183), (int16_t)(iYPos + 337), 80, 20, BUTTON_NO_TOGGLE,
+      MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercDoneEditCallback);
 
   // Disable color editing for PC Mercs
   if ((uint16_t)gsSelectedMercID >= gTacticalStatus.Team[OUR_TEAM].bFirstID &&
       (uint16_t)gsSelectedMercID <= gTacticalStatus.Team[OUR_TEAM].bLastID)
     DisableButton(iEditMercColorPage);
 
-  iEditorButton[8] = QuickCreateButton(giEditMercImage[0], (int16_t)(iXPos + 98), (int16_t)(iYPos + 51),
-                                       BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1,
-                                       DEFAULT_MOVE_CALLBACK, EditMercPrevOrderCallback);
+  iEditorButton[8] = QuickCreateButton(
+      giEditMercImage[0], (int16_t)(iXPos + 98), (int16_t)(iYPos + 51), BUTTON_NO_TOGGLE,
+      MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercPrevOrderCallback);
   iEditorButton[9] = QuickCreateButton(
       giEditMercImage[1], (int16_t)(iXPos + 233), (int16_t)(iYPos + 51), BUTTON_NO_TOGGLE,
       MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercNextOrderCallback);
@@ -1677,7 +1689,7 @@ void SetupTextInputForMercAttributes() {
 // In the merc editing, all detailed placement values for generated attributes are set to -1.
 // When making a generated attribute static, we then set the value to its applicable value.
 // This function is similar to the itoa function except that -1 is converted to a null string.
-void CalcStringForValue(wchar_t* str, int bufSize, int32_t iValue, uint32_t uiMax) {
+void CalcStringForValue(wchar_t *str, int bufSize, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
@@ -1698,7 +1710,8 @@ void ExtractAndUpdateMercAttributes() {
   gpSelected->pDetailedPlacement->bExpLevel = (int8_t)min(GetNumericStrictValueFromField(0), 100);
   gpSelected->pDetailedPlacement->bLife = (int8_t)min(GetNumericStrictValueFromField(1), 100);
   gpSelected->pDetailedPlacement->bLifeMax = (int8_t)min(GetNumericStrictValueFromField(2), 100);
-  gpSelected->pDetailedPlacement->bMarksmanship = (int8_t)min(GetNumericStrictValueFromField(3), 100);
+  gpSelected->pDetailedPlacement->bMarksmanship =
+      (int8_t)min(GetNumericStrictValueFromField(3), 100);
   gpSelected->pDetailedPlacement->bStrength = (int8_t)min(GetNumericStrictValueFromField(4), 100);
   gpSelected->pDetailedPlacement->bAgility = (int8_t)min(GetNumericStrictValueFromField(5), 100);
   gpSelected->pDetailedPlacement->bDexterity = (int8_t)min(GetNumericStrictValueFromField(6), 100);
@@ -1706,7 +1719,8 @@ void ExtractAndUpdateMercAttributes() {
   gpSelected->pDetailedPlacement->bLeadership = (int8_t)min(GetNumericStrictValueFromField(8), 100);
   gpSelected->pDetailedPlacement->bExplosive = (int8_t)min(GetNumericStrictValueFromField(9), 100);
   gpSelected->pDetailedPlacement->bMedical = (int8_t)min(GetNumericStrictValueFromField(10), 100);
-  gpSelected->pDetailedPlacement->bMechanical = (int8_t)min(GetNumericStrictValueFromField(11), 100);
+  gpSelected->pDetailedPlacement->bMechanical =
+      (int8_t)min(GetNumericStrictValueFromField(11), 100);
   gpSelected->pDetailedPlacement->bMorale = (int8_t)min(GetNumericStrictValueFromField(11), 100);
 
   // make sure that experience level ranges between 1 and 9
@@ -2579,8 +2593,8 @@ void RenderSelectedMercsInventory() {
       yp = mercRects[i].iTop + MERCPANEL_Y;
       pDst = VSurfaceLockOld(vsFB, &uiDstPitchBYTES);
       pSrc = VSurfaceLockOld(GetVSByID(guiMercInvPanelBuffers[i]), &uiSrcPitchBYTES);
-      Blt16BPPTo16BPPTrans((uint16_t *)pDst, uiDstPitchBYTES, (uint16_t *)pSrc, uiSrcPitchBYTES, xp, yp,
-                           0, 0, i < 3 ? 22 : 44, 15, 0);
+      Blt16BPPTo16BPPTrans((uint16_t *)pDst, uiDstPitchBYTES, (uint16_t *)pSrc, uiSrcPitchBYTES, xp,
+                           yp, 0, 0, i < 3 ? 22 : 44, 15, 0);
       VSurfaceUnlock(vsFB);
       VSurfaceUnlock(GetVSByID(guiMercInvPanelBuffers[i]));
       LoadItemInfo(gpMercSlotItem[i]->usItem, pItemName, NULL);
@@ -2613,8 +2627,8 @@ void RenderSelectedMercsInventory() {
         ubFontColor = FONT_YELLOW;
       else
         ubFontColor = FONT_WHITE;
-      DisplayWrappedString((uint16_t)xp, (uint16_t)yp, 60, 2, SMALLCOMPFONT, ubFontColor, pItemName, 0,
-                           FALSE, LEFT_JUSTIFIED);
+      DisplayWrappedString((uint16_t)xp, (uint16_t)yp, 60, 2, SMALLCOMPFONT, ubFontColor, pItemName,
+                           0, FALSE, LEFT_JUSTIFIED);
     }
   }
 }
@@ -2974,7 +2988,7 @@ void RenderMercStrings() {
   struct SOLDIERTYPE *pSoldier;
   int16_t sXPos, sYPos;
   int16_t sX, sY;
-  wchar_t* pStr;
+  wchar_t *pStr;
   SOLDIERINITNODE *curr;
   wchar_t str[50];
 
@@ -3461,7 +3475,7 @@ void PasteMercPlacement(int32_t iMapIndex) {
 
   if (IsLocationSittable(iMapIndex, gfRoofPlacement)) {
     uint8_t ubID;
-    u8 sSectorX, sSectorY;
+    uint8_t sSectorX, sSectorY;
     SOLDIERINITNODE *pNode;
 
     GetCurrentWorldSector(&sSectorX, &sSectorY);

@@ -342,7 +342,7 @@ int8_t GetMineAssociatedWithThisTown(TownID bTownId) {
 uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
   uint32_t uiAmountExtracted = 0;
-  u8 sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
@@ -387,8 +387,8 @@ uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
       // round all fractions UP to the next REMOVAL_RATE_INCREMENT
       gMineStatus[bMineIndex].uiMaxRemovalRate =
           (uint32_t)(((float)gMineStatus[bMineIndex].uiRemainingOreSupply / 10) /
-                       REMOVAL_RATE_INCREMENT +
-                   0.9999) *
+                         REMOVAL_RATE_INCREMENT +
+                     0.9999) *
           REMOVAL_RATE_INCREMENT;
 
       // if we control it
@@ -527,7 +527,8 @@ int32_t MineAMine(int8_t bMineIndex) {
     if (iAmtExtracted > 0) {
       // debug message
       //			ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s - Mine income from %s =
-      //$%d", gswzWorldTimeStr, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted );
+      //$%d", gswzWorldTimeStr, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted
+      //);
 
       // if this is the first time this mine has produced income for the player in the game
       if (!gMineStatus[bMineIndex].fMineHasProducedForPlayer) {
@@ -555,10 +556,10 @@ void PostEventsForMineProduction(void) {
   uint8_t ubShift;
 
   for (ubShift = 0; ubShift < MINE_PRODUCTION_NUMBER_OF_PERIODS; ubShift++) {
-    AddStrategicEvent(
-        EVENT_HANDLE_MINE_INCOME,
-        GetGameTimeInDays()*24*60 + MINE_PRODUCTION_START_TIME + (ubShift * MINE_PRODUCTION_PERIOD),
-        0);
+    AddStrategicEvent(EVENT_HANDLE_MINE_INCOME,
+                      GetGameTimeInDays() * 24 * 60 + MINE_PRODUCTION_START_TIME +
+                          (ubShift * MINE_PRODUCTION_PERIOD),
+                      0);
   }
 }
 
@@ -638,7 +639,7 @@ int8_t GetMineIndexForSector(int16_t sX, int16_t sY) {
   return (-1);
 }
 
-void GetMineSector(uint8_t ubMineIndex, u8 *psX, u8 *psY) {
+void GetMineSector(uint8_t ubMineIndex, uint8_t *psX, uint8_t *psY) {
   Assert((ubMineIndex >= 0) && (ubMineIndex < MAX_NUMBER_OF_MINES));
 
   *psX = gMineLocation[ubMineIndex].sSectorX;
@@ -1019,7 +1020,7 @@ BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId) {
 }
 
 // gte the id of the mine for this sector x,y,z...-1 is invalid
-int8_t GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+int8_t GetIdOfMineForSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   int8_t bMineIndex = -1;
   int16_t sSectorValue;
 

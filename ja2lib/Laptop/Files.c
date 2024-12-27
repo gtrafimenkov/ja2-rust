@@ -131,8 +131,8 @@ struct MOUSE_REGION pFilesRegions[MAX_FILES_PAGE];
 void RenderFilesBackGround(void);
 BOOLEAN LoadFiles(void);
 void RemoveFiles(void);
-uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, char* pFirstPicFile,
-                                   char* pSecondPicFile, BOOLEAN fRead);
+uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
+                                     char *pFirstPicFile, char *pSecondPicFile, BOOLEAN fRead);
 void OpenAndReadFilesFile(void);
 BOOLEAN OpenAndWriteFilesFile(void);
 void ClearFilesList(void);
@@ -156,9 +156,9 @@ void CheckForUnreadFiles(void);
 
 // file string structure manipulations
 void ClearFileStringList(void);
-void AddStringToFilesList(wchar_t* pString);
+void AddStringToFilesList(wchar_t *pString);
 BOOLEAN HandleSpecialFiles(uint8_t ubFormat);
-BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char* sPictureName);
+BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char *sPictureName);
 
 // callbacks
 void FilesBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
@@ -172,8 +172,8 @@ FileRecordWidthPtr CreateWidthRecordsForTerroristFile(void);
 FileRecordWidthPtr CreateRecordWidth(int32_t iRecordNumber, int32_t iRecordWidth,
                                      int32_t iRecordHeightAdjustment, uint8_t ubFlags);
 
-uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, char* pFirstPicFile,
-                            char* pSecondPicFile) {
+uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
+                              char *pFirstPicFile, char *pSecondPicFile) {
   // adds Files item to player's log(Files List), returns unique id number of it
   // outside of the Files system(the code in this .c file), this is the only function you'll ever
   // need
@@ -351,8 +351,8 @@ void RemoveFiles(void) {
   return;
 }
 
-uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, char* pFirstPicFile,
-                                   char* pSecondPicFile, BOOLEAN fRead) {
+uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
+                                     char *pFirstPicFile, char *pSecondPicFile, BOOLEAN fRead) {
   uint32_t uiId = 0;
   FilesUnitPtr pFiles = pFilesListHead;
 
@@ -413,7 +413,7 @@ uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ub
   // first file
   if (pFirstPicFile) {
     if ((pFirstPicFile[0]) != 0) {
-      pFiles->pPicFileNameList[0] = (char*)MemAlloc(strlen(pFirstPicFile) + 1);
+      pFiles->pPicFileNameList[0] = (char *)MemAlloc(strlen(pFirstPicFile) + 1);
       strcpy(pFiles->pPicFileNameList[0], pFirstPicFile);
       pFiles->pPicFileNameList[0][strlen(pFirstPicFile)] = 0;
     }
@@ -423,7 +423,7 @@ uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ub
 
   if (pSecondPicFile) {
     if ((pSecondPicFile[0]) != 0) {
-      pFiles->pPicFileNameList[1] = (char*)MemAlloc(strlen(pSecondPicFile) + 1);
+      pFiles->pPicFileNameList[1] = (char *)MemAlloc(strlen(pSecondPicFile) + 1);
       strcpy(pFiles->pPicFileNameList[1], pSecondPicFile);
       pFiles->pPicFileNameList[1][strlen(pSecondPicFile)] = 0;
     }
@@ -483,7 +483,8 @@ void OpenAndReadFilesFile(void) {
     ProcessAndEnterAFilesRecord(ubCode, uiDate, ubFormat, pFirstFilePath, pSecondFilePath, fRead);
 
     // increment byte counter
-    uiByteCount += sizeof(uint32_t) + sizeof(uint8_t) + 128 + 128 + sizeof(uint8_t) + sizeof(BOOLEAN);
+    uiByteCount +=
+        sizeof(uint32_t) + sizeof(uint8_t) + 128 + 128 + sizeof(uint8_t) + sizeof(BOOLEAN);
   }
 
   // close file
@@ -734,7 +735,7 @@ BOOLEAN DisplayFormattedText(void) {
   iLength = ubFileRecordsLength[pFilesList->ubCode];
 
   if (pFilesList->ubFormat < ENRICO_BACKGROUND) {
-    LoadEncryptedDataFromFile("BINARYDATA\\Files.edt", sString, FILE_STRING_SIZE * (iOffSet)*2,
+    LoadEncryptedDataFromFile("BINARYDATA\\Files.edt", sString, FILE_STRING_SIZE * (iOffSet) * 2,
                               FILE_STRING_SIZE * iLength * 2);
   }
 
@@ -907,7 +908,7 @@ BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
 
       WidthList = CreateWidthRecordsForAruloIntelFile();
       while (iCounter < LENGTH_OF_ENRICO_FILE) {
-        LoadEncryptedDataFromFile("BINARYDATA\\RIS.EDT", sString, FILE_STRING_SIZE * (iCounter)*2,
+        LoadEncryptedDataFromFile("BINARYDATA\\RIS.EDT", sString, FILE_STRING_SIZE * (iCounter) * 2,
                                   FILE_STRING_SIZE * 2);
         AddStringToFilesList(sString);
         iCounter++;
@@ -998,7 +999,8 @@ BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
           // now print it
           iYPositionOnPage += (int32_t)IanDisplayWrappedString(
               (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
-              (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
+              (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE,
+              uiFlags);
 
           fGoingOffCurrentPage = FALSE;
         } else {
@@ -1074,7 +1076,7 @@ BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
   return (TRUE);
 }
 
-void AddStringToFilesList(wchar_t* pString) {
+void AddStringToFilesList(wchar_t *pString) {
   FileStringPtr pFileString;
   FileStringPtr pTempString = pFileStringList;
 
@@ -1082,7 +1084,7 @@ void AddStringToFilesList(wchar_t* pString) {
   pFileString = (FileString *)MemAlloc(sizeof(FileString));
 
   // alloc string and copy
-  pFileString->pString = (wchar_t*)MemAlloc((wcslen(pString) * 2) + 2);
+  pFileString->pString = (wchar_t *)MemAlloc((wcslen(pString) * 2) + 2);
   wcscpy(pFileString->pString, pString);
   pFileString->pString[wcslen(pString)] = 0;
 
@@ -1393,7 +1395,7 @@ void CheckForUnreadFiles(void) {
   }
 }
 
-BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char* sPictureName) {
+BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char *sPictureName) {
   int32_t iCounter = 0;
   wchar_t sString[2048];
   FileStringPtr pTempString = NULL;
@@ -1474,8 +1476,8 @@ BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, char* sPictureName) {
         MAX_FILE_MESSAGE_PAGE_SIZE) {
       // now print it
       iYPositionOnPage += (int32_t)IanDisplayWrappedString(
-          (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage), (int16_t)iFileLineWidth,
-          FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
+          (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
+          (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
 
       fGoingOffCurrentPage = FALSE;
     } else {

@@ -746,238 +746,238 @@ AttachmentInfoStruct AttachmentInfo[] = {
     {0, 0}};
 
 uint16_t Attachment[][2] = {{SILENCER, GLOCK_17},
-                          {SILENCER, GLOCK_18},
-                          {SILENCER, BERETTA_92F},
-                          {SILENCER, BERETTA_93R},
-                          {SILENCER, SW38},
-                          {SILENCER, BARRACUDA},
-                          {SILENCER, DESERTEAGLE},
-                          {SILENCER, M1911},
-                          {SILENCER, MP5K},
-                          {SILENCER, MAC10},
-                          {SILENCER, THOMPSON},
-                          {SILENCER, P90},
+                            {SILENCER, GLOCK_18},
+                            {SILENCER, BERETTA_92F},
+                            {SILENCER, BERETTA_93R},
+                            {SILENCER, SW38},
+                            {SILENCER, BARRACUDA},
+                            {SILENCER, DESERTEAGLE},
+                            {SILENCER, M1911},
+                            {SILENCER, MP5K},
+                            {SILENCER, MAC10},
+                            {SILENCER, THOMPSON},
+                            {SILENCER, P90},
 
-                          {SNIPERSCOPE, COMMANDO},
-                          {SNIPERSCOPE, AKSU74},
-                          {SNIPERSCOPE, TYPE85},
-                          {SNIPERSCOPE, SKS},
-                          {SNIPERSCOPE, DRAGUNOV},
-                          {SNIPERSCOPE, M24},
-                          {SNIPERSCOPE, AUG},
-                          {SNIPERSCOPE, G41},
-                          {SNIPERSCOPE, MINI14},
-                          {SNIPERSCOPE, C7},
-                          {SNIPERSCOPE, FAMAS},
-                          {SNIPERSCOPE, AK74},
-                          {SNIPERSCOPE, AKM},
-                          {SNIPERSCOPE, M14},
-                          {SNIPERSCOPE, FNFAL},
-                          {SNIPERSCOPE, G3A3},
-                          {SNIPERSCOPE, G11},
-                          {SNIPERSCOPE, M870},
-                          {SNIPERSCOPE, SPAS15},
-                          {SNIPERSCOPE, CAWS},
-                          {SNIPERSCOPE, MINIMI},
-                          {SNIPERSCOPE, RPK74},
-                          {SNIPERSCOPE, HK21E},
+                            {SNIPERSCOPE, COMMANDO},
+                            {SNIPERSCOPE, AKSU74},
+                            {SNIPERSCOPE, TYPE85},
+                            {SNIPERSCOPE, SKS},
+                            {SNIPERSCOPE, DRAGUNOV},
+                            {SNIPERSCOPE, M24},
+                            {SNIPERSCOPE, AUG},
+                            {SNIPERSCOPE, G41},
+                            {SNIPERSCOPE, MINI14},
+                            {SNIPERSCOPE, C7},
+                            {SNIPERSCOPE, FAMAS},
+                            {SNIPERSCOPE, AK74},
+                            {SNIPERSCOPE, AKM},
+                            {SNIPERSCOPE, M14},
+                            {SNIPERSCOPE, FNFAL},
+                            {SNIPERSCOPE, G3A3},
+                            {SNIPERSCOPE, G11},
+                            {SNIPERSCOPE, M870},
+                            {SNIPERSCOPE, SPAS15},
+                            {SNIPERSCOPE, CAWS},
+                            {SNIPERSCOPE, MINIMI},
+                            {SNIPERSCOPE, RPK74},
+                            {SNIPERSCOPE, HK21E},
 
-                          {LASERSCOPE, GLOCK_17},
-                          {LASERSCOPE, GLOCK_18},
-                          {LASERSCOPE, BERETTA_92F},
-                          {LASERSCOPE, BERETTA_93R},
-                          {LASERSCOPE, SW38},
-                          {LASERSCOPE, BARRACUDA},
-                          {LASERSCOPE, DESERTEAGLE},
-                          {LASERSCOPE, M1911},
-                          {LASERSCOPE, MP5K},
-                          {LASERSCOPE, MAC10},
-                          {LASERSCOPE, THOMPSON},
-                          {LASERSCOPE, COMMANDO},
-                          {LASERSCOPE, MP53},
-                          {LASERSCOPE, AKSU74},
-                          {LASERSCOPE, P90},
-                          {LASERSCOPE, TYPE85},
-                          {LASERSCOPE, SKS},
-                          {LASERSCOPE, DRAGUNOV},
-                          {LASERSCOPE, M24},
-                          {LASERSCOPE, AUG},
-                          {LASERSCOPE, G41},
-                          {LASERSCOPE, MINI14},
-                          {LASERSCOPE, C7},
-                          {LASERSCOPE, FAMAS},
-                          {LASERSCOPE, AK74},
-                          {LASERSCOPE, AKM},
-                          {LASERSCOPE, M14},
-                          {LASERSCOPE, FNFAL},
-                          {LASERSCOPE, G3A3},
-                          {LASERSCOPE, G11},
-                          {LASERSCOPE, M870},
-                          {LASERSCOPE, SPAS15},
-                          {LASERSCOPE, CAWS},
-                          {LASERSCOPE, MINIMI},
-                          {LASERSCOPE, RPK74},
-                          {LASERSCOPE, HK21E},
-                          {LASERSCOPE, AUTOMAG_III},
+                            {LASERSCOPE, GLOCK_17},
+                            {LASERSCOPE, GLOCK_18},
+                            {LASERSCOPE, BERETTA_92F},
+                            {LASERSCOPE, BERETTA_93R},
+                            {LASERSCOPE, SW38},
+                            {LASERSCOPE, BARRACUDA},
+                            {LASERSCOPE, DESERTEAGLE},
+                            {LASERSCOPE, M1911},
+                            {LASERSCOPE, MP5K},
+                            {LASERSCOPE, MAC10},
+                            {LASERSCOPE, THOMPSON},
+                            {LASERSCOPE, COMMANDO},
+                            {LASERSCOPE, MP53},
+                            {LASERSCOPE, AKSU74},
+                            {LASERSCOPE, P90},
+                            {LASERSCOPE, TYPE85},
+                            {LASERSCOPE, SKS},
+                            {LASERSCOPE, DRAGUNOV},
+                            {LASERSCOPE, M24},
+                            {LASERSCOPE, AUG},
+                            {LASERSCOPE, G41},
+                            {LASERSCOPE, MINI14},
+                            {LASERSCOPE, C7},
+                            {LASERSCOPE, FAMAS},
+                            {LASERSCOPE, AK74},
+                            {LASERSCOPE, AKM},
+                            {LASERSCOPE, M14},
+                            {LASERSCOPE, FNFAL},
+                            {LASERSCOPE, G3A3},
+                            {LASERSCOPE, G11},
+                            {LASERSCOPE, M870},
+                            {LASERSCOPE, SPAS15},
+                            {LASERSCOPE, CAWS},
+                            {LASERSCOPE, MINIMI},
+                            {LASERSCOPE, RPK74},
+                            {LASERSCOPE, HK21E},
+                            {LASERSCOPE, AUTOMAG_III},
 
-                          {BIPOD, SKS},
-                          {BIPOD, DRAGUNOV},
-                          {BIPOD, M24},
-                          {BIPOD, AUG},
-                          {BIPOD, G41},
-                          {BIPOD, MINI14},
-                          {BIPOD, C7},
-                          {BIPOD, FAMAS},
-                          {BIPOD, AK74},
-                          {BIPOD, AKM},
-                          {BIPOD, M14},
-                          {BIPOD, FNFAL},
-                          {BIPOD, G3A3},
-                          {BIPOD, G11},
-                          {BIPOD, CAWS},
-                          {BIPOD, MINIMI},
-                          {BIPOD, RPK74},
-                          {BIPOD, HK21E},
+                            {BIPOD, SKS},
+                            {BIPOD, DRAGUNOV},
+                            {BIPOD, M24},
+                            {BIPOD, AUG},
+                            {BIPOD, G41},
+                            {BIPOD, MINI14},
+                            {BIPOD, C7},
+                            {BIPOD, FAMAS},
+                            {BIPOD, AK74},
+                            {BIPOD, AKM},
+                            {BIPOD, M14},
+                            {BIPOD, FNFAL},
+                            {BIPOD, G3A3},
+                            {BIPOD, G11},
+                            {BIPOD, CAWS},
+                            {BIPOD, MINIMI},
+                            {BIPOD, RPK74},
+                            {BIPOD, HK21E},
 
-                          {DUCKBILL, M870},
-                          {DUCKBILL, SPAS15},
-                          {DUCKBILL, CAWS},
+                            {DUCKBILL, M870},
+                            {DUCKBILL, SPAS15},
+                            {DUCKBILL, CAWS},
 
-                          {UNDER_GLAUNCHER, COMMANDO},
-                          {UNDER_GLAUNCHER, AKSU74},
-                          {UNDER_GLAUNCHER, AUG},
-                          {UNDER_GLAUNCHER, G41},
-                          {UNDER_GLAUNCHER, MINI14},
-                          {UNDER_GLAUNCHER, C7},
-                          {UNDER_GLAUNCHER, FAMAS},
-                          {UNDER_GLAUNCHER, AK74},
-                          {UNDER_GLAUNCHER, AKM},
-                          {UNDER_GLAUNCHER, M14},
-                          {UNDER_GLAUNCHER, FNFAL},
-                          {UNDER_GLAUNCHER, G3A3},
-                          {UNDER_GLAUNCHER, MINIMI},
-                          {UNDER_GLAUNCHER, RPK74},
-                          {UNDER_GLAUNCHER, HK21E},
+                            {UNDER_GLAUNCHER, COMMANDO},
+                            {UNDER_GLAUNCHER, AKSU74},
+                            {UNDER_GLAUNCHER, AUG},
+                            {UNDER_GLAUNCHER, G41},
+                            {UNDER_GLAUNCHER, MINI14},
+                            {UNDER_GLAUNCHER, C7},
+                            {UNDER_GLAUNCHER, FAMAS},
+                            {UNDER_GLAUNCHER, AK74},
+                            {UNDER_GLAUNCHER, AKM},
+                            {UNDER_GLAUNCHER, M14},
+                            {UNDER_GLAUNCHER, FNFAL},
+                            {UNDER_GLAUNCHER, G3A3},
+                            {UNDER_GLAUNCHER, MINIMI},
+                            {UNDER_GLAUNCHER, RPK74},
+                            {UNDER_GLAUNCHER, HK21E},
 
-                          {SPRING_AND_BOLT_UPGRADE, GLOCK_17},
-                          {SPRING_AND_BOLT_UPGRADE, GLOCK_18},
-                          {SPRING_AND_BOLT_UPGRADE, BERETTA_92F},
-                          {SPRING_AND_BOLT_UPGRADE, BERETTA_93R},
-                          {SPRING_AND_BOLT_UPGRADE, SW38},
-                          {SPRING_AND_BOLT_UPGRADE, BARRACUDA},
-                          {SPRING_AND_BOLT_UPGRADE, DESERTEAGLE},
-                          {SPRING_AND_BOLT_UPGRADE, M1911},
-                          {SPRING_AND_BOLT_UPGRADE, MP5K},
-                          {SPRING_AND_BOLT_UPGRADE, MAC10},
-                          {SPRING_AND_BOLT_UPGRADE, THOMPSON},
-                          {SPRING_AND_BOLT_UPGRADE, COMMANDO},
-                          {SPRING_AND_BOLT_UPGRADE, MP53},
-                          {SPRING_AND_BOLT_UPGRADE, AKSU74},
-                          {SPRING_AND_BOLT_UPGRADE, P90},
-                          {SPRING_AND_BOLT_UPGRADE, TYPE85},
-                          {SPRING_AND_BOLT_UPGRADE, SKS},
-                          {SPRING_AND_BOLT_UPGRADE, DRAGUNOV},
-                          {SPRING_AND_BOLT_UPGRADE, M24},
-                          {SPRING_AND_BOLT_UPGRADE, AUG},
-                          {SPRING_AND_BOLT_UPGRADE, G41},
-                          {SPRING_AND_BOLT_UPGRADE, MINI14},
-                          {SPRING_AND_BOLT_UPGRADE, C7},
-                          {SPRING_AND_BOLT_UPGRADE, FAMAS},
-                          {SPRING_AND_BOLT_UPGRADE, AK74},
-                          {SPRING_AND_BOLT_UPGRADE, AKM},
-                          {SPRING_AND_BOLT_UPGRADE, M14},
-                          {SPRING_AND_BOLT_UPGRADE, FNFAL},
-                          {SPRING_AND_BOLT_UPGRADE, G3A3},
-                          {SPRING_AND_BOLT_UPGRADE, G11},
-                          {SPRING_AND_BOLT_UPGRADE, M870},
-                          {SPRING_AND_BOLT_UPGRADE, SPAS15},
-                          {SPRING_AND_BOLT_UPGRADE, CAWS},
-                          {SPRING_AND_BOLT_UPGRADE, MINIMI},
-                          {SPRING_AND_BOLT_UPGRADE, RPK74},
-                          {SPRING_AND_BOLT_UPGRADE, HK21E},
-                          {SPRING_AND_BOLT_UPGRADE, AUTOMAG_III},
+                            {SPRING_AND_BOLT_UPGRADE, GLOCK_17},
+                            {SPRING_AND_BOLT_UPGRADE, GLOCK_18},
+                            {SPRING_AND_BOLT_UPGRADE, BERETTA_92F},
+                            {SPRING_AND_BOLT_UPGRADE, BERETTA_93R},
+                            {SPRING_AND_BOLT_UPGRADE, SW38},
+                            {SPRING_AND_BOLT_UPGRADE, BARRACUDA},
+                            {SPRING_AND_BOLT_UPGRADE, DESERTEAGLE},
+                            {SPRING_AND_BOLT_UPGRADE, M1911},
+                            {SPRING_AND_BOLT_UPGRADE, MP5K},
+                            {SPRING_AND_BOLT_UPGRADE, MAC10},
+                            {SPRING_AND_BOLT_UPGRADE, THOMPSON},
+                            {SPRING_AND_BOLT_UPGRADE, COMMANDO},
+                            {SPRING_AND_BOLT_UPGRADE, MP53},
+                            {SPRING_AND_BOLT_UPGRADE, AKSU74},
+                            {SPRING_AND_BOLT_UPGRADE, P90},
+                            {SPRING_AND_BOLT_UPGRADE, TYPE85},
+                            {SPRING_AND_BOLT_UPGRADE, SKS},
+                            {SPRING_AND_BOLT_UPGRADE, DRAGUNOV},
+                            {SPRING_AND_BOLT_UPGRADE, M24},
+                            {SPRING_AND_BOLT_UPGRADE, AUG},
+                            {SPRING_AND_BOLT_UPGRADE, G41},
+                            {SPRING_AND_BOLT_UPGRADE, MINI14},
+                            {SPRING_AND_BOLT_UPGRADE, C7},
+                            {SPRING_AND_BOLT_UPGRADE, FAMAS},
+                            {SPRING_AND_BOLT_UPGRADE, AK74},
+                            {SPRING_AND_BOLT_UPGRADE, AKM},
+                            {SPRING_AND_BOLT_UPGRADE, M14},
+                            {SPRING_AND_BOLT_UPGRADE, FNFAL},
+                            {SPRING_AND_BOLT_UPGRADE, G3A3},
+                            {SPRING_AND_BOLT_UPGRADE, G11},
+                            {SPRING_AND_BOLT_UPGRADE, M870},
+                            {SPRING_AND_BOLT_UPGRADE, SPAS15},
+                            {SPRING_AND_BOLT_UPGRADE, CAWS},
+                            {SPRING_AND_BOLT_UPGRADE, MINIMI},
+                            {SPRING_AND_BOLT_UPGRADE, RPK74},
+                            {SPRING_AND_BOLT_UPGRADE, HK21E},
+                            {SPRING_AND_BOLT_UPGRADE, AUTOMAG_III},
 
-                          {GUN_BARREL_EXTENDER, GLOCK_17},
-                          {GUN_BARREL_EXTENDER, GLOCK_18},
-                          {GUN_BARREL_EXTENDER, BERETTA_92F},
-                          {GUN_BARREL_EXTENDER, BERETTA_93R},
-                          {GUN_BARREL_EXTENDER, SW38},
-                          {GUN_BARREL_EXTENDER, BARRACUDA},
-                          {GUN_BARREL_EXTENDER, DESERTEAGLE},
-                          {GUN_BARREL_EXTENDER, M1911},
-                          {GUN_BARREL_EXTENDER, MP5K},
-                          {GUN_BARREL_EXTENDER, MAC10},
-                          {GUN_BARREL_EXTENDER, THOMPSON},
-                          {GUN_BARREL_EXTENDER, COMMANDO},
-                          {GUN_BARREL_EXTENDER, MP53},
-                          {GUN_BARREL_EXTENDER, AKSU74},
-                          {GUN_BARREL_EXTENDER, P90},
-                          {GUN_BARREL_EXTENDER, TYPE85},
-                          {GUN_BARREL_EXTENDER, SKS},
-                          {GUN_BARREL_EXTENDER, DRAGUNOV},
-                          {GUN_BARREL_EXTENDER, M24},
-                          {GUN_BARREL_EXTENDER, AUG},
-                          {GUN_BARREL_EXTENDER, G41},
-                          {GUN_BARREL_EXTENDER, MINI14},
-                          {GUN_BARREL_EXTENDER, C7},
-                          {GUN_BARREL_EXTENDER, FAMAS},
-                          {GUN_BARREL_EXTENDER, AK74},
-                          {GUN_BARREL_EXTENDER, AKM},
-                          {GUN_BARREL_EXTENDER, M14},
-                          {GUN_BARREL_EXTENDER, FNFAL},
-                          {GUN_BARREL_EXTENDER, G3A3},
-                          {GUN_BARREL_EXTENDER, G11},
-                          {GUN_BARREL_EXTENDER, M870},
-                          {GUN_BARREL_EXTENDER, SPAS15},
-                          {GUN_BARREL_EXTENDER, CAWS},
-                          {GUN_BARREL_EXTENDER, MINIMI},
-                          {GUN_BARREL_EXTENDER, RPK74},
-                          {GUN_BARREL_EXTENDER, HK21E},
-                          {GUN_BARREL_EXTENDER, AUTOMAG_III},
+                            {GUN_BARREL_EXTENDER, GLOCK_17},
+                            {GUN_BARREL_EXTENDER, GLOCK_18},
+                            {GUN_BARREL_EXTENDER, BERETTA_92F},
+                            {GUN_BARREL_EXTENDER, BERETTA_93R},
+                            {GUN_BARREL_EXTENDER, SW38},
+                            {GUN_BARREL_EXTENDER, BARRACUDA},
+                            {GUN_BARREL_EXTENDER, DESERTEAGLE},
+                            {GUN_BARREL_EXTENDER, M1911},
+                            {GUN_BARREL_EXTENDER, MP5K},
+                            {GUN_BARREL_EXTENDER, MAC10},
+                            {GUN_BARREL_EXTENDER, THOMPSON},
+                            {GUN_BARREL_EXTENDER, COMMANDO},
+                            {GUN_BARREL_EXTENDER, MP53},
+                            {GUN_BARREL_EXTENDER, AKSU74},
+                            {GUN_BARREL_EXTENDER, P90},
+                            {GUN_BARREL_EXTENDER, TYPE85},
+                            {GUN_BARREL_EXTENDER, SKS},
+                            {GUN_BARREL_EXTENDER, DRAGUNOV},
+                            {GUN_BARREL_EXTENDER, M24},
+                            {GUN_BARREL_EXTENDER, AUG},
+                            {GUN_BARREL_EXTENDER, G41},
+                            {GUN_BARREL_EXTENDER, MINI14},
+                            {GUN_BARREL_EXTENDER, C7},
+                            {GUN_BARREL_EXTENDER, FAMAS},
+                            {GUN_BARREL_EXTENDER, AK74},
+                            {GUN_BARREL_EXTENDER, AKM},
+                            {GUN_BARREL_EXTENDER, M14},
+                            {GUN_BARREL_EXTENDER, FNFAL},
+                            {GUN_BARREL_EXTENDER, G3A3},
+                            {GUN_BARREL_EXTENDER, G11},
+                            {GUN_BARREL_EXTENDER, M870},
+                            {GUN_BARREL_EXTENDER, SPAS15},
+                            {GUN_BARREL_EXTENDER, CAWS},
+                            {GUN_BARREL_EXTENDER, MINIMI},
+                            {GUN_BARREL_EXTENDER, RPK74},
+                            {GUN_BARREL_EXTENDER, HK21E},
+                            {GUN_BARREL_EXTENDER, AUTOMAG_III},
 
-                          {DETONATOR, TNT},
-                          {DETONATOR, HMX},
-                          {DETONATOR, C1},
-                          {DETONATOR, C4},
+                            {DETONATOR, TNT},
+                            {DETONATOR, HMX},
+                            {DETONATOR, C1},
+                            {DETONATOR, C4},
 
-                          {REMDETONATOR, TNT},
-                          {REMDETONATOR, HMX},
-                          {REMDETONATOR, C1},
-                          {REMDETONATOR, C4},
+                            {REMDETONATOR, TNT},
+                            {REMDETONATOR, HMX},
+                            {REMDETONATOR, C1},
+                            {REMDETONATOR, C4},
 
-                          {CERAMIC_PLATES, FLAK_JACKET},
-                          {CERAMIC_PLATES, FLAK_JACKET_18},
-                          {CERAMIC_PLATES, FLAK_JACKET_Y},
-                          {CERAMIC_PLATES, KEVLAR_VEST},
-                          {CERAMIC_PLATES, KEVLAR_VEST_18},
-                          {CERAMIC_PLATES, KEVLAR_VEST_Y},
-                          {CERAMIC_PLATES, SPECTRA_VEST},
-                          {CERAMIC_PLATES, SPECTRA_VEST_18},
-                          {CERAMIC_PLATES, SPECTRA_VEST_Y},
-                          {CERAMIC_PLATES, KEVLAR2_VEST},
-                          {CERAMIC_PLATES, KEVLAR2_VEST_18},
-                          {CERAMIC_PLATES, KEVLAR2_VEST_Y},
+                            {CERAMIC_PLATES, FLAK_JACKET},
+                            {CERAMIC_PLATES, FLAK_JACKET_18},
+                            {CERAMIC_PLATES, FLAK_JACKET_Y},
+                            {CERAMIC_PLATES, KEVLAR_VEST},
+                            {CERAMIC_PLATES, KEVLAR_VEST_18},
+                            {CERAMIC_PLATES, KEVLAR_VEST_Y},
+                            {CERAMIC_PLATES, SPECTRA_VEST},
+                            {CERAMIC_PLATES, SPECTRA_VEST_18},
+                            {CERAMIC_PLATES, SPECTRA_VEST_Y},
+                            {CERAMIC_PLATES, KEVLAR2_VEST},
+                            {CERAMIC_PLATES, KEVLAR2_VEST_18},
+                            {CERAMIC_PLATES, KEVLAR2_VEST_Y},
 
-                          {SPRING, ALUMINUM_ROD},
-                          {QUICK_GLUE, STEEL_ROD},
-                          {DUCT_TAPE, STEEL_ROD},
-                          {XRAY_BULB, FUMBLE_PAK},
-                          {CHEWING_GUM, FUMBLE_PAK},
-                          {BATTERIES, XRAY_DEVICE},
-                          {COPPER_WIRE, LAME_BOY},
-                          {0, 0}};
+                            {SPRING, ALUMINUM_ROD},
+                            {QUICK_GLUE, STEEL_ROD},
+                            {DUCT_TAPE, STEEL_ROD},
+                            {XRAY_BULB, FUMBLE_PAK},
+                            {CHEWING_GUM, FUMBLE_PAK},
+                            {BATTERIES, XRAY_DEVICE},
+                            {COPPER_WIRE, LAME_BOY},
+                            {0, 0}};
 
 uint16_t Launchable[][2] = {{GL_HE_GRENADE, GLAUNCHER},
-                          {GL_HE_GRENADE, UNDER_GLAUNCHER},
-                          {GL_TEARGAS_GRENADE, GLAUNCHER},
-                          {GL_TEARGAS_GRENADE, UNDER_GLAUNCHER},
-                          {GL_STUN_GRENADE, GLAUNCHER},
-                          {GL_STUN_GRENADE, UNDER_GLAUNCHER},
-                          {GL_SMOKE_GRENADE, GLAUNCHER},
-                          {GL_SMOKE_GRENADE, UNDER_GLAUNCHER},
-                          {MORTAR_SHELL, MORTAR},
-                          {TANK_SHELL, TANK_CANNON},
-                          {0, 0}};
+                            {GL_HE_GRENADE, UNDER_GLAUNCHER},
+                            {GL_TEARGAS_GRENADE, GLAUNCHER},
+                            {GL_TEARGAS_GRENADE, UNDER_GLAUNCHER},
+                            {GL_STUN_GRENADE, GLAUNCHER},
+                            {GL_STUN_GRENADE, UNDER_GLAUNCHER},
+                            {GL_SMOKE_GRENADE, GLAUNCHER},
+                            {GL_SMOKE_GRENADE, UNDER_GLAUNCHER},
+                            {MORTAR_SHELL, MORTAR},
+                            {TANK_SHELL, TANK_CANNON},
+                            {0, 0}};
 
 uint16_t CompatibleFaceItems[][2] = {
     {EXTENDEDEAR, NIGHTGOGGLES},
@@ -1018,7 +1018,7 @@ typedef enum {
 } MergeType;
 
 uint16_t Merge[][4] = {  // first item			second item
-                       // resulting item,					merge type
+                         // resulting item,					merge type
     {FIRSTAIDKIT, FIRSTAIDKIT, FIRSTAIDKIT, COMBINE_POINTS},
     {MEDICKIT, MEDICKIT, MEDICKIT, COMBINE_POINTS},
     {LOCKSMITHKIT, LOCKSMITHKIT, LOCKSMITHKIT, COMBINE_POINTS},
@@ -1098,32 +1098,32 @@ ComboMergeInfoStruct AttachmentComboMerge[] = {
 };
 
 uint16_t ReplacementGuns[][2] = {{BARRACUDA, DESERTEAGLE},
-                               {M1911, GLOCK_17},
-                               {GLOCK_18, BERETTA_93R},
-                               {BERETTA_92F, GLOCK_17},
-                               {TYPE85, BERETTA_93R},
-                               {THOMPSON, MP5K},
-                               {MP53, MP5K},
-                               {SPAS15, M870},
-                               {AKSU74, MAC10},
-                               {SKS, MINI14},
-                               {AKM, G41},
-                               {G3A3, G41},
-                               {AK74, G41},
-                               {DRAGUNOV, M24},
-                               {FAMAS, M14},
-                               {AUG, C7},
-                               {RPK74, MINIMI},
-                               {HK21E, MINIMI},
-                               {0, 0}};
+                                 {M1911, GLOCK_17},
+                                 {GLOCK_18, BERETTA_93R},
+                                 {BERETTA_92F, GLOCK_17},
+                                 {TYPE85, BERETTA_93R},
+                                 {THOMPSON, MP5K},
+                                 {MP53, MP5K},
+                                 {SPAS15, M870},
+                                 {AKSU74, MAC10},
+                                 {SKS, MINI14},
+                                 {AKM, G41},
+                                 {G3A3, G41},
+                                 {AK74, G41},
+                                 {DRAGUNOV, M24},
+                                 {FAMAS, M14},
+                                 {AUG, C7},
+                                 {RPK74, MINIMI},
+                                 {HK21E, MINIMI},
+                                 {0, 0}};
 
 uint16_t ReplacementAmmo[][2] = {{CLIP545_30_AP, CLIP556_30_AP},
-                               {CLIP545_30_HP, CLIP556_30_HP},
-                               {CLIP762W_10_AP, CLIP762N_5_AP},
-                               {CLIP762W_30_AP, CLIP762N_20_AP},
-                               {CLIP762W_10_HP, CLIP762N_5_HP},
-                               {CLIP762W_30_HP, CLIP762N_20_HP},
-                               {0, 0}};
+                                 {CLIP545_30_HP, CLIP556_30_HP},
+                                 {CLIP762W_10_AP, CLIP762N_5_AP},
+                                 {CLIP762W_30_AP, CLIP762N_20_AP},
+                                 {CLIP762W_10_HP, CLIP762N_5_HP},
+                                 {CLIP762W_30_HP, CLIP762N_20_HP},
+                                 {0, 0}};
 
 BOOLEAN ItemIsLegal(uint16_t usItemIndex) {
   // if the user has selected the reduced gun list
@@ -1318,7 +1318,8 @@ int8_t FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   return (NO_SLOT);
 }
 
-int8_t FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, int8_t bStartAfter, uint32_t usItemClass) {
+int8_t FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, int8_t bStartAfter,
+                             uint32_t usItemClass) {
   int8_t bLoop;
 
   for (bLoop = bStartAfter + 1; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -1354,7 +1355,7 @@ int8_t FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) 
 }
 
 int8_t FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass, int8_t bLower,
-                                int8_t bUpper) {
+                                  int8_t bUpper) {
   int8_t bLoop;
 
   // This is for the AI only so:
@@ -1771,7 +1772,8 @@ uint16_t GetLauncherFromLaunchable(uint16_t usLaunchable) {
   return (Launchable[iLoop][1]);
 }
 
-BOOLEAN EvaluateValidMerge(uint16_t usMerge, uint16_t usItem, uint16_t *pusResult, uint8_t *pubType) {
+BOOLEAN EvaluateValidMerge(uint16_t usMerge, uint16_t usItem, uint16_t *pusResult,
+                           uint8_t *pubType) {
   // NB "usMerge" is the object being merged with (e.g. compound 18)
   // "usItem" is the item being merged "onto" (e.g. kevlar vest)
   int32_t iLoop = 0;
@@ -1978,7 +1980,8 @@ void DamageObj(struct OBJECTTYPE *pObj, int8_t bAmount) {
   }
 }
 
-void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj, uint8_t ubNumberToCopy) {
+void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
+               uint8_t ubNumberToCopy) {
   uint8_t ubLoop;
 
   // copy over N status values
@@ -2347,7 +2350,8 @@ BOOLEAN ReloadLauncher( struct OBJECTTYPE * pLauncher, struct OBJECTTYPE * pAmmo
 }
 */
 
-int8_t FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize, int8_t bExcludeSlot) {
+int8_t FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize,
+                int8_t bExcludeSlot) {
   int8_t bLoop;
   INVTYPE *pItem;
 
@@ -2627,7 +2631,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
         if (bAttachInfoIndex != -1 &&
             AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod < 20) {
           StatChange(pSoldier, MECHANAMT,
-                     (int8_t)(20 - AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod), FALSE);
+                     (int8_t)(20 - AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod),
+                     FALSE);
         }
       }
 
@@ -3267,7 +3272,8 @@ BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition
 }
 
 // return number added
-uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition, struct OBJECTTYPE *pObj) {
+uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
+                      struct OBJECTTYPE *pObj) {
   uint8_t ubNumberNotAdded = 0;
 
   if (pSoldier->uiStatusFlags & SOLDIER_PC)  // redundant but what the hey
@@ -3306,7 +3312,8 @@ uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition, str
   return (pObj->ubNumberOfObjects);
 }
 
-uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition, struct OBJECTTYPE *pObj) {
+uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
+                       struct OBJECTTYPE *pObj) {
   // swap keys in keyring slot and keys in pocket
   struct OBJECTTYPE TempObj;
 
@@ -3326,7 +3333,8 @@ uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition, st
 BOOLEAN CreateKeyObject(struct OBJECTTYPE *pObj, uint8_t ubNumberOfKeys, uint8_t ubKeyID) {
   BOOLEAN fRet;
 
-  fRet = CreateItems((uint16_t)(FIRST_KEY + LockTable[ubKeyID].usKeyItem), 100, ubNumberOfKeys, pObj);
+  fRet =
+      CreateItems((uint16_t)(FIRST_KEY + LockTable[ubKeyID].usKeyItem), 100, ubNumberOfKeys, pObj);
   if (fRet) {
     pObj->ubKeyID = ubKeyID;
   }
@@ -3501,8 +3509,8 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
       case HISTORY_SLAUGHTEREDBLOODCATS:
       case HISTORY_GAVE_CARMEN_HEAD:
       case HISTORY_SLAY_MYSTERIOUSLY_LEFT:
-        AddHistoryToPlayersLog((uint8_t)uiLoop, 0, GetGameTimeInMin(), (u8)gWorldSectorX,
-                               (u8)gWorldSectorY);
+        AddHistoryToPlayersLog((uint8_t)uiLoop, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
+                               (uint8_t)gWorldSectorY);
         break;
       default:
         break;
@@ -3615,7 +3623,8 @@ uint16_t FindReplacementMagazine(uint8_t ubCalibre, uint8_t ubMagSize, uint8_t u
   return (usDefault);
 }
 
-uint16_t FindReplacementMagazineIfNecessary(uint16_t usOldGun, uint16_t usOldAmmo, uint16_t usNewGun) {
+uint16_t FindReplacementMagazineIfNecessary(uint16_t usOldGun, uint16_t usOldAmmo,
+                                            uint16_t usNewGun) {
   uint16_t usNewAmmo = NOTHING;
 
   if ((Magazine[Item[usOldAmmo].ubClassIndex].ubCalibre == Weapon[usOldGun].ubCalibre) &&
@@ -4296,8 +4305,8 @@ void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, int32_t iD
   }
 }
 
-BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel, int32_t iDamage,
-                           uint8_t ubOwner) {
+BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel,
+                           int32_t iDamage, uint8_t ubOwner) {
   BOOLEAN fBlowsUp;
 
   fBlowsUp = DamageItem(pObject, iDamage, TRUE);
@@ -4548,7 +4557,9 @@ BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLE
   return (TRUE);
 }
 
-uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(uint8_t ubStatus) { return (ubStatus * 50); }
+uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(uint8_t ubStatus) {
+  return (ubStatus * 50);
+}
 
 uint8_t ConvertObjectTypeMoneyValueToProfileMoneyValue(uint32_t uiMoneyAmount) {
   return ((uint8_t)(uiMoneyAmount / 50));

@@ -37,4 +37,4 @@ void SwitchMapToMilitiaMode() {
 bool IsGoingToAutoresolve() { return gfAutomaticallyStartAutoResolve; }
 
 // Return index of the character selected for assignment
-i8 GetCharForAssignmentIndex() { return bSelectedAssignChar; }
+int8_t GetCharForAssignmentIndex() { return bSelectedAssignChar; }

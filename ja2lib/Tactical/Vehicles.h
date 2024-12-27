@@ -6,6 +6,7 @@
 #define _VEHICLES_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct GROUP;
 struct SOLDIERTYPE;
@@ -52,18 +53,18 @@ enum {
 // NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ];
 
 extern int16_t sVehicleOrigArmorValues[NUMBER_OF_TYPES_OF_VEHICLES]
-                                    [NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE];
+                                      [NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE];
 
 // struct for vehicles
 typedef struct {
-  struct path *pMercPath;  // vehicle's stategic path list
-  uint8_t ubMovementGroup;   // the movement group this vehicle belongs to
-  uint8_t ubVehicleType;     // type of vehicle
-  int16_t sSectorX;          // X position on the Stategic Map
-  int16_t sSectorY;          // Y position on the Stategic Map
+  struct path *pMercPath;   // vehicle's stategic path list
+  uint8_t ubMovementGroup;  // the movement group this vehicle belongs to
+  uint8_t ubVehicleType;    // type of vehicle
+  int16_t sSectorX;         // X position on the Stategic Map
+  int16_t sSectorY;         // Y position on the Stategic Map
   int16_t sSectorZ;
   BOOLEAN fBetweenSectors;  // between sectors?
-  int16_t sGridNo;            // location in tactical
+  int16_t sGridNo;          // location in tactical
   struct SOLDIERTYPE *pPassengers[10];
   uint8_t ubDriver;
   int16_t sInternalHitLocations[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
@@ -94,7 +95,7 @@ extern int32_t iMvtTypes[];
 void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle);
 
 // add vehicle to list and return id value
-int32_t AddVehicleToList(u8 sMapX, u8 sMapY, int16_t sGridNo, uint8_t ubType);
+int32_t AddVehicleToList(uint8_t sMapX, uint8_t sMapY, int16_t sGridNo, uint8_t ubType);
 
 // remove this vehicle from the list
 BOOLEAN RemoveVehicleFromList(int32_t iId);

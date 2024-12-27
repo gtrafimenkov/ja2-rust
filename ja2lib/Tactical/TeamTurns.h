@@ -6,6 +6,7 @@
 #define TEAMTURNS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -18,7 +19,7 @@ extern BOOLEAN gfHiddenTurnbased;
 extern BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE* pSoldier, uint8_t ubOpponentID,
                                               int8_t bOldOppList);
 extern int8_t CalcInterruptDuelPts(struct SOLDIERTYPE* pSoldier, uint8_t ubOpponentID,
-                                 BOOLEAN fUseWatchSpots);
+                                   BOOLEAN fUseWatchSpots);
 extern void EndAITurn(void);
 extern void DisplayHiddenInterrupt(struct SOLDIERTYPE* pSoldier);
 extern BOOLEAN InterruptDuel(struct SOLDIERTYPE* pSoldier, struct SOLDIERTYPE* pOpponent);

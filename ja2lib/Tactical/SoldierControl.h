@@ -352,7 +352,7 @@ struct SOLDIERTYPE {
   int8_t bTeam;  // Team identifier
 
   // NEW MOVEMENT INFORMATION for Strategic Movement
-  uint8_t ubGroupID;          // the movement group the merc is currently part of.
+  uint8_t ubGroupID;        // the movement group the merc is currently part of.
   BOOLEAN fBetweenSectors;  // set when the group isn't actually in a sector.
                             // sSectorX and sSectorY will reflect the sector the
                             // merc was at last.
@@ -684,38 +684,38 @@ struct SOLDIERTYPE {
   int16_t sZLevelOverride;
   int8_t bMovedPriorToInterrupt;
   int32_t iEndofContractTime;  // time, in global time(resolution, minutes) that merc will leave, or
-                             // if its a M.E.R.C. merc it will be set to -1.  -2 for NPC and player
-                             // generated
+                               // if its a M.E.R.C. merc it will be set to -1.  -2 for NPC and
+                               // player generated
   int32_t iStartContractTime;
   int32_t iTotalContractLength;    // total time of AIM mercs contract	or the time since last paid
-                                 // for a M.E.R.C. merc
+                                   // for a M.E.R.C. merc
   int32_t iNextActionSpecialData;  // AI special action data record for the next action
   uint8_t ubWhatKindOfMercAmI;     // Set to the type of character it is
   int8_t bAssignment;              // soldiers current assignment
   int8_t bOldAssignment;           // old assignment, for autosleep purposes
-  BOOLEAN fForcedToStayAwake;    // forced by player to stay awake, reset to false, the moment they
-                                 // are set to rest or sleep
-  int8_t bTrainStat;               // current stat soldier is training
-  int16_t sSectorX;                // X position on the Stategic Map
-  int16_t sSectorY;                // Y position on the Stategic Map
-  int8_t bSectorZ;                 // Z sector location
-  int32_t iVehicleId;              // the id of the vehicle the char is in
-  struct path *pMercPath;        // Path Structure
-  uint8_t fHitByGasFlags;          // flags
-  uint16_t usMedicalDeposit;       // is there a medical deposit on merc
-  uint16_t usLifeInsurance;        // is there life insurance taken out on merc
+  BOOLEAN fForcedToStayAwake;  // forced by player to stay awake, reset to false, the moment they
+                               // are set to rest or sleep
+  int8_t bTrainStat;           // current stat soldier is training
+  int16_t sSectorX;            // X position on the Stategic Map
+  int16_t sSectorY;            // Y position on the Stategic Map
+  int8_t bSectorZ;             // Z sector location
+  int32_t iVehicleId;          // the id of the vehicle the char is in
+  struct path *pMercPath;      // Path Structure
+  uint8_t fHitByGasFlags;      // flags
+  uint16_t usMedicalDeposit;   // is there a medical deposit on merc
+  uint16_t usLifeInsurance;    // is there life insurance taken out on merc
 
   // DEF:  Used for the communications
   uint32_t uiStartMovementTime;    // the time since the merc first started moving
-  uint32_t uiOptimumMovementTime;  // everytime in ececute overhead the time for the current ani will
-                                 // be added to this total
-  uint32_t usLastUpdateTime;       // The last time the soldier was in ExecuteOverhead
+  uint32_t uiOptimumMovementTime;  // everytime in ececute overhead the time for the current ani
+                                   // will be added to this total
+  uint32_t usLastUpdateTime;  // The last time the soldier was in ExecuteOverhead
 
   BOOLEAN fIsSoldierMoving;   // ie.  Record time is on
   BOOLEAN fIsSoldierDelayed;  // Is the soldier delayed Soldier
   BOOLEAN fSoldierUpdatedFromNetwork;
   uint32_t uiSoldierUpdateNumber;
-  BYTE ubSoldierUpdateType;
+  uint8_t ubSoldierUpdateType;
   // END
 
   int32_t iStartOfInsuranceContract;
@@ -748,7 +748,7 @@ struct SOLDIERTYPE {
   uint32_t uiChangeMechanicalTime;
 
   uint32_t uiUniqueSoldierIdValue;  // the unique value every instance of a soldier gets - 1 is the
-                                  // first valid value
+                                    // first valid value
   int8_t bBeingAttackedCount;       // Being attacked counter
 
   int8_t bNewItemCount[NUM_INV_SLOTS];
@@ -816,8 +816,8 @@ struct SOLDIERTYPE {
   uint8_t ubHoursOnAssignment;  // used for assignments handled only every X hours
 
   uint8_t
-  ubMercJustFired;  // the merc was just fired..there may be dialogue events occuring, this flag
-                    // will prevent any interaction with contracts until after the merc leaves
+      ubMercJustFired;  // the merc was just fired..there may be dialogue events occuring, this flag
+                        // will prevent any interaction with contracts until after the merc leaves
   uint8_t ubTurnsUntilCanSayHeardNoise;
   uint16_t usQuoteSaidExtFlags;
 
@@ -970,11 +970,13 @@ void EVENT_SetSoldierDirection(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirec
 void EVENT_SetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection);
 void EVENT_FireSoldierWeapon(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, int16_t ubDamage,
-                         int16_t sBreathLoss, uint16_t bDirection, uint16_t sRange, uint8_t ubAttackerID,
-                         uint8_t ubSpecial, uint8_t ubHitLocation, int16_t sSubsequent,
-                         int16_t sLocationGridNo);
-void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection);
-void EVENT_SoldierBeginPunchAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection);
+                         int16_t sBreathLoss, uint16_t bDirection, uint16_t sRange,
+                         uint8_t ubAttackerID, uint8_t ubSpecial, uint8_t ubHitLocation,
+                         int16_t sSubsequent, int16_t sLocationGridNo);
+void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                   uint8_t ubDirection);
+void EVENT_SoldierBeginPunchAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                   uint8_t ubDirection);
 void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection);
 void EVENT_StopMerc(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bDirection);
 void EVENT_SoldierBeginCutFence(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection);
@@ -1002,8 +1004,8 @@ void ChangeSoldierStance(struct SOLDIERTYPE *pSoldier, uint8_t ubDesiredStance);
 void ModifySoldierAniSpeed(struct SOLDIERTYPE *pSoldier);
 void StopSoldier(struct SOLDIERTYPE *pSoldier);
 uint8_t SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, int8_t bHeight, int16_t sLifeDeduct,
-                        int16_t sBreathDeduct, uint8_t ubReason, uint8_t ubAttacker, int16_t sSourceGrid,
-                        int16_t sSubsequent, BOOLEAN fShowDamage);
+                          int16_t sBreathDeduct, uint8_t ubReason, uint8_t ubAttacker,
+                          int16_t sSourceGrid, int16_t sSubsequent, BOOLEAN fShowDamage);
 void RevivePlayerTeam();
 void ReviveSoldier(struct SOLDIERTYPE *pSoldier);
 
@@ -1036,8 +1038,8 @@ BOOLEAN DoMercBattleSound(struct SOLDIERTYPE *pSoldier, uint8_t ubBattleSoundID)
 BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, uint8_t ubBattleSoundID,
                                   int8_t bSpecialCode);
 
-uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim, int16_t sKitPts,
-                         int16_t sStatus);
+uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                           int16_t sKitPts, int16_t sStatus);
 void ReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier);
 void GivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier);
 void InternalReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEAN fPlayEndAnim);
@@ -1128,12 +1130,14 @@ struct SOLDIERTYPE *GetRobotController(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CanRobotBeControlled(struct SOLDIERTYPE *pSoldier);
 BOOLEAN ControllingRobot(struct SOLDIERTYPE *pSoldier);
 
-void EVENT_SoldierBeginReloadRobot(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection,
-                                   uint8_t ubMercSlot);
+void EVENT_SoldierBeginReloadRobot(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                   uint8_t ubDirection, uint8_t ubMercSlot);
 
-void EVENT_SoldierBeginTakeBlood(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection);
+void EVENT_SoldierBeginTakeBlood(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t ubDirection);
 
-void EVENT_SoldierBeginAttachCan(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection);
+void EVENT_SoldierBeginAttachCan(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t ubDirection);
 
 void HandleSoldierTakeDamageFeedback(struct SOLDIERTYPE *pSoldier);
 

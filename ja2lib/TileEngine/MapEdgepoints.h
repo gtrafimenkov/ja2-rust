@@ -6,6 +6,7 @@
 #define __MAP_EDGEPOINTS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 typedef struct MAPEDGEPOINTINFO {
   uint8_t ubNumPoints;

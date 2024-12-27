@@ -47,7 +47,8 @@ uint8_t gubFact[NUM_FACTS];  // this has to be updated when we figure out how ma
 int16_t gsFoodQuestSectorX;
 int16_t gsFoodQuestSectorY;
 
-extern void GuaranteeAtLeastXItemsOfIndex(uint8_t ubArmsDealer, uint16_t usItemIndex, uint8_t ubHowMany);
+extern void GuaranteeAtLeastXItemsOfIndex(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                          uint8_t ubHowMany);
 
 void SetFactTrue(uint16_t usFact) {
   // This function is here just for control flow purposes (debug breakpoints)
@@ -424,7 +425,7 @@ BOOLEAN CheckPlayerHasHead(void) {
   return (FALSE);
 }
 
-BOOLEAN CheckNPCSector(uint8_t ubProfileID, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN CheckNPCSector(uint8_t ubProfileID, uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ubProfileID, TRUE);
@@ -503,7 +504,7 @@ BOOLEAN NPCHeardShot(uint8_t ubProfileID) {
   return (pNPC->ubMiscSoldierFlags & SOLDIER_MISC_HEARD_GUNSHOT);
 }
 
-BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
+BOOLEAN InTownSectorWithTrainingLoyalty(uint8_t sSectorX, uint8_t sSectorY) {
   uint8_t ubTown;
 
   ubTown = GetTownIdForSector(sSectorX, sSectorY);
@@ -1019,45 +1020,46 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_DRASSEN);
       break;
     case FACT_PLAYER_IN_CONTROLLED_DRASSEN_MINE:
-      gubFact[usFact] = (GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY,
+      gubFact[usFact] = (GetIdOfMineForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                               gbWorldSectorZ) == MINE_DRASSEN &&
-                         !IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY));
+                         !IsSectorEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY));
       break;
     case FACT_PLAYER_SPOKE_TO_CAMBRIA_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_CAMBRIA);
       break;
     case FACT_PLAYER_IN_CONTROLLED_CAMBRIA_MINE:
-      gubFact[usFact] = (GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY,
+      gubFact[usFact] = (GetIdOfMineForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                               gbWorldSectorZ) == MINE_CAMBRIA &&
-                         !IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY));
+                         !IsSectorEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY));
       break;
     case FACT_PLAYER_SPOKE_TO_CHITZENA_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_CHITZENA);
       break;
     case FACT_PLAYER_IN_CONTROLLED_CHITZENA_MINE:
-      gubFact[usFact] = (GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY,
+      gubFact[usFact] = (GetIdOfMineForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                               gbWorldSectorZ) == MINE_CHITZENA &&
-                         !IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY));
+                         !IsSectorEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY));
       break;
     case FACT_PLAYER_SPOKE_TO_ALMA_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_ALMA);
       break;
     case FACT_PLAYER_IN_CONTROLLED_ALMA_MINE:
-      gubFact[usFact] = (GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY,
+      gubFact[usFact] = (GetIdOfMineForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                               gbWorldSectorZ) == MINE_ALMA &&
-                         !IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY));
+                         !IsSectorEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY));
       break;
     case FACT_PLAYER_SPOKE_TO_GRUMM_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_GRUMM);
       break;
     case FACT_PLAYER_IN_CONTROLLED_GRUMM_MINE:
-      gubFact[usFact] = (GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY,
+      gubFact[usFact] = (GetIdOfMineForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                               gbWorldSectorZ) == MINE_GRUMM &&
-                         !IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY));
+                         !IsSectorEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY));
       break;
 
     case FACT_ENOUGH_LOYALTY_TO_TRAIN_MILITIA:
-      gubFact[usFact] = InTownSectorWithTrainingLoyalty((u8)gWorldSectorX, (u8)gWorldSectorY);
+      gubFact[usFact] =
+          InTownSectorWithTrainingLoyalty((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
       break;
 
     case FACT_WALKER_AT_BAR:
@@ -1128,11 +1130,12 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
   return (gubFact[usFact]);
 }
 
-void StartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY) {
+void StartQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY) {
   InternalStartQuest(ubQuest, sSectorX, sSectorY, TRUE);
 }
 
-void InternalStartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
+void InternalStartQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY,
+                        BOOLEAN fUpdateHistory) {
   if (gubQuest[ubQuest] == QUESTNOTSTARTED) {
     gubQuest[ubQuest] = QUESTINPROGRESS;
 
@@ -1144,11 +1147,11 @@ void InternalStartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpda
   }
 }
 
-void EndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY) {
+void EndQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY) {
   InternalEndQuest(ubQuest, sSectorX, sSectorY, TRUE);
 }
 
-void InternalEndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
+void InternalEndQuest(uint8_t ubQuest, uint8_t sSectorX, uint8_t sSectorY, BOOLEAN fUpdateHistory) {
   if (gubQuest[ubQuest] == QUESTINPROGRESS) {
     gubQuest[ubQuest] = QUESTDONE;
 

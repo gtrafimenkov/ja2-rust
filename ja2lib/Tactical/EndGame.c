@@ -261,7 +261,8 @@ void DoneFadeOutKilledQueen(void) {
 
   SetMusicMode(MUSIC_TACTICAL_VICTORY);
 
-  SetThisSectorAsPlayerControlled((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, TRUE);
+  SetThisSectorAsPlayerControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
+                                  TRUE);
 
   // ATE: Force change of level set z to 1
   gbWorldSectorZ = 1;
@@ -358,7 +359,8 @@ void HandleDoneLastEndGameQuote() {
 
 void QueenBitchTimerCallback(void) { HandleQueenBitchDeath(gpKillerSoldier, gsGridNo, gbLevel); }
 
-void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel) {
+void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo,
+                                int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
   int32_t cnt;
 

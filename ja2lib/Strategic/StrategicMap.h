@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Town.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -35,15 +36,16 @@ extern BOOLEAN gfUseAlternateMap;
 #define CHECK_DIR_X_DELTA (WORLD_TILE_X * 4)
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)
 
-void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY);
-BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ);
+void GetCurrentWorldSector(uint8_t *psMapX, uint8_t *psMapY);
+BOOLEAN SetCurrentWorldSector(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 
-BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
-void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
-void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+BOOLEAN EnterSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
+void UpdateMercsInSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t sSectorY,
+                        int8_t bSectorZ);
 
 // get short sector name without town name
-void GetShortSectorString(u8 sMapX, u8 sMapY, wchar_t* sString, size_t bufSize);
+void GetShortSectorString(uint8_t sMapX, uint8_t sMapY, wchar_t *sString, size_t bufSize);
 
 // NEW!
 // Calculates the name of the sector based on the loaded sector values.
@@ -51,10 +53,10 @@ void GetShortSectorString(u8 sMapX, u8 sMapY, wchar_t* sString, size_t bufSize);
 //						A10_B1
 //						J9_B2_A ( >= BETAVERSION ) else J9_B2 (release
 // equivalent)
-void GetLoadedSectorString(wchar_t* pString, size_t bufSize);
+void GetLoadedSectorString(wchar_t *pString, size_t bufSize);
 
-void GetMapFileName(u8 sMapX, u8 sMapY, int8_t bSectorZ, char* bString, BOOLEAN fUsePlaceholder,
-                    BOOLEAN fAddAlternateMapLetter);
+void GetMapFileName(uint8_t sMapX, uint8_t sMapY, int8_t bSectorZ, char *bString,
+                    BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter);
 
 // Called from within tactical.....
 void JumpIntoAdjacentSector(uint8_t ubDirection, uint8_t ubJumpCode, int16_t sAdditionalData);
@@ -93,7 +95,7 @@ void PrepareLoadedSector();
 // handle for slay...no better place to really put this stuff
 void HandleSlayDailyEvent(void);
 
-void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, int8_t bNewSectorZ);
+void HandleQuestCodeOnSectorEntry(uint8_t sNewSectorX, uint8_t sNewSectorY, int8_t bNewSectorZ);
 
 // handle a soldier leaving thier squad behind, this sets them up for mvt and potential rejoining of
 // group
@@ -101,7 +103,7 @@ void HandleSoldierLeavingSectorByThemSelf(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN CheckAndHandleUnloadingOfCurrentWorld();
 
-BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
+BOOLEAN IsSectorDesert(uint8_t sSectorX, uint8_t sSectorY);
 
 void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier);
 

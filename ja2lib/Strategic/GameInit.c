@@ -68,7 +68,7 @@ BOOLEAN QuickGameMemberHireMerc(uint8_t ubCurrentSoldier);
 extern uint32_t guiExitScreen;
 extern uint32_t uiMeanWhileFlags;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, uint8_t bMapZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(uint8_t sMapX, uint8_t sMapY, uint8_t bMapZ);
 extern void InitVehicles();
 
 uint8_t gubScreenCount = 0;
@@ -106,7 +106,7 @@ void InitNPCs(void) {
             pProfile->sSectorX);
 #endif
   // use alternate map, with Skyrider's shack, in this sector
-  SectorInfo[GetSectorID8((u8)pProfile->sSectorX, (u8)pProfile->sSectorY)].uiFlags |=
+  SectorInfo[GetSectorID8((uint8_t)pProfile->sSectorX, (uint8_t)pProfile->sSectorY)].uiFlags |=
       SF_USE_ALTERNATE_MAP;
 
   // set up Madlab's secret lab (he'll be added when the meanwhile scene occurs)
@@ -197,7 +197,7 @@ void InitNPCs(void) {
 #endif
 
     // use alternate map in this sector
-    SectorInfo[GetSectorID8((u8)pProfile->sSectorX, (u8)pProfile->sSectorY)].uiFlags |=
+    SectorInfo[GetSectorID8((uint8_t)pProfile->sSectorX, (uint8_t)pProfile->sSectorY)].uiFlags |=
         SF_USE_ALTERNATE_MAP;
   } else {  // not scifi, so use alternate map in Tixa's b1 level that doesn't have the stairs going
             // down to the caves.

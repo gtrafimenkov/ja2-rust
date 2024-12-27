@@ -59,7 +59,7 @@ void BuildMercQuitList(struct SOLDIERTYPE *pMercList);
 
 void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pKiller = NULL;
-  u8 sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
 
   // if the soldier HAS a profile
   if (GetSolProfile(pSoldier) != NO_PROFILE) {
@@ -74,8 +74,8 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
       sSectorX = GetSolSectorX(pSoldier);
       sSectorY = GetSolSectorY(pSoldier);
     } else {
-      sSectorX = (u8)gWorldSectorX;
-      sSectorY = (u8)gWorldSectorY;
+      sSectorX = (uint8_t)gWorldSectorX;
+      sSectorY = (uint8_t)gWorldSectorY;
     }
 
     if (pKiller && pKiller->bTeam == OUR_TEAM) {

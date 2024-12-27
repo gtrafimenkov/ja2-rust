@@ -810,7 +810,7 @@ void UpdateDoorPerceivedValue(DOOR *pDoor) {
   }
 }
 
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   uint32_t uiNumBytesWritten;
   uint32_t uiSizeToSave = 0;
   char zMapName[128];
@@ -861,7 +861,7 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSecto
   }
 
   // Set the sector flag indicating that there is a Door table temp file present
-  SetSectorFlag((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
+  SetSectorFlag((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
                 SF_DOOR_TABLE_TEMP_FILES_EXISTS);
 
   File_Close(hFile);
@@ -882,8 +882,8 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   // add the 'd' for 'Door' to the front of the map name
   //	sprintf( zMapName, "%s\\d_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY, gbWorldSectorZ);
+  GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, (uint8_t)gWorldSectorX,
+                     (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
   // Check to see if the file exists
   if (!File_Exists(zMapName)) {
@@ -1200,7 +1200,8 @@ BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
     if (PythSpacesAway(pSoldier->sGridNo, sGridNo) <= sDistVisible) {
       // and we can trace a line of sight to his x,y coordinates?
       // (taking into account we are definitely aware of this guy now)
-      if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, 0, 0, (uint8_t)sDistVisible, TRUE)) {
+      if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, 0, 0, (uint8_t)sDistVisible,
+                                             TRUE)) {
         // OK, here... update perceived value....
         if (fUpdateValue) {
           InternalUpdateDoorsPerceivedValue(pDoorStatus);
@@ -1552,7 +1553,8 @@ BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen) {
   }
 }
 
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                int8_t bSectorZ) {
   char zMapName[128];
   FileID hFile = FILE_ID_ERR;
   uint32_t uiNumBytesWritten;
@@ -1617,8 +1619,8 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   // add the 'm' for 'Modifed Map' to the front of the map name
   //	sprintf( zMapName, "%s\\ds_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY, gbWorldSectorZ);
+  GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, (uint8_t)gWorldSectorX,
+                     (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
   // Get rid of the existing door array
   TrashDoorStatusArray();
@@ -1702,7 +1704,7 @@ void ExamineDoorsOnEnteringSector() {
 
   // OK, only do this if conditions are met....
   // If this is any omerta tow, don't do it...
-  bTownId = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
+  bTownId = GetTownIdForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 
   if (bTownId == OMERTA) {
     return;
@@ -1752,7 +1754,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   // OK, only do this if conditions are met....
 
   // If this is any omerta tow, don't do it...
-  bTownId = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
+  bTownId = GetTownIdForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 
   if (bTownId == OMERTA) {
     return;
@@ -1812,8 +1814,9 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   }
 }
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel, int8_t bVisible,
-                       BOOLEAN fAddToDropList, int32_t iDropListSlot, BOOLEAN fUseUnLoaded) {
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
+                       int8_t bVisible, BOOLEAN fAddToDropList, int32_t iDropListSlot,
+                       BOOLEAN fUseUnLoaded) {
   uint8_t ubLoop;
   uint8_t ubItem;
   struct OBJECTTYPE Object;

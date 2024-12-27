@@ -39,11 +39,11 @@
 
 // https://learn.microsoft.com/en-us/windows/win32/api/_directdraw/
 
-bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
-                             LPRECT pSrcRect, u32 flags);
+bool BltFastSurfaceWithFlags(struct VSurface *dest, uint32_t x, uint32_t y, struct VSurface *src,
+                             LPRECT pSrcRect, uint32_t flags);
 
-static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY,
-                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, u32 ddFlags);
+static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, uint32_t uiX, uint32_t uiY,
+                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, uint32_t ddFlags);
 
 #define VIDEO_NO_CURSOR 0xFFFF
 
@@ -59,26 +59,27 @@ void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurf
 void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *ppOldSurface2);
 static struct BufferLockInfo DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
-bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
-                      LPRECT pSrcRect);
+bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, uint32_t uiX, uint32_t uiY,
+                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect);
 void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
-                  LPRECT pSrcRect, UINT32 uiFlags, LPDDBLTFX pDDBltFx);
-void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey);
+                  LPRECT pSrcRect, uint32_t uiFlags, LPDDBLTFX pDDBltFx);
+void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, uint32_t uiFlags,
+                          LPDDCOLORKEY pDDColorKey);
 
 // Palette Functions
-void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, UINT32 uiFlags, LPPALETTEENTRY pColorTable,
+void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, uint32_t uiFlags, LPPALETTEENTRY pColorTable,
                      LPDIRECTDRAWPALETTE FAR *ppDDPalette, IUnknown FAR *pUnkOuter);
-void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiStartingEntry,
-                         UINT32 uiCount, LPPALETTEENTRY pEntries);
+void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiStartingEntry,
+                         uint32_t uiCount, LPPALETTEENTRY pEntries);
 void DDReleasePalette(LPDIRECTDRAWPALETTE pPalette);
-void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiBase,
-                         UINT32 uiNumEntries, LPPALETTEENTRY pEntries);
+void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiBase,
+                         uint32_t uiNumEntries, LPPALETTEENTRY pEntries);
 
 // Clipper functions
-void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, UINT32 fFlags, LPDIRECTDRAWCLIPPER *pDDClipper);
+void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, uint32_t fFlags, LPDIRECTDRAWCLIPPER *pDDClipper);
 void DDSetClipper(LPDIRECTDRAWSURFACE2 pSurface, LPDIRECTDRAWCLIPPER pDDClipper);
 void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper);
-void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags);
+void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, uint32_t uiFlags);
 
 // local functions
 void DirectXAssert(BOOLEAN fValue, int32_t nLine, char *szFilename);
@@ -114,8 +115,8 @@ typedef struct {
 
 #define MAX_NUM_FRAMES 25
 
-UINT32 guiFramePeriod = (1000 / 15);
-UINT32 guiLastFrame;
+uint32_t guiFramePeriod = (1000 / 15);
+uint32_t guiLastFrame;
 UINT16 *gpFrameData[MAX_NUM_FRAMES];
 
 //
@@ -162,12 +163,12 @@ LPDIRECTDRAWPALETTE gpDirectDrawPalette;
 //
 
 extern struct GRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
-extern UINT32 guiDirtyRegionCount;
+extern uint32_t guiDirtyRegionCount;
 extern BOOLEAN gfForceFullScreenRefresh;
 
 extern struct GRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
-extern UINT32 gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
-extern UINT32 guiDirtyRegionExCount;
+extern uint32_t gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
+extern uint32_t guiDirtyRegionExCount;
 
 //
 // Screen output stuff
@@ -176,7 +177,7 @@ extern UINT32 guiDirtyRegionExCount;
 BOOLEAN gfPrintFrameBuffer;
 
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
-  UINT32 uiIndex;
+  uint32_t uiIndex;
   HRESULT ReturnCode;
   HWND hWindow;
   WNDCLASS WindowClass;
@@ -586,9 +587,9 @@ BOOLEAN RestoreVideoManager(void) {
   }
 }
 
-void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
+void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
-                         BOOLEAN fRenderStrip, UINT32 uiCurrentMouseBackbuffer) {
+                         BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
   UINT16 usWidth, usHeight;
   static RECT Region;
   static UINT16 usMouseXPos, usMouseYPos;
@@ -950,7 +951,7 @@ void printFramebuffer() {
 }
 
 void RefreshScreen() {
-  static UINT32 uiRefreshThreadState, uiIndex;
+  static uint32_t uiRefreshThreadState, uiIndex;
   UINT16 usScreenWidth, usScreenHeight;
   static BOOLEAN fShowMouse;
   HRESULT ReturnCode;
@@ -1337,9 +1338,9 @@ static BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  u16 usRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  u16 usGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  u16 usBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  uint16_t usRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  uint16_t usGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  uint16_t usBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   if ((usRedMask != 0xf800) || (usGreenMask != 0x07e0) || (usBlueMask != 0x001f)) {
     char buf[200];
@@ -1421,7 +1422,7 @@ void FatalError(char *pError, ...) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height) {
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) {
   Assert(height > 0);
   Assert(width > 0);
 
@@ -1454,8 +1455,8 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height) {
   vs->usHeight = height;
   vs->usWidth = width;
   vs->TransparentColor = FROMRGB(0, 0, 0);
-  vs->_platformData1 = (PTR)lpDDS;
-  vs->_platformData2 = (PTR)lpDDS2;
+  vs->_platformData1 = (void *)lpDDS;
+  vs->_platformData2 = (void *)lpDDS2;
 
   return (vs);
 }
@@ -1530,7 +1531,7 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   struct VSurface *hVSurface = VSurfaceNew();
   hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
   hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
-  hVSurface->_platformData2 = (PTR)lpDDSurface;
+  hVSurface->_platformData2 = (void *)lpDDSurface;
 
   // Get and Set palette, if attached, allow to fail
   LPDIRECTDRAWPALETTE pDDPalette;
@@ -1624,7 +1625,8 @@ static BOOLEAN ClipReleatedSrcAndDestRectangles(struct VSurface *hDestVSurface,
 }
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, int32_t iDestX, int32_t iDestY, struct Rect *SrcRect) {
+                           uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                           struct Rect *SrcRect) {
   RECT DestRect;
 
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
@@ -1644,7 +1646,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
     // Normal, specialized blit for clipping, etc
 
     // Default flags
-    u32 uiDDFlags = DDBLT_WAIT;
+    uint32_t uiDDFlags = DDBLT_WAIT;
 
     // Convert flags into DD flags, ( for transparency use, etc )
     if (fBltFlags & VS_BLT_USECOLORKEY) {
@@ -1677,10 +1679,10 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
   return (TRUE);
 }
 
-BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, UINT32 fBltFlags,
+BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, uint32_t fBltFlags,
                               int32_t iDestX, int32_t iDestY, struct Rect *SrcRect,
                               struct Rect *DestRect) {
-  UINT32 uiDDFlags;
+  uint32_t uiDDFlags;
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
 
   // Default flags
@@ -1746,38 +1748,38 @@ struct SmkFlic {
   FileID file_id;
   struct SmackTag *SmackHandle;
   struct SmackBufTag *SmackBuffer;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   LPDIRECTDRAWSURFACE2 lpDDS;
   HWND hWindow;
-  UINT32 uiFrame;
-  UINT32 uiLeft, uiTop;
+  uint32_t uiFrame;
+  uint32_t uiLeft, uiTop;
 };
 
 struct SmkFlic SmkList[SMK_NUM_FLICS];
 
 HWND hDisplayWindow = 0;
-UINT32 uiDisplayHeight, uiDisplayWidth;
+uint32_t uiDisplayHeight, uiDisplayWidth;
 BOOLEAN fSuspendFlics = FALSE;
-UINT32 uiFlicsPlaying = 0;
-UINT32 guiSmackPixelFormat = SMACKBUFFER565;
+uint32_t uiFlicsPlaying = 0;
+uint32_t guiSmackPixelFormat = SMACKBUFFER565;
 
 LPDIRECTDRAWSURFACE lpVideoPlayback = NULL;
 LPDIRECTDRAWSURFACE2 lpVideoPlayback2 = NULL;
 
 //-Function-Prototypes-------------------------------------------------------------
-void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight);
+void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight);
 void SmkShutdown(void);
-struct SmkFlic *SmkPlayFlic(char *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fAutoClose);
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fAutoClose);
 BOOLEAN SmkPollFlics(void);
 struct SmkFlic *SmkOpenFlic(char *cFilename);
-void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop);
+void SmkSetBlitPosition(struct SmkFlic *pSmack, uint32_t uiLeft, uint32_t uiTop);
 void SmkCloseFlic(struct SmkFlic *pSmack);
 struct SmkFlic *SmkGetFreeFlic(void);
 void SmkSetupVideo(void);
 void SmkShutdownVideo(void);
 
 BOOLEAN SmkPollFlics(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
   BOOLEAN fFlicStatus = FALSE;
 
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++) {
@@ -1811,7 +1813,7 @@ BOOLEAN SmkPollFlics(void) {
   return (fFlicStatus);
 }
 
-void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {
+void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight) {
   void *pSoundDriver = NULL;
 
   // Wipe the flic list clean
@@ -1833,7 +1835,7 @@ void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {
 }
 
 void SmkShutdown(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // Close and deallocate any open flics
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++) {
@@ -1841,7 +1843,7 @@ void SmkShutdown(void) {
   }
 }
 
-struct SmkFlic *SmkPlayFlic(char *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
   struct SmkFlic *pSmack;
 
   // Open the flic
@@ -1904,7 +1906,7 @@ struct SmkFlic *SmkOpenFlic(char *cFilename) {
   return (pSmack);
 }
 
-void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop) {
+void SmkSetBlitPosition(struct SmkFlic *pSmack, uint32_t uiLeft, uint32_t uiTop) {
   pSmack->uiLeft = uiLeft;
   pSmack->uiTop = uiTop;
 }
@@ -1917,7 +1919,7 @@ void SmkCloseFlic(struct SmkFlic *pSmack) {
 }
 
 struct SmkFlic *SmkGetFreeFlic(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++)
     if (!(SmkList[uiCount].uiFlags & SMK_FLIC_OPEN)) return (&SmkList[uiCount]);
@@ -2114,8 +2116,8 @@ void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
   IDirectDrawSurface2_Restore(pSurface);
 }
 
-static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY,
-                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, u32 ddFlags) {
+static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, uint32_t uiX, uint32_t uiY,
+                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, uint32_t ddFlags) {
   HRESULT ReturnCode;
 
   Assert(dest != NULL);
@@ -2134,9 +2136,9 @@ static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UIN
   return true;
 }
 
-bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
-                             LPRECT pSrcRect, u32 flags) {
-  u32 ddFlags = 0;
+bool BltFastSurfaceWithFlags(struct VSurface *dest, uint32_t x, uint32_t y, struct VSurface *src,
+                             LPRECT pSrcRect, uint32_t flags) {
+  uint32_t ddFlags = 0;
 
   if (flags & VS_BLT_USECOLORKEY) {
     ddFlags |= DDBLTFAST_SRCCOLORKEY;
@@ -2146,13 +2148,13 @@ bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurfac
                                    (LPDIRECTDRAWSURFACE2)src->_platformData2, pSrcRect, ddFlags);
 }
 
-bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
-                      LPRECT pSrcRect) {
+bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, uint32_t uiX, uint32_t uiY,
+                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect) {
   return DDBltFastSurfaceWithFlags(dest, uiX, uiY, src, pSrcRect, DDBLTFAST_NOCOLORKEY);
 }
 
 void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
-                  LPRECT pSrcRect, UINT32 uiFlags, LPDDBLTFX pDDBltFx) {
+                  LPRECT pSrcRect, uint32_t uiFlags, LPDDBLTFX pDDBltFx) {
   HRESULT ReturnCode;
 
   Assert(dest != NULL);
@@ -2167,23 +2169,23 @@ void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFA
   ReturnCode;
 }
 
-void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, UINT32 uiFlags, LPPALETTEENTRY pColorTable,
+void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, uint32_t uiFlags, LPPALETTEENTRY pColorTable,
                      LPDIRECTDRAWPALETTE FAR *ppDDPalette, IUnknown FAR *pUnkOuter) {
   Assert(pDirectDraw != NULL);
 
   IDirectDraw2_CreatePalette(pDirectDraw, uiFlags, pColorTable, ppDDPalette, pUnkOuter);
 }
 
-void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiStartingEntry,
-                         UINT32 uiCount, LPPALETTEENTRY pEntries) {
+void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiStartingEntry,
+                         uint32_t uiCount, LPPALETTEENTRY pEntries) {
   Assert(pPalette != NULL);
   Assert(pEntries != NULL);
 
   IDirectDrawPalette_SetEntries(pPalette, uiFlags, uiStartingEntry, uiCount, pEntries);
 }
 
-void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiBase,
-                         UINT32 uiNumEntries, LPPALETTEENTRY pEntries) {
+void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiBase,
+                         uint32_t uiNumEntries, LPPALETTEENTRY pEntries) {
   Assert(pPalette != NULL);
   Assert(pEntries != NULL);
 
@@ -2196,7 +2198,8 @@ void DDReleasePalette(LPDIRECTDRAWPALETTE pPalette) {
   IDirectDrawPalette_Release(pPalette);
 }
 
-void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey) {
+void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, uint32_t uiFlags,
+                          LPDDCOLORKEY pDDColorKey) {
   Assert(pSurface != NULL);
   Assert(pDDColorKey != NULL);
 
@@ -2204,7 +2207,7 @@ void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOL
 }
 
 // Clipper FUnctions
-void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, UINT32 fFlags, LPDIRECTDRAWCLIPPER *pDDClipper) {
+void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, uint32_t fFlags, LPDIRECTDRAWCLIPPER *pDDClipper) {
   Assert(pDirectDraw != NULL);
   Assert(pDDClipper != NULL);
 
@@ -2224,7 +2227,7 @@ void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper) {
   IDirectDrawClipper_Release(pDDClipper);
 }
 
-void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags) {
+void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, uint32_t uiFlags) {
   Assert(pDDClipper != NULL);
   Assert(pClipList != NULL);
 

@@ -6,6 +6,7 @@
 #define _SQUADS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 
@@ -115,8 +116,9 @@ void SetDefaultSquadOnSectorEntry(BOOLEAN fForce);
 int32_t GetLastSquadActive(void);
 
 // set squads between sector position
-void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX, uint8_t ubPrevY,
-                                    uint32_t uiTraverseTime, uint32_t uiArriveTime, uint8_t ubSquadValue);
+void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX,
+                                    uint8_t ubPrevY, uint32_t uiTraverseTime, uint32_t uiArriveTime,
+                                    uint8_t ubSquadValue);
 
 // get squads between sector positions and times
 void GetSquadPosition(uint8_t *ubNextX, uint8_t *ubNextY, uint8_t *ubPrevX, uint8_t *ubPrevY,
@@ -143,7 +145,8 @@ BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, uint8_t ubSquad);
 BOOLEAN IsAnyMercOnSquadAsleep(uint8_t ubSquadValue);
 
 // is therea  dead guy here
-BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue, int8_t *bNumberOfDeadGuysSoFar);
+BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue,
+                                 int8_t *bNumberOfDeadGuysSoFar);
 
 // dead soldier was on squad
 BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadValue);

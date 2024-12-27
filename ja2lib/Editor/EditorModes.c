@@ -21,6 +21,7 @@
 #include "TileEngine/TileDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
+#include "rust_fileman.h"
 
 BOOLEAN gfShowExitGrids = FALSE;
 

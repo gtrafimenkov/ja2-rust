@@ -6,7 +6,7 @@
 #define __WORLD_CLOCK
 
 #include "SGP/Types.h"
-#include "rust_clock.h"
+#include "rust_clock_ext.h"
 
 // where the time string itself is rendered
 #define CLOCK_X 554
