@@ -13,12 +13,12 @@ void RenderHistory();
 
 // the financial structure
 struct history {
-  UINT8 ubCode;        // the code index in the finance code table
-  UINT32 uiIdNumber;   // unique id number
-  UINT8 ubSecondCode;  // secondary code
-  UINT32 uiDate;       // time in the world in global time
-  INT16 sSectorX;      // sector X this took place in
-  INT16 sSectorY;      // sector Y this took place in
+  UINT8 ubCode;         // the code index in the finance code table
+  uint32_t uiIdNumber;  // unique id number
+  UINT8 ubSecondCode;   // secondary code
+  uint32_t uiDate;      // time in the world in global time
+  INT16 sSectorX;       // sector X this took place in
+  INT16 sSectorY;       // sector Y this took place in
   INT8 bSectorZ;
   UINT8 ubColor;
   struct history *Next;  // next unit in the list
@@ -114,11 +114,11 @@ extern HistoryUnitPtr pHistoryListHead;
 void ResetHistoryFact(UINT8 ubCode, u8 sSectorX, u8 sSectorY);
 
 // set history fact...to allow for a different color for in progress quests
-UINT32 SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT16 sSectorX,
-                      INT16 sSectorY);
+uint32_t SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, uint32_t uiDate, INT16 sSectorX,
+                        INT16 sSectorY);
 
-UINT32 AddHistoryToPlayersLog(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT16 sSectorX,
-                              INT16 sSectorY);
-UINT32 GetTimeQuestWasStarted(UINT8 ubCode);
+uint32_t AddHistoryToPlayersLog(UINT8 ubCode, UINT8 ubSecondCode, uint32_t uiDate, INT16 sSectorX,
+                                INT16 sSectorY);
+uint32_t GetTimeQuestWasStarted(UINT8 ubCode);
 
 #endif

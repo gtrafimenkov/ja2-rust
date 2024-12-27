@@ -86,7 +86,7 @@ typedef struct {
   INT16 sAP;
   INT16 sSpeed;
   FLOAT dMovementChange;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UINT8 ubHeight;
   UINT8 ubEndHeight;
   INT8 bProfile;

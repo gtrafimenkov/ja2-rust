@@ -60,16 +60,16 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
 
 // Gets the free hard drive space from the drive letter passed in.  It has to be the root dir.  (
 // eg. c:\ )
-static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter);
+static uint32_t GetFreeSpaceOnHardDrive(STR pzDriveLetter);
 
-UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
+uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   STRING512 zExecDir;
   STRING512 zDrive;
   STRING512 zDir;
   STRING512 zFileName;
   STRING512 zExt;
 
-  UINT32 uiFreeSpace = 0;
+  uint32_t uiFreeSpace = 0;
 
   Plat_GetExecutableDirectory(zExecDir, sizeof(zExecDir));
 
@@ -83,7 +83,7 @@ UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   return (uiFreeSpace);
 }
 
-static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
+static uint32_t GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
   DWORD uiBytesFree = 0;
   DWORD uiSectorsPerCluster = 0;
   DWORD uiBytesPerSector = 0;
@@ -92,7 +92,7 @@ static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
 
   if (!GetDiskFreeSpace(pzDriveLetter, &uiSectorsPerCluster, &uiBytesPerSector,
                         &uiNumberOfFreeClusters, &uiTotalNumberOfClusters)) {
-    UINT32 uiLastError = GetLastError();
+    uint32_t uiLastError = GetLastError();
     char zString[1024];
     FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
 
@@ -218,7 +218,7 @@ static void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Str
 //
 //**************************************************************************
 
-HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
+HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) {
   HWFILE hFile;
   HANDLE hRealFile;
   DWORD dwAccess;
@@ -307,7 +307,7 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
     hRealFile =
         CreateFile(strFilename, dwAccess, 0, NULL, dwCreationFlags, dwFlagsAndAttributes, NULL);
     if (hRealFile == INVALID_HANDLE_VALUE) {
-      UINT32 uiLastError = GetLastError();
+      uint32_t uiLastError = GetLastError();
       char zString[1024];
       FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
 
@@ -342,7 +342,7 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
 
 void FileMan_Close(HWFILE hFile) {
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -375,8 +375,8 @@ void FileMan_Close(HWFILE hFile) {
 //
 //		HWFILE		-> handle to file to read from
 //		void	*	-> source buffer
-//		UINT32	-> num bytes to read
-//		UINT32	-> num bytes read
+//		uint32_t	-> num bytes to read
+//		uint32_t	-> num bytes read
 //
 // Return Value :
 //
@@ -393,21 +393,21 @@ void FileMan_Close(HWFILE hFile) {
 //**************************************************************************
 
 #ifdef JA2TESTVERSION
-extern UINT32 uiTotalFileReadTime;
-extern UINT32 uiTotalFileReadCalls;
+extern uint32_t uiTotalFileReadTime;
+extern uint32_t uiTotalFileReadCalls;
 #include "Utils/TimerControl.h"
 #endif
 
-BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead) {
+BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
   HANDLE hRealFile;
   DWORD dwNumBytesToRead;
   u32 dwNumBytesRead;
   BOOLEAN fRet = FALSE;
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
 #ifdef JA2TESTVERSION
-  UINT32 uiStartTime = GetJA2Clock();
+  uint32_t uiStartTime = GetJA2Clock();
 #endif
 
   // init the variables
@@ -425,14 +425,14 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiB
 
       fRet = Plat_ReadFile(hRealFile, pDest, dwNumBytesToRead, &dwNumBytesRead);
       if (dwNumBytesToRead != dwNumBytesRead) {
-        UINT32 uiLastError = GetLastError();
+        uint32_t uiLastError = GetLastError();
         char zString[1024];
         FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
 
         fRet = FALSE;
       }
 
-      if (puiBytesRead) *puiBytesRead = (UINT32)dwNumBytesRead;
+      if (puiBytesRead) *puiBytesRead = (uint32_t)dwNumBytesRead;
     }
   } else {
     // if the database is initialized
@@ -443,9 +443,9 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiB
         if (gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFileID != 0) {
           // read the data from the library
           fRet = LoadDataFromLibrary(sLibraryID, uiFileNum, pDest, dwNumBytesToRead,
-                                     (UINT32 *)&dwNumBytesRead);
+                                     (uint32_t *)&dwNumBytesRead);
           if (puiBytesRead) {
-            *puiBytesRead = (UINT32)dwNumBytesRead;
+            *puiBytesRead = (uint32_t)dwNumBytesRead;
           }
         }
       }
@@ -470,8 +470,8 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiB
 //
 //		HWFILE		-> handle to file to write to
 //		void	*	-> destination buffer
-//		UINT32	-> num bytes to write
-//		UINT32	-> num bytes written
+//		uint32_t	-> num bytes to write
+//		uint32_t	-> num bytes written
 //
 // Return Value :
 //
@@ -487,12 +487,12 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiB
 //
 //**************************************************************************
 
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *puiBytesWritten) {
+BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t *puiBytesWritten) {
   HANDLE hRealFile;
   DWORD dwNumBytesToWrite, dwNumBytesWritten;
   BOOLEAN fRet;
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -507,7 +507,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *pu
 
     if (dwNumBytesToWrite != dwNumBytesWritten) fRet = FALSE;
 
-    if (puiBytesWritten) *puiBytesWritten = (UINT32)dwNumBytesWritten;
+    if (puiBytesWritten) *puiBytesWritten = (uint32_t)dwNumBytesWritten;
   } else {
     // we cannot write to a library file
     if (puiBytesWritten) *puiBytesWritten = 0;
@@ -526,7 +526,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *pu
 // Parameter List :
 //
 //		HWFILE	-> handle to file to seek in
-//		UINT32	-> distance to seek
+//		uint32_t	-> distance to seek
 //		UINT8		-> how to seek
 //
 // Return Value :
@@ -542,13 +542,13 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *pu
 //
 //**************************************************************************
 
-BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) {
+BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, UINT8 uiHow) {
   HANDLE hRealFile;
   LONG lDistanceToMove;
   INT32 iDistance = 0;
 
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -599,10 +599,10 @@ BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) {
 
 INT32 FileMan_GetPos(HWFILE hFile) {
   HANDLE hRealFile;
-  UINT32 uiPositionInFile = 0;
+  uint32_t uiPositionInFile = 0;
 
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -654,12 +654,12 @@ INT32 FileMan_GetPos(HWFILE hFile) {
 //
 //**************************************************************************
 
-UINT32 FileMan_GetSize(HWFILE hFile) {
+uint32_t FileMan_GetSize(HWFILE hFile) {
   HANDLE hRealHandle;
-  UINT32 uiFileSize = 0xFFFFFFFF;
+  uint32_t uiFileSize = 0xFFFFFFFF;
 
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -683,7 +683,7 @@ UINT32 FileMan_GetSize(HWFILE hFile) {
 }
 
 BOOLEAN Plat_DirectoryExists(const char *pcDirectory) {
-  UINT32 uiAttribs;
+  uint32_t uiAttribs;
   DWORD uiLastError;
 
   uiAttribs = GetFileAttributes(pcDirectory);
@@ -887,7 +887,7 @@ void Plat_GetFileClose(struct GetFile *pGFStruct) {
 }
 
 void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
-  UINT32 uiAttribMask;
+  uint32_t uiAttribMask;
 
   // Copy the filename
   strcpy(pGFStruct->zFileName, pW32Struct->cFileName);
@@ -949,13 +949,13 @@ BOOLEAN Plat_ClearFileAttributes(STR strFilename) {
 // returns true if at end of file, else false
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
   HANDLE hRealFile;
   //	UINT8		Data;
-  UINT32 uiNumberOfBytesRead = 0;
-  UINT32 uiOldFilePtrLoc = 0;
-  UINT32 uiEndOfFilePtrLoc = 0;
-  UINT32 temp = 0;
+  uint32_t uiNumberOfBytesRead = 0;
+  uint32_t uiOldFilePtrLoc = 0;
+  uint32_t uiEndOfFilePtrLoc = 0;
+  uint32_t temp = 0;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -988,10 +988,10 @@ BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
       if (IsLibraryOpened(sLibraryID)) {
         // if the file is opened
         if (gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFileID != 0) {
-          UINT32 uiLength;  // uiOffsetInLibrary
+          uint32_t uiLength;  // uiOffsetInLibrary
           //					HANDLE	hLibraryFile;
-          //					UINT32	uiNumBytesRead;
-          UINT32 uiCurPos;
+          //					uint32_t	uiNumBytesRead;
+          uint32_t uiCurPos;
 
           uiLength =
               gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].pFileHeader->uiFileLength;
@@ -1014,7 +1014,7 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) {
   *pLastWriteTime = 0;
 
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
   // if its a real file, read the data from the file
@@ -1042,9 +1042,9 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) {
   return (TRUE);
 }
 
-UINT32 FileMan_Size(STR strFilename) {
+uint32_t FileMan_Size(STR strFilename) {
   HWFILE hFile;
-  UINT32 uiSize;
+  uint32_t uiSize;
 
   if ((hFile = FileMan_Open(strFilename, FILE_OPEN_EXISTING | FILE_ACCESS_READ, FALSE)) == 0)
     return (0);
@@ -1057,7 +1057,7 @@ UINT32 FileMan_Size(STR strFilename) {
 
 HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
   INT16 sLibraryID;
-  UINT32 uiFileNum;
+  uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 

@@ -36,7 +36,7 @@ extern UINT8 gPurpendicularDirection[NUM_WORLD_DIRECTIONS][NUM_WORLD_DIRECTIONS]
 //                                                |Invalid-|   |Valid-------------------|
 #define MAPROWCOLTOPOS(r, c)                                                 \
   (((r < 0) || (r >= WORLD_ROWS) || (c < 0) || (c >= WORLD_COLS)) ? (0xffff) \
-                                                                  : ((r)*WORLD_COLS + (c)))
+                                                                  : ((r) * WORLD_COLS + (c)))
 
 #define GETWORLDINDEXFROMWORLDCOORDS(r, c) \
   ((INT16)(r / CELL_X_SIZE)) * WORLD_COLS + ((INT16)(c / CELL_Y_SIZE))
@@ -116,6 +116,6 @@ BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8
 // Simply chooses a random gridno within valid boundaries (for dropping things in unloaded sectors)
 INT16 RandomGridNo();
 
-extern UINT32 guiForceRefreshMousePositionCalculation;
+extern uint32_t guiForceRefreshMousePositionCalculation;
 
 #endif

@@ -18,7 +18,7 @@ struct SOLDIERTYPE;
 #define BLOODDIVISOR 10
 
 void DecaySmells(void);
-void DecayBloodAndSmells(UINT32 uiTime);
+void DecayBloodAndSmells(uint32_t uiTime);
 void DropSmell(struct SOLDIERTYPE* pSoldier);
 void DropBlood(struct SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible);
 void UpdateBloodGraphics(INT16 sGridNo, INT8 bLevel);

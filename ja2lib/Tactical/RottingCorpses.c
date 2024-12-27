@@ -337,7 +337,7 @@ ROTTING_CORPSE gRottingCorpse[MAX_ROTTING_CORPSES];
 INT32 giNumRottingCorpse = 0;
 
 BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse);
-BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, UINT32 uiBase,
+BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, uint32_t uiBase,
                                   struct SGPPaletteEntry *pShadePal);
 
 void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot);
@@ -360,7 +360,7 @@ void RecountRottingCorpses(void) {
   if (giNumRottingCorpse > 0) {
     for (uiCount = giNumRottingCorpse - 1; (uiCount >= 0); uiCount--) {
       if ((gRottingCorpse[uiCount].fActivated == FALSE)) {
-        giNumRottingCorpse = (UINT32)(uiCount + 1);
+        giNumRottingCorpse = (uint32_t)(uiCount + 1);
         break;
       }
     }
@@ -429,7 +429,7 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   INT16 sTileGridNo;
   DB_STRUCTURE_TILE **ppTile;
   UINT16 usStructIndex;
-  UINT32 uiDirectionUseFlag;
+  uint32_t uiDirectionUseFlag;
 
   if (pCorpseDef->sGridNo == NOWHERE) {
     return (-1);
@@ -956,7 +956,7 @@ void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier) {
 void HandleRottingCorpses() {
   ROTTING_CORPSE *pCorpse;
   INT8 bNumCrows = 0;
-  UINT32 uiChosenCorpseID;
+  uint32_t uiChosenCorpseID;
 
   // Don't allow crows here if flags not set
   if (!gTacticalStatus.fGoodToAllowCrows) {
@@ -1162,7 +1162,7 @@ void RebuildAllCorpseShadeTables() {
 
 UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
   struct SGPPaletteEntry LightPal[256];
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // create the basic shade table
   for (uiCount = 0; uiCount < 256; uiCount++) {
@@ -1183,9 +1183,9 @@ UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
   return (TRUE);
 }
 
-BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, UINT32 uiBase,
+BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, uint32_t uiBase,
                                   struct SGPPaletteEntry *pShadePal) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   pCorpse->pShades[uiBase] = Create16BPPPaletteShaded(
       pShadePal, gusShadeLevels[0][0], gusShadeLevels[0][1], gusShadeLevels[0][2], TRUE);
@@ -1263,7 +1263,7 @@ void CorpseHit(INT16 sGridNo, UINT16 usStructureID) {
 	}
 
 	// PLay a sound....
-	PlayJA2Sample( (UINT32)( BULLET_IMPACT_2 ), RATE_11025, SoundVolume( MIDVOLUME, sGridNo ), 1, SoundDir( sGridNo ) );
+	PlayJA2Sample( (uint32_t)( BULLET_IMPACT_2 ), RATE_11025, SoundVolume( MIDVOLUME, sGridNo ), 1, SoundDir( sGridNo ) );
 
 #endif
 }
@@ -1323,7 +1323,7 @@ void VaporizeCorpse(INT16 sGridNo, UINT16 usStructureID) {
   }
 
   // PLay a sound....
-  PlayJA2Sample((UINT32)(BODY_EXPLODE_1), RATE_11025, SoundVolume(HIGHVOLUME, sGridNo), 1,
+  PlayJA2Sample((uint32_t)(BODY_EXPLODE_1), RATE_11025, SoundVolume(HIGHVOLUME, sGridNo), 1,
                 SoundDir(sGridNo));
 }
 

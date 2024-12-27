@@ -74,8 +74,8 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
   INT32 i;
   INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
@@ -381,16 +381,15 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                    UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam,
-                                    BOOLEAN fAppendToFile) {
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubFirstIdTeam,
+                                    UINT8 ubLastIdTeam, BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
   INT32 slots = 0;
   INT32 iSlotsAlreadyInUse = 0;
-  UINT32 uiNumBytesWritten;
-  UINT32 uiTimeStamp;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
   SCHEDULENODE *pSchedule;
   UINT16 usCheckSum;
@@ -671,8 +670,8 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
   INT32 i;
   INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
@@ -1038,9 +1037,9 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
   INT32 i;
   INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
-  UINT32 uiTimeSinceLastLoaded;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
+  uint32_t uiTimeSinceLastLoaded;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
@@ -1322,8 +1321,8 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
   INT32 slots = 0;
-  UINT32 uiNumBytesWritten;
-  UINT32 uiTimeStamp;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
@@ -1595,8 +1594,8 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
   INT32 i;
   INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
   UINT16 usCheckSum;

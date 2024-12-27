@@ -67,7 +67,7 @@ void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iRea
 
 // Bottom Menu Buttons
 void BtnHistoryMenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiHistoryMenuButton[AIM_HISTORY_MENU_BUTTON_AMOUNT];
+uint32_t guiHistoryMenuButton[AIM_HISTORY_MENU_BUTTON_AMOUNT];
 INT32 guiHistoryMenuButtonImage;
 
 BOOLEAN DrawAimHistoryMenuBar(void);
@@ -143,7 +143,7 @@ void HandleAimHistory() {}
 
 void RenderAimHistory() {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   DrawAimDefaults();
   //	DrawAimHistoryMenuBar();
@@ -310,7 +310,7 @@ void SelectHistoryMenuButtonsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
 
 BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   UINT16 usPosY = 0;
   UINT16 usNumPixels = 0;
 
@@ -357,7 +357,7 @@ BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs) {
 
 BOOLEAN InitTocMenu() {
   UINT16 i, usPosY;
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   wchar_t sText[400];
   UINT8 ubLocInFile[] = {IN_THE_BEGINNING, THE_ISLAND_METAVIRA, GUS_TARBALLS, WORD_FROM_FOUNDER,
                          INCORPORATION};

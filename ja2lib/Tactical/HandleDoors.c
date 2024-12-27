@@ -815,7 +815,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   ANITILE_PARAMS AniParams;
   BOOLEAN fDoAnimation = TRUE;
   struct STRUCTURE *pBaseStructure;
-  UINT32 uiSoundID;
+  uint32_t uiSoundID;
 
   pBaseStructure = FindBaseStructure(pStructure);
   if (!pBaseStructure) {

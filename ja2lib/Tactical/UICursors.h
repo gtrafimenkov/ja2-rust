@@ -25,6 +25,6 @@ extern BOOLEAN gfCannotGetThrough;
 void HandleUICursorRTFeedback(struct SOLDIERTYPE *pSoldier);
 void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN GetMouseRecalcAndShowAPFlags(UINT32 *puiCursorFlags, BOOLEAN *pfShowAPs);
+BOOLEAN GetMouseRecalcAndShowAPFlags(uint32_t *puiCursorFlags, BOOLEAN *pfShowAPs);
 
 #endif

@@ -56,7 +56,7 @@ UINT16 gusLOSStartGridNo = 0;
 UINT16 gusLOSEndGridNo = 0;
 UINT16 gusLOSStartSoldier = NOBODY;
 UINT16 gusLOSEndSoldier = NOBODY;
-extern UINT32 guiSoldierFlags;
+extern uint32_t guiSoldierFlags;
 extern INT16 DirIncrementer[8];
 
 static FIXEDPT gqStandardWallHeight = INT32_TO_FIXEDPT(WALL_HEIGHT_UNITS);
@@ -65,8 +65,8 @@ static FIXEDPT gqStandardWindowTopHeight = INT32_TO_FIXEDPT(WINDOW_TOP_HEIGHT_UN
 
 #define FIXEDPT_MULTIPLY(a, b) ((a / 256) * (b / 256))
 
-UINT32 FPMult32(UINT32 uiA, UINT32 uiB) {
-  UINT32 uiResult;
+uint32_t FPMult32(uint32_t uiA, uint32_t uiB) {
+  uint32_t uiResult;
 
 #ifdef _WINDOWS
   __asm {
@@ -178,9 +178,9 @@ static UINT16 guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STR
 #define MAX_AIMING_SCREWUP (RADIANS_IN_CIRCLE * 15 / 360)
 // min aiming screwup is X degrees, gets divided by distance in tiles
 #define MIN_AIMING_SCREWUP (RADIANS_IN_CIRCLE * 22 / 360)
-//#define MAX_AIMING_SCREWUP 0.2618
-// equal to 10 degrees
-//#define MAX_AIMING_SCREWUP_VERTIC 0.1745
+// #define MAX_AIMING_SCREWUP 0.2618
+//  equal to 10 degrees
+// #define MAX_AIMING_SCREWUP_VERTIC 0.1745
 
 #define SMELL_REDUCTION_FOR_NEARBY_OBSTACLE 80
 
@@ -192,7 +192,7 @@ static UINT16 guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STR
 #define MAX_LOCAL_STRUCTURES 20
 
 struct STRUCTURE *gpLocalStructure[MAX_LOCAL_STRUCTURES];
-UINT32 guiLocalStructureCTH[MAX_LOCAL_STRUCTURES];
+uint32_t guiLocalStructureCTH[MAX_LOCAL_STRUCTURES];
 UINT8 gubLocalStructureNumTimesHit[MAX_LOCAL_STRUCTURES];
 
 BOOLEAN CalculateLOSNormal(struct STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ,
@@ -233,7 +233,7 @@ FLOAT Distance2D(FLOAT dDeltaX, FLOAT dDeltaY) {
   return ((FLOAT)sqrt((DOUBLE)(dDeltaX * dDeltaX + dDeltaY * dDeltaY)));
 }
 
-//#define DEBUGLOS
+// #define DEBUGLOS
 
 #if defined(JA2BETAVERSION) && defined(DEBUGLOS)
 void DebugLOS(STR szOutput) {
@@ -1499,9 +1499,9 @@ INT16 SoldierToLocationWindowTest(struct SOLDIERTYPE *pStartSoldier, INT16 sEndG
 BOOLEAN SoldierToSoldierLineOfSightTimingTest(struct SOLDIERTYPE *pStartSoldier,
                                               struct SOLDIERTYPE *pEndSoldier,
                                               UINT8 ubTileSightLimit, INT8 bAware) {
-  UINT32 uiLoopLimit = 100000;
-  UINT32 uiLoop;
-  UINT32 uiStartTime, uiEndTime;
+  uint32_t uiLoopLimit = 100000;
+  uint32_t uiLoop;
+  uint32_t uiStartTime, uiEndTime;
 
   FILE *OutFile;
 
@@ -1718,7 +1718,7 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
   UINT8 ubHitLocation = AIM_SHOT_RANDOM;
   UINT8 ubAttackDirection;
   UINT8 ubAmmoType;
-  UINT32 uiChanceThrough;
+  uint32_t uiChanceThrough;
   UINT8 ubSpecial = FIRE_WEAPON_NO_SPECIAL;
   INT16 sHitBy;
   BOOLEAN fStopped = TRUE;
@@ -1854,13 +1854,13 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
       } else if (((pTarget->inv[HEAD1POS].usItem == NIGHTGOGGLES) ||
                   (pTarget->inv[HEAD1POS].usItem == SUNGOGGLES) ||
                   (pTarget->inv[HEAD1POS].usItem == GASMASK)) &&
-                 (PreRandom(100) < (UINT32)(pTarget->inv[HEAD1POS].bStatus[0]))) {
+                 (PreRandom(100) < (uint32_t)(pTarget->inv[HEAD1POS].bStatus[0]))) {
         // lucky bastard was wearing protective stuff
         bHeadSlot = HEAD1POS;
       } else if (((pTarget->inv[HEAD2POS].usItem == NIGHTGOGGLES) ||
                   (pTarget->inv[HEAD2POS].usItem == SUNGOGGLES) ||
                   (pTarget->inv[HEAD2POS].usItem == GASMASK)) &&
-                 (PreRandom(100) < (UINT32)(pTarget->inv[HEAD2POS].bStatus[0]))) {
+                 (PreRandom(100) < (uint32_t)(pTarget->inv[HEAD2POS].bStatus[0]))) {
         // lucky bastard was wearing protective stuff
         bHeadSlot = HEAD2POS;
       } else {
@@ -2095,7 +2095,7 @@ void BulletMissed(BULLET *pBullet, struct SOLDIERTYPE *pFirer) {
   ShotMiss(pFirer->ubID, pBullet->iBullet);
 }
 
-UINT32 ChanceOfBulletHittingStructure(INT32 iDistance, INT32 iDistanceToTarget, INT16 sHitBy) {
+uint32_t ChanceOfBulletHittingStructure(INT32 iDistance, INT32 iDistanceToTarget, INT16 sHitBy) {
   INT32 iCloseToCoverPenalty;
 
   if (iDistance / CELL_X_SIZE > MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STRUCTURE) {
@@ -2331,7 +2331,7 @@ UINT8 CalcChanceToGetThrough(BULLET *pBullet) {
   INT32 iStepsToTravel;
   INT32 iNumLocalStructures;
   INT32 iStructureLoop;
-  UINT32 uiChanceOfHit;
+  uint32_t uiChanceOfHit;
   INT32 iGridNo;
   INT32 iTotalStructureImpact;
   BOOLEAN fResolveHit;
@@ -2897,7 +2897,7 @@ void CalculateFiringIncrements(DOUBLE ddHorizAngle, DOUBLE ddVerticAngle, DOUBLE
   DOUBLE ddVerticPercentOfMiss;
   DOUBLE ddAbsVerticAngle;
   DOUBLE ddScrewupAdjustmentLimit;
-  UINT32 uiChanceOfMissAbove;
+  uint32_t uiChanceOfMissAbove;
   DOUBLE ddMinimumMiss;
   DOUBLE ddMaximumMiss;
   DOUBLE ddAmountOfMiss;
@@ -3285,8 +3285,8 @@ void MoveBullet(INT32 iBullet) {
   INT8 bOldLOSIndexX;
   INT8 bOldLOSIndexY;
 
-  UINT32 uiTileInc = 0;
-  UINT32 uiTime;
+  uint32_t uiTileInc = 0;
+  uint32_t uiTime;
 
   INT8 bDir;
   INT32 iGridNo, iAdjGridNo;
@@ -3301,7 +3301,7 @@ void MoveBullet(INT32 iBullet) {
 
   INT32 iNumLocalStructures;
   INT32 iStructureLoop;
-  UINT32 uiChanceOfHit;
+  uint32_t uiChanceOfHit;
 
   BOOLEAN fResolveHit;
 

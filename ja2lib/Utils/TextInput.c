@@ -28,14 +28,14 @@ void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 
 // Internal string manipulation functions.
-void AddChar(UINT32 uiKey);
+void AddChar(uint32_t uiKey);
 void RemoveChar(UINT8 ubArrayIndex);
 void DeleteHilitedText();
 
 void DoublePercentileCharacterFromStringIntoString(STR16 pSrcString, STR16 pDstString);
 
 // All exclusive input types are handled in this function.
-void HandleExclusiveInput(UINT32 uiKey);
+void HandleExclusiveInput(uint32_t uiKey);
 
 typedef struct TextInputColors {
   // internal values that contain all of the colors for the text editing fields.
@@ -770,7 +770,7 @@ BOOLEAN HandleTextInput(InputAtom *Event) {
         HandleExclusiveInput(Event->usParam);
       else {
         // Use abbreviations
-        UINT32 key = Event->usParam;
+        uint32_t key = Event->usParam;
         UINT16 type = gpActive->usInputType;
         // Handle space key
         if (key == SPACE && type & INPUTTYPE_SPACES) {
@@ -818,7 +818,7 @@ BOOLEAN HandleTextInput(InputAtom *Event) {
   return TRUE;
 }
 
-void HandleExclusiveInput(UINT32 uiKey) {
+void HandleExclusiveInput(uint32_t uiKey) {
   switch (gpActive->usInputType) {
     case INPUTTYPE_EXCLUSIVE_DOSFILENAME:  // dos file names
       if ((uiKey >= 'A' && uiKey <= 'Z') || (uiKey >= 'a' && uiKey <= 'z') ||
@@ -870,7 +870,7 @@ void HandleExclusiveInput(UINT32 uiKey) {
   }
 }
 
-void AddChar(UINT32 uiKey) {
+void AddChar(uint32_t uiKey) {
   PlayJA2Sample(ENTERING_TEXT, RATE_11025, BTNVOLUME, 1, MIDDLEPAN);
   if (gpActive->ubStrLen >=
       gpActive->ubMaxChars) {  // max length reached.  Just replace the last character with new one.
@@ -1041,7 +1041,7 @@ void RenderBackgroundField(TEXTINPUTNODE *pNode) {
 }
 
 void RenderActiveTextField() {
-  UINT32 uiCursorXPos;
+  uint32_t uiCursorXPos;
   UINT16 usOffset;
   CHAR16 str[256];
   if (!gpActive || !gpActive->szString) return;
@@ -1158,7 +1158,7 @@ void RenderInactiveTextFieldNode(TEXTINPUTNODE *pNode) {
   RestoreFontSettings();
   if (!pNode->fEnabled && pColors->fUseDisabledAutoShade) {
     UINT8 *pDestBuf;
-    UINT32 uiDestPitchBYTES;
+    uint32_t uiDestPitchBYTES;
     SGPRect ClipRect;
     ClipRect.iLeft = pNode->region.RegionTopLeftX;
     ClipRect.iRight = pNode->region.RegionBottomRightX;

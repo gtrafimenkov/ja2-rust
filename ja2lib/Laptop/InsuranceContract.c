@@ -105,8 +105,8 @@
 #define INS_CTRCT_EXP_LEVEL_BASE 3
 #define INS_CTRCT_SURVIVAL_BASE 90
 
-UINT32 guiInsOrderGridImage;
-UINT32 guiInsOrderBulletImage;
+uint32_t guiInsOrderGridImage;
+uint32_t guiInsOrderBulletImage;
 
 INT16 gsForm1InsuranceLengthNumber;
 INT16 gsForm2InsuranceLengthNumber;
@@ -130,24 +130,24 @@ void SelectInsuranceContractRegionCallBack(struct MOUSE_REGION *pRegion, INT32 i
 
 INT32 guiInsContractPrevButtonImage;
 void BtnInsContractPrevButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsContractPrevBackButton;
+uint32_t guiInsContractPrevBackButton;
 
 INT32 guiInsContractNextButtonImage;
 void BtnInsContractNextButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsContractNextBackButton;
+uint32_t guiInsContractNextBackButton;
 
 // Graphic for Accept, Clear button for form 1
 INT32 guiInsuranceAcceptClearForm1ButtonImage;
 void BtnInsuranceAcceptClearForm1ButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsuranceAcceptClearForm1Button;
+uint32_t guiInsuranceAcceptClearForm1Button;
 
 // Graphic for Accept, Clear button for form 2
 void BtnInsuranceAcceptClearForm2ButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsuranceAcceptClearForm2Button;
+uint32_t guiInsuranceAcceptClearForm2Button;
 
 // Graphic for Accept, Clear button for form 3
 void BtnInsuranceAcceptClearForm3ButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsuranceAcceptClearForm3Button;
+uint32_t guiInsuranceAcceptClearForm3Button;
 
 //
 //	Function Prototypes
@@ -166,12 +166,12 @@ FLOAT DiffFromNormRatio(INT16 sThisValue, INT16 sNormalValue);
 void InsContractNoMercsPopupCallBack(UINT8 bExitValue);
 void BuildInsuranceArray();
 BOOLEAN MercIsInsurable(struct SOLDIERTYPE *pSoldier);
-// UINT32		GetContractLengthForFormNumber( UINT8 ubFormID );
+// uint32_t		GetContractLengthForFormNumber( UINT8 ubFormID );
 void EnableDisableInsuranceContractAcceptButtons();
-UINT32 GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier);
-UINT32 GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier);
+uint32_t GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier);
+uint32_t GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier);
 void EnableDisableIndividualInsuranceContractButton(UINT8 ubMercIDForMercInForm1,
-                                                    UINT32 *puiAcceptButton);
+                                                    uint32_t *puiAcceptButton);
 BOOLEAN CanSoldierExtendInsuranceContract(struct SOLDIERTYPE *pSoldier);
 INT32 CalculateSoldiersInsuranceContractLength(struct SOLDIERTYPE *pSoldier);
 INT32 CalcStartDayOfInsurance(struct SOLDIERTYPE *pSoldier);
@@ -470,7 +470,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   VOBJECT_DESC VObjectDesc;
   struct VObject *hPixHandle;
   UINT16 usPosX, usPosY;
-  UINT32 uiInsMercFaceImage;
+  uint32_t uiInsMercFaceImage;
   INT32 iCostOfContract = 0;
   char sTemp[100];
   wchar_t sText[800];
@@ -851,7 +851,7 @@ INT8 GetNumberOfHireMercsStartingFromID(UINT8 ubStartMercID) {
 INT32 CalculateInsuranceCost( struct SOLDIERTYPE *pSoldier, BOOLEAN fHaveInsurance )
 {
         INT32			iAmount=0;
-        UINT32		uiInsuranceContractLength = 0;
+        uint32_t		uiInsuranceContractLength = 0;
 
         uiInsuranceContractLength = CalculateSoldiersInsuranceContractLength( pSoldier );
 
@@ -884,7 +884,7 @@ GetSolProfile(pSoldier));
 void SelectInsuranceContractRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
+    uint32_t uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
 
     if (uiInsuranceLink == 0)
       guiCurrentLaptopMode = LAPTOP_MODE_INSURANCE;
@@ -1052,8 +1052,8 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID) {
   INT16 sTotalSkill = 0;
   FLOAT flSkillFactor, flFitnessFactor, flExpFactor, flSurvivalFactor;
   FLOAT flRiskFactor;
-  UINT32 uiDailyInsurancePremium;
-  UINT32 uiTotalInsurancePremium;
+  uint32_t uiDailyInsurancePremium;
+  uint32_t uiTotalInsurancePremium;
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetSoldierByID(GetSoldierIDFromMercID(ubMercID));
@@ -1109,7 +1109,7 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID) {
   // premium depend on merc's salary, the base insurance rate, and the individual's risk factor at
   // this time
   uiDailyInsurancePremium =
-      (UINT32)(((pProfile->sSalary * INSURANCE_PREMIUM_RATE * flRiskFactor) / 100) + 0.5);
+      (uint32_t)(((pProfile->sSalary * INSURANCE_PREMIUM_RATE * flRiskFactor) / 100) + 0.5);
   // multiply by the insurance contract length
   uiTotalInsurancePremium = uiDailyInsurancePremium * iLength;
 
@@ -1166,10 +1166,10 @@ void BuildInsuranceArray() {
 
 BOOLEAN AddLifeInsurancePayout(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubPayoutID;
-  UINT32 uiTimeInMinutes;
+  uint32_t uiTimeInMinutes;
   MERCPROFILESTRUCT *pProfile;
-  UINT32 uiCostPerDay;
-  UINT32 uiDaysToPay;
+  uint32_t uiCostPerDay;
+  uint32_t uiDaysToPay;
 
   Assert(pSoldier != NULL);
   Assert(GetSolProfile(pSoldier) != NO_PROFILE);
@@ -1388,7 +1388,7 @@ void EnableDisableInsuranceContractAcceptButtons() {
 }
 
 void EnableDisableIndividualInsuranceContractButton(UINT8 ubMercIDForMercInForm,
-                                                    UINT32 *puiAcceptButton) {
+                                                    uint32_t *puiAcceptButton) {
   INT16 sSoldierID = 0;
 
   sSoldierID = GetSoldierIDFromMercID(ubMercIDForMercInForm);
@@ -1406,7 +1406,7 @@ void EnableDisableIndividualInsuranceContractButton(UINT8 ubMercIDForMercInForm,
 }
 
 /*
-UINT32	GetContractLengthForFormNumber( UINT8 ubFormID )
+uint32_t	GetContractLengthForFormNumber( UINT8 ubFormID )
 {
         UINT8	ubMercID;
         struct SOLDIERTYPE	*pSoldier;
@@ -1434,7 +1434,7 @@ UINT32	GetContractLengthForFormNumber( UINT8 ubFormID )
 }
 */
 
-UINT32 GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier) {
+uint32_t GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier) {
   // if the soldier has life insurance
   if (pSoldier->usLifeInsurance) {
     // if the insurance contract hasnt started yet
@@ -1447,7 +1447,7 @@ UINT32 GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier)
     return (0);
 }
 
-UINT32 GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier) {
+uint32_t GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier) {
   INT32 iDayMercLeaves = (pSoldier->iEndofContractTime / 1440) - 1;
 
   // Since the merc is leaving in the afternoon, we must adjust since the time left would be
@@ -1464,7 +1464,7 @@ UINT32 GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier) {
   //	return( ( pSoldier->iEndofContractTime - (INT32)GetWorldTotalMin( ) ) / 1440 );
 }
 
-void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 uiInsuranceLength) {
+void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, uint32_t uiInsuranceLength) {
   INT32 iAmountOfMoneyTransfer = -1;
 
   if (pSoldier == NULL) AssertMsg(0, "Soldier pointer is NULL!");
@@ -1541,7 +1541,7 @@ BOOLEAN CanSoldierExtendInsuranceContract(struct SOLDIERTYPE *pSoldier) {
 
 INT32 CalculateSoldiersInsuranceContractLength(struct SOLDIERTYPE *pSoldier) {
   INT32 iInsuranceContractLength = 0;
-  UINT32 uiTimeRemainingOnSoldiersContract = GetTimeRemainingOnSoldiersContract(pSoldier);
+  uint32_t uiTimeRemainingOnSoldiersContract = GetTimeRemainingOnSoldiersContract(pSoldier);
 
   // if the merc is dead
   if (IsMercDead(GetSolProfile(pSoldier))) return (0);
@@ -1585,7 +1585,7 @@ INT32 CalculateSoldiersInsuranceContractLength(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT32 CalcStartDayOfInsurance(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiDayToStartInsurance = 0;
+  uint32_t uiDayToStartInsurance = 0;
 
   // if the soldier was just hired ( in transit ), and the game didnt just start
   if (GetSolAssignment(pSoldier) == IN_TRANSIT && !DidGameJustStart()) {

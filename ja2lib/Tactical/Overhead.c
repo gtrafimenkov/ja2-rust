@@ -111,10 +111,10 @@ extern UINT8 gubAICounter;
 #define RT_AI_TIMESLICE 10
 
 INT32 giRTAILastUpdateTime = 0;
-UINT32 guiAISlotToHandle = 0;
+uint32_t guiAISlotToHandle = 0;
 #define HANDLE_OFF_MAP_MERC 0xFFFF
 #define RESET_HANDLE_OF_OFF_MAP_MERCS 0xFFFF
-UINT32 guiAIAwaySlotToHandle = RESET_HANDLE_OF_OFF_MAP_MERCS;
+uint32_t guiAIAwaySlotToHandle = RESET_HANDLE_OF_OFF_MAP_MERCS;
 
 #define PAUSE_ALL_AI_DELAY 1500
 
@@ -180,10 +180,10 @@ struct SOLDIERTYPE Menptr[TOTAL_SOLDIERS];
 struct SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
 
 struct SOLDIERTYPE *MercSlots[TOTAL_SOLDIERS];
-UINT32 guiNumMercSlots = 0;
+uint32_t guiNumMercSlots = 0;
 
 struct SOLDIERTYPE *AwaySlots[TOTAL_SOLDIERS];
-UINT32 guiNumAwaySlots = 0;
+uint32_t guiNumAwaySlots = 0;
 
 // DEF: changed to have client wait for gPlayerNum assigned from host
 UINT8 gbPlayerNum = 0;
@@ -286,12 +286,12 @@ UINT8 NumBloodcatsInSectorNotDeadOrDying();
 
 UINT8 gubWaitingForAllMercsToExitCode = 0;
 INT8 gbNumMercsUntilWaitingOver = 0;
-UINT32 guiWaitingForAllMercsToExitData[3];
-UINT32 guiWaitingForAllMercsToExitTimer = 0;
+uint32_t guiWaitingForAllMercsToExitData[3];
+uint32_t guiWaitingForAllMercsToExitTimer = 0;
 BOOLEAN gfKillingGuysForLosingBattle = FALSE;
 
 INT32 GetFreeMercSlot(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumMercSlots; uiCount++) {
     if ((MercSlots[uiCount] == NULL)) return ((INT32)uiCount);
@@ -309,7 +309,7 @@ void RecountMercSlots(void) {
     // set equal to 0 as a default
     for (iCount = guiNumMercSlots - 1; (iCount >= 0); iCount--) {
       if ((MercSlots[iCount] != NULL)) {
-        guiNumMercSlots = (UINT32)(iCount + 1);
+        guiNumMercSlots = (uint32_t)(iCount + 1);
         return;
       }
     }
@@ -329,7 +329,7 @@ INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   CHECKF(pSoldier != NULL);
 
@@ -346,7 +346,7 @@ BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT32 GetFreeAwaySlot(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumAwaySlots; uiCount++) {
     if ((AwaySlots[uiCount] == NULL)) return ((INT32)uiCount);
@@ -363,7 +363,7 @@ void RecountAwaySlots(void) {
   if (guiNumAwaySlots > 0) {
     for (iCount = guiNumAwaySlots - 1; (iCount >= 0); iCount--) {
       if ((AwaySlots[iCount] != NULL)) {
-        guiNumAwaySlots = (UINT32)(iCount + 1);
+        guiNumAwaySlots = (uint32_t)(iCount + 1);
         return;
       }
     }
@@ -383,7 +383,7 @@ INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   CHECKF(pSoldier != NULL);
 
@@ -486,7 +486,7 @@ void ShutdownTacticalEngine() {
 }
 
 BOOLEAN InitOverhead() {
-  UINT32 cnt;
+  uint32_t cnt;
   UINT8 cnt2;
 
   memset(MercSlots, 0, sizeof(MercSlots));
@@ -581,7 +581,7 @@ BOOLEAN InitOverhead() {
 }
 
 BOOLEAN ShutdownOverhead() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Delete any soldiers which have been created!
   for (cnt = 0; cnt < TOTAL_SOLDIERS; cnt++) {
@@ -615,8 +615,8 @@ BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, UINT16 usSoldierIndex) {
   }
 }
 
-BOOLEAN NextAIToHandle(UINT32 uiCurrAISlot) {
-  UINT32 cnt;
+BOOLEAN NextAIToHandle(uint32_t uiCurrAISlot) {
+  uint32_t cnt;
 
   if (uiCurrAISlot >= guiNumMercSlots) {
     // last person to handle was an off-map merc, so now we start looping at the beginning
@@ -690,7 +690,7 @@ FLOAT gdRadiansForAngle[] = {
 };
 
 BOOLEAN ExecuteOverhead() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   INT16 sAPCost;
   INT16 sBPCost;
@@ -2430,7 +2430,7 @@ void SelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceResel
 }
 
 BOOLEAN ResetAllAnimationCache() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // Loop through all mercs and make go
@@ -2542,7 +2542,7 @@ void SlideToLocation(UINT16 usReasonID, INT16 sDestGridNo) {
 }
 
 void RebuildAllSoldierShadeTables() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // Loop through all mercs and make go
@@ -3476,7 +3476,7 @@ void EndTacticalDemo() {
   gTacticalStatus.fGoingToEnterDemo = FALSE;
 }
 
-UINT32 EnterTacticalDemoMode() {
+uint32_t EnterTacticalDemoMode() {
   UINT8 ubNewScene = gubCurrentScene;
   UINT8 ubNumScenes = NUM_RANDOM_SCENES;
 
@@ -3742,7 +3742,7 @@ INT16 NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, INT16 sGrid
 // Kris:
 BOOLEAN FlatRoofAboveGridNo(INT32 iMapIndex) {
   struct LEVELNODE *pRoof;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pRoof = gpWorldLevelData[iMapIndex].pRoofHead;
   while (pRoof) {
     if (pRoof->usIndex != NO_TILE) {
@@ -3834,7 +3834,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
   INT32 cnt;
   INT16 sClosest = NOWHERE, sSpot, sOkTest;
   INT16 sCloseGridNo = NOWHERE;
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
   UINT16 usSoldierIndex;
   UINT8 ubDir;
   struct STRUCTURE *pDoor;
@@ -4077,7 +4077,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
   INT32 cnt;
   INT16 sClosest = WORLD_MAX, sSpot, sSpot2, sOkTest;
   INT16 sCloseGridNo = NOWHERE;
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
   UINT16 usSoldierIndex;
   UINT8 ubDir;
   struct STRUCTURE *pDoor;
@@ -4359,7 +4359,7 @@ BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
 void HandleTeamServices(UINT8 ubTeamNum) {
   INT32 cnt;
   struct SOLDIERTYPE *pTeamSoldier, *pTargetSoldier;
-  UINT32 uiPointsUsed;
+  uint32_t uiPointsUsed;
   UINT16 usSoldierIndex;
   UINT16 usKitPts;
   INT8 bSlot;
@@ -4434,7 +4434,7 @@ void HandleTeamServices(UINT8 ubTeamNum) {
 
 void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
   struct SOLDIERTYPE *pTargetSoldier;
-  UINT32 uiPointsUsed;
+  uint32_t uiPointsUsed;
   UINT16 usSoldierIndex;
   UINT16 usKitPts;
   INT8 bSlot;
@@ -4502,7 +4502,7 @@ void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
 }
 
 void CommonEnterCombatModeCode() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   gTacticalStatus.uiFlags |= INCOMBAT;
@@ -4589,7 +4589,7 @@ void CommonEnterCombatModeCode() {
 }
 
 void EnterCombatMode(UINT8 ubStartingTeam) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
   if (gTacticalStatus.uiFlags & INCOMBAT) {
@@ -4638,7 +4638,7 @@ void EnterCombatMode(UINT8 ubStartingTeam) {
 }
 
 void ExitCombatMode() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Exiting combat mode");
@@ -4769,7 +4769,7 @@ BOOLEAN SoldierHasSeenEnemiesLastFewTurns(struct SOLDIERTYPE *pTeamSoldier) {
 }
 
 BOOLEAN WeSeeNoOne(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -4787,7 +4787,7 @@ BOOLEAN WeSeeNoOne(void) {
 }
 
 BOOLEAN NobodyAlerted(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -4804,7 +4804,7 @@ BOOLEAN NobodyAlerted(void) {
 }
 
 BOOLEAN WeSawSomeoneThisTurn(void) {
-  UINT32 uiLoop, uiLoop2;
+  uint32_t uiLoop, uiLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -4855,7 +4855,7 @@ void SayBattleSoundFromAnyBodyInSector(INT32 iBattleSnd) {
 
 BOOLEAN CheckForEndOfCombatMode(BOOLEAN fIncrementTurnsNotSeen) {
   struct SOLDIERTYPE *pTeamSoldier;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
   BOOLEAN fWeSeeNoOne, fNobodyAlerted;
   BOOLEAN fSayQuote = FALSE;
   BOOLEAN fWeSawSomeoneRecently = FALSE, fSomeoneSawSomeoneRecently = FALSE;
@@ -5271,7 +5271,7 @@ void CycleThroughKnownEnemies() {
   struct SOLDIERTYPE *pSoldier;
   static BOOLEAN fFirstTime = TRUE;
   static UINT16 usStartToLook;
-  UINT32 cnt;
+  uint32_t cnt;
   BOOLEAN fEnemyBehindStartLook = FALSE;
   BOOLEAN fEnemiesFound = FALSE;
 
@@ -5322,7 +5322,7 @@ void CycleThroughKnownEnemies() {
 void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
   // static to indicate last position we were at:
   struct SOLDIERTYPE *pSoldier;
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bLastID, pSoldier = MercPtrs[cnt];
        cnt < TOTAL_SOLDIERS; cnt++, pSoldier++) {
@@ -5369,12 +5369,12 @@ void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
 }
 
 INT8 CountNonVehiclesOnPlayerTeam(void) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   INT8 bNumber = 0;
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[cnt];
-       cnt <= (UINT32)(gTacticalStatus.Team[gbPlayerNum].bLastID); cnt++, pSoldier++) {
+       cnt <= (uint32_t)(gTacticalStatus.Team[gbPlayerNum].bLastID); cnt++, pSoldier++) {
     if (IsSolActive(pSoldier) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
       bNumber++;
     }
@@ -5394,7 +5394,7 @@ BOOLEAN PlayerTeamFull() {
 
 UINT8 NumPCsInSector(void) {
   struct SOLDIERTYPE *pTeamSoldier;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
   UINT8 ubNumPlayers = 0;
 
   // Check if the battle is won!
@@ -5697,7 +5697,7 @@ BOOLEAN KillIncompacitatedEnemyInSector() {
 }
 
 BOOLEAN AttackOnGroupWitnessed(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget) {
-  UINT32 uiSlot;
+  uint32_t uiSlot;
   struct SOLDIERTYPE *pGroupMember;
 
   // look for all group members... rebels could be on the civ team or ours!
@@ -5774,7 +5774,7 @@ void HandleSuppressionFire(UINT8 ubTargetedMerc, UINT8 ubCausedAttacker) {
   INT8 bTolerance;
   INT16 sClosestOpponent, sClosestOppLoc;
   UINT8 ubPointsLost, ubTotalPointsLost, ubNewStance;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT8 ubLoop2;
   struct SOLDIERTYPE *pSoldier;
 
@@ -5935,7 +5935,7 @@ void HandleSuppressionFire(UINT8 ubTargetedMerc, UINT8 ubCausedAttacker) {
       }
 
     }  // end of examining one soldier
-  }    // end of loop
+  }  // end of loop
 }
 
 BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
@@ -6192,7 +6192,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
       if (pTarget->ubBodyType == CROW) {
         // Loop through our team, make guys who can see this fly away....
         {
-          UINT32 cnt;
+          uint32_t cnt;
           struct SOLDIERTYPE *pTeamSoldier;
           UINT8 ubTeam;
 
@@ -6400,7 +6400,7 @@ void StopMercAnimation(BOOLEAN fStop) {
 
 void ResetAllMercSpeeds() {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < TOTAL_SOLDIERS; cnt++) {
     pSoldier = MercPtrs[cnt];
@@ -6411,8 +6411,8 @@ void ResetAllMercSpeeds() {
   }
 }
 
-void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiting, UINT32 uiData1,
-                                         UINT32 uiData2, UINT32 uiData3) {
+void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiting,
+                                         uint32_t uiData1, uint32_t uiData2, uint32_t uiData3) {
   gubWaitingForAllMercsToExitCode = ubActionCode;
   gbNumMercsUntilWaitingOver = bNumMercsWaiting;
   guiWaitingForAllMercsToExitData[0] = uiData1;
@@ -6745,7 +6745,7 @@ void HandleCreatureTenseQuote() {
         uiTime = GetJA2Clock();
 
         if ((uiTime - gTacticalStatus.uiCreatureTenseQuoteLastUpdate) >
-            (UINT32)(gTacticalStatus.sCreatureTenseQuoteDelay * 1000)) {
+            (uint32_t)(gTacticalStatus.sCreatureTenseQuoteDelay * 1000)) {
           gTacticalStatus.uiCreatureTenseQuoteLastUpdate = uiTime;
 
           // set up soldier ptr as first element in mercptrs list

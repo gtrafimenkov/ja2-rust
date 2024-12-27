@@ -218,20 +218,20 @@ UINT16 gShippingSpeedAreas[] = {585, 218 + LAPTOP_SCREEN_WEB_DELTA_Y,
                                 585, 258 + LAPTOP_SCREEN_WEB_DELTA_Y};
 
 // Identifier for the images
-UINT32 guiBobbyRayTitle;
-UINT32 guiBobbyROrderGrid;
-UINT32 guiBobbyRLocationGraphic;
-UINT32 guiDeliverySpeedGraphic;
-UINT32 guiConfirmGraphic;
-UINT32 guiTotalSaveArea;  // used as a savebuffer for the subtotal, s&h, and grand total values
-UINT32 guiGoldArrowImages;
-UINT32 guiPackageWeightImage;
+uint32_t guiBobbyRayTitle;
+uint32_t guiBobbyROrderGrid;
+uint32_t guiBobbyRLocationGraphic;
+uint32_t guiDeliverySpeedGraphic;
+uint32_t guiConfirmGraphic;
+uint32_t guiTotalSaveArea;  // used as a savebuffer for the subtotal, s&h, and grand total values
+uint32_t guiGoldArrowImages;
+uint32_t guiPackageWeightImage;
 
 BOOLEAN gfReDrawBobbyOrder = FALSE;
 
 INT32 giGrandTotal;
-UINT32 guiShippingCost;
-UINT32 guiSubTotal;
+uint32_t guiShippingCost;
+uint32_t guiSubTotal;
 
 UINT8 gubSelectedLight;
 
@@ -255,27 +255,27 @@ INT32 giNumberOfNewBobbyRShipment;
 
 // Clear Order Button
 void BtnBobbyRClearOrderCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRClearOrder;
+uint32_t guiBobbyRClearOrder;
 INT32 guiBobbyRClearOrderImage;
 
 // Accept Order Button
 void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRAcceptOrder;
+uint32_t guiBobbyRAcceptOrder;
 INT32 guiBobbyRAcceptOrderImage;
 
 // Back Button
 void BtnBobbyRBackCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRBack;
+uint32_t guiBobbyRBack;
 INT32 guiBobbyRBackImage;
 
 // Home Button
 void BtnBobbyRHomeCallback(GUI_BUTTON *btn, INT32 reason);
-extern UINT32 guiBobbyRHome;
+extern uint32_t guiBobbyRHome;
 extern INT32 guiBobbyRHomeImage;
 
 // Goto Shipment Page Button
 void BtnBobbyRGotoShipmentPageCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRGotoShipmentPage;
+uint32_t guiBobbyRGotoShipmentPage;
 INT32 giBobbyRGotoShipmentPageImage;
 
 // mouse region for the shipping speed selection area
@@ -321,10 +321,10 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, UINT16 
 void RemovePurchasedItemsFromBobbyRayInventory();
 BOOLEAN IsAnythingPurchasedFromBobbyRayPage();
 void DrawGoldRectangle(INT8 bCityNum);
-UINT32 CalcCostFromWeightOfPackage(UINT8 ubTypeOfService);
+uint32_t CalcCostFromWeightOfPackage(UINT8 ubTypeOfService);
 void ConfirmBobbyRPurchaseMessageBoxCallBack(UINT8 bExitValue);
 void PurchaseBobbyOrder();
-UINT32 CalcPackageTotalWeight();
+uint32_t CalcPackageTotalWeight();
 void DisplayPackageWeight();
 void ShutDownBobbyRNewMailOrders();
 // ppp
@@ -811,8 +811,8 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, UINT16 usGridX, UINT16 
   wchar_t sBack[400];
   wchar_t sTemp[20];
   UINT16 usPosY;
-  UINT32 uiStartLoc = 0;
-  UINT32 uiTotal;
+  uint32_t uiStartLoc = 0;
+  uint32_t uiTotal;
   UINT16 usStringLength;
   UINT16 usPixLength;
   wchar_t OneChar[2];
@@ -1762,7 +1762,7 @@ void SelectUpDownArrowOnScrollAreaRegionCallBack(struct MOUSE_REGION *pRegion, I
 }
 
 void DrawGoldRectangle(INT8 bCityNum) {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usWidth, usTempHeight, usTempPosY, usHeight;
   UINT16 usPosX, usPosY;
@@ -1814,10 +1814,10 @@ void DrawGoldRectangle(INT8 bCityNum) {
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-UINT32 CalcCostFromWeightOfPackage(UINT8 ubTypeOfService) {
-  UINT32 uiTotalWeight = 0;
+uint32_t CalcCostFromWeightOfPackage(UINT8 ubTypeOfService) {
+  uint32_t uiTotalWeight = 0;
   UINT16 usStandardCost = 0;
-  UINT32 uiTotalCost = 0;
+  uint32_t uiTotalCost = 0;
 
   if (gbSelectedCity == -1) {
     // shipping rates unknown until destination selected
@@ -1864,7 +1864,7 @@ UINT32 CalcCostFromWeightOfPackage(UINT8 ubTypeOfService) {
     uiTotalWeight = MIN_SHIPPING_WEIGHT;
   }
 
-  uiTotalCost = (UINT32)((uiTotalWeight / (FLOAT)10) * usStandardCost + .5);
+  uiTotalCost = (uint32_t)((uiTotalWeight / (FLOAT)10) * usStandardCost + .5);
 
   return (uiTotalCost);
 }
@@ -1915,7 +1915,7 @@ void PurchaseBobbyOrder() {
   // if the shipment is going to Drassen, add the inventory
   if (gbSelectedCity == BR_DRASSEN || gbSelectedCity == BR_MEDUNA) {
     //					BobbyRayOrderStruct *pBobbyRayPurchase;
-    //					UINT32	uiResetTimeSec;
+    //					uint32_t	uiResetTimeSec;
     //		UINT8	i, ubCount;
     //		UINT8	cnt;
     //		INT8		bDaysAhead;
@@ -2078,9 +2078,9 @@ void EnterInitBobbyRayOrder() {
   DisableButton(guiBobbyRAcceptOrder);
 }
 
-UINT32 CalcPackageTotalWeight() {
+uint32_t CalcPackageTotalWeight() {
   UINT16 i;
-  UINT32 uiTotalWeight = 0;
+  uint32_t uiTotalWeight = 0;
 
   // loop through all the packages
   for (i = 0; i < MAX_PURCHASE_AMOUNT; i++) {
@@ -2097,7 +2097,7 @@ UINT32 CalcPackageTotalWeight() {
 
 void DisplayPackageWeight() {
   CHAR16 zTemp[32];
-  UINT32 uiTotalWeight = CalcPackageTotalWeight();
+  uint32_t uiTotalWeight = CalcPackageTotalWeight();
   //	FLOAT			fWeight = (FLOAT)(uiTotalWeight / 10.0);
 
   // Display the 'Package Weight' text
@@ -2169,13 +2169,13 @@ void DrawBobbyROrderTitle() {
 
 BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, UINT8 ubDeliveryLoc,
                              UINT8 ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,
-                             UINT32 uiPackageWeight) {
+                             uint32_t uiPackageWeight) {
   INT32 iCnt;
   INT32 iFoundSpot = -1;
   UINT8 ubItemCount = 0;
   UINT8 i;
   INT8 bDaysAhead = 0;
-  //	UINT32	uiPackageWeight;
+  //	uint32_t	uiPackageWeight;
   //	gpNewBobbyrShipments = NULL;
   //	giNumberOfNewBobbyRShipment = 0;
 
@@ -2264,7 +2264,7 @@ UINT16 CountNumberOfBobbyPurchasesThatAreInTransit() {
 
 BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
   INT32 iCnt;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Write the number of orders
   FileMan_Write(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesWritten);
@@ -2289,7 +2289,7 @@ BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
 
 BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
   INT32 iCnt;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // clear out the old list
   ShutDownBobbyRNewMailOrders();

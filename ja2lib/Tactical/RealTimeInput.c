@@ -65,13 +65,13 @@ extern UIKEYBOARD_HOOK gUIKeyboardHook;
 extern BOOLEAN fRightButtonDown;
 extern BOOLEAN fLeftButtonDown;
 extern BOOLEAN fIgnoreLeftUp;
-extern UINT32 guiCurrentEvent;
-extern UINT32 guiCurrentUICursor;
+extern uint32_t guiCurrentEvent;
+extern uint32_t guiCurrentUICursor;
 extern void DetermineWhichAssignmentMenusCanBeShown(void);
 extern BOOLEAN gfIgnoreOnSelectedGuy;
 extern INT16 gsOverItemsGridNo;
 extern INT16 gsOverItemsLevel;
-extern UINT32 guiUITargetSoldierId;
+extern uint32_t guiUITargetSoldierId;
 extern BOOLEAN gfUIShowExitSouth;
 
 BOOLEAN gfStartLookingForRubberBanding = FALSE;
@@ -85,16 +85,16 @@ BOOLEAN gfRTHaveClickedRightWhileLeftDown = FALSE;
 
 extern BOOLEAN ValidQuickExchangePosition();
 
-void GetRTMouseButtonInput(UINT32 *puiNewEvent) {
+void GetRTMouseButtonInput(uint32_t *puiNewEvent) {
   QueryRTLeftButton(puiNewEvent);
   QueryRTRightButton(puiNewEvent);
 }
 
-void QueryRTLeftButton(UINT32 *puiNewEvent) {
+void QueryRTLeftButton(uint32_t *puiNewEvent) {
   UINT16 usSoldierIndex;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiMercFlags;
-  static UINT32 uiSingleClickTime;
+  uint32_t uiMercFlags;
+  static uint32_t uiSingleClickTime;
   INT16 usMapPos;
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
@@ -772,10 +772,10 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
   }
 }
 
-void QueryRTRightButton(UINT32 *puiNewEvent) {
+void QueryRTRightButton(uint32_t *puiNewEvent) {
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fClickIntercepted = FALSE;
-  static UINT32 uiSingleClickTime;
+  static uint32_t uiSingleClickTime;
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
 
@@ -1026,10 +1026,10 @@ extern BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos);
 
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
-void GetRTMousePositionInput(UINT32 *puiNewEvent) {
+void GetRTMousePositionInput(uint32_t *puiNewEvent) {
   INT16 usMapPos;
   static UINT16 usOldMapPos = 0;
-  static UINT32 uiMoveTargetSoldierId = NO_SOLDIER;
+  static uint32_t uiMoveTargetSoldierId = NO_SOLDIER;
   struct SOLDIERTYPE *pSoldier;
 
   if (!GetMouseMapPos(&usMapPos)) {

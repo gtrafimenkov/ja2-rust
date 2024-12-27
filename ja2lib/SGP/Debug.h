@@ -12,7 +12,7 @@ extern void DebugPrint(const char *message);
 
 extern BOOLEAN gfRecordToFile;
 extern BOOLEAN gfRecordToDebugger;
-extern UINT32 guiProfileStart, guiExecutions, guiProfileTime;
+extern uint32_t guiProfileStart, guiExecutions, guiProfileTime;
 extern INT32 giProfileCount;
 
 #define PROFILE(x)                       \
@@ -45,7 +45,7 @@ extern char *String(const char *String, ...);
 // pointer ); Assert( pointer, "This pointer is null and you tried to access it in function A ");
 // It'll make debugging a little simpler.  In anal cases, you could build the string first, then
 // assert with it.
-extern void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
+extern void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile);
 
 #define Assert(a) (a) ? _Null() : _FailMessage((STR8)NULL, __LINE__, (STR8)__FILE__)
 #define AssertMsg(a, b) (a) ? _Null() : _FailMessage((STR8)b, __LINE__, (STR8)__FILE__)
@@ -80,13 +80,13 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 
 #define DbgMessage(a, b, c) \
   DbgMessageReal((UINT16)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (char *)(c))
-#define FastDebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
+#define FastDebugMsg(a) _DebugMessage((STR8)(a), (uint32_t)(__LINE__), (STR8)(__FILE__))
 
 #define UnRegisterDebugTopic(a, b) \
   DbgTopicRegistration((UINT8)TOPIC_UNREGISTER, (UINT16 *)(&(a)), (char *)(b))
 #define ClearAllDebugTopics() DbgClearAllTopics()
 
-#define ErrorMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
+#define ErrorMsg(a) _DebugMessage((STR8)(a), (uint32_t)(__LINE__), (STR8)(__FILE__))
 
 // Enable the debug topic we want
 #define RegisterJA2DebugTopic(a, b) DbgTopicRegistration(TOPIC_REGISTER, &(a), (b))
@@ -97,10 +97,11 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 extern void DbgMessageReal(UINT16 TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *Str);
 extern BOOLEAN DbgSetDebugLevel(UINT16 TopicId, UINT8 uiDebugLevel);
 extern void DbgFailedAssertion(BOOLEAN fExpression, char *szFile, int nLine);
-// extern	void		_FailMessage(UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile );
+// extern	void		_FailMessage(UINT8 *pString, uint32_t uiLineNum, UINT8 *pSourceFile
+// );
 extern void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage);
 extern void DbgClearAllTopics(void);
-extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
+extern void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile);
 
 //*******************************************************************************************
 

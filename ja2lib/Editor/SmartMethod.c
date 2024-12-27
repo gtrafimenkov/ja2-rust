@@ -104,11 +104,11 @@ void IncSmartBrokenWallUIValue() { gubBrokenWallUIValue += gubBrokenWallUIValue 
 
 void DecSmartBrokenWallUIValue() { gubBrokenWallUIValue -= gubBrokenWallUIValue > 0 ? 1 : -4; }
 
-BOOLEAN CalcWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex) {
+BOOLEAN CalcWallInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex) {
   return FALSE;
 }
 
-BOOLEAN CalcDoorInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusDoorType, UINT16 *pusIndex) {
+BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusDoorType, UINT16 *pusIndex) {
   struct LEVELNODE *pWall = NULL;
   UINT16 usWallOrientation;
   pWall = GetVerticalWall(iMapIndex);
@@ -128,9 +128,9 @@ BOOLEAN CalcDoorInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusDoorType, UINT
   return FALSE;
 }
 
-BOOLEAN CalcWindowInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex) {
+BOOLEAN CalcWindowInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex) {
   struct LEVELNODE *pWall = NULL;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
 
   pWall = GetVerticalWall(iMapIndex);
@@ -162,10 +162,10 @@ BOOLEAN CalcWindowInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UI
   return FALSE;
 }
 
-BOOLEAN CalcBrokenWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType,
+BOOLEAN CalcBrokenWallInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType,
                                            UINT16 *pusIndex) {
   struct LEVELNODE *pWall = NULL;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
 
   if (gubBrokenWallUIValue == 2)  // the hole in the wall
@@ -229,7 +229,7 @@ BOOLEAN CalcBrokenWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType
 // wall type, there are two more cases.  When there is a bottom wall in the y+1 position or a right
 // wall in the x+1 position.  If there are matching walls, there, then we draw two pieces to connect
 // the current gridno with the respective position.
-void PasteSmartWall(UINT32 iMapIndex) {
+void PasteSmartWall(uint32_t iMapIndex) {
   UINT16 usWallType;
 
   // These are the counters for the walls of each type
@@ -407,7 +407,7 @@ void PasteSmartWall(UINT32 iMapIndex) {
   // Check for the highest weight value.
 }
 
-void PasteSmartDoor(UINT32 iMapIndex) {
+void PasteSmartDoor(uint32_t iMapIndex) {
   struct LEVELNODE *pWall = NULL;
   UINT16 usTileIndex;
   UINT16 usDoorType;
@@ -432,11 +432,11 @@ void PasteSmartDoor(UINT32 iMapIndex) {
   }
 }
 
-void PasteSmartWindow(UINT32 iMapIndex) {
+void PasteSmartWindow(uint32_t iMapIndex) {
   UINT16 usNewWallIndex;
 
   struct LEVELNODE *pWall = NULL;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallType;
   UINT16 usIndex;
   UINT16 usWallOrientation;
@@ -476,11 +476,11 @@ void PasteSmartWindow(UINT32 iMapIndex) {
   }
 }
 
-void PasteSmartBrokenWall(UINT32 iMapIndex) {
+void PasteSmartBrokenWall(uint32_t iMapIndex) {
   UINT16 usNewWallIndex;
 
   struct LEVELNODE *pWall;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallType;
   UINT16 usIndex;
   UINT16 usWallOrientation;

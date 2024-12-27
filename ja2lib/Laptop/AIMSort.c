@@ -145,11 +145,11 @@ INT32 QsortCompare(const void *pNum1, const void *pNum2);
 INT32 CompareValue(const INT32 Num1, const INT32 Num2);
 BOOLEAN SortMercArray(void);
 
-UINT32 guiSortByBox;
-UINT32 guiToAlumni;
-UINT32 guiToMugShots;
-UINT32 guiToStats;
-UINT32 guiSelectLight;
+uint32_t guiSortByBox;
+uint32_t guiToAlumni;
+uint32_t guiToMugShots;
+uint32_t guiToStats;
+uint32_t guiSelectLight;
 
 void GameInitAimSort() {
   gubCurrentSortMode = 0;

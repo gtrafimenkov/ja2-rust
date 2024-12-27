@@ -65,17 +65,17 @@
 // Local-use only prototypes
 
 BOOLEAN LightTileBlocked(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY);
-BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite);
+BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite);
 BOOLEAN LightDelete(INT32 iLight);
 INT32 LightGetFree(void);
 INT32 LinearDistance(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2);
 DOUBLE LinearDistanceDouble(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2);
-BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                     UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls);
-BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                          UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls);
+BOOLEAN LightAddTile(uint32_t uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
+                     UINT8 ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls);
+BOOLEAN LightSubtractTile(uint32_t uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
+                          UINT8 ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls);
 BOOLEAN LightResetTile(INT16 iX, INT16 iY);
-BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, UINT32 uiLightType);
+BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, uint32_t uiLightType);
 BOOLEAN LightSetNaturalTile(INT16 iX, INT16 iY, UINT8 ubShade);
 UINT16 LightGetLastNode(INT32 iLight);
 BOOLEAN LightAddNode(INT32 iLight, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX, INT16 iY,
@@ -221,7 +221,7 @@ void LoadShadeTablesFromTextFile() {
 }
 
 // Debug variable
-UINT32 gNodesAdded = 0;
+uint32_t gNodesAdded = 0;
 
 /****************************************************************************************
  InitLightingSystem
@@ -230,7 +230,7 @@ UINT32 gNodesAdded = 0;
 
 ***************************************************************************************/
 BOOLEAN InitLightingSystem(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   LoadShadeTablesFromTextFile();
 
@@ -279,7 +279,7 @@ BOOLEAN SetDefaultWorldLightingColors(void) {
 
 ***************************************************************************************/
 BOOLEAN ShutdownLightingSystem(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // free up all allocated light nodes
   for (uiCount = 0; uiCount < MAX_LIGHT_TEMPLATES; uiCount++)
@@ -295,7 +295,7 @@ BOOLEAN ShutdownLightingSystem(void) {
 
 ***************************************************************************************/
 BOOLEAN LightReset(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // reset all light lists
   for (uiCount = 0; uiCount < MAX_LIGHT_TEMPLATES; uiCount++)
@@ -483,7 +483,7 @@ BOOLEAN LightTileBlocked(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
 ***************************************************************************************/
 BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
   // struct LEVELNODE *pStruct;
-  // UINT32 uiType;
+  // uint32_t uiType;
   UINT16 usTileNo;
   UINT16 usSrcTileNo;
   INT8 bDirection;
@@ -573,7 +573,7 @@ BOOLEAN LightDelete(INT32 iLight) {
 
 ***************************************************************************************/
 INT32 LightGetFree(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < MAX_LIGHT_TEMPLATES; uiCount++)
     if (pLightList[uiCount] == NULL) return (uiCount);
@@ -649,7 +649,7 @@ UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel) {
                 Does the addition of light values to individual LEVELNODEs in the world tile list.
 
 ***************************************************************************************/
-void LightAddTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShadeAdd,
+void LightAddTileNode(struct LEVELNODE *pNode, uint32_t uiLightType, UINT8 ubShadeAdd,
                       BOOLEAN fFake) {
   INT16 sSum;
 
@@ -676,7 +676,7 @@ void LightAddTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShade
 list.
 
 ***************************************************************************************/
-void LightSubtractTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShadeSubtract,
+void LightSubtractTileNode(struct LEVELNODE *pNode, uint32_t uiLightType, UINT8 ubShadeSubtract,
                            BOOLEAN fFake) {
   INT16 sSum;
 
@@ -710,11 +710,11 @@ void LightSubtractTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ub
                 Adds a specified amount of light to all objects on a given tile.
 
 ***************************************************************************************/
-BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                     UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls) {
+BOOLEAN LightAddTile(uint32_t uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
+                     UINT8 ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pMerc, *pRoof, *pOnRoof;
   UINT8 ubShadeAdd;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fLitWall = FALSE;
   BOOLEAN fFake;
 
@@ -822,11 +822,11 @@ BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT
                 Subtracts a specified amount of light to a given tile.
 
 ***************************************************************************************/
-BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                          UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls) {
+BOOLEAN LightSubtractTile(uint32_t uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
+                          UINT8 ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pMerc, *pRoof, *pOnRoof;
   UINT8 ubShadeSubtract;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fLitWall = FALSE;
   BOOLEAN fFake;  // only passed in to land and roof layers; others get fed FALSE
 
@@ -955,7 +955,7 @@ void LightSetNaturalTileNode(struct LEVELNODE *pNode, UINT8 ubShade) {
 ***************************************************************************************/
 BOOLEAN LightSetNaturalTile(INT16 iX, INT16 iY, UINT8 ubShade) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
   CHECKF(gpWorldLevelData != NULL);
 
@@ -1035,7 +1035,7 @@ void LightResetTileNode(struct LEVELNODE *pNode) {
 ***************************************************************************************/
 BOOLEAN LightResetTile(INT16 iX, INT16 iY) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
-  UINT32 uiTile;
+  uint32_t uiTile;
 
   CHECKF(gpWorldLevelData != NULL);
 
@@ -1111,9 +1111,9 @@ BOOLEAN LightResetAllTiles(void) {
                 Sets the current light value of all objects on a given tile to the specified value.
 
 ***************************************************************************************/
-BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, UINT32 uiLightType) {
+BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, uint32_t uiLightType) {
   /*struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pFog;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
           ubShade=max(SHADE_MAX, ubShade);
           ubShade=min(SHADE_MIN, ubShade);
@@ -1693,7 +1693,7 @@ BOOLEAN LightGenerateBeam(INT32 iLight, UINT8 iIntensity, INT16 iLength, INT16 i
 ***************************************************************************************/
 BOOLEAN LightSetBaseLevel(UINT8 iIntensity) {
   INT16 iCountY, iCountX;
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   ubAmbientLightLevel = iIntensity;
@@ -1732,7 +1732,7 @@ BOOLEAN LightSetBaseLevel(UINT8 iIntensity) {
                 Adds a light value to all the tiles in the world
 
 ***************************************************************************************/
-BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
+BOOLEAN LightAddBaseLevel(uint32_t uiLightType, UINT8 iIntensity) {
   INT16 iCountY, iCountX;
 
   ubAmbientLightLevel = max(SHADE_MAX, ubAmbientLightLevel - iIntensity);
@@ -1756,7 +1756,7 @@ BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
                 Sets the current and natural light settings for all tiles in the world.
 
 ***************************************************************************************/
-BOOLEAN LightSubtractBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
+BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, UINT8 iIntensity) {
   INT16 iCountY, iCountX;
 
   ubAmbientLightLevel = min(SHADE_MIN, ubAmbientLightLevel + iIntensity);
@@ -1884,11 +1884,11 @@ UINT16 usWallOrientation;
                 Renders a light template at the specified X,Y coordinates.
 
 ***************************************************************************************/
-BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite) {
+BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite) {
   LIGHT_NODE *pLight;
   UINT16 uiCount;
   UINT16 usNodeIndex;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   INT32 iOldX, iOldY;
   BOOLEAN fBlocked = FALSE;
   BOOLEAN fOnlyWalls;
@@ -1951,7 +1951,7 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
       }
 
       if (!(pLight->uiFlags & LIGHT_NODE_DRAWN) && (pLight->ubLight)) {
-        uiFlags = (UINT32)(usNodeIndex & LIGHT_BACKLIGHT);
+        uiFlags = (uint32_t)(usNodeIndex & LIGHT_BACKLIGHT);
         if (LightSprites[uiSprite].uiFlags & MERC_LIGHT) uiFlags |= LIGHT_FAKE;
         if (LightSprites[uiSprite].uiFlags & LIGHT_SPR_ONROOF) uiFlags |= LIGHT_ROOF_ONLY;
 
@@ -1980,7 +1980,7 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
 
 BOOLEAN LightRevealWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fRerender = FALSE, fHitWall = FALSE, fDoRightWalls = TRUE, fDoLeftWalls = TRUE;
   TILE_ELEMENT *TileElem;
 
@@ -2049,7 +2049,7 @@ BOOLEAN LightRevealWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
 
 BOOLEAN LightHideWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fRerender = FALSE, fHitWall = FALSE, fDoRightWalls = TRUE, fDoLeftWalls = TRUE;
   TILE_ELEMENT *TileElem;
 
@@ -2144,7 +2144,7 @@ BOOLEAN CalcTranslucentWalls(INT16 iX, INT16 iY) {
 
 BOOLEAN LightGreenTile(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
   struct LEVELNODE *pStruct, *pLand;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fHitWall = FALSE;
   TILE_ELEMENT *TileElem;
 
@@ -2232,7 +2232,7 @@ BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset) {
 ***************************************************************************************/
 BOOLEAN LightHideGreen(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
   struct LEVELNODE *pStruct, *pLand;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fHitWall = FALSE;
   TILE_ELEMENT *TileElem;
 
@@ -2346,10 +2346,10 @@ BOOLEAN ApplyTranslucencyToWalls(INT16 iX, INT16 iY) {
 ***************************************************************************************/
 BOOLEAN LightTranslucentTrees(INT16 iX, INT16 iY) {
   INT32 iCountX, iCountY;
-  UINT32 uiTile;
+  uint32_t uiTile;
   struct LEVELNODE *pNode;
   BOOLEAN fRerender = FALSE;
-  UINT32 fTileFlags;
+  uint32_t fTileFlags;
 
   for (iCountY = iY; iCountY < (INT16)(iY + LIGHT_TREE_REVEAL); iCountY++)
     for (iCountX = iX; iCountX < (INT16)(iX + LIGHT_TREE_REVEAL); iCountX++) {
@@ -2386,10 +2386,10 @@ BOOLEAN LightTranslucentTrees(INT16 iX, INT16 iY) {
 ***************************************************************************************/
 BOOLEAN LightHideTrees(INT16 iX, INT16 iY) {
   INT32 iCountX, iCountY;
-  UINT32 uiTile;
+  uint32_t uiTile;
   struct LEVELNODE *pNode;
   BOOLEAN fRerender = FALSE;
-  UINT32 fTileFlags;
+  uint32_t fTileFlags;
 
   // Kris:  added map boundary checking!!!
   for (iCountY = (INT16)max(iY - LIGHT_TREE_REVEAL, 0);
@@ -2428,11 +2428,11 @@ BOOLEAN LightHideTrees(INT16 iX, INT16 iY) {
                 Reverts all tiles a given light affects to their natural light levels.
 
 ***************************************************************************************/
-BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite) {
+BOOLEAN LightErase(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite) {
   LIGHT_NODE *pLight;
   UINT16 uiCount;
   UINT16 usNodeIndex;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   INT32 iOldX, iOldY;
   BOOLEAN fBlocked = FALSE;
   BOOLEAN fOnlyWalls;
@@ -2467,7 +2467,7 @@ BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 
       }
 
       if (!(pLight->uiFlags & LIGHT_NODE_DRAWN) && (pLight->ubLight)) {
-        uiFlags = (UINT32)(usNodeIndex & LIGHT_BACKLIGHT);
+        uiFlags = (uint32_t)(usNodeIndex & LIGHT_BACKLIGHT);
         if (LightSprites[uiSprite].uiFlags & MERC_LIGHT) uiFlags |= LIGHT_FAKE;
         if (LightSprites[uiSprite].uiFlags & LIGHT_SPR_ONROOF) uiFlags |= LIGHT_ROOF_ONLY;
 
@@ -2502,7 +2502,7 @@ updating a light.
 BOOLEAN LightCalcRect(INT32 iLight) {
   SGPRect MaxRect;
   INT16 sXValue, sYValue, sDummy;
-  UINT32 uiCount;
+  uint32_t uiCount;
   LIGHT_NODE *pLight;
 
   if (pLightList[iLight] == NULL) return (FALSE);
@@ -2762,7 +2762,7 @@ INT32 LightSpriteGetFree(void) {
  * If this function fails (out of sprites, or bad template name) it returns (-1).
  *
  ********************************************************************************/
-INT32 LightSpriteCreate(STR pName, UINT32 uiLightType) {
+INT32 LightSpriteCreate(STR pName, uint32_t uiLightType) {
   INT32 iSprite;
 
   if ((iSprite = LightSpriteGetFree()) != (-1)) {
@@ -3028,9 +3028,9 @@ BOOLEAN LightSpriteDirty(INT32 iSprite) {
   return (TRUE);
 }
 
-BOOLEAN CreateObjectPalette(struct VObject *pObj, UINT32 uiBase,
+BOOLEAN CreateObjectPalette(struct VObject *pObj, uint32_t uiBase,
                             struct SGPPaletteEntry *pShadePal) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   pObj->pShades[uiBase] = Create16BPPPaletteShaded(
       pShadePal, gusShadeLevels[0][0], gusShadeLevels[0][1], gusShadeLevels[0][2], TRUE);
@@ -3044,9 +3044,9 @@ BOOLEAN CreateObjectPalette(struct VObject *pObj, UINT32 uiBase,
   return (TRUE);
 }
 
-BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, UINT32 uiBase,
+BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase,
                                    struct SGPPaletteEntry *pShadePal) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   pSoldier->pShades[uiBase] = Create16BPPPaletteShaded(
       pShadePal, gusShadeLevels[0][0], gusShadeLevels[0][1], gusShadeLevels[0][2], TRUE);
@@ -3070,11 +3070,11 @@ HVOBJECT_SHADE_TABLES symbol, remember to add/delete entries here, it won't adju
 
 **********************************************************************************************/
 #ifdef JA2TESTVERSION
-extern UINT32 uiNumTablesSaved;
+extern uint32_t uiNumTablesSaved;
 #endif
 
-UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiTileIndex, BOOLEAN fForce) {
-  UINT32 uiCount;
+UINT16 CreateTilePaletteTables(struct VObject *pObj, uint32_t uiTileIndex, BOOLEAN fForce) {
+  uint32_t uiCount;
   struct SGPPaletteEntry LightPal[256];
   BOOLEAN fLoaded = FALSE;
 
@@ -3147,9 +3147,9 @@ UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiTileIndex, BOOLEAN
   return (TRUE);
 }
 
-UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, UINT32 uiType) {
+UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType) {
   struct SGPPaletteEntry LightPal[256];
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // create the basic shade table
   for (uiCount = 0; uiCount < 256; uiCount++) {

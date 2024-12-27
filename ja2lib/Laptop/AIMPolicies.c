@@ -144,20 +144,20 @@ void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
 
 // Agree/Disagree menu Buttons regions
 void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiPoliciesAgreeButton[2];
+uint32_t guiPoliciesAgreeButton[2];
 INT32 guiPoliciesButtonImage;
 
 // Bottom Menu Buttons
 void BtnPoliciesMenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiPoliciesMenuButton[AIM_POLICY_MENU_BUTTON_AMOUNT];
+uint32_t guiPoliciesMenuButton[AIM_POLICY_MENU_BUTTON_AMOUNT];
 INT32 guiPoliciesMenuButtonImage;
 
-UINT32 guiBottomButton;
-UINT32 guiBottomButton2;
+uint32_t guiBottomButton;
+uint32_t guiBottomButton2;
 BOOLEAN gfInPolicyToc = FALSE;
 BOOLEAN gfInAgreementPage = FALSE;
 BOOLEAN gfAimPolicyMenuBarLoaded = FALSE;
-UINT32 guiContentButton;
+uint32_t guiContentButton;
 BOOLEAN gfExitingPolicesAgreeButton;
 UINT8 gubPoliciesAgreeButtonDown;
 UINT8 gubAimPolicyMenuButtonDown = 255;
@@ -455,7 +455,7 @@ BOOLEAN ExitAimPolicyMenuBar(void) {
 
 BOOLEAN DrawAimPolicyMenu() {
   UINT16 i, usPosY;
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   wchar_t sText[400];
   struct VObject *hContentButtonHandle;
   UINT8 ubLocInFile[] = {
@@ -534,7 +534,7 @@ void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
 
 BOOLEAN DisplayAimPolicyTitleText(void) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   // Load anfd display title
   uiStartLoc = AIM_POLICY_LINE_SIZE * AIM_STATEMENT_OF_POLICY;
@@ -554,7 +554,7 @@ BOOLEAN DisplayAimPolicyTitleText(void) {
 
 BOOLEAN DisplayAimPolicyStatement(void) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   UINT16 usNumPixels;
 
   // load and display the statment of policies
@@ -622,7 +622,7 @@ BOOLEAN ExitAgreementButton(void) {
 
 BOOLEAN DisplayAimPolicyTitle(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   // Load and display title
   uiStartLoc = AIM_POLICY_LINE_SIZE * ubPageNum;
@@ -636,7 +636,7 @@ BOOLEAN DisplayAimPolicyTitle(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
 UINT16 DisplayAimPolicyParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   wchar_t sText[400];
   wchar_t sTemp[20];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   UINT16 usNumPixels;
 
   uiStartLoc = AIM_POLICY_LINE_SIZE * ubPageNum;
@@ -660,7 +660,7 @@ UINT16 DisplayAimPolicyParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) 
 UINT16 DisplayAimPolicySubParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   wchar_t sText[400];
   wchar_t sTemp[20];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   UINT16 usNumPixels;
 
   uiStartLoc = AIM_POLICY_LINE_SIZE * ubPageNum;

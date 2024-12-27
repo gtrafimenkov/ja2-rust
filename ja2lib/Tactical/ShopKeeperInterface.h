@@ -17,12 +17,12 @@ enum {
 };
 
 #define ARMS_INV_ITEM_SELECTED 0x00000001  // The item has been placed into the offer area
-//#define	ARMS_INV_PLAYERS_ITEM_SELECTED						0x00000002
+// #define	ARMS_INV_PLAYERS_ITEM_SELECTED						0x00000002
 //// The source location for the item has been selected
 #define ARMS_INV_PLAYERS_ITEM_HAS_VALUE \
   0x00000004  // The Players item is worth something to this dealer
-//#define	ARMS_INV_ITEM_HIGHLIGHTED
-// 0x00000008			// If the items is highlighted
+// #define	ARMS_INV_ITEM_HIGHLIGHTED
+//  0x00000008			// If the items is highlighted
 #define ARMS_INV_ITEM_NOT_REPAIRED_YET \
   0x00000010                                // The item is in for repairs but not repaired yet
 #define ARMS_INV_ITEM_REPAIRED 0x00000020   // The item is repaired
@@ -32,14 +32,14 @@ enum {
 typedef struct {
   BOOLEAN fActive;
   INT16 sItemIndex;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   struct OBJECTTYPE ItemObject;
   UINT8 ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
                              // dealers inventory, one of the offer areas or in the users inventory)
   INT8 bSlotIdInOtherLocation;
 
   UINT8 ubIdOfMercWhoOwnsTheItem;
-  UINT32 uiItemPrice;  // Only used for the players item that have been evaluated
+  uint32_t uiItemPrice;  // Only used for the players item that have been evaluated
 
   INT16 sSpecialItemElement;  // refers to which special item element an item in a dealer's
                               // inventory area occupies.  -1 Means the item is "perfect" and has no
@@ -66,13 +66,13 @@ extern INVENTORY_IN_SLOT gMoveingItem;
 
 extern struct OBJECTTYPE *pShopKeeperItemDescObject;
 
-UINT32 ShopKeeperScreenInit(void);
-UINT32 ShopKeeperScreenHandle(void);
-UINT32 ShopKeeperScreenShutdown(void);
+uint32_t ShopKeeperScreenInit(void);
+uint32_t ShopKeeperScreenHandle(void);
+uint32_t ShopKeeperScreenShutdown(void);
 
 void EnterShopKeeperInterfaceScreen(UINT8 ubArmsDealer);
 
-void DrawHatchOnInventory(UINT32 uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
+void DrawHatchOnInventory(uint32_t uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
                           UINT16 usHeight);
 BOOLEAN ShouldSoldierDisplayHatchOnItem(UINT8 ubProfileID, INT16 sSlotNum);
 INT8 AddItemToPlayersOfferArea(UINT8 ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
@@ -94,7 +94,7 @@ void DeleteShopKeeperItemDescBox();
 
 BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier);
 
-void DealerGetsBribed(UINT8 ubProfileId, UINT32 uiMoneyAmount);
+void DealerGetsBribed(UINT8 ubProfileId, uint32_t uiMoneyAmount);
 
 #ifdef JA2TESTVERSION
 void AddShopkeeperToGridNo(UINT8 ubProfile, INT16 sGridNo);

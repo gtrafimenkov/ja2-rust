@@ -93,7 +93,7 @@ void LoadWeaponIfNeeded(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iAttackValue;
   INT32 iThreatValue;
   INT32 iHitRate, iBestHitRate, iPercentBetter;
@@ -380,7 +380,7 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   UINT8 ubFriendCnt = 0, ubOpponentCnt = 0, ubOpponentID[MAXMERCS];
   UINT8 ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime;
   UINT8 ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit;
-  UINT32 uiPenalty;
+  uint32_t uiPenalty;
   UINT8 ubSearchRange;
   UINT16 usOppDist;
   BOOLEAN fFriendsNearby;
@@ -950,7 +950,7 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
 }
 
 void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN fBladeAttack) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iAttackValue;
   INT32 iThreatValue, iHitRate, iBestHitRate, iPercentBetter, iEstDamage;
   BOOLEAN fSurpriseStab;
@@ -1140,7 +1140,7 @@ void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN f
 }
 
 void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iAttackValue;
   INT32 iThreatValue, iHitRate, iBestHitRate, iEstDamage;
   BOOLEAN fSurpriseStab;
@@ -1277,7 +1277,7 @@ void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
 
 UINT8 NumMercsCloseTo(INT16 sGridNo, UINT8 ubMaxDist) {
   INT8 bNumber = 0;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {

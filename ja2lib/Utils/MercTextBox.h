@@ -19,33 +19,33 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
 BOOLEAN RemoveMercPopupBox();
 
 // remove this box from the index
-BOOLEAN RemoveMercPopupBoxFromIndex(UINT32 uiId);
+BOOLEAN RemoveMercPopupBoxFromIndex(uint32_t uiId);
 
 // render the current pop up box
-BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, UINT32 uiBuffer);
+BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, uint32_t uiBuffer);
 
 // render pop up box with this index value
-BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, UINT32 uiBuffer);
+BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, uint32_t uiBuffer);
 
 void RemoveTextMercPopupImages();
 
 typedef struct {
-  UINT32 uiSourceBufferIndex;
+  uint32_t uiSourceBufferIndex;
   UINT16 sWidth;
   UINT16 sHeight;
   UINT8 ubBackgroundIndex;
   UINT8 ubBorderIndex;
-  UINT32 uiMercTextPopUpBackground;
-  UINT32 uiMercTextPopUpBorder;
+  uint32_t uiMercTextPopUpBackground;
+  uint32_t uiMercTextPopUpBorder;
   BOOLEAN fMercTextPopupInitialized;
   BOOLEAN fMercTextPopupSurfaceInitialized;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
 } MercPopUpBox;
 
 BOOLEAN OverrideMercPopupBox(MercPopUpBox *pMercBox);
 BOOLEAN ResetOverrideMercPopupBox();
-BOOLEAN SetPrepareMercPopupFlags(UINT32 uiFlags);
+BOOLEAN SetPrepareMercPopupFlags(uint32_t uiFlags);
 
 // background enumeration
 enum {

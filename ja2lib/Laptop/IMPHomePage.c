@@ -27,7 +27,7 @@ void GetPlayerKeyBoardInputForIMPHomePage(void);
 void DisplayPlayerActivationString(void);
 void ProcessPlayerInputActivationString(void);
 void GetPlayerKeyBoardInputForIMPHomePage(void);
-void HandleTextEvent(UINT32 uiKey);
+void HandleTextEvent(uint32_t uiKey);
 void CreateIMPHomePageButtons(void);
 void RemoveIMPHomePageButtons(void);
 void DisplayActivationStringCursor(void);
@@ -156,11 +156,11 @@ void DisplayPlayerActivationString(void) {
 
 void DisplayActivationStringCursor(void) {
   // this procdure will draw the activation string cursor on the screen at position cursorx cursory
-  UINT32 uiDestPitchBYTES;
-  static UINT32 uiBaseTime = 0;
-  UINT32 uiDeltaTime = 0;
+  uint32_t uiDestPitchBYTES;
+  static uint32_t uiBaseTime = 0;
+  uint32_t uiDeltaTime = 0;
   UINT8 *pDestBuf;
-  static UINT32 iCurrentState = 0;
+  static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
 
   if (uiBaseTime == 0) {
@@ -256,7 +256,7 @@ void GetPlayerKeyBoardInputForIMPHomePage(void) {
   return;
 }
 
-void HandleTextEvent(UINT32 uiKey) {
+void HandleTextEvent(uint32_t uiKey) {
   // this function checks to see if a letter or a backspace was pressed, if so, either put char to
   // screen or delete it
 

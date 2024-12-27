@@ -199,7 +199,7 @@ BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, UINT8 ubProfileId) {
 
 INT8 NumWoundedMercsNearby(UINT8 ubProfileID) {
   INT8 bNumber = 0;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
@@ -226,7 +226,7 @@ INT8 NumWoundedMercsNearby(UINT8 ubProfileID) {
 
 INT8 NumMercsNear(UINT8 ubProfileID, UINT8 ubMaxDist) {
   INT8 bNumber = 0;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
@@ -347,7 +347,7 @@ BOOLEAN CheckTalkerUnpropositionedFemale(void) {
 
 INT8 NumMalesPresent(UINT8 ubProfileID) {
   INT8 bNumber = 0;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
@@ -375,7 +375,7 @@ INT8 NumMalesPresent(UINT8 ubProfileID) {
 }
 
 BOOLEAN FemalePresent(UINT8 ubProfileID) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
@@ -440,7 +440,7 @@ BOOLEAN CheckNPCSector(UINT8 ubProfileID, u8 sSectorX, u8 sSectorY, INT8 bSector
 }
 
 BOOLEAN AIMMercWithin(INT16 sGridNo, INT16 sDistance) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -1183,7 +1183,7 @@ void InitQuestEngine() {
   gfBoxersResting = FALSE;
 }
 
-void CheckForQuests(UINT32 uiDay) {
+void CheckForQuests(uint32_t uiDay) {
   // This function gets called at 8:00 AM time of the day
 
 #ifdef TESTQUESTS
@@ -1207,7 +1207,7 @@ void CheckForQuests(UINT32 uiDay) {
 }
 
 BOOLEAN SaveQuestInfoToSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Save all the states if the Quests
   FileMan_Write(hFile, gubQuest, MAX_QUESTS, &uiNumBytesWritten);
@@ -1225,7 +1225,7 @@ BOOLEAN SaveQuestInfoToSavedGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadQuestInfoFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Save all the states if the Quests
   FileMan_Read(hFile, gubQuest, MAX_QUESTS, &uiNumBytesRead);

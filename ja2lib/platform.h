@@ -38,7 +38,7 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType);
 BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize);
 
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
-UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
+uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory);
 BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory);
@@ -59,8 +59,8 @@ BOOLEAN Plat_DeleteFile(const char *filename);
 struct GetFile {
   INT32 iFindHandle;
   CHAR8 zFileName[260];  // changed from UINT16, Alex Meduna, Mar-20'98
-  UINT32 uiFileSize;
-  UINT32 uiFileAttribs;
+  uint32_t uiFileSize;
+  uint32_t uiFileAttribs;
 };
 
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct);

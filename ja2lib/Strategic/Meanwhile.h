@@ -34,7 +34,7 @@ typedef struct {
 
 } MEANWHILE_DEFINITION;
 
-void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, UINT32 uiTime);
+void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, uint32_t uiTime);
 void HandleFirstBattleVictory(void);
 
 BOOLEAN BeginMeanwhile(UINT8 ubMeanwhileID);
@@ -91,6 +91,6 @@ extern MEANWHILE_DEFINITION gMeanwhileDef[NUM_MEANWHILES];
 extern BOOLEAN gfMeanwhileScheduled;
 extern BOOLEAN gfMeanwhileTryingToStart;
 extern BOOLEAN gfInMeanwhile;
-extern UINT32 uiMeanWhileFlags;
+extern uint32_t uiMeanWhileFlags;
 
 #endif

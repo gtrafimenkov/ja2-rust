@@ -18,7 +18,7 @@ struct SOLDIERTYPE;
 
 // ATE: This define has been moved to be a function so that
 // we pick the most appropriate time of day to use...
-//#define		MERC_ARRIVAL_TIME_OF_DAY				 (7 * 60 + 30)
+// #define		MERC_ARRIVAL_TIME_OF_DAY				 (7 * 60 + 30)
 //// 7:30 am
 
 typedef struct {
@@ -28,7 +28,7 @@ typedef struct {
   INT8 bSectorZ;
   INT16 iTotalContractLength;
   BOOLEAN fCopyProfileItemsOver;
-  UINT32 uiTimeTillMercArrives;
+  uint32_t uiTimeTillMercArrives;
   UINT8 ubInsertionCode;
   UINT16 usInsertionData;
   BOOLEAN fUseLandingZoneForArrival;
@@ -48,6 +48,6 @@ BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier);
 void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier);
 void UpdateAnyInTransitMercsWithGlobalArrivalSector();
 
-UINT32 GetMercArrivalTimeOfDay();
+uint32_t GetMercArrivalTimeOfDay();
 
 #endif

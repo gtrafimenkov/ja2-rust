@@ -69,15 +69,15 @@ MercPopUpBox *gOldPopUpTextBox = NULL;
 MercPopUpBox *gpPopUpBoxList[MAX_NUMBER_OF_POPUP_BOXES];
 
 // the flags
-UINT32 guiFlags = 0;
-UINT32 guiBoxIcons;
-UINT32 guiSkullIcons;
+uint32_t guiFlags = 0;
+uint32_t guiBoxIcons;
+uint32_t guiSkullIcons;
 
-BOOLEAN SetCurrentPopUpBox(UINT32 uiId) {
+BOOLEAN SetCurrentPopUpBox(uint32_t uiId) {
   // given id of the box, find it in the list and set to current
 
   // make sure the box id is valid
-  if (uiId == (UINT32)-1) {
+  if (uiId == (uint32_t)-1) {
     // ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Error: Trying to set Current Popup Box using
     // -1 as an ID" );
     return (FALSE);
@@ -189,7 +189,7 @@ void RemoveTextMercPopupImages() {
   return;
 }
 
-BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, UINT32 uiBuffer) {
+BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, uint32_t uiBuffer) {
   // set the current box
   if (SetCurrentPopUpBox(iBoxId) == FALSE) {
     return (FALSE);
@@ -199,9 +199,9 @@ BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, UI
   return (RenderMercPopupBox(sDestX, sDestY, uiBuffer));
 }
 
-BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, UINT32 uiBuffer) {
-  //	UINT32  uiDestPitchBYTES;
-  //	UINT32  uiSrcPitchBYTES;
+BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, uint32_t uiBuffer) {
+  //	uint32_t  uiDestPitchBYTES;
+  //	uint32_t  uiSrcPitchBYTES;
   //  UINT16  *pDestBuf;
   //	UINT16  *pSrcBuf;
 
@@ -287,8 +287,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   UINT16 usStringPixLength;
   SGPRect DestRect;
   struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
   UINT8 ubFontColor, ubFontShadowColor;
@@ -347,11 +347,11 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
 
   usStringPixLength = WFStringPixLength(pString, TEXT_POPUP_FONT);
 
-  if (usStringPixLength < (usWidth - (MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X)*2)) {
+  if (usStringPixLength < (usWidth - (MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X) * 2)) {
     usWidth = usStringPixLength + MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X * 2;
-    usTextWidth = usWidth - (MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X)*2 + 1;
+    usTextWidth = usWidth - (MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X) * 2 + 1;
   } else {
-    usTextWidth = usWidth - (MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X)*2 + 1 - usMarginX;
+    usTextWidth = usWidth - (MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X) * 2 + 1 - usMarginX;
   }
 
   usNumberVerticalPixels =
@@ -574,7 +574,7 @@ BOOLEAN RemoveMercPopupBox() {
   return (TRUE);
 }
 
-BOOLEAN RemoveMercPopupBoxFromIndex(UINT32 uiId) {
+BOOLEAN RemoveMercPopupBoxFromIndex(uint32_t uiId) {
   // find this box, set it to current, and delete it
   if (SetCurrentPopUpBox(uiId) == FALSE) {
     // failed
@@ -616,12 +616,12 @@ void GetMercPopupBoxFontColor(UINT8 ubBackgroundIndex, UINT8 *pubFontColor,
   }
 }
 
-BOOLEAN SetPrepareMercPopupFlags(UINT32 uiFlags) {
+BOOLEAN SetPrepareMercPopupFlags(uint32_t uiFlags) {
   guiFlags |= uiFlags;
   return (TRUE);
 }
 
-BOOLEAN SetPrepareMercPopUpFlagsFromIndex(UINT32 uiFlags, UINT32 uiId) {
+BOOLEAN SetPrepareMercPopUpFlagsFromIndex(uint32_t uiFlags, uint32_t uiId) {
   // find this box, set it to current, and delete it
   if (SetCurrentPopUpBox(uiId) == FALSE) {
     // failed

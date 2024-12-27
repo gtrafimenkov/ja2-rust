@@ -110,8 +110,8 @@ UINT8 ViewPath2[MAXVIEWPATHS][VIEWPATHLENGTH] = {
 
 };
 
-void BuildSightDir(UINT32 dir, UINT32 *One, UINT32 *Two, UINT32 *Three, UINT32 *Four,
-                   UINT32 *Five) {
+void BuildSightDir(uint32_t dir, uint32_t *One, uint32_t *Two, uint32_t *Three, uint32_t *Four,
+                   uint32_t *Five) {
   switch (dir) {
     case NORTH:
       *One = NORTHWEST;
@@ -185,10 +185,10 @@ typedef struct {
 } SLANT_ROOF_FOV_TYPE;
 
 SLANT_ROOF_FOV_TYPE gSlantRoofData[NUM_SLANT_ROOF_SLOTS];
-UINT32 guiNumSlantRoofs = 0;
+uint32_t guiNumSlantRoofs = 0;
 
 INT32 GetFreeSlantRoof(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumSlantRoofs; uiCount++) {
     if ((gSlantRoofData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
@@ -204,14 +204,14 @@ void RecountSlantRoofs(void) {
 
   for (uiCount = guiNumSlantRoofs - 1; (uiCount >= 0); uiCount--) {
     if ((gSlantRoofData[uiCount].fAllocated)) {
-      guiNumSlantRoofs = (UINT32)(uiCount + 1);
+      guiNumSlantRoofs = (uint32_t)(uiCount + 1);
       break;
     }
   }
 }
 
 void ClearSlantRoofs(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumSlantRoofs; uiCount++) {
     if ((gSlantRoofData[uiCount].fAllocated)) {
@@ -223,7 +223,7 @@ void ClearSlantRoofs(void) {
 }
 
 BOOLEAN FindSlantRoofSlot(INT16 sGridNo) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumSlantRoofs; uiCount++) {
     if ((gSlantRoofData[uiCount].fAllocated)) {
@@ -255,7 +255,7 @@ void AddSlantRoofFOVSlot(INT16 sGridNo) {
 }
 
 void ExamineSlantRoofFOVSlots() {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumSlantRoofs; uiCount++) {
     if ((gSlantRoofData[uiCount].fAllocated)) {
@@ -266,10 +266,10 @@ void ExamineSlantRoofFOVSlots() {
   ClearSlantRoofs();
 }
 
-void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLocators,
+void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEAN fShowLocators,
                          UINT8 ubLevel, BOOLEAN fForce) {
-  UINT32 maincnt, markercnt, marker, tilesLeftToSee, cnt, prevmarker;
-  UINT32 Inc[6], Dir[6];
+  uint32_t maincnt, markercnt, marker, tilesLeftToSee, cnt, prevmarker;
+  uint32_t Inc[6], Dir[6];
   INT8 Blocking, markerDir;
   INT8 nextDir = 0;
   UINT8 dir, range, Path2;

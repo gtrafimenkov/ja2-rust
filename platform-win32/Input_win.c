@@ -43,15 +43,15 @@ UINT16 gfCtrlState;   // TRUE = Pressed, FALSE = Not Pressed
 // These data structure are used to track the mouse while polling
 
 BOOLEAN gfTrackDblClick;
-UINT32 guiDoubleClkDelay;  // Current delay in milliseconds for a delay
-UINT32 guiSingleClickTimer;
-UINT32 guiRecordedWParam;
-UINT32 guiRecordedLParam;
+uint32_t guiDoubleClkDelay;  // Current delay in milliseconds for a delay
+uint32_t guiSingleClickTimer;
+uint32_t guiRecordedWParam;
+uint32_t guiRecordedLParam;
 UINT16 gusRecordedKeyState;
 BOOLEAN gfRecordedLeftButtonUp;
 
-UINT32 guiLeftButtonRepeatTimer;
-UINT32 guiRightButtonRepeatTimer;
+uint32_t guiLeftButtonRepeatTimer;
+uint32_t guiRightButtonRepeatTimer;
 
 BOOLEAN gfTrackMousePos;     // TRUE = queue mouse movement events, FALSE = don't
 BOOLEAN gfLeftButtonState;   // TRUE = Pressed, FALSE = Not Pressed
@@ -83,7 +83,7 @@ StringInput *gpCurrentStringDescriptor;
 
 // Local function headers
 
-void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
+void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam);
 void RedirectToString(UINT16 uiInputCharacter);
 void HandleSingleClicksAndButtonRepeats(void);
 void AdjustMouseForWindowOrigin(void);
@@ -107,7 +107,7 @@ LRESULT CALLBACK KeyboardHandler(int Code, WPARAM wParam, LPARAM lParam) {
 }
 
 LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
-  UINT32 uiParam;
+  uint32_t uiParam;
 
   if (Code < 0) {  // Do not handle this message, pass it on to another window
     return CallNextHookEx(ghMouseHook, Code, wParam, lParam);
@@ -234,8 +234,8 @@ void ShutdownInputManager(void) {  // There's very little to do when shutting do
   UnhookWindowsHookEx(ghMouseHook);
 }
 
-void QueuePureEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam) {
-  UINT32 uiTimer;
+void QueuePureEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
+  uint32_t uiTimer;
   UINT16 usKeyState;
 
   uiTimer = Plat_GetTickCount();
@@ -264,8 +264,8 @@ void QueuePureEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam) {
   }
 }
 
-void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam) {
-  UINT32 uiTimer;
+void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
+  uint32_t uiTimer;
   UINT16 usKeyState;
 
   uiTimer = Plat_GetTickCount();
@@ -356,7 +356,7 @@ void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam) {
   }
 }
 
-BOOLEAN DequeueSpecificEvent(InputAtom *Event, UINT32 uiMaskFlags) {
+BOOLEAN DequeueSpecificEvent(InputAtom *Event, uint32_t uiMaskFlags) {
   // Is there an event to dequeue
   if (gusQueueCount > 0) {
     memcpy(Event, &(gEventQueue[gusHeadIndex]), sizeof(InputAtom));
@@ -395,10 +395,10 @@ BOOLEAN DequeueEvent(InputAtom *Event) {
   }
 }
 
-void KeyChange(UINT32 usParam, UINT32 uiParam, UINT8 ufKeyState) {
-  UINT32 ubKey;
+void KeyChange(uint32_t usParam, uint32_t uiParam, UINT8 ufKeyState) {
+  uint32_t ubKey;
   UINT16 ubChar;
-  UINT32 uiTmpLParam;
+  uint32_t uiTmpLParam;
 
   if ((usParam >= 96) &&
       (usParam <= 110)) {  // Well this could be a NUMPAD character imitating the center console
@@ -721,9 +721,9 @@ void KeyChange(UINT32 usParam, UINT32 uiParam, UINT8 ufKeyState) {
   }
 }
 
-void KeyDown(UINT32 usParam,
-             UINT32 uiParam) {  // Are we PRESSING down one of SHIFT, ALT or CTRL ???
-  if (usParam == 16) {          // SHIFT key is PRESSED
+void KeyDown(uint32_t usParam,
+             uint32_t uiParam) {  // Are we PRESSING down one of SHIFT, ALT or CTRL ???
+  if (usParam == 16) {            // SHIFT key is PRESSED
     gfShiftState = SHIFT_DOWN;
     gfKeyState[16] = TRUE;
   } else {
@@ -750,8 +750,8 @@ void KeyDown(UINT32 usParam,
   }
 }
 
-void KeyUp(UINT32 usParam, UINT32 uiParam) {  // Are we RELEASING one of SHIFT, ALT or CTRL ???
-  if (usParam == 16) {                        // SHIFT key is RELEASED
+void KeyUp(uint32_t usParam, uint32_t uiParam) {  // Are we RELEASING one of SHIFT, ALT or CTRL ???
+  if (usParam == 16) {                            // SHIFT key is RELEASED
     gfShiftState = FALSE;
     gfKeyState[16] = FALSE;
   } else {
@@ -783,14 +783,14 @@ void KeyUp(UINT32 usParam, UINT32 uiParam) {  // Are we RELEASING one of SHIFT, 
 void GetMousePos(SGPPoint *Point) {
   struct Point MousePos = GetMousePoint();
 
-  Point->iX = (UINT32)MousePos.x;
-  Point->iY = (UINT32)MousePos.y;
+  Point->iX = (uint32_t)MousePos.x;
+  Point->iY = (uint32_t)MousePos.y;
 
   return;
 }
 
 BOOLEAN CharacterIsValid(UINT16 usCharacter, UINT16 *pFilter) {
-  UINT32 uiIndex, uiEndIndex;
+  uint32_t uiIndex, uiEndIndex;
 
   if (pFilter != NULL) {
     uiEndIndex = *pFilter;
@@ -1034,7 +1034,7 @@ void GetRestrictedClipCursor(SGPRect *pRectangle) { GetClipCursor((RECT *)pRecta
 
 BOOLEAN IsCursorRestricted(void) { return (fCursorWasClipped); }
 
-void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos) {
+void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {
   FLOAT flNewXPos, flNewYPos;
 
   // Wizardry NOTE: This function currently doesn't quite work right for in any Windows resolution
@@ -1053,7 +1053,8 @@ void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos) {
   flNewXPos = ((FLOAT)uiNewXPos / SCREEN_WIDTH) * 65536;
   flNewYPos = ((FLOAT)uiNewYPos / SCREEN_HEIGHT) * 65536;
 
-  mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, (UINT32)flNewXPos, (UINT32)flNewYPos, 0, 0);
+  mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, (uint32_t)flNewXPos, (uint32_t)flNewYPos, 0,
+              0);
 }
 
 void DequeueAllKeyBoardEvents() {
@@ -1061,8 +1062,7 @@ void DequeueAllKeyBoardEvents() {
   MSG KeyMessage;
 
   // dequeue all the events waiting in the windows queue
-  while (PeekMessage(&KeyMessage, ghWindow, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE))
-    ;
+  while (PeekMessage(&KeyMessage, ghWindow, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE));
 
   // Deque all the events waiting in the SGP queue
   while (DequeueEvent(&InputEvent) == TRUE) {
@@ -1071,14 +1071,14 @@ void DequeueAllKeyBoardEvents() {
 }
 
 void HandleSingleClicksAndButtonRepeats(void) {
-  UINT32 uiTimer;
+  uint32_t uiTimer;
 
   uiTimer = Plat_GetTickCount();
 
   // Is there a LEFT mouse button repeat
   if (gfLeftButtonState) {
     if ((guiLeftButtonRepeatTimer > 0) && (guiLeftButtonRepeatTimer <= uiTimer)) {
-      UINT32 uiTmpLParam;
+      uint32_t uiTmpLParam;
       struct Point MousePos = GetMousePoint();
       uiTmpLParam = ((MousePos.y << 16) & 0xffff0000) | (MousePos.x & 0x0000ffff);
       QueueEvent(LEFT_BUTTON_REPEAT, 0, uiTmpLParam);
@@ -1091,7 +1091,7 @@ void HandleSingleClicksAndButtonRepeats(void) {
   // Is there a RIGHT mouse button repeat
   if (gfRightButtonState) {
     if ((guiRightButtonRepeatTimer > 0) && (guiRightButtonRepeatTimer <= uiTimer)) {
-      UINT32 uiTmpLParam;
+      uint32_t uiTmpLParam;
       struct Point MousePos = GetMousePoint();
       uiTmpLParam = ((MousePos.y << 16) & 0xffff0000) | (MousePos.x & 0x0000ffff);
       QueueEvent(RIGHT_BUTTON_REPEAT, 0, uiTmpLParam);

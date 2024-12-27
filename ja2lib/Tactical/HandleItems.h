@@ -53,7 +53,7 @@ struct ITEM_POOL {
   INT32 iItemIndex;
   INT8 bVisible;
   INT8 bFlashColor;
-  UINT32 uiTimerID;
+  uint32_t uiTimerID;
   INT16 sGridNo;
   UINT8 ubLevel;
   UINT16 usFlags;
@@ -66,7 +66,7 @@ typedef struct {
 
   // Additional info for locators
   INT8 bRadioFrame;
-  UINT32 uiLastFrameUpdate;
+  uint32_t uiLastFrameUpdate;
   ITEM_POOL_LOCATOR_HOOK Callback;
   BOOLEAN fAllocated;
   UINT8 ubFlags;
@@ -120,7 +120,7 @@ void AdjustItemPoolVisibility(struct ITEM_POOL *pItemPool);
 void SetItemPoolVisibilityHiddenInObject(struct ITEM_POOL *pItemPool);
 void SetItemPoolVisibilityHidden(struct ITEM_POOL *pItemPool);
 
-INT32 GetItemOfClassTypeInPool(INT16 sGridNo, UINT32 uiItemClass, UINT8 ubLevel);
+INT32 GetItemOfClassTypeInPool(INT16 sGridNo, uint32_t uiItemClass, UINT8 ubLevel);
 void RemoveItemPool(INT16 sGridNo, UINT8 ubLevel);
 void RenderTopmostFlashingItems();
 

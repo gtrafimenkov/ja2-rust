@@ -13,8 +13,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 guiMiscBackground;
-UINT32 guiMiscGrid;
+uint32_t guiMiscBackground;
+uint32_t guiMiscGrid;
 
 void GameInitBobbyRMisc() {}
 

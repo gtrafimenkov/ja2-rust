@@ -361,24 +361,24 @@ enum {
 };
 
 // Image Identifiers
-UINT32 guiStats;
-UINT32 guiPrice;
-UINT32 guiPortrait;
-UINT32 guiWeaponBox;
-UINT32 guiFace;
-// UINT32		guiVideoFace;
-// UINT32		guiContactButton;
-UINT32 guiVideoConfPopup;
-UINT32 guiVideoConfTerminal;
-UINT32 guiPopUpBox;
-UINT32 guiVideoFaceBackground;
-UINT32 guiBWSnow;
-UINT32 guiFuzzLine;
-UINT32 guiStraightLine;
-UINT32 guiTransSnow;
-UINT32 guiVideoContractCharge;
-// UINT32		guiAnsweringMachineImage;
-UINT32 guiVideoTitleBar;
+uint32_t guiStats;
+uint32_t guiPrice;
+uint32_t guiPortrait;
+uint32_t guiWeaponBox;
+uint32_t guiFace;
+// uint32_t		guiVideoFace;
+// uint32_t		guiContactButton;
+uint32_t guiVideoConfPopup;
+uint32_t guiVideoConfTerminal;
+uint32_t guiPopUpBox;
+uint32_t guiVideoFaceBackground;
+uint32_t guiBWSnow;
+uint32_t guiFuzzLine;
+uint32_t guiStraightLine;
+uint32_t guiTransSnow;
+uint32_t guiVideoContractCharge;
+// uint32_t		guiAnsweringMachineImage;
+uint32_t guiVideoTitleBar;
 INT32 iAimMembersBoxId = -1;
 
 UINT8 gbCurrentSoldier = 0;
@@ -398,15 +398,15 @@ BOOLEAN gfBuyEquipment;
 INT32 giContractAmount = 0;
 INT32 giMercFaceIndex;
 wchar_t gsTalkingMercText[TEXT_POPUP_STRING_SIZE];
-UINT32 guiTimeThatMercStartedTalking;
-UINT32 guiLastHandleMercTime;
+uint32_t guiTimeThatMercStartedTalking;
+uint32_t guiLastHandleMercTime;
 BOOLEAN gfFirstTimeInContactScreen;
 
 UINT8 gubCurrentCount;
 UINT8 gubCurrentStaticMode;
-UINT32 guiMercAttitudeTime;  // retains the amount of time the user is in a screen, if over a
-                             // certain time, the merc gets miffed
-UINT8 gubMercAttitudeLevel;  // retains the current level the merc is  P.O.'ed at the caller.
+uint32_t guiMercAttitudeTime;  // retains the amount of time the user is in a screen, if over a
+                               // certain time, the merc gets miffed
+UINT8 gubMercAttitudeLevel;    // retains the current level the merc is  P.O.'ed at the caller.
 BOOLEAN
 gfHangUpMerc;  // if we have to cancel the video conferencing after the merc is finsihed talking
 BOOLEAN gfIsShutUpMouseRegionActive;
@@ -470,7 +470,7 @@ INT32 giHangUpButton;
 
 // PopupBox button
 void BtnPopUpOkButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiPopUpOkButton;
+uint32_t guiPopUpOkButton;
 INT32 guiPopUpImage;
 
 // First Contact Screen, Goto Hire merc Button
@@ -511,7 +511,7 @@ INT8 AimMemberHireMerc();
 BOOLEAN DisplayVideoConferencingDisplay();
 BOOLEAN DisplayMercsVideoFace();
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown);
-UINT32 DisplayMercChargeAmount();
+uint32_t DisplayMercChargeAmount();
 BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, UINT16 usPosX,
                                     UINT16 usPosY, UINT8 ubData);
 BOOLEAN InitVideoFaceTalking(UINT8 ubMercID, UINT16 usQuoteNum);
@@ -519,11 +519,11 @@ BOOLEAN InitVideoFace(UINT8 ubMercID);
 BOOLEAN DisplaySnowBackground();
 UINT8 WillMercAcceptCall();
 void HandleVideoDistortion();
-UINT8 DisplayDistortionLine(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxImages);
+UINT8 DisplayDistortionLine(UINT8 ubMode, uint32_t uiImageIdentifier, UINT8 ubMaxImages);
 UINT8 DisplayPixelatedImage(UINT8 ubMaxImages);
 void HandleMercAttitude();
 void StopMercTalking();
-UINT8 DisplayTransparentSnow(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxImages,
+UINT8 DisplayTransparentSnow(UINT8 ubMode, uint32_t uiImageIdentifier, UINT8 ubMaxImages,
                              BOOLEAN bForward);
 
 BOOLEAN InitDeleteVideoConferencePopUp();
@@ -959,7 +959,7 @@ BOOLEAN RenderAIMMembers() {
 }
 
 BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLocY,
-                             UINT32 ulFont, UINT8 ubColor) {
+                             uint32_t ulFont, UINT8 ubColor) {
   wchar_t sStr[10];
 
   swprintf(sStr, ARR_SIZE(sStr), L"%d", iNumber);
@@ -970,7 +970,7 @@ BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 u
   return (TRUE);
 }
 
-BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLocY, UINT32 ulFont,
+BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLocY, uint32_t ulFont,
                           UINT8 ubColor) {
   wchar_t sStr[10];
 
@@ -1070,9 +1070,9 @@ BOOLEAN UpdateMercInfo(void) {
 
 BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   HWFILE hFile;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   UINT16 i;
-  UINT32 uiStartSeekAmount;
+  uint32_t uiStartSeekAmount;
 
   hFile = FileMan_Open(MERCBIOSFILENAME, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
@@ -1241,7 +1241,7 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
   UINT16 usItem;
   INVTYPE *pItem;
   struct VObject *hVObject;
-  UINT32 usHeight, usWidth;
+  uint32_t usHeight, usWidth;
   ETRLEObject *pTrav;
   CHAR16 gzItemName[SIZE_ITEM_NAME];
   UINT8 ubItemCount = 0;
@@ -1265,8 +1265,8 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
       pTrav = &(hVObject->pETRLEObject[pItem->ubGraphicNum]);
 
-      usHeight = (UINT32)pTrav->usHeight;
-      usWidth = (UINT32)pTrav->usWidth;
+      usHeight = (uint32_t)pTrav->usHeight;
+      usWidth = (uint32_t)pTrav->usWidth;
 
       sCenX = PosX + (abs((INT32)((INT32)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->sOffsetX;
       sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
@@ -1989,7 +1989,7 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-UINT32 DisplayMercChargeAmount() {
+uint32_t DisplayMercChargeAmount() {
   wchar_t wTemp[50];
   wchar_t wDollarTemp[50];
   struct VObject *hImageHandle;
@@ -2584,7 +2584,7 @@ BOOLEAN CanMercBeHired() {
 }
 
 BOOLEAN DisplaySnowBackground() {
-  UINT32 uiCurrentTime = 0;
+  uint32_t uiCurrentTime = 0;
   struct VObject *hSnowHandle;
   UINT8 ubCount;
 
@@ -2624,7 +2624,7 @@ BOOLEAN DisplaySnowBackground() {
 }
 
 BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops) {
-  UINT32 uiCurrentTime = 0;
+  uint32_t uiCurrentTime = 0;
 
   uiCurrentTime = GetJA2Clock();
 
@@ -2652,7 +2652,7 @@ BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops) {
 }
 
 void HandleVideoDistortion() {
-  static UINT32 uiStaticNoiseSound = NO_SAMPLE;
+  static uint32_t uiStaticNoiseSound = NO_SAMPLE;
   UINT8 ubOldMode = gubCurrentStaticMode;
 
   // if we are just entering the contact page, display a snowy background
@@ -2667,7 +2667,7 @@ void HandleVideoDistortion() {
   } else {
     switch (gubCurrentStaticMode) {
       case VC_NO_STATIC: {
-        static UINT32 uiCurTime = 0;
+        static uint32_t uiCurTime = 0;
         UINT8 ubNum;
 
         // if the sound is playing, stop it
@@ -2771,12 +2771,12 @@ void HandleVideoDistortion() {
 }
 
 // returns true when done. else false
-UINT8 DisplayTransparentSnow(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxImages,
+UINT8 DisplayTransparentSnow(UINT8 ubMode, uint32_t uiImageIdentifier, UINT8 ubMaxImages,
                              BOOLEAN bForward) {
   struct VObject *hFuzzLineHandle;
   static INT8 bCount = 0;
-  UINT32 uiCurrentTime = 0;
-  static UINT32 uiLastTime = 0;
+  uint32_t uiCurrentTime = 0;
+  static uint32_t uiLastTime = 0;
 
   uiCurrentTime = GetJA2Clock();
 
@@ -2818,11 +2818,11 @@ UINT8 DisplayTransparentSnow(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMax
 }
 
 // returns true when done. else false
-UINT8 DisplayDistortionLine(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxImages) {
+UINT8 DisplayDistortionLine(UINT8 ubMode, uint32_t uiImageIdentifier, UINT8 ubMaxImages) {
   struct VObject *hFuzzLineHandle;
   static UINT8 ubCount = 255;
-  UINT32 uiCurrentTime = 0;
-  static UINT32 uiLastTime = 0;
+  uint32_t uiCurrentTime = 0;
+  static uint32_t uiLastTime = 0;
 
   uiCurrentTime = GetJA2Clock();
 
@@ -2853,8 +2853,8 @@ UINT8 DisplayDistortionLine(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxI
 
 UINT8 DisplayPixelatedImage(UINT8 ubMaxImages) {
   static UINT8 ubCount = 255;
-  UINT32 uiCurrentTime = 0;
-  static UINT32 uiLastTime = 0;
+  uint32_t uiCurrentTime = 0;
+  static uint32_t uiLastTime = 0;
 
   uiCurrentTime = GetJA2Clock();
 
@@ -2881,7 +2881,7 @@ UINT8 DisplayPixelatedImage(UINT8 ubMaxImages) {
 }
 
 void HandleMercAttitude() {
-  UINT32 uiCurrentTime = 0;
+  uint32_t uiCurrentTime = 0;
 
   uiCurrentTime = GetJA2Clock();
 
@@ -2896,7 +2896,7 @@ void HandleMercAttitude() {
       InitVideoFaceTalking(gbCurrentSoldier, QUOTE_PRECEDENT_TO_REPEATING_ONESELF);
       InitVideoFaceTalking(gbCurrentSoldier, QUOTE_IMPATIENT_QUOTE);
     } else if (gubMercAttitudeLevel == QUOTE_DELAY_HANGUP_TALK) {
-      UINT32 uiResetTime;
+      uint32_t uiResetTime;
       InitVideoFaceTalking(gbCurrentSoldier, QUOTE_COMMENT_BEFORE_HANG_UP);
 
       // if the merc is going to hang up disable the buttons, so user cant press any buttons
@@ -3036,7 +3036,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     gubVideoConferencingPreviousMode = gubVideoConferencingMode;
 
     if (gfJustSwitchedVideoConferenceMode) {
-      UINT32 uiVideoBackgroundGraphic;
+      uint32_t uiVideoBackgroundGraphic;
       struct VObject *hImageHandle;
 
       // load the answering machine graphic and add it
@@ -3255,7 +3255,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
   }
 
   if (gubVideoConferencingMode == AIM_VIDEO_POPDOWN_MODE) {
-    UINT32 uiVideoBackgroundGraphic;
+    uint32_t uiVideoBackgroundGraphic;
     struct VObject *hImageHandle;
 
     if (gubPopUpBoxAction == AIM_POPUP_DISPLAY) {
@@ -3539,8 +3539,8 @@ BOOLEAN DisplayAnimatedAnsweringMachineMsg( BOOLEAN fInit, UINT8 ubNumSubImages)
 {
 //  struct VObject*	hImageHandle;
         static UINT8	ubSubImage=0;
-        static UINT32 uiLastTime=0;
-        UINT32 uiCurTime = GetJA2Clock();
+        static uint32_t uiLastTime=0;
+        uint32_t uiCurTime = GetJA2Clock();
         static UINT8		ubMode=0;
 
         if( fInit )
@@ -3810,8 +3810,8 @@ void TempHiringOfMercs(UINT8 ubNumberOfMercs, BOOLEAN fReset) {
 
 void DelayMercSpeech(UINT8 ubMercID, UINT16 usQuoteNum, UINT16 usDelay, BOOLEAN fNewQuote,
                      BOOLEAN fReset) {
-  static UINT32 uiLastTime = 0;
-  UINT32 uiCurTime;
+  static uint32_t uiLastTime = 0;
+  uint32_t uiCurTime;
   static UINT16 usCurQuoteNum;
   static UINT16 usCurDelay;
   static BOOLEAN fQuoteWaiting = FALSE;  // a quote is waiting to be said
@@ -4056,7 +4056,7 @@ void DisplayPopUpBoxExplainingMercArrivalLocationAndTime() {
   struct SOLDIERTYPE *pSoldier = NULL;
   CHAR16 zTimeString[128];
   CHAR16 zSectorIDString[512];
-  UINT32 uiHour;
+  uint32_t uiHour;
 
   // if the id of the merc is invalid, dont display the pop up
   if (LaptopSaveInfo.sLastHiredMerc.iIdOfMerc == -1) return;

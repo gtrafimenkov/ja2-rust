@@ -39,7 +39,7 @@
 #define FLORIST_CARD_
 #define FLORIST_CARD_
 
-UINT32 guiCardBackground;
+uint32_t guiCardBackground;
 
 INT8 gbCurrentlySelectedCard;
 
@@ -49,7 +49,7 @@ void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 
 INT32 guiFlowerCardsButtonImage;
 void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFlowerCardsBackButton;
+uint32_t guiFlowerCardsBackButton;
 
 void GameInitFloristCards() {}
 
@@ -118,7 +118,7 @@ void RenderFloristCards() {
   UINT8 i, j, ubCount;
   UINT16 usPosX, usPosY;
   wchar_t sTemp[640];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   struct VObject *hPixHandle;
   UINT16 usHeightOffset;
 

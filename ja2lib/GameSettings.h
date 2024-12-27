@@ -63,8 +63,8 @@ typedef struct {
 
   CHAR8 zVersionNumber[14];
 
-  UINT32 uiSettingsVersionNumber;
-  UINT32 uiMeanwhileScenesSeenFlags;
+  uint32_t uiSettingsVersionNumber;
+  uint32_t uiMeanwhileScenesSeenFlags;
 
   BOOLEAN fHideHelpInAllScreens;
 

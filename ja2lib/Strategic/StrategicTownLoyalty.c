@@ -74,7 +74,7 @@ INT32 iTownDistances[NUM_TOWNS][NUM_TOWNS];
 
 #define BASIC_COST_FOR_CIV_MURDER (10 * GAIN_PTS_PER_LOYALTY_PT)
 
-UINT32 uiPercentLoyaltyDecreaseForCivMurder[] = {
+uint32_t uiPercentLoyaltyDecreaseForCivMurder[] = {
     // These get multiplied by GAIN_PTS_PER_LOYALTY_PT so they're in % of loyalty decrease (for an
     // average town)
     (5 * GAIN_PTS_PER_LOYALTY_PT),   // fat civ
@@ -130,7 +130,7 @@ BOOLEAN gfTownUsesLoyalty[NUM_TOWNS] = {
 INT16 sWorldSectorLocationOfFirstBattle = 0;
 
 // number of items in currently loaded sector
-extern UINT32 guiNumWorldItems;
+extern uint32_t guiNumWorldItems;
 
 // preprocess sector for mercs in it
 extern BOOLEAN fSectorsWithSoldiers[MAP_WORLD_X * MAP_WORLD_X][4];
@@ -218,8 +218,8 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
 }
 
 // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
-void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
-  UINT32 uiRemainingIncrement;
+void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease) {
+  uint32_t uiRemainingIncrement;
   INT16 sThisIncrement;
 
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
@@ -252,8 +252,8 @@ void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
 
 // decrements the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 // NOTE: This function expects a POSITIVE number for a decrease!!!
-void DecrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyDecrease) {
-  UINT32 uiRemainingDecrement;
+void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease) {
+  uint32_t uiRemainingDecrement;
   INT16 sThisDecrement;
 
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
@@ -353,7 +353,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   INT8 bSeenState = 0;
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pCivSoldier = NULL;
-  UINT32 uiChanceFalseAccusal = 0;
+  uint32_t uiChanceFalseAccusal = 0;
   INT8 bKillerTeam = 0;
   BOOLEAN fIncrement = FALSE;
 
@@ -582,7 +582,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
 // check town and raise loyalty value for hiring a merc from a town...not a lot of a gain, but some
 void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
   TownID bTownId = 0;
-  UINT32 uiLoyaltyValue = 0;
+  uint32_t uiLoyaltyValue = 0;
 
   // get town id civilian
   bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
@@ -657,9 +657,9 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
 
 void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubChance) {
   // remove random items in sector
-  UINT32 uiNumberOfItems = 0, iCounter = 0;
+  uint32_t uiNumberOfItems = 0, iCounter = 0;
   WORLDITEM *pItemList;
-  UINT32 uiNewTotal = 0;
+  uint32_t uiNewTotal = 0;
   CHAR16 wSectorName[128];
 
   // stealing should fail anyway 'cause there shouldn't be a temp file for unvisited sectors, but
@@ -734,7 +734,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
 void CalcDistancesBetweenTowns(void) {
   // run though each town sector and compare it to the next in terms of distance
   UINT8 ubTownA, ubTownB;
-  UINT32 uiCounterA, uiCounterB;
+  uint32_t uiCounterA, uiCounterB;
   UINT8 ubTempGroupId = 0;
   INT32 iDistance = 0;
 
@@ -867,7 +867,7 @@ void ReadInDistancesBetweenTowns(void) {
 INT32 GetTownDistances(UINT8 ubTown, UINT8 ubTownA) { return (iTownDistances[ubTown][ubTownA]); }
 
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Save the Town Loyalty
   FileMan_Write(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesWritten);
@@ -879,7 +879,7 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Restore the Town Loyalty
   FileMan_Read(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesRead);
@@ -964,7 +964,7 @@ INT32 IsTownUnderCompleteControlByEnemy(TownID bTownId) {
 
 void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, UINT8 ubHowMany) {
   TownID bTownId = 0;
-  UINT32 uiLoyaltyChange = 0;
+  uint32_t uiLoyaltyChange = 0;
   CHAR16 str[256];
   CHAR16 pSectorString[128];
 
@@ -988,7 +988,7 @@ void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, UINT8 ubHowMa
 }
 
 // this applies the SAME change to every town equally, regardless of distance from the event
-void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease) {
+void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease) {
   TownID bTownId;
 
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
@@ -996,7 +996,7 @@ void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease) {
   }
 }
 
-void DecrementTownLoyaltyEverywhere(UINT32 uiLoyaltyDecrease) {
+void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease) {
   TownID bTownId;
 
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
@@ -1080,7 +1080,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
   INT16 sEventSector;
   UINT8 ubTempGroupId;
   TownID bTownId;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
   INT32 iThisDistance;
   INT32 iShortestDistance[NUM_TOWNS];
   INT32 iPercentAdjustment;
@@ -1271,10 +1271,10 @@ BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId) {
   return (bTownId == bTownBattleId);
 }
 
-UINT32 PlayerStrength(void) {
+uint32_t PlayerStrength(void) {
   UINT8 ubLoop;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiStrength, uiTotal = 0;
+  uint32_t uiStrength, uiTotal = 0;
 
   for (ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        ubLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubLoop++) {
@@ -1294,10 +1294,10 @@ UINT32 PlayerStrength(void) {
   return (uiTotal);
 }
 
-UINT32 EnemyStrength(void) {
+uint32_t EnemyStrength(void) {
   UINT8 ubLoop;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiStrength, uiTotal = 0;
+  uint32_t uiStrength, uiTotal = 0;
 
   for (ubLoop = gTacticalStatus.Team[ENEMY_TEAM].bFirstID;
        ubLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID; ubLoop++) {

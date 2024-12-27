@@ -108,8 +108,8 @@ NPCQuoteInfo *LoadQuoteFile(UINT8 ubNPC) {
   CHAR8 zFileName[255];
   HWFILE hFile;
   NPCQuoteInfo *pFileData;
-  UINT32 uiBytesRead;
-  UINT32 uiFileSize;
+  uint32_t uiBytesRead;
+  uint32_t uiFileSize;
 
   if (ubNPC == PETER || ubNPC == ALBERTO || ubNPC == CARLO) {
     // use a copy of Herve's data file instead!
@@ -303,8 +303,8 @@ NPCQuoteInfo *LoadCivQuoteFile(UINT8 ubIndex) {
   CHAR8 zFileName[255];
   HWFILE hFile;
   NPCQuoteInfo *pFileData;
-  UINT32 uiBytesRead;
-  UINT32 uiFileSize;
+  uint32_t uiBytesRead;
+  uint32_t uiFileSize;
 
   if (ubIndex == MINERS_CIV_QUOTE_INDEX) {
     sprintf(zFileName, "NPCData\\miners.npc");
@@ -503,12 +503,12 @@ UINT8 CalcDesireToTalk(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach) {
 
 void ApproachedForFirstTime(MERCPROFILESTRUCT *pNPCProfile, INT8 bApproach) {
   UINT8 ubLoop;
-  UINT32 uiTemp;
+  uint32_t uiTemp;
 
   pNPCProfile->bApproached |= gbFirstApproachFlags[bApproach - 1];
   for (ubLoop = 1; ubLoop <= NUM_REAL_APPROACHES; ubLoop++) {
-    uiTemp = (UINT32)pNPCProfile->ubApproachVal[ubLoop - 1] *
-             (UINT32)pNPCProfile->ubApproachMod[bApproach - 1][ubLoop - 1] / 100;
+    uiTemp = (uint32_t)pNPCProfile->ubApproachVal[ubLoop - 1] *
+             (uint32_t)pNPCProfile->ubApproachMod[bApproach - 1][ubLoop - 1] / 100;
     if (uiTemp > 255) {
       uiTemp = 255;
     }
@@ -957,7 +957,7 @@ UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTT
   return (0);
 }
 
-BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPC, UINT32 uiMoneyAmount, UINT8 *pQuoteValue) {
+BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPC, uint32_t uiMoneyAmount, UINT8 *pQuoteValue) {
   switch (ubNPC) {
     // handle for STEVE and VINCE
     case STEVE:
@@ -1039,7 +1039,7 @@ UINT8 NPCConsiderQuote(UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuot
   // Returns 0 if none , 1 if one is found
   MERCPROFILESTRUCT *pNPCProfile;
   NPCQuoteInfo *pNPCQuoteInfo;
-  UINT32 uiDay;
+  uint32_t uiDay;
   BOOLEAN fTrue;
 
   if (ubNPC == NO_PROFILE) {
@@ -1305,7 +1305,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
   MERCPROFILESTRUCT *pProfile = NULL;
   UINT8 ubLoop, ubQuoteNum, ubRecordNum;
   struct SOLDIERTYPE *pSoldier = NULL;
-  UINT32 uiDay;
+  uint32_t uiDay;
   struct OBJECTTYPE *pObj = NULL;
   struct SOLDIERTYPE *pNPC;
   BOOLEAN fAttemptingToGiveItem;
@@ -2308,8 +2308,8 @@ BOOLEAN TriggerNPCWithGivenApproach(UINT8 ubTriggerNPC, UINT8 ubApproach, BOOLEA
 }
 
 BOOLEAN SaveNPCInfoToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
-  UINT32 cnt;
+  uint32_t uiNumBytesWritten = 0;
+  uint32_t cnt;
   UINT8 ubOne = 1;
   UINT8 ubZero = 0;
 
@@ -2365,11 +2365,11 @@ BOOLEAN SaveNPCInfoToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersion) {
-  UINT32 uiNumBytesRead = 0;
-  UINT32 cnt;
+BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion) {
+  uint32_t uiNumBytesRead = 0;
+  uint32_t cnt;
   UINT8 ubLoadQuote = 0;
-  UINT32 uiNumberToLoad = 0;
+  uint32_t uiNumberToLoad = 0;
 
   // If we are trying to restore a saved game prior to version 44, use the
   // MAX_NUM_SOLDIERS, else use NUM_PROFILES.  Dave used the wrong define!
@@ -2511,8 +2511,8 @@ BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersion) {
 }
 
 BOOLEAN SaveBackupNPCInfoToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
-  UINT32 cnt;
+  uint32_t uiNumBytesWritten = 0;
+  uint32_t cnt;
   UINT8 ubOne = 1;
   UINT8 ubZero = 0;
 
@@ -2544,11 +2544,11 @@ BOOLEAN SaveBackupNPCInfoToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersion) {
-  UINT32 uiNumBytesRead = 0;
-  UINT32 cnt;
+BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion) {
+  uint32_t uiNumBytesRead = 0;
+  uint32_t cnt;
   UINT8 ubLoadQuote = 0;
-  UINT32 uiNumberOfProfilesToLoad = 0;
+  uint32_t uiNumberOfProfilesToLoad = 0;
 
   uiNumberOfProfilesToLoad = NUM_PROFILES;
 

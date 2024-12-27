@@ -182,7 +182,7 @@ UINT8 gubTargetRecord;
 UINT8 gubTargetApproach;
 BOOLEAN gfShowDialogueMenu;
 BOOLEAN gfWaitingForTriggerTimer;
-UINT32 guiWaitingForTriggerTime;
+uint32_t guiWaitingForTriggerTime;
 INT32 iInterfaceDialogueBox = -1;
 UINT8 ubRecordThatTriggeredLiePrompt;
 BOOLEAN gfConversationPending = FALSE;
@@ -628,7 +628,7 @@ void RenderTalkingMenu() {
   FACETYPE *pFace;
   INT16 sFontX, sFontY, sX, sY;
   UINT8 ubCharacterNum = gTalkPanel.ubCharNum;
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   UINT16 usTextBoxWidth, usTextBoxHeight;
   CHAR16 zTempString[128];
@@ -849,7 +849,7 @@ void RenderTalkingMenu() {
 }
 
 void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiItemPos;
+  uint32_t uiItemPos;
 
   uiItemPos = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -864,7 +864,7 @@ void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiItemPos;
+  uint32_t uiItemPos;
   BOOLEAN fDoConverse = TRUE;
   uiItemPos = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -1168,8 +1168,8 @@ void CalculatePopupTextPosition(INT16 sWidth, INT16 sHeight) {
 }
 
 BOOLEAN TalkingMenuGiveItem(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos) {
-  CHECKF(SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_GIVE_ITEM, (UINT32)ubNPC,
-                                       (uintptr_t)pObject, (UINT32)bInvPos, gTalkPanel.iFaceIndex,
+  CHECKF(SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_GIVE_ITEM, (uint32_t)ubNPC,
+                                       (uintptr_t)pObject, (uint32_t)bInvPos, gTalkPanel.iFaceIndex,
                                        DIALOGUE_NPC_UI) != FALSE);
 
   return (TRUE);
@@ -3755,8 +3755,8 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
   }
 }
 
-UINT32 CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCost;
+uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier) {
+  uint32_t uiCost;
 
   if (!pSoldier) {
     return (0);
@@ -3797,9 +3797,9 @@ UINT32 CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier) {
   return (uiCost);
 }
 
-UINT32 CalcMedicalCost(UINT8 ubId) {
+uint32_t CalcMedicalCost(UINT8 ubId) {
   INT32 cnt;
-  UINT32 uiCostSoFar;
+  uint32_t uiCostSoFar;
   INT16 sGridNo = 0;
   struct SOLDIERTYPE *pSoldier, *pNPC;
 
@@ -3837,17 +3837,17 @@ UINT32 CalcMedicalCost(UINT8 ubId) {
 }
 
 BOOLEAN PlayerTeamHasTwoSpotsLeft() {
-  UINT32 cnt, uiCount = 0;
+  uint32_t cnt, uiCount = 0;
   struct SOLDIERTYPE *pSoldier;
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[cnt];
-       cnt <= (UINT32)(gTacticalStatus.Team[gbPlayerNum].bLastID - 2); cnt++, pSoldier++) {
+       cnt <= (uint32_t)(gTacticalStatus.Team[gbPlayerNum].bLastID - 2); cnt++, pSoldier++) {
     if (IsSolActive(pSoldier)) {
       uiCount++;
     }
   }
 
-  if (uiCount <= (UINT32)(gTacticalStatus.Team[gbPlayerNum].bLastID - 2) - 2) {
+  if (uiCount <= (uint32_t)(gTacticalStatus.Team[gbPlayerNum].bLastID - 2) - 2) {
     return (TRUE);
   } else {
     return (FALSE);

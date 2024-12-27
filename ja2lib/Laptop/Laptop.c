@@ -237,7 +237,7 @@ enum {
 // the wait time for closing of laptop animation/delay
 #define EXIT_LAPTOP_DELAY_TIME 100
 
-UINT32 guiTitleBarSurface;
+uint32_t guiTitleBarSurface;
 BOOLEAN gfTitleBarSurfaceAlreadyActive = FALSE;
 
 #define LAPTOP__NEW_FILE_ICON_X 83
@@ -247,17 +247,17 @@ BOOLEAN gfTitleBarSurfaceAlreadyActive = FALSE;
 #define LAPTOP__NEW_EMAIL_ICON_Y LAPTOP__NEW_FILE_ICON_Y
 
 // Mode values
-UINT32 guiCurrentLaptopMode;
-UINT32 guiPreviousLaptopMode;
-UINT32 guiCurrentWWWMode = LAPTOP_MODE_NONE;
+uint32_t guiCurrentLaptopMode;
+uint32_t guiPreviousLaptopMode;
+uint32_t guiCurrentWWWMode = LAPTOP_MODE_NONE;
 INT32 giCurrentSubPage;
-UINT32 guiCurrentLapTopCursor;
-UINT32 guiPreviousLapTopCursor;
-UINT32 guiCurrentSidePanel;  // the current navagation panel on the leftside of the laptop screen
-UINT32 guiPreviousSidePanel;
+uint32_t guiCurrentLapTopCursor;
+uint32_t guiPreviousLapTopCursor;
+uint32_t guiCurrentSidePanel;  // the current navagation panel on the leftside of the laptop screen
+uint32_t guiPreviousSidePanel;
 
-extern UINT32 guiVObjectSize;
-extern UINT32 guiVSurfaceSize;
+extern uint32_t guiVObjectSize;
+extern uint32_t guiVSurfaceSize;
 
 INT32 iHighLightBookLine = -1;
 BOOLEAN fFastLoadFlag = FALSE;
@@ -315,17 +315,17 @@ extern BOOLEAN fShowAtmPanelStartButton;
 BOOLEAN gfTemporaryDisablingOfLoadPendingFlag = FALSE;
 
 // GLOBAL FOR WHICH SCREEN TO EXIT TO FOR LAPTOP
-UINT32 guiExitScreen = MAP_SCREEN;
+uint32_t guiExitScreen = MAP_SCREEN;
 
 struct MOUSE_REGION gLaptopRegion;
 // Laptop screen graphic handle
-UINT32 guiLAPTOP;
+uint32_t guiLAPTOP;
 BOOLEAN fNewWWWDisplay = TRUE;
 
 static BOOLEAN fNewWWW = TRUE;
 
 // Used to store the site to go to after the 'rain delay' message
-extern UINT32 guiRainLoop;
+extern uint32_t guiRainLoop;
 
 INT32 giRainDelayInternetSite = -1;
 
@@ -333,36 +333,36 @@ INT32 giRainDelayInternetSite = -1;
 // BOOLEAN fVisitedBookmarkAlready[20];
 
 // the laptop icons
-UINT32 guiFILESICON;
-UINT32 guiFINANCIALICON;
-UINT32 guiHISTORYICON;
-UINT32 guiMAILICON;
-UINT32 guiPERSICON;
-UINT32 guiWWWICON;
-UINT32 guiBOOKTOP;
-UINT32 guiBOOKHIGH;
-UINT32 guiBOOKMID;
-UINT32 guiBOOKBOT;
-UINT32 guiBOOKMARK;
-UINT32 guiGRAPHWINDOW;
-UINT32 guiGRAPHBAR;
-UINT32 guiLaptopBACKGROUND;
-UINT32 guiDOWNLOADTOP;
-UINT32 guiDOWNLOADMID;
-UINT32 guiDOWNLOADBOT;
-UINT32 guiTITLEBARLAPTOP;
-UINT32 guiLIGHTS;
-UINT32 guiTITLEBARICONS;
-UINT32 guiDESKTOP;
+uint32_t guiFILESICON;
+uint32_t guiFINANCIALICON;
+uint32_t guiHISTORYICON;
+uint32_t guiMAILICON;
+uint32_t guiPERSICON;
+uint32_t guiWWWICON;
+uint32_t guiBOOKTOP;
+uint32_t guiBOOKHIGH;
+uint32_t guiBOOKMID;
+uint32_t guiBOOKBOT;
+uint32_t guiBOOKMARK;
+uint32_t guiGRAPHWINDOW;
+uint32_t guiGRAPHBAR;
+uint32_t guiLaptopBACKGROUND;
+uint32_t guiDOWNLOADTOP;
+uint32_t guiDOWNLOADMID;
+uint32_t guiDOWNLOADBOT;
+uint32_t guiTITLEBARLAPTOP;
+uint32_t guiLIGHTS;
+uint32_t guiTITLEBARICONS;
+uint32_t guiDESKTOP;
 
 // email notification
-UINT32 guiUNREAD;
-UINT32 guiNEWMAIL;
+uint32_t guiUNREAD;
+uint32_t guiNEWMAIL;
 
 // laptop button
-UINT32 guiLAPTOPBUTTON;
+uint32_t guiLAPTOPBUTTON;
 // the sidepanel handle
-UINT32 guiLAPTOPSIDEPANEL;
+uint32_t guiLAPTOPSIDEPANEL;
 
 // BOOLEAN		gfNewGameLaptop = TRUE;
 
@@ -454,14 +454,14 @@ INT32 giOldRegion = NO_REGION;
 LaptopSaveInfoStruct LaptopSaveInfo;
 
 // function calls
-UINT32 RenderLaptopPanel();
+uint32_t RenderLaptopPanel();
 void RenderLapTopImage();
 void GetLaptopKeyboardInput();
-UINT32 ExitLaptopMode(UINT32 uiMode);
+uint32_t ExitLaptopMode(uint32_t uiMode);
 
-UINT32 DrawLapTopText();
+uint32_t DrawLapTopText();
 void BtnOnCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 CreateLaptopButtons();
+uint32_t CreateLaptopButtons();
 void DeleteLapTopButtons();
 BOOLEAN DeleteLapTopMouseRegions();
 BOOLEAN CreateLapTopMouseRegions();
@@ -514,7 +514,7 @@ void CreateDestroyErrorButton(void);
 void DrawTextOnErrorButton();
 BOOLEAN LeaveLapTopScreen();
 void HandleAnimatedButtons(void);
-void AnimateButton(UINT32 uiIconID, UINT16 usX, UINT16 usY);
+void AnimateButton(uint32_t uiIconID, UINT16 usX, UINT16 usY);
 void CreateDestoryBookMarkRegions(void);
 void EnterLaptopInitLaptopPages();
 void CheckMarkButtonsDirtyFlag(void);
@@ -523,8 +523,8 @@ void ShouldNewMailBeDisplayed(void);
 void DisplayPlayersBalanceToDate(void);
 void CheckIfNewWWWW(void);
 void HandleLapTopESCKey(void);
-BOOLEAN InitTitleBarMaximizeGraphics(UINT32 uiBackgroundGraphic, STR16 pTitle, UINT32 uiIconGraphic,
-                                     UINT16 usIconGraphicIndex);
+BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
+                                     uint32_t uiIconGraphic, UINT16 usIconGraphicIndex);
 void RemoveTitleBarMaximizeGraphics();
 BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 usTopLeftX,
                                        UINT16 usTopLeftY, UINT16 usTopRightX);
@@ -564,10 +564,10 @@ void DisplayWebBookMarkNotify(void);
 // handle timer for bookmark notify
 void HandleWebBookMarkNotifyTimer(void);
 
-void CreateBookMarkHelpText(struct MOUSE_REGION *pRegion, UINT32 uiBookMarkID);
+void CreateBookMarkHelpText(struct MOUSE_REGION *pRegion, uint32_t uiBookMarkID);
 
-void CreateFileAndNewEmailIconFastHelpText(UINT32 uiHelpTextID, BOOLEAN fClearHelpText);
-void CreateLaptopButtonHelpText(INT32 iButtonIndex, UINT32 uiButtonHelpTextID);
+void CreateFileAndNewEmailIconFastHelpText(uint32_t uiHelpTextID, BOOLEAN fClearHelpText);
+void CreateLaptopButtonHelpText(INT32 iButtonIndex, uint32_t uiButtonHelpTextID);
 // ppp
 
 // Used to determine delay if its raining
@@ -585,7 +585,7 @@ extern void CheatToGetAll5Merc();
 extern void DemoHiringOfMercs();
 #endif
 
-void SetLaptopExitScreen(UINT32 uiExitScreen) { guiExitScreen = uiExitScreen; }
+void SetLaptopExitScreen(uint32_t uiExitScreen) { guiExitScreen = uiExitScreen; }
 
 void SetLaptopNewGameFlag() { LaptopSaveInfo.gfNewGameLaptop = TRUE; }
 
@@ -644,7 +644,7 @@ void GetLaptopKeyboardInput() {
 }
 
 // This is called only once at game initialization.
-UINT32 LaptopScreenInit() {
+uint32_t LaptopScreenInit() {
   // Memset the whole structure, to make sure of no 'JUNK'
   memset(&LaptopSaveInfo, 0, sizeof(LaptopSaveInfoStruct));
 
@@ -717,11 +717,9 @@ BOOLEAN InitLaptopAndLaptopScreens() {
   return (TRUE);
 }
 
-UINT32
-DrawLapTopIcons() { return (TRUE); }
+uint32_t DrawLapTopIcons() { return (TRUE); }
 
-UINT32
-DrawLapTopText() {
+uint32_t DrawLapTopText() {
   // show balance
   DisplayPlayersBalanceToDate();
 
@@ -729,7 +727,7 @@ DrawLapTopText() {
 }
 
 // This is only called once at game shutdown.
-UINT32 LaptopScreenShutdown() {
+uint32_t LaptopScreenShutdown() {
   InsuranceContractEndGameShutDown();
   BobbyRayMailOrderEndGameShutDown();
   ShutDownEmailList();
@@ -1018,7 +1016,7 @@ void RenderLapTopImage() {
   MarkButtonsDirty();
 }
 void RenderLaptop() {
-  UINT32 uiTempMode = 0;
+  uint32_t uiTempMode = 0;
 
   if ((fMaximizingProgram == TRUE) || (fMinizingProgram == TRUE)) {
     gfShowBookmarks = FALSE;
@@ -1604,7 +1602,7 @@ void HandleLapTopHandles() {
 
 extern BOOLEAN gfPrintFrameBuffer;
 
-UINT32 LaptopScreenHandle() {
+uint32_t LaptopScreenHandle() {
   // User just changed modes.  This is determined by the button callbacks
   // created in LaptopScreenInit()
 
@@ -1619,7 +1617,7 @@ UINT32 LaptopScreenHandle() {
                                              // animation.
     SGPRect SrcRect2, DstRect;
     INT32 iPercentage, iScalePercentage, iFactor;
-    UINT32 uiStartTime, uiTimeRange, uiCurrTime;
+    uint32_t uiStartTime, uiTimeRange, uiCurrTime;
     INT32 iX, iY, iWidth, iHeight;
 
     INT32 iRealPercentage;
@@ -1660,9 +1658,9 @@ UINT32 LaptopScreenHandle() {
       // Factor the percentage so that it is modified by a gravity falling acceleration effect.
       iFactor = (iPercentage - 50) * 2;
       if (iPercentage < 50)
-        iPercentage = (UINT32)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
+        iPercentage = (uint32_t)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
       else
-        iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.5);
+        iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.5);
 
       // Laptop source rect
       if (iPercentage < 99)
@@ -1863,9 +1861,9 @@ UINT32 LaptopScreenHandle() {
   return (LAPTOP_SCREEN);
 }
 
-UINT32 RenderLaptopPanel() { return 0; }
+uint32_t RenderLaptopPanel() { return 0; }
 
-UINT32 ExitLaptopMode(UINT32 uiMode) {
+uint32_t ExitLaptopMode(uint32_t uiMode) {
   // Deallocate the previous mode that you were in.
 
   switch (uiMode) {
@@ -1996,8 +1994,7 @@ UINT32 ExitLaptopMode(UINT32 uiMode) {
   return (TRUE);
 }
 
-UINT32
-CreateLaptopButtons() {
+uint32_t CreateLaptopButtons() {
   memset(giLapTopButton, -1, sizeof(giLapTopButton));
 
   /*giLapTopButtonImage[ON_BUTTON]=  LoadButtonImage( "LAPTOP\\button.sti" ,-1,1,-1,0,-1 );
@@ -2108,7 +2105,7 @@ CreateLaptopButtons() {
 }
 
 void DeleteLapTopButtons() {
-  UINT32 cnt;
+  uint32_t cnt;
   /*	for ( cnt = 0; cnt < MAX_BUTTON_COUNT; cnt++ )
           {
                   if (giLapTopButton[ cnt ] != -1 )
@@ -2181,7 +2178,7 @@ BOOLEAN LeaveLapTopScreen(void) {
     if (!gfDontStartTransitionFromLaptop) {
       SGPRect SrcRect2, DstRect;
       INT32 iPercentage, iScalePercentage, iFactor;
-      UINT32 uiStartTime, uiTimeRange, uiCurrTime;
+      uint32_t uiStartTime, uiTimeRange, uiCurrTime;
       INT32 iX, iY, iWidth, iHeight;
       INT32 iRealPercentage;
 
@@ -2223,9 +2220,9 @@ BOOLEAN LeaveLapTopScreen(void) {
         // Factor the percentage so that it is modified by a gravity falling acceleration effect.
         iFactor = (iPercentage - 50) * 2;
         if (iPercentage < 50)
-          iPercentage = (UINT32)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
+          iPercentage = (uint32_t)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
         else
-          iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.5);
+          iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.5);
 
         // Laptop source rect
         if (iPercentage < 99)
@@ -2586,7 +2583,7 @@ void RestoreOldRegion(INT32 iOldRegion) { return; }
 void HighLightRegion(INT32 iCurrentRegion) { return; }
 
 void HandleAnimatedButtons() { return; }
-void AnimateButton(UINT32 uiIconID, UINT16 usX, UINT16 usY) { return; }
+void AnimateButton(uint32_t uiIconID, UINT16 usX, UINT16 usY) { return; }
 
 void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iFrame = 0;
@@ -3729,7 +3726,7 @@ void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   return;
 }
 
-BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT8 ubFlags,
+BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
                            MSGBOX_CALLBACK ReturnCallback) {
   SGPRect pCenteringRect = {LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y, LAPTOP_SCREEN_LR_X,
                             LAPTOP_SCREEN_LR_Y};
@@ -3746,7 +3743,7 @@ BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, 
   return ((iLaptopMessageBox != -1));
 }
 
-BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                          UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect) {
   // reset exit mode
@@ -3761,7 +3758,7 @@ BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 
   return ((iLaptopMessageBox != -1));
 }
 
-BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                  UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
@@ -3777,7 +3774,7 @@ BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitSc
 
 // places a tileable pattern down
 BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight,
-                              UINT32 uiBackgroundIdentifier) {
+                              uint32_t uiBackgroundIdentifier) {
   struct VObject *hBackGroundHandle;
   UINT16 x, y, uiPosX, uiPosY;
 
@@ -3797,8 +3794,8 @@ BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16
   return (TRUE);
 }
 
-BOOLEAN InitTitleBarMaximizeGraphics(UINT32 uiBackgroundGraphic, STR16 pTitle, UINT32 uiIconGraphic,
-                                     UINT16 usIconGraphicIndex) {
+BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
+                                     uint32_t uiIconGraphic, UINT16 usIconGraphicIndex) {
   VSURFACE_DESC vs_desc;
   struct VObject *hImageHandle;
 
@@ -4416,8 +4413,8 @@ void BlitTitleBarIcons(void) {
 
 BOOLEAN DrawDeskTopBackground(void) {
   struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
@@ -4583,7 +4580,7 @@ void DisplayTaskBarIcons() {
   }
 }
 
-void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usKeyState) {
+void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, uint32_t usParam, UINT16 usKeyState) {
   // will handle keyboard shortcuts for the laptop ... to be added to later
 
   if ((fExitingLaptopFlag == TRUE) || (fTabHandled)) {
@@ -4771,7 +4768,7 @@ void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usK
 
 BOOLEAN RenderWWWProgramTitleBar(void) {
   // will render the title bar for the www program
-  UINT32 uiTITLEFORWWW;
+  uint32_t uiTITLEFORWWW;
   struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   INT32 iIndex = 0;
@@ -5272,8 +5269,8 @@ void ClearOutTempLaptopFiles(void) {
 }
 
 BOOLEAN SaveLaptopInfoToSavedGame(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
-  UINT32 uiSize;
+  uint32_t uiNumBytesWritten = 0;
+  uint32_t uiSize;
 
   // Save The laptop information
   FileMan_Write(hFile, &LaptopSaveInfo, sizeof(LaptopSaveInfoStruct), &uiNumBytesWritten);
@@ -5309,8 +5306,8 @@ BOOLEAN SaveLaptopInfoToSavedGame(HWFILE hFile) {
 }
 
 BOOLEAN LoadLaptopInfoFromSavedGame(HWFILE hFile) {
-  UINT32 uiNumBytesRead = 0;
-  UINT32 uiSize;
+  uint32_t uiNumBytesRead = 0;
+  uint32_t uiSize;
 
   // if there is memory allocated for the BobbyR orders
   if (LaptopSaveInfo.usNumberOfBobbyRayOrderItems) {
@@ -5405,13 +5402,13 @@ void InternetRainDelayMessageBoxCallBack(UINT8 bExitValue) {
   giRainDelayInternetSite = -2;
 }
 
-void CreateBookMarkHelpText(struct MOUSE_REGION *pRegion, UINT32 uiBookMarkID) {
+void CreateBookMarkHelpText(struct MOUSE_REGION *pRegion, uint32_t uiBookMarkID) {
   SetRegionFastHelpText(
       pRegion,
       gzLaptopHelpText[BOOKMARK_TEXT_ASSOCIATION_OF_INTERNATION_MERCENARIES + uiBookMarkID]);
 }
 
-void CreateFileAndNewEmailIconFastHelpText(UINT32 uiHelpTextID, BOOLEAN fClearHelpText) {
+void CreateFileAndNewEmailIconFastHelpText(uint32_t uiHelpTextID, BOOLEAN fClearHelpText) {
   struct MOUSE_REGION *pRegion;
 
   switch (uiHelpTextID) {
@@ -5437,6 +5434,6 @@ void CreateFileAndNewEmailIconFastHelpText(UINT32 uiHelpTextID, BOOLEAN fClearHe
   // fNewFilesInFileViewer
 }
 
-void CreateLaptopButtonHelpText(INT32 iButtonIndex, UINT32 uiButtonHelpTextID) {
+void CreateLaptopButtonHelpText(INT32 iButtonIndex, uint32_t uiButtonHelpTextID) {
   SetButtonFastHelpText(iButtonIndex, gzLaptopHelpText[uiButtonHelpTextID]);
 }

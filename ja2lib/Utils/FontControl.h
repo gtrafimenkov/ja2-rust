@@ -183,6 +183,6 @@ extern BOOLEAN gfFontsInit;
 BOOLEAN InitializeFonts();
 void ShutdownFonts();
 
-BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID);
+BOOLEAN SetFontShade(uint32_t uiFontID, INT8 bColorID);
 
 #endif

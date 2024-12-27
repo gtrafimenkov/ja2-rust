@@ -53,8 +53,8 @@ extern INT32 giTimerTeamTurnUpdate;
 BOOLEAN InitializeJA2Clock(void);
 void ShutdownJA2Clock(void);
 
-UINT32 GetJA2Clock();
-void SetJA2Clock(UINT32 time);
+uint32_t GetJA2Clock();
+void SetJA2Clock(uint32_t time);
 
 void PauseTime(BOOLEAN fPaused);
 

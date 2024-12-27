@@ -110,11 +110,11 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
   UINT16 sNewAniFrame, anAniFrame;
   INT8 ubCurrentHeight;
   UINT16 usOldAnimState;
-  static UINT32 uiJumpAddress = NO_JUMP;
+  static uint32_t uiJumpAddress = NO_JUMP;
   INT16 sNewGridNo;
   INT16 sX, sY;
   BOOLEAN fStop;
-  UINT32 cnt;
+  uint32_t cnt;
   UINT8 ubDiceRoll;         // Percentile dice roll
   UINT8 ubRandomHandIndex;  // Index value into random animation table to use base don what is in
                             // the guys hand...
@@ -1174,7 +1174,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // CODE: Decide to turn from hit.......
           {
             INT8 bNewDirection;
-            UINT32 uiChance;
+            uint32_t uiChance;
 
             // ONLY DO THIS IF CERTAIN CONDITIONS ARISE!
             // For one, only do for mercs!
@@ -1484,7 +1484,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // ATE: Only do if we're not inspecial case...
           if (!(pSoldier->uiStatusFlags & SOLDIER_NPC_DOING_PUNCH)) {
             struct SOLDIERTYPE *pTSoldier;
-            UINT32 uiMercFlags;
+            uint32_t uiMercFlags;
             UINT16 usSoldierIndex;
 
             if (FindSoldier(pSoldier->sTargetGridNo, &usSoldierIndex, &uiMercFlags,

@@ -64,10 +64,10 @@ BOOLEAN ShutdownEventManager() {
   return (TRUE);
 }
 
-BOOLEAN AddEvent(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT32 uiDataSize,
+BOOLEAN AddEvent(uint32_t uiEvent, UINT16 usDelay, PTR pEventData, uint32_t uiDataSize,
                  UINT8 ubQueueID) {
   EVENT *pEvent;
-  UINT32 uiEventSize = sizeof(EVENT);
+  uint32_t uiEventSize = sizeof(EVENT);
   HLIST hQueue;
 
   // Allocate new event
@@ -94,8 +94,8 @@ BOOLEAN AddEvent(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT32 uiDataSi
   return (TRUE);
 }
 
-BOOLEAN RemoveEvent(EVENT **ppEvent, UINT32 uiIndex, UINT8 ubQueueID) {
-  UINT32 uiQueueSize;
+BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID) {
+  uint32_t uiQueueSize;
   HLIST hQueue;
 
   // Get an event from queue, if one exists
@@ -116,8 +116,8 @@ BOOLEAN RemoveEvent(EVENT **ppEvent, UINT32 uiIndex, UINT8 ubQueueID) {
   return (TRUE);
 }
 
-BOOLEAN PeekEvent(EVENT **ppEvent, UINT32 uiIndex, UINT8 ubQueueID) {
-  UINT32 uiQueueSize;
+BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID) {
+  uint32_t uiQueueSize;
   HLIST hQueue;
 
   // Get an event from queue, if one exists
@@ -147,8 +147,8 @@ BOOLEAN FreeEvent(EVENT *pEvent) {
   return (TRUE);
 }
 
-UINT32 EventQueueSize(UINT8 ubQueueID) {
-  UINT32 uiQueueSize;
+uint32_t EventQueueSize(UINT8 ubQueueID) {
+  uint32_t uiQueueSize;
   HLIST hQueue;
 
   // Get an event from queue, if one exists

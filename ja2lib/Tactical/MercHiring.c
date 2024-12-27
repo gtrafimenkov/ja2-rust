@@ -256,7 +256,7 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
 void MercArrivesCallback(UINT8 ubSoldierID) {
   MERCPROFILESTRUCT *pMerc;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiTimeOfPost;
+  uint32_t uiTimeOfPost;
 
   if (!DidGameJustStart() && gsMercArriveSectorX == 9 &&
       gsMercArriveSectorY ==
@@ -467,9 +467,9 @@ void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier) {
 void SetFlagToForceHireMerc(BOOLEAN fForceHire) { gForceHireMerc = fForceHire; }
 #endif
 
-UINT32 GetMercArrivalTimeOfDay() {
-  UINT32 uiCurrHour;
-  UINT32 uiMinHour;
+uint32_t GetMercArrivalTimeOfDay() {
+  uint32_t uiCurrHour;
+  uint32_t uiMinHour;
 
   // Pick a time...
 

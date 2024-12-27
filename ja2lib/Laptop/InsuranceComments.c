@@ -31,7 +31,7 @@
 #define INS_CMNT_LINK_HEIGHT 35
 #define INS_CMNT_LINK_OFFSET_X 166
 
-UINT32 guiInsCmntBulletImage;
+uint32_t guiInsCmntBulletImage;
 
 // link to the varios pages
 struct MOUSE_REGION gSelectedInsuranceCommentLinkRegion[3];
@@ -157,7 +157,7 @@ void RenderInsuranceComments() {
 void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
+    uint32_t uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
 
     if (uiInsuranceLink == 0)
       guiCurrentLaptopMode = LAPTOP_MODE_INSURANCE;

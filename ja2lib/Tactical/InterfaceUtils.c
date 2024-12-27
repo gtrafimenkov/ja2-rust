@@ -44,8 +44,8 @@
 #define FACE_HEIGHT 43
 
 // backgrounds for breath max background
-extern UINT32 guiBrownBackgroundForTeamPanel;
-extern UINT32 guiGoldBackgroundForTeamPanel;
+extern uint32_t guiBrownBackgroundForTeamPanel;
+extern uint32_t guiGoldBackgroundForTeamPanel;
 
 // selected grunt
 extern UINT16 gusSelectedSoldier;
@@ -102,11 +102,11 @@ void UnLoadCarPortraits(void) {
 }
 
 void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                     INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer) {
+                     INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
   INT8 bBandage;
@@ -184,11 +184,11 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
 }
 
 void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                       INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer) {
+                       INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
   struct VObject *hHandle;
@@ -286,11 +286,11 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
 }
 
 void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                       INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer) {
+                       INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
 
@@ -328,11 +328,11 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
 
 void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos,
                      INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
-                     UINT32 uiBuffer) {
+                     uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
   INT16 sValue;
@@ -419,7 +419,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
         SetAutoFaceActiveFromSoldier(FRAME_BUFFER, guiSAVEBUFFER, GetSolID(pSoldier), sFaceX,
                                      sFaceY);
         //	SetAutoFaceActiveFromSoldier( FRAME_BUFFER, FACE_AUTO_RESTORE_BUFFER,
-        //GetSolID(pSoldier) , sFaceX, sFaceY );
+        // GetSolID(pSoldier) , sFaceX, sFaceY );
       }
     }
 

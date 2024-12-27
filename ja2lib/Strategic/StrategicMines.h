@@ -63,11 +63,11 @@ typedef struct MINE_LOCATION_TYPE {
 typedef struct MINE_STATUS_TYPE {
   UINT8 ubMineType;  // type of mine (silver or gold)
   BYTE filler1[3];
-  UINT32 uiMaxRemovalRate;  // fastest rate we can move ore from this mine in period
+  uint32_t uiMaxRemovalRate;  // fastest rate we can move ore from this mine in period
 
-  UINT32 uiRemainingOreSupply;  // the total value left to this mine (-1 means unlimited)
-  UINT32 uiOreRunningOutPoint;  // when supply drop below this, workers tell player the mine is
-                                // running out of ore
+  uint32_t uiRemainingOreSupply;  // the total value left to this mine (-1 means unlimited)
+  uint32_t uiOreRunningOutPoint;  // when supply drop below this, workers tell player the mine is
+                                  // running out of ore
 
   BOOLEAN fEmpty;       // whether no longer minable
   BOOLEAN fRunningOut;  // whether mine is beginning to run out
@@ -85,10 +85,10 @@ typedef struct MINE_STATUS_TYPE {
                                       // produced from it
   BOOLEAN fAttackedHeadMiner;         // player has attacked the head miner, shutting down mine &
                                       // decreasing loyalty
-  UINT16 usValidDayCreaturesCanInfest;   // Creatures will be permitted to spread if the game day is
-                                         // greater than this value.
-  UINT32 uiTimePlayerProductionStarted;  // time in minutes when 'fMineHasProducedForPlayer' was
-                                         // first set
+  UINT16 usValidDayCreaturesCanInfest;  // Creatures will be permitted to spread if the game day is
+                                        // greater than this value.
+  uint32_t uiTimePlayerProductionStarted;  // time in minutes when 'fMineHasProducedForPlayer' was
+                                           // first set
 
   BYTE filler[11];  // reserved for expansion
 
@@ -109,8 +109,8 @@ void HourlyMinesUpdate(void);
 INT32 GetTotalLeftInMine(INT8 bMineIndex);
 
 // get max rates for this mine (per period, per day)
-UINT32 GetMaxPeriodicRemovalFromMine(INT8 bMineIndex);
-UINT32 GetMaxDailyRemovalFromMine(INT8 bMineIndex);
+uint32_t GetMaxPeriodicRemovalFromMine(INT8 bMineIndex);
+uint32_t GetMaxDailyRemovalFromMine(INT8 bMineIndex);
 
 // which town does this mine belong to?
 INT8 GetTownAssociatedWithMine(INT8 bMineIndex);
@@ -128,7 +128,7 @@ void HandleIncomeFromMines(void);
 INT32 PredictIncomeFromPlayerMines(void);
 
 // predict income from a mine
-UINT32 PredictDailyIncomeFromAMine(INT8 bMineIndex);
+uint32_t PredictDailyIncomeFromAMine(INT8 bMineIndex);
 
 // calculate maximum possible daily income from all mines
 INT32 CalcMaxPlayerIncomeFromMines(void);

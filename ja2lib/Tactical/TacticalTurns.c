@@ -115,10 +115,10 @@ void HandleRPCDescription() {
 }
 
 void HandleTacticalEndTurn() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiTime;
-  static UINT32 uiTimeSinceLastStrategicUpdate = 0;
+  uint32_t uiTime;
+  static uint32_t uiTimeSinceLastStrategicUpdate = 0;
 
   // OK, Do a number of things here....
   // Every few turns......

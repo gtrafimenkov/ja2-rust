@@ -12,7 +12,7 @@ extern BOOLEAN gfAskForName;
 extern BOOLEAN gfCreatedFDlg;
 extern BOOLEAN gfDestroyFDlg;
 
-UINT32 WaitForFileName(void);
+uint32_t WaitForFileName(void);
 void RemoveFileDialog(void);
 void CreateFileDialog(CHAR16 *zTitle);
 

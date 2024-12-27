@@ -60,7 +60,7 @@ void TacticalSquadListBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 INT16 gsRadarX;
 INT16 gsRadarY;
-UINT32 gusRadarImage;
+uint32_t gusRadarImage;
 BOOLEAN fImageLoaded = FALSE;
 BOOLEAN fRenderRadarScreen = TRUE;
 INT16 sSelectedSquadLine = -1;
@@ -237,10 +237,10 @@ void RenderRadarScreen() {
 
   INT16 sXSoldPos, sYSoldPos, sXSoldScreen, sYSoldScreen, sXSoldRadar, sYSoldRadar;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
-  UINT32 cnt;
+  uint32_t cnt;
   INT16 sHeight, sWidth, sX;
   INT32 iCounter = 0;
 
@@ -518,7 +518,7 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
   INT16 sCounter = 0;
   VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
-  UINT32 uiHandle;
+  uint32_t uiHandle;
 
   if ((fRenderRadarScreen == FALSE) && (fCreated == FALSE)) {
     // create regions

@@ -89,8 +89,8 @@ typedef struct {
   INT16 iOldX, iOldY;
   INT16 iAnimSpeed;
   INT32 iTemplate;
-  UINT32 uiFlags;
-  UINT32 uiLightType;
+  uint32_t uiFlags;
+  uint32_t uiLightType;
 } LIGHT_SPRITE;
 
 // Initializes the lighting system
@@ -108,9 +108,9 @@ BOOLEAN SetDefaultWorldLightingColors(void);
 // Sets the normal light level for all tiles in the world
 BOOLEAN LightSetBaseLevel(UINT8 iIntensity);
 // Adds a light value to all tiles
-BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity);
+BOOLEAN LightAddBaseLevel(uint32_t uiLightType, UINT8 iIntensity);
 // Subtracts a light value from all tiles
-BOOLEAN LightSubtractBaseLevel(UINT32 uiLightType, UINT8 iIntensity);
+BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, UINT8 iIntensity);
 // Creates an omni (circular) light
 INT32 LightCreateOmni(UINT8 ubIntensity, INT16 iRadius);
 // Creates an oval-shaped light (two separate radii)
@@ -118,9 +118,9 @@ INT32 LightCreateElliptical(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2);
 // Creates a square light
 INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2);
 // Draws a light into the scene at X,Y
-BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite);
+BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite);
 // Reverts the tiles a light has affected back to normal
-BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite);
+BOOLEAN LightErase(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite);
 // Save a light list into a file
 BOOLEAN LightSave(INT32 uiLight, STR pFilename);
 // Load a light list from a file
@@ -134,7 +134,7 @@ UINT8 LightGetColors(struct SGPPaletteEntry *pPal);
 // High-Level Sprite Interface
 
 // Creates a new light sprite from a given filename/predefined symbol
-INT32 LightSpriteCreate(STR pName, UINT32 uiLightType);
+INT32 LightSpriteCreate(STR pName, uint32_t uiLightType);
 // Destroys the instance of that light
 BOOLEAN LightSpriteDestroy(INT32 iSprite);
 // Sets the tile position of the light instance
@@ -160,10 +160,10 @@ BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset);
 BOOLEAN LightHideRays(INT16 iX, INT16 iY);
 
 // makes the 16-bit palettes
-UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiType, BOOLEAN fForce);
-BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, UINT32 uiBase,
+UINT16 CreateTilePaletteTables(struct VObject *pObj, uint32_t uiType, BOOLEAN fForce);
+BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase,
                                    struct SGPPaletteEntry *pShadePal);
-UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, UINT32 uiType);
+UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
 UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel);

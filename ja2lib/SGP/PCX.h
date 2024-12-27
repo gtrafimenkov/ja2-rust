@@ -25,7 +25,7 @@ typedef struct {
   UINT8 *pPcxBuffer;
   UINT8 ubPalette[768];
   UINT16 usWidth, usHeight;
-  UINT32 uiBufferSize;
+  uint32_t uiBufferSize;
   UINT16 usPcxFlags;
 
 } PcxObject;

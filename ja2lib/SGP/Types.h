@@ -15,7 +15,6 @@
 
 // HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
 
-typedef uint32_t UINT32;
 typedef int32_t INT32;
 
 // integers
@@ -42,7 +41,7 @@ typedef void* PTR;
 typedef uint16_t HNDL;
 typedef UINT8 BYTE;
 typedef CHAR8 STRING512[512];
-typedef UINT32 HWFILE;
+typedef uint32_t HWFILE;
 
 #define SGPFILENAME_LEN 100
 typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
@@ -119,6 +118,6 @@ typedef int32_t i32;
 typedef int64_t i64;
 
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
-typedef UINT32 COLORVAL;
+typedef uint32_t COLORVAL;
 
 #endif

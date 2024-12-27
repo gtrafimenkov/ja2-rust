@@ -23,12 +23,12 @@ INT16 gsCurMouseOffsetY = 0;
 UINT16 gsCurMouseHeight = 0;
 UINT16 gsCurMouseWidth = 0;
 UINT16 gusNumDataFiles = 0;
-UINT32 guiExternVo;
+uint32_t guiExternVo;
 UINT16 gusExternVoSubIndex;
-UINT32 guiExtern2Vo;
+uint32_t guiExtern2Vo;
 UINT16 gusExtern2VoSubIndex;
-UINT32 guiOldSetCursor = 0;
-UINT32 guiDelayTimer = 0;
+uint32_t guiOldSetCursor = 0;
+uint32_t guiDelayTimer = 0;
 
 MOUSEBLT_HOOK gMouseBltOverride = NULL;
 
@@ -86,11 +86,11 @@ void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCur
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
+BOOLEAN LoadCursorData(uint32_t uiCursorIndex) {
   // Load cursor data will load all data required for the cursor specified by this index
   CursorData *pCurData;
   CursorImage *pCurImage;
-  UINT32 cnt;
+  uint32_t cnt;
   INT16 sMaxHeight = -1;
   INT16 sMaxWidth = -1;
   ETRLEObject *pTrav;
@@ -225,7 +225,7 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void UnLoadCursorData(UINT32 uiCursorIndex) {
+void UnLoadCursorData(uint32_t uiCursorIndex) {
   // This function will unload add data used for this cursor
   //
   // Ok, first we make sure that the video object file is indeed loaded. Once this is verified, we
@@ -233,7 +233,7 @@ void UnLoadCursorData(UINT32 uiCursorIndex) {
   //
   CursorData *pCurData;
   CursorImage *pCurImage;
-  UINT32 cnt;
+  uint32_t cnt;
 
   pCurData = &(gpCursorDatabase[uiCursorIndex]);
 
@@ -253,7 +253,7 @@ void UnLoadCursorData(UINT32 uiCursorIndex) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void CursorDatabaseClear(void) {
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
   for (uiIndex = 0; uiIndex < gusNumDataFiles; uiIndex++) {
     if (gpCursorFileDatabase[uiIndex].fLoaded == TRUE) {
@@ -269,12 +269,12 @@ void CursorDatabaseClear(void) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
+BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex) {
   BOOLEAN ReturnValue = TRUE;
   UINT16 usSubIndex;
   CursorData *pCurData;
   CursorImage *pCurImage;
-  UINT32 cnt;
+  uint32_t cnt;
   INT16 sCenterValX, sCenterValY;
   struct VObject *hVObject;
   ETRLEObject *pTrav;
@@ -485,10 +485,10 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride) { gMouseBltOverride = pMouseBltOverride; }
 
 // Sets an external video object as cursor file data....
-void SetExternVOData(UINT32 uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex) {
+void SetExternVOData(uint32_t uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex) {
   CursorData *pCurData;
   CursorImage *pCurImage;
-  UINT32 cnt;
+  uint32_t cnt;
 
   pCurData = &(gpCursorDatabase[uiCursorIndex]);
 
@@ -511,10 +511,10 @@ void SetExternVOData(UINT32 uiCursorIndex, struct VObject *hVObject, UINT16 usSu
   }
 }
 
-void RemoveExternVOData(UINT32 uiCursorIndex) {
+void RemoveExternVOData(uint32_t uiCursorIndex) {
   CursorData *pCurData;
   CursorImage *pCurImage;
-  UINT32 cnt;
+  uint32_t cnt;
 
   pCurData = &(gpCursorDatabase[uiCursorIndex]);
 

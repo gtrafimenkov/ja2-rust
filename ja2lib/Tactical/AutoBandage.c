@@ -35,7 +35,7 @@
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
 
-extern UINT32 giMercPanelImage;
+extern uint32_t giMercPanelImage;
 extern FACETYPE *gpCurrentTalkingFace;
 
 // max number of merc faces per row in autobandage box
@@ -48,7 +48,7 @@ UINT16 gusTextBoxHeight = 0;
 BOOLEAN gfBeginningAutoBandage = FALSE;
 INT16 gsX = 0;
 INT16 gsY = 0;
-UINT32 guiAutoBandageSeconds = 0;
+uint32_t guiAutoBandageSeconds = 0;
 BOOLEAN fAutoBandageComplete = FALSE;
 BOOLEAN fEndAutoBandage = FALSE;
 
@@ -269,7 +269,7 @@ BOOLEAN HandleAutoBandage() {
 BOOLEAN CreateAutoBandageString(void) {
   INT32 cnt;
   UINT8 ubDoctor[20], ubDoctors = 0;
-  UINT32 uiDoctorNameStringLength = 1;  // for end-of-string character
+  uint32_t uiDoctorNameStringLength = 1;  // for end-of-string character
   STR16 sTemp;
   struct SOLDIERTYPE *pSoldier;
 

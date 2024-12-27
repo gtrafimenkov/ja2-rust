@@ -60,7 +60,7 @@ extern UINT8 gubWaitingForAllMercsToExitCode;
 
 void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   if ((gTacticalStatus.uiFlags & INCOMBAT) && (pSoldier->usPathDataSize > 0)) {
-    UINT32 uiLoop;
+    uint32_t uiLoop;
     UINT16 usTemp;
     UINT16 usNewGridNo;
 

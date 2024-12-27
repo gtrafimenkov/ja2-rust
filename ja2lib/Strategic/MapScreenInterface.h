@@ -215,8 +215,8 @@ extern INT32 giDestHighLine;
 extern INT32 giContractHighLine;
 extern INT32 giSleepHighLine;
 
-extern UINT32 guiUpdatePanel;
-extern UINT32 guiUpdatePanelTactical;
+extern uint32_t guiUpdatePanel;
+extern uint32_t guiUpdatePanelTactical;
 extern BOOLEAN fShowUpdateBox;
 
 extern SGPRect ContractDimensions;
@@ -254,17 +254,17 @@ extern INT32 iCurrentMapSectorZ;
 extern INT32 giBoxY;
 
 // pop up box textures
-extern UINT32 guiPOPUPTEX;
-extern UINT32 guiPOPUPBORDERS;
+extern uint32_t guiPOPUPTEX;
+extern uint32_t guiPOPUPBORDERS;
 
 // the level-changing markers on the map border
-extern UINT32 guiLEVELMARKER;
+extern uint32_t guiLEVELMARKER;
 
 // the currently selected character arrow
-extern UINT32 guiSelectedCharArrow;
+extern uint32_t guiSelectedCharArrow;
 
 // sam and mine icons
-extern UINT32 guiSAMICON;
+extern uint32_t guiSAMICON;
 
 extern BOOLEAN fShowMapScreenMovementList;
 
@@ -342,36 +342,36 @@ void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldie
 void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString);
 
 // handle leaving of equipment in sector
-void HandleLeavingOfEquipmentInCurrentSector(UINT32 uiMercId);
+void HandleLeavingOfEquipmentInCurrentSector(uint32_t uiMercId);
 
 // set up a linked list of items being dropped and post an event to later drop them
-void HandleMercLeavingEquipmentInDrassen(UINT32 uiMercId);
-void HandleMercLeavingEquipmentInOmerta(UINT32 uiMercId);
+void HandleMercLeavingEquipmentInDrassen(uint32_t uiMercId);
+void HandleMercLeavingEquipmentInOmerta(uint32_t uiMercId);
 
 // actually drop the stored list of items
-void HandleEquipmentLeftInOmerta(UINT32 uiSlotIndex);
-void HandleEquipmentLeftInDrassen(UINT32 uiSlotIndex);
+void HandleEquipmentLeftInOmerta(uint32_t uiSlotIndex);
+void HandleEquipmentLeftInDrassen(uint32_t uiSlotIndex);
 
 // init/shutdown leave item lists
 void InitLeaveList(void);
 void ShutDownLeaveList(void);
 
 // add item to leave equip index
-BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, UINT32 uiIndex);
+BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, uint32_t uiIndex);
 
 // release memory for all items in this slot's leave item list
-void FreeLeaveListSlot(UINT32 uiSlotIndex);
+void FreeLeaveListSlot(uint32_t uiSlotIndex);
 
 // first free slot in equip leave list
 INT32 FindFreeSlotInLeaveList(void);
 
 // set up drop list
-INT32 SetUpDropItemListForMerc(UINT32 uiMercId);
+INT32 SetUpDropItemListForMerc(uint32_t uiMercId);
 // store owner's profile id for the items added to this leave slot index
-void SetUpMercAboutToLeaveEquipment(UINT32 ubProfileId, UINT32 uiSlotIndex);
+void SetUpMercAboutToLeaveEquipment(uint32_t ubProfileId, uint32_t uiSlotIndex);
 
 // remove item from leave index
-// BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, UINT32 uiIndex );
+// BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, uint32_t uiIndex );
 
 // handle a group about to arrive in a sector
 void HandleGroupAboutToArrive(void);
@@ -434,7 +434,7 @@ extern UINT8 gubBlitSectorLocatorCode;
 
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };
 
-extern UINT32 guiSectorLocatorGraphicID;
+extern uint32_t guiSectorLocatorGraphicID;
 void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubLocatorID);
 
 // the tactical version

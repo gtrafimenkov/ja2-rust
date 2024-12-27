@@ -261,7 +261,7 @@ BOOLEAN MoveToFrontOfAIList(UINT8 ubID) {
 
 BOOLEAN BuildAIListForTeam(INT8 bTeam) {
   // loop through all non-player-team guys and add to list
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   BOOLEAN fInsertRet;
   struct SOLDIERTYPE* pSoldier;
   BOOLEAN fRet = FALSE;

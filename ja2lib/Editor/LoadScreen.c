@@ -71,7 +71,7 @@ void FDlgNamesCallback(GUI_BUTTON *butn, INT32 reason);
 void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason);
 void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering);
 
-UINT32 ProcessLoadSaveScreenMessageBoxResult();
+uint32_t ProcessLoadSaveScreenMessageBoxResult();
 BOOLEAN RemoveFromFDlgList(struct FileDialogList **head, struct FileDialogList *node);
 
 void DrawFileDialog();
@@ -112,17 +112,17 @@ CHAR8 gszCurrFilename[1024];
 enum { IOSTATUS_NONE, INITIATE_MAP_SAVE, SAVING_MAP, INITIATE_MAP_LOAD, LOADING_MAP };
 INT8 gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
                              // none
-UINT32 ProcessFileIO();
+uint32_t ProcessFileIO();
 
 // BOOLEAN fSavingFile;
 extern UINT16 gusLightLevel, gusSavedLightLevel;
-UINT32 LoadSaveScreenInit(void) {
+uint32_t LoadSaveScreenInit(void) {
   gfUpdateSummaryInfo = TRUE;
   fEnteringLoadSaveScreen = TRUE;
   return TRUE;
 }
 
-UINT32 LoadSaveScreenShutdown(void) { return TRUE; }
+uint32_t LoadSaveScreenShutdown(void) { return TRUE; }
 
 void LoadSaveScreenEntry() {
   fEnteringLoadSaveScreen = FALSE;
@@ -170,7 +170,7 @@ void LoadSaveScreenEntry() {
   iLastClickTime = 0;
 }
 
-UINT32 ProcessLoadSaveScreenMessageBoxResult() {
+uint32_t ProcessLoadSaveScreenMessageBoxResult() {
   struct FileDialogList *curr, *temp;
   gfRenderWorld = TRUE;
   RemoveMessageBox();
@@ -248,7 +248,7 @@ UINT32 ProcessLoadSaveScreenMessageBoxResult() {
   return LOADSAVE_SCREEN;
 }
 
-UINT32 LoadSaveScreenHandle(void) {
+uint32_t LoadSaveScreenHandle(void) {
   struct FileDialogList *FListNode;
   INT32 x;
   InputAtom DialogEvent;
@@ -259,7 +259,7 @@ UINT32 LoadSaveScreenHandle(void) {
 
   if (gbCurrentFileIOStatus)  // loading or saving map
   {
-    UINT32 uiScreen;
+    uint32_t uiScreen;
     uiScreen = ProcessFileIO();
     if (uiScreen == EDIT_SCREEN && gbCurrentFileIOStatus == LOADING_MAP) RemoveProgressBar(0);
     return uiScreen;
@@ -616,7 +616,7 @@ void TrashFDlgList(struct FileDialogList *pList) {
 }
 
 void SetTopFileToLetter(UINT16 usLetter) {
-  UINT32 x;
+  uint32_t x;
   struct FileDialogList *curr;
   struct FileDialogList *prev;
   UINT16 usNodeLetter;
@@ -759,7 +759,7 @@ void InitErrorCatchDialog() {
 // on the screen and then update it which requires passing the screen back to the main loop.
 // When we come back for the next frame, we then actually save or load the map.  So this
 // process takes two full screen cycles.
-UINT32 ProcessFileIO() {
+uint32_t ProcessFileIO() {
   INT16 usStartX, usStartY;
   CHAR8 ubNewFilename[1024];
   switch (gbCurrentFileIOStatus) {

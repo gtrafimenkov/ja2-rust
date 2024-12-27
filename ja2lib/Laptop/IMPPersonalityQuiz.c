@@ -20,8 +20,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 giIMPPersonalityQuizButton[2];
-UINT32 giIMPPersonalityQuizButtonImage[2];
+uint32_t giIMPPersonalityQuizButton[2];
+uint32_t giIMPPersonalityQuizButtonImage[2];
 
 // these are the buttons for the current question
 INT32 giIMPPersonalityQuizAnswerButton[10];

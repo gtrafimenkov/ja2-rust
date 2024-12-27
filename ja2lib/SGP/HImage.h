@@ -68,8 +68,8 @@ struct RelTileLoc {
 
 // TRLE subimage structure, mirroring that of ST(C)I
 typedef struct tagETRLEObject {
-  UINT32 uiDataOffset;
-  UINT32 uiDataLength;
+  uint32_t uiDataOffset;
+  uint32_t uiDataLength;
   INT16 sOffsetX;
   INT16 sOffsetY;
   UINT16 usHeight;
@@ -78,7 +78,7 @@ typedef struct tagETRLEObject {
 
 typedef struct tagETRLEData {
   PTR pPixData;
-  UINT32 uiSizePixData;
+  uint32_t uiSizePixData;
   ETRLEObject *pETRLEObject;
   UINT16 usNumberOfObjects;
 } ETRLEData;
@@ -90,11 +90,11 @@ typedef struct {
   UINT8 ubBitDepth;
   UINT16 fFlags;
   SGPFILENAME ImageFile;
-  UINT32 iFileLoader;
+  uint32_t iFileLoader;
   struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
   UINT8 *pAppData;
-  UINT32 uiAppDataSize;
+  uint32_t uiAppDataSize;
   // This union is used to describe each data type and is flexible to include the
   // data strucutre of the compresssed format, once developed.
   union {
@@ -112,7 +112,7 @@ typedef struct {
     };
     struct {
       UINT8 *pPixData8;
-      UINT32 uiSizePixData;
+      uint32_t uiSizePixData;
       ETRLEObject *pETRLEObject;
       UINT16 usNumberOfObjects;
     };
@@ -141,7 +141,7 @@ BOOLEAN ReleaseImageData(HIMAGE hImage, UINT16 fContents);
 BOOLEAN LoadImageData(HIMAGE hImage, UINT16 fContents);
 
 // This function will run the appropriate copy function based on the type of HIMAGE object
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, UINT32 fBufferType, BYTE *pDestBuf, UINT16 usDestWidth,
+BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, UINT16 usDestWidth,
                           UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
@@ -159,11 +159,11 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
 // UTILITY FUNCTIONS
 
 // Used to create a 16BPP Palette from an 8 bit palette, found in himage.c
-UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                 UINT32 bscale, BOOLEAN mono);
+UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
+                                 uint32_t bscale, BOOLEAN mono);
 UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
-UINT16 Get16BPPColor(UINT32 RGBValue);
-UINT32 GetRGBColor(UINT16 Value16BPP);
+UINT16 Get16BPPColor(uint32_t RGBValue);
+uint32_t GetRGBColor(UINT16 Value16BPP);
 struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
 extern UINT16 gusAlphaMask;
@@ -175,9 +175,9 @@ extern INT16 gusBlueShift;
 extern INT16 gusGreenShift;
 
 // used to convert 565 RGB data into different bit-formats
-void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-void ConvertRGBDistribution565To655(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-void ConvertRGBDistribution565To556(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
+void ConvertRGBDistribution565To555(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To655(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To556(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
 
 #endif

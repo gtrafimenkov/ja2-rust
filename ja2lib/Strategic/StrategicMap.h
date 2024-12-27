@@ -99,7 +99,7 @@ BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY);
 BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
                                UINT16 usAdditionalData);
 BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
-                        UINT32 *puiTraverseTimeInMinutes);
+                        uint32_t *puiTraverseTimeInMinutes);
 void SetupNewStrategicGame();
 
 BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile);

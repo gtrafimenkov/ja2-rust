@@ -143,23 +143,23 @@ void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex);
 
 // graphical handles
 
-extern UINT32 guiBACKGROUND;
-extern UINT32 guiIMPSYMBOL;
-extern UINT32 guiBEGININDENT;
-extern UINT32 guiACTIVATIONINDENT;
-extern UINT32 guiFRONTPAGEINDENT;
-extern UINT32 guiFULLNAMEINDENT;
-extern UINT32 guiGENDERINDENT;
-extern UINT32 guiSMALLFRAME;
-extern UINT32 guiANALYSE;
-extern UINT32 guiATTRIBUTEGRAPH;
-extern UINT32 guiATTRIBUTEGRAPHBAR;
-extern UINT32 guiSMALLSILHOUETTE;
-extern UINT32 guiLARGESILHOUETTE;
-extern UINT32 guiPORTRAITFRAME;
-extern UINT32 guiATTRIBUTEFRAME;
-extern UINT32 guiATTRIBUTESCREENINDENT1;
-extern UINT32 guiATTRIBUTESCREENINDENT2;
-extern UINT32 guiSLIDERBAR;
+extern uint32_t guiBACKGROUND;
+extern uint32_t guiIMPSYMBOL;
+extern uint32_t guiBEGININDENT;
+extern uint32_t guiACTIVATIONINDENT;
+extern uint32_t guiFRONTPAGEINDENT;
+extern uint32_t guiFULLNAMEINDENT;
+extern uint32_t guiGENDERINDENT;
+extern uint32_t guiSMALLFRAME;
+extern uint32_t guiANALYSE;
+extern uint32_t guiATTRIBUTEGRAPH;
+extern uint32_t guiATTRIBUTEGRAPHBAR;
+extern uint32_t guiSMALLSILHOUETTE;
+extern uint32_t guiLARGESILHOUETTE;
+extern uint32_t guiPORTRAITFRAME;
+extern uint32_t guiATTRIBUTEFRAME;
+extern uint32_t guiATTRIBUTESCREENINDENT1;
+extern uint32_t guiATTRIBUTESCREENINDENT2;
+extern uint32_t guiSLIDERBAR;
 
 #endif

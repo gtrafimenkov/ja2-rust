@@ -102,10 +102,10 @@
 
 #define MERC_PORTRAIT_TEXT_OFFSET_Y 110
 
-UINT32 guiPortraitBox;
-UINT32 guiStatsBox;
-UINT32 guiBioBox;
-UINT32 guiMercFace;
+uint32_t guiPortraitBox;
+uint32_t guiStatsBox;
+uint32_t guiBioBox;
+uint32_t guiMercFace;
 
 //
 // Buttons
@@ -113,20 +113,20 @@ UINT32 guiMercFace;
 
 // The Prev button
 void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiPrevButton;
+uint32_t guiPrevButton;
 INT32 guiButtonImage;
 
 // The Next button
 void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiNextButton;
+uint32_t guiNextButton;
 
 // The Hire button
 void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiHireButton;
+uint32_t guiHireButton;
 
 // The Back button
 void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiMercBackButton;
+uint32_t guiMercBackButton;
 
 //****************************
 //
@@ -483,7 +483,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
 
 void LoadAndDisplayMercBio(UINT8 ubMercID) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   // load and display the merc bio
   uiStartLoc = MERC_BIO_SIZE * ubMercID;

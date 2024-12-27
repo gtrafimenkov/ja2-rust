@@ -38,7 +38,7 @@ extern void RecalculateOppCntsDueToBecomingNeutral(struct SOLDIERTYPE* pSoldier)
 void ExitBoxing(void) {
   UINT8 ubRoom;
   struct SOLDIERTYPE* pSoldier;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT8 ubPass;
 
   // find boxers and turn them neutral again
@@ -151,7 +151,7 @@ void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSoldier) {
 
 UINT8 CountPeopleInBoxingRing(void) {
   struct SOLDIERTYPE* pSoldier;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT8 ubRoom;
   UINT8 ubTotalInRing = 0;
 
@@ -169,7 +169,7 @@ UINT8 CountPeopleInBoxingRing(void) {
 }
 
 void CountPeopleInBoxingRingAndDoActions(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT8 ubTotalInRing = 0;
   UINT8 ubRoom;
   UINT8 ubPlayersInRing = 0;
@@ -255,7 +255,7 @@ void CountPeopleInBoxingRingAndDoActions(void) {
 }
 
 BOOLEAN CheckOnBoxers(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT8 ubID;
 
   // repick boxer IDs every time
@@ -278,7 +278,7 @@ BOOLEAN CheckOnBoxers(void) {
 }
 
 BOOLEAN BoxerExists(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop < NUM_BOXERS; uiLoop++) {
     if (WhoIsThere2(gsBoxerGridNo[uiLoop], 0) != NOBODY) {
@@ -289,7 +289,7 @@ BOOLEAN BoxerExists(void) {
 }
 
 BOOLEAN PickABoxer(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE* pBoxer;
 
   for (uiLoop = 0; uiLoop < NUM_BOXERS; uiLoop++) {
@@ -430,7 +430,7 @@ void SetBoxingState(INT8 bNewState) {
 }
 
 void ClearAllBoxerFlags(void) {
-  UINT32 uiSlot;
+  uint32_t uiSlot;
 
   for (uiSlot = 0; uiSlot < guiNumMercSlots; uiSlot++) {
     if (MercSlots[uiSlot] && MercSlots[uiSlot]->uiStatusFlags & SOLDIER_BOXER) {

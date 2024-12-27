@@ -44,7 +44,7 @@
 
 #define INS_INFO_LINK_TO_CONTRACT_TEXT_Y 355 + LAPTOP_SCREEN_WEB_UL_Y
 
-UINT32 guiBulletImage;
+uint32_t guiBulletImage;
 
 // The list of Info sub pages
 enum {
@@ -61,11 +61,11 @@ BOOLEAN InsuranceInfoSubPagesVisitedFlag[INS_INFO_LAST_PAGE - 1];
 
 INT32 guiInsPrevButtonImage;
 void BtnInsPrevButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsPrevBackButton;
+uint32_t guiInsPrevBackButton;
 
 INT32 guiInsNextButtonImage;
 void BtnInsNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiInsNextBackButton;
+uint32_t guiInsNextBackButton;
 
 // link to the varios pages
 struct MOUSE_REGION gSelectedInsuranceInfoLinkRegion;

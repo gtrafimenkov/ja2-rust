@@ -147,7 +147,7 @@ void DisplayCoverOfSelectedGridNo() {
 }
 
 void AddCoverTileToEachGridNo() {
-  UINT32 uiCntX, uiCntY;
+  uint32_t uiCntX, uiCntY;
   BOOLEAN fRoof = (gsInterfaceLevel != I_GROUND_LEVEL);
 
   // loop through all the gridnos
@@ -195,7 +195,7 @@ void AddCoverTileToEachGridNo() {
 }
 
 void RemoveCoverOfSelectedGridNo() {
-  UINT32 uiCntX, uiCntY;
+  uint32_t uiCntX, uiCntY;
   BOOLEAN fRoof = (gsInterfaceLevel != I_GROUND_LEVEL);
 
   if (gsLastCoverGridNo == NOWHERE) {
@@ -365,7 +365,7 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT
   INT32 iTotalCoverPoints = 0;
   INT8 bNumEnemies = 0;
   INT8 bPercentCoverForGridno = 0;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pOpponent;
   INT8 *pbPersOL;
   INT8 *pbPublOL;
@@ -708,7 +708,7 @@ void CalculateVisibleToSoldierAroundGridno(INT16 sTargetGridNo, INT8 bSearchRang
 }
 
 void AddVisibleToSoldierToEachGridNo() {
-  UINT32 uiCntX, uiCntY;
+  uint32_t uiCntX, uiCntY;
   INT8 bVisibleToSoldier = 0;
   BOOLEAN fRoof;
   INT16 sGridNo;
@@ -755,7 +755,7 @@ void AddVisibleToSoldierToEachGridNo() {
 }
 
 void RemoveVisibleGridNoAtSelectedGridNo() {
-  UINT32 uiCntX, uiCntY;
+  uint32_t uiCntX, uiCntY;
   INT8 bVisibleToSoldier;
   BOOLEAN fRoof;
 

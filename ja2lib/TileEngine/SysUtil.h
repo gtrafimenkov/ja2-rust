@@ -6,11 +6,11 @@
 #include "TileEngine/IsometricUtils.h"
 
 // Global variables for video objects
-extern UINT32 guiBOTTOMPANEL;
-extern UINT32 guiRIGHTPANEL;
-extern UINT32 guiRENDERBUFFER;
-extern UINT32 guiSAVEBUFFER;
-extern UINT32 guiEXTRABUFFER;
+extern uint32_t guiBOTTOMPANEL;
+extern uint32_t guiRIGHTPANEL;
+extern uint32_t guiRENDERBUFFER;
+extern uint32_t guiSAVEBUFFER;
+extern uint32_t guiEXTRABUFFER;
 
 extern BOOLEAN gfExtraBuffer;
 

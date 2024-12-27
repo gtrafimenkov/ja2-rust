@@ -28,10 +28,10 @@
 // #include "mbstring.h"
 
 typedef struct {
-  UINT32 uiFont;
-  UINT32 uiTimeOfLastUpdate;
-  UINT32 uiFlags;
-  UINT32 uiPadding[3];
+  uint32_t uiFont;
+  uint32_t uiTimeOfLastUpdate;
+  uint32_t uiFlags;
+  uint32_t uiPadding[3];
   UINT16 usColor;
   BOOLEAN fBeginningOfNewString;
 
@@ -74,7 +74,7 @@ BOOLEAN fFirstTimeInMessageSystem = TRUE;
 BOOLEAN fDisableJustForIan = FALSE;
 
 BOOLEAN fScrollMessagesHidden = FALSE;
-UINT32 uiStartOfPauseTime = 0;
+uint32_t uiStartOfPauseTime = 0;
 
 // test extern functions
 BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack);
@@ -102,15 +102,15 @@ void AlignString(ScrollStringStPtr pPermStringSt);
 
 INT32 GetMessageQueueSize(void);
 
-ScrollStringStPtr AddString(STR16 string, UINT16 usColor, UINT32 uiFont, BOOLEAN fStartOfNewString,
-                            UINT8 ubPriority);
+ScrollStringStPtr AddString(STR16 string, UINT16 usColor, uint32_t uiFont,
+                            BOOLEAN fStartOfNewString, UINT8 ubPriority);
 void SetString(ScrollStringStPtr pStringSt, STR16 String);
 
 void SetStringPosition(ScrollStringStPtr pStringSt, UINT16 x, UINT16 y);
 void SetStringColor(ScrollStringStPtr pStringSt, UINT16 color);
 ScrollStringStPtr SetStringNext(ScrollStringStPtr pStringSt, ScrollStringStPtr pNext);
 ScrollStringStPtr SetStringPrev(ScrollStringStPtr pStringSt, ScrollStringStPtr pPrev);
-void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, UINT32 uiFont,
+void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, uint32_t uiFont,
                                      BOOLEAN fStartOfNewString, UINT8 ubPriority);
 
 // clear up a linked list of wrapped strings
@@ -127,12 +127,12 @@ void HandleLastQuotePopUpTimer(void);
 
 // functions
 
-void SetStringFont(ScrollStringStPtr pStringSt, UINT32 uiFont) { pStringSt->uiFont = uiFont; }
+void SetStringFont(ScrollStringStPtr pStringSt, uint32_t uiFont) { pStringSt->uiFont = uiFont; }
 
-UINT32 GetStringFont(ScrollStringStPtr pStringSt) { return pStringSt->uiFont; }
+uint32_t GetStringFont(ScrollStringStPtr pStringSt) { return pStringSt->uiFont; }
 
-ScrollStringStPtr AddString(STR16 pString, UINT16 usColor, UINT32 uiFont, BOOLEAN fStartOfNewString,
-                            UINT8 ubPriority) {
+ScrollStringStPtr AddString(STR16 pString, UINT16 usColor, uint32_t uiFont,
+                            BOOLEAN fStartOfNewString, UINT8 ubPriority) {
   // add a new string to the list of strings
   ScrollStringStPtr pStringSt = NULL;
   pStringSt = (ScrollStringSt *)MemAlloc(sizeof(ScrollStringSt));
@@ -242,7 +242,7 @@ void SetStringVideoOverlayPosition(ScrollStringStPtr pStringSt, UINT16 usX, UINT
 
 void BlitString(VIDEO_OVERLAY *pBlitter) {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
 
   // gprintfdirty(pBlitter->sX,pBlitter->sY, pBlitter->zText);
   // RestoreExternBackgroundRect(pBlitter->sX,pBlitter->sY,
@@ -278,7 +278,7 @@ void EnableStringVideoOverlay(ScrollStringStPtr pStringSt, BOOLEAN fEnable) {
 
 void ClearDisplayedListOfTacticalStrings(void) {
   // this function will go through list of display strings and clear them all out
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < MAX_LINE_COUNT; cnt++) {
     if (gpDisplayList[cnt] != NULL) {
@@ -298,8 +298,8 @@ void ClearDisplayedListOfTacticalStrings(void) {
 }
 
 void ScrollString() {
-  UINT32 suiTimer = 0;
-  UINT32 cnt;
+  uint32_t suiTimer = 0;
+  uint32_t cnt;
   INT32 iNumberOfNewStrings = 0;  // the count of new strings, so we can update position by
                                   // WIDTH_BETWEEN_NEW_STRINGS pixels in the y
   INT32 iNumberOfMessagesOnQueue = 0;
@@ -349,7 +349,7 @@ void ScrollString() {
       }
       // CHECK IF WE HAVE AGED
       if ((suiTimer - gpDisplayList[cnt]->uiTimeOfLastUpdate) >
-          (UINT32)(iMaxAge - (1000 * iNumberOfMessagesOnQueue))) {
+          (uint32_t)(iMaxAge - (1000 * iNumberOfMessagesOnQueue))) {
         // Remove our sorry ass
         RemoveStringVideoOverlay(gpDisplayList[cnt]);
         MemFree(gpDisplayList[cnt]->pString16);
@@ -572,7 +572,7 @@ void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   // this function sets up the string into several single line structures
 
   ScrollStringStPtr pStringSt;
-  UINT32 uiFont = TINYFONT1;
+  uint32_t uiFont = TINYFONT1;
   va_list argptr;
 
   wchar_t DestString[512], DestStringA[512];
@@ -687,7 +687,7 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   // this function sets up the string into several single line structures
 
   ScrollStringStPtr pStringSt;
-  UINT32 uiFont = MAP_SCREEN_MESSAGE_FONT;
+  uint32_t uiFont = MAP_SCREEN_MESSAGE_FONT;
   va_list argptr;
   wchar_t DestString[512], DestStringA[512];
   WRAPPED_STRING *pStringWrapper = NULL;
@@ -830,7 +830,7 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
 }
 
 // add string to the map screen message list
-void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, UINT32 uiFont,
+void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, uint32_t uiFont,
                                      BOOLEAN fStartOfNewString, UINT8 ubPriority) {
   ScrollStringStPtr pStringSt = NULL;
 
@@ -933,7 +933,7 @@ void EnableDisableScrollStringVideoOverlay(BOOLEAN fEnable) {
 
 void PlayNewMessageSound(void) {
   // play a new message sound, if there is one playing, do nothing
-  static UINT32 uiSoundId = NO_SAMPLE;
+  static uint32_t uiSoundId = NO_SAMPLE;
 
   if (uiSoundId != NO_SAMPLE) {
     // is sound playing?..don't play new one
@@ -949,9 +949,9 @@ void PlayNewMessageSound(void) {
 }
 
 BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
-  UINT32 uiCount;
-  UINT32 uiSizeOfString;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiCount;
+  uint32_t uiSizeOfString;
   StringSaveStruct StringSave;
 
   //	write to the begining of the message list
@@ -979,8 +979,8 @@ BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
       uiSizeOfString = 0;
 
     //	write to the file the size of the message
-    FileMan_Write(hFile, &uiSizeOfString, sizeof(UINT32), &uiNumBytesWritten);
-    if (uiNumBytesWritten != sizeof(UINT32)) {
+    FileMan_Write(hFile, &uiSizeOfString, sizeof(uint32_t), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(uint32_t)) {
       return (FALSE);
     }
 
@@ -1012,9 +1012,9 @@ BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
-  UINT32 uiCount;
-  UINT32 uiSizeOfString;
+  uint32_t uiNumBytesRead;
+  uint32_t uiCount;
+  uint32_t uiSizeOfString;
   StringSaveStruct StringSave;
   CHAR16 SavedString[512];
 
@@ -1046,8 +1046,8 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
   // Loopthrough all the messages
   for (uiCount = 0; uiCount < 256; uiCount++) {
     //	Read to the file the size of the message
-    FileMan_Read(hFile, &uiSizeOfString, sizeof(UINT32), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(UINT32)) {
+    FileMan_Read(hFile, &uiSizeOfString, sizeof(uint32_t), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(uint32_t)) {
       return (FALSE);
     }
 

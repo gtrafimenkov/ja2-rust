@@ -34,7 +34,7 @@ typedef union {
     UINT16 usLower;
     UINT16 usHigher;
   };
-  UINT32 uiValue;
+  uint32_t uiValue;
 } SplitUINT32;
 
 HIMAGE CreateImage(const char *ImageFile, UINT16 fContents) {
@@ -42,7 +42,7 @@ HIMAGE CreateImage(const char *ImageFile, UINT16 fContents) {
   SGPFILENAME Extension;
   CHAR8 ExtensionSep[] = ".";
   STR StrPtr;
-  UINT32 iFileLoader;
+  uint32_t iFileLoader;
   SGPFILENAME imageFileCopy;
 
   strcopy(imageFileCopy, ARR_SIZE(imageFileCopy), ImageFile);
@@ -200,7 +200,7 @@ BOOLEAN LoadImageData(HIMAGE hImage, UINT16 fContents) {
   return (fReturnVal);
 }
 
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, UINT32 fBufferType, BYTE *pDestBuf, UINT16 usDestWidth,
+BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, UINT16 usDestWidth,
                           UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
   // Use blitter based on type of image
   Assert(hImage != NULL);
@@ -230,8 +230,8 @@ BOOLEAN CopyImageToBuffer(HIMAGE hImage, UINT32 fBufferType, BYTE *pDestBuf, UIN
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
-  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  UINT32 cnt;
+  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  uint32_t cnt;
   UINT8 *pDest, *pSrc;
 
   // Assertions
@@ -272,8 +272,8 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWi
 
 BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                     UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
-  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  UINT32 cnt;
+  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  uint32_t cnt;
   UINT16 *pDest, *pSrc;
 
   Assert(hImage != NULL);
@@ -317,8 +317,8 @@ BOOLEAN Extract16BPPCompressedImageToBuffer(HIMAGE hImage, BYTE *pDestBuf) { ret
 
 BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
-  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  UINT32 rows, cols;
+  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  uint32_t rows, cols;
   UINT8 *pSrc, *pSrcTemp;
   UINT16 *pDest, *pDestTemp;
   UINT16 *p16BPPPalette;
@@ -374,7 +374,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestW
 
 UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
-  UINT32 cnt;
+  uint32_t cnt;
   UINT8 r, g, b;
 
   Assert(pPalette != NULL);
@@ -437,11 +437,11 @@ shaded according to each pixel's brightness.
         4) For gamma correction, pass in weighted values for each color.
 
 **********************************************************************************************/
-UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                 UINT32 bscale, BOOLEAN mono) {
+UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
+                                 uint32_t bscale, BOOLEAN mono) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
-  UINT32 cnt, lumin;
-  UINT32 rmod, gmod, bmod;
+  uint32_t cnt, lumin;
+  uint32_t rmod, gmod, bmod;
   UINT8 r, g, b;
 
   Assert(pPalette != NULL);
@@ -494,7 +494,7 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
 }
 
 // Convert from RGB to 16 bit value
-UINT16 Get16BPPColor(UINT32 RGBValue) {
+UINT16 Get16BPPColor(uint32_t RGBValue) {
   UINT16 r16, g16, b16, usColor;
   UINT8 r, g, b;
 
@@ -532,28 +532,28 @@ UINT16 Get16BPPColor(UINT32 RGBValue) {
 }
 
 // Convert from 16 BPP to RGBvalue
-UINT32 GetRGBColor(UINT16 Value16BPP) {
+uint32_t GetRGBColor(UINT16 Value16BPP) {
   UINT16 r16, g16, b16;
-  UINT32 r, g, b, val;
+  uint32_t r, g, b, val;
 
   r16 = Value16BPP & gusRedMask;
   g16 = Value16BPP & gusGreenMask;
   b16 = Value16BPP & gusBlueMask;
 
   if (gusRedShift < 0)
-    r = ((UINT32)r16 << abs(gusRedShift));
+    r = ((uint32_t)r16 << abs(gusRedShift));
   else
-    r = ((UINT32)r16 >> gusRedShift);
+    r = ((uint32_t)r16 >> gusRedShift);
 
   if (gusGreenShift < 0)
-    g = ((UINT32)g16 << abs(gusGreenShift));
+    g = ((uint32_t)g16 << abs(gusGreenShift));
   else
-    g = ((UINT32)g16 >> gusGreenShift);
+    g = ((uint32_t)g16 >> gusGreenShift);
 
   if (gusBlueShift < 0)
-    b = ((UINT32)b16 << abs(gusBlueShift));
+    b = ((uint32_t)b16 << abs(gusBlueShift));
   else
-    b = ((UINT32)b16 >> gusBlueShift);
+    b = ((uint32_t)b16 >> gusBlueShift);
 
   r &= 0x000000ff;
   g &= 0x000000ff;
@@ -623,9 +623,9 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer) {
   return (TRUE);
 }
 
-void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels) {
+void ConvertRGBDistribution565To555(UINT16 *p16BPPData, uint32_t uiNumberOfPixels) {
   UINT16 *pPixel;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   SplitUINT32 Pixel;
 
@@ -648,9 +648,9 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
   }
 }
 
-void ConvertRGBDistribution565To655(UINT16 *p16BPPData, UINT32 uiNumberOfPixels) {
+void ConvertRGBDistribution565To655(UINT16 *p16BPPData, uint32_t uiNumberOfPixels) {
   UINT16 *pPixel;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   SplitUINT32 Pixel;
 
@@ -673,9 +673,9 @@ void ConvertRGBDistribution565To655(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
   }
 }
 
-void ConvertRGBDistribution565To556(UINT16 *p16BPPData, UINT32 uiNumberOfPixels) {
+void ConvertRGBDistribution565To556(UINT16 *p16BPPData, uint32_t uiNumberOfPixels) {
   UINT16 *pPixel;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   SplitUINT32 Pixel;
 
@@ -697,9 +697,9 @@ void ConvertRGBDistribution565To556(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
   }
 }
 
-void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, UINT32 uiNumberOfPixels) {
+void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, uint32_t uiNumberOfPixels) {
   UINT16 *pPixel;
-  UINT32 uiRed, uiGreen, uiBlue, uiTemp, uiLoop;
+  uint32_t uiRed, uiGreen, uiBlue, uiTemp, uiLoop;
 
   pPixel = p16BPPData;
   for (uiLoop = 0; uiLoop < uiNumberOfPixels; uiLoop++) {

@@ -25,7 +25,7 @@ void InitStrategicStatus(void) {
 }
 
 BOOLEAN SaveStrategicStatusToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Save the Strategic Status structure to the saved game file
   FileMan_Write(hFile, &gStrategicStatus, sizeof(STRATEGIC_STATUS), &uiNumBytesWritten);
@@ -37,7 +37,7 @@ BOOLEAN SaveStrategicStatusToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Load the Strategic Status structure from the saved game file
   FileMan_Read(hFile, &gStrategicStatus, sizeof(STRATEGIC_STATUS), &uiNumBytesRead);
@@ -51,13 +51,13 @@ BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile) {
 #define DEATH_RATE_SEVERITY 1.0f  // increase to make death rates higher for same # of deaths/time
 
 UINT8 CalcDeathRate(void) {
-  UINT32 uiDeathRate = 0;
+  uint32_t uiDeathRate = 0;
 
   // give the player a grace period of 1 day
   if (gStrategicStatus.uiManDaysPlayed > 0) {
     // calculates the player's current death rate
-    uiDeathRate = (UINT32)((gStrategicStatus.ubMercDeaths * DEATH_RATE_SEVERITY * 100) /
-                           gStrategicStatus.uiManDaysPlayed);
+    uiDeathRate = (uint32_t)((gStrategicStatus.ubMercDeaths * DEATH_RATE_SEVERITY * 100) /
+                             gStrategicStatus.uiManDaysPlayed);
   }
 
   return ((UINT8)uiDeathRate);
@@ -214,7 +214,7 @@ void HandleEnricoEmail(void) {
         // remember that the original setback has been overcome, so another one can generate another
         // E-mail
         gStrategicStatus.usEnricoEmailFlags |= ENRICO_EMAIL_FLAG_SETBACK_OVER;
-      } else if (GetWorldDay() > (UINT32)(gStrategicStatus.usLastDayOfPlayerActivity)) {
+      } else if (GetWorldDay() > (uint32_t)(gStrategicStatus.usLastDayOfPlayerActivity)) {
         INT8 bComplaint = 0;
         UINT8 ubTolerance;
 
@@ -231,7 +231,7 @@ void HandleEnricoEmail(void) {
             } else if (!(gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_LACK_PROGRESS3)) {
               bComplaint = 3;
             }
-          } else if (gStrategicStatus.ubNumberOfDaysOfInactivity == (UINT32)ubTolerance * 2) {
+          } else if (gStrategicStatus.ubNumberOfDaysOfInactivity == (uint32_t)ubTolerance * 2) {
             // six days? send 2nd or 3rd message possibly
             if (!(gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_LACK_PROGRESS2)) {
               bComplaint = 2;

@@ -106,7 +106,7 @@ BOOLEAN ValidateEntryPointGridNo(INT16 *sGridNo) {
 }
 
 void SaveMapInformation(HWFILE fp) {
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
 
   gMapInformation.ubMapVersion = MINOR_MAP_VERSION;
   FileMan_Write(fp, &gMapInformation, sizeof(MAPCREATE_STRUCT), &uiBytesWritten);
@@ -139,7 +139,7 @@ void UpdateOldVersionMap() {
   }
   if (gMapInformation.ubMapVersion < 18) {
     // replace useless crowbars with proper ones
-    UINT32 i;
+    uint32_t i;
     gMapInformation.ubMapVersion = 18;
     for (i = 0; i < guiNumWorldItems; i++) {
       if (gWorldItems[i].o.usItem == JAR_ELIXIR) {

@@ -1698,7 +1698,7 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
 }
 
 BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Save the gubTurn Order Array
@@ -1725,7 +1725,7 @@ BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadTeamTurnsFromTheSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Load the gubTurn Order Array

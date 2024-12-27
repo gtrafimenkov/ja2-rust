@@ -18,7 +18,7 @@ INT8 gbFPSDisplay = SHOW_MIN_FPS;
 BOOLEAN gfResetInputCheck = FALSE;
 BOOLEAN gfGlobalError = FALSE;
 BOOLEAN fFirstTimeInGameScreen = TRUE;
-UINT32 guiGameCycleCounter = 0;
+uint32_t guiGameCycleCounter = 0;
 INT16 gsCurrentActionPoints = 1;
 
 BOOLEAN SET_ERROR(const char *String, ...) {

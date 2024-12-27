@@ -66,8 +66,8 @@ CHAR16 pFullNameString[128];
 CHAR16 pNickNameString[128];
 
 // positions in name strings
-UINT32 uiFullNameCharacterPosition = 0;
-UINT32 uiNickNameCharacterPosition = 0;
+uint32_t uiFullNameCharacterPosition = 0;
+uint32_t uiNickNameCharacterPosition = 0;
 
 // non gender
 INT8 bGenderFlag = -1;
@@ -80,8 +80,8 @@ INT32 giIMPBeginScreenButtonImage[1];
 UINT8 ubTextEnterMode = 0;
 
 // cursor position
-UINT32 uiNickNameCursorPosition = 196 + LAPTOP_SCREEN_UL_X;
-UINT32 uiFullNameCursorPosition = 196 + LAPTOP_SCREEN_UL_X;
+uint32_t uiNickNameCursorPosition = 196 + LAPTOP_SCREEN_UL_X;
+uint32_t uiFullNameCursorPosition = 196 + LAPTOP_SCREEN_UL_X;
 
 // whther a new char has been entered ( to force redraw)
 BOOLEAN fNewCharInString = FALSE;
@@ -94,7 +94,7 @@ void CreateIMPBeginScreenButtons(void);
 void RemoveIMPBeginScreenButtons(void);
 void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, INT32 reason);
 void GetPlayerKeyBoardInputForIMPBeginScreen(void);
-void HandleBeginScreenTextEvent(UINT32 uiKey);
+void HandleBeginScreenTextEvent(uint32_t uiKey);
 void DisplayFullNameStringCursor(void);
 void DisplayNickNameStringCursor(void);
 void DisplayPlayerFullNameString(void);
@@ -410,7 +410,7 @@ void GetPlayerKeyBoardInputForIMPBeginScreen(void) {
   return;
 }
 
-void HandleBeginScreenTextEvent(UINT32 uiKey) {
+void HandleBeginScreenTextEvent(uint32_t uiKey) {
   // this function checks to see if a letter or a backspace was pressed, if so, either put char to
   // screen or delete it
 
@@ -533,10 +533,10 @@ void HandleBeginScreenTextEvent(UINT32 uiKey) {
 
 void DisplayFullNameStringCursor(void) {
   // this procdure will draw the activation string cursor on the screen at position cursorx cursory
-  UINT32 uiDestPitchBYTES;
-  static UINT32 uiBaseTime = 0;
-  UINT32 uiDeltaTime = 0;
-  static UINT32 iCurrentState = 0;
+  uint32_t uiDestPitchBYTES;
+  static uint32_t uiBaseTime = 0;
+  uint32_t uiDeltaTime = 0;
+  static uint32_t iCurrentState = 0;
   UINT8 *pDestBuf;
   static BOOLEAN fIncrement = TRUE;
 
@@ -589,11 +589,11 @@ void DisplayFullNameStringCursor(void) {
 
 void DisplayNickNameStringCursor(void) {
   // this procdure will draw the activation string cursor on the screen at position cursorx cursory
-  UINT32 uiDestPitchBYTES;
-  static UINT32 uiBaseTime = 0;
-  UINT32 uiDeltaTime = 0;
+  uint32_t uiDestPitchBYTES;
+  static uint32_t uiBaseTime = 0;
+  uint32_t uiDeltaTime = 0;
   UINT8 *pDestBuf;
-  static UINT32 iCurrentState = 0;
+  static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
 
   if (uiBaseTime == 0) {
@@ -694,10 +694,10 @@ void DisplayPlayerNickNameString(void) {
 
 void DisplayMaleGlowCursor(void) {
   // this procdure will draw the activation string cursor on the screen at position cursorx cursory
-  UINT32 uiDestPitchBYTES;
-  static UINT32 uiBaseTime = 0;
-  UINT32 uiDeltaTime = 0;
-  static UINT32 iCurrentState = 0;
+  uint32_t uiDestPitchBYTES;
+  static uint32_t uiBaseTime = 0;
+  uint32_t uiDeltaTime = 0;
+  static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
   UINT8 *pDestBuf;
 
@@ -749,10 +749,10 @@ void DisplayMaleGlowCursor(void) {
 
 void DisplayFemaleGlowCursor(void) {
   // this procdure will draw the activation string cursor on the screen at position cursorx cursory
-  UINT32 uiDestPitchBYTES;
-  static UINT32 uiBaseTime = 0;
-  UINT32 uiDeltaTime = 0;
-  static UINT32 iCurrentState = 0;
+  uint32_t uiDestPitchBYTES;
+  static uint32_t uiBaseTime = 0;
+  uint32_t uiDeltaTime = 0;
+  static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
   UINT8 *pDestBuf;
 
@@ -804,7 +804,7 @@ void DisplayFemaleGlowCursor(void) {
 
 void CopyFirstNameIntoNickName(void) {
   // this procedure will copy the characters first name in to the nickname for the character
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   while ((pFullNameString[iCounter] != L' ') && (iCounter < 20) &&
          (pFullNameString[iCounter] != 0)) {
     // copy charcters into nick name

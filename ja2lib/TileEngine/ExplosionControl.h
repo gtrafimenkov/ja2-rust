@@ -10,7 +10,7 @@
 
 // Explosion Data
 typedef struct {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
   UINT8 ubOwner;
   UINT8 ubTypeID;
@@ -53,8 +53,8 @@ typedef enum {
 } EXPLOSION_TYPES;
 
 typedef struct {
-  UINT32 uiWorldBombIndex;
-  UINT32 uiTimeStamp;
+  uint32_t uiWorldBombIndex;
+  uint32_t uiTimeStamp;
   UINT8 fExists;
 } ExplosionQueueElement;
 
@@ -78,7 +78,7 @@ void GenerateExplosion(EXPLOSION_PARAMS *pExpParams);
 void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, UINT16 usItem, UINT8 ubOwner, BOOLEAN fSubsequent,
                   INT8 bLevel, INT32 iSmokeEffectNum);
 
-void AddBombToQueue(UINT32 uiWorldBombIndex, UINT32 uiTimeStamp);
+void AddBombToQueue(uint32_t uiWorldBombIndex, uint32_t uiTimeStamp);
 
 void DecayBombTimers(void);
 void SetOffBombsByFrequency(UINT8 ubID, INT8 bFrequency);

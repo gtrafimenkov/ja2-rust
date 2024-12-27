@@ -150,14 +150,14 @@ enum {
 
 // Image Indetifiers
 
-UINT32 guiAccountBox;
-UINT32 guiArrow;
-UINT32 guiFilesBox;
-UINT32 guiMercSymbol;
-UINT32 guiSpecPortrait;
-UINT32 guiMercBackGround;
-UINT32 guiMercVideoFaceBackground;
-UINT32 guiMercVideoPopupBackground;
+uint32_t guiAccountBox;
+uint32_t guiArrow;
+uint32_t guiFilesBox;
+uint32_t guiMercSymbol;
+uint32_t guiSpecPortrait;
+uint32_t guiMercBackGround;
+uint32_t guiMercVideoFaceBackground;
+uint32_t guiMercVideoPopupBackground;
 
 UINT8 gubMercArray[NUMBER_OF_MERCS];
 UINT8 gubCurMercIndex;
@@ -202,7 +202,7 @@ BOOLEAN gfFirstTimeIntoMERCSiteSinceEnteringLaptop = FALSE;
 // used for the random quotes to try to balance the ones that are said
 typedef struct {
   UINT8 ubQuoteID;
-  UINT32 uiNumberOfTimesQuoteSaid;
+  uint32_t uiNumberOfTimesQuoteSaid;
 
 } NUMBER_TIMES_QUOTE_SAID;
 NUMBER_TIMES_QUOTE_SAID gNumberOfTimesQuoteSaid[MERC_NUMBER_OF_RANDOM_QUOTES] = {
@@ -229,16 +229,16 @@ NUMBER_TIMES_QUOTE_SAID gNumberOfTimesQuoteSaid[MERC_NUMBER_OF_RANDOM_QUOTES] = 
 
 // The Account Box button
 void BtnAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiAccountBoxButton;
+uint32_t guiAccountBoxButton;
 INT32 guiAccountBoxButtonImage;
 
 // File Box
-UINT32 guiFileBoxButton;
+uint32_t guiFileBoxButton;
 void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
 
 // The 'X' to close the video conf window button
 void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiXToCloseMercVideoButton;
+uint32_t guiXToCloseMercVideoButton;
 INT32 guiXToCloseMercVideoButtonImage;
 
 // Mouse region for the subtitles region when the merc is talking
@@ -278,13 +278,13 @@ BOOLEAN HasLarryRelapsed();
 void IncreaseMercRandomQuoteValue(UINT8 ubQuoteID, UINT8 ubValue);
 BOOLEAN ShouldTheMercSiteServerGoDown();
 void DrawMercVideoBackGround();
-BOOLEAN CanMercQuoteBeSaid(UINT32 uiQuoteID);
+BOOLEAN CanMercQuoteBeSaid(uint32_t uiQuoteID);
 UINT8 NumberOfMercMercsDead();
 void MakeBiffAwayForCoupleOfDays();
 BOOLEAN AreAnyOfTheNewMercsAvailable();
 void ShouldAnyNewMercMercBecomeAvailable();
 BOOLEAN CanMercBeAvailableYet(UINT8 ubMercToCheck);
-UINT32 CalcMercDaysServed();
+uint32_t CalcMercDaysServed();
 // ppp
 
 void GameInitMercs() {
@@ -869,7 +869,7 @@ void DailyUpdateOfMercSite(UINT16 usDate) {
   // and the players account status is ok ( cant have the merc site going down when the player owes
   // him money, player may lose account that way )
   if (ShouldTheMercSiteServerGoDown()) {
-    UINT32 uiTimeInMinutes = 0;
+    uint32_t uiTimeInMinutes = 0;
 
     // Set the fact the site has gone down
     LaptopSaveInfo.fMercSiteHasGoneDownYet = TRUE;
@@ -1091,10 +1091,10 @@ void HandleCurrentMercDistortion() {
 
 BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
                                UINT16 usHeight) {
-  static UINT32 uiLastTime;
-  UINT32 uiCurTime = GetJA2Clock();
+  static uint32_t uiLastTime;
+  uint32_t uiCurTime = GetJA2Clock();
   UINT16 *pBuffer = NULL, DestColor;
-  UINT32 uiPitch;
+  uint32_t uiPitch;
   UINT16 i, j;
   static UINT8 ubPixelationAmount = 255;
   BOOLEAN fReturnStatus = FALSE;
@@ -1162,10 +1162,10 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16
 }
 
 BOOLEAN DistortVideoMercImage(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT16 usHeight) {
-  UINT32 uiPitch;
+  uint32_t uiPitch;
   UINT16 i, j;
   UINT16 *pBuffer = NULL, DestColor;
-  UINT32 uiColor;
+  uint32_t uiColor;
   UINT8 red, green, blue;
   static UINT16 usDistortionValue = 255;
   UINT8 uiReturnValue;
@@ -1274,8 +1274,8 @@ void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN DisplayMercVideoIntro(UINT16 usTimeTillFinish) {
-  UINT32 uiCurTime = GetJA2Clock();
-  static UINT32 uiLastTime = 0;
+  uint32_t uiCurTime = GetJA2Clock();
+  static uint32_t uiLastTime = 0;
 
   // init variable
   if (uiLastTime == 0) uiLastTime = uiCurTime;
@@ -1932,8 +1932,8 @@ BOOLEAN ShouldSpeckSayAQuote() {
 }
 
 void HandleSpeckIdleConversation(BOOLEAN fReset) {
-  static UINT32 uiLastTime = 0;
-  UINT32 uiCurTime = GetJA2Clock();
+  static uint32_t uiLastTime = 0;
+  uint32_t uiCurTime = GetJA2Clock();
   INT16 sLeastSaidQuote;
 
   // if we should reset the variables
@@ -2015,7 +2015,7 @@ void EnterInitMercSite() {
 }
 
 BOOLEAN ShouldTheMercSiteServerGoDown() {
-  UINT32 uiDay = GetWorldDay();
+  uint32_t uiDay = GetWorldDay();
 
   // If the merc site has never gone down, the first new merc has shown ( which shows the player is
   // using the site ), and the players account status is ok ( cant have the merc site going down
@@ -2066,7 +2066,7 @@ void DisableMercSiteButton() {
   }
 }
 
-BOOLEAN CanMercQuoteBeSaid(UINT32 uiQuoteID) {
+BOOLEAN CanMercQuoteBeSaid(uint32_t uiQuoteID) {
   BOOLEAN fRetVal = TRUE;
 
   // switch onb the quote being said, if hes plugging a merc that has already been hired, dont say
@@ -2272,9 +2272,9 @@ void CalcAproximateAmountPaidToSpeck() {
 }
 
 // CJC Dec 1 2002: calculate whether any MERC characters have been used at all
-UINT32 CalcMercDaysServed() {
+uint32_t CalcMercDaysServed() {
   UINT8 i, ubMercID;
-  UINT32 uiDaysServed = 0;
+  uint32_t uiDaysServed = 0;
 
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
     // get the id

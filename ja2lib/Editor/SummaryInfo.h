@@ -79,13 +79,13 @@ typedef struct SUMMARYFILE {
                              //	227
   // start version 13
   UINT8 ubEnemiesHaveWaypoints;  //		1
-  UINT32 uiNumItemsPosition;     //		4
+  uint32_t uiNumItemsPosition;   //		4
                                  //-----
                                  //	232
   // start version 14
-  UINT32 uiEnemyPlacementPosition;  //		4
-                                    //-----
-                                    //	236
+  uint32_t uiEnemyPlacementPosition;  //		4
+                                      //-----
+                                      //	236
 
   UINT8 ubPadding
       [164];  //	164

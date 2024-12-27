@@ -176,7 +176,7 @@ extern BOOLEAN gfSchedulesHosed;
 void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
   VSURFACE_DESC vs_desc;
   struct VSurface* hVSurface;
-  UINT32 uiLoadScreen;
+  uint32_t uiLoadScreen;
 
   vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
 

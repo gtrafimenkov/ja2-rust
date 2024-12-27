@@ -5,6 +5,6 @@
 
 BOOLEAN InitializeClockManager(void);
 void ShutdownClockManager(void);
-UINT32 GetClock(void);
+uint32_t GetClock(void);
 
 #endif

@@ -126,7 +126,7 @@ BOOLEAN fShowMapScreenHelpText = FALSE;
 BOOLEAN fScreenMaskForMoveCreated = FALSE;
 BOOLEAN fLockOutMapScreenInterface = FALSE;
 
-extern UINT32 giMercPanelImage;
+extern uint32_t giMercPanelImage;
 extern BOOLEAN fInMapMode;
 
 CHAR16 gsCustomErrorString[128];
@@ -139,8 +139,8 @@ INT32 giSizeOfInterfaceFastHelpTextList = 0;
 // Animated sector locator icon variables.
 INT16 gsSectorLocatorX;
 INT16 gsSectorLocatorY;
-UINT8 gubBlitSectorLocatorCode;    // color
-UINT32 guiSectorLocatorGraphicID;  // icon graphic ID
+UINT8 gubBlitSectorLocatorCode;      // color
+uint32_t guiSectorLocatorGraphicID;  // icon graphic ID
 // the animate time per frame in milliseconds
 #define ANIMATED_BATTLEICON_FRAME_TIME 80
 #define MAX_FRAME_COUNT_FOR_ANIMATED_BATTLE_ICON 12
@@ -175,7 +175,7 @@ BOOLEAN fSoldierIsMoving[MAX_CHARACTER_COUNT];
 
 struct SOLDIERTYPE *pUpdateSoldierBox[SIZE_OF_UPDATE_BOX];
 
-UINT32 giUpdateSoldierFaces[SIZE_OF_UPDATE_BOX];
+uint32_t giUpdateSoldierFaces[SIZE_OF_UPDATE_BOX];
 
 // the squads thata re moving
 INT32 iSquadMovingList[NUMBER_OF_SQUADS];
@@ -188,7 +188,7 @@ INT32 fVehicleIsMoving[NUMBER_OF_SQUADS];
 struct MOUSE_REGION gMoveBoxScreenMask;
 
 // the save buffer
-extern UINT32 guiSAVEBUFFER;
+extern uint32_t guiSAVEBUFFER;
 
 extern BOOLEAN fShowInventoryFlag;
 extern FACETYPE *gpCurrentTalkingFace;
@@ -213,7 +213,7 @@ BOOLEAN fResetTimerForFirstEntryIntoMapScreen = FALSE;
 INT32 iReasonForSoldierUpDate = NO_REASON_FOR_UPDATE;
 
 // sam and mine icons
-UINT32 guiSAMICON;
+uint32_t guiSAMICON;
 
 // disable team info panels due to battle roster
 BOOLEAN fDisableDueToBattleRoster = FALSE;
@@ -247,24 +247,24 @@ INT32 giContractHighLine = -1;
 INT32 giSleepHighLine = -1;
 
 // pop up box textures
-UINT32 guiPOPUPTEX;
-UINT32 guiPOPUPBORDERS;
+uint32_t guiPOPUPTEX;
+uint32_t guiPOPUPBORDERS;
 
 // the currently selected character arrow
-UINT32 guiSelectedCharArrow;
+uint32_t guiSelectedCharArrow;
 
 INT32 guiUpdatePanelButtonsImage[2];
 INT32 guiUpdatePanelButtons[2];
 
 // the update panel
-UINT32 guiUpdatePanel;
-UINT32 guiUpdatePanelTactical;
+uint32_t guiUpdatePanel;
+uint32_t guiUpdatePanelTactical;
 
 // the leave item list
 MERC_LEAVE_ITEM *gpLeaveListHead[NUM_LEAVE_LIST_SLOTS];
 
 // holds ids of mercs who left stuff behind
-UINT32 guiLeaveListOwnerProfileId[NUM_LEAVE_LIST_SLOTS];
+uint32_t guiLeaveListOwnerProfileId[NUM_LEAVE_LIST_SLOTS];
 
 // flag to reset contract region glow
 BOOLEAN fResetContractGlow = FALSE;
@@ -273,7 +273,7 @@ BOOLEAN fResetContractGlow = FALSE;
 INT32 giDblClickTimersForMoveBoxMouseRegions[MAX_POPUP_BOX_STRING_COUNT];
 
 INT32 giExitToTactBaseTime = 0;
-UINT32 guiSectorLocatorBaseTime = 0;
+uint32_t guiSectorLocatorBaseTime = 0;
 
 // which menus are we showing
 BOOLEAN fShowAssignmentMenu = FALSE;
@@ -737,7 +737,7 @@ void RestoreBackgroundForSleepGlowRegionList(void) {
 
 void PlayGlowRegionSound(void) {
   // play a new message sound, if there is one playing, do nothing
-  static UINT32 uiSoundId = 0;
+  static uint32_t uiSoundId = 0;
 
   if (uiSoundId != 0) {
     // is sound playing?..don't play new one
@@ -853,7 +853,7 @@ void EnableTeamInfoPanels(void) {
   return;
 }
 
-INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                               MSGBOX_CALLBACK ReturnCallback,
                               const SGPRect *pCenteringRect) {  // reset the highlighted line
   giHighLine = -1;
@@ -862,7 +862,7 @@ INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScree
                       pCenteringRect);
 }
 
-INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                       MSGBOX_CALLBACK ReturnCallback) {
   // reset the highlighted line
   giHighLine = -1;
@@ -1096,7 +1096,7 @@ void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString) {
 }
 
 // NOTE: This doesn't use the "LeaveList" system at all!
-void HandleLeavingOfEquipmentInCurrentSector(UINT32 uiMercId) {
+void HandleLeavingOfEquipmentInCurrentSector(uint32_t uiMercId) {
   // just drop the stuff in the current sector
   INT32 iCounter = 0;
   INT16 sGridNo, sTempGridNo;
@@ -1149,7 +1149,7 @@ void HandleLeavingOfEquipmentInCurrentSector(UINT32 uiMercId) {
   DropKeysInKeyRing(MercPtrs[uiMercId], sGridNo, MercPtrs[uiMercId]->bLevel, 1, FALSE, 0, FALSE);
 }
 
-void HandleMercLeavingEquipmentInOmerta(UINT32 uiMercId) {
+void HandleMercLeavingEquipmentInOmerta(uint32_t uiMercId) {
   INT32 iSlotIndex = 0;
 
   // stash the items into a linked list hanging of a free "leave item list" slot
@@ -1162,7 +1162,7 @@ void HandleMercLeavingEquipmentInOmerta(UINT32 uiMercId) {
   }
 }
 
-void HandleMercLeavingEquipmentInDrassen(UINT32 uiMercId) {
+void HandleMercLeavingEquipmentInDrassen(uint32_t uiMercId) {
   INT32 iSlotIndex = 0;
 
   // stash the items into a linked list hanging of a free "leave item list" slot
@@ -1175,7 +1175,7 @@ void HandleMercLeavingEquipmentInDrassen(UINT32 uiMercId) {
   }
 }
 
-void HandleEquipmentLeftInOmerta(UINT32 uiSlotIndex) {
+void HandleEquipmentLeftInOmerta(uint32_t uiSlotIndex) {
   MERC_LEAVE_ITEM *pItem;
   CHAR16 sString[128];
 
@@ -1211,7 +1211,7 @@ void HandleEquipmentLeftInOmerta(UINT32 uiSlotIndex) {
   FreeLeaveListSlot(uiSlotIndex);
 }
 
-void HandleEquipmentLeftInDrassen(UINT32 uiSlotIndex) {
+void HandleEquipmentLeftInDrassen(uint32_t uiSlotIndex) {
   MERC_LEAVE_ITEM *pItem;
   CHAR16 sString[128];
 
@@ -1269,7 +1269,7 @@ void ShutDownLeaveList(void) {
   }
 }
 
-BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, UINT32 uiSlotIndex) {
+BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, uint32_t uiSlotIndex) {
   MERC_LEAVE_ITEM *pItem, *pCurrentItem;
 
   Assert(uiSlotIndex < NUM_LEAVE_LIST_SLOTS);
@@ -1307,7 +1307,7 @@ BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, UINT32 uiSlotIndex) {
 }
 
 // release memory for all items in this slot's leave item list
-void FreeLeaveListSlot(UINT32 uiSlotIndex) {
+void FreeLeaveListSlot(uint32_t uiSlotIndex) {
   MERC_LEAVE_ITEM *pCurrent = NULL, *pTemp = NULL;
 
   Assert(uiSlotIndex < NUM_LEAVE_LIST_SLOTS);
@@ -1336,7 +1336,7 @@ INT32 FindFreeSlotInLeaveList(void) {
   return (-1);
 }
 
-INT32 SetUpDropItemListForMerc(UINT32 uiMercId) {
+INT32 SetUpDropItemListForMerc(uint32_t uiMercId) {
   // will set up a drop list for this grunt, remove items from inventory, and profile
   INT32 iSlotIndex = -1;
   INT32 iCounter = 0;
@@ -1371,7 +1371,7 @@ INT32 SetUpDropItemListForMerc(UINT32 uiMercId) {
 }
 
 // store owner's profile id for the items added to this leave slot index
-void SetUpMercAboutToLeaveEquipment(UINT32 ubProfileId, UINT32 uiSlotIndex) {
+void SetUpMercAboutToLeaveEquipment(uint32_t ubProfileId, uint32_t uiSlotIndex) {
   Assert(uiSlotIndex < NUM_LEAVE_LIST_SLOTS);
 
   // store the profile ID of this merc in the same slot that the items are gonna be dropped in
@@ -1379,7 +1379,7 @@ void SetUpMercAboutToLeaveEquipment(UINT32 ubProfileId, UINT32 uiSlotIndex) {
 }
 
 /*
-BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, UINT32 uiSlotIndex )
+BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, uint32_t uiSlotIndex )
 {
         MERC_LEAVE_ITEM *pCurrentItem = NULL;
 
@@ -2115,7 +2115,7 @@ void DisplayFastHelpRegions(FASTHELPREGION *pRegion, INT32 iSize) {
 void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
   INT32 iX, iY, iW, iH;
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
 
   iX = pRegion->iX;
   iY = pRegion->iY;
@@ -2804,7 +2804,7 @@ void CreatePopUpBoxForMovementBox(void) {
 void AddStringsToMoveBox(void) {
   INT32 iCount = 0, iCountB = 0;
   CHAR16 sString[128], sStringB[128];
-  UINT32 hStringHandle;
+  uint32_t hStringHandle;
   BOOLEAN fFirstOne = TRUE;
 
   // set the current box
@@ -4923,10 +4923,10 @@ BOOLEAN CanSoldierMoveWithVehicleId(struct SOLDIERTYPE *pSoldier, INT32 iVehicle
 BOOLEAN SaveLeaveItemList(HWFILE hFile) {
   INT32 iCounter = 0;
   MERC_LEAVE_ITEM *pCurrentItem;
-  UINT32 uiCount = 0;
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiCount = 0;
+  uint32_t uiNumBytesWritten = 0;
   BOOLEAN fNodeExists = FALSE;
-  UINT32 uiCnt;
+  uint32_t uiCnt;
 
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
     // go through nodes and save them
@@ -4949,8 +4949,8 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       }
 
       // Save the number specifing how many items there are in the list
-      FileMan_Write(hFile, &uiCount, sizeof(UINT32), &uiNumBytesWritten);
-      if (uiNumBytesWritten != sizeof(UINT32)) {
+      FileMan_Write(hFile, &uiCount, sizeof(uint32_t), &uiNumBytesWritten);
+      if (uiNumBytesWritten != sizeof(uint32_t)) {
         return (FALSE);
       }
 
@@ -4978,8 +4978,9 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
 
   // Save the leave list profile id's
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
-    FileMan_Write(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(UINT32), &uiNumBytesWritten);
-    if (uiNumBytesWritten != sizeof(UINT32)) {
+    FileMan_Write(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(uint32_t),
+                  &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(uint32_t)) {
       return (FALSE);
     }
   }
@@ -4991,10 +4992,10 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
   INT32 iCounter = 0;
   MERC_LEAVE_ITEM *pCurrentItem;
   MERC_LEAVE_ITEM *pItem;
-  UINT32 uiCount = 0;
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiCount = 0;
+  uint32_t uiNumBytesRead = 0;
   BOOLEAN fNodeExists = FALSE;
-  UINT32 uiSubItem;
+  uint32_t uiSubItem;
 
   // Shutdown the list
   ShutDownLeaveList();
@@ -5013,8 +5014,8 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
     // if a root node is supposed to exist
     if (fNodeExists) {
       // load the number specifing how many items there are in the list
-      FileMan_Read(hFile, &uiCount, sizeof(UINT32), &uiNumBytesRead);
-      if (uiNumBytesRead != sizeof(UINT32)) {
+      FileMan_Read(hFile, &uiCount, sizeof(uint32_t), &uiNumBytesRead);
+      if (uiNumBytesRead != sizeof(uint32_t)) {
         return (FALSE);
       }
 
@@ -5057,8 +5058,8 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
 
   // Load the leave list profile id's
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
-    FileMan_Read(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(UINT32), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(UINT32)) {
+    FileMan_Read(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(uint32_t), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(uint32_t)) {
       return (FALSE);
     }
   }
@@ -5105,7 +5106,7 @@ void TurnOffSectorLocator() {
 void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubLocatorID) {
   static UINT8 ubFrame = 0;
   UINT8 ubBaseFrame = 0;
-  UINT32 uiTimer = 0;
+  uint32_t uiTimer = 0;
   struct VObject *hHandle;
   INT16 sScreenX, sScreenY;
 

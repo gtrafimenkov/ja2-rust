@@ -241,14 +241,14 @@ void InitCursors();
 void HandleAnimatedCursors();
 
 void DrawMouseActionPoints();
-void UpdateAnimatedCursorFrames(UINT32 uiCursorIndex);
+void UpdateAnimatedCursorFrames(uint32_t uiCursorIndex);
 
-void SyncPairedCursorFrames(UINT32 uiSrcCursor, UINT32 uiDestCursor);
+void SyncPairedCursorFrames(uint32_t uiSrcCursor, uint32_t uiDestCursor);
 
-void SetCursorSpecialFrame(UINT32 uiCursor, UINT8 ubFrame);
+void SetCursorSpecialFrame(uint32_t uiCursor, UINT8 ubFrame);
 
-void SetCursorFlags(UINT32 uiCursor, UINT8 ubFlags);
+void SetCursorFlags(uint32_t uiCursor, UINT8 ubFlags);
 
-void RemoveCursorFlags(UINT32 uiCursor, UINT8 ubFlags);
+void RemoveCursorFlags(uint32_t uiCursor, UINT8 ubFlags);
 
 #endif

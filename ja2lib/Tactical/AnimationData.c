@@ -4410,7 +4410,7 @@ BOOLEAN UnLoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex) {
 }
 
 void ClearAnimationSurfacesUsageHistory(UINT16 usSoldierID) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < NUMANIMATIONSURFACETYPES; cnt++) {
     gbAnimUsageHistory[cnt][usSoldierID] = 0;
@@ -4422,7 +4422,7 @@ BOOLEAN LoadAnimationProfiles() {
   HWFILE pInput;
   INT32 iProfileCount, iDirectionCount, iTileCount;
   struct ANIM_PROF_DIR *pProfileDirs;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
 
   //	pInput = fopen( ANIMPROFILEFILENAME, "rb" );
   pInput = FileMan_Open(ANIMPROFILEFILENAME, FILE_ACCESS_READ, FALSE);

@@ -55,20 +55,20 @@ enum { RETREAT_NORTH, RETREAT_EAST, RETREAT_SOUTH, RETREAT_WEST };
 #define ENEMY_OFFERED_SURRENDER 0x01
 
 typedef struct {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   TacticalTeamType Team[MAXTEAMS];
   UINT8 ubCurrentTeam;
   INT16 sSlideTarget;
   INT16 sSlideReason;
-  UINT32 uiTimeSinceMercAIStart;
+  uint32_t uiTimeSinceMercAIStart;
   INT8 fPanicFlags;
   INT16 sPanicTriggerGridnoUnused;
   INT16 sHandGrid;
   UINT8 ubSpottersCalledForBy;
   UINT8 ubTheChosenOne;
-  UINT32 uiTimeOfLastInput;
-  UINT32 uiTimeSinceDemoOn;
-  UINT32 uiCountdownToRestart;
+  uint32_t uiTimeOfLastInput;
+  uint32_t uiTimeSinceDemoOn;
+  uint32_t uiCountdownToRestart;
   BOOLEAN fGoingToEnterDemo;
   BOOLEAN fNOTDOLASTDEMO;
   BOOLEAN fMultiplayer;
@@ -96,7 +96,7 @@ typedef struct {
   UINT8 ubTopMessageType;
   CHAR16 zTopMessageString[20];
   UINT16 usTactialTurnLimitMax;
-  UINT32 uiTactialTurnLimitClock;
+  uint32_t uiTactialTurnLimitClock;
   BOOLEAN fTactialTurnLimitStartedBeep;
   INT8 bBoxingState;
   INT8 bConsNumTurnsNotSeen;
@@ -129,16 +129,16 @@ typedef struct {
   UINT8 ubLastRequesterTargetID;
   BOOLEAN fGoodToAllowCrows;
   UINT8 ubNumCrowsPossible;
-  UINT32 uiTimeCounterForGiveItemSrc;
+  uint32_t uiTimeCounterForGiveItemSrc;
   BOOLEAN fUnLockUIAfterHiddenInterrupt;
   INT8 bNumFoughtInBattle[MAXTEAMS];
-  UINT32 uiDecayBloodLastUpdate;
-  UINT32 uiTimeSinceLastInTactical;
+  uint32_t uiDecayBloodLastUpdate;
+  uint32_t uiTimeSinceLastInTactical;
   BOOLEAN fHasAGameBeenStarted;
   INT8 bConsNumTurnsWeHaventSeenButEnemyDoes;
   BOOLEAN fSomeoneHit;
   UINT8 ubPaddingSmall;
-  UINT32 uiTimeSinceLastOpplistDecay;
+  uint32_t uiTimeSinceLastOpplistDecay;
   INT8 bMercArrivingQuoteBeingUsed;
   UINT8 ubEnemyKilledOnAttackKiller;
   BOOLEAN fCountingDownForGuideDescription;
@@ -152,7 +152,7 @@ typedef struct {
   BOOLEAN fDontAddNewCrows;
   UINT8 ubMorePadding;
   UINT16 sCreatureTenseQuoteDelay;
-  UINT32 uiCreatureTenseQuoteLastUpdate;
+  uint32_t uiCreatureTenseQuoteLastUpdate;
 
   // PADDING GONE!!!!!
 
@@ -178,7 +178,7 @@ extern struct SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
 
 // MERC SLOTS - A LIST OF ALL ACTIVE MERCS
 extern struct SOLDIERTYPE *MercSlots[TOTAL_SOLDIERS];
-extern UINT32 guiNumMercSlots;
+extern uint32_t guiNumMercSlots;
 
 extern BOOLEAN gfMovingAnimation;
 
@@ -230,7 +230,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldier);
 
 void StopMercAnimation(BOOLEAN fStop);
 
-UINT32 EnterTacticalDemoMode();
+uint32_t EnterTacticalDemoMode();
 
 BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos);
 
@@ -270,8 +270,8 @@ struct SOLDIERTYPE *FreeUpAttacker(UINT8 ubID);
 
 BOOLEAN PlayerTeamFull();
 
-void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiting, UINT32 uiData1,
-                                         UINT32 uiData2, UINT32 uiData3);
+void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiting,
+                                         uint32_t uiData1, uint32_t uiData2, uint32_t uiData3);
 
 void ResetAllMercSpeeds();
 

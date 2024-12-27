@@ -5285,7 +5285,7 @@ void InitAnimationSurfacesPerBodytype() {
 
 BOOLEAN LoadAnimationStateInstructions() {
   HWFILE hFile;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
 
   // Open ani file
   hFile = FileMan_Open(ANIMFILENAME, FILE_ACCESS_READ, FALSE);

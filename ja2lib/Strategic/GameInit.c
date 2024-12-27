@@ -57,10 +57,10 @@
 #include "Utils/SoundControl.h"
 
 // Temp function
-void QuickSetupOfMercProfileItems(UINT32 uiCount, UINT8 ubProfileIndex);
+void QuickSetupOfMercProfileItems(uint32_t uiCount, UINT8 ubProfileIndex);
 BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier);
-extern UINT32 guiExitScreen;
-extern UINT32 uiMeanWhileFlags;
+extern uint32_t guiExitScreen;
+extern uint32_t uiMeanWhileFlags;
 extern BOOLEAN gfGamePaused;
 
 extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
@@ -405,7 +405,7 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
     AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, iStartingCash);
 
     {
-      UINT32 uiDaysTimeMercSiteAvailable = Random(2) + 1;
+      uint32_t uiDaysTimeMercSiteAvailable = Random(2) + 1;
 
       // schedule email for message from spec at 7am 3 days in the future
       AddFutureDayStrategicEvent(EVENT_DAY3_ADD_EMAIL_FROM_SPECK, 60 * 7, 0,
@@ -414,7 +414,7 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
 
 #ifdef CRIPPLED_VERSION
     {
-      UINT32 cnt;
+      uint32_t cnt;
 
       // loop through the first 20 AIM mercs and set them to be away
       for (cnt = 0; cnt < 20; cnt++) {
@@ -496,7 +496,7 @@ void QuickStartGame() {
 }
 
 // TEMP FUNCTION!
-void QuickSetupOfMercProfileItems(UINT32 uiCount, UINT8 ubProfileIndex) {
+void QuickSetupOfMercProfileItems(uint32_t uiCount, UINT8 ubProfileIndex) {
   // Quickly give some guys we hire some items
 
   if (uiCount == 0) {

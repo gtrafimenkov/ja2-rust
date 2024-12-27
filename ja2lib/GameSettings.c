@@ -43,7 +43,7 @@ void InitGameSettings();
 
 BOOLEAN LoadGameSettings() {
   HWFILE hFile;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // if the game settings file does NOT exist, or if it is smaller then what it should be
   if (!FileMan_Exists(GAME_SETTINGS_FILE) ||
@@ -127,7 +127,7 @@ BOOLEAN LoadGameSettings() {
 
 BOOLEAN SaveGameSettings() {
   HWFILE hFile;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // create the file
   hFile = FileMan_Open(GAME_SETTINGS_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
@@ -261,7 +261,7 @@ void DisplayGameSettings() {
 }
 
 BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile) {
-  UINT32 uiCheckFlag;
+  uint32_t uiCheckFlag;
 
   if (ubMeanwhile > 32 || ubMeanwhile > NUM_MEANWHILES) {
     return (FALSE);
@@ -277,7 +277,7 @@ BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile) {
 }
 
 BOOLEAN SetMeanwhileSceneSeen(UINT8 ubMeanwhile) {
-  UINT32 uiCheckFlag;
+  uint32_t uiCheckFlag;
 
   if (ubMeanwhile > 32 || ubMeanwhile > NUM_MEANWHILES) {
     // can't set such a flag!

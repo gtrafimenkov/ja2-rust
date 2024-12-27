@@ -143,7 +143,7 @@ struct DB_STRUCTURE {
   UINT8 ubHitPoints;
   UINT8 ubDensity;
   UINT8 ubNumberOfTiles;
-  UINT32 fFlags;
+  uint32_t fFlags;
   UINT16 usStructureNumber;
   UINT8 ubWallOrientation;
   INT8 bDestructionPartner;  // >0 = debris number (bDP - 1), <0 = partner graphic
@@ -156,7 +156,7 @@ struct DB_STRUCTURE {
 struct DB_STRUCTURE_REF {
   struct DB_STRUCTURE* pDBStructure;
   DB_STRUCTURE_TILE** ppTile;  // dynamic array
-};                             // 8 bytes
+};  // 8 bytes
 
 struct STRUCTURE {
   struct STRUCTURE* pPrev;
@@ -172,9 +172,9 @@ struct STRUCTURE {
     struct {
       INT16 sBaseGridNo;
     };
-  };                  // 2 bytes
+  };  // 2 bytes
   INT16 sCubeOffset;  // height of bottom of object in profile "cubes"
-  UINT32 fFlags;      // need to have something to indicate base tile/not
+  uint32_t fFlags;    // need to have something to indicate base tile/not
   PROFILE* pShape;
   UINT8 ubWallOrientation;
   UINT8 ubVehicleHitLocation;

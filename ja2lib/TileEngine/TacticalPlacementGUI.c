@@ -39,7 +39,7 @@
 
 typedef struct MERCPLACEMENT {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiVObjectID;
+  uint32_t uiVObjectID;
   struct MOUSE_REGION region;
   UINT8 ubStrategicInsertionCode;
   BOOLEAN fPlaced;
@@ -48,7 +48,7 @@ typedef struct MERCPLACEMENT {
 MERCPLACEMENT *gMercPlacement = NULL;
 
 enum { DONE_BUTTON, SPREAD_BUTTON, GROUP_BUTTON, CLEAR_BUTTON, NUM_TP_BUTTONS };
-UINT32 iTPButtons[NUM_TP_BUTTONS];
+uint32_t iTPButtons[NUM_TP_BUTTONS];
 
 extern BOOLEAN gfOverheadMapDirty;
 extern BOOLEAN GetOverheadMouseGridNo(INT16 *psGridNo);
@@ -58,9 +58,9 @@ BOOLEAN gfTacticalPlacementGUIActive = FALSE;
 BOOLEAN gfTacticalPlacementFirstTime = FALSE;
 BOOLEAN gfEnterTacticalPlacementGUI = FALSE;
 BOOLEAN gfKillTacticalGUI = FALSE;
-UINT32 giOverheadPanelImage = 0;
+uint32_t giOverheadPanelImage = 0;
 INT32 giOverheadButtonImages[NUM_TP_BUTTONS];
-UINT32 giMercPanelImage = 0;
+uint32_t giMercPanelImage = 0;
 INT32 giPlacements = 0;
 BOOLEAN gfTacticalPlacementGUIDirty = FALSE;
 BOOLEAN gfValidLocationsChanged = FALSE;
@@ -359,7 +359,7 @@ void RenderTacticalPlacementGUI() {
   INT32 i, xp, yp, width;
   INT32 iStartY;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT16 usHatchColor;
   CHAR16 str[128];
   UINT8 *pDestBuf;

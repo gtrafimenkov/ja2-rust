@@ -33,7 +33,7 @@
 
 extern INT16 gsRobotGridNo;
 
-UINT32 guiPabloExtraDaysBribed = 0;
+uint32_t guiPabloExtraDaysBribed = 0;
 
 UINT8 gubCambriaMedicalObjects;
 
@@ -46,9 +46,9 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   UINT16 usMapPos, usStandardMapPos;
   UINT16 usNumberOfItems;
   BOOLEAN fSectorLoaded = FALSE;
-  UINT32 uiCount = 0, uiStolenCount = 0;
+  uint32_t uiCount = 0, uiStolenCount = 0;
   static UINT8 ubShipmentsSinceNoBribes = 0;
-  UINT32 uiChanceOfTheft;
+  uint32_t uiChanceOfTheft;
   BOOLEAN fPablosStoleSomething = FALSE;
   BOOLEAN fPablosStoleLastItem = FALSE;
   struct OBJECTTYPE *pObject = NULL;
@@ -329,11 +329,11 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   }
 }
 
-void HandleDelayedItemsArrival(UINT32 uiReason) {
+void HandleDelayedItemsArrival(uint32_t uiReason) {
   // This function moves all the items that Pablos has stolen
   // (or items that were delayed) to the arrival location for new shipments,
   INT16 sStartGridNo;
-  UINT32 uiNumWorldItems, uiLoop;
+  uint32_t uiNumWorldItems, uiLoop;
   BOOLEAN fOk;
   WORLDITEM *pTemp;
   UINT8 ubLoop;
@@ -457,8 +457,8 @@ void HandlePossiblyDamagedPackage(void) {
 }
 
 void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
-  UINT32 uiLoop;
-  UINT32 uiTotalCash = 0;
+  uint32_t uiLoop;
+  uint32_t uiTotalCash = 0;
   BOOLEAN fKingpinWillDiscover = FALSE, fKingpinDiscovers = FALSE;
 
   // money in D5b1 must be less than 30k
@@ -525,7 +525,7 @@ void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
   }
 }
 
-void HandleNPCSystemEvent(UINT32 uiEvent) {
+void HandleNPCSystemEvent(uint32_t uiEvent) {
   if (uiEvent < NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS) {
     switch (uiEvent) {
       case FACT_PABLOS_BRIBED:
@@ -658,8 +658,8 @@ void HandleNPCSystemEvent(UINT32 uiEvent) {
 }
 
 void HandleEarlyMorningEvents(void) {
-  UINT32 cnt;
-  UINT32 uiAmount;
+  uint32_t cnt;
+  uint32_t uiAmount;
 
   // loop through all *NPCs* and reset "default response used recently" flags
   for (cnt = FIRST_RPC; cnt < NUM_PROFILES; cnt++) {
@@ -876,7 +876,7 @@ void RemoveAssassin(UINT8 ubProfile) {
 }
 
 void CheckForMissingHospitalSupplies(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct ITEM_POOL *pItemPool;
   struct OBJECTTYPE *pObj;
   UINT8 ubMedicalObjects = 0;
@@ -927,11 +927,11 @@ void CheckForMissingHospitalSupplies(void) {
 void DropOffItemsInMeduna(UINT8 ubOrderNum) {
   BOOLEAN fSectorLoaded = FALSE;
   struct OBJECTTYPE Object;
-  UINT32 uiCount = 0;
+  uint32_t uiCount = 0;
   struct OBJECTTYPE *pObject = NULL;
   UINT16 usNumberOfItems = 0, usItem;
   UINT8 ubItemsDelivered, ubTempNumItems;
-  UINT32 i;
+  uint32_t i;
 
   // if the player doesnt "own" the sector,
   if (StrategicMap[GetSectorID16(MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y)]

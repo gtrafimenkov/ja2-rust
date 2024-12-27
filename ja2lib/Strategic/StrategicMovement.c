@@ -89,7 +89,7 @@ BOOLEAN gfUndergroundTacticalTraversal = FALSE;
 // can't save while prompt ON
 struct GROUP *gpGroupPrompting = NULL;
 
-UINT32 uniqueIDMask[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+uint32_t uniqueIDMask[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 // Internal function manipulation prototypes
 
@@ -171,7 +171,7 @@ UINT8 CreateNewPlayerGroupDepartingFromSector(UINT8 ubSectorX, UINT8 ubSectorY) 
 }
 
 UINT8 CreateNewVehicleGroupDepartingFromSector(UINT8 ubSectorX, UINT8 ubSectorY,
-                                               UINT32 uiUNISEDVehicleId) {
+                                               uint32_t uiUNISEDVehicleId) {
   struct GROUP *pNew;
   AssertMsg(ubSectorX >= 1 && ubSectorX <= 16,
             String("CreateNewVehicleGroup with out of range sectorX value of %d", ubSectorX));
@@ -604,13 +604,13 @@ BOOLEAN AddWaypointIDToPGroup(struct GROUP *pGroup, UINT8 ubSectorID) {
   return AddWaypointToPGroup(pGroup, ubSectorX, ubSectorY);
 }
 
-BOOLEAN AddWaypointStrategicIDToGroup(UINT8 ubGroupID, UINT32 uiSectorID) {
+BOOLEAN AddWaypointStrategicIDToGroup(UINT8 ubGroupID, uint32_t uiSectorID) {
   struct GROUP *pGroup;
   pGroup = GetGroup(ubGroupID);
   return AddWaypointStrategicIDToPGroup(pGroup, uiSectorID);
 }
 
-BOOLEAN AddWaypointStrategicIDToPGroup(struct GROUP *pGroup, UINT32 uiSectorID) {
+BOOLEAN AddWaypointStrategicIDToPGroup(struct GROUP *pGroup, uint32_t uiSectorID) {
   UINT8 ubSectorX, ubSectorY;
   ubSectorX = SectorID16_X(uiSectorID);
   ubSectorY = SectorID16_Y(uiSectorID);
@@ -619,7 +619,7 @@ BOOLEAN AddWaypointStrategicIDToPGroup(struct GROUP *pGroup, UINT32 uiSectorID) 
 
 // Enemy grouping functions -- private use by the strategic AI.
 //............................................................
-struct GROUP *CreateNewEnemyGroupDepartingFromSector(UINT32 uiSector, UINT8 ubNumAdmins,
+struct GROUP *CreateNewEnemyGroupDepartingFromSector(uint32_t uiSector, UINT8 ubNumAdmins,
                                                      UINT8 ubNumTroops, UINT8 ubNumElites) {
   struct GROUP *pNew;
   AssertMsg(uiSector >= 0 && uiSector <= 255,
@@ -686,7 +686,7 @@ struct GROUP *CreateNewEnemyGroupDepartingFromSector(UINT32 uiSector, UINT8 ubNu
 // 3)  Insert the group at the end of the list.
 UINT8 AddGroupToList(struct GROUP *pGroup) {
   struct GROUP *curr;
-  UINT32 bit, index, mask;
+  uint32_t bit, index, mask;
   UINT8 ID = 0;
   // First, find a unique ID
   while (++ID) {
@@ -748,7 +748,7 @@ void RemoveGroupFromList(struct GROUP *pGroup) {
     }
 
   if (curr == pGroup) {  // we found the group, so now remove it.
-    UINT32 bit, index, mask;
+    uint32_t bit, index, mask;
 
     // clear the unique group ID
     index = pGroup->ubGroupID / 32;
@@ -1175,8 +1175,8 @@ void AwardExperienceForTravelling(struct GROUP *pGroup) {
   // based on how long movement took, mercs gain a bit of life experience for travelling
   PLAYERGROUP *pPlayerGroup;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiPoints;
-  UINT32 uiCarriedPercent;
+  uint32_t uiPoints;
+  uint32_t uiCarriedPercent;
 
   if (!pGroup || !pGroup->fPlayer) {
     return;
@@ -1693,7 +1693,7 @@ void HandleNonCombatGroupArrival(struct GROUP *pGroup, BOOLEAN fMainGroup, BOOLE
 // to start.
 void HandleOtherGroupsArrivingSimultaneously(UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ) {
   STRATEGICEVENT *pEvent;
-  UINT32 uiCurrTimeStamp;
+  uint32_t uiCurrTimeStamp;
   struct GROUP *pGroup;
   uiCurrTimeStamp = GetWorldTotalSeconds();
   pEvent = gpEventList;
@@ -1723,7 +1723,7 @@ void HandleOtherGroupsArrivingSimultaneously(UINT8 ubSectorX, UINT8 ubSectorY, U
 // arrive).
 void PrepareGroupsForSimultaneousArrival() {
   struct GROUP *pGroup;
-  UINT32 uiLatestArrivalTime = 0;
+  uint32_t uiLatestArrivalTime = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehId = 0;
 
@@ -1922,7 +1922,7 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup) {
   WAYPOINT *wp;
   INT32 iVehId = -1;
   struct SOLDIERTYPE *pSoldier = NULL;
-  UINT32 uiSleepMinutes = 0;
+  uint32_t uiSleepMinutes = 0;
 
   Assert(pGroup);
   i = pGroup->ubNextWaypointID;
@@ -2133,7 +2133,7 @@ void RemoveGroup(UINT8 ubGroupID) {
 BOOLEAN gfRemovingAllGroups = FALSE;
 
 void RemovePGroup(struct GROUP *pGroup) {
-  UINT32 bit, index, mask;
+  uint32_t bit, index, mask;
 
   if (pGroup->fPersistant && !gfRemovingAllGroups) {
     CancelEmptyPersistentGroupMovement(pGroup);
@@ -2287,7 +2287,7 @@ INT32 CalculateTravelTimeOfGroupId(UINT8 ubId) {
 
 INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
   INT32 iDelta;
-  UINT32 uiEtaTime = 0;
+  uint32_t uiEtaTime = 0;
   WAYPOINT *pNode = NULL;
   WAYPOINT pCurrent, pDest;
 
@@ -2875,7 +2875,7 @@ void MoveAllGroupsInCurrentSectorToSector(UINT8 ubSectorX, UINT8 ubSectorY, UINT
 }
 
 void GetGroupPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubPrevY,
-                      UINT32 *uiTraverseTime, UINT32 *uiArriveTime, UINT8 ubGroupId) {
+                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, UINT8 ubGroupId) {
   struct GROUP *pGroup;
 
   // get the group
@@ -2908,7 +2908,7 @@ void GetGroupPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubP
 // this is only for grunts who were in mvt groups between sectors and are set to a new
 // squad...NOTHING ELSE!!!!!
 void SetGroupPosition(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY,
-                      UINT32 uiTraverseTime, UINT32 uiArriveTime, UINT8 ubGroupId) {
+                      uint32_t uiTraverseTime, uint32_t uiArriveTime, UINT8 ubGroupId) {
   struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
 
@@ -2944,8 +2944,8 @@ void SetGroupPosition(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY
 
 BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   struct GROUP *pGroup = NULL;
-  UINT32 uiNumberOfGroups = 0;
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumberOfGroups = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   pGroup = gpGroupList;
 
@@ -2956,8 +2956,8 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of movement groups to the saved game file
-  FileMan_Write(hFile, &uiNumberOfGroups, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiNumberOfGroups, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3000,8 +3000,8 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the unique id mask
-  FileMan_Write(hFile, uniqueIDMask, sizeof(UINT32) * 8, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32) * 8) {
+  FileMan_Write(hFile, uniqueIDMask, sizeof(uint32_t) * 8, &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t) * 8) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3012,11 +3012,11 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
 BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
   struct GROUP *pGroup = NULL;
   struct GROUP *pTemp = NULL;
-  UINT32 uiNumberOfGroups = 0;
-  // UINT32	uiNumBytesWritten=0;
-  UINT32 uiNumBytesRead = 0;
-  UINT32 cnt;
-  UINT32 bit, index, mask;
+  uint32_t uiNumberOfGroups = 0;
+  // uint32_t	uiNumBytesWritten=0;
+  uint32_t uiNumBytesRead = 0;
+  uint32_t cnt;
+  uint32_t bit, index, mask;
   UINT8 ubNumPlayerGroupsEmpty = 0;
   UINT8 ubNumEnemyGroupsEmpty = 0;
   UINT8 ubNumPlayerGroupsFull = 0;
@@ -3026,8 +3026,8 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
   while (gpGroupList) RemoveGroupFromList(gpGroupList);
 
   // load the number of nodes in the list
-  FileMan_Read(hFile, &uiNumberOfGroups, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &uiNumberOfGroups, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3081,12 +3081,12 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
   }
 
   // Load the unique id mask
-  FileMan_Read(hFile, uniqueIDMask, sizeof(UINT32) * 8, &uiNumBytesRead);
+  FileMan_Read(hFile, uniqueIDMask, sizeof(uint32_t) * 8, &uiNumBytesRead);
 
   //@@@ TEMP!
   // Rebuild the uniqueIDMask as a very old bug broke the uniqueID assignments in extremely rare
   // cases.
-  memset(uniqueIDMask, 0, sizeof(UINT32) * 8);
+  memset(uniqueIDMask, 0, sizeof(uint32_t) * 8);
   pGroup = gpGroupList;
   while (pGroup) {
     if (pGroup->fPlayer) {
@@ -3112,7 +3112,7 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
     pGroup = pGroup->next;
   }
 
-  if (uiNumBytesRead != sizeof(UINT32) * 8) {
+  if (uiNumBytesRead != sizeof(uint32_t) * 8) {
     return (FALSE);
   }
 
@@ -3121,10 +3121,10 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
 
 // Saves the Player's group list to the saved game file
 BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
-  UINT32 uiNumberOfNodesInList = 0;
+  uint32_t uiNumberOfNodesInList = 0;
   PLAYERGROUP *pTemp = NULL;
-  UINT32 uiNumBytesWritten = 0;
-  UINT32 uiProfileID;
+  uint32_t uiNumBytesWritten = 0;
+  uint32_t uiProfileID;
 
   pTemp = pGroup->pPlayerList;
 
@@ -3134,8 +3134,8 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
   }
 
   // Save the number of nodes in the list
-  FileMan_Write(hFile, &uiNumberOfNodesInList, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiNumberOfNodesInList, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3146,8 +3146,8 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
   while (pTemp) {
     // Save the ubProfile ID for this node
     uiProfileID = pTemp->ubProfileID;
-    FileMan_Write(hFile, &uiProfileID, sizeof(UINT32), &uiNumBytesWritten);
-    if (uiNumBytesWritten != sizeof(UINT32)) {
+    FileMan_Write(hFile, &uiProfileID, sizeof(uint32_t), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(uint32_t)) {
       // Error Writing size of L.L. to disk
       return (FALSE);
     }
@@ -3161,10 +3161,10 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
 BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
   PLAYERGROUP *pTemp = NULL;
   PLAYERGROUP *pHead = NULL;
-  UINT32 uiNumberOfNodes = 0;
-  UINT32 uiProfileID = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 cnt = 0;
+  uint32_t uiNumberOfNodes = 0;
+  uint32_t uiProfileID = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t cnt = 0;
   INT16 sTempID;
   struct GROUP *pTempGroup = *pGroup;
 
@@ -3173,8 +3173,8 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
   //	pHead = *pGroup->pPlayerList;
 
   // Load the number of nodes in the player list
-  FileMan_Read(hFile, &uiNumberOfNodes, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &uiNumberOfNodes, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3186,8 +3186,8 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
     if (pTemp == NULL) return (FALSE);
 
     // Load the ubProfile ID for this node
-    FileMan_Read(hFile, &uiProfileID, sizeof(UINT32), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(UINT32)) {
+    FileMan_Read(hFile, &uiProfileID, sizeof(uint32_t), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(uint32_t)) {
       // Error Writing size of L.L. to disk
       return (FALSE);
     }
@@ -3221,7 +3221,7 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
 
 // Saves the enemy group struct to the saved game struct
 BOOLEAN SaveEnemyGroupStruct(HWFILE hFile, struct GROUP *pGroup) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   // Save the enemy struct info to the saved game file
   FileMan_Write(hFile, pGroup->pEnemyGroup, sizeof(ENEMYGROUP), &uiNumBytesWritten);
@@ -3235,7 +3235,7 @@ BOOLEAN SaveEnemyGroupStruct(HWFILE hFile, struct GROUP *pGroup) {
 
 // Loads the enemy group struct from the saved game file
 BOOLEAN LoadEnemyGroupStructFromSavedGame(HWFILE hFile, struct GROUP *pGroup) {
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiNumBytesRead = 0;
   ENEMYGROUP *pEnemyGroup = NULL;
 
   // Alllocate memory for the enemy struct
@@ -3299,9 +3299,9 @@ void CheckMembersOfMvtGroupAndComplainAboutBleeding(struct SOLDIERTYPE *pSoldier
 }
 
 BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
-  UINT32 cnt = 0;
-  UINT32 uiNumberOfWayPoints = 0;
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t cnt = 0;
+  uint32_t uiNumberOfWayPoints = 0;
+  uint32_t uiNumBytesWritten = 0;
   WAYPOINT *pWayPoints = pGroup->pWaypoints;
 
   // loop trhough and count all the node in the waypoint list
@@ -3311,8 +3311,8 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
   }
 
   // Save the number of waypoints
-  FileMan_Write(hFile, &uiNumberOfWayPoints, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiNumberOfWayPoints, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3336,15 +3336,15 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
 }
 
 BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup) {
-  UINT32 cnt = 0;
-  UINT32 uiNumberOfWayPoints = 0;
-  UINT32 uiNumBytesRead = 0;
+  uint32_t cnt = 0;
+  uint32_t uiNumberOfWayPoints = 0;
+  uint32_t uiNumBytesRead = 0;
   WAYPOINT *pWayPoints = pGroup->pWaypoints;
   WAYPOINT *pTemp = NULL;
 
   // Load the number of waypoints
-  FileMan_Read(hFile, &uiNumberOfWayPoints, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &uiNumberOfWayPoints, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
   }
@@ -3385,7 +3385,7 @@ BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup) {
 
 void CalculateGroupRetreatSector(struct GROUP *pGroup) {
   SECTORINFO *pSector;
-  UINT32 uiSectorID;
+  uint32_t uiSectorID;
 
   uiSectorID = GetSectorID8(pGroup->ubSectorX, pGroup->ubSectorY);
   pSector = &SectorInfo[uiSectorID];
@@ -3619,7 +3619,7 @@ void ResetMovementForEnemyGroup(struct GROUP *pGroup) {
   AddStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->uiArrivalTime, pGroup->ubGroupID);
 }
 
-void UpdatePersistantGroupsFromOldSave(UINT32 uiSavedGameVersion) {
+void UpdatePersistantGroupsFromOldSave(uint32_t uiSavedGameVersion) {
   struct GROUP *pGroup = NULL;
   BOOLEAN fDone = FALSE;
   INT32 cnt;
@@ -3904,7 +3904,7 @@ void RandomizePatrolGroupLocation(
   }
   // double it (they go back and forth) -- it's using zero based indices, so you have to add one to
   // get the number of actual waypoints in one direction.
-  ubTotalWaypoints = (UINT8)((ubMaxWaypointID)*2);
+  ubTotalWaypoints = (UINT8)((ubMaxWaypointID) * 2);
 
   // pick the waypoint they start at
   ubChosen = (UINT8)Random(ubTotalWaypoints);
@@ -4068,7 +4068,7 @@ void PlaceGroupInSector(UINT8 ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNext
 
 // ARM: centralized it so we can do a comprehensive Assert on it.  Causing problems with helicopter
 // group!
-void SetGroupArrivalTime(struct GROUP *pGroup, UINT32 uiArrivalTime) {
+void SetGroupArrivalTime(struct GROUP *pGroup, uint32_t uiArrivalTime) {
   // PLEASE CENTRALIZE ALL CHANGES TO THE ARRIVAL TIMES OF GROUPS THROUGH HERE, ESPECIALLY THE
   // HELICOPTER struct GROUP!!!
 

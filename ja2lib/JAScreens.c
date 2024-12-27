@@ -57,11 +57,11 @@
 
 #define MAX_DEBUG_PAGES 4
 
-UINT32 guiCurrentScreen;
+uint32_t guiCurrentScreen;
 
 // GLOBAL FOR PAL EDITOR
 UINT8 CurrentPalette = 0;
-UINT32 guiBackgroundRect;
+uint32_t guiBackgroundRect;
 BOOLEAN gfExitPalEditScreen = FALSE;
 BOOLEAN gfExitDebugScreen = FALSE;
 BOOLEAN gfInitRect = TRUE;
@@ -77,8 +77,8 @@ INT8 gCurDebugPage = 0;
 
 struct VSurface *hVAnims[7];
 INT8 bTitleAnimFrame = 0;
-UINT32 uiTitleAnimTime = 0;
-UINT32 uiDoTitleAnimTime = 0;
+uint32_t uiTitleAnimTime = 0;
+uint32_t uiDoTitleAnimTime = 0;
 BOOLEAN gfDoTitleAnimation = FALSE;
 BOOLEAN gfStartTitleAnimation = FALSE;
 
@@ -91,8 +91,8 @@ RENDER_HOOK gDebugRenderOverride[MAX_DEBUG_PAGES] = {
     (RENDER_HOOK)DefaultDebugPage4};
 
 void DisplayFrameRate() {
-  static UINT32 uiFPS = 0;
-  static UINT32 uiFrameCount = 0;
+  static uint32_t uiFPS = 0;
+  static uint32_t uiFrameCount = 0;
   INT16 usMapPos;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
@@ -181,17 +181,17 @@ void DisplayFrameRate() {
 }
 
 // USELESS!!!!!!!!!!!!!!!!!!
-UINT32 SavingScreenInitialize(void) { return (TRUE); }
-UINT32 SavingScreenHandle(void) { return SAVING_SCREEN; }
-UINT32 SavingScreenShutdown(void) { return TRUE; }
+uint32_t SavingScreenInitialize(void) { return (TRUE); }
+uint32_t SavingScreenHandle(void) { return SAVING_SCREEN; }
+uint32_t SavingScreenShutdown(void) { return TRUE; }
 
-UINT32 LoadingScreenInitialize(void) { return (TRUE); }
-UINT32 LoadingScreenHandle(void) { return LOADING_SCREEN; }
-UINT32 LoadingScreenShutdown(void) { return (TRUE); }
+uint32_t LoadingScreenInitialize(void) { return (TRUE); }
+uint32_t LoadingScreenHandle(void) { return LOADING_SCREEN; }
+uint32_t LoadingScreenShutdown(void) { return (TRUE); }
 
-UINT32 ErrorScreenInitialize(void) { return (TRUE); }
+uint32_t ErrorScreenInitialize(void) { return (TRUE); }
 
-UINT32 ErrorScreenHandle(void) {
+uint32_t ErrorScreenHandle(void) {
   InputAtom InputEvent;
   static BOOLEAN fFirstTime = FALSE;
 #ifdef JA2BETAVERSION
@@ -249,11 +249,11 @@ UINT32 ErrorScreenHandle(void) {
   return (ERROR_SCREEN);
 }
 
-UINT32 ErrorScreenShutdown(void) { return (TRUE); }
+uint32_t ErrorScreenShutdown(void) { return (TRUE); }
 
-UINT32 InitScreenInitialize(void) { return (TRUE); }
+uint32_t InitScreenInitialize(void) { return (TRUE); }
 
-UINT32 InitScreenHandle(void) {
+uint32_t InitScreenHandle(void) {
   VSURFACE_DESC vs_desc;
   static struct VSurface *hVSurface;
   static UINT8 ubCurrentScreen = 255;
@@ -332,11 +332,11 @@ UINT32 InitScreenHandle(void) {
   return (INIT_SCREEN);
 }
 
-UINT32 InitScreenShutdown(void) { return (TRUE); }
+uint32_t InitScreenShutdown(void) { return (TRUE); }
 
-UINT32 PalEditScreenInit(void) { return (TRUE); }
+uint32_t PalEditScreenInit(void) { return (TRUE); }
 
-UINT32 PalEditScreenHandle(void) {
+uint32_t PalEditScreenHandle(void) {
   static BOOLEAN FirstTime = TRUE;
 
   if (gfExitPalEditScreen) {
@@ -363,7 +363,7 @@ UINT32 PalEditScreenHandle(void) {
   return (PALEDIT_SCREEN);
 }
 
-UINT32 PalEditScreenShutdown(void) { return (TRUE); }
+uint32_t PalEditScreenShutdown(void) { return (TRUE); }
 
 void PalEditRenderHook() {
   struct SOLDIERTYPE *pSoldier;
@@ -383,7 +383,7 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
   UINT8 ubType;
   struct SOLDIERTYPE *pSoldier;
   UINT8 ubPaletteRep;
-  UINT32 cnt;
+  uint32_t cnt;
   UINT8 ubStartRep = 0;
   UINT8 ubEndRep = 0;
 
@@ -507,7 +507,7 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
   return (FALSE);
 }
 
-UINT32 DebugScreenInit(void) { return (TRUE); }
+uint32_t DebugScreenInit(void) { return (TRUE); }
 
 BOOLEAN CheckForAndExitTacticalDebug() {
   if (gfExitDebugScreen) {
@@ -532,7 +532,7 @@ void ExitDebugScreen() {
   CheckForAndExitTacticalDebug();
 }
 
-UINT32 DebugScreenHandle(void) {
+uint32_t DebugScreenHandle(void) {
   if (CheckForAndExitTacticalDebug()) {
     return (GAME_SCREEN);
   }
@@ -555,7 +555,7 @@ UINT32 DebugScreenHandle(void) {
   return (DEBUG_SCREEN);
 }
 
-UINT32 DebugScreenShutdown(void) { return (TRUE); }
+uint32_t DebugScreenShutdown(void) { return (TRUE); }
 
 void DebugRenderHook() { gDebugRenderOverride[gCurDebugPage](); }
 
@@ -616,17 +616,17 @@ void DefaultDebugPage4() {
   gprintf(0, 0, L"DEBUG PAGE FOUR");
 }
 
-UINT32 SexScreenInit(void) { return (TRUE); }
+uint32_t SexScreenInit(void) { return (TRUE); }
 
 #define SMILY_DELAY 100
 #define SMILY_END_DELAY 1000
 
-UINT32 SexScreenHandle(void) {
+uint32_t SexScreenHandle(void) {
   static UINT8 ubCurrentScreen = 0;
   VOBJECT_DESC VObjectDesc;
-  static UINT32 guiSMILY;
+  static uint32_t guiSMILY;
   static INT8 bCurFrame = 0;
-  static UINT32 uiTimeOfLastUpdate = 0, uiTime;
+  static uint32_t uiTimeOfLastUpdate = 0, uiTime;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT16 sX, sY;
@@ -709,9 +709,9 @@ UINT32 SexScreenHandle(void) {
   return (SEX_SCREEN);
 }
 
-UINT32 SexScreenShutdown(void) { return (TRUE); }
+uint32_t SexScreenShutdown(void) { return (TRUE); }
 
-UINT32 DemoExitScreenInit(void) { return (TRUE); }
+uint32_t DemoExitScreenInit(void) { return (TRUE); }
 
 void DoneFadeOutForDemoExitScreen(void) { gfProgramIsRunning = FALSE; }
 
@@ -720,9 +720,9 @@ extern INT8 gbFadeSpeed;
 #ifdef GERMAN
 void DisplayTopwareGermanyAddress() {
   VOBJECT_DESC vo_desc;
-  UINT32 uiTempID;
+  uint32_t uiTempID;
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
 
   // bring up the Topware address screen
@@ -752,9 +752,9 @@ void DisplayTopwareGermanyAddress() {
 }
 #endif
 
-UINT32 DemoExitScreenHandle(void) {
+uint32_t DemoExitScreenHandle(void) {
   gfProgramIsRunning = FALSE;
   return (DEMO_EXIT_SCREEN);
 }
 
-UINT32 DemoExitScreenShutdown(void) { return (TRUE); }
+uint32_t DemoExitScreenShutdown(void) { return (TRUE); }

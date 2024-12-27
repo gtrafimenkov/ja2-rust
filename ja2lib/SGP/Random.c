@@ -2,12 +2,12 @@
 
 #ifdef PRERANDOM_GENERATOR
 
-UINT32 guiPreRandomIndex = 0;
-UINT32 guiPreRandomNums[MAX_PREGENERATED_NUMS];
+uint32_t guiPreRandomIndex = 0;
+uint32_t guiPreRandomNums[MAX_PREGENERATED_NUMS];
 
 #ifdef JA2BETAVERSION
-UINT32 guiRandoms = 0;
-UINT32 guiPreRandoms = 0;
+uint32_t guiRandoms = 0;
+uint32_t guiPreRandoms = 0;
 BOOLEAN gfCountRandoms = FALSE;
 #endif
 
@@ -27,7 +27,7 @@ void InitializeRandom() {
 }
 
 // Returns a pseudo-random integer between 0 and uiRange
-UINT32 Random(UINT32 uiRange) {
+uint32_t Random(uint32_t uiRange) {
 // Always return 0, if no range given (it's not an error)
 #ifdef JA2BETAVERSION
   if (gfCountRandoms) {
@@ -39,12 +39,12 @@ UINT32 Random(UINT32 uiRange) {
   return rand() * uiRange / RAND_MAX % uiRange;
 }
 
-BOOLEAN Chance(UINT32 uiChance) { return (BOOLEAN)(Random(100) < uiChance); }
+BOOLEAN Chance(uint32_t uiChance) { return (BOOLEAN)(Random(100) < uiChance); }
 
 #ifdef PRERANDOM_GENERATOR
 
-UINT32 PreRandom(UINT32 uiRange) {
-  UINT32 uiNum;
+uint32_t PreRandom(uint32_t uiRange) {
+  uint32_t uiNum;
 #ifdef JA2BETAVERSION
   if (gfCountRandoms) {
     guiPreRandoms++;
@@ -60,11 +60,11 @@ UINT32 PreRandom(UINT32 uiRange) {
 
   // Go to the next index.
   guiPreRandomIndex++;
-  if (guiPreRandomIndex >= (UINT32)MAX_PREGENERATED_NUMS) guiPreRandomIndex = 0;
+  if (guiPreRandomIndex >= (uint32_t)MAX_PREGENERATED_NUMS) guiPreRandomIndex = 0;
   return uiNum;
 }
 
-BOOLEAN PreChance(UINT32 uiChance) { return (BOOLEAN)(PreRandom(100) < uiChance); }
+BOOLEAN PreChance(uint32_t uiChance) { return (BOOLEAN)(PreRandom(100) < uiChance); }
 
 #ifdef JA2BETAVERSION
 void CountRandomCalls(BOOLEAN fStart) {
@@ -75,7 +75,7 @@ void CountRandomCalls(BOOLEAN fStart) {
   }
 }
 
-void GetRandomCalls(UINT32 *puiRandoms, UINT32 *puiPreRandoms) {
+void GetRandomCalls(uint32_t *puiRandoms, uint32_t *puiPreRandoms) {
   *puiRandoms = guiRandoms;
   *puiPreRandoms = guiPreRandoms;
 }

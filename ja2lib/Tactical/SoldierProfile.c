@@ -144,9 +144,9 @@ BOOLEAN LoadMercProfiles(void) {
   //	FILE *fptr;
   HWFILE fptr;
   char *pFileName = "BINARYDATA\\Prof.dat";
-  UINT32 uiLoop, uiLoop2, uiLoop3;
+  uint32_t uiLoop, uiLoop2, uiLoop3;
   UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   fptr = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
   if (!fptr) {
@@ -288,7 +288,7 @@ void DecideActiveTerrorists(void) {
   UINT8 ubLoop, ubLoop2;
   UINT8 ubTerrorist;
   UINT8 ubNumAdditionalTerrorists, ubNumTerroristsAdded = 0;
-  UINT32 uiChance, uiLocationChoice;
+  uint32_t uiChance, uiLocationChoice;
   BOOLEAN fFoundSpot;
   INT16 sTerroristPlacement[MAX_ADDITIONAL_TERRORISTS][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
@@ -558,9 +558,9 @@ void MakeRemainingAssassinsTougher(void) {
 }
 
 void StartSomeMercsOnAssignment(void) {
-  UINT32 uiCnt;
+  uint32_t uiCnt;
   MERCPROFILESTRUCT *pProfile;
-  UINT32 uiChance;
+  uint32_t uiChance;
 
   // some randomly picked A.I.M. mercs will start off "on assignment" at the beginning of each new
   // game
@@ -594,7 +594,7 @@ void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, UINT16 usEyesX, UINT
 }
 
 UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
-  UINT32 uiStats, uiSkills, uiActionPoints, uiSpecialSkills;
+  uint32_t uiStats, uiSkills, uiActionPoints, uiSpecialSkills;
   UINT16 usCompetence;
 
   // count life twice 'cause it's also hit points
@@ -604,10 +604,10 @@ UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
             3;
 
   // marksmanship is very important, count it double
-  uiSkills = (UINT32)((2 * (pow((float)pProfile->bMarksmanship, 3) / 10000)) +
-                      1.5 * (pow((float)pProfile->bMedical, 3) / 10000) +
-                      (pow((float)pProfile->bMechanical, 3) / 10000) +
-                      (pow((float)pProfile->bExplosive, 3) / 10000));
+  uiSkills = (uint32_t)((2 * (pow((float)pProfile->bMarksmanship, 3) / 10000)) +
+                        1.5 * (pow((float)pProfile->bMedical, 3) / 10000) +
+                        (pow((float)pProfile->bMechanical, 3) / 10000) +
+                        (pow((float)pProfile->bExplosive, 3) / 10000));
 
   // action points
   uiActionPoints = 5 + (((10 * pProfile->bExpLevel + 3 * pProfile->bAgility +
@@ -658,10 +658,10 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
   UINT8 ubID;
   struct SOLDIERTYPE *pNewSoldier = NULL;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT32 cnt;
+  uint32_t cnt;
   INT16 sOldGridNo;
 
-  UINT32 uiSlot;
+  uint32_t uiSlot;
   struct SOLDIERTYPE *pGroupMember;
 
   if (gfInTalkPanel) {
@@ -1000,7 +1000,7 @@ BOOLEAN IsProfileAHeadMiner(UINT8 ubProfile) {
 }
 
 void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs) {
-  UINT32 uiCount;
+  uint32_t uiCount;
   struct SOLDIERTYPE *pSoldier = NULL;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fDoCopy = FALSE;

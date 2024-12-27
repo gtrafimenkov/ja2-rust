@@ -19,4 +19,4 @@ CHAR16 zTrackingNumber[16] = {L"Z"};
 
 #define SAVE_GAME_VERSION 99
 
-const UINT32 guiSavedGameVersion = SAVE_GAME_VERSION;
+const uint32_t guiSavedGameVersion = SAVE_GAME_VERSION;

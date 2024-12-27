@@ -149,9 +149,9 @@ BobbyRayPurchaseStruct BobbyRayPurchases[MAX_PURCHASE_AMOUNT];
 
 extern BOOLEAN fExitingLaptopFlag;
 
-UINT32 guiGunBackground;
-UINT32 guiGunsGrid;
-UINT32 guiBrTitle;
+uint32_t guiGunBackground;
+uint32_t guiGunsGrid;
+uint32_t guiBrTitle;
 UINT16 gusCurWeaponIndex;
 UINT8 gubCurPage;
 UINT8 ubCatalogueButtonValues[] = {LAPTOP_MODE_BOBBY_R_GUNS, LAPTOP_MODE_BOBBY_R_AMMO,
@@ -172,15 +172,15 @@ UINT16 gusOldItemNumOnTopOfPage = 65535;
 
 // The menu bar at the bottom that changes to different pages
 void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRPageMenu[NUM_CATALOGUE_BUTTONS];
+uint32_t guiBobbyRPageMenu[NUM_CATALOGUE_BUTTONS];
 INT32 guiBobbyRPageMenuImage;
 
 // The next and previous buttons
 void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRPreviousPage;
+uint32_t guiBobbyRPreviousPage;
 INT32 guiBobbyRPreviousPageImage;
 
-UINT32 guiBobbyRNextPage;
+uint32_t guiBobbyRNextPage;
 INT32 guiBobbyRNextPageImage;
 
 // Big Image Mouse region
@@ -189,19 +189,19 @@ void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // The order form button
 void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyROrderForm;
+uint32_t guiBobbyROrderForm;
 INT32 guiBobbyROrderFormImage;
 
 // The Home button
 void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRHome;
+uint32_t guiBobbyRHome;
 INT32 guiBobbyRHomeImage;
 
 // Link from the title
 struct MOUSE_REGION gSelectedTitleImageLinkRegion;
 void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-UINT32 guiTempCurrentMode;
+uint32_t guiTempCurrentMode;
 
 BOOLEAN DisplayNonGunWeaponInfo(UINT16 usItemIndex, UINT16 usTextPosY, BOOLEAN fUsed,
                                 UINT16 usBobbyIndex);
@@ -212,7 +212,7 @@ BOOLEAN DisplayGunInfo(UINT16 usItemIndex, UINT16 usTextPosY, BOOLEAN fUsed, UIN
 BOOLEAN DisplayAmmoInfo(UINT16 usItemIndex, UINT16 usPosY, BOOLEAN fUsed, UINT16 usBobbyIndex);
 
 BOOLEAN DisplayBigItemImage(UINT16 ubIndex, UINT16 usPosY);
-// void InitFirstAndLastGlobalIndex(UINT32 ubItemClassMask);
+// void InitFirstAndLastGlobalIndex(uint32_t ubItemClassMask);
 UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UINT16 usBobbyIndex,
                          BOOLEAN fUsed);
 UINT16 DisplayRof(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
@@ -227,9 +227,9 @@ void PurchaseBobbyRayItem(UINT16 usItemNumber);
 UINT8 CheckIfItemIsPurchased(UINT16 usItemNumber);
 UINT8 GetNextPurchaseNumber();
 void UnPurchaseBobbyRayItem(UINT16 usItemNumber);
-UINT32 CalculateTotalPurchasePrice();
+uint32_t CalculateTotalPurchasePrice();
 void DisableBobbyRButtons();
-void CalcFirstIndexForPage(STORE_INVENTORY *pInv, UINT32 uiItemClass);
+void CalcFirstIndexForPage(STORE_INVENTORY *pInv, uint32_t uiItemClass);
 void OutOfStockMessageBoxCallBack(UINT8 bExitValue);
 UINT8 CheckPlayersInventoryForGunMatchingGivenAmmoID(INT16 sItemID);
 void BobbyrRGunsHelpTextDoneCallBack(void);
@@ -479,7 +479,7 @@ BOOLEAN DeleteBobbyMenuBar() {
 }
 
 void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT32 bNewValue;
+  uint32_t bNewValue;
   bNewValue = MSYS_GetBtnUserData(btn, 0);
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -508,7 +508,7 @@ void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT32 bNewValue;
+  uint32_t bNewValue;
 
   bNewValue = MSYS_GetBtnUserData(btn, 0);
 
@@ -544,7 +544,7 @@ void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-BOOLEAN DisplayItemInfo(UINT32 uiItemClass) {
+BOOLEAN DisplayItemInfo(uint32_t uiItemClass) {
   UINT16 i;
   UINT8 ubCount = 0;
   UINT16 PosY, usTextPosY;
@@ -799,10 +799,10 @@ BOOLEAN DisplayAmmoInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16
 
 BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   INT16 PosX, sCenX, sCenY;
-  UINT32 usWidth;
+  uint32_t usWidth;
   ETRLEObject *pTrav;
   INVTYPE *pItem;
-  UINT32 uiImage;
+  uint32_t uiImage;
   struct VObject *hPixHandle;
 
   PosX = BOBBYR_GRID_PIC_X;
@@ -814,7 +814,7 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   pTrav = &(hPixHandle->pETRLEObject[0]);
 
   // center picture in frame
-  usWidth = (UINT32)pTrav->usWidth;
+  usWidth = (uint32_t)pTrav->usWidth;
   //	sCenX = PosX + ( abs( BOBBYR_GRID_PIC_WIDTH - usWidth ) / 2 );
   //	sCenY = PosY + 8;
   sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
@@ -1050,7 +1050,7 @@ UINT16 DisplayWeight(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
 void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed) {
   wchar_t sText[400];
   wchar_t sTemp[20];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   UINT8 ubPurchaseNumber;
 
@@ -1101,7 +1101,7 @@ void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, 
 }
 
 /*
-void InitFirstAndLastGlobalIndex(UINT32 uiItemClass)
+void InitFirstAndLastGlobalIndex(uint32_t uiItemClass)
 {
         switch(uiItemClass)
         {
@@ -1159,7 +1159,7 @@ void CalculateFirstAndLastIndexs()
 */
 
 // Loops through Bobby Rays Inventory to find the first and last index
-void SetFirstLastPagesForNew(UINT32 uiClassMask) {
+void SetFirstLastPagesForNew(uint32_t uiClassMask) {
   UINT16 i;
   INT16 sFirst = -1;
   INT16 sLast = -1;
@@ -1473,7 +1473,7 @@ void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void UpdateButtonText(UINT32 uiCurPage) {
+void UpdateButtonText(uint32_t uiCurPage) {
   switch (uiCurPage) {
     case LAPTOP_MODE_BOBBY_R_GUNS:
       DisableButton(guiBobbyRPageMenu[0]);
@@ -1510,9 +1510,9 @@ UINT16 CalcBobbyRayCost(UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed) {
   return ((UINT16)value);
 }
 
-UINT32 CalculateTotalPurchasePrice() {
+uint32_t CalculateTotalPurchasePrice() {
   UINT16 i;
-  UINT32 uiTotal = 0;
+  uint32_t uiTotal = 0;
 
   for (i = 0; i < MAX_PURCHASE_AMOUNT; i++) {
     // if the item was purchased
@@ -1560,7 +1560,7 @@ void DisableBobbyRButtons() {
   */
 }
 
-void CalcFirstIndexForPage(STORE_INVENTORY *pInv, UINT32 uiItemClass) {
+void CalcFirstIndexForPage(STORE_INVENTORY *pInv, uint32_t uiItemClass) {
   UINT16 i;
   UINT16 usNumItems = 0;
 

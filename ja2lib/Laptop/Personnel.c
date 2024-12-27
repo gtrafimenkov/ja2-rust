@@ -235,7 +235,7 @@ extern void HandleShiftAltTabKeyInLaptop(void);
 // BOOLEAN fShowInventory = FALSE;
 UINT8 uiCurrentInventoryIndex = 0;
 
-UINT32 guiSliderPosition;
+uint32_t guiSliderPosition;
 
 // the transfer funds string
 CHAR16 sTransferString[32];
@@ -279,11 +279,11 @@ struct Point pPersonnelScreenPoints[] = {
     {422 + PrsnlOffSetX, 395 + PrsnlOffSetY},
 };
 
-UINT32 guiSCREEN;
-UINT32 guiFACE;
-UINT32 guiDEPARTEDTEAM;
-UINT32 guiCURRENTTEAM;
-UINT32 guiPersonnelInventory;
+uint32_t guiSCREEN;
+uint32_t guiFACE;
+uint32_t guiDEPARTEDTEAM;
+uint32_t guiCURRENTTEAM;
+uint32_t guiPersonnelInventory;
 
 INT32 giPersonnelButton[6];
 INT32 giPersonnelButtonImage[6];
@@ -1269,7 +1269,7 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
   wchar_t sString[50];
   //	wchar_t sStringA[ 50 ];
   INT16 sX, sY;
-  UINT32 uiHits = 0;
+  uint32_t uiHits = 0;
   struct SOLDIERTYPE *pSoldier = GetSoldierByID(iId);
   BOOLEAN fAmIaRobot = AM_A_ROBOT(pSoldier);
 
@@ -1612,12 +1612,12 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
         // shots/hits
         mprintf((INT16)(pPersonnelScreenPoints[23].x + (iSlot * TEXT_BOX_WIDTH)),
                 pPersonnelScreenPoints[23].y, pPersonnelScreenStrings[PRSNL_TXT_HIT_PERCENTAGE]);
-        uiHits = (UINT32)gMercProfiles[Menptr[iId].ubProfile].usShotsHit;
+        uiHits = (uint32_t)gMercProfiles[Menptr[iId].ubProfile].usShotsHit;
         uiHits *= 100;
 
         // check we have shot at least once
         if (gMercProfiles[Menptr[iId].ubProfile].usShotsFired > 0) {
-          uiHits /= (UINT32)gMercProfiles[Menptr[iId].ubProfile].usShotsFired;
+          uiHits /= (uint32_t)gMercProfiles[Menptr[iId].ubProfile].usShotsFired;
         } else {
           // no, set hit % to 0
           uiHits = 0;
@@ -2210,7 +2210,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   ETRLEObject *pTrav;
   INVTYPE *pItem;
   INT16 PosX, PosY, sCenX, sCenY;
-  UINT32 usHeight, usWidth;
+  uint32_t usHeight, usWidth;
   UINT8 ubItemCount = 0;
   UINT8 ubUpToCount = 0;
   INT16 sX, sY;
@@ -2255,8 +2255,8 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         GetVideoObject(&hHandle, GetInterfaceGraphicForItem(pItem));
         pTrav = &(hHandle->pETRLEObject[pItem->ubGraphicNum]);
 
-        usHeight = (UINT32)pTrav->usHeight;
-        usWidth = (UINT32)pTrav->usWidth;
+        usHeight = (uint32_t)pTrav->usHeight;
+        usWidth = (uint32_t)pTrav->usWidth;
 
         sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->sOffsetX;
         sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->sOffsetY;
@@ -2768,7 +2768,7 @@ INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat) {
   INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiLoopCounter;
+  uint32_t uiLoopCounter;
 
   // run through active soldiers
   //	while( fNotDone )
@@ -2919,7 +2919,7 @@ INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat) {
   INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiLoopCounter;
+  uint32_t uiLoopCounter;
 
   // run through active soldiers
   //	while( fNotDone )
@@ -3380,7 +3380,7 @@ INT32 GetAvgStatOfPastTeamStat(INT32 iStat) {
   INT8 bCurrentList = 0;
   INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
-  UINT32 uiLoopCounter;
+  uint32_t uiLoopCounter;
 
   // run through active soldiers
 
@@ -4421,7 +4421,7 @@ void DisplayDepartedCharStats(INT32 iId, INT32 iSlot, INT32 iState) {
   INT32 iCounter = 0;
   wchar_t sString[50];
   INT16 sX, sY;
-  UINT32 uiHits = 0;
+  uint32_t uiHits = 0;
 
   // font stuff
   SetFont(FONT10ARIAL);
@@ -4574,12 +4574,12 @@ void DisplayDepartedCharStats(INT32 iId, INT32 iSlot, INT32 iState) {
         // shots/hits
         mprintf((INT16)(pPersonnelScreenPoints[23].x + (iSlot * TEXT_BOX_WIDTH)),
                 pPersonnelScreenPoints[23].y, pPersonnelScreenStrings[PRSNL_TXT_HIT_PERCENTAGE]);
-        uiHits = (UINT32)gMercProfiles[iId].usShotsHit;
+        uiHits = (uint32_t)gMercProfiles[iId].usShotsHit;
         uiHits *= 100;
 
         // check we have shot at least once
         if (gMercProfiles[iId].usShotsFired > 0) {
-          uiHits /= (UINT32)gMercProfiles[iId].usShotsFired;
+          uiHits /= (uint32_t)gMercProfiles[iId].usShotsFired;
         } else {
           // no, set hit % to 0
           uiHits = 0;
@@ -4754,7 +4754,7 @@ void DisplayPersonnelTextOnTitleBar(void) {
 BOOLEAN DisplayHighLightBox(void) {
   // will display highlight box around selected merc
   VOBJECT_DESC VObjectDesc;
-  UINT32 uiBox = 0;
+  uint32_t uiBox = 0;
   struct VObject *hHandle;
 
   // load graphics
@@ -4934,7 +4934,7 @@ INT32 GetIdOfThisSlot(INT32 iSlot) {
 
 BOOLEAN RenderAtmPanel(void) {
   VOBJECT_DESC VObjectDesc;
-  UINT32 uiBox = 0;
+  uint32_t uiBox = 0;
   struct VObject *hHandle;
 
   // render the ATM panel
@@ -5387,8 +5387,7 @@ void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
       // find position in value string, append character at end
-      for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++)
-        ;
+      for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++);
       sTransferString[iCounter] = (sZero[0] + (UINT16)iValue);
       sTransferString[iCounter + 1] = 0;
       fReDrawScreenFlag = TRUE;
@@ -5500,7 +5499,7 @@ BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrent
   for (iCurrentPocket = 0; iCurrentPocket < NUM_INV_SLOTS; iCurrentPocket++) {
     if (Item[pSoldier->inv[iCurrentPocket].usItem].usItemClass == IC_MONEY) {
       // is there more left to go, or does this pocket finish it off?
-      if (pSoldier->inv[iCurrentPocket].uiMoneyAmount > (UINT32)iAmountLeftToTake) {
+      if (pSoldier->inv[iCurrentPocket].uiMoneyAmount > (uint32_t)iAmountLeftToTake) {
         pSoldier->inv[iCurrentPocket].uiMoneyAmount -= iAmountLeftToTake;
         iAmountLeftToTake = 0;
       } else {
@@ -5741,8 +5740,7 @@ void HandlePersonnelKeyboard(void) {
       if ((fShowAtmPanel) && (fATMFlags != 0)) {
         iValue = (INT32)(InputEvent.usParam - '0');
 
-        for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++)
-          ;
+        for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++);
         sTransferString[iCounter] = (sZero[0] + (UINT16)iValue);
         sTransferString[iCounter + 1] = 0;
         fPausedReDrawScreenFlag = TRUE;
@@ -5761,7 +5759,7 @@ void HandlePersonnelKeyboard(void) {
 void RenderRectangleForPersonnelTransactionAmount(void) {
   INT32 iLength = 0;
   INT32 iHeight = GetFontHeight(ATM_FONT);
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   CHAR16 sTempString[32];
   INT32 iCounter = 0;
@@ -5797,7 +5795,7 @@ void RenderRectangleForPersonnelTransactionAmount(void) {
 
 void HandleTimedAtmModes(void) {
   static BOOLEAN fOldAtmMode = 0;
-  static UINT32 uiBaseTime = 0;
+  static uint32_t uiBaseTime = 0;
 
   if (fShowAtmPanel == FALSE) {
     return;
@@ -5863,7 +5861,7 @@ void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
 
       // Remaining Contract:
       case 0: {
-        UINT32 uiMinutesInDay = 24 * 60;
+        uint32_t uiMinutesInDay = 24 * 60;
 
         if (Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||
             Menptr[iId].ubProfile == SLAY) {
@@ -5952,7 +5950,7 @@ void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
         /*
                                  if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)
                                  {
-                                         UINT32 uiDailyCost = 0;
+                                         uint32_t uiDailyCost = 0;
 
                                          if( Menptr[iId].bTypeOfLastContract ==
         CONTRACT_EXTEND_2_WEEK )

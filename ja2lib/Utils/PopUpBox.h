@@ -20,7 +20,7 @@ struct popupstring {
   UINT8 ubHighLight;
   UINT8 ubShade;
   UINT8 ubSecondaryShade;
-  UINT32 uiFont;
+  uint32_t uiFont;
   BOOLEAN fColorFlag;
   BOOLEAN fHighLightFlag;
   BOOLEAN fShadeFlag;
@@ -35,18 +35,18 @@ typedef POPUPSTRING *POPUPSTRINGPTR;
 struct popupbox {
   SGPRect Dimensions;
   SGPPoint Position;
-  UINT32 uiLeftMargin;
-  UINT32 uiRightMargin;
-  UINT32 uiBottomMargin;
-  UINT32 uiTopMargin;
-  UINT32 uiLineSpace;
+  uint32_t uiLeftMargin;
+  uint32_t uiRightMargin;
+  uint32_t uiBottomMargin;
+  uint32_t uiTopMargin;
+  uint32_t uiLineSpace;
   INT32 iBorderObjectIndex;
   INT32 iBackGroundSurface;
-  UINT32 uiFlags;
-  UINT32 uiBuffer;
-  UINT32 uiSecondColumnMinimunOffset;
-  UINT32 uiSecondColumnCurrentOffset;
-  UINT32 uiBoxMinWidth;
+  uint32_t uiFlags;
+  uint32_t uiBuffer;
+  uint32_t uiSecondColumnMinimunOffset;
+  uint32_t uiSecondColumnCurrentOffset;
+  uint32_t uiBoxMinWidth;
   BOOLEAN fUpdated;
   BOOLEAN fShowBox;
 
@@ -59,26 +59,27 @@ typedef PopUpBo *PopUpBoxPt;
 
 // functions
 void InitPopUpBoxList();
-BOOLEAN CreatePopUpBox(INT32 *hBoxHandle, SGPRect Dimensions, SGPPoint Position, UINT32 uiFlags);
+BOOLEAN CreatePopUpBox(INT32 *hBoxHandle, SGPRect Dimensions, SGPPoint Position, uint32_t uiFlags);
 
-void SetMargins(INT32 hBoxHandle, UINT32 uiLeft, UINT32 uiTop, UINT32 uiBottom, UINT32 uiRight);
-UINT32 GetTopMarginSize(INT32 hBoxHandle);
-void SetLineSpace(INT32 hBoxHandle, UINT32 uiLineSpace);
-UINT32 GetLineSpace(INT32 hBoxHandle);
-void SetBoxBuffer(INT32 hBoxHandle, UINT32 uiBuffer);
+void SetMargins(INT32 hBoxHandle, uint32_t uiLeft, uint32_t uiTop, uint32_t uiBottom,
+                uint32_t uiRight);
+uint32_t GetTopMarginSize(INT32 hBoxHandle);
+void SetLineSpace(INT32 hBoxHandle, uint32_t uiLineSpace);
+uint32_t GetLineSpace(INT32 hBoxHandle);
+void SetBoxBuffer(INT32 hBoxHandle, uint32_t uiBuffer);
 void SetBoxPosition(INT32 hBoxHandle, SGPPoint Position);
 void GetBoxPosition(INT32 hBoxHandle, SGPPoint *Position);
-UINT32 GetNumberOfLinesOfTextInBox(INT32 hBoxHandle);
+uint32_t GetNumberOfLinesOfTextInBox(INT32 hBoxHandle);
 void SetBoxSize(INT32 hBoxHandle, SGPRect Dimensions);
 void GetBoxSize(INT32 hBoxHandle, SGPRect *Dimensions);
-void SetBoxFlags(INT32 hBoxHandle, UINT32 uiFlags);
+void SetBoxFlags(INT32 hBoxHandle, uint32_t uiFlags);
 void SetBorderType(INT32 hBoxHandle, INT32 BorderObjectIndex);
 void SetBackGroundSurface(INT32 hBoxHandle, INT32 BackGroundSurfaceIndex);
-void AddMonoString(UINT32 *hStringHandle, STR16 pString);
+void AddMonoString(uint32_t *hStringHandle, STR16 pString);
 void AddColorString(INT32 *hStringHandle, STR16 pString);
-void SetPopUpStringFont(INT32 hStringHandle, UINT32 uiFont);
-void SetBoxFont(INT32 hBoxHandle, UINT32 uiFont);
-UINT32 GetBoxFont(INT32 hBoxHandle);
+void SetPopUpStringFont(INT32 hStringHandle, uint32_t uiFont);
+void SetBoxFont(INT32 hBoxHandle, uint32_t uiFont);
+uint32_t GetBoxFont(INT32 hBoxHandle);
 void SetStringForeground(INT32 hStringHandle, UINT8 ubColor);
 void SetStringBackground(INT32 hStringHandle, UINT8 ubColor);
 void SetStringHighLight(INT32 hStringHandle, UINT8 ubColor);
@@ -98,8 +99,8 @@ void RemoveAllCurrentBoxStrings(void);
 void RemoveBox(INT32 hBoxHandle);
 void ShowBox(INT32 hBoxHandle);
 void HideBox(INT32 hBoxHandle);
-void DisplayBoxes(UINT32 uiBuffer);
-void DisplayOnePopupBox(UINT32 uiIndex, UINT32 uiBuffer);
+void DisplayBoxes(uint32_t uiBuffer);
+void DisplayOnePopupBox(uint32_t uiIndex, uint32_t uiBuffer);
 void SetCurrentBox(INT32 hBoxHandle);
 void GetCurrentBox(INT32 *hBoxHandle);
 
@@ -107,13 +108,13 @@ void GetCurrentBox(INT32 *hBoxHandle);
 void ResizeBoxToText(INT32 hBoxHandle);
 
 // force update/redraw of this boxes background
-void ForceUpDateOfBox(UINT32 uiIndex);
+void ForceUpDateOfBox(uint32_t uiIndex);
 
 // force redraw of ALL boxes
 void MarkAllBoxesAsAltered(void);
 
 // is the box being displayed?
-BOOLEAN IsBoxShown(UINT32 uiHandle);
+BOOLEAN IsBoxShown(uint32_t uiHandle);
 
 // is this line int he current boxed in a shaded state?
 BOOLEAN GetShadeFlag(INT32 hStringHandle);
@@ -128,14 +129,14 @@ void SetBoxLineForeground(INT32 iBox, INT32 iStringValue, UINT8 ubColor);
 void HideAllBoxes(void);
 
 // add the second column monocrome string
-void AddSecondColumnMonoString(UINT32 *hStringHandle, STR16 pString);
+void AddSecondColumnMonoString(uint32_t *hStringHandle, STR16 pString);
 
 // set the 2nd column font for this box
-void SetBoxSecondColumnFont(INT32 hBoxHandle, UINT32 uiFont);
+void SetBoxSecondColumnFont(INT32 hBoxHandle, uint32_t uiFont);
 
 // set the minimum offset
-void SetBoxSecondColumnMinimumOffset(INT32 hBoxHandle, UINT32 uiWidth);
-void SetBoxSecondColumnCurrentOffset(INT32 hBoxHandle, UINT32 uiCurrentOffset);
+void SetBoxSecondColumnMinimumOffset(INT32 hBoxHandle, uint32_t uiWidth);
+void SetBoxSecondColumnCurrentOffset(INT32 hBoxHandle, uint32_t uiCurrentOffset);
 void ResizeBoxForSecondStrings(INT32 hBoxHandle);
 
 // fore ground, background, highlight and shade.. for indivdual strings

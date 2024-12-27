@@ -38,8 +38,8 @@ extern BOOLEAN gfAnchoredState;
 struct MOUSE_REGION LevelMouseRegions[4];
 
 // graphics
-UINT32 guiMapBorder;
-// UINT32 guiMapBorderCorner;
+uint32_t guiMapBorder;
+// uint32_t guiMapBorderCorner;
 
 // scroll direction
 INT32 giScrollButtonState = -1;
@@ -63,12 +63,12 @@ BOOLEAN fZoomFlag = FALSE;
 INT32 giMapBorderButtons[6] = {-1, -1, -1, -1, -1, -1};
 INT32 giMapBorderButtonsImage[6] = {-1, -1, -1, -1, -1, -1};
 
-// UINT32 guiMapBorderScrollButtons[ 4 ] = { -1, -1, -1, -1 };
-// UINT32 guiMapBorderScrollButtonsImage[ 4 ];
+// uint32_t guiMapBorderScrollButtons[ 4 ] = { -1, -1, -1, -1 };
+// uint32_t guiMapBorderScrollButtonsImage[ 4 ];
 
 // raise/lower land buttons
-// UINT32 guiMapBorderLandRaiseButtons[ 2 ] = { -1, -1 };
-// UINT32 guiMapBorderLandRaiseButtonsImage[ 2 ];
+// uint32_t guiMapBorderLandRaiseButtons[ 2 ] = { -1, -1 };
+// uint32_t guiMapBorderLandRaiseButtonsImage[ 2 ];
 
 void DeleteMapBorderButtons(void);
 BOOLEAN CreateButtonsForMapBorder(void);

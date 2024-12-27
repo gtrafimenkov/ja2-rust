@@ -47,8 +47,8 @@ BOOLEAN DeleteStructureFromWorld(struct STRUCTURE *pStructure);
 //
 // functions to find a structure in a location
 //
-struct STRUCTURE *FindStructure(INT16 sGridNo, UINT32 fFlags);
-struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, UINT32 fFlags);
+struct STRUCTURE *FindStructure(INT16 sGridNo, uint32_t fFlags);
+struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, uint32_t fFlags);
 struct STRUCTURE *FindStructureByID(INT16 sGridNo, UINT16 usStructureID);
 struct STRUCTURE *FindBaseStructure(struct STRUCTURE *pStructure);
 struct STRUCTURE *FindNonBaseStructure(INT16 sGridNo, struct STRUCTURE *pStructure);
@@ -127,9 +127,9 @@ extern INT32 guiMaterialHitSound[NUM_MATERIAL_TYPES];
 
 struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ubWallOrientation,
                                            INT8 bLevel);
-UINT32 StructureTypeToFlag(UINT8 ubType);
-UINT8 StructureFlagToType(UINT32 uiFlag);
+uint32_t StructureTypeToFlag(UINT8 ubType);
+UINT8 StructureFlagToType(uint32_t uiFlag);
 
-UINT32 GetStructureOpenSound(struct STRUCTURE *pStructure, BOOLEAN fClose);
+uint32_t GetStructureOpenSound(struct STRUCTURE *pStructure, BOOLEAN fClose);
 
 #endif

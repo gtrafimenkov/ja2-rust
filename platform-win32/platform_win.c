@@ -13,7 +13,7 @@
 
 BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
   char ModuleFilename[100];
-  UINT32 cnt;
+  uint32_t cnt;
 
   if (GetModuleFileName(NULL, ModuleFilename, sizeof(ModuleFilename)) == 0) {
     return FALSE;
@@ -65,8 +65,8 @@ HWND ghWindow;
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-UINT32 guiStartupTime;
-UINT32 guiCurrentTime;
+uint32_t guiStartupTime;
+uint32_t guiCurrentTime;
 
 void CALLBACK Clock(HWND hWindow, UINT uMessage, UINT idEvent, DWORD dwTime) {
   guiCurrentTime = Plat_GetTickCount();
@@ -92,7 +92,7 @@ void ShutdownClockManager(void) {
   KillTimer(ghWindow, MAIN_TIMER_ID);
 }
 
-UINT32 GetClock(void) { return guiCurrentTime; }
+uint32_t GetClock(void) { return guiCurrentTime; }
 
 /////////////////////////////////////////////////////////////////////////////////
 //

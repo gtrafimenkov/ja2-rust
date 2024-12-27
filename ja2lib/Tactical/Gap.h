@@ -10,9 +10,9 @@ typedef INT16 AudioSample16;
 void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList);
 void AudioGapListDone(AudioGapList *pGapList);
 
-void PollAudioGap(UINT32 uiSampleNum, AudioGapList *pGapList);
+void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList);
 
-UINT32 PlayJA2GapSample(CHAR8 *zSoundFile, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                        UINT32 uiPan, AudioGapList *pData);
+uint32_t PlayJA2GapSample(CHAR8 *zSoundFile, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                          uint32_t uiPan, AudioGapList *pData);
 
 #endif

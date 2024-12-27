@@ -63,8 +63,8 @@ typedef struct {
   struct MOUSE_REGION MouseRegion;
   INT32 iVideoOverlay;
   INT32 iDialogueBox;
-  UINT32 uiTimeOfCreation;
-  UINT32 uiDelayTime;
+  uint32_t uiTimeOfCreation;
+  uint32_t uiDelayTime;
   struct SOLDIERTYPE *pCiv;
 } QUOTE_SYSTEM_STRUCT;
 
@@ -654,7 +654,7 @@ void InitCivQuoteSystem() {
 }
 
 BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   FileMan_Write(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gCivQuotes)) {
@@ -665,7 +665,7 @@ BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadCivQuotesFromLoadGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   FileMan_Read(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gCivQuotes)) {

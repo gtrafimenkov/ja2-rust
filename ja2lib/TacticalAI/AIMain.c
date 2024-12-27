@@ -792,7 +792,7 @@ INT16 FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
 }
 
 UINT8 GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iThreatVal, iMinThreat = 30000;
   struct SOLDIERTYPE *pTargetSoldier;
   UINT8 ubTargetSoldier = NO_SOLDIER;
@@ -2337,7 +2337,7 @@ void HandleInitialRedAlert(INT8 bTeam, UINT8 ubCommunicate) {
 }
 
 void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pFriend;
   INT16 sDistVisible;
 

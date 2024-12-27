@@ -63,7 +63,7 @@ void HandleMercIsWillingToRenew(UINT8 ubID);
 void HandleMercIsNotWillingToRenew(UINT8 ubID);
 
 BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier);
-UINT32 GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier);
+uint32_t GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier);
 BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile);

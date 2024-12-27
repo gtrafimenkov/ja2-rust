@@ -4,28 +4,28 @@
 #include "SGP/Types.h"
 
 typedef struct {
-  UINT32 uiOffset;
-  UINT32 uiWidth;
-  UINT32 uiOffLen;
+  uint32_t uiOffset;
+  uint32_t uiWidth;
+  uint32_t uiOffLen;
   INT16 sOffsetX;
   INT16 sOffsetY;
 
 } TRLEObject;
 
 typedef struct {
-  UINT32 uiHeightEach;
-  UINT32 uiTotalElements;
+  uint32_t uiHeightEach;
+  uint32_t uiTotalElements;
   TRLEObject *pTRLEObject;
   PTR pPixData;
-  UINT32 uiSizePixDataElem;
+  uint32_t uiSizePixDataElem;
 
 } TRLEData;
 
-BOOLEAN GetTRLEObjectData(UINT32 uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
-                          UINT32 *pWidth, UINT32 *pOffset, UINT32 *pOffLen, UINT16 *pOffsetX,
+BOOLEAN GetTRLEObjectData(uint32_t uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
+                          uint32_t *pWidth, uint32_t *pOffset, uint32_t *pOffLen, UINT16 *pOffsetX,
                           UINT16 *pOffsetY);
 
-BOOLEAN SetTRLEObjectOffset(UINT32 uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
+BOOLEAN SetTRLEObjectOffset(uint32_t uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
                             INT16 sOffsetX, INT16 sOffsetY);
 
 #endif

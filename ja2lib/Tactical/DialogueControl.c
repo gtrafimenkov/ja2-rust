@@ -88,8 +88,8 @@ typedef struct {
   uintptr_t uiSpecialEventFlag;
   uintptr_t uiSpecialEventData;
   uintptr_t uiSpecialEventData2;
-  UINT32 uiSpecialEventData3;
-  UINT32 uiSpecialEventData4;
+  uint32_t uiSpecialEventData3;
+  uint32_t uiSpecialEventData4;
   BOOLEAN fFromSoldier;
   BOOLEAN fDelayed;
   BOOLEAN fPauseTime;
@@ -100,14 +100,14 @@ extern INT32 giMapInvNext;
 extern BOOLEAN gfSKIScreenExit;
 extern struct SOLDIERTYPE *pProcessingSoldier;
 extern BOOLEAN fProcessingAMerc;
-extern UINT32 guiPendingScreen;
+extern uint32_t guiPendingScreen;
 extern BOOLEAN fReDrawFace;
 extern BOOLEAN gfWaitingForTriggerTimer;
 
 BOOLEAN fExternFacesLoaded = FALSE;
 
-UINT32 uiExternalStaticNPCFaces[NUMBER_OF_EXTERNAL_NPC_FACES];
-UINT32 uiExternalFaceProfileIds[NUMBER_OF_EXTERNAL_NPC_FACES] = {
+uint32_t uiExternalStaticNPCFaces[NUMBER_OF_EXTERNAL_NPC_FACES];
+uint32_t uiExternalFaceProfileIds[NUMBER_OF_EXTERNAL_NPC_FACES] = {
     97, 106, 148, 156, 157, 158,
 };
 
@@ -116,7 +116,7 @@ UINT8 gubMercValidPrecedentQuoteID[NUMBER_VALID_MERC_PRECEDENT_QUOTES] = {
 
 extern INT32 iInterfaceDialogueBox;
 extern BOOLEAN gfRerenderInterfaceFromHelpText;
-extern UINT32 guiSKI_TransactionButton;
+extern uint32_t guiSKI_TransactionButton;
 
 UINT16 gusStopTimeQuoteList[] = {QUOTE_BOOBYTRAP_ITEM, QUOTE_SUSPICIOUS_GROUND};
 
@@ -140,7 +140,7 @@ UINT16 gusSubtitleBoxWidth;
 UINT16 gusSubtitleBoxHeight;
 INT32 giTextBoxOverlay = -1;
 BOOLEAN gfFacePanelActive = FALSE;
-UINT32 guiScreenIDUsedWhenUICreated;
+uint32_t guiScreenIDUsedWhenUICreated;
 CHAR16 gzQuoteStr[QUOTE_MESSAGE_SIZE];
 struct MOUSE_REGION gTextBoxMouseRegion;
 struct MOUSE_REGION gFacePopupMouseRegion;
@@ -173,8 +173,8 @@ BOOLEAN fExternFaceBoxRegionCreated = FALSE;
 BOOLEAN fDialogueBoxDueToLastMessage = FALSE;
 
 // last quote timers
-UINT32 guiDialogueLastQuoteTime = 0;
-UINT32 guiDialogueLastQuoteDelay = 0;
+uint32_t guiDialogueLastQuoteTime = 0;
+uint32_t guiDialogueLastQuoteDelay = 0;
 
 void CheckForStopTimeQuotes(UINT16 usQuoteNum);
 
@@ -192,7 +192,7 @@ void CreateTalkingUI(INT8 bUIHandlerID, INT32 iFaceIndex, UINT8 ubCharacterNum,
 void HandleExternNPCSpeechFace(INT32 iIndex);
 
 extern BOOLEAN ContinueDialogue(struct SOLDIERTYPE *pSoldier, BOOLEAN fDone);
-extern BOOLEAN DoSkiMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT8 ubFlags,
+extern BOOLEAN DoSkiMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
                                MSGBOX_CALLBACK ReturnCallback);
 
 void UnPauseGameDuringNextQuote(void) {
@@ -260,7 +260,7 @@ void InitalizeStaticExternalNPCFaces(void) {
 
   for (iCounter = 0; iCounter < NUMBER_OF_EXTERNAL_NPC_FACES; iCounter++) {
     uiExternalStaticNPCFaces[iCounter] =
-        (UINT32)InitFace((UINT8)(uiExternalFaceProfileIds[iCounter]), NOBODY, FACE_FORCE_SMALL);
+        (uint32_t)InitFace((UINT8)(uiExternalFaceProfileIds[iCounter]), NOBODY, FACE_FORCE_SMALL);
   }
 
   return;
@@ -1020,8 +1020,8 @@ void HandleDialogue() {
   MemFree(QItem);
 }
 
-BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
-                    CHAR16 *zDialogueText, int zDialogueTextSize, UINT32 *puiSoundID,
+BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, uint32_t iDataSize,
+                    CHAR16 *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
                     CHAR8 *zSoundString);
 
 BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
@@ -1048,8 +1048,8 @@ BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 us
 }
 
 BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
-                                                  UINT32 uiFlag, uintptr_t uiData1,
-                                                  UINT32 uiData2) {
+                                                  uint32_t uiFlag, uintptr_t uiData1,
+                                                  uint32_t uiData2) {
   if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return (FALSE);
   }
@@ -1066,8 +1066,8 @@ BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, 
 }
 
 BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
-                                                    UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2,
-                                                    UINT32 uiData3) {
+                                                    uint32_t uiFlag, uint32_t uiData1,
+                                                    uint32_t uiData2, uint32_t uiData3) {
   if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return (FALSE);
   }
@@ -1170,8 +1170,8 @@ BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNu
 
 BOOLEAN CharacterDialogueWithSpecialEvent(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
                                           UINT8 bUIHandlerID, BOOLEAN fFromSoldier,
-                                          BOOLEAN fDelayed, UINT32 uiFlag, uintptr_t uiData1,
-                                          UINT32 uiData2) {
+                                          BOOLEAN fDelayed, uint32_t uiFlag, uintptr_t uiData1,
+                                          uint32_t uiData2) {
   DIALOGUE_Q_STRUCT *QItem;
 
   // Allocate new item
@@ -1204,8 +1204,8 @@ BOOLEAN CharacterDialogueWithSpecialEvent(UINT8 ubCharacterNum, UINT16 usQuoteNu
 
 BOOLEAN CharacterDialogueWithSpecialEventEx(UINT8 ubCharacterNum, UINT16 usQuoteNum,
                                             INT32 iFaceIndex, UINT8 bUIHandlerID,
-                                            BOOLEAN fFromSoldier, BOOLEAN fDelayed, UINT32 uiFlag,
-                                            UINT32 uiData1, UINT32 uiData2, UINT32 uiData3) {
+                                            BOOLEAN fFromSoldier, BOOLEAN fDelayed, uint32_t uiFlag,
+                                            uint32_t uiData1, uint32_t uiData2, uint32_t uiData3) {
   DIALOGUE_Q_STRUCT *QItem;
 
   // Allocate new item
@@ -1267,7 +1267,7 @@ BOOLEAN CharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIn
 }
 
 BOOLEAN SpecialCharacterDialogueEvent(uintptr_t uiSpecialEventFlag, uintptr_t uiSpecialEventData1,
-                                      uintptr_t uiSpecialEventData2, UINT32 uiSpecialEventData3,
+                                      uintptr_t uiSpecialEventData2, uint32_t uiSpecialEventData3,
                                       INT32 iFaceIndex, UINT8 bUIHandlerID) {
   DIALOGUE_Q_STRUCT *QItem;
 
@@ -1296,9 +1296,12 @@ BOOLEAN SpecialCharacterDialogueEvent(uintptr_t uiSpecialEventFlag, uintptr_t ui
   return (TRUE);
 }
 
-BOOLEAN SpecialCharacterDialogueEventWithExtraParam(
-    UINT32 uiSpecialEventFlag, UINT32 uiSpecialEventData1, UINT32 uiSpecialEventData2,
-    UINT32 uiSpecialEventData3, UINT32 uiSpecialEventData4, INT32 iFaceIndex, UINT8 bUIHandlerID) {
+BOOLEAN SpecialCharacterDialogueEventWithExtraParam(uint32_t uiSpecialEventFlag,
+                                                    uint32_t uiSpecialEventData1,
+                                                    uint32_t uiSpecialEventData2,
+                                                    uint32_t uiSpecialEventData3,
+                                                    uint32_t uiSpecialEventData4, INT32 iFaceIndex,
+                                                    UINT8 bUIHandlerID) {
   DIALOGUE_Q_STRUCT *QItem;
 
   // Allocate new item
@@ -1330,7 +1333,7 @@ BOOLEAN SpecialCharacterDialogueEventWithExtraParam(
 BOOLEAN ExecuteCharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
                                  UINT8 bUIHandlerID, BOOLEAN fFromSoldier) {
   CHAR8 zSoundString[164];
-  UINT32 uiSoundID;
+  uint32_t uiSoundID;
   struct SOLDIERTYPE *pSoldier;
 
   // Check if we are dead now or not....( if from a soldier... )
@@ -1530,8 +1533,8 @@ BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, UINT16 usQuoteNum
   return (FileMan_Exists(pFilename));
 }
 
-BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
-                    CHAR16 *zDialogueText, int zDialogueTextSize, UINT32 *puiSoundID,
+BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, uint32_t iDataSize,
+                    CHAR16 *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
                     CHAR8 *zSoundString) {
   CHAR8 *pFilename;
 
@@ -1655,7 +1658,7 @@ void HandleTacticalTextUI(INT32 iFaceIndex, struct SOLDIERTYPE *pSoldier, CHAR16
 }
 
 void ExecuteTacticalTextBoxForLastQuote(INT16 sLeftPosition, STR16 pString) {
-  UINT32 uiDelay = FindDelayForString(pString);
+  uint32_t uiDelay = FindDelayForString(pString);
 
   fDialogueBoxDueToLastMessage = TRUE;
 
@@ -1937,7 +1940,7 @@ void HandleDialogueEnd(FACETYPE *pFace) {
 }
 
 void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   INT16 sFontX, sFontY;
   struct SOLDIERTYPE *pSoldier;
@@ -2268,7 +2271,7 @@ void ShutDownLastQuoteTacticalTextBox(void) {
   }
 }
 
-UINT32 FindDelayForString(STR16 sString) { return (wcslen(sString) * TEXT_DELAY_MODIFIER); }
+uint32_t FindDelayForString(STR16 sString) { return (wcslen(sString) * TEXT_DELAY_MODIFIER); }
 
 void BeginLoggingForBleedMeToos(BOOLEAN fStart) { gubLogForMeTooBleeds = fStart; }
 
@@ -2317,7 +2320,7 @@ BOOLEAN IsMercSayingDialogue(UINT8 ubProfileID) {
   return (FALSE);
 }
 
-BOOLEAN ShouldMercSayPrecedentToRepeatOneSelf(UINT8 ubMercID, UINT32 uiQuoteID) {
+BOOLEAN ShouldMercSayPrecedentToRepeatOneSelf(UINT8 ubMercID, uint32_t uiQuoteID) {
   UINT8 ubQuoteBit = 0;
 
   // If the quote is not in the array
@@ -2351,7 +2354,7 @@ BOOLEAN SetMercPrecedentQuoteBitStatus(UINT8 ubMercID, UINT8 ubBitToSet) {
   return (TRUE);
 }
 
-BOOLEAN IsQuoteInPrecedentArray(UINT32 uiQuoteID) {
+BOOLEAN IsQuoteInPrecedentArray(uint32_t uiQuoteID) {
   UINT8 ubCnt;
 
   // If the quote id is above or below the ones in the array
@@ -2370,7 +2373,7 @@ BOOLEAN IsQuoteInPrecedentArray(UINT32 uiQuoteID) {
   return (FALSE);
 }
 
-UINT8 GetQuoteBitNumberFromQuoteID(UINT32 uiQuoteID) {
+UINT8 GetQuoteBitNumberFromQuoteID(uint32_t uiQuoteID) {
   UINT8 ubCnt;
 
   // loop through all the quotes

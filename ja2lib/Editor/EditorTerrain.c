@@ -170,12 +170,12 @@ void ChooseWeightedTerrainTile() {
   }
 }
 
-UINT32 guiSearchType;
-static UINT32 count, maxCount = 0, calls = 0;
+uint32_t guiSearchType;
+static uint32_t count, maxCount = 0, calls = 0;
 
 void Fill(INT32 x, INT32 y) {
   INT32 iMapIndex;
-  UINT32 uiCheckType;
+  uint32_t uiCheckType;
 
   count++;
   calls++;
@@ -202,7 +202,7 @@ void Fill(INT32 x, INT32 y) {
   count--;
 }
 
-void TerrainFill(UINT32 iMapIndex) {
+void TerrainFill(uint32_t iMapIndex) {
   INT16 sX, sY;
   // determine what we should be looking for to replace...
   GetTileType(gpWorldLevelData[iMapIndex].pLandHead->usIndex, &guiSearchType);

@@ -41,10 +41,10 @@ extern	UINT16  gusLastUsedIndex;
 extern	UINT8		gubNumUsedPages;
 */
 
-extern UINT32 guiLastBobbyRayPage;
+extern uint32_t guiLastBobbyRayPage;
 
-// BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, UINT32
-// uiBackGround);
+// BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight,
+// uint32_t uiBackGround);
 BOOLEAN DrawBobbyRWoodBackground();
 BOOLEAN DeleteBobbyRWoodBackground();
 BOOLEAN InitBobbyRWoodBackground();

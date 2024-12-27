@@ -65,8 +65,8 @@ void UpdateStats(struct SOLDIERTYPE *pSoldier);
 void ProfileUpdateStats(MERCPROFILESTRUCT *pProfile);
 void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier);
 
-UINT32 CalcNewSalary(UINT32 uiOldSalary, BOOLEAN fIncrease, UINT32 uiMaxLimit);
-UINT32 RoundOffSalary(UINT32 uiSalary);
+uint32_t CalcNewSalary(uint32_t uiOldSalary, BOOLEAN fIncrease, uint32_t uiMaxLimit);
+uint32_t RoundOffSalary(uint32_t uiSalary);
 UINT16 SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel);
 
 void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile);

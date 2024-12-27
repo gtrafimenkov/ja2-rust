@@ -223,8 +223,8 @@ enum {
 
 // vehicle/human path structure
 struct path {
-  UINT32 uiSectorId;
-  UINT32 uiEta;
+  uint32_t uiSectorId;
+  uint32_t uiEta;
   BOOLEAN fSpeed;
   struct path *pNext;
   struct path *pPrev;
@@ -279,7 +279,7 @@ typedef struct {
   float dForceZ;
   float dLifeSpan;
   UINT8 ubActionCode;
-  UINT32 uiActionData;
+  uint32_t uiActionData;
 
 } THROW_PARAMS;
 
@@ -307,7 +307,7 @@ struct SOLDIERTYPE {
   INT8 bActionPoints;
   INT8 bInitialActionPoints;
 
-  UINT32 uiStatusFlags;
+  uint32_t uiStatusFlags;
 
   struct OBJECTTYPE inv[NUM_INV_SLOTS];
   struct OBJECTTYPE *pTempObject;
@@ -398,7 +398,7 @@ struct SOLDIERTYPE {
   UINT8 ubSkillTrait1;
   UINT8 ubSkillTrait2;
 
-  UINT32 uiAIDelay;
+  uint32_t uiAIDelay;
   INT8 bDexterity;  // dexterity (hand coord) value
   INT8 bWisdom;
   INT16 sReloadDelay;
@@ -538,7 +538,7 @@ struct SOLDIERTYPE {
   UINT8 ubSuppressionPoints;
 
   // STUFF FOR RANDOM ANIMATIONS
-  UINT32 uiTimeOfLastRandomAction;
+  uint32_t uiTimeOfLastRandomAction;
   INT16 usLastRandomAnim;
 
   // AI STUFF
@@ -577,11 +577,11 @@ struct SOLDIERTYPE {
   INT8 bAIMorale;
   UINT8 ubPendingAction;
   UINT8 ubPendingActionAnimCount;
-  UINT32 uiPendingActionData1;
+  uint32_t uiPendingActionData1;
   INT16 sPendingActionData2;
   INT8 bPendingActionData3;
   INT8 ubDoorHandleCode;
-  UINT32 uiPendingActionData4;
+  uint32_t uiPendingActionData4;
   INT8 bInterruptDuelPts;
   INT8 bPassedLastInterrupt;
   INT8 bIntStartAPs;
@@ -661,7 +661,7 @@ struct SOLDIERTYPE {
   INT8 fTryingToFall;
 
   UINT8 ubPendingDirection;
-  UINT32 uiAnimSubFlags;
+  uint32_t uiAnimSubFlags;
 
   UINT8 bAimShotLocation;
   UINT8 ubHitLocation;
@@ -702,20 +702,20 @@ struct SOLDIERTYPE {
   UINT16 usLifeInsurance;        // is there life insurance taken out on merc
 
   // DEF:  Used for the communications
-  UINT32 uiStartMovementTime;    // the time since the merc first started moving
-  UINT32 uiOptimumMovementTime;  // everytime in ececute overhead the time for the current ani will
-                                 // be added to this total
-  UINT32 usLastUpdateTime;       // The last time the soldier was in ExecuteOverhead
+  uint32_t uiStartMovementTime;    // the time since the merc first started moving
+  uint32_t uiOptimumMovementTime;  // everytime in ececute overhead the time for the current ani
+                                   // will be added to this total
+  uint32_t usLastUpdateTime;  // The last time the soldier was in ExecuteOverhead
 
   BOOLEAN fIsSoldierMoving;   // ie.  Record time is on
   BOOLEAN fIsSoldierDelayed;  // Is the soldier delayed Soldier
   BOOLEAN fSoldierUpdatedFromNetwork;
-  UINT32 uiSoldierUpdateNumber;
+  uint32_t uiSoldierUpdateNumber;
   BYTE ubSoldierUpdateType;
   // END
 
   INT32 iStartOfInsuranceContract;
-  UINT32 uiLastAssignmentChangeMin;  // timestamp of last assignment change in minutes
+  uint32_t uiLastAssignmentChangeMin;  // timestamp of last assignment change in minutes
   INT32 iTotalLengthOfInsuranceContract;
 
   UINT8 ubSoldierClass;  // admin, elite, troop (creature types?)
@@ -731,21 +731,21 @@ struct SOLDIERTYPE {
   UINT8 ubCivilianGroup;
 
   // time changes...when a stat was changed according to GetJA2Clock();
-  UINT32 uiChangeLevelTime;
-  UINT32 uiChangeHealthTime;
-  UINT32 uiChangeStrengthTime;
-  UINT32 uiChangeDexterityTime;
-  UINT32 uiChangeAgilityTime;
-  UINT32 uiChangeWisdomTime;
-  UINT32 uiChangeLeadershipTime;
-  UINT32 uiChangeMarksmanshipTime;
-  UINT32 uiChangeExplosivesTime;
-  UINT32 uiChangeMedicalTime;
-  UINT32 uiChangeMechanicalTime;
+  uint32_t uiChangeLevelTime;
+  uint32_t uiChangeHealthTime;
+  uint32_t uiChangeStrengthTime;
+  uint32_t uiChangeDexterityTime;
+  uint32_t uiChangeAgilityTime;
+  uint32_t uiChangeWisdomTime;
+  uint32_t uiChangeLeadershipTime;
+  uint32_t uiChangeMarksmanshipTime;
+  uint32_t uiChangeExplosivesTime;
+  uint32_t uiChangeMedicalTime;
+  uint32_t uiChangeMechanicalTime;
 
-  UINT32 uiUniqueSoldierIdValue;  // the unique value every instance of a soldier gets - 1 is the
-                                  // first valid value
-  INT8 bBeingAttackedCount;       // Being attacked counter
+  uint32_t uiUniqueSoldierIdValue;  // the unique value every instance of a soldier gets - 1 is the
+                                    // first valid value
+  INT8 bBeingAttackedCount;         // Being attacked counter
 
   INT8 bNewItemCount[NUM_INV_SLOTS];
   INT8 bNewItemCycleCount[NUM_INV_SLOTS];
@@ -778,7 +778,7 @@ struct SOLDIERTYPE {
   INT16 sBoundingBoxHeight;
   INT16 sBoundingBoxOffsetX;
   INT16 sBoundingBoxOffsetY;
-  UINT32 uiTimeSameBattleSndDone;
+  uint32_t uiTimeSameBattleSndDone;
   INT8 bOldBattleSnd;
   BOOLEAN fReactingFromBeingShot;
   BOOLEAN fContractPriceHasIncreased;
@@ -790,7 +790,7 @@ struct SOLDIERTYPE {
   UINT8 ubAutoBandagingMedic;
   BOOLEAN fDontChargeTurningAPs;
   UINT8 ubRobotRemoteHolderID;
-  UINT32 uiTimeOfLastContractUpdate;
+  uint32_t uiTimeOfLastContractUpdate;
   INT8 bTypeOfLastContract;
   INT8 bTurnsCollapsed;
   INT8 bSleepDrugCounter;
@@ -830,7 +830,7 @@ struct SOLDIERTYPE {
   UINT8 ubPrevSectorID;
   UINT8 ubNumTilesMovesSinceLastForget;
   INT8 bTurningIncrement;
-  UINT32 uiBattleSoundID;
+  uint32_t uiBattleSoundID;
 
   BOOLEAN fSoldierWasMoving;
   BOOLEAN fSayAmmoQuotePending;
@@ -842,7 +842,7 @@ struct SOLDIERTYPE {
   UINT8 ubCTGTTargetID;
 
   TIMECOUNTER PanelAnimateCounter;
-  UINT32 uiMercChecksum;
+  uint32_t uiMercChecksum;
 
   INT8 bCurrentCivQuote;
   INT8 bCurrentCivQuoteDelta;
@@ -852,10 +852,10 @@ struct SOLDIERTYPE {
   INT16 sLocationOfFadeStart;
   UINT8 bUseExitGridForReentryDirection;
 
-  UINT32 uiTimeSinceLastSpoke;
+  uint32_t uiTimeSinceLastSpoke;
   UINT8 ubContractRenewalQuoteCode;
   INT16 sPreTraversalGridNo;
-  UINT32 uiXRayActivatedTime;
+  uint32_t uiXRayActivatedTime;
   INT8 bTurningFromUI;
   INT8 bPendingActionData5;
 
@@ -868,7 +868,7 @@ struct SOLDIERTYPE {
   INT8 bOverrideMoveSpeed;
   BOOLEAN fUseMoverrideMoveSpeed;
 
-  UINT32 uiTimeSoldierWillArrive;
+  uint32_t uiTimeSoldierWillArrive;
   BOOLEAN fDieSoundUsed;
   BOOLEAN fUseLandingZoneForArrival;
   BOOLEAN fFallClockwise;
@@ -876,7 +876,7 @@ struct SOLDIERTYPE {
   INT32 iTimeCanSignElsewhere;
   INT8 bHospitalPriceModifier;
   INT8 bFillerBytes[3];
-  UINT32 uiStartTimeOfInsuranceContract;
+  uint32_t uiStartTimeOfInsuranceContract;
   BOOLEAN fRTInNonintAnim;
   BOOLEAN fDoingExternalDeath;
   INT8 bCorpseQuoteTolerance;
@@ -929,10 +929,10 @@ struct ANIM_PROF {
 //////////
 
 // VARIABLES FOR PALETTE REPLACEMENTS FOR HAIR, ETC
-extern UINT32 guiNumPaletteSubRanges;
+extern uint32_t guiNumPaletteSubRanges;
 extern UINT8 *gubpNumReplacementsPerRange;
 extern PaletteSubRangeType *gpPaletteSubRanges;
-extern UINT32 guiNumReplacements;
+extern uint32_t guiNumReplacements;
 extern PaletteReplacementType *gpPalRep;
 
 extern UINT8 bHealthStrRanges[];
@@ -1032,8 +1032,8 @@ BOOLEAN DoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID);
 BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID,
                                   INT8 bSpecialCode);
 
-UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim, INT16 sKitPts,
-                         INT16 sStatus);
+uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim, INT16 sKitPts,
+                           INT16 sStatus);
 void ReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier);
 void GivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier);
 void InternalReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEAN fPlayEndAnim);

@@ -59,11 +59,11 @@ typedef struct {
   struct MOUSE_REGION SingleRegion;
   struct MOUSE_REGION LoadRegion;
   struct MOUSE_REGION AllRegion;
-  UINT32 uiLoadCheckButton;
-  UINT32 uiSingleMoveButton;
-  UINT32 uiAllMoveButton;
-  UINT32 uiOKButton;
-  UINT32 uiCancelButton;
+  uint32_t uiLoadCheckButton;
+  uint32_t uiSingleMoveButton;
+  uint32_t uiAllMoveButton;
+  uint32_t uiOKButton;
+  uint32_t uiCancelButton;
   INT32 iBoxId;
   INT32 iButtonImages;
   UINT16 usWidth;
@@ -112,7 +112,7 @@ INT16 gsWarpGridNo;
 // multiple
 // arguments and calculating it prior.
 BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
-  UINT32 uiTraverseTimeInMinutes;
+  uint32_t uiTraverseTimeInMinutes;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
   SGPRect aRect;

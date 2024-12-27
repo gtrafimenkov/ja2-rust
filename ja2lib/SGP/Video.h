@@ -21,16 +21,16 @@ extern BOOLEAN RestoreVideoManager(void);
 extern void GetCurrentVideoSettings(UINT16 *usWidth, UINT16 *usHeight, UINT8 *ubBitDepth);
 extern void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom);
 extern void InvalidateScreen(void);
-extern PTR LockPrimarySurface(UINT32 *uiPitch);
+extern PTR LockPrimarySurface(uint32_t *uiPitch);
 extern void UnlockPrimarySurface(void);
-extern PTR LockBackBuffer(UINT32 *uiPitch);
+extern PTR LockBackBuffer(uint32_t *uiPitch);
 extern void UnlockBackBuffer(void);
-extern PTR LockFrameBuffer(UINT32 *uiPitch);
+extern PTR LockFrameBuffer(uint32_t *uiPitch);
 extern void UnlockFrameBuffer(void);
-extern PTR LockMouseBuffer(UINT32 *uiPitch);
+extern PTR LockMouseBuffer(uint32_t *uiPitch);
 extern void UnlockMouseBuffer(void);
-extern BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
-                                              UINT32 *BblueBitMask);
+extern BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitMask,
+                                              uint32_t *BblueBitMask);
 extern BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY);
 extern void StartFrameBufferRender(void);
 extern void EndFrameBufferRender(void);
@@ -45,7 +45,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);
 
 void VideoCaptureToggle(void);
 
-void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags);
+void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, uint32_t uiFlags);
 
 void RefreshScreen(void *DummyVariable);
 

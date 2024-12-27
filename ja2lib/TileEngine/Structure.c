@@ -35,10 +35,10 @@
 #include "Utils/SoundControl.h"
 
 #ifdef COUNT_PATHS
-extern UINT32 guiSuccessfulPathChecks;
-extern UINT32 guiTotalPathChecks;
-extern UINT32 guiFailedPathChecks;
-extern UINT32 guiUnsuccessfulPathChecks;
+extern uint32_t guiSuccessfulPathChecks;
+extern uint32_t guiTotalPathChecks;
+extern uint32_t guiFailedPathChecks;
+extern uint32_t guiUnsuccessfulPathChecks;
 #endif
 
 /*
@@ -228,13 +228,13 @@ BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile) {
 }
 
 BOOLEAN LoadStructureData(STR szFileName, struct STRUCTURE_FILE_REF *pFileRef,
-                          UINT32 *puiStructureDataSize)
-// UINT8 **ppubStructureData, UINT32 * puiDataSize, STRUCTURE_FILE_HEADER * pHeader )
+                          uint32_t *puiStructureDataSize)
+// UINT8 **ppubStructureData, uint32_t * puiDataSize, STRUCTURE_FILE_HEADER * pHeader )
 {  // Loads a structure file's data as a honking chunk o' memory
   HWFILE hInput;
   STRUCTURE_FILE_HEADER Header;
-  UINT32 uiBytesRead;
-  UINT32 uiDataSize;
+  uint32_t uiBytesRead;
+  uint32_t uiDataSize;
   BOOLEAN fOk;
 
   CHECKF(szFileName);
@@ -316,8 +316,8 @@ BOOLEAN LoadStructureData(STR szFileName, struct STRUCTURE_FILE_REF *pFileRef,
 
 BOOLEAN CreateFileStructureArrays(
     struct STRUCTURE_FILE_REF *pFileRef,
-    UINT32 uiDataSize) {  // Based on a file chunk, creates all the dynamic arrays for the
-                          // structure definitions contained within
+    uint32_t uiDataSize) {  // Based on a file chunk, creates all the dynamic arrays for the
+                            // structure definitions contained within
 
   UINT8 *pCurrent;
   struct DB_STRUCTURE_REF *pDBStructureRef;
@@ -325,7 +325,7 @@ BOOLEAN CreateFileStructureArrays(
   UINT16 usLoop;
   UINT16 usIndex;
   UINT16 usTileLoop;
-  UINT32 uiHitPoints;
+  uint32_t uiHitPoints;
 
   pCurrent = pFileRef->pubStructureData;
   pDBStructureRef = (struct DB_STRUCTURE_REF *)MemAlloc(pFileRef->usNumberOfStructures *
@@ -389,7 +389,7 @@ BOOLEAN CreateFileStructureArrays(
 struct STRUCTURE_FILE_REF *LoadStructureFile(
     STR szFileName) {  // NB should be passed in expected number
                        // of structures so we can check equality
-  UINT32 uiDataSize = 0;
+  uint32_t uiDataSize = 0;
   BOOLEAN fOk;
   struct STRUCTURE_FILE_REF *pFileRef;
 
@@ -1081,7 +1081,7 @@ struct STRUCTURE *SwapStructureForPartnerAndStoreChangeInMap(INT16 sGridNo,
 
 struct STRUCTURE *FindStructure(
     INT16 sGridNo,
-    UINT32 fFlags) {  // finds a structure that matches any of the given flags
+    uint32_t fFlags) {  // finds a structure that matches any of the given flags
   struct STRUCTURE *pCurrent;
 
   pCurrent = gpWorldLevelData[sGridNo].pStructureHead;
@@ -1094,7 +1094,7 @@ struct STRUCTURE *FindStructure(
   return (NULL);
 }
 
-struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, UINT32 fFlags) {
+struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, uint32_t fFlags) {
   struct STRUCTURE *pCurrent;
 
   CHECKF(pStructure);
@@ -1578,7 +1578,7 @@ void DebugStructurePage1(void) {
 BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
                                struct STRUCTURE_FILE_REF *pStructureFileRef, BOOLEAN fFromAnimation,
                                INT16 sSTIStartIndex) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT8 ubLoop2;
   UINT8 ubNumIncreasing = 0;
   UINT8 ubNumStable = 0;
@@ -1595,7 +1595,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
   INT16 sSTIStep = 0;
   INT16 sStructIndex = 0;
   INT16 sNext;
-  UINT32 uiDestVoIndex;
+  uint32_t uiDestVoIndex;
   BOOLEAN fCopyIntoVo;
   BOOLEAN fFirstTime;
 
@@ -1656,7 +1656,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
     fCopyIntoVo = TRUE;
 
     // Increment struct index....
-    if (uiLoop == (UINT32)sNext) {
+    if (uiLoop == (uint32_t)sNext) {
       sNext = (UINT16)(uiLoop + sSTIStep);
       sStructIndex++;
     } else {
@@ -1969,9 +1969,9 @@ INT8 GetBlockingStructureInfo(INT16 sGridNo, INT8 bDir, INT8 bNextDir, INT8 bLev
   }
 }
 
-UINT8 StructureFlagToType(UINT32 uiFlag) {
+UINT8 StructureFlagToType(uint32_t uiFlag) {
   UINT8 ubLoop;
-  UINT32 uiBit = STRUCTURE_GENERIC;
+  uint32_t uiBit = STRUCTURE_GENERIC;
 
   for (ubLoop = 8; ubLoop < 32; ubLoop++) {
     if ((uiFlag & uiBit) != 0) {
@@ -1982,8 +1982,8 @@ UINT8 StructureFlagToType(UINT32 uiFlag) {
   return (0);
 }
 
-UINT32 StructureTypeToFlag(UINT8 ubType) {
-  UINT32 uiFlag = 0x1;
+uint32_t StructureTypeToFlag(UINT8 ubType) {
+  uint32_t uiFlag = 0x1;
 
   uiFlag = uiFlag << ubType;
   return (uiFlag);
@@ -1992,7 +1992,7 @@ UINT32 StructureTypeToFlag(UINT8 ubType) {
 struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ubWallOrientation,
                                            INT8 bLevel) {
   struct STRUCTURE *pCurrent;
-  UINT32 uiTypeFlag;
+  uint32_t uiTypeFlag;
 
   uiTypeFlag = StructureTypeToFlag(ubType);
 
@@ -2008,8 +2008,8 @@ struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ub
   return (NULL);
 }
 
-UINT32 GetStructureOpenSound(struct STRUCTURE *pStructure, BOOLEAN fClose) {
-  UINT32 uiSoundID;
+uint32_t GetStructureOpenSound(struct STRUCTURE *pStructure, BOOLEAN fClose) {
+  uint32_t uiSoundID;
 
   switch (pStructure->pDBStructureRef->pDBStructure->ubArmour) {
     case MATERIAL_LIGHT_METAL:

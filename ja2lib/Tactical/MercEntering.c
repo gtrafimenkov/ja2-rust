@@ -345,14 +345,14 @@ INT8 gbNumHeliSeatsOccupied = 0;
 
 BOOLEAN gfFirstGuyDown = FALSE;
 
-UINT32 uiSoundSample;
+uint32_t uiSoundSample;
 INT16 gsGridNoSweetSpot;
 INT16 gsHeliXPos;
 INT16 gsHeliYPos;
 FLOAT gdHeliZPos;
 INT16 gsHeliScript;
 UINT8 gubHeliState;
-UINT32 guiHeliLastUpdate;
+uint32_t guiHeliLastUpdate;
 INT8 gbCurDrop;
 INT8 gbExitCount;
 INT8 gbHeliRound;
@@ -426,7 +426,7 @@ void StartHelicopterRun(INT16 sGridNoSweetSpot) {
 
 void HandleHeliDrop() {
   UINT8 ubScriptCode;
-  UINT32 uiClock;
+  uint32_t uiClock;
   // INT16 sWorldX, sWorldY;
   INT32 iVol;
   INT32 cnt;

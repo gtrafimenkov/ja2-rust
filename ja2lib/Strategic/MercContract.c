@@ -53,7 +53,7 @@ void HandleNotifyPlayerCanAffordInsurance(struct SOLDIERTYPE *pSoldier, UINT8 ub
 void ExtendMercInsuranceContractCallBack(UINT8 bExitValue);
 void HandleUniqueEventWhenPlayerLeavesTeam(struct SOLDIERTYPE *pSoldier);
 
-UINT32 uiContractTimeMode = 0;
+uint32_t uiContractTimeMode = 0;
 
 struct SOLDIERTYPE *pLeaveSoldier = NULL;
 
@@ -86,7 +86,7 @@ BOOLEAN gfInContractMenuFromRenewSequence = FALSE;
 #define AIRPORT_Y 2
 
 BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   FileMan_Write(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ContractRenewalList)) {
@@ -102,7 +102,7 @@ BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   FileMan_Read(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(ContractRenewalList)) {
@@ -549,22 +549,22 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   if (fSayQuote) {
     if (fUnhappy) {
       if (fBuddyAround) {
-        if (GetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
-                                           GetQuoteBitNumberFromQuoteID((UINT32)(usBuddyQuote))) ==
+        if (GetMercPrecedentQuoteBitStatus(
+                GetSolProfile(pSoldier), GetQuoteBitNumberFromQuoteID((uint32_t)(usBuddyQuote))) ==
             TRUE) {
           fSayPrecedent = TRUE;
         } else {
           SetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
-                                         GetQuoteBitNumberFromQuoteID((UINT32)(usBuddyQuote)));
+                                         GetQuoteBitNumberFromQuoteID((uint32_t)(usBuddyQuote)));
         }
       } else {
-        if (GetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
-                                           GetQuoteBitNumberFromQuoteID((UINT32)(usReasonQuote))) ==
+        if (GetMercPrecedentQuoteBitStatus(
+                GetSolProfile(pSoldier), GetQuoteBitNumberFromQuoteID((uint32_t)(usReasonQuote))) ==
             TRUE) {
           fSayPrecedent = TRUE;
         } else {
           SetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
-                                         GetQuoteBitNumberFromQuoteID((UINT32)(usReasonQuote)));
+                                         GetQuoteBitNumberFromQuoteID((uint32_t)(usReasonQuote)));
         }
       }
     }
@@ -684,14 +684,14 @@ player if( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC ) return( FALSE 
 
 // this is called once a day (daily update) for every merc working for the player
 void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiFullDaysRemaining = 0;
+  uint32_t uiFullDaysRemaining = 0;
   INT32 iChance = 0;
 
   // aim merc?
   if (pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC) return;
 
   // ATE: check time we have and see if we can accept new contracts....
-  if (GetWorldTotalMin() <= (UINT32)pSoldier->iTimeCanSignElsewhere) {
+  if (GetWorldTotalMin() <= (uint32_t)pSoldier->iTimeCanSignElsewhere) {
     return;
   }
 
@@ -1275,8 +1275,8 @@ void HandleUniqueEventWhenPlayerLeavesTeam(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-UINT32 GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiArriveHour;
+uint32_t GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier) {
+  uint32_t uiArriveHour;
 
   // Get the arrival hour - that will give us when they arrived....
   uiArriveHour = ((pSoldier->uiTimeSoldierWillArrive) -
@@ -1287,7 +1287,7 @@ UINT32 GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCheckHour;
+  uint32_t uiCheckHour;
 
   // First at least make sure same day....
   if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
@@ -1305,7 +1305,7 @@ BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier) {
   // get hour contract is going to expire....
-  UINT32 uiCheckHour;
+  uint32_t uiCheckHour;
 
   // First at least make sure same day....
   if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {

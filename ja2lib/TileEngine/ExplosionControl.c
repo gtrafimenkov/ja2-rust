@@ -65,7 +65,7 @@
 // MODULE FOR EXPLOSIONS
 
 // Spreads the effects of explosions...
-BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem, UINT8 ubOwner,
+BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, UINT16 usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID);
 
 extern INT8 gbSAMGraphicList[NUMBER_OF_SAMS];
@@ -81,7 +81,7 @@ UINT8 ubDamageKeyFrame[NUM_EXP_TYPES] = {
     0, 3, 5, 5, 5, 18, 18, 18, 18,
 };
 
-UINT32 uiExplosionSoundID[NUM_EXP_TYPES] = {
+uint32_t uiExplosionSoundID[NUM_EXP_TYPES] = {
     EXPLOSION_1,       EXPLOSION_1,
     EXPLOSION_BLAST_2,  // LARGE
     EXPLOSION_BLAST_2, EXPLOSION_1, AIR_ESCAPING_1, AIR_ESCAPING_1, AIR_ESCAPING_1, AIR_ESCAPING_1,
@@ -121,7 +121,7 @@ extern UINT8 gubInterruptProvoker;
 
 // GLOBAL FOR SMOKE LISTING
 EXPLOSIONTYPE gExplosionData[NUM_EXPLOSION_SLOTS];
-UINT32 guiNumExplosions = 0;
+uint32_t guiNumExplosions = 0;
 
 INT32 GetFreeExplosion(void);
 void RecountExplosions(void);
@@ -129,7 +129,7 @@ void GenerateExplosionFromExplosionPointer(EXPLOSIONTYPE *pExplosion);
 void HandleBuldingDestruction(INT16 sGridNo, UINT8 ubOwner);
 
 INT32 GetFreeExplosion(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumExplosions; uiCount++) {
     if ((gExplosionData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
@@ -145,7 +145,7 @@ void RecountExplosions(void) {
 
   for (uiCount = guiNumExplosions - 1; (uiCount >= 0); uiCount--) {
     if ((gExplosionData[uiCount].fAllocated)) {
-      guiNumExplosions = (UINT32)(uiCount + 1);
+      guiNumExplosions = (uint32_t)(uiCount + 1);
       break;
     }
   }
@@ -231,7 +231,7 @@ void GenerateExplosion(EXPLOSION_PARAMS *pExpParams) {
 }
 
 void GenerateExplosionFromExplosionPointer(EXPLOSIONTYPE *pExplosion) {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UINT8 ubOwner;
   UINT8 ubTypeID;
   INT16 sX;
@@ -241,7 +241,7 @@ void GenerateExplosionFromExplosionPointer(EXPLOSIONTYPE *pExplosion) {
   UINT16 usItem;
   UINT8 ubTerrainType;
   INT8 bLevel;
-  UINT32 uiSoundID;
+  uint32_t uiSoundID;
 
   ANITILE_PARAMS AniParams;
 
@@ -350,7 +350,7 @@ void HandleFencePartnerCheck(INT16 sStructGridNo) {
   struct STRUCTURE *pFenceStructure, *pFenceBaseStructure;
   struct LEVELNODE *pFenceNode;
   INT8 bFenceDestructionPartner = -1;
-  UINT32 uiFenceType;
+  uint32_t uiFenceType;
   UINT16 usTileIndex;
 
   pFenceStructure = FindStructure(sStructGridNo, STRUCTURE_FENCE);
@@ -389,7 +389,7 @@ void HandleFencePartnerCheck(INT16 sStructGridNo) {
 
 BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
                                          struct STRUCTURE **ppNextCurrent, INT16 sGridNo,
-                                         INT16 sWoundAmt, UINT32 uiDist,
+                                         INT16 sWoundAmt, uint32_t uiDist,
                                          BOOLEAN *pfRecompileMovementCosts, BOOLEAN fOnlyWalls,
                                          BOOLEAN fSubSequentMultiTilesTransitionDamage,
                                          UINT8 ubOwner, INT8 bLevel) {
@@ -404,7 +404,7 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
   INT8 bDestructionPartner = -1;
   INT8 bDamageReturnVal;
   BOOLEAN fContinue;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   INT16 sBaseGridNo;
   BOOLEAN fExplosive;
 
@@ -968,7 +968,7 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
 
 struct STRUCTURE *gStruct;
 
-void ExplosiveDamageGridNo(INT16 sGridNo, INT16 sWoundAmt, UINT32 uiDist,
+void ExplosiveDamageGridNo(INT16 sGridNo, INT16 sWoundAmt, uint32_t uiDist,
                            BOOLEAN *pfRecompileMovementCosts, BOOLEAN fOnlyWalls,
                            INT8 bMultiStructSpecialFlag,
                            BOOLEAN fSubSequentMultiTilesTransitionDamage, UINT8 ubOwner,
@@ -1099,7 +1099,8 @@ void ExplosiveDamageGridNo(INT16 sGridNo, INT16 sWoundAmt, UINT32 uiDist,
 }
 
 BOOLEAN DamageSoldierFromBlast(UINT8 ubPerson, UINT8 ubOwner, INT16 sBombGridNo, INT16 sWoundAmt,
-                               INT16 sBreathAmt, UINT32 uiDist, UINT16 usItem, INT16 sSubsequent) {
+                               INT16 sBreathAmt, uint32_t uiDist, UINT16 usItem,
+                               INT16 sSubsequent) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sNewWoundAmt = 0;
   UINT8 ubDirection;
@@ -1251,7 +1252,7 @@ BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive
   return (fRecompileMovementCosts);
 }
 
-BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem, UINT8 ubOwner,
+BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, UINT16 usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID) {
   INT16 sWoundAmt = 0, sBreathAmt = 0, sStructDmgAmt;
   UINT8 ubPerson;
@@ -1264,7 +1265,7 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem
   BOOLEAN fBlastEffect = TRUE;
   INT16 sNewGridNo;
   struct ITEM_POOL *pItemPool, *pItemPoolNext;
-  UINT32 uiRoll;
+  uint32_t uiRoll;
 
   if (sSubsequent == BLOOD_SPREAD_EFFECT) {
     fSmokeEffect = FALSE;
@@ -1351,7 +1352,7 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem
     if (sBreathAmt < 0) sBreathAmt = 0;
 
     // damage structures
-    if (uiDist <= max(1, (UINT32)(pExplosive->ubDamage / 30))) {
+    if (uiDist <= max(1, (uint32_t)(pExplosive->ubDamage / 30))) {
       if (Item[usItem].usItemClass & IC_GRENADE) {
         sStructDmgAmt = sWoundAmt / 3;
       } else  // most explosives
@@ -1601,13 +1602,13 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem
   return (fRecompileMovementCosts);
 }
 
-void GetRayStopInfo(UINT32 uiNewSpot, UINT8 ubDir, INT8 bLevel, BOOLEAN fSmokeEffect,
+void GetRayStopInfo(uint32_t uiNewSpot, UINT8 ubDir, INT8 bLevel, BOOLEAN fSmokeEffect,
                     INT32 uiCurRange, INT32 *piMaxRange, UINT8 *pubKeepGoing) {
   INT8 bStructHeight;
   UINT8 ubMovementCost;
   INT8 Blocking, BlockingTemp;
   BOOLEAN fTravelCostObs = FALSE;
-  UINT32 uiRangeReduce;
+  uint32_t uiRangeReduce;
   INT16 sNewGridNo;
   struct STRUCTURE *pBlockingStructure;
   BOOLEAN fBlowWindowSouth = FALSE;
@@ -1974,7 +1975,7 @@ void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, UINT16 usItem, UINT8 ubOwner, B
 }
 
 void ToggleActionItemsByFrequency(INT8 bFrequency) {
-  UINT32 uiWorldBombIndex;
+  uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
 
   // Go through all the bombs in the world, and look for remote ones
@@ -1997,7 +1998,7 @@ void ToggleActionItemsByFrequency(INT8 bFrequency) {
 }
 
 void TogglePressureActionItemsInGridNo(INT16 sGridNo) {
-  UINT32 uiWorldBombIndex;
+  uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
 
   // Go through all the bombs in the world, and look for remote ones
@@ -2417,7 +2418,7 @@ void PerformItemAction(INT16 sGridNo, struct OBJECTTYPE *pObj) {
   }
 }
 
-void AddBombToQueue(UINT32 uiWorldBombIndex, UINT32 uiTimeStamp) {
+void AddBombToQueue(uint32_t uiWorldBombIndex, uint32_t uiTimeStamp) {
   if (gubElementsOnExplosionQueue == MAX_BOMB_QUEUE) {
     return;
   }
@@ -2436,9 +2437,9 @@ void AddBombToQueue(UINT32 uiWorldBombIndex, UINT32 uiTimeStamp) {
 }
 
 void HandleExplosionQueue(void) {
-  UINT32 uiIndex;
-  UINT32 uiWorldBombIndex;
-  UINT32 uiCurrentTime;
+  uint32_t uiIndex;
+  uint32_t uiWorldBombIndex;
+  uint32_t uiCurrentTime;
   INT16 sGridNo;
   struct OBJECTTYPE *pObj;
   UINT8 ubLevel;
@@ -2551,8 +2552,8 @@ void HandleExplosionQueue(void) {
 }
 
 void DecayBombTimers(void) {
-  UINT32 uiWorldBombIndex;
-  UINT32 uiTimeStamp;
+  uint32_t uiWorldBombIndex;
+  uint32_t uiTimeStamp;
   struct OBJECTTYPE *pObj;
 
   uiTimeStamp = GetJA2Clock();
@@ -2584,8 +2585,8 @@ void DecayBombTimers(void) {
 }
 
 void SetOffBombsByFrequency(UINT8 ubID, INT8 bFrequency) {
-  UINT32 uiWorldBombIndex;
-  UINT32 uiTimeStamp;
+  uint32_t uiWorldBombIndex;
+  uint32_t uiTimeStamp;
   struct OBJECTTYPE *pObj;
 
   uiTimeStamp = GetJA2Clock();
@@ -2644,8 +2645,8 @@ void SetOffPanicBombs(UINT8 ubID, INT8 bPanicTrigger) {
 }
 
 BOOLEAN SetOffBombsInGridNo(UINT8 ubID, INT16 sGridNo, BOOLEAN fAllBombs, INT8 bLevel) {
-  UINT32 uiWorldBombIndex;
-  UINT32 uiTimeStamp;
+  uint32_t uiWorldBombIndex;
+  uint32_t uiTimeStamp;
   struct OBJECTTYPE *pObj;
   BOOLEAN fFoundMine = FALSE;
 
@@ -2699,7 +2700,7 @@ BOOLEAN SetOffBombsInGridNo(UINT8 ubID, INT16 sGridNo, BOOLEAN fAllBombs, INT8 b
 }
 
 void ActivateSwitchInGridNo(UINT8 ubID, INT16 sGridNo) {
-  UINT32 uiWorldBombIndex;
+  uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
 
   // Go through all the bombs in the world, and look for mines at this location
@@ -2723,17 +2724,17 @@ void ActivateSwitchInGridNo(UINT8 ubID, INT16 sGridNo) {
 }
 
 BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
-  UINT32 uiExplosionCount = 0;
-  UINT32 uiCnt;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiExplosionCount = 0;
+  uint32_t uiCnt;
 
   //
   //	Explosion queue Info
   //
 
   // Write the number of explosion queues
-  FileMan_Write(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &gubElementsOnExplosionQueue, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     FileMan_Close(hFile);
     return (FALSE);
   }
@@ -2761,8 +2762,8 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of explosions
-  FileMan_Write(hFile, &uiExplosionCount, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiExplosionCount, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     FileMan_Close(hFile);
     return (FALSE);
   }
@@ -2782,8 +2783,8 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
-  UINT32 uiCnt;
+  uint32_t uiNumBytesRead;
+  uint32_t uiCnt;
 
   //
   //	Explosion Queue
@@ -2793,8 +2794,8 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   memset(gExplosionQueue, 0, sizeof(ExplosionQueueElement) * MAX_BOMB_QUEUE);
 
   // Read the number of explosions queue's
-  FileMan_Read(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &gubElementsOnExplosionQueue, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -2811,8 +2812,8 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   //
 
   // Load the number of explosions
-  FileMan_Read(hFile, &guiNumExplosions, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &guiNumExplosions, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -2967,7 +2968,7 @@ void HandleBuldingDestruction(INT16 sGridNo, UINT8 ubOwner) {
 }
 
 INT32 FindActiveTimedBomb(void) {
-  UINT32 uiWorldBombIndex;
+  uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
 
   // Go through all the bombs in the world, and look for timed ones

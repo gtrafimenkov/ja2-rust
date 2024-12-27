@@ -79,12 +79,12 @@ BOOLEAN fFirstIMPAttribTime = TRUE;
 BOOLEAN fReviewStats = FALSE;
 
 // buttons
-UINT32 giIMPAttributeSelectionButton[1];
-UINT32 giIMPAttributeSelectionButtonImage[1];
+uint32_t giIMPAttributeSelectionButton[1];
+uint32_t giIMPAttributeSelectionButtonImage[1];
 
 // slider buttons
-UINT32 giIMPAttributeSelectionSliderButton[20];
-UINT32 giIMPAttributeSelectionSliderButtonImage[20];
+uint32_t giIMPAttributeSelectionSliderButton[20];
+uint32_t giIMPAttributeSelectionSliderButtonImage[20];
 
 // mouse regions
 struct MOUSE_REGION pSliderRegions[10];

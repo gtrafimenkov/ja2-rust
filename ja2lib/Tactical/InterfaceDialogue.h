@@ -15,9 +15,9 @@ typedef struct {
   INT16 sPopupY;
   UINT8 ubPopupOrientation;
   UINT8 ubCharNum;
-  UINT32 uiPanelVO;
+  uint32_t uiPanelVO;
   INT32 iButtonImages;
-  UINT32 uiCancelButton;
+  uint32_t uiCancelButton;
   INT8 bCurSelect;
   INT8 bOldCurSelect;
   UINT16 usWidth;
@@ -30,7 +30,7 @@ typedef struct {
   BOOLEAN fTextRegionOn;
   BOOLEAN fOnName;
   BOOLEAN fDirtyLevel;
-  UINT32 uiSaveBuffer;
+  uint32_t uiSaveBuffer;
   BOOLEAN fHandled;
   BOOLEAN fHandledTalkingVal;
   BOOLEAN fHandledCanDeleteVal;
@@ -356,8 +356,8 @@ extern INT32 giHospitalTempBalance;
 extern INT32 giHospitalRefund;
 extern INT8 gbHospitalPriceModifier;
 
-extern UINT32 CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier);
-extern UINT32 CalcMedicalCost(UINT8 ubId);
+extern uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier);
+extern uint32_t CalcMedicalCost(UINT8 ubId);
 
 extern BOOLEAN gfInTalkPanel;
 

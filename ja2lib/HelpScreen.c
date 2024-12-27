@@ -45,7 +45,7 @@ extern BOOLEAN gfGamePaused;
 extern BOOLEAN fShowMapInventoryPool;
 
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
+                                  uint32_t fBltFlags, INT32 iDestX, INT32 iDestY,
                                   struct Rect *SrcRect);
 
 #define HELP_SCREEN_ACTIVE 0x00000001
@@ -338,8 +338,8 @@ HELP_SCREEN_BTN_TEXT_RECORD gHelpScreenBtnTextRecordNum[HELP_SCREEN_NUMBER_OF_HE
 BOOLEAN gfHelpScreenEntry = TRUE;
 BOOLEAN gfHelpScreenExit = FALSE;
 
-UINT32 guiHelpScreenBackGround;
-UINT32 guiHelpScreenTextBufferSurface;
+uint32_t guiHelpScreenBackGround;
+uint32_t guiHelpScreenTextBufferSurface;
 
 BOOLEAN gfScrollBoxIsScrolling = FALSE;
 
@@ -366,22 +366,22 @@ struct MOUSE_REGION gHelpScreenScrollAreaArrows;
 void SelectHelpScrollAreaArrowsCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // checkbox to toggle show help again toggle
-UINT32 gHelpScreenDontShowHelpAgainToggle;
+uint32_t gHelpScreenDontShowHelpAgainToggle;
 void BtnHelpScreenDontShowHelpAgainCallback(GUI_BUTTON *btn, INT32 reason);
 // struct MOUSE_REGION    HelpScreenDontShowHelpAgainToggleTextRegion;
 // void		HelpScreenDontShowHelpAgainToggleTextRegionCallBack(struct MOUSE_REGION * pRegion,
 // INT32 iReason );
 
 INT32 giHelpScreenButtonsImage[HELP_SCREEN_NUM_BTNS];
-UINT32 guiHelpScreenBtns[HELP_SCREEN_NUM_BTNS];
+uint32_t guiHelpScreenBtns[HELP_SCREEN_NUM_BTNS];
 void BtnHelpScreenBtnsCallback(GUI_BUTTON *btn, INT32 reason);
 
 INT32 giExitBtnImage;
-UINT32 guiHelpScreenExitBtn;
+uint32_t guiHelpScreenExitBtn;
 void BtnHelpScreenExitCallback(GUI_BUTTON *btn, INT32 reason);
 
 INT32 giHelpScreenScrollArrows[2];
-UINT32 guiHelpScreenScrollArrowImage[2];
+uint32_t guiHelpScreenScrollArrowImage[2];
 void BtnHelpScreenScrollArrowsCallback(GUI_BUTTON *btn, INT32 reason);
 
 // ggg
@@ -409,8 +409,8 @@ UINT16 RenderMapScreenSectorInventoryHelpScreen();
 
 void GetHelpScreenTextPositions(UINT16 *pusPosX, UINT16 *pusPosY, UINT16 *pusWidth);
 void DisplayCurrentScreenTitleAndFooter();
-void GetHelpScreenText(UINT32 uiRecordToGet, STR16 pText);
-UINT16 GetAndDisplayHelpScreenText(UINT32 uiRecord, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth);
+void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText);
+UINT16 GetAndDisplayHelpScreenText(uint32_t uiRecord, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth);
 void CreateHelpScreenButtons();
 void RefreshAllHelpScreenButtons();
 
@@ -1377,7 +1377,7 @@ void ChangeToHelpScreenSubPage(INT8 bNewPage) {
   ChangeHelpScreenSubPage();
 }
 
-void GetHelpScreenText(UINT32 uiRecordToGet, STR16 pText) {
+void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText) {
   INT32 iStartLoc = -1;
 
   iStartLoc = HELPSCREEN_RECORD_SIZE * uiRecordToGet;
@@ -1385,10 +1385,11 @@ void GetHelpScreenText(UINT32 uiRecordToGet, STR16 pText) {
 }
 
 // returns the number of vertical pixels printed
-UINT16 GetAndDisplayHelpScreenText(UINT32 uiRecord, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth) {
+UINT16 GetAndDisplayHelpScreenText(uint32_t uiRecord, UINT16 usPosX, UINT16 usPosY,
+                                   UINT16 usWidth) {
   CHAR16 zText[1024];
   UINT16 usNumVertPixels = 0;
-  UINT32 uiStartLoc;
+  uint32_t uiStartLoc;
 
   SetFontShadow(NO_SHADOW);
 
@@ -2044,7 +2045,7 @@ void ChangeHelpScreenSubPage() {
 }
 
 void ClearHelpScreenTextBuffer() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
@@ -2100,7 +2101,7 @@ void DisplayHelpScreenTextBufferScrollBox() {
   INT32 iSizeOfBox;
   INT32 iTopPosScrollBox = 0;
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT16 usPosX;
 
   if (gHelpScreen.bNumberOfButtons != 0) {

@@ -23,7 +23,7 @@ typedef struct {
   BOOLEAN fHaveDisplayedPopUpInLaptop;  // Is set when the popup gets displayed, reset when entering
                                         // laptop again.
   INT32 iIdOfMerc;
-  UINT32 uiArrivalTime;
+  uint32_t uiArrivalTime;
 } LAST_HIRED_MERC_STRUCT;
 
 typedef struct {
@@ -67,7 +67,7 @@ typedef struct {
 
   // MERC site info
   UINT8 gubPlayersMercAccountStatus;
-  UINT32 guiPlayersMercAccountNumber;
+  uint32_t guiPlayersMercAccountNumber;
   UINT8 gubLastMercIndex;
 
   // Aim Site
@@ -106,7 +106,7 @@ typedef struct {
   INT8 gbNumDaysTillThirdMercArrives;
   INT8 gbNumDaysTillFourthMercArrives;
 
-  UINT32 guiNumberOfMercPaymentsInDays;  // Keeps track of each day of payment the MERC site gets
+  uint32_t guiNumberOfMercPaymentsInDays;  // Keeps track of each day of payment the MERC site gets
 
   UINT16 usInventoryListLength[BOBBY_RAY_LISTS];
 
@@ -124,11 +124,11 @@ typedef struct {
   INT32 iCurrentFinancesPage;
   INT32 iCurrentEmailPage;
 
-  UINT32 uiSpeckQuoteFlags;
+  uint32_t uiSpeckQuoteFlags;
 
-  UINT32 uiFlowerOrderNumber;
+  uint32_t uiFlowerOrderNumber;
 
-  UINT32 uiTotalMoneyPaidToSpeck;
+  uint32_t uiTotalMoneyPaidToSpeck;
 
   UINT8 ubLastMercAvailableId;
   UINT8 bPadding[86];

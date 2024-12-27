@@ -15,7 +15,7 @@ enum {
 };
 
 // there's no button for entering SAVE/LOAD screen directly...
-extern UINT32 guiMapBottomExitButtons[3];
+extern uint32_t guiMapBottomExitButtons[3];
 
 extern BOOLEAN fLapTop;
 extern BOOLEAN fLeavingMapScreen;

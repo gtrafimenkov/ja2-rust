@@ -297,17 +297,17 @@ BOOLEAN gfDisableTacticalPanelButtons = FALSE;
 BOOLEAN gfAddingMoneyToMercFromPlayersAccount = FALSE;
 
 BOOLEAN gfCheckForMouseOverItem = FALSE;
-UINT32 guiMouseOverItemTime = 0;
+uint32_t guiMouseOverItemTime = 0;
 INT8 gbCheckForMouseOverItemPos = 0;
 UINT8 gubSelectSMPanelToMerc = NOBODY;
 BOOLEAN gfReEvaluateDisabledINVPanelButtons = FALSE;
 
-UINT32 guiBrownBackgroundForTeamPanel;
-UINT32 guiGoldBackgroundForTeamPanel;
+uint32_t guiBrownBackgroundForTeamPanel;
+uint32_t guiGoldBackgroundForTeamPanel;
 
 extern BOOLEAN gfRerenderInterfaceFromHelpText;
 extern BOOLEAN gfInKeyRingPopup;
-extern UINT32 guiVEHINV;
+extern uint32_t guiVEHINV;
 extern INT32 giMapInvDoneButton;
 extern BOOLEAN gfBeginEndTurn;
 extern struct SOLDIERTYPE *gpItemDescSoldier;
@@ -404,13 +404,13 @@ INT32 iSMPanelButtons[NUM_SM_BUTTONS];
 INT32 iTEAMPanelButtons[NUM_TEAM_BUTTONS];
 
 // Video Surface for Single Merc Panel
-UINT32 guiSMPanel;
-UINT32 guiSMObjects;
-UINT32 guiSMObjects2;
-UINT32 guiSecItemHiddenVO;
+uint32_t guiSMPanel;
+uint32_t guiSMObjects;
+uint32_t guiSMObjects2;
+uint32_t guiSecItemHiddenVO;
 
-UINT32 guiTEAMPanel;
-UINT32 guiTEAMObjects;
+uint32_t guiTEAMPanel;
+uint32_t guiTEAMObjects;
 
 // Globals for various mouse regions
 struct MOUSE_REGION gSM_SELMERCPanelRegion;
@@ -498,7 +498,7 @@ void UpdateSelectedSoldier(UINT16 usSoldierID, BOOLEAN fSelect);
 void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, INT16 sPanelX, INT16 sPanelY);
 void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY);
 BOOLEAN PlayerExistsInSlot(UINT8 ubID);
-void UpdateStatColor(UINT32 uiTimer, BOOLEAN fUpdate);
+void UpdateStatColor(uint32_t uiTimer, BOOLEAN fUpdate);
 
 extern void UpdateItemHatches();
 
@@ -778,7 +778,7 @@ void UpdateSMPanel() {
 
   // Set Disable /Enable UI based on buddy's stats
   if (ButtonList[iSMPanelButtons[BURSTMODE_BUTTON]]->ImageNum !=
-      (UINT32)iBurstButtonImages[gpSMCurrentMerc->bWeaponMode]) {
+      (uint32_t)iBurstButtonImages[gpSMCurrentMerc->bWeaponMode]) {
     ButtonList[iSMPanelButtons[BURSTMODE_BUTTON]]->ImageNum =
         iBurstButtonImages[gpSMCurrentMerc->bWeaponMode];
     ButtonList[iSMPanelButtons[BURSTMODE_BUTTON]]->uiFlags |= BUTTON_DIRTY;
@@ -1371,7 +1371,7 @@ BOOLEAN CreateSMPanelButtons() {
 }
 
 void RemoveSMPanelButtons() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < NUM_SM_BUTTONS; cnt++) {
     if (iSMPanelButtons[cnt] != -1) {
@@ -1440,7 +1440,7 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
   INT16 sFontX, sFontY;
   INT16 usX, usY;
   wchar_t sString[9];
-  UINT32 cnt;
+  uint32_t cnt;
   static CHAR16 pStr[200], pMoraleStr[20];
 
   if (gubSelectSMPanelToMerc != NOBODY) {
@@ -1768,7 +1768,7 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
 
   if (gfSMDisableForItems && (*pfDirty) != DIRTYLEVEL0) {
     UINT8 *pDestBuf;
-    UINT32 uiDestPitchBYTES;
+    uint32_t uiDestPitchBYTES;
     SGPRect ClipRect;
 
     ClipRect.iLeft = 87;
@@ -1781,7 +1781,7 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
   }
 }
 
-void UpdateStatColor(UINT32 uiTimer, BOOLEAN fIncrease) {
+void UpdateStatColor(uint32_t uiTimer, BOOLEAN fIncrease) {
   if (gpSMCurrentMerc->bLife >= OKLIFE) {
     if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + uiTimer) && (uiTimer != 0)) {
       if (fIncrease) {
@@ -1800,7 +1800,7 @@ void UpdateStatColor(UINT32 uiTimer, BOOLEAN fIncrease) {
 }
 
 void SMInvMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiHandPos;
+  uint32_t uiHandPos;
 
   uiHandPos = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -1945,7 +1945,7 @@ void SMInvClickCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, UINT32 uiHandPos,
+BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, uint32_t uiHandPos,
                               UINT16 usReplaceItem) {
   BOOLEAN fRefuse = FALSE;
 
@@ -2036,7 +2036,7 @@ BOOLEAN UIHandleItemPlacement(UINT8 ubHandPos, UINT16 usOldItemIndex, UINT16 usN
 }
 
 void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiHandPos;
+  uint32_t uiHandPos;
   // Copyies of values
   UINT16 usOldItemIndex, usNewItemIndex;
   UINT16 usItemPrevInItemPointer;
@@ -2766,7 +2766,7 @@ void BtnPositionShowCallback(GUI_BUTTON *btn, INT32 reason) {}
 // TEAM PANEL!!!!!!!!!!!!!!
 BOOLEAN InitializeTEAMPanel() {
   VOBJECT_DESC VObjectDesc;
-  UINT32 cnt, posIndex;
+  uint32_t cnt, posIndex;
 
   // INit viewport region
   // Set global mouse regions
@@ -2880,7 +2880,7 @@ BOOLEAN InitializeTEAMPanel() {
 }
 
 BOOLEAN ShutdownTEAMPanel() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // All buttons and regions and video objects and video surfaces will be deleted at shutddown of
   // SGM We may want to delete them at the interm as well, to free up room for other panels Delete
@@ -2923,7 +2923,7 @@ BOOLEAN ShutdownTEAMPanel() {
 
 void RenderTEAMPanel(BOOLEAN fDirty) {
   INT16 sFontX, sFontY;
-  UINT32 cnt, posIndex;
+  uint32_t cnt, posIndex;
   struct SOLDIERTYPE *pSoldier;
   static CHAR16 pStr[200], pMoraleStr[20];
 
@@ -3217,7 +3217,7 @@ BOOLEAN CreateTEAMPanelButtons() {
 }
 
 void RemoveTEAMPanelButtons() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < NUM_TEAM_BUTTONS; cnt++) {
     RemoveButton(iTEAMPanelButtons[cnt]);
@@ -4272,7 +4272,7 @@ void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
 }
 
 void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiKeyRing;
+  uint32_t uiKeyRing;
   // Copyies of values
   UINT16 usOldItemIndex;
   static BOOLEAN fRightDown = FALSE;
@@ -4654,7 +4654,7 @@ void GoToMapScreenFromTactical(void) {
   gfEnteringMapScreen = TRUE;
 }
 
-void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, UINT32 uiInvPos,
+void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, uint32_t uiInvPos,
                                             UINT16 usOldItem, UINT16 usNewItem) {
   // if in attached weapon mode and don't have weapon with GL attached in hand, reset weapon mode
   if (pSoldier->bWeaponMode == WM_ATTACHED &&

@@ -19,7 +19,7 @@ enum {
 
 typedef struct {
   INT8 bCurrentHelpScreen;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
   UINT16 usHasPlayerSeenHelpScreenInCurrentScreen;
 

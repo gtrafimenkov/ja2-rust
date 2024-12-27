@@ -32,7 +32,7 @@
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
 #endif
 
-BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, UINT32 *puiTime);
+BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime);
 INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule);
 BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule);
 
@@ -47,8 +47,8 @@ SCHEDULENODE *gpScheduleList = NULL;
 UINT8 gubScheduleID = 0;
 void ReverseSchedules();
 
-void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, UINT32 uiStartTime,
-                                      UINT32 uiEndTime);
+void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, uint32_t uiStartTime,
+                                      uint32_t uiEndTime);
 
 // IMPORTANT:
 // This function adds a NEWLY allocated schedule to the list.  The pointer passed is totally
@@ -207,7 +207,7 @@ void ProcessTacticalSchedule(UINT8 ubScheduleID) {
     }
   }
   if (fAutoProcess) {
-    UINT32 uiStartTime, uiEndTime;
+    uint32_t uiStartTime, uiEndTime;
     // Grab the last time the eventlist was queued.  This will tell us how much time has passed
     // since that moment, and how long we need to auto process this schedule.
     uiStartTime = (guiTimeOfLastEventQuery / 60) % NUM_MIN_IN_DAY;
@@ -358,9 +358,9 @@ BOOLEAN LoadSchedulesFromSave(HWFILE hFile) {
   SCHEDULENODE *pSchedule = NULL;
   SCHEDULENODE temp;
   UINT8 ubNum;
-  UINT32 ubRealNum;
+  uint32_t ubRealNum;
 
-  UINT32 uiNumBytesRead, uiNumBytesToRead;
+  uint32_t uiNumBytesRead, uiNumBytesToRead;
 
   // LOADDATA( &ubNum, *hBuffer, sizeof( UINT8 ) );
   uiNumBytesToRead = sizeof(UINT8);
@@ -454,7 +454,7 @@ void ClearAllSchedules() {
 
 BOOLEAN SaveSchedules(HWFILE hFile) {
   SCHEDULENODE *curr;
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
   UINT8 ubNum, ubNumFucker;
   INT32 iNum;
   // Now, count the number of schedules in the list
@@ -684,7 +684,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
 }
 
 void PostSchedule(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiStartTime, uiEndTime;
+  uint32_t uiStartTime, uiEndTime;
   INT32 i;
   INT8 bEmpty;
   SCHEDULENODE *pSchedule;
@@ -788,8 +788,8 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   PrepareScheduleForAutoProcessing(pSchedule, uiStartTime, uiEndTime);
 }
 
-void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, UINT32 uiStartTime,
-                                      UINT32 uiEndTime) {
+void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, uint32_t uiStartTime,
+                                      uint32_t uiEndTime) {
   INT32 i;
   BOOLEAN fPostedNextEvent = FALSE;
 
@@ -984,8 +984,8 @@ void PostNextSchedule(struct SOLDIERTYPE *pSoldier) {
                     pSchedule->ubScheduleID);
 }
 
-BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, UINT32 *puiEntryTime,
-                                        UINT32 *puiExitTime) {
+BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiEntryTime,
+                                        uint32_t *puiExitTime) {
   INT32 iLoop;
   BOOLEAN fFoundEntryTime = FALSE, fFoundExitTime = FALSE;
   SCHEDULENODE *pSchedule;
@@ -1019,8 +1019,8 @@ BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, UINT32 *pu
 }
 
 // This is for determining shopkeeper's opening/closing hours
-BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, UINT32 *puiOpeningTime,
-                                             UINT32 *puiClosingTime) {
+BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiOpeningTime,
+                                             uint32_t *puiClosingTime) {
   INT32 iLoop;
   BOOLEAN fFoundOpeningTime = FALSE, fFoundClosingTime = FALSE;
   SCHEDULENODE *pSchedule;
@@ -1053,7 +1053,7 @@ BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, UINT3
   }
 }
 
-BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, UINT32 *puiTime) {
+BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime) {
   INT32 iLoop;
 
   *puiTime = 100000;
@@ -1100,7 +1100,7 @@ INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule) {
 /*
 void ReconnectSchedules( void )
 {
-        UINT32						uiLoop;
+        uint32_t						uiLoop;
         struct SOLDIERTYPE *			pSoldier;
         SCHEDULENODE *		pSchedule;
 
@@ -1151,7 +1151,7 @@ void ReplaceSleepSpot(SCHEDULENODE *pSchedule, UINT16 usNewSpot) {
 void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, UINT16 usSleepSpot) {
   struct SOLDIERTYPE *pSoldier2;
   UINT16 usSleepSpot2, usNewSleepSpot;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   SCHEDULENODE *pSchedule;
   UINT8 ubDirection;
 
@@ -1183,7 +1183,7 @@ void SecureSleepSpots( void )
 {
         // make sure no one else has the same sleep dest as another merc, and if they do
         // move extras away!
-        UINT32						uiLoop;
+        uint32_t						uiLoop;
         struct SOLDIERTYPE *			pSoldier;
         SCHEDULENODE *		pSchedule;
         UINT16						usSleepSpot;

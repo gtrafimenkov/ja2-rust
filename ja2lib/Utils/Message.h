@@ -8,12 +8,12 @@
 struct stringstruct {
   STR16 pString16;
   INT32 iVideoOverlay;
-  UINT32 uiFont;
+  uint32_t uiFont;
   UINT16 usColor;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   BOOLEAN fBeginningOfNewString;
-  UINT32 uiTimeOfLastUpdate;
-  UINT32 uiPadding[5];
+  uint32_t uiTimeOfLastUpdate;
+  uint32_t uiPadding[5];
   struct stringstruct *pNext;
   struct stringstruct *pPrev;
 };
@@ -40,7 +40,7 @@ typedef struct stringstruct ScrollStringSt;
 typedef ScrollStringSt *ScrollStringStPtr;
 
 extern ScrollStringStPtr pStringS;
-extern UINT32 StringCount;
+extern uint32_t StringCount;
 extern UINT8 gubCurrentMapMessageString;
 extern BOOLEAN fDisableJustForIan;
 

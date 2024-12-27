@@ -26,11 +26,11 @@
 #define BUTTON_REPEAT_TIME 50
 
 typedef struct {
-  UINT32 uiTimeStamp;
+  uint32_t uiTimeStamp;
   UINT16 usKeyState;
   UINT16 usEvent;
-  UINT32 usParam;
-  UINT32 uiParam;
+  uint32_t usParam;
+  uint32_t uiParam;
 } InputAtom;
 
 typedef struct StringInput {
@@ -51,14 +51,14 @@ typedef struct StringInput {
 extern BOOLEAN InitializeInputManager(void);
 extern void ShutdownInputManager(void);
 extern BOOLEAN DequeueEvent(InputAtom *Event);
-extern void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
+extern void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam);
 
-extern void KeyDown(UINT32 usParam, UINT32 uiParam);
-extern void KeyUp(UINT32 usParam, UINT32 uiParam);
+extern void KeyDown(uint32_t usParam, uint32_t uiParam);
+extern void KeyUp(uint32_t usParam, uint32_t uiParam);
 
 extern void GetMousePos(SGPPoint *Point);
 
-extern BOOLEAN DequeueSpecificEvent(InputAtom *Event, UINT32 uiMaskFlags);
+extern BOOLEAN DequeueSpecificEvent(InputAtom *Event, uint32_t uiMaskFlags);
 
 extern void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2);
 extern void RestrictMouseCursor(SGPRect *pRectangle);
@@ -67,7 +67,7 @@ extern BOOLEAN IsCursorRestricted(void);
 extern void GetRestrictedClipCursor(SGPRect *pRectangle);
 extern void ReapplyCursorClipRect(void);
 
-void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos);
+void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos);
 
 extern void DequeueAllKeyBoardEvents();
 

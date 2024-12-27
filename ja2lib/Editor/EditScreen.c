@@ -84,10 +84,10 @@ extern void RemoveMercsInSector();
 extern void ReverseSchedules();
 extern void ClearAllSchedules();
 
-extern UINT32 guiCurUICursor;
+extern uint32_t guiCurUICursor;
 
 void DrawObjectsBasedOnSelectionRegion();
-UINT32 ProcessEditscreenMessageBoxResponse();
+uint32_t ProcessEditscreenMessageBoxResponse();
 
 void ReloadMap();
 
@@ -98,7 +98,7 @@ GUI_BUTTON *gpPersistantButton;
 
 // These are global variables used by the main game loop
 
-UINT32 guiSaveTacticalStatusFlags;  // saves the tactical status flags when entering the editor.
+uint32_t guiSaveTacticalStatusFlags;  // saves the tactical status flags when entering the editor.
 
 BOOLEAN gfAutoLoadA9 = FALSE;
 // new vars added by Kris
@@ -194,7 +194,7 @@ BOOLEAN fFirstTimeInEditModeInit = TRUE;
 BOOLEAN fSelectionWindow = FALSE;
 BOOLEAN gfRealGunNut = TRUE;
 
-UINT32 iMapIndex;
+uint32_t iMapIndex;
 BOOLEAN fNewMap = FALSE;
 
 INT32 iPrevDrawMode = DRAW_MODE_NOTHING;
@@ -218,7 +218,7 @@ struct MOUSE_REGION GotoGridNoUIRegion;
 //
 //	This function is called once at SGP (and game) startup
 //
-UINT32 EditScreenInit(void) {
+uint32_t EditScreenInit(void) {
   gfFakeLights = FALSE;
 
   eInfo.fGameInit = TRUE;
@@ -249,7 +249,7 @@ UINT32 EditScreenInit(void) {
 //
 //	This function is called once at shutdown of the game
 //
-UINT32 EditScreenShutdown(void) {
+uint32_t EditScreenShutdown(void) {
   GameShutdownEditorMercsInfo();
   RemoveAllFromUndoList();
   KillClipboard();
@@ -262,7 +262,7 @@ UINT32 EditScreenShutdown(void) {
 //	Editor's Init code. Called each time we enter edit mode from the game.
 //
 BOOLEAN EditModeInit(void) {
-  UINT32 x;
+  uint32_t x;
   INT32 i;
   struct SGPPaletteEntry LColors[2];
 
@@ -722,7 +722,7 @@ void ShowCurrentDrawingMode(void) {
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
   ETRLEObject *pETRLEObject;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usFillColor;
   INT32 iIndexToUse;
@@ -1726,8 +1726,8 @@ void HandleKeyboardShortcuts() {
 //
 //	Perform the current user selected action, if any (or at least set things up for doing that)
 //
-UINT32 PerformSelectedAction(void) {
-  UINT32 uiRetVal;
+uint32_t PerformSelectedAction(void) {
+  uint32_t uiRetVal;
 
   uiRetVal = EDIT_SCREEN;
 
@@ -2116,7 +2116,7 @@ void CreateNewMap() {
   LightReset();
   NewWorld();
   if (gfPendingBasement) {
-    UINT32 i;
+    uint32_t i;
     UINT16 usIndex;
     for (i = 0; i < WORLD_MAX; i++) {
       // Set land index 9 + 3 variants
@@ -2125,7 +2125,7 @@ void CreateNewMap() {
     }
     SetEditorSmoothingMode(SMOOTHING_BASEMENT);
   } else if (gfPendingCaves) {
-    UINT32 i;
+    uint32_t i;
     UINT16 usIndex;
     for (i = 0; i < WORLD_MAX; i++) {
       // Set up the default cave here.
@@ -2148,7 +2148,7 @@ void CreateNewMap() {
   gMapInformation.sEastGridNo = -1;
 }
 
-UINT32 ProcessEditscreenMessageBoxResponse() {
+uint32_t ProcessEditscreenMessageBoxResponse() {
   RemoveMessageBox();
   gfRenderWorld = TRUE;
   if (gfConfirmExitPending) {
@@ -2196,7 +2196,7 @@ UINT32 ProcessEditscreenMessageBoxResponse() {
 //
 //	Displays a help screen and waits for the user to wisk it away.
 //
-UINT32 WaitForHelpScreenResponse(void) {
+uint32_t WaitForHelpScreenResponse(void) {
   InputAtom DummyEvent;
   BOOLEAN fLeaveScreen;
 
@@ -2304,7 +2304,7 @@ UINT32 WaitForHelpScreenResponse(void) {
 //
 //	Handles all keyboard input and display for a selection window.
 //
-UINT32 WaitForSelectionWindowResponse(void) {
+uint32_t WaitForSelectionWindowResponse(void) {
   InputAtom DummyEvent;
 
   while (DequeueEvent(&DummyEvent) == TRUE) {
@@ -2375,7 +2375,7 @@ void GetMasterList(void) {}
 //	Displays the image of the currently highlighted tileset slot if it's a video surface.
 //	(usually a 16 bit image)
 //
-void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
+void ShowCurrentSlotSurface(uint32_t vSurface, INT32 iWindow) {
   SGPRect ClipRect, WinRect;
   INT32 iStartX;
   INT32 iStartY;
@@ -2565,7 +2565,7 @@ BOOLEAN RemoveLight(INT16 iMapX, INT16 iMapY) {
   BOOLEAN fSoldierLight;
   BOOLEAN fRemovedLight;
   INT32 iMapIndex;
-  UINT32 uiLastLightType;
+  uint32_t uiLastLightType;
   CHAR8 *pLastLightName;
 
   fRemovedLight = FALSE;
@@ -3343,8 +3343,8 @@ void DrawObjectsBasedOnSelectionRegion() {
 extern void AutoLoadMap();
 
 // The main loop of the editor.
-UINT32 EditScreenHandle(void) {
-  UINT32 uiRetVal;
+uint32_t EditScreenHandle(void) {
+  uint32_t uiRetVal;
   BOOLEAN fShowingCursor;
   StartFrameBufferRender();
 

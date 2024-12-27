@@ -36,8 +36,8 @@
 extern BOOLEAN gfFadeOut;
 
 // These functions shouldn't be used anywhere else...
-extern BOOLEAN GameEventsPending(UINT32 uiAdjustment);
-extern void ProcessPendingGameEvents(UINT32 uiAdjustment, UINT8 ubWarpCode);
+extern BOOLEAN GameEventsPending(uint32_t uiAdjustment);
+extern void ProcessPendingGameEvents(uint32_t uiAdjustment, UINT8 ubWarpCode);
 void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, INT32 iReason);
 void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
@@ -53,7 +53,7 @@ BOOLEAN fTimeCompressHasOccured = FALSE;
 // This value represents the time that the sector was loaded.  If you are in sector A9, and leave
 // the game clock at that moment will get saved into the temp file associated with it.  The next
 // time you enter A9, this value will contain that time.  Used for scheduling purposes.
-UINT32 guiTimeCurrentSectorWasLastLoaded = 0;
+uint32_t guiTimeCurrentSectorWasLastLoaded = 0;
 
 // did we JUST finish up a game pause by the player
 BOOLEAN gfJustFinishedAPause = FALSE;
@@ -80,32 +80,32 @@ BOOLEAN gfGamePaused = TRUE;
 BOOLEAN gfTimeInterrupt = FALSE;
 BOOLEAN gfTimeInterruptPause = FALSE;
 BOOLEAN fSuperCompression = FALSE;
-UINT32 guiGameClock = STARTING_TIME;
-UINT32 guiPreviousGameClock = 0;  // used only for error-checking purposes
-UINT32 guiGameSecondsPerRealSecond;
-UINT32 guiTimesThisSecondProcessed = 0;
+uint32_t guiGameClock = STARTING_TIME;
+uint32_t guiPreviousGameClock = 0;  // used only for error-checking purposes
+uint32_t guiGameSecondsPerRealSecond;
+uint32_t guiTimesThisSecondProcessed = 0;
 INT32 iPausedPopUpBox = -1;
-UINT32 guiDay;
-UINT32 guiHour;
-UINT32 guiMin;
+uint32_t guiDay;
+uint32_t guiHour;
+uint32_t guiMin;
 CHAR16 gswzWorldTimeStr[20];
 INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS] = {0, 1, 5 * 60, 30 * 60, 60 * 60};
 UINT16 usPausedActualWidth;
 UINT16 usPausedActualHeight;
-UINT32 guiTimeOfLastEventQuery = 0;
+uint32_t guiTimeOfLastEventQuery = 0;
 BOOLEAN gfLockPauseState = FALSE;
 BOOLEAN gfPauseDueToPlayerGamePause = FALSE;
 BOOLEAN gfResetAllPlayerKnowsEnemiesFlags = FALSE;
 BOOLEAN gfTimeCompressionOn = FALSE;
-UINT32 guiLockPauseStateLastReasonId = 0;
+uint32_t guiLockPauseStateLastReasonId = 0;
 //***When adding new saved time variables, make sure you remove the appropriate amount from the
 // paddingbytes and
 //   more IMPORTANTLY, add appropriate code in Save/LoadGameClock()!
 #define TIME_PADDINGBYTES 20
 UINT8 gubUnusedTimePadding[TIME_PADDINGBYTES];
 
-extern UINT32 guiEnvTime;
-extern UINT32 guiEnvDay;
+extern uint32_t guiEnvTime;
+extern uint32_t guiEnvDay;
 
 void InitNewGameClock() {
   guiGameClock = STARTING_TIME;
@@ -122,31 +122,33 @@ void InitNewGameClock() {
   memset(gubUnusedTimePadding, 0, TIME_PADDINGBYTES);
 }
 
-UINT32 GetWorldTotalMin() { return (guiGameClock / NUM_SEC_IN_MIN); }
+uint32_t GetWorldTotalMin() { return (guiGameClock / NUM_SEC_IN_MIN); }
 
-UINT32 GetWorldTotalSeconds() { return (guiGameClock); }
+uint32_t GetWorldTotalSeconds() { return (guiGameClock); }
 
-UINT32 GetWorldHour() { return (guiHour); }
+uint32_t GetWorldHour() { return (guiHour); }
 
-UINT32 GetWorldMinutesInDay() { return ((guiHour * 60) + guiMin); }
+uint32_t GetWorldMinutesInDay() { return ((guiHour * 60) + guiMin); }
 
-UINT32 GetWorldDay() { return (guiDay); }
+uint32_t GetWorldDay() { return (guiDay); }
 
-UINT32 GetWorldDayInSeconds() { return (guiDay * NUM_SEC_IN_DAY); }
+uint32_t GetWorldDayInSeconds() { return (guiDay * NUM_SEC_IN_DAY); }
 
-UINT32 GetWorldDayInMinutes() { return ((guiDay * NUM_SEC_IN_DAY) / NUM_SEC_IN_MIN); }
+uint32_t GetWorldDayInMinutes() { return ((guiDay * NUM_SEC_IN_DAY) / NUM_SEC_IN_MIN); }
 
-UINT32 GetFutureDayInMinutes(UINT32 uiDay) { return ((uiDay * NUM_SEC_IN_DAY) / NUM_SEC_IN_MIN); }
+uint32_t GetFutureDayInMinutes(uint32_t uiDay) {
+  return ((uiDay * NUM_SEC_IN_DAY) / NUM_SEC_IN_MIN);
+}
 
 // this function returns the amount of minutes there has been from start of game to midnight of the
 // uiDay.
-UINT32 GetMidnightOfFutureDayInMinutes(UINT32 uiDay) {
+uint32_t GetMidnightOfFutureDayInMinutes(uint32_t uiDay) {
   return (GetWorldTotalMin() + (uiDay * 1440) - GetWorldMinutesInDay());
 }
 
 // Not to be used too often by things other than internally
-void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode) {
-  UINT32 uiSaveTimeRate;
+void WarpGameTime(uint32_t uiAdjustment, UINT8 ubWarpCode) {
+  uint32_t uiSaveTimeRate;
   uiSaveTimeRate = guiGameSecondsPerRealSecond;
   guiGameSecondsPerRealSecond = uiAdjustment;
   AdvanceClock(ubWarpCode);
@@ -213,7 +215,7 @@ void AdvanceClock(UINT8 ubWarpCode) {
 
 void AdvanceToNextDay() {
   INT32 uiDiff;
-  UINT32 uiTomorrowTimeInSec;
+  uint32_t uiTomorrowTimeInSec;
 
   uiTomorrowTimeInSec = (guiDay + 1) * NUM_SEC_IN_DAY + 8 * NUM_SEC_IN_HOUR + 15 * NUM_SEC_IN_MIN;
   uiDiff = uiTomorrowTimeInSec - guiGameClock;
@@ -273,7 +275,7 @@ void RenderClock(INT16 sX, INT16 sY) {
 }
 
 void ToggleSuperCompression() {
-  static UINT32 uiOldTimeCompressMode = 0;
+  static uint32_t uiOldTimeCompressMode = 0;
 
   // Display message
   if (gTacticalStatus.uiFlags & INCOMBAT) {
@@ -404,7 +406,7 @@ void DecreaseGameTimeCompressionRate() {
   }
 }
 
-void SetGameTimeCompressionLevel(UINT32 uiCompressionRate) {
+void SetGameTimeCompressionLevel(uint32_t uiCompressionRate) {
   Assert(uiCompressionRate < NUM_TIME_COMPRESS_SPEEDS);
 
   if (IsTacticalMode()) {
@@ -457,7 +459,7 @@ void SetClockResolutionToCompressMode(INT32 iCompressMode) {
   fMapScreenBottomDirty = TRUE;
 }
 
-void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond) {
+void SetGameHoursPerSecond(uint32_t uiGameHoursPerSecond) {
   giTimeCompressMode = NOT_USING_TIME_COMPRESSION;
   guiGameSecondsPerRealSecond = uiGameHoursPerSecond * 3600;
   if (uiGameHoursPerSecond == 1) {
@@ -467,13 +469,13 @@ void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond) {
   }
 }
 
-void SetGameMinutesPerSecond(UINT32 uiGameMinutesPerSecond) {
+void SetGameMinutesPerSecond(uint32_t uiGameMinutesPerSecond) {
   giTimeCompressMode = NOT_USING_TIME_COMPRESSION;
   guiGameSecondsPerRealSecond = uiGameMinutesPerSecond * 60;
   SetClockResolutionPerSecond((UINT8)uiGameMinutesPerSecond);
 }
 
-void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond) {
+void SetGameSecondsPerSecond(uint32_t uiGameSecondsPerSecond) {
   giTimeCompressMode = NOT_USING_TIME_COMPRESSION;
   guiGameSecondsPerRealSecond = uiGameSecondsPerSecond;
   //	SetClockResolutionPerSecond( (UINT8)(guiGameSecondsPerRealSecond / 60) );
@@ -486,7 +488,7 @@ void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond) {
 
 // call this to prevent player from changing the time compression state via the interface
 
-void LockPauseState(UINT32 uiUniqueReasonId) {
+void LockPauseState(uint32_t uiUniqueReasonId) {
   gfLockPauseState = TRUE;
 
   // if adding a new call, please choose a new uiUniqueReasonId, this helps track down the cause
@@ -564,19 +566,19 @@ UINT8 ClockResolution() { return gubClockResolution; }
 // time
 // flows.
 void UpdateClock() {
-  UINT32 uiNewTime;
-  UINT32 uiThousandthsOfThisSecondProcessed;
-  UINT32 uiTimeSlice;
-  UINT32 uiNewTimeProcessed;
+  uint32_t uiNewTime;
+  uint32_t uiThousandthsOfThisSecondProcessed;
+  uint32_t uiTimeSlice;
+  uint32_t uiNewTimeProcessed;
   static UINT8 ubLastResolution = 1;
-  static UINT32 uiLastSecondTime = 0;
-  static UINT32 uiLastTimeProcessed = 0;
+  static uint32_t uiLastSecondTime = 0;
+  static uint32_t uiLastTimeProcessed = 0;
 #ifdef DEBUG_GAME_CLOCK
-  UINT32 uiOrigNewTime;
-  UINT32 uiOrigLastSecondTime;
-  UINT32 uiOrigThousandthsOfThisSecondProcessed;
+  uint32_t uiOrigNewTime;
+  uint32_t uiOrigLastSecondTime;
+  uint32_t uiOrigThousandthsOfThisSecondProcessed;
   UINT8 ubOrigClockResolution;
-  UINT32 uiOrigTimesThisSecondProcessed;
+  uint32_t uiOrigTimesThisSecondProcessed;
   UINT8 ubOrigLastResolution;
 #endif
   // check game state for pause screen masks
@@ -670,7 +672,7 @@ void UpdateClock() {
 }
 
 BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   FileMan_Write(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) return (FALSE);
@@ -687,26 +689,26 @@ BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   FileMan_Write(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileMan_Write(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiGameClock, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
-  FileMan_Write(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiGameSecondsPerRealSecond, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Write(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
 
-  FileMan_Write(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiEnvTime, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
-  FileMan_Write(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiEnvDay, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Write(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
 
-  FileMan_Write(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiTimeOfLastEventQuery, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Write(hFile, &fLockPauseState, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
@@ -720,11 +722,11 @@ BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   FileMan_Write(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileMan_Write(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiPreviousGameClock, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
-  FileMan_Write(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  FileMan_Write(hFile, &guiLockPauseStateLastReasonId, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Write(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesWritten);
   if (uiNumBytesWritten != TIME_PADDINGBYTES) return (FALSE);
@@ -732,7 +734,7 @@ BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
 }
 
 BOOLEAN LoadGameClock(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   FileMan_Read(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) return (FALSE);
@@ -749,26 +751,26 @@ BOOLEAN LoadGameClock(HWFILE hFile) {
   FileMan_Read(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileMan_Read(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiGameClock, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
-  FileMan_Read(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiGameSecondsPerRealSecond, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Read(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  FileMan_Read(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiEnvTime, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
-  FileMan_Read(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiEnvDay, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Read(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  FileMan_Read(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiTimeOfLastEventQuery, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Read(hFile, &gfLockPauseState, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
@@ -782,11 +784,11 @@ BOOLEAN LoadGameClock(HWFILE hFile) {
   FileMan_Read(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileMan_Read(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiPreviousGameClock, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
-  FileMan_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  FileMan_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) return (FALSE);
 
   FileMan_Read(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesRead);
   if (uiNumBytesRead != TIME_PADDINGBYTES) return (FALSE);

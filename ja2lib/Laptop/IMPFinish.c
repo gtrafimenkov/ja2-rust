@@ -40,10 +40,10 @@ INT16 sFaceX = 253;
 INT16 sFaceY = 245;
 
 // what voice are we playing?
-UINT32 uiVoiceSound = 0;
+uint32_t uiVoiceSound = 0;
 
 // image handle
-UINT32 guiCHARACTERPORTRAIT;
+uint32_t guiCHARACTERPORTRAIT;
 extern INT32 iCurrentPortrait;
 extern INT32 iCurrentVoices;
 
@@ -279,7 +279,7 @@ void BtnIMPFinishDoneCallback(GUI_BUTTON *btn, INT32 reason) {
 void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn, INT32 reason) {
   // btn callback for Main Page Begin Profiling
   static BOOLEAN fAnimateFlag = FALSE;
-  static UINT32 uiBaseTime = 0;
+  static uint32_t uiBaseTime = 0;
   static BOOLEAN fState = 0;
   INT32 iDifference = 0;
 
@@ -395,7 +395,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
   // render the portrait of the current picture
   VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
-  UINT32 uiGraphicHandle;
+  uint32_t uiGraphicHandle;
 
   if (fCharacterIsMale == TRUE) {
     switch (LaptopSaveInfo.iVoiceId) {

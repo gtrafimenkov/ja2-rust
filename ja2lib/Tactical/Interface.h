@@ -64,20 +64,20 @@ extern UINT8 gbNewPanel;
 extern UINT8 gubNewPanelParam;
 extern INT16 gsCurInterfacePanel;
 
-extern UINT32 guiCLOSE;
-extern UINT32 guiDEAD;
-extern UINT32 guiHATCH;
-extern UINT32 guiINTEXT;
-extern UINT32 guiGUNSM;
-extern UINT32 guiP1ITEMS;
-extern UINT32 guiP2ITEMS;
-extern UINT32 guiP3ITEMS;
-extern UINT32 guiCOMPANEL;
-extern UINT32 guiCOMPANELB;
-extern UINT32 guiRADIO;
-extern UINT32 guiPORTRAITICONS;
-extern UINT32 guiBURSTACCUM;
-extern UINT32 guiITEMPOINTERHATCHES;
+extern uint32_t guiCLOSE;
+extern uint32_t guiDEAD;
+extern uint32_t guiHATCH;
+extern uint32_t guiINTEXT;
+extern uint32_t guiGUNSM;
+extern uint32_t guiP1ITEMS;
+extern uint32_t guiP2ITEMS;
+extern uint32_t guiP3ITEMS;
+extern uint32_t guiCOMPANEL;
+extern uint32_t guiCOMPANELB;
+extern uint32_t guiRADIO;
+extern uint32_t guiPORTRAITICONS;
+extern uint32_t guiBURSTACCUM;
+extern uint32_t guiITEMPOINTERHATCHES;
 
 extern struct MOUSE_REGION gViewportRegion;
 extern struct MOUSE_REGION gRadarRegion;
@@ -127,7 +127,7 @@ void CancelOpenDoorMenu();
 
 void HandleInterfaceBackgrounds();
 
-void BeginOverlayMessage(UINT32 uiFont, CHAR16 *pFontString, ...);
+void BeginOverlayMessage(uint32_t uiFont, CHAR16 *pFontString, ...);
 void EndOverlayMessage();
 
 void DrawSelectedUIAboveGuy(UINT16 usSoldierID);
@@ -164,7 +164,7 @@ void BeginMapUIMessage(UINT8 fPosition, CHAR16 *pFontString, ...);
 
 extern UINT16 gusUIOldSelectedSoldier;
 extern INT32 giUIMessageOverlay;
-extern UINT32 guiUIMessageTime;
+extern uint32_t guiUIMessageTime;
 
 typedef enum {
   NO_MESSAGE,

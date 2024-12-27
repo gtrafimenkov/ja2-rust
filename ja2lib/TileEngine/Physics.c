@@ -39,8 +39,8 @@
 
 #define OUTDOORS_START_ANGLE (FLOAT)(PI / 4)
 #define INDOORS_START_ANGLE (FLOAT)(PI / 30)
-//#define INDOORS_START_ANGLE (FLOAT)(
-// 0
+// #define INDOORS_START_ANGLE (FLOAT)(
+//  0
 //)
 #define GLAUNCHER_START_ANGLE (FLOAT)(PI / 8)
 #define GLAUNCHER_HIGHER_LEVEL_START_ANGLE (FLOAT)(PI / 6)
@@ -57,17 +57,17 @@
 
 #define TIME_MULTI 1.8
 
-//#define					TIME_MULTI			2.2
+// #define					TIME_MULTI			2.2
 
 #define DELTA_T (1.0 * TIME_MULTI)
 
 #define GRAVITY (9.8 * 2.5)
-//#define					GRAVITY ( 9.8
+// #define					GRAVITY ( 9.8
 //* 2.8
 //)
 
 REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
-UINT32 guiNumObjectSlots = 0;
+uint32_t guiNumObjectSlots = 0;
 BOOLEAN fDampingActive = FALSE;
 // real						Kdl	= (float)0.5;
 // // LINEAR DAMPENING ( WIND RESISTANCE )
@@ -119,7 +119,7 @@ BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, UINT16 usStructureID);
 
 /// OBJECT POOL FUNCTIONS
 INT32 GetFreeObjectSlot(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumObjectSlots; uiCount++) {
     if ((ObjectSlots[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
@@ -135,7 +135,7 @@ void RecountObjectSlots(void) {
 
   for (uiCount = guiNumObjectSlots - 1; (uiCount >= 0); uiCount--) {
     if ((ObjectSlots[uiCount].fAllocated)) {
-      guiNumObjectSlots = (UINT32)(uiCount + 1);
+      guiNumObjectSlots = (uint32_t)(uiCount + 1);
       return;
     }
   }
@@ -145,7 +145,7 @@ void RecountObjectSlots(void) {
 
 INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
                            real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
-                           UINT8 ubActionCode, UINT32 uiActionData) {
+                           UINT8 ubActionCode, uint32_t uiActionData) {
   INT32 iObjectIndex;
   FLOAT mass;
   REAL_OBJECT *pObject;
@@ -230,7 +230,7 @@ BOOLEAN RemoveObjectSlot(INT32 iObject) {
 }
 
 void SimulateWorld() {
-  UINT32 cnt;
+  uint32_t cnt;
   REAL_OBJECT *pObject;
 
   if (COUNTERDONE(PHYSICSUPDATE)) {
@@ -249,7 +249,7 @@ void SimulateWorld() {
 }
 
 void RemoveAllPhysicsObjects() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < guiNumObjectSlots; cnt++) {
     // CHECK FOR ALLOCATED
@@ -1738,7 +1738,7 @@ FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
 
 void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
                                        INT16 sEndZ, struct OBJECTTYPE *pItem, INT8 bMissBy,
-                                       UINT8 ubActionCode, UINT32 uiActionData) {
+                                       UINT8 ubActionCode, uint32_t uiActionData) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
   vector_3 vForce, vDirNormal;
@@ -1906,7 +1906,7 @@ void CheckForObjectHittingMerc(REAL_OBJECT *pObject, UINT16 usStructureID) {
 
 BOOLEAN CheckForCatchObject(REAL_OBJECT *pObject) {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiSpacesAway;
+  uint32_t uiSpacesAway;
 
   // Do we want to catch?
   if (pObject->fTestObject == NO_TEST_OBJECT) {
@@ -2017,7 +2017,7 @@ BOOLEAN DoCatchObject(REAL_OBJECT *pObject) {
   return (TRUE);
 }
 
-//#define TESTDUDEXPLOSIVES
+// #define TESTDUDEXPLOSIVES
 
 void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   INT16 sZ;
@@ -2056,7 +2056,8 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
     if (sZ != 0 || pObject->fInWater)
 #else
     if (sZ != 0 || pObject->fInWater ||
-        (pObj->bStatus[0] >= USABLE && (PreRandom(100) < (UINT32)pObj->bStatus[0] + PreRandom(50))))
+        (pObj->bStatus[0] >= USABLE &&
+         (PreRandom(100) < (uint32_t)pObj->bStatus[0] + PreRandom(50))))
 #endif
     {
       fDoImpact = TRUE;
@@ -2065,7 +2066,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
 #ifdef TESTDUDEXPLOSIVES
       if (1)
 #else
-      if (pObj->bStatus[0] >= USABLE && PreRandom(100) < (UINT32)pObj->bStatus[0] + PreRandom(50))
+      if (pObj->bStatus[0] >= USABLE && PreRandom(100) < (uint32_t)pObj->bStatus[0] + PreRandom(50))
 #endif
       {
         iTrapped = PreRandom(4) + 2;
@@ -2135,9 +2136,9 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
 }
 
 BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
   UINT16 usCnt = 0;
-  UINT32 usPhysicsCount = 0;
+  uint32_t usPhysicsCount = 0;
 
   for (usCnt = 0; usCnt < NUM_OBJECT_SLOTS; usCnt++) {
     // if the REAL_OBJECT is active, save it
@@ -2147,8 +2148,8 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of REAL_OBJECTs in the array
-  FileMan_Write(hFile, &usPhysicsCount, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &usPhysicsCount, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -2169,15 +2170,15 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiNumBytesRead = 0;
   UINT16 usCnt = 0;
 
   // make sure the objects are not allocated
   memset(ObjectSlots, 0, NUM_OBJECT_SLOTS * sizeof(REAL_OBJECT));
 
   // Load the number of REAL_OBJECTs in the array
-  FileMan_Read(hFile, &guiNumObjectSlots, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &guiNumObjectSlots, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -2202,7 +2203,7 @@ UINT16 RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadi
   INT16 sGridNo;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
 
   if (ubMaxRadius == 0 || ubMinRadius == 0) {
     return (sSweetGridNo);

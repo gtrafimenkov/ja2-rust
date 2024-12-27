@@ -135,19 +135,19 @@ enum {
   GLAUNCHER_ATTACHMENT_BUTTON,
   NUM_ATTACHMENT_BUTTONS
 };
-UINT32 guiAttachmentButton[NUM_ATTACHMENT_BUTTONS];
+uint32_t guiAttachmentButton[NUM_ATTACHMENT_BUTTONS];
 BOOLEAN gfAttachment[NUM_ATTACHMENT_BUTTONS];
 void ToggleAttachment(GUI_BUTTON *btn, INT32 reason);
 
-UINT32 guiCeramicPlatesButton;
+uint32_t guiCeramicPlatesButton;
 BOOLEAN gfCeramicPlates;
 void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason);
 
-UINT32 guiDetonatorButton;
+uint32_t guiDetonatorButton;
 BOOLEAN gfDetonator;
 void ToggleDetonator(GUI_BUTTON *btn, INT32 reason);
 
-UINT32 guiActionItemButton;
+uint32_t guiActionItemButton;
 void ActionItemCallback(GUI_BUTTON *btn, INT32 reason);
 INT8 gbActionItemIndex = ACTIONITEM_MEDIUM;
 INT8 gbDefaultBombTrapLevel = 9;

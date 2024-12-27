@@ -40,7 +40,7 @@ UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 
 INT16 RecalculatePathCost(struct SOLDIERTYPE *pSoldier, UINT16 usMovementMode);
 
 // Exporting these global variables
-extern UINT32 guiPathingData[256];
+extern uint32_t guiPathingData[256];
 extern UINT8 gubNPCAPBudget;
 extern UINT16 gusNPCMovementMode;
 extern UINT8 gubNPCDistLimit;

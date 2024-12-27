@@ -715,7 +715,7 @@ INVTYPE Item[MAXITEMS] = {
 
 typedef struct {
   UINT16 usItem;
-  UINT32 uiItemClass;
+  uint32_t uiItemClass;
   INT8 bAttachmentSkillCheck;
   INT8 bAttachmentSkillCheckMod;
 } AttachmentInfoStruct;
@@ -1214,7 +1214,7 @@ UINT8 ItemSlotLimit(UINT16 usItem, INT8 bSlot) {
   }
 }
 
-UINT32 MoneySlotLimit(INT8 bSlot) {
+uint32_t MoneySlotLimit(INT8 bSlot) {
   if (bSlot >= SMALLPOCK1POS) {
     return (MAX_MONEY_PER_SLOT / 2);
   } else {
@@ -1302,7 +1302,7 @@ INT8 FindObjInObjRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem1, UINT16 usIt
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
+INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   INT8 bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -1313,7 +1313,7 @@ INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
   return (NO_SLOT);
 }
 
-INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, UINT32 usItemClass) {
+INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, uint32_t usItemClass) {
   INT8 bLoop;
 
   for (bLoop = bStartAfter + 1; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -1324,7 +1324,7 @@ INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, UINT3
   return (NO_SLOT);
 }
 
-INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
+INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   // finds the first object of the specified class which does NOT have
   // the "unusable by AI" flag set.
 
@@ -1348,7 +1348,7 @@ INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
   return (NO_SLOT);
 }
 
-INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass, INT8 bLower,
+INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass, INT8 bLower,
                                 INT8 bUpper) {
   INT8 bLoop;
 
@@ -1447,7 +1447,7 @@ INT8 FindAttachment(struct OBJECTTYPE *pObj, UINT16 usItem) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, UINT32 uiItemClass) {
+INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass) {
   INT8 bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
@@ -1840,9 +1840,9 @@ UINT8 CalculateObjectWeight(struct OBJECTTYPE *pObject) {
   return ((UINT8)usWeight);
 }
 
-UINT32 CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiTotalWeight = 0;
-  UINT32 uiPercent;
+uint32_t CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier) {
+  uint32_t uiTotalWeight = 0;
+  uint32_t uiPercent;
   UINT8 ubLoop;
   UINT16 usWeight;
   UINT8 ubStrengthForCarrying;
@@ -2468,7 +2468,7 @@ INT8 GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
 
 void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, INT8 bAttachmentComboMerge) {
   INT8 bAttachLoop, bAttachPos;
-  UINT32 uiStatusTotal = 0;
+  uint32_t uiStatusTotal = 0;
   INT8 bNumStatusContributors = 0;
 
   // This object has been validated as available for an attachment combo merge.
@@ -2903,7 +2903,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
     if ((pObj->usItem == pInSlot->usItem) &&
         (Item[pObj->usItem].usItemClass != IC_KEY || pObj->ubKeyID == pInSlot->ubKeyID)) {
       if (Item[pObj->usItem].usItemClass == IC_MONEY) {
-        UINT32 uiMoneyMax = MoneySlotLimit(bPos);
+        uint32_t uiMoneyMax = MoneySlotLimit(bPos);
 
         // always allow money to be combined!
         // IGNORE STATUS!
@@ -3397,16 +3397,16 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
 #else
 
 #ifdef AI_TIMING_TESTS
-extern UINT32 guiGreenTimeTotal, guiYellowTimeTotal, guiRedTimeTotal, guiBlackTimeTotal;
-extern UINT32 guiGreenCounter, guiYellowCounter, guiRedCounter, guiBlackCounter;
-extern UINT32 guiRedSeekTimeTotal, guiRedHelpTimeTotal, guiRedHideTimeTotal;
-extern UINT32 guiRedSeekCounter, guiRedHelpCounter;
+extern uint32_t guiGreenTimeTotal, guiYellowTimeTotal, guiRedTimeTotal, guiBlackTimeTotal;
+extern uint32_t guiGreenCounter, guiYellowCounter, guiRedCounter, guiBlackCounter;
+extern uint32_t guiRedSeekTimeTotal, guiRedHelpTimeTotal, guiRedHideTimeTotal;
+extern uint32_t guiRedSeekCounter, guiRedHelpCounter;
 guiRedHideCounter;
 #endif
 
 void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   /*
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for ( uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++ )
   {
@@ -3437,7 +3437,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   }
   */
 
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop <= HISTORY_MERC_KILLED_CHARACTER; uiLoop++) {
     switch (uiLoop) {
@@ -3494,8 +3494,8 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   }
 
   /*
-  UINT32		uiEntryTime, uiExitTime;
-  UINT32		uiLoop;
+  uint32_t		uiEntryTime, uiExitTime;
+  uint32_t		uiLoop;
 
   for ( uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++ )
   {
@@ -3511,7 +3511,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   }
   */
   /*
-                  UINT32	 uiLoop;
+                  uint32_t	 uiLoop;
 
                   for ( uiLoop = 0; uiLoop <= 4; uiLoop++ )
                   {
@@ -3520,9 +3520,9 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
                   }
                   */
   /*
-          UINT32	uiLoop;
+          uint32_t	uiLoop;
           INT16		sGridNo;
-          UINT32	uiStartTime, uiEndTime;
+          uint32_t	uiStartTime, uiEndTime;
 
           if (GetMouseMapPos( &sGridNo ))
           {
@@ -3660,7 +3660,7 @@ UINT16 RandomMagazine(UINT16 usItem, UINT8 ubPercentStandard) {
         ubMagChosen = 0;
       } else {
         // pick a non-standard type instead
-        ubMagChosen = (UINT8)(1 + Random((UINT32)(usPossibleMagCnt - 1)));
+        ubMagChosen = (UINT8)(1 + Random((uint32_t)(usPossibleMagCnt - 1)));
       }
 
       return (MagazineClassIndexToItemType(usPossibleMagIndex[ubMagChosen]));
@@ -3793,7 +3793,7 @@ BOOLEAN CreateItems(UINT16 usItem, INT8 bStatus, UINT8 ubNumber, struct OBJECTTY
   return (FALSE);
 }
 
-BOOLEAN CreateMoney(UINT32 uiMoney, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateMoney(uint32_t uiMoney, struct OBJECTTYPE *pObj) {
   BOOLEAN fOk;
 
   fOk = CreateItem(MONEY, 100, pObj);
@@ -4053,7 +4053,7 @@ BOOLEAN RemoveObjectFromSoldierProfile(UINT8 ubProfile, UINT16 usItem) {
   return (fReturnVal);
 }
 
-void SetMoneyInSoldierProfile(UINT8 ubProfile, UINT32 uiMoney) {
+void SetMoneyInSoldierProfile(UINT8 ubProfile, uint32_t uiMoney) {
   // INT8						bSlot;
   struct OBJECTTYPE Object;
   // struct SOLDIERTYPE *		pSoldier;
@@ -4174,7 +4174,7 @@ BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround)
             break;
         }
         if (Item[pObject->usItem].usItemClass == IC_AMMO) {
-          if (PreRandom(100) < (UINT32)bDamage) {
+          if (PreRandom(100) < (uint32_t)bDamage) {
             // destroy clip completely
             pObject->bStatus[bLoop] = 1;
           }
@@ -4358,7 +4358,7 @@ void SwapOutHandItem(struct SOLDIERTYPE *pSoldier) {
 void WaterDamage(struct SOLDIERTYPE *pSoldier) {
   // damage guy's equipment and camouflage due to water
   INT8 bLoop, bDamage, bDieSize;
-  UINT32 uiRoll;
+  uint32_t uiRoll;
 
   if (pSoldier->bOverTerrainType == DEEP_WATER) {
     for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -4530,9 +4530,9 @@ BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLE
   return (TRUE);
 }
 
-UINT32 ConvertProfileMoneyValueToObjectTypeMoneyValue(UINT8 ubStatus) { return (ubStatus * 50); }
+uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(UINT8 ubStatus) { return (ubStatus * 50); }
 
-UINT8 ConvertObjectTypeMoneyValueToProfileMoneyValue(UINT32 uiMoneyAmount) {
+UINT8 ConvertObjectTypeMoneyValueToProfileMoneyValue(uint32_t uiMoneyAmount) {
   return ((UINT8)(uiMoneyAmount / 50));
 }
 
@@ -4555,7 +4555,7 @@ BOOLEAN ItemIsCool(struct OBJECTTYPE *pObj) {
 
 void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2;
-  UINT32 uiSlot;
+  uint32_t uiSlot;
   INT8 bBatteries;
 
   // check for batteries
@@ -4601,7 +4601,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
 
 void TurnOffXRayEffects(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2;
-  UINT32 uiSlot;
+  uint32_t uiSlot;
 
   if (!pSoldier->uiXRayActivatedTime) {
     return;

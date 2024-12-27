@@ -54,7 +54,7 @@
 #define CLOCK_Y 459
 SGPRect gOldClippingRect, gOldDirtyClippingRect;
 
-UINT32 guiTacticalInterfaceFlags;
+uint32_t guiTacticalInterfaceFlags;
 
 UINT16 gusUICurIntTileEffectIndex;
 INT16 gsUICurIntTileEffectGridNo;
@@ -70,7 +70,7 @@ extern INT16 gfUIOverItemPoolGridNo;
 extern BOOLEAN gfInMovementMenu;
 extern BOOLEAN gfInItemPickupMenu;
 extern BOOLEAN gfInOpenDoorMenu;
-extern UINT32 guiUIMessageTimeDelay;
+extern uint32_t guiUIMessageTimeDelay;
 
 BOOLEAN gfPausedTacticalRenderInterfaceFlags = FALSE;
 BOOLEAN gfPausedTacticalRenderFlags = FALSE;
@@ -81,7 +81,7 @@ extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTT
                                                    BOOLEAN fReset);
 extern BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool);
 
-void SetTacticalInterfaceFlags(UINT32 uiFlags) { guiTacticalInterfaceFlags = uiFlags; }
+void SetTacticalInterfaceFlags(uint32_t uiFlags) { guiTacticalInterfaceFlags = uiFlags; }
 
 void HandleTacticalPanelSwitch() {
   if (gfSwitchPanel) {
@@ -338,14 +338,14 @@ void ResetInterface() {
 
 extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
 
-UINT32 guiColors[12] = {FROMRGB(198, 163, 0), FROMRGB(185, 150, 0), FROMRGB(172, 136, 0),
-                        FROMRGB(159, 123, 0), FROMRGB(146, 110, 0), FROMRGB(133, 96, 0),
-                        FROMRGB(120, 83, 0),  FROMRGB(133, 96, 0),  FROMRGB(146, 110, 0),
-                        FROMRGB(159, 123, 0), FROMRGB(172, 136, 0), FROMRGB(185, 150, 0)};
+uint32_t guiColors[12] = {FROMRGB(198, 163, 0), FROMRGB(185, 150, 0), FROMRGB(172, 136, 0),
+                          FROMRGB(159, 123, 0), FROMRGB(146, 110, 0), FROMRGB(133, 96, 0),
+                          FROMRGB(120, 83, 0),  FROMRGB(133, 96, 0),  FROMRGB(146, 110, 0),
+                          FROMRGB(159, 123, 0), FROMRGB(172, 136, 0), FROMRGB(185, 150, 0)};
 
 void RenderRubberBanding() {
   UINT16 usLineColor;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   INT16 iLeft, iRight, iTop, iBottom;
   INT32 iBack = -1;
@@ -445,8 +445,8 @@ void RenderRubberBanding() {
 
 void RenderTopmostTacticalInterface() {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 cnt;
-  static UINT32 uiBogTarget = 0;
+  uint32_t cnt;
+  static uint32_t uiBogTarget = 0;
   VOBJECT_DESC VObjectDesc;
   INT16 sX, sY;
   INT16 sOffsetX, sOffsetY, sTempY_S, sTempX_S;

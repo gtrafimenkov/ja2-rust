@@ -77,8 +77,8 @@ BOOLEAN fDirtyRectangleMode = FALSE;
 UINT16 *gpFPSBuffer = NULL;
 // MarkNote
 // extern ScrollStringStPtr pStringS=NULL;
-UINT32 counter = 0;
-UINT32 count = 0;
+uint32_t counter = 0;
+uint32_t count = 0;
 BOOLEAN gfTacticalDoHeliRun = FALSE;
 BOOLEAN gfPlayAttnAfterMapLoad = FALSE;
 
@@ -91,7 +91,7 @@ BOOLEAN gfExitToNewSector = FALSE;
 
 BOOLEAN gfGameScreenLocateToSoldier = FALSE;
 BOOLEAN gfEnteringMapScreen = FALSE;
-UINT32 uiOldMouseCursor;
+uint32_t uiOldMouseCursor;
 UINT8 gubPreferredInitialSelectedGuy = NOBODY;
 
 BOOLEAN gfTacticalIsModal = FALSE;
@@ -115,14 +115,14 @@ RENDER_HOOK gRenderOverride = NULL;
 
 void TacticalScreenLocateToSoldier();
 
-UINT32 guiTacticalLeaveScreenID;
+uint32_t guiTacticalLeaveScreenID;
 BOOLEAN guiTacticalLeaveScreen = FALSE;
 
 void HandleModalTactical();
 extern void CheckForDisabledRegionRemove();
 extern void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce);
 
-UINT32 MainGameScreenInit(void) {
+uint32_t MainGameScreenInit(void) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   gpZBuffer = InitZBuffer(1280, 480);
@@ -166,7 +166,7 @@ UINT32 MainGameScreenInit(void) {
 // The ShutdownGame function will free up/undo all things that were started in InitializeGame()
 // It will also be responsible to making sure that all Gaming Engine tasks exit properly
 
-UINT32 MainGameScreenShutdown(void) {
+uint32_t MainGameScreenShutdown(void) {
   ShutdownZBuffer(gpZBuffer);
   ShutdownBackgroundRects();
 
@@ -268,12 +268,12 @@ void EnterTacticalScreen() {
   EnableScrollMessages();
 }
 
-void LeaveTacticalScreen(UINT32 uiNewScreen) {
+void LeaveTacticalScreen(uint32_t uiNewScreen) {
   guiTacticalLeaveScreenID = uiNewScreen;
   guiTacticalLeaveScreen = TRUE;
 }
 
-void InternalLeaveTacticalScreen(UINT32 uiNewScreen) {
+void InternalLeaveTacticalScreen(uint32_t uiNewScreen) {
   gpCustomizableTimerCallback = NULL;
 
   // unload the sector they teleported out of
@@ -337,8 +337,8 @@ extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
 extern BOOLEAN gfDoDialogOnceGameScreenFadesIn;
 #endif
 
-UINT32 MainGameScreenHandle(void) {
-  UINT32 uiNewScreen = GAME_SCREEN;
+uint32_t MainGameScreenHandle(void) {
+  uint32_t uiNewScreen = GAME_SCREEN;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
   // This determines if the help screen should be active

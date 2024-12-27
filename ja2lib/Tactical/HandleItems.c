@@ -70,7 +70,7 @@
 #define MIN_LOB_RANGE 6
 
 ITEM_POOL_LOCATOR FlashItemSlots[NUM_ITEM_FLASH_SLOTS];
-UINT32 guiNumFlashItemSlots = 0;
+uint32_t guiNumFlashItemSlots = 0;
 
 struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel);
 INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sFontX, INT16 sFontY,
@@ -292,7 +292,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
             if (pSoldier->bTeam == gbPlayerNum) {
               PlayJA2Sample(RG_ID_INVALID, RATE_11025, HIGHVOLUME, 1, MIDDLE);
 
-              // if (Random( 100 ) < (UINT32) pSoldier->bWisdom)
+              // if (Random( 100 ) < (uint32_t) pSoldier->bWisdom)
               //{
               //	DoMercBattleSound( pSoldier, BATTLE_SOUND_CURSE1 );
               //}
@@ -1994,7 +1994,7 @@ BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, IN
   return (FALSE);
 }
 
-INT32 GetItemOfClassTypeInPool(INT16 sGridNo, UINT32 uiItemClass, UINT8 ubLevel) {
+INT32 GetItemOfClassTypeInPool(INT16 sGridNo, uint32_t uiItemClass, UINT8 ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
 
@@ -2498,7 +2498,7 @@ BOOLEAN GetItemPool(UINT16 usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLeve
 }
 
 void NotifySoldiersToLookforItems() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
@@ -2511,7 +2511,7 @@ void NotifySoldiersToLookforItems() {
 }
 
 void AllSoldiersLookforItems(BOOLEAN fShowLocators) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
@@ -2853,7 +2853,7 @@ void SetItemPoolLocatorWithCallback(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCAT
 /// ITEM POOL INDICATOR FUNCTIONS
 
 INT32 GetFreeFlashItemSlot(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumFlashItemSlots; uiCount++) {
     if ((FlashItemSlots[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
@@ -2869,7 +2869,7 @@ void RecountFlashItemSlots(void) {
 
   for (uiCount = guiNumFlashItemSlots - 1; (uiCount >= 0); uiCount--) {
     if ((FlashItemSlots[uiCount].fAllocated)) {
-      guiNumFlashItemSlots = (UINT32)(uiCount + 1);
+      guiNumFlashItemSlots = (uint32_t)(uiCount + 1);
       break;
     }
   }
@@ -2895,7 +2895,7 @@ INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callb
 }
 
 BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   CHECKF(pItemPool != NULL);
 
@@ -2918,7 +2918,7 @@ BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool) {
 }
 
 void HandleFlashingItems() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct ITEM_POOL *pItemPool;
   struct LEVELNODE *pObject;
   ITEM_POOL_LOCATOR *pLocator;
@@ -2947,7 +2947,7 @@ void HandleFlashingItems() {
 
           // Update radio locator
           {
-            UINT32 uiClock;
+            uint32_t uiClock;
 
             uiClock = GetJA2Clock();
 
@@ -3004,7 +3004,7 @@ void HandleFlashingItems() {
 }
 
 void RenderTopmostFlashingItems() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct ITEM_POOL *pItemPool;
   ITEM_POOL_LOCATOR *pLocator;
 
@@ -3445,7 +3445,7 @@ BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
     // if it's still usable, check whether it breaks
     if (pObj->bStatus[0] >= USABLE) {
       // if a dice roll is greater than the item's status
-      if ((Random(80) + 20) >= (UINT32)(pObj->bStatus[0] + 50)) {
+      if ((Random(80) + 20) >= (uint32_t)(pObj->bStatus[0] + 50)) {
         fItemJustBroke = TRUE;
         fItemWorks = FALSE;
 
@@ -3775,8 +3775,8 @@ BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   // BOOLEAN fWorthChecking = FALSE, fProblemExists = FALSE, fDetectedProblem = FALSE;
   UINT8 ubDetectLevel, ubDirection;
   MAP_ELEMENT *pMapElement;
-  UINT32 fCheckFlag;
-  UINT32 uiWorldBombIndex;
+  uint32_t fCheckFlag;
+  uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
   BOOLEAN fMining, fFoundMetal = FALSE;
   //	struct ITEM_POOL *			pItemPool;
@@ -4104,7 +4104,7 @@ void HandleItemGlowFlag(INT16 sGridNo, UINT8 ubLevel, BOOLEAN fOn) {
 }
 
 void ToggleItemGlow(BOOLEAN fOn) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     HandleItemGlowFlag((INT16)cnt, 0, fOn);
@@ -4171,7 +4171,7 @@ BOOLEAN ContinuePastBoobyTrapInMapScreen(struct OBJECTTYPE *pObject, struct SOLD
 
 // Well, clears all item pools
 void ClearAllItemPools() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     RemoveItemPool((INT16)cnt, 0);

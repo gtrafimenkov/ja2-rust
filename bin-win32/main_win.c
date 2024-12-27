@@ -41,7 +41,7 @@
 
 extern BOOLEAN gfPauseDueToPlayerGamePause;
 
-extern void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
+extern void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam);
 
 // Prototype Declarations
 
@@ -59,7 +59,7 @@ void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine);
 RECT rcWindow;
 #endif
 
-UINT32 guiMouseWheelMsg;  // For mouse wheel messages
+uint32_t guiMouseWheelMsg;  // For mouse wheel messages
 
 BOOLEAN gfApplicationActive;
 BOOLEAN gfProgramIsRunning;

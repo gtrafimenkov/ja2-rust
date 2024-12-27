@@ -96,9 +96,9 @@ void ReadInDistancesBetweenTowns(void);
 
 /* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
 // delayed town loyalty event
-void HandleDelayedTownLoyaltyEvent( UINT32 uiValue );
+void HandleDelayedTownLoyaltyEvent( uint32_t uiValue );
 // build loyalty event value
-UINT32 BuildLoyaltyEventValue( TownID bTownId, UINT32 uiValue, BOOLEAN fIncrement );
+uint32_t BuildLoyaltyEventValue( TownID bTownId, uint32_t uiValue, BOOLEAN fIncrement );
 */
 
 BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile);
@@ -116,8 +116,8 @@ INT32 IsTownUnderCompleteControlByPlayer(TownID bTownId);
 void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, UINT8 ubHowMany);
 
 // these are used to handle global loyalty events (ones that effect EVERY town on the map)
-void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease);
-void DecrementTownLoyaltyEverywhere(UINT32 uiLoyaltyDecrease);
+void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease);
+void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease);
 void HandleGlobalLoyaltyEvent(UINT8 ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          INT8 bSectorZ);

@@ -21,7 +21,7 @@ void UseSingleCharWordsForWordWrap(BOOLEAN fUseSingleCharWords) {
   gfUseSingleCharWordsForWordWrap = fUseSingleCharWords;
 }
 
-WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixels,
+WRAPPED_STRING *LineWrapForSingleCharWords(uint32_t ulFont, UINT16 usLineWidthPixels,
                                            UINT16 *pusLineWidthIfWordIsWiderThenWidth,
                                            STR16 pString, ...) {
   WRAPPED_STRING FirstWrappedString;
@@ -127,7 +127,7 @@ WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixe
   return (FirstWrappedString.pNextWrappedString);
 }
 
-WRAPPED_STRING *LineWrap(UINT32 ulFont, UINT16 usLineWidthPixels,
+WRAPPED_STRING *LineWrap(uint32_t ulFont, UINT16 usLineWidthPixels,
                          UINT16 *pusLineWidthIfWordIsWiderThenWidth, STR16 pString, ...) {
   WRAPPED_STRING FirstWrappedString;
   WRAPPED_STRING *pWrappedString = NULL;
@@ -319,8 +319,8 @@ WRAPPED_STRING *LineWrap(UINT32 ulFont, UINT16 usLineWidthPixels,
 //
 
 UINT16 DisplayWrappedString(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT8 ubGap,
-                            UINT32 uiFont, UINT8 ubColor, STR16 pString, UINT8 ubBackGroundColor,
-                            BOOLEAN fDirty, UINT32 uiFlags) {
+                            uint32_t uiFont, UINT8 ubColor, STR16 pString, UINT8 ubBackGroundColor,
+                            BOOLEAN fDirty, uint32_t uiFlags) {
   WRAPPED_STRING *pFirstWrappedString, *pTempWrappedString;
   UINT16 uiCounter = 0;
   UINT16 usLineWidthIfWordIsWiderThenWidth = 0;
@@ -386,8 +386,8 @@ UINT16 DeleteWrappedString(WRAPPED_STRING *pWrappedString) {
 //			do you want to display it using dirty rects, TRUE or FALSE
 //			flags for either LEFT_JUSTIFIED, CENTER_JUSTIFIED, RIGHT_JUSTIFIED
 
-BOOLEAN DrawTextToScreen(STR16 pStr, UINT16 usLocX, UINT16 usLocY, UINT16 usWidth, UINT32 ulFont,
-                         UINT8 ubColor, UINT8 ubBackGroundColor, BOOLEAN fDirty, UINT32 ulFlags) {
+BOOLEAN DrawTextToScreen(STR16 pStr, UINT16 usLocX, UINT16 usLocY, UINT16 usWidth, uint32_t ulFont,
+                         UINT8 ubColor, UINT8 ubBackGroundColor, BOOLEAN fDirty, uint32_t ulFlags) {
   INT16 usPosX, usPosY;
   UINT16 usFontHeight = 0;
   UINT16 usStringWidth = 0;
@@ -459,12 +459,12 @@ BOOLEAN DrawTextToScreen(STR16 pStr, UINT16 usLocX, UINT16 usLocY, UINT16 usWidt
 //
 
 UINT16 IanDisplayWrappedString(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT8 ubGap,
-                               UINT32 uiFont, UINT8 ubColor, STR16 pString, UINT8 ubBackGroundColor,
-                               BOOLEAN fDirty, UINT32 uiFlags) {
+                               uint32_t uiFont, UINT8 ubColor, STR16 pString,
+                               UINT8 ubBackGroundColor, BOOLEAN fDirty, uint32_t uiFlags) {
   UINT16 usSourceCounter = 0, usDestCounter = 0, usWordLengthPixels, usLineLengthPixels = 0,
          usPhraseLengthPixels = 0;
   UINT16 usLinesUsed = 1, usLocalWidth = usWidth;
-  UINT32 uiLocalFont = uiFont;
+  uint32_t uiLocalFont = uiFont;
   UINT16 usJustification = LEFT_JUSTIFIED, usLocalPosX = usPosX;
   UINT8 ubLocalColor = ubColor;
   BOOLEAN fBoldOn = FALSE;
@@ -948,13 +948,13 @@ void CleanOutControlCodesFromString(STR16 pSourceString, STR16 pDestString) {
 
 INT16 IanDisplayWrappedStringToPages(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
                                      UINT16 usPageHeight, UINT16 usTotalHeight, UINT16 usPageNumber,
-                                     UINT8 ubGap, UINT32 uiFont, UINT8 ubColor, STR16 pString,
-                                     UINT8 ubBackGroundColor, BOOLEAN fDirty, UINT32 uiFlags,
+                                     UINT8 ubGap, uint32_t uiFont, UINT8 ubColor, STR16 pString,
+                                     UINT8 ubBackGroundColor, BOOLEAN fDirty, uint32_t uiFlags,
                                      BOOLEAN *fOnLastPageFlag) {
   UINT16 usSourceCounter = 0, usDestCounter = 0, usWordLengthPixels, usLineLengthPixels = 0,
          usPhraseLengthPixels = 0;
   UINT16 usLinesUsed = 1, usLocalWidth = usWidth;
-  UINT32 uiLocalFont = uiFont;
+  uint32_t uiLocalFont = uiFont;
   UINT16 usJustification = LEFT_JUSTIFIED, usLocalPosX = usPosX;
   UINT8 ubLocalColor = ubColor;
   BOOLEAN fBoldOn = FALSE;
@@ -1253,12 +1253,12 @@ INT16 IanDisplayWrappedStringToPages(UINT16 usPosX, UINT16 usPosY, UINT16 usWidt
 
 // now variant for grabbing height
 UINT16 IanWrappedStringHeight(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT8 ubGap,
-                              UINT32 uiFont, UINT8 ubColor, STR16 pString, UINT8 ubBackGroundColor,
-                              BOOLEAN fDirty, UINT32 uiFlags) {
+                              uint32_t uiFont, UINT8 ubColor, STR16 pString,
+                              UINT8 ubBackGroundColor, BOOLEAN fDirty, uint32_t uiFlags) {
   UINT16 usSourceCounter = 0, usDestCounter = 0, usWordLengthPixels, usLineLengthPixels = 0,
          usPhraseLengthPixels = 0;
   UINT16 usLinesUsed = 1, usLocalWidth = usWidth;
-  UINT32 uiLocalFont = uiFont;
+  uint32_t uiLocalFont = uiFont;
   UINT16 usJustification = LEFT_JUSTIFIED, usLocalPosX = usPosX;
   BOOLEAN fBoldOn = FALSE;
   CHAR16 zLineString[640] = L"", zWordString[640] = L"";
@@ -1510,7 +1510,7 @@ UINT16 IanWrappedStringHeight(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT
 }
 
 BOOLEAN WillThisStringGetCutOff(INT32 iTotalYPosition, INT32 iBottomOfPage, INT32 iWrapWidth,
-                                UINT32 uiFont, STR16 pString, INT32 iGap, INT32 iPage) {
+                                uint32_t uiFont, STR16 pString, INT32 iGap, INT32 iPage) {
   BOOLEAN fGetCutOff = FALSE;
   INT32 iHeight;
   // Will return if this string will get cut off
@@ -1526,7 +1526,7 @@ BOOLEAN WillThisStringGetCutOff(INT32 iTotalYPosition, INT32 iBottomOfPage, INT3
 }
 
 BOOLEAN IsThisStringBeforeTheCurrentPage(INT32 iTotalYPosition, INT32 iPageSize, INT32 iCurrentPage,
-                                         INT32 iWrapWidth, UINT32 uiFont, STR16 pString,
+                                         INT32 iWrapWidth, uint32_t uiFont, STR16 pString,
                                          INT32 iGap) {
   // check to see if the current string will appear on the current page
   BOOLEAN fBeforeCurrentPage = FALSE;
@@ -1543,7 +1543,8 @@ BOOLEAN IsThisStringBeforeTheCurrentPage(INT32 iTotalYPosition, INT32 iPageSize,
 }
 
 INT32 GetNewTotalYPositionOfThisString(INT32 iTotalYPosition, INT32 iPageSize, INT32 iCurrentPage,
-                                       INT32 iWrapWidth, UINT32 uiFont, STR16 pString, INT32 iGap) {
+                                       INT32 iWrapWidth, uint32_t uiFont, STR16 pString,
+                                       INT32 iGap) {
   INT32 iNewYPosition = 0;
   // will returnt he new total y value of this string
 
@@ -1553,8 +1554,9 @@ INT32 GetNewTotalYPositionOfThisString(INT32 iTotalYPosition, INT32 iPageSize, I
   return (iNewYPosition);
 }
 
-void ShadowText(UINT32 uiDestVSurface, STR16 pString, UINT32 uiFont, UINT16 usPosX, UINT16 usPosY) {
-  UINT32 uiLength = StringPixLength(pString, uiFont);
+void ShadowText(uint32_t uiDestVSurface, STR16 pString, uint32_t uiFont, UINT16 usPosX,
+                UINT16 usPosY) {
+  uint32_t uiLength = StringPixLength(pString, uiFont);
   UINT16 usFontHeight = WFGetFontHeight(uiFont);
 
   ShadowVideoSurfaceRect(uiDestVSurface, usPosX, usPosY, usPosX + uiLength + 1,
@@ -1562,8 +1564,8 @@ void ShadowText(UINT32 uiDestVSurface, STR16 pString, UINT32 uiFont, UINT16 usPo
 }
 
 // for email
-RecordPtr GetFirstRecordOnThisPage(RecordPtr RecordList, UINT32 uiFont, UINT16 usWidth, UINT8 ubGap,
-                                   INT32 iPage, INT32 iPageSize) {
+RecordPtr GetFirstRecordOnThisPage(RecordPtr RecordList, uint32_t uiFont, UINT16 usWidth,
+                                   UINT8 ubGap, INT32 iPage, INT32 iPageSize) {
   // get the first record on this page - build pages up until this point
 
   RecordPtr CurrentRecord = NULL;
@@ -1608,7 +1610,7 @@ RecordPtr GetFirstRecordOnThisPage(RecordPtr RecordList, UINT32 uiFont, UINT16 u
 }
 
 // for file viewer
-FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, UINT32 uiFont, UINT16 usWidth,
+FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, uint32_t uiFont, UINT16 usWidth,
                                        UINT8 ubGap, INT32 iPage, INT32 iPageSize,
                                        FileRecordWidthPtr WidthList) {
   // get the first record on this page - build pages up until this point
@@ -1687,16 +1689,17 @@ FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, UINT32 uiFont, 
   return (CurrentRecord);
 }
 
-BOOLEAN ReduceStringLength(STR16 pString, size_t bufSize, UINT32 uiWidthToFitIn, UINT32 uiFont) {
+BOOLEAN ReduceStringLength(STR16 pString, size_t bufSize, uint32_t uiWidthToFitIn,
+                           uint32_t uiFont) {
   wchar_t OneChar[2];
   CHAR16 zTemp[1024];
   wchar_t zStrDots[16];
-  UINT32 uiDotWidth;
-  UINT32 uiTempStringPixWidth = 0;
-  UINT32 uiStringPixWidth;
+  uint32_t uiDotWidth;
+  uint32_t uiTempStringPixWidth = 0;
+  uint32_t uiStringPixWidth;
   BOOLEAN fDone = FALSE;
-  UINT32 uiSrcStringCntr = 0;
-  UINT32 uiOneCharWidth = 0;
+  uint32_t uiSrcStringCntr = 0;
+  uint32_t uiOneCharWidth = 0;
 
   uiStringPixWidth = WFStringPixLength(pString, uiFont);
 

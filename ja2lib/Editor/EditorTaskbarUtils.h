@@ -47,15 +47,15 @@ void DisableEditorRegion(INT8 bRegionID);
 // Rendering Utils
 void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...);
 void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
-void DrawEditorInfoBox(STR16 str, UINT32 uiFont, UINT16 x, UINT16 y, UINT16 w, UINT16 h);
+void DrawEditorInfoBox(STR16 str, uint32_t uiFont, UINT16 x, UINT16 y, UINT16 w, UINT16 h);
 
 extern INT32 giEditMercDirectionIcons[2];
-extern UINT32 guiMercInventoryPanel;
-extern UINT32 guiOmertaMap;
-extern UINT32 guiExclamation;
-extern UINT32 guiKeyImage;
-extern UINT32 guiMercInvPanelBuffers[9];
-extern UINT32 guiMercTempBuffer;
+extern uint32_t guiMercInventoryPanel;
+extern uint32_t guiOmertaMap;
+extern uint32_t guiExclamation;
+extern uint32_t guiKeyImage;
+extern uint32_t guiMercInvPanelBuffers[9];
+extern uint32_t guiMercTempBuffer;
 extern INT32 giEditMercImage[2];
 
 #endif

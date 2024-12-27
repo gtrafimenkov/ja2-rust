@@ -29,7 +29,7 @@ void EndModalTactical();
 // handle the entrance of the mercs at the beginning of the game
 void InitHelicopterEntranceByMercs(void);
 
-void LeaveTacticalScreen(UINT32 uiNewScreen);
-void InternalLeaveTacticalScreen(UINT32 uiNewScreen);
+void LeaveTacticalScreen(uint32_t uiNewScreen);
+void InternalLeaveTacticalScreen(uint32_t uiNewScreen);
 
 #endif

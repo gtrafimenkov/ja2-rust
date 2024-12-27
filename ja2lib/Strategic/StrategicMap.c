@@ -131,7 +131,7 @@ INT16 gsAdjacentSectorX, gsAdjacentSectorY;
 INT8 gbAdjacentSectorZ;
 struct GROUP *gpAdjacentGroup = NULL;
 UINT8 gubAdjacentJumpCode;
-UINT32 guiAdjacentTraverseTime;
+uint32_t guiAdjacentTraverseTime;
 UINT8 gubTacticalDirection;
 INT16 gsAdditionalData;
 UINT16 gusDestExitGridNo;
@@ -254,7 +254,7 @@ void DoneFadeOutExitGridSector(void);
 
 INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection);
 INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection,
-                         UINT32 *puiNumAttempts);
+                         uint32_t *puiNumAttempts);
 
 void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ);
 void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup);
@@ -280,28 +280,28 @@ extern INT16 gsAINumElites;
 extern INT16 gsAINumCreatures;
 // The wrapper time for EnterSector
 BOOLEAN fStartNewFile = TRUE;
-UINT32 uiEnterSectorStartTime;
-UINT32 uiEnterSectorEndTime;
+uint32_t uiEnterSectorStartTime;
+uint32_t uiEnterSectorEndTime;
 // The grand total time for loading a map
-UINT32 uiLoadWorldStartTime;
-UINT32 uiLoadWorldEndTime;
+uint32_t uiLoadWorldStartTime;
+uint32_t uiLoadWorldEndTime;
 // The time spent in FileMan_Read
-UINT32 uiTotalFileReadTime;
-UINT32 uiTotalFileReadCalls;
+uint32_t uiTotalFileReadTime;
+uint32_t uiTotalFileReadCalls;
 // LoadWorld and parts
-UINT32 uiLoadWorldTime;
-UINT32 uiTrashWorldTime;
-UINT32 uiLoadMapTilesetTime;
-UINT32 uiLoadMapLightsTime;
-UINT32 uiBuildShadeTableTime;
-UINT32 uiNumTablesSaved;
-UINT32 uiNumTablesLoaded;
-UINT32 uiNumImagesReloaded;
+uint32_t uiLoadWorldTime;
+uint32_t uiTrashWorldTime;
+uint32_t uiLoadMapTilesetTime;
+uint32_t uiLoadMapLightsTime;
+uint32_t uiBuildShadeTableTime;
+uint32_t uiNumTablesSaved;
+uint32_t uiNumTablesLoaded;
+uint32_t uiNumImagesReloaded;
 
 #include "TileEngine/TileDat.h"
 #endif
 
-UINT32 UndergroundTacticalTraversalTime(
+uint32_t UndergroundTacticalTraversalTime(
     INT8 bExitDirection) {  // We are attempting to traverse in an underground environment.  We need
                             // to use a complete different
   // method.  When underground, all sectors are instantly adjacent.
@@ -324,9 +324,9 @@ UINT32 UndergroundTacticalTraversalTime(
 
 void BeginLoadScreen() {
   SGPRect SrcRect, DstRect;
-  UINT32 uiStartTime, uiCurrTime;
+  uint32_t uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
-  UINT32 uiTimeRange;
+  uint32_t uiTimeRange;
   UINT8 ubLoadScreenID;
 
   SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);
@@ -350,9 +350,9 @@ void BeginLoadScreen() {
       // Factor the percentage so that it is modified by a gravity falling acceleration effect.
       iFactor = (iPercentage - 50) * 2;
       if (iPercentage < 50)
-        iPercentage = (UINT32)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
+        iPercentage = (uint32_t)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
       else
-        iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
+        iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
 
       if (iPercentage > 50) {
         // iFactor = (iPercentage - 50) * 2;
@@ -419,10 +419,10 @@ void EndLoadScreen() {
   // time it takes to load the map.
   CHAR16 str[60];
   FILE *fp;
-  UINT32 uiSeconds;
-  UINT32 uiHundreths;
-  UINT32 uiUnaccounted;
-  UINT32 uiPercentage;
+  uint32_t uiSeconds;
+  uint32_t uiHundreths;
+  uint32_t uiUnaccounted;
+  uint32_t uiPercentage;
   uiEnterSectorEndTime = GetJA2Clock();
   uiSeconds = (uiEnterSectorEndTime - uiEnterSectorStartTime) / 1000;
   uiHundreths = ((uiEnterSectorEndTime - uiEnterSectorStartTime) / 10) % 100;
@@ -660,7 +660,7 @@ void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY) {
 extern UINT8 NumEnemyInSector();
 
 void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
-  UINT32 cnt;
+  uint32_t cnt;
   UINT8 ubSectorDescription[33][3] = {
       // row (letter), column, quote #
       {2, 13, 0},  // b13	Drassen
@@ -1992,7 +1992,7 @@ void JumpIntoAdjacentSector(UINT8 ubTacticalDirection, UINT8 ubJumpCode, INT16 s
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pValidSoldier = NULL;
   struct GROUP *pGroup;
-  UINT32 uiTraverseTime = 0;
+  uint32_t uiTraverseTime = 0;
   UINT8 ubDirection;
   EXITGRID ExitGrid;
   INT8 bPrevAssignment;
@@ -2444,11 +2444,11 @@ void AllMercsHaveWalkedOffSector() {
     if (guiAdjacentTraverseTime <= 5) {
       // Case 2:  Immediatly loading the next sector
       if (!gbAdjacentSectorZ) {
-        UINT32 uiWarpTime;
+        uint32_t uiWarpTime;
         uiWarpTime = (GetWorldTotalMin() + 5) * 60 - GetWorldTotalSeconds();
         WarpGameTime(uiWarpTime, WARPTIME_PROCESS_TARGET_TIME_FIRST);
       } else if (gbAdjacentSectorZ > 0) {
-        UINT32 uiWarpTime;
+        uint32_t uiWarpTime;
         uiWarpTime = (GetWorldTotalMin() + 1) * 60 - GetWorldTotalSeconds();
         WarpGameTime(uiWarpTime, WARPTIME_PROCESS_TARGET_TIME_FIRST);
       }
@@ -2511,7 +2511,7 @@ void DoneFadeOutAdjacentSector() {
   if (gpAdjacentGroup->fPlayer) {
     // For player groups, update the soldier information
     PLAYERGROUP *curr;
-    UINT32 uiAttempts;
+    uint32_t uiAttempts;
     INT16 sGridNo, sOldGridNo;
     UINT8 ubNum = 0;
     INT16 sWorldX, sWorldY;
@@ -2654,7 +2654,7 @@ BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection
 // ATE: Returns FALSE if NOBODY is close enough, 1 if ONLY selected guy is and 2 if all on squad
 // are...
 BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
-                        UINT32 *puiTraverseTimeInMinutes) {
+                        uint32_t *puiTraverseTimeInMinutes) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fAtLeastOneMercControllable = FALSE;
@@ -3053,8 +3053,8 @@ BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
 }
 
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
-  UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
+  uint32_t uiNumBytesWritten = 0;
+  uint32_t uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
 
   // Save the strategic map information
   FileMan_Write(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
@@ -3095,8 +3095,8 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead = 0;
-  UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
+  uint32_t uiNumBytesRead = 0;
+  uint32_t uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
 
   // Load the strategic map information
   FileMan_Read(hFile, StrategicMap, uiSize, &uiNumBytesRead);
@@ -3142,7 +3142,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirect
   INT16 sGridNo, sStartGridNo, sOldGridNo;
   INT8 bOdd = 1, bOdd2 = 1;
   UINT8 bAdjustedDist = 0;
-  UINT32 cnt;
+  uint32_t cnt;
 
   switch (ubTacticalDirection) {
     case EAST:
@@ -3500,11 +3500,11 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
 }
 
 INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection,
-                         UINT32 *puiNumAttempts) {
+                         uint32_t *puiNumAttempts) {
   INT16 sGridNo, sStartGridNo, sOldGridNo;
   INT8 bOdd = 1, bOdd2 = 1;
   UINT8 bAdjustedDist = 0;
-  UINT32 cnt;
+  uint32_t cnt;
 
   *puiNumAttempts = 0;
 

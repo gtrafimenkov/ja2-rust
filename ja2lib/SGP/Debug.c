@@ -11,7 +11,7 @@ BOOLEAN gfRecordToFile = FALSE;
 BOOLEAN gfRecordToDebugger = TRUE;
 
 // moved from header file: 24mar98:HJH
-UINT32 guiProfileStart, guiExecutions, guiProfileTime;
+uint32_t guiProfileStart, guiExecutions, guiProfileTime;
 INT32 giProfileCount;
 
 // Had to move these outside the ifdef SGP_DEBUG below, because
@@ -66,7 +66,7 @@ UINT16 TOPIC_BLIT_QUEUE = INVALID_TOPIC;
 UINT16 TOPIC_JA2OPPLIST = INVALID_TOPIC;
 UINT16 TOPIC_JA2AI = INVALID_TOPIC;
 
-// UINT32 guiTimerID = 0;
+// uint32_t guiTimerID = 0;
 // UINT8 guiDebugLevels[NUM_TOPIC_IDS];  // don't change this, Luis!!!!
 
 // BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
@@ -293,11 +293,11 @@ void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char 
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 // // Wiz8 compatible debug messaging
 
-void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
   printf("%s [Line %d in %s]\n", pString, uiLineNum, pSourceFile);
 }
 
-// void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+// void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
 //   char ubOutputString[512];
 // #ifndef _NO_DEBUG_TXT
 //   FILE *DebugFile;
@@ -335,11 +335,11 @@ void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 
 // extern struct VObject* FontObjs[25];
 
-void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
   printf("Assertion Failure [Line %d in %s]\n", uiLineNum, pSourceFile);
 }
 
-// void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+// void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
 //   MSG Message;
 //   char ubOutputString[512];
 // #ifndef _NO_DEBUG_TXT

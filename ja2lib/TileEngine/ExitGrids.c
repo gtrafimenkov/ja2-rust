@@ -133,7 +133,7 @@ void SaveExitGrids(HWFILE fp, UINT16 usNumExitGrids) {
   EXITGRID exitGrid;
   UINT16 usNumSaved = 0;
   UINT16 x;
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
   FileMan_Write(fp, &usNumExitGrids, 2, &uiBytesWritten);
   for (x = 0; x < WORLD_MAX; x++) {
     if (GetExitGrid(x, &exitGrid)) {

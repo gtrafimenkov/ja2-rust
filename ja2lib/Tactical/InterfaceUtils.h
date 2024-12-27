@@ -12,15 +12,15 @@ struct SOLDIERTYPE;
 #define DRAW_ITEM_STATUS_ATTACHMENT4 203
 
 void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                       INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer);
+                       INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer);
 void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                       INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer);
+                       INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer);
 void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                     INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer);
+                     INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer);
 
 void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos,
                      INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
-                     UINT32 uiBuffer);
+                     uint32_t uiBuffer);
 
 void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY, BOOLEAN fAutoFace);
 

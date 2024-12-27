@@ -355,7 +355,7 @@ typedef struct rgbcolor RGBCOLOR;
 
 struct lineoftext {
   STR16 pLineText;
-  UINT32 uiFont;
+  uint32_t uiFont;
   struct lineoftext *pNext;
 };
 
@@ -531,7 +531,7 @@ INT32 giSortStateForMapScreenList = 0;
 INT32 giCommonGlowBaseTime = 0;
 INT32 giFlashAssignBaseTime = 0;
 INT32 giFlashContractBaseTime = 0;
-UINT32 guiFlashCursorBaseTime = 0;
+uint32_t guiFlashCursorBaseTime = 0;
 INT32 giPotCharPathBaseTime = 0;
 
 /*
@@ -541,8 +541,8 @@ INT32 giMapInvNext;
 INT32 giMapInvPrevImage;
 INT32 giMapInvNextImage;
 */
-extern UINT32 guiVObjectSize;
-extern UINT32 guiVSurfaceSize;
+extern uint32_t guiVObjectSize;
+extern uint32_t guiVSurfaceSize;
 
 extern UINT8 gubHandPos;
 extern UINT16 gusOldItemIndex;
@@ -551,15 +551,15 @@ extern BOOLEAN gfDeductPoints;
 
 extern void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj);
 
-UINT32 guiCHARLIST;
-UINT32 guiCHARINFO;
-UINT32 guiSleepIcon;
-UINT32 guiCROSS;
-UINT32 guiMAPINV;
-UINT32 guiMapInvSecondHandBlockout;
-UINT32 guiULICONS;
-UINT32 guiNewMailIcons;
-UINT32 guiLEVELMARKER;  // the white rectangle highlighting the current level on the map border
+uint32_t guiCHARLIST;
+uint32_t guiCHARINFO;
+uint32_t guiSleepIcon;
+uint32_t guiCROSS;
+uint32_t guiMAPINV;
+uint32_t guiMapInvSecondHandBlockout;
+uint32_t guiULICONS;
+uint32_t guiNewMailIcons;
+uint32_t guiLEVELMARKER;  // the white rectangle highlighting the current level on the map border
 
 // misc mouse regions
 struct MOUSE_REGION gCharInfoFaceRegion;
@@ -596,19 +596,19 @@ extern BOOLEAN gfOneFramePauseOnExit;
 extern INT32 iDialogueBox;
 extern INT32 giMapInvDescButton;
 
-extern UINT32 guiBrownBackgroundForTeamPanel;
+extern uint32_t guiBrownBackgroundForTeamPanel;
 
 // the town mine info box
 extern INT32 ghTownMineBox;
 // border and bottom buttons
 extern INT32 giMapBorderButtons[];
-extern UINT32 guiMapButtonInventory[];
+extern uint32_t guiMapButtonInventory[];
 
 // the mine icon
-extern UINT32 guiMINEICON;
-extern UINT32 guiSecItemHiddenVO;
+extern uint32_t guiMINEICON;
+extern uint32_t guiSecItemHiddenVO;
 
-extern UINT32 guiUIMessageTimeDelay;
+extern uint32_t guiUIMessageTimeDelay;
 
 extern struct path *pTempCharacterPath;
 extern struct path *pTempHelicopterPath;
@@ -630,7 +630,7 @@ extern FACETYPE *gpCurrentTalkingFace;
 // extern BOOLEAN	gfFacePanelActive;
 
 // externs for highlighting of ammo/weapons
-extern UINT32 guiMouseOverItemTime;
+extern uint32_t guiMouseOverItemTime;
 extern BOOLEAN gfCheckForMouseOverItem;
 extern INT8 gbCheckForMouseOverItemPos;
 
@@ -640,7 +640,7 @@ extern INT16 gsCiviliansEatenByMonsters;
 
 extern BOOLEAN gfFadeOutDone;
 
-extern UINT32 guiPendingScreen;
+extern uint32_t guiPendingScreen;
 
 extern CHAR16 gzUserDefinedButton1[128];
 extern CHAR16 gzUserDefinedButton2[128];
@@ -655,15 +655,15 @@ extern INT16 MSYS_CurrentMY;
 // PROTOTYPES
 
 // basic input
-void GetMapKeyboardInput(UINT32 *puiNewEvent);
-void PollLeftButtonInMapView(UINT32 *puiNewEvent);
-void PollRightButtonInMapView(UINT32 *puiNewEvent);
+void GetMapKeyboardInput(uint32_t *puiNewEvent);
+void PollLeftButtonInMapView(uint32_t *puiNewEvent);
+void PollRightButtonInMapView(uint32_t *puiNewEvent);
 
 // background render
 void BlitBackgroundToSaveBuffer(void);
 
 // Drawing the Map
-UINT32 HandleMapUI();
+uint32_t HandleMapUI();
 void RenderMapCursorsIndexesAnims(void);
 BOOLEAN GetMapXY(INT16 sX, INT16 sY, INT16 *psMapWorldX, INT16 *psMapWorldY);
 BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY);
@@ -677,7 +677,7 @@ void MonitorMapUIMessage(void);
 void RenderMapHighlight(INT16 sMapX, INT16 sMapY, UINT16 usLineColor, BOOLEAN fStationary);
 void ShadeMapElem(INT16 sMapX, INT16 sMapY);
 void PopupText(CHAR16 *pFontString, ...);
-void DrawString(STR16 pString, UINT16 uiX, UINT16 uiY, UINT32 uiFont);
+void DrawString(STR16 pString, UINT16 uiX, UINT16 uiY, uint32_t uiFont);
 
 // Clock
 void SetClock(STR16 pString);
@@ -687,7 +687,7 @@ void SetHourAlternate(STR16 pStringA, ...);
 void SetDayAlternate(STR16 pStringA, ...);
 
 void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber);
-void RenderAttributeStringsForUpperLeftHandCorner(UINT32 uiBufferToRenderTo);
+void RenderAttributeStringsForUpperLeftHandCorner(uint32_t uiBufferToRenderTo);
 
 void DisplayThePotentialPathForCurrentDestinationCharacterForMapScreenInterface(INT16 sMapX,
                                                                                 INT16 sMapY);
@@ -751,7 +751,7 @@ void HandleCharBarRender(void);
 // rebuild waypoints for selected character list
 void RebuildWayPointsForAllSelectedCharsGroups(void);
 
-extern BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, UINT32 uiHandPos,
+extern BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, uint32_t uiHandPos,
                                      UINT16 usReplaceItem);
 
 BOOLEAN CharacterIsInTransitAndHasItemPickedUp(INT8 bCharacterNumber);
@@ -897,7 +897,7 @@ BOOLEAN HandleCtrlOrShiftInTeamPanel(INT8 bCharNumber);
 
 INT32 GetContractExpiryTime(struct SOLDIERTYPE *pSoldier);
 
-void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString, size_t bufSize);
+void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, size_t bufSize);
 INT32 GetGroundTravelTimeOfCharacter(INT8 bCharNumber);
 
 INT16 CalcLocationValueForChar(INT32 iCounter);
@@ -1011,7 +1011,7 @@ void ContractBoxGlow(void) {
    static BOOLEAN fDelta=FALSE;
    static BOOLEAN fOldContractGlow = FALSE;
    UINT16 usColor;
-   UINT32 uiDestPitchBYTES;
+   uint32_t uiDestPitchBYTES;
    UINT8	*pDestBuf;
 
 
@@ -1074,7 +1074,7 @@ void ContractListRegionBoxGlow(UINT16 usCount) {
   static INT32 iColorNum = 10;
   static BOOLEAN fDelta = FALSE;
   UINT16 usColor;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   INT16 usY = 0;
   INT16 sYAdd = 0;
@@ -1133,7 +1133,7 @@ void GlowFace(void) {
   static BOOLEAN fDelta = FALSE;
   static BOOLEAN fOldFaceGlow = FALSE;
   UINT16 usColor;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // not glowing right now, leave
@@ -1184,7 +1184,7 @@ void GlowItem(void) {
   static BOOLEAN fDelta = FALSE;
   static BOOLEAN fOldItemGlow = FALSE;
   UINT16 usColor;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // not glowing right now, leave
@@ -1236,7 +1236,7 @@ void GlowTrashCan(void) {
   static INT32 iColorNum = 10;
   static BOOLEAN fOldTrashCanGlow = FALSE;
   UINT16 usColor;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   if (fShowInventoryFlag == FALSE) {
@@ -1384,7 +1384,7 @@ void DrawPay(INT16 sCharNumber) {
   usMercProfileID = MercPtrs[gCharactersList[sCharNumber].usSolID]->ubProfile;
 
   // grab salary
-  uiSalary = ((UINT32)gMercProfiles[usMercProfileID].sSalary);
+  uiSalary = ((uint32_t)gMercProfiles[usMercProfileID].sSalary);
 
   // font stuff
   SetFontForeground(CHAR_TITLE_FONT_COLOR);
@@ -1652,7 +1652,7 @@ void DrawCharStats(INT16 sCharNum) {
 }
 
 void DrawCharHealth(INT16 sCharNum) {
-  UINT32 uiHealthPercent = 0;
+  uint32_t uiHealthPercent = 0;
   wchar_t sString[9];
   INT16 usX, usY;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -1730,7 +1730,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
   INT32 iTimeRemaining = 0;
   INT32 iDailyCost = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
-  UINT32 uiArrivalTime;
+  uint32_t uiArrivalTime;
 
   if (gCharactersList[sCharNumber].fValid == FALSE) {
     return;
@@ -2149,7 +2149,7 @@ INT32 GetPathTravelTimeDuringPlotting(struct path *pPath) {
 }
 
 void DisplayGroundEta(void) {
-  UINT32 iTotalTime = 0;
+  uint32_t iTotalTime = 0;
 
   if (fPlotForHelicopter == TRUE) {
     return;
@@ -2184,7 +2184,7 @@ void DisplayGroundEta(void) {
 }
 
 void HighLightAssignLine() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor;
   static INT32 iColorNum = STARTING_COLOR_NUM;
@@ -2267,7 +2267,7 @@ void HighLightAssignLine() {
 }
 
 void HighLightDestLine() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor;
   static INT32 iColorNum = STARTING_COLOR_NUM;
@@ -2345,7 +2345,7 @@ void HighLightDestLine() {
 }
 
 void HighLightSleepLine() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor;
   static INT32 iColorNum = STARTING_COLOR_NUM;
@@ -2594,7 +2594,7 @@ void DisplayCharacterList() {
 }
 
 // THIS IS STUFF THAT RUNS *ONCE* DURING APPLICATION EXECUTION, AT INITIAL STARTUP
-UINT32 MapScreenInit(void) {
+uint32_t MapScreenInit(void) {
   VOBJECT_DESC VObjectDesc;
 
   SetUpBadSectorsList();
@@ -2622,7 +2622,7 @@ UINT32 MapScreenInit(void) {
   return TRUE;
 }
 
-UINT32 MapScreenShutdown(void) {
+uint32_t MapScreenShutdown(void) {
   // free up alloced mapscreen messages
   FreeGlobalMessageList();
 
@@ -2637,8 +2637,8 @@ UINT32 MapScreenShutdown(void) {
   return TRUE;
 }
 
-UINT32 MapScreenHandle(void) {
-  UINT32 uiNewScreen;
+uint32_t MapScreenHandle(void) {
+  uint32_t uiNewScreen;
   VSURFACE_DESC vs_desc;
   VOBJECT_DESC VObjectDesc;
   //	static BOOLEAN fSecondFrame = FALSE;
@@ -3540,7 +3540,7 @@ UINT32 MapScreenHandle(void) {
   return (MAP_SCREEN);
 }
 
-void DrawString(STR16 pString, UINT16 uiX, UINT16 uiY, UINT32 uiFont) {
+void DrawString(STR16 pString, UINT16 uiX, UINT16 uiY, uint32_t uiFont) {
   // draw monochrome string
   SetFont(uiFont);
   gprintfdirty(uiX, uiY, pString);
@@ -3726,7 +3726,7 @@ void DrawLocation(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont) {
 
   // draw string
   DrawString(sString, ((UINT16)(usX)), ((UINT16)(usY + (Y_OFFSET * sRowIndex + 1))),
-             ((UINT32)iFont));
+             ((uint32_t)iFont));
 }
 
 void DrawDestination(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont) {
@@ -3755,7 +3755,7 @@ void DrawDestination(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont) {
   // DEST_ETA_WIDTH-1, Y_SIZE);
   // ShowDestinationOfPlottedPath( sString );
   DrawString(sString, ((UINT16)(usX)), ((UINT16)(usY + (Y_OFFSET * sRowIndex + 1))),
-             ((UINT32)iFont));
+             ((uint32_t)iFont));
 }
 
 void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, UINT8 ubFontColor) {
@@ -3787,14 +3787,14 @@ void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, UINT8 ubFontColor) {
   // RestoreExternBackgroundRect(TIME_REMAINING_X, ((UINT16)(usY+(Y_OFFSET*sCharNumber+1))),
   // TIME_REMAINING_WIDTH, Y_SIZE);
   DrawString(sString, ((UINT16)(usX)), ((UINT16)(usY + (Y_OFFSET * sCharNumber + 1))),
-             ((UINT32)iFont));
+             ((uint32_t)iFont));
 }
 
 void RenderMapCursorsIndexesAnims() {
   BOOLEAN fSelectedSectorHighlighted = FALSE;
   BOOLEAN fSelectedCursorIsYellow = TRUE;
   UINT16 usCursorColor;
-  UINT32 uiDeltaTime;
+  uint32_t uiDeltaTime;
   static INT16 sPrevHighlightedMapX = -1, sPrevHighlightedMapY = -1;
   static INT16 sPrevSelectedMapX = -1, sPrevSelectedMapY = -1;
   static BOOLEAN fFlashCursorIsYellow = FALSE;
@@ -3903,11 +3903,11 @@ void RenderMapCursorsIndexesAnims() {
   }
 }
 
-UINT32 HandleMapUI() {
-  UINT32 uiNewEvent = MAP_EVENT_NONE;
+uint32_t HandleMapUI() {
+  uint32_t uiNewEvent = MAP_EVENT_NONE;
   INT16 sMapX = 0, sMapY = 0;
   INT16 sX, sY;
-  UINT32 uiNewScreen = MAP_SCREEN;
+  uint32_t uiNewScreen = MAP_SCREEN;
   BOOLEAN fWasAlreadySelected;
 
   // Get Input from keyboard
@@ -4202,7 +4202,7 @@ UINT32 HandleMapUI() {
   return (uiNewScreen);
 }
 
-void GetMapKeyboardInput(UINT32 *puiNewEvent) {
+void GetMapKeyboardInput(uint32_t *puiNewEvent) {
   InputAtom InputEvent;
   INT8 bSquadNumber;
   UINT8 ubGroupId = 0;
@@ -4949,7 +4949,7 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
 #ifdef JA2TESTVERSION
         {
           if (fAlt) {
-            UINT32 uiCnt;
+            uint32_t uiCnt;
             // initialize miners if not already done so (fakes entering Drassen mine first)
             HandleQuestCodeOnSectorEntry(13, 4, 0);
             // test running out
@@ -5263,7 +5263,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
 
   if (!gfDontStartTransitionFromLaptop) {
     VOBJECT_DESC VObjectDesc;
-    UINT32 uiLaptopOn;
+    uint32_t uiLaptopOn;
 
     // Load a tiny graphic of the on screen and draw it to the buffer.
     PlayJA2SampleFromFile("SOUNDS\\Initial Power Up (8-11).wav", RATE_11025, HIGHVOLUME, 1,
@@ -5339,7 +5339,7 @@ BOOLEAN GetMapXY(INT16 sX, INT16 sY, INT16 *psMapWorldX, INT16 *psMapWorldY) {
 
 void RenderMapHighlight(INT16 sMapX, INT16 sMapY, UINT16 usLineColor, BOOLEAN fStationary) {
   INT16 sScreenX, sScreenY;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   Assert((sMapX >= 1) && (sMapX <= 16));
@@ -5368,7 +5368,7 @@ void RenderMapHighlight(INT16 sMapX, INT16 sMapY, UINT16 usLineColor, BOOLEAN fS
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void PollLeftButtonInMapView(UINT32 *puiNewEvent) {
+void PollLeftButtonInMapView(uint32_t *puiNewEvent) {
   static BOOLEAN fLBBeenPressedInMapView = FALSE;
   INT16 sMapX, sMapY;
 
@@ -5466,7 +5466,7 @@ void PollLeftButtonInMapView(UINT32 *puiNewEvent) {
   fJustFinishedPlotting = FALSE;
 }
 
-void PollRightButtonInMapView(UINT32 *puiNewEvent) {
+void PollRightButtonInMapView(uint32_t *puiNewEvent) {
   static BOOLEAN fRBBeenPressedInMapView = FALSE;
   INT16 sMapX, sMapY;
 
@@ -5570,7 +5570,7 @@ void PollRightButtonInMapView(UINT32 *puiNewEvent) {
 
 void PopupText(CHAR16 *pFontString, ...) {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   va_list argptr;
   INT16 sX, sY;
   wchar_t PopupString[512];
@@ -5686,7 +5686,7 @@ void CreateDestroyMapInvButton() {
 }
 
 void BltCharInvPanel() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT16 *pDestBuf;
   struct VObject *hCharListHandle;
   struct SOLDIERTYPE *pSoldier;
@@ -5810,7 +5810,7 @@ void MAPInvMoveCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {}
 // this is Map Screen's version of SMInvMoveCallback()
 void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiHandPos;
+  uint32_t uiHandPos;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
@@ -5865,7 +5865,7 @@ BOOLEAN MAPInternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, UINT8 ubSt
 // this is Map Screen's version of SMInvClickCallback()
 void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiHandPos;
+  uint32_t uiHandPos;
   UINT16 usOldItemIndex, usNewItemIndex;
   static BOOLEAN fRightDown = FALSE;
 
@@ -6130,7 +6130,7 @@ void HandleMapInventoryCursor() {
 }
 
 // will place down the upper left hand corner attribute strings
-void RenderAttributeStringsForUpperLeftHandCorner(UINT32 uiBufferToRenderTo) {
+void RenderAttributeStringsForUpperLeftHandCorner(uint32_t uiBufferToRenderTo) {
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -8470,7 +8470,7 @@ void HandlePreBattleInterfaceWithInventoryPanelUp(void) {
 
 // this puts anyone who is on NO_ASSIGNMENT onto a free squad
 void UpdateBadAssignments(void) {
-  UINT32 iCounter;
+  uint32_t iCounter;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if (IsCharListEntryValid(iCounter)) {
@@ -8514,8 +8514,8 @@ void HandleContractTimeFlashForMercThatIsAboutLeave(void) {
 }
 
 BOOLEAN AnyMercsLeavingRealSoon() {
-  UINT32 uiCounter = 0;
-  UINT32 uiTimeInMin = GetWorldTotalMin();
+  uint32_t uiCounter = 0;
+  uint32_t uiTimeInMin = GetWorldTotalMin();
   BOOLEAN fFoundOne = FALSE;
 
   for (uiCounter = 0; uiCounter < MAX_CHARACTER_COUNT; uiCounter++) {
@@ -9346,7 +9346,7 @@ void CheckForAndRenderNewMailOverlay() {
         BltVideoObjectFromIndex(FRAME_BUFFER, guiNewMailIcons, 0, 464, 417, VO_BLT_SRCTRANSPARENCY,
                                 NULL);
         if (!(ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags & BUTTON_ENABLED)) {
-          UINT32 uiDestPitchBYTES;
+          uint32_t uiDestPitchBYTES;
           UINT8 *pDestBuf;
           SGPRect area = {463, 417, 477, 425};
 
@@ -9586,7 +9586,7 @@ void ChangeMapScreenMaskCursor(UINT16 usCursor) {
 
 void CancelOrShortenPlottedPath(void) {
   INT16 sMapX, sMapY;
-  UINT32 uiReturnValue;
+  uint32_t uiReturnValue;
 
   GetMouseMapXY(&sMapX, &sMapY);
 
@@ -9809,8 +9809,8 @@ void CancelPathsOfAllSelectedCharacters() {
   }
 }
 
-void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString, size_t bufSize) {
-  UINT32 uiDay, uiHour, uiMin;
+void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, size_t bufSize) {
+  uint32_t uiDay, uiHour, uiMin;
 
   uiDay = (uiTimeInMin / NUM_MIN_IN_DAY);
   uiHour = (uiTimeInMin - (uiDay * NUM_MIN_IN_DAY)) / NUM_MIN_IN_HOUR;

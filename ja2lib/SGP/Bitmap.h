@@ -34,11 +34,11 @@
 //**************************************************************************
 
 typedef struct sgpBmHeadertag {
-  UINT32 uiNumBytes;      //	number of bytes of the bitmap, including the
+  uint32_t uiNumBytes;    //	number of bytes of the bitmap, including the
                           // memory for all variables in this structure plus
                           // all the memory in bitmap
-  UINT32 uiWidth;         // width of bitmap in pixels
-  UINT32 uiHeight;        // height of bitmap in pixels
+  uint32_t uiWidth;       // width of bitmap in pixels
+  uint32_t uiHeight;      // height of bitmap in pixels
   UINT8 uiBitDepth;       // 8, 16, 24, or 32
   UINT8 uiNumPalEntries;  // if uiBitDepth is 8, non-zero, else 0
 } SGPBmHeader;

@@ -248,7 +248,7 @@ INT8 CalcBestCTGT(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo,
 }
 
 INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, INT32 iMyAPsLeft,
-                     UINT32 uiThreatIndex, INT32 iRange, INT32 morale, INT32 *iTotalScale) {
+                     uint32_t uiThreatIndex, INT32 iRange, INT32 morale, INT32 *iTotalScale) {
   // all 32-bit integers for max. speed
   INT32 iMyPosValue, iHisPosValue, iCoverValue;
   INT32 iReductionFactor, iThisScale;
@@ -482,7 +482,7 @@ UINT8 NumberOfTeamMatesAdjacent(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 
 INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piPercentBetter) {
   // all 32-bit integers for max. speed
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iCurrentCoverValue, iCoverValue, iBestCoverValue;
   INT32 iCurrentScale, iCoverScale, iBestCoverScale;
   INT32 iDistFromOrigin, iDistCoverFromOrigin, iThreatCertainty;
@@ -493,7 +493,7 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
   INT32 iMyThreatValue;
   INT16 sThreatLoc;
   INT32 iMaxThreatRange;
-  UINT32 uiThreatCnt = 0;
+  uint32_t uiThreatCnt = 0;
   INT32 iMaxMoveTilesLeft, iSearchRange, iRoamRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   UINT16 sOrigin;  // has to be a short, need a pointer
@@ -1005,10 +1005,10 @@ do
 INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   INT16 sGridNo;
   INT16 sBestSpot = NOWHERE;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iThreatRange, iClosestThreatRange = 1500, iSpotClosestThreatRange;
   INT16 sThreatLoc, sThreatGridNo[MAXMERCS];
-  UINT32 uiThreatCnt = 0;
+  uint32_t uiThreatCnt = 0;
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT8 *pbPersOL, *pbPublOL, bEscapeDirection, bBestEscapeDirection = -1;

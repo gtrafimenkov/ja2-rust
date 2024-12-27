@@ -11,7 +11,7 @@ struct VObject;
 void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow);
 // void DrawMapIndexSmallMap( BOOLEAN fSelectedCursorIsYellow );
 
-UINT32 DrawMap(void);
+uint32_t DrawMap(void);
 
 void GetScreenXYFromMapXY(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY);
 void GetScreenXYFromMapXYStationary(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY);
@@ -48,7 +48,7 @@ void DisplayHelicopterPath(void);
 void DisplayHelicopterTempPath(void);
 
 // clear path after this sector
-UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+uint32_t ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
 
 // cancel path : clear the path completely and gives player feedback message that the route was
 // canceled
@@ -60,7 +60,7 @@ void CancelPathForGroup(struct GROUP *pGroup);
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
 
 // clear out helicopter list after this sector
-UINT32 ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY);
+uint32_t ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY);
 
 // check to see if sector is highlightable
 BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
@@ -73,11 +73,11 @@ void RestoreBackgroundForMapGrid(INT16 sMapX, INT16 sMapY);
 
 // clip blits to map view region
 void ClipBlitsToMapViewRegion(void);
-void ClipBlitsToMapViewRegionForRectangleAndABit(UINT32 uiDestPitchBYTES);
+void ClipBlitsToMapViewRegionForRectangleAndABit(uint32_t uiDestPitchBYTES);
 
 // clip blits to full screen....restore after use of ClipBlitsToMapViewRegion( )
 void RestoreClipRegionToFullScreen(void);
-void RestoreClipRegionToFullScreenForRectangle(UINT32 uiDestPitchBYTES);
+void RestoreClipRegionToFullScreenForRectangle(uint32_t uiDestPitchBYTES);
 
 // show the icons for people in motion
 void ShowPeopleInMotion(INT16 sX, INT16 sY);
@@ -109,7 +109,7 @@ BOOLEAN DrawMilitiaPopUpBox(void);
 
 // Returns true if the player knows how many enemies are in the sector if that number is greater
 // than 0. Returns false for all other cases.
-UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY);
+uint32_t WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY);
 
 // There is a special case flag used when players encounter enemies in a sector, then retreat.  The
 // number of enemies will display on mapscreen until time is compressed.  When time is compressed,
@@ -192,22 +192,22 @@ extern INT16 gsHighlightSectorX;
 extern INT16 gsHighlightSectorY;
 
 // the big map
-extern UINT32 guiBIGMAP;
+extern uint32_t guiBIGMAP;
 
 // the orta icon
-extern UINT32 guiORTAICON;
+extern uint32_t guiORTAICON;
 
-extern UINT32 guiTIXAICON;
+extern uint32_t guiTIXAICON;
 
 // the character icons
-extern UINT32 guiCHARICONS;
+extern uint32_t guiCHARICONS;
 
 // the merc arrival sector landing zone icon
-extern UINT32 guiBULLSEYE;
+extern uint32_t guiBULLSEYE;
 
 // character between sector icons
-extern UINT32 guiCHARBETWEENSECTORICONS;
-extern UINT32 guiCHARBETWEENSECTORICONSCLOSE;
+extern uint32_t guiCHARBETWEENSECTORICONS;
+extern uint32_t guiCHARBETWEENSECTORICONSCLOSE;
 
 // the viewable map bound region
 extern SGPRect MapScreenRect;
@@ -228,7 +228,7 @@ extern INT8 bSelectedInfoChar;
 extern INT8 bSelectedContractChar;
 
 // map arrows graphical index value
-extern UINT32 guiMAPCURSORS;
+extern uint32_t guiMAPCURSORS;
 
 // has temp path for character path or helicopter been already drawn
 extern BOOLEAN fTempPathAlreadyDrawn;
@@ -237,10 +237,10 @@ extern BOOLEAN fTempPathAlreadyDrawn;
 extern SGPRect MapScreenRect;
 
 // the map border eta pop up
-extern UINT32 guiMapBorderEtaPopUp;
+extern uint32_t guiMapBorderEtaPopUp;
 
 // heli pop up
-extern UINT32 guiMapBorderHeliSectors;
+extern uint32_t guiMapBorderHeliSectors;
 
 // the currently selected town militia
 extern INT16 sSelectedMilitiaTown;
@@ -251,6 +251,6 @@ extern UINT16 sSelMapY;
 
 extern BOOLEAN fFoundTixa;
 
-extern UINT32 guiSubLevel1, guiSubLevel2, guiSubLevel3;
+extern uint32_t guiSubLevel1, guiSubLevel2, guiSubLevel3;
 
 #endif

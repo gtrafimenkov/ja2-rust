@@ -15,8 +15,8 @@
 #include "UI.h"
 #include "Utils/TimerControl.h"
 
-UINT32 uiMusicHandle = NO_SAMPLE;
-UINT32 uiMusicVolume = 50;
+uint32_t uiMusicHandle = NO_SAMPLE;
+uint32_t uiMusicVolume = 50;
 BOOLEAN fMusicPlaying = FALSE;
 BOOLEAN fMusicFadingOut = FALSE;
 BOOLEAN fMusicFadingIn = FALSE;
@@ -81,7 +81,7 @@ void MusicStopCallback(void *pData);
 //	Returns:	TRUE if the music was started, FALSE if an error occurred
 //
 //********************************************************************************
-BOOLEAN MusicPlay(UINT32 uiNum) {
+BOOLEAN MusicPlay(uint32_t uiNum) {
 #ifndef WINDOWED_MODE
 
   SOUNDPARMS spParms;
@@ -120,7 +120,7 @@ BOOLEAN MusicPlay(UINT32 uiNum) {
 //	Returns:	TRUE if the volume was set, FALSE if an error occurred
 //
 //********************************************************************************
-BOOLEAN MusicSetVolume(UINT32 uiVolume) {
+BOOLEAN MusicSetVolume(uint32_t uiVolume) {
   INT32 uiOldMusicVolume = uiMusicVolume;
 
 #ifndef WINDOWED_MODE
@@ -159,7 +159,7 @@ BOOLEAN MusicSetVolume(UINT32 uiVolume) {
 //	Returns:	TRUE if the volume was set, FALSE if an error occurred
 //
 //********************************************************************************
-UINT32 MusicGetVolume(void) { return (uiMusicVolume); }
+uint32_t MusicGetVolume(void) { return (uiMusicVolume); }
 
 //********************************************************************************
 // MusicStop
@@ -435,7 +435,7 @@ void MusicStopCallback(void *pData) {
 
 void SetMusicFadeSpeed(INT8 bFadeSpeed) { gbFadeSpeed = bFadeSpeed; }
 
-void FadeMusicForXSeconds(UINT32 uiDelay) {
+void FadeMusicForXSeconds(uint32_t uiDelay) {
   INT16 sNumTimeSteps, sNumVolumeSteps;
 
   // get # time steps in delay....

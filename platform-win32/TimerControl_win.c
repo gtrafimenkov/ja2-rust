@@ -10,15 +10,15 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-extern UINT32 guiBaseJA2Clock;
-extern UINT32 guiBaseJA2NoPauseClock;
+extern uint32_t guiBaseJA2Clock;
+extern uint32_t guiBaseJA2NoPauseClock;
 extern BOOLEAN gfPauseClock;
 extern INT32 giTimerAirRaidQuote;
 extern INT32 giTimerAirRaidDiveStarted;
 extern INT32 giTimerAirRaidUpdate;
 extern INT32 giTimerCustomizable;
 extern INT32 giTimerTeamTurnUpdate;
-extern UINT32 gCNT;
+extern uint32_t gCNT;
 extern struct SOLDIERTYPE *gPSOLDIER;
 
 MMRESULT gTimerID;

@@ -112,11 +112,12 @@ INT32 GetLastSquadActive(void);
 
 // set squads between sector position
 void SetSquadPositionBetweenSectors(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY,
-                                    UINT32 uiTraverseTime, UINT32 uiArriveTime, UINT8 ubSquadValue);
+                                    uint32_t uiTraverseTime, uint32_t uiArriveTime,
+                                    UINT8 ubSquadValue);
 
 // get squads between sector positions and times
 void GetSquadPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubPrevY,
-                      UINT32 *uiTraverseTime, UINT32 *uiArriveTime, UINT8 ubSquadValue);
+                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, UINT8 ubSquadValue);
 
 void ExamineCurrentSquadLights(void);
 

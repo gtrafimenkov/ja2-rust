@@ -75,10 +75,10 @@ BOOLEAN fWaitAFrame = FALSE;
 BOOLEAN fNewFilesInFileViewer = FALSE;
 
 // graphics handles
-UINT32 guiTITLE;
-UINT32 guiFileBack;
-UINT32 guiTOP;
-UINT32 guiHIGHLIGHT;
+uint32_t guiTITLE;
+uint32_t guiFileBack;
+uint32_t guiTOP;
+uint32_t guiHIGHLIGHT;
 
 // currewnt page of multipage files we are on
 INT32 giFilesPage = 0;
@@ -112,8 +112,8 @@ UINT16 usProfileIdsForTerroristFiles[] = {
     112,  // elgin
 };
 // buttons for next and previous pages
-UINT32 giFilesPageButtons[2];
-UINT32 giFilesPageButtonsImage[2];
+uint32_t giFilesPageButtons[2];
+uint32_t giFilesPageButtonsImage[2];
 
 // the previous and next pages buttons
 
@@ -128,8 +128,8 @@ struct MOUSE_REGION pFilesRegions[MAX_FILES_PAGE];
 void RenderFilesBackGround(void);
 BOOLEAN LoadFiles(void);
 void RemoveFiles(void);
-UINT32 ProcessAndEnterAFilesRecord(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
-                                   STR8 pSecondPicFile, BOOLEAN fRead);
+uint32_t ProcessAndEnterAFilesRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat,
+                                     STR8 pFirstPicFile, STR8 pSecondPicFile, BOOLEAN fRead);
 void OpenAndReadFilesFile(void);
 BOOLEAN OpenAndWriteFilesFile(void);
 void ClearFilesList(void);
@@ -169,12 +169,12 @@ FileRecordWidthPtr CreateWidthRecordsForTerroristFile(void);
 FileRecordWidthPtr CreateRecordWidth(INT32 iRecordNumber, INT32 iRecordWidth,
                                      INT32 iRecordHeightAdjustment, UINT8 ubFlags);
 
-UINT32 AddFilesToPlayersLog(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
-                            STR8 pSecondPicFile) {
+uint32_t AddFilesToPlayersLog(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
+                              STR8 pSecondPicFile) {
   // adds Files item to player's log(Files List), returns unique id number of it
   // outside of the Files system(the code in this .c file), this is the only function you'll ever
   // need
-  UINT32 uiId = 0;
+  uint32_t uiId = 0;
 
   // if not in Files mode, read in from file
   if (!fInFilesMode) OpenAndReadFilesFile();
@@ -349,9 +349,9 @@ void RemoveFiles(void) {
   return;
 }
 
-UINT32 ProcessAndEnterAFilesRecord(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
-                                   STR8 pSecondPicFile, BOOLEAN fRead) {
-  UINT32 uiId = 0;
+uint32_t ProcessAndEnterAFilesRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat,
+                                     STR8 pFirstPicFile, STR8 pSecondPicFile, BOOLEAN fRead) {
+  uint32_t uiId = 0;
   FilesUnitPtr pFiles = pFilesListHead;
 
   // add to Files list
@@ -435,9 +435,9 @@ void OpenAndReadFilesFile(void) {
   // this procedure will open and read in data to the finance list
   HWFILE hFileHandle;
   UINT8 ubCode;
-  UINT32 uiDate;
-  UINT32 iBytesRead = 0;
-  UINT32 uiByteCount = 0;
+  uint32_t uiDate;
+  uint32_t iBytesRead = 0;
+  uint32_t uiByteCount = 0;
   CHAR8 pFirstFilePath[128];
   CHAR8 pSecondFilePath[128];
   UINT8 ubFormat;
@@ -468,7 +468,7 @@ void OpenAndReadFilesFile(void) {
     // read in data
     FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
 
-    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
 
     FileMan_Read(hFileHandle, &pFirstFilePath, 128, &iBytesRead);
 
@@ -481,7 +481,7 @@ void OpenAndReadFilesFile(void) {
     ProcessAndEnterAFilesRecord(ubCode, uiDate, ubFormat, pFirstFilePath, pSecondFilePath, fRead);
 
     // increment byte counter
-    uiByteCount += sizeof(UINT32) + sizeof(UINT8) + 128 + 128 + sizeof(UINT8) + sizeof(BOOLEAN);
+    uiByteCount += sizeof(uint32_t) + sizeof(UINT8) + 128 + 128 + sizeof(UINT8) + sizeof(BOOLEAN);
   }
 
   // close file
@@ -520,7 +520,7 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   while (pFilesList) {
     // now write date and amount, and code
     FileMan_Write(hFileHandle, &(pFilesList->ubCode), sizeof(UINT8), NULL);
-    FileMan_Write(hFileHandle, &(pFilesList->uiDate), sizeof(UINT32), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->uiDate), sizeof(uint32_t), NULL);
     FileMan_Write(hFileHandle, &(pFirstFilePath), 128, NULL);
     FileMan_Write(hFileHandle, &(pSecondFilePath), 128, NULL);
     FileMan_Write(hFileHandle, &(pFilesList->ubFormat), sizeof(UINT8), NULL);
@@ -695,8 +695,8 @@ BOOLEAN DisplayFormattedText(void) {
   INT32 iMessageCode;
   wchar_t sString[2048];
   struct VObject *hHandle;
-  UINT32 uiFirstTempPicture;
-  UINT32 uiSecondTempPicture;
+  uint32_t uiFirstTempPicture;
+  uint32_t uiSecondTempPicture;
   VOBJECT_DESC VObjectDesc;
   INT16 usFreeSpace = 0;
 
@@ -735,7 +735,7 @@ BOOLEAN DisplayFormattedText(void) {
   iLength = ubFileRecordsLength[pFilesList->ubCode];
 
   if (pFilesList->ubFormat < ENRICO_BACKGROUND) {
-    LoadEncryptedDataFromFile("BINARYDATA\\Files.edt", sString, FILE_STRING_SIZE * (iOffSet)*2,
+    LoadEncryptedDataFromFile("BINARYDATA\\Files.edt", sString, FILE_STRING_SIZE * (iOffSet) * 2,
                               FILE_STRING_SIZE * iLength * 2);
   }
 
@@ -894,12 +894,12 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   INT32 iYPositionOnPage = 0;
   INT32 iFileLineWidth = 0;
   INT32 iFileStartX = 0;
-  UINT32 uiFlags = 0;
-  UINT32 uiFont = 0;
+  uint32_t uiFlags = 0;
+  uint32_t uiFont = 0;
   BOOLEAN fGoingOffCurrentPage = FALSE;
   FileRecordWidthPtr WidthList = NULL;
 
-  UINT32 uiPicture;
+  uint32_t uiPicture;
   struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
 
@@ -912,7 +912,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
       WidthList = CreateWidthRecordsForAruloIntelFile();
       while (iCounter < LENGTH_OF_ENRICO_FILE) {
-        LoadEncryptedDataFromFile("BINARYDATA\\RIS.EDT", sString, FILE_STRING_SIZE * (iCounter)*2,
+        LoadEncryptedDataFromFile("BINARYDATA\\RIS.EDT", sString, FILE_STRING_SIZE * (iCounter) * 2,
                                   FILE_STRING_SIZE * 2);
         AddStringToFilesList(sString);
         iCounter++;
@@ -1406,12 +1406,12 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
   INT32 iYPositionOnPage = 0;
   INT32 iFileLineWidth = 0;
   INT32 iFileStartX = 0;
-  UINT32 uiFlags = 0;
-  UINT32 uiFont = 0;
+  uint32_t uiFlags = 0;
+  uint32_t uiFont = 0;
   BOOLEAN fGoingOffCurrentPage = FALSE;
   FileRecordWidthPtr WidthList = NULL;
   INT32 iOffset = 0;
-  UINT32 uiPicture;
+  uint32_t uiPicture;
   struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   char sTemp[128];

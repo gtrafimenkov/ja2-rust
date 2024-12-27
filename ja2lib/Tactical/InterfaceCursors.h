@@ -189,8 +189,8 @@ typedef enum {
 } UICursorDefines;
 
 typedef struct {
-  UINT32 uiCursorID;
-  UINT32 uiFlags;
+  uint32_t uiCursorID;
+  uint32_t uiFlags;
   UINT16 usFreeCursorName;
   UINT16 usAdditionalData;
 
@@ -198,7 +198,7 @@ typedef struct {
 
 extern UICursor gUICursors[NUM_UI_CURSORS];
 
-BOOLEAN SetUICursor(UINT32 uiNewCursor);
+BOOLEAN SetUICursor(uint32_t uiNewCursor);
 BOOLEAN DrawUICursor();
 BOOLEAN HideUICursor();
 

@@ -831,7 +831,7 @@ UINT16 FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetG
   INT16 sGridNo;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
   struct SOLDIERTYPE soldier;
   UINT8 ubSaveNPCAPBudget;
   UINT8 ubSaveNPCDistLimit;
@@ -926,7 +926,7 @@ UINT16 FindRandomGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSold
   INT16 sGridNo;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
 
   do {
     sX = (UINT16)Random(ubRadius);

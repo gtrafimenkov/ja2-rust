@@ -77,7 +77,7 @@ void EndRadioLocator(UINT8 ubID);
 
 extern struct MOUSE_REGION gSMPanelRegion;
 
-extern UINT32 guiSecItemHiddenVO;
+extern uint32_t guiSecItemHiddenVO;
 
 extern BOOLEAN gfDisableTacticalPanelButtons;
 
@@ -104,7 +104,7 @@ void HandlePanelFaceAnimations(struct SOLDIERTYPE *pSoldier);
 
 void GoToMapScreenFromTactical(void);
 
-void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, UINT32 uiInvPos,
+void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, uint32_t uiInvPos,
                                             UINT16 usOldItem, UINT16 usNewItem);
 
 void FinishAnySkullPanelAnimations();

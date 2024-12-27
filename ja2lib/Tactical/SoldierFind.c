@@ -58,7 +58,7 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect);
 // This value is used to keep a small static array of uBID's which are stacked
 #define MAX_STACKED_MERCS 10
 
-UINT32 gScrollSlideInertiaDirection[NUM_WORLD_DIRECTIONS] = {
+uint32_t gScrollSlideInertiaDirection[NUM_WORLD_DIRECTIONS] = {
     3, 0, 0, 0, 0, 0, 3, 3,
 };
 
@@ -76,9 +76,9 @@ SOLDIER_STACK_TYPE gSoldierStack;
 BOOLEAN gfHandleStack = FALSE;
 
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
-extern UINT32 guiUITargetSoldierId;
+extern uint32_t guiUITargetSoldierId;
 
-BOOLEAN FindSoldierFromMouse(UINT16 *pusSoldierIndex, UINT32 *pMercFlags) {
+BOOLEAN FindSoldierFromMouse(UINT16 *pusSoldierIndex, uint32_t *pMercFlags) {
   INT16 sMapPos;
 
   *pMercFlags = 0;
@@ -92,7 +92,7 @@ BOOLEAN FindSoldierFromMouse(UINT16 *pusSoldierIndex, UINT32 *pMercFlags) {
   return (FALSE);
 }
 
-BOOLEAN SelectiveFindSoldierFromMouse(UINT16 *pusSoldierIndex, UINT32 *pMercFlags) {
+BOOLEAN SelectiveFindSoldierFromMouse(UINT16 *pusSoldierIndex, uint32_t *pMercFlags) {
   INT16 sMapPos;
 
   *pMercFlags = 0;
@@ -106,8 +106,8 @@ BOOLEAN SelectiveFindSoldierFromMouse(UINT16 *pusSoldierIndex, UINT32 *pMercFlag
   return (FALSE);
 }
 
-UINT32 GetSoldierFindFlags(UINT16 ubID) {
-  UINT32 MercFlags = 0;
+uint32_t GetSoldierFindFlags(UINT16 ubID) {
+  uint32_t MercFlags = 0;
   struct SOLDIERTYPE *pSoldier;
 
   // Get pSoldier!
@@ -164,8 +164,9 @@ extern BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObjec
                                                       INT32 iTextX, INT32 iTestY);
 
 // THIS FUNCTION IS CALLED FAIRLY REGULARLY
-BOOLEAN FindSoldier(INT16 sGridNo, UINT16 *pusSoldierIndex, UINT32 *pMercFlags, UINT32 uiFlags) {
-  UINT32 cnt;
+BOOLEAN FindSoldier(INT16 sGridNo, UINT16 *pusSoldierIndex, uint32_t *pMercFlags,
+                    uint32_t uiFlags) {
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   SGPRect aRect;
   BOOLEAN fSoldierFound = FALSE;
@@ -384,7 +385,7 @@ BOOLEAN FindSoldier(INT16 sGridNo, UINT16 *pusSoldierIndex, UINT32 *pMercFlags, 
 
 BOOLEAN CycleSoldierFindStack(UINT16 usMapPos) {
   UINT16 usSoldierIndex;
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
 
   // Have we initalized for this yet?
   if (!gfHandleStack) {
@@ -493,7 +494,7 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
   INT16 sMercScreenX, sMercScreenY;
   UINT16 usAnimSurface;
   //		ETRLEObject *pTrav;
-  //		UINT32 usHeight, usWidth;
+  //		uint32_t usHeight, usWidth;
 
   GetSoldierScreenPos(pSoldier, &sMercScreenX, &sMercScreenY);
 
@@ -508,8 +509,8 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
   }
 
   // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[
-  // pSoldier->usAniFrame ] ); usHeight				= (UINT32)pTrav->usHeight; usWidth
-  // = (UINT32)pTrav->usWidth;
+  // pSoldier->usAniFrame ] ); usHeight				= (uint32_t)pTrav->usHeight; usWidth
+  // = (uint32_t)pTrav->usWidth;
 
   pRect->iLeft = sMercScreenX;
   pRect->iTop = sMercScreenY;
@@ -676,7 +677,7 @@ BOOLEAN SoldierOnVisibleWorldTile(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, UINT16 usReasonID, INT8 *pbDirection,
-                                        UINT32 *puiScrollFlags) {
+                                        uint32_t *puiScrollFlags) {
   INT16 sWorldX;
   INT16 sWorldY;
   INT16 sY, sX;
@@ -803,7 +804,7 @@ BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, UINT16 *usFlag
 
 // VERY quickly finds a soldier at gridno , ( that is visible )
 UINT8 QuickFindSoldier(INT16 sGridNo) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // Loop through all mercs and make go

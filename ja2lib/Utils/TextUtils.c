@@ -5,9 +5,9 @@
 
 BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   HWFILE hFile;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   UINT16 i;
-  UINT32 uiStartSeekAmount;
+  uint32_t uiStartSeekAmount;
 
   hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
@@ -185,9 +185,9 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
 BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
   HWFILE hFile;
   //  wchar_t		DestString[ SIZE_MERC_BIO_INFO ];
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   UINT16 i;
-  UINT32 uiStartSeekAmount;
+  uint32_t uiStartSeekAmount;
 
   hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
@@ -298,7 +298,7 @@ STR16 GetWeightUnitString(void) {
   }
 }
 
-FLOAT GetWeightBasedOnMetricOption(UINT32 uiObjectWeight) {
+FLOAT GetWeightBasedOnMetricOption(uint32_t uiObjectWeight) {
   FLOAT fWeight = 0.0f;
 
   // if the user is smart and wants things displayed in 'metric'

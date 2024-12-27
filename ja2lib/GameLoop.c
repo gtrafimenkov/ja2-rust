@@ -34,13 +34,13 @@
 #include "Utils/TimerControl.h"
 #include "platform.h"
 
-UINT32 guiPendingScreen = NO_PENDING_SCREEN;
-UINT32 guiPreviousScreen = NO_PENDING_SCREEN;
+uint32_t guiPendingScreen = NO_PENDING_SCREEN;
+uint32_t guiPreviousScreen = NO_PENDING_SCREEN;
 
 #define DONT_CHECK_FOR_FREE_SPACE 255
 UINT8 gubCheckForFreeSpaceOnHardDriveCount = DONT_CHECK_FOR_FREE_SPACE;
 
-extern BOOLEAN DoSkiMessageBox(UINT8 ubStyle, STR16 zString, UINT32 uiExitScreen, UINT8 ubFlags,
+extern BOOLEAN DoSkiMessageBox(UINT8 ubStyle, STR16 zString, uint32_t uiExitScreen, UINT8 ubFlags,
                                MSGBOX_CALLBACK ReturnCallback);
 extern void NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack(UINT8 bExitValue);
 extern BOOLEAN gfTacticalPlacementGUIActive;
@@ -50,7 +50,7 @@ extern BOOLEAN gfInMsgBox;
 
 // callback to confirm game is over
 void EndGameMessageBoxCallBack(UINT8 bExitValue);
-void HandleNewScreenChange(UINT32 uiNewScreen, UINT32 uiOldScreen);
+void HandleNewScreenChange(uint32_t uiNewScreen, uint32_t uiOldScreen);
 
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
@@ -84,7 +84,7 @@ void ReportMapscreenErrorLock() {
 #endif
 
 BOOLEAN InitializeGame(void) {
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
   ClearAllDebugTopics();
   RegisterJA2DebugTopic(TOPIC_JA2OPPLIST, "Reg");
@@ -155,7 +155,7 @@ void ShutdownGame(void) {
 
 void GameLoop(void) {
   InputAtom InputEvent;
-  UINT32 uiOldScreen = guiCurrentScreen;
+  uint32_t uiOldScreen = guiCurrentScreen;
 
   struct Point MousePos = GetMousePoint();
   // Hook into mouse stuff for MOVEMENT MESSAGES
@@ -210,7 +210,7 @@ void GameLoop(void) {
         if (!DoesUserHaveEnoughHardDriveSpace()) {
           CHAR16 zText[512];
           CHAR16 zSpaceOnDrive[512];
-          UINT32 uiSpaceOnDrive;
+          uint32_t uiSpaceOnDrive;
           CHAR16 zSizeNeeded[512];
 
           swprintf(zSizeNeeded, ARR_SIZE(zSizeNeeded), L"%d",
@@ -287,15 +287,15 @@ void GameLoop(void) {
 #endif
 }
 
-void SetCurrentScreen(UINT32 uiNewScreen) {
+void SetCurrentScreen(uint32_t uiNewScreen) {
   guiCurrentScreen = uiNewScreen;
   (*(GameScreens[guiCurrentScreen].HandleScreen))();
 }
 
-void SetPendingNewScreen(UINT32 uiNewScreen) { guiPendingScreen = uiNewScreen; }
+void SetPendingNewScreen(uint32_t uiNewScreen) { guiPendingScreen = uiNewScreen; }
 
 // Gets called when the screen changes, place any needed in code in here
-void HandleNewScreenChange(UINT32 uiNewScreen, UINT32 uiOldScreen) {
+void HandleNewScreenChange(uint32_t uiNewScreen, uint32_t uiOldScreen) {
   // if we are not going into the message box screen, and we didnt just come from it
   if ((uiNewScreen != MSG_BOX_SCREEN && uiOldScreen != MSG_BOX_SCREEN)) {
     // reset the help screen

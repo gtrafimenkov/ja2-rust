@@ -151,13 +151,13 @@ typedef enum {
 typedef struct {
   CHAR16 zName[NAME_LENGTH];
   CHAR16 zNickname[NICKNAME_LENGTH];
-  UINT32 uiAttnSound;
-  UINT32 uiCurseSound;
-  UINT32 uiDieSound;
-  UINT32 uiGoodSound;
-  UINT32 uiGruntSound;
-  UINT32 uiGrunt2Sound;
-  UINT32 uiOkSound;
+  uint32_t uiAttnSound;
+  uint32_t uiCurseSound;
+  uint32_t uiDieSound;
+  uint32_t uiGoodSound;
+  uint32_t uiGruntSound;
+  uint32_t uiGrunt2Sound;
+  uint32_t uiOkSound;
   UINT8 ubFaceIndex;
   PaletteRepID PANTS;
   PaletteRepID VEST;
@@ -195,14 +195,14 @@ typedef struct {
   UINT16 usEyesY;
   UINT16 usMouthX;
   UINT16 usMouthY;
-  UINT32 uiEyeDelay;
-  UINT32 uiMouthDelay;
-  UINT32 uiBlinkFrequency;
-  UINT32 uiExpressionFrequency;
+  uint32_t uiEyeDelay;
+  uint32_t uiMouthDelay;
+  uint32_t uiBlinkFrequency;
+  uint32_t uiExpressionFrequency;
   UINT16 sSectorX;
   UINT16 sSectorY;
 
-  UINT32 uiDayBecomesAvailable;  // day the merc will be available.  used with the bMercStatus
+  uint32_t uiDayBecomesAvailable;  // day the merc will be available.  used with the bMercStatus
 
   INT8 bStrength;
 
@@ -230,7 +230,7 @@ typedef struct {
   INT16 sStrengthGain;
 
   // BODY TYPE SUBSITUTIONS
-  UINT32 uiBodyTypeSubFlags;
+  uint32_t uiBodyTypeSubFlags;
 
   INT16 sSalary;
   INT8 bLife;
@@ -290,8 +290,8 @@ typedef struct {
   INT8 bHatedNationality;
   INT8 bHatedNationalityCareLevel;
   INT8 bRacist;
-  UINT32 uiWeeklySalary;
-  UINT32 uiBiWeeklySalary;
+  uint32_t uiWeeklySalary;
+  uint32_t uiBiWeeklySalary;
   INT8 bMedicalDeposit;
   INT8 bAttitude;
   INT8 bBaseMorale;
@@ -327,7 +327,7 @@ typedef struct {
                       // salary value
   UINT8 ubCivilianGroup;
   UINT8 ubNeedForSleep;
-  UINT32 uiMoney;
+  uint32_t uiMoney;
   INT8 bNPCData2;  // NPC specific
 
   UINT8 ubMiscFlags3;
@@ -338,8 +338,8 @@ typedef struct {
 
   // Flags used for the precedent to repeating oneself in Contract negotiations.  Used for quote 80
   // -  ~107.  Gets reset every day
-  UINT32 uiPrecedentQuoteSaid;
-  UINT32 uiProfileChecksum;
+  uint32_t uiPrecedentQuoteSaid;
+  uint32_t uiProfileChecksum;
   INT16 sPreCombatGridNo;
   UINT8 ubTimeTillNextHatedComplaint;
   UINT8 ubSuspiciousDeath;
@@ -347,8 +347,8 @@ typedef struct {
   INT32 iMercMercContractLength;  // Used for MERC mercs, specifies how many days the merc has gone
                                   // since last page
 
-  UINT32 uiTotalCostToDate;  // The total amount of money that has been paid to the merc for their
-                             // salary
+  uint32_t uiTotalCostToDate;  // The total amount of money that has been paid to the merc for their
+                               // salary
   UINT8 ubBuffer[4];
 } MERCPROFILESTRUCT;
 

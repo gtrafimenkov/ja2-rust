@@ -15,7 +15,7 @@
 
 #define EMPTY_CACHE_ENTRY 65000
 
-UINT32 guiCacheSize = MIN_CACHE_SIZE;
+uint32_t guiCacheSize = MIN_CACHE_SIZE;
 
 void DetermineOptimumAnimationCacheSize() {
   // If we have lots-a memory, adjust accordingly!
@@ -23,7 +23,7 @@ void DetermineOptimumAnimationCacheSize() {
 }
 
 BOOLEAN InitAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Allocate entries
   AnimDebugMsg(String("*** Initializing anim cache surface for soldier %d", usSoldierID));

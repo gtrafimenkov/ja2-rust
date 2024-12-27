@@ -104,15 +104,15 @@ struct GROUP {
                                // arrival at next sector.
   UINT8 ubRestToFatigueLevel;  // when resting, the group will rest until the fatigue level reaches
                                // this level.
-  UINT32 uiArrivalTime;  // the arrival time in world minutes that the group will arrive at the next
-                         // sector.
-  UINT32 uiTraverseTime;  // the total traversal time from the previous sector to the next sector.
-  BOOLEAN fRestAtNight;   // set when the group is permitted to rest between 2200 and 0600 when
-                          // moving
+  uint32_t uiArrivalTime;  // the arrival time in world minutes that the group will arrive at the
+                           // next sector.
+  uint32_t uiTraverseTime;  // the total traversal time from the previous sector to the next sector.
+  BOOLEAN fRestAtNight;     // set when the group is permitted to rest between 2200 and 0600 when
+                            // moving
   BOOLEAN fWaypointsCancelled;  // set when groups waypoints have been removed.
   WAYPOINT *pWaypoints;         // a list of all of the waypoints in the groups movement.
   UINT8 ubTransportationMask;   // the mask combining all of the groups transportation methods.
-  UINT32 uiFlags;               // various conditions that apply to the group
+  uint32_t uiFlags;             // various conditions that apply to the group
   UINT8 ubCreatedSectorID;  // used for debugging strategic AI for keeping track of the sector ID a
                             // group was created in.
   UINT8 ubSectorIDOfLastReassignment;  // used for debuggin strategic AI.  Records location of any
@@ -158,7 +158,7 @@ BOOLEAN RemoveAllPlayersFromPGroup(struct GROUP *pGroup);
 
 // create a vehicle group, it is by itself,
 UINT8 CreateNewVehicleGroupDepartingFromSector(UINT8 ubSectorX, UINT8 ubSectorY,
-                                               UINT32 uiVehicleId);
+                                               uint32_t uiVehicleId);
 
 // Appends a waypoint to the end of the list.  Waypoint MUST be on the
 // same horizontal xor vertical level as the last waypoint added.
@@ -168,8 +168,8 @@ BOOLEAN AddWaypointToPGroup(struct GROUP *pGroup, UINT8 ubSectorX, UINT8 ubSecto
 BOOLEAN AddWaypointIDToGroup(UINT8 ubGroupID, UINT8 ubSectorID);
 BOOLEAN AddWaypointIDToPGroup(struct GROUP *pGroup, UINT8 ubSectorID);
 // Same, but uses a strategic sectorID
-BOOLEAN AddWaypointStrategicIDToGroup(UINT8 ubGroupID, UINT32 uiSectorID);
-BOOLEAN AddWaypointStrategicIDToPGroup(struct GROUP *pGroup, UINT32 uiSectorID);
+BOOLEAN AddWaypointStrategicIDToGroup(UINT8 ubGroupID, uint32_t uiSectorID);
+BOOLEAN AddWaypointStrategicIDToPGroup(struct GROUP *pGroup, uint32_t uiSectorID);
 
 // Allows you to change any group's orders based on movement type, and when to rest
 BOOLEAN SetGroupPatrolParameters(UINT8 ubGroupID, UINT8 ubRestAtFL, UINT8 ubRestToFL,
@@ -177,7 +177,7 @@ BOOLEAN SetGroupPatrolParameters(UINT8 ubGroupID, UINT8 ubRestAtFL, UINT8 ubRest
 
 // Enemy grouping functions -- private use by the strategic AI.
 //............................................................
-struct GROUP *CreateNewEnemyGroupDepartingFromSector(UINT32 uiSector, UINT8 ubNumAdmins,
+struct GROUP *CreateNewEnemyGroupDepartingFromSector(uint32_t uiSector, UINT8 ubNumAdmins,
                                                      UINT8 ubNumTroops, UINT8 ubNumElites);
 
 // ARRIVALCALLBACK -- None of these functions should be called directly.
@@ -233,11 +233,11 @@ void MoveAllGroupsInCurrentSectorToSector(UINT8 ubSectorX, UINT8 ubSectorY, UINT
 // this is for groups that are between sectors, nothing else
 // get group position
 void GetGroupPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubPrevY,
-                      UINT32 *uiTraverseTime, UINT32 *uiArriveTime, UINT8 ubGroupId);
+                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, UINT8 ubGroupId);
 
 // set groups postion
 void SetGroupPosition(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY,
-                      UINT32 uiTraverseTime, UINT32 uiArriveTime, UINT8 ubGroupId);
+                      uint32_t uiTraverseTime, uint32_t uiArriveTime, UINT8 ubGroupId);
 
 // Save the strategic movemnet Group paths to the saved game file
 BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile);
@@ -299,7 +299,7 @@ void InitStrategicMovementCosts();
 void PlaceGroupInSector(UINT8 ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
                         INT8 bZ, BOOLEAN fCheckForBattle);
 
-void SetGroupArrivalTime(struct GROUP *pGroup, UINT32 uiArrivalTime);
+void SetGroupArrivalTime(struct GROUP *pGroup, uint32_t uiArrivalTime);
 
 void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPCs);
 

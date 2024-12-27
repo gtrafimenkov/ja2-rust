@@ -93,7 +93,7 @@ BOOLEAN InitInteractiveTileManagement() { return (TRUE); }
 
 void ShutdownInteractiveTileManagement() {}
 
-BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, UINT32 uiFlags,
+BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, uint32_t uiFlags,
                            UINT16 usType) {
   return (TRUE);
 }
@@ -307,7 +307,7 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 }
 
-UINT32 GetInteractiveTileCursor(UINT32 uiOldCursor, BOOLEAN fConfirm) {
+uint32_t GetInteractiveTileCursor(uint32_t uiOldCursor, BOOLEAN fConfirm) {
   struct LEVELNODE *pIntNode;
   struct STRUCTURE *pStructure;
   INT16 sGridNo;
@@ -368,7 +368,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
   INT16 sOffsetX, sOffsetY;
   INT16 sTempX_S, sTempY_S;
   ETRLEObject *pTrav;
-  UINT32 usHeight, usWidth;
+  uint32_t usHeight, usWidth;
   TILE_ELEMENT *TileElem;
 
   // Get 'TRUE' merc position
@@ -413,8 +413,8 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
   // Adjust for render height
   sScreenY += gsRenderHeight;
 
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
 
   // Add to start position of dest buffer
   sScreenX += (pTrav->sOffsetX - (WORLD_TILE_X / 2));
@@ -769,10 +769,10 @@ BOOLEAN RefinePointCollisionOnStruct(INT16 sGridNo, INT16 sTestX, INT16 sTestY, 
 // will return true if data found, else false
 BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT16 usIndex,
                                                INT32 iTestX, INT32 iTestY) {
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth;
   UINT8 *SrcPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   BOOLEAN fDataFound = FALSE;
   INT32 iTestPos, iStartPos;
@@ -782,8 +782,8 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Calculate test position we are looking for!

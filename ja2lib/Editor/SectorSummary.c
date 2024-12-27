@@ -197,7 +197,7 @@ INT16 gsSelSectorX = 0, gsSelSectorY = 0;
 
 // Used to determine how long the F5 key has been held down for to determine whether or not the
 // summary is going to be persistant or not.
-UINT32 giInitTimer;
+uint32_t giInitTimer;
 
 CHAR16 gszFilename[40];
 CHAR16 gszTempFilename[21];
@@ -404,7 +404,7 @@ void AutoLoadMap() {
 
 void ReleaseSummaryWindow() {
   INT32 i;
-  UINT32 uiCurrTimer;
+  uint32_t uiCurrTimer;
   if (!gfSummaryWindowActive || gfPersistantSummary) return;
   uiCurrTimer = GetJA2Clock();
   if (!gfWorldLoaded || uiCurrTimer - giInitTimer < 400) {  // make window persistant
@@ -639,9 +639,10 @@ void RenderItemDetails() {
   struct OBJECTTYPE *pItem;
   INT32 index, i;
   CHAR16 str[100];
-  UINT32 uiQuantity, uiExistChance, uiStatus;
-  UINT32 uiTriggerQuantity[8], uiActionQuantity[8], uiTriggerExistChance[8], uiActionExistChance[8];
-  UINT32 xp, yp;
+  uint32_t uiQuantity, uiExistChance, uiStatus;
+  uint32_t uiTriggerQuantity[8], uiActionQuantity[8], uiTriggerExistChance[8],
+      uiActionExistChance[8];
+  uint32_t xp, yp;
   INT8 bFreqIndex;
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_GRAY2);
@@ -909,7 +910,7 @@ void RenderItemDetails() {
 
 void RenderSummaryWindow() {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   INT32 i, x, y;
   if ((GetActiveFieldID() == 1) != gfTempFile) {
@@ -2017,7 +2018,7 @@ void LoadGlobalSummary() {
   char ExecDir[256];
   char DevInfoDir[300];
   char MapsDir[300];
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   FLOAT dMajorVersion;
   INT32 x, y;
   CHAR8 szFilename[40];
@@ -2572,8 +2573,8 @@ void ApologizeOverrideAndForceUpdateEverything() {
 
 void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   HWFILE hfile;
-  UINT32 uiNumBytesRead;
-  UINT32 uiNumItems;
+  uint32_t uiNumBytesRead;
+  uint32_t uiNumItems;
   CHAR8 szFilename[1024];
   BASIC_SOLDIERCREATE_STRUCT basic;
   SOLDIERCREATE_STRUCT priority;

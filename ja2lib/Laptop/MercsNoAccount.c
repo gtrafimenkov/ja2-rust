@@ -31,16 +31,16 @@
 #define MERC_NA_SENTENCE_Y MERC_NO_ACCOUNT_IMAGE_Y + 75
 #define MERC_NA_SENTENCE_WIDTH 460 - 20
 
-UINT32 guiNoAccountImage;
+uint32_t guiNoAccountImage;
 
 // The Open Account Box button
 void BtnOpenAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiOpenAccountBoxButton;
+uint32_t guiOpenAccountBoxButton;
 INT32 guiOpenAccountBoxButtonImage;
 
 // The Cancel Account Box button
 void BtnCancelBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiCancelBoxButton;
+uint32_t guiCancelBoxButton;
 
 void GameInitMercsNoAccount() {}
 

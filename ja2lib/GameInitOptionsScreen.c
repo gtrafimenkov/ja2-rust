@@ -138,9 +138,9 @@ BOOLEAN gfGIOButtonsAllocated = FALSE;
 
 UINT8 gubGameOptionScreenHandler = GIO_NOTHING;
 
-UINT32 gubGIOExitScreen = GAME_INIT_OPTIONS_SCREEN;
+uint32_t gubGIOExitScreen = GAME_INIT_OPTIONS_SCREEN;
 
-UINT32 guiGIOMainBackGroundImage;
+uint32_t guiGIOMainBackGroundImage;
 
 INT32 giGioMessageBox = -1;
 // BOOLEAN		gfExitGioDueToMessageBox=FALSE;
@@ -153,35 +153,35 @@ INT32 giGioMessageBox = -1;
 
 // Done Button
 void BtnGIODoneCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGIODoneButton;
+uint32_t guiGIODoneButton;
 INT32 giGIODoneBtnImage;
 
 // Cancel Button
 void BtnGIOCancelCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGIOCancelButton;
+uint32_t guiGIOCancelButton;
 INT32 giGIOCancelBtnImage;
 
 // checkbox to toggle the Diff level
-UINT32 guiDifficultySettingsToggles[NUM_DIFF_SETTINGS];
+uint32_t guiDifficultySettingsToggles[NUM_DIFF_SETTINGS];
 void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason);
 
 // checkbox to toggle Game style
-UINT32 guiGameStyleToggles[NUM_GAME_STYLES];
+uint32_t guiGameStyleToggles[NUM_GAME_STYLES];
 void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason);
 
 // checkbox to toggle Gun options
-UINT32 guiGunOptionToggles[NUM_GUN_OPTIONS];
+uint32_t guiGunOptionToggles[NUM_GUN_OPTIONS];
 void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason);
 
 // JA2Gold: no more timed turns setting
 /*
 //checkbox to toggle Timed turn option on or off
-UINT32	guiTimedTurnToggles[ GIO_NUM_TIMED_TURN_OPTIONS ];
+uint32_t	guiTimedTurnToggles[ GIO_NUM_TIMED_TURN_OPTIONS ];
 void BtnTimedTurnsTogglesCallback(GUI_BUTTON *btn,INT32 reason);
 */
 
 // checkbox to toggle Save style
-UINT32 guiGameSaveToggles[NUM_SAVE_OPTIONS];
+uint32_t guiGameSaveToggles[NUM_SAVE_OPTIONS];
 void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason);
 
 ////////////////////////////////////////////
@@ -207,7 +207,7 @@ void DoneFadeOutForExitGameInitOptionScreen(void);
 void DoneFadeInForExitGameInitOptionScreen(void);
 // JA2Gold: no more timed turns setting
 // UINT8			GetCurrentTimedTurnsButtonSetting();
-BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 void DisplayMessageToUserAboutGameDifficulty();
 void ConfirmGioDifSettingMessageBoxCallBack(UINT8 bExitValue);
@@ -216,9 +216,9 @@ void ConfirmGioIronManMessageBoxCallBack(UINT8 bExitValue);
 
 // ppp
 
-UINT32 GameInitOptionsScreenInit(void) { return (1); }
+uint32_t GameInitOptionsScreenInit(void) { return (1); }
 
-UINT32 GameInitOptionsScreenHandle(void) {
+uint32_t GameInitOptionsScreenHandle(void) {
   StartFrameBufferRender();
 
   if (gfGIOScreenEntry) {
@@ -269,7 +269,7 @@ UINT32 GameInitOptionsScreenHandle(void) {
   return (gubGIOExitScreen);
 }
 
-UINT32 GameInitOptionsScreenShutdown(void) { return (1); }
+uint32_t GameInitOptionsScreenShutdown(void) { return (1); }
 
 BOOLEAN EnterGIOScreen() {
   VOBJECT_DESC VObjectDesc;
@@ -1002,7 +1002,7 @@ void DoneFadeOutForExitGameInitOptionScreen(void) {
 
 void DoneFadeInForExitGameInitOptionScreen(void) { SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR); }
 
-BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 

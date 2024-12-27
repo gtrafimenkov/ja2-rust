@@ -131,14 +131,14 @@
 #define BOBBYR_UNDER_CONSTRUCTION_TEXT_Y BOBBYR_UNDERCONSTRUCTION_Y + 62 + 60
 #define BOBBYR_UNDER_CONSTRUCTION_TEXT_WIDTH LAPTOP_SCREEN_LR_X - LAPTOP_SCREEN_UL_X
 
-UINT32 guiBobbyName;
-UINT32 guiPlaque;
-UINT32 guiTopHinge;
-UINT32 guiBottomHinge;
-UINT32 guiStorePlaque;
-UINT32 guiHandle;
-UINT32 guiWoodBackground;
-UINT32 guiUnderConstructionImage;
+uint32_t guiBobbyName;
+uint32_t guiPlaque;
+uint32_t guiTopHinge;
+uint32_t guiBottomHinge;
+uint32_t guiStorePlaque;
+uint32_t guiHandle;
+uint32_t guiWoodBackground;
+uint32_t guiUnderConstructionImage;
 
 /*
 UINT16	gusFirstGunIndex;
@@ -162,7 +162,7 @@ UINT16  gusLastUsedIndex;
 UINT8		gubNumUsedPages;
 */
 
-UINT32 guiLastBobbyRayPage;
+uint32_t guiLastBobbyRayPage;
 
 UINT8 gubBobbyRPages[] = {LAPTOP_MODE_BOBBY_R_USED, LAPTOP_MODE_BOBBY_R_MISC,
                           LAPTOP_MODE_BOBBY_R_GUNS, LAPTOP_MODE_BOBBY_R_AMMO,
@@ -473,7 +473,7 @@ void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
 }
 
 /*
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, UINT32
+BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, uint32_t
 uiBackground)
 {
   struct VObject* hBackGroundHandle;
@@ -499,9 +499,9 @@ VO_BLT_SRCTRANSPARENCY,NULL); uiPosX += usWidth;
 
 void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
   struct VObject *hPixHandle;
-  static UINT32 uiLastTime = 1;
+  static uint32_t uiLastTime = 1;
   static UINT16 usCount = 0;
-  UINT32 uiCurTime = GetJA2Clock();
+  uint32_t uiCurTime = GetJA2Clock();
 
   if (LaptopSaveInfo.fBobbyRSiteCanBeAccessed) return;
 
@@ -753,7 +753,7 @@ UINT8 HowManyBRItemsToOrder(UINT16 usItemIndex, UINT8 ubCurrentlyOnHand, UINT8 u
 }
 
 void OrderBobbyRItem(UINT16 usItemIndex) {
-  UINT32 uiArrivalTime;
+  uint32_t uiArrivalTime;
 
   // add the new item to the queue.  The new item will arrive in 'uiArrivalTime' minutes.
   uiArrivalTime = BOBBY_R_NEW_PURCHASE_ARRIVAL_TIME + Random(BOBBY_R_NEW_PURCHASE_ARRIVAL_TIME / 2);

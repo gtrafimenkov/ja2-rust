@@ -45,7 +45,7 @@
 INT32 MineAMine(INT8 bMineIndex);
 
 // remove actual ore from mine
-UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount);
+uint32_t ExtractOreFromMine(INT8 bMineIndex, uint32_t uiAmount);
 
 // get available workforce for the mine
 INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex);
@@ -82,7 +82,7 @@ UINT8 gubMineTypes[] = {
 
 // These values also determine the most likely ratios of mine sizes after random production
 // increases are done
-UINT32 guiMinimumMineProduction[] = {
+uint32_t guiMinimumMineProduction[] = {
     0,     // SAN MONA
     1000,  // DRASSEN
     1500,  // ALMA
@@ -106,7 +106,7 @@ HEAD_MINER_TYPE gHeadMinerData[NUM_HEAD_MINERS] = {
 };
 
 // the static NPC dialogue faces
-extern UINT32 uiExternalStaticNPCFaces[];
+extern uint32_t uiExternalStaticNPCFaces[];
 extern FACETYPE *gpCurrentTalkingFace;
 extern UINT8 gubCurrentTalkingID;
 
@@ -277,7 +277,7 @@ INT32 GetTotalLeftInMine(INT8 bMineIndex) {
   return (gMineStatus[bMineIndex].uiRemainingOreSupply);
 }
 
-UINT32 GetMaxPeriodicRemovalFromMine(INT8 bMineIndex) {
+uint32_t GetMaxPeriodicRemovalFromMine(INT8 bMineIndex) {
   // returns max amount that can be mined in a time period
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -290,8 +290,8 @@ UINT32 GetMaxPeriodicRemovalFromMine(INT8 bMineIndex) {
   return (gMineStatus[bMineIndex].uiMaxRemovalRate);
 }
 
-UINT32 GetMaxDailyRemovalFromMine(INT8 bMineIndex) {
-  UINT32 uiAmtExtracted;
+uint32_t GetMaxDailyRemovalFromMine(INT8 bMineIndex) {
+  uint32_t uiAmtExtracted;
 
   // returns max amount that can be mined in one day
 
@@ -334,9 +334,9 @@ INT8 GetMineAssociatedWithThisTown(TownID bTownId) {
   return (0);
 }
 
-UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount) {
+uint32_t ExtractOreFromMine(INT8 bMineIndex, uint32_t uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
-  UINT32 uiAmountExtracted = 0;
+  uint32_t uiAmountExtracted = 0;
   INT16 sSectorX, sSectorY;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -381,9 +381,9 @@ UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount) {
 
       // round all fractions UP to the next REMOVAL_RATE_INCREMENT
       gMineStatus[bMineIndex].uiMaxRemovalRate =
-          (UINT32)(((FLOAT)gMineStatus[bMineIndex].uiRemainingOreSupply / 10) /
-                       REMOVAL_RATE_INCREMENT +
-                   0.9999) *
+          (uint32_t)(((FLOAT)gMineStatus[bMineIndex].uiRemainingOreSupply / 10) /
+                         REMOVAL_RATE_INCREMENT +
+                     0.9999) *
           REMOVAL_RATE_INCREMENT;
 
       // if we control it
@@ -577,11 +577,11 @@ void HandleIncomeFromMines(void) {
   }
 }
 
-UINT32 PredictDailyIncomeFromAMine(INT8 bMineIndex) {
+uint32_t PredictDailyIncomeFromAMine(INT8 bMineIndex) {
   // predict income from this mine, estimate assumes mining situation will not change during next 4
   // income periods (miner loyalty, % town controlled, monster infestation level, and current max
   // removal rate may all in fact change)
-  UINT32 uiAmtExtracted = 0;
+  uint32_t uiAmtExtracted = 0;
 
   if (PlayerControlsMine(bMineIndex)) {
     // get daily income for this mine (regardless of what time of day it currently is)
@@ -709,7 +709,7 @@ BOOLEAN PlayerControlsMine(INT8 bMineIndex) {
 }
 
 BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Save the MineStatus
   FileMan_Write(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES,
@@ -722,7 +722,7 @@ BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadMineStatusFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Load the MineStatus
   FileMan_Read(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES, &uiNumBytesRead);

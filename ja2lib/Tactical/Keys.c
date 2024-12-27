@@ -126,8 +126,8 @@ DOORTRAP DoorTrapTable[NUM_DOOR_TRAPS] = {
 DOOR *DoorTable = NULL;
 
 BOOLEAN LoadLockTable(void) {
-  UINT32 uiNumBytesRead = 0;
-  UINT32 uiBytesToRead;
+  uint32_t uiNumBytesRead = 0;
+  uint32_t uiBytesToRead;
   CHAR8 *pFileName = "BINARYDATA\\Locks.bin";
   HWFILE hFile;
 
@@ -712,7 +712,7 @@ void LoadDoorTableFromMap(INT8 **hBuffer) {
 // many different ways, so I opted to put it in the saving routine.
 void SaveDoorTableToMap(HWFILE fp) {
   INT32 i = 0;
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
 
   while (i < gubNumDoors) {
     if (!OpenableAtGridNo(DoorTable[i].sGridNo))
@@ -806,8 +806,8 @@ void UpdateDoorPerceivedValue(DOOR *pDoor) {
 }
 
 BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  UINT32 uiNumBytesWritten;
-  UINT32 uiSizeToSave = 0;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiSizeToSave = 0;
   CHAR8 zMapName[128];
   HWFILE hFile;
 
@@ -864,7 +864,7 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
 }
 
 BOOLEAN LoadDoorTableFromDoorTableTempFile() {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   HWFILE hFile;
   CHAR8 zMapName[128];
 
@@ -1545,7 +1545,7 @@ BOOLEAN SetDoorOpenStatus(INT16 sGridNo, BOOLEAN fOpen) {
 BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   UINT8 ubCnt;
 
   // Turn off any DOOR BUSY flags....
@@ -1599,7 +1599,7 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 b
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   UINT8 ubLoop;
 
   // Convert the current sector location into a file name
@@ -1661,7 +1661,7 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
 }
 
 BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   // Save the KeyTable
   FileMan_Write(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesWritten);
@@ -1673,7 +1673,7 @@ BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadKeyTableFromSaveedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiNumBytesRead = 0;
 
   // Load the KeyTable
   FileMan_Read(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesRead);

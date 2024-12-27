@@ -10,9 +10,9 @@
 // getting ready to make another screen active.
 
 typedef struct Screens {
-  UINT32 (*InitializeScreen)(void);
-  UINT32 (*HandleScreen)(void);
-  UINT32 (*ShutdownScreen)(void);
+  uint32_t (*InitializeScreen)(void);
+  uint32_t (*HandleScreen)(void);
+  uint32_t (*ShutdownScreen)(void);
 
 } Screens;
 

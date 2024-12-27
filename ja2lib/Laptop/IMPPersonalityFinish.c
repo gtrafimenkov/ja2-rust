@@ -32,8 +32,8 @@ BOOLEAN fExitIMPPerFinAtOk = FALSE;
 BOOLEAN fCreateFinishOkButton = FALSE;
 
 // buttons
-UINT32 giIMPPersonalityFinishButton[2];
-UINT32 giIMPPersonalityFinishButtonImage[2];
+uint32_t giIMPPersonalityFinishButton[2];
+uint32_t giIMPPersonalityFinishButtonImage[2];
 
 // function definitions
 void CreateIMPPersonalityFinishButtons(void);

@@ -67,7 +67,7 @@ typedef enum {
 // These structures are placed in a list and used for all tile imagery
 struct TILE_IMAGERY {
   struct VObject *vo;
-  UINT32 fType;
+  uint32_t fType;
   struct AuxObjectData *pAuxData;
   struct RelTileLoc *pTileLocData;
   struct STRUCTURE_FILE_REF *pStructureFileRef;
@@ -90,7 +90,7 @@ typedef struct {
   UINT16 fType;
   struct VObject *hTileSurface;
   struct DB_STRUCTURE_REF *pDBStructureRef;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   struct RelTileLoc *pTileLocData;
   UINT16 usRegionIndex;
   INT16 sBuddyNum;
@@ -141,33 +141,33 @@ extern UINT8 gTileTypeMovementCost[NUM_TERRAIN_TYPES];
 void CreateTileDatabase();
 
 // Land level manipulation functions
-BOOLEAN GetLandHeadType(INT32 iMapIndex, UINT32 *puiType);
+BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType);
 
-BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, BOOLEAN fDelete);
+BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, BOOLEAN fDelete);
 
-BOOLEAN GetTypeLandLevel(UINT32 iMapIndex, UINT32 uiNewType, UINT8 *pubLevel);
-UINT8 GetLandLevelDepth(UINT32 iMapIndex);
+BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, UINT8 *pubLevel);
+UINT8 GetLandLevelDepth(uint32_t iMapIndex);
 
-BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, UINT8 ubRadius,
+BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, UINT8 ubRadius,
                                BOOLEAN fReplace);
 
-BOOLEAN LandTypeHeigher(UINT32 uiDestType, UINT32 uiSrcType);
+BOOLEAN LandTypeHeigher(uint32_t uiDestType, uint32_t uiSrcType);
 
-BOOLEAN MoveLandIndexToTop(UINT32 iMapIndex, UINT16 usIndex);
+BOOLEAN MoveLandIndexToTop(uint32_t iMapIndex, UINT16 usIndex);
 
 // Database access functions
 BOOLEAN GetSubIndexFromTileIndex(UINT16 usIndex, UINT16 *pusSubIndex);
-BOOLEAN GetTypeSubIndexFromTileIndex(UINT32 uiCheckType, UINT16 usIndex, UINT16 *pusSubIndex);
-BOOLEAN GetTypeSubIndexFromTileIndexChar(UINT32 uiCheckType, UINT16 usIndex, UINT8 *pusSubIndex);
-BOOLEAN GetTileIndexFromTypeSubIndex(UINT32 uiCheckType, UINT16 usSubIndex, UINT16 *pusTileIndex);
-BOOLEAN GetTileType(UINT16 usIndex, UINT32 *puiType);
-BOOLEAN GetTileFlags(UINT16 usIndex, UINT32 *puiFlags);
+BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, UINT16 usIndex, UINT16 *pusSubIndex);
+BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, UINT16 usIndex, UINT8 *pusSubIndex);
+BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, UINT16 usSubIndex, UINT16 *pusTileIndex);
+BOOLEAN GetTileType(UINT16 usIndex, uint32_t *puiType);
+BOOLEAN GetTileFlags(UINT16 usIndex, uint32_t *puiFlags);
 
-BOOLEAN GetTileTypeLogicalHeight(UINT32 fType, UINT8 *pubLogHeight);
-BOOLEAN AnyHeigherLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel);
-BOOLEAN AnyLowerLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel);
+BOOLEAN GetTileTypeLogicalHeight(uint32_t fType, UINT8 *pubLogHeight);
+BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel);
+BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel);
 BOOLEAN GetWallOrientation(UINT16 usIndex, UINT16 *pusWallOrientation);
-BOOLEAN ContainsWallOrientation(INT32 iMapIndex, UINT32 uiType, UINT16 usWallOrientation,
+BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, UINT16 usWallOrientation,
                                 UINT8 *pubLevel);
 UINT8 CalculateWallOrientationsAtGridNo(INT32 iMapIndex);
 

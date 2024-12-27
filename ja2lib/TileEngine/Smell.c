@@ -94,10 +94,10 @@ UINT8 ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
   { (b)--; }
 
 #define SET_BLOOD_FLOOR_STRENGTH(b, nb) \
-  { (b) = ((nb) << 2) | ((b)&0xE3); }
+  { (b) = ((nb) << 2) | ((b) & 0xE3); }
 
 #define SET_BLOOD_ROOF_STRENGTH(b, nb) \
-  { (b) = BLOOD_FLOOR_STRENGTH((nb)) << 5 | ((b)&0x1F); }
+  { (b) = BLOOD_FLOOR_STRENGTH((nb)) << 5 | ((b) & 0x1F); }
 
 #define DECAY_BLOOD_FLOOR_STRENGTH(b)             \
   {                                               \
@@ -133,7 +133,7 @@ void RemoveBlood(INT16 sGridNo, INT8 bLevel) {
 }
 
 void DecaySmells(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   MAP_ELEMENT* pMapElement;
 
   // return;
@@ -151,7 +151,7 @@ void DecaySmells(void) {
 }
 
 void DecayBlood() {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   MAP_ELEMENT* pMapElement;
 
   for (uiLoop = 0, pMapElement = gpWorldLevelData; uiLoop < WORLD_MAX; uiLoop++, pMapElement++) {
@@ -198,8 +198,8 @@ void DecayBlood() {
   }
 }
 
-void DecayBloodAndSmells(UINT32 uiTime) {
-  UINT32 uiCheckTime;
+void DecayBloodAndSmells(uint32_t uiTime) {
+  uint32_t uiCheckTime;
 
   if (!gfWorldLoaded) {
     return;

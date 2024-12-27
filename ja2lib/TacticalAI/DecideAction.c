@@ -38,10 +38,10 @@ extern BOOLEAN gfUseAlternateQueenPosition;
 // global status time counters to determine what takes the most time
 
 #ifdef AI_TIMING_TESTS
-UINT32 guiGreenTimeTotal = 0, guiYellowTimeTotal = 0, guiRedTimeTotal = 0, guiBlackTimeTotal = 0;
-UINT32 guiGreenCounter = 0, guiYellowCounter = 0, guiRedCounter = 0, guiBlackCounter = 0;
-UINT32 guiRedSeekTimeTotal = 0, guiRedHelpTimeTotal = 0, guiRedHideTimeTotal = 0;
-UINT32 guiRedSeekCounter = 0, guiRedHelpCounter = 0;
+uint32_t guiGreenTimeTotal = 0, guiYellowTimeTotal = 0, guiRedTimeTotal = 0, guiBlackTimeTotal = 0;
+uint32_t guiGreenCounter = 0, guiYellowCounter = 0, guiRedCounter = 0, guiBlackCounter = 0;
+uint32_t guiRedSeekTimeTotal = 0, guiRedHelpTimeTotal = 0, guiRedHideTimeTotal = 0;
+uint32_t guiRedSeekCounter = 0, guiRedHelpCounter = 0;
 guiRedHideCounter = 0;
 #endif
 
@@ -1516,7 +1516,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
   INT8 bHighestWatchLoc;
   ATTACKTYPE BestThrow;
 #ifdef AI_TIMING_TEST
-  UINT32 uiStartTime, uiEndTime;
+  uint32_t uiStartTime, uiEndTime;
 #endif
   BOOLEAN fClimb;
   BOOLEAN fCivilian =
@@ -3809,7 +3809,7 @@ INT8 DecideAction(struct SOLDIERTYPE *pSoldier) {
   INT8 bAction = AI_ACTION_NONE;
 
 #ifdef AI_TIMING_TESTS
-  UINT32 uiStartTime, uiEndTime;
+  uint32_t uiStartTime, uiEndTime;
 #endif
 
   // turn off cautious flag

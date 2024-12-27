@@ -60,14 +60,14 @@ void CycleAnimations() {
   EVENT_InitNewSoldierAnim(pSoldier, usStartAnim, 0, TRUE);
 }
 
-UINT32 AniEditScreenInit(void) { return TRUE; }
+uint32_t AniEditScreenInit(void) { return TRUE; }
 
 // The ShutdownGame function will free up/undo all things that were started in InitializeGame()
 // It will also be responsible to making sure that all Gaming Engine tasks exit properly
 
-UINT32 AniEditScreenShutdown(void) { return TRUE; }
+uint32_t AniEditScreenShutdown(void) { return TRUE; }
 
-UINT32 AniEditScreenHandle(void) {
+uint32_t AniEditScreenHandle(void) {
   InputAtom InputEvent;
   static BOOLEAN fFirstTime = TRUE;
   static UINT16 usOldState;

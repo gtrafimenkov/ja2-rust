@@ -58,18 +58,18 @@ extern SOLDIERINITNODE *gpSelected;
 #define NORMAL_MAP_SCREEN_BY 2400
 #define NORMAL_MAP_SCREEN_TY 860
 
-#define FASTMAPROWCOLTOPOS(r, c) ((r)*WORLD_COLS + (c))
+#define FASTMAPROWCOLTOPOS(r, c) ((r) * WORLD_COLS + (c))
 
 typedef struct {
   struct VObject *vo;
-  UINT32 fType;
+  uint32_t fType;
 
 } SMALL_TILE_SURF;
 
 typedef struct {
   struct VObject *vo;
   UINT16 usSubIndex;
-  UINT32 fType;
+  uint32_t fType;
 
 } SMALL_TILE_DB;
 
@@ -80,8 +80,8 @@ BOOLEAN gfSmTileLoaded = FALSE;
 BOOLEAN gfInOverheadMap = FALSE;
 struct MOUSE_REGION OverheadRegion;
 struct MOUSE_REGION OverheadBackgroundRegion;
-UINT32 uiOVERMAP;
-UINT32 uiPERSONS;
+uint32_t uiOVERMAP;
+uint32_t uiPERSONS;
 BOOLEAN gfOverheadMapDirty = FALSE;
 extern BOOLEAN gfRadarCurrentGuyFlash;
 INT16 gsStartRestrictedX, gsStartRestrictedY;
@@ -106,15 +106,15 @@ void CopyOverheadDBShadetablesFromTileset();
 void RenderOverheadOverlays();
 
 void InitNewOverheadDB(UINT8 ubTilesetID) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   VOBJECT_DESC VObjectDesc;
   struct VObject *hVObject;
   CHAR8 cFileBPP[128];
   CHAR8 cAdjustedFile[200];
-  UINT32 cnt1, cnt2;
+  uint32_t cnt1, cnt2;
   SMALL_TILE_SURF s;
-  UINT32 NumRegions;
-  UINT32 dbSize = 0;
+  uint32_t NumRegions;
+  uint32_t dbSize = 0;
 
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     // Create video object
@@ -603,9 +603,9 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
   INT16 sTempPosX_M, sTempPosY_M;
   INT16 sTempPosX_S, sTempPosY_S;
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
-  UINT32 usTileIndex;
+  uint32_t usTileIndex;
   INT16 sX, sY;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   struct LEVELNODE *pNode;
   SMALL_TILE_DB *pTile;
@@ -931,7 +931,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
 
     // Update the save buffer
     {
-      UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+      uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
       UINT8 *pDestBuf, *pSrcBuf;
       UINT16 usWidth, usHeight;
       UINT8 ubBitDepth;
@@ -952,9 +952,9 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
 }
 
 void RenderOverheadOverlays() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   WORLDITEM *pWorldItem;
-  UINT32 i;
+  uint32_t i;
   struct SOLDIERTYPE *pSoldier;
   struct VObject *hVObject;
   INT16 sX, sY;
@@ -1122,9 +1122,9 @@ sStartPointY_S, INT16 sEndXS, INT16 sEndYS )
         INT16				sTempPosX_M, sTempPosY_M;
         INT16				sTempPosX_S, sTempPosY_S;
         BOOLEAN			fEndRenderRow = FALSE, fEndRenderCol = FALSE;
-        UINT32			usTileIndex;
+        uint32_t			usTileIndex;
         INT16				sX, sY;
-        UINT32			uiDestPitchBYTES;
+        uint32_t			uiDestPitchBYTES;
         UINT8				*pDestBuf;
         struct LEVELNODE		*pNode;
         UINT16			usLineColor;
@@ -1394,7 +1394,7 @@ BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(INT16 *psGridNo) {
   if ((OverheadRegion.uiFlags & MSYS_MOUSE_IN_AREA)) {
     // ATE: Adjust alogrithm values a tad to reflect map positioning
     sWorldScreenX = gsStartRestrictedX + (gusMouseXPos - 5) * 5;
-    sWorldScreenY = gsStartRestrictedY + (gusMouseYPos)*5;
+    sWorldScreenY = gsStartRestrictedY + (gusMouseYPos) * 5;
 
     // Get new proposed center location.
     GetFromAbsoluteScreenXYWorldXY(&uiCellX, &uiCellY, sWorldScreenX, sWorldScreenY);
@@ -1456,7 +1456,7 @@ void CalculateRestrictedMapCoords(INT8 bDirection, INT16 *psX1, INT16 *psY1, INT
 void CalculateRestrictedScaleFactors(INT16 *pScaleX, INT16 *pScaleY) {}
 
 void CopyOverheadDBShadetablesFromTileset() {
-  UINT32 uiLoop, uiLoop2;
+  uint32_t uiLoop, uiLoop2;
   struct TILE_IMAGERY *pTileSurf;
 
   // Loop through tileset

@@ -26,10 +26,10 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
-BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubRadius);
-BOOLEAN PasteExistingTexture(UINT32 iMapIndex, UINT16 usIndex);
+BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius);
+BOOLEAN PasteExistingTexture(uint32_t iMapIndex, UINT16 usIndex);
 BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, UINT16 usIndex, UINT8 ubRadius);
-BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubRadius,
+BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius,
                                     BOOLEAN fReplace);
 
 void PasteTextureEx(INT16 sGridNo, UINT16 usType);
@@ -42,15 +42,15 @@ UINT16 CurrentPaste = NO_TILE;
 UINT16 gDebrisPaste = NO_TILE;
 UINT16 gChangeElevation = FALSE;
 UINT16 CurrentStruct = NO_TILE;
-UINT32 gDoBanks = NO_BANKS;
-UINT32 gDoCliffs = NO_CLIFFS;
+uint32_t gDoBanks = NO_BANKS;
+uint32_t gDoCliffs = NO_CLIFFS;
 
 //---------------------------------------------------------------------------------------------------------------
 //	QuickEraseMapTile
 //
 //	Performs ersing operation when the DEL key is hit in the editor
 //
-void QuickEraseMapTile(UINT32 iMapIndex) {
+void QuickEraseMapTile(uint32_t iMapIndex) {
   if (iMapIndex >= 0x8000) return;
   AddToUndoList(iMapIndex);
   DeleteStuffFromMapTile(iMapIndex);
@@ -62,10 +62,10 @@ void QuickEraseMapTile(UINT32 iMapIndex) {
 //
 //	Common delete function for both QuickEraseMapTile and EraseMapTile
 //
-void DeleteStuffFromMapTile(UINT32 iMapIndex) {
+void DeleteStuffFromMapTile(uint32_t iMapIndex) {
   // UINT16		usUseIndex;
   // UINT16		usType;
-  // UINT32		uiCheckType;
+  // uint32_t		uiCheckType;
   // UINT16		usDummy;
 
   // GetTileType( gpWorldLevelData[ iMapIndex ].pLandHead->usIndex, &uiCheckType );
@@ -89,9 +89,9 @@ void DeleteStuffFromMapTile(UINT32 iMapIndex) {
 //	Generic tile erasing function. Erases things from the world depending on the current drawing
 // mode
 //
-void EraseMapTile(UINT32 iMapIndex) {
+void EraseMapTile(uint32_t iMapIndex) {
   INT32 iEraseMode;
-  UINT32 uiCheckType;
+  uint32_t uiCheckType;
   if (iMapIndex >= 0x8000) return;
 
   // Figure out what it is we are trying to erase
@@ -205,7 +205,7 @@ void EraseMapTile(UINT32 iMapIndex) {
 //	Place some "debris" on the map at the current mouse coordinates. This function is called
 // repeatedly if 	the current brush size is larger than 1 tile.
 //
-void PasteDebris(UINT32 iMapIndex) {
+void PasteDebris(uint32_t iMapIndex) {
   UINT16 usUseIndex;
   UINT16 usUseObjIndex;
   INT32 iRandSelIndex;
@@ -234,38 +234,38 @@ void PasteDebris(UINT32 iMapIndex) {
   }
 }
 
-void PasteSingleWall(UINT32 iMapIndex) {
+void PasteSingleWall(uint32_t iMapIndex) {
   pSelList = SelSingleWall;
   pNumSelList = &iNumWallsSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleDoor(UINT32 iMapIndex) {
+void PasteSingleDoor(uint32_t iMapIndex) {
   pSelList = SelSingleDoor;
   pNumSelList = &iNumDoorsSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleWindow(UINT32 iMapIndex) {
+void PasteSingleWindow(uint32_t iMapIndex) {
   pSelList = SelSingleWindow;
   pNumSelList = &iNumWindowsSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleRoof(UINT32 iMapIndex) {
+void PasteSingleRoof(uint32_t iMapIndex) {
   pSelList = SelSingleRoof;
   pNumSelList = &iNumRoofsSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteRoomNumber(UINT32 iMapIndex, UINT8 ubRoomNumber) {
+void PasteRoomNumber(uint32_t iMapIndex, UINT8 ubRoomNumber) {
   if (gubWorldRoomInfo[iMapIndex] != ubRoomNumber) {
     AddToUndoList(iMapIndex);
     gubWorldRoomInfo[iMapIndex] = ubRoomNumber;
   }
 }
 
-void PasteSingleBrokenWall(UINT32 iMapIndex) {
+void PasteSingleBrokenWall(uint32_t iMapIndex) {
   UINT16 usIndex, usObjIndex, usTileIndex, usWallOrientation;
 
   pSelList = SelSingleBrokenWall;
@@ -283,25 +283,25 @@ void PasteSingleBrokenWall(UINT32 iMapIndex) {
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleDecoration(UINT32 iMapIndex) {
+void PasteSingleDecoration(uint32_t iMapIndex) {
   pSelList = SelSingleDecor;
   pNumSelList = &iNumDecorSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleDecal(UINT32 iMapIndex) {
+void PasteSingleDecal(uint32_t iMapIndex) {
   pSelList = SelSingleDecal;
   pNumSelList = &iNumDecalsSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleFloor(UINT32 iMapIndex) {
+void PasteSingleFloor(uint32_t iMapIndex) {
   pSelList = SelSingleFloor;
   pNumSelList = &iNumFloorsSelected;
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteSingleToilet(UINT32 iMapIndex) {
+void PasteSingleToilet(uint32_t iMapIndex) {
   pSelList = SelSingleToilet;
   pNumSelList = &iNumToiletsSelected;
   PasteSingleWallCommon(iMapIndex);
@@ -313,7 +313,7 @@ void PasteSingleToilet(UINT32 iMapIndex) {
 //	Common paste routine for PasteSingleWall, PasteSingleDoor, PasteSingleDecoration, and
 //	PasteSingleDecor (above).
 //
-void PasteSingleWallCommon(UINT32 iMapIndex) {
+void PasteSingleWallCommon(uint32_t iMapIndex) {
   UINT16 usUseIndex;
   UINT16 usUseObjIndex;
   UINT16 usTempIndex;
@@ -425,7 +425,7 @@ UINT16 GetRandomTypeByRange(UINT16 usRangeStart, UINT16 usRangeEnd) {
   UINT16 usNumInPickList;
   UINT16 i;
   UINT16 usObject;
-  UINT32 uiType;
+  uint32_t uiType;
   // Get a list of valid object to select from
   usNumInPickList = 0;
   for (i = 0; i < *pNumSelList; i++) {
@@ -445,7 +445,7 @@ UINT16 GetRandomTypeByRange(UINT16 usRangeStart, UINT16 usRangeEnd) {
 //
 //	Puts a structure (trees, trucks, etc.) into the world
 //
-void PasteStructure(UINT32 iMapIndex) {
+void PasteStructure(uint32_t iMapIndex) {
   pSelList = SelOStructs;
   pNumSelList = &iNumOStructsSelected;
 
@@ -458,7 +458,7 @@ void PasteStructure(UINT32 iMapIndex) {
 //
 //	Puts a structure (trees, trucks, etc.) into the world
 //
-void PasteStructure1(UINT32 iMapIndex) {
+void PasteStructure1(uint32_t iMapIndex) {
   pSelList = SelOStructs1;
   pNumSelList = &iNumOStructs1Selected;
 
@@ -471,7 +471,7 @@ void PasteStructure1(UINT32 iMapIndex) {
 //
 //	Puts a structure (trees, trucks, etc.) into the world
 //
-void PasteStructure2(UINT32 iMapIndex) {
+void PasteStructure2(uint32_t iMapIndex) {
   pSelList = SelOStructs2;
   pNumSelList = &iNumOStructs2Selected;
 
@@ -485,8 +485,8 @@ void PasteStructure2(UINT32 iMapIndex) {
 // required because they 	each use different selection lists. Other than that, they are
 // COMPLETELY identical.
 //
-void PasteStructureCommon(UINT32 iMapIndex) {
-  UINT32 fHeadType;
+void PasteStructureCommon(uint32_t iMapIndex) {
+  uint32_t fHeadType;
   UINT16 usUseIndex;
   UINT16 usUseObjIndex;
   INT32 iRandSelIndex;
@@ -531,7 +531,7 @@ void PasteStructureCommon(UINT32 iMapIndex) {
 //
 //	Places a river bank or cliff into the world
 //
-void PasteBanks(UINT32 iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace) {
+void PasteBanks(uint32_t iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace) {
   BOOLEAN fDoPaste = FALSE;
   UINT16 usUseIndex;
   UINT16 usUseObjIndex;
@@ -578,7 +578,7 @@ void PasteBanks(UINT32 iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace) {
   }
 }
 
-void PasteRoads(UINT32 iMapIndex) {
+void PasteRoads(uint32_t iMapIndex) {
   UINT16 usUseIndex;
 
   pSelList = SelRoads;
@@ -595,7 +595,7 @@ void PasteRoads(UINT32 iMapIndex) {
 //	Puts a ground texture in the world. Ground textures are then "smoothed" in order to blend
 // the edges with one 	another. The current drawing brush also affects this function.
 //
-void PasteTexture(UINT32 iMapIndex) {
+void PasteTexture(uint32_t iMapIndex) {
   ChooseWeightedTerrainTile();  // Kris
   PasteTextureCommon(iMapIndex);
 }
@@ -607,7 +607,7 @@ void PasteTexture(UINT32 iMapIndex) {
 // size is larger than 	one tile, then the above function will call this one and indicate that they
 // should all be placed into the undo 	stack as the same undo command.
 //
-void PasteTextureCommon(UINT32 iMapIndex) {
+void PasteTextureCommon(uint32_t iMapIndex) {
   UINT8 ubLastHighLevel;
   UINT16 usTileIndex;
   // UINT16					Dummy;
@@ -654,10 +654,10 @@ void PasteTextureCommon(UINT32 iMapIndex) {
 //	Some ground textures should be placed "above" others. That is, grass needs to be placed
 //"above" sand etc. 	This function performs the appropriate actions.
 //
-void PasteHigherTexture(UINT32 iMapIndex, UINT32 fNewType) {
+void PasteHigherTexture(uint32_t iMapIndex, uint32_t fNewType) {
   UINT16 NewTile;
   UINT8 ubLastHighLevel;
-  UINT32 *puiDeletedTypes = NULL;
+  uint32_t *puiDeletedTypes = NULL;
   UINT8 ubNumTypes;
   UINT8 cnt;
 
@@ -710,7 +710,7 @@ void PasteHigherTexture(UINT32 iMapIndex, UINT32 fNewType) {
 //
 //	Like above function except it performs it's operation on a redial area.
 //
-BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubRadius) {
+BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -750,8 +750,8 @@ BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ub
 //---------------------------------------------------------------------------------------------------------------
 //	PasteExistingTexture
 //
-BOOLEAN PasteExistingTexture(UINT32 iMapIndex, UINT16 usIndex) {
-  UINT32 uiNewType;
+BOOLEAN PasteExistingTexture(uint32_t iMapIndex, UINT16 usIndex) {
+  uint32_t uiNewType;
   UINT16 usNewIndex;
   // UINT16					Dummy;
 
@@ -831,7 +831,7 @@ BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, UINT16 usIndex, UINT8 ub
 //
 //	Puts a land index "under" an existing ground texture. Affects a radial area.
 //
-BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubRadius,
+BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius,
                                     BOOLEAN fReplace) {
   UINT16 usTempIndex;
   INT16 sTop, sBottom;
@@ -841,7 +841,7 @@ BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubR
   BOOLEAN fDoPaste = FALSE;
   INT32 leftmost;
   UINT8 ubLastHighLevel;
-  UINT32 *puiSmoothTiles = NULL;
+  uint32_t *puiSmoothTiles = NULL;
   INT16 sNumSmoothTiles = 0;
   UINT16 usTemp;
   UINT16 NewTile;  //,Dummy;
@@ -896,7 +896,8 @@ BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubR
 
             // If we are top-most, add to smooth list
             sNumSmoothTiles++;
-            puiSmoothTiles = (UINT32 *)MemRealloc(puiSmoothTiles, sNumSmoothTiles * sizeof(UINT32));
+            puiSmoothTiles =
+                (uint32_t *)MemRealloc(puiSmoothTiles, sNumSmoothTiles * sizeof(uint32_t));
             puiSmoothTiles[sNumSmoothTiles - 1] = iNewIndex;
           }
         }
@@ -976,7 +977,7 @@ void PasteTextureFromRadiusEx(INT16 sGridNo, UINT16 usType, UINT8 ubRadius) {
 #define LAND_DROP_5 FIRSTCLIFF8
 void RaiseWorldLand() {
   INT32 cnt;
-  UINT32 sTempGridNo;
+  uint32_t sTempGridNo;
   struct LEVELNODE *pStruct;
   TILE_ELEMENT *pTileElement;
   BOOLEAN fRaiseSet;
@@ -1194,7 +1195,7 @@ void RaiseWorldLand() {
 
 void EliminateObjectLayerRedundancy() {
   INT32 i, numRoads, numAnothers;
-  UINT32 uiType;
+  uint32_t uiType;
   struct LEVELNODE *pObject, *pValidRoad, *pValidAnother;
   UINT16 usIndex;
 

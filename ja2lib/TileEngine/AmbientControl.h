@@ -7,7 +7,7 @@
 BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID);
 
 void HandleNewSectorAmbience(UINT8 ubAmbientID);
-UINT32 SetupNewAmbientSound(UINT32 uiAmbientID);
+uint32_t SetupNewAmbientSound(uint32_t uiAmbientID);
 
 void StopAmbients();
 void DeleteAllAmbients();

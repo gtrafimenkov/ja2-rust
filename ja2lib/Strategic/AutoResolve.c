@@ -86,9 +86,9 @@ enum {
 typedef struct SOLDIERCELL {
   struct SOLDIERTYPE *pSoldier;
   struct MOUSE_REGION *pRegion;  // only used for player mercs.
-  UINT32 uiVObjectID;
+  uint32_t uiVObjectID;
   UINT16 usIndex;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UINT16 usFrame;
   INT16 xp, yp;
   UINT16 usAttack, usDefence;
@@ -96,7 +96,7 @@ typedef struct SOLDIERCELL {
   UINT16 usNextHit[3];
   UINT16 usHitDamage[3];
   struct SOLDIERCELL *pAttacker[3];
-  UINT32 uiFlashTime;
+  uint32_t uiFlashTime;
   INT8 bWeaponSlot;
 } SOLDIERCELL;
 
@@ -110,18 +110,18 @@ typedef struct AUTORESOLVE_STRUCT {
   INT32 iFaces;          // for generic civs and enemies
   INT32 iMercFaces[20];  // for each merc face
   INT32 iIndent;
-  UINT32 iInterfaceBuffer;
+  uint32_t iInterfaceBuffer;
   INT32 iNumMercFaces;
   INT32 iActualMercFaces;  // this represents the real number of merc faces.  Because
                            // my debug mode allows to freely add and subtract mercs, we
                            // can add/remove temp mercs, but we don't want to remove the
                            // actual mercs.
-  UINT32 uiTimeSlice;
-  UINT32 uiTotalElapsedBattleTimeInMilliseconds;
-  UINT32 uiPrevTime, uiCurrTime;
-  UINT32 uiStartExpanding;
-  UINT32 uiEndExpanding;
-  UINT32 uiPreRandomIndex;
+  uint32_t uiTimeSlice;
+  uint32_t uiTotalElapsedBattleTimeInMilliseconds;
+  uint32_t uiPrevTime, uiCurrTime;
+  uint32_t uiStartExpanding;
+  uint32_t uiEndExpanding;
+  uint32_t uiPreRandomIndex;
 
   SGPRect Rect, ExRect;
 
@@ -309,7 +309,7 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell);
 
 #ifdef JA2BETAVERSION
 extern void CountRandomCalls(BOOLEAN fStart);
-extern void GetRandomCalls(UINT32 *puiRandoms, UINT32 *puiPreRandoms);
+extern void GetRandomCalls(uint32_t *puiRandoms, uint32_t *puiPreRandoms);
 #endif
 
 // Dynamic globals -- to conserve memory, all global variables are allocated upon entry
@@ -320,15 +320,15 @@ SOLDIERCELL *gpCivs = NULL;
 SOLDIERCELL *gpEnemies = NULL;
 
 // Simple wrappers for autoresolve sounds that are played.
-void PlayAutoResolveSample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                           UINT32 uiPan) {
+void PlayAutoResolveSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                           uint32_t uiPan) {
   if (gpAR->fSound) {
     PlayJA2Sample(usNum, usRate, ubVolume, ubLoops, uiPan);
   }
 }
 
-void PlayAutoResolveSampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                                   UINT32 uiPan) {
+void PlayAutoResolveSampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+                                   uint32_t ubLoops, uint32_t uiPan) {
   if (gpAR->fSound) {
     PlayJA2SampleFromFile(szFileName, usRate, ubVolume, ubLoops, uiPan);
   }
@@ -449,9 +449,9 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
 
 void DoTransitionFromPreBattleInterfaceToAutoResolve() {
   SGPRect SrcRect, DstRect;
-  UINT32 uiStartTime, uiCurrTime;
+  uint32_t uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
-  UINT32 uiTimeRange;
+  uint32_t uiTimeRange;
   INT16 sStartLeft, sEndLeft, sStartTop, sEndTop;
   INT32 iLeft, iTop, iWidth, iHeight;
 
@@ -500,9 +500,9 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
     // Factor the percentage so that it is modified by a gravity falling acceleration effect.
     iFactor = (iPercentage - 50) * 2;
     if (iPercentage < 50)
-      iPercentage = (UINT32)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
+      iPercentage = (uint32_t)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
     else
-      iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
+      iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
 
     // Calculate the center point.
     iLeft = sStartLeft + (sEndLeft - sStartLeft + 1) * iPercentage / 100;
@@ -586,14 +586,14 @@ void EnterAutoResolveMode(UINT8 ubSectorX, UINT8 ubSectorY) {
   }
 }
 
-UINT32 AutoResolveScreenInit() { return TRUE; }
+uint32_t AutoResolveScreenInit() { return TRUE; }
 
-UINT32 AutoResolveScreenShutdown() {
+uint32_t AutoResolveScreenShutdown() {
   gpBattleGroup = NULL;
   return TRUE;
 }
 
-UINT32 AutoResolveScreenHandle() {
+uint32_t AutoResolveScreenHandle() {
   RestoreBackgroundRects();
 
   if (!gpAR) {
@@ -602,7 +602,7 @@ UINT32 AutoResolveScreenHandle() {
   }
   if (gpAR->fEnteringAutoResolve) {
     UINT8 *pDestBuf;
-    UINT32 uiDestPitchBYTES;
+    uint32_t uiDestPitchBYTES;
     SGPRect ClipRect;
     gpAR->fEnteringAutoResolve = FALSE;
     // Take the framebuffer, shade it, and save it to the SAVEBUFFER.
@@ -632,7 +632,7 @@ UINT32 AutoResolveScreenHandle() {
     RemoveAutoResolveInterface(TRUE);
 #ifdef JA2BETAVERSION
     {
-      UINT32 uiRandoms, uiPreRandoms;
+      uint32_t uiRandoms, uiPreRandoms;
       GetRandomCalls(&uiRandoms, &uiPreRandoms);
     }
 #endif
@@ -892,7 +892,7 @@ void RenderSoldierCell(SOLDIERCELL *pCell) {
         (CELL_HITBYATTACKER | CELL_HITLASTFRAME |
          CELL_CREATURE))) {  // Merc is unconcious (and not taking damage), so darken his portrait.
     UINT8 *pDestBuf;
-    UINT32 uiDestPitchBYTES;
+    uint32_t uiDestPitchBYTES;
     SGPRect ClipRect;
     ClipRect.iLeft = pCell->xp + 3 + x;
     ClipRect.iTop = pCell->yp + 3;
@@ -1050,8 +1050,8 @@ void BuildInterfaceBuffer() {
 
 void ExpandWindow() {
   SGPRect OldRect;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiCurrentTime, uiTimeRange, uiPercent;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiCurrentTime, uiTimeRange, uiPercent;
   UINT8 *pDestBuf;
   INT32 i;
 
@@ -1156,9 +1156,9 @@ void ExpandWindow() {
                    gpAR->ExRect.iBottom + 1);
 }
 
-UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
-                                struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus) {
-  UINT32 uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
+uint32_t VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                                  struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus) {
+  uint32_t uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
   UINT8 bBelowOKlife, bPtsLeft;
 
   if (pVictim->bBleeding < 1) return 0;  // nothing to do, shouldn't have even been called!
@@ -1215,7 +1215,7 @@ UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE
   if (pKit->usItem == MEDICKIT) {
     uiMedcost = uiActual / 2;  // cost is only half
     if (uiMedcost == 0 && uiActual > 0) uiMedcost = 1;
-    if (uiMedcost > (UINT32)sKitPts)  // if we can't afford this
+    if (uiMedcost > (uint32_t)sKitPts)  // if we can't afford this
     {
       uiMedcost = sKitPts;       // what CAN we afford?
       uiActual = uiMedcost * 2;  // give double this as aid
@@ -1223,8 +1223,8 @@ UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE
   } else {
     uiMedcost = uiActual;
     if (uiMedcost == 0 && uiActual > 0) uiMedcost = 1;
-    if (uiMedcost > (UINT32)sKitPts)   // can't afford it
-      uiMedcost = uiActual = sKitPts;  // recalc cost AND aid
+    if (uiMedcost > (uint32_t)sKitPts)  // can't afford it
+      uiMedcost = uiActual = sKitPts;   // recalc cost AND aid
   }
 
   bPtsLeft = (INT8)uiActual;
@@ -1304,9 +1304,9 @@ struct OBJECTTYPE *FindMedicalKit() {
   return NULL;
 }
 
-UINT32 AutoBandageMercs() {
+uint32_t AutoBandageMercs() {
   INT32 i, iBest;
-  UINT32 uiPointsUsed, uiCurrPointsUsed, uiMaxPointsUsed, uiParallelPointsUsed;
+  uint32_t uiPointsUsed, uiCurrPointsUsed, uiMaxPointsUsed, uiParallelPointsUsed;
   UINT16 usKitPts;
   struct OBJECTTYPE *pKit = NULL;
   BOOLEAN fComplete = TRUE;
@@ -2759,7 +2759,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   STR16 pStr;
   CHAR16 str[20];
   UINT8 *pDestBuf, *pSrcBuf;
-  UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   UINT16 usColor;
 
   SetFont(SMALLCOMPFONT);
@@ -3609,11 +3609,10 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
   pTarget->uiFlags |= CELL_HITBYATTACKER | CELL_DIRTY;
 }
 
-void Delay(UINT32 uiMilliseconds) {
+void Delay(uint32_t uiMilliseconds) {
   INT32 iTime;
   iTime = GetJA2Clock();
-  while (GetJA2Clock() < iTime + uiMilliseconds)
-    ;
+  while (GetJA2Clock() < iTime + uiMilliseconds);
 }
 
 BOOLEAN IsBattleOver() {
@@ -3835,10 +3834,10 @@ void ProcessBattleFrame() {
   INT32 iRandom;
   INT32 i;
   SOLDIERCELL *pAttacker, *pTarget;
-  UINT32 uiDiff;
+  uint32_t uiDiff;
   static INT32 iTimeSlice = 0;
   static BOOLEAN fContinue = FALSE;
-  static UINT32 uiSlice = 0;
+  static uint32_t uiSlice = 0;
   static INT32 iTotal = 0;
   static INT32 iMercs = 0;
   static INT32 iCivs = 0;

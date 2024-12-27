@@ -18,17 +18,17 @@ CHAR8 TileSurfaceFilenames[NUMBEROFTILETYPES][32];
 BOOLEAN gfForceBuildShadeTables = FALSE;
 
 #ifdef JA2TESTVERSION
-extern UINT32 uiNumTablesSaved;
-extern UINT32 uiNumTablesLoaded;
+extern uint32_t uiNumTablesSaved;
+extern uint32_t uiNumTablesLoaded;
 #endif
 
 void DetermineRGBDistributionSettings() {
   STRING512 DataDir;
   char ExecDir[256];
   STRING512 ShadeTableDir;
-  UINT32 uiRBitMask, uiGBitMask, uiBBitMask;
-  UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
-  UINT32 uiNumBytesRead;
+  uint32_t uiRBitMask, uiGBitMask, uiBBitMask;
+  uint32_t uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
+  uint32_t uiNumBytesRead;
   HWFILE hfile;
   BOOLEAN fSaveRGBDist = FALSE;
   BOOLEAN fCleanShadeTable = FALSE;
@@ -63,9 +63,9 @@ void DetermineRGBDistributionSettings() {
       if (!hfile) {
         AssertMsg(0, "Couldn't open RGBDist.dat, even though it exists!");
       }
-      FileMan_Read(hfile, &uiPrevRBitMask, sizeof(UINT32), &uiNumBytesRead);
-      FileMan_Read(hfile, &uiPrevGBitMask, sizeof(UINT32), &uiNumBytesRead);
-      FileMan_Read(hfile, &uiPrevBBitMask, sizeof(UINT32), &uiNumBytesRead);
+      FileMan_Read(hfile, &uiPrevRBitMask, sizeof(uint32_t), &uiNumBytesRead);
+      FileMan_Read(hfile, &uiPrevGBitMask, sizeof(uint32_t), &uiNumBytesRead);
+      FileMan_Read(hfile, &uiPrevBBitMask, sizeof(uint32_t), &uiNumBytesRead);
       fLoadedPrevRGBDist = TRUE;
       FileMan_Close(hfile);
     }
@@ -99,9 +99,9 @@ void DetermineRGBDistributionSettings() {
     if (!hfile) {
       AssertMsg(0, "Couldn't create RGBDist.dat for writing!");
     }
-    FileMan_Write(hfile, &uiRBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileMan_Write(hfile, &uiGBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileMan_Write(hfile, &uiBBitMask, sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Write(hfile, &uiRBitMask, sizeof(uint32_t), &uiNumBytesRead);
+    FileMan_Write(hfile, &uiGBitMask, sizeof(uint32_t), &uiNumBytesRead);
+    FileMan_Write(hfile, &uiBBitMask, sizeof(uint32_t), &uiNumBytesRead);
     FileMan_Close(hfile);
   }
 
@@ -110,10 +110,10 @@ void DetermineRGBDistributionSettings() {
   Plat_SetCurrentDirectory(DataDir);
 }
 
-BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
+BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   HWFILE hfile;
   INT32 i;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   CHAR8 ShadeFileName[100];
   STR8 ptr;
   // ASSUMPTIONS:
@@ -150,10 +150,10 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   return TRUE;
 }
 
-BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
+BOOLEAN SaveShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   HWFILE hfile;
   INT32 i;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   CHAR8 ShadeFileName[100];
   STR8 ptr;
 #ifdef JA2TESTVERSION

@@ -30,6 +30,6 @@ void HideTerrainTileButtons();
 
 void ChooseWeightedTerrainTile();
 
-void TerrainFill(UINT32 iMapIndex);
+void TerrainFill(uint32_t iMapIndex);
 
 #endif

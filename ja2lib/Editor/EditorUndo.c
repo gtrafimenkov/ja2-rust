@@ -570,7 +570,7 @@ void SmoothUndoMapTileTerrain(INT32 iWorldTile, MAP_ELEMENT *pUndoTile) {
   struct LEVELNODE *pUndoLand;
   struct LEVELNODE *pLand;
   struct LEVELNODE *pWLand;
-  UINT32 uiCheckType, uiWCheckType;
+  uint32_t uiCheckType, uiWCheckType;
   BOOLEAN fFound;
 
   pUndoLand = pUndoTile->pLandHead;

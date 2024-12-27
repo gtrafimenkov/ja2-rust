@@ -44,7 +44,7 @@ enum {
 BOOLEAN gfIntroScreenEntry;
 BOOLEAN gfIntroScreenExit;
 
-UINT32 guiIntroExitScreen = INTRO_SCREEN;
+uint32_t guiIntroExitScreen = INTRO_SCREEN;
 
 extern BOOLEAN gfDoneWithSplashScreen;
 
@@ -105,22 +105,22 @@ void RenderIntroScreen();
 void ExitIntroScreen();
 void HandleIntroScreen();
 void PrepareToExitIntroScreen();
-INT32 GetNextIntroVideo(UINT32 uiCurrentVideo);
+INT32 GetNextIntroVideo(uint32_t uiCurrentVideo);
 void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay);
 void DisplaySirtechSplashScreen();
 
 // ppp
 
-UINT32 IntroScreenInit(void) {
+uint32_t IntroScreenInit(void) {
   // Set so next time we come in, we can set up
   gfIntroScreenEntry = TRUE;
 
   return (1);
 }
 
-UINT32 IntroScreenShutdown(void) { return (1); }
+uint32_t IntroScreenShutdown(void) { return (1); }
 
-UINT32 IntroScreenHandle(void) {
+uint32_t IntroScreenHandle(void) {
   if (gfIntroScreenEntry) {
     EnterIntroScreen();
     gfIntroScreenEntry = FALSE;
@@ -308,7 +308,7 @@ void PrepareToExitIntroScreen() {
   gfIntroScreenExit = TRUE;
 }
 
-INT32 GetNextIntroVideo(UINT32 uiCurrentVideo) {
+INT32 GetNextIntroVideo(uint32_t uiCurrentVideo) {
   INT32 iStringToUse = -1;
 
   // switch on whether it is the beginging or the end game video
@@ -404,9 +404,9 @@ void SetIntroType(INT8 bIntroType) {
 void DisplaySirtechSplashScreen() {
   struct VObject *hPixHandle;
   VOBJECT_DESC VObjectDesc;
-  UINT32 uiLogoID;
+  uint32_t uiLogoID;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // JA3Gold: do nothing until we have a graphic to replace Talonsoft's

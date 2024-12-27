@@ -62,8 +62,8 @@
 #define MERC_AC_FIRST_ROW_Y MERC_AC_ORDER_GRID_Y + 42
 #define MERC_AC_ROW_SIZE 16
 
-UINT32 guiMercOrderGrid;
-UINT32 guiAccountNumberGrid;
+uint32_t guiMercOrderGrid;
+uint32_t guiAccountNumberGrid;
 
 INT32 giMercTotalContractCharge;
 
@@ -71,12 +71,12 @@ BOOLEAN gfMercPlayerDoesntHaveEnoughMoney_DisplayWarning = FALSE;
 
 // The Authorize button
 void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiMercAuthorizeBoxButton;
+uint32_t guiMercAuthorizeBoxButton;
 INT32 guiMercAuthorizeButtonImage;
 
 // The Back button
 void BtnMercBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiMercBackBoxButton;
+uint32_t guiMercBackBoxButton;
 
 void DisplayHiredMercs();
 void SettleMercAccounts();
@@ -262,7 +262,7 @@ void BtnMercBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void DisplayHiredMercs() {
   UINT16 usPosY;
-  UINT32 uiContractCharge;
+  uint32_t uiContractCharge;
   wchar_t sTemp[20];
   UINT8 i, usMercID;
   UINT8 ubFontColor;
@@ -402,9 +402,9 @@ void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue) {
   }
 }
 
-UINT32 CalculateHowMuchPlayerOwesSpeck() {
+uint32_t CalculateHowMuchPlayerOwesSpeck() {
   UINT8 i = 0;
-  UINT32 uiContractCharge = 0;
+  uint32_t uiContractCharge = 0;
   UINT16 usMercID;
 
   for (i = 0; i < 10; i++) {

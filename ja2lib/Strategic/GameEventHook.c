@@ -50,7 +50,7 @@ extern void HandleHourlyUpdate();
 extern void HandleQuarterHourUpdate();
 extern void HandleMinuteUpdate();
 extern BOOLEAN gfProcessingGameEvents;
-extern UINT32 guiTimeStampOfCurrentlyExecutingEvent;
+extern uint32_t guiTimeStampOfCurrentlyExecutingEvent;
 extern BOOLEAN gfPreventDeletionOfAnyEvent;
 
 #ifdef CRIPPLED_VERSION

@@ -56,8 +56,8 @@ BOOLEAN gfCaves = FALSE;
 #define DUSK_TO_NIGHT (NIGHT_START - DUSK_START)
 #define NIGHT_TO_DAWN (24 * 60 - NIGHT_START + DAWN_START)
 
-UINT32 guiEnvWeather = 0;
-UINT32 guiRainLoop = NO_SAMPLE;
+uint32_t guiEnvWeather = 0;
+uint32_t guiRainLoop = NO_SAMPLE;
 
 // frame cues for lightning
 UINT8 ubLightningTable[3][10][2] = {
@@ -117,8 +117,8 @@ typedef enum {
 #define HOT_DAY_LIGHTLEVEL 2
 
 BOOLEAN fTimeOfDayControls = TRUE;
-UINT32 guiEnvTime = 0;
-UINT32 guiEnvDay = 0;
+uint32_t guiEnvTime = 0;
+uint32_t guiEnvDay = 0;
 UINT8 gubEnvLightValue = 0;
 BOOLEAN gfDoLighting = FALSE;
 
@@ -130,7 +130,7 @@ void EnvDoLightning(void);
 
 // polled by the game to handle time/atmosphere changes from gamescreen
 void EnvironmentController(BOOLEAN fCheckForLights) {
-  UINT32 uiOldWorldHour;
+  uint32_t uiOldWorldHour;
   UINT8 ubLightAdjustFromWeather = 0;
 
   // do none of this stuff in the basement or caves
@@ -225,7 +225,7 @@ void EnvironmentController(BOOLEAN fCheckForLights) {
 }
 
 void BuildDayLightLevels() {
-  UINT32 uiLoop, uiHour;
+  uint32_t uiLoop, uiHour;
 
   /*
   // Dawn; light 12
@@ -311,7 +311,7 @@ void BuildDayAmbientSounds() {
 }
 
 void ForecastDayEvents() {
-  UINT32 uiOldDay;
+  uint32_t uiOldDay;
 
   // Get current day and see if different
   if ((uiOldDay = GetWorldDay()) != guiEnvDay) {
@@ -328,7 +328,7 @@ void EnvEnableTOD(void) { fTimeOfDayControls = TRUE; }
 void EnvDisableTOD(void) { fTimeOfDayControls = FALSE; }
 
 void EnvDoLightning(void) {
-  static UINT32 uiCount = 0, uiIndex = 0, uiStrike = 0, uiFrameNext = 1000;
+  static uint32_t uiCount = 0, uiIndex = 0, uiStrike = 0, uiFrameNext = 1000;
   static UINT8 ubLevel = 0, ubLastLevel = 0;
 
   if (gfPauseDueToPlayerGamePause) {
@@ -350,7 +350,7 @@ void EnvDoLightning(void) {
       PlayJA2Ambient(LIGHTNING_1 + Random(2), HIGHVOLUME, 1);
     }
 
-    while (uiCount > ((UINT32)ubLightningTable[uiStrike][uiIndex][0] + uiFrameNext)) uiIndex++;
+    while (uiCount > ((uint32_t)ubLightningTable[uiStrike][uiIndex][0] + uiFrameNext)) uiIndex++;
 
     ubLastLevel = ubLevel;
     ubLevel = ubLightningTable[uiStrike][uiIndex][1];
@@ -473,7 +473,7 @@ void UpdateTemperature(UINT8 ubTemperatureCode) {
   gfDoLighting = TRUE;
 }
 
-INT8 SectorTemperature(UINT32 uiTime, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+INT8 SectorTemperature(uint32_t uiTime, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   if (bSectorZ > 0) {
     // cool underground
     return (0);

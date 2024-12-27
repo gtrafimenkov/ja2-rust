@@ -31,7 +31,7 @@
 #define WINDOW_SIZE 2
 
 FLOAT gdXStep, gdYStep;
-UINT32 giMiniMap, gi8BitMiniMap;
+uint32_t giMiniMap, gi8BitMiniMap;
 struct VSurface *ghvSurface;
 
 extern BOOLEAN gfOverheadMapDirty;
@@ -47,9 +47,9 @@ typedef struct {
 
 } RGBValues;
 
-UINT32 MapUtilScreenInit() { return (TRUE); }
+uint32_t MapUtilScreenInit() { return (TRUE); }
 
-UINT32 MapUtilScreenHandle() {
+uint32_t MapUtilScreenHandle() {
   static INT16 fNewMap = TRUE;
   static INT16 sFileNum = 0;
   InputAtom InputEvent;
@@ -62,16 +62,16 @@ UINT32 MapUtilScreenHandle() {
   UINT16 usWidth;
   UINT16 usHeight;
   UINT8 ubBitDepth;
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT16 *pDestBuf, *pSrcBuf;
   UINT8 *pDataPtr;
 
   static UINT8 *p24BitDest = NULL;
   static RGBValues *p24BitValues = NULL;
 
-  UINT32 uiRGBColor;
+  uint32_t uiRGBColor;
 
-  UINT32 bR, bG, bB, bAvR, bAvG, bAvB;
+  uint32_t bR, bG, bB, bAvR, bAvG, bAvB;
   INT16 s16BPPSrc, sDest16BPPColor;
   INT32 cnt;
 
@@ -305,20 +305,20 @@ UINT32 MapUtilScreenHandle() {
   return (MAPUTILITY_SCREEN);
 }
 
-UINT32 MapUtilScreenShutdown() { return (TRUE); }
+uint32_t MapUtilScreenShutdown() { return (TRUE); }
 
 #else  // non-editor version
 
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
 
-UINT32 MapUtilScreenInit() { return (TRUE); }
+uint32_t MapUtilScreenInit() { return (TRUE); }
 
-UINT32 MapUtilScreenHandle() {
+uint32_t MapUtilScreenHandle() {
   // If this screen ever gets set, then this is a bad thing -- endless loop
   return (ERROR_SCREEN);
 }
 
-UINT32 MapUtilScreenShutdown() { return (TRUE); }
+uint32_t MapUtilScreenShutdown() { return (TRUE); }
 
 #endif

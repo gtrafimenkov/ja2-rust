@@ -14,7 +14,7 @@ extern BOOLEAN fDirtyRectangleMode;
 extern CHAR8 gDebugStr[128];
 extern CHAR8 gSystemDebugStr[128];
 
-extern UINT32 guiDoneButton;
+extern uint32_t guiDoneButton;
 
 extern BOOLEAN gfMode;
 extern INT16 gsCurrentActionPoints;
@@ -22,7 +22,7 @@ extern INT8 gbFPSDisplay;
 extern BOOLEAN gfResetInputCheck;
 extern BOOLEAN gfGlobalError;
 
-extern UINT32 guiGameCycleCounter;
+extern uint32_t guiGameCycleCounter;
 
 // VIDEO OVERLAYS
 extern INT32 giFPSOverlay;

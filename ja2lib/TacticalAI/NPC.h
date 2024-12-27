@@ -161,7 +161,7 @@ extern BOOLEAN ReloadAllQuoteFiles(void);
 
 // Save and loads the npc info to a saved game file
 extern BOOLEAN SaveNPCInfoToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersion);
+BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion);
 
 extern void TriggerFriendWithHostileQuote(UINT8 ubNPC);
 
@@ -170,10 +170,10 @@ extern void ReplaceLocationInNPCDataFromProfileID(UINT8 ubNPC, INT16 sOldGridNo,
 extern UINT8 ActionIDForMovementRecord(UINT8 ubNPC, UINT8 ubRecord);
 
 // total amount given to doctors
-extern UINT32 uiTotalAmountGivenToDoctors;
+extern uint32_t uiTotalAmountGivenToDoctors;
 
 // handle money being npc being
-extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPCId, UINT32 uiMoneyAmount,
+extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPCId, uint32_t uiMoneyAmount,
                                                 UINT8 *pQuoteValue);
 
 // given a victory in this sector, handle specific facts
@@ -186,7 +186,7 @@ BOOLEAN NPCHasUnusedRecordWithGivenApproach(UINT8 ubNPC, UINT8 ubApproach);
 BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pObj);
 
 BOOLEAN SaveBackupNPCInfoToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersion);
+BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion);
 
 #ifdef JA2BETAVERSION
 void ToggleNPCRecordDisplay(void);

@@ -105,7 +105,7 @@ struct VObject;
 
 struct LEVELNODE {
   struct LEVELNODE *pNext;
-  UINT32 uiFlags;  // flags struct
+  uint32_t uiFlags;  // flags struct
 
   UINT8 ubSumLights;  // LIGHTING INFO
   UINT8 ubMaxLights;  // MAX LIGHTING INFO
@@ -141,8 +141,8 @@ struct LEVELNODE {
     };
 
     struct {
-      UINT32 uiAnimHitLocationFlags;  // Animation profile flags for soldier placeholders ( prone
-                                      // merc hit location values )
+      uint32_t uiAnimHitLocationFlags;  // Animation profile flags for soldier placeholders ( prone
+                                        // merc hit location values )
     };
 
     // Some can contains index values into animated tile data
@@ -220,7 +220,7 @@ extern UINT8 gubCurrentLevel;
 extern INT32 giCurrentTilesetID;
 
 extern struct VObject *hRenderVObject;
-extern UINT32 gSurfaceMemUsage;
+extern uint32_t gSurfaceMemUsage;
 
 extern CHAR8 gzLastLoadedFile[260];
 
@@ -260,11 +260,11 @@ struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
 
 void ReloadTileset(UINT8 ubID);
 
-BOOLEAN FloorAtGridNo(UINT32 iMapIndex);
-BOOLEAN DoorAtGridNo(UINT32 iMapIndex);
-BOOLEAN GridNoIndoors(UINT32 iMapIndex);
+BOOLEAN FloorAtGridNo(uint32_t iMapIndex);
+BOOLEAN DoorAtGridNo(uint32_t iMapIndex);
+BOOLEAN GridNoIndoors(uint32_t iMapIndex);
 
-BOOLEAN OpenableAtGridNo(UINT32 iMapIndex);
+BOOLEAN OpenableAtGridNo(uint32_t iMapIndex);
 
 void RecompileLocalMovementCostsInAreaWithFlags(void);
 void AddTileToRecompileArea(INT16 sGridNo);

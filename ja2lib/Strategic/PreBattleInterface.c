@@ -126,9 +126,9 @@ struct SOLDIERTYPE* UninvolvedSoldier( INT32 index );
 
 struct MOUSE_REGION PBInterfaceBlanket;
 BOOLEAN gfPreBattleInterfaceActive = FALSE;
-UINT32 iPBButton[3];
-UINT32 iPBButtonImage[3];
-UINT32 uiInterfaceImages;
+uint32_t iPBButton[3];
+uint32_t iPBButtonImage[3];
+uint32_t uiInterfaceImages;
 BOOLEAN gfRenderPBInterface;
 BOOLEAN gfPBButtonsHidden;
 BOOLEAN fDisableMapInterfaceDueToBattle = FALSE;
@@ -149,8 +149,8 @@ extern void UpdateTheStateOfTheNextPrevMapScreenCharacterButtons(void);
 // were we showing the mapscreen inventory when the prebattle interface came up
 extern BOOLEAN fShowInventoryFlag;
 
-UINT32 guiNumInvolved;
-UINT32 guiNumUninvolved;
+uint32_t guiNumInvolved;
+uint32_t guiNumUninvolved;
 
 // SAVE START
 
@@ -685,9 +685,9 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
 
 void DoTransitionFromMapscreenToPreBattleInterface() {
   SGPRect DstRect, PBIRect;
-  UINT32 uiStartTime, uiCurrTime;
+  uint32_t uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
-  UINT32 uiTimeRange;
+  uint32_t uiTimeRange;
   INT16 sStartLeft, sEndLeft, sStartTop, sEndTop;
   INT32 iLeft, iTop, iWidth, iHeight;
   BOOLEAN fEnterAutoResolveMode = FALSE;
@@ -751,9 +751,9 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     // Factor the percentage so that it is modified by a gravity falling acceleration effect.
     iFactor = (iPercentage - 50) * 2;
     if (iPercentage < 50)
-      iPercentage = (UINT32)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
+      iPercentage = (uint32_t)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
     else
-      iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
+      iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
 
     // Calculate the center point.
     iLeft = sStartLeft - (sStartLeft - sEndLeft + 1) * iPercentage / 100;

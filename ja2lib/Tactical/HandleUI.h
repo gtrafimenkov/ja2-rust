@@ -59,16 +59,16 @@ typedef enum {
 
 } UI_MODE;
 
-typedef UINT32 (*UI_HANDLEFNC)(struct TAG_UI_EVENT *);
+typedef uint32_t (*UI_HANDLEFNC)(struct TAG_UI_EVENT *);
 
 typedef struct TAG_UI_EVENT {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UI_MODE ChangeToUIMode;
   UI_HANDLEFNC HandleEvent;
   BOOLEAN fFirstTime;
   BOOLEAN fDoneMenu;
   UI_MODE uiMenuPreviousMode;
-  UINT32 uiParams[3];
+  uint32_t uiParams[3];
 
 } UI_EVENT;
 
@@ -168,10 +168,10 @@ extern UI_EVENT gEvents[NUM_UI_EVENTS];
 // GLOBAL STATUS VARS
 extern UI_MODE gCurrentUIMode;
 extern UI_MODE gOldUIMode;
-extern UINT32 guiCurrentEvent;
+extern uint32_t guiCurrentEvent;
 extern INT16 gsSelectedLevel;
 extern BOOLEAN gfPlotNewMovement;
-extern UINT32 guiPendingOverrideEvent;
+extern uint32_t guiPendingOverrideEvent;
 
 // GLOBALS
 extern BOOLEAN gfUIDisplayActionPoints;
@@ -181,7 +181,7 @@ extern BOOLEAN gfUIDisplayActionPointsCenter;
 extern INT16 gUIDisplayActionPointsOffY;
 extern INT16 gUIDisplayActionPointsOffX;
 extern BOOLEAN gfUIDoNotHighlightSelMerc;
-extern UINT32 guiShowUPDownArrows;
+extern uint32_t guiShowUPDownArrows;
 extern BOOLEAN gfUIHandleSelection;
 extern BOOLEAN gfUIHandleSelectionAboveGuy;
 extern INT16 gsSelectedGridNo;
@@ -228,24 +228,24 @@ extern BOOLEAN gfUIHandlePhysicsTrajectory;
 // GLOBALS FOR FAST LOOKUP FOR FINDING MERCS FROM THE MOUSE
 extern BOOLEAN gfUISelectiveTargetFound;
 extern UINT16 gusUISelectiveTargetID;
-extern UINT32 guiUISelectiveTargetFlags;
+extern uint32_t guiUISelectiveTargetFlags;
 
 extern BOOLEAN gfUIFullTargetFound;
 extern UINT16 gusUIFullTargetID;
-extern UINT32 guiUIFullTargetFlags;
+extern uint32_t guiUIFullTargetFlags;
 
 extern BOOLEAN gfUIConfirmExitArrows;
 extern INT16 gsJumpOverGridNo;
 
-UINT32 HandleTacticalUI(void);
-UINT32 UIHandleEndTurn(UI_EVENT *pUIEvent);
+uint32_t HandleTacticalUI(void);
+uint32_t UIHandleEndTurn(UI_EVENT *pUIEvent);
 
 extern BOOLEAN gfUIShowCurIntTile;
 
 extern SGPRect gRubberBandRect;
 extern BOOLEAN gRubberBandActive;
 
-void EndMenuEvent(UINT32 uiEvent);
+void EndMenuEvent(uint32_t uiEvent);
 void SetUIKeyboardHook(UIKEYBOARD_HOOK KeyboardHookFnc);
 void HandleObjectHighlighting();
 
@@ -255,20 +255,20 @@ extern INT16 guiCreateGuyIndex;
 extern INT16 guiCreateBadGuyIndex;
 
 // FUNCTIONS IN INPUT MODULES
-void GetKeyboardInput(UINT32 *puiNewEvent);
-void GetPolledKeyboardInput(UINT32 *puiNewEvent);
+void GetKeyboardInput(uint32_t *puiNewEvent);
+void GetPolledKeyboardInput(uint32_t *puiNewEvent);
 
-void GetTBMouseButtonInput(UINT32 *puiNewEvent);
-void GetTBMousePositionInput(UINT32 *puiNewEvent);
-void QueryTBLeftButton(UINT32 *puiNewEvent);
-void QueryTBRightButton(UINT32 *puiNewEvent);
+void GetTBMouseButtonInput(uint32_t *puiNewEvent);
+void GetTBMousePositionInput(uint32_t *puiNewEvent);
+void QueryTBLeftButton(uint32_t *puiNewEvent);
+void QueryTBRightButton(uint32_t *puiNewEvent);
 void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight);
 void HandleKeyInputOnEnemyTurn();
 
-void GetRTMouseButtonInput(UINT32 *puiNewEvent);
-void GetRTMousePositionInput(UINT32 *puiNewEvent);
-void QueryRTLeftButton(UINT32 *puiNewEvent);
-void QueryRTRightButton(UINT32 *puiNewEvent);
+void GetRTMouseButtonInput(uint32_t *puiNewEvent);
+void GetRTMousePositionInput(uint32_t *puiNewEvent);
+void QueryRTLeftButton(uint32_t *puiNewEvent);
+void QueryRTRightButton(uint32_t *puiNewEvent);
 
 void AdjustSoldierCreationStartValues();
 
@@ -276,15 +276,15 @@ BOOLEAN SelectedMercCanAffordAttack();
 BOOLEAN SelectedMercCanAffordMove();
 void GetMercClimbDirection(UINT8 ubSoldierID, BOOLEAN *pfGoDown, BOOLEAN *pfGoUp);
 
-void ToggleHandCursorMode(UINT32 *puiNewEvent);
-void ToggleTalkCursorMode(UINT32 *puiNewEvent);
-void ToggleLookCursorMode(UINT32 *puiNewEvent);
+void ToggleHandCursorMode(uint32_t *puiNewEvent);
+void ToggleTalkCursorMode(uint32_t *puiNewEvent);
+void ToggleLookCursorMode(uint32_t *puiNewEvent);
 
 void UIHandleSoldierStanceChange(UINT8 ubSoldierID, INT8 bNewStance);
-void GetCursorMovementFlags(UINT32 *puiCursorFlags);
+void GetCursorMovementFlags(uint32_t *puiCursorFlags);
 
-BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, UINT32 uiCursorFlags, UINT16 usMapPos,
-                               UINT32 uiFlags);
+BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags,
+                               UINT16 usMapPos, uint32_t uiFlags);
 BOOLEAN UIMouseOnValidAttackLocation(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
@@ -301,16 +301,16 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustForConfirm);
 void SetUIBusy(UINT8 ubID);
 void UnSetUIBusy(UINT8 ubID);
 
-UINT32 UIHandleLUIEndLock(UI_EVENT *pUIEvent);
+uint32_t UIHandleLUIEndLock(UI_EVENT *pUIEvent);
 
-void BeginDisplayTimedCursor(UINT32 uiCursorID, UINT32 uiDelay);
+void BeginDisplayTimedCursor(uint32_t uiCursorID, uint32_t uiDelay);
 
-void HandleHandCursorClick(UINT16 usMapPos, UINT32 *puiNewEvent);
-INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, UINT32 *puiNewEvent);
+void HandleHandCursorClick(UINT16 usMapPos, uint32_t *puiNewEvent);
+INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, uint32_t *puiNewEvent);
 
 BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 
-UINT32 UIHandleChangeLevel(UI_EVENT *pUIEvent);
+uint32_t UIHandleChangeLevel(UI_EVENT *pUIEvent);
 BOOLEAN UIHandleOnMerc(BOOLEAN fMovementMode);
 
 void ChangeInterfaceLevel(INT16 sLevel);

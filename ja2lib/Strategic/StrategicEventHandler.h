@@ -23,7 +23,7 @@ void HandleStolenItemsReturned(void);
 void AddSecondAirportAttendant(void);
 
 void SetPabloToUnbribed(void);
-void HandleNPCSystemEvent(UINT32 uiEvent);
+void HandleNPCSystemEvent(uint32_t uiEvent);
 void HandleEarlyMorningEvents(void);
 
 void MakeCivGroupHostileOnNextSectorEntrance(UINT8 ubCivGroup);

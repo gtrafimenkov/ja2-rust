@@ -33,7 +33,7 @@
 // click to determine if a double click event has been detected.
 struct MOUSE_REGION *gpRegionLastLButtonDown = NULL;
 struct MOUSE_REGION *gpRegionLastLButtonUp = NULL;
-UINT32 guiRegionLastLButtonDownTime = 0;
+uint32_t guiRegionLastLButtonDownTime = 0;
 
 extern void ReleaseAnchorMode();  // private function used here (implemented in Button System.c)
 
@@ -464,7 +464,7 @@ void MSYS_DeleteRegionFromList(struct MOUSE_REGION *region) {
 //
 void MSYS_UpdateMouseRegion(void) {
   INT32 found;
-  UINT32 ButtonReason;
+  uint32_t ButtonReason;
   struct MOUSE_REGION *pTempRegion;
   BOOLEAN fFound = FALSE;
   found = FALSE;
@@ -636,7 +636,7 @@ void MSYS_UpdateMouseRegion(void) {
             // Kris: Nov 31, 1999 -- Added support for double click events.
             // This is where double clicks are checked and passed down.
             if (ButtonReason == MSYS_CALLBACK_REASON_LBUTTON_DWN) {
-              UINT32 uiCurrTime = GetClock();
+              uint32_t uiCurrTime = GetClock();
               if (gpRegionLastLButtonDown == MSYS_CurrRegion &&
                   gpRegionLastLButtonUp == MSYS_CurrRegion &&
                   uiCurrTime <=
@@ -654,7 +654,7 @@ void MSYS_UpdateMouseRegion(void) {
                 guiRegionLastLButtonDownTime = GetClock();
               }
             } else if (ButtonReason == MSYS_CALLBACK_REASON_LBUTTON_UP) {
-              UINT32 uiCurrTime = GetClock();
+              uint32_t uiCurrTime = GetClock();
               if (gpRegionLastLButtonDown == MSYS_CurrRegion &&
                   uiCurrTime <=
                       guiRegionLastLButtonDownTime +
@@ -1079,7 +1079,7 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
       region->uiFlags |= MSYS_HAS_BACKRECT;
     } else {
       UINT8 *pDestBuf;
-      UINT32 uiDestPitchBYTES;
+      uint32_t uiDestPitchBYTES;
       pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
       SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
       RectangleDraw(TRUE, iX + 1, iY + 1, iX + iW - 1, iY + iH - 1,
@@ -1122,7 +1122,7 @@ INT16 GetWidthOfString(STR16 pStringA) {
 void DisplayHelpTokenizedString(STR16 pStringA, INT16 sX, INT16 sY) {
   STR16 pToken;
   INT32 iCounter = 0, i;
-  UINT32 uiCursorXPos;
+  uint32_t uiCursorXPos;
   CHAR16 pString[512];
   INT32 iLength;
 

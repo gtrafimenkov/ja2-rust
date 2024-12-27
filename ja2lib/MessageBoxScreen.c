@@ -59,7 +59,7 @@ void LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-UINT32 ExitMsgBox(INT8 ubExitCode);
+uint32_t ExitMsgBox(INT8 ubExitCode);
 UINT16 GetMSgBoxButtonWidth(INT32 iButtonImage);
 
 SGPRect gOldCursorLimitRectangle;
@@ -77,13 +77,13 @@ extern STR16 pUpdatePanelButtons[];
 CHAR16 gzUserDefinedButton1[128];
 CHAR16 gzUserDefinedButton2[128];
 
-INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                    MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
   VSURFACE_DESC vs_desc;
   UINT16 usTextBoxWidth;
   UINT16 usTextBoxHeight;
   SGPRect aRect;
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   INT16 sButtonX, sButtonY, sBlankSpace;
   UINT8 ubMercBoxBackground = BASIC_MERC_POPUP_BACKGROUND,
@@ -698,8 +698,8 @@ void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-UINT32 ExitMsgBox(INT8 ubExitCode) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+uint32_t ExitMsgBox(INT8 ubExitCode) {
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   SGPPoint pPosition;
 
@@ -844,15 +844,15 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
   return (gMsgBox.uiExitScreen);
 }
 
-UINT32 MessageBoxScreenInit() { return (TRUE); }
+uint32_t MessageBoxScreenInit() { return (TRUE); }
 
-UINT32 MessageBoxScreenHandle() {
+uint32_t MessageBoxScreenHandle() {
   InputAtom InputEvent;
 
   if (gfNewMessageBox) {
     // If in game screen....
     if ((gfStartedFromGameScreen) || (gfStartedFromMapScreen)) {
-      // UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
+      // uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
       // UINT8	 *pDestBuf, *pSrcBuf;
 
       if (gfStartedFromGameScreen) {
@@ -1027,7 +1027,7 @@ UINT32 MessageBoxScreenHandle() {
   return (MSG_BOX_SCREEN);
 }
 
-UINT32 MessageBoxScreenShutdown() { return (FALSE); }
+uint32_t MessageBoxScreenShutdown() { return (FALSE); }
 
 // a basic box that don't care what screen we came from
 void DoScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,

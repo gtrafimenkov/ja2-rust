@@ -79,11 +79,11 @@ void SetMercEditingMode(UINT8 ubNewMode);
 void ResetAllMercPositions();
 
 void EraseMercWaypoint();
-void AddMercWaypoint(UINT32 iMapIndex);
+void AddMercWaypoint(uint32_t iMapIndex);
 
 void SetEnemyColorCode(UINT8 ubColorCode);
 
-void SpecifyEntryPoint(UINT32 iMapIndex);
+void SpecifyEntryPoint(uint32_t iMapIndex);
 
 // Modify stats of current soldiers
 void SetMercOrders(INT8 bOrders);
@@ -115,7 +115,7 @@ void ChangeCivGroup(UINT8 ubNewCivGroup);
 
 extern BOOLEAN gfRoofPlacement;
 
-extern void SetEnemyDroppableStatus(UINT32 uiSlot, BOOLEAN fDroppable);
+extern void SetEnemyDroppableStatus(uint32_t uiSlot, BOOLEAN fDroppable);
 
 void RenderMercStrings();
 

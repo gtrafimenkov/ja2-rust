@@ -366,8 +366,8 @@ BOOLEAN gfPlotDirectPath = FALSE;
 BOOLEAN gfEstimatePath = FALSE;
 BOOLEAN gfPathAroundObstacles = TRUE;
 
-static UINT32 guiPlottedPath[256];
-UINT32 guiPathingData[256];
+static uint32_t guiPlottedPath[256];
+uint32_t guiPathingData[256];
 static INT32 giPathDataSize;
 static INT32 giPlotCnt;
 
@@ -387,10 +387,10 @@ static INT32 dirDelta[8] = {
 #define LOOPING_REVERSE 2
 
 #ifdef COUNT_PATHS
-UINT32 guiSuccessfulPathChecks = 0;
-UINT32 guiTotalPathChecks = 0;
-UINT32 guiFailedPathChecks = 0;
-UINT32 guiUnsuccessfulPathChecks = 0;
+uint32_t guiSuccessfulPathChecks = 0;
+uint32_t guiTotalPathChecks = 0;
+uint32_t guiFailedPathChecks = 0;
+uint32_t guiUnsuccessfulPathChecks = 0;
 #endif
 
 INT8 RandomSkipListLevel(void) {
@@ -482,7 +482,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
   path_t *pCurr;
   path_t *pNext;
   path_t *pDel;
-  UINT32 uiCost;
+  uint32_t uiCost;
   INT32 iCurrLevel, iLoop;
 
   BOOLEAN fHiddenStructVisible;  // Used for hidden struct visiblity
@@ -1911,7 +1911,7 @@ void ErasePath(char bEraseOldOne) {
   // RemoveAllStructsOfTypeRange( gusEndPlotGridNo, GOODRING, GOODRING );
 
   giPlotCnt = 0;
-  memset(guiPlottedPath, 0, 256 * sizeof(UINT32));
+  memset(guiPlottedPath, 0, 256 * sizeof(uint32_t));
 }
 
 INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,

@@ -109,9 +109,9 @@ extern UIKEYBOARD_HOOK gUIKeyboardHook;
 extern BOOLEAN fRightButtonDown;
 extern BOOLEAN fLeftButtonDown;
 extern BOOLEAN fIgnoreLeftUp;
-extern UINT32 guiCurrentEvent;
+extern uint32_t guiCurrentEvent;
 extern UINT8 gubIntTileCheckFlags;
-extern UINT32 guiCurrentUICursor;
+extern uint32_t guiCurrentUICursor;
 extern struct SOLDIERTYPE *gpSMCurrentMerc;
 extern INT16 gsOverItemsGridNo;
 extern INT16 gsOverItemsLevel;
@@ -124,19 +124,19 @@ extern BOOLEAN gfReportHitChances;
 
 BOOLEAN gfFirstCycleMovementStarted = FALSE;
 
-extern UINT32 guiVObjectSize;
-extern UINT32 guiVSurfaceSize;
+extern uint32_t guiVObjectSize;
+extern uint32_t guiVSurfaceSize;
 
 extern BOOLEAN gfNextShotKills;
 
-UINT32 guiSoldierFlags;
-UINT32 guiUITargetSoldierId = NOBODY;
+uint32_t guiSoldierFlags;
+uint32_t guiUITargetSoldierId = NOBODY;
 
-void HandleTalkingMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent);
-void HandleMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent);
-void HandleItemMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent);
-void HandleOpenDoorMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent);
-void HandleSectorExitMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent);
+void HandleTalkingMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent);
+void HandleMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent);
+void HandleItemMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent);
+void HandleOpenDoorMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent);
+void HandleSectorExitMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent);
 void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight);
 
 extern BOOLEAN ValidQuickExchangePosition();
@@ -163,7 +163,7 @@ BOOLEAN gfNextFireJam = FALSE;
 // Little functions called by keyboard input
 void CreateRandomItem();
 void MakeSelectedSoldierTired();
-void ToggleRealTime(UINT32 *puiNewEvent);
+void ToggleRealTime(uint32_t *puiNewEvent);
 void ToggleViewAllMercs();
 void ToggleViewAllItems();
 void TestExplosion();
@@ -210,12 +210,12 @@ UINT8 gubCheatLevel = STARTING_CHEAT_LEVEL;
 
 extern void DetermineWhichAssignmentMenusCanBeShown(void);
 
-void GetTBMouseButtonInput(UINT32 *puiNewEvent) {
+void GetTBMouseButtonInput(uint32_t *puiNewEvent) {
   QueryTBLeftButton(puiNewEvent);
   QueryTBRightButton(puiNewEvent);
 }
 
-void QueryTBLeftButton(UINT32 *puiNewEvent) {
+void QueryTBLeftButton(uint32_t *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
   INT16 usMapPos;
   static BOOLEAN fClickHoldIntercepted = FALSE;
@@ -600,7 +600,7 @@ void QueryTBLeftButton(UINT32 *puiNewEvent) {
   }
 }
 
-void QueryTBRightButton(UINT32 *puiNewEvent) {
+void QueryTBRightButton(uint32_t *puiNewEvent) {
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fClickIntercepted = FALSE;
   struct SOLDIERTYPE *pSoldier;
@@ -805,13 +805,13 @@ void QueryTBRightButton(UINT32 *puiNewEvent) {
 
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
-void GetTBMousePositionInput(UINT32 *puiNewEvent) {
+void GetTBMousePositionInput(uint32_t *puiNewEvent) {
   INT16 usMapPos;
   static UINT16 usOldMapPos = 0;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN bHandleCode;
   static BOOLEAN fOnValidGuy = FALSE;
-  static UINT32 uiMoveTargetSoldierId = NO_SOLDIER;
+  static uint32_t uiMoveTargetSoldierId = NO_SOLDIER;
 
   if (!GetMouseMapPos(&usMapPos)) {
     return;
@@ -1032,7 +1032,7 @@ void GetTBMousePositionInput(UINT32 *puiNewEvent) {
   }
 }
 
-void GetPolledKeyboardInput(UINT32 *puiNewEvent) {
+void GetPolledKeyboardInput(uint32_t *puiNewEvent) {
   static BOOLEAN fShifted2 = FALSE;
   static BOOLEAN fCtrlDown = FALSE;
   static BOOLEAN fAltDown = FALSE;
@@ -1156,7 +1156,7 @@ void GetPolledKeyboardInput(UINT32 *puiNewEvent) {
 extern BOOLEAN gfDisableRegionActive;
 extern BOOLEAN gfUserTurnRegionActive;
 
-void GetKeyboardInput(UINT32 *puiNewEvent) {
+void GetKeyboardInput(uint32_t *puiNewEvent) {
   InputAtom InputEvent;
   BOOLEAN fKeyTaken = FALSE;
   INT16 usMapPos;
@@ -2731,7 +2731,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
   }
 }
 
-void HandleTalkingMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
+void HandleTalkingMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent) {
   // CHECK ESC KEYS HERE....
   if (pInputEvent->usEvent == KEY_UP) {
     if (pInputEvent->usParam == ESC) {
@@ -2745,7 +2745,7 @@ void HandleTalkingMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
   }
 }
 
-void HandleSectorExitMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
+void HandleSectorExitMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent) {
   // CHECK ESC KEYS HERE....
   if ((pInputEvent->usEvent == KEY_UP) && (pInputEvent->usParam == ESC)) {
     // Handle esc in talking menu
@@ -2755,7 +2755,7 @@ void HandleSectorExitMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
   }
 }
 
-void HandleOpenDoorMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
+void HandleOpenDoorMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent) {
   // CHECK ESC KEYS HERE....
   if ((pInputEvent->usEvent == KEY_UP) && (pInputEvent->usParam == ESC)) {
     // Handle esc in talking menu
@@ -2765,7 +2765,7 @@ void HandleOpenDoorMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
   }
 }
 
-void HandleMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
+void HandleMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent) {
   // CHECK ESC KEYS HERE....
   if ((pInputEvent->usEvent == KEY_UP) && (pInputEvent->usParam == ESC)) {
     // Handle esc in talking menu
@@ -2775,7 +2775,7 @@ void HandleMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
   }
 }
 
-void HandleItemMenuKeys(InputAtom *pInputEvent, UINT32 *puiNewEvent) {
+void HandleItemMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent) {
   // CHECK ESC KEYS HERE....
   if ((pInputEvent->usEvent == KEY_UP) && (pInputEvent->usParam == ESC)) {
     // Handle esc in talking menu
@@ -2959,7 +2959,7 @@ void MakeSelectedSoldierTired() {
   }
 }
 
-void ToggleRealTime(UINT32 *puiNewEvent) {
+void ToggleRealTime(uint32_t *puiNewEvent) {
   if (gTacticalStatus.uiFlags & TURNBASED) {
     // Change to real-time
     gTacticalStatus.uiFlags &= (~TURNBASED);
@@ -3498,7 +3498,7 @@ INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier
   return (0);
 }
 
-void HandleHandCursorClick(UINT16 usMapPos, UINT32 *puiNewEvent) {
+void HandleHandCursorClick(UINT16 usMapPos, uint32_t *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
   struct LEVELNODE *pIntTile;
   INT16 sIntTileGridNo;
@@ -3629,7 +3629,7 @@ void ExchangeMessageBoxCallBack(UINT8 bExitValue) {
   }
 }
 
-INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, UINT32 *puiNewEvent) {
+INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, uint32_t *puiNewEvent) {
   // Look for an item pool
   struct ITEM_POOL *pItemPool;
   BOOLEAN fContinue = TRUE;
@@ -3969,7 +3969,7 @@ void HandleStealthChangeFromUIKeys() {
 void TestCapture() {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiNumChosen = 0;
+  uint32_t uiNumChosen = 0;
 
   // StartQuest( QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY );
   // EndQuest( QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY );

@@ -10,11 +10,11 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 
-UINT32 guiBOTTOMPANEL = 0;
-UINT32 guiRIGHTPANEL = 0;
-UINT32 guiRENDERBUFFER = 0;
-UINT32 guiSAVEBUFFER = 0;
-UINT32 guiEXTRABUFFER = 0;
+uint32_t guiBOTTOMPANEL = 0;
+uint32_t guiRIGHTPANEL = 0;
+uint32_t guiRENDERBUFFER = 0;
+uint32_t guiSAVEBUFFER = 0;
+uint32_t guiEXTRABUFFER = 0;
 
 BOOLEAN gfExtraBuffer = FALSE;
 

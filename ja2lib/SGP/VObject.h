@@ -30,7 +30,7 @@
 
 // Effects structure for specialized blitting
 typedef struct {
-  UINT32 uiShadowLevel;
+  uint32_t uiShadowLevel;
   SGPRect ClipRect;
 
 } blt_fx;
@@ -56,7 +56,7 @@ typedef struct {
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
 // From RGB to COLORVAL
 #define FROMRGB(r, g, b) \
-  ((UINT32)(((UINT8)(r) | ((UINT16)(g) << 8)) | (((UINT32)(UINT8)(b)) << 16)))
+  ((uint32_t)(((UINT8)(r) | ((UINT16)(g) << 8)) | (((uint32_t)(UINT8)(b)) << 16)))
 
 // Video object creation flags
 // Used in the VOBJECT_DESC structure to describe creation flags
@@ -72,8 +72,8 @@ typedef struct {
 // This structure is a video object.
 // The video object contains different data based on it's type, compressed or not
 struct VObject {
-  UINT32 fFlags;                          // Special flags
-  UINT32 uiSizePixData;                   // ETRLE data size
+  uint32_t fFlags;                        // Special flags
+  uint32_t uiSizePixData;                 // ETRLE data size
   struct SGPPaletteEntry *pPaletteEntry;  // 8BPP Palette
   COLORVAL TransparentColor;              // Defaults to 0,0,0
   UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
@@ -98,7 +98,7 @@ struct VObject {
 
 // This structure describes the creation parameters for a Video Object
 typedef struct {
-  UINT32 fCreateFlags;  // Specifies creation flags like from file or not
+  uint32_t fCreateFlags;  // Specifies creation flags like from file or not
   union {
     struct {
       SGPFILENAME ImageFile;  // Filename of image data to use
@@ -126,32 +126,33 @@ BOOLEAN ShutdownVideoObjectManager();
 #ifdef SGP_VIDEO_DEBUGGING
 void PerformVideoInfoDumpIntoFile(CHAR8 *filename, BOOLEAN fAppend);
 void DumpVObjectInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend);
-BOOLEAN _AddAndRecordVObject(VOBJECT_DESC *VObjectDesc, UINT32 *uiIndex, UINT32 uiLineNum,
+BOOLEAN _AddAndRecordVObject(VOBJECT_DESC *VObjectDesc, uint32_t *uiIndex, uint32_t uiLineNum,
                              CHAR8 *pSourceFile);
-#define AddVideoObject(a, b) _AddAndRecordVObject(a, (UINT32 *)b, __LINE__, __FILE__)
+#define AddVideoObject(a, b) _AddAndRecordVObject(a, (uint32_t *)b, __LINE__, __FILE__)
 #else
-#define AddVideoObject(a, b) AddStandardVideoObject(a, (UINT32 *)b)
+#define AddVideoObject(a, b) AddStandardVideoObject(a, (uint32_t *)b)
 #endif
 
-BOOLEAN AddStandardVideoObject(VOBJECT_DESC *VObjectDesc, UINT32 *uiIndex);
+BOOLEAN AddStandardVideoObject(VOBJECT_DESC *VObjectDesc, uint32_t *uiIndex);
 
 // Removes a video object
-BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject);
+BOOLEAN DeleteVideoObjectFromIndex(uint32_t uiVObject);
 
-UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType);
+UINT16 CreateObjectPaletteTables(struct VObject *pObj, uint32_t uiType);
 
 // Returns a struct VObject* for the specified index
-BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex);
+BOOLEAN GetVideoObject(struct VObject **hVObject, uint32_t uiIndex);
 
 // Blits a video object to another video object
-BOOLEAN BltVideoObject(UINT32 uiDestVSurface, struct VObject *hVSrcObject, UINT16 usRegionIndex,
-                       INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx);
+BOOLEAN BltVideoObject(uint32_t uiDestVSurface, struct VObject *hVSrcObject, UINT16 usRegionIndex,
+                       INT32 iDestX, INT32 iDestY, uint32_t fBltFlags, blt_fx *pBltFx);
 
-BOOLEAN BltVideoObjectFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject, UINT16 usRegionIndex,
-                                INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx);
+BOOLEAN BltVideoObjectFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,
+                                UINT16 usRegionIndex, INT32 iDestX, INT32 iDestY,
+                                uint32_t fBltFlags, blt_fx *pBltFx);
 
 // Sets transparency
-BOOLEAN SetVideoObjectTransparency(UINT32 uiIndex, COLORVAL TransColor);
+BOOLEAN SetVideoObjectTransparency(uint32_t uiIndex, COLORVAL TransColor);
 
 // **********************************************************************************
 //
@@ -175,13 +176,13 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject);
 BOOLEAN DestroyObjectPaletteTables(struct VObject *hVObject);
 
 // Sets the current object shade table
-UINT16 SetObjectShade(struct VObject *pObj, UINT32 uiShade);
+UINT16 SetObjectShade(struct VObject *pObj, uint32_t uiShade);
 
 // Sets the current object shade table using a vobject handle
-UINT16 SetObjectHandleShade(UINT32 uiHandle, UINT32 uiShade);
+UINT16 SetObjectHandleShade(uint32_t uiHandle, uint32_t uiShade);
 
 // Fills a rectangular area of an object with a color
-UINT16 FillObjectRect(UINT32 iObj, INT32 x1, INT32 y1, INT32 x2, INT32 y2, COLORVAL color32);
+UINT16 FillObjectRect(uint32_t iObj, INT32 x1, INT32 y1, INT32 x2, INT32 y2, COLORVAL color32);
 
 // Retrieves an struct VObject* pixel value
 BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETLREIndex, UINT16 usX,
@@ -212,7 +213,7 @@ extern BOOLEAN gfVideoObjectsInit;
 // These blitting functions more-or less encapsolate all of the functionality of DirectDraw
 // Blitting, giving an API layer for portability.
 
-BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                struct VObject *hSrcVObject, UINT16 usIndex, INT32 iDestX,
                                INT32 iDestY, INT32 fBltFlags, blt_fx *pBltFx);
 
@@ -221,9 +222,9 @@ struct VObject *GetBackBufferVideoObject();
 
 BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, ETRLEObject *pETRLEObject,
                                       UINT16 usIndex);
-BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, ETRLEObject *pETRLEObject,
+BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, ETRLEObject *pETRLEObject,
                                                UINT16 usIndex);
-BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIndex,
+BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, UINT16 usIndex,
                                                UINT16 *pusWidth, UINT16 *pusHeight);
 
 BOOLEAN SetVideoObjectPalette8BPP(INT32 uiVideoObject, struct SGPPaletteEntry *pPal8);
@@ -236,15 +237,15 @@ BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, UINT16 usRegionInd
 BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, UINT16 usRegionIndex, UINT8 ubShadeLevel,
                             UINT16 *pusIndex);
 
-BOOLEAN BltVideoObjectOutlineFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject, UINT16 usIndex,
-                                       INT32 iDestX, INT32 iDestY, INT16 s16BPPColor,
-                                       BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutline(UINT32 uiDestVSurface, struct VObject *hSrcVObject, UINT16 usIndex,
+BOOLEAN BltVideoObjectOutlineFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,
+                                       UINT16 usIndex, INT32 iDestX, INT32 iDestY,
+                                       INT16 s16BPPColor, BOOLEAN fDoOutline);
+BOOLEAN BltVideoObjectOutline(uint32_t uiDestVSurface, struct VObject *hSrcVObject, UINT16 usIndex,
                               INT32 iDestX, INT32 iDestY, INT16 s16BPPColor, BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject,
+BOOLEAN BltVideoObjectOutlineShadowFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,
                                              UINT16 usIndex, INT32 iDestX, INT32 iDestY);
-BOOLEAN BltVideoObjectOutlineShadow(UINT32 uiDestVSurface, struct VObject *hSrcVObject,
+BOOLEAN BltVideoObjectOutlineShadow(uint32_t uiDestVSurface, struct VObject *hSrcVObject,
                                     UINT16 usIndex, INT32 iDestX, INT32 iDestY);
-BOOLEAN PixelateVideoObjectRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
+BOOLEAN PixelateVideoObjectRect(uint32_t uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
 
 #endif

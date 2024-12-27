@@ -32,7 +32,7 @@ typedef struct {
 } WORLDITEM;
 
 extern WORLDITEM *gWorldItems;
-extern UINT32 guiNumWorldItems;
+extern uint32_t guiNumWorldItems;
 
 INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible);
@@ -50,7 +50,7 @@ typedef struct {
 } WORLDBOMB;
 
 extern WORLDBOMB *gWorldBombs;
-extern UINT32 guiNumWorldBombs;
+extern uint32_t guiNumWorldBombs;
 
 extern INT32 AddBombToWorld(INT32 iItemIndex);
 extern void FindPanicBombsAndTriggers(void);

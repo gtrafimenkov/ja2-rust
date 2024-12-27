@@ -190,10 +190,10 @@ INT16 gsFullTileDirections[MAX_FULLTILE_DIRECTIONS] = {-1, -WORLD_COLS - 1, -WOR
 };
 
 // Palette ranges
-UINT32 guiNumPaletteSubRanges;
+uint32_t guiNumPaletteSubRanges;
 PaletteSubRangeType *guipPaletteSubRanges = NULL;
 // Palette replacements
-UINT32 guiNumReplacements;
+uint32_t guiNumReplacements;
 PaletteReplacementType *guipPaletteReplacements = NULL;
 PaletteReplacementType *gpPalRep;
 PaletteSubRangeType *gpPaletteSubRanges;
@@ -234,10 +234,10 @@ UINT8 CalcScreamVolume(struct SOLDIERTYPE *pSoldier, UINT8 ubCombinedLoss);
 void PlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
 void HandleSystemNewAISituation(struct SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
 
-UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                    BOOLEAN fAdjustGreen);
-UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale,
-                                        UINT32 gscale, BOOLEAN fAdjustGreen);
+UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                    uint32_t gscale, BOOLEAN fAdjustGreen);
+UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                        uint32_t gscale, BOOLEAN fAdjustGreen);
 
 void SoldierBleed(struct SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed);
 INT32 CheckBleeding(struct SOLDIERTYPE *pSoldier);
@@ -251,7 +251,7 @@ extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
 void SAIReportError(STR16 wErrorString);
 #endif
 
-UINT32 SleepDartSuccumbChance(struct SOLDIERTYPE *pSoldier);
+uint32_t SleepDartSuccumbChance(struct SOLDIERTYPE *pSoldier);
 
 void EnableDisableSoldierLightEffects(BOOLEAN fEnableLights);
 void SetSoldierPersonalLightLevel(struct SOLDIERTYPE *pSoldier);
@@ -415,7 +415,7 @@ INT8 CalcActionPoints(struct SOLDIERTYPE *pSold) {
   if (pSold->bBreath < 100) ubPoints -= (ubPoints * (100 - pSold->bBreath)) / 200;
 
   if (pSold->sWeightCarriedAtTurnStart > 100) {
-    ubPoints = (UINT8)(((UINT32)ubPoints) * 100 / pSold->sWeightCarriedAtTurnStart);
+    ubPoints = (UINT8)(((uint32_t)ubPoints) * 100 / pSold->sWeightCarriedAtTurnStart);
   }
 
   // If resulting APs are below our permitted minimum, raise them to it!
@@ -497,7 +497,7 @@ void CalcNewActionPoints(struct SOLDIERTYPE *pSoldier) {
 }
 
 void DoNinjaAttack(struct SOLDIERTYPE *pSoldier) {
-  // UINT32						uiMercFlags;
+  // uint32_t						uiMercFlags;
   UINT16 usSoldierIndex;
   struct SOLDIERTYPE *pTSoldier;
   UINT8 ubTDirection;
@@ -545,7 +545,7 @@ void DoNinjaAttack(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (GetSolProfile(pSoldier) == 33) {
-    UINT32 uiSoundID;
+    uint32_t uiSoundID;
     SOUNDPARMS spParms;
     INT32 iFaceIndex;
 
@@ -696,7 +696,7 @@ BOOLEAN CreateSoldierCommon(UINT8 ubBodyType, struct SOLDIERTYPE *pSoldier, UINT
 }
 
 BOOLEAN DeleteSoldier(struct SOLDIERTYPE *pSoldier) {
-  UINT32 cnt;
+  uint32_t cnt;
   INT32 iGridNo;
   INT8 bDir;
   BOOLEAN fRet;
@@ -957,8 +957,8 @@ BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) 
   return (FALSE);
 }
 
-void CheckForFreeupFromHit(struct SOLDIERTYPE *pSoldier, UINT32 uiOldAnimFlags,
-                           UINT32 uiNewAnimFlags, UINT16 usOldAniState, UINT16 usNewState) {
+void CheckForFreeupFromHit(struct SOLDIERTYPE *pSoldier, uint32_t uiOldAnimFlags,
+                           uint32_t uiNewAnimFlags, UINT16 usOldAniState, UINT16 usNewState) {
   // THIS COULD POTENTIALLY CALL EVENT_INITNEWAnim() if the GUY was SUPPRESSED
   // CHECK IF THE OLD ANIMATION WAS A HIT START THAT WAS NOT FOLLOWED BY A HIT FINISH
   // IF SO, RELEASE ATTACKER FROM ATTACKING
@@ -1015,8 +1015,8 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
                                  UINT16 usStartingAniCode, BOOLEAN fForce) {
   INT16 sAPCost = 0;
   INT16 sBPCost = 0;
-  UINT32 uiOldAnimFlags;
-  UINT32 uiNewAnimFlags;
+  uint32_t uiOldAnimFlags;
+  uint32_t uiNewAnimFlags;
   UINT16 usSubState;
   UINT16 usItem;
   BOOLEAN fTryingToRestart = FALSE;
@@ -2835,7 +2835,7 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT
     ubReason = TAKE_DAMAGE_TENTACLES;
   } else if (Item[usWeaponIndex].usItemClass & (IC_GUN | IC_THROWING_KNIFE)) {
     if (ubSpecial == FIRE_WEAPON_SLEEP_DART_SPECIAL) {
-      UINT32 uiChance;
+      uint32_t uiChance;
 
       // put the drug in!
       pSoldier->bSleepDrugCounter = 10;
@@ -2955,10 +2955,10 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT
     LocateSoldier(pSoldier->ubID, DONTSETLOCATOR);
 
   if (Item[usWeaponIndex].usItemClass & IC_BLADE) {
-    PlayJA2Sample((UINT32)(KNIFE_IMPACT), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
-                  SoundDir(pSoldier->sGridNo));
+    PlayJA2Sample((uint32_t)(KNIFE_IMPACT), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo),
+                  1, SoundDir(pSoldier->sGridNo));
   } else {
-    PlayJA2Sample((UINT32)(BULLET_IMPACT_1 + Random(3)), RATE_11025,
+    PlayJA2Sample((uint32_t)(BULLET_IMPACT_1 + Random(3)), RATE_11025,
                   SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1, SoundDir(pSoldier->sGridNo));
   }
 
@@ -3462,7 +3462,7 @@ BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDe
                                         BOOLEAN fForceRestartAnim) {
   INT32 iDest;
   BOOLEAN fContinue;
-  UINT32 uiDist;
+  uint32_t uiDist;
   UINT16 usAnimState;
   UINT16 usMoveAnimState = usMovementAnim;
   INT16 sMercGridNo;
@@ -4707,8 +4707,8 @@ void AdjustAniSpeed(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CalculateSoldierAniSpeed(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pStatsSoldier) {
-  UINT32 uiTerrainDelay;
-  UINT32 uiSpeed = 0;
+  uint32_t uiTerrainDelay;
+  uint32_t uiSpeed = 0;
 
   INT8 bBreathDef, bLifeDef, bAgilDef;
   INT8 bAdditional = 0;
@@ -4868,7 +4868,7 @@ void SetSoldierAniSpeed(struct SOLDIERTYPE *pSoldier) {
 ///////////////////////////////////////////////////////
 BOOLEAN LoadPaletteData() {
   HWFILE hFile;
-  UINT32 cnt, cnt2;
+  uint32_t cnt, cnt2;
 
   hFile = FileMan_Open(PALETTEFILENAME, FILE_ACCESS_READ, FALSE);
 
@@ -4952,7 +4952,7 @@ BOOLEAN LoadPaletteData() {
 }
 
 BOOLEAN SetPaletteReplacement(struct SGPPaletteEntry *p8BPPPalette, PaletteRepID aPalRep) {
-  UINT32 cnt2;
+  uint32_t cnt2;
   UINT8 ubType;
   UINT8 ubPalIndex;
 
@@ -4972,7 +4972,7 @@ BOOLEAN SetPaletteReplacement(struct SGPPaletteEntry *p8BPPPalette, PaletteRepID
 }
 
 BOOLEAN DeletePaletteData() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Free!
   if (gpPaletteSubRanges != NULL) {
@@ -5011,7 +5011,7 @@ BOOLEAN DeletePaletteData() {
 }
 
 BOOLEAN GetPaletteRepIndexFromID(PaletteRepID aPalRep, UINT8 *pubPalIndex) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Check if type exists
   for (cnt = 0; cnt < guiNumReplacements; cnt++) {
@@ -5152,8 +5152,8 @@ void BeginSoldierClimbFence(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-UINT32 SleepDartSuccumbChance(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiChance;
+uint32_t SleepDartSuccumbChance(struct SOLDIERTYPE *pSoldier) {
+  uint32_t uiChance;
   INT8 bEffectiveStrength;
 
   // figure out base chance of succumbing,
@@ -5231,7 +5231,7 @@ void BeginSoldierGetup(struct SOLDIERTYPE *pSoldier) {
       }
     }
   } else if (pSoldier->bSleepDrugCounter > 0) {
-    UINT32 uiChance;
+    uint32_t uiChance;
 
     uiChance = SleepDartSuccumbChance(pSoldier);
 
@@ -5679,8 +5679,8 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   SGPFILENAME zFilename;
   SOUNDPARMS spParms;
   UINT8 ubSoundID;
-  UINT32 uiSoundID;
-  UINT32 iFaceIndex;
+  uint32_t uiSoundID;
+  uint32_t iFaceIndex;
   BOOLEAN fDoSub = FALSE;
   INT32 uiSubSoundID = 0;
 
@@ -5760,7 +5760,7 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
       case ROBOTNOWEAPON:
 
         fDoSub = TRUE;
-        uiSubSoundID = (UINT32)(S_METAL_IMPACT1 + Random(2));
+        uiSubSoundID = (uint32_t)(S_METAL_IMPACT1 + Random(2));
         break;
     }
   }
@@ -5809,7 +5809,7 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
       case ROBOTNOWEAPON:
 
         fDoSub = TRUE;
-        uiSubSoundID = (UINT32)(EXPLOSION_1);
+        uiSubSoundID = (uint32_t)(EXPLOSION_1);
         PlayJA2Sample(ROBOT_DEATH, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
         break;
     }
@@ -5994,7 +5994,7 @@ BOOLEAN DoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID) {
 }
 
 BOOLEAN PreloadSoldierBattleSounds(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemove) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   CHECKF(IsSolActive(pSoldier) != FALSE);
 
@@ -6409,7 +6409,7 @@ void CheckForFullStructures(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN CheckForFullStruct(INT16 sGridNo, UINT16 *pusIndex) {
   struct LEVELNODE *pStruct = NULL;
   struct LEVELNODE *pOldStruct = NULL;
-  UINT32 fTileFlags;
+  uint32_t fTileFlags;
 
   pStruct = gpWorldLevelData[sGridNo].pStructHead;
 
@@ -6696,7 +6696,7 @@ void HandleAnimationProfile(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState, BO
   struct ANIM_PROF_DIR *pProfileDir;
   struct ANIM_PROF_TILE *pProfileTile;
   INT8 bProfileID;
-  UINT32 iTileCount;
+  uint32_t iTileCount;
   INT16 sGridNo;
   UINT16 usAnimSurface;
 
@@ -6778,7 +6778,7 @@ BOOLEAN GetProfileFlagsFromGridno(struct SOLDIERTYPE *pSoldier, UINT16 usAnimSta
   struct ANIM_PROF_DIR *pProfileDir;
   struct ANIM_PROF_TILE *pProfileTile;
   INT8 bProfileID;
-  UINT32 iTileCount;
+  uint32_t iTileCount;
   INT16 sGridNo;
   UINT16 usAnimSurface;
 
@@ -6838,7 +6838,7 @@ void EVENT_SoldierBeginGiveItem(struct SOLDIERTYPE *pSoldier) {
 
 void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection) {
   struct SOLDIERTYPE *pTSoldier;
-  // UINT32 uiMercFlags;
+  // uint32_t uiMercFlags;
   UINT16 usSoldierIndex;
   UINT8 ubTDirection;
   ROTTING_CORPSE *pCorpse;
@@ -6972,7 +6972,7 @@ void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, 
 void EVENT_SoldierBeginPunchAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection) {
   BOOLEAN fMartialArtist = FALSE;
   struct SOLDIERTYPE *pTSoldier;
-  // UINT32 uiMercFlags;
+  // uint32_t uiMercFlags;
   UINT16 usSoldierIndex;
   UINT8 ubTDirection;
   BOOLEAN fChangeDirection = FALSE;
@@ -7139,7 +7139,7 @@ void EVENT_SoldierBeginUseDetonator(struct SOLDIERTYPE *pSoldier) {
 
 void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection) {
   struct SOLDIERTYPE *pTSoldier;
-  // UINT32 uiMercFlags;
+  // uint32_t uiMercFlags;
   UINT16 usSoldierIndex;
   BOOLEAN fRefused = FALSE;
 
@@ -7212,7 +7212,7 @@ void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UIN
 
 void EVENT_SoldierEnterVehicle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection) {
   struct SOLDIERTYPE *pTSoldier;
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
   UINT16 usSoldierIndex;
 
   if (FindSoldier(sGridNo, &usSoldierIndex, &uiMercFlags, FIND_SOLDIER_GRIDNO)) {
@@ -7225,9 +7225,9 @@ void EVENT_SoldierEnterVehicle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
   UnSetUIBusy(pSoldier->ubID);
 }
 
-UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim, INT16 sKitPts,
-                         INT16 sStatus) {
-  UINT32 uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
+uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim, INT16 sKitPts,
+                           INT16 sStatus) {
+  uint32_t uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
   UINT8 ubBelowOKlife, ubPtsLeft;
 
   if (pVictim->bBleeding < 1 && pVictim->bLife >= OKLIFE) {
@@ -7296,7 +7296,7 @@ UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVict
   if (pSoldier->inv[HANDPOS].usItem == MEDICKIT) {
     uiMedcost = (uiActual + 1) / 2;  // cost is only half, rounded up
 
-    if (uiMedcost > (UINT32)sKitPts)  // if we can't afford this
+    if (uiMedcost > (uint32_t)sKitPts)  // if we can't afford this
     {
       uiMedcost = sKitPts;       // what CAN we afford?
       uiActual = uiMedcost * 2;  // give double this as aid
@@ -7304,7 +7304,7 @@ UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVict
   } else {
     uiMedcost = uiActual;
 
-    if (uiMedcost > (UINT32)sKitPts)  // can't afford it
+    if (uiMedcost > (uint32_t)sKitPts)  // can't afford it
     {
       uiMedcost = uiActual = sKitPts;  // recalc cost AND aid
     }
@@ -7667,11 +7667,11 @@ void ReLoadSoldierAnimationDueToHandItemChange(struct SOLDIERTYPE *pSoldier, UIN
   }
 }
 
-UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                    BOOLEAN fAdjustGreen) {
+UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                    uint32_t gscale, BOOLEAN fAdjustGreen) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
-  UINT32 cnt;
-  UINT32 rmod, gmod, bmod;
+  uint32_t cnt;
+  uint32_t rmod, gmod, bmod;
   UINT8 r, g, b;
 
   Assert(pPalette != NULL);
@@ -7717,11 +7717,11 @@ UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rsc
   return (p16BPPPalette);
 }
 
-UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale,
-                                        UINT32 gscale, BOOLEAN fAdjustGreen) {
+UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                        uint32_t gscale, BOOLEAN fAdjustGreen) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
-  UINT32 cnt, lumin;
-  UINT32 rmod, gmod, bmod;
+  uint32_t cnt, lumin;
+  uint32_t rmod, gmod, bmod;
   UINT8 r, g, b;
 
   Assert(pPalette != NULL);
@@ -8802,7 +8802,7 @@ BOOLEAN PlayerSoldierStartTalking(struct SOLDIERTYPE *pSoldier, UINT8 ubTargetID
                                   BOOLEAN fValidate) {
   INT16 sFacingDir, sXPos, sYPos, sAPCost;
   struct SOLDIERTYPE *pTSoldier;
-  UINT32 uiRange;
+  uint32_t uiRange;
 
   if (ubTargetID == NOBODY) {
     return (FALSE);
@@ -9120,7 +9120,7 @@ void InternalPlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubRandomSnd;
   INT8 bVolume = MIDVOLUME;
   // Assume outside
-  UINT32 ubSoundBase = WALK_LEFT_OUT;
+  uint32_t ubSoundBase = WALK_LEFT_OUT;
   UINT8 ubRandomMax = 4;
 
   // Determine if we are on the floor
@@ -9192,7 +9192,7 @@ void PlayStealthySoldierFootstepSound(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CrowsFlyAway(UINT8 ubTeam) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
   for (cnt = gTacticalStatus.Team[ubTeam].bFirstID, pTeamSoldier = MercPtrs[cnt];
@@ -9208,11 +9208,11 @@ void CrowsFlyAway(UINT8 ubTeam) {
 
 #ifdef JA2BETAVERSION
 void DebugValidateSoldierData() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   CHAR16 sString[1024];
   BOOLEAN fProblemDetected = FALSE;
-  static UINT32 uiFrameCount = 0;
+  static uint32_t uiFrameCount = 0;
 
   // this function is too slow to run every frame, so do the check only every 50 frames
   if (uiFrameCount++ < 50) {

@@ -23,15 +23,16 @@ void DecSmartWindowUIValue();
 void IncSmartBrokenWallUIValue();
 void DecSmartBrokenWallUIValue();
 
-BOOLEAN CalcWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
-BOOLEAN CalcDoorInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusDoorType, UINT16 *pusIndex);
-BOOLEAN CalcWindowInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
-BOOLEAN CalcBrokenWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
+BOOLEAN CalcWallInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
+BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusDoorType, UINT16 *pusIndex);
+BOOLEAN CalcWindowInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
+BOOLEAN CalcBrokenWallInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType,
+                                           UINT16 *pusIndex);
 
-void PasteSmartWall(UINT32 iMapIndex);
-void PasteSmartDoor(UINT32 iMapIndex);
-void PasteSmartWindow(UINT32 iMapIndex);
-void PasteSmartBrokenWall(UINT32 iMapIndex);
+void PasteSmartWall(uint32_t iMapIndex);
+void PasteSmartDoor(uint32_t iMapIndex);
+void PasteSmartWindow(uint32_t iMapIndex);
+void PasteSmartBrokenWall(uint32_t iMapIndex);
 
 extern UINT8 gubDoorUIValue;
 extern UINT8 gubWindowUIValue;

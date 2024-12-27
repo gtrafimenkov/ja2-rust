@@ -862,7 +862,7 @@ INT32 GetLastSquadActive(void) {
 }
 
 void GetSquadPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubPrevY,
-                      UINT32 *uiTraverseTime, UINT32 *uiArriveTime, UINT8 ubSquadValue) {
+                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, UINT8 ubSquadValue) {
   // grab the mvt group for this squad and find all this information
 
   if (SquadMovementGroups[ubSquadValue] == 0) {
@@ -883,7 +883,7 @@ void GetSquadPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubP
 }
 
 void SetSquadPositionBetweenSectors(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY,
-                                    UINT32 uiTraverseTime, UINT32 uiArriveTime,
+                                    uint32_t uiTraverseTime, uint32_t uiArriveTime,
                                     UINT8 ubSquadValue) {
   // set mvt group position for squad for
 
@@ -898,8 +898,8 @@ void SetSquadPositionBetweenSectors(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX,
 
 BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
   SAVE_SQUAD_INFO_STRUCT sSquadSaveStruct[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
-  UINT32 uiNumBytesWritten = 0;
-  UINT32 uiSaveSize = 0;
+  uint32_t uiNumBytesWritten = 0;
+  uint32_t uiSaveSize = 0;
   // Reset the current squad info
   INT32 iCounterB = 0;
   INT32 iCounter = 0;
@@ -932,8 +932,8 @@ BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
 
 BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   SAVE_SQUAD_INFO_STRUCT sSquadSaveStruct[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
-  UINT32 uiNumBytesRead = 0;
-  UINT32 uiSaveSize = 0;
+  uint32_t uiNumBytesRead = 0;
+  uint32_t uiSaveSize = 0;
 
   // Reset the current squad info
   INT32 iCounterB = 0;

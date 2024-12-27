@@ -66,8 +66,8 @@ INT32 iMenuButtons[NUM_MENU_ITEMS];
 
 UINT16 gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 
-UINT32 guiMainMenuBackGroundImage;
-UINT32 guiJa2LogoImage;
+uint32_t guiMainMenuBackGroundImage;
+uint32_t guiJa2LogoImage;
 
 struct MOUSE_REGION gBackRegion;
 INT8 gbHandledMainMenu = 0;
@@ -77,7 +77,7 @@ BOOLEAN fInitialRender = FALSE;
 BOOLEAN gfMainMenuScreenEntry = FALSE;
 BOOLEAN gfMainMenuScreenExit = FALSE;
 
-UINT32 guiMainMenuExitScreen = MAINMENU_SCREEN;
+uint32_t guiMainMenuExitScreen = MAINMENU_SCREEN;
 
 extern BOOLEAN gfLoadGameUponEntry;
 
@@ -89,13 +89,13 @@ void DisplayAssignmentText();
 void ClearMainMenu();
 void HandleHelpScreenInput();
 void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SetMainMenuExitScreen(UINT32 uiNewScreen);
+void SetMainMenuExitScreen(uint32_t uiNewScreen);
 void CreateDestroyBackGroundMouseMask(BOOLEAN fCreate);
 BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate);
 void RenderMainMenu();
 void RestoreButtonBackGrounds();
 
-UINT32 MainMenuScreenInit() {
+uint32_t MainMenuScreenInit() {
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Version Label: %S", zBuildInfo));
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Version #:     %s", czVersionNumber));
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Tracking #:    %S", zTrackingNumber));
@@ -103,8 +103,8 @@ UINT32 MainMenuScreenInit() {
   return (TRUE);
 }
 
-UINT32 MainMenuScreenHandle() {
-  UINT32 cnt;
+uint32_t MainMenuScreenHandle() {
+  uint32_t cnt;
 
   if (guiSplashStartTime + 4000 > GetJA2Clock()) {
     SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);
@@ -178,7 +178,7 @@ UINT32 MainMenuScreenHandle() {
   return (guiMainMenuExitScreen);
 }
 
-UINT32 MainMenuScreenShutdown() { return (FALSE); }
+uint32_t MainMenuScreenShutdown() { return (FALSE); }
 
 void HandleMainMenuScreen() {
   if (gbHandledMainMenu != 0) {
@@ -279,7 +279,7 @@ BOOLEAN InitMainMenu() {
 }
 
 void ExitMainMenu() {
-  //	UINT32 uiDestPitchBYTES; 	UINT8
+  //	uint32_t uiDestPitchBYTES; 	UINT8
   //*pDestBuf;
 
   //	if( !gfDoHelpScreen )
@@ -402,7 +402,7 @@ void HandleHelpScreenInput() {
 }
 
 void ClearMainMenu() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
@@ -431,7 +431,7 @@ void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
   }
 }
 
-void SetMainMenuExitScreen(UINT32 uiNewScreen) {
+void SetMainMenuExitScreen(uint32_t uiNewScreen) {
   guiMainMenuExitScreen = uiNewScreen;
 
   // REmove the background region

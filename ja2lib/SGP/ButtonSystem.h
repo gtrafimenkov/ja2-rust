@@ -87,7 +87,7 @@ struct _GUI_BUTTON;
 #define GUI_SND_DCLK BUTTON_SOUND_DISABLED_CLICK
 #define GUI_SND_DMOV BUTTON_SOUND_DISABLED_MOVED_ONTO
 
-extern UINT32 ButtonDestBuffer;
+extern uint32_t ButtonDestBuffer;
 
 // GUI_BUTTON callback function type
 typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, INT32);
@@ -95,13 +95,13 @@ typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, INT32);
 // GUI_BUTTON structure definitions.
 typedef struct _GUI_BUTTON {
   INT32 IDNum;                 // ID Number, contains it's own button number
-  UINT32 ImageNum;             // Image number to use (see DOCs for details)
+  uint32_t ImageNum;           // Image number to use (see DOCs for details)
   struct MOUSE_REGION Area;    // Mouse System's mouse region to use for this button
   GUI_CALLBACK ClickCallback;  // Button Callback when button is clicked
   GUI_CALLBACK MoveCallback;   // Button Callback when mouse moved on this region
   INT16 Cursor;                // Cursor to use for this button
-  UINT32 uiFlags;              // Button state flags etc.( 32-bit )
-  UINT32 uiOldFlags;           // Old flags from previous render loop
+  uint32_t uiFlags;            // Button state flags etc.( 32-bit )
+  uint32_t uiOldFlags;         // Old flags from previous render loop
   INT16 XLoc;                  // Coordinates where button is on the screen
   INT16 YLoc;
   uintptr_t UserData[4];  // Place holder for user data etc.
@@ -154,9 +154,9 @@ typedef struct {
   INT32 OffHilite;       // Index to use when button is OFF w/ hilite on it
   INT32 OnNormal;        // Index to use when button is ON
   INT32 OnHilite;        // Index to use when button is ON w/ hilite on it
-  UINT32 MaxWidth;       // Width of largest image in use
-  UINT32 MaxHeight;      // Height of largest image in use
-  UINT32 fFlags;         // Special image flags
+  uint32_t MaxWidth;     // Width of largest image in use
+  uint32_t MaxHeight;    // Height of largest image in use
+  uint32_t fFlags;       // Special image flags
 } BUTTON_PICS;
 
 #define MAX_BUTTON_PICS 256
@@ -201,7 +201,7 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
                               INT16 OffsetY);
 BOOLEAN UnloadGenericButtonImage(INT16 GenImg);
 
-BOOLEAN SetButtonDestBuffer(UINT32 DestBuffer);
+BOOLEAN SetButtonDestBuffer(uint32_t DestBuffer);
 
 BOOLEAN EnableButton(INT32 iButtonID);
 BOOLEAN DisableButton(INT32 iButtonID);
@@ -228,7 +228,7 @@ extern BOOLEAN gfRenderHilights;
 #define DisableHilightsAndHelpText() gfRenderHilights = FALSE;
 
 // Providing you have allocated your own image, this is a somewhat simplified function.
-INT32 QuickCreateButton(UINT32 Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 Priority,
+INT32 QuickCreateButton(uint32_t Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 Priority,
                         GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 
 // A hybrid of QuickCreateButton.  Takes a lot less parameters, but makes more assumptions.  It self
@@ -253,10 +253,10 @@ INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, IN
 INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Priority,
                     GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 
-INT32 CreateTextButton(STR16 string, UINT32 uiFont, INT16 sForeColor, INT16 sShadowColor,
+INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sShadowColor,
                        INT16 GenImg, INT16 xloc, INT16 yloc, INT16 w, INT16 h, INT32 Type,
                        INT16 Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
-INT32 CreateIconAndTextButton(INT32 Image, STR16 string, UINT32 uiFont, INT16 sForeColor,
+INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 sForeColor,
                               INT16 sShadowColor, INT16 sForeColorDown, INT16 sShadowColorDown,
                               INT8 bJustification, INT16 xloc, INT16 yloc, INT32 Type,
                               INT16 Priority, GUI_CALLBACK MoveCallback,
@@ -264,7 +264,7 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, UINT32 uiFont, INT16 sF
 
 // New functions
 void SpecifyButtonText(INT32 iButtonID, STR16 string);
-void SpecifyButtonFont(INT32 iButtonID, UINT32 uiFont);
+void SpecifyButtonFont(INT32 iButtonID, uint32_t uiFont);
 void SpecifyButtonMultiColorFont(INT32 iButtonID, BOOLEAN fMultiColor);
 void SpecifyButtonUpTextColors(INT32 iButtonID, INT16 sForeColor, INT16 sShadowColor);
 void SpecifyButtonDownTextColors(INT32 iButtonID, INT16 sForeColorDown, INT16 sShadowColorDown);

@@ -425,8 +425,8 @@ extern BOOLEAN SectorIsImpassable(INT16 sSector);
 
 extern BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber);
 
-extern UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
-                                       struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus);
+extern uint32_t VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                                         struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus);
 
 // only 2 trainers are allowed per sector, so this function counts the # in a guy's sector
 INT8 CountMilitiaTrainersInSoldiersSector(struct SOLDIERTYPE *pSoldier);
@@ -440,7 +440,7 @@ void AssignmentAborted(struct SOLDIERTYPE *pSoldier, UINT8 ubReason);
 
 UINT8 CalcSoldierNeedForSleep(struct SOLDIERTYPE *pSoldier);
 
-UINT32 GetLastSquadListedInSquadMenu(void);
+uint32_t GetLastSquadListedInSquadMenu(void);
 
 BOOLEAN IsAnythingAroundForSoldierToRepair(struct SOLDIERTYPE *pSoldier);
 BOOLEAN HasCharacterFinishedRepairing(struct SOLDIERTYPE *pSoldier);
@@ -2806,8 +2806,8 @@ void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier) {
 
     // check if kit damaged/depleted
     if ((Random(100)) <
-        (UINT32)(ubRepairPtsUsed *
-                 5))  // CJC: added a x5 as this wasn't going down anywhere fast enough
+        (uint32_t)(ubRepairPtsUsed *
+                   5))  // CJC: added a x5 as this wasn't going down anywhere fast enough
     {
       // kit item damaged/depleted, burn up points of toolkit..which is in right hand
       UseKitPoints(&(pSoldier->inv[HANDPOS]), 1, pSoldier);
@@ -2985,7 +2985,7 @@ void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ) {
   struct SOLDIERTYPE *pStudent;
   UINT8 ubStat;
   BOOLEAN fAtGunRange = FALSE;
-  UINT32 uiCnt = 0;
+  uint32_t uiCnt = 0;
   INT16 sTotalTrainingPts = 0;
   UINT16 sTrainingPtsDueToInstructor = 0;
   struct SOLDIERTYPE *pStatTrainerList[NUM_TRAINABLE_STATS];  // can't have more "best" trainers
@@ -3436,7 +3436,7 @@ INT16 GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEA
 
   INT16 sBestTrainingPts, sTrainingPtsDueToInstructor;
   UINT16 usMaxTrainerPts, usBestMaxTrainerPts;
-  UINT32 uiCnt;
+  uint32_t uiCnt;
   struct SOLDIERTYPE *pTrainer;
 
   // assume training impossible for max pts
@@ -3824,7 +3824,7 @@ void HandleNaturalHealing(void) {
 
 // handle healing of this soldier by natural causes.
 void HandleHealingByNaturalCauses(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiPercentHealth = 0;
+  uint32_t uiPercentHealth = 0;
   INT8 bActivityLevelDivisor = 0;
 
   // check if soldier valid
@@ -3983,7 +3983,7 @@ void CheckIfSoldierUnassigned(struct SOLDIERTYPE *pSoldier) {
 
 void CreateDestroyMouseRegionsForAssignmentMenu(void) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -4102,7 +4102,7 @@ void CreateDestroyMouseRegionsForAssignmentMenu(void) {
 void CreateDestroyMouseRegionForVehicleMenu(void) {
   static BOOLEAN fCreated = FALSE;
 
-  UINT32 uiMenuLine = 0;
+  uint32_t uiMenuLine = 0;
   INT32 iVehicleId = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
@@ -4218,7 +4218,7 @@ void CreateDestroyMouseRegionForVehicleMenu(void) {
 void HandleShadingOfLinesForVehicleMenu(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehicleId;
-  UINT32 uiMenuLine = 0;
+  uint32_t uiMenuLine = 0;
 
   if ((fShowVehicleMenu == FALSE) || (ghVehicleBox == -1)) {
     return;
@@ -4316,7 +4316,7 @@ void VehicleMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 BOOLEAN DisplayRepairMenu(struct SOLDIERTYPE *pSoldier) {
   INT32 iVehicleIndex = 0;
-  UINT32 hStringHandle = 0;
+  uint32_t hStringHandle = 0;
 
   // run through list of vehicles in sector and add them to pop up box
   // first, clear pop up box
@@ -4471,7 +4471,7 @@ void HandleShadingOfLinesForRepairMenu(void) {
 void CreateDestroyMouseRegionForRepairMenu(void) {
   static BOOLEAN fCreated = FALSE;
 
-  UINT32 uiCounter = 0;
+  uint32_t uiCounter = 0;
   INT32 iCount = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
@@ -5238,7 +5238,7 @@ void ClearScreenMaskForMapScreenExit(void) {
 
 void CreateDestroyMouseRegions(void) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -5319,7 +5319,7 @@ void CreateDestroyMouseRegions(void) {
 
 void CreateDestroyMouseRegionsForContractMenu(void) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -5418,7 +5418,7 @@ void CreateDestroyMouseRegionsForContractMenu(void) {
     fShownContractMenu = FALSE;
     // if( ( fProcessingAMerc ) && ( pProcessingSoldier ) )
     //{
-    //	if( (UINT32)(pProcessingSoldier->iEndofContractTime) == GetWorldTotalMin() )
+    //	if( (uint32_t)(pProcessingSoldier->iEndofContractTime) == GetWorldTotalMin() )
     //	{
     //		StrategicRemoveMerc( pProcessingSoldier, MERC_FIRED );
     //		pProcessingSoldier = NULL;
@@ -5440,7 +5440,7 @@ void CreateDestroyMouseRegionsForContractMenu(void) {
 
 void CreateDestroyMouseRegionsForTrainingMenu(void) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -5533,7 +5533,7 @@ void CreateDestroyMouseRegionsForTrainingMenu(void) {
 
 void CreateDestroyMouseRegionsForAttributeMenu(void) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -5628,7 +5628,7 @@ void CreateDestroyMouseRegionsForAttributeMenu(void) {
 
 void CreateDestroyMouseRegionsForRemoveMenu(void) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -5730,7 +5730,7 @@ void CreateDestroyMouseRegionsForRemoveMenu(void) {
 
 void CreateDestroyMouseRegionsForSquadMenu(BOOLEAN fPositionBox) {
   static BOOLEAN fCreated = FALSE;
-  UINT32 iCounter = 0;
+  uint32_t iCounter = 0;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
@@ -6227,7 +6227,7 @@ void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT8 bCanJoinSquad;
   /* ARM: Squad menu is now disabled for anyone between sectors
           UINT8 ubNextX, ubNextY, ubPrevX, ubPrevY;
-          UINT32 uiTraverseTime, uiArriveTime;
+          uint32_t uiTraverseTime, uiArriveTime;
           INT32 iOldSquadValue = -1;
           BOOLEAN fCharacterWasBetweenSectors = FALSE;
   */
@@ -6896,10 +6896,10 @@ void CreateSquadBox(void) {
   // will create a pop up box for squad selection
   SGPPoint pPoint;
   SGPRect pDimensions;
-  UINT32 hStringHandle;
-  UINT32 uiCounter;
+  uint32_t hStringHandle;
+  uint32_t uiCounter;
   CHAR16 sString[64];
-  UINT32 uiMaxSquad;
+  uint32_t uiMaxSquad;
 
   // create basic box
   CreatePopUpBox(&ghSquadBox, SquadDimensions, SquadPosition,
@@ -6976,7 +6976,7 @@ void CreateEPCBox(void) {
   // will create a pop up box for squad selection
   SGPPoint pPoint;
   SGPRect pDimensions;
-  UINT32 hStringHandle;
+  uint32_t hStringHandle;
   INT32 iCount;
 
   // create basic box
@@ -7036,9 +7036,9 @@ void CreateEPCBox(void) {
 
 void HandleShadingOfLinesForSquadMenu(void) {
   // find current squad and set that line the squad box a lighter green
-  UINT32 uiCounter;
+  uint32_t uiCounter;
   struct SOLDIERTYPE *pSoldier = NULL;
-  UINT32 uiMaxSquad;
+  uint32_t uiMaxSquad;
   INT8 bResult;
 
   if ((fShowSquadMenu == FALSE) || (ghSquadBox == -1)) {
@@ -7094,7 +7094,7 @@ void PostTerminateMessage(struct SOLDIERTYPE *pCharacter) {
 BOOLEAN DisplayVehicleMenu(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fVehiclePresent = FALSE;
   INT32 iCounter = 0;
-  UINT32 hStringHandle = 0;
+  uint32_t hStringHandle = 0;
 
   // first, clear pop up box
   RemoveBox(ghVehicleBox);
@@ -7145,8 +7145,8 @@ void CreateRepairBox(void) {
 }
 
 void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
-  UINT32 hStringHandle;
-  UINT32 uiCounter;
+  uint32_t hStringHandle;
+  uint32_t uiCounter;
   CHAR16 sString[50];
   CHAR16 sDollarString[50];
 
@@ -7252,8 +7252,8 @@ void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
 }
 
 void CreateAttributeBox(void) {
-  UINT32 hStringHandle;
-  UINT32 uiCounter;
+  uint32_t hStringHandle;
+  uint32_t uiCounter;
 
   // will create attribute pop up menu for mapscreen assignments
 
@@ -7316,8 +7316,8 @@ void CreateAttributeBox(void) {
 }
 
 void CreateTrainingBox(void) {
-  UINT32 hStringHandle;
-  UINT32 uiCounter;
+  uint32_t hStringHandle;
+  uint32_t uiCounter;
 
   // will create attribute pop up menu for mapscreen assignments
 
@@ -7379,8 +7379,8 @@ void CreateTrainingBox(void) {
 }
 
 void CreateAssignmentsBox(void) {
-  UINT32 hStringHandle;
-  UINT32 uiCounter;
+  uint32_t hStringHandle;
+  uint32_t uiCounter;
   CHAR16 sString[128];
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -7461,8 +7461,8 @@ void CreateAssignmentsBox(void) {
 void CreateMercRemoveAssignBox(void) {
   // will create remove mercbox to be placed in assignment area
 
-  UINT32 hStringHandle;
-  UINT32 uiCounter;
+  uint32_t hStringHandle;
+  uint32_t uiCounter;
   // create basic box
   CreatePopUpBox(&ghRemoveMercAssignBox, AssignmentDimensions, AssignmentPosition,
                  (POPUP_BOX_FLAG_CLIP_TEXT | POPUP_BOX_FLAG_CENTER_TEXT | POPUP_BOX_FLAG_RESIZE));
@@ -9171,7 +9171,7 @@ void BandageBleedingDyingPatientsBeingTreated() {
   INT32 iKitSlot;
   struct OBJECTTYPE *pKit = NULL;
   UINT16 usKitPts;
-  UINT32 uiKitPtsUsed;
+  uint32_t uiKitPtsUsed;
   BOOLEAN fSomeoneStillBleedingDying = FALSE;
 
   for (iCounter = gTacticalStatus.Team[OUR_TEAM].bFirstID;
@@ -9742,8 +9742,8 @@ UINT8 CalcSoldierNeedForSleep(struct SOLDIERTYPE *pSoldier) {
   return (ubNeedForSleep);
 }
 
-UINT32 GetLastSquadListedInSquadMenu(void) {
-  UINT32 uiMaxSquad;
+uint32_t GetLastSquadListedInSquadMenu(void) {
+  uint32_t uiMaxSquad;
 
   uiMaxSquad = GetLastSquadActive() + 1;
 

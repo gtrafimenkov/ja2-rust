@@ -85,7 +85,7 @@ void UpdateBuildingsInfo() {
 // 4) KillBuilding at x  , y-1.
 // 5) KillBuilding at x+1, y.
 // 6) KillBuilding at x  , y+1.
-void KillBuilding(UINT32 iMapIndex) {
+void KillBuilding(uint32_t iMapIndex) {
   BOOLEAN fFound = FALSE;
 
   if (!gfBasement) fFound |= RemoveAllRoofsOfTypeRange(iMapIndex, FIRSTTEXTURE, LASTITEM);
@@ -416,7 +416,7 @@ void DoorOkayCallback(GUI_BUTTON *btn, INT32 reason);
 void DoorCancelCallback(GUI_BUTTON *btn, INT32 reason);
 void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason);
 
-extern BOOLEAN OpenableAtGridNo(UINT32 iMapIndex);
+extern BOOLEAN OpenableAtGridNo(uint32_t iMapIndex);
 
 void InitDoorEditing(INT32 iMapIndex) {
   DOOR *pDoor;

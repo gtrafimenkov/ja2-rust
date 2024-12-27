@@ -14,10 +14,10 @@ extern INT8 FindObj(struct SOLDIERTYPE *pSoldier, UINT16 usItem);
 INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, UINT8 ubCalibre, UINT8 ubMagSize, INT8 bExcludeSlot);
 
 extern INT8 FindAttachment(struct OBJECTTYPE *pObj, UINT16 usItem);
-extern INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass);
-extern INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStart, UINT32 usItemClass);
-extern INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass);
-extern INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass,
+extern INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass);
+extern INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStart, uint32_t usItemClass);
+extern INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass);
+extern INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass,
                                        INT8 bLower, INT8 bUpper);
 extern INT8 FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, INT8 bLower, INT8 bUpper);
 extern INT8 FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj);
@@ -44,7 +44,7 @@ extern BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, INT8 bAttachPos,
                                 struct OBJECTTYPE *pNewObj);
 
 extern UINT8 CalculateObjectWeight(struct OBJECTTYPE *pObject);
-extern UINT32 CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier);
+extern uint32_t CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier);
 
 extern UINT16 TotalPoints(struct OBJECTTYPE *pObj);
 extern UINT16 UseKitPoints(struct OBJECTTYPE *pObj, UINT16 usPoints, struct SOLDIERTYPE *pSoldier);
@@ -52,7 +52,7 @@ extern UINT16 UseKitPoints(struct OBJECTTYPE *pObj, UINT16 usPoints, struct SOLD
 extern BOOLEAN EmptyWeaponMagazine(struct OBJECTTYPE *pWeapon, struct OBJECTTYPE *pAmmo);
 extern BOOLEAN CreateItem(UINT16 usItem, INT8 bStatus, struct OBJECTTYPE *pObj);
 extern BOOLEAN CreateItems(UINT16 usItem, INT8 bStatus, UINT8 ubNumber, struct OBJECTTYPE *pObj);
-extern BOOLEAN CreateMoney(UINT32 uiMoney, struct OBJECTTYPE *pObj);
+extern BOOLEAN CreateMoney(uint32_t uiMoney, struct OBJECTTYPE *pObj);
 extern UINT16 DefaultMagazine(UINT16 usItem);
 UINT16 RandomMagazine(UINT16 usItem, UINT8 ubPercentStandard);
 extern BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun,
@@ -67,7 +67,7 @@ BOOLEAN RemoveObjectFromSoldierProfile(UINT8 ubProfile, UINT16 usItem);
 INT8 FindObjectInSoldierProfile(UINT8 ubProfile, UINT16 usItem);
 
 BOOLEAN ObjectExistsInSoldierProfile(UINT8 ubProfile, UINT16 usItem);
-void SetMoneyInSoldierProfile(UINT8 ubProfile, UINT32 uiMoney);
+void SetMoneyInSoldierProfile(UINT8 ubProfile, uint32_t uiMoney);
 
 void DamageObj(struct OBJECTTYPE *pObj, INT8 bAmount);
 
@@ -147,7 +147,7 @@ INT8 FindAmmoToReload(struct SOLDIERTYPE *pSoldier, INT8 bWeaponIn, INT8 bExclud
 void SwapOutHandItem(struct SOLDIERTYPE *pSoldier);
 void SwapHandItems(struct SOLDIERTYPE *pSoldier);
 
-INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, UINT32 uiItemClass);
+INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass);
 void RemoveObjs(struct OBJECTTYPE *pObj, UINT8 ubNumberToRemove);
 
 void WaterDamage(struct SOLDIERTYPE *pSoldier);
@@ -156,8 +156,8 @@ INT8 FindObjWithin(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 bLower, INT
 
 BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);
 
-UINT32 ConvertProfileMoneyValueToObjectTypeMoneyValue(UINT8 ubStatus);
-UINT8 ConvertObjectTypeMoneyValueToProfileMoneyValue(UINT32 uiMoneyAmount);
+uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(UINT8 ubStatus);
+UINT8 ConvertObjectTypeMoneyValueToProfileMoneyValue(uint32_t uiMoneyAmount);
 
 BOOLEAN CheckForChainReaction(UINT16 usItem, INT8 bStatus, INT8 bDamage, BOOLEAN fOnGround);
 
@@ -175,7 +175,7 @@ BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLE
 
 BOOLEAN CompatibleFaceItem(UINT16 usItem1, UINT16 usItem2);
 
-UINT32 MoneySlotLimit(INT8 bSlot);
+uint32_t MoneySlotLimit(INT8 bSlot);
 
 void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage);
 

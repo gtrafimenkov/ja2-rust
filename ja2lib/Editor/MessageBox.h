@@ -25,7 +25,7 @@ void RemoveMessageBox();
 //		return MYCURRENT_SCREEN;
 //	}
 //
-//  UINT32 ProcessMyOwnMessageBoxResultHandlerFunction()
+//  uint32_t ProcessMyOwnMessageBoxResultHandlerFunction()
 //	{
 //		RemoveMessageBox();  //MUST BE HERE
 //		if( gfMessageBoxResult ) //user selected yes

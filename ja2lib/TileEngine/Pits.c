@@ -162,7 +162,7 @@ void Remove5X5Pit(INT32 iMapIndex) {
 }
 
 void AddAllPits() {
-  UINT32 i;
+  uint32_t i;
   for (i = 0; i < guiNumWorldItems; i++) {
     if (gWorldItems[i].o.usItem == ACTION_ITEM) {
       if (gWorldItems[i].o.bActionValue == ACTION_ITEM_SMALL_PIT)
@@ -174,7 +174,7 @@ void AddAllPits() {
 }
 
 void RemoveAllPits() {
-  UINT32 i;
+  uint32_t i;
   for (i = 0; i < guiNumWorldItems; i++) {
     if (gWorldItems[i].o.usItem == ACTION_ITEM) {
       if (gWorldItems[i].o.bActionValue == ACTION_ITEM_SMALL_PIT)

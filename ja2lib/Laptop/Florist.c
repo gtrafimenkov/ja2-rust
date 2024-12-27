@@ -56,10 +56,10 @@
 #define FLORIST_COMPANY_INFO_LINE_3_Y LAPTOP_SCREEN_WEB_UL_Y + 107
 #define FLORIST_COMPANY_INFO_LINE_4_Y LAPTOP_SCREEN_WEB_UL_Y + 119
 
-UINT32 guiFloristBackground;
-UINT32 guiHandBullet;
-UINT32 guiLargeTitleSymbol;
-UINT32 guiSmallTitleSymbol;
+uint32_t guiFloristBackground;
+uint32_t guiHandBullet;
+uint32_t guiLargeTitleSymbol;
+uint32_t guiSmallTitleSymbol;
 
 BOOLEAN gfHomePageActive =
     FALSE;  // Specifies whether or not the home page or the sub pages are active
@@ -69,7 +69,7 @@ BOOLEAN gfHomePageActive =
 // Graphic for button
 INT32 guiGalleryButtonImage;
 void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGalleryButton;
+uint32_t guiGalleryButton;
 
 // link to the flower home page by clicking on the flower title
 struct MOUSE_REGION gSelectedFloristTitleHomeLinkRegion;

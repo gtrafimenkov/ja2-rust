@@ -159,7 +159,7 @@ void MercDailyUpdate() {
   struct SOLDIERTYPE *pSoldier;
   // struct SOLDIERTYPE *pQuitList[ 21 ];
   MERCPROFILESTRUCT *pProfile;
-  UINT32 uiChance;
+  uint32_t uiChance;
   INT32 iOffset = 0;
 
   // if its the first day, leave

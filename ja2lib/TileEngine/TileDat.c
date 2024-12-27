@@ -335,7 +335,7 @@ void SetSpecificDatabaseValues(UINT16 usType, UINT16 uiDatabaseElem, TILE_ELEMEN
                                BOOLEAN fUseRaisedObjectType) {
   UINT8 ubLoop;
   INT16 sIndexDiff;
-  UINT32 cnt;
+  uint32_t cnt;
 
   // SETUP BUDDYS FOR SHADOWS
   cnt = 0;

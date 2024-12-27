@@ -50,8 +50,8 @@ typedef struct {
   BobbyRayPurchaseStruct BobbyRayPurchase[MAX_PURCHASE_AMOUNT];
   UINT8 ubNumberPurchases;
 
-  UINT32 uiPackageWeight;
-  UINT32 uiOrderedOnDayNum;
+  uint32_t uiPackageWeight;
+  uint32_t uiOrderedOnDayNum;
 
   BOOLEAN fDisplayedInShipmentPage;
 
@@ -63,7 +63,7 @@ extern INT32 giNumberOfNewBobbyRShipment;
 
 BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, UINT8 ubDeliveryLoc,
                              UINT8 ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,
-                             UINT32 uiPackageWeight);
+                             uint32_t uiPackageWeight);
 
 UINT16 CountNumberOfBobbyPurchasesThatAreInTransit();
 

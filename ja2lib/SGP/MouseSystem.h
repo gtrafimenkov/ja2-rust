@@ -13,7 +13,7 @@ typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback
 struct MOUSE_REGION {
   UINT16 IDNumber;       // Region's ID number, set by mouse system
   INT8 PriorityLevel;    // Region's Priority, set by system and/or caller
-  UINT32 uiFlags;        // Region's state flags
+  uint32_t uiFlags;      // Region's state flags
   INT16 RegionTopLeftX;  // Screen area affected by this region (absolute coordinates)
   INT16 RegionTopLeftY;
   INT16 RegionBottomRightX;

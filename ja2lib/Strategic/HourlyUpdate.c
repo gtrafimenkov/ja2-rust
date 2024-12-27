@@ -94,7 +94,7 @@ void HandleQuarterHourUpdate() {
 }
 
 void HourlyQuestUpdate(void) {
-  UINT32 uiHour = GetWorldHour();
+  uint32_t uiHour = GetWorldHour();
 
   // brothel
   if (uiHour == 4) {

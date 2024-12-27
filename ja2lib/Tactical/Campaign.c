@@ -106,7 +106,7 @@ void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumCh
 
 void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
                        UINT8 ubReason) {
-  UINT32 uiCnt, uiEffLevel;
+  uint32_t uiCnt, uiEffLevel;
   INT16 sSubPointChange = 0;
   UINT16 usChance = 0;
   UINT16 usSubpointsPerPoint;
@@ -373,10 +373,10 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8
   INT8 *pbStatPtr = NULL;
   INT8 *pbSoldierStatPtr = NULL;
   INT8 *pbStatDeltaPtr = NULL;
-  UINT32 *puiStatTimerPtr = NULL;
+  uint32_t *puiStatTimerPtr = NULL;
   BOOLEAN fChangeTypeIncrease;
   BOOLEAN fChangeSalary;
-  UINT32 uiLevelCnt;
+  uint32_t uiLevelCnt;
   UINT8 ubMercMercIdValue = 0;
   UINT16 usIncreaseValue = 0;
   UINT16 usSubpointsPerPoint;
@@ -665,7 +665,7 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8
 
       if (fChangeSalary) {
         // increase all salaries and medical deposits, once for each level gained
-        for (uiLevelCnt = 0; uiLevelCnt < (UINT32)sPtsChanged; uiLevelCnt++) {
+        for (uiLevelCnt = 0; uiLevelCnt < (uint32_t)sPtsChanged; uiLevelCnt++) {
           pProfile->sSalary =
               (INT16)CalcNewSalary(pProfile->sSalary, fChangeTypeIncrease, MAX_DAILY_SALARY);
           pProfile->uiWeeklySalary =
@@ -850,8 +850,8 @@ void HandleAnyStatChangesAfterAttack(void) {
   }
 }
 
-UINT32 CalcNewSalary(UINT32 uiOldSalary, BOOLEAN fIncrease, UINT32 uiMaxLimit) {
-  UINT32 uiNewSalary;
+uint32_t CalcNewSalary(uint32_t uiOldSalary, BOOLEAN fIncrease, uint32_t uiMaxLimit) {
+  uint32_t uiNewSalary;
 
   // if he was working for free, it's still free!
   if (uiOldSalary == 0) {
@@ -859,9 +859,9 @@ UINT32 CalcNewSalary(UINT32 uiOldSalary, BOOLEAN fIncrease, UINT32 uiMaxLimit) {
   }
 
   if (fIncrease) {
-    uiNewSalary = (UINT32)(uiOldSalary * SALARY_CHANGE_PER_LEVEL);
+    uiNewSalary = (uint32_t)(uiOldSalary * SALARY_CHANGE_PER_LEVEL);
   } else {
-    uiNewSalary = (UINT32)(uiOldSalary / SALARY_CHANGE_PER_LEVEL);
+    uiNewSalary = (uint32_t)(uiOldSalary / SALARY_CHANGE_PER_LEVEL);
   }
 
   // round it off to a reasonable multiple
@@ -875,8 +875,8 @@ UINT32 CalcNewSalary(UINT32 uiOldSalary, BOOLEAN fIncrease, UINT32 uiMaxLimit) {
   return (uiNewSalary);
 }
 
-UINT32 RoundOffSalary(UINT32 uiSalary) {
-  UINT32 uiMultiple;
+uint32_t RoundOffSalary(uint32_t uiSalary) {
+  uint32_t uiMultiple;
 
   // determine what multiple value the salary should be rounded off to
   if (uiSalary <= 250)
@@ -1074,8 +1074,8 @@ void HandleUnhiredMercDeaths(INT32 iProfileID) {
 // returns a number between 0-100, this is an estimate of how far a player has progressed through
 // the game
 UINT8 CurrentPlayerProgressPercentage(void) {
-  UINT32 uiCurrentIncome;
-  UINT32 uiPossibleIncome;
+  uint32_t uiCurrentIncome;
+  uint32_t uiPossibleIncome;
   UINT8 ubCurrentProgress;
   UINT8 ubKillsPerPoint;
   UINT16 usKillsProgress;
@@ -1185,15 +1185,15 @@ void HourlyProgressUpdate(void) {
 
 #ifdef JA2TESTVERSION
 void TestDumpStatChanges(void) {
-  UINT32 uiProfileId;
+  uint32_t uiProfileId;
   UINT8 ubStat;
   CHAR8 zPrintFileName[60];
   FILE *FDump;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fMercUsed;
   CHAR8 cEvolutionChars[3] = {'+', '=', '-'};
-  UINT32 uiTotalSuccesses[12];
-  UINT32 uiTotalChances[12];
+  uint32_t uiTotalSuccesses[12];
+  uint32_t uiTotalChances[12];
 
   // clear totals
   memset(uiTotalSuccesses, 0, sizeof(uiTotalSuccesses));

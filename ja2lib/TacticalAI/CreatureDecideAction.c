@@ -866,7 +866,7 @@ INT8 CreatureDecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubBestAttackAction;
   INT8 bCanAttack;
   INT8 bSpitIn, bWeaponIn;
-  UINT32 uiChance;
+  uint32_t uiChance;
   ATTACKTYPE BestShot, BestStab, BestAttack, CurrStab;
   BOOLEAN fRunAway = FALSE;
   BOOLEAN fChangeLevel;

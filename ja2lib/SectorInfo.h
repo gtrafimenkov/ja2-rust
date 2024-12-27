@@ -7,7 +7,7 @@ typedef struct SectorInfo SECTORINFO;
 
 struct SectorInfo {
   // information pertaining to this sector
-  UINT32 uiFlags;              // various special conditions
+  uint32_t uiFlags;            // various special conditions
   UINT8 ubInvestigativeState;  // When the sector is attacked by the player, the state increases by
                                // 1 permanently. This value determines how quickly it is
                                // investigated by the enemy.
@@ -32,8 +32,8 @@ struct SectorInfo {
                            // most recently while this is being maintained (partially, surely
                            // buggy), nothing uses it anymore. ARM
 
-  UINT32 ubDayOfLastCreatureAttack;
-  UINT32 uiFacilitiesFlags;  // the flags for various facilities
+  uint32_t ubDayOfLastCreatureAttack;
+  uint32_t uiFacilitiesFlags;  // the flags for various facilities
 
   UINT8 ubTraversability[5];  // determines the traversability ratings to adjacent sectors.
                               // The last index represents the traversability if travelling
@@ -54,12 +54,13 @@ struct SectorInfo {
   // town militia per experience class, 0/1/2 is GREEN/REGULAR/ELITE
   UINT8 _only_savedgame_ubNumberOfCivsAtLevel[3 /*MAX_MILITIA_LEVELS*/];
 
-  UINT16 usUNUSEDMilitiaLevels;             // unused (ARM)
-  UINT8 ubUNUSEDNumberOfJoeBlowCivilians;   // unused (ARM)
-  UINT32 uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
+  UINT16 usUNUSEDMilitiaLevels;            // unused (ARM)
+  UINT8 ubUNUSEDNumberOfJoeBlowCivilians;  // unused (ARM)
+  uint32_t
+      uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
   UINT8 ubUNUSEDNumberOfEnemiesThoughtToBeHere;  // using bLastKnownEnemies instead
-  UINT32 uiTimeLastPlayerLiberated;  // in game seconds (used to prevent the queen from attacking
-                                     // for awhile)
+  uint32_t uiTimeLastPlayerLiberated;  // in game seconds (used to prevent the queen from attacking
+                                       // for awhile)
 
   BOOLEAN fSurfaceWasEverPlayerControlled;
 
@@ -67,7 +68,7 @@ struct SectorInfo {
   UINT8 bFiller2;
   UINT8 bFiller3;
 
-  UINT32 uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
+  uint32_t uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
 
   INT8 bPadding[41];
 };

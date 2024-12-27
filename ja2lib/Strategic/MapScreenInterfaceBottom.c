@@ -121,21 +121,21 @@ INT8 gbExitingMapScreenToWhere = -1;
 
 UINT8 gubFirstMapscreenMessageIndex = 0;
 
-UINT32 guiCompressionStringBaseTime = 0;
+uint32_t guiCompressionStringBaseTime = 0;
 
 // graphics
-UINT32 guiMAPBOTTOMPANEL;
-UINT32 guiSliderBar;
+uint32_t guiMAPBOTTOMPANEL;
+uint32_t guiSliderBar;
 
 // buttons
-UINT32 guiMapMessageScrollButtons[2];
-UINT32 guiMapBottomExitButtons[3];
-UINT32 guiMapBottomTimeButtons[2];
+uint32_t guiMapMessageScrollButtons[2];
+uint32_t guiMapBottomExitButtons[3];
+uint32_t guiMapBottomTimeButtons[2];
 
 // buttons images
-UINT32 guiMapMessageScrollButtonsImage[2];
-UINT32 guiMapBottomExitButtonsImage[3];
-UINT32 guiMapBottomTimeButtonsImage[2];
+uint32_t guiMapMessageScrollButtonsImage[2];
+uint32_t guiMapBottomExitButtonsImage[3];
+uint32_t guiMapBottomTimeButtonsImage[2];
 
 // mouse regions
 struct MOUSE_REGION gMapMessageScrollBarRegion;

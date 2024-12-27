@@ -126,8 +126,8 @@ INT16 TerrainActionPoints(struct SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir
 }
 
 INT16 BreathPointAdjustmentForCarriedWeight(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCarriedPercent;
-  UINT32 uiPercentCost;
+  uint32_t uiCarriedPercent;
+  uint32_t uiPercentCost;
 
   uiCarriedPercent = CalculateCarriedWeight(pSoldier);
   if (uiCarriedPercent < 101) {
@@ -795,7 +795,7 @@ UINT8 CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ub
   INT16 sActionGridNo;
   UINT8 ubDirection;
   INT16 sAdjustedGridNo;
-  UINT32 uiItemClass;
+  uint32_t uiItemClass;
 
   // LOOK IN BUDDY'S HAND TO DETERMINE WHAT TO DO HERE
   usItemNum = pSoldier->inv[HANDPOS].usItem;
@@ -903,7 +903,7 @@ UINT8 CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ub
 
 UINT8 MinAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost) {
   UINT16 sAPCost = 0;
-  UINT32 uiItemClass;
+  uint32_t uiItemClass;
 
   if (pSoldier->bWeaponMode == WM_ATTACHED) {
     INT8 bAttachSlot;
@@ -981,7 +981,7 @@ void GetAPChargeForShootOrStabWRTGunRaises(struct SOLDIERTYPE *pSoldier, INT16 s
                                            UINT8 ubAddTurningCost, BOOLEAN *pfChargeTurning,
                                            BOOLEAN *pfChargeRaise) {
   UINT8 ubDirection;
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
   UINT16 usTargID;
   BOOLEAN fAddingTurningCost = FALSE;
   BOOLEAN fAddingRaiseGunCost = FALSE;
@@ -1021,7 +1021,7 @@ void GetAPChargeForShootOrStabWRTGunRaises(struct SOLDIERTYPE *pSoldier, INT16 s
 }
 
 UINT8 MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
   UINT16 usTargID;
   INT8 bFullAPs;
   INT8 bAimSkill;
@@ -1677,7 +1677,7 @@ INT16 MinAPsToThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurn
   INT32 iAPCost = AP_MIN_AIM_ATTACK;
   UINT16 usInHand;
   UINT16 usTargID;
-  UINT32 uiMercFlags;
+  uint32_t uiMercFlags;
   UINT8 ubDirection;
 
   // make sure the guy's actually got a throwable item in his hand!

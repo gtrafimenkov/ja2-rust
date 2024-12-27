@@ -192,7 +192,7 @@ INT8 RepairVehicle(INT32 iVehicleId, INT8 bTotalPts, BOOLEAN *pfNothingToRepair)
 BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile);
 
 // Load all the vehicle information From the saved game file
-BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGameVersion);
+BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, uint32_t uiSavedGameVersion);
 
 // take soldier out of vehicle
 BOOLEAN TakeSoldierOutOfVehicle(struct SOLDIERTYPE *pSoldier);

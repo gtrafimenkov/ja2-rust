@@ -1292,6 +1292,6 @@ extern STR16 gzCreditNameTitle[];
 extern STR16 gzCreditNameFunny[];
 
 extern STR16 GetWeightUnitString(void);
-FLOAT GetWeightBasedOnMetricOption(UINT32 uiObjectWeight);
+FLOAT GetWeightBasedOnMetricOption(uint32_t uiObjectWeight);
 
 #endif

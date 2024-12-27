@@ -74,7 +74,7 @@ BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
 // @@ATECLIP TO WORLD!
 void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
   INT16 sCountX, sCountY;
-  UINT32 uiTile;
+  uint32_t uiTile;
 
   for (sCountY = sY - sRadius; sCountY < (sY + sRadius + 2); sCountY++) {
     for (sCountX = sX - sRadius; sCountX < (sX + sRadius + 2); sCountX++) {
@@ -86,7 +86,7 @@ void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
 }
 
 void SetGridNoRevealedFlag(UINT16 sGridNo) {
-  //	UINT32 cnt;
+  //	uint32_t cnt;
   //  struct ITEM_POOL					*pItemPool;
   //	INT16							sX, sY;
   struct LEVELNODE *pNode = NULL;
@@ -206,7 +206,7 @@ void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
 }
 
 void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct ITEM_POOL *pItemPool;
   INT16 sX, sY;
   BOOLEAN fSaidItemSeenQuote = FALSE;

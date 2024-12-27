@@ -68,9 +68,9 @@ void ToggleQuestDebugModes(UINT8 ubType) {
 
 void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
   static BOOLEAN fFirstTimeIn = TRUE;
-  static UINT32 uiLineNumber = 1;
+  static uint32_t uiLineNumber = 1;
   HWFILE hFile;
-  UINT32 uiByteWritten;
+  uint32_t uiByteWritten;
   va_list argptr;
   char TempString[1024];
   char DestString[1100];

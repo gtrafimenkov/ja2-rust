@@ -405,7 +405,7 @@ extern UINT8 gszTerrain[NUM_TRAVTERRAIN_TYPES][15];
 #define WEST_ADJACENT_SECTOR 0x08
 
 typedef struct UNDERGROUND_SECTORINFO {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UINT8 ubSectorX, ubSectorY, ubSectorZ;
   UINT8 ubNumElites, ubNumTroops, ubNumAdmins, ubNumCreatures;
   UINT8 fVisited;
@@ -413,14 +413,15 @@ typedef struct UNDERGROUND_SECTORINFO {
                         // rating, the more people go near it.  A travel rating of 0 means there are
                         // never people around.  This value is used for determining how often items
                         // would "vanish" from a sector.
-  UINT32 uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
+  uint32_t
+      uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
   struct UNDERGROUND_SECTORINFO *next;
   UINT8 ubAdjacentSectors;  // mask containing which sectors are adjacent
   UINT8
   ubCreatureHabitat;  // determines how creatures live in this sector (see creature spreading.c)
   UINT8 ubElitesInBattle, ubTroopsInBattle, ubAdminsInBattle, ubCreaturesInBattle;
 
-  UINT32 uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
+  uint32_t uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
   INT8 bPadding[36];
   // no padding left!
 } UNDERGROUND_SECTORINFO;

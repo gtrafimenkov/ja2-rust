@@ -161,15 +161,15 @@ void ExtractAndUpdatePopulations();
 void PrintEnemyPopTable();
 void PrintEnemiesKilledTable();
 UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites);
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
+void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject);
 void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
                                       UINT8 ubSectorY);
 
 struct MOUSE_REGION ViewerRegion;
 
-UINT32 guiMapGraphicID;
-UINT32 guiMapIconsID;
+uint32_t guiMapGraphicID;
+uint32_t guiMapIconsID;
 
 BOOLEAN gfViewerEntry;
 BOOLEAN gfExitViewer;
@@ -190,7 +190,7 @@ INT16 gsAINumElites = -1;
 INT16 gsAINumCreatures = -1;
 BOOLEAN gfOverrideSector = FALSE;
 
-UINT32 guiLastTime;
+uint32_t guiLastTime;
 
 INT32 giSaveTCMode;  // time compression mode;
 
@@ -203,7 +203,7 @@ INT32 iViewerButton[NUM_VIEWER_BUTTONS];
 
 extern BOOLEAN gfQueenAIAwake;
 extern INT32 giReinforcementPool;
-extern UINT32 guiEventListCurrNodes, guiEventListPeekNodes;
+extern uint32_t guiEventListCurrNodes, guiEventListPeekNodes;
 extern INT32 giReinforcementPoints, giRequestPoints;
 extern ARMY_COMPOSITION gArmyComp[NUM_ARMY_COMPOSITIONS];
 extern GARRISON_GROUP *gGarrisonGroup;
@@ -212,10 +212,10 @@ extern INT32 giGarrisonArraySize;
 CHAR16 gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING", L"PATROL",
                                                       L"REINFORCE"};
 
-void StringFromValue(STR16 str, INT32 iValue, UINT32 uiMax) {
+void StringFromValue(STR16 str, INT32 iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
-  else if ((UINT32)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
+  else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
     swprintf(str, ARR_SIZE(str), L"%d", uiMax);
   else  // this is a valid static value, so convert it to a string.
     swprintf(str, ARR_SIZE(str), L"%d", iValue);
@@ -501,10 +501,10 @@ void RenderMovingGroupsAndMercs() {
                 (float)pGroup->uiTraverseTime;
         minX = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1);
         maxX = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubNextX - 1);
-        x = (UINT32)(minX + ratio * (maxX - minX));
+        x = (uint32_t)(minX + ratio * (maxX - minX));
         minY = VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1);
         maxY = VIEWER_TOP + VIEWER_CELLH * (pGroup->ubNextY - 1);
-        y = (UINT32)(minY + ratio * (maxY - minY));
+        y = (uint32_t)(minY + ratio * (maxY - minY));
       } else {
         x = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1);
         y = VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1);
@@ -739,7 +739,7 @@ void RenderInfoInSector() {
 
 void RenderViewer() {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   INT32 i, x, y, xp, yp;
   if (gfRenderViewer) {
@@ -999,7 +999,7 @@ void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-UINT32 AIViewerScreenInit() {
+uint32_t AIViewerScreenInit() {
   gfViewerEntry = TRUE;
   gusBlue = Get16BPPColor(FROMRGB(65, 79, 94));
   gusLtBlue = Get16BPPColor(FROMRGB(122, 124, 121));
@@ -1007,7 +1007,7 @@ UINT32 AIViewerScreenInit() {
   return TRUE;
 }
 
-UINT32 AIViewerScreenHandle() {
+uint32_t AIViewerScreenHandle() {
   StartFrameBufferRender();
 
   RestoreBackgroundRects();
@@ -1045,7 +1045,7 @@ UINT32 AIViewerScreenHandle() {
   return AIVIEWER_SCREEN;
 }
 
-UINT32 AIViewerScreenShutdown() { return TRUE; }
+uint32_t AIViewerScreenShutdown() { return TRUE; }
 
 void Compression0Callback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1110,7 +1110,7 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct GROUP *pGroup;
     UINT8 ubSector;
-    UINT32 uiWorldMin;
+    uint32_t uiWorldMin;
     Compression0Callback(ButtonList[iViewerButton[COMPRESSION0]], MSYS_CALLBACK_REASON_LBUTTON_UP);
     if ((gsSelSectorX == 0) || (gsSelSectorY == 0)) gsSelSectorX = 9, gsSelSectorY = 1;
 
@@ -1317,7 +1317,7 @@ CHAR16 EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
 void PrintEnemyPopTable() {
   UINT16 usX, usY;
   UINT16 usEnemyPopTable[TABLE_ENEMY_RANKS][POP_TABLE_ENEMY_TYPES];
-  UINT32 uiSector = 0;
+  uint32_t uiSector = 0;
   UINT8 ubEnemyRank;
   UINT8 ubEnemyType;
   SECTORINFO *pSector;
@@ -1620,7 +1620,7 @@ UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites) {
   return (ubIconColor);
 }
 
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
+void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject) {
   UINT8 ubObjectIndex;
 

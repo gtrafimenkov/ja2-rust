@@ -17,7 +17,7 @@
 #include "TileEngine/TileSurface.h"
 #include "TileEngine/WorldMan.h"
 
-//#include "Editor/EditScreen.h"
+// #include "Editor/EditScreen.h"
 
 // GLobals
 TILE_ELEMENT gTileDatabase[NUMBEROFTILES];
@@ -273,9 +273,9 @@ UINT8 gTileTypeMovementCost[NUM_TERRAIN_TYPES] = {
 };
 
 void CreateTileDatabase() {
-  UINT32 cnt1, cnt2;
+  uint32_t cnt1, cnt2;
   UINT8 ubLoop;
-  UINT32 NumRegions;
+  uint32_t NumRegions;
   struct TILE_IMAGERY *TileSurf;
   TILE_ELEMENT TileElement;
 
@@ -434,7 +434,7 @@ void DeallocateTileDatabase() {
   gusNumAnimatedTiles = 0;
 }
 
-BOOLEAN GetLandHeadType(INT32 iMapIndex, UINT32 *puiType) {
+BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType) {
   UINT16 usIndex;
 
   Assert(puiType != NULL);
@@ -448,7 +448,7 @@ BOOLEAN GetLandHeadType(INT32 iMapIndex, UINT32 *puiType) {
   return (TRUE);
 }
 
-BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, BOOLEAN fDelete) {
+BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, BOOLEAN fDelete) {
   UINT16 usTempIndex;
   UINT8 ubLastHighLevel = 0;
 
@@ -478,7 +478,7 @@ BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, BOOLEAN 
   }
 }
 
-BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, UINT8 ubRadius,
+BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, UINT8 ubRadius,
                                BOOLEAN fReplace) {
   UINT16 usTempIndex;
   INT16 sTop, sBottom;
@@ -526,10 +526,10 @@ BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType
   return (TRUE);
 }
 
-BOOLEAN GetTypeLandLevel(UINT32 iMapIndex, UINT32 uiNewType, UINT8 *pubLevel) {
+BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, UINT8 *pubLevel) {
   UINT8 level = 0;
   struct LEVELNODE *pLand;
-  UINT32 fTileType = 0;
+  uint32_t fTileType = 0;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
 
@@ -550,7 +550,7 @@ BOOLEAN GetTypeLandLevel(UINT32 iMapIndex, UINT32 uiNewType, UINT8 *pubLevel) {
   return (FALSE);
 }
 
-UINT8 GetLandLevelDepth(UINT32 iMapIndex) {
+UINT8 GetLandLevelDepth(uint32_t iMapIndex) {
   UINT8 level = 0;
   struct LEVELNODE *pLand;
 
@@ -565,7 +565,7 @@ UINT8 GetLandLevelDepth(UINT32 iMapIndex) {
 }
 
 BOOLEAN GetSubIndexFromTileIndex(UINT16 usTileIndex, UINT16 *pusSubIndex) {
-  UINT32 uiType = 0;
+  uint32_t uiType = 0;
   if (GetTileType(usTileIndex, &uiType)) {
     *pusSubIndex = usTileIndex - gTileTypeStartIndex[uiType] + 1;
     return TRUE;
@@ -573,7 +573,7 @@ BOOLEAN GetSubIndexFromTileIndex(UINT16 usTileIndex, UINT16 *pusSubIndex) {
   return FALSE;
 }
 
-BOOLEAN GetTypeSubIndexFromTileIndex(UINT32 uiCheckType, UINT16 usIndex, UINT16 *pusSubIndex) {
+BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, UINT16 usIndex, UINT16 *pusSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
@@ -583,7 +583,7 @@ BOOLEAN GetTypeSubIndexFromTileIndex(UINT32 uiCheckType, UINT16 usIndex, UINT16 
   return (TRUE);
 }
 
-BOOLEAN GetTypeSubIndexFromTileIndexChar(UINT32 uiCheckType, UINT16 usIndex, UINT8 *pubSubIndex) {
+BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, UINT16 usIndex, UINT8 *pubSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
@@ -593,7 +593,8 @@ BOOLEAN GetTypeSubIndexFromTileIndexChar(UINT32 uiCheckType, UINT16 usIndex, UIN
   return (TRUE);
 }
 
-BOOLEAN GetTileIndexFromTypeSubIndex(UINT32 uiCheckType, UINT16 usSubIndex, UINT16 *pusTileIndex) {
+BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, UINT16 usSubIndex,
+                                     UINT16 *pusTileIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
@@ -603,7 +604,7 @@ BOOLEAN GetTileIndexFromTypeSubIndex(UINT32 uiCheckType, UINT16 usSubIndex, UINT
   return (TRUE);
 }
 
-BOOLEAN MoveLandIndexToTop(UINT32 iMapIndex, UINT16 usIndex) {
+BOOLEAN MoveLandIndexToTop(uint32_t iMapIndex, UINT16 usIndex) {
   // Remove, then add again
   RemoveLand(iMapIndex, usIndex);
 
@@ -613,7 +614,7 @@ BOOLEAN MoveLandIndexToTop(UINT32 iMapIndex, UINT16 usIndex) {
 }
 
 // Database access functions
-BOOLEAN GetTileType(UINT16 usIndex, UINT32 *puiType) {
+BOOLEAN GetTileType(UINT16 usIndex, uint32_t *puiType) {
   TILE_ELEMENT TileElem;
 
   CHECKF(usIndex != NO_TILE);
@@ -626,7 +627,7 @@ BOOLEAN GetTileType(UINT16 usIndex, UINT32 *puiType) {
   return (TRUE);
 }
 
-BOOLEAN GetTileFlags(UINT16 usIndex, UINT32 *puiFlags) {
+BOOLEAN GetTileFlags(UINT16 usIndex, uint32_t *puiFlags) {
   TILE_ELEMENT TileElem;
 
   CHECKF(usIndex != NO_TILE);
@@ -640,13 +641,13 @@ BOOLEAN GetTileFlags(UINT16 usIndex, UINT32 *puiFlags) {
   return (TRUE);
 }
 
-BOOLEAN GetTileTypeLogicalHeight(UINT32 fType, UINT8 *pubLogHeight) {
+BOOLEAN GetTileTypeLogicalHeight(uint32_t fType, UINT8 *pubLogHeight) {
   *pubLogHeight = gTileTypeLogicalHeight[fType];
 
   return (TRUE);
 }
 
-BOOLEAN LandTypeHeigher(UINT32 uiDestType, UINT32 uiSrcType) {
+BOOLEAN LandTypeHeigher(uint32_t uiDestType, uint32_t uiSrcType) {
   UINT8 ubDestLogHeight;
   UINT8 ubSrcLogHeight;
 
@@ -657,10 +658,10 @@ BOOLEAN LandTypeHeigher(UINT32 uiDestType, UINT32 uiSrcType) {
   return (ubDestLogHeight > ubSrcLogHeight);
 }
 
-BOOLEAN AnyHeigherLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel) {
+BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel) {
   struct LEVELNODE *pLand = NULL;
   UINT8 ubSrcLogHeight = 0;
-  UINT32 fTileType = 0;
+  uint32_t fTileType = 0;
   UINT8 level = 0;
   UINT8 ubSrcTypeLevel = 0;
   BOOLEAN fFound = FALSE;
@@ -697,10 +698,10 @@ BOOLEAN AnyHeigherLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel) 
   return (fFound);
 }
 
-BOOLEAN AnyLowerLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel) {
+BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel) {
   struct LEVELNODE *pLand = NULL;
   UINT8 ubSrcLogHeight;
-  UINT32 fTileType = 0;
+  uint32_t fTileType = 0;
   UINT8 level = 0;
   UINT8 ubSrcTypeLevel;
   TILE_ELEMENT TileElem;
@@ -752,7 +753,7 @@ BOOLEAN GetWallOrientation(UINT16 usIndex, UINT16 *pusWallOrientation) {
   return (TRUE);
 }
 
-BOOLEAN ContainsWallOrientation(INT32 iMapIndex, UINT32 uiType, UINT16 usWallOrientation,
+BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, UINT16 usWallOrientation,
                                 UINT8 *pubLevel) {
   struct LEVELNODE *pStruct = NULL;
   UINT8 level = 0;

@@ -105,9 +105,9 @@ BOOLEAN gfRenderHilights = TRUE;
 BUTTON_PICS ButtonPictures[MAX_BUTTON_PICS];
 INT32 ButtonPicsLoaded;
 
-UINT32 ButtonDestBuffer = BACKBUFFER;
-UINT32 ButtonDestPitch = 640 * 2;
-UINT32 ButtonDestBPP = 16;
+uint32_t ButtonDestBuffer = BACKBUFFER;
+uint32_t ButtonDestPitch = 640 * 2;
+uint32_t ButtonDestBPP = 16;
 
 GUI_BUTTON *ButtonList[MAX_BUTTONS];
 
@@ -168,9 +168,9 @@ INT32 FindFreeButtonSlot(void) {
 INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHilite, INT32 OnNormal,
                       INT32 OnHilite) {
   VOBJECT_DESC vo_desc;
-  UINT32 UseSlot;
+  uint32_t UseSlot;
   ETRLEObject *pTrav;
-  UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
+  uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   AssertMsg(filename != BUTTON_NO_FILENAME, "Attempting to LoadButtonImage() with null filename.");
   AssertMsg(strlen(filename), "Attempting to LoadButtonImage() with empty filename string.");
@@ -213,8 +213,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
   MaxWidth = MaxHeight = 0;
   if (Grayed != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[Grayed]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -222,8 +222,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OffNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OffNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -231,8 +231,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OffHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OffHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -240,8 +240,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OnNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OnNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -249,8 +249,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OnHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OnHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -273,9 +273,9 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 //
 INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite) {
-  UINT32 UseSlot;
+  uint32_t UseSlot;
   ETRLEObject *pTrav;
-  UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
+  uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   // Is button image index given valid?
   if (ButtonPictures[LoadedImg].vobj == NULL) {
@@ -324,8 +324,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
   MaxWidth = MaxHeight = 0;
   if (Grayed != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[Grayed]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -333,8 +333,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OffNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OffNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -342,8 +342,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OffHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OffHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -351,8 +351,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OnNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OnNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -360,8 +360,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OnHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OnHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -389,9 +389,9 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 //
 INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite) {
-  UINT32 UseSlot;
+  uint32_t UseSlot;
   ETRLEObject *pTrav;
-  UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
+  uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   // Is button image index given valid?
   if (hVObject == NULL) {
@@ -429,8 +429,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
   MaxWidth = MaxHeight = 0;
   if (Grayed != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[Grayed]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -438,8 +438,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OffNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OffNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -447,8 +447,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OffHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OffHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -456,8 +456,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OnNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OnNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -465,8 +465,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OnHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->pETRLEObject[OnHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    ThisWidth = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -486,7 +486,7 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 //
 //	Sets the destination buffer for all button blits.
 //
-BOOLEAN SetButtonDestBuffer(UINT32 DestBuffer) {
+BOOLEAN SetButtonDestBuffer(uint32_t DestBuffer) {
   if (DestBuffer != BUTTON_USE_DEFAULT) ButtonDestBuffer = DestBuffer;
 
   return (TRUE);
@@ -552,7 +552,7 @@ void UnloadButtonImage(INT32 Index) {
 //
 BOOLEAN EnableButton(INT32 iButtonID) {
   GUI_BUTTON *b;
-  UINT32 OldState;
+  uint32_t OldState;
 
   if (iButtonID < 0 || iButtonID >= MAX_BUTTONS) {
     sprintf(str, "Attempting to EnableButton with out of range buttonID %d.", iButtonID);
@@ -583,7 +583,7 @@ BOOLEAN EnableButton(INT32 iButtonID) {
 //
 BOOLEAN DisableButton(INT32 iButtonID) {
   GUI_BUTTON *b;
-  UINT32 OldState;
+  uint32_t OldState;
 
   if (iButtonID < 0 || iButtonID >= MAX_BUTTONS) {
     sprintf(str, "Attempting to DisableButton with out of range buttonID %d.", iButtonID);
@@ -617,17 +617,17 @@ BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, IN
 
   // Set up the default settings
   if (DefaultBuffer != BUTTON_USE_DEFAULT)
-    ButtonDestBuffer = (UINT32)DefaultBuffer;
+    ButtonDestBuffer = (uint32_t)DefaultBuffer;
   else
     ButtonDestBuffer = FRAME_BUFFER;
 
   if (DefaultPitch != BUTTON_USE_DEFAULT)
-    ButtonDestPitch = (UINT32)DefaultPitch;
+    ButtonDestPitch = (uint32_t)DefaultPitch;
   else
     ButtonDestPitch = 640 * 2;
 
   if (DefaultBPP != BUTTON_USE_DEFAULT)
-    ButtonDestBPP = (UINT32)DefaultBPP;
+    ButtonDestBPP = (uint32_t)DefaultBPP;
   else
     ButtonDestBPP = 16;
 
@@ -1423,7 +1423,7 @@ INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, IN
 }
 
 // Creates a generic button with text on it.
-INT32 CreateTextButton(STR16 string, UINT32 uiFont, INT16 sForeColor, INT16 sShadowColor,
+INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sShadowColor,
                        INT16 GenImg, INT16 xloc, INT16 yloc, INT16 w, INT16 h, INT32 Type,
                        INT16 Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
@@ -1650,7 +1650,7 @@ BOOLEAN SetButtonCursor(INT32 iBtnId, UINT16 crsr) {
 //	Creates a QuickButton. QuickButtons only have graphics associated with
 //	them. They cannot be re-sized, nor can the graphic be changed.
 //
-INT32 QuickCreateButton(UINT32 Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 Priority,
+INT32 QuickCreateButton(uint32_t Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 Priority,
                         GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 ButtonNum;
@@ -1823,7 +1823,7 @@ INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, INT16 Prio
   return (ButNum);
 }
 
-INT32 CreateIconAndTextButton(INT32 Image, STR16 string, UINT32 uiFont, INT16 sForeColor,
+INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 sForeColor,
                               INT16 sShadowColor, INT16 sForeColorDown, INT16 sShadowColorDown,
                               INT8 bJustification, INT16 xloc, INT16 yloc, INT32 Type,
                               INT16 Priority, GUI_CALLBACK MoveCallback,
@@ -1978,7 +1978,7 @@ void SpecifyButtonMultiColorFont(INT32 iButtonID, BOOLEAN fMultiColor) {
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonFont(INT32 iButtonID, UINT32 uiFont) {
+void SpecifyButtonFont(INT32 iButtonID, uint32_t uiFont) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2684,7 +2684,7 @@ void DrawQuickButton(GUI_BUTTON *b) {
 
 void DrawHatchOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   ClipRect.iLeft = b->Area.RegionTopLeftX;
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
@@ -2697,7 +2697,7 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
 
 void DrawShadeOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   ClipRect.iLeft = b->Area.RegionTopLeftX;
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
@@ -2710,7 +2710,7 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
 
 void DrawDefaultOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   if (b->bDefaultStatus == DEFAULT_STATUS_DARKBORDER ||
@@ -2878,8 +2878,8 @@ void DrawIconOnButton(GUI_BUTTON *b) {
       GetVideoObject(&hvObject, b->iIconID);
       pTrav = &(hvObject->pETRLEObject[b->usIconIndex]);
     }
-    IconH = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    IconW = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    IconH = (uint32_t)(pTrav->usHeight + pTrav->sOffsetY);
+    IconW = (uint32_t)(pTrav->usWidth + pTrav->sOffsetX);
 
     // Compute coordinates for centering the icon on the button or
     // use the offset system.
@@ -3079,7 +3079,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   INT32 q, ImgNum, ox, oy;
   INT32 iBorderHeight, iBorderWidth;
   struct VObject *BPic;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   SGPRect ClipRect;
 
@@ -3306,7 +3306,7 @@ INT32 CreateCheckBoxButton(INT16 x, INT16 y, CHAR8 *filename, INT16 Priority,
     DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateCheckBoxButton: Can't load button image");
     return (-1);
   }
-  iButtonID = (INT16)QuickCreateButton((UINT32)ButPic, x, y, BUTTON_CHECKBOX, Priority,
+  iButtonID = (INT16)QuickCreateButton((uint32_t)ButPic, x, y, BUTTON_CHECKBOX, Priority,
                                        MSYS_NO_CALLBACK, ClickCallback);
   if (iButtonID == -1) {
     DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateCheckBoxButton: Can't create button");

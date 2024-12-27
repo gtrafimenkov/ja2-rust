@@ -42,9 +42,9 @@
 #define AIM_LINK_LINK_TEXT_2_Y AIM_LINK_FUNERAL_LINK_Y + 36
 #define AIM_LINK_LINK_TEXT_3_Y AIM_LINK_INSURANCE_LINK_Y + 45
 
-UINT32 guiBobbyLink;
-UINT32 guiFuneralLink;
-UINT32 guiInsuranceLink;
+uint32_t guiBobbyLink;
+uint32_t guiFuneralLink;
+uint32_t guiInsuranceLink;
 UINT8 gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK};
 
 // Clicking on guys Face
@@ -146,7 +146,7 @@ void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 gNextLaptopPage;
+    uint32_t gNextLaptopPage;
 
     gNextLaptopPage = MSYS_GetRegionUserData(pRegion, 0);
 

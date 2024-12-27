@@ -94,7 +94,7 @@ typedef struct {
   PaletteRepID SkinPal;
 
   INT8 bDirection;
-  UINT32 uiTimeOfDeath;
+  uint32_t uiTimeOfDeath;
 
   UINT16 usFlags;
 

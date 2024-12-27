@@ -41,7 +41,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   INT16 usTileIndex;
   INT16 sDelay;
   INT16 sStartFrame = -1;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   struct LEVELNODE *pGivenNode;
   INT16 sX, sY, sZ;
   UINT8 ubTempDir;
@@ -395,7 +395,7 @@ void DeleteAniTile(ANITILE *pAniTile) {
 void UpdateAniTiles() {
   ANITILE *pAniNode = NULL;
   ANITILE *pNode = NULL;
-  UINT32 uiClock = GetJA2Clock();
+  uint32_t uiClock = GetJA2Clock();
   UINT16 usMaxFrames, usMinFrames;
   UINT8 ubTempDir;
 
@@ -406,7 +406,7 @@ void UpdateAniTiles() {
     pNode = pAniNode;
     pAniNode = pAniNode->pNext;
 
-    if ((uiClock - pNode->uiTimeLastUpdate) > (UINT32)pNode->sDelay &&
+    if ((uiClock - pNode->uiTimeLastUpdate) > (uint32_t)pNode->sDelay &&
         !(pNode->uiFlags & ANITILE_PAUSED)) {
       pNode->uiTimeLastUpdate = GetJA2Clock();
 
@@ -653,7 +653,7 @@ void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
   pAniTile->sCurrentFrame = sStartFrame;
 }
 
-ANITILE *GetCachedAniTileOfType(INT16 sGridNo, UINT8 ubLevelID, UINT32 uiFlags) {
+ANITILE *GetCachedAniTileOfType(INT16 sGridNo, UINT8 ubLevelID, uint32_t uiFlags) {
   struct LEVELNODE *pNode = NULL;
 
   switch (ubLevelID) {
@@ -721,7 +721,7 @@ void PauseAniTile(ANITILE *pAniTile, BOOLEAN fPause) {
   }
 }
 
-void PauseAllAniTilesOfType(UINT32 uiType, BOOLEAN fPause) {
+void PauseAllAniTilesOfType(uint32_t uiType, BOOLEAN fPause) {
   ANITILE *pAniNode = NULL;
   ANITILE *pNode = NULL;
 

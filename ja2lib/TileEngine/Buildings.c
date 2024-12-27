@@ -35,12 +35,12 @@ BUILDING* CreateNewBuilding(UINT8* pubBuilding) {
 }
 
 BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT16 sTempGridNo, sNextTempGridNo, sVeryTemporaryGridNo;
   INT16 sStartGridNo, sCurrGridNo, sPrevGridNo = NOWHERE, sRightGridNo;
   INT8 bDirection, bTempDirection;
   BOOLEAN fFoundDir, fFoundWall;
-  UINT32 uiChanceIn = ROOF_LOCATION_CHANCE;  // chance of a location being considered
+  uint32_t uiChanceIn = ROOF_LOCATION_CHANCE;  // chance of a location being considered
   INT16 sWallGridNo;
   INT8 bDesiredOrientation;
   INT8 bSkipSpots = 0;
@@ -328,7 +328,7 @@ BOOLEAN InBuilding(INT16 sGridNo) {
 }
 
 void GenerateBuildings(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   // init building structures and variables
   memset(&gubBuildingInfo, 0, WORLD_MAX * sizeof(UINT8));

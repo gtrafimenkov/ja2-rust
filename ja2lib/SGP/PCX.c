@@ -74,7 +74,7 @@ PcxObject *LoadPcx(STR8 pFilename) {
   PcxHeader Header;
   PcxObject *pCurrentPcxObject;
   HWFILE hFileHandle;
-  UINT32 uiFileSize;
+  uint32_t uiFileSize;
   UINT8 *pPcxBuffer;
 
   // Open and read in the file
@@ -139,12 +139,12 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usB
   UINT8 *pPcxBuffer;
   UINT8 ubRepCount;
   UINT16 usMaxX, usMaxY;
-  UINT32 uiImageSize;
+  uint32_t uiImageSize;
   UINT8 ubCurrentByte = 0;
   UINT8 ubMode;
   UINT16 usCurrentX, usCurrentY;
-  UINT32 uiOffset, uiIndex;
-  UINT32 uiNextLineOffset, uiStartOffset, uiCurrentOffset;
+  uint32_t uiOffset, uiIndex;
+  uint32_t uiNextLineOffset, uiStartOffset, uiCurrentOffset;
 
   pPcxBuffer = pCurrentPcxObject->pPcxBuffer;
 

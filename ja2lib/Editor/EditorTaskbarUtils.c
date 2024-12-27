@@ -50,13 +50,13 @@ extern struct ITEM_POOL *gpItemPool;
 
 // editor icon storage vars
 INT32 giEditMercDirectionIcons[2];
-UINT32 guiMercInventoryPanel;
-UINT32 guiOmertaMap;
-UINT32 guiMercInvPanelBuffers[9];
-UINT32 guiMercTempBuffer;
+uint32_t guiMercInventoryPanel;
+uint32_t guiOmertaMap;
+uint32_t guiMercInvPanelBuffers[9];
+uint32_t guiMercTempBuffer;
 INT32 giEditMercImage[2];
-UINT32 guiExclamation;
-UINT32 guiKeyImage;
+uint32_t guiExclamation;
+uint32_t guiKeyImage;
 
 // editor Mouseregion storage vars
 struct MOUSE_REGION TerrainTileButtonRegion[NUM_TERRAIN_TILE_REGIONS];
@@ -472,7 +472,7 @@ void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
 // This is a new function which duplicates the older "yellow info boxes" that
 // are common throughout the editor.  This draws the yellow box with the indentation
 // look.
-void DrawEditorInfoBox(STR16 str, UINT32 uiFont, UINT16 x, UINT16 y, UINT16 w, UINT16 h) {
+void DrawEditorInfoBox(STR16 str, uint32_t uiFont, UINT16 x, UINT16 y, UINT16 w, UINT16 h) {
   UINT16 usFillColorDark, usFillColorLight, usFillColorBack;
   UINT16 x2, y2;
   UINT16 usStrWidth;
@@ -719,7 +719,7 @@ void RenderDoorLockInfo() {
 }
 
 void RenderSelectedItemBlownUp() {
-  UINT32 uiVideoObjectIndex;
+  uint32_t uiVideoObjectIndex;
   struct VObject *hVObject;
   INT16 sScreenX, sScreenY, xp, yp;
   struct ITEM_POOL *pItemPool;

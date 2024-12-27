@@ -130,7 +130,7 @@ void CallEldinTo(INT16 sGridNo) {
 
 INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
                               BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT8 *pbPersOL, *pbPublOL;
   INT16 *psLastLoc, *psNoiseGridNo;
   INT8 *pbNoiseLevel;
@@ -293,7 +293,7 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
 
 INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, UINT8 ubInSightOnly) {
   UINT8 ubTotal = 0;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT8 *pbPersOL, *pbPublOL;
   struct SOLDIERTYPE *pTemp;
 

@@ -1473,7 +1473,7 @@ enum SAIMOVECODE {
   EVASIVE,
   STAGE,
 };
-void MoveSAIGroupToSector(struct GROUP **pGroup, UINT8 ubSectorID, UINT32 uiMoveCode,
+void MoveSAIGroupToSector(struct GROUP **pGroup, UINT8 ubSectorID, uint32_t uiMoveCode,
                           UINT8 ubIntention);
 
 // returns the number of reinforcements permitted to be sent.  Will increased if the denied counter
@@ -3710,7 +3710,7 @@ void SendReinforcementsForPatrol(INT32 iPatrolID, struct GROUP **pOptionalGroup)
 void EvaluateQueenSituation() {
   INT32 i, iRandom;
   INT32 iWeight;
-  UINT32 uiOffset;
+  uint32_t uiOffset;
   UINT16 usDefencePoints;
   INT32 iSumOfAllWeights = 0;
 
@@ -3821,7 +3821,7 @@ BOOLEAN SaveStrategicAI(HWFILE hFile) {
   GARRISON_GROUP gTempGarrisonGroup;
   PATROL_GROUP gTempPatrolGroup;
   ARMY_COMPOSITION gTempArmyComp;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   INT32 i;
 
   memset(&gTempPatrolGroup, 0, sizeof(PATROL_GROUP));
@@ -3898,12 +3898,12 @@ BOOLEAN SaveStrategicAI(HWFILE hFile) {
   }
 
   FileMan_Write(hFile, gubPatrolReinforcementsDenied, giPatrolArraySize, &uiNumBytesWritten);
-  if (uiNumBytesWritten != (UINT32)giPatrolArraySize) {
+  if (uiNumBytesWritten != (uint32_t)giPatrolArraySize) {
     return FALSE;
   }
 
   FileMan_Write(hFile, gubGarrisonReinforcementsDenied, giGarrisonArraySize, &uiNumBytesWritten);
-  if (uiNumBytesWritten != (UINT32)giGarrisonArraySize) {
+  if (uiNumBytesWritten != (uint32_t)giGarrisonArraySize) {
     return FALSE;
   }
 
@@ -3919,7 +3919,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   GARRISON_GROUP gTempGarrisonGroup;
   PATROL_GROUP gTempPatrolGroup;
   ARMY_COMPOSITION gTempArmyComp;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   INT32 i;
   UINT8 ubSAIVersion;
 
@@ -4013,7 +4013,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   }
   gubPatrolReinforcementsDenied = (UINT8 *)MemAlloc(giPatrolArraySize);
   FileMan_Read(hFile, gubPatrolReinforcementsDenied, giPatrolArraySize, &uiNumBytesRead);
-  if (uiNumBytesRead != (UINT32)giPatrolArraySize) {
+  if (uiNumBytesRead != (uint32_t)giPatrolArraySize) {
     return FALSE;
   }
 
@@ -4024,7 +4024,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   }
   gubGarrisonReinforcementsDenied = (UINT8 *)MemAlloc(giGarrisonArraySize);
   FileMan_Read(hFile, gubGarrisonReinforcementsDenied, giGarrisonArraySize, &uiNumBytesRead);
-  if (uiNumBytesRead != (UINT32)giGarrisonArraySize) {
+  if (uiNumBytesRead != (uint32_t)giGarrisonArraySize) {
     return FALSE;
   }
 
@@ -5501,7 +5501,7 @@ void RemoveSoldiersFromGarrisonBasedOnComposition(INT32 iGarrisonID, UINT8 ubSiz
   RecalculateGarrisonWeight(iGarrisonID);
 }
 
-void MoveSAIGroupToSector(struct GROUP **pGroup, UINT8 ubSectorID, UINT32 uiMoveCode,
+void MoveSAIGroupToSector(struct GROUP **pGroup, UINT8 ubSectorID, uint32_t uiMoveCode,
                           UINT8 ubIntention) {
   UINT8 ubDstSectorX, ubDstSectorY;
 

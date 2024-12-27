@@ -88,7 +88,7 @@ void MoveCharacterOnPath( struct SOLDIERTYPE *pCharacter );
 void MoveTeamOnFoot( void );
 
 // get the final eta of this path to the last sector in it's list
-UINT32 GetEtaGivenRoute( struct path* pPath );
+uint32_t GetEtaGivenRoute( struct path* pPath );
 */
 
 // rebuild way points for strategic mapscreen path changes

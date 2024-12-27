@@ -74,7 +74,7 @@ typedef struct {
       struct VObject *hVObject;
       UINT16 usStart;
       UINT16 usEnd;
-      UINT32 uiObjIndx;
+      uint32_t uiObjIndx;
     };
     struct {
       UINT16 *pString;
@@ -89,13 +89,13 @@ typedef struct _DisplayList {
   INT16 iY;
   INT16 iWidth;
   INT16 iHeight;
-  UINT32 uiObjIndx;
+  uint32_t uiObjIndx;
   BOOLEAN fChosen;
   struct _DisplayList *pNext;
 } DisplayList;
 
 typedef struct _Selections {
-  UINT32 uiObject;
+  uint32_t uiObject;
   UINT16 usIndex;
   INT16 sCount;
 } Selections;

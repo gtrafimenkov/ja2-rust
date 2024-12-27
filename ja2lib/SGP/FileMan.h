@@ -5,7 +5,7 @@
 
 // This is a handle to an open file.
 // The file can be a regular file on a disk, or a file from an slf archive.
-typedef UINT32 HWFILE;
+typedef uint32_t HWFILE;
 
 #define FILE_ACCESS_READ 0x01
 #define FILE_ACCESS_WRITE 0x02
@@ -27,21 +27,22 @@ extern void FileMan_Shutdown(void);
 extern BOOLEAN FileMan_Exists(STR strFilename);
 extern BOOLEAN FileMan_ExistsNoDB(STR strFilename);
 extern BOOLEAN FileMan_Delete(STR strFilename);
-extern HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose);
+extern HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose);
 extern void FileMan_Close(HWFILE);
 
-extern BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead);
-extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
-                             UINT32 *puiBytesWritten);
+extern BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
+                            uint32_t *puiBytesRead);
+extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
+                             uint32_t *puiBytesWritten);
 
-extern BOOLEAN FileMan_Seek(HWFILE, UINT32 uiDistance, UINT8 uiHow);
+extern BOOLEAN FileMan_Seek(HWFILE, uint32_t uiDistance, UINT8 uiHow);
 extern INT32 FileMan_GetPos(HWFILE);
 
 // returns true if at end of file, else false
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile);
 
-extern UINT32 FileMan_GetSize(HWFILE);
-extern UINT32 FileMan_Size(STR strFilename);
+extern uint32_t FileMan_GetSize(HWFILE);
+extern uint32_t FileMan_Size(STR strFilename);
 
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime);
 

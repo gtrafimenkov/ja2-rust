@@ -15,7 +15,7 @@ BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage);
 BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
   HWFILE hFile;
   STCIHeader Header;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   image_type TempImage;
 
   // Check that hImage is valid, and that the file in question exists
@@ -72,7 +72,7 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
 }
 
 BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader) {
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
       !(fContents & IMAGE_ALLIMAGEDATA)) {  // RGB doesn't have a palette!
@@ -134,8 +134,8 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *p
 }
 
 BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader) {
-  UINT32 uiFileSectionSize;
-  UINT32 uiBytesRead;
+  uint32_t uiFileSectionSize;
+  uint32_t uiBytesRead;
   PTR pSTCIPalette;
 
   if (fContents & IMAGE_PALETTE) {  // Allocate memory for reading in the palette
@@ -313,7 +313,7 @@ BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage) {
 BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
   HWFILE hFile;
   STCIHeader Header;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
 
   CHECKF(FileMan_Exists(ImageFile));
 

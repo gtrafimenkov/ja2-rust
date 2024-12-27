@@ -83,10 +83,10 @@ UINT8 gubProgNumEnemies = 0;
 UINT8 gubProgCurEnemy = 0;
 
 typedef struct {
-  UINT32 uiSurface;
+  uint32_t uiSurface;
   INT8 bCurrentMessage;
-  UINT32 uiTimeOfLastUpdate;
-  UINT32 uiTimeSinceLastBeep;
+  uint32_t uiTimeOfLastUpdate;
+  uint32_t uiTimeSinceLastBeep;
   INT8 bAnimate;
   INT8 bYPos;
   BOOLEAN fCreated;
@@ -98,7 +98,7 @@ typedef struct {
 TOP_MESSAGE gTopMessage;
 BOOLEAN gfTopMessageDirty = FALSE;
 
-void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString);
+void CreateTopMessage(uint32_t uiSurface, UINT8 ubType, CHAR16 *psString);
 extern UINT16 GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
                                          UINT16 usAnimState);
 
@@ -114,10 +114,10 @@ MercPopUpBox gpOverrideMercBox;
 INT32 giUIMessageOverlay = -1;
 UINT16 gusUIMessageWidth, gusUIMessageHeight;
 MercPopUpBox gpUIMessageOverrideMercBox;
-UINT32 guiUIMessageTime = 0;
+uint32_t guiUIMessageTime = 0;
 INT32 iOverlayMessageBox = -1;
 INT32 iUIMessageBox = -1;
-UINT32 guiUIMessageTimeDelay = 0;
+uint32_t guiUIMessageTimeDelay = 0;
 BOOLEAN gfUseSkullIconMessage = FALSE;
 
 // Overlay callback
@@ -191,24 +191,24 @@ enum {
 INT32 iActionIcons[NUM_ICONS];
 
 // GLOBAL INTERFACE SURFACES
-UINT32 guiINTEXT;
-UINT32 guiCLOSE;
-UINT32 guiDEAD;
-UINT32 guiHATCH;
-UINT32 guiGUNSM;
-UINT32 guiP1ITEMS;
-UINT32 guiP2ITEMS;
-UINT32 guiP3ITEMS;
-UINT32 guiBUTTONBORDER;
-UINT32 guiRADIO;
-UINT32 guiRADIO2;
-UINT32 guiCOMPANEL;
-UINT32 guiCOMPANELB;
-UINT32 guiAIMCUBES;
-UINT32 guiAIMBARS;
-UINT32 guiVEHINV;
-UINT32 guiBURSTACCUM;
-UINT32 guiITEMPOINTERHATCHES;
+uint32_t guiINTEXT;
+uint32_t guiCLOSE;
+uint32_t guiDEAD;
+uint32_t guiHATCH;
+uint32_t guiGUNSM;
+uint32_t guiP1ITEMS;
+uint32_t guiP2ITEMS;
+uint32_t guiP3ITEMS;
+uint32_t guiBUTTONBORDER;
+uint32_t guiRADIO;
+uint32_t guiRADIO2;
+uint32_t guiCOMPANEL;
+uint32_t guiCOMPANELB;
+uint32_t guiAIMCUBES;
+uint32_t guiAIMBARS;
+uint32_t guiVEHINV;
+uint32_t guiBURSTACCUM;
+uint32_t guiITEMPOINTERHATCHES;
 
 // UI Globals
 struct MOUSE_REGION gViewportRegion;
@@ -219,8 +219,8 @@ UINT16 gsUpArrowY;
 UINT16 gsDownArrowX;
 UINT16 gsDownArrowY;
 
-UINT32 giUpArrowRect;
-UINT32 giDownArrowRect;
+uint32_t giUpArrowRect;
+uint32_t giDownArrowRect;
 
 void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                      INT16 sHeight);
@@ -238,7 +238,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason);
 void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-UINT32 CalcUIMessageDuration(STR16 wString);
+uint32_t CalcUIMessageDuration(STR16 wString);
 
 BOOLEAN InitializeTacticalInterface() {
   VSURFACE_DESC vs_desc;
@@ -555,7 +555,7 @@ void BtnPositionCallback(GUI_BUTTON *btn, INT32 reason) {}
 void PopupMovementMenu(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iMenuAnchorX, iMenuAnchorY;
-  UINT32 uiActionImages;
+  uint32_t uiActionImages;
   CHAR16 zActionString[50];
   BOOLEAN fDisableAction = FALSE;
 
@@ -917,7 +917,7 @@ void BtnMovementCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void HandleUpDownArrowBackgrounds() {
-  static UINT32 uiOldShowUpDownArrows = ARROWS_HIDE_UP | ARROWS_HIDE_DOWN;
+  static uint32_t uiOldShowUpDownArrows = ARROWS_HIDE_UP | ARROWS_HIDE_DOWN;
 
   // Check for change in mode
   if (guiShowUPDownArrows != uiOldShowUpDownArrows || gfUIRefreshArrows) {
@@ -1551,7 +1551,7 @@ void RenderOverlayMessage(VIDEO_OVERLAY *pBlitter) {
                    pBlitter->sY + gusOverlayPopupBoxHeight);
 }
 
-void BeginOverlayMessage(UINT32 uiFont, CHAR16 *pFontString, ...) {
+void BeginOverlayMessage(uint32_t uiFont, CHAR16 *pFontString, ...) {
   va_list argptr;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t SlideString[512];
@@ -1603,7 +1603,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   FLOAT dWidth, dPercentage;
   // UINT16 usLineColor;
 
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
   INT8 bBandage;
@@ -1729,7 +1729,7 @@ void RestoreInterface() {
 
 void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
 
   BltVideoSurface(pBlitter->uiDestBuff, guiINTEXT, 0, pBlitter->pBackground->sLeft,
                   pBlitter->pBackground->sTop, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
@@ -2401,7 +2401,7 @@ void BeginMapUIMessage(UINT8 ubPosition, CHAR16 *pFontString, ...) {
 }
 
 void EndUIMessage() {
-  UINT32 uiClock = GetJA2Clock();
+  uint32_t uiClock = GetJA2Clock();
 
   if (giUIMessageOverlay != -1) {
     if (gfUseSkullIconMessage) {
@@ -2435,7 +2435,7 @@ void EndUIMessage() {
 #define PLAYER_TEAM_TIMER_TICKS_PER_ENEMY (2000 / PLAYER_TEAM_TIMER_SEC_PER_TICKS)
 
 BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString) {
-  UINT32 cnt;
+  uint32_t cnt;
   BOOLEAN fFound = FALSE;
 
   // Set time of last update
@@ -2469,13 +2469,13 @@ BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString) {
   return (FALSE);
 }
 
-void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
-  UINT32 uiBAR, uiPLAYERBAR, uiINTBAR;
+void CreateTopMessage(uint32_t uiSurface, UINT8 ubType, CHAR16 *psString) {
+  uint32_t uiBAR, uiPLAYERBAR, uiINTBAR;
   VOBJECT_DESC VObjectDesc;
   INT16 sX, sY;
   INT32 cnt2;
   INT16 sBarX = 0;
-  UINT32 uiBarToUseInUpDate = 0;
+  uint32_t uiBarToUseInUpDate = 0;
   BOOLEAN fDoLimitBar = FALSE;
 
   FLOAT dNumStepsPerEnemy, dLength, dCurSize;
@@ -2696,7 +2696,7 @@ void CheckForAndHandleEndPlayerTimeLimit() {
 }
 
 void HandleTopMessages() {
-  // UINT32		uiTime;
+  // uint32_t		uiTime;
   blt_vs_fx BltFx;
 
   // OK, is out current count > 0 ?
@@ -3270,13 +3270,13 @@ void ResetPhysicsTrajectoryUI() {
 
 void DirtyTopMessage() { gTopMessage.fCreated = FALSE; }
 
-UINT32 CalcUIMessageDuration(STR16 wString) {
+uint32_t CalcUIMessageDuration(STR16 wString) {
   // base + X per letter
   return (1000 + 50 * wcslen(wString));
 }
 
 BOOLEAN gfMultipurposeLocatorOn = FALSE;
-UINT32 guiMultiPurposeLocatorLastUpdate;
+uint32_t guiMultiPurposeLocatorLastUpdate;
 INT8 gbMultiPurposeLocatorFrame;
 INT16 gsMultiPurposeLocatorGridNo;
 INT8 gbMultiPurposeLocatorLevel;
@@ -3307,7 +3307,7 @@ void BeginMultiPurposeLocator(INT16 sGridNo, INT8 bLevel, BOOLEAN fSlideTo) {
 }
 
 void HandleMultiPurposeLocator() {
-  UINT32 uiClock;
+  uint32_t uiClock;
 
   if (!gfMultipurposeLocatorOn) {
     return;

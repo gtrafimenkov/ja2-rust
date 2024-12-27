@@ -547,7 +547,7 @@ extern void EndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);
 extern void InternalStartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
 extern void InternalEndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
 
-extern void CheckForQuests(UINT32 uiDay);
+extern void CheckForQuests(uint32_t uiDay);
 
 void InitQuestEngine();
 

@@ -26,7 +26,7 @@
 #define STEEL_SLIDER_HEIGHT 25
 
 typedef struct TAG_SLIDER {
-  UINT32 uiSliderID;
+  uint32_t uiSliderID;
 
   UINT8 ubStyle;
   UINT16 usPosX;
@@ -42,12 +42,12 @@ typedef struct TAG_SLIDER {
 
   struct MOUSE_REGION ScrollAreaMouseRegion;
 
-  UINT32 uiSliderBoxImage;
+  uint32_t uiSliderBoxImage;
   UINT16 usCurrentSliderBoxPosition;
 
   SGPRect LastRect;
 
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
   UINT8 ubSliderWidth;
   UINT8 ubSliderHeight;
@@ -66,7 +66,7 @@ typedef struct TAG_SLIDER {
 ///////////////////////////////////////////////////
 
 SLIDER *pSliderHead = NULL;
-UINT32 guiCurrentSliderID = 1;
+uint32_t guiCurrentSliderID = 1;
 
 BOOLEAN gfSliderInited = FALSE;
 
@@ -74,7 +74,7 @@ BOOLEAN gfCurrentSliderIsAnchored =
     FALSE;  // if true, the current selected slider mouse button is down
 SLIDER *gpCurrentSlider = NULL;
 
-UINT32 guiSliderBoxImage = 0;
+uint32_t guiSliderBoxImage = 0;
 // ggg
 
 // Mouse regions for the currently selected save game
@@ -91,9 +91,9 @@ void OptDisplayLine(UINT16 usStartX, UINT16 usStartY, UINT16 EndX, UINT16 EndY, 
 
 void RenderSelectedSliderBar(SLIDER *pSlider);
 void CalculateNewSliderBoxPosition(SLIDER *pSlider);
-SLIDER *GetSliderFromID(UINT32 uiSliderID);
+SLIDER *GetSliderFromID(uint32_t uiSliderID);
 void RenderSliderBox(SLIDER *pSlider);
-void CalculateNewSliderIncrement(UINT32 uiSliderID, UINT16 usPosX);
+void CalculateNewSliderIncrement(uint32_t uiSliderID, UINT16 usPosX);
 
 // ppp
 
@@ -139,7 +139,7 @@ void ShutDownSlider() {
 
 INT32 AddSlider(UINT8 ubStyle, UINT16 usCursor, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
                 UINT16 usNumberOfIncrements, INT8 sPriority,
-                SLIDER_CHANGE_CALLBACK SliderChangeCallback, UINT32 uiFlags) {
+                SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags) {
   SLIDER *pTemp = NULL;
   SLIDER *pNewSlider = NULL;
 
@@ -358,10 +358,10 @@ void RenderSliderBox(SLIDER *pSlider) {
   }
 }
 
-void RemoveSliderBar(UINT32 uiSliderID) {
+void RemoveSliderBar(uint32_t uiSliderID) {
   SLIDER *pTemp = NULL;
   SLIDER *pNodeToRemove = NULL;
-  //	UINT32	cnt;
+  //	uint32_t	cnt;
 
   pTemp = pSliderHead;
 
@@ -396,7 +396,7 @@ void RemoveSliderBar(UINT32 uiSliderID) {
 }
 
 void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
-  UINT32 uiSelectedSlider;
+  uint32_t uiSelectedSlider;
   SLIDER *pSlider = NULL;
 
   // if we already have an anchored slider bar
@@ -461,7 +461,7 @@ void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) 
 }
 
 void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiSelectedSlider;
+  uint32_t uiSelectedSlider;
   SLIDER *pSlider = NULL;
 
   // if we already have an anchored slider bar
@@ -510,7 +510,7 @@ void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void CalculateNewSliderIncrement(UINT32 uiSliderID, UINT16 usPos) {
+void CalculateNewSliderIncrement(uint32_t uiSliderID, UINT16 usPos) {
   FLOAT dNewIncrement = 0.0;
   SLIDER *pSlider;
   UINT16 usOldIncrement;
@@ -556,7 +556,7 @@ void CalculateNewSliderIncrement(UINT32 uiSliderID, UINT16 usPos) {
 }
 
 void OptDisplayLine(UINT16 usStartX, UINT16 usStartY, UINT16 EndX, UINT16 EndY, INT16 iColor) {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
@@ -613,7 +613,7 @@ void CalculateNewSliderBoxPosition(SLIDER *pSlider) {
   }
 }
 
-SLIDER *GetSliderFromID(UINT32 uiSliderID) {
+SLIDER *GetSliderFromID(uint32_t uiSliderID) {
   SLIDER *pTemp = NULL;
 
   pTemp = pSliderHead;
@@ -629,7 +629,7 @@ SLIDER *GetSliderFromID(UINT32 uiSliderID) {
   return (pTemp);
 }
 
-void SetSliderValue(UINT32 uiSliderID, UINT32 uiNewValue) {
+void SetSliderValue(uint32_t uiSliderID, uint32_t uiNewValue) {
   SLIDER *pSlider = NULL;
 
   pSlider = GetSliderFromID(uiSliderID);

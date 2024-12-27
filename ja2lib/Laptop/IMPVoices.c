@@ -25,7 +25,7 @@ INT32 iLastVoice = 2;
 
 // INT32 iVoiceId = 0;
 
-UINT32 uiVocVoiceSound = 0;
+uint32_t uiVocVoiceSound = 0;
 // buttons needed for the IMP Voices screen
 INT32 giIMPVoicesButton[3];
 INT32 giIMPVoicesButtonImage[3];
@@ -298,7 +298,7 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-UINT32 PlayVoice(void) {
+uint32_t PlayVoice(void) {
   //	CHAR16 sString[ 64 ];
 
   // gender?

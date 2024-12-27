@@ -21,7 +21,7 @@ void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFil
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   HWFILE hFileHandle;
   BYTE bColHeader[8];
-  UINT32 cnt;
+  uint32_t cnt;
 
   // See if files exists, if not, return error
   if (!FileMan_Exists(ColFile)) {
@@ -53,9 +53,10 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
   return (TRUE);
 }
 
-BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT32 uiDestSurface) {
+BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos,
+                          uint32_t uiDestSurface) {
   UINT16 us16BPPColor;
-  UINT32 cnt1;
+  uint32_t cnt1;
   UINT8 ubSize;
   INT16 sTLX, sTLY, sBRX, sBRY;
   UINT8 ubPaletteRep;
@@ -86,7 +87,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
 }
 
 BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, UINT16 usWidth, INT32 uiFont) {
-  UINT32 Cur, uiLet, uiNewLet, uiHyphenLet;
+  uint32_t Cur, uiLet, uiNewLet, uiHyphenLet;
   CHAR16 *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;
   struct VObject *hFont;

@@ -77,7 +77,7 @@ typedef struct trail_s trail_t;
 // #define NOPASS (TRAVELCOST_OBSTACLE)
 // #define VEINCOST TRAVELCOST_FLAT     //actual cost for bridges and doors and such
 // #define ISVEIN(v) ((v==TRAVELCOST_VEINMID) || (v==TRAVELCOST_VEINEND))
-#define TRAILCELLTYPE UINT32
+#define TRAILCELLTYPE uint32_t
 
 static path_t pathQB[MAXpathQ];
 static TRAILCELLTYPE trailCostB[MAP_LENGTH];
@@ -467,7 +467,7 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
       if (!pNode) return NULL;
       while (pNode->pNext) pNode = pNode->pNext;
       // start backing up
-      while (pNode->uiSectorId != (UINT32)iStartSectorNum) {
+      while (pNode->uiSectorId != (uint32_t)iStartSectorNum) {
         pDeleteNode = pNode;
         pNode = pNode->pPrev;
         pNode->pNext = NULL;
@@ -1108,7 +1108,7 @@ INT32 GetStrategicMvtSpeed(struct SOLDIERTYPE* pCharacter) {
 void CalculateEtaForCharacterPath( struct SOLDIERTYPE *pCharacter )
 {
         struct path* pNode = NULL;
-        UINT32 uiDeltaEta =0;
+        uint32_t uiDeltaEta =0;
         INT32 iMveDelta = 0;
         BOOLEAN fInVehicle;
 
@@ -1287,7 +1287,7 @@ void MoveTeamOnFoot( void )
 */
 
 /*
-UINT32 GetEtaGivenRoute( struct path* pPath )
+uint32_t GetEtaGivenRoute( struct path* pPath )
 {
         // will return the eta of a passed path in global time units, in minutes
         struct path* pNode = pPath;
@@ -1434,7 +1434,7 @@ void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup) {
   // at this point, the final sector in the path must be identical to this group's last waypoint
   wp = GetFinalWaypoint(pGroup);
   AssertMsg(wp, "Path exists, but no waypoints were added!  AM-0");
-  AssertMsg(pNode->uiSectorId == (UINT32)GetSectorID16(wp->x, wp->y),
+  AssertMsg(pNode->uiSectorId == (uint32_t)GetSectorID16(wp->x, wp->y),
             "Last waypoint differs from final path sector!  AM-0");
 
   // see if we've already reached the first sector in the path (we never actually left the sector

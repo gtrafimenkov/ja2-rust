@@ -50,7 +50,7 @@ INT32 giMessageId = -1;
 INT32 giPrevMessageId = -1;
 INT32 giMessagePage = -1;
 INT32 giNumberOfPagesToCurrentEmail = -1;
-UINT32 guiEmailWarning;
+uint32_t guiEmailWarning;
 
 #define EMAIL_TOP_BAR_HEIGHT 22
 
@@ -227,12 +227,12 @@ struct MOUSE_REGION pSortMailRegions[3];
 RecordPtr pMessageRecordList = NULL;
 
 // video handles
-UINT32 guiEmailTitle;
-UINT32 guiEmailStamp;
-UINT32 guiEmailBackground;
-UINT32 guiEmailIndicator;
-UINT32 guiEmailMessage;
-UINT32 guiMAILDIVIDER;
+uint32_t guiEmailTitle;
+uint32_t guiEmailStamp;
+uint32_t guiEmailBackground;
+uint32_t guiEmailIndicator;
+uint32_t guiEmailMessage;
+uint32_t guiMAILDIVIDER;
 
 // the enumeration of headers
 enum {
@@ -603,7 +603,7 @@ void RenderEmail(void) {
 }
 
 void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
-                             INT32 iDate, INT32 iFirstData, UINT32 uiSecondData) {
+                             INT32 iDate, INT32 iFirstData, uint32_t uiSecondData) {
   wchar_t pSubject[320];
   Email FakeEmail;
 
@@ -670,7 +670,8 @@ void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
 }
 
 void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject, INT32 iDate,
-                     UINT8 ubSender, BOOLEAN fAlreadyRead, INT32 iFirstData, UINT32 uiSecondData) {
+                     UINT8 ubSender, BOOLEAN fAlreadyRead, INT32 iFirstData,
+                     uint32_t uiSecondData) {
   // will add a message to the list of messages
   EmailPtr pEmail = pEmailList;
   EmailPtr pTempEmail = NULL;
@@ -4114,7 +4115,7 @@ void OpenMostRecentUnreadEmail(void) {
   // will open the most recent email the player has recieved and not read
   INT32 iMostRecentMailId = -1;
   EmailPtr pB = pEmailList;
-  UINT32 iLowestDate = 9999999;
+  uint32_t iLowestDate = 9999999;
 
   while (pB) {
     // if date is lesser and unread , swap
@@ -4548,8 +4549,8 @@ BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr
 
 #ifdef JA2BETAVERSION
 void AddAllEmails() {
-  UINT32 uiCnt;
-  UINT32 uiOffset;
+  uint32_t uiCnt;
+  uint32_t uiOffset;
 
   AddEmail(IMP_EMAIL_INTRO, IMP_EMAIL_INTRO_LENGTH, CHAR_PROFILE_SITE, GetWorldTotalMin());
   AddEmail(ENRICO_CONGRATS, ENRICO_CONGRATS_LENGTH, MAIL_ENRICO, GetWorldTotalMin());

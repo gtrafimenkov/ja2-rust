@@ -263,17 +263,17 @@ enum {
   MAP_SHADE_DK_RED,
 };
 // the big map .pcx
-UINT32 guiBIGMAP;
+uint32_t guiBIGMAP;
 
 // orta .sti icon
-UINT32 guiORTAICON;
-UINT32 guiTIXAICON;
+uint32_t guiORTAICON;
+uint32_t guiTIXAICON;
 
 // boxes for characters on the map
-UINT32 guiCHARICONS;
+uint32_t guiCHARICONS;
 
 // the merc arrival sector landing zone icon
-UINT32 guiBULLSEYE;
+uint32_t guiBULLSEYE;
 
 // the max allowable towns militia in a sector
 #define MAP_MILITIA_MAP_X 4
@@ -331,11 +331,11 @@ extern MINE_LOCATION_TYPE gMineLocation[];
 extern MINE_STATUS_TYPE gMineStatus[];
 
 // sublevel graphics
-UINT32 guiSubLevel1, guiSubLevel2, guiSubLevel3;
+uint32_t guiSubLevel1, guiSubLevel2, guiSubLevel3;
 
 // the between sector icons
-UINT32 guiCHARBETWEENSECTORICONS;
-UINT32 guiCHARBETWEENSECTORICONSCLOSE;
+uint32_t guiCHARBETWEENSECTORICONS;
+uint32_t guiCHARBETWEENSECTORICONSCLOSE;
 
 extern BOOLEAN fMapScreenBottomDirty;
 
@@ -360,10 +360,10 @@ UINT16 *pMapLTGreenPalette;
 UINT16 *pMapDKGreenPalette;
 
 // the map border eta pop up
-UINT32 guiMapBorderEtaPopUp;
+uint32_t guiMapBorderEtaPopUp;
 
 // heli pop up
-UINT32 guiMapBorderHeliSectors;
+uint32_t guiMapBorderHeliSectors;
 
 // list of map sectors that player isn't allowed to even highlight
 BOOLEAN sBadSectorsList[WORLD_MAP_X][WORLD_MAP_X];
@@ -424,7 +424,7 @@ struct path *pTempCharacterPath = NULL;
 BOOLEAN fDrawTempHeliPath = FALSE;
 
 // the map arrows graphics
-UINT32 guiMAPCURSORS;
+uint32_t guiMAPCURSORS;
 
 // destination plotting character
 INT8 bSelectedDestChar = -1;
@@ -443,13 +443,13 @@ struct MOUSE_REGION gMapScreenMilitiaBoxRegions[9];
 struct MOUSE_REGION gMapScreenMilitiaRegion;
 
 // the mine icon
-UINT32 guiMINEICON;
+uint32_t guiMINEICON;
 
 // militia graphics
-UINT32 guiMilitia;
-UINT32 guiMilitiaMaps;
-UINT32 guiMilitiaSectorHighLight;
-UINT32 guiMilitiaSectorOutline;
+uint32_t guiMilitia;
+uint32_t guiMilitiaMaps;
+uint32_t guiMilitiaSectorHighLight;
+uint32_t guiMilitiaSectorOutline;
 
 // the sector that is highlighted on the militia map
 INT16 sSectorMilitiaMapSector = -1;
@@ -662,10 +662,10 @@ void HandleShowingOfEnemiesWithMilitiaOn(void) {
   return;
 }
 
-UINT32 DrawMap(void) {
+uint32_t DrawMap(void) {
   struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
@@ -1150,8 +1150,8 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   struct VSurface *hSrcVSurface;
   // struct VSurface* hSAMSurface;
   // struct VSurface* hMineSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
@@ -1319,8 +1319,8 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
   INT32 iX, iY;
   struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   // UINT8 *pDestBuf2;
   UINT8 *pSrcBuf;
@@ -1489,7 +1489,7 @@ BOOLEAN InitializePalettesForMap(void) {
   struct VSurface *hSrcVSurface;
   struct SGPPaletteEntry pPalette[256];
   VSURFACE_DESC vs_desc;
-  UINT32 uiTempMap;
+  uint32_t uiTempMap;
 
   // load image
   vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
@@ -1602,7 +1602,7 @@ void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, IN
 }
 
 // clear out character path list, after and including this sector
-UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
+uint32_t ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
   INT32 iOrigLength = 0;
   VEHICLETYPE *pVehicle = NULL;
 
@@ -1871,7 +1871,7 @@ void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY) {
 }
 
 // clear out helicopter path list, after and including this sector
-UINT32 ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY) {
+uint32_t ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY) {
   VEHICLETYPE *pVehicle = NULL;
   INT32 iOrigLength = 0;
 
@@ -3373,7 +3373,7 @@ void RestoreClipRegionToFullScreen(void) {
   memcpy(&gDirtyClipRect, &gOldClipRect, sizeof(gDirtyClipRect));
 }
 
-void ClipBlitsToMapViewRegionForRectangleAndABit(UINT32 uiDestPitchBYTES) {
+void ClipBlitsToMapViewRegionForRectangleAndABit(uint32_t uiDestPitchBYTES) {
   // clip blits to map view region
   // because MC's map coordinates system is so screwy, these had to be hand-tuned to work right...
   // ARM
@@ -3390,7 +3390,7 @@ void ClipBlitsToMapViewRegionForRectangleAndABit(UINT32 uiDestPitchBYTES) {
   return;
 }
 
-void RestoreClipRegionToFullScreenForRectangle(UINT32 uiDestPitchBYTES) {
+void RestoreClipRegionToFullScreenForRectangle(uint32_t uiDestPitchBYTES) {
   // clip blits to map view region
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
@@ -3649,7 +3649,7 @@ void DisplayDistancesForHelicopter(void) {
   static INT16 sOldYPosition = 0;
   INT16 sNumSafeSectors;
   INT16 sNumUnSafeSectors;
-  UINT32 uiTripCost;
+  uint32_t uiTripCost;
 
   if (GetMouseMapXY(&sMapX, &sMapY) && !fZoomFlag && (sMapY >= 13)) {
     sYPosition = MAP_HELICOPTER_UPPER_ETA_POPUP_Y;
@@ -3780,7 +3780,7 @@ void DisplayPositionOfHelicopter(void) {
   static INT16 sOldMapX = 0, sOldMapY = 0;
   //	INT16 sX =0, sY = 0;
   FLOAT flRatio = 0.0;
-  UINT32 x, y;
+  uint32_t x, y;
   UINT16 minX, minY, maxX, maxY;
   struct GROUP *pGroup;
   struct VObject *hHandle;
@@ -3867,8 +3867,8 @@ void DisplayPositionOfHelicopter(void) {
                 String("DisplayPositionOfHelicopter: Invalid maxY = %d", maxY));
 
       // IMPORTANT: Since min can easily be larger than max, we gotta cast to as signed value
-      x = (UINT32)(minX + flRatio * ((INT16)maxX - (INT16)minX));
-      y = (UINT32)(minY + flRatio * ((INT16)maxY - (INT16)minY));
+      x = (uint32_t)(minX + flRatio * ((INT16)maxX - (INT16)minX));
+      y = (uint32_t)(minY + flRatio * ((INT16)maxY - (INT16)minY));
 
       /*
                               if( fZoomFlag )
@@ -3926,7 +3926,7 @@ void DisplayDestinationOfHelicopter(void) {
   static INT16 sOldMapX = 0, sOldMapY = 0;
   INT16 sSector;
   INT16 sMapX, sMapY;
-  UINT32 x, y;
+  uint32_t x, y;
   struct VObject *hHandle;
 
   AssertMsg((sOldMapX >= 0) && (sOldMapX < 640),
@@ -4033,7 +4033,7 @@ BOOLEAN CheckForClickOverHelicopterIcon(INT16 sClickedSectorX, INT16 sClickedSec
 
 void BlitMineIcon(INT16 sMapX, INT16 sMapY) {
   struct VObject *hHandle;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   INT16 sScreenX, sScreenY;
 
   GetVideoObject(&hHandle, guiMINEICON);
@@ -4169,7 +4169,7 @@ void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX) {
 
 void BlitTownGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor = 0;
   INT32 iCounter = 0;
@@ -4245,7 +4245,7 @@ void BlitTownGridMarkers(void) {
 
 void BlitMineGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor = 0;
   INT32 iCounter = 0;
@@ -5567,8 +5567,8 @@ void ClearAnySectorsFlashingNumberOfEnemies() {
   MarkForRedrawalStrategicMap();
 }
 
-UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {
-  UINT32 uiSectorFlags = SectorInfo[GetSectorID8(sSectorX, sSectorY)].uiFlags;
+uint32_t WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {
+  uint32_t uiSectorFlags = SectorInfo[GetSectorID8(sSectorX, sSectorY)].uiFlags;
 
   // if player has militia close enough to scout this sector out, if there are mercs who can scout
   // here, OR
@@ -5736,7 +5736,7 @@ void ShowSAMSitesOnStrategicMap(void) {
   INT16 sX = 0, sY = 0;
   struct VObject *hHandle;
   INT8 ubVidObjIndex = 0;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   CHAR16 wString[40];
 
   if (fShowAircraftFlag) {
@@ -5822,7 +5822,7 @@ void ShowSAMSitesOnStrategicMap(void) {
 
 void BlitSAMGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor = 0;
   INT32 iCounter = 0;
@@ -5917,7 +5917,7 @@ void ShowItemsOnMap(void) {
   INT16 sMapX, sMapY;
   INT16 sXCorner, sYCorner;
   INT16 usXPos, usYPos;
-  UINT32 uiItemCnt;
+  uint32_t uiItemCnt;
   CHAR16 sString[10];
 
   // clip blits to mapscreen region
@@ -6009,7 +6009,7 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, 
 }
 
 void DrawOrta() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
@@ -6038,7 +6038,7 @@ void DrawOrta() {
 }
 
 void DrawTixa() {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;

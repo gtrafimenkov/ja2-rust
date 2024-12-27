@@ -92,10 +92,10 @@ void OptimizeSchedules();
 
 void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, UINT16 usMapIndex);
 
-BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, UINT32 *puiEntryTime,
-                                        UINT32 *puiExitTime);
-BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, UINT32 *puiOpeningTime,
-                                             UINT32 *puiClosingTime);
+BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiEntryTime,
+                                        uint32_t *puiExitTime);
+BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiOpeningTime,
+                                             uint32_t *puiClosingTime);
 
 void ReconnectSchedules(void);
 

@@ -33,8 +33,8 @@ void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset);
 #define QTN_SECOND_COLUMN_X 320
 
 void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
-                           INT16 sIMPTextRecordNumber, UINT32 uiFont, UINT8 ubColor,
-                           BOOLEAN fShadow, UINT32 uiFlags) {
+                           INT16 sIMPTextRecordNumber, uint32_t uiFont, UINT8 ubColor,
+                           BOOLEAN fShadow, uint32_t uiFlags) {
   // this procedure will load and display to the screen starting at postion X, Y relative to the
   // start of the laptop screen it will access record sIMPTextRecordNumber and go until all records
   // following it but before the next IMP record are displayed in font uiFont
@@ -47,7 +47,7 @@ void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
 
   // load the string
   LoadEncryptedDataFromFile("BINARYDATA\\IMPText.EDT", sString,
-                            (UINT32)((sIMPTextRecordNumber)*IMP_SEEK_AMOUNT), IMP_SEEK_AMOUNT);
+                            (uint32_t)((sIMPTextRecordNumber)*IMP_SEEK_AMOUNT), IMP_SEEK_AMOUNT);
 
   // null put last char
   sString[wcslen(sString)] = 0;

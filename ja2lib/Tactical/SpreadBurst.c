@@ -118,7 +118,7 @@ void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, INT8 bTargets,
   // OK, they have been added
 }
 
-extern struct VObject *GetCursorFileVideoObject(UINT32 uiCursorFile);
+extern struct VObject *GetCursorFileVideoObject(uint32_t uiCursorFile);
 
 void RenderAccumulatedBurstLocations() {
   INT32 cnt;

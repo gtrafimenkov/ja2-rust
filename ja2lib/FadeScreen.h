@@ -26,10 +26,10 @@ extern INT8 gbFadeType;
 extern FADE_FUNCTION gFadeFunction;
 extern BOOLEAN gfFadeInVideo;
 
-void BeginFade(UINT32 uiExitScreen, INT8 bFadeValue, INT8 bType, UINT32 uiDelay);
+void BeginFade(uint32_t uiExitScreen, INT8 bFadeValue, INT8 bType, uint32_t uiDelay);
 
-BOOLEAN HandleBeginFadeIn(UINT32 uiScreenExit);
-BOOLEAN HandleBeginFadeOut(UINT32 uiScreenExit);
+BOOLEAN HandleBeginFadeIn(uint32_t uiScreenExit);
+BOOLEAN HandleBeginFadeOut(uint32_t uiScreenExit);
 
 BOOLEAN HandleFadeOutCallback();
 BOOLEAN HandleFadeInCallback();

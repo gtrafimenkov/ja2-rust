@@ -148,8 +148,8 @@ UINT8 ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
   UINT16 usRealAnimState, usBestAnimState;
   INT8 bBestStanceDiff = -1;
   INT8 bLoop, bStanceNum, bStanceDiff, bAPsAfterAttack;
-  UINT32 uiChanceOfDamage, uiBestChanceOfDamage, uiCurrChanceOfDamage;
-  UINT32 uiStanceBonus, uiMinimumStanceBonusPerChange = 20 - 3 * pAttack->ubAimTime;
+  uint32_t uiChanceOfDamage, uiBestChanceOfDamage, uiCurrChanceOfDamage;
+  uint32_t uiStanceBonus, uiMinimumStanceBonusPerChange = 20 - 3 * pAttack->ubAimTime;
   INT32 iRange;
 
   bStanceNum = 0;
@@ -482,7 +482,7 @@ BOOLEAN IsActionAffordable(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   UINT16 usMaxDist;
   UINT8 ubFriendCount, ubFriendIDs[MAXMERCS], ubFriendID;
   UINT16 usDirection;
@@ -731,7 +731,7 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
   BOOLEAN fClimbingNecessary, fClosestClimbingNecessary = FALSE;
   INT32 iPathCost;
   INT16 sClosestDisturbance = NOWHERE;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT8 *pbNoiseLevel;
   INT8 *pbPersOL, *pbPublOL;
   INT16 sClimbGridNo;
@@ -896,7 +896,7 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
 
 INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *pbLevel) {
   INT16 sGridNo, sClosestOpponent = NOWHERE;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iRange, iClosestRange = 1500;
   INT8 *pbPersOL, *pbPublOL;
   INT8 bLevel, bClosestLevel;
@@ -988,7 +988,7 @@ INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *
 
 INT16 ClosestSeenOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *pbLevel) {
   INT16 sGridNo, sClosestOpponent = NOWHERE;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT32 iRange, iClosestRange = 1500;
   INT8 *pbPersOL;
   INT8 bLevel, bClosestLevel;
@@ -1288,7 +1288,7 @@ BOOLEAN GuySawEnemyThisTurnOrBefore(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT16 ClosestReachableFriendInTrouble(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfClimbingNecessary) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   INT16 sPathCost, sClosestFriend = NOWHERE, sShortestPath = 1000, sClimbGridNo;
   BOOLEAN fClimbingNecessary, fClosestClimbingNecessary = FALSE;
   struct SOLDIERTYPE *pFriend;
@@ -1529,7 +1529,7 @@ BOOLEAN InLightAtNight(INT16 sGridNo, INT8 bLevel) {
 }
 
 INT8 CalcMorale(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiLoop, uiLoop2;
+  uint32_t uiLoop, uiLoop2;
   INT32 iOurTotalThreat = 0, iTheirTotalThreat = 0;
   INT16 sOppThreatValue, sFrndThreatValue, sMorale;
   INT32 iPercent;

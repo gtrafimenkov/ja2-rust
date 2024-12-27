@@ -57,8 +57,8 @@ extern INT32 giTimerAirRaidUpdate;
 BOOLEAN gfInAirRaid = FALSE;
 BOOLEAN gfAirRaidScheduled = FALSE;
 UINT8 gubAirRaidMode;
-UINT32 guiSoundSample;
-UINT32 guiRaidLastUpdate;
+uint32_t guiSoundSample;
+uint32_t guiRaidLastUpdate;
 BOOLEAN gfFadingRaidIn = FALSE;
 BOOLEAN gfQuoteSaid = FALSE;
 INT8 gbNumDives = 0;
@@ -83,8 +83,8 @@ typedef struct {
   BOOLEAN fInAirRaid;
   BOOLEAN fAirRaidScheduled;
   UINT8 ubAirRaidMode;
-  UINT32 uiSoundSample;
-  UINT32 uiRaidLastUpdate;
+  uint32_t uiSoundSample;
+  uint32_t uiRaidLastUpdate;
   BOOLEAN fFadingRaidIn;
   BOOLEAN fQuoteSaid;
   INT8 bNumDives;
@@ -394,7 +394,7 @@ void AirRaidLookForDive() {
     }
   } else {
     // How many turns have gone by?
-    if ((UINT32)giNumTurnsSinceLastDive > (Random(2) + 1)) {
+    if ((uint32_t)giNumTurnsSinceLastDive > (Random(2) + 1)) {
       fDoDive = TRUE;
     }
   }
@@ -445,7 +445,7 @@ void AirRaidStartEnding() {
 
 void BeginBombing() {
   INT16 sGridNo;
-  UINT32 iSoundStartDelay;
+  uint32_t iSoundStartDelay;
 
   if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
     // Start diving sound...
@@ -488,7 +488,7 @@ void BeginBombing() {
 
 void BeginDive() {
   INT16 sGridNo;
-  UINT32 iSoundStartDelay;
+  uint32_t iSoundStartDelay;
 
   // Start diving sound...
   PlayJA2Sample(S_RAID_DIVE, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
@@ -831,7 +831,7 @@ void DoBombing() {
 
 void HandleAirRaid() {
   INT32 iVol;
-  UINT32 uiClock;
+  uint32_t uiClock;
 
   // OK,
   if (gfInAirRaid) {
@@ -1035,7 +1035,7 @@ BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam) {
 }
 
 BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   AIR_RAID_SAVE_STRUCT sAirRaidSaveStruct;
 
   // Put all the globals into the save struct
@@ -1094,7 +1094,7 @@ BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile) {
 
 BOOLEAN LoadAirRaidInfoFromSaveGameFile(HWFILE hFile) {
   AIR_RAID_SAVE_STRUCT sAirRaidSaveStruct;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Load the number of REAL_OBJECTs in the array
   FileMan_Read(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesRead);

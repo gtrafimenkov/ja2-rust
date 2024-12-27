@@ -240,8 +240,8 @@ BOOLEAN gfDoSubtileScroll = FALSE;
 
 BOOLEAN gfScrollPending = FALSE;
 
-UINT32 uiLayerUsedFlags = 0xffffffff;
-UINT32 uiAdditiveLayerUsedFlags = 0xffffffff;
+uint32_t uiLayerUsedFlags = 0xffffffff;
+uint32_t uiAdditiveLayerUsedFlags = 0xffffffff;
 
 // Array of shade values to use.....
 #define NUM_GLOW_FRAMES 30
@@ -304,7 +304,7 @@ INT16 gsFastGlowFrames[] = {
 // The glow frame pointer can be adjusted to use a faster/ slower glow
 INT16 *gpGlowFramePointer = gsGlowFrames;
 
-UINT32 gScrollDirectionFlags[NUM_WORLD_DIRECTIONS] = {
+uint32_t gScrollDirectionFlags[NUM_WORLD_DIRECTIONS] = {
     SCROLL_UP | SCROLL_RIGHT,  SCROLL_RIGHT, SCROLL_DOWN | SCROLL_RIGHT, SCROLL_DOWN,
     SCROLL_DOWN | SCROLL_LEFT, SCROLL_LEFT,  SCROLL_UP | SCROLL_LEFT,    SCROLL_UP,
 };
@@ -338,7 +338,7 @@ INT16 gsBLX, gsBLY, gsBRX, gsBRY;
 INT16 gsCX, gsCY;
 DOUBLE gdScaleX, gdScaleY;
 
-#define FASTMAPROWCOLTOPOS(r, c) ((r)*WORLD_COLS + (c))
+#define FASTMAPROWCOLTOPOS(r, c) ((r) * WORLD_COLS + (c))
 
 BOOLEAN gfScrollInertia = FALSE;
 
@@ -360,7 +360,7 @@ INT16 gsScrollYIncrement;
 INT32 guiScrollDirection;
 
 // Rendering flags (full, partial, etc.)
-UINT32 gRenderFlags = 0;
+uint32_t gRenderFlags = 0;
 
 SGPRect gClippingRect = {0, 0, 640, 360};
 SGPRect gOldClipRect;
@@ -369,7 +369,7 @@ INT16 gsRenderCenterY;
 INT16 gsRenderWorldOffsetX = -1;
 INT16 gsRenderWorldOffsetY = -1;
 SGPRect gSelectRegion;
-UINT32 fSelectMode = NO_SELECT;
+uint32_t fSelectMode = NO_SELECT;
 SGPPoint gSelectAnchor;
 
 typedef struct {
@@ -432,11 +432,11 @@ UINT8 RenderFXStartIndex[] = {
 // INT16 gsCoordArrayY;
 
 // void SetRenderGlobals( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16
-// sStartPointY_S, INT16 sEndXS, INT16 sEndYS ); void TempRenderTiles(UINT32 uiFlags, INT16
+// sStartPointY_S, INT16 sEndXS, INT16 sEndYS ); void TempRenderTiles(uint32_t uiFlags, INT16
 // sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS,
-// INT16 sEndYS ); void TempRenderTiles(UINT32 uiFlags, INT16 sStartPointX_M, INT16 sStartPointY_M,
-// INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, UINT8 ubNumLevels, UINT32
-// *puiLevels );
+// INT16 sEndYS ); void TempRenderTiles(uint32_t uiFlags, INT16 sStartPointX_M, INT16
+// sStartPointY_M, INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, UINT8
+// ubNumLevels, uint32_t *puiLevels );
 
 void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                                   INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
@@ -444,35 +444,35 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
 // void ReRenderWorld(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
 void ClearMarkedTiles(void);
 void CorrectRenderCenter(INT16 sRenderX, INT16 sRenderY, INT16 *pSNewX, INT16 *pSNewY);
-void ScrollBackground(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement);
+void ScrollBackground(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement);
 
 void CalcRenderParameters(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
 void ResetRenderParameters();
 
-BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex);
 
-BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                           UINT16 *pZBuffer, UINT16 usZValue,
                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                           UINT16 usIndex);
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                                          UINT16 *pZBuffer, UINT16 usZValue,
                                                          struct VObject *hSrcVObject, INT32 iX,
                                                          INT32 iY, UINT16 usIndex,
                                                          SGPRect *clipregion, INT16 sZIndex,
                                                          UINT16 *p16BPPPalette);
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                                      UINT16 *pZBuffer, UINT16 usZValue,
                                                      struct VObject *hSrcVObject, INT32 iX,
                                                      INT32 iY, UINT16 usIndex, SGPRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
-    UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
+    UINT16 *pBuffer, uint32_t uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion,
     INT16 sZIndex, UINT16 *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
-    UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
+    UINT16 *pBuffer, uint32_t uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion);
 
 void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
@@ -498,7 +498,7 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
 
 #endif
 
-void DeleteFromWorld(UINT16 usTileIndex, UINT32 uiRenderTiles, UINT16 usIndex);
+void DeleteFromWorld(UINT16 usTileIndex, uint32_t uiRenderTiles, UINT16 usIndex);
 
 void RenderHighlight(INT16 sMouseX_M, INT16 sMouseY_M, INT16 sStartPointX_M, INT16 sStartPointY_M,
                      INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
@@ -507,7 +507,7 @@ BOOLEAN CheckRenderCenter(INT16 sNewCenterX, INT16 sNewCenterY);
 BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
   struct LEVELNODE *pStruct;
   INT16 sCountX, sCountY;
-  UINT32 uiTile;
+  uint32_t uiTile;
   TILE_ELEMENT *TileElem;
 
   for (sCountY = sY - sRadius; sCountY < (sY + sRadius + 2); sCountY++)
@@ -545,7 +545,7 @@ BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
 BOOLEAN ConcealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
   struct LEVELNODE *pStruct;
   INT16 sCountX, sCountY;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fRerender = FALSE;
   TILE_ELEMENT *TileElem;
 
@@ -590,7 +590,7 @@ BOOLEAN ConcealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
 
 void ConcealAllWalls(void) {
   struct LEVELNODE *pStruct;
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < WORLD_MAX; uiCount++) {
     pStruct = gpWorldLevelData[uiCount].pStructHead;
@@ -606,15 +606,15 @@ void ResetLayerOptimizing(void) {
   uiAdditiveLayerUsedFlags = 0;
 }
 
-void ResetSpecificLayerOptimizing(UINT32 uiRowFlag) { uiLayerUsedFlags |= uiRowFlag; }
+void ResetSpecificLayerOptimizing(uint32_t uiRowFlag) { uiLayerUsedFlags |= uiRowFlag; }
 
 void SumAddiviveLayerOptimization(void) { uiLayerUsedFlags = uiAdditiveLayerUsedFlags; }
 
-void SetRenderFlags(UINT32 uiFlags) { gRenderFlags |= uiFlags; }
+void SetRenderFlags(uint32_t uiFlags) { gRenderFlags |= uiFlags; }
 
-void ClearRenderFlags(UINT32 uiFlags) { gRenderFlags &= (~uiFlags); }
+void ClearRenderFlags(uint32_t uiFlags) { gRenderFlags &= (~uiFlags); }
 
-UINT32 GetRenderFlags(void) { return (gRenderFlags); }
+uint32_t GetRenderFlags(void) { return (gRenderFlags); }
 
 void RenderSetShadows(BOOLEAN fShadows) {
   if (fShadows)
@@ -623,9 +623,9 @@ void RenderSetShadows(BOOLEAN fShadows) {
     gRenderFlags &= (~RENDER_FLAG_SHADOWS);
 }
 
-void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT32 iStartPointX_S,
+void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT32 iStartPointX_S,
                  INT32 iStartPointY_S, INT32 iEndXS, INT32 iEndYS, UINT8 ubNumLevels,
-                 UINT32 *puiLevels, UINT16 *psLevelIDs) {
+                 uint32_t *puiLevels, UINT16 *psLevelIDs) {
   // #if 0
 
   struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
@@ -633,7 +633,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   struct VObject *hVObject;
   ETRLEObject *pTrav;
   TILE_ELEMENT *TileElem = NULL;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf = NULL;
   UINT16 usAnimSurface;
   INT8 bXOddFlag = 0;
@@ -643,9 +643,9 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   INT32 iTempPosX_S, iTempPosY_S;
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
-  UINT32 uiTileIndex;
+  uint32_t uiTileIndex;
   UINT16 usImageIndex, *pShadeTable, *pDirtyBackPtr;
-  UINT32 uiBrushWidth, uiBrushHeight, uiDirtyFlags;
+  uint32_t uiBrushWidth, uiBrushHeight, uiDirtyFlags;
   INT16 sTileHeight, sXPos, sYPos, sZLevel;
   INT16 sMouseX_M, sMouseY_M;
   BOOLEAN fShadowBlitter = FALSE;
@@ -655,7 +655,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   BOOLEAN fRenderTile = TRUE;
   BOOLEAN fMerc = FALSE;
   BOOLEAN fCheckForRedundency = FALSE;
-  UINT32 uiRowFlags;
+  uint32_t uiRowFlags;
   BOOLEAN fDynamic = TRUE;
   BOOLEAN fEndRenderRow = FALSE;
   BOOLEAN fEndRenderCol = FALSE;
@@ -669,13 +669,13 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   BOOLEAN fTileInvisible = FALSE;
   BOOLEAN fConvertTo16 = FALSE;
   BOOLEAN fBlit16 = FALSE;
-  UINT32 cnt;
+  uint32_t cnt;
   static UINT8 ubLevelNodeStartIndex[NUM_RENDER_FX_TYPES];
   BOOLEAN bItemOutline;
   UINT16 usOutlineColor = 0;
 
   static INT32 iTileMapPos[500];
-  UINT32 uiMapPosIndex;
+  uint32_t uiMapPosIndex;
   UINT8 bBlitClipVal;
   INT8 bItemCount, bVisibleItemCount;
   // UINT16			us16BPPIndex;
@@ -690,8 +690,8 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   INT16 gsForceSoldierZLevel;
   ROTTING_CORPSE *pCorpse = NULL;
   BOOLEAN fUseTileElem;
-  UINT32 uiLevelNodeFlags;
-  UINT32 uiTileElemFlags = 0;
+  uint32_t uiLevelNodeFlags;
+  uint32_t uiTileElemFlags = 0;
   INT8 bGlowShadeOffset;
   BOOLEAN fObscured;
   BOOLEAN fObscuredBlitter;
@@ -699,11 +699,11 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   BOOLEAN fDoRow;
   UINT16 **pShadeStart;
 
-  UINT32 uiSaveBufferPitchBYTES;
+  uint32_t uiSaveBufferPitchBYTES;
   UINT8 *pSaveBuf;
   struct ITEM_POOL *pItemPool = NULL;
   BOOLEAN fHiddenTile = FALSE;
-  UINT32 uiAniTileFlags = 0;
+  uint32_t uiAniTileFlags = 0;
 
   // Init some variables
   usImageIndex = 0;
@@ -1670,8 +1670,8 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 } else if (uiFlags & TILES_DIRTY) {
                   if (!(uiLevelNodeFlags & LEVELNODE_LASTDYNAMIC)) {
                     pTrav = &(hVObject->pETRLEObject[usImageIndex]);
-                    uiBrushHeight = (UINT32)pTrav->usHeight;
-                    uiBrushWidth = (UINT32)pTrav->usWidth;
+                    uiBrushHeight = (uint32_t)pTrav->usHeight;
+                    uiBrushWidth = (uint32_t)pTrav->usWidth;
                     sXPos += pTrav->sOffsetX;
                     sYPos += pTrav->sOffsetY;
 
@@ -2062,7 +2062,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   }
 }
 
-void DeleteFromWorld(UINT16 usTileIndex, UINT32 uiRenderTiles, UINT16 usIndex) {
+void DeleteFromWorld(UINT16 usTileIndex, uint32_t uiRenderTiles, UINT16 usIndex) {
   switch (uiRenderTiles) {
     case TILES_DYNAMIC_LAND:
     case TILES_STATIC_LAND:
@@ -2094,7 +2094,7 @@ void DeleteFromWorld(UINT16 usTileIndex, UINT32 uiRenderTiles, UINT16 usIndex) {
 // memcpy's the background to the new scroll position, and renders the missing strip
 // via the RenderStaticWorldRect. Dynamic stuff will be updated on the next frame
 // by the normal render cycle
-void ScrollBackground(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement) {
+void ScrollBackground(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement) {
   // RestoreBackgroundRects();
 
   if (!gfDoVideoScroll) {
@@ -2129,7 +2129,7 @@ void ScrollBackground(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScroll
 void RenderWorld() {
   TILE_ELEMENT *TileElem;
   TILE_ANIMATION_DATA *pAnimData;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
 
   gfRenderFullThisFrame = FALSE;
 
@@ -2260,9 +2260,9 @@ void RenderWorld() {
 
   if (gTacticalStatus.uiFlags & SHOW_Z_BUFFER) {
     // COPY Z BUFFER TO FRAME BUFFER
-    UINT32 uiDestPitchBYTES;
+    uint32_t uiDestPitchBYTES;
     UINT16 *pDestBuf;
-    UINT32 cnt;
+    uint32_t cnt;
     CHAR16 zVal;
 
     pDestBuf = (UINT16 *)LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
@@ -2282,7 +2282,7 @@ void RenderWorld() {
 // Then render away!
 void RenderStaticWorldRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom,
                            BOOLEAN fDynamicsToo) {
-  UINT32 uiLevelFlags[10];
+  uint32_t uiLevelFlags[10];
   UINT16 sLevelIDs[10];
 
   // Calculate render starting parameters
@@ -2381,7 +2381,7 @@ void RenderStaticWorldRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom,
 }
 
 void RenderStaticWorld() {
-  UINT32 uiLevelFlags[9];
+  uint32_t uiLevelFlags[9];
   UINT16 sLevelIDs[9];
 
   // Calculate render starting parameters
@@ -2440,7 +2440,7 @@ void RenderStaticWorld() {
 }
 
 void RenderMarkedWorld(void) {
-  UINT32 uiLevelFlags[4];
+  uint32_t uiLevelFlags[4];
   UINT16 sLevelIDs[4];
 
   CalcRenderParameters(gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X, gsVIEWPORT_END_Y);
@@ -2493,7 +2493,7 @@ void RenderMarkedWorld(void) {
 
 void RenderDynamicWorld() {
   UINT8 ubNumLevels;
-  UINT32 uiLevelFlags[10];
+  uint32_t uiLevelFlags[10];
   UINT16 sLevelIDs[10];
 
   CalcRenderParameters(gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X, gsVIEWPORT_END_Y);
@@ -2601,7 +2601,7 @@ void RenderDynamicWorld() {
   ResetRenderParameters();
 }
 
-BOOLEAN HandleScrollDirections(UINT32 ScrollFlags, INT16 sScrollXStep, INT16 sScrollYStep,
+BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 sScrollYStep,
                                INT16 *psTempRenderCenterX, INT16 *psTempRenderCenterY,
                                BOOLEAN fCheckOnly) {
   BOOLEAN fAGoodMove = FALSE, fMovedPos = FALSE;
@@ -2858,7 +2858,7 @@ BOOLEAN HandleScrollDirections(UINT32 ScrollFlags, INT16 sScrollXStep, INT16 sSc
 }
 
 void ScrollWorld() {
-  UINT32 ScrollFlags = 0;
+  uint32_t ScrollFlags = 0;
   BOOLEAN fDoScroll = FALSE, fMovedPos = FALSE, fAGoodMove = FALSE;
   INT16 sTempRenderCenterX, sTempRenderCenterY;
   INT8 bDirection;
@@ -3087,7 +3087,7 @@ void ScrollWorld() {
 
 void InitRenderParams(UINT8 ubRestrictionID) {
   INT16 gsTilesX, gsTilesY;
-  UINT32 cnt, cnt2;
+  uint32_t cnt, cnt2;
   DOUBLE dWorldX, dWorldY;
 
   switch (ubRestrictionID) {
@@ -3424,7 +3424,7 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
 }
 
 void ClearMarkedTiles(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < WORLD_MAX; uiCount++)
     gpWorldLevelData[uiCount].uiFlags &= (~MAPELEMENT_REDRAW);
@@ -3433,7 +3433,7 @@ void ClearMarkedTiles(void) {
 // @@ATECLIP TO WORLD!
 void InvalidateWorldRedundencyRadius(INT16 sX, INT16 sY, INT16 sRadius) {
   INT16 sCountX, sCountY;
-  UINT32 uiTile;
+  uint32_t uiTile;
 
   SetRenderFlags(RENDER_FLAG_CHECKZ);
 
@@ -3447,7 +3447,7 @@ void InvalidateWorldRedundencyRadius(INT16 sX, INT16 sY, INT16 sRadius) {
 }
 
 void InvalidateWorldRedundency() {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   SetRenderFlags(RENDER_FLAG_CHECKZ);
 
@@ -3467,15 +3467,15 @@ void InvalidateWorldRedundency() {
         must be the same dimensions (including Pitch) as the destination.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                               UINT16 *pZBuffer, UINT16 usZValue,
                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth, Unblitted;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -3489,8 +3489,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -3730,7 +3730,7 @@ BlitNTL2:
 		or		al, al
 		jz		BlitNTL5  // dir = 0 no change
 		js		BlitNTL4               // dir < 0 z-level down
-                     // dir > 0 z-level up (default)
+                    // dir > 0 z-level up (default)
 		add		dx, Z_STRIP_DELTA_Y
 		jmp		BlitNTL5
 
@@ -3782,7 +3782,7 @@ BlitTrans2:
 		or		al, al
 		jz		BlitTrans5  // dir = 0 no change
 		js		BlitTrans4         // dir < 0 z-level down
-                       // dir > 0 z-level up (default)
+                      // dir > 0 z-level up (default)
 		add		dx, Z_STRIP_DELTA_Y
 		jmp		BlitTrans5
 
@@ -3856,13 +3856,13 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
-    UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
+    UINT16 *pBuffer, uint32_t uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth, Unblitted;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -3876,8 +3876,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -4117,7 +4117,7 @@ BlitNTL2:
 		or		al, al
 		jz		BlitNTL5  // dir = 0 no change
 		js		BlitNTL4               // dir < 0 z-level down
-                     // dir > 0 z-level up (default)
+                    // dir > 0 z-level up (default)
 		add		dx, Z_STRIP_DELTA_Y
 		jmp		BlitNTL5
 
@@ -4169,7 +4169,7 @@ BlitTrans2:
 		or		al, al
 		jz		BlitTrans5  // dir = 0 no change
 		js		BlitTrans4         // dir < 0 z-level down
-                       // dir > 0 z-level up (default)
+                      // dir > 0 z-level up (default)
 		add		dx, Z_STRIP_DELTA_Y
 		jmp		BlitTrans5
 
@@ -4245,16 +4245,16 @@ BlitDone:
         // render at all
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                                      UINT16 *pZBuffer, UINT16 usZValue,
                                                      struct VObject *hSrcVObject, INT32 iX,
                                                      INT32 iY, UINT16 usIndex,
                                                      SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
-  UINT32 uiOffset, uiLineFlag;
-  UINT32 usHeight, usWidth, Unblitted;
+  uint32_t uiOffset, uiLineFlag;
+  uint32_t usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -4268,8 +4268,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -4530,7 +4530,7 @@ BlitNTL2:
 		or		al, al
 		jz		BlitNTL5  // dir = 0 no change
 		js		BlitNTL4               // dir < 0 z-level down
-                     // dir > 0 z-level up (default)
+                    // dir > 0 z-level up (default)
 		add		dx, Z_STRIP_DELTA_Y
 		jmp		BlitNTL5
 
@@ -4582,7 +4582,7 @@ BlitTrans2:
 		or		al, al
 		jz		BlitTrans5  // dir = 0 no change
 		js		BlitTrans4         // dir < 0 z-level down
-                       // dir > 0 z-level up (default)
+                      // dir > 0 z-level up (default)
 		add		dx, Z_STRIP_DELTA_Y
 		jmp		BlitTrans5
 
@@ -4653,13 +4653,13 @@ BlitDone:
 // 4 ) trans shadow - if value is 254, makes a shadow
 //
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
-    UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
+    UINT16 *pBuffer, uint32_t uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion,
     INT16 sZIndex, UINT16 *p16BPPPalette) {
-  UINT32 uiOffset, uiLineFlag;
-  UINT32 usHeight, usWidth, Unblitted;
+  uint32_t uiOffset, uiLineFlag;
+  uint32_t usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -4673,8 +4673,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -4946,7 +4946,7 @@ BlitNTL2:
 		or		al, al
 		jz		BlitNTL5  // dir = 0 no change
 		js		BlitNTL4               // dir < 0 z-level down
-                     // dir > 0 z-level up (default)
+                    // dir > 0 z-level up (default)
 		add		dx, Z_SUBLAYERS
 		jmp		BlitNTL5
 
@@ -4998,7 +4998,7 @@ BlitTrans2:
 		or		al, al
 		jz		BlitTrans5  // dir = 0 no change
 		js		BlitTrans4         // dir < 0 z-level down
-                       // dir > 0 z-level up (default)
+                      // dir > 0 z-level up (default)
 		add		dx, Z_SUBLAYERS
 		jmp		BlitTrans5
 
@@ -5100,16 +5100,16 @@ void CorrectRenderCenter(INT16 sRenderX, INT16 sRenderY, INT16 *pSNewX, INT16 *p
 // 3 ) clipped
 // 4 ) trans shadow - if value is 254, makes a shadow
 //
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                                          UINT16 *pZBuffer, UINT16 usZValue,
                                                          struct VObject *hSrcVObject, INT32 iX,
                                                          INT32 iY, UINT16 usIndex,
                                                          SGPRect *clipregion, INT16 sZIndex,
                                                          UINT16 *p16BPPPalette) {
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth, Unblitted;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -5123,8 +5123,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -5375,7 +5375,7 @@ BlitNTL2:
 		or		al, al
 		jz		BlitNTL5  // dir = 0 no change
 		js		BlitNTL4               // dir < 0 z-level down
-                     // dir > 0 z-level up (default)
+                    // dir > 0 z-level up (default)
 		add		dx, Z_SUBLAYERS
 		jmp		BlitNTL5
 
@@ -5427,7 +5427,7 @@ BlitTrans2:
 		or		al, al
 		jz		BlitTrans5  // dir = 0 no change
 		js		BlitTrans4         // dir < 0 z-level down
-                       // dir > 0 z-level up (default)
+                      // dir > 0 z-level up (default)
 		add		dx, Z_SUBLAYERS
 		jmp		BlitTrans5
 
@@ -5500,7 +5500,7 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   UINT16 usTileIndex;
   INT16 sX, sY;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // Begin Render Loop
@@ -5598,7 +5598,7 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   UINT16 usTileIndex;
   INT16 sX, sY;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // Begin Render Loop
@@ -5689,7 +5689,7 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   UINT16 usTileIndex;
   INT16 sX, sY;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // Begin Render Loop
@@ -5774,7 +5774,7 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   UINT16 usTileIndex;
   INT16 sX, sY;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   // Begin Render Loop
@@ -5864,7 +5864,7 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   UINT16 usTileIndex;
   INT16 sX, sY, sWorldX, sZLevel;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   TILE_ELEMENT *TileElem;
   INT8 bBlitClipVal;
@@ -6081,13 +6081,13 @@ void ResetRenderParameters() {
   gClippingRect = gOldClipRect;
 }
 
-BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex) {
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
@@ -6097,8 +6097,8 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -6203,15 +6203,15 @@ BlitDone:
   return (TRUE);
 }
 
-BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                           UINT16 *pZBuffer, UINT16 usZValue,
                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                           UINT16 usIndex) {
   UINT16 *p16BPPPalette;
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
@@ -6221,8 +6221,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer
@@ -6318,10 +6318,10 @@ BlitDone:
 BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
                         INT32 iY, UINT16 usIndex) {
   UINT16 *p16BPPPalette;
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth;
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth;
   UINT8 *SrcPtr, *ZPtr;
-  UINT32 LineSkip;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   BOOLEAN fHidden = TRUE;
@@ -6331,8 +6331,8 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Add to start position of dest buffer

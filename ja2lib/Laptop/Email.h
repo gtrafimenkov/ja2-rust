@@ -150,17 +150,17 @@ struct email {
   UINT16 usOffset;
   UINT16 usLength;
   UINT8 ubSender;
-  UINT32 iDate;
+  uint32_t iDate;
   INT32 iId;
   INT32 iFirstData;
-  UINT32 uiSecondData;
+  uint32_t uiSecondData;
   BOOLEAN fRead;
   BOOLEAN fNew;
 
   INT32 iThirdData;
   INT32 iFourthData;
-  UINT32 uiFifthData;
-  UINT32 uiSixData;
+  uint32_t uiFifthData;
+  uint32_t uiSixData;
 
   struct email *Next;
   struct email *Prev;
@@ -174,15 +174,15 @@ typedef struct {
   UINT16 usOffset;
   UINT16 usLength;
   UINT8 ubSender;
-  UINT32 iDate;
+  uint32_t iDate;
   INT32 iId;
   INT32 iFirstData;
-  UINT32 uiSecondData;
+  uint32_t uiSecondData;
 
   INT32 iThirdData;
   INT32 iFourthData;
-  UINT32 uiFifthData;
-  UINT32 uiSixData;
+  uint32_t uiFifthData;
+  uint32_t uiSixData;
 
   BOOLEAN fRead;
   BOOLEAN fNew;
@@ -248,7 +248,7 @@ extern BOOLEAN fDisplayMessageFlag;
 extern BOOLEAN fReDrawNewMailFlag;
 extern BOOLEAN fOpenMostRecentUnReadFlag;
 extern EmailPtr pEmailList;
-extern UINT32 guiEmailWarning;
+extern uint32_t guiEmailWarning;
 
 void GameInitEmail();
 BOOLEAN EnterEmail();
@@ -264,7 +264,8 @@ void RenderEmail();
 
 // message manipulation
 void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject, INT32 iDate,
-                     UINT8 ubSender, BOOLEAN fAlreadyRead, INT32 uiFirstData, UINT32 uiSecondData);
+                     UINT8 ubSender, BOOLEAN fAlreadyRead, INT32 uiFirstData,
+                     uint32_t uiSecondData);
 void RemoveEmailMessage(INT32 iId);
 EmailPtr GetEmailMessage(INT32 iId);
 void LookForUnread();
@@ -280,7 +281,7 @@ void ReDisplayBoxes(void);
 void ShutDownEmailList();
 void AddMessageToPages(INT32 iMessageId);
 void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
-                             INT32 iDate, INT32 iFirstData, UINT32 uiSecondData);
+                             INT32 iDate, INT32 iFirstData, uint32_t uiSecondData);
 
 #ifdef JA2BETAVERSION
 void AddAllEmails();

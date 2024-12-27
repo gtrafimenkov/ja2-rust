@@ -36,27 +36,27 @@ enum {
 
 // in newsmooth.c
 extern INT8 gbWallTileLUT[NUM_WALL_TYPES][7];
-extern void EraseWalls(UINT32 iMapIndex);
-extern void BuildWallPiece(UINT32 iMapIndex, UINT8 ubWallPiece, UINT16 usWallType);
+extern void EraseWalls(uint32_t iMapIndex);
+extern void BuildWallPiece(uint32_t iMapIndex, UINT8 ubWallPiece, UINT16 usWallType);
 // in Smoothing Utils
-void RestoreWalls(UINT32 iMapIndex);
-UINT16 SearchForRoofType(UINT32 iMapIndex);
-UINT16 SearchForWallType(UINT32 iMapIndex);
-BOOLEAN RoofAtGridNo(UINT32 iMapIndex);
-BOOLEAN BuildingAtGridNo(UINT32 iMapIndex);
-struct LEVELNODE* GetHorizontalWall(UINT32 iMapIndex);
-struct LEVELNODE* GetVerticalWall(UINT32 iMapIndex);
-struct LEVELNODE* GetVerticalFence(UINT32 iMapIndex);
-struct LEVELNODE* GetHorizontalFence(UINT32 iMapIndex);
-UINT16 GetHorizontalWallType(UINT32 iMapIndex);
-UINT16 GetVerticalWallType(UINT32 iMapIndex);
-void EraseHorizontalWall(UINT32 iMapIndex);
-void EraseVerticalWall(UINT32 iMapIndex);
-void ChangeHorizontalWall(UINT32 iMapIndex, UINT16 usNewPiece);
-void ChangeVerticalWall(UINT32 iMapIndex, UINT16 usNewPiece);
+void RestoreWalls(uint32_t iMapIndex);
+UINT16 SearchForRoofType(uint32_t iMapIndex);
+UINT16 SearchForWallType(uint32_t iMapIndex);
+BOOLEAN RoofAtGridNo(uint32_t iMapIndex);
+BOOLEAN BuildingAtGridNo(uint32_t iMapIndex);
+struct LEVELNODE* GetHorizontalWall(uint32_t iMapIndex);
+struct LEVELNODE* GetVerticalWall(uint32_t iMapIndex);
+struct LEVELNODE* GetVerticalFence(uint32_t iMapIndex);
+struct LEVELNODE* GetHorizontalFence(uint32_t iMapIndex);
+UINT16 GetHorizontalWallType(uint32_t iMapIndex);
+UINT16 GetVerticalWallType(uint32_t iMapIndex);
+void EraseHorizontalWall(uint32_t iMapIndex);
+void EraseVerticalWall(uint32_t iMapIndex);
+void ChangeHorizontalWall(uint32_t iMapIndex, UINT16 usNewPiece);
+void ChangeVerticalWall(uint32_t iMapIndex, UINT16 usNewPiece);
 UINT16 GetWallClass(struct LEVELNODE* pWall);
 UINT16 GetVerticalWallClass(UINT16 iMapIndex);
 UINT16 GetHorizontalWallClass(UINT16 iMapIndex);
-BOOLEAN ValidDecalPlacement(UINT32 iMapIndex);
+BOOLEAN ValidDecalPlacement(uint32_t iMapIndex);
 
 #endif

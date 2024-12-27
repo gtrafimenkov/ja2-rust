@@ -65,7 +65,7 @@ extern UINT8 ubSAMControlledSectors[MAP_WORLD_X][MAP_WORLD_Y];
 extern INT32 iSeatingCapacities[];
 
 // the static NPC dialogue faces
-extern UINT32 uiExternalStaticNPCFaces[];
+extern uint32_t uiExternalStaticNPCFaces[];
 
 // the squad mvt groups
 extern INT8 SquadMovementGroups[];
@@ -83,7 +83,7 @@ BOOLEAN fHelicopterAvailable = FALSE;
 INT32 iHelicopterVehicleId = -1;
 
 // helicopter icon
-UINT32 guiHelicopterIcon;
+uint32_t guiHelicopterIcon;
 
 // total distance travelled
 // INT32 iTotalHeliDistanceSinceRefuel = 0;
@@ -125,10 +125,10 @@ BOOLEAN fHeliReturnStraightToBase = FALSE;
 BOOLEAN fHoveringHelicopter = FALSE;
 
 // time started hovering
-UINT32 uiStartHoverTime = 0;
+uint32_t uiStartHoverTime = 0;
 
 // what state are skyrider's monologues in in?
-UINT32 guiHelicopterSkyriderTalkState = 0;
+uint32_t guiHelicopterSkyriderTalkState = 0;
 
 // the flags for skyrider events
 BOOLEAN fShowEstoniRefuelHighLight = FALSE;
@@ -136,7 +136,7 @@ BOOLEAN fShowOtherSAMHighLight = FALSE;
 BOOLEAN fShowDrassenSAMHighLight = FALSE;
 BOOLEAN fShowCambriaHospitalHighLight = FALSE;
 
-UINT32 guiTimeOfLastSkyriderMonologue = 0;
+uint32_t guiTimeOfLastSkyriderMonologue = 0;
 
 UINT8 gubHelicopterHitsTaken = 0;
 
@@ -167,10 +167,10 @@ void AddHelicopterToMaps(BOOLEAN fAdd, UINT8 ubSite);
 void PaySkyriderBill(void);
 void MakeHeliReturnToBase(void);
 
-void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode);
-void HandleSkyRiderMonologueAboutCambriaHospital(UINT32 uiSpecialCode);
-void HandleSkyRiderMonologueAboutOtherSAMSites(UINT32 uiSpecialCode);
-void HandleSkyRiderMonologueAboutEstoniRefuel(UINT32 uiSpecialCode);
+void HandleSkyRiderMonologueAboutDrassenSAMSite(uint32_t uiSpecialCode);
+void HandleSkyRiderMonologueAboutCambriaHospital(uint32_t uiSpecialCode);
+void HandleSkyRiderMonologueAboutOtherSAMSites(uint32_t uiSpecialCode);
+void HandleSkyRiderMonologueAboutEstoniRefuel(uint32_t uiSpecialCode);
 
 void InitializeHelicopter(void) {
   // must be called whenever a new game starts up!
@@ -854,7 +854,7 @@ void SkyRiderTalk(UINT16 usQuoteNum) {
   return;
 }
 
-void HandleSkyRiderMonologueEvent(UINT32 uiEventCode, UINT32 uiSpecialCode) {
+void HandleSkyRiderMonologueEvent(uint32_t uiEventCode, uint32_t uiSpecialCode) {
   // will handle the skyrider monologue about where the SAM sites are and what not
 
   TurnOnAirSpaceMode();
@@ -882,7 +882,7 @@ void HandleSkyRiderMonologueEvent(UINT32 uiEventCode, UINT32 uiSpecialCode) {
   guiTimeOfLastSkyriderMonologue = GetWorldTotalMin();
 }
 
-void HandleSkyRiderMonologueAboutEstoniRefuel(UINT32 uiSpecialCode) {
+void HandleSkyRiderMonologueAboutEstoniRefuel(uint32_t uiSpecialCode) {
   // once estoni is free tell player about refueling
 
   switch (uiSpecialCode) {
@@ -914,7 +914,7 @@ void HandleSkyRiderMonologueAboutEstoniRefuel(UINT32 uiSpecialCode) {
   return;
 }
 
-void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
+void HandleSkyRiderMonologueAboutDrassenSAMSite(uint32_t uiSpecialCode) {
   switch (uiSpecialCode) {
     case (0):
       // gpCurrentTalkingFace = &gFacesData[ uiExternalStaticNPCFaces[ SKYRIDER_EXTERNAL_FACE ] ];
@@ -962,7 +962,7 @@ void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
   return;
 }
 
-void HandleSkyRiderMonologueAboutCambriaHospital(UINT32 uiSpecialCode) {
+void HandleSkyRiderMonologueAboutCambriaHospital(uint32_t uiSpecialCode) {
   switch (uiSpecialCode) {
     case (0):
       // gpCurrentTalkingFace = &gFacesData[ uiExternalStaticNPCFaces[ SKYRIDER_EXTERNAL_FACE ] ];
@@ -988,7 +988,7 @@ void HandleSkyRiderMonologueAboutCambriaHospital(UINT32 uiSpecialCode) {
   return;
 }
 
-void HandleSkyRiderMonologueAboutOtherSAMSites(UINT32 uiSpecialCode) {
+void HandleSkyRiderMonologueAboutOtherSAMSites(uint32_t uiSpecialCode) {
   // handle skyrider telling player about other sam sites..on fifth hiring or after one near drassen
   // is taken out
 
@@ -1136,7 +1136,7 @@ void HandleAnimationOfSectors(void) {
 INT16 LastSectorInHelicoptersPath(void) {
   // get the last sector value in the helictoper's path
   struct path *pNode = NULL;
-  UINT32 uiLocation = 0;
+  uint32_t uiLocation = 0;
 
   // if the heli is on the move, what is the distance it will move..the length of the merc path,
   // less the first node
@@ -1510,8 +1510,8 @@ BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup) {
 INT16 GetNumSafeSectorsInPath(void) {
   // get the last sector value in the helictoper's path
   struct path *pNode = NULL;
-  UINT32 uiLocation = 0;
-  UINT32 uiCount = 0;
+  uint32_t uiLocation = 0;
+  uint32_t uiCount = 0;
   INT32 iHeliSector = -1;
   struct GROUP *pGroup;
 
@@ -1586,8 +1586,8 @@ INT16 GetNumSafeSectorsInPath(void) {
 INT16 GetNumUnSafeSectorsInPath(void) {
   // get the last sector value in the helictoper's path
   struct path *pNode = NULL;
-  UINT32 uiLocation = 0;
-  UINT32 uiCount = 0;
+  uint32_t uiLocation = 0;
+  uint32_t uiCount = 0;
   INT32 iHeliSector = -1;
   struct GROUP *pGroup;
 

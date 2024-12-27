@@ -232,7 +232,7 @@ void ShutdownFonts() {
 }
 
 // Set shades for fonts
-BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
+BOOLEAN SetFontShade(uint32_t uiFontID, INT8 bColorID) {
   struct VObject* pFont;
 
   CHECKF(bColorID > 0);
@@ -246,7 +246,7 @@ BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
 }
 
 UINT16 CreateFontPaletteTables(struct VObject* pObj) {
-  UINT32 count;
+  uint32_t count;
 
   for (count = 0; count < 16; count++) {
     if ((count == 4) && (pObj->p16BPPPalette == pObj->pShades[count]))

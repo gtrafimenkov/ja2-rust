@@ -518,8 +518,8 @@ typedef struct {
   CHAR8 Filename[50];
   CHAR8 bStructDataType;
   UINT8 ubFlags;
-  UINT32 uiNumDirections;
-  UINT32 uiNumFramesPerDir;
+  uint32_t uiNumDirections;
+  uint32_t uiNumFramesPerDir;
   struct VObject *hVideoObject;
   void *Unused;
   INT8 bUsageCount;

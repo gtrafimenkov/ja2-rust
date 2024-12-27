@@ -30,8 +30,8 @@
 #define LOOSE_CURSOR_DELAY 300
 static BOOLEAN gfLooseCursorOn = FALSE;
 static INT16 gsLooseCursorGridNo = NOWHERE;
-static UINT32 guiLooseCursorID = 0;
-static UINT32 guiLooseCursorTimeOfLastUpdate = 0;
+static uint32_t guiLooseCursorID = 0;
+static uint32_t guiLooseCursorTimeOfLastUpdate = 0;
 
 void HandleLooseCursorDraw();
 void HandleLooseCursorHide();
@@ -653,8 +653,8 @@ UICursor gUICursors[NUM_UI_CURSORS] = {
 #pragma GCC diagnostic pop
 #endif
 
-UINT32 guiCurUICursor = NO_UICURSOR;
-UINT32 guiOldUICursor = NO_UICURSOR;
+uint32_t guiCurUICursor = NO_UICURSOR;
+uint32_t guiOldUICursor = NO_UICURSOR;
 UINT16 gusCurMousePos;
 UINT16 gusTargetDropPos;
 BOOLEAN gfTargetDropPos = FALSE;
@@ -663,7 +663,7 @@ BOOLEAN gfTargetDropPos = FALSE;
 void EraseSnappingCursor();
 void DrawSnappingCursor();
 
-BOOLEAN SetUICursor(UINT32 uiNewCursor) {
+BOOLEAN SetUICursor(uint32_t uiNewCursor) {
   guiOldUICursor = guiCurUICursor;
   guiCurUICursor = uiNewCursor;
 
@@ -1038,7 +1038,7 @@ void EraseSnappingCursor() {
   RemoveAllOnRoofsOfTypeRange(gusCurMousePos, MOCKFLOOR, MOCKFLOOR);
 }
 
-void StartLooseCursor(INT16 sGridNo, UINT32 uiCursorID) {
+void StartLooseCursor(INT16 sGridNo, uint32_t uiCursorID) {
   gfLooseCursorOn = TRUE;
 
   guiLooseCursorID = uiCursorID;

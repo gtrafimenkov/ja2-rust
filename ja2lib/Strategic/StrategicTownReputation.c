@@ -31,7 +31,7 @@
 #define TOWN_OPINION_PERIOD (3 * 60)
 
 void InitializeProfilesForTownReputation(void) {
-  UINT32 uiProfileId = 0;
+  uint32_t uiProfileId = 0;
 
   // initialize the town opinion values in each recruitable merc's profile structure
   for (uiProfileId = 0; uiProfileId < FIRST_NPC; uiProfileId++) {

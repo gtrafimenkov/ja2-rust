@@ -7,24 +7,24 @@
 
 typedef struct {
   UINT16 usFlags;
-  UINT32 uiExitScreen;
+  uint32_t uiExitScreen;
   MSGBOX_CALLBACK ExitCallback;
   INT16 sX;
   INT16 sY;
-  UINT32 uiSaveBuffer;
+  uint32_t uiSaveBuffer;
   struct MOUSE_REGION BackRegion;
   UINT16 usWidth;
   UINT16 usHeight;
   INT32 iButtonImages;
   union {
     struct {
-      UINT32 uiOKButton;
-      UINT32 uiYESButton;
-      UINT32 uiNOButton;
-      UINT32 uiUnusedButton;
+      uint32_t uiOKButton;
+      uint32_t uiYESButton;
+      uint32_t uiNOButton;
+      uint32_t uiUnusedButton;
     };
     struct {
-      UINT32 uiButton[4];
+      uint32_t uiButton[4];
     };
   };
   BOOLEAN fRenderBox;
@@ -56,15 +56,15 @@ void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
                                            const SGPRect *pCenteringRect);
 
 // wrappers for other screens
-BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                          UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect);
-INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                               MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect);
-BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect);
-BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                      UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
                                      const SGPRect *pCenteringRect);
 

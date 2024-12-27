@@ -146,7 +146,7 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
       if ((pObject->bStatus[0] % (100 / REGEN_POINTS_PER_BOOSTER)) != 0) {
         // chance of an extra point
         if (PreRandom(100 / REGEN_POINTS_PER_BOOSTER) <
-            (UINT32)(pObject->bStatus[0] % (100 / REGEN_POINTS_PER_BOOSTER))) {
+            (uint32_t)(pObject->bStatus[0] % (100 / REGEN_POINTS_PER_BOOSTER))) {
           bRegenPointsGained++;
         }
       }

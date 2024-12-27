@@ -8,9 +8,9 @@
 #define INTERFACE_LOCKEDLEVEL1 0x00000004
 #define INTERFACE_SHOPKEEP_INTERFACE 0x00000008
 
-extern UINT32 guiTacticalInterfaceFlags;
+extern uint32_t guiTacticalInterfaceFlags;
 
-void SetTacticalInterfaceFlags(UINT32 uiFlags);
+void SetTacticalInterfaceFlags(uint32_t uiFlags);
 
 void SetUpInterface();
 void ResetInterface();

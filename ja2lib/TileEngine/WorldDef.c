@@ -98,7 +98,7 @@ UINT8 gubCurrentLevel;
 INT32 giCurrentTilesetID = 0;
 CHAR8 gzLastLoadedFile[260];
 
-UINT32 gCurrentBackground = FIRSTTEXTURE;
+uint32_t gCurrentBackground = FIRSTTEXTURE;
 
 INT8 gbNewTileSurfaceLoaded[NUMBEROFTILETYPES];
 
@@ -110,7 +110,7 @@ BOOLEAN gfInitAnimateLoading = FALSE;
 
 // Local Functions
 BOOLEAN LoadTileSurfaces(char pTileSurfaceFilenames[][32], UINT8 ubTilesetID);
-BOOLEAN AddTileSurface(SGPFILENAME cFilename, UINT32 ubType, UINT8 ubTilesetID,
+BOOLEAN AddTileSurface(SGPFILENAME cFilename, uint32_t ubType, UINT8 ubTilesetID,
                        BOOLEAN fGetFromRoot);
 void DestroyTileSurfaces(void);
 void ProcessTilesetNamesForBPP(void);
@@ -125,7 +125,7 @@ void LoadMapLights(INT8 **hBuffer);
 // Global Variables
 MAP_ELEMENT *gpWorldLevelData;
 INT32 *gpDirtyData;
-UINT32 gSurfaceMemUsage;
+uint32_t gSurfaceMemUsage;
 UINT8 gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 
 // set to nonzero (locs of base gridno of structure are good) to have it defined by structure code
@@ -136,17 +136,17 @@ INT16 gsRecompileAreaBottom = 0;
 
 // TIMER TESTING STUFF
 #ifdef JA2TESTVERSION
-extern UINT32 uiLoadWorldTime;
-extern UINT32 uiTrashWorldTime;
-extern UINT32 uiLoadMapTilesetTime;
-extern UINT32 uiLoadMapLightsTime;
-extern UINT32 uiBuildShadeTableTime;
-extern UINT32 uiNumTablesLoaded;
-extern UINT32 uiNumTablesSaved;
-extern UINT32 uiNumImagesReloaded;
+extern uint32_t uiLoadWorldTime;
+extern uint32_t uiTrashWorldTime;
+extern uint32_t uiLoadMapTilesetTime;
+extern uint32_t uiLoadMapLightsTime;
+extern uint32_t uiBuildShadeTableTime;
+extern uint32_t uiNumTablesLoaded;
+extern uint32_t uiNumTablesSaved;
+extern uint32_t uiNumImagesReloaded;
 #endif
 
-BOOLEAN DoorAtGridNo(UINT32 iMapIndex) {
+BOOLEAN DoorAtGridNo(uint32_t iMapIndex) {
   struct STRUCTURE *pStruct;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
@@ -156,7 +156,7 @@ BOOLEAN DoorAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN OpenableAtGridNo(UINT32 iMapIndex) {
+BOOLEAN OpenableAtGridNo(uint32_t iMapIndex) {
   struct STRUCTURE *pStruct;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
@@ -166,9 +166,9 @@ BOOLEAN OpenableAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN FloorAtGridNo(UINT32 iMapIndex) {
+BOOLEAN FloorAtGridNo(uint32_t iMapIndex) {
   struct LEVELNODE *pLand;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
   // Look through all objects and Search for type
   while (pLand) {
@@ -183,7 +183,7 @@ BOOLEAN FloorAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN GridNoIndoors(UINT32 iMapIndex) {
+BOOLEAN GridNoIndoors(uint32_t iMapIndex) {
   if (gfBasement || gfCaves) return TRUE;
   if (FloorAtGridNo(iMapIndex)) return TRUE;
   return FALSE;
@@ -194,7 +194,7 @@ void DOIT() {
   // struct LEVELNODE *			pObject;
   struct LEVELNODE *pStruct, *pNewStruct;
   // struct LEVELNODE	*			pShadow;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   // first level
   for (uiLoop = 0; uiLoop < WORLD_MAX; uiLoop++) {
@@ -280,8 +280,8 @@ void DeinitializeWorld() {
 BOOLEAN ReloadTilesetSlot(INT32 iSlot) { return (TRUE); }
 
 BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
-  UINT32 uiLoop;
-  UINT32 uiPercentage;
+  uint32_t uiLoop;
+  uint32_t uiPercentage;
 
   // If no Tileset filenames are given, return error
   if (ppTileSurfaceFilenames == NULL) {
@@ -332,7 +332,7 @@ BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
   return (TRUE);
 }
 
-BOOLEAN AddTileSurface(char *cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOLEAN fGetFromRoot) {
+BOOLEAN AddTileSurface(char *cFilename, uint32_t ubType, UINT8 ubTilesetID, BOOLEAN fGetFromRoot) {
   // Add tile surface
   struct TILE_IMAGERY *TileSurf;
   CHAR8 cFileBPP[128];
@@ -385,12 +385,12 @@ void BuildTileShadeTables() {
   HWFILE hfile;
   char DataDir[256];
   char ShadeTableDir[300];
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   CHAR8 cRootFile[128];
   BOOLEAN fForceRebuildForSlot = FALSE;
 
 #ifdef JA2TESTVERSION
-  UINT32 uiStartTime;
+  uint32_t uiStartTime;
 #endif
   static UINT8 ubLastRed = 255, ubLastGreen = 255, ubLastBlue = 255;
 
@@ -473,7 +473,7 @@ void BuildTileShadeTables() {
 }
 
 void DestroyTileShadeTables() {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     if (gTileSurfaceArray[uiLoop] != NULL) {
@@ -492,7 +492,7 @@ void DestroyTileShadeTables() {
 }
 
 void DestroyTileSurfaces() {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     if (gTileSurfaceArray[uiLoop] != NULL) {
@@ -1346,11 +1346,11 @@ void CompileWorldMovementCosts() {
 BOOLEAN SaveWorld(STR8 puiFilename) {
 #ifdef JA2EDITOR
   INT32 cnt;
-  UINT32 uiSoldierSize;
-  UINT32 uiType;
-  UINT32 uiFlags;
-  UINT32 uiBytesWritten;
-  UINT32 uiNumWarningsCaught = 0;
+  uint32_t uiSoldierSize;
+  uint32_t uiType;
+  uint32_t uiFlags;
+  uint32_t uiBytesWritten;
+  uint32_t uiNumWarningsCaught = 0;
   HWFILE hfile;
   struct LEVELNODE *pLand;
   struct LEVELNODE *pObject;
@@ -1457,7 +1457,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     while (pObject != NULL) {
       // DON'T WRITE ANY ITEMS
       if (!(pObject->uiFlags & (LEVELNODE_ITEM))) {
-        UINT32 uiTileType;
+        uint32_t uiTileType;
         // Make sure this isn't a UI Element
         GetTileType(pObject->usIndex, &uiTileType);
         if (uiTileType < FIRSTPOINTERS) ObjectCount++;
@@ -1860,9 +1860,9 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   HWFILE hfile;
   MAPCREATE_STRUCT mapInfo;
   INT8 *pBuffer, *pBufferHead;
-  UINT32 uiFileSize;
-  UINT32 uiFlags;
-  UINT32 uiBytesRead;
+  uint32_t uiFileSize;
+  uint32_t uiFlags;
+  uint32_t uiBytesRead;
   INT32 cnt;
   INT32 i;
   INT32 iTilesetID;
@@ -1988,7 +1988,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   }
 
   if (uiFlags & MAP_WORLDITEMS_SAVED) {
-    UINT32 temp;
+    uint32_t temp;
     RenderProgressBar(0, 91);
     // RenderProgressBar( 1, 91 );
     // get number of items (for now)
@@ -2233,14 +2233,14 @@ extern void LoadShadeTablesFromTextFile();
 BOOLEAN LoadWorld(STR8 puiFilename) {
   HWFILE hfile;
   FLOAT dMajorMapVersion;
-  UINT32 uiFlags;
-  UINT32 uiBytesRead;
-  UINT32 uiSoldierSize;
-  UINT32 uiFileSize;
-  UINT32 fp, offset;
+  uint32_t uiFlags;
+  uint32_t uiBytesRead;
+  uint32_t uiSoldierSize;
+  uint32_t uiFileSize;
+  uint32_t fp, offset;
 #ifdef JA2TESTVERSION
-  UINT32 uiStartTime;
-  UINT32 uiLoadWorldStartTime;
+  uint32_t uiStartTime;
+  uint32_t uiLoadWorldStartTime;
 #endif
   INT32 cnt, cnt2;
   INT32 iTilesetID;
@@ -2558,7 +2558,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 
 #ifdef RUSSIAN
   {
-    UINT32 uiNums[37];
+    uint32_t uiNums[37];
     LOADDATA(uiNums, pBuffer, 37 * sizeof(INT32));
   }
 #endif
@@ -3043,7 +3043,7 @@ BOOLEAN SaveMapTileset(INT32 iTilesetID) {
   HWFILE hTSet;
   char zTilesetName[65];
   int cnt;
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
 
   // Are we trying to save the default tileset?
   if (iTilesetID == 0) return (TRUE);
@@ -3423,7 +3423,7 @@ void SaveMapLights(HWFILE hfile) {
   UINT16 usNumLights = 0;
   UINT16 cnt, cnt2;
   UINT8 ubStrLen;
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
 
   ubNumColors = LightGetColors(LColors);
 
@@ -3477,7 +3477,7 @@ void LoadMapLights(INT8 **hBuffer) {
   UINT8 ubStrLen;
   LIGHT_SPRITE TmpLight;
   INT32 iLSprite;
-  UINT32 uiHour;
+  uint32_t uiHour;
   BOOLEAN fPrimeTime = FALSE, fNightTime = FALSE;
 
   // reset the lighting system, so that any current lights are toasted.

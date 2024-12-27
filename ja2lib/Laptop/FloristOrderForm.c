@@ -152,13 +152,13 @@ FlowerOrderLocationStruct FlowerOrderLocations[FLOWER_ORDER_NUMBER_OF_DROP_DOWN_
     {20, 15}, {95, 70}, {100, 75}, {50, 35}, {70, 50}, {45, 35}, {30, 25}, {100, 75}, {100, 75},
     {30, 25}, {95, 70}, {30, 25},  {40, 30}, {45, 35}, {95, 70}, {50, 40}, {40, 30}};
 
-UINT32 guiDeliveryLocation;
-UINT32 guiFlowerFrame;
-UINT32 guiCurrentlySelectedFlowerImage;
-UINT32 guiNameBox;
-UINT32 guiPersonalSentiments;
-UINT32 guiFlowerOrderCheckBoxButtonImage;
-UINT32 guiDropDownBorder;
+uint32_t guiDeliveryLocation;
+uint32_t guiFlowerFrame;
+uint32_t guiCurrentlySelectedFlowerImage;
+uint32_t guiNameBox;
+uint32_t guiPersonalSentiments;
+uint32_t guiFlowerOrderCheckBoxButtonImage;
+uint32_t guiDropDownBorder;
 
 BOOLEAN gfFLoristCheckBox0Down = FALSE;  // next day delviery
 BOOLEAN gfFLoristCheckBox1Down = TRUE;   // when it gets there delivery
@@ -167,7 +167,7 @@ BOOLEAN gfFLoristCheckBox3Down = FALSE;
 BOOLEAN gfFLoristCheckBox4Down = FALSE;
 BOOLEAN gfFLoristCheckBox5Down = FALSE;
 
-UINT32 guiFlowerPrice;
+uint32_t guiFlowerPrice;
 
 // drop down menu
 enum {
@@ -189,16 +189,16 @@ INT32 guiFlowerOrderButtonImage;
 UINT8 gubFlowerOrder_AdditioanalServicePrices[] = {10, 20, 10, 10};
 
 void BtnFlowerOrderBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFlowerOrderBackButton;
+uint32_t guiFlowerOrderBackButton;
 
 void BtnFlowerOrderSendButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFlowerOrderSendButton;
+uint32_t guiFlowerOrderSendButton;
 
 void BtnFlowerOrderClearButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFlowerOrderClearButton;
+uint32_t guiFlowerOrderClearButton;
 
 void BtnFlowerOrderGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFlowerOrderGalleryButton;
+uint32_t guiFlowerOrderGalleryButton;
 
 // Clicking on OrderCheckBox
 struct MOUSE_REGION gSelectedFloristCheckBoxRegion[6];
@@ -500,7 +500,7 @@ void RenderFloristOrderForm() {
   struct VObject *hPixHandle;
   UINT16 usPosX;
   wchar_t sTemp[640];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   DisplayFloristDefaults();
 
@@ -765,7 +765,7 @@ void BtnFlowerOrderGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 void SelectFlorsitCheckBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 uiUserData;
+    uint32_t uiUserData;
 
     uiUserData = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -890,7 +890,7 @@ void SelectFloristCardGalleryLinkRegionCallBack(struct MOUSE_REGION *pRegion, IN
 
 // display the things that change on the screen
 void DisplayFlowerDynamicItems() {
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   UINT16 usPosX;
   wchar_t sTemp[640];
   //	wchar_t	sText[ 640 ];
@@ -1212,7 +1212,7 @@ void FlowerOrderDisplayShippingLocationCity() {
 }
 
 void InitFlowerOrderTextInputBoxes() {
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   wchar_t sTemp[640];
   wchar_t sText[640];
 

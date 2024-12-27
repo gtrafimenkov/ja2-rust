@@ -76,7 +76,7 @@ void ReduceHighExpLevels(INT8 *pbExpLevel);
 
 BOOLEAN gfProfiledEnemyAdded = FALSE;
 
-UINT32 guiCurrentUniqueSoldierId = 1;
+uint32_t guiCurrentUniqueSoldierId = 1;
 
 // CJC note: trust me, it's easiest just to put this here; this is the only
 // place it should need to be used
@@ -1715,7 +1715,7 @@ void UpdateSoldierWithStaticDetailedInformation(struct SOLDIERTYPE *s, SOLDIERCR
 // also want to copy that information to the static detailed placement, for editor viewing purposes.
 void UpdateStaticDetailedPlacementWithProfileInformation(SOLDIERCREATE_STRUCT *spp,
                                                          UINT8 ubProfile) {
-  UINT32 cnt;
+  uint32_t cnt;
   MERCPROFILESTRUCT *pProfile;
 
   spp->ubProfile = ubProfile;
@@ -2115,10 +2115,10 @@ void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID) {
 }
 
 void CopyProfileItems(struct SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct) {
-  UINT32 cnt, cnt2;
+  uint32_t cnt, cnt2;
   MERCPROFILESTRUCT *pProfile;
   struct OBJECTTYPE Obj;
-  UINT32 uiMoneyLeft, uiMoneyLimitInSlot;
+  uint32_t uiMoneyLeft, uiMoneyLimitInSlot;
   INT8 bSlot;
 
   pProfile = &(gMercProfiles[pCreateStruct->ubProfile]);

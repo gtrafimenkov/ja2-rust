@@ -29,13 +29,13 @@ BOOLEAN gfApplyChangesToTempFile = FALSE;
 //	3200 bytes * 8 bits = 25600 map elements
 UINT8 *gpRevealedMap;
 
-void RemoveSavedStructFromMap(UINT32 uiMapIndex, UINT16 usIndex);
-void AddObjectFromMapTempFileToMap(UINT32 uiMapIndex, UINT16 usIndex);
+void RemoveSavedStructFromMap(uint32_t uiMapIndex, UINT16 usIndex);
+void AddObjectFromMapTempFileToMap(uint32_t uiMapIndex, UINT16 usIndex);
 void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap);
 void SetSectorsRevealedBit(UINT16 usMapIndex);
 void SetMapRevealedStatus();
 void DamageStructsFromMapTempFile(MODIFY_MAP *pMap);
-BOOLEAN ModifyWindowStatus(UINT32 uiMapIndex);
+BOOLEAN ModifyWindowStatus(uint32_t uiMapIndex);
 // ppp
 
 void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap) { gfApplyChangesToTempFile = fAddToMap; }
@@ -44,7 +44,7 @@ BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSe
                                            INT8 bSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Convert the current sector location into a file name
   //	GetMapFileName( sSectorX, sSectorY, bSectorZ, zTempName, FALSE );
@@ -81,12 +81,12 @@ BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSe
 BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesRead;
-  UINT32 uiFileSize;
-  UINT32 uiNumberOfElements;
-  UINT32 uiNumberOfElementsSavedBackToFile =
+  uint32_t uiNumBytesRead;
+  uint32_t uiFileSize;
+  uint32_t uiNumberOfElements;
+  uint32_t uiNumberOfElementsSavedBackToFile =
       0;  // added becuase if no files get saved back to disk, the flag needs to be erased
-  UINT32 cnt;
+  uint32_t cnt;
   MODIFY_MAP *pMap;
   MODIFY_MAP *pTempArrayOfMaps = NULL;
   UINT16 usIndex;
@@ -276,9 +276,9 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
   return (TRUE);
 }
 
-void AddStructToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
+void AddStructToMapTempFile(uint32_t uiMapIndex, UINT16 usIndex) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (!gfApplyChangesToTempFile) return;
@@ -300,13 +300,13 @@ void AddStructToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
   SaveModifiedMapStructToMapTempFile(&Map, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 }
 
-void AddStructFromMapTempFileToMap(UINT32 uiMapIndex, UINT16 usIndex) {
+void AddStructFromMapTempFileToMap(uint32_t uiMapIndex, UINT16 usIndex) {
   AddStructToTailCommon(uiMapIndex, usIndex, TRUE);
 }
 
-void AddObjectToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
+void AddObjectToMapTempFile(uint32_t uiMapIndex, UINT16 usIndex) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (!gfApplyChangesToTempFile) return;
@@ -328,13 +328,13 @@ void AddObjectToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
   SaveModifiedMapStructToMapTempFile(&Map, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 }
 
-void AddObjectFromMapTempFileToMap(UINT32 uiMapIndex, UINT16 usIndex) {
+void AddObjectFromMapTempFileToMap(uint32_t uiMapIndex, UINT16 usIndex) {
   AddObjectToHead(uiMapIndex, usIndex);
 }
 
-void AddRemoveObjectToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
+void AddRemoveObjectToMapTempFile(uint32_t uiMapIndex, UINT16 usIndex) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (!gfApplyChangesToTempFile) return;
@@ -356,9 +356,9 @@ void AddRemoveObjectToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
   SaveModifiedMapStructToMapTempFile(&Map, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 }
 
-void RemoveStructFromMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
+void RemoveStructFromMapTempFile(uint32_t uiMapIndex, UINT16 usIndex) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (!gfApplyChangesToTempFile) return;
@@ -380,7 +380,7 @@ void RemoveStructFromMapTempFile(UINT32 uiMapIndex, UINT16 usIndex) {
   SaveModifiedMapStructToMapTempFile(&Map, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 }
 
-void RemoveSavedStructFromMap(UINT32 uiMapIndex, UINT16 usIndex) {
+void RemoveSavedStructFromMap(uint32_t uiMapIndex, UINT16 usIndex) {
   RemoveStruct(uiMapIndex, usIndex);
 }
 
@@ -489,7 +489,7 @@ void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
 BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   Assert(gpRevealedMap != NULL);
 
@@ -529,7 +529,7 @@ BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Convert the current sector location into a file name
   //	GetMapFileName( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, zTempName, FALSE );
@@ -642,10 +642,10 @@ void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
 
 //////////////
 
-void AddStructToUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSectorX,
+void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, UINT16 usIndex, INT16 sSectorX,
                                     INT16 sSectorY, UINT8 ubSectorZ) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) return;
@@ -665,10 +665,10 @@ void AddStructToUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSe
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void AddObjectToUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSectorX,
+void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, UINT16 usIndex, INT16 sSectorX,
                                     INT16 sSectorY, UINT8 ubSectorZ) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) return;
@@ -688,10 +688,10 @@ void AddObjectToUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSe
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void RemoveStructFromUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSectorX,
+void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, UINT16 usIndex, INT16 sSectorX,
                                          INT16 sSectorY, UINT8 ubSectorZ) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) return;
@@ -711,10 +711,10 @@ void RemoveStructFromUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT1
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void AddRemoveObjectToUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSectorX,
+void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, UINT16 usIndex, INT16 sSectorX,
                                           INT16 sSectorY, UINT8 ubSectorZ) {
   MODIFY_MAP Map;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
 
   if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) return;
@@ -760,19 +760,19 @@ void AddExitGridToMapTempFile(UINT16 usGridNo, EXITGRID *pExitGrid, u8 sSectorX,
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX, u8 sSectorY,
+BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, UINT16 usIndex, u8 sSectorX, u8 sSectorY,
                                   UINT8 ubSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   MODIFY_MAP *pTempArrayOfMaps = NULL;
   MODIFY_MAP *pMap;
-  UINT32 uiFileSize;
-  UINT32 uiNumberOfElements;
+  uint32_t uiFileSize;
+  uint32_t uiNumberOfElements;
   BOOLEAN fRetVal = FALSE;
-  UINT32 uiType;
+  uint32_t uiType;
   UINT16 usSubIndex;
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Convert the current sector location into a file name
   //	GetMapFileName( sSectorX, sSectorY, ubSectorZ, zTempName, FALSE );
@@ -843,7 +843,7 @@ BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX
   return (fRetVal);
 }
 
-void AddOpenableStructStatusToMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened) {
+void AddOpenableStructStatusToMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened) {
   MODIFY_MAP Map;
 
   memset(&Map, 0, sizeof(MODIFY_MAP));
@@ -856,7 +856,7 @@ void AddOpenableStructStatusToMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened) {
   SaveModifiedMapStructToMapTempFile(&Map, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 }
 
-void AddWindowHitToMapTempFile(UINT32 uiMapIndex) {
+void AddWindowHitToMapTempFile(uint32_t uiMapIndex) {
   MODIFY_MAP Map;
 
   memset(&Map, 0, sizeof(MODIFY_MAP));
@@ -867,7 +867,7 @@ void AddWindowHitToMapTempFile(UINT32 uiMapIndex) {
   SaveModifiedMapStructToMapTempFile(&Map, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 }
 
-BOOLEAN ModifyWindowStatus(UINT32 uiMapIndex) {
+BOOLEAN ModifyWindowStatus(uint32_t uiMapIndex) {
   struct STRUCTURE *pStructure;
 
   pStructure = FindStructure((INT16)uiMapIndex, STRUCTURE_WALLNWINDOW);
@@ -879,7 +879,7 @@ BOOLEAN ModifyWindowStatus(UINT32 uiMapIndex) {
   return (FALSE);
 }
 
-void SetOpenableStructStatusFromMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened) {
+void SetOpenableStructStatusFromMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened) {
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBase;
   BOOLEAN fStatusOnTheMap;
@@ -932,11 +932,11 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(UINT16 usSectorX, UINT16 us
   //	MODIFY_MAP Map;
   CHAR8 zMapName[128];
   HWFILE hFile;
-  UINT32 uiNumBytesRead;
-  UINT32 uiNumBytesWritten;
-  UINT32 uiFileSize;
-  UINT32 uiNumberOfElements;
-  UINT32 cnt;
+  uint32_t uiNumBytesRead;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiFileSize;
+  uint32_t uiNumberOfElements;
+  uint32_t cnt;
   MODIFY_MAP *pMap;
   MODIFY_MAP *pTempArrayOfMaps = NULL;
   //	UINT16	usIndex;

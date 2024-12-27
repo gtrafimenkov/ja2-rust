@@ -393,33 +393,34 @@ extern char szSoundEffects[NUM_SAMPLES][255];
 
 BOOLEAN InitJA2Sound();
 BOOLEAN ShutdownJA2Sound();
-UINT32 PlayJA2Sample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops, UINT32 uiPan);
-UINT32 PlayJA2StreamingSample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                              UINT32 uiPan);
+uint32_t PlayJA2Sample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                       uint32_t uiPan);
+uint32_t PlayJA2StreamingSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                                uint32_t ubLoops, uint32_t uiPan);
 
-UINT32 PlayJA2SampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                             UINT32 uiPan);
-UINT32 PlayJA2StreamingSampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume,
-                                      UINT32 ubLoops, UINT32 uiPan,
-                                      SOUND_STOP_CALLBACK EndsCallback);
+uint32_t PlayJA2SampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+                               uint32_t ubLoops, uint32_t uiPan);
+uint32_t PlayJA2StreamingSampleFromFile(STR8 szFileName, uint32_t usRate, uint32_t ubVolume,
+                                        uint32_t ubLoops, uint32_t uiPan,
+                                        SOUND_STOP_CALLBACK EndsCallback);
 
-UINT32 PlayJA2Ambient(UINT32 usNum, UINT32 ubVolume, UINT32 ubLoops);
-UINT32 PlayJA2AmbientRandom(UINT32 usNum, UINT32 uiTimeMin, UINT32 uiTimeMax);
+uint32_t PlayJA2Ambient(uint32_t usNum, uint32_t ubVolume, uint32_t ubLoops);
+uint32_t PlayJA2AmbientRandom(uint32_t usNum, uint32_t uiTimeMin, uint32_t uiTimeMax);
 
-UINT32 PlaySoldierJA2Sample(UINT16 usID, UINT32 usNum, UINT32 usRate, UINT32 ubVolume,
-                            UINT32 ubLoops, UINT32 uiPan, BOOLEAN fCheck);
+uint32_t PlaySoldierJA2Sample(UINT16 usID, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                              uint32_t ubLoops, uint32_t uiPan, BOOLEAN fCheck);
 
-UINT32 GetSoundEffectsVolume();
-void SetSoundEffectsVolume(UINT32 uiNewVolume);
+uint32_t GetSoundEffectsVolume();
+void SetSoundEffectsVolume(uint32_t uiNewVolume);
 
-UINT32 GetSpeechVolume();
-void SetSpeechVolume(UINT32 uiNewVolume);
+uint32_t GetSpeechVolume();
+void SetSpeechVolume(uint32_t uiNewVolume);
 
 // Calculates a volume based on the current Speech Volume level
-UINT32 CalculateSpeechVolume(UINT32 uiVolume);
+uint32_t CalculateSpeechVolume(uint32_t uiVolume);
 
 // Calculates a volume based on the current Sound Effects Volume level
-UINT32 CalculateSoundEffectsVolume(UINT32 uiVolume);
+uint32_t CalculateSoundEffectsVolume(uint32_t uiVolume);
 
 INT8 SoundDir(INT16 sGridNo);
 INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo);
@@ -427,12 +428,12 @@ INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo);
 // ATE: Warning! Use this sparingly! NOT very robust - can
 // have only 1 delayed sound at a time, and uses the global custom
 // timer, again, of which can only be one
-void PlayDelayedJA2Sample(UINT32 uiDelay, UINT32 usNum, UINT32 usRate, UINT32 ubVolume,
-                          UINT32 ubLoops, UINT32 uiPan);
+void PlayDelayedJA2Sample(uint32_t uiDelay, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                          uint32_t ubLoops, uint32_t uiPan);
 
 #define POSITION_SOUND_FROM_SOLDIER 0x00000001
 
-INT32 NewPositionSnd(INT16 sGridNo, UINT32 uiFlags, void *uiData, UINT32 iSoundToPlay);
+INT32 NewPositionSnd(INT16 sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay);
 void DeletePositionSnd(INT32 iPositionSndIndex);
 void SetPositionSndsActive();
 void SetPositionSndsInActive();

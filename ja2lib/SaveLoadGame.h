@@ -17,19 +17,19 @@ struct SOLDIERTYPE;
 #define SAVE__END_TURN_NUM 98
 
 typedef struct {
-  UINT32 uiSavedGameVersion;
+  uint32_t uiSavedGameVersion;
   CHAR8 zGameVersionNumber[GAME_VERSION_LENGTH];
 
   CHAR16 sSavedGameDesc[SIZE_OF_SAVE_GAME_DESC];
 
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
 #ifdef CRIPPLED_VERSION
   UINT8 ubCrippleFiller[20];
 #endif
 
   // The following will be used to quickly access info to display in the save/load screen
-  UINT32 uiDay;
+  uint32_t uiDay;
   UINT8 ubHour;
   UINT8 ubMin;
   INT16 sSectorX;
@@ -38,7 +38,7 @@ typedef struct {
   UINT8 ubNumOfMercsOnPlayersTeam;
   INT32 iCurrentBalance;
 
-  UINT32 uiCurrentScreen;
+  uint32_t uiCurrentScreen;
 
   BOOLEAN fAlternateSector;
 
@@ -49,14 +49,14 @@ typedef struct {
   GAME_OPTIONS sInitialGameOptions;  // need these in the header so we can get the info from it on
                                      // the save load screen.
 
-  UINT32 uiRandom;
+  uint32_t uiRandom;
 
   UINT8 ubFiller[110];
 
 } SAVED_GAME_HEADER;
 
-extern UINT32 guiScreenToGotoAfterLoadingSavedGame;
-extern UINT32 guiSaveGameVersion;
+extern uint32_t guiScreenToGotoAfterLoadingSavedGame;
+extern uint32_t guiSaveGameVersion;
 
 void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName);
 
@@ -73,7 +73,7 @@ BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 
 void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ);
 
-extern UINT32 guiLastSaveGameNum;
+extern uint32_t guiLastSaveGameNum;
 INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave);
 
 #endif

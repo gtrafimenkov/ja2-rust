@@ -20,16 +20,16 @@
 #include "platform.h"
 #include "platform_strings.h"
 
-UINT32 guiNumTileCacheStructs = 0;
-UINT32 guiMaxTileCacheSize = 50;
-UINT32 guiCurTileCacheSize = 0;
+uint32_t guiNumTileCacheStructs = 0;
+uint32_t guiMaxTileCacheSize = 50;
+uint32_t guiCurTileCacheSize = 0;
 INT32 giDefaultStructIndex = -1;
 
 TILE_CACHE_ELEMENT *gpTileCache = NULL;
 TILE_CACHE_STRUCT *gpTileCacheStructInfo = NULL;
 
 BOOLEAN InitTileCache() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct GetFile FileInfo;
   INT16 sFiles = 0;
 
@@ -91,7 +91,7 @@ BOOLEAN InitTileCache() {
 }
 
 void DeleteTileCache() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Allocate entries
   if (gpTileCache != NULL) {
@@ -112,7 +112,7 @@ void DeleteTileCache() {
 }
 
 INT16 FindCacheStructDataIndex(STR8 cFilename) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < guiNumTileCacheStructs; cnt++) {
     if (strcasecmp(gpTileCacheStructInfo[cnt].zRootName, cFilename) == 0) {
@@ -124,8 +124,8 @@ INT16 FindCacheStructDataIndex(STR8 cFilename) {
 }
 
 INT32 GetCachedTile(STR8 cFilename) {
-  UINT32 cnt;
-  UINT32 ubLowestIndex = 0;
+  uint32_t cnt;
+  uint32_t ubLowestIndex = 0;
   INT16 sMostHits = (INT16)15000;
 
   // Check to see if surface exists already
@@ -205,12 +205,12 @@ INT32 GetCachedTile(STR8 cFilename) {
 }
 
 BOOLEAN RemoveCachedTile(INT32 iCachedTile) {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Find tile
   for (cnt = 0; cnt < guiCurTileCacheSize; cnt++) {
     if (gpTileCache[cnt].pImagery != NULL) {
-      if (cnt == (UINT32)iCachedTile) {
+      if (cnt == (uint32_t)iCachedTile) {
         // Found surface, decrement hits
         gpTileCache[cnt].sHits--;
 

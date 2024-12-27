@@ -38,17 +38,17 @@ BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, UINT16 usLeft, UINT16 usTop, UI
 
 // You may also define a panel to go in behind the progress bar.  You can now assign a title to go
 // with the panel.
-void DefineProgressBarPanel(UINT32 ubID, UINT8 r, UINT8 g, UINT8 b, UINT16 usLeft, UINT16 usTop,
+void DefineProgressBarPanel(uint32_t ubID, UINT8 r, UINT8 g, UINT8 b, UINT16 usLeft, UINT16 usTop,
                             UINT16 usRight, UINT16 usBottom);
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
 // panel and vertically centered from the top of the panel, to the top of the progress bar.
-void SetProgressBarTitle(UINT32 ubID, STR16 pString, UINT32 usFont, UINT8 ubForeColor,
+void SetProgressBarTitle(uint32_t ubID, STR16 pString, uint32_t usFont, UINT8 ubForeColor,
                          UINT8 ubShadowColor);
 
 // Unless you set up the attributes, any text you pass to SetRelativeStartAndEndPercentage will
 // default to FONT12POINT1 in a black color.
-void SetProgressBarMsgAttributes(UINT32 ubID, UINT32 usFont, UINT8 ubForeColor,
+void SetProgressBarMsgAttributes(uint32_t ubID, uint32_t usFont, UINT8 ubForeColor,
                                  UINT8 ubShadowColor);
 
 // When finished, the progress bar needs to be removed.
@@ -62,13 +62,13 @@ void RemoveProgressBar(UINT8 ubID);
 // total progress bar will only reach 30% at the 100% mark within UpdateProgressBar.  At that time,
 // you would go onto the next step, resetting the relative start and end percentage from 30 to
 // whatever, until your done.
-void SetRelativeStartAndEndPercentage(UINT8 ubID, UINT32 uiRelStartPerc, UINT32 uiRelEndPerc,
+void SetRelativeStartAndEndPercentage(UINT8 ubID, uint32_t uiRelStartPerc, uint32_t uiRelEndPerc,
                                       STR16 str);
 
 // This part renders the progress bar at the percentage level that you specify.  If you have set
 // relative percentage values in the above function, then the uiPercentage will be reflected based
 // off of the relative percentages.
-void RenderProgressBar(UINT8 ubID, UINT32 uiPercentage);
+void RenderProgressBar(UINT8 ubID, uint32_t uiPercentage);
 
 // Sets the color of the progress bars main color.
 void SetProgressBarColor(UINT8 ubID, UINT8 ubColorFillRed, UINT8 ubColorFillGreen,

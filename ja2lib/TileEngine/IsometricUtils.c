@@ -18,7 +18,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
 
-UINT32 guiForceRefreshMousePositionCalculation = 0;
+uint32_t guiForceRefreshMousePositionCalculation = 0;
 
 // GLOBALS
 INT16 DirIncrementer[8] = {
@@ -272,7 +272,7 @@ BOOLEAN GetMouseWorldCoordsInCenter(INT16 *psMouseX, INT16 *psMouseY) {
 BOOLEAN GetMouseMapPos(INT16 *psMapPos) {
   INT16 sWorldX, sWorldY;
   static INT16 sSameCursorPos;
-  static UINT32 uiOldFrameNumber = 99999;
+  static uint32_t uiOldFrameNumber = 99999;
 
   // Check if this is the same frame as before, return already calculated value if so!
   if (uiOldFrameNumber == guiGameCycleCounter && !guiForceRefreshMousePositionCalculation) {
@@ -446,9 +446,9 @@ INT16 NewGridNo(INT16 sGridno, INT16 sDirInc) {
 
 INT16 DirectionInc(INT16 sDirection) {
   if ((sDirection < 0) || (sDirection > 7)) {
-    //#ifdef BETAVERSION
-    //   NumMessage("DirectionInc: Invalid direction received, = ",direction);
-    //#endif
+    // #ifdef BETAVERSION
+    //    NumMessage("DirectionInc: Invalid direction received, = ",direction);
+    // #endif
 
     // direction = random(8);	// replace garbage with random direction
     sDirection = 1;

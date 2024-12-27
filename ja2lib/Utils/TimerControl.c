@@ -10,8 +10,8 @@
 
 INT32 giTimerDiag = 0;
 
-UINT32 guiBaseJA2Clock = 0;
-UINT32 guiBaseJA2NoPauseClock = 0;
+uint32_t guiBaseJA2Clock = 0;
+uint32_t guiBaseJA2NoPauseClock = 0;
 
 BOOLEAN gfPauseClock = FALSE;
 
@@ -56,25 +56,25 @@ INT32 giTimerTeamTurnUpdate = 0;
 CUSTOMIZABLE_TIMER_CALLBACK gpCustomizableTimerCallback = NULL;
 
 // GLOBALS FOR CALLBACK
-UINT32 gCNT;
+uint32_t gCNT;
 struct SOLDIERTYPE *gPSOLDIER;
 
 // GLobal for displaying time diff ( DIAG )
-UINT32 guiClockDiff = 0;
-UINT32 guiClockStart = 0;
+uint32_t guiClockDiff = 0;
+uint32_t guiClockStart = 0;
 
-extern UINT32 guiCompressionStringBaseTime;
+extern uint32_t guiCompressionStringBaseTime;
 extern INT32 giFlashHighlightedItemBaseTime;
 extern INT32 giCompatibleItemBaseTime;
 extern INT32 giAnimateRouteBaseTime;
 extern INT32 giPotHeliPathBaseTime;
 extern INT32 giClickHeliIconBaseTime;
 extern INT32 giExitToTactBaseTime;
-extern UINT32 guiSectorLocatorBaseTime;
+extern uint32_t guiSectorLocatorBaseTime;
 extern INT32 giCommonGlowBaseTime;
 extern INT32 giFlashAssignBaseTime;
 extern INT32 giFlashContractBaseTime;
-extern UINT32 guiFlashCursorBaseTime;
+extern uint32_t guiFlashCursorBaseTime;
 extern INT32 giPotCharPathBaseTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ extern INT32 giPotCharPathBaseTime;
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 static void ResetJA2ClockGlobalTimers(void) {
-  UINT32 uiCurrentTime = GetJA2Clock();
+  uint32_t uiCurrentTime = GetJA2Clock();
 
   guiCompressionStringBaseTime = uiCurrentTime;
   giFlashHighlightedItemBaseTime = uiCurrentTime;
@@ -100,9 +100,9 @@ static void ResetJA2ClockGlobalTimers(void) {
   giPotCharPathBaseTime = uiCurrentTime;
 }
 
-UINT32 GetJA2Clock() { return guiBaseJA2Clock; }
+uint32_t GetJA2Clock() { return guiBaseJA2Clock; }
 
-void SetJA2Clock(UINT32 time) {
+void SetJA2Clock(uint32_t time) {
   guiBaseJA2Clock = time;
   // whenever guiBaseJA2Clock changes, we must reset all the timer variables that use it as a
   // reference

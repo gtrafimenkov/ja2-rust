@@ -33,8 +33,8 @@
 
 #define IMP_MERC_FILE "IMP.dat"
 
-UINT32 giIMPConfirmButton[2];
-UINT32 giIMPConfirmButtonImage[2];
+uint32_t giIMPConfirmButton[2];
+uint32_t giIMPConfirmButtonImage[2];
 BOOLEAN fNoAlreadySelected = FALSE;
 UINT16 uiEyeXPositions[] = {
     8, 9,  8, 6, 13, 11, 8, 8,
@@ -90,7 +90,7 @@ void DestroyConfirmButtons(void);
 void GiveItemsToPC(UINT8 ubProfileId);
 void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8 ubStatus,
                                UINT8 ubHowMany);
-void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, UINT32 uiPos, UINT16 usItem,
+void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, UINT16 usItem,
                                 UINT8 ubStatus, UINT8 ubHowMany);
 INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem);
 
@@ -335,7 +335,7 @@ void GiveItemsToPC(UINT8 ubProfileId) {
 
   // kevlar vest, leggings, & helmet
   MakeProfileInvItemThisSlot(pProfile, VESTPOS, FLAK_JACKET, 100, 1);
-  if (PreRandom(100) < (UINT32)pProfile->bWisdom) {
+  if (PreRandom(100) < (uint32_t)pProfile->bWisdom) {
     MakeProfileInvItemThisSlot(pProfile, HELMETPOS, STEEL_HELMET, 100, 1);
   }
 
@@ -422,7 +422,7 @@ void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8
   MakeProfileInvItemThisSlot(pProfile, iSlot, usItem, ubStatus, ubHowMany);
 }
 
-void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, UINT32 uiPos, UINT16 usItem,
+void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, UINT16 usItem,
                                 UINT8 ubStatus, UINT8 ubHowMany) {
   pProfile->inv[uiPos] = usItem;
   pProfile->bInvStatus[uiPos] = ubStatus;
@@ -430,7 +430,7 @@ void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, UINT32 uiPos, UINT1
 }
 
 INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem) {
-  UINT32 uiPos;
+  uint32_t uiPos;
 
   // if it fits into a small pocket
   if (Item[usItem].ubPerPocket != 0) {
@@ -455,7 +455,7 @@ INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem) {
 void WriteOutCurrentImpCharacter(INT32 iProfileId) {
   // grab the profile number and write out what is contained there in
   HWFILE hFile;
-  UINT32 uiBytesWritten = 0;
+  uint32_t uiBytesWritten = 0;
 
   // open the file for writing
   hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
@@ -485,7 +485,7 @@ void WriteOutCurrentImpCharacter(INT32 iProfileId) {
 void LoadInCurrentImpCharacter(void) {
   INT32 iProfileId = 0;
   HWFILE hFile;
-  UINT32 uiBytesRead = 0;
+  uint32_t uiBytesRead = 0;
 
   // open the file for writing
   hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_READ, FALSE);

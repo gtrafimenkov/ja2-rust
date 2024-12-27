@@ -29,10 +29,10 @@
 
 // Global dynamic array of all of the items in a loaded map.
 WORLDITEM *gWorldItems = NULL;
-UINT32 guiNumWorldItems = 0;
+uint32_t guiNumWorldItems = 0;
 
 WORLDBOMB *gWorldBombs = NULL;
-UINT32 guiNumWorldBombs = 0;
+uint32_t guiNumWorldBombs = 0;
 
 void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void);
 void DeleteWorldItemsBelongingToQueenIfThere(void);
@@ -40,9 +40,9 @@ void DeleteWorldItemsBelongingToQueenIfThere(void);
 extern UINT16 StandardGunListAmmoReplacement(UINT16 usAmmo);
 
 INT32 GetFreeWorldBombIndex(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
   WORLDBOMB *newWorldBombs;
-  UINT32 uiOldNumWorldBombs;
+  uint32_t uiOldNumWorldBombs;
 
   for (uiCount = 0; uiCount < guiNumWorldBombs; uiCount++) {
     if (gWorldBombs[uiCount].fExists == FALSE) return ((INT32)uiCount);
@@ -65,8 +65,8 @@ INT32 GetFreeWorldBombIndex(void) {
   return (uiCount);
 }
 
-UINT32 GetNumUsedWorldBombs(void) {
-  UINT32 uiCount, uiNumItems;
+uint32_t GetNumUsedWorldBombs(void) {
+  uint32_t uiCount, uiNumItems;
   uiNumItems = 0;
 
   if (guiNumWorldBombs == 0) {
@@ -83,7 +83,7 @@ UINT32 GetNumUsedWorldBombs(void) {
 }
 
 INT32 AddBombToWorld(INT32 iItemIndex) {
-  UINT32 iBombIndex;
+  uint32_t iBombIndex;
 
   iBombIndex = GetFreeWorldBombIndex();
 
@@ -102,7 +102,7 @@ void RemoveBombFromWorld(INT32 iBombIndex) {
 void RemoveBombFromWorldByItemIndex(INT32 iItemIndex) {
   // Find the world bomb which corresponds with a particular world item, then
   // remove the world bomb from the table.
-  UINT32 uiBombIndex;
+  uint32_t uiBombIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
     if (gWorldBombs[uiBombIndex].fExists && gWorldBombs[uiBombIndex].iItemIndex == iItemIndex) {
@@ -113,7 +113,7 @@ void RemoveBombFromWorldByItemIndex(INT32 iItemIndex) {
 }
 
 INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, INT8 bLevel) {
-  UINT32 uiBombIndex;
+  uint32_t uiBombIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
     if (gWorldBombs[uiBombIndex].fExists &&
@@ -128,7 +128,7 @@ INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, INT8 bLevel) {
 void FindPanicBombsAndTriggers(void) {
   // This function searches the bomb table to find panic-trigger-tuned bombs and triggers
 
-  UINT32 uiBombIndex;
+  uint32_t uiBombIndex;
   struct OBJECTTYPE *pObj;
   struct STRUCTURE *pSwitch;
   INT16 sGridNo = NOWHERE;
@@ -194,9 +194,9 @@ void FindPanicBombsAndTriggers(void) {
 }
 
 INT32 GetFreeWorldItemIndex(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
   WORLDITEM *newWorldItems;
-  UINT32 uiOldNumWorldItems;
+  uint32_t uiOldNumWorldItems;
 
   for (uiCount = 0; uiCount < guiNumWorldItems; uiCount++) {
     if (gWorldItems[uiCount].fExists == FALSE) return ((INT32)uiCount);
@@ -219,8 +219,8 @@ INT32 GetFreeWorldItemIndex(void) {
   return (uiCount);
 }
 
-UINT32 GetNumUsedWorldItems(void) {
-  UINT32 uiCount, uiNumItems;
+uint32_t GetNumUsedWorldItems(void) {
+  uint32_t uiCount, uiNumItems;
   uiNumItems = 0;
 
   if (guiNumWorldItems == 0) {
@@ -238,7 +238,7 @@ UINT32 GetNumUsedWorldItems(void) {
 
 INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible) {
-  UINT32 iItemIndex;
+  uint32_t iItemIndex;
   INT32 iReturn;
 
   // ATE: Check if the gridno is OK
@@ -287,7 +287,7 @@ void RemoveItemFromWorld(INT32 iItemIndex) {
 }
 
 void TrashWorldItems() {
-  UINT32 i;
+  uint32_t i;
   if (gWorldItems) {
     for (i = 0; i < guiNumWorldItems; i++) {
       if (gWorldItems[i].fExists) {
@@ -306,8 +306,8 @@ void TrashWorldItems() {
 }
 
 void SaveWorldItemsToMap(HWFILE fp) {
-  UINT32 i, uiBytesWritten;
-  UINT32 uiActualNumWorldItems;
+  uint32_t i, uiBytesWritten;
+  uint32_t uiActualNumWorldItems;
 
   uiActualNumWorldItems = GetNumUsedWorldItems();
 
@@ -322,10 +322,10 @@ void SaveWorldItemsToMap(HWFILE fp) {
 void LoadWorldItemsFromMap(INT8 **hBuffer) {
   // Start loading itmes...
 
-  UINT32 i;
+  uint32_t i;
   WORLDITEM dummyItem;
   INT32 iItemIndex;
-  UINT32 uiNumWorldItems;
+  uint32_t uiNumWorldItems;
 
   // If any world items exist, we must delete them now.
   TrashWorldItems();
@@ -435,8 +435,8 @@ void LoadWorldItemsFromMap(INT8 **hBuffer) {
 }
 
 void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void) {
-  UINT32 uiLoop;
-  UINT32 uiLoop2;
+  uint32_t uiLoop;
+  uint32_t uiLoop2;
   INT16 sGridNo;
   UINT8 ubLevel;
 
@@ -470,8 +470,8 @@ void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void) {
 }
 
 void DeleteWorldItemsBelongingToQueenIfThere(void) {
-  UINT32 uiLoop;
-  UINT32 uiLoop2;
+  uint32_t uiLoop;
+  uint32_t uiLoop2;
   INT16 sGridNo;
   UINT8 ubLevel;
   INT8 bSlot;

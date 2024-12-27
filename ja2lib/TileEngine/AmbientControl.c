@@ -18,7 +18,7 @@ INT16 gsNumAmbData = 0;
 
 UINT8 gubCurrentSteadyStateAmbience = SSA_NONE;
 UINT8 gubCurrentSteadyStateSound = 0;
-UINT32 guiCurrentSteadyStateSoundHandle = NO_SAMPLE;
+uint32_t guiCurrentSteadyStateSoundHandle = NO_SAMPLE;
 STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
     // NONE
     {
@@ -250,7 +250,7 @@ void DeleteAllAmbients() {
   DeleteAllStrategicEventsOfType(EVENT_AMBIENT);
 }
 
-UINT32 SetupNewAmbientSound(UINT32 uiAmbientID) {
+uint32_t SetupNewAmbientSound(uint32_t uiAmbientID) {
   RANDOMPARMS rpParms;
 
   memset(&rpParms, 0xff, sizeof(RANDOMPARMS));
@@ -264,7 +264,7 @@ UINT32 SetupNewAmbientSound(UINT32 uiAmbientID) {
   return SoundPlayRandom(gAmbData[uiAmbientID].zFilename, &rpParms);
 }
 
-UINT32 StartSteadyStateAmbient(UINT32 ubVolume, UINT32 ubLoops) {
+uint32_t StartSteadyStateAmbient(uint32_t ubVolume, uint32_t ubLoops) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));

@@ -105,7 +105,7 @@ extern INT16 gsBottomRightWorldX, gsBottomRightWorldY;
 
 extern SGPRect gSelectRegion;
 extern SGPPoint gSelectAnchor;
-extern UINT32 fSelectMode;
+extern uint32_t fSelectMode;
 
 // GLOBAL COORDINATES
 extern INT16 gTopLeftWorldLimitX, gTopLeftWorldLimitY;
@@ -128,21 +128,21 @@ void InitRenderParams(UINT8 ubRestrictionID);
 void RenderWorld();
 
 void ResetLayerOptimizing(void);
-void ResetSpecificLayerOptimizing(UINT32 uiRowFlag);
+void ResetSpecificLayerOptimizing(uint32_t uiRowFlag);
 
 // Routines of RenderWorld
 extern void RenderStaticWorld();
 extern void RenderDynamicWorld();
 void CopyRenderBuffer();
 
-void SetRenderFlags(UINT32 uiFlags);
-UINT32 GetRenderFlags(void);
-void ClearRenderFlags(UINT32 uiFlags);
+void SetRenderFlags(uint32_t uiFlags);
+uint32_t GetRenderFlags(void);
+void ClearRenderFlags(uint32_t uiFlags);
 
 void RenderSetShadows(BOOLEAN fShadows);
 
 extern UINT16 *gpZBuffer;
-extern UINT32 gRenderFlags;
+extern uint32_t gRenderFlags;
 extern BOOLEAN gfIgnoreScrolling;
 
 extern BOOLEAN gfScrollInertia;
@@ -158,7 +158,7 @@ void ConcealAllWalls(void);
 BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLEAN fForceAdjust,
                        BOOLEAN fCheckOnly);
 
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
                                               UINT16 *pZBuffer, UINT16 usZValue,
                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex, SGPRect *clipregion);

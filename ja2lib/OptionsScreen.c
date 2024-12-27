@@ -138,12 +138,12 @@
 //
 /////////////////////////////////
 
-UINT32 guiOptionBackGroundImage;
-UINT32 guiOptionsAddOnImages;
+uint32_t guiOptionBackGroundImage;
+uint32_t guiOptionsAddOnImages;
 
-UINT32 guiSoundEffectsSliderID;
-UINT32 guiSpeechSliderID;
-UINT32 guiMusicSliderID;
+uint32_t guiSoundEffectsSliderID;
+uint32_t guiSpeechSliderID;
+uint32_t guiMusicSliderID;
 
 BOOLEAN gfOptionsScreenEntry = TRUE;
 BOOLEAN gfOptionsScreenExit = FALSE;
@@ -152,14 +152,14 @@ BOOLEAN gfRedrawOptionsScreen = TRUE;
 CHAR8 gzSavedGameName[128];
 BOOLEAN gfEnteredFromMapScreen = FALSE;
 
-UINT32 guiOptionsScreen = OPTIONS_SCREEN;
-UINT32 guiPreviousOptionScreen = OPTIONS_SCREEN;
+uint32_t guiOptionsScreen = OPTIONS_SCREEN;
+uint32_t guiPreviousOptionScreen = OPTIONS_SCREEN;
 
 BOOLEAN gfExitOptionsDueToMessageBox = FALSE;
 BOOLEAN gfExitOptionsAfterMessageBox = FALSE;
 
-UINT32 guiSoundFxSliderMoving = 0xffffffff;
-UINT32 guiSpeechSliderMoving = 0xffffffff;
+uint32_t guiSoundFxSliderMoving = 0xffffffff;
+uint32_t guiSpeechSliderMoving = 0xffffffff;
 
 INT32 giOptionsMessageBox = -1;  // Options pop up messages index value
 
@@ -175,26 +175,26 @@ BOOLEAN gfSettingOfDontAnimateSmoke;
 
 // Goto save game Button
 void BtnOptGotoSaveGameCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiOptGotoSaveGameBtn;
+uint32_t guiOptGotoSaveGameBtn;
 INT32 giOptionsButtonImages;
 
 // Goto load game button
 void BtnOptGotoLoadGameCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiOptGotoLoadGameBtn;
+uint32_t guiOptGotoLoadGameBtn;
 INT32 giGotoLoadBtnImage;
 
 // QuitButton
 void BtnOptQuitCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiQuitButton;
+uint32_t guiQuitButton;
 INT32 giQuitBtnImage;
 
 // Done Button
 void BtnDoneCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiDoneButton;
+uint32_t guiDoneButton;
 INT32 giDoneBtnImage;
 
 // checkbox to toggle tracking mode on or off
-UINT32 guiOptionsToggles[NUM_GAME_OPTIONS];
+uint32_t guiOptionsToggles[NUM_GAME_OPTIONS];
 void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason);
 
 // Mouse regions for the name of the option
@@ -217,12 +217,12 @@ void RenderOptionsScreen();
 void ExitOptionsScreen();
 void HandleOptionsScreen();
 void GetOptionsScreenUserInput();
-void SetOptionsExitScreen(UINT32 uiExitScreen);
+void SetOptionsExitScreen(uint32_t uiExitScreen);
 
 void SoundFXSliderChangeCallBack(INT32 iNewValue);
 void SpeechSliderChangeCallBack(INT32 iNewValue);
 void MusicSliderChangeCallBack(INT32 iNewValue);
-// BOOLEAN		DoOptionsMessageBox( UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+// BOOLEAN		DoOptionsMessageBox( UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
 // UINT8 ubFlags, MSGBOX_CALLBACK ReturnCallback );
 void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue);
 void HandleSliderBarMovementSounds();
@@ -239,14 +239,14 @@ extern void ToggleItemGlow(BOOLEAN fOn);
 //
 /////////////////////////////////
 
-UINT32 OptionsScreenInit() {
+uint32_t OptionsScreenInit() {
   // Set so next time we come in, we can set up
   gfOptionsScreenEntry = TRUE;
 
   return (TRUE);
 }
 
-UINT32 OptionsScreenHandle() {
+uint32_t OptionsScreenHandle() {
   StartFrameBufferRender();
 
   if (gfOptionsScreenEntry) {
@@ -300,7 +300,7 @@ UINT32 OptionsScreenHandle() {
   return (guiOptionsScreen);
 }
 
-UINT32 OptionsScreenShutdown() { return (TRUE); }
+uint32_t OptionsScreenShutdown() { return (TRUE); }
 
 BOOLEAN EnterOptionsScreen() {
   VOBJECT_DESC VObjectDesc;
@@ -795,7 +795,7 @@ void GetOptionsScreenUserInput() {
           // Test keys
 
         case 'y': {
-          static UINT32 uiTest2 = NO_SAMPLE;
+          static uint32_t uiTest2 = NO_SAMPLE;
           if (!SoundIsPlaying(uiTest2))
             uiTest2 = PlayJA2SampleFromFile("Sounds\\RAID Dive.wav", RATE_11025, HIGHVOLUME, 1,
                                             MIDDLEPAN);
@@ -808,7 +808,7 @@ void GetOptionsScreenUserInput() {
   }
 }
 
-void SetOptionsExitScreen(UINT32 uiExitScreen) {
+void SetOptionsExitScreen(uint32_t uiExitScreen) {
   guiOptionsScreen = uiExitScreen;
   gfOptionsScreenExit = TRUE;
 }
@@ -931,7 +931,7 @@ void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound) {
-  static UINT32 uiOptionToggleSound = NO_SAMPLE;
+  static uint32_t uiOptionToggleSound = NO_SAMPLE;
 
   if (fState) {
     gGameSettings.fOptions[ubButton] = TRUE;
@@ -993,7 +993,7 @@ void SpeechSliderChangeCallBack(INT32 iNewValue) {
 
 void MusicSliderChangeCallBack(INT32 iNewValue) { MusicSetVolume(iNewValue); }
 
-BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
+BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect) {
   // reset exit mode
@@ -1008,7 +1008,7 @@ BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExi
   return ((giOptionsMessageBox != -1));
 }
 
-BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
                             MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
@@ -1062,10 +1062,10 @@ void GetOptionsScreenToggleBoxes() {
 }
 
 void HandleSliderBarMovementSounds() {
-  static UINT32 uiLastSoundFxTime = 0;
-  static UINT32 uiLastSpeechTime = 0;
-  static UINT32 uiLastPlayingSoundID = NO_SAMPLE;
-  static UINT32 uiLastPlayingSpeechID = NO_SAMPLE;
+  static uint32_t uiLastSoundFxTime = 0;
+  static uint32_t uiLastSpeechTime = 0;
+  static uint32_t uiLastPlayingSoundID = NO_SAMPLE;
+  static uint32_t uiLastPlayingSpeechID = NO_SAMPLE;
 
   if ((uiLastSoundFxTime - OPT_MUSIC_SLIDER_PLAY_SOUND_DELAY) > guiSoundFxSliderMoving) {
     guiSoundFxSliderMoving = 0xffffffff;

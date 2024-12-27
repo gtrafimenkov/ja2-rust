@@ -82,13 +82,13 @@
 #define FUNERAL_RIP_SENTENCE_2_Y FUNERAL_CLOSED_RIP_SIGN_Y + 162
 
 // Image Identifiers
-UINT32 guiClosedSign;
-UINT32 guiLeftColumn;
-UINT32 guiLinkCarving;
-UINT32 guiMarbleBackground;
-UINT32 guiMcGillicuttys;
-UINT32 guiMortuary;
-UINT32 guiRightColumn;
+uint32_t guiClosedSign;
+uint32_t guiLeftColumn;
+uint32_t guiLinkCarving;
+uint32_t guiMarbleBackground;
+uint32_t guiMcGillicuttys;
+uint32_t guiMortuary;
+uint32_t guiRightColumn;
 
 // Clicking on Funeral link
 struct MOUSE_REGION gSelectedFuneralLinkRegion[FUNERAL_NUMBER_OF_LINKS];
@@ -308,7 +308,7 @@ void DisplayFuneralRipTombStone() {
 void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 uiUserData;
+    uint32_t uiUserData;
 
     uiUserData = MSYS_GetRegionUserData(pRegion, 0);
 

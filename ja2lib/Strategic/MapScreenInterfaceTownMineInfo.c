@@ -45,8 +45,8 @@ INT8 bCurrentTownMineSectorY = 0;
 INT8 bCurrentTownMineSectorZ = 0;
 
 // inventory button
-UINT32 guiMapButtonInventoryImage[2];
-UINT32 guiMapButtonInventory[2];
+uint32_t guiMapButtonInventoryImage[2];
+uint32_t guiMapButtonInventory[2];
 
 UINT16 sTotalButtonWidth = 0;
 
@@ -251,7 +251,7 @@ void CreateTownInfoBox(void) {
 
 // adds text to town info box
 void AddTextToTownBox(void) {
-  UINT32 hStringHandle = 0;
+  uint32_t hStringHandle = 0;
   CHAR16 wString[64];
   UINT8 ubTownId = 0;
   UINT16 usTownSectorIndex;
@@ -349,7 +349,7 @@ void AddTextToTownBox(void) {
 void AddTextToMineBox(void) {
   UINT8 ubMineIndex;
   UINT8 ubTown;
-  UINT32 hStringHandle;
+  uint32_t hStringHandle;
   CHAR16 wString[64];
 
   ubMineIndex = GetMineIndexForSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
@@ -463,7 +463,7 @@ void AddTextToMineBox(void) {
 }
 
 void AddTextToBlankSectorBox(void) {
-  UINT32 hStringHandle;
+  uint32_t hStringHandle;
   UINT16 usSectorValue = 0;
 
   // get the sector value
@@ -506,7 +506,7 @@ void AddTextToBlankSectorBox(void) {
 void AddSectorToBox(void) {
   CHAR16 wString[64];
   CHAR16 wString2[10];
-  UINT32 hStringHandle = 0;
+  uint32_t hStringHandle = 0;
 
   // sector
   swprintf(wString, ARR_SIZE(wString), L"%s:", pwMiscSectorStrings[1]);
@@ -524,7 +524,7 @@ void AddSectorToBox(void) {
 
 void AddCommonInfoToBox(void) {
   CHAR16 wString[64];
-  UINT32 hStringHandle = 0;
+  uint32_t hStringHandle = 0;
   BOOLEAN fUnknownSAMSite = FALSE;
   UINT8 ubNumEnemies;
 
@@ -624,7 +624,7 @@ void AddCommonInfoToBox(void) {
 
 void AddItemsInSectorToBox(void) {
   CHAR16 wString[64];
-  UINT32 hStringHandle = 0;
+  uint32_t hStringHandle = 0;
 
   // items in sector (this works even for underground)
 
@@ -695,7 +695,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   SGPRect pDimensions;
   SGPPoint pPosition;
   VOBJECT_DESC VObjectDesc;
-  UINT32 uiObject;
+  uint32_t uiObject;
   ETRLEObject *pTrav;
   INT16 sWidthA = 0, sTotalBoxWidth = 0;
   struct VObject *hHandle;
@@ -808,7 +808,7 @@ void MinWidthOfTownMineInfoBox(void) {
   struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
-  UINT32 uiObject;
+  uint32_t uiObject;
   ETRLEObject *pTrav;
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;

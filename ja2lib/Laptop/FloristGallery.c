@@ -42,7 +42,7 @@
 #define FLOR_GALLERY_FLOWER_BUTTON_X LAPTOP_SCREEN_UL_X + 7
 #define FLOR_GALLERY_FLOWER_BUTTON_Y LAPTOP_SCREEN_WEB_UL_Y + 74
 
-//#define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
+// #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
 
 #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_Y 112
 
@@ -58,9 +58,9 @@
 #define FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y FLOR_GALLERY_FLOWER_TITLE_OFFSET_Y + 17
 #define FLOR_GALLERY_FLOWER_DESC_OFFSET_Y FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y + 15
 
-UINT32 guiFlowerImages[3];
+uint32_t guiFlowerImages[3];
 
-UINT32 guiCurrentlySelectedFlower = 0;
+uint32_t guiCurrentlySelectedFlower = 0;
 
 UINT8 gubCurFlowerIndex = 0;
 UINT8 gubCurNumberOfFlowers = 0;
@@ -71,13 +71,13 @@ BOOLEAN FloristGallerySubPagesVisitedFlag[4];
 
 // Floral buttons
 void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGalleryButtons[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
+uint32_t guiGalleryButtons[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
 
 // Next Previous buttons
 INT32 guiFloralGalleryButtonImage;
 void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFloralGalleryButton[2];
+uint32_t guiFloralGalleryButton[2];
 
 BOOLEAN InitFlowerButtons();
 void DeleteFlowerButtons();
@@ -321,7 +321,7 @@ void DeleteFlowerButtons() {
 
 BOOLEAN DisplayFloralDescriptions() {
   wchar_t sTemp[640];
-  UINT32 uiStartLoc = 0, i;
+  uint32_t uiStartLoc = 0, i;
   UINT16 usPosY, usPrice;
 
   if ((FLOR_GALLERY_NUMBER_FLORAL_IMAGES - gubCurFlowerIndex) >= 3)

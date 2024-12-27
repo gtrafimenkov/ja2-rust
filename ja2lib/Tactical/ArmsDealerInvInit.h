@@ -24,7 +24,7 @@ typedef struct {
 } DEALER_POSSIBLE_INV;
 
 typedef struct {
-  UINT32 uiItemClass;
+  uint32_t uiItemClass;
   UINT8 ubWeaponClass;
   BOOLEAN fAllowUsed;
 } ITEM_SORT_ENTRY;

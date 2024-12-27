@@ -80,7 +80,7 @@ struct OBJECTTYPE {
     };
     struct {
       INT8 bMoneyStatus;
-      UINT32 uiMoneyAmount;
+      uint32_t uiMoneyAmount;
       UINT8 ubMoneyUnused[MAX_OBJECTS_PER_SLOT - 5];
     };
     struct {                // this is used by placed bombs, switches, and the action item
@@ -239,7 +239,7 @@ typedef struct
 #define EXPLOSIVE_GUN(x) (x == ROCKET_LAUNCHER || x == TANK_CANNON)
 
 typedef struct {
-  UINT32 usItemClass;
+  uint32_t usItemClass;
   UINT8 ubClassIndex;
   UINT8 ubCursor;
   INT8 bSoundType;

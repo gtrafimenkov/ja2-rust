@@ -56,9 +56,9 @@
 #define BOBBYR_SHIPMENT_NUM_ITEMS_Y BOBBYR_SHIPMENT_SHIPMENT_ORDER_NUM_Y
 #define BOBBYR_SHIPMENT_NUM_ITEMS_WIDTH 116
 
-//#define		BOBBYR_SHIPMENT_
+// #define		BOBBYR_SHIPMENT_
 
-UINT32 guiBobbyRShipmentGrid;
+uint32_t guiBobbyRShipmentGrid;
 
 BOOLEAN gfBobbyRShipmentsDirty = FALSE;
 
@@ -66,12 +66,12 @@ INT32 giBobbyRShipmentSelectedShipment = -1;
 
 // Back Button
 void BtnBobbyRShipmentBackCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRShipmetBack;
+uint32_t guiBobbyRShipmetBack;
 INT32 guiBobbyRShipmentBackImage;
 
 // Home Button
 void BtnBobbyRShipmentHomeCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRShipmentHome;
+uint32_t guiBobbyRShipmentHome;
 INT32 giBobbyRShipmentHomeImage;
 
 struct MOUSE_REGION gSelectedPreviousShipmentsRegion[BOBBYR_SHIPMENT_NUM_PREVIOUS_SHIPMENTS];
@@ -279,12 +279,12 @@ void DisplayShipmentTitles() {
 }
 
 void DisplayPreviousShipments() {
-  UINT32 uiCnt;
+  uint32_t uiCnt;
   CHAR16 zText[512];
   UINT16 usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
-  UINT32 uiNumItems = CountNumberValidShipmentForTheShipmentsPage();
-  UINT32 uiNumberItemsInShipments = 0;
-  UINT32 uiItemCnt;
+  uint32_t uiNumItems = CountNumberValidShipmentForTheShipmentsPage();
+  uint32_t uiNumberItemsInShipments = 0;
+  uint32_t uiItemCnt;
   UINT8 ubFontColor = BOBBYR_SHIPMENT_STATIC_TEXT_COLOR;
 
   // loop through all the shipments
@@ -292,7 +292,7 @@ void DisplayPreviousShipments() {
     // if it is a valid shipment, and can be displayed at bobby r
     if (gpNewBobbyrShipments[uiCnt].fActive &&
         gpNewBobbyrShipments[giBobbyRShipmentSelectedShipment].fDisplayedInShipmentPage) {
-      if (uiCnt == (UINT32)giBobbyRShipmentSelectedShipment) {
+      if (uiCnt == (uint32_t)giBobbyRShipmentSelectedShipment) {
         ubFontColor = FONT_MCOLOR_WHITE;
       } else {
         ubFontColor = BOBBYR_SHIPMENT_STATIC_TEXT_COLOR;
@@ -326,11 +326,11 @@ void DisplayPreviousShipments() {
 }
 
 void CreatePreviousShipmentsMouseRegions() {
-  UINT32 uiCnt;
+  uint32_t uiCnt;
   UINT16 usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
   UINT16 usWidth = BOBBYR_SHIPMENT_DELIVERY_GRID_WIDTH;
   UINT16 usHeight = GetFontHeight(BOBBYR_SHIPMENT_STATIC_TEXT_FONT);
-  UINT32 uiNumItems = CountNumberOfBobbyPurchasesThatAreInTransit();
+  uint32_t uiNumItems = CountNumberOfBobbyPurchasesThatAreInTransit();
 
   for (uiCnt = 0; uiCnt < uiNumItems; uiCnt++) {
     MSYS_DefineRegion(&gSelectedPreviousShipmentsRegion[uiCnt], BOBBYR_SHIPMENT_ORDER_NUM_X, usPosY,
@@ -345,8 +345,8 @@ void CreatePreviousShipmentsMouseRegions() {
 }
 
 void RemovePreviousShipmentsMouseRegions() {
-  UINT32 uiCnt;
-  UINT32 uiNumItems = CountNumberOfBobbyPurchasesThatAreInTransit();
+  uint32_t uiCnt;
+  uint32_t uiNumItems = CountNumberOfBobbyPurchasesThatAreInTransit();
 
   for (uiCnt = 0; uiCnt < uiNumItems; uiCnt++) {
     MSYS_RemoveRegion(&gSelectedPreviousShipmentsRegion[uiCnt]);

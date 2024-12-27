@@ -219,7 +219,7 @@ void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHo
 
 // kill pts are (2 * kills) + assists
 UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts) {
-  UINT32 uiChanceToLevel = 0;
+  uint32_t uiChanceToLevel = 0;
 
   switch (ubCurrentRank) {
     case GREEN_MILITIA:
@@ -262,7 +262,7 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
   UINT8 ubRank;
   UINT8 ubMilitiaCnt;
   UINT8 ubCount;
-  UINT32 uiChanceToDefect;
+  uint32_t uiChanceToDefect;
 
   for (ubRank = 0; ubRank < MAX_MILITIA_LEVELS; ubRank++) {
     ubMilitiaCnt = GetMilitiaOfRankInSector(mapX, mapY, ubRank);

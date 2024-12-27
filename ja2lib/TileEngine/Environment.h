@@ -63,7 +63,7 @@ void EnvEndRainStorm();
 
 extern UINT8 gubEnvLightValue;
 extern BOOLEAN gfDoLighting;
-extern UINT32 guiEnvWeather;
+extern uint32_t guiEnvWeather;
 
 void TurnOnNightLights();
 void TurnOffNightLights();
@@ -75,7 +75,7 @@ void TurnOffPrimeLights();
 extern BOOLEAN gfCaves;
 extern BOOLEAN gfBasement;
 
-extern INT8 SectorTemperature(UINT32 uiTime, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+extern INT8 SectorTemperature(uint32_t uiTime, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 extern void UpdateTemperature(UINT8 ubTemperatureCode);
 

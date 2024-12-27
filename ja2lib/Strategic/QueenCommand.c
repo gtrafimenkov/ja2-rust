@@ -816,7 +816,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
     if (!gbWorldSectorZ || IsAutoResolveActive()) {  // ground level (SECTORINFO)
       SECTORINFO *pSector;
 #ifdef JA2BETAVERSION
-      UINT32 ubTotalEnemies;
+      uint32_t ubTotalEnemies;
 #endif
 
       if (!IsAutoResolveActive()) {
@@ -924,7 +924,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       UNDERGROUND_SECTORINFO *pSector =
           FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
 #ifdef JA2BETAVERSION
-      UINT32 ubTotalEnemies = pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites;
+      uint32_t ubTotalEnemies = pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites;
 #endif
       if (pSector) {
         switch (pSoldier->ubSoldierClass) {
@@ -1295,8 +1295,8 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
 }
 
 BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
-  UINT32 uiNumOfRecords = 0;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiNumOfRecords = 0;
   UNDERGROUND_SECTORINFO *TempNode = gpUndergroundSectorInfoHead;
 
   // Loop through all the nodes to count how many there are
@@ -1306,8 +1306,8 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
   }
 
   // Write how many nodes there are
-  FileMan_Write(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiNumOfRecords, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -1327,9 +1327,9 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
 }
 
 BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
-  UINT32 uiNumOfRecords = 0;
-  UINT32 cnt = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t uiNumOfRecords = 0;
+  uint32_t cnt = 0;
   UNDERGROUND_SECTORINFO *TempNode = NULL;
   UNDERGROUND_SECTORINFO *TempSpot = NULL;
 
@@ -1337,8 +1337,8 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
   TrashUndergroundSectorInfo();
 
   // Read in the number of nodes stored
-  FileMan_Read(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &uiNumOfRecords, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 

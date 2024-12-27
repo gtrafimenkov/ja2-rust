@@ -29,10 +29,10 @@
 
 // GLOBAL FOR FACES LISTING
 BULLET gBullets[NUM_BULLET_SLOTS];
-UINT32 guiNumBullets = 0;
+uint32_t guiNumBullets = 0;
 
 INT32 GetFreeBullet(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBullets; uiCount++) {
     if ((gBullets[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
@@ -48,7 +48,7 @@ void RecountBullets(void) {
 
   for (uiCount = guiNumBullets - 1; (uiCount >= 0); uiCount--) {
     if ((gBullets[uiCount].fAllocated)) {
-      guiNumBullets = (UINT32)(uiCount + 1);
+      guiNumBullets = (uint32_t)(uiCount + 1);
       return;
     }
   }
@@ -187,7 +187,7 @@ void LocateBullet(INT32 iBulletIndex) {
 }
 
 void UpdateBullets() {
-  UINT32 uiCount;
+  uint32_t uiCount;
   struct LEVELNODE *pNode;
   BOOLEAN fDeletedSome = FALSE;
 
@@ -340,9 +340,9 @@ void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qC
 }
 
 BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   UINT16 usCnt;
-  UINT32 uiBulletCount = 0;
+  uint32_t uiBulletCount = 0;
 
   // loop through and count the number of bullets
   for (usCnt = 0; usCnt < NUM_BULLET_SLOTS; usCnt++) {
@@ -353,8 +353,8 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of Bullets in the array
-  FileMan_Write(hFile, &uiBulletCount, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiBulletCount, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -375,15 +375,15 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   UINT16 usCnt;
 
   // make sure the bullets are not allocated
   memset(gBullets, 0, NUM_BULLET_SLOTS * sizeof(BULLET));
 
   // Load the number of Bullets in the array
-  FileMan_Read(hFile, &guiNumBullets, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &guiNumBullets, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -419,7 +419,7 @@ void StopBullet(INT32 iBullet) {
 }
 
 void DeleteAllBullets() {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBullets; uiCount++) {
     if (gBullets[uiCount].fAllocated) {

@@ -15,8 +15,8 @@
 #include "Utils/WordWrap.h"
 
 // the buttons
-UINT32 giIMPAttributeEntranceButtonImage[1];
-UINT32 giIMPAttributeEntranceButton[1];
+uint32_t giIMPAttributeEntranceButtonImage[1];
+uint32_t giIMPAttributeEntranceButton[1];
 
 // function definitions
 void DestroyIMPAttributeEntranceButtons(void);

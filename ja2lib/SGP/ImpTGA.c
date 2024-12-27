@@ -65,7 +65,7 @@ BOOLEAN ReadRLERGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColM
 BOOLEAN LoadTGAFileToImage(HIMAGE hImage, UINT16 fContents) {
   HWFILE hFile;
   UINT8 uiImgID, uiColMap, uiType;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   BOOLEAN fReturnVal = FALSE;
 
   Assert(hImage != NULL);
@@ -144,17 +144,17 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
   UINT16 uiColMapOrigin;
   UINT16 uiColMapLength;
   UINT8 uiColMapEntrySize;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   UINT16 uiXOrg;
   UINT16 uiYOrg;
   UINT16 uiWidth;
   UINT16 uiHeight;
   UINT8 uiImagePixelSize;
   UINT8 uiImageDescriptor;
-  UINT32 iNumValues;
+  uint32_t iNumValues;
   UINT16 cnt;
 
-  UINT32 i;
+  uint32_t i;
   UINT8 r;
   UINT8 g;
   UINT8 b;
@@ -323,9 +323,9 @@ BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage )
         UINT16		*pData;
         UINT16		usR, usG, usB;
         float			scale_val;
-        UINT32		uiRBitMask;
-        UINT32		uiGBitMask;
-        UINT32		uiBBitMask;
+        uint32_t		uiRBitMask;
+        uint32_t		uiGBitMask;
+        uint32_t		uiBBitMask;
         UINT8			ubRNewShift;
         UINT8			ubGNewShift;
         UINT8			ubBNewShift;

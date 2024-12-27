@@ -68,12 +68,12 @@
 #define INSURANCE_SMALL_TITLE_WIDTH 434 - 170
 #define INSURANCE_SMALL_TITLE_HEIGHT 40 - 10
 
-UINT32 guiInsuranceBackGround;
-UINT32 guiInsuranceTitleImage;
-UINT32 guiInsuranceSmallTitleImage;
-UINT32 guiInsuranceRedBarImage;
-UINT32 guiInsuranceBigRedLineImage;
-UINT32 guiInsuranceBulletImage;
+uint32_t guiInsuranceBackGround;
+uint32_t guiInsuranceTitleImage;
+uint32_t guiInsuranceSmallTitleImage;
+uint32_t guiInsuranceRedBarImage;
+uint32_t guiInsuranceBigRedLineImage;
+uint32_t guiInsuranceBulletImage;
 
 // link to the varios pages
 struct MOUSE_REGION gSelectedInsuranceLinkRegion[3];
@@ -331,7 +331,7 @@ void RemoveInsuranceDefaults() {
 }
 
 void DisplaySmallRedLineWithShadow(UINT16 usStartX, UINT16 usStartY, UINT16 EndX, UINT16 EndY) {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
@@ -350,7 +350,7 @@ void DisplaySmallRedLineWithShadow(UINT16 usStartX, UINT16 usStartY, UINT16 EndX
 }
 
 void GetInsuranceText(UINT8 ubNumber, STR16 pString) {
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   if (ubNumber < INS_MULTI_LINE_BEGINS) {
     // Get and display the card saying
@@ -368,7 +368,7 @@ void GetInsuranceText(UINT8 ubNumber, STR16 pString) {
 void SelectInsuranceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
+    uint32_t uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
 
     if (uiInsuranceLink == 0)
       guiCurrentLaptopMode = LAPTOP_MODE_INSURANCE_COMMENTS;

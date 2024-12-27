@@ -101,7 +101,7 @@ struct VSurface {
   PTR pSavedSurfaceData;   // A void pointer, but for this implementation, is really a
                           // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video memory
                           // Surfaces so that they my be restored
-  UINT32 fFlags;              // Used to describe memory usage, etc
+  uint32_t fFlags;            // Used to describe memory usage, etc
   PTR pPalette;               // A void pointer, but for this implementation a DDPalette
   UINT16 *p16BPPPalette;      // A 16BPP palette used for 8->16 blits
   COLORVAL TransparentColor;  // Defaults to 0,0,0
@@ -114,7 +114,7 @@ struct VSurface {
 //
 
 typedef struct {
-  UINT32 fCreateFlags;    // Specifies creation flags like from file or not
+  uint32_t fCreateFlags;  // Specifies creation flags like from file or not
   SGPFILENAME ImageFile;  // Filename of image data to use
   UINT16 usWidth;         // Width, ignored if given from file
   UINT16 usHeight;        // Height, ignored if given from file
@@ -142,29 +142,29 @@ BOOLEAN RestoreVideoSurfaces();
 // Creates and adds a video Surface to list
 #ifdef SGP_VIDEO_DEBUGGING
 void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend);
-extern BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT32 uiLineNum,
-                                     CHAR8 *pSourceFile);
+extern BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex,
+                                     uint32_t uiLineNum, CHAR8 *pSourceFile);
 #define AddVideoSurface(a, b) _AddAndRecordVSurface(a, b, __LINE__, __FILE__)
 #else
 #define AddVideoSurface(a, b) AddStandardVideoSurface(a, b)
 #endif
 
-BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex);
+BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex);
 
 // Returns a HVSurface for the specified index
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex);
+BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex);
 
-BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *uiPitch);
-void UnLockVideoSurface(UINT32 uiVSurface);
+BYTE *LockVideoSurface(uint32_t uiVSurface, uint32_t *uiPitch);
+void UnLockVideoSurface(uint32_t uiVSurface);
 
 // Blits a video Surface to another video Surface
-BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRegionIndex,
-                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_vs_fx *pBltFx);
+BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, UINT16 usRegionIndex,
+                        INT32 iDestX, INT32 iDestY, uint32_t fBltFlags, blt_vs_fx *pBltFx);
 
-BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
+BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP);
 
-BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
+BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
                                   UINT16 Index, INT16 Ox, INT16 Oy);
 
@@ -172,13 +172,13 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
 BOOLEAN SetPrimaryVideoSurfaces();
 
 // Sets transparency
-BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor);
+BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor);
 
 // Adds a video Surface region
-BOOLEAN AddVideoSurfaceRegion(UINT32 uiIndex, VSURFACE_REGION *pNewRegion);
+BOOLEAN AddVideoSurfaceRegion(uint32_t uiIndex, VSURFACE_REGION *pNewRegion);
 
 // Gets width, hight, bpp information
-BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHeight,
+BOOLEAN GetVideoSurfaceDescription(uint32_t uiIndex, UINT16 *usWidth, UINT16 *usHeight,
                                    UINT8 *ubBitDepth);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHe
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Darkens a rectangular area on a surface for menus etc.
-BOOLEAN PixelateVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
+BOOLEAN PixelateVideoSurfaceRect(uint32_t uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
 
 // Created from a VSurface_DESC structure. Can be from a file via HIMAGE or empty.
 struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc);
@@ -199,7 +199,7 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
 // Returns a flat pointer for direct manipulation of data
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch);
+BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch);
 
 // Must be called after Locking buffer call above
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
@@ -219,7 +219,7 @@ BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntr
 
 // Deletes all data, including palettes, regions, DD Surfaces
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface);
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
+BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -237,9 +237,9 @@ BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRe
 BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex);
 BOOLEAN ClearAllVSurfaceRegions(struct VSurface *hVSurface);
 BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion);
-BOOLEAN GetNumRegions(struct VSurface *hVSurface, UINT32 *puiNumRegions);
+BOOLEAN GetNumRegions(struct VSurface *hVSurface, uint32_t *puiNumRegions);
 BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion);
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
+BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -265,18 +265,19 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 struct VSurface *GetPrimaryVideoSurface();
 struct VSurface *GetBackBufferVideoSurface();
 
-BOOLEAN ShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
+BOOLEAN ShadowVideoSurfaceRect(uint32_t uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
+BOOLEAN ShadowVideoSurfaceImage(uint32_t uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
                                 INT32 iPosY);
 
 // If the Dest Rect and the source rect are not the same size, the source surface will be either
 // enlraged or shunk.
-BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect, SGPRect *DestRect);
+BOOLEAN BltStretchVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, INT32 iDestX,
+                               INT32 iDestY, uint32_t fBltFlags, SGPRect *SrcRect,
+                               SGPRect *DestRect);
 
-BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *puiVSurface);
+BOOLEAN MakeVSurfaceFromVObject(uint32_t uiVObject, UINT16 usSubIndex, uint32_t *puiVSurface);
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(uint32_t uiDestVSurface, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2);
 
 #endif

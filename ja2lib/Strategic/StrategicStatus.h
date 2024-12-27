@@ -63,7 +63,7 @@ enum {
 };
 
 typedef struct STRATEGIC_STATUS {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UINT8 ubNumCapturedForRescue;
 
   UINT8 ubHighestProgress;  // the highest level of progress player has attained thus far in the
@@ -74,9 +74,9 @@ typedef struct STRATEGIC_STATUS {
   BOOLEAN fWeaponDroppedAlready[MAX_WEAPONS];  // flag that tracks whether this weapon type has been
                                                // dropped before
 
-  UINT8 ubMercDeaths;      // how many soldiers have bit it while in the player's employ (0-100)
-  UINT32 uiManDaysPlayed;  // once per day, # living mercs on player's team is added to this running
-                           // total
+  UINT8 ubMercDeaths;        // how many soldiers have bit it while in the player's employ (0-100)
+  uint32_t uiManDaysPlayed;  // once per day, # living mercs on player's team is added to this
+                             // running total
 
   UINT8 ubBadReputation;  // how bad a reputation player has earned through his actions,
                           // performance, etc. (0-100)

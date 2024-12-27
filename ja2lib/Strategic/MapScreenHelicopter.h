@@ -78,7 +78,7 @@ extern INT32 iHelicopterVehicleId;
 extern BOOLEAN fHoveringHelicopter;
 
 // helicopter icon
-extern UINT32 guiHelicopterIcon;
+extern uint32_t guiHelicopterIcon;
 
 // helicopter destroyed
 extern BOOLEAN fHelicopterDestroyed;
@@ -99,10 +99,10 @@ extern BOOLEAN fHelicopterIsAirBorne;
 extern BOOLEAN fSkyRiderAvailable;
 
 // time started hovering
-extern UINT32 uiStartHoverTime;
+extern uint32_t uiStartHoverTime;
 
 // what state is skyrider's dialogue in in?
-extern UINT32 guiHelicopterSkyriderTalkState;
+extern uint32_t guiHelicopterSkyriderTalkState;
 
 // plot for helicopter
 extern BOOLEAN fPlotForHelicopter;
@@ -114,7 +114,7 @@ extern BOOLEAN fShowDrassenSAMHighLight;
 extern BOOLEAN fShowCambriaHospitalHighLight;
 
 extern INT32 iTotalAccumulatedCostByPlayer;
-extern UINT32 guiTimeOfLastSkyriderMonologue;
+extern uint32_t guiTimeOfLastSkyriderMonologue;
 extern BOOLEAN fSkyRiderSetUp;
 extern BOOLEAN fRefuelingSiteAvailable[NUMBER_OF_REFUEL_SITES];
 
@@ -218,7 +218,7 @@ INT32 GetNumberOfPassengersInHelicopter(void);
 void SkyRiderTalk(UINT16 usQuoteNum);
 
 // sky rider monlogue events for mapscreen
-void HandleSkyRiderMonologueEvent(UINT32 uiEventCode, UINT32 uiSpecialCode);
+void HandleSkyRiderMonologueEvent(uint32_t uiEventCode, uint32_t uiSpecialCode);
 
 // handle animation of sectors for mapscreen
 void HandleAnimationOfSectors(void);

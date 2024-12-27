@@ -223,7 +223,7 @@ void RenderPopupMenu() {
   UINT16 usX, usY;
   UINT8 ubColumn, ubEntry, ubCounter;
   UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT16 usLineColor;
   UINT16 usStringWidth;
   UINT16 usStart;

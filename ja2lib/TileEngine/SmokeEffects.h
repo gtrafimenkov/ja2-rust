@@ -28,7 +28,7 @@ typedef struct TAG_SMOKE_EFFECT {
   UINT16 usItem;
   UINT8 ubOwner;
   UINT8 ubPadding;
-  UINT32 uiTimeOfLastUpdate;
+  uint32_t uiTimeOfLastUpdate;
 
 } SMOKEEFFECT;
 
@@ -36,7 +36,7 @@ typedef struct TAG_SMOKE_EFFECT {
 INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel);
 
 // Decays all smoke effects...
-void DecaySmokeEffects(UINT32 uiTime);
+void DecaySmokeEffects(uint32_t uiTime);
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )

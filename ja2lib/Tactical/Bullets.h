@@ -22,7 +22,7 @@ typedef struct {
   UINT8 ubTargetID;
   INT8 bStartCubesAboveLevelZ;
   INT8 bEndCubesAboveLevelZ;
-  UINT32 sGridNo;
+  uint32_t sGridNo;
   INT16 sUnused;
   UINT16 usLastStructureHit;
   FIXEDPT qCurrX;
@@ -44,11 +44,11 @@ typedef struct {
   BOOLEAN fLocated;
   BOOLEAN fReal;
   BOOLEAN fAimed;
-  UINT32 uiLastUpdate;
+  uint32_t uiLastUpdate;
   UINT8 ubTilesPerUpdate;
   UINT16 usClockTicksPerUpdate;
   struct SOLDIERTYPE *pFirer;
-  UINT32 sTargetGridNo;
+  uint32_t sTargetGridNo;
   INT16 sHitBy;
   INT32 iImpact;
   INT32 iImpactReduction;
@@ -61,7 +61,7 @@ typedef struct {
 
 } BULLET;
 
-extern UINT32 guiNumBullets;
+extern uint32_t guiNumBullets;
 
 INT32 CreateBullet(UINT8 ubFirer, BOOLEAN fFake, UINT16 usFlags);
 void RemoveBullet(INT32 iBullet);

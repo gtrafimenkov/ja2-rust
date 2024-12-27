@@ -12,7 +12,7 @@ struct AnimationSurfaceCache {
   UINT8 ubCacheSize;
 };
 
-extern UINT32 guiCacheSize;
+extern uint32_t guiCacheSize;
 
 BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache,
                                   UINT16 usSurfaceIndex, UINT16 usCurrentAnimation);

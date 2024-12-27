@@ -7,7 +7,7 @@
 
 struct SOLDIERTYPE;
 
-extern UINT32 guiNumObjectSlots;
+extern uint32_t guiNumObjectSlots;
 
 typedef struct {
   BOOLEAN fAllocated;
@@ -52,9 +52,9 @@ typedef struct {
   INT16 sFirstGridNo;
   UINT8 ubOwner;
   UINT8 ubActionCode;
-  UINT32 uiActionData;
+  uint32_t uiActionData;
   BOOLEAN fDropItem;
-  UINT32 uiNumTilesMoved;
+  uint32_t uiNumTilesMoved;
   BOOLEAN fCatchGood;
   BOOLEAN fAttemptedCatch;
   BOOLEAN fCatchAnimOn;
@@ -77,7 +77,7 @@ extern REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
 // OBJECT LIST STUFF
 INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
                            real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
-                           UINT8 ubActionCode, UINT32 uiActionData);
+                           UINT8 ubActionCode, uint32_t uiActionData);
 BOOLEAN RemoveObjectSlot(INT32 iObject);
 void RemoveAllPhysicsObjects();
 
@@ -91,7 +91,7 @@ BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
 
 void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
                                        INT16 sZPos, struct OBJECTTYPE *pItem, INT8 bMissBy,
-                                       UINT8 ubActionCode, UINT32 uiActionData);
+                                       UINT8 ubActionCode, uint32_t uiActionData);
 
 // SIMULATE WORLD
 void SimulateWorld();

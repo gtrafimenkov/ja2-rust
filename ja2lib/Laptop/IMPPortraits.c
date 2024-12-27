@@ -96,7 +96,7 @@ BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
   // render the portrait of the current picture
   VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
-  UINT32 uiGraphicHandle;
+  uint32_t uiGraphicHandle;
 
   if (fCharacterIsMale) {
     // load it

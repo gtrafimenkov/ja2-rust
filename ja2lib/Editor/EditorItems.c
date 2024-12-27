@@ -177,14 +177,14 @@ void EntryInitEditorItemsInfo() {
   }
 }
 
-void InitEditorItemsInfo(UINT32 uiItemType) {
+void InitEditorItemsInfo(uint32_t uiItemType) {
   VSURFACE_DESC vs_desc;
   UINT8 *pDestBuf, *pSrcBuf;
-  UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   SGPRect SaveRect, NewRect;
   struct VObject *hVObject;
-  UINT32 uiVideoObjectIndex;
+  uint32_t uiVideoObjectIndex;
   UINT16 usUselessWidth, usUselessHeight;
   INT16 sWidth, sOffset, sStart;
   INT16 i, x, y;
@@ -481,10 +481,10 @@ void DetermineItemsScrolling() {
 
 void RenderEditorItemsInfo() {
   UINT8 *pDestBuf, *pSrcBuf;
-  UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
+  uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   struct VObject *hVObject;
-  UINT32 uiVideoObjectIndex;
+  uint32_t uiVideoObjectIndex;
   INT16 i;
   INT16 minIndex, maxIndex;
   INT16 sWidth, sOffset, sStart, x, y;

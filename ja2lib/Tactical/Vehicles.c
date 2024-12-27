@@ -1150,7 +1150,7 @@ BOOLEAN EnterVehicle(struct SOLDIERTYPE *pVehicle, struct SOLDIERTYPE *pSoldier)
 }
 
 struct SOLDIERTYPE *GetVehicleSoldierPointerFromPassenger(struct SOLDIERTYPE *pSrcSoldier) {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // End the turn of player charactors
@@ -1244,7 +1244,7 @@ void AddPassangersToTeamPanel(INT32 iId) {
 void VehicleTakeDamage(UINT8 ubID, UINT8 ubReason, INT16 sDamage, INT16 sGridNo,
                        UINT8 ubAttackerID) {
   if (ubReason != TAKE_DAMAGE_GAS) {
-    PlayJA2Sample((UINT32)(S_METAL_IMPACT3), RATE_11025, SoundVolume(MIDVOLUME, sGridNo), 1,
+    PlayJA2Sample((uint32_t)(S_METAL_IMPACT3), RATE_11025, SoundVolume(MIDVOLUME, sGridNo), 1,
                   SoundDir(sGridNo));
   }
 
@@ -1467,9 +1467,9 @@ void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
 }
 
 BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   struct path *pTempPathPtr;
-  UINT32 uiNodeCount = 0;
+  uint32_t uiNodeCount = 0;
   UINT8 cnt;
   VEHICLETYPE TempVehicle;
   UINT8 ubPassengerCnt = 0;
@@ -1524,8 +1524,8 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
       }
 
       // Save the number of nodes
-      FileMan_Write(hFile, &uiNodeCount, sizeof(UINT32), &uiNumBytesWritten);
-      if (uiNumBytesWritten != sizeof(UINT32)) {
+      FileMan_Write(hFile, &uiNodeCount, sizeof(uint32_t), &uiNumBytesWritten);
+      if (uiNumBytesWritten != sizeof(uint32_t)) {
         return (FALSE);
       }
 
@@ -1546,11 +1546,11 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGameVersion) {
-  UINT32 uiNumBytesRead;
-  UINT32 uiTotalNodeCount = 0;
+BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, uint32_t uiSavedGameVersion) {
+  uint32_t uiNumBytesRead;
+  uint32_t uiTotalNodeCount = 0;
   UINT8 cnt;
-  UINT32 uiNodeCount = 0;
+  uint32_t uiNodeCount = 0;
   struct path *pPath = NULL;
   UINT8 ubPassengerCnt = 0;
   struct path *pTempPath;
@@ -1611,8 +1611,8 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGame
         }
 
         // Load the number of nodes
-        FileMan_Read(hFile, &uiTotalNodeCount, sizeof(UINT32), &uiNumBytesRead);
-        if (uiNumBytesRead != sizeof(UINT32)) {
+        FileMan_Read(hFile, &uiTotalNodeCount, sizeof(uint32_t), &uiNumBytesRead);
+        if (uiNumBytesRead != sizeof(uint32_t)) {
           return (FALSE);
         }
 
@@ -1692,7 +1692,7 @@ void UpdateAllVehiclePassengersGridNo(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN SaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   // Save all the vehicle movement id's
   FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesWritten);
@@ -1706,7 +1706,7 @@ BOOLEAN SaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
 BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   INT32 cnt;
   struct GROUP *pGroup = NULL;
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiNumBytesRead = 0;
 
   // Load in the Squad movement id's
   FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesRead);
@@ -1727,7 +1727,7 @@ BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
 }
 
 BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   // Save all the vehicle movement id's
   FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesWritten);
@@ -1739,7 +1739,7 @@ BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
 }
 
 BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiNumBytesRead = 0;
 
   // Load in the Squad movement id's
   FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesRead);
@@ -1766,8 +1766,8 @@ BOOLEAN OKUseVehicle(UINT8 ubProfile) {
 
 void TeleportVehicleToItsClosestSector(INT32 iVehicleId, UINT8 ubGroupID) {
   struct GROUP *pGroup = NULL;
-  UINT32 uiTimeToNextSector;
-  UINT32 uiTimeToLastSector;
+  uint32_t uiTimeToNextSector;
+  uint32_t uiTimeToLastSector;
   INT16 sPrevX, sPrevY, sNextX, sNextY;
 
   pGroup = GetGroup(ubGroupID);

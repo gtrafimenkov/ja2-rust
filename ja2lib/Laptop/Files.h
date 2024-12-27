@@ -12,10 +12,10 @@ void HandleFiles();
 void RenderFiles();
 
 struct files {
-  UINT8 ubCode;       // the code index in the files code table
-  UINT8 ubFormat;     // layout format
-  UINT32 uiIdNumber;  // unique id number
-  UINT32 uiDate;      // time in the world in global time (resolution, minutes)
+  UINT8 ubCode;         // the code index in the files code table
+  UINT8 ubFormat;       // layout format
+  uint32_t uiIdNumber;  // unique id number
+  uint32_t uiDate;      // time in the world in global time (resolution, minutes)
   BOOLEAN fRead;
   STR8 pPicFileNameList[2];
 
@@ -65,8 +65,8 @@ struct filerecordwidth {
 
 typedef struct filerecordwidth FileRecordWidth;
 typedef struct filerecordwidth *FileRecordWidthPtr;
-UINT32 AddFilesToPlayersLog(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
-                            STR8 pSecondPicFile);
+uint32_t AddFilesToPlayersLog(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
+                              STR8 pSecondPicFile);
 
 // add a file about this terrorist
 BOOLEAN AddFileAboutTerrorist(INT32 iProfileId);

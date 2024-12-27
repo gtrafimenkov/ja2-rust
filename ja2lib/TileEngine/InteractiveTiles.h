@@ -20,13 +20,13 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
                             INT16 sGridNo);
 BOOLEAN InitInteractiveTileManagement();
 void ShutdownInteractiveTileManagement();
-BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, UINT32 uiFlags,
+BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, uint32_t uiFlags,
                            UINT16 usType);
 BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, struct SOLDIERTYPE *pSoldier,
                                UINT8 ubDirection);
 BOOLEAN StartInteractiveObjectFromMouse(struct SOLDIERTYPE *pSoldier, UINT8 ubDirection);
 void CompileInteractiveTiles();
-UINT32 GetInteractiveTileCursor(UINT32 uiOldCursor, BOOLEAN fConfirm);
+uint32_t GetInteractiveTileCursor(uint32_t uiOldCursor, BOOLEAN fConfirm);
 BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
                                       UINT8 ubDirection);
 BOOLEAN SoldierHandleInteractiveObject(struct SOLDIERTYPE *pSoldier);

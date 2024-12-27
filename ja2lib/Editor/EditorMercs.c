@@ -148,7 +148,7 @@ void SetupTextInputForMercSchedule();
 void ExtractAndUpdateMercAttributes();
 void ExtractAndUpdateMercProfile();
 void ExtractAndUpdateMercSchedule();
-void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, UINT32 uiMax);
+void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, uint32_t uiMax);
 void ChangeBodyType(INT8 bOffset);  //+1 or -1 only
 
 // internal merc variables
@@ -596,7 +596,7 @@ void ResetAllMercPositions() {
   gsSelectedMercID = -1;
 }
 
-void AddMercWaypoint(UINT32 iMapIndex) {
+void AddMercWaypoint(uint32_t iMapIndex) {
   INT32 iNum;
   // index 0 isn't used
   if (iActionParam == 0) return;
@@ -1670,10 +1670,10 @@ void SetupTextInputForMercAttributes() {
 // In the merc editing, all detailed placement values for generated attributes are set to -1.
 // When making a generated attribute static, we then set the value to its applicable value.
 // This function is similar to the itoa function except that -1 is converted to a null string.
-void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, UINT32 uiMax) {
+void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
-  else if ((UINT32)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
+  else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
     swprintf(str, bufSize, L"%d", uiMax);
   else  // this is a valid static value, so convert it to a string.
     swprintf(str, bufSize, L"%d", iValue);
@@ -1981,7 +1981,7 @@ void SetMercEditability(BOOLEAN fEditable) {
 // points together.  If one of the points is isolated, then the map will be rejected.  It
 // isn't necessary to specify all four points.  You wouldn't want to specify a north point if
 // there isn't going to be any traversing to adjacent maps from that side.
-void SpecifyEntryPoint(UINT32 iMapIndex) {
+void SpecifyEntryPoint(uint32_t iMapIndex) {
   INT16 *psEntryGridNo;
   BOOLEAN fErasing = FALSE;
   if (iDrawMode >= DRAW_MODE_ERASE) {
@@ -2550,7 +2550,7 @@ BOOLEAN PointInRect(SGPRect *pRect, INT32 x, INT32 y) {
 }
 
 void DrawRect(SGPRect *pRect, INT16 color) {
-  UINT32 uiDestPitchBYTES;
+  uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
@@ -2564,7 +2564,7 @@ void RenderSelectedMercsInventory() {
   INT32 i;
   UINT8 *pSrc, *pDst;
   INT32 xp, yp;
-  UINT32 uiSrcPitchBYTES, uiDstPitchBYTES;
+  uint32_t uiSrcPitchBYTES, uiDstPitchBYTES;
   CHAR16 pItemName[100];
   UINT8 ubFontColor;
   if (gsSelectedMercID == -1) return;
@@ -2629,8 +2629,8 @@ void DeleteSelectedMercsItem() {
 // screen during rendering, not here.
 // NOTE:  Step one can be skipped (when selecting an existing merc).  By setting the
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
-  UINT32 uiVideoObjectIndex;
-  UINT32 uiSrcID, uiDstID;
+  uint32_t uiVideoObjectIndex;
+  uint32_t uiSrcID, uiDstID;
   struct VObject *hVObject;
   ETRLEObject *pObject;
   INVTYPE *item;
@@ -2943,7 +2943,7 @@ void SetEnemyColorCode(UINT8 ubColorCode) {
   CreateSoldierPalettes(gpSelected->pSoldier);
 }
 
-void SetEnemyDroppableStatus(UINT32 uiSlot, BOOLEAN fDroppable) {
+void SetEnemyDroppableStatus(uint32_t uiSlot, BOOLEAN fDroppable) {
   if (gpSelected) {
     if (fDroppable) {
       if (gpSelected->pDetailedPlacement)
@@ -2955,7 +2955,7 @@ void SetEnemyDroppableStatus(UINT32 uiSlot, BOOLEAN fDroppable) {
       if (gpSelected->pSoldier) gpSelected->pSoldier->inv[uiSlot].fFlags |= OBJECT_UNDROPPABLE;
     }
   }
-  if (gbCurrSelect != -1 && uiSlot == (UINT32)gbMercSlotTypes[gbCurrSelect]) {
+  if (gbCurrSelect != -1 && uiSlot == (uint32_t)gbMercSlotTypes[gbCurrSelect]) {
     if (gpMercSlotItem[gbCurrSelect]->usItem == NOTHING)
       SpecifyItemToEdit(gpMercSlotItem[gbCurrSelect], -1);
   }

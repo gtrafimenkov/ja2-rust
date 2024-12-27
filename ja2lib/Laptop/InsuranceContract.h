@@ -27,6 +27,6 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID);
 
 void InsuranceContractEndGameShutDown();
 
-void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 uiInsuranceLength);
+void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, uint32_t uiInsuranceLength);
 
 #endif

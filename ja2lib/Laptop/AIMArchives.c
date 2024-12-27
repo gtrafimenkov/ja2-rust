@@ -98,14 +98,14 @@
 #define AIM_ALUMNI_NAME_SIZE 80 * 2
 #define AIM_ALUMNI_DECRIPTION_SIZE 80 * 7 * 2
 #define AIM_ALUMNI_FILE_RECORD_SIZE 80 * 8 * 2
-//#define		AIM_ALUMNI_FILE_RECORD_SIZE			80 * 7 * 2
+// #define		AIM_ALUMNI_FILE_RECORD_SIZE			80 * 7 * 2
 #define AIM_ALUMNI_FULL_NAME_SIZE 80 * 2
 
-UINT32 guiAlumniFrame;
-UINT32 guiOldAim;
-UINT32 guiPageButtons;
-UINT32 guiAlumniPopUp;
-UINT32 guiPopUpPic;
+uint32_t guiAlumniFrame;
+uint32_t guiOldAim;
+uint32_t guiPageButtons;
+uint32_t guiAlumniPopUp;
+uint32_t guiPopUpPic;
 
 UINT8 gubPageNum;
 UINT8 gunAlumniButtonDown = 255;
@@ -131,7 +131,7 @@ void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
 
 // Previous Button
 void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiAlumniPageButton[3];
+uint32_t guiAlumniPageButton[3];
 INT32 guiAlumniPageButtonImage;
 
 void ResetAimArchiveButtons();
@@ -267,7 +267,7 @@ void RenderAimArchives() {
   //  struct VObject*	hBottomButtonHandle;
   UINT16 usPosX, usPosY, x, y, i = 0;
   UINT8 ubNumRows = 0;
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   wchar_t sText[400];
 
   DrawAimDefaults();
@@ -446,7 +446,7 @@ void DisplayAlumniOldMercPopUp() {
   //	WRAPPED_STRING *pFirstWrappedString, *pTempWrappedString;
   wchar_t sName[AIM_ALUMNI_NAME_SIZE];
   wchar_t sDesc[AIM_ALUMNI_DECRIPTION_SIZE];
-  UINT32 uiStartLoc;
+  uint32_t uiStartLoc;
   UINT16 usStringPixLength;
 
   GetVideoObject(&hAlumniPopUpHandle, guiAlumniPopUp);

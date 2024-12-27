@@ -79,7 +79,7 @@ BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, INT8 bInvPos, BOOLE
 //== 1 will only dirty the name space and then set counter to 0
 //  Last parameter used mainly for when mouse is over item
 
-void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
+void INVRenderItem(uint32_t uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
                    INT16 sX, INT16 sY, INT16 sWidth, INT16 sHeight, UINT8 fDirtyLevel,
                    UINT8 *pubHighlightCounter, UINT8 ubStatusIndex, BOOLEAN fOutline,
                    INT16 sOutlineColor);
@@ -134,9 +134,9 @@ void HideItemTileCursor();
 void InitItemInterface();
 BOOLEAN ItemCursorInLobRange(UINT16 usMapPos);
 BOOLEAN HandleItemPointerClick(UINT16 usMapPos);
-UINT32 GetInterfaceGraphicForItem(INVTYPE *pItem);
+uint32_t GetInterfaceGraphicForItem(INVTYPE *pItem);
 UINT16 GetTileGraphicForItem(INVTYPE *pItem);
-BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, UINT32 *puiVo);
+BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo);
 
 void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
                         struct SOLDIERTYPE *pSoldier);

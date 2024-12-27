@@ -18,11 +18,11 @@ extern BOOLEAN gbSaveGameArray[NUM_SAVE_GAMES];
 
 extern BOOLEAN gfCameDirectlyFromGame;
 
-UINT32 SaveLoadScreenShutdown(void);
-UINT32 SaveLoadScreenHandle(void);
-UINT32 SaveLoadScreenInit(void);
+uint32_t SaveLoadScreenShutdown(void);
+uint32_t SaveLoadScreenHandle(void);
+uint32_t SaveLoadScreenInit(void);
 
-BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, STR16 zString, UINT32 uiExitScreen, UINT16 usFlags,
+BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, STR16 zString, uint32_t uiExitScreen, UINT16 usFlags,
                              MSGBOX_CALLBACK ReturnCallback);
 
 BOOLEAN InitSaveGameArray();

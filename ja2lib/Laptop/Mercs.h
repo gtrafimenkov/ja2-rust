@@ -31,7 +31,7 @@ enum {
   MERC_ACCOUNT_VALID,
 };
 // extern	UINT8			gubPlayersMercAccountStatus;
-// extern	UINT32		guiPlayersMercAccountNumber;
+// extern	uint32_t		guiPlayersMercAccountNumber;
 
 // The video conferencing for the merc page
 #define MERC_VIDEO_SPECK_SPEECH_NOT_TALKING 65535
@@ -74,7 +74,7 @@ extern UINT8 gubMercArray[NUMBER_OF_MERCS];
 extern UINT8 gubCurMercIndex;
 // extern	UINT8			gubLastMercIndex;
 
-// extern	UINT32		guiNumberOfMercPaymentsInDays;
+// extern	uint32_t		guiNumberOfMercPaymentsInDays;
 // extern	UINT8			gubNumDaysTillFirstMercArrives;
 
 extern BOOLEAN gfJustHiredAMercMerc;

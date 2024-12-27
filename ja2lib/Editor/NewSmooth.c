@@ -507,12 +507,12 @@ INT8 gbWallTileLUT[NUM_WALL_TYPES][7] = {
 void BuildSlantRoof(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT16 usWallType,
                     UINT16 usRoofType, BOOLEAN fVertical);
 
-void BulldozeNature(UINT32 iMapIndex);
-void EraseRoof(UINT32 iMapIndex);
-void EraseFloor(UINT32 iMapIndex);
-void EraseBuilding(UINT32 iMapIndex);
-void EraseFloorOwnedBuildingPieces(UINT32 iMapIndex);
-void ConsiderEffectsOfNewWallPiece(UINT32 iMapIndex, UINT8 usWallOrientation);
+void BulldozeNature(uint32_t iMapIndex);
+void EraseRoof(uint32_t iMapIndex);
+void EraseFloor(uint32_t iMapIndex);
+void EraseBuilding(uint32_t iMapIndex);
+void EraseFloorOwnedBuildingPieces(uint32_t iMapIndex);
+void ConsiderEffectsOfNewWallPiece(uint32_t iMapIndex, UINT8 usWallOrientation);
 
 //----------------------------------------------------------------------------------------------------
 // BEGIN IMPLEMENTATION OF PRIVATE FUNCTIONS
@@ -602,7 +602,7 @@ UINT16 PickAWallPiece(UINT16 usWallPieceType) {
 // NOTE:  Passing NULL for usWallType will force it to calculate the closest existing wall type, and
 //  use that for building this new wall.  It is necessary for restructuring a building, but not for
 //  adding on to an existing building, where the type is already known.
-void BuildWallPiece(UINT32 iMapIndex, UINT8 ubWallPiece, UINT16 usWallType) {
+void BuildWallPiece(uint32_t iMapIndex, UINT8 ubWallPiece, UINT16 usWallType) {
   INT16 sIndex;
   UINT16 usTileIndex;
   UINT16 ubWallClass;
@@ -805,7 +805,7 @@ void RebuildRoofUsingFloorInfo(INT32 iMapIndex, UINT16 usRoofType) {
 // NOTE:  passing NULL for usRoofType will force the function to calculate the nearest roof type,
 //  and use that for the new roof.  This is needed when erasing parts of multiple buildings
 //  simultaneously.
-void RebuildRoof(UINT32 iMapIndex, UINT16 usRoofType) {
+void RebuildRoof(uint32_t iMapIndex, UINT16 usRoofType) {
   UINT16 usRoofIndex, usTileIndex;
   BOOLEAN fTop, fBottom, fLeft, fRight;
   if (!usRoofType) {
@@ -847,7 +847,7 @@ void RebuildRoof(UINT32 iMapIndex, UINT16 usRoofType) {
   }
 }
 
-void BulldozeNature(UINT32 iMapIndex) {
+void BulldozeNature(uint32_t iMapIndex) {
   AddToUndoList(iMapIndex);
   RemoveAllStructsOfTypeRange(iMapIndex, FIRSTISTRUCT, LASTISTRUCT);
   RemoveAllShadowsOfTypeRange(iMapIndex, FIRSTCLIFFSHADOW, LASTCLIFFSHADOW);
@@ -858,19 +858,19 @@ void BulldozeNature(UINT32 iMapIndex) {
   RemoveAllObjectsOfTypeRange(iMapIndex, ANOTHERDEBRIS, ANOTHERDEBRIS);
 }
 
-void EraseRoof(UINT32 iMapIndex) {
+void EraseRoof(uint32_t iMapIndex) {
   AddToUndoList(iMapIndex);
   RemoveAllRoofsOfTypeRange(iMapIndex, FIRSTTEXTURE, LASTITEM);
   RemoveAllOnRoofsOfTypeRange(iMapIndex, FIRSTTEXTURE, LASTITEM);
   RemoveAllShadowsOfTypeRange(iMapIndex, FIRSTROOF, LASTSLANTROOF);
 }
 
-void EraseFloor(UINT32 iMapIndex) {
+void EraseFloor(uint32_t iMapIndex) {
   AddToUndoList(iMapIndex);
   RemoveAllLandsOfTypeRange(iMapIndex, FIRSTFLOOR, LASTFLOOR);
 }
 
-void EraseWalls(UINT32 iMapIndex) {
+void EraseWalls(uint32_t iMapIndex) {
   AddToUndoList(iMapIndex);
   RemoveAllStructsOfTypeRange(iMapIndex, FIRSTTEXTURE, LASTITEM);
   RemoveAllShadowsOfTypeRange(iMapIndex, FIRSTWALL, LASTWALL);
@@ -881,7 +881,7 @@ void EraseWalls(UINT32 iMapIndex) {
   RemoveAllObjectsOfTypeRange(iMapIndex, ANOTHERDEBRIS, ANOTHERDEBRIS);
 }
 
-void EraseBuilding(UINT32 iMapIndex) {
+void EraseBuilding(uint32_t iMapIndex) {
   EraseRoof(iMapIndex);
   EraseFloor(iMapIndex);
   EraseWalls(iMapIndex);
@@ -891,9 +891,9 @@ void EraseBuilding(UINT32 iMapIndex) {
 // Specialized function that will delete only the TOP_RIGHT oriented wall in the gridno to the left
 // and the TOP_LEFT oriented wall in the gridno up one as well as the other building information at
 // this gridno.
-void EraseFloorOwnedBuildingPieces(UINT32 iMapIndex) {
+void EraseFloorOwnedBuildingPieces(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct = NULL;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
 
   if (!gfBasement &&
@@ -947,8 +947,8 @@ void AddCave( INT32 iMapIndex, UINT16 usIndex );
 */
 
 void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
-  UINT32 top, left, right, bottom, x, y;
-  UINT32 iMapIndex;
+  uint32_t top, left, right, bottom, x, y;
+  uint32_t iMapIndex;
   UINT16 usIndex;
   UINT8 ubPerimeterValue;
   top = pSelectRegion->iTop;
@@ -981,7 +981,7 @@ void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
 
 void AddCaveSectionToWorld(SGPRect *pSelectRegion) {
   INT32 top, left, right, bottom, x, y;
-  UINT32 uiMapIndex;
+  uint32_t uiMapIndex;
   UINT16 usIndex;
   UINT8 ubPerimeterValue;
   top = pSelectRegion->iTop;
@@ -1029,8 +1029,8 @@ void AddCaveSectionToWorld(SGPRect *pSelectRegion) {
 // entire highlighted area, it'll repair the building itself so there are no
 // outside walls missing from the new building.
 void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
-  UINT32 top, left, right, bottom, x, y;
-  UINT32 iMapIndex;
+  uint32_t top, left, right, bottom, x, y;
+  uint32_t iMapIndex;
   UINT16 usTileIndex;
   UINT16 usFloorType;
   BOOLEAN fFloor;
@@ -1100,7 +1100,7 @@ void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
 
 void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
   INT32 top, left, right, bottom, x, y;
-  UINT32 iMapIndex;
+  uint32_t iMapIndex;
   UINT16 usFloorType, usWallType, usRoofType;
   UINT16 usTileIndex;
   BOOLEAN fNewBuilding;
@@ -1139,7 +1139,7 @@ void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
       iMapIndex = y * WORLD_COLS + x;
       if (FloorAtGridNo(iMapIndex)) {
         struct LEVELNODE *pFloor;
-        UINT32 uiTileType;
+        uint32_t uiTileType;
         // If a floor is found, then we are adding to an existing structure.
         fNewBuilding = FALSE;
         // Extract the floor type.  We already checked if there was a floor here, so it is assumed.
@@ -1266,7 +1266,7 @@ void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
 
 void AnalyseCaveMapForStructureInfo() {
   struct LEVELNODE *pStruct;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   INT32 iMapIndex;
   for (iMapIndex = 0; iMapIndex < WORLD_MAX; iMapIndex++) {
     pStruct = gpWorldLevelData[iMapIndex].pStructHead;

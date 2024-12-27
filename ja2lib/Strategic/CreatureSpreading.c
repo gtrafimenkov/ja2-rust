@@ -34,7 +34,7 @@
 
 #ifdef JA2BETAVERSION
 BOOLEAN gfClearCreatureQuest = FALSE;
-extern UINT32 uiMeanWhileFlags;
+extern uint32_t uiMeanWhileFlags;
 #endif
 
 // GAME BALANCING DEFINITIONS FOR CREATURE SPREADING
@@ -1292,7 +1292,7 @@ void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, INT8 bS
 }
 
 BOOLEAN SaveCreatureDirectives(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   FileMan_Write(hFile, &giHabitatedDistance, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) {
@@ -1319,8 +1319,8 @@ BOOLEAN SaveCreatureDirectives(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadCreatureDirectives(HWFILE hFile, UINT32 uiSavedGameVersion) {
-  UINT32 uiNumBytesRead;
+BOOLEAN LoadCreatureDirectives(HWFILE hFile, uint32_t uiSavedGameVersion) {
+  uint32_t uiNumBytesRead;
   FileMan_Read(hFile, &giHabitatedDistance, 4, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) {
     return (FALSE);

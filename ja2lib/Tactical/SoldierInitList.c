@@ -51,9 +51,9 @@ BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
 BOOLEAN gfDoDialogOnceGameScreenFadesIn = FALSE;
 #endif
 
-UINT32 CountNumberOfNodesWithSoldiers() {
+uint32_t CountNumberOfNodesWithSoldiers() {
   SOLDIERINITNODE *curr;
-  UINT32 num = 0;
+  uint32_t num = 0;
   curr = gSoldierInitHead;
   while (curr) {
     if (curr->pSoldier) {
@@ -163,8 +163,8 @@ void RemoveSoldierNodeFromInitList(SOLDIERINITNODE *pNode) {
 // pointer to the beginning of the save/load area, which is not necessarily at
 // the beginning of the file.  This is just a part of the whole map serialization.
 BOOLEAN SaveSoldiersToMap(HWFILE fp) {
-  UINT32 i;
-  UINT32 uiBytesWritten;
+  uint32_t i;
+  uint32_t uiBytesWritten;
   SOLDIERINITNODE *curr;
 
   if (!fp) return FALSE;
@@ -198,7 +198,7 @@ BOOLEAN SaveSoldiersToMap(HWFILE fp) {
 }
 
 BOOLEAN LoadSoldiersFromMap(INT8 **hBuffer) {
-  UINT32 i;
+  uint32_t i;
   UINT8 ubNumIndividuals;
   BASIC_SOLDIERCREATE_STRUCT tempBasicPlacement;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
@@ -1474,7 +1474,7 @@ void RemoveDetailedPlacementInfo(UINT8 ubNodeID) {
 // soldier pointer whenever we load the game.
 BOOLEAN SaveSoldierInitListLinks(HWFILE hfile) {
   SOLDIERINITNODE *curr;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   UINT8 ubSlots = 0;
 
   // count the number of soldier init nodes...
@@ -1508,7 +1508,7 @@ BOOLEAN SaveSoldierInitListLinks(HWFILE hfile) {
 }
 
 BOOLEAN LoadSoldierInitListLinks(HWFILE hfile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
@@ -1780,7 +1780,7 @@ extern void ErrorDetectedInSaveCallback(UINT8 bValue);
 
 BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode) {
   SOLDIERINITNODE *curr;
-  UINT32 uiNumInvalids = 0;
+  uint32_t uiNumInvalids = 0;
   CHAR16 str[512];
   curr = gSoldierInitHead;
   while (curr) {
@@ -1828,7 +1828,7 @@ BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode) {
 #endif  // betaversion error checking functions
 
 BOOLEAN NewWayOfLoadingEnemySoldierInitListLinks(HWFILE hfile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
@@ -1865,7 +1865,7 @@ BOOLEAN NewWayOfLoadingEnemySoldierInitListLinks(HWFILE hfile) {
 }
 
 BOOLEAN NewWayOfLoadingCivilianInitListLinks(HWFILE hfile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
@@ -1902,7 +1902,7 @@ BOOLEAN NewWayOfLoadingCivilianInitListLinks(HWFILE hfile) {
 }
 
 BOOLEAN LookAtButDontProcessEnemySoldierInitListLinks(HWFILE hfile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 

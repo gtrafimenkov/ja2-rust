@@ -26,7 +26,7 @@ extern void RemoveTempMouseCursorObject(void);
 extern BOOLEAN DrawTempMouseCursorObject(void);
 extern void ShowCurrentDrawingMode(void);
 extern void ShowCurrentSlotImage(struct VObject* hVObj, INT32 iWindow);
-extern void ShowCurrentSlotSurface(UINT32 hSurface, INT32 iWindow);
+extern void ShowCurrentSlotSurface(uint32_t hSurface, INT32 iWindow);
 
 void CreateNewMap();
 
@@ -36,10 +36,10 @@ void GetMasterList(void);
 
 void HandleJA2ToolbarSelection(void);
 void HandleKeyboardShortcuts();
-UINT32 PerformSelectedAction(void);
-UINT32 WaitForSelectionWindowResponse(void);
-UINT32 WaitForMessageBoxResponse(UINT32 uiCurrentScreen);
-UINT32 WaitForHelpScreenResponse(void);
+uint32_t PerformSelectedAction(void);
+uint32_t WaitForSelectionWindowResponse(void);
+uint32_t WaitForMessageBoxResponse(uint32_t uiCurrentScreen);
+uint32_t WaitForHelpScreenResponse(void);
 
 BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType);
 BOOLEAN RemoveLight(INT16 iMapX, INT16 iMapY);

@@ -19,8 +19,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 guiMugShotBorder;
-UINT32 guiAimFiFace[MAX_NUMBER_MERCS];
+uint32_t guiMugShotBorder;
+uint32_t guiAimFiFace[MAX_NUMBER_MERCS];
 
 #define AIM_FI_NUM_MUHSHOTS_X 8
 #define AIM_FI_NUM_MUHSHOTS_Y 5

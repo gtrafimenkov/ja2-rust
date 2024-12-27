@@ -27,7 +27,7 @@
 #define MAX_MORTARS_PER_TEAM \
   1  // one team can't randomly roll more than this many mortars per sector
 
-UINT32 guiMortarsRolledByTeam = 0;
+uint32_t guiMortarsRolledByTeam = 0;
 
 ARMY_GUN_CHOICE_TYPE gRegularArmyGunChoices[ARMY_GUN_LEVELS] = {
     // INDEX		CLASS				 #CHOICES
@@ -77,8 +77,8 @@ void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass
 
 void InitArmyGunTypes(void) {
   ARMY_GUN_CHOICE_TYPE *pGunChoiceTable;
-  UINT32 uiGunLevel;
-  UINT32 uiChoice;
+  uint32_t uiGunLevel;
+  uint32_t uiChoice;
   INT8 bItemNo;
   UINT8 ubWeapon;
 
@@ -110,7 +110,7 @@ void InitArmyGunTypes(void) {
 }
 
 INT8 GetWeaponClass(UINT16 usGun) {
-  UINT32 uiGunLevel, uiLoop;
+  uint32_t uiGunLevel, uiLoop;
 
   // always use the extended list since it contains all guns...
   for (uiGunLevel = 0; uiGunLevel < ARMY_GUN_LEVELS; uiGunLevel++) {
@@ -125,7 +125,7 @@ INT8 GetWeaponClass(UINT16 usGun) {
 
 void MarkAllWeaponsOfSameGunClassAsDropped(UINT16 usWeapon) {
   INT8 bGunClass;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   // mark that item itself as dropped, whether or not it's part of a gun class
   gStrategicStatus.fWeaponDroppedAlready[usWeapon] = TRUE;
@@ -1349,7 +1349,7 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECT
 void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
   INT32 i;
   //	UINT16 usRandomNum;
-  UINT32 uiItemClass;
+  uint32_t uiItemClass;
   UINT8 ubNumMatches = 0;
   UINT16 usItem;
   UINT8 ubAmmoDropRate;
@@ -1473,7 +1473,7 @@ void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldie
 
   if (Random(100) < ubOtherDropRate) fKit = TRUE;
 
-  if (Random(100) < (UINT32)(ubOtherDropRate / 3)) fFace = TRUE;
+  if (Random(100) < (uint32_t)(ubOtherDropRate / 3)) fFace = TRUE;
 
   if (Random(100) < ubOtherDropRate) fMisc = TRUE;
 
@@ -1669,7 +1669,7 @@ void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldie
 }
 
 void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiChanceToDrop = 0;
+  uint32_t uiChanceToDrop = 0;
   BOOLEAN fMaleCreature = FALSE;
   BOOLEAN fBloodcat = FALSE;
 
@@ -1764,7 +1764,7 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
 }
 
 void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
-  UINT32 uiLoop, uiLoop2, uiAttachDestIndex;
+  uint32_t uiLoop, uiLoop2, uiAttachDestIndex;
   INT8 bWeaponClass;
   struct OBJECTTYPE OldObj;
   UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
@@ -1821,7 +1821,7 @@ void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
 
 UINT16 SelectStandardArmyGun(UINT8 uiGunLevel) {
   ARMY_GUN_CHOICE_TYPE *pGunChoiceTable;
-  UINT32 uiChoice;
+  uint32_t uiChoice;
   UINT16 usGunIndex;
 
   // pick the standard army gun for this weapon class from table

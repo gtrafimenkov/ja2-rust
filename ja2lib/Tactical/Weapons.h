@@ -239,16 +239,16 @@ extern INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarge
                           UINT8 ubHitLocation, INT32 iImpact, INT16 sHitBy, UINT8 *pubSpecial);
 extern BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 extern void ShotMiss(UINT8 ubAttackerID, INT32 iBullet);
-extern UINT32 CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
-                                 UINT8 ubAimPos);
-extern UINT32 AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
+extern uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
                                    UINT8 ubAimPos);
-extern UINT32 CalcChanceToPunch(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                                UINT8 ubAimTime);
-extern UINT32 CalcChanceToStab(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                               UINT8 ubAimTime);
-UINT32 CalcChanceToSteal(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                         UINT8 ubAimTime);
+extern uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
+                                     UINT8 ubAimPos);
+extern uint32_t CalcChanceToPunch(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
+                                  UINT8 ubAimTime);
+extern uint32_t CalcChanceToStab(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
+                                 UINT8 ubAimTime);
+uint32_t CalcChanceToSteal(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
+                           UINT8 ubAimTime);
 extern void ReloadWeapon(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos);
 extern BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos, BOOLEAN fNotify);
 extern INT32 CalcBodyImpactReduction(UINT8 ubAmmoType, UINT8 ubHitLocation);
@@ -263,8 +263,8 @@ extern BOOLEAN OKFireWeapon(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN CheckForGunJam(struct SOLDIERTYPE *pSoldier);
 
 extern INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem, BOOLEAN fArmed);
-extern UINT32 CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTime,
-                                    UINT8 ubAimPos);
+extern uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTime,
+                                      UINT8 ubAimPos);
 
 extern void ChangeWeaponMode(struct SOLDIERTYPE *pSoldier);
 

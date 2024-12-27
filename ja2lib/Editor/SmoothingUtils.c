@@ -19,8 +19,8 @@ extern UINT16 PickAWallPiece(UINT16 usWallPieceType);
 // This method isn't foolproof, but because erasing large areas of buildings could result in
 // multiple wall types for each building.  When processing the region, it is necessary to
 // calculate the roof type by searching for the nearest roof tile.
-UINT16 SearchForWallType(UINT32 iMapIndex) {
-  UINT32 uiTileType;
+UINT16 SearchForWallType(uint32_t iMapIndex) {
+  uint32_t uiTileType;
   struct LEVELNODE *pWall;
   INT16 sOffset;
   INT16 x, y, sRadius = 0;
@@ -64,8 +64,8 @@ UINT16 SearchForWallType(UINT32 iMapIndex) {
 // This method isn't foolproof, but because erasing large areas of buildings could result in
 // multiple roof types for each building.  When processing the region, it is necessary to
 // calculate the roof type by searching for the nearest roof tile.
-UINT16 SearchForRoofType(UINT32 iMapIndex) {
-  UINT32 uiTileType;
+UINT16 SearchForRoofType(uint32_t iMapIndex) {
+  uint32_t uiTileType;
   struct LEVELNODE *pRoof;
   INT16 x, y, sRadius = 0;
   INT16 sOffset;
@@ -93,9 +93,9 @@ UINT16 SearchForRoofType(UINT32 iMapIndex) {
   return 0xffff;
 }
 
-BOOLEAN RoofAtGridNo(UINT32 iMapIndex) {
+BOOLEAN RoofAtGridNo(uint32_t iMapIndex) {
   struct LEVELNODE *pRoof;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pRoof = gpWorldLevelData[iMapIndex].pRoofHead;
   // Look through all objects and Search for type
   while (pRoof) {
@@ -108,22 +108,22 @@ BOOLEAN RoofAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN BuildingAtGridNo(UINT32 iMapIndex) {
+BOOLEAN BuildingAtGridNo(uint32_t iMapIndex) {
   if (RoofAtGridNo(iMapIndex)) return TRUE;
   if (FloorAtGridNo(iMapIndex)) return TRUE;
   return FALSE;
 }
 
-BOOLEAN ValidDecalPlacement(UINT32 iMapIndex) {
+BOOLEAN ValidDecalPlacement(uint32_t iMapIndex) {
   if (GetVerticalWall(iMapIndex) || GetHorizontalWall(iMapIndex) || GetVerticalFence(iMapIndex) ||
       GetHorizontalFence(iMapIndex))
     return TRUE;
   return FALSE;
 }
 
-struct LEVELNODE *GetVerticalWall(UINT32 iMapIndex) {
+struct LEVELNODE *GetVerticalWall(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
@@ -142,9 +142,9 @@ struct LEVELNODE *GetVerticalWall(UINT32 iMapIndex) {
   return NULL;
 }
 
-struct LEVELNODE *GetHorizontalWall(UINT32 iMapIndex) {
+struct LEVELNODE *GetHorizontalWall(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
@@ -163,9 +163,9 @@ struct LEVELNODE *GetHorizontalWall(UINT32 iMapIndex) {
   return NULL;
 }
 
-UINT16 GetVerticalWallType(UINT32 iMapIndex) {
+UINT16 GetVerticalWallType(uint32_t iMapIndex) {
   struct LEVELNODE *pWall;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pWall = GetVerticalWall(iMapIndex);
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);
@@ -176,9 +176,9 @@ UINT16 GetVerticalWallType(UINT32 iMapIndex) {
   return 0;
 }
 
-UINT16 GetHorizontalWallType(UINT32 iMapIndex) {
+UINT16 GetHorizontalWallType(uint32_t iMapIndex) {
   struct LEVELNODE *pWall;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pWall = GetHorizontalWall(iMapIndex);
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);
@@ -189,9 +189,9 @@ UINT16 GetHorizontalWallType(UINT32 iMapIndex) {
   return 0;
 }
 
-struct LEVELNODE *GetVerticalFence(UINT32 iMapIndex) {
+struct LEVELNODE *GetVerticalFence(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
@@ -209,9 +209,9 @@ struct LEVELNODE *GetVerticalFence(UINT32 iMapIndex) {
   return NULL;
 }
 
-struct LEVELNODE *GetHorizontalFence(UINT32 iMapIndex) {
+struct LEVELNODE *GetHorizontalFence(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
@@ -229,7 +229,7 @@ struct LEVELNODE *GetHorizontalFence(UINT32 iMapIndex) {
   return NULL;
 }
 
-void EraseHorizontalWall(UINT32 iMapIndex) {
+void EraseHorizontalWall(uint32_t iMapIndex) {
   struct LEVELNODE *pWall;
   pWall = GetHorizontalWall(iMapIndex);
   if (pWall) {
@@ -239,7 +239,7 @@ void EraseHorizontalWall(UINT32 iMapIndex) {
   }
 }
 
-void EraseVerticalWall(UINT32 iMapIndex) {
+void EraseVerticalWall(uint32_t iMapIndex) {
   struct LEVELNODE *pWall;
   pWall = GetVerticalWall(iMapIndex);
   if (pWall) {
@@ -249,9 +249,9 @@ void EraseVerticalWall(UINT32 iMapIndex) {
   }
 }
 
-void ChangeHorizontalWall(UINT32 iMapIndex, UINT16 usNewPiece) {
+void ChangeHorizontalWall(uint32_t iMapIndex, UINT16 usNewPiece) {
   struct LEVELNODE *pWall;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usTileIndex;
   INT16 sIndex;
   pWall = GetHorizontalWall(iMapIndex);
@@ -267,9 +267,9 @@ void ChangeHorizontalWall(UINT32 iMapIndex, UINT16 usNewPiece) {
   }
 }
 
-void ChangeVerticalWall(UINT32 iMapIndex, UINT16 usNewPiece) {
+void ChangeVerticalWall(uint32_t iMapIndex, UINT16 usNewPiece) {
   struct LEVELNODE *pWall;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usTileIndex;
   INT16 sIndex;
   pWall = GetVerticalWall(iMapIndex);
@@ -285,9 +285,9 @@ void ChangeVerticalWall(UINT32 iMapIndex, UINT16 usNewPiece) {
   }
 }
 
-void RestoreWalls(UINT32 iMapIndex) {
+void RestoreWalls(uint32_t iMapIndex) {
   struct LEVELNODE *pWall = NULL;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   UINT16 usWallType;
   UINT16 usWallOrientation;
   UINT8 ubSaveWallUIValue;

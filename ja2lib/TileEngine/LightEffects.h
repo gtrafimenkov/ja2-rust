@@ -18,12 +18,12 @@ typedef struct {
   BOOLEAN fAllocated;
   INT8 bType;
   INT32 iLight;
-  UINT32 uiTimeOfLastUpdate;
+  uint32_t uiTimeOfLastUpdate;
 
 } LIGHTEFFECT;
 
 // Decays all light effects...
-void DecayLightEffects(UINT32 uiTime);
+void DecayLightEffects(uint32_t uiTime);
 
 // Add light to gridno
 // ( Replacement algorithm uses distance away )

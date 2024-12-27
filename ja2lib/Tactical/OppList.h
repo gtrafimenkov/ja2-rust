@@ -144,7 +144,7 @@ INT8 GetHighestWatchedLocPoints(UINT8 ubID);
 void TurnOffEveryonesMuzzleFlashes(void);
 void TurnOffTeamsMuzzleFlashes(UINT8 ubTeam);
 void EndMuzzleFlash(struct SOLDIERTYPE *pSoldier);
-void NonCombatDecayPublicOpplist(UINT32 uiTime);
+void NonCombatDecayPublicOpplist(uint32_t uiTime);
 
 void CheckHostileOrSayQuoteList(void);
 void InitOpplistForDoorOpening(void);

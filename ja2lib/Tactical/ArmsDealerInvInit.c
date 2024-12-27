@@ -1081,8 +1081,8 @@ int ArmsDealerItemQsortCompare(const void *pArg1, const void *pArg2) {
 int RepairmanItemQsortCompare(const void *pArg1, const void *pArg2) {
   INVENTORY_IN_SLOT *pInvSlot1;
   INVENTORY_IN_SLOT *pInvSlot2;
-  UINT32 uiRepairTime1;
-  UINT32 uiRepairTime2;
+  uint32_t uiRepairTime1;
+  uint32_t uiRepairTime2;
 
   pInvSlot1 = (INVENTORY_IN_SLOT *)pArg1;
   pInvSlot2 = (INVENTORY_IN_SLOT *)pArg2;
@@ -1197,7 +1197,7 @@ int CompareItemsForSorting(UINT16 usItem1Index, UINT16 usItem2Index, UINT8 ubIte
 }
 
 UINT8 GetDealerItemCategoryNumber(UINT16 usItemIndex) {
-  UINT32 uiItemClass;
+  uint32_t uiItemClass;
   UINT8 ubWeaponClass;
   UINT8 ubCategory = 0;
 
