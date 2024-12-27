@@ -418,7 +418,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, uint8_t ubDesiredActi
 
 BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   uint8_t i;
-  INT8 bMercID;
+  int8_t bMercID;
   BOOLEAN fBuddyAround = FALSE;
   BOOLEAN fUnhappy = FALSE;
   uint16_t usBuddyQuote = 0;
@@ -641,7 +641,7 @@ void HandleSoldierLeavingForAnotherContract(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN SoldierWantsToDelayRenewalOfContract( struct SOLDIERTYPE *pSoldier )
 {
 
-        INT8 bTypeOfCurrentContract = 0; // what kind of contract the merc has..1 day, week or 2
+        int8_t bTypeOfCurrentContract = 0; // what kind of contract the merc has..1 day, week or 2
 week INT32 iLeftTimeOnContract = 0; // how much time til contract expires..in minutes INT32
 iToleranceLevelForContract = 0; // how much time before contract ends before merc actually speaks
 thier mind

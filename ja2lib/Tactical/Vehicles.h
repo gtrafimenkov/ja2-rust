@@ -44,7 +44,7 @@ enum {
 
 // extern STR16 sCritLocationStrings[];
 
-// extern INT8 bInternalCritHitsByLocation[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE][
+// extern int8_t bInternalCritHitsByLocation[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE][
 // NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ];
 
 extern INT16 sVehicleOrigArmorValues[NUMBER_OF_TYPES_OF_VEHICLES]
@@ -186,7 +186,7 @@ void SetUpArmorForVehicle(uint8_t ubID);
 BOOLEAN DoesVehicleNeedAnyRepairs(INT32 iVehicleId);
 
 // repair the vehicle
-INT8 RepairVehicle(INT32 iVehicleId, INT8 bTotalPts, BOOLEAN *pfNothingToRepair);
+int8_t RepairVehicle(INT32 iVehicleId, int8_t bTotalPts, BOOLEAN *pfNothingToRepair);
 
 // Save all the vehicle information to the saved game file
 BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile);
@@ -198,7 +198,7 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, uint32_t uiSavedGa
 BOOLEAN TakeSoldierOutOfVehicle(struct SOLDIERTYPE *pSoldier);
 
 // put soldier in vehicle
-BOOLEAN PutSoldierInVehicle(struct SOLDIERTYPE *pSoldier, INT8 bVehicleId);
+BOOLEAN PutSoldierInVehicle(struct SOLDIERTYPE *pSoldier, int8_t bVehicleId);
 
 void SetVehicleSectorValues(INT32 iVehId, uint8_t ubSectorX, uint8_t ubSectorY);
 
@@ -223,7 +223,7 @@ BOOLEAN OnlyThisSoldierCanDriveVehicle(struct SOLDIERTYPE *pSoldier, INT32 iVehi
 
 BOOLEAN IsEnoughSpaceInVehicle(INT32 iID);
 
-BOOLEAN IsSoldierInThisVehicleSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadNumber);
+BOOLEAN IsSoldierInThisVehicleSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadNumber);
 
 struct SOLDIERTYPE *PickRandomPassengerFromVehicle(struct SOLDIERTYPE *pSoldier);
 

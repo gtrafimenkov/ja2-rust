@@ -86,11 +86,11 @@ void SetEnemyColorCode(uint8_t ubColorCode);
 void SpecifyEntryPoint(uint32_t iMapIndex);
 
 // Modify stats of current soldiers
-void SetMercOrders(INT8 bOrders);
-void SetMercAttitude(INT8 bAttitude);
-void SetMercDirection(INT8 bDirection);
-void SetMercRelativeEquipment(INT8 bLevel);
-void SetMercRelativeAttributes(INT8 bLevel);
+void SetMercOrders(int8_t bOrders);
+void SetMercAttitude(int8_t bAttitude);
+void SetMercDirection(int8_t bDirection);
+void SetMercRelativeEquipment(int8_t bLevel);
+void SetMercRelativeAttributes(int8_t bLevel);
 
 void DeleteSelectedMerc();
 
@@ -102,7 +102,7 @@ void ExtractCurrentMercModeInfo(BOOLEAN fKillTextInputMode);
 
 void SetMercEditability(BOOLEAN fEditable);
 
-void HandleMercInventoryPanel(INT16 sX, INT16 sY, INT8 bEvent);
+void HandleMercInventoryPanel(INT16 sX, INT16 sY, int8_t bEvent);
 
 extern uint16_t gusMercsNewItemIndex;
 extern BOOLEAN gfRenderMercInfo;
@@ -124,7 +124,7 @@ extern BOOLEAN gfShowEnemies;
 extern BOOLEAN gfShowCreatures;
 extern BOOLEAN gfShowRebels;
 extern BOOLEAN gfShowCivilians;
-void SetMercTeamVisibility(INT8 bTeam, BOOLEAN fVisible);
+void SetMercTeamVisibility(int8_t bTeam, BOOLEAN fVisible);
 
 extern uint8_t gubCurrentScheduleActionIndex;
 extern BOOLEAN gfSingleAction;

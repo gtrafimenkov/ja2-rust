@@ -65,7 +65,7 @@ BOOLEAN gfPotentialTeamChangeDuringDeath = FALSE;
 
 MERCPROFILESTRUCT gMercProfiles[NUM_PROFILES];
 
-INT8 gbSkillTraitBonus[NUM_SKILLTRAITS] = {
+int8_t gbSkillTraitBonus[NUM_SKILLTRAITS] = {
     0,   // NO_SKILLTRAIT
     25,  // LOCKPICKING
     15,  // HANDTOHAND
@@ -117,7 +117,7 @@ uint8_t gubAssassins[NUM_ASSASSINS] = {JIM, JACK, OLAF, RAY, OLGA, TYRONE};
 
 #define NUM_ASSASSIN_POSSIBLE_TOWNS 5
 
-INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
+int8_t gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
     // Jim
     {CAMBRIA, DRASSEN, ALMA, BALIME, GRUMM},
     // Jack
@@ -806,7 +806,7 @@ BOOLEAN RecruitRPC(uint8_t ubCharNum) {
   HandleTownLoyaltyForNPCRecruitment(pNewSoldier);
 
   // Try putting them into the current squad
-  if (AddCharacterToSquad(pNewSoldier, (INT8)CurrentSquad()) == FALSE) {
+  if (AddCharacterToSquad(pNewSoldier, (int8_t)CurrentSquad()) == FALSE) {
     AddCharacterToAnySquad(pNewSoldier);
   }
 
@@ -816,7 +816,7 @@ BOOLEAN RecruitRPC(uint8_t ubCharNum) {
 
   if (pNewSoldier->inv[HANDPOS].usItem == NOTHING) {
     // empty handed - swap in first available weapon
-    INT8 bSlot;
+    int8_t bSlot;
 
     bSlot = FindObjClass(pNewSoldier, IC_WEAPON);
     if (bSlot != NO_SLOT) {
@@ -874,7 +874,7 @@ BOOLEAN RecruitEPC(uint8_t ubCharNum) {
   pNewSoldier->ubWhatKindOfMercAmI = MERC_TYPE__EPC;
 
   // Try putting them into the current squad
-  if (AddCharacterToSquad(pNewSoldier, (INT8)CurrentSquad()) == FALSE) {
+  if (AddCharacterToSquad(pNewSoldier, (int8_t)CurrentSquad()) == FALSE) {
     AddCharacterToAnySquad(pNewSoldier);
   }
 
@@ -953,9 +953,9 @@ BOOLEAN UnRecruitEPC(uint8_t ubCharNum) {
   return (TRUE);
 }
 
-INT8 WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy) {
+int8_t WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy) {
   MERCPROFILESTRUCT *pProfile;
-  INT8 bLoop;
+  int8_t bLoop;
 
   pProfile = &(gMercProfiles[ubCharNum]);
 
@@ -967,9 +967,9 @@ INT8 WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy) {
   return (-1);
 }
 
-INT8 WhichHated(uint8_t ubCharNum, uint8_t ubHated) {
+int8_t WhichHated(uint8_t ubCharNum, uint8_t ubHated) {
   MERCPROFILESTRUCT *pProfile;
-  INT8 bLoop;
+  int8_t bLoop;
 
   pProfile = &(gMercProfiles[ubCharNum]);
 
@@ -1049,7 +1049,7 @@ void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs) {
 
 BOOLEAN DoesMercHaveABuddyOnTheTeam(uint8_t ubMercID) {
   uint8_t ubCnt;
-  INT8 bBuddyID;
+  int8_t bBuddyID;
 
   // loop through the list of people the merc is buddies with
   for (ubCnt = 0; ubCnt < 3; ubCnt++) {

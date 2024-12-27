@@ -39,7 +39,7 @@ typedef struct {
 // Itempickup stuff
 BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                  struct ITEM_POOL *pItemPool, INT16 sScreenX, INT16 sScreenY,
-                                 INT8 bZLevel);
+                                 int8_t bZLevel);
 void RenderItemPickupMenu();
 void RemoveItemPickupMenu();
 void SetItemPickupMenuDirty(BOOLEAN fDirtyLevel);
@@ -63,7 +63,7 @@ void DisableInvRegions(BOOLEAN fDisable);
 void DegradeNewlyAddedItems();
 void CheckForAnyNewlyAddedItems(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, INT8 bInvPos, BOOLEAN fOn);
+BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, int8_t bInvPos, BOOLEAN fOn);
 
 // THIS FUNCTION IS CALLED TO RENDER AN ITEM.
 // uiBuffer - The Dest Video Surface - can only be FRAME_BUFFER or guiSAVEBUFFER
@@ -126,7 +126,7 @@ extern BOOLEAN gfItemPointerDifferentThanDefault;
 
 void BeginItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos);
 void InternalBeginItemPointer(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
-                              INT8 bHandPos);
+                              int8_t bHandPos);
 void EndItemPointer();
 void DrawItemFreeCursor();
 void DrawItemTileCursor();

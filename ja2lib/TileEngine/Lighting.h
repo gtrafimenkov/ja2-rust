@@ -166,7 +166,7 @@ BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase
 uint16_t CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
-uint8_t LightTrueLevel(INT16 sGridNo, INT8 bLevel);
+uint8_t LightTrueLevel(INT16 sGridNo, int8_t bLevel);
 
 // system variables
 extern LIGHT_NODE *pLightList[MAX_LIGHT_TEMPLATES];

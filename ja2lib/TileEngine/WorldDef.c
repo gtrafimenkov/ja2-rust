@@ -100,7 +100,7 @@ CHAR8 gzLastLoadedFile[260];
 
 uint32_t gCurrentBackground = FIRSTTEXTURE;
 
-INT8 gbNewTileSurfaceLoaded[NUMBEROFTILETYPES];
+int8_t gbNewTileSurfaceLoaded[NUMBEROFTILETYPES];
 
 void SetAllNewTileSurfacesLoaded(BOOLEAN fNew) {
   memset(gbNewTileSurfaceLoaded, fNew, sizeof(gbNewTileSurfaceLoaded));
@@ -116,11 +116,11 @@ void DestroyTileSurfaces(void);
 void ProcessTilesetNamesForBPP(void);
 BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos);
 
-INT8 IsHiddenTileMarkerThere(INT16 sGridNo);
+int8_t IsHiddenTileMarkerThere(INT16 sGridNo);
 extern void SetInterfaceHeightLevel();
 
 void SaveMapLights(HWFILE hfile);
-void LoadMapLights(INT8 **hBuffer);
+void LoadMapLights(int8_t **hBuffer);
 
 // Global Variables
 MAP_ELEMENT *gpWorldLevelData;
@@ -1155,7 +1155,7 @@ void RecompileLocalMovementCosts(INT16 sCentreGridNo) {
   INT16 usGridNo;
   INT16 sGridX, sGridY;
   INT16 sCentreGridX, sCentreGridY;
-  INT8 bDirLoop;
+  int8_t bDirLoop;
 
   ConvertGridNoToXY(sCentreGridNo, &sCentreGridX, &sCentreGridY);
   for (sGridY = sCentreGridY - LOCAL_RADIUS; sGridY < sCentreGridY + LOCAL_RADIUS; sGridY++) {
@@ -1186,11 +1186,11 @@ void RecompileLocalMovementCosts(INT16 sCentreGridNo) {
   }
 }
 
-void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, INT8 bRadius) {
+void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, int8_t bRadius) {
   INT16 usGridNo;
   INT16 sGridX, sGridY;
   INT16 sCentreGridX, sCentreGridY;
-  INT8 bDirLoop;
+  int8_t bDirLoop;
 
   ConvertGridNoToXY(sCentreGridNo, &sCentreGridX, &sCentreGridY);
   if (bRadius == 0) {
@@ -1266,7 +1266,7 @@ void AddTileToRecompileArea(INT16 sGridNo) {
 void RecompileLocalMovementCostsInAreaWithFlags(void) {
   INT16 usGridNo;
   INT16 sGridX, sGridY;
-  INT8 bDirLoop;
+  int8_t bDirLoop;
 
   for (sGridY = gsRecompileAreaTop; sGridY <= gsRecompileAreaBottom; sGridY++) {
     for (sGridX = gsRecompileAreaLeft; sGridX < gsRecompileAreaRight; sGridX++) {
@@ -1295,7 +1295,7 @@ void RecompileLocalMovementCostsInAreaWithFlags(void) {
 }
 
 void RecompileLocalMovementCostsForWall(INT16 sGridNo, uint8_t ubOrientation) {
-  INT8 bDirLoop;
+  int8_t bDirLoop;
   INT16 sUp, sDown, sLeft, sRight;
   INT16 sX, sY, sTempGridNo;
 
@@ -1731,7 +1731,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Write out room information
-    FileMan_Write(hfile, &gubWorldRoomInfo[cnt], sizeof(INT8), &uiBytesWritten);
+    FileMan_Write(hfile, &gubWorldRoomInfo[cnt], sizeof(int8_t), &uiBytesWritten);
   }
 
   if (uiFlags & MAP_WORLDITEMS_SAVED) {
@@ -1778,7 +1778,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 }
 
 #define NUM_DIR_SEARCHES 5
-INT8 bDirectionsForShadowSearch[NUM_DIR_SEARCHES] = {WEST, SOUTHWEST, SOUTH, SOUTHEAST, EAST};
+int8_t bDirectionsForShadowSearch[NUM_DIR_SEARCHES] = {WEST, SOUTHWEST, SOUTH, SOUTHEAST, EAST};
 
 void OptimizeMapForShadows() {
   INT32 cnt, dir;
@@ -1860,7 +1860,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel) {
   SUMMARYFILE *pSummary;
   HWFILE hfile;
   MAPCREATE_STRUCT mapInfo;
-  INT8 *pBuffer, *pBufferHead;
+  int8_t *pBuffer, *pBufferHead;
   uint32_t uiFileSize;
   uint32_t uiFlags;
   uint32_t uiBytesRead;
@@ -1898,7 +1898,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel) {
   if (!hfile) return FALSE;
 
   uiFileSize = FileMan_GetSize(hfile);
-  pBuffer = (INT8 *)MemAlloc(uiFileSize);
+  pBuffer = (int8_t *)MemAlloc(uiFileSize);
   pBufferHead = pBuffer;
   FileMan_Read(hfile, pBuffer, uiFileSize, &uiBytesRead);
   FileMan_Close(hfile);
@@ -2252,8 +2252,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   CHAR8 aFilename[256];
   uint8_t ubCombine;
   uint8_t bCounts[WORLD_MAX][8];
-  INT8 *pBuffer;
-  INT8 *pBufferHead;
+  int8_t *pBuffer;
+  int8_t *pBufferHead;
   BOOLEAN fGenerateEdgePoints = FALSE;
   uint8_t ubMinorMapVersion;
 #ifdef JA2TESTVERSION
@@ -2297,7 +2297,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   // Get the file size and alloc one huge buffer for it.
   // We will use this buffer to transfer all of the data from.
   uiFileSize = FileMan_GetSize(hfile);
-  pBuffer = (INT8 *)MemAlloc(uiFileSize);
+  pBuffer = (int8_t *)MemAlloc(uiFileSize);
   pBufferHead = pBuffer;
   FileMan_Read(hfile, pBuffer, uiFileSize, &uiBytesRead);
   FileMan_Close(hfile);
@@ -2571,13 +2571,13 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   gubMaxRoomNumber = 0;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Read room information
-    LOADDATA(&gubWorldRoomInfo[cnt], pBuffer, sizeof(INT8));
+    LOADDATA(&gubWorldRoomInfo[cnt], pBuffer, sizeof(int8_t));
     // Got to set the max room number
     if (gubWorldRoomInfo[cnt] > gubMaxRoomNumber) gubMaxRoomNumber = gubWorldRoomInfo[cnt];
   }
   if (gubMaxRoomNumber < 255) gubMaxRoomNumber++;
 #else
-  LOADDATA(gubWorldRoomInfo, pBuffer, sizeof(INT8) * WORLD_MAX);
+  LOADDATA(gubWorldRoomInfo, pBuffer, sizeof(int8_t) * WORLD_MAX);
 #endif
 
   // ATE; Memset this array!
@@ -3154,8 +3154,8 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
   struct STRUCTURE *pStructure;
   INT16 sGridNo;
   uint8_t ubWallOrientation;
-  INT8 bHiddenVal;
-  INT8 bNumWallsSameGridNo;
+  int8_t bHiddenVal;
+  int8_t bNumWallsSameGridNo;
   uint16_t usWireFrameIndex;
 
   // Create world randomly from tiles
@@ -3367,7 +3367,7 @@ void RemoveWireFrameTiles(INT16 sGridNo) {
   }
 }
 
-INT8 IsHiddenTileMarkerThere(INT16 sGridNo) {
+int8_t IsHiddenTileMarkerThere(INT16 sGridNo) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
@@ -3469,7 +3469,7 @@ void SaveMapLights(HWFILE hfile) {
   }
 }
 
-void LoadMapLights(INT8 **hBuffer) {
+void LoadMapLights(int8_t **hBuffer) {
   struct SGPPaletteEntry LColors[3];
   uint8_t ubNumColors;
   uint16_t usNumLights;

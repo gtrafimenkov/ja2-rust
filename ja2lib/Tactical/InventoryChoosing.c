@@ -68,18 +68,18 @@ ARMY_GUN_CHOICE_TYPE gExtendedArmyGunChoices[ARMY_GUN_LEVELS] = {
     {/* 10- rocket rifle		*/ 4, {ROCKET_RIFLE, ROCKET_RIFLE, RPK74, HK21E, -1}},
 };
 
-void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass);
+void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass);
 void EquipTank(SOLDIERCREATE_STRUCT *pp);
 
-void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass);
-void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscClass);
-void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass);
+void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bKitClass);
+void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bMiscClass);
+void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bBombClass);
 
 void InitArmyGunTypes(void) {
   ARMY_GUN_CHOICE_TYPE *pGunChoiceTable;
   uint32_t uiGunLevel;
   uint32_t uiChoice;
-  INT8 bItemNo;
+  int8_t bItemNo;
   uint8_t ubWeapon;
 
   // depending on selection of the gun nut option
@@ -109,14 +109,14 @@ void InitArmyGunTypes(void) {
   MarkAllWeaponsOfSameGunClassAsDropped(SW38);
 }
 
-INT8 GetWeaponClass(uint16_t usGun) {
+int8_t GetWeaponClass(uint16_t usGun) {
   uint32_t uiGunLevel, uiLoop;
 
   // always use the extended list since it contains all guns...
   for (uiGunLevel = 0; uiGunLevel < ARMY_GUN_LEVELS; uiGunLevel++) {
     for (uiLoop = 0; uiLoop < gExtendedArmyGunChoices[uiGunLevel].ubChoices; uiLoop++) {
       if (gExtendedArmyGunChoices[uiGunLevel].bItemNo[uiLoop] == usGun) {
-        return ((INT8)uiGunLevel);
+        return ((int8_t)uiGunLevel);
       }
     }
   }
@@ -124,7 +124,7 @@ INT8 GetWeaponClass(uint16_t usGun) {
 }
 
 void MarkAllWeaponsOfSameGunClassAsDropped(uint16_t usWeapon) {
-  INT8 bGunClass;
+  int8_t bGunClass;
   uint32_t uiLoop;
 
   // mark that item itself as dropped, whether or not it's part of a gun class
@@ -148,31 +148,32 @@ void MarkAllWeaponsOfSameGunClassAsDropped(uint16_t usWeapon) {
 // that different groups can have.  Basically,
 // there are variations, so a guy at a certain level may get a better gun and worse armour or vice
 // versa.
-void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 bEquipmentRating) {
+void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass,
+                             int8_t bEquipmentRating) {
   struct OBJECTTYPE *pItem;
   // general rating information
-  INT8 bRating = 0;
+  int8_t bRating = 0;
   // numbers of items
-  INT8 bAmmoClips = 0;
-  INT8 bGrenades = 0;
+  int8_t bAmmoClips = 0;
+  int8_t bGrenades = 0;
   BOOLEAN fAttachment = FALSE;
   // item levels
-  INT8 bWeaponClass = 0;
-  INT8 bHelmetClass = 0;
-  INT8 bVestClass = 0;
-  INT8 bLeggingClass = 0;
-  INT8 bAttachClass = 0;
-  INT8 bGrenadeClass = 0;
-  INT8 bKnifeClass = 0;
-  INT8 bKitClass = 0;
-  INT8 bMiscClass = 0;
-  INT8 bBombClass = 0;
+  int8_t bWeaponClass = 0;
+  int8_t bHelmetClass = 0;
+  int8_t bVestClass = 0;
+  int8_t bLeggingClass = 0;
+  int8_t bAttachClass = 0;
+  int8_t bGrenadeClass = 0;
+  int8_t bKnifeClass = 0;
+  int8_t bKitClass = 0;
+  int8_t bMiscClass = 0;
+  int8_t bBombClass = 0;
   // special weapons
   BOOLEAN fMortar = FALSE;
   BOOLEAN fGrenadeLauncher = FALSE;
   BOOLEAN fLAW = FALSE;
   INT32 i;
-  INT8 bEquipmentModifier;
+  int8_t bEquipmentModifier;
   uint8_t ubMaxSpecialWeaponRoll;
 
   Assert(pp);
@@ -198,7 +199,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
   switch (bSoldierClass) {
     case SOLDIER_CLASS_NONE:
       // ammo is here only so that civilians with pre-assigned ammo will get some clips for it!
-      bAmmoClips = (INT8)(1 + Random(2));
+      bAmmoClips = (int8_t)(1 + Random(2));
 
       // civilians get nothing, anyone who should get something should be preassigned by Linda
       break;
@@ -206,7 +207,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
     case SOLDIER_CLASS_ADMINISTRATOR:
     case SOLDIER_CLASS_GREEN_MILITIA:
       bRating = BAD_ADMINISTRATOR_EQUIPMENT_RATING + bEquipmentModifier;
-      bRating = (INT8)max(MIN_EQUIPMENT_CLASS, min(MAX_EQUIPMENT_CLASS, bRating));
+      bRating = (int8_t)max(MIN_EQUIPMENT_CLASS, min(MAX_EQUIPMENT_CLASS, bRating));
 
       bWeaponClass = bRating;
 
@@ -218,7 +219,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
 
       if (Random(2)) bKnifeClass = bRating;
 
-      bAmmoClips = (INT8)(1 + Random(2));
+      bAmmoClips = (int8_t)(1 + Random(2));
 
       if (bRating >= GOOD_ADMINISTRATOR_EQUIPMENT_RATING) {
         bAmmoClips++;
@@ -249,7 +250,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
     case SOLDIER_CLASS_REG_MILITIA:
       // army guys tend to have a broad range of equipment
       bRating = BAD_ARMY_EQUIPMENT_RATING + bEquipmentModifier;
-      bRating = (INT8)max(MIN_EQUIPMENT_CLASS, min(MAX_EQUIPMENT_CLASS, bRating));
+      bRating = (int8_t)max(MIN_EQUIPMENT_CLASS, min(MAX_EQUIPMENT_CLASS, bRating));
 
       bWeaponClass = bRating;
       bVestClass = bRating;
@@ -261,10 +262,10 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
         bAttachClass = bRating;
       }
 
-      bAmmoClips = (INT8)(2 + Random(2));
+      bAmmoClips = (int8_t)(2 + Random(2));
 
       if (bRating >= AVERAGE_ARMY_EQUIPMENT_RATING) {
-        bGrenades = (INT8)Random(2);
+        bGrenades = (int8_t)Random(2);
         bKitClass = bRating;
         bMiscClass = bRating;
       }
@@ -313,7 +314,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
             if (pp->bExpLevel >= 3) {
               // grenade launcher
               fGrenadeLauncher = TRUE;
-              bGrenades = 3 + (INT8)(Random(3));  // 3-5
+              bGrenades = 3 + (int8_t)(Random(3));  // 3-5
             }
             break;
 
@@ -334,7 +335,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
               guiMortarsRolledByTeam++;
 
               // the grenades will actually represent mortar shells in this case
-              bGrenades = 2 + (INT8)(Random(3));  // 2-4
+              bGrenades = 2 + (int8_t)(Random(3));  // 2-4
               bGrenadeClass = MORTAR_GRENADE_CLASS;
             }
             break;
@@ -345,7 +346,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
     case SOLDIER_CLASS_ELITE:
     case SOLDIER_CLASS_ELITE_MILITIA:
       bRating = BAD_ELITE_EQUIPMENT_RATING + bEquipmentModifier;
-      bRating = (INT8)max(MIN_EQUIPMENT_CLASS, min(MAX_EQUIPMENT_CLASS, bRating));
+      bRating = (int8_t)max(MIN_EQUIPMENT_CLASS, min(MAX_EQUIPMENT_CLASS, bRating));
 
       bWeaponClass = bRating;
       bHelmetClass = bRating;
@@ -360,8 +361,8 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
         bBombClass = bRating;
       }
 
-      bAmmoClips = (INT8)(3 + Random(2));
-      bGrenades = (INT8)(1 + Random(3));
+      bAmmoClips = (int8_t)(3 + Random(2));
+      bGrenades = (int8_t)(1 + Random(3));
 
       if ((bRating >= AVERAGE_ELITE_EQUIPMENT_RATING) && (Random(100) < 75)) {
         fAttachment = TRUE;
@@ -406,7 +407,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
           case 2:
             // grenade launcher
             fGrenadeLauncher = TRUE;
-            bGrenades = 4 + (INT8)(Random(4));  // 4-7
+            bGrenades = 4 + (int8_t)(Random(4));  // 4-7
             break;
           case 3:
           case 4:
@@ -422,7 +423,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
               guiMortarsRolledByTeam++;
 
               // the grenades will actually represent mortar shells in this case
-              bGrenades = 3 + (INT8)(Random(5));  // 3-7
+              bGrenades = 3 + (int8_t)(Random(5));  // 3-7
               bGrenadeClass = MORTAR_GRENADE_CLASS;
             }
             break;
@@ -508,8 +509,9 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
 // selection for that particular type of item, and 1-11 means to choose an item if possible.  1 is
 // the worst class of item, while 11 is the best.
 
-void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponClass,
-                                        INT8 bAmmoClips, INT8 bAttachClass, BOOLEAN fAttachment) {
+void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bWeaponClass,
+                                        int8_t bAmmoClips, int8_t bAttachClass,
+                                        BOOLEAN fAttachment) {
   INVTYPE *pItem;
   struct OBJECTTYPE Object;
   uint16_t i;
@@ -519,7 +521,7 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
   uint16_t usAmmoIndex = 0;
   uint16_t usAttachIndex = 0;
   uint8_t ubChanceStandardAmmo;
-  INT8 bStatus;
+  int8_t bStatus;
 
   // Choose weapon:
   // WEAPONS are very important, and are therefore handled differently using special pre-generated
@@ -618,24 +620,24 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
       case SOLDIER_CLASS_GREEN_MILITIA:
       case SOLDIER_CLASS_REG_MILITIA:
         // Admins/Troops: 60-75% + 1% every 4% progress
-        bStatus = (INT8)(60 + Random(16));
-        bStatus += (INT8)(HighestPlayerProgressPercentage() / 4);
-        bStatus = (INT8)min(100, bStatus);
+        bStatus = (int8_t)(60 + Random(16));
+        bStatus += (int8_t)(HighestPlayerProgressPercentage() / 4);
+        bStatus = (int8_t)min(100, bStatus);
         break;
       case SOLDIER_CLASS_ELITE:
       case SOLDIER_CLASS_ELITE_MILITIA:
         // 85-90% +  1% every 10% progress
-        bStatus = (INT8)(85 + Random(6));
-        bStatus += (INT8)(HighestPlayerProgressPercentage() / 10);
-        bStatus = (INT8)min(100, bStatus);
+        bStatus = (int8_t)(85 + Random(6));
+        bStatus += (int8_t)(HighestPlayerProgressPercentage() / 10);
+        bStatus = (int8_t)min(100, bStatus);
         break;
       default:
-        bStatus = (INT8)(50 + Random(51));
+        bStatus = (int8_t)(50 + Random(51));
         break;
     }
     // don't allow it to be lower than marksmanship, we don't want it to affect their chances of
     // hitting
-    bStatus = (INT8)max(pp->bMarksmanship, bStatus);
+    bStatus = (int8_t)max(pp->bMarksmanship, bStatus);
 
     CreateItem(usGunIndex, bStatus, &(pp->Inv[HANDPOS]));
     pp->Inv[HANDPOS].fFlags |= OBJECT_UNDROPPABLE;
@@ -660,8 +662,8 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
   }
 }
 
-void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenades,
-                                          INT8 bGrenadeClass, BOOLEAN fGrenadeLauncher) {
+void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bGrenades,
+                                          int8_t bGrenadeClass, BOOLEAN fGrenadeLauncher) {
   struct OBJECTTYPE Object;
   INT16 sNumPoints;
   uint16_t usItem;
@@ -684,7 +686,7 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
 
   // special mortar shell handling
   if (bGrenadeClass == MORTAR_GRENADE_CLASS) {
-    CreateItems(MORTAR_SHELL, (INT8)(80 + Random(21)), bGrenades, &Object);
+    CreateItems(MORTAR_SHELL, (int8_t)(80 + Random(21)), bGrenades, &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
     return;
@@ -830,7 +832,7 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
     } else {
       usItem = SMOKE_GRENADE;
     }
-    CreateItems(usItem, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumSmoke, &Object);
+    CreateItems(usItem, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumSmoke, &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
@@ -840,7 +842,7 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
     } else {
       usItem = TEARGAS_GRENADE;
     }
-    CreateItems(usItem, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumTear, &Object);
+    CreateItems(usItem, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumTear, &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
@@ -850,7 +852,7 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
     } else {
       usItem = STUN_GRENADE;
     }
-    CreateItems(usItem, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumStun, &Object);
+    CreateItems(usItem, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumStun, &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
@@ -860,38 +862,38 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
     } else {
       usItem = HAND_GRENADE;
     }
-    CreateItems(usItem, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumReg, &Object);
+    CreateItems(usItem, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumReg, &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
 
   if (ubNumMini) {
-    CreateItems(MINI_GRENADE, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumMini,
+    CreateItems(MINI_GRENADE, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumMini,
                 &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
   if (ubNumMustard) {
-    CreateItems(MUSTARD_GRENADE, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumMustard,
+    CreateItems(MUSTARD_GRENADE, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumMustard,
                 &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
   if (ubNumFlare) {
-    CreateItems(BREAK_LIGHT, (INT8)(ubBaseQuality + Random(ubQualityVariation)), ubNumFlare,
+    CreateItems(BREAK_LIGHT, (int8_t)(ubBaseQuality + Random(ubQualityVariation)), ubNumFlare,
                 &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
 }
 
-void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetClass,
-                                        INT8 bVestClass, INT8 bLeggingsClass) {
+void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bHelmetClass,
+                                        int8_t bVestClass, int8_t bLeggingsClass) {
   uint16_t i;
   INVTYPE *pItem;
   uint16_t usRandom;
   uint16_t usNumMatches;
-  INT8 bOrigVestClass = bVestClass;
+  int8_t bOrigVestClass = bVestClass;
   struct OBJECTTYPE Object;
 
   // Choose helmet
@@ -920,7 +922,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
               usRandom--;
             else {
               if (!(pp->Inv[HELMETPOS].fFlags & OBJECT_NO_OVERWRITE)) {
-                CreateItem(i, (INT8)(70 + Random(31)), &(pp->Inv[HELMETPOS]));
+                CreateItem(i, (int8_t)(70 + Random(31)), &(pp->Inv[HELMETPOS]));
                 pp->Inv[HELMETPOS].fFlags |= OBJECT_UNDROPPABLE;
               }
               break;
@@ -962,14 +964,14 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
               usRandom--;
             else {
               if (!(pp->Inv[VESTPOS].fFlags & OBJECT_NO_OVERWRITE)) {
-                CreateItem(i, (INT8)(70 + Random(31)), &(pp->Inv[VESTPOS]));
+                CreateItem(i, (int8_t)(70 + Random(31)), &(pp->Inv[VESTPOS]));
                 pp->Inv[VESTPOS].fFlags |= OBJECT_UNDROPPABLE;
 
                 if ((i == KEVLAR_VEST) || (i == SPECTRA_VEST)) {
                   // roll to see if he gets a CERAMIC PLATES, too.  Higher chance the higher his
                   // entitled vest class is
-                  if ((INT8)Random(100) < (15 * (bOrigVestClass - pItem->ubCoolness))) {
-                    CreateItem(CERAMIC_PLATES, (INT8)(70 + Random(31)), &Object);
+                  if ((int8_t)Random(100) < (15 * (bOrigVestClass - pItem->ubCoolness))) {
+                    CreateItem(CERAMIC_PLATES, (int8_t)(70 + Random(31)), &Object);
                     Object.fFlags |= OBJECT_UNDROPPABLE;
                     AttachObject(NULL, &(pp->Inv[VESTPOS]), &Object);
                   }
@@ -1008,7 +1010,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
               usRandom--;
             else {
               if (!(pp->Inv[LEGPOS].fFlags & OBJECT_NO_OVERWRITE)) {
-                CreateItem(i, (INT8)(70 + Random(31)), &(pp->Inv[LEGPOS]));
+                CreateItem(i, (int8_t)(70 + Random(31)), &(pp->Inv[LEGPOS]));
                 pp->Inv[LEGPOS].fFlags |= OBJECT_UNDROPPABLE;
                 break;
               }
@@ -1020,7 +1022,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
   }
 }
 
-void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKnifeClass,
+void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bKnifeClass,
                                                 BOOLEAN fGrenadeLauncher, BOOLEAN fLAW,
                                                 BOOLEAN fMortar) {
   uint16_t i;
@@ -1060,21 +1062,21 @@ void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 b
   }
 
   if (usKnifeIndex) {
-    CreateItem(usKnifeIndex, (INT8)(70 + Random(31)), &Object);
+    CreateItem(usKnifeIndex, (int8_t)(70 + Random(31)), &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
 
   if (fGrenadeLauncher) {
     // give grenade launcher
-    CreateItem(GLAUNCHER, (INT8)(50 + Random(51)), &Object);
+    CreateItem(GLAUNCHER, (int8_t)(50 + Random(51)), &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
 
   if (fLAW) {
     // give rocket launcher
-    CreateItem(ROCKET_LAUNCHER, (INT8)(50 + Random(51)), &Object);
+    CreateItem(ROCKET_LAUNCHER, (int8_t)(50 + Random(51)), &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
@@ -1084,7 +1086,7 @@ void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 b
     Assert(IsAutoResolveActive() || (gbWorldSectorZ == 0));
 
     // give mortar
-    CreateItem(MORTAR, (INT8)(50 + Random(51)), &Object);
+    CreateItem(MORTAR, (int8_t)(50 + Random(51)), &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
@@ -1092,7 +1094,7 @@ void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 b
 
 void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
   INT32 i;
-  INT8 bDifficultyRating = CalcDifficultyModifier(pp->ubSoldierClass);
+  int8_t bDifficultyRating = CalcDifficultyModifier(pp->ubSoldierClass);
 
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
       StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)]
@@ -1116,17 +1118,17 @@ void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
     case SOLDIER_CLASS_ELITE_MILITIA:
       // All elites get a gasmask and either night goggles or uv goggles.
       if (Chance(75)) {
-        CreateItem(GASMASK, (INT8)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
+        CreateItem(GASMASK, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
         pp->Inv[HEAD1POS].fFlags |= OBJECT_UNDROPPABLE;
       } else {
-        CreateItem(EXTENDEDEAR, (INT8)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
+        CreateItem(EXTENDEDEAR, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
         pp->Inv[HEAD1POS].fFlags |= OBJECT_UNDROPPABLE;
       }
       if (Chance(75)) {
-        CreateItem(NIGHTGOGGLES, (INT8)(70 + Random(31)), &(pp->Inv[HEAD2POS]));
+        CreateItem(NIGHTGOGGLES, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD2POS]));
         pp->Inv[HEAD2POS].fFlags |= OBJECT_UNDROPPABLE;
       } else {
-        CreateItem(UVGOGGLES, (INT8)(70 + Random(31)), &(pp->Inv[HEAD2POS]));
+        CreateItem(UVGOGGLES, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD2POS]));
         pp->Inv[HEAD2POS].fFlags |= OBJECT_UNDROPPABLE;
       }
       break;
@@ -1134,15 +1136,15 @@ void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
     case SOLDIER_CLASS_REG_MILITIA:
       if (Chance(bDifficultyRating / 2)) {  // chance of getting a face item
         if (Chance(50)) {
-          CreateItem(GASMASK, (INT8)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
+          CreateItem(GASMASK, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
           pp->Inv[HEAD1POS].fFlags |= OBJECT_UNDROPPABLE;
         } else {
-          CreateItem(NIGHTGOGGLES, (INT8)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
+          CreateItem(NIGHTGOGGLES, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD1POS]));
           pp->Inv[HEAD1POS].fFlags |= OBJECT_UNDROPPABLE;
         }
       }
       if (Chance(bDifficultyRating / 3)) {  // chance of getting a extended ear
-        CreateItem(EXTENDEDEAR, (INT8)(70 + Random(31)), &(pp->Inv[HEAD2POS]));
+        CreateItem(EXTENDEDEAR, (int8_t)(70 + Random(31)), &(pp->Inv[HEAD2POS]));
         pp->Inv[HEAD2POS].fFlags |= OBJECT_UNDROPPABLE;
       }
       break;
@@ -1152,7 +1154,7 @@ void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
   }
 }
 
-void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass) {
+void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bKitClass) {
   uint16_t i;
   INVTYPE *pItem;
   uint16_t usRandom;
@@ -1197,13 +1199,13 @@ void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass) 
   }
 
   if (usKitItem != 0) {
-    CreateItem(usKitItem, (INT8)(80 + Random(21)), &Object);
+    CreateItem(usKitItem, (int8_t)(80 + Random(21)), &Object);
     Object.fFlags |= OBJECT_UNDROPPABLE;
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
 }
 
-void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscClass) {
+void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bMiscClass) {
   uint16_t i;
   INVTYPE *pItem;
   uint16_t usRandom;
@@ -1253,7 +1255,7 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscCl
           if (usRandom)
             usRandom--;
           else {
-            CreateItem((uint16_t)iMiscItemsList[i], (INT8)(80 + Random(21)), &Object);
+            CreateItem((uint16_t)iMiscItemsList[i], (int8_t)(80 + Random(21)), &Object);
             Object.fFlags |= OBJECT_UNDROPPABLE;
             PlaceObjectInSoldierCreateStruct(pp, &Object);
             break;
@@ -1266,7 +1268,7 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscCl
   }
 }
 
-void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass) {
+void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bBombClass) {
   uint16_t i;
   INVTYPE *pItem;
   uint16_t usRandom;
@@ -1292,7 +1294,7 @@ void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass
         if (usRandom)
           usRandom--;
         else {
-          CreateItem(i, (INT8)(80 + Random(21)), &Object);
+          CreateItem(i, (int8_t)(80 + Random(21)), &Object);
           Object.fFlags |= OBJECT_UNDROPPABLE;
           PlaceObjectInSoldierCreateStruct(pp, &Object);
           break;
@@ -1309,13 +1311,13 @@ void ChooseLocationSpecificGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) 
   // but somewhere on their person, not in their face positions
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
       StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)].fEnemyControlled) {
-    CreateItem(GASMASK, (INT8)(95 + Random(6)), &Object);
+    CreateItem(GASMASK, (int8_t)(95 + Random(6)), &Object);
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
 }
 
 BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECTTYPE *pObject) {
-  INT8 i;
+  int8_t i;
   if (!Item[pObject->usItem].ubPerPocket) {  // ubPerPocket == 0 will only fit in large pockets.
     pObject->ubNumberOfObjects = 1;
     for (i = BIGPOCK1POS; i <= BIGPOCK4POS; i++) {
@@ -1346,7 +1348,7 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECT
   return FALSE;
 }
 
-void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
+void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass) {
   INT32 i;
   //	uint16_t usRandomNum;
   uint32_t uiItemClass;
@@ -1742,12 +1744,12 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
   // decide if the creature will drop any REAL bodyparts
   if (Random(100) < uiChanceToDrop) {
     CreateItem((uint16_t)(fBloodcat ? BLOODCAT_CLAWS : CREATURE_PART_CLAWS),
-               (INT8)(80 + Random(21)), &(pSoldier->inv[BIGPOCK1POS]));
+               (int8_t)(80 + Random(21)), &(pSoldier->inv[BIGPOCK1POS]));
   }
 
   if (Random(100) < uiChanceToDrop) {
     CreateItem((uint16_t)(fBloodcat ? BLOODCAT_TEETH : CREATURE_PART_FLESH),
-               (INT8)(80 + Random(21)), &(pSoldier->inv[BIGPOCK2POS]));
+               (int8_t)(80 + Random(21)), &(pSoldier->inv[BIGPOCK2POS]));
   }
 
   // as requested by ATE, males are more likely to drop their "organs" (he actually suggested this,
@@ -1758,14 +1760,14 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (Random(100) < uiChanceToDrop) {
-    CreateItem((uint16_t)(fBloodcat ? BLOODCAT_PELT : CREATURE_PART_ORGAN), (INT8)(80 + Random(21)),
-               &(pSoldier->inv[BIGPOCK3POS]));
+    CreateItem((uint16_t)(fBloodcat ? BLOODCAT_PELT : CREATURE_PART_ORGAN),
+               (int8_t)(80 + Random(21)), &(pSoldier->inv[BIGPOCK3POS]));
   }
 }
 
-void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
+void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass) {
   uint32_t uiLoop, uiLoop2, uiAttachDestIndex;
-  INT8 bWeaponClass;
+  int8_t bWeaponClass;
   struct OBJECTTYPE OldObj;
   uint16_t usItem, usNewGun, usAmmo, usNewAmmo;
 
@@ -1853,11 +1855,11 @@ void EquipTank(SOLDIERCREATE_STRUCT *pp) {
   // tanks get special equipment, and they drop nothing (MGs are hard-mounted & non-removable)
 
   // main cannon
-  CreateItem(TANK_CANNON, (INT8)(80 + Random(21)), &(pp->Inv[HANDPOS]));
+  CreateItem(TANK_CANNON, (int8_t)(80 + Random(21)), &(pp->Inv[HANDPOS]));
   pp->Inv[HANDPOS].fFlags |= OBJECT_UNDROPPABLE;
 
   // machine gun
-  CreateItems(MINIMI, (INT8)(80 + Random(21)), 1, &Object);
+  CreateItems(MINIMI, (int8_t)(80 + Random(21)), 1, &Object);
   Object.fFlags |= OBJECT_UNDROPPABLE;
   PlaceObjectInSoldierCreateStruct(pp, &Object);
 

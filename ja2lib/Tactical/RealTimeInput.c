@@ -163,7 +163,7 @@ void QueryRTLeftButton(uint32_t *puiNewEvent) {
                       ResetMultiSelection();
                     }
                   } else {
-                    INT8 bReturnCode;
+                    int8_t bReturnCode;
 
                     bReturnCode = HandleMoveModeInteractiveClick(usMapPos, puiNewEvent);
 
@@ -513,7 +513,7 @@ void QueryRTLeftButton(uint32_t *puiNewEvent) {
                                 }
                                 gfRTClickLeftHoldIntercepted = TRUE;
                               } else {
-                                INT8 bReturnCode;
+                                int8_t bReturnCode;
 
                                 bReturnCode = HandleMoveModeInteractiveClick(usMapPos, puiNewEvent);
 

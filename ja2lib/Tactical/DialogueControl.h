@@ -306,10 +306,11 @@ void InitalizeStaticExternalNPCFaces(void);
 void ShutdownStaticExternalNPCFaces(void);
 
 void SayQuoteFromAnyBodyInSector(uint16_t usQuoteNum);
-void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint16_t usQuoteNum);
-void SayQuoteFromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, uint16_t usQuoteNum);
-void SayQuote58FromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, uint16_t usQuoteNum,
-                                      INT8 bSex);
+void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+                                     uint16_t usQuoteNum);
+void SayQuoteFromNearbyMercInSector(INT16 sGridNo, int8_t bDistance, uint16_t usQuoteNum);
+void SayQuote58FromNearbyMercInSector(INT16 sGridNo, int8_t bDistance, uint16_t usQuoteNum,
+                                      int8_t bSex);
 void ExecuteTacticalTextBox(INT16 sLeftPosition, STR16 pString);
 void ExecuteTacticalTextBoxForLastQuote(INT16 sLeftPosition, STR16 pString);
 uint32_t FindDelayForString(STR16 sString);

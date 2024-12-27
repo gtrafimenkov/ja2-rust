@@ -28,7 +28,7 @@ typedef struct {
     };
   };
   BOOLEAN fRenderBox;
-  INT8 bHandled;
+  int8_t bHandled;
   INT32 iBoxId;
 
 } MESSAGE_BOX_STRUCT;

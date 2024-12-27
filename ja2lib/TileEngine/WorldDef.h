@@ -243,7 +243,7 @@ BOOLEAN SaveWorld(STR8 puiFilename);
 BOOLEAN LoadWorld(STR8 puiFilename);
 void CompileWorldMovementCosts();
 void RecompileLocalMovementCosts(INT16 sCentreGridNo);
-void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, INT8 bRadius);
+void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, int8_t bRadius);
 
 BOOLEAN LoadMapTileset(INT32 iTilesetID);
 BOOLEAN SaveMapTileset(INT32 iTilesetID);

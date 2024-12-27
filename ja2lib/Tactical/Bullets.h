@@ -20,8 +20,8 @@ typedef struct {
   INT32 iBullet;
   uint8_t ubFirerID;
   uint8_t ubTargetID;
-  INT8 bStartCubesAboveLevelZ;
-  INT8 bEndCubesAboveLevelZ;
+  int8_t bStartCubesAboveLevelZ;
+  int8_t bEndCubesAboveLevelZ;
   uint32_t sGridNo;
   INT16 sUnused;
   uint16_t usLastStructureHit;
@@ -34,8 +34,8 @@ typedef struct {
   DOUBLE ddHorizAngle;
   INT32 iCurrTileX;
   INT32 iCurrTileY;
-  INT8 bLOSIndexX;
-  INT8 bLOSIndexY;
+  int8_t bLOSIndexX;
+  int8_t bLOSIndexY;
   BOOLEAN fCheckForRoof;
   INT32 iCurrCubesZ;
   INT32 iLoop;

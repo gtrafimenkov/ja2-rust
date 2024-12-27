@@ -197,7 +197,7 @@ BOOLEAN SaveSoldiersToMap(HWFILE fp) {
   return TRUE;
 }
 
-BOOLEAN LoadSoldiersFromMap(INT8 **hBuffer) {
+BOOLEAN LoadSoldiersFromMap(int8_t **hBuffer) {
   uint32_t i;
   uint8_t ubNumIndividuals;
   BASIC_SOLDIERCREATE_STRUCT tempBasicPlacement;
@@ -604,7 +604,7 @@ void AddPlacementToWorldByProfileID(uint8_t ubProfile) {
   }
 }
 
-uint8_t AddSoldierInitListTeamToWorld(INT8 bTeam, uint8_t ubMaxNum) {
+uint8_t AddSoldierInitListTeamToWorld(int8_t bTeam, uint8_t ubMaxNum) {
   uint8_t ubNumAdded = 0;
   SOLDIERINITNODE *mark;
   uint8_t ubSlotsToFill;
@@ -1095,7 +1095,7 @@ void AddSoldierInitListMilitia(uint8_t ubNumGreen, uint8_t ubNumRegs, uint8_t ub
       if (fDoPlacement) {
         curr->pBasicPlacement->bTeam = MILITIA_TEAM;
         curr->pBasicPlacement->bOrders = STATIONARY;
-        curr->pBasicPlacement->bAttitude = (INT8)Random(MAXATTITUDES);
+        curr->pBasicPlacement->bAttitude = (int8_t)Random(MAXATTITUDES);
         if (curr->pDetailedPlacement) {  // delete the detailed placement information.
           MemFree(curr->pDetailedPlacement);
           curr->pDetailedPlacement = NULL;
@@ -1232,7 +1232,7 @@ void AddSoldierInitListMilitia(uint8_t ubNumGreen, uint8_t ubNumRegs, uint8_t ub
           Assert(0);
         curr->pBasicPlacement->bTeam = MILITIA_TEAM;
         curr->pBasicPlacement->bOrders = STATIONARY;
-        curr->pBasicPlacement->bAttitude = (INT8)Random(MAXATTITUDES);
+        curr->pBasicPlacement->bAttitude = (int8_t)Random(MAXATTITUDES);
         if (curr->pDetailedPlacement) {  // delete the detailed placement information.
           MemFree(curr->pDetailedPlacement);
           curr->pDetailedPlacement = NULL;
@@ -1566,7 +1566,7 @@ void AddSoldierInitListBloodcats() {
   if (pSector->bBloodCatPlacements) {  // We don't yet know the number of bloodcat placements in
                                        // this sector so
     // count them now, and permanently record it.
-    INT8 bBloodCatPlacements = 0;
+    int8_t bBloodCatPlacements = 0;
     curr = gSoldierInitHead;
     while (curr) {
       if (curr->pBasicPlacement->bBodyType == BLOODCAT) {

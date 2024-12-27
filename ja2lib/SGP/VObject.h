@@ -37,10 +37,10 @@ typedef struct {
 
 // Z-buffer info structure for properly assigning Z values
 typedef struct {
-  INT8 bInitialZChange;        // difference in Z value between the leftmost and base strips
+  int8_t bInitialZChange;      // difference in Z value between the leftmost and base strips
   uint8_t ubFirstZStripWidth;  // # of pixels in the leftmost strip
   uint8_t ubNumberOfZChanges;  // number of strips (after the first)
-  INT8 *pbZChange;             // change to the Z value in each strip (after the first)
+  int8_t *pbZChange;           // change to the Z value in each strip (after the first)
 } ZStripInfo;
 
 typedef struct {

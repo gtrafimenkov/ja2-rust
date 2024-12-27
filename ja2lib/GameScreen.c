@@ -97,7 +97,7 @@ uint8_t gubPreferredInitialSelectedGuy = NOBODY;
 BOOLEAN gfTacticalIsModal = FALSE;
 struct MOUSE_REGION gTacticalDisableRegion;
 BOOLEAN gfTacticalDisableRegionActive = FALSE;
-INT8 gbTacticalDisableMode = FALSE;
+int8_t gbTacticalDisableMode = FALSE;
 MODAL_HOOK gModalDoneCallback;
 BOOLEAN gfBeginEndTurn = FALSE;
 extern BOOLEAN gfTopMessageDirty;
@@ -788,7 +788,7 @@ void UpdateTeamPanelAssignments() {
   }
 }
 
-void EnterModalTactical(INT8 bMode) {
+void EnterModalTactical(int8_t bMode) {
   gbTacticalDisableMode = bMode;
   gfTacticalIsModal = TRUE;
 

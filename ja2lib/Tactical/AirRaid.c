@@ -61,8 +61,8 @@ uint32_t guiSoundSample;
 uint32_t guiRaidLastUpdate;
 BOOLEAN gfFadingRaidIn = FALSE;
 BOOLEAN gfQuoteSaid = FALSE;
-INT8 gbNumDives = 0;
-INT8 gbMaxDives = 0;
+int8_t gbNumDives = 0;
+int8_t gbMaxDives = 0;
 BOOLEAN gfFadingRaidOut = FALSE;
 INT16 gsDiveX;
 INT16 gsDiveY;
@@ -87,8 +87,8 @@ typedef struct {
   uint32_t uiRaidLastUpdate;
   BOOLEAN fFadingRaidIn;
   BOOLEAN fQuoteSaid;
-  INT8 bNumDives;
-  INT8 bMaxDives;
+  int8_t bNumDives;
+  int8_t bMaxDives;
   BOOLEAN fFadingRaidOut;
   INT16 sDiveX;
   INT16 sDiveY;
@@ -107,9 +107,9 @@ typedef struct {
   INT16 sNotLocatedYet;
   INT32 iNumFrames;
 
-  INT8 bLevel;
-  INT8 bTeam;
-  INT8 bSide;
+  int8_t bLevel;
+  int8_t bTeam;
+  int8_t bSide;
   uint8_t ubAttackerID;
   uint16_t usAttackingWeapon;
   FLOAT dXPos;
@@ -126,14 +126,14 @@ typedef struct {
 struct SOLDIERTYPE *gpRaidSoldier;
 
 typedef struct {
-  INT8 bDir1;
-  INT8 bDir2;
+  int8_t bDir1;
+  int8_t bDir2;
 
 } AIR_RAID_DIR;
 
 typedef struct {
-  INT8 bX;
-  INT8 bY;
+  int8_t bX;
+  int8_t bY;
 
 } AIR_RAID_POS;
 
@@ -200,7 +200,7 @@ BOOLEAN BeginAirRaid() {
     return (FALSE);
   }
 
-  ChangeSelectedMapSector(gAirRaidDef.sSectorX, gAirRaidDef.sSectorY, (INT8)gAirRaidDef.sSectorZ);
+  ChangeSelectedMapSector(gAirRaidDef.sSectorX, gAirRaidDef.sSectorY, (int8_t)gAirRaidDef.sSectorZ);
 
   if (gAirRaidDef.sSectorX != gWorldSectorX || gAirRaidDef.sSectorY != gWorldSectorY ||
       gAirRaidDef.sSectorZ != gbWorldSectorZ || IsMapScreen_2()) {
@@ -209,7 +209,7 @@ BOOLEAN BeginAirRaid() {
     gubAirRaidMode = AIR_RAID_TRYING_TO_START;
     gfQuoteSaid = TRUE;
     SayQuoteFromAnyBodyInThisSector(gAirRaidDef.sSectorX, gAirRaidDef.sSectorY,
-                                    (INT8)gAirRaidDef.sSectorZ, QUOTE_AIR_RAID);
+                                    (int8_t)gAirRaidDef.sSectorZ, QUOTE_AIR_RAID);
     SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_EXIT_MAP_SCREEN, gAirRaidDef.sSectorX,
                                   gAirRaidDef.sSectorY, gAirRaidDef.sSectorZ, 0, 0);
   } else {
@@ -237,7 +237,7 @@ BOOLEAN BeginAirRaid() {
   gpRaidSoldier->inv[HANDPOS].usItem = HK21E;
 
   // Determine how many dives this one will be....
-  gbMaxDives = (INT8)(gAirRaidDef.bIntensity + Random(gAirRaidDef.bIntensity - 1));
+  gbMaxDives = (int8_t)(gAirRaidDef.bIntensity + Random(gAirRaidDef.bIntensity - 1));
 
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Begin Air Raid.");
 
@@ -378,7 +378,7 @@ void AirRaidLookForDive() {
 
     // Do morale hit on our guys
     HandleMoraleEvent(NULL, MORALE_AIRSTRIKE, gAirRaidDef.sSectorX, gAirRaidDef.sSectorY,
-                      (INT8)gAirRaidDef.sSectorZ);
+                      (int8_t)gAirRaidDef.sSectorZ);
   }
 
   // If NOT in combat....
@@ -480,7 +480,7 @@ void BeginBombing() {
   giNumTurnsSinceDiveStarted = 0;
 
   // Get direction....
-  gubDiveDirection = (INT8)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
+  gubDiveDirection = (int8_t)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
 
   gsNumGridNosMoved = 0;
   gsNotLocatedYet = TRUE;
@@ -525,7 +525,7 @@ void BeginDive() {
   RESETTIMECOUNTER(giTimerAirRaidDiveStarted, iSoundStartDelay);
 
   // Get direction....
-  gubDiveDirection = (INT8)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
+  gubDiveDirection = (int8_t)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
 
   gsNumGridNosMoved = 0;
   gsNotLocatedYet = TRUE;

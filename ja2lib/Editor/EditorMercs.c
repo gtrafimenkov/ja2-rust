@@ -128,15 +128,15 @@ extern BOOLEAN InternalAddSoldierToSector(uint8_t ubID, BOOLEAN fCalculateDirect
 struct OBJECTTYPE *gpMercSlotItem[9] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 // Because we only support these nine slots, they aren't continuous values, so this array helps
 // processing functions by referring to this array to get the appropriate slot.
-INT8 gbMercSlotTypes[9] = {HELMETPOS,   VESTPOS,     LEGPOS,      HANDPOS,    SECONDHANDPOS,
-                           BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS};
+int8_t gbMercSlotTypes[9] = {HELMETPOS,   VESTPOS,     LEGPOS,      HANDPOS,    SECONDHANDPOS,
+                             BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS};
 // returns the usItem index of specified slot in the currently selected merc.
 #define GetSelectedMercSlotItemIndex(x) \
   (gpSelected->pDetailedPlacement->Inv[gbMercSlotTypes[x]].usItem)
 #define GetSelectedMercSlot(x) (&gpSelected->pDetailedPlacement->Inv[gbMercSlotTypes[x]])
 // values indicating which merc inventory slot is hilited and which slot is selected.
-INT8 gbCurrHilite = -1;
-INT8 gbCurrSelect = -1;
+int8_t gbCurrHilite = -1;
+int8_t gbCurrSelect = -1;
 // when a new merc is selected, this function sets up all of the information for the slots,
 // selections, and hilites.
 void UpdateMercItemSlots();
@@ -149,7 +149,7 @@ void ExtractAndUpdateMercAttributes();
 void ExtractAndUpdateMercProfile();
 void ExtractAndUpdateMercSchedule();
 void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, uint32_t uiMax);
-void ChangeBodyType(INT8 bOffset);  //+1 or -1 only
+void ChangeBodyType(int8_t bOffset);  //+1 or -1 only
 
 // internal merc variables
 BASIC_SOLDIERCREATE_STRUCT gTempBasicPlacement;
@@ -162,12 +162,12 @@ SOLDIERINITNODE *gpSelected;
 uint8_t gubCurrMercMode = MERC_TEAMMODE;
 uint8_t gubPrevMercMode = MERC_NOMODE;
 uint8_t gubLastDetailedMercMode = MERC_GENERALMODE;
-INT8 gbDefaultOrders = STATIONARY;
-INT8 gbDefaultAttitude = DEFENSIVE;
-INT8 gbDefaultRelativeEquipmentLevel = 2;
-INT8 gbDefaultRelativeAttributeLevel = 2;
-INT8 gbDefaultDirection = NORTHWEST;
-INT8 gubSoldierClass = SOLDIER_CLASS_ARMY;
+int8_t gbDefaultOrders = STATIONARY;
+int8_t gbDefaultAttitude = DEFENSIVE;
+int8_t gbDefaultRelativeEquipmentLevel = 2;
+int8_t gbDefaultRelativeAttributeLevel = 2;
+int8_t gbDefaultDirection = NORTHWEST;
+int8_t gubSoldierClass = SOLDIER_CLASS_ARMY;
 uint8_t gubCivGroup = NON_CIV_GROUP;
 
 struct SOLDIERTYPE *pTempSoldier;
@@ -253,18 +253,18 @@ CHAR16 *EditMercAttitudes[6] = {L"Defensive",     L"Brave Loner",   L"Brave Budd
 #define MAX_REBELTYPES 7
 #define MAX_CIVTYPES 18
 // #define MAX_CIVRANDOMTYPES		11
-INT8 bEnemyArray[MAX_ENEMYTYPES] = {RANDOM,    REGMALE, BIGMALE, STOCKYMALE,
-                                    REGFEMALE, TANK_NW, TANK_NE};
-INT8 bCreatureArray[MAX_CREATURETYPES] = {BLOODCAT,    LARVAE_MONSTER, INFANT_MONSTER,
-                                          YAF_MONSTER, YAM_MONSTER,    ADULTFEMALEMONSTER,
-                                          AM_MONSTER,  QUEENMONSTER};
-INT8 bRebelArray[MAX_REBELTYPES] = {RANDOM,  FATCIV,     MANCIV,   REGMALE,
-                                    BIGMALE, STOCKYMALE, REGFEMALE};
-INT8 bCivArray[MAX_CIVTYPES] = {RANDOM,     FATCIV,        MANCIV,   MINICIV,       DRESSCIV,
-                                HATKIDCIV,  KIDCIV,        REGMALE,  BIGMALE,       STOCKYMALE,
-                                REGFEMALE,  HUMVEE,        ELDORADO, ICECREAMTRUCK, JEEP,
-                                CRIPPLECIV, ROBOTNOWEAPON, COW};
-INT8 gbCurrCreature = BLOODCAT;
+int8_t bEnemyArray[MAX_ENEMYTYPES] = {RANDOM,    REGMALE, BIGMALE, STOCKYMALE,
+                                      REGFEMALE, TANK_NW, TANK_NE};
+int8_t bCreatureArray[MAX_CREATURETYPES] = {BLOODCAT,    LARVAE_MONSTER, INFANT_MONSTER,
+                                            YAF_MONSTER, YAM_MONSTER,    ADULTFEMALEMONSTER,
+                                            AM_MONSTER,  QUEENMONSTER};
+int8_t bRebelArray[MAX_REBELTYPES] = {RANDOM,  FATCIV,     MANCIV,   REGMALE,
+                                      BIGMALE, STOCKYMALE, REGFEMALE};
+int8_t bCivArray[MAX_CIVTYPES] = {RANDOM,     FATCIV,        MANCIV,   MINICIV,       DRESSCIV,
+                                  HATKIDCIV,  KIDCIV,        REGMALE,  BIGMALE,       STOCKYMALE,
+                                  REGFEMALE,  HUMVEE,        ELDORADO, ICECREAMTRUCK, JEEP,
+                                  CRIPPLECIV, ROBOTNOWEAPON, COW};
+int8_t gbCurrCreature = BLOODCAT;
 
 BOOLEAN gfSaveBuffer = FALSE;
 BASIC_SOLDIERCREATE_STRUCT gSaveBufferBasicPlacement;
@@ -619,10 +619,10 @@ void AddMercWaypoint(uint32_t iMapIndex) {
       gpSelected->pSoldier->usPatrolGrid[iNum] = (uint16_t)iMapIndex;
     }
 
-    gpSelected->pBasicPlacement->bPatrolCnt = (INT8)iActionParam;
+    gpSelected->pBasicPlacement->bPatrolCnt = (int8_t)iActionParam;
     if (gpSelected->pDetailedPlacement)
-      gpSelected->pDetailedPlacement->bPatrolCnt = (INT8)iActionParam;
-    gpSelected->pSoldier->bPatrolCnt = (INT8)iActionParam;
+      gpSelected->pDetailedPlacement->bPatrolCnt = (int8_t)iActionParam;
+    gpSelected->pSoldier->bPatrolCnt = (int8_t)iActionParam;
     gpSelected->pSoldier->bNextPatrolPnt = 1;
   } else {
     // Set this way point
@@ -708,7 +708,7 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
                 (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
 
   pSoldier->bExpLevel = (uint8_t)sBaseExpLvl[sCurBaseDiff];
-  pSoldier->bGunType = (INT8)Random(BASE_GUNTYPE_DEVIATION);
+  pSoldier->bGunType = (int8_t)Random(BASE_GUNTYPE_DEVIATION);
 
   pSoldier->bActionPoints = CalcActionPoints(pSoldier);
 }
@@ -725,7 +725,7 @@ void DisplayEditMercWindow(void) {
   INT32 x, iXOff;
   CHAR16 TempString[30];
   struct SOLDIERTYPE *pSoldier;
-  INT8 iEditStat[12];
+  int8_t iEditStat[12];
 
   usFillColorBack = 0;
 
@@ -1172,7 +1172,7 @@ void DisplayWayPoints(void) {
   INT16 sXMapPos, sYMapPos;
   INT16 sScreenX, sScreenY;
   FLOAT ScrnX, ScrnY, dOffsetX, dOffsetY;
-  INT8 bPoint;
+  int8_t bPoint;
   struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
 
@@ -1364,7 +1364,7 @@ void CreateEditMercWindow(void) {
     SetButtonFastHelpText(iEditorButton[x + 1], L"Increase merc stat");
   }
 }
-void SetMercOrders(INT8 bOrders) {
+void SetMercOrders(int8_t bOrders) {
   gpSelected->pSoldier->bOrders = bOrders;
   gpSelected->pBasicPlacement->bOrders = bOrders;
   UnclickEditorButtons(FIRST_MERCS_ORDERS_BUTTON, LAST_MERCS_ORDERS_BUTTON);
@@ -1372,7 +1372,7 @@ void SetMercOrders(INT8 bOrders) {
   gbDefaultOrders = bOrders;
 }
 
-void SetMercAttitude(INT8 bAttitude) {
+void SetMercAttitude(int8_t bAttitude) {
   gpSelected->pSoldier->bAttitude = bAttitude;
   gpSelected->pBasicPlacement->bAttitude = bAttitude;
   UnclickEditorButtons(FIRST_MERCS_ATTITUDE_BUTTON, LAST_MERCS_ATTITUDE_BUTTON);
@@ -1380,7 +1380,7 @@ void SetMercAttitude(INT8 bAttitude) {
   gbDefaultAttitude = bAttitude;
 }
 
-void SetMercDirection(INT8 bDirection) {
+void SetMercDirection(int8_t bDirection) {
   UnclickEditorButtons(FIRST_MERCS_DIRECTION_BUTTON, LAST_MERCS_DIRECTION_BUTTON);
   ClickEditorButton(FIRST_MERCS_DIRECTION_BUTTON + bDirection);
 
@@ -1394,7 +1394,7 @@ void SetMercDirection(INT8 bDirection) {
   ConvertAniCodeToAniFrame(gpSelected->pSoldier, 0);
 }
 
-void SetMercRelativeEquipment(INT8 bLevel) {
+void SetMercRelativeEquipment(int8_t bLevel) {
   gpSelected->pBasicPlacement->bRelativeEquipmentLevel = bLevel;
 
   UnclickEditorButtons(FIRST_MERCS_REL_EQUIPMENT_BUTTON, LAST_MERCS_REL_EQUIPMENT_BUTTON);
@@ -1402,7 +1402,7 @@ void SetMercRelativeEquipment(INT8 bLevel) {
   gbDefaultRelativeEquipmentLevel = bLevel;
 }
 
-void SetMercRelativeAttributes(INT8 bLevel) {
+void SetMercRelativeAttributes(int8_t bLevel) {
   gpSelected->pBasicPlacement->bRelativeAttributeLevel = bLevel;
   // We also have to modify the existing soldier incase the user wishes to enter game.
   ModifySoldierAttributesWithNewRelativeLevel(gpSelected->pSoldier, bLevel);
@@ -1414,7 +1414,7 @@ void SetMercRelativeAttributes(INT8 bLevel) {
 
 void IndicateSelectedMerc(INT16 sID) {
   SOLDIERINITNODE *prev;
-  INT8 bTeam;
+  int8_t bTeam;
 
   // If we are trying to select a merc that is already selected, ignore.
   if (sID >= 0 && sID == gsSelectedMercGridNo) return;
@@ -1698,19 +1698,21 @@ void ExtractAndUpdateMercAttributes() {
   //-1 values in the detailed placement work nicely, because that signifies that specific
   // field isn't static.  Any other value becomes static, and static values override any
   // generated values.
-  gpSelected->pDetailedPlacement->bExpLevel = (INT8)min(GetNumericStrictValueFromField(0), 100);
-  gpSelected->pDetailedPlacement->bLife = (INT8)min(GetNumericStrictValueFromField(1), 100);
-  gpSelected->pDetailedPlacement->bLifeMax = (INT8)min(GetNumericStrictValueFromField(2), 100);
-  gpSelected->pDetailedPlacement->bMarksmanship = (INT8)min(GetNumericStrictValueFromField(3), 100);
-  gpSelected->pDetailedPlacement->bStrength = (INT8)min(GetNumericStrictValueFromField(4), 100);
-  gpSelected->pDetailedPlacement->bAgility = (INT8)min(GetNumericStrictValueFromField(5), 100);
-  gpSelected->pDetailedPlacement->bDexterity = (INT8)min(GetNumericStrictValueFromField(6), 100);
-  gpSelected->pDetailedPlacement->bWisdom = (INT8)min(GetNumericStrictValueFromField(7), 100);
-  gpSelected->pDetailedPlacement->bLeadership = (INT8)min(GetNumericStrictValueFromField(8), 100);
-  gpSelected->pDetailedPlacement->bExplosive = (INT8)min(GetNumericStrictValueFromField(9), 100);
-  gpSelected->pDetailedPlacement->bMedical = (INT8)min(GetNumericStrictValueFromField(10), 100);
-  gpSelected->pDetailedPlacement->bMechanical = (INT8)min(GetNumericStrictValueFromField(11), 100);
-  gpSelected->pDetailedPlacement->bMorale = (INT8)min(GetNumericStrictValueFromField(11), 100);
+  gpSelected->pDetailedPlacement->bExpLevel = (int8_t)min(GetNumericStrictValueFromField(0), 100);
+  gpSelected->pDetailedPlacement->bLife = (int8_t)min(GetNumericStrictValueFromField(1), 100);
+  gpSelected->pDetailedPlacement->bLifeMax = (int8_t)min(GetNumericStrictValueFromField(2), 100);
+  gpSelected->pDetailedPlacement->bMarksmanship =
+      (int8_t)min(GetNumericStrictValueFromField(3), 100);
+  gpSelected->pDetailedPlacement->bStrength = (int8_t)min(GetNumericStrictValueFromField(4), 100);
+  gpSelected->pDetailedPlacement->bAgility = (int8_t)min(GetNumericStrictValueFromField(5), 100);
+  gpSelected->pDetailedPlacement->bDexterity = (int8_t)min(GetNumericStrictValueFromField(6), 100);
+  gpSelected->pDetailedPlacement->bWisdom = (int8_t)min(GetNumericStrictValueFromField(7), 100);
+  gpSelected->pDetailedPlacement->bLeadership = (int8_t)min(GetNumericStrictValueFromField(8), 100);
+  gpSelected->pDetailedPlacement->bExplosive = (int8_t)min(GetNumericStrictValueFromField(9), 100);
+  gpSelected->pDetailedPlacement->bMedical = (int8_t)min(GetNumericStrictValueFromField(10), 100);
+  gpSelected->pDetailedPlacement->bMechanical =
+      (int8_t)min(GetNumericStrictValueFromField(11), 100);
+  gpSelected->pDetailedPlacement->bMorale = (int8_t)min(GetNumericStrictValueFromField(11), 100);
 
   // make sure that experience level ranges between 1 and 9
   if (gpSelected->pDetailedPlacement->bExpLevel != -1)
@@ -1877,9 +1879,9 @@ void KillDetailedPlacementForMerc() {
   SetMercEditability(TRUE);
 }
 
-void ChangeBodyType(INT8 bOffset)  //+1 or -1 only
+void ChangeBodyType(int8_t bOffset)  //+1 or -1 only
 {
-  INT8 *pbArray;
+  int8_t *pbArray;
   INT32 iMax, x;
   INT32 iIndex;
 
@@ -1955,12 +1957,12 @@ void ChangeBodyType(INT8 bOffset)  //+1 or -1 only
     SetSoldierAnimationSurface(gpSelected->pSoldier, gpSelected->pSoldier->usAnimState);
   }
   // Update the placement's info as well.
-  gpSelected->pBasicPlacement->bBodyType = (INT8)iIndex;
+  gpSelected->pBasicPlacement->bBodyType = (int8_t)iIndex;
   if (gpSelected->pDetailedPlacement) {
-    gpSelected->pDetailedPlacement->bBodyType = (INT8)iIndex;
+    gpSelected->pDetailedPlacement->bBodyType = (int8_t)iIndex;
   }
   if (gpSelected->pSoldier->bTeam == CREATURE_TEAM) {
-    gbCurrCreature = (INT8)iIndex;
+    gbCurrCreature = (int8_t)iIndex;
     AssignCreatureInventory(gpSelected->pSoldier);
   }
   CreateSoldierPalettes(gpSelected->pSoldier);
@@ -2683,7 +2685,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
               .usItemClass &
           IC_AMMO))
       gpSelected->pDetailedPlacement->Inv[gbMercSlotTypes[gbCurrSelect]].bStatus[0] =
-          (INT8)(80 + Random(21));
+          (int8_t)(80 + Random(21));
 
     if (gusMercsNewItemIndex) {
       gpSelected->pDetailedPlacement->Inv[gbMercSlotTypes[gbCurrSelect]].fFlags |=
@@ -2815,8 +2817,8 @@ void RenderMercInventoryPanel() {
 // positions which are processed here.  This basically checks for new changes in hilighting and
 // selections, which will set the rendering flag, and getitem flag if the user wishes to choose an
 // item.
-void HandleMercInventoryPanel(INT16 sX, INT16 sY, INT8 bEvent) {
-  INT8 x;
+void HandleMercInventoryPanel(INT16 sX, INT16 sY, int8_t bEvent) {
+  int8_t x;
   if (!gfCanEditMercs &&
       bEvent ==
           GUI_RCLICK_EVENT) {  // if we are dealing with a profile merc, we can't allow editing
@@ -2866,7 +2868,7 @@ void HandleMercInventoryPanel(INT16 sX, INT16 sY, INT8 bEvent) {
 }
 
 void UpdateMercItemSlots() {
-  INT8 x;
+  int8_t x;
   if (!gpSelected->pDetailedPlacement) {
     for (x = 0; x < 9; x++) {
       gpMercSlotItem[x] = NULL;
@@ -3092,9 +3094,9 @@ void RenderMercStrings() {
   }
 }
 
-void SetMercTeamVisibility(INT8 bTeam, BOOLEAN fVisible) {
+void SetMercTeamVisibility(int8_t bTeam, BOOLEAN fVisible) {
   SOLDIERINITNODE *curr;
-  INT8 bVisible;
+  int8_t bVisible;
   curr = gSoldierInitHead;
   bVisible = fVisible ? 1 : -1;
   while (curr) {

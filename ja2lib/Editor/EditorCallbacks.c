@@ -960,12 +960,12 @@ void MercsFindSelectedMercCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void MercsSetRelativeEquipmentCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
-    SetMercRelativeEquipment((INT8)MSYS_GetBtnUserData(btn, 0));
+    SetMercRelativeEquipment((int8_t)MSYS_GetBtnUserData(btn, 0));
 }
 
 void MercsSetRelativeAttributesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
-    SetMercRelativeAttributes((INT8)MSYS_GetBtnUserData(btn, 0));
+    SetMercRelativeAttributes((int8_t)MSYS_GetBtnUserData(btn, 0));
 }
 
 void MouseMovedInMercRegion(struct MOUSE_REGION *reg, INT32 reason) {

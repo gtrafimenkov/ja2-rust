@@ -278,24 +278,24 @@ extern BOOLEAN fResetContractGlow;
 void InitalizeVehicleAndCharacterList(void);
 
 // set this entry to as selected
-void SetEntryInSelectedCharacterList(INT8 bEntry);
+void SetEntryInSelectedCharacterList(int8_t bEntry);
 // set this entry to as unselected
-void ResetEntryForSelectedList(INT8 bEntry);
+void ResetEntryForSelectedList(int8_t bEntry);
 
 // reset selected list
 void ResetSelectedListForMapScreen();
 
 // build a selected list from a to b, inclusive
-void BuildSelectedListFromAToB(INT8 bA, INT8 bB);
+void BuildSelectedListFromAToB(int8_t bA, int8_t bB);
 
 // isa this entry int he selected character list set?
-BOOLEAN IsEntryInSelectedListSet(INT8 bEntry);
+BOOLEAN IsEntryInSelectedListSet(int8_t bEntry);
 
 // is there more than one person selected?
 BOOLEAN MultipleCharacterListEntriesSelected(void);
 
 // toggle this entry on or off
-void ToggleEntryInSelectedList(INT8 bEntry);
+void ToggleEntryInSelectedList(int8_t bEntry);
 
 void RestoreBackgroundForAssignmentGlowRegionList(void);
 void RestoreBackgroundForDestinationGlowRegionList(void);
@@ -512,11 +512,11 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo(void);
 // void HandlePlayerEnteringMapScreenBeforeGoingToTactical( void );
 
 // handle sector being taken over uncontested
-BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                                           BOOLEAN fContested);
+BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY,
+                                                           int8_t bSectorZ, BOOLEAN fContested);
 
 // handle notifying player of invasion by enemy
-void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback);
 
 void ShutDownUserDefineHelpTextRegions(void);
@@ -530,8 +530,8 @@ void AddReasonToWaitingListQueue(INT32 iReason);
 void AddDisplayBoxToWaitingQueue(void);
 
 // can this group move it out
-BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
-void ReportMapScreenMovementError(INT8 bErrorNumber);
+BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber);
+void ReportMapScreenMovementError(int8_t bErrorNumber);
 
 void HandleRebuildingOfMapScreenCharacterList(void);
 
@@ -550,7 +550,7 @@ BOOLEAN CheckIfSalaryIncreasedAndSayQuote(struct SOLDIERTYPE *pSoldier,
 
 void EndUpdateBox(BOOLEAN fContinueTimeCompression);
 
-extern BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
+extern BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber);
 extern BOOLEAN MapscreenCanPassItemToCharNum(INT32 iNewCharSlot);
 
 #endif

@@ -51,7 +51,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 
-extern INT8 gbNumMercsUntilWaitingOver;
+extern int8_t gbNumMercsUntilWaitingOver;
 extern uint8_t gubWaitingForAllMercsToExitCode;
 
 #define NEXT_TILE_CHECK_DELAY 700
@@ -94,7 +94,7 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
 }
 #endif
 
-void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, INT8 bValue) {
+void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, int8_t bValue) {
   uint8_t ubPerson;
 
   // Cancel AI Action
@@ -183,7 +183,7 @@ void UnMarkMovementReserved(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, INT8 bLevel) {
+int8_t TileIsClear(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sGridNo, int8_t bLevel) {
   uint8_t ubPerson;
   INT16 sTempDestGridNo;
   INT16 sNewGridNo;
@@ -331,9 +331,9 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
   return (MOVE_TILE_CLEAR);
 }
 
-BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo,
+BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sGridNo,
                        INT16 sFinalDestTile) {
-  INT8 bBlocked;
+  int8_t bBlocked;
   INT16 bOverTerrainType;
 
   // Check for blocking if in realtime
@@ -440,7 +440,7 @@ BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGri
 
 BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   // Buddy is waiting to continue his path
-  INT8 bBlocked, bPathBlocked;
+  int8_t bBlocked, bPathBlocked;
   INT16 sCost;
   INT16 sNewGridNo, sCheckGridNo;
   uint8_t ubDirection, bCauseDirection;
@@ -452,8 +452,8 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
       RESETTIMECOUNTER(pSoldier->NextTileCounter, NEXT_TILE_CHECK_DELAY);
 
       // Get direction from gridno...
-      bCauseDirection = (INT8)GetDirectionToGridNoFromGridNo(pSoldier->sGridNo,
-                                                             pSoldier->sDelayedMovementCauseGridNo);
+      bCauseDirection = (int8_t)GetDirectionToGridNoFromGridNo(
+          pSoldier->sGridNo, pSoldier->sDelayedMovementCauseGridNo);
 
       bBlocked = TileIsClear(pSoldier, bCauseDirection, pSoldier->sDelayedMovementCauseGridNo,
                              pSoldier->bLevel);

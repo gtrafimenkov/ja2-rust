@@ -365,7 +365,7 @@ void CreateDestroyUpdatePanelButtons(INT32 iX, INT32 iY, BOOLEAN fFourWideMode);
 void RenderSoldierSmallFaceForUpdatePanel(INT32 iIndex, INT32 iX, INT32 iY);
 void ContinueUpdateButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void StopUpdateButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT8 FindSquadThatSoldierCanJoin(struct SOLDIERTYPE *pSoldier);
+int8_t FindSquadThatSoldierCanJoin(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CanSoldierMoveWithVehicleId(struct SOLDIERTYPE *pSoldier, INT32 iVehicle1Id);
 BOOLEAN IsAnythingSelectedForMoving(void);
 BOOLEAN CanMoveBoxSoldierMoveStrategically(struct SOLDIERTYPE *pSoldier, BOOLEAN fShowErrorMessage);
@@ -379,7 +379,7 @@ void InitalizeVehicleAndCharacterList(void) {
   return;
 }
 
-void SetEntryInSelectedCharacterList(INT8 bEntry) {
+void SetEntryInSelectedCharacterList(int8_t bEntry) {
   Assert((bEntry >= 0) && (bEntry < MAX_CHARACTER_COUNT));
 
   // set this entry to selected
@@ -388,7 +388,7 @@ void SetEntryInSelectedCharacterList(INT8 bEntry) {
   return;
 }
 
-void ResetEntryForSelectedList(INT8 bEntry) {
+void ResetEntryForSelectedList(int8_t bEntry) {
   Assert((bEntry >= 0) && (bEntry < MAX_CHARACTER_COUNT));
 
   // set this entry to selected
@@ -410,7 +410,7 @@ void ResetSelectedListForMapScreen(void) {
   return;
 }
 
-BOOLEAN IsEntryInSelectedListSet(INT8 bEntry) {
+BOOLEAN IsEntryInSelectedListSet(int8_t bEntry) {
   Assert((bEntry >= 0) && (bEntry < MAX_CHARACTER_COUNT));
 
   // is this entry in the selected list set?
@@ -418,7 +418,7 @@ BOOLEAN IsEntryInSelectedListSet(INT8 bEntry) {
   return (fSelectedListOfMercsForMapScreen[bEntry]);
 }
 
-void ToggleEntryInSelectedList(INT8 bEntry) {
+void ToggleEntryInSelectedList(int8_t bEntry) {
   Assert((bEntry >= 0) && (bEntry < MAX_CHARACTER_COUNT));
 
   // toggle the value in the selected list
@@ -427,8 +427,8 @@ void ToggleEntryInSelectedList(INT8 bEntry) {
   return;
 }
 
-void BuildSelectedListFromAToB(INT8 bA, INT8 bB) {
-  INT8 bStart = 0, bEnd = 0;
+void BuildSelectedListFromAToB(int8_t bA, int8_t bB) {
+  int8_t bStart = 0, bEnd = 0;
 
   // run from a to b..set slots as selected
 
@@ -493,45 +493,45 @@ void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldie
         if (GetSolAssignment(pSoldier) == VEHICLE) {
           if (!CanSoldierMoveWithVehicleId(pSoldier2, pSoldier->iVehicleId)) {
             // reset entry for selected list
-            ResetEntryForSelectedList((INT8)iCounter);
+            ResetEntryForSelectedList((int8_t)iCounter);
           }
         }
         // if anchor guy IS a vehicle
         else if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
           if (!CanSoldierMoveWithVehicleId(pSoldier2, pSoldier->bVehicleID)) {
             // reset entry for selected list
-            ResetEntryForSelectedList((INT8)iCounter);
+            ResetEntryForSelectedList((int8_t)iCounter);
           }
         }
         // if this guy is IN a vehicle
         else if (pSoldier2->bAssignment == VEHICLE) {
           if (!CanSoldierMoveWithVehicleId(pSoldier, pSoldier2->iVehicleId)) {
             // reset entry for selected list
-            ResetEntryForSelectedList((INT8)iCounter);
+            ResetEntryForSelectedList((int8_t)iCounter);
           }
         }
         // if this guy IS a vehicle
         else if (pSoldier2->uiStatusFlags & SOLDIER_VEHICLE) {
           if (!CanSoldierMoveWithVehicleId(pSoldier, pSoldier2->bVehicleID)) {
             // reset entry for selected list
-            ResetEntryForSelectedList((INT8)iCounter);
+            ResetEntryForSelectedList((int8_t)iCounter);
           }
         }
         // reject those not a squad (vehicle handled above)
         else if (pSoldier2->bAssignment >= ON_DUTY) {
-          ResetEntryForSelectedList((INT8)iCounter);
+          ResetEntryForSelectedList((int8_t)iCounter);
         } else {
           // reject those not in the same sector
           if ((GetSolSectorX(pSoldier) != pSoldier2->sSectorX) ||
               (GetSolSectorY(pSoldier) != pSoldier2->sSectorY) ||
               (GetSolSectorZ(pSoldier) != pSoldier2->bSectorZ)) {
-            ResetEntryForSelectedList((INT8)iCounter);
+            ResetEntryForSelectedList((int8_t)iCounter);
           }
 
           // if either is between sectors, they must be in the same movement group
           if ((pSoldier->fBetweenSectors || pSoldier2->fBetweenSectors) &&
               (pSoldier->ubGroupID != pSoldier2->ubGroupID)) {
-            ResetEntryForSelectedList((INT8)iCounter);
+            ResetEntryForSelectedList((int8_t)iCounter);
           }
         }
 
@@ -558,7 +558,7 @@ void SelectUnselectedMercsWhoMustMoveWithThisGuy(void) {
           // and a member of that squad or vehicle is selected
           if (AnyMercInSameSquadOrVehicleIsSelected(pSoldier)) {
             // then also select this guy
-            SetEntryInSelectedCharacterList((INT8)iCounter);
+            SetEntryInSelectedCharacterList((int8_t)iCounter);
           }
         }
       }
@@ -764,10 +764,10 @@ INT16 CharacterIsGettingPathPlotted(INT16 sCharNumber) {
   }
 
   // if the highlighted line character is also selected
-  if (((giDestHighLine != -1) && IsEntryInSelectedListSet((INT8)giDestHighLine)) ||
+  if (((giDestHighLine != -1) && IsEntryInSelectedListSet((int8_t)giDestHighLine)) ||
       ((bSelectedDestChar != -1) && IsEntryInSelectedListSet(bSelectedDestChar))) {
     // then ALL selected lines will be affected
-    if (IsEntryInSelectedListSet((INT8)sCharNumber)) {
+    if (IsEntryInSelectedListSet((int8_t)sCharNumber)) {
       return (TRUE);
     }
   } else {
@@ -797,9 +797,9 @@ BOOLEAN IsCharacterSelectedForAssignment(INT16 sCharNumber) {
   }
 
   // if the highlighted line character is also selected
-  if ((giAssignHighLine != -1) && IsEntryInSelectedListSet((INT8)giAssignHighLine)) {
+  if ((giAssignHighLine != -1) && IsEntryInSelectedListSet((int8_t)giAssignHighLine)) {
     // then ALL selected lines will be affected
-    if (IsEntryInSelectedListSet((INT8)sCharNumber)) {
+    if (IsEntryInSelectedListSet((int8_t)sCharNumber)) {
       return (TRUE);
     }
   } else {
@@ -824,9 +824,9 @@ BOOLEAN IsCharacterSelectedForSleep(INT16 sCharNumber) {
   }
 
   // if the highlighted line character is also selected
-  if ((giSleepHighLine != -1) && IsEntryInSelectedListSet((INT8)giSleepHighLine)) {
+  if ((giSleepHighLine != -1) && IsEntryInSelectedListSet((int8_t)giSleepHighLine)) {
     // then ALL selected lines will be affected
-    if (IsEntryInSelectedListSet((INT8)sCharNumber)) {
+    if (IsEntryInSelectedListSet((int8_t)sCharNumber)) {
       return (TRUE);
     }
   } else {
@@ -904,7 +904,7 @@ void JumpToLevel(INT32 iLevel) {
   }
 
   // set current sector Z to level passed
-  ChangeSelectedMapSector(sSelMapX, sSelMapY, (INT8)iLevel);
+  ChangeSelectedMapSector(sSelMapX, sSelMapY, (int8_t)iLevel);
 }
 
 // check against old contract times, update as nessacary
@@ -1078,7 +1078,7 @@ void InventoryScreenMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
 }
 
 void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString) {
-  INT8 bMorale = pSoldier->bMorale;
+  int8_t bMorale = pSoldier->bMorale;
 
   if (pSoldier->uiStatusFlags & SOLDIER_DEAD) {
     wcscpy(sString, pMoralStrings[5]);
@@ -1636,8 +1636,8 @@ void FindAndSetThisContractSoldier(struct SOLDIERTYPE *pSoldier) {
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if (IsCharListEntryValid(iCounter)) {
       if (gCharactersList[iCounter].usSolID == GetSolID(pSoldier)) {
-        ChangeSelectedInfoChar((INT8)iCounter, TRUE);
-        bSelectedContractChar = (INT8)iCounter;
+        ChangeSelectedInfoChar((int8_t)iCounter, TRUE);
+        bSelectedContractChar = (int8_t)iCounter;
         fShowContractMenu = TRUE;
 
         // create
@@ -1795,7 +1795,7 @@ BOOLEAN ValidSelectableCharForNextOrPrev(INT32 iNewCharSlot) {
   // if showing merc inventory, or holding an item
   if (fShowInventoryFlag || fHoldingItem) {
     // the new guy must have accessible inventory
-    if (!MapCharacterHasAccessibleInventory((INT8)iNewCharSlot)) {
+    if (!MapCharacterHasAccessibleInventory((int8_t)iNewCharSlot)) {
       return (FALSE);
     }
   }
@@ -1830,7 +1830,7 @@ BOOLEAN MapscreenCanPassItemToCharNum(INT32 iNewCharSlot) {
   if (fShowMapInventoryPool && !gpItemPointerSoldier && fMapInventoryItem) {
     // disallow passing items to anyone not in that sector
     if (pNewSoldier->sSectorX != sSelMapX || pNewSoldier->sSectorY != sSelMapY ||
-        pNewSoldier->bSectorZ != (INT8)(iCurrentMapSectorZ)) {
+        pNewSoldier->bSectorZ != (int8_t)(iCurrentMapSectorZ)) {
       return (FALSE);
     }
 
@@ -1905,7 +1905,7 @@ void GoToNextCharacterInList(void) {
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if ((gCharactersList[iCount].fValid) && (iCount < MAX_CHARACTER_COUNT) &&
         ValidSelectableCharForNextOrPrev(iCount)) {
-      ChangeSelectedInfoChar((INT8)iCount, TRUE);
+      ChangeSelectedInfoChar((int8_t)iCount, TRUE);
       break;
     } else {
       iCount++;
@@ -1939,7 +1939,7 @@ void GoToPrevCharacterInList(void) {
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if ((gCharactersList[iCount].fValid) && (iCount < MAX_CHARACTER_COUNT) &&
         ValidSelectableCharForNextOrPrev(iCount)) {
-      ChangeSelectedInfoChar((INT8)iCount, TRUE);
+      ChangeSelectedInfoChar((int8_t)iCount, TRUE);
       break;
     } else {
       iCount--;
@@ -2404,7 +2404,7 @@ void DeselectSquadForMovement(INT32 iSquadNumber) {
 BOOLEAN AllSoldiersInSquadSelected(INT32 iSquadNumber) {
   // is everyone on this squad moving?
   for (int iCounter = 0; iCounter < giNumberOfSoldiersInSectorMoving; iCounter++) {
-    if (pSoldierMovingList[iCounter]->bAssignment == (INT8)iSquadNumber) {
+    if (pSoldierMovingList[iCounter]->bAssignment == (int8_t)iSquadNumber) {
       if (fSoldierIsMoving[iCounter] == FALSE) {
         return (FALSE);
       }
@@ -3283,7 +3283,7 @@ void MoveMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 BOOLEAN CanMoveBoxSoldierMoveStrategically(struct SOLDIERTYPE *pSoldier,
                                            BOOLEAN fShowErrorMessage) {
-  INT8 bErrorNumber = -1;
+  int8_t bErrorNumber = -1;
 
   // valid soldier?
   Assert(pSoldier);
@@ -3378,7 +3378,7 @@ void HandleMoveoutOfSectorMovementTroops(void) {
       // look for a squad that's doing the same thing as this guy is and has room for him
       iSquadNumber = FindSquadThatSoldierCanJoin(pSoldier);
       if (iSquadNumber != -1) {
-        if (!AddCharacterToSquad(pSoldier, (INT8)(iSquadNumber))) {
+        if (!AddCharacterToSquad(pSoldier, (int8_t)(iSquadNumber))) {
           AssertMsg(
               0,
               String(
@@ -3445,15 +3445,15 @@ void HandleSettingTheSelectedListOfMercs(void) {
           // yes, then set them as the destination plotting character for movement arrow purposes
           fFirstOne = FALSE;
 
-          bSelectedDestChar = (INT8)iCounter;
+          bSelectedDestChar = (int8_t)iCounter;
           // make DEST column glow
           giDestHighLine = iCounter;
 
-          ChangeSelectedInfoChar((INT8)iCounter, TRUE);
+          ChangeSelectedInfoChar((int8_t)iCounter, TRUE);
         }
 
         // add this guy to the selected list of grunts
-        SetEntryInSelectedCharacterList((INT8)iCounter);
+        SetEntryInSelectedCharacterList((int8_t)iCounter);
       }
     }
   }
@@ -3495,9 +3495,9 @@ BOOLEAN AllOtherSoldiersInListAreSelected(void) {
   return (FALSE);
 }
 
-BOOLEAN IsThisSquadInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, INT8 bSquadValue) {
+BOOLEAN IsThisSquadInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ, int8_t bSquadValue) {
   INT16 sX = 0, sY = 0;
-  INT8 bZ = 0;
+  int8_t bZ = 0;
 
   // check if the squad is empty
   if (SquadIsEmpty(bSquadValue) == FALSE) {
@@ -3518,9 +3518,9 @@ BOOLEAN IsThisSquadInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, INT8 bS
   return (FALSE);
 }
 
-INT8 FindSquadThatSoldierCanJoin(struct SOLDIERTYPE *pSoldier) {
+int8_t FindSquadThatSoldierCanJoin(struct SOLDIERTYPE *pSoldier) {
   // look for a squad that isn't full that can take this character
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   // run through the list of squads
   for (bCounter = 0; bCounter < NUMBER_OF_SQUADS; bCounter++) {
@@ -4413,13 +4413,13 @@ void HandleDisplayOfExitToTacticalMessageForFirstEntryToMapScreen(void) {
   return;
 }
 
-BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                                           BOOLEAN fContested) {
+BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY,
+                                                           int8_t bSectorZ, BOOLEAN fContested) {
   CHAR16 sString[128], sStringA[64], sStringB[256], sStringC[64];
   INT32 iValue = 0;
   TownID bTownId = 0;
   INT16 sSector = 0;
-  INT8 bMineIndex;
+  int8_t bMineIndex;
 
   // are we below ground?
   if (bSectorZ != 0) {
@@ -4495,7 +4495,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSect
   return (TRUE);
 }
 
-void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback) {
   INT16 sSector = 0;
   TownID bTownId = 0;
@@ -4539,7 +4539,7 @@ void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
   }
 }
 
-BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber) {
+BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber) {
   INT16 sSector = 0;
   BOOLEAN fProblemExists = FALSE;
 
@@ -4738,7 +4738,7 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   return (TRUE);
 }
 
-BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber) {
+BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber) {
   struct SOLDIERTYPE *pCurrentSoldier = NULL;
   INT32 iCounter = 0;
   uint8_t ubGroup = 0;
@@ -4809,7 +4809,7 @@ BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *p
   return (TRUE);
 }
 
-void ReportMapScreenMovementError(INT8 bErrorNumber) {
+void ReportMapScreenMovementError(int8_t bErrorNumber) {
   if (bErrorNumber == -99) {
     // - 99 is a special message # indicating a customized message
     DoMapMessageBox(MSG_BOX_BASIC_STYLE, gsCustomErrorString, MAP_SCREEN, MSG_BOX_FLAG_OK,

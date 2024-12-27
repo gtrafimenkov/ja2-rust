@@ -157,14 +157,14 @@ typedef struct {
 typedef struct {
   uint16_t usAttachment[MAX_ATTACHMENTS];  // item index of any attachments on the item
 
-  INT8 bItemCondition;  // if 0, no item is stored
-                        // from 1 to 100 indicates an item with that status
-                        // -1 to -100 means the item is in for repairs, flip sign for the actual
-                        // status
+  int8_t bItemCondition;  // if 0, no item is stored
+                          // from 1 to 100 indicates an item with that status
+                          // -1 to -100 means the item is in for repairs, flip sign for the actual
+                          // status
 
   uint8_t ubImprintID;  // imprint ID for imprinted items (during repair!)
 
-  INT8 bAttachmentStatus[MAX_ATTACHMENTS];  // status of any attachments on the item
+  int8_t bAttachmentStatus[MAX_ATTACHMENTS];  // status of any attachments on the item
 
   uint8_t ubPadding[2];  // filler
 
@@ -200,8 +200,8 @@ typedef struct {
   uint8_t ubStrayAmmo;     // partially-depleted ammo mags are stored here as #bullets, and can be
                            // converted to full packs
 
-  uint8_t ubElementsAlloced;  // number of DEALER_SPECIAL_ITEM array elements alloced for the
-                              // special item array
+  uint8_t ubElementsAlloced;         // number of DEALER_SPECIAL_ITEM array elements alloced for the
+                                     // special item array
   DEALER_SPECIAL_ITEM *SpecialItem;  // dynamic array of special items with this same item index
 
   uint32_t uiOrderArrivalTime;  // Day the items ordered will arrive on.  It's uint32_t in case we
@@ -239,7 +239,7 @@ void RemoveSpecialItemFromArmsDealerInventoryAtElement(uint8_t ubArmsDealer, uin
                                                        uint8_t ubElement);
 
 BOOLEAN IsMercADealer(uint8_t ubMercID);
-INT8 GetArmsDealerIDFromMercID(uint8_t ubMercID);
+int8_t GetArmsDealerIDFromMercID(uint8_t ubMercID);
 
 BOOLEAN SaveArmsDealerInventoryToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludesElgin,
@@ -274,13 +274,13 @@ uint32_t CalculateSpecialItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemInd
                                         SPECIAL_ITEM_INFO *pSpclItemInfo);
 uint32_t CalculateObjectItemRepairTime(uint8_t ubArmsDealer, struct OBJECTTYPE *pItemObject);
 uint32_t CalculateSimpleItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex,
-                                       INT8 bItemCondition);
+                                       int8_t bItemCondition);
 
 uint32_t CalculateSpecialItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
                                         SPECIAL_ITEM_INFO *pSpclItemInfo);
 uint32_t CalculateObjectItemRepairCost(uint8_t ubArmsDealer, struct OBJECTTYPE *pItemObject);
 uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
-                                       INT8 bItemCondition);
+                                       int8_t bItemCondition);
 
 void SetSpecialItemInfoToDefaults(SPECIAL_ITEM_INFO *pSpclItemInfo);
 void SetSpecialItemInfoFromObject(SPECIAL_ITEM_INFO *pSpclItemInfo, struct OBJECTTYPE *pObject);

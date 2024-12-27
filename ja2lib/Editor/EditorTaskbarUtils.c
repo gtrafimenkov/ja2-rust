@@ -64,7 +64,7 @@ struct MOUSE_REGION ItemsRegion;
 struct MOUSE_REGION MercRegion;
 struct MOUSE_REGION EditorRegion;
 
-void EnableEditorRegion(INT8 bRegionID) {
+void EnableEditorRegion(int8_t bRegionID) {
   switch (bRegionID) {
     case BASE_TERRAIN_TILE_REGION_ID:
     case 1:
@@ -86,7 +86,7 @@ void EnableEditorRegion(INT8 bRegionID) {
   }
 }
 
-void DisableEditorRegion(INT8 bRegionID) {
+void DisableEditorRegion(int8_t bRegionID) {
   switch (bRegionID) {
     case BASE_TERRAIN_TILE_REGION_ID:
     case 1:

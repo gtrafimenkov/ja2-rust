@@ -19,13 +19,13 @@
 
 extern uint32_t guiExitScreen;
 BOOLEAN gfFadeInitialized = FALSE;
-INT8 gbFadeValue;
+int8_t gbFadeValue;
 INT16 gsFadeLimit;
 uint32_t guiTime;
 uint32_t guiFadeDelay;
 BOOLEAN gfFirstTimeInFade = FALSE;
 INT16 gsFadeCount;
-INT8 gbFadeType;
+int8_t gbFadeType;
 INT32 giX1, giX2, giY1, giY2;
 INT16 gsFadeRealCount;
 BOOLEAN gfFadeInVideo;
@@ -39,7 +39,7 @@ FADE_HOOK gFadeOutDoneCallback = NULL;
 
 void FadeFrameBufferSquare();
 void FadeFrameBufferVersionOne();
-void FadeFrameBufferVersionFaster(INT8 bFadeValue);
+void FadeFrameBufferVersionFaster(int8_t bFadeValue);
 void FadeFrameBufferSide();
 void FadeFrameBufferRealFade();
 
@@ -126,7 +126,7 @@ BOOLEAN HandleFadeInCallback() {
   return (FALSE);
 }
 
-void BeginFade(uint32_t uiExitScreen, INT8 bFadeValue, INT8 bType, uint32_t uiDelay) {
+void BeginFade(uint32_t uiExitScreen, int8_t bFadeValue, int8_t bType, uint32_t uiDelay) {
   // Init some paramters
   guiExitScreen = uiExitScreen;
   gbFadeValue = bFadeValue;
@@ -371,7 +371,7 @@ void FadeInBackBufferVersionOne() {
   UnLockVideoSurface(BACKBUFFER);
 }
 
-void FadeFrameBufferVersionFaster(INT8 bFadeValue) {
+void FadeFrameBufferVersionFaster(int8_t bFadeValue) {
   INT32 cX, cY, iStartX, iStartY;
   uint32_t uiDestPitchBYTES;
   uint16_t *pBuf;

@@ -26,7 +26,7 @@ typedef struct {
 } BURST_LOCATIONS;
 
 BURST_LOCATIONS gsBurstLocations[MAX_BURST_LOCATIONS];
-INT8 gbNumBurstLocations = 0;
+int8_t gbNumBurstLocations = 0;
 
 extern BOOLEAN gfBeginBurstSpreadTracking;
 
@@ -84,7 +84,7 @@ void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
   // OK, they have been added
 }
 
-void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, INT8 bTargets,
+void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, int8_t bTargets,
                           struct SOLDIERTYPE *pTargets[5]) {
   uint8_t ubShotsPerBurst;
   FLOAT dAccululator = 0;

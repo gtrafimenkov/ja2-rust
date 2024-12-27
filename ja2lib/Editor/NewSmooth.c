@@ -451,7 +451,7 @@ void AddCave(INT32 iMapIndex, uint16_t usIndex) {
 #define INTERIOR_BOTTOMEND_SHADOW_INDEX 31
 
 // Wall Look Up Table containing variants and indices with each row being a different walltype.
-INT8 gbWallTileLUT[NUM_WALL_TYPES][7] = {
+int8_t gbWallTileLUT[NUM_WALL_TYPES][7] = {
     //	The number of variants of this tile type.
     //  |			The first relative index of the wall type (FIRSTWALL, SECONDWALL,
     //  etc. )  walltype + 10

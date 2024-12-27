@@ -341,7 +341,7 @@ uint8_t ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
 
 BOOLEAN gfHandleHeli = FALSE;
 uint8_t gusHeliSeats[MAX_MERC_IN_HELI];
-INT8 gbNumHeliSeatsOccupied = 0;
+int8_t gbNumHeliSeatsOccupied = 0;
 
 BOOLEAN gfFirstGuyDown = FALSE;
 
@@ -353,9 +353,9 @@ FLOAT gdHeliZPos;
 INT16 gsHeliScript;
 uint8_t gubHeliState;
 uint32_t guiHeliLastUpdate;
-INT8 gbCurDrop;
-INT8 gbExitCount;
-INT8 gbHeliRound;
+int8_t gbCurDrop;
+int8_t gbExitCount;
+int8_t gbHeliRound;
 
 BOOLEAN fFadingHeliIn = FALSE;
 BOOLEAN fFadingHeliOut = FALSE;
@@ -541,7 +541,7 @@ void HandleHeliDrop() {
       // Switch on mode...
       if (gubHeliState == HELI_DROP) {
         if (!gfIngagedInDrop) {
-          INT8 bEndVal;
+          int8_t bEndVal;
 
           bEndVal = (gbHeliRound * NUM_PER_HELI_RUN);
 

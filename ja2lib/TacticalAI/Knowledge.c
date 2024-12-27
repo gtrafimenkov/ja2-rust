@@ -39,7 +39,7 @@ void CallAvailableEnemiesTo(INT16 sGridNo) {
   }
 }
 
-void CallAvailableTeamEnemiesTo(INT16 sGridno, INT8 bTeam) {
+void CallAvailableTeamEnemiesTo(INT16 sGridno, int8_t bTeam) {
   INT32 iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
@@ -132,15 +132,15 @@ void CallEldinTo(INT16 sGridNo) {
 INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
                               BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
   uint32_t uiLoop;
-  INT8 *pbPersOL, *pbPublOL;
+  int8_t *pbPersOL, *pbPublOL;
   INT16 *psLastLoc, *psNoiseGridNo;
-  INT8 *pbNoiseLevel;
-  INT8 *pbLastLevel;
+  int8_t *pbNoiseLevel;
+  int8_t *pbLastLevel;
   uint8_t *pubNoiseVolume;
   INT32 iDistAway;
   INT32 iNoiseValue, iBestValue = -10000;
   INT16 sBestGridNo = NOWHERE;
-  INT8 bBestLevel = 0;
+  int8_t bBestLevel = 0;
   INT16 sClimbingGridNo;
   BOOLEAN fClimbingNecessary = FALSE;
   struct SOLDIERTYPE *pTemp;
@@ -295,7 +295,7 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
 INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, uint8_t ubInSightOnly) {
   uint8_t ubTotal = 0;
   uint32_t uiLoop;
-  INT8 *pbPersOL, *pbPublOL;
+  int8_t *pbPersOL, *pbPublOL;
   struct SOLDIERTYPE *pTemp;
 
   // if merc knows of a more important misc. noise than his team does

@@ -79,7 +79,7 @@ struct LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo) {
   return (pNode);
 }
 
-struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation) {
+struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, int8_t ubOrientation) {
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure;
 
@@ -98,7 +98,7 @@ struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 
 }
 
 struct LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(
-    INT16 sGridNo, INT8 ubOrientation, struct STRUCTURE **ppStructure) {
+    INT16 sGridNo, int8_t ubOrientation, struct STRUCTURE **ppStructure) {
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure, *pBaseStructure;
 

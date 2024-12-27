@@ -522,8 +522,8 @@ typedef struct {
   uint32_t uiNumFramesPerDir;
   struct VObject *hVideoObject;
   void *Unused;
-  INT8 bUsageCount;
-  INT8 bProfile;
+  int8_t bUsageCount;
+  int8_t bProfile;
 
 } AnimationSurfaceType;
 

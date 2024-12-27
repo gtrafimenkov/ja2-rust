@@ -304,7 +304,7 @@ uint8_t CountAllMilitiaInSectorID8(SectorID8 sectorID) {
   return milCount.green + milCount.regular + milCount.elite;
 }
 
-INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   if (!bSectorZ) {
     return CountAllMilitiaInSector(sSectorX, sSectorY);
   }
@@ -767,7 +767,7 @@ BOOLEAN IsSAMSiteFullOfMilitia(u8 mapX, u8 mapY) {
 
 static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer) {
   u8 mapX = 0, mapY = 0;
-  INT8 bSectorZ = 0;
+  int8_t bSectorZ = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter = 0;
 
@@ -990,7 +990,7 @@ static void ResetDoneFlagForAllMilitiaTrainersInSector(SectorID8 ubSector) {
   }
 }
 
-BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ) {
+BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, int8_t bSectorZ) {
   TownID bTownId;
   BOOLEAN fSamSitePresent = FALSE;
 

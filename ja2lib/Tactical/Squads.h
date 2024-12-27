@@ -48,7 +48,7 @@ extern INT32 iCurrentTacticalSquad;
 void InitSquads(void);
 
 // add character to squad
-BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // find the first slot the guy will fit in, return true if he is in a squad or has been put in one
 BOOLEAN AddCharacterToAnySquad(struct SOLDIERTYPE *pCharacter);
@@ -57,46 +57,46 @@ BOOLEAN AddCharacterToAnySquad(struct SOLDIERTYPE *pCharacter);
 BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter);
 
 // remove character from a squad
-BOOLEAN RemoveCharacterFromASquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+BOOLEAN RemoveCharacterFromASquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // check if character is in this squad
-BOOLEAN IsCharacterInSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+BOOLEAN IsCharacterInSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // return which squad character is in, -1 if none found
-INT8 SquadCharacterIsIn(struct SOLDIERTYPE *pCharacter);
+int8_t SquadCharacterIsIn(struct SOLDIERTYPE *pCharacter);
 
 // what slot is character in in this squad?..-1 if not found in squad
-INT8 SlotCharacterIsInSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+int8_t SlotCharacterIsInSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // return number of people in this squad
-INT8 NumberOfPeopleInSquad(INT8 bSquadValue);
+int8_t NumberOfPeopleInSquad(int8_t bSquadValue);
 
-INT8 NumberOfNonEPCsInSquad(INT8 bSquadValue);
+int8_t NumberOfNonEPCsInSquad(int8_t bSquadValue);
 
-BOOLEAN IsRobotControllerInSquad(INT8 bSquadValue);
+BOOLEAN IsRobotControllerInSquad(int8_t bSquadValue);
 
-INT8 NumberOfPlayerControllableMercsInSquad(INT8 bSquadValue);
+int8_t NumberOfPlayerControllableMercsInSquad(int8_t bSquadValue);
 
 // what sector is the squad currently in?..return if anyone in squad
-BOOLEAN SectorSquadIsIn(INT8 bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMapZ);
+BOOLEAN SectorSquadIsIn(int8_t bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMapZ);
 
 // rebuild current squad list
 void RebuildCurrentSquad(void);
 
 // copy path of squad to character
-BOOLEAN CopyPathOfSquadToCharacter(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+BOOLEAN CopyPathOfSquadToCharacter(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // copy path from character back to squad
-BOOLEAN CopyPathOfCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+BOOLEAN CopyPathOfCharacterToSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // what is the id of the current squad?
 INT32 CurrentSquad(void);
 
 // add character to unique squad (returns the squad #, -1 if failed)
-INT8 AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter);
+int8_t AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter);
 
 // is this squad empty?
-BOOLEAN SquadIsEmpty(INT8 bSquadValue);
+BOOLEAN SquadIsEmpty(int8_t bSquadValue);
 
 // is this squad in the current tactical sector?
 BOOLEAN IsSquadOnCurrentTacticalMap(INT32 iCurrentSquad);
@@ -122,7 +122,7 @@ void GetSquadPosition(uint8_t *ubNextX, uint8_t *ubNextY, uint8_t *ubPrevX, uint
 void ExamineCurrentSquadLights(void);
 
 // get location of this squad
-void GetLocationOfSquad(INT16 *sX, INT16 *sY, INT8 *bZ, INT8 bSquadValue);
+void GetLocationOfSquad(INT16 *sX, INT16 *sY, int8_t *bZ, int8_t bSquadValue);
 
 // Save the squad information to the saved game file
 BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile);
@@ -131,7 +131,7 @@ BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile);
 BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile);
 
 // get squad id of first free squad
-INT8 GetFirstEmptySquad(void);
+int8_t GetFirstEmptySquad(void);
 
 // is this squad in the same sector as soldier?
 BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, uint8_t ubSquad);
@@ -140,10 +140,11 @@ BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, uint8_t ubSquad);
 BOOLEAN IsAnyMercOnSquadAsleep(uint8_t ubSquadValue);
 
 // is therea  dead guy here
-BOOLEAN IsDeadGuyInThisSquadSlot(INT8 bSlotId, INT8 bSquadValue, INT8 *bNumberOfDeadGuysSoFar);
+BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue,
+                                 int8_t *bNumberOfDeadGuysSoFar);
 
 // dead soldier was on squad
-BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue);
+BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadValue);
 
 // now reset the table for these mercs
 BOOLEAN ResetDeadSquadMemberList(INT32 iSquadValue);
@@ -152,13 +153,13 @@ BOOLEAN ResetDeadSquadMemberList(INT32 iSquadValue);
 BOOLEAN IsMercOnCurrentSquad(struct SOLDIERTYPE *pSoldier);
 
 // is this squad filled up?
-BOOLEAN IsThisSquadFull(INT8 bSquadValue);
+BOOLEAN IsThisSquadFull(int8_t bSquadValue);
 
 // is this squad moving?
-BOOLEAN IsThisSquadOnTheMove(INT8 bSquadValue);
+BOOLEAN IsThisSquadOnTheMove(int8_t bSquadValue);
 
 // is there a vehicle in this squad?
-BOOLEAN DoesVehicleExistInSquad(INT8 bSquadValue);
+BOOLEAN DoesVehicleExistInSquad(int8_t bSquadValue);
 
 // re-create any trashed squad movement groups
 void CheckSquadMovementGroups(void);

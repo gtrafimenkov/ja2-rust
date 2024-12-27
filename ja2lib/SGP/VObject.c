@@ -970,7 +970,7 @@ BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, uint16_t usRegionI
   uint32_t uiDataLength;
   uint8_t ubRunLoop;
   // uint8_t					ubRunLength;
-  INT8 bData;
+  int8_t bData;
   uint32_t uiLen;
 
   // check for existing 16BPP region and then allocate memory

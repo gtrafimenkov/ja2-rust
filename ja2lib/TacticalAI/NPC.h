@@ -132,7 +132,7 @@ typedef enum {
 
 #define CONVO_DIST 5
 
-extern INT8 gbFirstApproachFlags[4];
+extern int8_t gbFirstApproachFlags[4];
 
 extern uint8_t gubTeamPenalty;
 
@@ -141,8 +141,8 @@ extern void ShutdownNPCQuotes(void);
 extern void SetQuoteRecordAsUsed(uint8_t ubNPC, uint8_t ubRecord);
 
 // uiApproachData is used for approach things like giving items, etc.
-extern uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach);
-extern void Converse(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach, uintptr_t uiApproachData);
+extern uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach);
+extern void Converse(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uintptr_t uiApproachData);
 
 extern BOOLEAN NPCOkToGiveItem(uint8_t ubNPC, uint8_t ubMerc, uint16_t usItem);
 extern void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere);
@@ -201,7 +201,7 @@ BOOLEAN GetInfoForAbandoningEPC(uint8_t ubNPC, uint16_t *pusQuoteNum, uint16_t *
 
 BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord);
 
-INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed);
+int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed);
 
 void ResetOncePerConvoRecordsForNPC(uint8_t ubNPC);
 

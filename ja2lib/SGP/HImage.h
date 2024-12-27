@@ -62,8 +62,8 @@ struct AuxObjectData {
 
 // relative tile location
 struct RelTileLoc {
-  INT8 bTileOffsetX;
-  INT8 bTileOffsetY;
+  int8_t bTileOffsetX;
+  int8_t bTileOffsetY;
 };
 
 // TRLE subimage structure, mirroring that of ST(C)I

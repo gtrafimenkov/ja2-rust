@@ -26,14 +26,14 @@ BOOLEAN gfMusicEnded = FALSE;
 uint8_t gubMusicMode = 0;
 uint8_t gubOldMusicMode = 0;
 
-INT8 gbVictorySongCount = 0;
-INT8 gbDeathSongCount = 0;
+int8_t gbVictorySongCount = 0;
+int8_t gbDeathSongCount = 0;
 
-INT8 bNothingModeSong;
-INT8 bEnemyModeSong;
-INT8 bBattleModeSong;
+int8_t bNothingModeSong;
+int8_t bEnemyModeSong;
+int8_t bBattleModeSong;
 
-INT8 gbFadeSpeed = 1;
+int8_t gbFadeSpeed = 1;
 
 CHAR8 *szMusicList[NUM_MUSIC] = {
     "MUSIC\\marimbad 2.wav", "MUSIC\\menumix1.wav",  "MUSIC\\nothing A.wav",
@@ -298,7 +298,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
 }
 
 BOOLEAN SetMusicMode(uint8_t ubMusicMode) {
-  static INT8 bPreviousMode = 0;
+  static int8_t bPreviousMode = 0;
 
   // OK, check if we want to restore
   if (ubMusicMode == MUSIC_RESTORE) {
@@ -341,11 +341,11 @@ BOOLEAN StartMusicBasedOnMode() {
   if (fFirstTime) {
     fFirstTime = FALSE;
 
-    bNothingModeSong = NOTHING_A_MUSIC + (INT8)Random(4);
+    bNothingModeSong = NOTHING_A_MUSIC + (int8_t)Random(4);
 
-    bEnemyModeSong = TENSOR_A_MUSIC + (INT8)Random(3);
+    bEnemyModeSong = TENSOR_A_MUSIC + (int8_t)Random(3);
 
-    bBattleModeSong = BATTLE_A_MUSIC + (INT8)Random(2);
+    bBattleModeSong = BATTLE_A_MUSIC + (int8_t)Random(2);
   }
 
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -355,52 +355,52 @@ BOOLEAN StartMusicBasedOnMode() {
   switch (gubMusicMode) {
     case MUSIC_MAIN_MENU:
       // ATE: Don't fade in
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(MENUMIX_MUSIC);
       break;
 
     case MUSIC_LAPTOP:
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(MARIMBAD2_MUSIC);
       break;
 
     case MUSIC_TACTICAL_NOTHING:
       // ATE: Don't fade in
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       if (gfUseCreatureMusic) {
         MusicPlay(CREEPY_MUSIC);
       } else {
         MusicPlay(bNothingModeSong);
-        bNothingModeSong = NOTHING_A_MUSIC + (INT8)Random(4);
+        bNothingModeSong = NOTHING_A_MUSIC + (int8_t)Random(4);
       }
       break;
 
     case MUSIC_TACTICAL_ENEMYPRESENT:
       // ATE: Don't fade in EnemyPresent...
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       if (gfUseCreatureMusic) {
         MusicPlay(CREEPY_MUSIC);
       } else {
         MusicPlay(bEnemyModeSong);
-        bEnemyModeSong = TENSOR_A_MUSIC + (INT8)Random(3);
+        bEnemyModeSong = TENSOR_A_MUSIC + (int8_t)Random(3);
       }
       break;
 
     case MUSIC_TACTICAL_BATTLE:
       // ATE: Don't fade in
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       if (gfUseCreatureMusic) {
         MusicPlay(CREATURE_BATTLE_MUSIC);
       } else {
         MusicPlay(bBattleModeSong);
       }
-      bBattleModeSong = BATTLE_A_MUSIC + (INT8)Random(2);
+      bBattleModeSong = BATTLE_A_MUSIC + (int8_t)Random(2);
       break;
 
     case MUSIC_TACTICAL_VICTORY:
 
       // ATE: Don't fade in EnemyPresent...
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(TRIUMPH_MUSIC);
       gbVictorySongCount++;
 
@@ -413,7 +413,7 @@ BOOLEAN StartMusicBasedOnMode() {
     case MUSIC_TACTICAL_DEATH:
 
       // ATE: Don't fade in EnemyPresent...
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(DEATH_MUSIC);
       gbDeathSongCount++;
       break;
@@ -433,7 +433,7 @@ void MusicStopCallback(void *pData) {
   uiMusicHandle = NO_SAMPLE;
 }
 
-void SetMusicFadeSpeed(INT8 bFadeSpeed) { gbFadeSpeed = bFadeSpeed; }
+void SetMusicFadeSpeed(int8_t bFadeSpeed) { gbFadeSpeed = bFadeSpeed; }
 
 void FadeMusicForXSeconds(uint32_t uiDelay) {
   INT16 sNumTimeSteps, sNumVolumeSteps;
@@ -445,7 +445,7 @@ void FadeMusicForXSeconds(uint32_t uiDelay) {
   sNumVolumeSteps = (INT16)(uiMusicVolume / sNumTimeSteps);
 
   // Set fade delay...
-  SetMusicFadeSpeed((INT8)sNumVolumeSteps);
+  SetMusicFadeSpeed((int8_t)sNumVolumeSteps);
 }
 
 void DoneFadeOutDueToEndMusic(void) {

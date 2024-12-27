@@ -53,7 +53,7 @@ enum {
 extern uint8_t gubLastLoadingScreenID;
 
 // returns the uint8_t ID for the specified sector.
-uint8_t GetLoadScreenID(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+uint8_t GetLoadScreenID(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // sets up the loadscreen with specified ID, and draws it to the FRAME_BUFFER,
 // and refreshing the screen with it.

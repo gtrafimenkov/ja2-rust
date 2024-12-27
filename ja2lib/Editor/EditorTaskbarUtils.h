@@ -41,8 +41,8 @@ enum {
   MERC_REGION_ID,
 };
 
-void EnableEditorRegion(INT8 bRegionID);
-void DisableEditorRegion(INT8 bRegionID);
+void EnableEditorRegion(int8_t bRegionID);
+void DisableEditorRegion(int8_t bRegionID);
 
 // Rendering Utils
 void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...);

@@ -710,7 +710,7 @@ void MSYS_UpdateMouseRegion(void) {
 //	Inits a struct MOUSE_REGION structure for use with the mouse system
 //
 void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
-                       uint16_t bry, INT8 priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
+                       uint16_t bry, int8_t priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback) {
 #ifdef MOUSESYSTEM_DEBUGGING
   if (region->uiFlags & MSYS_REGION_EXISTS)
@@ -871,7 +871,7 @@ void MSYS_SetCurrentCursor(uint16_t Cursor) { SetCurrentCursorFromDatabase(Curso
 //
 //	Set the priority of a mouse region
 //
-void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, INT8 priority) {
+void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, int8_t priority) {
   if (priority == MSYS_PRIORITY_AUTO) priority = MSYS_PRIORITY_NORMAL;
 
   region->PriorityLevel = priority;

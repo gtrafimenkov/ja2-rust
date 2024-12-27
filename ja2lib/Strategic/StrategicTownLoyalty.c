@@ -350,11 +350,11 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   // handle the impact on loyalty of the murder of a civilian
   TownID bTownId = 0;
   INT32 iLoyaltyChange = 0;
-  INT8 bSeenState = 0;
+  int8_t bSeenState = 0;
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pCivSoldier = NULL;
   uint32_t uiChanceFalseAccusal = 0;
-  INT8 bKillerTeam = 0;
+  int8_t bKillerTeam = 0;
   BOOLEAN fIncrement = FALSE;
 
   // ubAttacker CAN be NOBODY...  Don't treat is as murder if NOBODY killed us...
@@ -667,7 +667,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t
   Assert(GetSectorFlagStatus(sSectorX, sSectorY, (uint8_t)sSectorZ, SF_ALREADY_VISITED) == TRUE);
 
   // get sector name string
-  GetSectorIDString(sSectorX, sSectorY, (INT8)sSectorZ, wSectorName, ARR_SIZE(wSectorName), TRUE);
+  GetSectorIDString(sSectorX, sSectorY, (int8_t)sSectorZ, wSectorName, ARR_SIZE(wSectorName), TRUE);
 
   // go through list of items in sector and randomly remove them
 
@@ -930,7 +930,7 @@ INT32 GetNumberOfWholeTownsUnderControl(void) {
   return (iNumber);
 }
 
-INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude) {
+INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude) {
   INT32 iNumber = 0;
   TownID bTownId = 0;
 
@@ -1006,7 +1006,7 @@ void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease) {
   }
 }
 // this applies the change to every town differently, depending on the distance from the event
-void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   INT32 iLoyaltyChange;
   TownID bTownId = 0;
 
@@ -1078,7 +1078,7 @@ void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, INT
 }
 
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
-                                         INT8 bSectorZ) {
+                                         int8_t bSectorZ) {
   INT16 sEventSector;
   uint8_t ubTempGroupId;
   TownID bTownId;
@@ -1264,7 +1264,7 @@ void SetTheFirstBattleSector(INT16 sSectorValue) {
 
 // did first battle take place here
 BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId) {
-  INT8 bTownBattleId = 0;
+  int8_t bTownBattleId = 0;
 
   // get town id for sector
   bTownBattleId = GetTownIdForSector(SectorID16_X(sWorldSectorLocationOfFirstBattle),
@@ -1318,20 +1318,20 @@ uint32_t EnemyStrength(void) {
 // Function assumes that mercs have retreated already.  Handles two cases, one for general merc
 // retreat which slightly demoralizes the mercs, the other handles abandonment of militia forces
 // which poses as a serious loyalty penalty.
-void HandleLoyaltyImplicationsOfMercRetreat(INT8 bRetreatCode, u8 sSectorX, u8 sSectorY,
+void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, u8 sSectorX, u8 sSectorY,
                                             INT16 sSectorZ) {
   if (CountAllMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (INT8)sSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (int8_t)sSectorZ);
   }
 
   // Standard retreat penalty
   if (bRetreatCode == RETREAT_TACTICAL_TRAVERSAL) {
     // if not worse than 2:1 odds, then penalize morale
     if (gTacticalStatus.fEnemyInSector && (PlayerStrength() * 2 >= EnemyStrength())) {
-      HandleMoraleEvent(NULL, MORALE_RAN_AWAY, sSectorX, sSectorY, (INT8)sSectorZ);
+      HandleMoraleEvent(NULL, MORALE_RAN_AWAY, sSectorX, sSectorY, (int8_t)sSectorZ);
     }
   } else {
-    HandleMoraleEvent(NULL, MORALE_RAN_AWAY, sSectorX, sSectorY, (INT8)sSectorZ);
+    HandleMoraleEvent(NULL, MORALE_RAN_AWAY, sSectorX, sSectorY, (int8_t)sSectorZ);
   }
 }
 

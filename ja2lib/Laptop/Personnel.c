@@ -1655,7 +1655,7 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
       case 19: {
         INT32 iWidth;
         INT32 iMinimumX;
-        INT8 bScreenLocIndex = 19;  // if you change the '19', change it below in the if statement
+        int8_t bScreenLocIndex = 19;  // if you change the '19', change it below in the if statement
 
         // Display the 'Skills' text
         mprintf((INT16)(pPersonnelScreenPoints[bScreenLocIndex].x + (iSlot * TEXT_BOX_WIDTH)),
@@ -1671,8 +1671,8 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
         iMinimumX = iWidth + pPersonnelScreenPoints[bScreenLocIndex].x + iSlot * TEXT_BOX_WIDTH + 2;
 
         if (!fAmIaRobot) {
-          INT8 bSkill1 = gMercProfiles[Menptr[iId].ubProfile].bSkillTrait;
-          INT8 bSkill2 = gMercProfiles[Menptr[iId].ubProfile].bSkillTrait2;
+          int8_t bSkill1 = gMercProfiles[Menptr[iId].ubProfile].bSkillTrait;
+          int8_t bSkill2 = gMercProfiles[Menptr[iId].ubProfile].bSkillTrait2;
 
           // if the 2 skills are the same, add the '(expert)' at the end
           if (bSkill1 == bSkill2 && bSkill1 != NO_SKILLTRAIT) {
@@ -2765,7 +2765,7 @@ INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat) {
   INT32 iValue = 0;
   MERCPROFILESTRUCT *pTeamSoldier;
   INT32 cnt = 0;
-  INT8 bCurrentList = 0;
+  int8_t bCurrentList = 0;
   INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
   struct SOLDIERTYPE *pSoldier;
@@ -2916,7 +2916,7 @@ INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat) {
   INT32 iValue = 9999999;
   MERCPROFILESTRUCT *pTeamSoldier;
   INT32 cnt = 0;
-  INT8 bCurrentList = 0;
+  int8_t bCurrentList = 0;
   INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
   struct SOLDIERTYPE *pSoldier;
@@ -3280,7 +3280,7 @@ INT32 GetAvgStatOfCurrentTeamStat(INT32 iStat) {
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
   INT32 cnt = 0;
   INT32 iTotalStatValue = 0;
-  INT8 bNumberOfPows = 0;
+  int8_t bNumberOfPows = 0;
   uint8_t ubNumberOfMercsInCalculation = 0;
 
   // first grunt
@@ -3378,7 +3378,7 @@ INT32 GetAvgStatOfPastTeamStat(INT32 iStat) {
   INT32 cnt = 0;
   INT32 iTotalStatValue = 0;
   MERCPROFILESTRUCT *pTeamSoldier;
-  INT8 bCurrentList = 0;
+  int8_t bCurrentList = 0;
   INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
   uint32_t uiLoopCounter;
@@ -5508,7 +5508,7 @@ BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrent
         pSoldier->inv[iCurrentPocket].uiMoneyAmount = 0;
 
         // Remove the item out off the merc
-        RemoveObjectFromSlot(pSoldier, (INT8)iCurrentPocket, &ObjectToRemove);
+        RemoveObjectFromSlot(pSoldier, (int8_t)iCurrentPocket, &ObjectToRemove);
       }
     }
   }

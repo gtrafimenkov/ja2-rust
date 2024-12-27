@@ -99,7 +99,7 @@ BOOLEAN LoadMilitiaPopUpBox(void);
 void RemoveMilitiaPopUpBox(void);
 
 // check if anyone left behind, if not, move selected cursor along with movement group
-// void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, INT8 bZ );
+// void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, int8_t bZ );
 
 // create destroy
 void CreateDestroyMilitiaPopUPRegions(void);
@@ -216,16 +216,16 @@ extern SGPRect MapScreenRect;
 extern BOOLEAN fDrawTempHeliPath;
 
 // selected destination char
-extern INT8 bSelectedDestChar;
+extern int8_t bSelectedDestChar;
 
 // current assignment character
-extern INT8 bSelectedAssignChar;
+extern int8_t bSelectedAssignChar;
 
 // the info character
-extern INT8 bSelectedInfoChar;
+extern int8_t bSelectedInfoChar;
 
 // the contract char
-extern INT8 bSelectedContractChar;
+extern int8_t bSelectedContractChar;
 
 // map arrows graphical index value
 extern uint32_t guiMAPCURSORS;

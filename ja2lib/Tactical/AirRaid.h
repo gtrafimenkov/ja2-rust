@@ -12,7 +12,7 @@ typedef struct {
   INT16 sSectorX;
   INT16 sSectorY;
   INT16 sSectorZ;
-  INT8 bIntensity;
+  int8_t bIntensity;
   uint32_t uiFlags;
   uint8_t ubNumMinsFromCurrentTime;
   uint8_t ubFiller[8];

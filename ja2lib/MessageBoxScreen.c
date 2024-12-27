@@ -59,7 +59,7 @@ void LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-uint32_t ExitMsgBox(INT8 ubExitCode);
+uint32_t ExitMsgBox(int8_t ubExitCode);
 uint16_t GetMSgBoxButtonWidth(INT32 iButtonImage);
 
 SGPRect gOldCursorLimitRectangle;
@@ -694,11 +694,11 @@ void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
     // OK, exit
-    gMsgBox.bHandled = (INT8)MSYS_GetBtnUserData(btn, 0);
+    gMsgBox.bHandled = (int8_t)MSYS_GetBtnUserData(btn, 0);
   }
 }
 
-uint32_t ExitMsgBox(INT8 ubExitCode) {
+uint32_t ExitMsgBox(int8_t ubExitCode) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint8_t *pDestBuf, *pSrcBuf;
   SGPPoint pPosition;

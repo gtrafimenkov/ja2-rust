@@ -74,7 +74,7 @@ uint8_t GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubT
   return (GetTownOpinionOfMerc(GetSolProfile(pSoldier), ubTownId));
 }
 
-void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, INT8 bAmount) {
+void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, int8_t bAmount) {
   Assert(ubProfileId < FIRST_NPC);
   Assert(ubTownId < NUM_TOWNS);
 
@@ -93,7 +93,7 @@ void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, INT8 bAm
 }
 
 void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId,
-                                           INT8 bAmount) {
+                                           int8_t bAmount) {
   // error check
   if (pSoldier == NULL) {
     return;
@@ -120,8 +120,8 @@ void HandleSpreadOfAllTownsOpinion(void) {
 void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId) {
   // handle opinion spread for this grunt
   INT32 iDistanceBetweenTowns;
-  INT8 iCounterA, iCounterB;
-  INT8 bOpinionOfTownA, bOpinionOfTownB;
+  int8_t iCounterA, iCounterB;
+  int8_t bOpinionOfTownA, bOpinionOfTownB;
 
   Assert(ubProfileId < FIRST_NPC);
 
@@ -141,7 +141,7 @@ void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId) {
   }
 }
 
-void HandleOpinionOfTownsAboutSoldier(INT8 bTownA, INT8 bTownB, INT32 iDistanceBetweenThem,
+void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, INT32 iDistanceBetweenThem,
                                       uint8_t ubProfile) {
   // ARM: System has been scrapped
 }

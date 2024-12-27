@@ -18,7 +18,7 @@ void KillOverheadMap();
 void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 
-void CalculateRestrictedMapCoords(INT8 bDirection, INT16 *psX1, INT16 *psY1, INT16 *psX2,
+void CalculateRestrictedMapCoords(int8_t bDirection, INT16 *psX1, INT16 *psY1, INT16 *psX2,
                                   INT16 *psY2, INT16 sEndXS, INT16 sEndYS);
 void CalculateRestrictedScaleFactors(INT16 *pScaleX, INT16 *pScaleY);
 

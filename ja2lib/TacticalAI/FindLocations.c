@@ -42,7 +42,7 @@ BOOLEAN gfDisplayCoverValues = FALSE;
 extern void RenderCoverDebug(void);
 #endif
 
-INT8 gubAIPathCosts[19][19];
+int8_t gubAIPathCosts[19][19];
 
 // FindBestNearbyCover - "Net" related stuff commented out
 extern uint8_t gubAICounter;
@@ -108,11 +108,11 @@ void AICenterXY(INT16 sGridNo, FLOAT *pdX, FLOAT *pdY) {
   *pdY = (FLOAT)(sYPos * CELL_Y_SIZE + CELL_Y_SIZE / 2);
 }
 
-INT8 CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT16 sOppGridNo,
-                              INT8 bLevel, INT32 iMyAPsLeft) {
+int8_t CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT16 sOppGridNo,
+                                int8_t bLevel, INT32 iMyAPsLeft) {
   // When considering a gridno for cover, we want to take into account cover if we
   // lie down, so we return the LOWEST chance to get through for that location.
-  INT8 bCubeLevel, bThisCTGT, bWorstCTGT = 100;
+  int8_t bCubeLevel, bThisCTGT, bWorstCTGT = 100;
 
   for (bCubeLevel = 1; bCubeLevel <= 3; bCubeLevel++) {
     switch (bCubeLevel) {
@@ -143,11 +143,11 @@ INT8 CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT
   return (bWorstCTGT);
 }
 
-INT8 CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT16 sOppGridNo,
-                                INT8 bLevel, INT32 iMyAPsLeft) {
+int8_t CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT16 sOppGridNo,
+                                  int8_t bLevel, INT32 iMyAPsLeft) {
   // When considering a gridno for cover, we want to take into account cover if we
   // lie down, so we return the LOWEST chance to get through for that location.
-  INT8 bCubeLevel;
+  int8_t bCubeLevel;
   INT32 iTotalCTGT = 0, bValidCubeLevels = 0;
   ;
 
@@ -171,18 +171,18 @@ INT8 CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, I
     bValidCubeLevels++;
   }
   iTotalCTGT /= bValidCubeLevels;
-  return ((INT8)iTotalCTGT);
+  return ((int8_t)iTotalCTGT);
 }
 
-INT8 CalcBestCTGT(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT16 sOppGridNo, INT8 bLevel,
-                  INT32 iMyAPsLeft) {
+int8_t CalcBestCTGT(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, INT16 sOppGridNo, int8_t bLevel,
+                    INT32 iMyAPsLeft) {
   // NOTE: CTGT stands for "ChanceToGetThrough..."
 
   // using only ints for maximum execution speed here
   // CJC: Well, so much for THAT idea!
   INT16 sCentralGridNo, sAdjSpot, sNorthGridNo, sSouthGridNo, sDir, sCheckSpot;
 
-  INT8 bThisCTGT, bBestCTGT = 0;
+  int8_t bThisCTGT, bBestCTGT = 0;
 
   sCheckSpot = -1;
 
@@ -255,7 +255,7 @@ INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, 
   INT16 sHisGridNo, sMyRealGridNo = NOWHERE, sHisRealGridNo = NOWHERE;
   INT16 sTempX, sTempY;
   FLOAT dMyX, dMyY, dHisX, dHisY;
-  INT8 bHisBestCTGT, bHisActualCTGT, bHisCTGT, bMyCTGT;
+  int8_t bHisBestCTGT, bHisActualCTGT, bHisCTGT, bMyCTGT;
   INT32 iRangeChange, iRangeFactor, iRangeFactorMultiplier;
   struct SOLDIERTYPE *pHim;
 
@@ -498,11 +498,11 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   uint16_t sOrigin;  // has to be a short, need a pointer
   INT16 *pusLastLoc;
-  INT8 *pbPersOL;
-  INT8 *pbPublOL;
+  int8_t *pbPersOL;
+  int8_t *pbPublOL;
   struct SOLDIERTYPE *pOpponent;
   uint16_t usMovementMode;
-  INT8 fHasGasMask;
+  int8_t fHasGasMask;
 
   uint8_t ubBackgroundLightLevel;
   uint8_t ubBackgroundLightPercent = 0;
@@ -1011,12 +1011,12 @@ INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiThreatCnt = 0;
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  INT8 *pbPersOL, *pbPublOL, bEscapeDirection, bBestEscapeDirection = -1;
+  int8_t *pbPersOL, *pbPublOL, bEscapeDirection, bBestEscapeDirection = -1;
   struct SOLDIERTYPE *pOpponent;
   uint16_t sOrigin;
   INT32 iRoamRange;
 
-  INT8 fHasGasMask;
+  int8_t fHasGasMask;
 
   switch (FindObj(pSoldier, GASMASK)) {
     case HEAD1POS:
@@ -1362,7 +1362,7 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
   INT32 iSpotValue, iBestSpotValue = 1000;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT32 iSearchRange;
-  INT8 bLightLevel, bCurrLightLevel, bLightDiff;
+  int8_t bLightLevel, bCurrLightLevel, bLightDiff;
   INT32 iRoamRange;
   uint16_t sOrigin;
 
@@ -1479,7 +1479,7 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
 
 #define MINIMUM_REQUIRED_STATUS 70
 
-INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, uint16_t usItem) {
+int8_t SearchForItems(struct SOLDIERTYPE *pSoldier, int8_t bReason, uint16_t usItem) {
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT16 sGridNo;
@@ -1812,7 +1812,7 @@ INT16 FindClosestDoor(struct SOLDIERTYPE *pSoldier) {
   return (sClosestDoor);
 }
 
-INT16 FindNearestEdgepointOnSpecifiedEdge(INT16 sGridNo, INT8 bEdgeCode) {
+INT16 FindNearestEdgepointOnSpecifiedEdge(INT16 sGridNo, int8_t bEdgeCode) {
   INT32 iLoop;
   INT16 *psEdgepointArray;
   INT32 iEdgepointArraySize;
@@ -1859,7 +1859,7 @@ INT16 FindNearestEdgePoint(INT16 sGridNo) {
   INT16 sScreenX, sScreenY, sMaxScreenX, sMaxScreenY;
   INT16 sDist[5], sMinDist;
   INT32 iLoop;
-  INT8 bMinIndex;
+  int8_t bMinIndex;
   INT16 *psEdgepointArray;
   INT32 iEdgepointArraySize;
   INT16 sClosestSpot = NOWHERE, sClosestDist = 0x7FFF, sTempDist;
@@ -1881,7 +1881,7 @@ INT16 FindNearestEdgePoint(INT16 sGridNo) {
   for (iLoop = 1; iLoop < 5; iLoop++) {
     if (sDist[iLoop] < sMinDist) {
       sMinDist = sDist[iLoop];
-      bMinIndex = (INT8)iLoop;
+      bMinIndex = (int8_t)iLoop;
     }
   }
 
@@ -1923,12 +1923,12 @@ INT16 FindNearestEdgePoint(INT16 sGridNo) {
 
 #define EDGE_OF_MAP_SEARCH 5
 
-INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, INT8 *pbDirection) {
+INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, int8_t *pbDirection) {
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
 
   INT16 sGridNo, sClosestSpot = NOWHERE;
-  INT8 bDirection, bClosestDirection;
+  int8_t bDirection, bClosestDirection;
   INT32 iPathCost, iClosestPathCost = 1000;
 
   bClosestDirection = -1;

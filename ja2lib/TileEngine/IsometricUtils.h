@@ -77,7 +77,7 @@ void FloatFromScreenToCellCoordinates(FLOAT dScreenX, FLOAT dScreenY, FLOAT *pdC
 
 BOOLEAN GridNoOnVisibleWorldTile(INT16 sGridNo);
 BOOLEAN GridNoOnVisibleWorldTileGivenYLimits(INT16 sGridNo);
-BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, INT8 *pbDirection);
+BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, int8_t *pbDirection);
 
 BOOLEAN ConvertMapPosToWorldTileCenter(uint16_t usMapPos, INT16 *psXPos, INT16 *psYPos);
 
@@ -93,11 +93,11 @@ BOOLEAN IsPointInScreenRectWithRelative(INT16 sXPos, INT16 sYPos, SGPRect *pRect
 INT16 PythSpacesAway(INT16 sOrigin, INT16 sDest);
 INT16 SpacesAway(INT16 sOrigin, INT16 sDest);
 INT16 CardinalSpacesAway(INT16 sOrigin, INT16 sDest);
-INT8 FindNumTurnsBetweenDirs(INT8 sDir1, INT8 sDir2);
-BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
-                         INT8 *pbDirection);
-BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
-                       INT8 *pbDirection);
+int8_t FindNumTurnsBetweenDirs(int8_t sDir1, int8_t sDir2);
+BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bStartingDir,
+                         int8_t *pbDirection);
+BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bStartingDir,
+                       int8_t *pbDirection);
 
 INT16 QuickestDirection(INT16 origin, INT16 dest);
 INT16 ExtQuickestDirection(INT16 origin, INT16 dest);
@@ -110,8 +110,8 @@ INT16 CenterY(INT16 sGridno);
 
 INT16 MapX(INT16 sGridNo);
 INT16 MapY(INT16 sGridNo);
-BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
-                               INT8 *pbDirection);
+BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bStartingDir,
+                               int8_t *pbDirection);
 
 // Simply chooses a random gridno within valid boundaries (for dropping things in unloaded sectors)
 INT16 RandomGridNo();

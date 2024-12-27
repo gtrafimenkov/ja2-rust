@@ -14,7 +14,7 @@ CHAR8 gubFilename[200];
 BOOLEAN gfEditMode = FALSE;
 CHAR8 gDebugStr[128];
 CHAR8 gSystemDebugStr[128];
-INT8 gbFPSDisplay = SHOW_MIN_FPS;
+int8_t gbFPSDisplay = SHOW_MIN_FPS;
 BOOLEAN gfResetInputCheck = FALSE;
 BOOLEAN gfGlobalError = FALSE;
 BOOLEAN fFirstTimeInGameScreen = TRUE;

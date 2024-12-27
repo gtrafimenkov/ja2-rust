@@ -93,7 +93,7 @@ GUI_BUTTON *gpPrevAnchoredButton;
 BOOLEAN gfAnchoredState;
 void ReleaseAnchorMode();
 
-INT8 gbDisabledButtonStyle;
+int8_t gbDisabledButtonStyle;
 void DrawHatchOnButton(GUI_BUTTON *b);
 void DrawShadeOnButton(GUI_BUTTON *b);
 void DrawDefaultOnButton(GUI_BUTTON *b);
@@ -1398,7 +1398,7 @@ INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, IN
 
   // Define a mouse region for this button
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w),
-                    (uint16_t)(yloc + h), (INT8)Priority, MSYS_STARTING_CURSORVAL,
+                    (uint16_t)(yloc + h), (int8_t)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1522,7 +1522,7 @@ INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sS
 
   // Define a struct MOUSE_REGION for this button
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w),
-                    (uint16_t)(yloc + h), (INT8)Priority, MSYS_STARTING_CURSORVAL,
+                    (uint16_t)(yloc + h), (int8_t)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1608,7 +1608,7 @@ INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Pri
 
   // define a struct MOUSE_REGION for this hotspot
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + Width),
-                    (uint16_t)(yloc + Height), (INT8)Priority, MSYS_STARTING_CURSORVAL,
+                    (uint16_t)(yloc + Height), (int8_t)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1753,7 +1753,7 @@ INT32 QuickCreateButton(uint32_t Image, INT16 xloc, INT16 yloc, INT32 Type, INT1
   // Define a struct MOUSE_REGION for this QuickButton
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc,
                     (uint16_t)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
-                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
+                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (int8_t)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1825,7 +1825,7 @@ INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, INT16 Prio
 
 INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 sForeColor,
                               INT16 sShadowColor, INT16 sForeColorDown, INT16 sShadowColorDown,
-                              INT8 bJustification, INT16 xloc, INT16 yloc, INT32 Type,
+                              int8_t bJustification, INT16 xloc, INT16 yloc, INT32 Type,
                               INT16 Priority, GUI_CALLBACK MoveCallback,
                               GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
@@ -1921,7 +1921,7 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 
   // Define a struct MOUSE_REGION for this QuickButton
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc,
                     (uint16_t)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
-                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
+                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (int8_t)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -2022,7 +2022,7 @@ void SpecifyButtonHilitedTextColors(INT32 iButtonID, INT16 sForeColorHilited,
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonTextJustification(INT32 iButtonID, INT8 bJustification) {
+void SpecifyButtonTextJustification(INT32 iButtonID, int8_t bJustification) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2037,7 +2037,7 @@ void SpecifyButtonTextJustification(INT32 iButtonID, INT8 bJustification) {
 
 void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont, INT16 sForeColor,
                                      INT16 sShadowColor, INT16 sForeColorDown,
-                                     INT16 sShadowColorDown, INT8 bJustification) {
+                                     INT16 sShadowColorDown, int8_t bJustification) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2072,7 +2072,7 @@ void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiF
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonTextOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOffset,
+void SpecifyButtonTextOffsets(INT32 iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                               BOOLEAN fShiftText) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
@@ -2085,7 +2085,7 @@ void SpecifyButtonTextOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOff
   b->fShiftText = fShiftText;
 }
 
-void SpecifyButtonTextSubOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOffset,
+void SpecifyButtonTextSubOffsets(INT32 iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                                  BOOLEAN fShiftText) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
@@ -2108,7 +2108,7 @@ void SpecifyButtonTextWrappedWidth(INT32 iButtonID, INT16 sWrappedWidth) {
   b->sWrappedWidth = sWrappedWidth;
 }
 
-void SpecifyDisabledButtonStyle(INT32 iButtonID, INT8 bStyle) {
+void SpecifyDisabledButtonStyle(INT32 iButtonID, int8_t bStyle) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2124,7 +2124,7 @@ void SpecifyDisabledButtonStyle(INT32 iButtonID, INT8 bStyle) {
 // If fShiftImage is true, then the image will shift down one pixel and right one pixel
 // just like the text does.
 BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, uint16_t usVideoObjectIndex,
-                          INT8 bXOffset, INT8 bYOffset, BOOLEAN fShiftImage) {
+                          int8_t bXOffset, int8_t bYOffset, BOOLEAN fShiftImage) {
   GUI_BUTTON *b;
 
   Assert(iButtonID >= 0);
@@ -3467,8 +3467,8 @@ void GiveButtonDefaultStatus(INT32 iButtonID, INT32 iDefaultStatus) {
             String("Illegal button default status of %d", iDefaultStatus));
   Assert(b);
 
-  if (b->bDefaultStatus != (INT8)iDefaultStatus) {
-    b->bDefaultStatus = (INT8)iDefaultStatus;
+  if (b->bDefaultStatus != (int8_t)iDefaultStatus) {
+    b->bDefaultStatus = (int8_t)iDefaultStatus;
     b->uiFlags |= BUTTON_DIRTY;
   }
 }

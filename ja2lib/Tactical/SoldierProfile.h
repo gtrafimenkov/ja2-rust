@@ -7,7 +7,7 @@
 
 struct SOLDIERTYPE;
 
-extern INT8 gbSkillTraitBonus[NUM_SKILLTRAITS];
+extern int8_t gbSkillTraitBonus[NUM_SKILLTRAITS];
 extern uint8_t gubTerrorists[];
 extern INT16 gsTerroristSector[][5][2];
 extern BOOLEAN gfPotentialTeamChangeDuringDeath;
@@ -169,8 +169,8 @@ BOOLEAN RecruitRPC(uint8_t ubCharNum);
 BOOLEAN RecruitEPC(uint8_t ubCharNum);
 BOOLEAN UnRecruitEPC(uint8_t ubCharNum);
 
-INT8 WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy);
-INT8 WhichHated(uint8_t ubCharNum, uint8_t ubHated);
+int8_t WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy);
+int8_t WhichHated(uint8_t ubCharNum, uint8_t ubHated);
 
 struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, uint8_t ubTeam);
 

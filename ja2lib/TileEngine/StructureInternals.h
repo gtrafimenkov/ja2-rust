@@ -126,8 +126,8 @@ extern uint8_t AtHeight[PROFILE_Z_SIZE];
 
 typedef struct TAG_STRUCTURE_TILE {
   INT16 sPosRelToBase;  // "single-axis"
-  INT8 bXPosRelToBase;
-  INT8 bYPosRelToBase;
+  int8_t bXPosRelToBase;
+  int8_t bYPosRelToBase;
   PROFILE Shape;  // 25 bytes
   uint8_t fFlags;
   uint8_t ubVehicleHitLocation;
@@ -146,10 +146,10 @@ struct DB_STRUCTURE {
   uint32_t fFlags;
   uint16_t usStructureNumber;
   uint8_t ubWallOrientation;
-  INT8 bDestructionPartner;  // >0 = debris number (bDP - 1), <0 = partner graphic
-  INT8 bPartnerDelta;        // opened/closed version, etc... 0 for unused
-  INT8 bZTileOffsetX;
-  INT8 bZTileOffsetY;
+  int8_t bDestructionPartner;  // >0 = debris number (bDP - 1), <0 = partner graphic
+  int8_t bPartnerDelta;        // opened/closed version, etc... 0 for unused
+  int8_t bZTileOffsetX;
+  int8_t bZTileOffsetY;
   BYTE bUnused[1];
 };  // 16 bytes
 

@@ -37,21 +37,21 @@ struct VObject;
 typedef struct {
   BOOLEAN fDetailedPlacement;  // Specialized information.  Has a counterpart containing all info.
   uint16_t usStartingGridNo;   // Where the placement position is.
-  INT8 bTeam;                  // The team this individual is part of.
-  INT8 bRelativeAttributeLevel;
-  INT8 bRelativeEquipmentLevel;
-  INT8 bDirection;  // 1 of 8 values (always mandatory)
-  INT8 bOrders;
-  INT8 bAttitude;
-  INT8 bBodyType;                     // up to 128 body types, -1 means random
+  int8_t bTeam;                // The team this individual is part of.
+  int8_t bRelativeAttributeLevel;
+  int8_t bRelativeEquipmentLevel;
+  int8_t bDirection;  // 1 of 8 values (always mandatory)
+  int8_t bOrders;
+  int8_t bAttitude;
+  int8_t bBodyType;                   // up to 128 body types, -1 means random
   INT16 sPatrolGrid[MAXPATROLGRIDS];  // possible locations to visit, patrol, etc.
-  INT8 bPatrolCnt;
+  int8_t bPatrolCnt;
   BOOLEAN fOnRoof;
   uint8_t ubSoldierClass;  // army, administrator, elite
   uint8_t ubCivilianGroup;
   BOOLEAN fPriorityExistance;  // These slots are used first
   BOOLEAN fHasKeys;
-  INT8 PADDINGSLOTS[14];
+  int8_t PADDINGSLOTS[14];
 } BASIC_SOLDIERCREATE_STRUCT;  // 50 bytes
 
 typedef struct {
@@ -68,32 +68,32 @@ typedef struct {
   // Location information
   INT16 sSectorX;
   INT16 sSectorY;
-  INT8 bDirection;
+  int8_t bDirection;
   INT16 sInsertionGridNo;
 
   // Can force a team, but needs flag set
-  INT8 bTeam;
-  INT8 bBodyType;
+  int8_t bTeam;
+  int8_t bBodyType;
 
   // Orders and attitude settings
-  INT8 bAttitude;
-  INT8 bOrders;
+  int8_t bAttitude;
+  int8_t bOrders;
 
   // Attributes
-  INT8 bLifeMax;
-  INT8 bLife;
-  INT8 bAgility;
-  INT8 bDexterity;
-  INT8 bExpLevel;
-  INT8 bMarksmanship;
-  INT8 bMedical;
-  INT8 bMechanical;
-  INT8 bExplosive;
-  INT8 bLeadership;
-  INT8 bStrength;
-  INT8 bWisdom;
-  INT8 bMorale;
-  INT8 bAIMorale;
+  int8_t bLifeMax;
+  int8_t bLife;
+  int8_t bAgility;
+  int8_t bDexterity;
+  int8_t bExpLevel;
+  int8_t bMarksmanship;
+  int8_t bMedical;
+  int8_t bMechanical;
+  int8_t bExplosive;
+  int8_t bLeadership;
+  int8_t bStrength;
+  int8_t bWisdom;
+  int8_t bMorale;
+  int8_t bAIMorale;
 
   // Inventory
   struct OBJECTTYPE Inv[NUM_INV_SLOTS];
@@ -107,7 +107,7 @@ typedef struct {
 
   // Waypoint information for patrolling
   INT16 sPatrolGrid[MAXPATROLGRIDS];
-  INT8 bPatrolCnt;
+  int8_t bPatrolCnt;
 
   // Kris:  Additions November 16, 1997 (padding down to 129 from 150)
   BOOLEAN fVisible;
@@ -117,7 +117,7 @@ typedef struct {
 
   BOOLEAN fOnRoof;
 
-  INT8 bSectorZ;
+  int8_t bSectorZ;
 
   struct SOLDIERTYPE *pExistingSoldier;
   BOOLEAN fUseExistingSoldier;
@@ -127,10 +127,10 @@ typedef struct {
   uint8_t ubScheduleID;
 
   BOOLEAN fUseGivenVehicle;
-  INT8 bUseGivenVehicleID;
+  int8_t bUseGivenVehicleID;
   BOOLEAN fHasKeys;
 
-  INT8 bPadding[115];
+  int8_t bPadding[115];
 
 } SOLDIERCREATE_STRUCT;
 
@@ -138,7 +138,7 @@ typedef struct {
 BOOLEAN TacticalRemoveSoldier(uint16_t usSoldierIndex);
 BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle);
 
-INT8 CalcDifficultyModifier(uint8_t ubSoldierClass);
+int8_t CalcDifficultyModifier(uint8_t ubSoldierClass);
 
 void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct);
 
@@ -151,10 +151,10 @@ struct SOLDIERTYPE *TacticalCreateAdministrator();
 struct SOLDIERTYPE *TacticalCreateEliteEnemy();
 struct SOLDIERTYPE *TacticalCreateArmyTroop();
 struct SOLDIERTYPE *TacticalCreateMilitia(uint8_t ubMilitiaClass);
-struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType);
+struct SOLDIERTYPE *TacticalCreateCreature(int8_t bCreatureBodyType);
 
 // randomly generates a relative level rating (attributes or equipment)
-void RandomizeRelativeLevel(INT8 *pbRelLevel, uint8_t ubSoldierClass);
+void RandomizeRelativeLevel(int8_t *pbRelLevel, uint8_t ubSoldierClass);
 
 // get the pythag. distance from the passed sector to the palace..
 uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY);
@@ -224,14 +224,14 @@ void UpdateStaticDetailedPlacementWithProfileInformation(SOLDIERCREATE_STRUCT *s
 
 // When the editor modifies the soldier's relative attribute level,
 // this function is called to update that information.
-void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s, INT8 bLevel);
+void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s, int8_t bLevel);
 
 // Force the soldier to be a different ID
 void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, uint8_t ubProfileID);
 
 void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubSoldierClass);
 
-void QuickCreateProfileMerc(INT8 bTeam, uint8_t ubProfileID);
+void QuickCreateProfileMerc(int8_t bTeam, uint8_t ubProfileID);
 
 BOOLEAN InternalTacticalRemoveSoldier(uint16_t usSoldierIndex, BOOLEAN fRemoveVehicle);
 

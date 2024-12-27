@@ -197,7 +197,7 @@ extern BOOLEAN gfUIHandleShowMoveGrid;
 extern uint16_t gsUIHandleShowMoveGridLocation;
 
 extern BOOLEAN gfUIDisplayDamage;
-extern INT8 gbDamage;
+extern int8_t gbDamage;
 extern uint16_t gsDamageGridNo;
 
 extern BOOLEAN gfFontPopupDo;
@@ -280,7 +280,7 @@ void ToggleHandCursorMode(uint32_t *puiNewEvent);
 void ToggleTalkCursorMode(uint32_t *puiNewEvent);
 void ToggleLookCursorMode(uint32_t *puiNewEvent);
 
-void UIHandleSoldierStanceChange(uint8_t ubSoldierID, INT8 bNewStance);
+void UIHandleSoldierStanceChange(uint8_t ubSoldierID, int8_t bNewStance);
 void GetCursorMovementFlags(uint32_t *puiCursorFlags);
 
 BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags,
@@ -306,7 +306,7 @@ uint32_t UIHandleLUIEndLock(UI_EVENT *pUIEvent);
 void BeginDisplayTimedCursor(uint32_t uiCursorID, uint32_t uiDelay);
 
 void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent);
-INT8 HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent);
+int8_t HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent);
 
 BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 

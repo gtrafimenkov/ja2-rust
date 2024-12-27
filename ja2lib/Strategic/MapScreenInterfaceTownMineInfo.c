@@ -40,9 +40,9 @@ INT32 ghTownMineBox = -1;
 SGPPoint TownMinePosition = {300, 150};
 SGPRect TownMineDimensions = {0, 0, 240, 60};
 
-INT8 bCurrentTownMineSectorX = 0;
-INT8 bCurrentTownMineSectorY = 0;
-INT8 bCurrentTownMineSectorZ = 0;
+int8_t bCurrentTownMineSectorX = 0;
+int8_t bCurrentTownMineSectorY = 0;
+int8_t bCurrentTownMineSectorZ = 0;
 
 // inventory button
 uint32_t guiMapButtonInventoryImage[2];
@@ -88,14 +88,14 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason);
 void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason);
 void MinWidthOfTownMineInfoBox(void);
 
-void DisplayTownInfo(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+void DisplayTownInfo(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   // will display town info for a particular town
 
   // set current sector
   if ((bCurrentTownMineSectorX != sMapX) || (bCurrentTownMineSectorY != sMapY) ||
       (bCurrentTownMineSectorZ != bMapZ)) {
-    bCurrentTownMineSectorX = (INT8)sMapX;
-    bCurrentTownMineSectorY = (INT8)sMapY;
+    bCurrentTownMineSectorX = (int8_t)sMapX;
+    bCurrentTownMineSectorY = (int8_t)sMapY;
     bCurrentTownMineSectorZ = bMapZ;
   }
 

@@ -19,7 +19,7 @@ typedef int32_t INT32;
 
 // integers
 typedef unsigned char uint8_t;
-typedef signed char INT8;
+typedef signed char int8_t;
 typedef uint16_t uint16_t;
 typedef int16_t INT16;
 // floats

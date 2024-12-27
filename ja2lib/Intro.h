@@ -17,6 +17,6 @@ enum {
 
 extern uint32_t guiSmackerSurface;
 
-void SetIntroType(INT8 bIntroType);
+void SetIntroType(int8_t bIntroType);
 
 #endif

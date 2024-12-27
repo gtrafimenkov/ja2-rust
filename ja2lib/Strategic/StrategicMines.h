@@ -54,9 +54,9 @@ enum {
 
 // the strategic mine structures
 typedef struct MINE_LOCATION_TYPE {
-  INT16 sSectorX;        // x value of sector mine is in
-  INT16 sSectorY;        // y value of sector mine is in
-  INT8 bAssociatedTown;  // associated town of this mine
+  INT16 sSectorX;          // x value of sector mine is in
+  INT16 sSectorY;          // y value of sector mine is in
+  int8_t bAssociatedTown;  // associated town of this mine
 
 } MINE_LOCATION_TYPE;
 
@@ -96,7 +96,7 @@ typedef struct MINE_STATUS_TYPE {
 
 typedef struct HEAD_MINER_TYPE {
   uint16_t usProfileId;
-  INT8 bQuoteNum[NUM_HEAD_MINER_STRATEGIC_QUOTES];
+  int8_t bQuoteNum[NUM_HEAD_MINER_STRATEGIC_QUOTES];
   uint8_t ubExternalFace;
 } HEAD_MINER_TYPE;
 
@@ -106,17 +106,17 @@ void InitializeMines(void);
 void HourlyMinesUpdate(void);
 
 // get total left in this mine
-INT32 GetTotalLeftInMine(INT8 bMineIndex);
+INT32 GetTotalLeftInMine(int8_t bMineIndex);
 
 // get max rates for this mine (per period, per day)
-uint32_t GetMaxPeriodicRemovalFromMine(INT8 bMineIndex);
-uint32_t GetMaxDailyRemovalFromMine(INT8 bMineIndex);
+uint32_t GetMaxPeriodicRemovalFromMine(int8_t bMineIndex);
+uint32_t GetMaxDailyRemovalFromMine(int8_t bMineIndex);
 
 // which town does this mine belong to?
-INT8 GetTownAssociatedWithMine(INT8 bMineIndex);
+int8_t GetTownAssociatedWithMine(int8_t bMineIndex);
 
 // which mine belongs tot his town
-INT8 GetMineAssociatedWithThisTown(TownID bTownId);
+int8_t GetMineAssociatedWithThisTown(TownID bTownId);
 
 // posts the actual mine production events daily
 void PostEventsForMineProduction(void);
@@ -128,16 +128,16 @@ void HandleIncomeFromMines(void);
 INT32 PredictIncomeFromPlayerMines(void);
 
 // predict income from a mine
-uint32_t PredictDailyIncomeFromAMine(INT8 bMineIndex);
+uint32_t PredictDailyIncomeFromAMine(int8_t bMineIndex);
 
 // calculate maximum possible daily income from all mines
 INT32 CalcMaxPlayerIncomeFromMines(void);
 
 // get index value of this mine in the mine list
-INT8 GetMineIndexForSector(INT16 sX, INT16 sY);
+int8_t GetMineIndexForSector(INT16 sX, INT16 sY);
 
 // get the index of the mine associated with this town
-INT8 GetMineIndexForTown(TownID bTownId);
+int8_t GetMineIndexForTown(TownID bTownId);
 
 // get the sector value for the mine associated with this town
 INT16 GetMineSectorForTown(TownID bTownId);
@@ -152,21 +152,21 @@ BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadMineStatusFromSavedGameFile(HWFILE hFile);
 
 // if the player controls a given mine
-BOOLEAN PlayerControlsMine(INT8 bMineIndex);
+BOOLEAN PlayerControlsMine(int8_t bMineIndex);
 
-void ShutOffMineProduction(INT8 bMineIndex);
-void RestartMineProduction(INT8 bMineIndex);
-void MineShutdownIsPermanent(INT8 bMineIndex);
+void ShutOffMineProduction(int8_t bMineIndex);
+void RestartMineProduction(int8_t bMineIndex);
+void MineShutdownIsPermanent(int8_t bMineIndex);
 
-BOOLEAN IsMineShutDown(INT8 bMineIndex);
+BOOLEAN IsMineShutDown(int8_t bMineIndex);
 
-uint8_t GetHeadMinerIndexForMine(INT8 bMineIndex);
-uint16_t GetHeadMinerProfileIdForMine(INT8 bMineIndex);
+uint8_t GetHeadMinerIndexForMine(int8_t bMineIndex);
+uint16_t GetHeadMinerProfileIdForMine(int8_t bMineIndex);
 
 // Find the sector location of a mine
 void GetMineSector(uint8_t ubMineIndex, INT16* psX, INT16* psY);
 
-void IssueHeadMinerQuote(INT8 bMineIndex, uint8_t ubQuoteType);
+void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType);
 
 uint8_t GetHeadMinersMineIndex(uint8_t ubMinerProfileId);
 
@@ -180,7 +180,7 @@ BOOLEAN IsHisMineLostAndRegained(uint8_t ubMinerProfileId);
 BOOLEAN IsHisMineAtMaxProduction(uint8_t ubMinerProfileId);
 void ResetQueenRetookMine(uint8_t ubMinerProfileId);
 
-void QueenHasRegainedMineSector(INT8 bMineIndex);
+void QueenHasRegainedMineSector(int8_t bMineIndex);
 
 BOOLEAN HasAnyMineBeenAttackedByMonsters(void);
 
@@ -189,7 +189,7 @@ void PlayerAttackedHeadMiner(uint8_t ubMinerProfileId);
 BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId);
 
 // given sector value, get mine id value
-INT8 GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+int8_t GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // use this for miner (civilian) quotes when *underground* in a mine
 BOOLEAN PlayerForgotToTakeOverMine(uint8_t ubMineIndex);

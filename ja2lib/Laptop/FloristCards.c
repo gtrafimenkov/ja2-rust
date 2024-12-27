@@ -41,7 +41,7 @@
 
 uint32_t guiCardBackground;
 
-INT8 gbCurrentlySelectedCard;
+int8_t gbCurrentlySelectedCard;
 
 // link to the card gallery
 struct MOUSE_REGION gSelectedFloristCardsRegion[9];

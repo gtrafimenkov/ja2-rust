@@ -25,8 +25,8 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
-INT8 FromWorldFlagsToSmokeType(uint8_t ubWorldFlags);
-uint8_t FromSmokeTypeToWorldFlags(INT8 bType);
+int8_t FromWorldFlagsToSmokeType(uint8_t ubWorldFlags);
+uint8_t FromSmokeTypeToWorldFlags(int8_t bType);
 
 #define NUM_SMOKE_EFFECT_SLOTS 25
 
@@ -61,7 +61,7 @@ void RecountSmokeEffects(void) {
 }
 
 // Returns NO_SMOKE_EFFECT if none there...
-INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel) {
+int8_t GetSmokeEffectOnTile(INT16 sGridNo, int8_t bLevel) {
   uint8_t ubExtFlags;
 
   ubExtFlags = gpWorldLevelData[sGridNo].ubExtFlags[bLevel];
@@ -75,7 +75,7 @@ INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel) {
   return (NO_SMOKE_EFFECT);
 }
 
-INT8 FromWorldFlagsToSmokeType(uint8_t ubWorldFlags) {
+int8_t FromWorldFlagsToSmokeType(uint8_t ubWorldFlags) {
   if (ubWorldFlags & MAPELEMENT_EXT_SMOKE) {
     return (NORMAL_SMOKE_EFFECT);
   } else if (ubWorldFlags & MAPELEMENT_EXT_TEARGAS) {
@@ -89,7 +89,7 @@ INT8 FromWorldFlagsToSmokeType(uint8_t ubWorldFlags) {
   }
 }
 
-uint8_t FromSmokeTypeToWorldFlags(INT8 bType) {
+uint8_t FromSmokeTypeToWorldFlags(int8_t bType) {
   switch (bType) {
     case NORMAL_SMOKE_EFFECT:
 
@@ -117,10 +117,10 @@ uint8_t FromSmokeTypeToWorldFlags(INT8 bType) {
   }
 }
 
-INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, uint8_t ubOwner) {
+INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner) {
   SMOKEEFFECT *pSmoke;
   INT32 iSmokeIndex;
-  INT8 bSmokeEffectType = 0;
+  int8_t bSmokeEffectType = 0;
   uint8_t ubDuration = 0;
   uint8_t ubStartRadius = 0;
 
@@ -214,7 +214,7 @@ INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, uint8_t ubOwne
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )
-void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 bLevel) {
+void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, INT16 sGridNo, int8_t bLevel) {
   ANITILE_PARAMS AniParams;
   SMOKEEFFECT *pSmoke;
   BOOLEAN fDissipating = FALSE;
@@ -335,7 +335,7 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
-void RemoveSmokeEffectFromTile(INT16 sGridNo, INT8 bLevel) {
+void RemoveSmokeEffectFromTile(INT16 sGridNo, int8_t bLevel) {
   ANITILE *pAniTile;
   uint8_t ubLevelID;
 
@@ -366,7 +366,7 @@ void DecaySmokeEffects(uint32_t uiTime) {
   uint32_t cnt, cnt2;
   BOOLEAN fUpdate = FALSE;
   BOOLEAN fSpreadEffect;
-  INT8 bLevel;
+  int8_t bLevel;
   uint16_t usNumUpdates = 1;
 
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
@@ -522,7 +522,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
   uint32_t uiNumBytesRead;
   uint32_t uiCount;
   uint32_t uiCnt = 0;
-  INT8 bLevel;
+  int8_t bLevel;
 
   // no longer need to load smoke effects.  They are now in temp files
   if (guiSaveGameVersion < 75) {
@@ -575,7 +575,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   uint32_t uiNumSmokeEffects = 0;
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
@@ -640,13 +640,13 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   uint32_t uiNumBytesRead;
   uint32_t uiCount;
   uint32_t uiCnt = 0;
   HWFILE hFile;
   CHAR8 zMapName[128];
-  INT8 bLevel;
+  int8_t bLevel;
 
   GetMapTempFileName(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
@@ -707,7 +707,7 @@ void ResetSmokeEffects() {
 void UpdateSmokeEffectGraphics() {
   uint32_t uiCnt;
   SMOKEEFFECT *pSmoke;
-  INT8 bLevel;
+  int8_t bLevel;
 
   // loop through and save the number of smoke effects
   for (uiCnt = 0; uiCnt < guiNumSmokeEffects; uiCnt++) {

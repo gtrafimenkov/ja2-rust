@@ -178,7 +178,7 @@ BOOLEAN ShutDownQuoteBoxIfActive() {
   return (FALSE);
 }
 
-INT8 GetCivType(struct SOLDIERTYPE *pCiv) {
+int8_t GetCivType(struct SOLDIERTYPE *pCiv) {
   if (pCiv->ubProfile != NO_PROFILE) {
     return (CIV_TYPE_NA);
   }
@@ -359,8 +359,8 @@ uint8_t DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, uint8_t *pubCivHintToUs
   TownID bTownId;
   BOOLEAN bCivLowLoyalty = FALSE;
   BOOLEAN bCivHighLoyalty = FALSE;
-  INT8 bCivHint;
-  INT8 bMineId;
+  int8_t bCivHint;
+  int8_t bMineId;
   BOOLEAN bMiners = FALSE;
 
   (*pubCivHintToUse) = 0;
@@ -611,7 +611,7 @@ void StartCivQuote(struct SOLDIERTYPE *pCiv) {
   if (ubCivQuoteID != CIV_QUOTE_HINT) {
     if (pCiv->bCurrentCivQuote == -1) {
       // Pick random one
-      pCiv->bCurrentCivQuote = (INT8)Random(gCivQuotes[ubCivQuoteID].ubNumEntries - 2);
+      pCiv->bCurrentCivQuote = (int8_t)Random(gCivQuotes[ubCivQuoteID].ubNumEntries - 2);
       pCiv->bCurrentCivQuoteDelta = 0;
     }
 

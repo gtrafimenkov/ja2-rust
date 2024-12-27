@@ -14,7 +14,7 @@ typedef struct STRATEGICEVENT {
   uint8_t ubEventType;
   uint8_t ubCallbackID;
   uint8_t ubFlags;
-  INT8 bPadding[6];
+  int8_t bPadding[6];
 } STRATEGICEVENT;
 
 enum { ONETIME_EVENT, RANGED_EVENT, ENDRANGED_EVENT, EVERYDAY_EVENT, PERIODIC_EVENT, QUEUED_EVENT };

@@ -14,9 +14,9 @@ typedef struct {
 
   uint8_t ubDuration;  // the number of turns will remain effective
   uint8_t bRadius;     // the current radius
-  INT8 bAge;           // the number of turns light has been around
+  int8_t bAge;         // the number of turns light has been around
   BOOLEAN fAllocated;
-  INT8 bType;
+  int8_t bType;
   INT32 iLight;
   uint32_t uiTimeOfLastUpdate;
 
@@ -27,17 +27,17 @@ void DecayLightEffects(uint32_t uiTime);
 
 // Add light to gridno
 // ( Replacement algorithm uses distance away )
-void AddLightEffectToTile(INT8 bType, INT16 sGridNo);
+void AddLightEffectToTile(int8_t bType, INT16 sGridNo);
 
 void RemoveLightEffectFromTile(INT16 sGridNo);
 
-INT32 NewLightEffect(INT16 sGridNo, INT8 bType);
+INT32 NewLightEffect(INT16 sGridNo, int8_t bType);
 
 BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile);
 
-BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
-BOOLEAN LoadLightEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
+BOOLEAN LoadLightEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
 void ResetLightEffects();
 
 #endif

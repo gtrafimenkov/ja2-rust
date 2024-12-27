@@ -48,7 +48,7 @@
 #define GET_THROW_HEIGHT(l) (INT16)((l * 256))
 #define GET_SOLDIER_THROW_HEIGHT(l) (INT16)((l * 256) + STANDING_HEIGHT)
 
-#define GET_OBJECT_LEVEL(z) ((INT8)((z + 10) / HEIGHT_UNITS))
+#define GET_OBJECT_LEVEL(z) ((int8_t)((z + 10) / HEIGHT_UNITS))
 #define OBJECT_DETONATE_ON_IMPACT(o) \
   ((o->Obj.usItem ==                 \
     MORTAR_SHELL))  // && ( o->ubActionCode == THROW_ARM_ITEM || pObject->fTestObject ) )
@@ -97,7 +97,7 @@ void PhysicsDeleteObject(REAL_OBJECT *pObject);
 BOOLEAN PhysicsHandleCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID, real DeltaTime);
 FLOAT CalculateForceFromRange(INT16 sRange, FLOAT dDegrees);
 
-uint16_t RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadius);
+uint16_t RandomGridFromRadius(INT16 sSweetGridNo, int8_t ubMinRadius, int8_t ubMaxRadius);
 
 void HandleArmedObjectImpact(REAL_OBJECT *pObject);
 void ObjectHitWindow(INT16 sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
@@ -109,7 +109,7 @@ vector_3 FindBestForceForTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStar
                                     FLOAT *pzMagForce);
 INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem,
                                          vector_3 *vPosition, vector_3 *vForce,
-                                         INT16 *psFinalGridNo, INT8 *pbLevel, BOOLEAN fFromUI);
+                                         INT16 *psFinalGridNo, int8_t *pbLevel, BOOLEAN fFromUI);
 FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
                                struct OBJECTTYPE *pObject, BOOLEAN fArmed);
 BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject);
@@ -1426,7 +1426,7 @@ FLOAT CalculateObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem, vector
 
 INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem,
                                          vector_3 *vPosition, vector_3 *vForce, INT16 *psNewGridNo,
-                                         INT8 *pbLevel, BOOLEAN fFromUI) {
+                                         int8_t *pbLevel, BOOLEAN fFromUI) {
   INT32 iID;
   REAL_OBJECT *pObject;
 
@@ -1647,7 +1647,7 @@ void CalculateLaunchItemBasicParams(struct SOLDIERTYPE *pSoldier, struct OBJECTT
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
                                               struct OBJECTTYPE *pItem, INT16 sGridNo,
                                               uint8_t ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
-                                              BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI) {
+                                              BOOLEAN fArmed, int8_t *pbLevel, BOOLEAN fFromUI) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
   vector_3 vForce, vPosition, vDirNormal;
@@ -1737,7 +1737,7 @@ FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
 #define MAX_MISS_RADIUS 5
 
 void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubLevel,
-                                       INT16 sEndZ, struct OBJECTTYPE *pItem, INT8 bMissBy,
+                                       INT16 sEndZ, struct OBJECTTYPE *pItem, int8_t bMissBy,
                                        uint8_t ubActionCode, uint32_t uiActionData) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
@@ -1746,7 +1746,7 @@ void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGrid
   BOOLEAN fArmed = FALSE;
   uint16_t usLauncher;
   INT16 sStartZ;
-  INT8 bMinMissRadius, bMaxMissRadius, bMaxRadius;
+  int8_t bMinMissRadius, bMaxMissRadius, bMaxRadius;
   FLOAT fScale;
 
   // Set target ID if anyone
@@ -1789,7 +1789,7 @@ void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGrid
     // Get radius
     fScale = ((float)bMissBy / (float)MAX_MISS_BY);
 
-    bMaxMissRadius = (INT8)(bMaxRadius * fScale);
+    bMaxMissRadius = (int8_t)(bMaxRadius * fScale);
 
     // Limit max radius...
     if (bMaxMissRadius > 4) {
@@ -2026,7 +2026,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   struct OBJECTTYPE *pObj;
   INT32 iTrapped = 0;
   uint16_t usFlags = 0;
-  INT8 bLevel = 0;
+  int8_t bLevel = 0;
 
   // Calculate pixel position of z
   sZ = (INT16)CONVERT_HEIGHTUNITS_TO_PIXELS((INT16)(pObject->Position.z)) -
@@ -2077,7 +2077,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
         usFlags |= WORLD_ITEM_ARMED_BOMB;
 
         pObj->bDetonatorType = BOMB_TIMED;
-        pObj->bDelay = (INT8)(1 + PreRandom(2));
+        pObj->bDelay = (int8_t)(1 + PreRandom(2));
       }
 
       // ATE: If we have collided with roof last...
@@ -2092,7 +2092,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
       NotifySoldiersToLookforItems();
 
       if (pObject->ubOwner != NOBODY) {
-        DoMercBattleSound(MercPtrs[pObject->ubOwner], (INT8)(BATTLE_SOUND_CURSE1));
+        DoMercBattleSound(MercPtrs[pObject->ubOwner], (int8_t)(BATTLE_SOUND_CURSE1));
       }
     }
   } else {
@@ -2198,7 +2198,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-uint16_t RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadius) {
+uint16_t RandomGridFromRadius(INT16 sSweetGridNo, int8_t ubMinRadius, int8_t ubMaxRadius) {
   INT16 sX, sY;
   INT16 sGridNo;
   INT32 leftmost;

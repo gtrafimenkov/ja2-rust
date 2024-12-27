@@ -635,7 +635,7 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf = NULL;
   uint16_t usAnimSurface;
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT32 iAnchorPosX_M, iAnchorPosY_M;
   INT32 iAnchorPosX_S, iAnchorPosY_S;
   INT32 iTempPosX_M, iTempPosY_M;
@@ -676,7 +676,7 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   static INT32 iTileMapPos[500];
   uint32_t uiMapPosIndex;
   uint8_t bBlitClipVal;
-  INT8 bItemCount, bVisibleItemCount;
+  int8_t bItemCount, bVisibleItemCount;
   // uint16_t			us16BPPIndex;
   RenderFXType RenderingFX;
   BOOLEAN fCheckForMouseDetections = FALSE;
@@ -691,7 +691,7 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   BOOLEAN fUseTileElem;
   uint32_t uiLevelNodeFlags;
   uint32_t uiTileElemFlags = 0;
-  INT8 bGlowShadeOffset;
+  int8_t bGlowShadeOffset;
   BOOLEAN fObscured;
   BOOLEAN fObscuredBlitter;
   INT16 sModifiedTileHeight;
@@ -2860,7 +2860,7 @@ void ScrollWorld() {
   uint32_t ScrollFlags = 0;
   BOOLEAN fDoScroll = FALSE, fMovedPos = FALSE, fAGoodMove = FALSE;
   INT16 sTempRenderCenterX, sTempRenderCenterY;
-  INT8 bDirection;
+  int8_t bDirection;
   INT16 sScrollXStep = -1;
   INT16 sScrollYStep = -1;
   BOOLEAN fIgnoreInput = FALSE;
@@ -3479,7 +3479,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDest
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
-  INT8 *pZArray;
+  int8_t *pZArray;
   ZStripInfo *pZInfo;
 
   // Assertions
@@ -3867,7 +3867,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
-  INT8 *pZArray;
+  int8_t *pZArray;
   ZStripInfo *pZInfo;
 
   // Assertions
@@ -4260,7 +4260,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
-  INT8 *pZArray;
+  int8_t *pZArray;
   ZStripInfo *pZInfo;
 
   // Assertions
@@ -4666,7 +4666,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
-  INT8 *pZArray;
+  int8_t *pZArray;
   ZStripInfo *pZInfo;
 
   // Assertions
@@ -5115,7 +5115,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
-  INT8 *pZArray;
+  int8_t *pZArray;
   ZStripInfo *pZInfo;
 
   // Assertions
@@ -5494,7 +5494,7 @@ BlitDone:
 
 void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                     INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
   INT16 sAnchorPosX_S, sAnchorPosY_S;
   INT16 sTempPosX_M, sTempPosY_M;
@@ -5592,7 +5592,7 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
 
 void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                         INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
   INT16 sAnchorPosX_S, sAnchorPosY_S;
   INT16 sTempPosX_M, sTempPosY_M;
@@ -5683,7 +5683,7 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 
 void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                           INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
   INT16 sAnchorPosX_S, sAnchorPosY_S;
   INT16 sTempPosX_M, sTempPosY_M;
@@ -5768,7 +5768,7 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
 
 void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                                   INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
   INT16 sAnchorPosX_S, sAnchorPosY_S;
   INT16 sTempPosX_M, sTempPosY_M;
@@ -5858,7 +5858,7 @@ void ExamineZBufferRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
 
 void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                                   INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
   INT16 sAnchorPosX_S, sAnchorPosY_S;
   INT16 sTempPosX_M, sTempPosY_M;
@@ -5869,7 +5869,7 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   TILE_ELEMENT *TileElem;
-  INT8 bBlitClipVal;
+  int8_t bBlitClipVal;
   struct LEVELNODE *pObject;
 
   // Begin Render Loop

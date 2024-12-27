@@ -42,22 +42,22 @@
 // PRIVATE PROTOTYPES
 
 // mine this mine
-INT32 MineAMine(INT8 bMineIndex);
+INT32 MineAMine(int8_t bMineIndex);
 
 // remove actual ore from mine
-uint32_t ExtractOreFromMine(INT8 bMineIndex, uint32_t uiAmount);
+uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount);
 
 // get available workforce for the mine
-INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex);
+INT32 GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex);
 
 // get workforce conscripted by enemy for mine
-INT32 GetAvailableWorkForceForMineForEnemy(INT8 bMineIndex);
+INT32 GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex);
 
 // how fast is the mine's workforce working for you?
-INT32 GetCurrentWorkRateOfMineForPlayer(INT8 bMineIndex);
+INT32 GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex);
 
 // how fast is workforce working for the enemy
-INT32 GetCurrentWorkRateOfMineForEnemy(INT8 bMineIndex);
+INT32 GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex);
 
 // DATA TABLES
 
@@ -269,7 +269,7 @@ void HourlyMinesUpdate(void) {
   }
 }
 
-INT32 GetTotalLeftInMine(INT8 bMineIndex) {
+INT32 GetTotalLeftInMine(int8_t bMineIndex) {
   // returns the value of the mine
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -277,7 +277,7 @@ INT32 GetTotalLeftInMine(INT8 bMineIndex) {
   return (gMineStatus[bMineIndex].uiRemainingOreSupply);
 }
 
-uint32_t GetMaxPeriodicRemovalFromMine(INT8 bMineIndex) {
+uint32_t GetMaxPeriodicRemovalFromMine(int8_t bMineIndex) {
   // returns max amount that can be mined in a time period
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -290,7 +290,7 @@ uint32_t GetMaxPeriodicRemovalFromMine(INT8 bMineIndex) {
   return (gMineStatus[bMineIndex].uiMaxRemovalRate);
 }
 
-uint32_t GetMaxDailyRemovalFromMine(INT8 bMineIndex) {
+uint32_t GetMaxDailyRemovalFromMine(int8_t bMineIndex) {
   uint32_t uiAmtExtracted;
 
   // returns max amount that can be mined in one day
@@ -313,14 +313,14 @@ uint32_t GetMaxDailyRemovalFromMine(INT8 bMineIndex) {
   return (uiAmtExtracted);
 }
 
-INT8 GetTownAssociatedWithMine(INT8 bMineIndex) {
+int8_t GetTownAssociatedWithMine(int8_t bMineIndex) {
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
   return (gMineLocation[bMineIndex].bAssociatedTown);
 }
 
-INT8 GetMineAssociatedWithThisTown(TownID bTownId) {
-  INT8 bCounter = 0;
+int8_t GetMineAssociatedWithThisTown(TownID bTownId) {
+  int8_t bCounter = 0;
 
   // run through list of mines
   for (bCounter = 0; bCounter < MAX_NUMBER_OF_MINES; bCounter++) {
@@ -334,7 +334,7 @@ INT8 GetMineAssociatedWithThisTown(TownID bTownId) {
   return (0);
 }
 
-uint32_t ExtractOreFromMine(INT8 bMineIndex, uint32_t uiAmount) {
+uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
   uint32_t uiAmountExtracted = 0;
   INT16 sSectorX, sSectorY;
@@ -405,7 +405,7 @@ uint32_t ExtractOreFromMine(INT8 bMineIndex, uint32_t uiAmount) {
   return (uiAmountExtracted);
 }
 
-INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex) {
+INT32 GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex) {
   // look for available workforce in the town associated with the mine
   INT32 iWorkForceSize = 0;
   TownID bTownId = 0;
@@ -444,7 +444,7 @@ INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex) {
   return (iWorkForceSize);
 }
 
-INT32 GetAvailableWorkForceForMineForEnemy(INT8 bMineIndex) {
+INT32 GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex) {
   // look for available workforce in the town associated with the mine
   INT32 iWorkForceSize = 0;
   TownID bTownId = 0;
@@ -480,7 +480,7 @@ INT32 GetAvailableWorkForceForMineForEnemy(INT8 bMineIndex) {
   return (iWorkForceSize);
 }
 
-INT32 GetCurrentWorkRateOfMineForPlayer(INT8 bMineIndex) {
+INT32 GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex) {
   INT32 iWorkRate = 0;
 
   // multiply maximum possible removal rate by the percentage of workforce currently working
@@ -491,7 +491,7 @@ INT32 GetCurrentWorkRateOfMineForPlayer(INT8 bMineIndex) {
   return (iWorkRate);
 }
 
-INT32 GetCurrentWorkRateOfMineForEnemy(INT8 bMineIndex) {
+INT32 GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex) {
   INT32 iWorkRate = 0;
 
   // multiply maximum possible removal rate by the percentage of workforce currently working
@@ -502,7 +502,7 @@ INT32 GetCurrentWorkRateOfMineForEnemy(INT8 bMineIndex) {
   return (iWorkRate);
 }
 
-INT32 MineAMine(INT8 bMineIndex) {
+INT32 MineAMine(int8_t bMineIndex) {
   // will extract ore based on available workforce, and increment players income based on amount
   INT32 iAmtExtracted = 0;
 
@@ -565,7 +565,7 @@ void PostEventsForMineProduction(void) {
 
 void HandleIncomeFromMines(void) {
   INT32 iIncome = 0;
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   // mine each mine, check if we own it and such
   for (bCounter = 0; bCounter < MAX_NUMBER_OF_MINES; bCounter++) {
@@ -577,7 +577,7 @@ void HandleIncomeFromMines(void) {
   }
 }
 
-uint32_t PredictDailyIncomeFromAMine(INT8 bMineIndex) {
+uint32_t PredictDailyIncomeFromAMine(int8_t bMineIndex) {
   // predict income from this mine, estimate assumes mining situation will not change during next 4
   // income periods (miner loyalty, % town controlled, monster infestation level, and current max
   // removal rate may all in fact change)
@@ -600,7 +600,7 @@ uint32_t PredictDailyIncomeFromAMine(INT8 bMineIndex) {
 
 INT32 PredictIncomeFromPlayerMines(void) {
   INT32 iTotal = 0;
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   for (bCounter = 0; bCounter < MAX_NUMBER_OF_MINES; bCounter++) {
     // add up the total
@@ -612,7 +612,7 @@ INT32 PredictIncomeFromPlayerMines(void) {
 
 INT32 CalcMaxPlayerIncomeFromMines(void) {
   INT32 iTotal = 0;
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   // calculate how much player could make daily if he owned all mines with 100% control and 100%
   // loyalty
@@ -625,7 +625,7 @@ INT32 CalcMaxPlayerIncomeFromMines(void) {
 }
 
 // get index of this mine, return -1 if no mine found
-INT8 GetMineIndexForSector(INT16 sX, INT16 sY) {
+int8_t GetMineIndexForSector(INT16 sX, INT16 sY) {
   uint8_t ubMineIndex = 0;
 
   for (ubMineIndex = 0; ubMineIndex < MAX_NUMBER_OF_MINES; ubMineIndex++) {
@@ -647,7 +647,7 @@ void GetMineSector(uint8_t ubMineIndex, INT16 *psX, INT16 *psY) {
 }
 
 // get the index of the mine associated with this town
-INT8 GetMineIndexForTown(TownID bTownId) {
+int8_t GetMineIndexForTown(TownID bTownId) {
   uint8_t ubMineIndex = 0;
 
   // given town id, send sector value of mine, a 0 means no mine for this town
@@ -662,7 +662,7 @@ INT8 GetMineIndexForTown(TownID bTownId) {
 
 // get the sector value for the mine associated with this town
 INT16 GetMineSectorForTown(TownID bTownId) {
-  INT8 ubMineIndex;
+  int8_t ubMineIndex;
   INT16 sMineSector = -1;
 
   // given town id, send sector value of mine, a 0 means no mine for this town
@@ -691,7 +691,7 @@ BOOLEAN IsThereAMineInThisSector(INT16 sX, INT16 sY) {
   return (FALSE);
 }
 
-BOOLEAN PlayerControlsMine(INT8 bMineIndex) {
+BOOLEAN PlayerControlsMine(int8_t bMineIndex) {
   // a value of TRUE is from the enemy's point of view
   if (StrategicMap[(gMineLocation[bMineIndex].sSectorX) +
                    (MAP_WORLD_X * (gMineLocation[bMineIndex].sSectorY))]
@@ -733,7 +733,7 @@ BOOLEAN LoadMineStatusFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-void ShutOffMineProduction(INT8 bMineIndex) {
+void ShutOffMineProduction(int8_t bMineIndex) {
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
   if (!gMineStatus[bMineIndex].fShutDown) {
@@ -744,7 +744,7 @@ void ShutOffMineProduction(INT8 bMineIndex) {
   }
 }
 
-void RestartMineProduction(INT8 bMineIndex) {
+void RestartMineProduction(int8_t bMineIndex) {
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
   if (!gMineStatus[bMineIndex].fShutDownIsPermanent) {
@@ -757,19 +757,19 @@ void RestartMineProduction(INT8 bMineIndex) {
   }
 }
 
-void MineShutdownIsPermanent(INT8 bMineIndex) {
+void MineShutdownIsPermanent(int8_t bMineIndex) {
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
   gMineStatus[bMineIndex].fShutDownIsPermanent = TRUE;
 }
 
-BOOLEAN IsMineShutDown(INT8 bMineIndex) {
+BOOLEAN IsMineShutDown(int8_t bMineIndex) {
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
   return (gMineStatus[bMineIndex].fShutDown);
 }
 
-uint8_t GetHeadMinerIndexForMine(INT8 bMineIndex) {
+uint8_t GetHeadMinerIndexForMine(int8_t bMineIndex) {
   uint8_t ubMinerIndex = 0;
   uint16_t usProfileId = 0;
 
@@ -790,14 +790,14 @@ uint8_t GetHeadMinerIndexForMine(INT8 bMineIndex) {
   return (0);
 }
 
-uint16_t GetHeadMinerProfileIdForMine(INT8 bMineIndex) {
+uint16_t GetHeadMinerProfileIdForMine(int8_t bMineIndex) {
   return (gHeadMinerData[GetHeadMinerIndexForMine(bMineIndex)].usProfileId);
 }
 
-void IssueHeadMinerQuote(INT8 bMineIndex, uint8_t ubQuoteType) {
+void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType) {
   uint8_t ubHeadMinerIndex = 0;
   uint16_t usHeadMinerProfileId = 0;
-  INT8 bQuoteNum = 0;
+  int8_t bQuoteNum = 0;
   BOOLEAN fForceMapscreen = FALSE;
   INT16 sXPos, sYPos;
 
@@ -962,7 +962,7 @@ BOOLEAN IsHisMineAtMaxProduction(uint8_t ubMinerProfileId) {
   }
 }
 
-void QueenHasRegainedMineSector(INT8 bMineIndex) {
+void QueenHasRegainedMineSector(int8_t bMineIndex) {
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
   if (gMineStatus[bMineIndex].fMineHasProducedForPlayer) {
@@ -1021,8 +1021,8 @@ BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId) {
 }
 
 // gte the id of the mine for this sector x,y,z...-1 is invalid
-INT8 GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  INT8 bMineIndex = -1;
+int8_t GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+  int8_t bMineIndex = -1;
   INT16 sSectorValue;
 
   // are we even on the right level?

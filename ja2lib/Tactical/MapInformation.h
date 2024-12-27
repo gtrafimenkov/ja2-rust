@@ -32,13 +32,13 @@ typedef struct {
   uint8_t ubEditorSmoothingType;  // normal, basement, or caves
   INT16 sCenterGridNo;
   INT16 sIsolatedGridNo;
-  INT8 bPadding[83];  // I'm sure lots of map info will be added
-} MAPCREATE_STRUCT;   // 99 bytes
+  int8_t bPadding[83];  // I'm sure lots of map info will be added
+} MAPCREATE_STRUCT;     // 99 bytes
 
 extern MAPCREATE_STRUCT gMapInformation;
 
 void SaveMapInformation(HWFILE fp);
-void LoadMapInformation(INT8 **hBuffer);
+void LoadMapInformation(int8_t **hBuffer);
 void ValidateAndUpdateMapVersionIfNecessary();
 BOOLEAN ValidateEntryPointGridNo(INT16 *sGridNo);
 

@@ -146,7 +146,7 @@ void SaveExitGrids(HWFILE fp, uint16_t usNumExitGrids) {
   Assert(usNumExitGrids == usNumSaved);
 }
 
-void LoadExitGrids(INT8 **hBuffer) {
+void LoadExitGrids(int8_t **hBuffer) {
   EXITGRID exitGrid;
   uint16_t x;
   uint16_t usNumSaved;
@@ -164,7 +164,7 @@ void LoadExitGrids(INT8 **hBuffer) {
   gfLoadingExitGrids = FALSE;
 }
 
-void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
+void AttemptToChangeFloorLevel(int8_t bRelativeZLevel) {
   uint8_t ubLookForLevel = 0;
   uint16_t i;
   if (bRelativeZLevel != 1 && bRelativeZLevel != -1) return;
@@ -202,7 +202,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
 }
 
 uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                                INT8 ubRadius, uint8_t *pubDirection) {
+                                                int8_t ubRadius, uint8_t *pubDirection) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -311,7 +311,7 @@ uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, IN
   }
 }
 
-uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo, INT8 ubRadius) {
+uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo, int8_t ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;

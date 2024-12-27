@@ -163,20 +163,20 @@ typedef struct {
   PaletteRepID VEST;
   PaletteRepID SKIN;
   PaletteRepID HAIR;
-  INT8 bSex;
-  INT8 bArmourAttractiveness;
+  int8_t bSex;
+  int8_t bArmourAttractiveness;
   uint8_t ubMiscFlags2;
-  INT8 bEvolution;
+  int8_t bEvolution;
   uint8_t ubMiscFlags;
   uint8_t bSexist;
-  INT8 bLearnToHate;
+  int8_t bLearnToHate;
 
   // skills
-  INT8 bStealRate;
-  INT8 bVocalVolume;
+  int8_t bStealRate;
+  int8_t bVocalVolume;
   uint8_t ubQuoteRecord;
-  INT8 bDeathRate;
-  INT8 bScientific;
+  int8_t bDeathRate;
+  int8_t bScientific;
 
   INT16 sExpLevelGain;
   INT16 sLifeGain;
@@ -189,7 +189,7 @@ typedef struct {
   INT16 sExplosivesGain;
 
   uint8_t ubBodyType;
-  INT8 bMedical;
+  int8_t bMedical;
 
   uint16_t usEyesX;
   uint16_t usEyesY;
@@ -204,20 +204,20 @@ typedef struct {
 
   uint32_t uiDayBecomesAvailable;  // day the merc will be available.  used with the bMercStatus
 
-  INT8 bStrength;
+  int8_t bStrength;
 
-  INT8 bLifeMax;
-  INT8 bExpLevelDelta;
-  INT8 bLifeDelta;
-  INT8 bAgilityDelta;
-  INT8 bDexterityDelta;
-  INT8 bWisdomDelta;
-  INT8 bMarksmanshipDelta;
-  INT8 bMedicalDelta;
-  INT8 bMechanicDelta;
-  INT8 bExplosivesDelta;
-  INT8 bStrengthDelta;
-  INT8 bLeadershipDelta;
+  int8_t bLifeMax;
+  int8_t bExpLevelDelta;
+  int8_t bLifeDelta;
+  int8_t bAgilityDelta;
+  int8_t bDexterityDelta;
+  int8_t bWisdomDelta;
+  int8_t bMarksmanshipDelta;
+  int8_t bMedicalDelta;
+  int8_t bMechanicDelta;
+  int8_t bExplosivesDelta;
+  int8_t bStrengthDelta;
+  int8_t bLeadershipDelta;
   uint16_t usKills;
   uint16_t usAssists;
   uint16_t usShotsFired;
@@ -233,23 +233,23 @@ typedef struct {
   uint32_t uiBodyTypeSubFlags;
 
   INT16 sSalary;
-  INT8 bLife;
-  INT8 bDexterity;  // dexterity (hand coord) value
-  INT8 bPersonalityTrait;
-  INT8 bSkillTrait;
+  int8_t bLife;
+  int8_t bDexterity;  // dexterity (hand coord) value
+  int8_t bPersonalityTrait;
+  int8_t bSkillTrait;
 
-  INT8 bReputationTolerance;
-  INT8 bExplosive;
-  INT8 bSkillTrait2;
-  INT8 bLeadership;
+  int8_t bReputationTolerance;
+  int8_t bExplosive;
+  int8_t bSkillTrait2;
+  int8_t bLeadership;
 
-  INT8 bBuddy[5];
-  INT8 bHated[5];
-  INT8 bExpLevel;  // general experience level
+  int8_t bBuddy[5];
+  int8_t bHated[5];
+  int8_t bExpLevel;  // general experience level
 
-  INT8 bMarksmanship;
+  int8_t bMarksmanship;
   uint8_t bMinService;
-  INT8 bWisdom;
+  int8_t bWisdom;
   uint8_t bResigned;
   uint8_t bActive;
 
@@ -257,18 +257,18 @@ typedef struct {
   uint8_t bInvNumber[19];
   uint16_t usApproachFactor[4];
 
-  INT8 bMainGunAttractiveness;
-  INT8 bAgility;  // agility (speed) value
+  int8_t bMainGunAttractiveness;
+  int8_t bAgility;  // agility (speed) value
 
   BOOLEAN fUseProfileInsertionInfo;  // Set to various flags, ( contained in TacticalSave.h )
   INT16 sGridNo;                     // The Gridno the NPC was in before leaving the sector
   uint8_t ubQuoteActionID;
-  INT8 bMechanical;
+  int8_t bMechanical;
 
   uint8_t ubInvUndroppable;
   uint8_t ubRoomRangeStart[2];
   uint16_t inv[19];
-  INT8 bMercTownReputation[20];
+  int8_t bMercTownReputation[20];
 
   uint16_t usStatChangeChances[12];    // used strictly for balancing, never shown!
   uint16_t usStatChangeSuccesses[12];  // used strictly for balancing, never shown!
@@ -277,58 +277,58 @@ typedef struct {
 
   uint8_t ubRoomRangeEnd[2];
 
-  INT8 bPadding[4];
+  int8_t bPadding[4];
 
   uint8_t ubLastQuoteSaid;
 
-  INT8 bRace;
-  INT8 bNationality;
-  INT8 bAppearance;
-  INT8 bAppearanceCareLevel;
-  INT8 bRefinement;
-  INT8 bRefinementCareLevel;
-  INT8 bHatedNationality;
-  INT8 bHatedNationalityCareLevel;
-  INT8 bRacist;
+  int8_t bRace;
+  int8_t bNationality;
+  int8_t bAppearance;
+  int8_t bAppearanceCareLevel;
+  int8_t bRefinement;
+  int8_t bRefinementCareLevel;
+  int8_t bHatedNationality;
+  int8_t bHatedNationalityCareLevel;
+  int8_t bRacist;
   uint32_t uiWeeklySalary;
   uint32_t uiBiWeeklySalary;
-  INT8 bMedicalDeposit;
-  INT8 bAttitude;
-  INT8 bBaseMorale;
+  int8_t bMedicalDeposit;
+  int8_t bAttitude;
+  int8_t bBaseMorale;
   uint16_t sMedicalDepositAmount;
 
-  INT8 bLearnToLike;
+  int8_t bLearnToLike;
   uint8_t ubApproachVal[4];
   uint8_t ubApproachMod[3][4];
-  INT8 bTown;
-  INT8 bTownAttachment;
+  int8_t bTown;
+  int8_t bTownAttachment;
   uint16_t usOptionalGearCost;
-  INT8 bMercOpinion[75];
-  INT8 bApproached;
-  INT8 bMercStatus;  // The status of the merc.  If negative, see flags at the top of this file.
-                     // Positive:  The number of days the merc is away for.  0:  Not hired but ready
-                     // to be.
-  INT8 bHatedTime[5];
-  INT8 bLearnToLikeTime;
-  INT8 bLearnToHateTime;
-  INT8 bHatedCount[5];
-  INT8 bLearnToLikeCount;
-  INT8 bLearnToHateCount;
+  int8_t bMercOpinion[75];
+  int8_t bApproached;
+  int8_t bMercStatus;  // The status of the merc.  If negative, see flags at the top of this file.
+                       // Positive:  The number of days the merc is away for.  0:  Not hired but
+                       // ready to be.
+  int8_t bHatedTime[5];
+  int8_t bLearnToLikeTime;
+  int8_t bLearnToHateTime;
+  int8_t bHatedCount[5];
+  int8_t bLearnToLikeCount;
+  int8_t bLearnToHateCount;
   uint8_t ubLastDateSpokenTo;
   uint8_t bLastQuoteSaidWasSpecial;
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   uint16_t usStrategicInsertionData;
-  INT8 bFriendlyOrDirectDefaultResponseUsedRecently;
-  INT8 bRecruitDefaultResponseUsedRecently;
-  INT8 bThreatenDefaultResponseUsedRecently;
-  INT8 bNPCData;  // NPC specific
+  int8_t bFriendlyOrDirectDefaultResponseUsedRecently;
+  int8_t bRecruitDefaultResponseUsedRecently;
+  int8_t bThreatenDefaultResponseUsedRecently;
+  int8_t bNPCData;  // NPC specific
   INT32 iBalance;
   INT16 sTrueSalary;  // for use when the person is working for us for free but has a positive
                       // salary value
   uint8_t ubCivilianGroup;
   uint8_t ubNeedForSleep;
   uint32_t uiMoney;
-  INT8 bNPCData2;  // NPC specific
+  int8_t bNPCData2;  // NPC specific
 
   uint8_t ubMiscFlags3;
 

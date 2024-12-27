@@ -153,8 +153,8 @@ uint16_t LarryItems[NUM_LARRY_ITEMS][3] = {
 
 void HourlyLarryUpdate(void) {
   struct SOLDIERTYPE *pSoldier;
-  INT8 bSlot, bBoozeSlot;
-  INT8 bLarryItemLoop;
+  int8_t bSlot, bBoozeSlot;
+  int8_t bLarryItemLoop;
   uint16_t usTemptation = 0;
   uint16_t usCashAmount;
   BOOLEAN fBar = FALSE;
@@ -202,7 +202,7 @@ void HourlyLarryUpdate(void) {
 
     if (usTemptation > 0) {
       if (GetSolProfile(pSoldier) == LARRY_NORMAL) {
-        gMercProfiles[LARRY_NORMAL].bNPCData += (INT8)Random(usTemptation);
+        gMercProfiles[LARRY_NORMAL].bNPCData += (int8_t)Random(usTemptation);
         if (gMercProfiles[LARRY_NORMAL].bNPCData >= LARRY_FALLS_OFF_WAGON) {
           if (fBar) {
             // take $ from player's account
@@ -229,7 +229,7 @@ void HourlyLarryUpdate(void) {
         // so long as he keeps consuming, keep number above level at which he cracked
         gMercProfiles[LARRY_NORMAL].bNPCData =
             max(gMercProfiles[LARRY_NORMAL].bNPCData, LARRY_FALLS_OFF_WAGON);
-        gMercProfiles[LARRY_NORMAL].bNPCData += (INT8)Random(usTemptation);
+        gMercProfiles[LARRY_NORMAL].bNPCData += (int8_t)Random(usTemptation);
         // allow value to keep going up to 24 (about 2 days since we subtract Random( 2 ) when he
         // has no access )
         gMercProfiles[LARRY_NORMAL].bNPCData = min(gMercProfiles[LARRY_NORMAL].bNPCData, 24);
@@ -253,7 +253,7 @@ void HourlyLarryUpdate(void) {
         }
       }
     } else if (GetSolProfile(pSoldier) == LARRY_DRUNK) {
-      gMercProfiles[LARRY_NORMAL].bNPCData -= (INT8)Random(2);
+      gMercProfiles[LARRY_NORMAL].bNPCData -= (int8_t)Random(2);
       if (gMercProfiles[LARRY_NORMAL].bNPCData <= 0) {
         // goes sober!
         SwapLarrysProfiles(pSoldier);

@@ -48,24 +48,24 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
                         uint16_t *pusStructureID, FLOAT *pdNormalX, FLOAT *pdNormalY,
                         FLOAT *pdNormalZ);
 
-INT8 ChanceToGetThrough(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ);
-INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ,
-                           uint16_t usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake);
+int8_t ChanceToGetThrough(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ);
+int8_t FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ,
+                             uint16_t usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake);
 
 INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
                                       struct SOLDIERTYPE *pEndSoldier, uint8_t ubSightLimit,
-                                      INT8 bAware);
+                                      int8_t bAware);
 INT32 SoldierToLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                       uint8_t ubSightLimit, INT8 bAware);
+                                       uint8_t ubSightLimit, int8_t bAware);
 INT32 SoldierTo3DLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                         INT8 bLevel, INT8 bCubeLevel, uint8_t ubSightLimit,
-                                         INT8 bAware);
+                                         int8_t bLevel, int8_t bCubeLevel, uint8_t ubSightLimit,
+                                         int8_t bAware);
 INT32 SoldierToBodyPartLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                       INT8 bLevel, uint8_t ubAimLocation, uint8_t ubTileSightLimit,
-                                       INT8 bAware);
+                                       int8_t bLevel, uint8_t ubAimLocation,
+                                       uint8_t ubTileSightLimit, int8_t bAware);
 INT32 SoldierToVirtualSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                             INT8 bLevel, INT8 bStance, uint8_t ubTileSightLimit,
-                                             INT8 bAware);
+                                             int8_t bLevel, int8_t bStance,
+                                             uint8_t ubTileSightLimit, int8_t bAware);
 uint8_t SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
                                            struct SOLDIERTYPE *pEndSoldier);
 uint8_t SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
@@ -74,20 +74,20 @@ uint8_t SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSol
 uint8_t AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
                                              struct SOLDIERTYPE *pEndSoldier);
 uint8_t AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                              INT8 bLevel, INT8 bCubeLevel);
+                                              int8_t bLevel, int8_t bCubeLevel);
 uint8_t SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                            INT8 bLevel, INT8 bCubeLevel, uint8_t ubTargetID);
+                                            int8_t bLevel, int8_t bCubeLevel, uint8_t ubTargetID);
 INT32 SoldierToLocationVisibleDistance(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                       uint8_t ubTileSightLimit, INT8 bAware);
+                                       uint8_t ubTileSightLimit, int8_t bAware);
 INT16 SoldierToLocationWindowTest(struct SOLDIERTYPE *pStartSoldier, INT16 sEndGridNo);
-INT32 LocationToLocationLineOfSightTest(INT16 sStartGridNo, INT8 bStartLevel, INT16 sEndGridNo,
-                                        INT8 bEndLevel, uint8_t ubTileSightLimit, INT8 bAware);
+INT32 LocationToLocationLineOfSightTest(INT16 sStartGridNo, int8_t bStartLevel, INT16 sEndGridNo,
+                                        int8_t bEndLevel, uint8_t ubTileSightLimit, int8_t bAware);
 
 BOOLEAN CalculateSoldierZPos(struct SOLDIERTYPE *pSoldier, uint8_t ubPosType, FLOAT *pdZPos);
 
 BOOLEAN SoldierToSoldierLineOfSightTimingTest(struct SOLDIERTYPE *pStartSoldier,
                                               struct SOLDIERTYPE *pEndSoldier, uint8_t ubSightLimit,
-                                              INT8 bAware);
+                                              int8_t bAware);
 BOOLEAN TestFireBullet(struct SOLDIERTYPE *pStartSoldier, struct SOLDIERTYPE *pEndSoldier);
 void DoChrisTest(struct SOLDIERTYPE *pSoldier);
 

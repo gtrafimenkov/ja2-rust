@@ -241,7 +241,7 @@ BOOLEAN gfDestroyConfirmGrphiArea;
 BOOLEAN gfCanAcceptOrder;
 
 uint8_t gubDropDownAction;
-INT8 gbSelectedCity = -1;  // keeps track of the currently selected city
+int8_t gbSelectedCity = -1;  // keeps track of the currently selected city
 uint8_t gubCityAtTopOfList;
 
 BOOLEAN gfRemoveItemsFromStock = FALSE;
@@ -320,7 +320,7 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, uint16_
                           uint16_t usGridY, INT32 iOrderNum);
 void RemovePurchasedItemsFromBobbyRayInventory();
 BOOLEAN IsAnythingPurchasedFromBobbyRayPage();
-void DrawGoldRectangle(INT8 bCityNum);
+void DrawGoldRectangle(int8_t bCityNum);
 uint32_t CalcCostFromWeightOfPackage(uint8_t ubTypeOfService);
 void ConfirmBobbyRPurchaseMessageBoxCallBack(uint8_t bExitValue);
 void PurchaseBobbyOrder();
@@ -1763,7 +1763,7 @@ void SelectUpDownArrowOnScrollAreaRegionCallBack(struct MOUSE_REGION *pRegion, I
   }
 }
 
-void DrawGoldRectangle(INT8 bCityNum) {
+void DrawGoldRectangle(int8_t bCityNum) {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usWidth, usTempHeight, usTempPosY, usHeight;
@@ -1890,8 +1890,8 @@ void ShutDownBobbyRNewMailOrders() {
   giNumberOfNewBobbyRShipment = 0;
 }
 
-INT8 CalculateOrderDelay(uint8_t ubSelectedService) {
-  INT8 bDaysAhead;
+int8_t CalculateOrderDelay(uint8_t ubSelectedService) {
+  int8_t bDaysAhead;
 
   // get the length of time to receive the shipment
   if (ubSelectedService == 0) {
@@ -1920,7 +1920,7 @@ void PurchaseBobbyOrder() {
     //					uint32_t	uiResetTimeSec;
     //		uint8_t	i, ubCount;
     //		uint8_t	cnt;
-    //		INT8		bDaysAhead;
+    //		int8_t		bDaysAhead;
 
     /*
                     //if we need to add more array elements for the Order Array
@@ -1995,7 +1995,7 @@ void PurchaseBobbyOrder() {
 void AddJohnsGunShipment() {
   BobbyRayPurchaseStruct Temp[MAX_PURCHASE_AMOUNT];
   //	uint8_t	cnt;
-  INT8 bDaysAhead;
+  int8_t bDaysAhead;
 
   // clear out the memory
   memset(Temp, 0, sizeof(BobbyRayPurchaseStruct) * MAX_PURCHASE_AMOUNT);
@@ -2176,7 +2176,7 @@ BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ub
   INT32 iFoundSpot = -1;
   uint8_t ubItemCount = 0;
   uint8_t i;
-  INT8 bDaysAhead = 0;
+  int8_t bDaysAhead = 0;
   //	uint32_t	uiPackageWeight;
   //	gpNewBobbyrShipments = NULL;
   //	giNumberOfNewBobbyRShipment = 0;

@@ -76,8 +76,8 @@ typedef struct {
   uint8_t ubLeaveSectorCode;
   uint8_t ubDirection;
   uint8_t ubNumPeopleOnSquad;
-  INT8 bSingleMoveWillIsolateEPC;  // if not -1, then that means the slot number is an EPC
-  INT8 bHandled;
+  int8_t bSingleMoveWillIsolateEPC;  // if not -1, then that means the slot number is an EPC
+  int8_t bHandled;
   BOOLEAN fRender;
   BOOLEAN fGotoSector;
   BOOLEAN fGotoSectorText;
@@ -104,7 +104,7 @@ uint8_t gubExitGUIDirection;
 INT16 gsExitGUIAdditionalData;
 INT16 gsWarpWorldX;
 INT16 gsWarpWorldY;
-INT8 gbWarpWorldZ;
+int8_t gbWarpWorldZ;
 INT16 gsWarpGridNo;
 
 // KM:  New method is coded for more sophistocated rules.  All the information is stored within the
@@ -118,7 +118,7 @@ BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
   SGPRect aRect;
   uint16_t usTextBoxWidth, usTextBoxHeight;
   uint16_t usMapPos = 0;
-  INT8 bExitCode = -1;
+  int8_t bExitCode = -1;
   BOOLEAN OkExitCode;
 
   // STEP 1:  Calculate the information for the exit gui
@@ -243,7 +243,7 @@ BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
           // record the slot of the epc.  If there are more than one EPCs, then
           // it doesn't matter.  This is used in building the text message explaining
           // why the selected merc can't leave.  This is how we extract the EPC's name.
-          gExitDialog.bSingleMoveWillIsolateEPC = (INT8)i;
+          gExitDialog.bSingleMoveWillIsolateEPC = (int8_t)i;
         } else {  // We have more than one merc, so we will allow the selected merc to leave alone
                   // if
           // the user so desired.

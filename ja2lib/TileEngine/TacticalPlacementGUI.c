@@ -71,9 +71,9 @@ BOOLEAN gfEveryonePlaced = FALSE;
 uint8_t gubSelectedGroupID = 0;
 uint8_t gubHilightedGroupID = 0;
 uint8_t gubCursorGroupID = 0;
-INT8 gbSelectedMercID = -1;
-INT8 gbHilightedMercID = -1;
-INT8 gbCursorMercID = -1;
+int8_t gbSelectedMercID = -1;
+int8_t gbHilightedMercID = -1;
+int8_t gbCursorMercID = -1;
 struct SOLDIERTYPE *gpTacticalPlacementSelectedSoldier = NULL;
 struct SOLDIERTYPE *gpTacticalPlacementHilightedSoldier = NULL;
 
@@ -92,7 +92,7 @@ void DialogRemoved(uint8_t ubResult);
 
 void PutDownMercPiece(INT32 iPlacement);
 void PickUpMercPiece(INT32 iPlacement);
-void SetCursorMerc(INT8 bPlacementID);
+void SetCursorMerc(int8_t bPlacementID);
 void SelectNextUnplacedUnit();
 
 #ifdef JA2BETAVERSION
@@ -343,11 +343,11 @@ void InitTacticalPlacementGUI() {
     ButtonList[iTPButtons[GROUP_BUTTON]]->uiFlags |= BUTTON_CLICKED_ON;
     for (i = 0; i < giPlacements; i++) {  // go from the currently selected soldier to the end
       if (!gMercPlacement[i].fPlaced) {   // Found an unplaced merc.  Select him.
-        gbSelectedMercID = (INT8)i;
+        gbSelectedMercID = (int8_t)i;
         if (gubDefaultButton == GROUP_BUTTON)
           gubSelectedGroupID = gMercPlacement[i].pSoldier->ubGroupID;
         gfTacticalPlacementGUIDirty = TRUE;
-        SetCursorMerc((INT8)i);
+        SetCursorMerc((int8_t)i);
         gpTacticalPlacementSelectedSoldier = gMercPlacement[i].pSoldier;
         break;
       }
@@ -776,7 +776,7 @@ void ClearPlacementsCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void MercMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   if (reg->uiFlags & MSYS_MOUSE_IN_AREA) {
-    INT8 i;
+    int8_t i;
     for (i = 0; i < giPlacements; i++) {
       if (&gMercPlacement[i].region == reg) {
         if (gbHilightedMercID != i) {
@@ -794,7 +794,7 @@ void MercMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
 
 void MercClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
-    INT8 i;
+    int8_t i;
     for (i = 0; i < giPlacements; i++) {
       if (&gMercPlacement[i].region == reg) {
         if (gbSelectedMercID != i) {
@@ -816,11 +816,11 @@ void SelectNextUnplacedUnit() {
   for (i = gbSelectedMercID; i < giPlacements;
        i++) {                          // go from the currently selected soldier to the end
     if (!gMercPlacement[i].fPlaced) {  // Found an unplaced merc.  Select him.
-      gbSelectedMercID = (INT8)i;
+      gbSelectedMercID = (int8_t)i;
       if (gubDefaultButton == GROUP_BUTTON)
         gubSelectedGroupID = gMercPlacement[i].pSoldier->ubGroupID;
       gfTacticalPlacementGUIDirty = TRUE;
-      SetCursorMerc((INT8)i);
+      SetCursorMerc((int8_t)i);
       gpTacticalPlacementSelectedSoldier = gMercPlacement[i].pSoldier;
       return;
     }
@@ -828,11 +828,11 @@ void SelectNextUnplacedUnit() {
   for (i = 0; i < gbSelectedMercID;
        i++) {                          // go from the beginning to the currently selected soldier
     if (!gMercPlacement[i].fPlaced) {  // Found an unplaced merc.  Select him.
-      gbSelectedMercID = (INT8)i;
+      gbSelectedMercID = (int8_t)i;
       if (gubDefaultButton == GROUP_BUTTON)
         gubSelectedGroupID = gMercPlacement[i].pSoldier->ubGroupID;
       gfTacticalPlacementGUIDirty = TRUE;
-      SetCursorMerc((INT8)i);
+      SetCursorMerc((int8_t)i);
       gpTacticalPlacementSelectedSoldier = gMercPlacement[i].pSoldier;
       return;
     }
@@ -928,7 +928,7 @@ void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, INT32 
   }
 }
 
-void SetCursorMerc(INT8 bPlacementID) {
+void SetCursorMerc(int8_t bPlacementID) {
   if (gbCursorMercID != bPlacementID) {
     if (gbCursorMercID == -1 || bPlacementID == -1 ||
         gMercPlacement[gbCursorMercID].ubStrategicInsertionCode !=

@@ -49,7 +49,7 @@ uint8_t GetDrugType(uint16_t usItem) {
 BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
   uint8_t ubDrugType;
   uint8_t ubKitPoints;
-  INT8 bRegenPointsGained;
+  int8_t bRegenPointsGained;
   uint16_t usItem;
 
   usItem = pObject->usItem;
@@ -181,7 +181,7 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
 void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt, cnt2;
   INT32 iNumLoops;
-  //	INT8 bBandaged;
+  //	int8_t bBandaged;
 
   for (cnt = 0; cnt < NUM_COMPLEX_DRUGS; cnt++) {
     // If side effect aret is non-zero....
@@ -265,11 +265,11 @@ void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
+int8_t GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
   return (pSoldier->bDrugEffect[ubDrugType]);
 }
 
-INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
+int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
   // If we have a o-positive effect
   if (pSoldier->bDrugEffect[ubDrugType] > 0) {
     return (0);
@@ -279,7 +279,7 @@ INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
 }
 
 void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) {
-  INT8 bDrunkLevel;
+  int8_t bDrunkLevel;
   INT16 sPoints = (*pubPoints);
 
   // Are we in a side effect or good effect?
@@ -310,7 +310,7 @@ void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) 
 }
 
 void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPointReduction) {
-  INT8 bDrunkLevel;
+  int8_t bDrunkLevel;
 
   // Are we in a side effect or good effect?
   if (pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE]) {
@@ -331,8 +331,8 @@ void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPointReduct
   }
 }
 
-INT8 GetDrunkLevel(struct SOLDIERTYPE *pSoldier) {
-  INT8 bNumDrinks;
+int8_t GetDrunkLevel(struct SOLDIERTYPE *pSoldier) {
+  int8_t bNumDrinks;
 
   // If we have a -ve effect ...
   if (pSoldier->bDrugEffect[DRUG_TYPE_ALCOHOL] == 0 &&

@@ -68,7 +68,7 @@ extern INT32 iSeatingCapacities[];
 extern uint32_t uiExternalStaticNPCFaces[];
 
 // the squad mvt groups
-extern INT8 SquadMovementGroups[];
+extern int8_t SquadMovementGroups[];
 
 // whether helicopted variables have been set up
 BOOLEAN fSkyRiderSetUp = FALSE;
@@ -230,7 +230,7 @@ BOOLEAN AddSoldierToHelicopter(struct SOLDIERTYPE *pSoldier) {
   }
 
   // attempt to add to vehicle
-  return (PutSoldierInVehicle(pSoldier, (INT8)iHelicopterVehicleId));
+  return (PutSoldierInVehicle(pSoldier, (int8_t)iHelicopterVehicleId));
 }
 
 BOOLEAN RemoveSoldierFromHelicopter(struct SOLDIERTYPE *pSoldier) {
@@ -791,7 +791,7 @@ uint8_t MoveAllInHelicopterToFootMovementGroup(void) {
   INT32 iCounter = 0;
   uint8_t ubGroupId = 0;
   struct SOLDIERTYPE *pSoldier;
-  INT8 bNewSquad;
+  int8_t bNewSquad;
   BOOLEAN fAnyoneAboard = FALSE;
   BOOLEAN fSuccess;
   uint8_t ubInsertionCode;
@@ -1298,7 +1298,7 @@ void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
 BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
   uint8_t ubSamNumber = 0;
-  INT8 bSAMCondition;
+  int8_t bSAMCondition;
   uint8_t ubChance;
 
   // if this sector is in friendly airspace, we're safe

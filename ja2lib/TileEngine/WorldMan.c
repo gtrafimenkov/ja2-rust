@@ -143,7 +143,7 @@ void SetLevelShadeLevel(struct LEVELNODE *pStartNode, uint8_t ubShadeLevel) {
   }
 }
 
-void AdjustLevelShadeLevel(struct LEVELNODE *pStartNode, INT8 bShadeDiff) {
+void AdjustLevelShadeLevel(struct LEVELNODE *pStartNode, int8_t bShadeDiff) {
   // Look through all objects and Search for type
   while (pStartNode != NULL) {
     pStartNode->ubShadeLevel += bShadeDiff;
@@ -335,7 +335,7 @@ void SetAllObjectShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel) {
   SetLevelShadeLevel(pObject, ubShadeLevel);
 }
 
-void AdjustAllObjectShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff) {
+void AdjustAllObjectShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff) {
   struct LEVELNODE *pObject = NULL;
 
   pObject = gpWorldLevelData[iMapIndex].pObjectHead;
@@ -692,7 +692,7 @@ void SetAllLandShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel) {
   SetLevelShadeLevel(pLand, ubShadeLevel);
 }
 
-void AdjustAllLandShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff) {
+void AdjustAllLandShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff) {
   struct LEVELNODE *pLand = NULL;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
@@ -1423,7 +1423,7 @@ void SetAllStructShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel) {
   SetLevelShadeLevel(pStruct, ubShadeLevel);
 }
 
-void AdjustAllStructShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff) {
+void AdjustAllStructShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff) {
   struct LEVELNODE *pStruct = NULL;
 
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
@@ -1846,7 +1846,7 @@ BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, struct SOLDIERTYPE *p
   return (TRUE);
 }
 
-BOOLEAN OKToAddMercToWorld(struct SOLDIERTYPE *pSoldier, INT8 bDirection) {
+BOOLEAN OKToAddMercToWorld(struct SOLDIERTYPE *pSoldier, int8_t bDirection) {
   uint16_t usAnimSurface;
   struct STRUCTURE_FILE_REF *pStructFileRef;
   uint16_t usOKToAddStructID;
@@ -2145,7 +2145,7 @@ void SetAllRoofShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel) {
   SetLevelShadeLevel(pRoof, ubShadeLevel);
 }
 
-void AdjustAllRoofShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff) {
+void AdjustAllRoofShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff) {
   struct LEVELNODE *pRoof = NULL;
 
   pRoof = gpWorldLevelData[iMapIndex].pRoofHead;
@@ -2409,7 +2409,7 @@ void SetAllOnRoofShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel) {
   SetLevelShadeLevel(pOnRoof, ubShadeLevel);
 }
 
-void AdjustAllOnRoofShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff) {
+void AdjustAllOnRoofShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff) {
   struct LEVELNODE *pOnRoof = NULL;
 
   pOnRoof = gpWorldLevelData[iMapIndex].pOnRoofHead;
@@ -2480,7 +2480,7 @@ struct LEVELNODE *AddTopmostToTail(uint32_t iMapIndex, uint16_t usIndex) {
   return (pNextTopmost);
 }
 
-BOOLEAN AddUIElem(uint32_t iMapIndex, uint16_t usIndex, INT8 sRelativeX, INT8 sRelativeY,
+BOOLEAN AddUIElem(uint32_t iMapIndex, uint16_t usIndex, int8_t sRelativeX, int8_t sRelativeY,
                   struct LEVELNODE **ppNewNode) {
   struct LEVELNODE *pTopmost = NULL;
 
@@ -2720,7 +2720,7 @@ BOOLEAN IsRoofVisible2(INT16 sMapPos) {
   return (FALSE);
 }
 
-uint8_t WhoIsThere2(INT16 sGridNo, INT8 bLevel) {
+uint8_t WhoIsThere2(INT16 sGridNo, int8_t bLevel) {
   struct STRUCTURE *pStructure;
 
   if (!GridNoOnVisibleWorldTile(sGridNo)) {

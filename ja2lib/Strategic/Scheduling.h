@@ -66,7 +66,7 @@ void ProcessTacticalSchedule(uint8_t ubScheduleID);
 
 void DeleteSchedule(uint8_t ubScheduleID);
 
-void LoadSchedules(INT8 **hBuffer);
+void LoadSchedules(int8_t **hBuffer);
 BOOLEAN LoadSchedulesFromSave(HWFILE hFile);
 BOOLEAN SaveSchedules(HWFILE hFile);
 

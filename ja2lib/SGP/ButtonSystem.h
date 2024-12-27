@@ -106,9 +106,9 @@ typedef struct _GUI_BUTTON {
   INT16 YLoc;
   uintptr_t UserData[4];  // Place holder for user data etc.
   INT16 Group;            // Group this button belongs to (see DOCs)
-  INT8 bDefaultStatus;
+  int8_t bDefaultStatus;
   // Button disabled style
-  INT8 bDisabledStyle;
+  int8_t bDisabledStyle;
   // For buttons with text
   STR16 string;         // the string
   uint16_t usFont;      // font for text
@@ -119,18 +119,18 @@ typedef struct _GUI_BUTTON {
   INT16 sShadowColorDown;
   INT16 sForeColorHilited;  // text colors when button is down (optional)
   INT16 sShadowColorHilited;
-  INT8 bJustification;  // BUTTON_TEXT_LEFT, BUTTON_TEXT_CENTER, BUTTON_TEXT_RIGHT
-  INT8 bTextXOffset;
-  INT8 bTextYOffset;
-  INT8 bTextXSubOffSet;
-  INT8 bTextYSubOffSet;
+  int8_t bJustification;  // BUTTON_TEXT_LEFT, BUTTON_TEXT_CENTER, BUTTON_TEXT_RIGHT
+  int8_t bTextXOffset;
+  int8_t bTextYOffset;
+  int8_t bTextXSubOffSet;
+  int8_t bTextYSubOffSet;
   BOOLEAN fShiftText;
   INT16 sWrappedWidth;
   // For buttons with icons (don't confuse this with quickbuttons which have up to 5 states )
   INT32 iIconID;
   INT16 usIconIndex;
-  INT8 bIconXOffset;    //-1 means horizontally centered
-  INT8 bIconYOffset;    //-1 means vertically centered
+  int8_t bIconXOffset;  //-1 means horizontally centered
+  int8_t bIconYOffset;  //-1 means vertically centered
   BOOLEAN fShiftImage;  // if true, icon is shifted +1,+1 when button state is down.
 
   uint8_t ubToggleButtonOldState;  // Varibles for new toggle buttons that work
@@ -258,7 +258,7 @@ INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sS
                        INT16 Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 sForeColor,
                               INT16 sShadowColor, INT16 sForeColorDown, INT16 sShadowColorDown,
-                              INT8 bJustification, INT16 xloc, INT16 yloc, INT32 Type,
+                              int8_t bJustification, INT16 xloc, INT16 yloc, INT32 Type,
                               INT16 Priority, GUI_CALLBACK MoveCallback,
                               GUI_CALLBACK ClickCallback);
 
@@ -270,21 +270,21 @@ void SpecifyButtonUpTextColors(INT32 iButtonID, INT16 sForeColor, INT16 sShadowC
 void SpecifyButtonDownTextColors(INT32 iButtonID, INT16 sForeColorDown, INT16 sShadowColorDown);
 void SpecifyButtonHilitedTextColors(INT32 iButtonID, INT16 sForeColorHilited,
                                     INT16 sShadowColorHilited);
-void SpecifyButtonTextJustification(INT32 iButtonID, INT8 bJustification);
+void SpecifyButtonTextJustification(INT32 iButtonID, int8_t bJustification);
 void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont,
                                         INT16 sForeColor, INT16 sShadowColor);
 void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont, INT16 sForeColor,
                                      INT16 sShadowColor, INT16 sForeColorDown,
-                                     INT16 sShadowColorDown, INT8 bJustification);
+                                     INT16 sShadowColorDown, int8_t bJustification);
 void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont,
                                         INT16 sForeColor, INT16 sShadowColor);
-void SpecifyButtonTextOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOffset,
+void SpecifyButtonTextOffsets(INT32 iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                               BOOLEAN fShiftText);
-void SpecifyButtonTextSubOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOffset,
+void SpecifyButtonTextSubOffsets(INT32 iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                                  BOOLEAN fShiftText);
 void SpecifyButtonTextWrappedWidth(INT32 iButtonID, INT16 sWrappedWidth);
 
-void SpecifyButtonSoundScheme(INT32 iButtonID, INT8 bSoundScheme);
+void SpecifyButtonSoundScheme(INT32 iButtonID, int8_t bSoundScheme);
 void PlayButtonSound(INT32 iButtonID, INT32 iSoundType);
 
 void AllowDisabledButtonFastHelp(INT32 iButtonID, BOOLEAN fAllow);
@@ -306,7 +306,7 @@ enum  // for use with SpecifyDisabledButtonStyle
   DISABLED_STYLE_HATCHED,  // always hatches the disabled button
   DISABLED_STYLE_SHADED    // always shades the disabled button 25% darker
 };
-void SpecifyDisabledButtonStyle(INT32 iButtonID, INT8 bStyle);
+void SpecifyDisabledButtonStyle(INT32 iButtonID, int8_t bStyle);
 
 void RemoveTextFromButton(INT32 iButtonID);
 void RemoveIconFromButton(INT32 iButtonID);
@@ -315,7 +315,7 @@ void RemoveIconFromButton(INT32 iButtonID);
 // If fShiftImage is true, then the image will shift down one pixel and right one pixel
 // just like the text does.
 BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, uint16_t usVideoObjectIndex,
-                          INT8 bXOffset, INT8 bYOffset, BOOLEAN fShiftImage);
+                          int8_t bXOffset, int8_t bYOffset, BOOLEAN fShiftImage);
 
 void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y);
 void ResizeButton(INT32 iButtonID, INT16 w, INT16 h);

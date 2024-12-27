@@ -49,7 +49,7 @@ BOOLEAN MusicFadeOut(void);
 BOOLEAN MusicFadeIn(void);
 BOOLEAN MusicPoll(BOOLEAN fForce);
 
-void SetMusicFadeSpeed(INT8 bFadeSpeed);
+void SetMusicFadeSpeed(int8_t bFadeSpeed);
 
 void FadeMusicForXSeconds(uint32_t uiDelay);
 

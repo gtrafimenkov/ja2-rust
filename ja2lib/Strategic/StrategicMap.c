@@ -125,10 +125,10 @@ extern BOOLEAN gfGettingNameFromSaveLoadScreen;
 
 INT16 gWorldSectorX = 0;
 INT16 gWorldSectorY = 0;
-INT8 gbWorldSectorZ = -1;
+int8_t gbWorldSectorZ = -1;
 
 INT16 gsAdjacentSectorX, gsAdjacentSectorY;
-INT8 gbAdjacentSectorZ;
+int8_t gbAdjacentSectorZ;
 struct GROUP *gpAdjacentGroup = NULL;
 uint8_t gubAdjacentJumpCode;
 uint32_t guiAdjacentTraverseTime;
@@ -141,7 +141,7 @@ BOOLEAN gfInvalidTraversal = FALSE;
 BOOLEAN gfLoneEPCAttemptingTraversal = FALSE;
 BOOLEAN gfRobotWithoutControllerAttemptingTraversal = FALSE;
 BOOLEAN gubLoneMercAttemptingToAbandonEPCs = 0;
-INT8 gbPotentiallyAbandonedEPCSlotID = -1;
+int8_t gbPotentiallyAbandonedEPCSlotID = -1;
 
 extern BOOLEAN gfUsePersistantPBI;
 
@@ -180,14 +180,14 @@ INT16 pSamGridNoBList[NUMBER_OF_SAMS] = {
 
 // ATE: Update this w/ graphic used
 // Use 3 if / orientation, 4 if \ orientation
-INT8 gbSAMGraphicList[NUMBER_OF_SAMS] = {
+int8_t gbSAMGraphicList[NUMBER_OF_SAMS] = {
     4,
     3,
     3,
     3,
 };
 
-INT8 gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
+int8_t gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 
 // the amount of time that a soldier will wait to return to desired/old squad
 #define DESIRE_SQUAD_RESET_DELAY 12 * 60
@@ -256,7 +256,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
 INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirection,
                          uint32_t *puiNumAttempts);
 
-void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ);
+void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, int8_t bOldSectorZ);
 void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup);
 
 extern void InitializeTacticalStatusAtBattleStart();
@@ -302,8 +302,8 @@ uint32_t uiNumImagesReloaded;
 #endif
 
 uint32_t UndergroundTacticalTraversalTime(
-    INT8 bExitDirection) {  // We are attempting to traverse in an underground environment.  We need
-                            // to use a complete different
+    int8_t bExitDirection) {  // We are attempting to traverse in an underground environment.  We
+                              // need to use a complete different
   // method.  When underground, all sectors are instantly adjacent.
   switch (bExitDirection) {
     case NORTH_STRATEGIC_MOVE:
@@ -530,7 +530,7 @@ BOOLEAN InitStrategicEngine() {
   return (TRUE);
 }
 
-INT8 GetTownIdForSector(INT16 sMapX, INT16 sMapY) {
+int8_t GetTownIdForSector(INT16 sMapX, INT16 sMapY) {
   // return the name value of the town in this sector
 
   return GetTownIdForStrategicMapIndex(GetSectorID16(sMapX, sMapY));
@@ -556,7 +556,7 @@ uint8_t GetTownSectorSize(TownID bTownId) {
 
 // return number of sectors under player control for this town
 uint8_t GetTownSectorsUnderControl(TownID bTownId) {
-  INT8 ubSectorsControlled = 0;
+  int8_t ubSectorsControlled = 0;
   INT32 iCounterA = 0, iCounterB = 0;
   uint16_t usSector = 0;
 
@@ -601,8 +601,8 @@ void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSiz
   swprintf(sString, bufSize, L"%hs%hs", pVertStrings[sMapY], pHortStrings[sMapX]);
 }
 
-void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,
-                    BOOLEAN fAddAlternateMapLetter) {
+void GetMapFileName(INT16 sMapX, INT16 sMapY, int8_t bSectorZ, STR8 bString,
+                    BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter) {
   CHAR8 bTestString[150];
   CHAR8 bExtensionString[15];
 
@@ -723,10 +723,10 @@ void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
 
         gTacticalStatus.fCountingDownForGuideDescription = TRUE;
         gTacticalStatus.bGuideDescriptionCountDown =
-            (INT8)(4 + Random(5));  // 4 to 8 tactical turns...
+            (int8_t)(4 + Random(5));  // 4 to 8 tactical turns...
         gTacticalStatus.ubGuideDescriptionToUse = ubSectorDescription[cnt][2];
-        gTacticalStatus.bGuideDescriptionSectorX = (INT8)sSectorX;
-        gTacticalStatus.bGuideDescriptionSectorY = (INT8)sSectorY;
+        gTacticalStatus.bGuideDescriptionSectorX = (int8_t)sSectorX;
+        gTacticalStatus.bGuideDescriptionSectorY = (int8_t)sSectorY;
       }
     }
   }
@@ -735,7 +735,7 @@ void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   HandleRPCDescription();
 }
 
-BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   BOOLEAN fChangeMusic = TRUE;
 
 #ifdef CRIPPLED_VERSION
@@ -922,7 +922,7 @@ BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
     {
       INT16 sWarpWorldX;
       INT16 sWarpWorldY;
-      INT8 bWarpWorldZ;
+      int8_t bWarpWorldZ;
       INT16 sWarpGridNo;
 
       if (GetWarpOutOfMineCodes(&sWarpWorldX, &sWarpWorldY, &bWarpWorldZ, &sWarpGridNo) &&
@@ -973,7 +973,7 @@ void RemoveMercsInSector() {
 
 void PrepareLoadedSector() {
   BOOLEAN fAddCivs = TRUE;
-  INT8 bMineIndex = -1;
+  int8_t bMineIndex = -1;
 
   if (AreInMeanwhile() == FALSE) {
     if (gbWorldSectorZ == 0) {
@@ -1107,7 +1107,7 @@ void PrepareLoadedSector() {
 }
 
 #define RANDOM_HEAD_MINERS 4
-void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNewSectorZ) {
+void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, int8_t bNewSectorZ) {
   uint8_t ubRandomMiner[RANDOM_HEAD_MINERS] = {106, 156, 157, 158};
   uint8_t ubMiner, ubMinersPlaced;
   uint8_t ubMine, ubThisMine;
@@ -1234,7 +1234,7 @@ void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNe
   ResetOncePerConvoRecordsForAllNPCsInLoadedSector();
 }
 
-void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ) {
+void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, int8_t bOldSectorZ) {
   if (sOldSectorX == KINGPIN_MONEY_SECTOR_X && sOldSectorY == KINGPIN_MONEY_SECTOR_Y &&
       bOldSectorZ == KINGPIN_MONEY_SECTOR_Z) {
     CheckForKingpinsMoneyMissing(TRUE);
@@ -1256,7 +1256,7 @@ void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOld
   SetFactFalse(FACT_MUSEUM_ALARM_WENT_OFF);
 }
 
-BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   INT32 i;
   UNDERGROUND_SECTORINFO *pNode = NULL;
   CHAR8 bFilename[50];
@@ -1363,7 +1363,7 @@ BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   return TRUE;  // because the map was loaded.
 }
 
-void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fPOWSquadSet = FALSE;
@@ -1469,7 +1469,7 @@ void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   }
 }
 
-void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   BOOLEAN fError = FALSE;
   if (pSoldier->uiStatusFlags & SOLDIER_IS_TACTICALLY_VALID) {
     pSoldier->ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
@@ -1703,12 +1703,12 @@ void InitializeStrategicMapSectorTownNames(void) {
 }
 
 // Get sector ID string makes a string like 'A9 - OMERTA', or just J11 if no town....
-void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString, size_t bufSize,
+void GetSectorIDString(u8 sSectorX, u8 sSectorY, int8_t bSectorZ, CHAR16 *zString, size_t bufSize,
                        BOOLEAN fDetailed) {
   SECTORINFO *pSector = NULL;
   UNDERGROUND_SECTORINFO *pUnderground;
-  INT8 bTownNameID;
-  INT8 bMineIndex;
+  int8_t bTownNameID;
+  int8_t bMineIndex;
   uint8_t ubSectorID = 0;
   uint8_t ubLandType = 0;
 
@@ -1999,7 +1999,7 @@ void JumpIntoAdjacentSector(uint8_t ubTacticalDirection, uint8_t ubJumpCode,
   uint32_t uiTraverseTime = 0;
   uint8_t ubDirection;
   EXITGRID ExitGrid;
-  INT8 bPrevAssignment;
+  int8_t bPrevAssignment;
   uint8_t ubPrevGroupID;
 
   // Set initial selected
@@ -2565,7 +2565,7 @@ void DoneFadeOutAdjacentSector() {
   FadeInGameScreen();
 }
 
-BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
+BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, int8_t bExitDirection,
                                uint16_t usAdditionalData) {
   INT16 sXMapPos;
   INT16 sYMapPos;
@@ -2657,7 +2657,7 @@ BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection
 
 // ATE: Returns FALSE if NOBODY is close enough, 1 if ONLY selected guy is and 2 if all on squad
 // are...
-BOOLEAN OKForSectorExit(INT8 bExitDirection, uint16_t usAdditionalData,
+BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,
                         uint32_t *puiTraverseTimeInMinutes) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
@@ -2719,7 +2719,7 @@ BOOLEAN OKForSectorExit(INT8 bExitDirection, uint16_t usAdditionalData,
       if (AM_AN_EPC(pSoldier)) {
         ubNumEPCs++;
         // Also record the EPC's slot ID incase we later build a string using the EPC's name.
-        gbPotentiallyAbandonedEPCSlotID = (INT8)cnt;
+        gbPotentiallyAbandonedEPCSlotID = (int8_t)cnt;
         if (AM_A_ROBOT(pSoldier) && !CanRobotBeControlled(pSoldier)) {
           gfRobotWithoutControllerAttemptingTraversal = TRUE;
           ubNumControllableMercs--;
@@ -2886,8 +2886,8 @@ void SetupNewStrategicGame() {
 }
 
 // a -1 will be returned upon failure
-INT8 GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  INT8 bCounter = 0;
+int8_t GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+  int8_t bCounter = 0;
   INT16 sSectorValue = 0;
 
   // check if valid sector
@@ -3033,7 +3033,7 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
-BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ) == FALSE) {
     return (FALSE);
   }
@@ -3145,7 +3145,7 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
 
 INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDirection) {
   INT16 sGridNo, sStartGridNo, sOldGridNo;
-  INT8 bOdd = 1, bOdd2 = 1;
+  int8_t bOdd = 1, bOdd2 = 1;
   uint8_t bAdjustedDist = 0;
   uint32_t cnt;
 
@@ -3166,7 +3166,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           sGridNo++;
         }
 
-        bOdd = (INT8)!bOdd;
+        bOdd = (int8_t)!bOdd;
       }
 
       sGridNo = sOldGridNo;
@@ -3198,7 +3198,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
 
       } while (TRUE);
 
@@ -3220,7 +3220,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           sGridNo--;
         }
 
-        bOdd = (INT8)!bOdd;
+        bOdd = (int8_t)!bOdd;
       }
 
       sGridNo = sOldGridNo;
@@ -3252,7 +3252,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
 
       } while (TRUE);
 
@@ -3274,7 +3274,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           sGridNo--;
         }
 
-        bOdd = (INT8)(!bOdd);
+        bOdd = (int8_t)(!bOdd);
       }
 
       sGridNo = sOldGridNo;
@@ -3306,7 +3306,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
 
       } while (TRUE);
 
@@ -3328,7 +3328,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           sGridNo++;
         }
 
-        bOdd = (INT8)(!bOdd);
+        bOdd = (int8_t)(!bOdd);
       }
 
       sGridNo = sOldGridNo;
@@ -3360,7 +3360,7 @@ INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDire
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
 
       } while (TRUE);
 
@@ -3507,7 +3507,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
 INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirection,
                          uint32_t *puiNumAttempts) {
   INT16 sGridNo, sStartGridNo, sOldGridNo;
-  INT8 bOdd = 1, bOdd2 = 1;
+  int8_t bOdd = 1, bOdd2 = 1;
   uint8_t bAdjustedDist = 0;
   uint32_t cnt;
 
@@ -3532,7 +3532,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           sGridNo--;
         }
 
-        bOdd = (INT8)(!bOdd);
+        bOdd = (int8_t)(!bOdd);
       }
 
       sGridNo = sOldGridNo;
@@ -3566,7 +3566,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
       }
       return NOWHERE;
 
@@ -3586,7 +3586,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           sGridNo++;
         }
 
-        bOdd = (INT8)(!bOdd);
+        bOdd = (int8_t)(!bOdd);
       }
 
       sGridNo = sOldGridNo;
@@ -3620,7 +3620,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
       }
       return NOWHERE;
 
@@ -3640,7 +3640,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           sGridNo--;
         }
 
-        bOdd = (INT8)(!bOdd);
+        bOdd = (int8_t)(!bOdd);
       }
 
       sGridNo = sOldGridNo;
@@ -3674,7 +3674,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
       }
       return NOWHERE;
 
@@ -3694,7 +3694,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           sGridNo++;
         }
 
-        bOdd = (INT8)(!bOdd);
+        bOdd = (int8_t)(!bOdd);
       }
 
       sGridNo = sOldGridNo;
@@ -3728,7 +3728,7 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, uint8_t ubInsertionDirect
           }
         }
 
-        bOdd2 = (INT8)(!bOdd2);
+        bOdd2 = (int8_t)(!bOdd2);
       }
       return NOWHERE;
   }

@@ -232,7 +232,7 @@ void ShutdownFonts() {
 }
 
 // Set shades for fonts
-BOOLEAN SetFontShade(uint32_t uiFontID, INT8 bColorID) {
+BOOLEAN SetFontShade(uint32_t uiFontID, int8_t bColorID) {
   struct VObject* pFont;
 
   CHECKF(bColorID > 0);

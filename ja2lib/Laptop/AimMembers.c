@@ -507,7 +507,7 @@ BOOLEAN LoadMercBioInfo(uint8_t ubIndex, STR16 pInfoString, STR16 pAddInfo);
 BOOLEAN DisplayMercsInventory(uint8_t ubMercID);
 BOOLEAN DisplayMercsFace();
 void DisplayMercStats();
-INT8 AimMemberHireMerc();
+int8_t AimMemberHireMerc();
 BOOLEAN DisplayVideoConferencingDisplay();
 BOOLEAN DisplayMercsVideoFace();
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown);
@@ -547,7 +547,7 @@ void DisplayAimMemberClickOnFaceHelpText();
 
 // ppp
 
-uint8_t GetStatColor(INT8 bStat);
+uint8_t GetStatColor(int8_t bStat);
 
 #ifdef JA2TESTVERSION
 BOOLEAN QuickHireMerc();
@@ -958,7 +958,7 @@ BOOLEAN RenderAIMMembers() {
   return (TRUE);
 }
 
-BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawNumeralsToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                              uint32_t ulFont, uint8_t ubColor) {
   wchar_t sStr[10];
 
@@ -970,7 +970,7 @@ BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16
   return (TRUE);
 }
 
-BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawMoneyToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                           uint32_t ulFont, uint8_t ubColor) {
   wchar_t sStr[10];
 
@@ -1612,7 +1612,7 @@ void DisplayMercStats() {
                        AIM_M_NUMBER_FONT, ubColor);
 }
 
-uint8_t GetStatColor(INT8 bStat) {
+uint8_t GetStatColor(int8_t bStat) {
   if (bStat >= 80)
     return (HIGH_STAT_COLOR);
   else if (bStat >= 50)
@@ -1765,12 +1765,12 @@ void BtnAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-INT8 AimMemberHireMerc() {
+int8_t AimMemberHireMerc() {
   MERC_HIRE_STRUCT HireMercStruct;
   uint8_t ubCurrentSoldier = AimMercArray[gbCurrentIndex];
-  INT8 bReturnCode;
+  int8_t bReturnCode;
   INT16 sSoldierID = 0;
-  INT8 bTypeOfContract = 0;
+  int8_t bTypeOfContract = 0;
 
   if (MoneyGetBalance() < giContractAmount) {
     // wasnt hired because of lack of funds
@@ -2479,7 +2479,7 @@ uint8_t WillMercAcceptCall() {
 
 BOOLEAN CanMercBeHired() {
   uint8_t i, j;
-  INT8 bMercID;
+  int8_t bMercID;
   BOOLEAN fRetVal = FALSE;
   BOOLEAN fBuddyOnTeam = FALSE;
 
@@ -2774,7 +2774,7 @@ void HandleVideoDistortion() {
 uint8_t DisplayTransparentSnow(uint8_t ubMode, uint32_t uiImageIdentifier, uint8_t ubMaxImages,
                                BOOLEAN bForward) {
   struct VObject *hFuzzLineHandle;
-  static INT8 bCount = 0;
+  static int8_t bCount = 0;
   uint32_t uiCurrentTime = 0;
   static uint32_t uiLastTime = 0;
 
@@ -3486,7 +3486,7 @@ BOOLEAN HandleCurrentVideoConfMode() {
 }
 
 BOOLEAN EnableDisableCurrentVideoConferenceButtons(BOOLEAN fEnable) {
-  INT8 i;
+  int8_t i;
   static BOOLEAN fCreated = FALSE;
   if (!fEnable) {
     if (fCreated) {
@@ -3855,7 +3855,7 @@ void DelayMercSpeech(uint8_t ubMercID, uint16_t usQuoteNum, uint16_t usDelay, BO
 
 // TEMP!!!
 BOOLEAN QuickHireMerc() {
-  INT8 bReturnCode;
+  int8_t bReturnCode;
   MERC_HIRE_STRUCT HireMercStruct;
   uint8_t ubCurrentSoldier = AimMercArray[gbCurrentIndex];
 

@@ -1267,7 +1267,7 @@ void CreatureNightPlanning() {  // Check the populations of the mine exits, and 
   }
 }
 
-void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   uint8_t ubValidMines = 0;
   if (!gGameOptions.fSciFi) return;  // No scifi, no creatures...
   if (giLairID) return;              // Creature quest already begun
@@ -1396,7 +1396,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
   INT16 sSectorX, sSectorY;
-  INT8 bSectorZ;
+  int8_t bSectorZ;
 
   if (giLairID <= 0) {  // Creature quest inactive
     return FALSE;
@@ -1407,7 +1407,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   while (curr) {
     sSectorX = curr->pLevel->ubSectorX;
     sSectorY = curr->pLevel->ubSectorY;
-    bSectorZ = (INT8)curr->pLevel->ubSectorZ;
+    bSectorZ = (int8_t)curr->pLevel->ubSectorZ;
     // Loop through all the creature directives (mine sectors that are infectible) and
     // see if players are there.
     for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -1427,7 +1427,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
 }
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ,
+BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ,
                               INT16 *psInsertionGridNo) {
   INT32 iSwitchValue;
 

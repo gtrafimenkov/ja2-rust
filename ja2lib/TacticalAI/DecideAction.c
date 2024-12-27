@@ -30,8 +30,8 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
-extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bDirection,
-                                     INT8 bNewStance);
+extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, int8_t bDirection,
+                                     int8_t bNewStance);
 extern BOOLEAN gfHiddenInterrupt;
 extern BOOLEAN gfUseAlternateQueenPosition;
 
@@ -53,13 +53,13 @@ void DoneScheduleAction(struct SOLDIERTYPE *pSoldier) {
   PostNextSchedule(pSoldier);
 }
 
-INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
   INT32 iScheduleIndex;
   uint8_t ubScheduleAction;
   uint16_t usGridNo1, usGridNo2;
   INT16 sX, sY;
-  INT8 bDirection;
+  int8_t bDirection;
   struct STRUCTURE *pStructure;
   BOOLEAN fDoUseDoor;
   DOOR_STATUS *pDoorStatus;
@@ -431,7 +431,7 @@ INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubRoom;
   INT16 sDesiredMercLoc;
   uint8_t ubDesiredMercDir;
@@ -472,7 +472,7 @@ INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_ABSOLUTELY_NONE);
 }
 
-INT8 DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
   INT16 sDesiredMercLoc;
   uint8_t ubDesiredMercDir;
   uint8_t ubDesiredMerc;
@@ -558,9 +558,9 @@ INT8 DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
   INT32 iChance, iSneaky = 10;
-  INT8 bInWater, bInGas;
+  int8_t bInWater, bInGas;
 
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
@@ -970,7 +970,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         AIPopMessage(tempstr);
 #endif
 
-        if (InternalIsValidStance(pSoldier, (INT8)pSoldier->usActionData,
+        if (InternalIsValidStance(pSoldier, (int8_t)pSoldier->usActionData,
                                   gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
           if (!gfTurnBasedAI) {
             // wait after this...
@@ -994,7 +994,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   INT32 iDummy;
   uint8_t ubNoiseDir;
   INT16 sNoiseGridNo;
@@ -1505,15 +1505,15 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
-  INT8 bActionReturned;
+int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
+  int8_t bActionReturned;
   INT32 iDummy;
   INT16 iChance, sClosestOpponent, sClosestFriend;
   INT16 sClosestDisturbance, sDistVisible, sCheckGridNo;
   uint8_t ubCanMove, ubOpponentDir;
-  INT8 bInWater, bInDeepWater, bInGas;
-  INT8 bSeekPts = 0, bHelpPts = 0, bHidePts = 0, bWatchPts = 0;
-  INT8 bHighestWatchLoc;
+  int8_t bInWater, bInDeepWater, bInGas;
+  int8_t bSeekPts = 0, bHelpPts = 0, bHidePts = 0, bWatchPts = 0;
+  int8_t bHighestWatchLoc;
   ATTACKTYPE BestThrow;
 #ifdef AI_TIMING_TEST
   uint32_t uiStartTime, uiEndTime;
@@ -2163,8 +2163,8 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
                     // reserve APs for a possible crouch plus a shot
                     pSoldier->usActionData = InternalGoAsFarAsPossibleTowards(
                         pSoldier, sClosestDisturbance,
-                        (INT8)(MinAPsToAttack(pSoldier, sClosestDisturbance, ADDTURNCOST) +
-                               AP_CROUCH),
+                        (int8_t)(MinAPsToAttack(pSoldier, sClosestDisturbance, ADDTURNCOST) +
+                                 AP_CROUCH),
                         AI_ACTION_SEEK_OPPONENT, FLAG_CAUTIOUS);
                     if (pSoldier->usActionData != NOWHERE) {
                       pSoldier->fAIFlags |= AI_CAUTIOUS;
@@ -2312,7 +2312,8 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
                 // ensure will we have enough APs for a possible crouch plus a shot
                 if (InternalGoAsFarAsPossibleTowards(
                         pSoldier, pSoldier->usActionData,
-                        (INT8)(MinAPsToAttack(pSoldier, sClosestOpponent, ADDTURNCOST) + AP_CROUCH),
+                        (int8_t)(MinAPsToAttack(pSoldier, sClosestOpponent, ADDTURNCOST) +
+                                 AP_CROUCH),
                         AI_ACTION_TAKE_COVER, 0) == pSoldier->usActionData) {
                   return (AI_ACTION_TAKE_COVER);
                 }
@@ -2608,16 +2609,16 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   INT32 iCoverPercentBetter, iOffense, iDefense, iChance;
   INT16 sClosestOpponent, sBestCover = NOWHERE;
   INT16 sClosestDisturbance;
   uint8_t ubMinAPCost, ubCanMove;
-  INT8 bInDeepWater, bInGas;
-  INT8 bDirection;
+  int8_t bInDeepWater, bInGas;
+  int8_t bDirection;
   uint8_t ubBestAttackAction = AI_ACTION_NONE;
-  INT8 bCanAttack, bActionReturned;
-  INT8 bWeaponIn;
+  int8_t bCanAttack, bActionReturned;
+  int8_t bWeaponIn;
   BOOLEAN fTryPunching = FALSE;
 
   ATTACKTYPE BestShot, BestThrow, BestStab, BestAttack;
@@ -2645,7 +2646,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   if ((pSoldier->bTeam == ENEMY_TEAM || GetSolProfile(pSoldier) == WARDEN) &&
       (gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE) &&
       (gTacticalStatus.ubTheChosenOne == NOBODY)) {
-    INT8 bPanicTrigger;
+    int8_t bPanicTrigger;
 
     bPanicTrigger = ClosestPanicTrigger(pSoldier);
     // if it's an alarm trigger and team is alerted, ignore it
@@ -3601,7 +3602,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
           if ((!gfTurnBasedAI ||
                GetAPsToLook(pSoldier) <=
                    pSoldier->bActionPoints -
-                       GetAPsToChangeStance(pSoldier, (INT8)pSoldier->usActionData)) &&
+                       GetAPsToChangeStance(pSoldier, (int8_t)pSoldier->usActionData)) &&
               (((pSoldier->bAIMorale > MORALE_HOPELESS) || ubCanMove) && !AimingGun(pSoldier))) {
             // determine the location of the known closest opponent
             // (don't care if he's conscious, don't care if he's reachable at all)
@@ -3614,7 +3615,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
 
               // if we're not facing towards him
               if (pSoldier->bDirection != bDirection) {
-                if (InternalIsValidStance(pSoldier, bDirection, (INT8)pSoldier->usActionData)) {
+                if (InternalIsValidStance(pSoldier, bDirection, (int8_t)pSoldier->usActionData)) {
                   // change direction, THEN change stance!
                   pSoldier->bNextAction = AI_ACTION_CHANGE_STANCE;
                   pSoldier->usNextActionData = pSoldier->usActionData;
@@ -3807,8 +3808,8 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideAction(struct SOLDIERTYPE *pSoldier) {
-  INT8 bAction = AI_ACTION_NONE;
+int8_t DecideAction(struct SOLDIERTYPE *pSoldier) {
+  int8_t bAction = AI_ACTION_NONE;
 
 #ifdef AI_TIMING_TESTS
   uint32_t uiStartTime, uiEndTime;
@@ -3908,7 +3909,7 @@ INT8 DecideAction(struct SOLDIERTYPE *pSoldier) {
   return (bAction);
 }
 
-INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
   // if he has a place to go, and isn't already there... go!
   if (pSoldier->usActionData != NOWHERE && (pSoldier->sGridNo != pSoldier->usActionData)) {
 #ifdef DEBUGDECISIONS
@@ -3922,7 +3923,7 @@ INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
 }
 
 void DecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
-  INT8 bOldStatus;
+  int8_t bOldStatus;
   INT32 iDummy;
   BOOLEAN fClimbDummy, fReachableDummy;
 

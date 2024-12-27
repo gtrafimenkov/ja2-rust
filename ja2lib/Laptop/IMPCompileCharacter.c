@@ -89,33 +89,35 @@ void CreateACharacterFromPlayerEnteredStats(void) {
   }
 
   // attributes
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLifeMax = (INT8)iHealth;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLife = (INT8)iHealth;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bAgility = (INT8)iAgility;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLifeMax = (int8_t)iHealth;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLife = (int8_t)iHealth;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bAgility =
+      (int8_t)iAgility;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bStrength =
-      (INT8)iStrength;
+      (int8_t)iStrength;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bDexterity =
-      (INT8)iDexterity;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bWisdom = (INT8)iWisdom;
+      (int8_t)iDexterity;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bWisdom = (int8_t)iWisdom;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLeadership =
-      (INT8)iLeadership;
+      (int8_t)iLeadership;
 
   // skills
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMarksmanship =
-      (INT8)iMarksmanship;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMedical = (INT8)iMedical;
+      (int8_t)iMarksmanship;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMedical =
+      (int8_t)iMedical;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMechanical =
-      (INT8)iMechanical;
+      (int8_t)iMechanical;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bExplosive =
-      (INT8)iExplosives;
+      (int8_t)iExplosives;
 
   // personality
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bPersonalityTrait =
-      (INT8)iPersonality;
+      (int8_t)iPersonality;
 
   // attitude
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bAttitude =
-      (INT8)iAttitude;
+      (int8_t)iAttitude;
 
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bExpLevel = 1;
 
@@ -234,7 +236,7 @@ void CreatePlayerAttitude(void) {
           */
 }
 
-void AddAnAttitudeToAttitudeList(INT8 bAttitude) {
+void AddAnAttitudeToAttitudeList(int8_t bAttitude) {
   // adds an attitude to attitude list
 
   if (iLastElementInAttitudeList < ATTITUDE_LIST_SIZE) {
@@ -248,7 +250,7 @@ void AddAnAttitudeToAttitudeList(INT8 bAttitude) {
   return;
 }
 
-void AddSkillToSkillList(INT8 bSkill) {
+void AddSkillToSkillList(int8_t bSkill) {
   // adds a skill to skills list
 
   if (iLastElementInSkillsList < ATTITUDE_LIST_SIZE) {
@@ -402,7 +404,7 @@ iSkillB = NO_SKILLTRAIT;
   */
 }
 
-void AddAPersonalityToPersonalityList(INT8 bPersonlity) {
+void AddAPersonalityToPersonalityList(int8_t bPersonlity) {
   // CJC, Oct 26 98: prevent personality list from being generated
   // because no dialogue was written to support PC personality quotes
 
@@ -683,9 +685,9 @@ void HandleMercStatsForChangesInFace() {
 
   // skill trait
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bSkillTrait =
-      (INT8)iSkillA;
+      (int8_t)iSkillA;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bSkillTrait2 =
-      (INT8)iSkillB;
+      (int8_t)iSkillB;
 }
 
 BOOLEAN ShouldThisMercHaveABigBody(void) {

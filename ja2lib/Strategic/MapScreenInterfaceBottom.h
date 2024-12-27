@@ -48,8 +48,8 @@ BOOLEAN CommonTimeCompressionChecks(void);
 
 BOOLEAN AnyUsableRealMercenariesOnTeam(void);
 
-void RequestTriggerExitFromMapscreen(INT8 bExitToWhere);
-BOOLEAN AllowedToExitFromMapscreenTo(INT8 bExitToWhere);
+void RequestTriggerExitFromMapscreen(int8_t bExitToWhere);
+BOOLEAN AllowedToExitFromMapscreenTo(int8_t bExitToWhere);
 void HandleExitsFromMapScreen(void);
 
 void MapScreenMsgScrollDown(uint8_t ubLinesDown);

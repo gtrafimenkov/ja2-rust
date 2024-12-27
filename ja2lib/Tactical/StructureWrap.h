@@ -13,7 +13,7 @@ BOOLEAN IsDoorPresentAtGridno(INT16 sGridNo);
 
 // OK, THIS FUNCTION RETURNS A struct LEVELNODE POINTER TO A WALL OF THE SAME ORIENTATION
 // AS WAS GIVEN. RETURNS NULL IF NONE FOUND.
-struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation);
+struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, int8_t ubOrientation);
 
 struct LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo);
 
@@ -35,7 +35,7 @@ BOOLEAN OpenRightOrientedDoorWithDoorOnRightOfEdgeExists(INT16 sGridNo);
 BOOLEAN OpenLeftOrientedDoorWithDoorOnLeftOfEdgeExists(INT16 sGridNo);
 
 struct LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(
-    INT16 sGridNo, INT8 ubOrientation, struct STRUCTURE **ppStructure);
+    INT16 sGridNo, int8_t ubOrientation, struct STRUCTURE **ppStructure);
 
 BOOLEAN CutWireFence(INT16 sGridNo);
 BOOLEAN IsCuttableWireFenceAtGridNo(INT16 sGridNo);

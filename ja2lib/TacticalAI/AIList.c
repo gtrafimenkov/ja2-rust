@@ -58,7 +58,7 @@ uint8_t FindEmptyAIListEntry(void) {
   return (AI_LIST_SIZE);
 }
 
-AILIST* CreateNewAIListEntry(uint8_t ubNewEntry, uint8_t ubID, INT8 bPriority) {
+AILIST* CreateNewAIListEntry(uint8_t ubNewEntry, uint8_t ubID, int8_t bPriority) {
   gAIList[ubNewEntry].ubID = ubID;
   gAIList[ubNewEntry].bPriority = bPriority;
   gAIList[ubNewEntry].pNext = NULL;
@@ -110,7 +110,7 @@ void RemoveAIListEntryForID(uint8_t ubID) {
   // none found, that's okay
 }
 
-BOOLEAN InsertIntoAIList(uint8_t ubID, INT8 bPriority) {
+BOOLEAN InsertIntoAIList(uint8_t ubID, int8_t bPriority) {
   uint8_t ubNewEntry;
   AILIST *pEntry, *pNewEntry, *pPrevEntry = NULL;
 
@@ -234,7 +234,7 @@ BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, uint8_t* pubDone
 BOOLEAN MoveToFrontOfAIList(uint8_t ubID) {
   // we'll have to fake this guy's alert status (in the list) to be the same as the current
   // front of the list
-  INT8 bPriority;
+  int8_t bPriority;
   uint8_t ubNewEntry;
   AILIST* pNewEntry;
 
@@ -259,7 +259,7 @@ BOOLEAN MoveToFrontOfAIList(uint8_t ubID) {
   }
 }
 
-BOOLEAN BuildAIListForTeam(INT8 bTeam) {
+BOOLEAN BuildAIListForTeam(int8_t bTeam) {
   // loop through all non-player-team guys and add to list
   uint32_t uiLoop;
   BOOLEAN fInsertRet;
@@ -267,7 +267,7 @@ BOOLEAN BuildAIListForTeam(INT8 bTeam) {
   BOOLEAN fRet = FALSE;
   uint8_t ubCount = 0;
   uint8_t ubDoneCount = 0;
-  INT8 bPriority;
+  int8_t bPriority;
 
   // this team is being given control so reset their muzzle flashes
   TurnOffTeamsMuzzleFlashes(bTeam);

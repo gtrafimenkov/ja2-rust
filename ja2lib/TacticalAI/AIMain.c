@@ -76,13 +76,13 @@ extern BYTE gfAmIHost;
 
 // #define TESTAI
 
-INT8 GameOption[MAXGAMEOPTIONS] = {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0};
+int8_t GameOption[MAXGAMEOPTIONS] = {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0};
 
 #define AI_LIMIT_PER_UPDATE 1
 
 BOOLEAN gfTurnBasedAI;
 
-INT8 gbDiff[MAX_DIFF_PARMS][5] = {
+int8_t gbDiff[MAX_DIFF_PARMS][5] = {
     //       AI DIFFICULTY SETTING
     // WIMPY  EASY  NORMAL  TOUGH  ELITE
     {-20, -10, 0, 10, 20},  // DIFF_ENEMY_EQUIP_MOD
@@ -643,7 +643,7 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
 void EndAIDeadlock(void) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT8 bFound = FALSE;
+  int8_t bFound = FALSE;
 
   // ESCAPE ENEMY'S TURN
 
@@ -934,7 +934,7 @@ void FreeUpNPCFromLoweringGun(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, INT8 bLook) {
+void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, int8_t bLook) {
   // if NPC is in the process of changing facing, mark him as being done!
   if ((pSoldier->bAction == AI_ACTION_CHANGE_FACING) && pSoldier->bActionInProgress) {
 #ifdef TESTAI
@@ -1260,7 +1260,7 @@ INT16 ActionInProgress(struct SOLDIERTYPE *pSoldier) {
 
     // don't try to pay any more APs for this, it was paid for once already!
     pSoldier->bDesiredDirection =
-        (INT8)pSoldier->usActionData;  // turn to face direction in actionData
+        (int8_t)pSoldier->usActionData;  // turn to face direction in actionData
     return (TRUE);
   }
 
@@ -1674,7 +1674,7 @@ void AIDecideRadioAnimation(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
+int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
   INT32 iRetCode;
   // NumMessage("ExecuteAction - Guy#",pSoldier->ubID);
 
@@ -1725,7 +1725,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
 #endif
 
       //			pSoldier->bDesiredDirection = (uint8_t) ;   // turn to face
-      //direction
+      // direction
       // in actionData
       SendSoldierSetDesiredDirectionEvent(pSoldier, pSoldier->usActionData);
       // now we'll have to wait for the turning to finish; no need to call TurnSoldier here
@@ -2158,10 +2158,10 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
     case AI_ACTION_UNLOCK_DOOR:
     case AI_ACTION_LOCK_DOOR: {
       struct STRUCTURE *pStructure;
-      INT8 bDirection;
+      int8_t bDirection;
       INT16 sDoorGridNo;
 
-      bDirection = (INT8)GetDirectionFromGridNo(pSoldier->usActionData, pSoldier);
+      bDirection = (int8_t)GetDirectionFromGridNo(pSoldier->usActionData, pSoldier);
       if (bDirection == EAST || bDirection == SOUTH) {
         sDoorGridNo = pSoldier->sGridNo;
       } else {
@@ -2292,7 +2292,7 @@ void InitAttackType(ATTACKTYPE *pAttack) {
   pAttack->ubAPCost = 0;
 }
 
-void HandleInitialRedAlert(INT8 bTeam, uint8_t ubCommunicate) {
+void HandleInitialRedAlert(int8_t bTeam, uint8_t ubCommunicate) {
   /*
    if (ubCommunicate)
     {

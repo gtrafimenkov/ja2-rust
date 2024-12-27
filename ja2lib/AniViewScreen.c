@@ -42,7 +42,7 @@ static struct SOLDIERTYPE *pSoldier;
 static BOOLEAN fOKFiles = FALSE;
 static uint8_t ubNumStates = 0;
 static uint16_t *pusStates = NULL;
-static INT8 ubCurLoadedState = 0;
+static int8_t ubCurLoadedState = 0;
 
 void CycleAnimations() {
   INT32 cnt;

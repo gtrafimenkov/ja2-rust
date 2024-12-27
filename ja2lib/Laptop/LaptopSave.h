@@ -29,7 +29,7 @@ typedef struct {
 typedef struct {
   uint16_t usItemIndex;
   uint8_t ubNumberPurchased;
-  INT8 bItemQuality;
+  int8_t bItemQuality;
   uint16_t usBobbyItemIndex;  // Item number in the BobbyRayInventory structure
   BOOLEAN fUsed;  // Indicates wether or not the item is from the used inventory or the regular
                   // inventory
@@ -101,10 +101,10 @@ typedef struct {
   uint8_t ubCrippleFiller[20];
 #endif
 
-  INT8 gbNumDaysTillFirstMercArrives;
-  INT8 gbNumDaysTillSecondMercArrives;
-  INT8 gbNumDaysTillThirdMercArrives;
-  INT8 gbNumDaysTillFourthMercArrives;
+  int8_t gbNumDaysTillFirstMercArrives;
+  int8_t gbNumDaysTillSecondMercArrives;
+  int8_t gbNumDaysTillThirdMercArrives;
+  int8_t gbNumDaysTillFourthMercArrives;
 
   uint32_t guiNumberOfMercPaymentsInDays;  // Keeps track of each day of payment the MERC site gets
 

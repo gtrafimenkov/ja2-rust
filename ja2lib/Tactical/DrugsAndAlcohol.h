@@ -28,9 +28,9 @@ void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier);
 void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints);
 void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPoints);
 
-INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
-INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
-INT8 GetDrunkLevel(struct SOLDIERTYPE *pSoldier);
+int8_t GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
+int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
+int8_t GetDrunkLevel(struct SOLDIERTYPE *pSoldier);
 INT32 EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, INT32 iStat);
 BOOLEAN MercUnderTheInfluence(struct SOLDIERTYPE *pSoldier);
 

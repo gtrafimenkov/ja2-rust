@@ -5440,8 +5440,8 @@ BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTes
   return (fSubFound);
 }
 
-INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
-                                        CHAR8 *zColFilename) {
+int8_t GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
+                                          CHAR8 *zColFilename) {
   switch (ubBodyType) {
     case REGMALE:
     case BIGMALE:
@@ -5586,12 +5586,12 @@ uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t
 
   // If we are a queen, pick the 'real' anim surface....
   if (usAnimSurface == QUEENMONSTERSPIT_SW) {
-    INT8 bDir;
+    int8_t bDir;
 
     // Assume a target gridno is here.... get direction...
     // ATE: use +2 in gridno because here head is far from body
-    bDir = (INT8)GetDirectionToGridNoFromGridNo((INT16)(pSoldier->sGridNo + 2),
-                                                pSoldier->sTargetGridNo);
+    bDir = (int8_t)GetDirectionToGridNoFromGridNo((INT16)(pSoldier->sGridNo + 2),
+                                                  pSoldier->sTargetGridNo);
 
     return (gusQueenMonsterSpitAnimPerDir[bDir]);
   }

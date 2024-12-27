@@ -112,7 +112,7 @@ void ProcessStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usN
   uint16_t usChance = 0;
   uint16_t usSubpointsPerPoint;
   uint16_t usSubpointsPerLevel;
-  INT8 bCurrentRating;
+  int8_t bCurrentRating;
   INT16 *psStatGainPtr;
   BOOLEAN fAffectedByWisdom = TRUE;
 
@@ -371,9 +371,9 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, uint8
                 INT16 sPtsChanged) {
   // this function changes the stat a given amount...
   INT16 *psStatGainPtr = NULL;
-  INT8 *pbStatPtr = NULL;
-  INT8 *pbSoldierStatPtr = NULL;
-  INT8 *pbStatDeltaPtr = NULL;
+  int8_t *pbStatPtr = NULL;
+  int8_t *pbSoldierStatPtr = NULL;
+  int8_t *pbStatDeltaPtr = NULL;
   uint32_t *puiStatTimerPtr = NULL;
   BOOLEAN fChangeTypeIncrease;
   BOOLEAN fChangeSalary;
@@ -695,9 +695,9 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
   // accumulated gain pts.
   uint8_t ubStat = 0;
   INT16 *psStatGainPtr = NULL;
-  INT8 *pbStatPtr = NULL;
-  INT8 bMinStatValue;
-  INT8 bMaxStatValue;
+  int8_t *pbStatPtr = NULL;
+  int8_t bMinStatValue;
+  int8_t bMaxStatValue;
   uint16_t usSubpointsPerPoint;
   INT16 sPtsChanged;
 
@@ -909,7 +909,7 @@ uint32_t RoundOffSalary(uint32_t uiSalary) {
   return (uiSalary);
 }
 
-uint16_t SubpointsPerPoint(uint8_t ubStat, INT8 bExpLevel) {
+uint16_t SubpointsPerPoint(uint8_t ubStat, int8_t bExpLevel) {
   uint16_t usSubpointsPerPoint;
 
   // figure out how many subpoints this type of stat needs to change
@@ -975,7 +975,7 @@ void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile) {
     }
   } else {
     // if the merc just takes it easy (high level or stupid mercs are more likely to)
-    if (((INT8)Random(10) < pProfile->bExpLevel) || ((INT8)Random(100) > pProfile->bWisdom)) {
+    if (((int8_t)Random(10) < pProfile->bExpLevel) || ((int8_t)Random(100) > pProfile->bWisdom)) {
       // no chance to change today
       return;
     }

@@ -178,7 +178,7 @@ BOOLEAN gfRenderViewer;
 extern BOOLEAN gfRenderMap;
 
 BOOLEAN gfViewEnemies = TRUE;
-INT8 gbViewLevel = 0;
+int8_t gbViewLevel = 0;
 
 uint16_t gusBlue;
 uint16_t gusLtBlue;

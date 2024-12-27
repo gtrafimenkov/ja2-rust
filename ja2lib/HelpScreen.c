@@ -428,7 +428,7 @@ void CalculateHeightAndPositionForHelpScreenScrollBox(INT32 *piHeightOfScrollBox
 void HelpScreenMouseMoveScrollBox(INT32 usMousePosY);
 void CreateScrollAreaButtons();
 void DeleteScrollArrowButtons();
-void ChangeToHelpScreenSubPage(INT8 bNewPage);
+void ChangeToHelpScreenSubPage(int8_t bNewPage);
 BOOLEAN AreWeClickingOnScrollBar(INT32 usMousePosY);
 
 // ppp
@@ -998,11 +998,11 @@ void GetHelpScreenUserInput() {
         } break;
 
         case LEFTARROW:
-          ChangeToHelpScreenSubPage((INT8)(gHelpScreen.bCurrentHelpScreenActiveSubPage - 1));
+          ChangeToHelpScreenSubPage((int8_t)(gHelpScreen.bCurrentHelpScreenActiveSubPage - 1));
           break;
 
         case RIGHTARROW:
-          ChangeToHelpScreenSubPage((INT8)(gHelpScreen.bCurrentHelpScreenActiveSubPage + 1));
+          ChangeToHelpScreenSubPage((int8_t)(gHelpScreen.bCurrentHelpScreenActiveSubPage + 1));
           break;
 
           /*
@@ -1308,7 +1308,7 @@ void BtnHelpScreenBtnsCallback(GUI_BUTTON *btn, INT32 reason) {
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // Get the btn id
-    INT8 bRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
+    int8_t bRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
 
     ChangeToHelpScreenSubPage(bRetValue);
     /*
@@ -1338,8 +1338,8 @@ void BtnHelpScreenBtnsCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ChangeToHelpScreenSubPage(INT8 bNewPage) {
-  INT8 i;
+void ChangeToHelpScreenSubPage(int8_t bNewPage) {
+  int8_t i;
 
   // if for some reason, we are assigning a lower number
   if (bNewPage < 0) {
@@ -1967,7 +1967,7 @@ void RefreshAllHelpScreenButtons() {
   ButtonList[giHelpScreenScrollArrows[1]]->uiFlags |= BUTTON_DIRTY;
 }
 
-INT8 HelpScreenDetermineWhichMapScreenHelpToShow() {
+int8_t HelpScreenDetermineWhichMapScreenHelpToShow() {
   if (fShowMapInventoryPool) {
     return (HELP_SCREEN_MAPSCREEN_SECTOR_INVENTORY);
   }
@@ -2204,7 +2204,7 @@ void CreateScrollAreaButtons() {
 }
 
 void DeleteScrollArrowButtons() {
-  INT8 i;
+  int8_t i;
   // remove the mouse region that blankets
   MSYS_RemoveRegion(&gHelpScreenScrollArea);
 

@@ -2286,8 +2286,8 @@ void FromCallback(GUI_BUTTON *btn, INT32 iReason) {
 
     SortMessages(SENDER);
 
-    // SpecifyButtonIcon( giSortButton[1] , giArrowsForEmail, uint16_t usVideoObjectIndex,  INT8
-    // bXOffset, INT8 bYOffset, TRUE );
+    // SpecifyButtonIcon( giSortButton[1] , giArrowsForEmail, uint16_t usVideoObjectIndex,  int8_t
+    // bXOffset, int8_t bYOffset, TRUE );
 
     fJustStartedEmail = FALSE;
 
@@ -4575,7 +4575,7 @@ void AddAllEmails() {
   }
 
   //	AddEmail( ( uint8_t )( AIM_REPLY_BARRY + ( AIM_REPLY_LENGTH_BARRY ) ),
-  //AIM_REPLY_LENGTH_BARRY,
+  // AIM_REPLY_LENGTH_BARRY,
   // AIM_REPLY_BARRY, GetWorldTotalMin() );
 
   uiOffset = AIM_REPLY_BARRY;

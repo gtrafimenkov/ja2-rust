@@ -87,10 +87,10 @@ FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
                                               struct OBJECTTYPE *pItem, INT16 sGridNo,
                                               uint8_t ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
-                                              BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI);
+                                              BOOLEAN fArmed, int8_t *pbLevel, BOOLEAN fFromUI);
 
 void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubLevel,
-                                       INT16 sZPos, struct OBJECTTYPE *pItem, INT8 bMissBy,
+                                       INT16 sZPos, struct OBJECTTYPE *pItem, int8_t bMissBy,
                                        uint8_t ubActionCode, uint32_t uiActionData);
 
 // SIMULATE WORLD

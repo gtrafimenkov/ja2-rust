@@ -225,8 +225,8 @@ enum {
   M_DONE,
 };
 
-INT8 gbNewItem[NUM_INV_SLOTS];
-INT8 gbNewItemCycle[NUM_INV_SLOTS];
+int8_t gbNewItem[NUM_INV_SLOTS];
+int8_t gbNewItemCycle[NUM_INV_SLOTS];
 uint8_t gubNewItemMerc;
 
 // AN ARRAY OF MOUSE REGIONS, ONE FOR EACH OBJECT POSITION ON BUDDY
@@ -246,7 +246,7 @@ struct OBJECTTYPE *gpItemPointer = NULL;
 struct OBJECTTYPE gItemPointer;
 BOOLEAN gfItemPointerDifferentThanDefault = FALSE;
 struct SOLDIERTYPE *gpItemPointerSoldier;
-INT8 gbItemPointerSrcSlot;
+int8_t gbItemPointerSrcSlot;
 uint16_t gusItemPointer = 255;
 uint16_t usItemSnapCursor;
 uint32_t guiNewlyPlacedItemTimer = 0;
@@ -637,12 +637,12 @@ REMOVE_MONEY gRemoveMoney;
 struct MOUSE_REGION gSMInvRegion[NUM_INV_SLOTS];
 struct MOUSE_REGION gKeyRingPanel;
 struct MOUSE_REGION gSMInvCamoRegion;
-INT8 gbCompatibleAmmo[NUM_INV_SLOTS];
-INT8 gbInvalidPlacementSlot[NUM_INV_SLOTS];
+int8_t gbCompatibleAmmo[NUM_INV_SLOTS];
+int8_t gbInvalidPlacementSlot[NUM_INV_SLOTS];
 uint16_t us16BPPItemCyclePlacedItemColors[20];
 uint32_t guiBodyInvVO[4][2];
 uint32_t guiGoldKeyVO;
-INT8 gbCompatibleApplyItem = FALSE;
+int8_t gbCompatibleApplyItem = FALSE;
 
 BOOLEAN AttemptToAddSubstring(STR16 zDest, STR16 zTemp, uint32_t *puiStringLength,
                               uint32_t uiPixLimit) {
@@ -892,7 +892,7 @@ BOOLEAN InitInvSlotInterface(INV_REGION_DESC *pRegionDesc, INV_REGION_DESC *pCam
     MSYS_DefineRegion(&gSMInvRegion[cnt], gSMInvData[cnt].sX, gSMInvData[cnt].sY,
                       (INT16)(gSMInvData[cnt].sX + gSMInvData[cnt].sWidth),
                       (INT16)(gSMInvData[cnt].sY + gSMInvData[cnt].sHeight),
-                      (INT8)(fSetHighestPrioity ? MSYS_PRIORITY_HIGHEST : MSYS_PRIORITY_HIGH),
+                      (int8_t)(fSetHighestPrioity ? MSYS_PRIORITY_HIGHEST : MSYS_PRIORITY_HIGH),
                       MSYS_NO_CURSOR, INVMoveCallback, INVClickCallback);
     // Add region
     MSYS_AddRegion(&gSMInvRegion[cnt]);
@@ -985,7 +985,7 @@ void ShutdownInvSlotInterface() {
 
 void RenderInvBodyPanel(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY) {
   // Blit body inv, based on body type
-  INT8 bSubImageIndex = gbCompatibleApplyItem;
+  int8_t bSubImageIndex = gbCompatibleApplyItem;
 
   BltVideoObjectFromIndex(guiSAVEBUFFER, guiBodyInvVO[pSoldier->ubBodyType][bSubImageIndex], 0, sX,
                           sY, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -1566,7 +1566,7 @@ void ResetCompatibleItemArray() {
   }
 }
 
-BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, INT8 bInvPos, BOOLEAN fOn) {
+BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, int8_t bInvPos, BOOLEAN fOn) {
   INT32 cnt;
   struct OBJECTTYPE *pTestObject;
 
@@ -3770,7 +3770,7 @@ void DeleteItemDescriptionBox() {
 }
 
 void InternalBeginItemPointer(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
-                              INT8 bHandPos) {
+                              int8_t bHandPos) {
   //	BOOLEAN fOk;
 
   // If not null return
@@ -3898,9 +3898,11 @@ BOOLEAN SoldierCanSeeCatchComing(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo)
   return (TRUE);
   /*-
           INT32							cnt;
-          INT8							bDirection, bTargetDirection;
+          int8_t							bDirection,
+  bTargetDirection;
 
-          bTargetDirection = (INT8)GetDirectionToGridNoFromGridNo( pSoldier->sGridNo, sSrcGridNo );
+          bTargetDirection = (int8_t)GetDirectionToGridNoFromGridNo( pSoldier->sGridNo, sSrcGridNo
+  );
 
           // Look 3 directions Clockwise from what we are facing....
           bDirection = pSoldier->bDirection;
@@ -3950,7 +3952,7 @@ void DrawItemTileCursor() {
   static uint16_t usOldMousePos = 0;
   INT16 sEndZ = 0;
   INT16 sDist;
-  INT8 bLevel;
+  int8_t bLevel;
 
   if (GetMouseMapPos(&usMapPos)) {
     if (gfUIFullTargetFound) {
@@ -4140,7 +4142,7 @@ void DrawItemTileCursor() {
 
             // Calculate chance to throw here.....
             if (!CalculateLaunchItemChanceToGetThrough(gpItemPointerSoldier, gpItemPointer,
-                                                       usMapPos, (INT8)gsInterfaceLevel,
+                                                       usMapPos, (int8_t)gsInterfaceLevel,
                                                        (INT16)((gsInterfaceLevel * 256) + sEndZ),
                                                        &sFinalGridNo, FALSE, &bLevel, TRUE)) {
               gfBadThrowItemCTGH = TRUE;
@@ -4404,7 +4406,7 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
               // Turn towards.....gridno
               EVENT_SetSoldierDesiredDirection(
                   gpItemPointerSoldier,
-                  (INT8)GetDirectionFromGridNo(usMapPos, gpItemPointerSoldier));
+                  (int8_t)GetDirectionFromGridNo(usMapPos, gpItemPointerSoldier));
 
               EVENT_InitNewSoldierAnim(gpItemPointerSoldier, DROP_ADJACENT_OBJECT, 0, FALSE);
             }
@@ -5291,7 +5293,7 @@ typedef struct {
   INT16 sY;
   INT16 sWidth;
   INT16 sHeight;
-  INT8 bScrollPage;
+  int8_t bScrollPage;
   INT32 ubScrollAnchor;
   INT32 ubTotalItems;
   INT32 bCurSelect;
@@ -5313,7 +5315,7 @@ typedef struct {
   INT32 iDirtyRect;
   BOOLEAN fHandled;
   INT16 sGridNo;
-  INT8 bZLevel;
+  int8_t bZLevel;
   INT16 sButtomPanelStartY;
   struct SOLDIERTYPE *pSoldier;
   struct ITEM_POOL *ItemPoolSlots[NUM_PICKUP_SLOTS];
@@ -5359,7 +5361,7 @@ void ItemPickupScrollDown(GUI_BUTTON *btn, INT32 reason);
 void ItemPickupAll(GUI_BUTTON *btn, INT32 reason);
 void ItemPickupOK(GUI_BUTTON *btn, INT32 reason);
 void ItemPickupCancel(GUI_BUTTON *btn, INT32 reason);
-void SetupPickupPage(INT8 bPage);
+void SetupPickupPage(int8_t bPage);
 void ItemPickMenuMouseMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void ItemPickMenuMouseClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void CalculateItemPickupMenuDimensions();
@@ -5370,7 +5372,7 @@ void SetItemPickupMenuDirty(BOOLEAN fDirtyLevel) { gItemPickupMenu.fDirtyLevel =
 
 BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                  struct ITEM_POOL *pItemPool, INT16 sScreenX, INT16 sScreenY,
-                                 INT8 bZLevel) {
+                                 int8_t bZLevel) {
   VOBJECT_DESC VObjectDesc;
   CHAR8 ubString[48];
   struct ITEM_POOL *pTempItemPool;
@@ -5570,7 +5572,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   // Ignore scrolling
   gfIgnoreScrolling = TRUE;
 
-  HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
+  HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(), NULL, TRUE);
   gubSelectSMPanelToMerc = GetSolID(pSoldier);
   ReEvaluateDisabledINVPanelButtons();
   DisableTacticalTeamPanelButtons(TRUE);
@@ -5579,7 +5581,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   return (TRUE);
 }
 
-void SetupPickupPage(INT8 bPage) {
+void SetupPickupPage(int8_t bPage) {
   INT32 cnt, iStart, iEnd;
   struct ITEM_POOL *pTempItemPool;
   INT16 sValue;
@@ -5906,7 +5908,7 @@ void RemoveItemPickupMenu() {
   if (gfInItemPickupMenu) {
     gfSMDisableForItems = FALSE;
 
-    HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
+    HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(), NULL, TRUE);
 
     UnLockPauseState();
     UnPauseGame();
@@ -6083,10 +6085,10 @@ void ItemPickMenuMouseMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) 
                sizeof(struct OBJECTTYPE));
 
         // Turn off first...
-        HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
+        HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(), NULL, TRUE);
         InternalHandleCompatibleAmmoUI(gpSMCurrentMerc, &(gItemPickupMenu.CompAmmoObject), TRUE);
 
-        HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(),
+        HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(),
                                                &(gWorldItems[pTempItemPool->iItemIndex].o), FALSE);
 
         SetItemPickupMenuDirty(DIRTYLEVEL2);
@@ -6098,7 +6100,7 @@ void ItemPickMenuMouseMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) 
     gItemPickupMenu.bCurSelect = 255;
 
     InternalHandleCompatibleAmmoUI(gpSMCurrentMerc, &(gItemPickupMenu.CompAmmoObject), FALSE);
-    HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
+    HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(), NULL, TRUE);
 
     SetItemPickupMenuDirty(DIRTYLEVEL2);
 
@@ -6167,7 +6169,7 @@ BOOLEAN HandleItemPickupMenu() {
 }
 
 void BtnMoneyButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT8 i;
+  int8_t i;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -6484,7 +6486,7 @@ typedef struct {
   uint8_t ubSoldierID;
   uint8_t ubInvSlot;
   BOOLEAN fCursorActive;
-  INT8 bPadding[5];
+  int8_t bPadding[5];
 
 } ITEM_CURSOR_SAVE_INFO;
 

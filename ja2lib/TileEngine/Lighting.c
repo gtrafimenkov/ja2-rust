@@ -486,9 +486,9 @@ BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
   // uint32_t uiType;
   uint16_t usTileNo;
   uint16_t usSrcTileNo;
-  INT8 bDirection;
+  int8_t bDirection;
   uint8_t ubTravelCost;
-  // INT8		bWallCount = 0;
+  // int8_t		bWallCount = 0;
   // uint16_t	usWallOrientation;
 
   Assert(gpWorldLevelData != NULL);
@@ -622,7 +622,7 @@ DOUBLE LinearDistanceDouble(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2) {
                 Returns the light level at a particular level without fake lights
 
 ***************************************************************************************/
-uint8_t LightTrueLevel(INT16 sGridNo, INT8 bLevel) {
+uint8_t LightTrueLevel(INT16 sGridNo, int8_t bLevel) {
   struct LEVELNODE *pNode;
   INT32 iSum;
 

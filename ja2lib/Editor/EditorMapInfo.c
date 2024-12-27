@@ -45,7 +45,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-INT8 gbDefaultLightType = PRIMETIME_LIGHT;
+int8_t gbDefaultLightType = PRIMETIME_LIGHT;
 
 struct SGPPaletteEntry gEditorLightColor;
 
@@ -192,7 +192,7 @@ void ExtractAndUpdateMapInfo() {
     LightSpriteRenderAll();
   }
 
-  temp = (INT8)GetNumericStrictValueFromField(6);
+  temp = (int8_t)GetNumericStrictValueFromField(6);
   if (temp == -1)
     gMapInformation.ubRestrictedScrollID = 0;
   else
@@ -250,7 +250,7 @@ void LocateNextExitGrid() {
   }
 }
 
-void ChangeLightDefault(INT8 bLightType) {
+void ChangeLightDefault(int8_t bLightType) {
   UnclickEditorButton(MAPINFO_PRIMETIME_LIGHT + gbDefaultLightType);
   gbDefaultLightType = bLightType;
   ClickEditorButton(MAPINFO_PRIMETIME_LIGHT + gbDefaultLightType);

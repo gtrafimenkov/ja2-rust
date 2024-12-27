@@ -41,7 +41,7 @@ BOOLEAN ModifyWindowStatus(uint32_t uiMapIndex);
 void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap) { gfApplyChangesToTempFile = fAddToMap; }
 
 BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
-                                           INT8 bSectorZ) {
+                                           int8_t bSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;
@@ -486,7 +486,7 @@ void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
   gpWorldLevelData[pMap->usGridNo].ubSmellInfo = (uint8_t)pMap->usSubImageIndex;
 }
 
-BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;
@@ -615,7 +615,7 @@ void SetMapRevealedStatus() {
 
 void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
   struct STRUCTURE *pCurrent = NULL;
-  INT8 bLevel;
+  int8_t bLevel;
   uint8_t ubWallOrientation;
   uint8_t ubBitToSet = 0x80;
   uint8_t ubType = 0;
@@ -927,7 +927,7 @@ void SetOpenableStructStatusFromMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened
 }
 
 BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(uint16_t usSectorX, uint16_t usSectorY,
-                                                     INT8 bSectorZ, uint16_t usGridNo,
+                                                     int8_t bSectorZ, uint16_t usGridNo,
                                                      BOOLEAN fChangeToOpen) {
   //	struct STRUCTURE * pStructure;
   //	MODIFY_MAP Map;

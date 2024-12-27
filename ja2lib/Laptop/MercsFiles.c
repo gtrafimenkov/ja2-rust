@@ -609,7 +609,7 @@ void DisplayMercsStats(uint8_t ubMercID) {
 
 BOOLEAN MercFilesHireMerc(uint8_t ubMercID) {
   MERC_HIRE_STRUCT HireMercStruct;
-  INT8 bReturnCode;
+  int8_t bReturnCode;
 
   memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));
 

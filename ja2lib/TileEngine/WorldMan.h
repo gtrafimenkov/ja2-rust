@@ -18,7 +18,7 @@ BOOLEAN AddObjectToHead(uint32_t iMapIndex, uint16_t usIndex);
 BOOLEAN TypeExistsInObjectLayer(uint32_t iMapIndex, uint32_t fType, uint16_t *pusObjectIndex);
 BOOLEAN RemoveAllObjectsOfTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType);
 void SetAllObjectShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel);
-void AdjustAllObjectShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff);
+void AdjustAllObjectShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff);
 BOOLEAN TypeRangeExistsInObjectLayer(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType,
                                      uint16_t *pusObjectIndex);
 
@@ -29,7 +29,7 @@ BOOLEAN AddRoofToHead(uint32_t iMapIndex, uint16_t usIndex);
 BOOLEAN TypeExistsInRoofLayer(uint32_t iMapIndex, uint32_t fType, uint16_t *pusRoofIndex);
 BOOLEAN RemoveAllRoofsOfTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType);
 void SetAllRoofShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel);
-void AdjustAllRoofShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff);
+void AdjustAllRoofShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff);
 void RemoveRoofIndexFlagsFromTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType,
                                        uint32_t uiFlags);
 void SetRoofIndexFlagsFromTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType,
@@ -47,7 +47,7 @@ BOOLEAN AddOnRoofToHead(uint32_t iMapIndex, uint16_t usIndex);
 BOOLEAN TypeExistsInOnRoofLayer(uint32_t iMapIndex, uint32_t fType, uint16_t *pusOnRoofIndex);
 BOOLEAN RemoveAllOnRoofsOfTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType);
 void SetAllOnRoofShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel);
-void AdjustAllOnRoofShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff);
+void AdjustAllOnRoofShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff);
 BOOLEAN RemoveOnRoofFromLevelNode(uint32_t iMapIndex, struct LEVELNODE *pNode);
 
 // Land manipulation functions
@@ -68,8 +68,8 @@ BOOLEAN RemoveHigherLandLevels(uint32_t iMapIndex, uint32_t fSrcType, uint32_t *
 BOOLEAN SetLowerLandLevels(uint32_t iMapIndex, uint32_t fSrcType, uint16_t usIndex);
 BOOLEAN AdjustForFullTile(uint32_t iMapIndex);
 void SetAllLandShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel);
-void AdjustAllLandShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff);
-void AdjustAllLandDirtyCount(uint32_t iMapIndex, INT8 bDirtyDiff);
+void AdjustAllLandShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff);
+void AdjustAllLandDirtyCount(uint32_t iMapIndex, int8_t bDirtyDiff);
 uint8_t GetTerrainType(INT16 sGridNo);
 BOOLEAN Water(INT16 sGridNo);
 BOOLEAN DeepWater(INT16 sGridNo);
@@ -90,7 +90,7 @@ BOOLEAN ReplaceStructIndex(uint32_t iMapIndex, uint16_t usOldIndex, uint16_t usN
 BOOLEAN HideStructOfGivenType(uint32_t iMapIndex, uint32_t fType, BOOLEAN fHide);
 BOOLEAN InsertStructIndex(uint32_t iMapIndex, uint16_t usIndex, uint8_t ubLevel);
 void SetAllStructShadeLevels(uint32_t iMapIndex, uint8_t ubShadeLevel);
-void AdjustAllStructShadeLevels(uint32_t iMapIndex, INT8 bShadeDiff);
+void AdjustAllStructShadeLevels(uint32_t iMapIndex, int8_t bShadeDiff);
 void SetStructIndexFlagsFromTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType,
                                       uint32_t uiFlags);
 void RemoveStructIndexFlagsFromTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType,
@@ -121,12 +121,12 @@ BOOLEAN RemoveShadowFromLevelNode(uint32_t iMapIndex, struct LEVELNODE *pNode);
 
 BOOLEAN AddMercToHead(uint32_t iMapIndex, struct SOLDIERTYPE *pSoldier, BOOLEAN fAddStructInfo);
 BOOLEAN RemoveMerc(uint32_t iMapIndex, struct SOLDIERTYPE *pSoldier, BOOLEAN fPlaceHolder);
-uint8_t WhoIsThere2(INT16 sGridNo, INT8 bLevel);
+uint8_t WhoIsThere2(INT16 sGridNo, int8_t bLevel);
 BOOLEAN AddMercStructureInfo(INT16 sGridNo, struct SOLDIERTYPE *pSoldier);
 BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, struct SOLDIERTYPE *pSoldier,
                                             uint16_t usAnimSurface, uint16_t usAnimState);
 BOOLEAN UpdateMercStructureInfo(struct SOLDIERTYPE *pSoldier);
-BOOLEAN OKToAddMercToWorld(struct SOLDIERTYPE *pSoldier, INT8 bDirection);
+BOOLEAN OKToAddMercToWorld(struct SOLDIERTYPE *pSoldier, int8_t bDirection);
 
 // TOPMOST manipulation functions
 struct LEVELNODE *AddTopmostToTail(uint32_t iMapIndex, uint16_t usIndex);
@@ -137,7 +137,7 @@ BOOLEAN RemoveAllTopmostsOfTypeRange(uint32_t iMapIndex, uint32_t fStartType, ui
 BOOLEAN SetMapElementShadeLevel(uint32_t uiMapIndex, uint8_t ubShadeLevel);
 void SetTopmostFlags(uint32_t iMapIndex, uint32_t uiFlags, uint16_t usIndex);
 void RemoveTopmostFlags(uint32_t iMapIndex, uint32_t uiFlags, uint16_t usIndex);
-BOOLEAN AddUIElem(uint32_t iMapIndex, uint16_t usIndex, INT8 sRelativeX, INT8 sRelativeY,
+BOOLEAN AddUIElem(uint32_t iMapIndex, uint16_t usIndex, int8_t sRelativeX, int8_t sRelativeY,
                   struct LEVELNODE **ppNewNode);
 void RemoveUIElem(uint32_t iMapIndex, uint16_t usIndex);
 BOOLEAN RemoveTopmostFromLevelNode(uint32_t iMapIndex, struct LEVELNODE *pNode);

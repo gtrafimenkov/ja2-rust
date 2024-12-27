@@ -919,7 +919,7 @@ void DisplayStringsInMapScreenMessageList(void) {
 void EnableDisableScrollStringVideoOverlay(BOOLEAN fEnable) {
   // will go through the list of video overlays for the tactical scroll message system, and
   // enable/disable video overlays depending on fEnable
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   for (bCounter = 0; bCounter < MAX_LINE_COUNT; bCounter++) {
     // if valid, enable/disable

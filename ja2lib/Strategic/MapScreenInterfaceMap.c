@@ -427,13 +427,13 @@ BOOLEAN fDrawTempHeliPath = FALSE;
 uint32_t guiMAPCURSORS;
 
 // destination plotting character
-INT8 bSelectedDestChar = -1;
+int8_t bSelectedDestChar = -1;
 
 // assignment selection character
-INT8 bSelectedAssignChar = -1;
+int8_t bSelectedAssignChar = -1;
 
 // current contract char
-INT8 bSelectedContractChar = -1;
+int8_t bSelectedContractChar = -1;
 
 // has the temp path for character or helicopter been already drawn?
 BOOLEAN fTempPathAlreadyDrawn = FALSE;
@@ -506,7 +506,7 @@ void HandleLowerLevelMapBlit(void);
 void ShowSAMSitesOnStrategicMap(void);
 
 // uint8_t NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ );
-// uint8_t NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ );
+// uint8_t NumFriendlyInSector( INT16 sX, INT16 sY, int8_t bZ );
 
 // callbacks
 void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
@@ -515,7 +515,7 @@ void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
 void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, uint8_t ubIconPosition);
 void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY);
-void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                         uint8_t ubIconPosition);
 
 BOOLEAN CanMilitiaAutoDistribute(void);
@@ -529,7 +529,7 @@ void DrawTixa();
 void DrawBullseye();
 void HideExistenceOfUndergroundMapSector(uint8_t ubSectorX, uint8_t ubSectorY);
 
-BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate);
 void AnimateRoute(struct path *pPath);
@@ -654,7 +654,7 @@ void HandleShowingOfEnemiesWithMilitiaOn(void) {
 
   for (sX = 1; sX < (MAP_WORLD_X - 1); sX++) {
     for (sY = 1; sY < (MAP_WORLD_Y - 1); sY++) {
-      HandleShowingOfEnemyForcesInSector(sX, sY, (INT8)iCurrentMapSectorZ,
+      HandleShowingOfEnemyForcesInSector(sX, sY, (int8_t)iCurrentMapSectorZ,
                                          CountAllMilitiaInSector(sX, sY));
     }
   }
@@ -721,7 +721,7 @@ uint32_t DrawMap(void) {
         if (GetSectorFlagStatus(cnt, cnt2, (uint8_t)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
             FALSE)
         //				if ( IsTheSectorPerceivedToBeUnderEnemyControl( cnt, cnt2, (
-        // INT8
+        // int8_t
         //)( iCurrentMapSectorZ ) ) )
         {
           if (fShowAircraftFlag && !iCurrentMapSectorZ) {
@@ -847,7 +847,7 @@ void GetScreenXYFromMapXYStationary(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 
 void ShowTownText(void) {
   CHAR16 sString[32];
   CHAR16 sStringA[32];
-  INT8 bTown = 0;
+  int8_t bTown = 0;
   uint16_t usX, usY;
   BOOLEAN fLoyaltyTooLowToTrainMilitia;
 
@@ -1138,7 +1138,7 @@ void ShowTeamAndVehicles(INT32 fShowFlags) {
       }
 
       if (fShowFlags & SHOW_TEAMMATES) {
-        HandleShowingOfEnemyForcesInSector(sMapX, sMapY, (INT8)iCurrentMapSectorZ,
+        HandleShowingOfEnemyForcesInSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ,
                                            (uint8_t)iIconOffset);
         ShowPeopleInMotion(sMapX, sMapY);
       }
@@ -1746,7 +1746,7 @@ void CancelPathForGroup(struct GROUP *pGroup) {
 }
 
 void CopyPathToCharactersSquadIfInOne(struct SOLDIERTYPE *pCharacter) {
-  INT8 bSquad = 0;
+  int8_t bSquad = 0;
 
   // check if on a squad, if so, do same thing for all characters
 
@@ -3287,7 +3287,7 @@ BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY) {
 
 void SetUpBadSectorsList(void) {
   // initalizes all sectors to highlighable and then the ones non highlightable are marked as such
-  INT8 bY;
+  int8_t bY;
 
   memset(&sBadSectorsList, 0, sizeof(sBadSectorsList));
 
@@ -4295,13 +4295,13 @@ void BlitMineGridMarkers(void) {
 }
 
 /*
-void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, INT8 bZ )
+void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, int8_t bZ )
 {
         // if this map sector is currently selected
         if( ( sX == sSelMapX ) && ( sY == sSelMapY ) && ( bZ == iCurrentMapSectorZ ) )
         {
                 // check if anyone left in the old sector
-                if( NumFriendlyInSector( (INT8)sX, (INT8)sY, bZ ) == 0)
+                if( NumFriendlyInSector( (int8_t)sX, (int8_t)sY, bZ ) == 0)
                 {
                         ChangeSelectedMapSector( sNewX, sNewY, bZ );
                         fMapScreenBottomDirty = TRUE;
@@ -4312,7 +4312,7 @@ void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, IN
 }
 
 
-uint8_t NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ )
+uint8_t NumFriendlyInSector( INT16 sX, INT16 sY, int8_t bZ )
 {
         struct SOLDIERTYPE *pTeamSoldier;
         INT32				cnt = 0;
@@ -5044,7 +5044,7 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
   }
 
   // yep someone left
-  iNumberUnderControl = GetTownSectorsUnderControl((INT8)sTownValue);
+  iNumberUnderControl = GetTownSectorsUnderControl((int8_t)sTownValue);
 
   // find number of sectors under player's control
   const TownSectors *townSectors = GetAllTownSectors();
@@ -5130,7 +5130,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
   INT16 sTotalSoFar = 0;
 
   // how many sectors in the selected town do we control?
-  iNumberUnderControl = GetTownSectorsUnderControl((INT8)sSelectedMilitiaTown);
+  iNumberUnderControl = GetTownSectorsUnderControl((int8_t)sSelectedMilitiaTown);
 
   // if none, there's nothing to be done!
   if (!iNumberUnderControl) {
@@ -5613,7 +5613,7 @@ uint32_t WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   return KNOWS_NOTHING;
 }
 
-BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   INT32 iFirstId = 0, iLastId = 0;
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -5665,7 +5665,7 @@ BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   return (FALSE);
 }
 
-void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                         uint8_t ubIconPosition) {
   INT16 sNumberOfEnemies = 0;
 
@@ -5737,7 +5737,7 @@ void ShowSAMSitesOnStrategicMap(void) {
   INT16 sSectorX = 0, sSectorY = 0;
   INT16 sX = 0, sY = 0;
   struct VObject *hHandle;
-  INT8 ubVidObjIndex = 0;
+  int8_t ubVidObjIndex = 0;
   uint32_t uiDestPitchBYTES;
   CHAR16 wString[40];
 
@@ -5883,7 +5883,7 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
   if (sSelectedMilitiaTown == BLANK_SECTOR) return (FALSE);
 
   // can't auto-distribute if we don't control any sectors in the the town
-  if (!GetTownSectorsUnderControl((INT8)sSelectedMilitiaTown)) return (FALSE);
+  if (!GetTownSectorsUnderControl((int8_t)sSelectedMilitiaTown)) return (FALSE);
 
   // get the sector value for the upper left corner
   sBaseSectorValue = GetBaseSectorForCurrentTown();
@@ -6102,7 +6102,7 @@ void InitMapSecrets(void) {
 }
 
 BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSectorY,
-                                       INT8 bClickedTownId) {
+                                       int8_t bClickedTownId) {
   INT32 iCounter = 0;
   INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
   INT16 sSectorX = 0, sSectorY = 0;

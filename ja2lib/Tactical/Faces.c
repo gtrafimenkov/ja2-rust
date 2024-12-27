@@ -64,10 +64,10 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
 extern BOOLEAN gfInItemPickupMenu;
 
 typedef struct {
-  INT8 bEyesX;
-  INT8 bEyesY;
-  INT8 bMouthX;
-  INT8 bMouthY;
+  int8_t bEyesX;
+  int8_t bEyesY;
+  int8_t bMouthX;
+  int8_t bMouthY;
 
 } RPC_SMALL_FACE_VALUES;
 
@@ -988,7 +988,7 @@ void GetXYForIconPlacement(FACETYPE *pFace, uint16_t ubIndex, INT16 sFaceX, INT1
 }
 
 void GetXYForRightIconPlacement(FACETYPE *pFace, uint16_t ubIndex, INT16 sFaceX, INT16 sFaceY,
-                                INT16 *psX, INT16 *psY, INT8 bNumIcons) {
+                                INT16 *psX, INT16 *psY, int8_t bNumIcons) {
   INT16 sX, sY;
   uint16_t usWidth, usHeight;
   ETRLEObject *pTrav;
@@ -1008,7 +1008,7 @@ void GetXYForRightIconPlacement(FACETYPE *pFace, uint16_t ubIndex, INT16 sFaceX,
 }
 
 void DoRightIcon(uint32_t uiRenderBuffer, FACETYPE *pFace, INT16 sFaceX, INT16 sFaceY,
-                 INT8 bNumIcons, INT8 sIconIndex) {
+                 int8_t bNumIcons, int8_t sIconIndex) {
   INT16 sIconX, sIconY;
 
   // Find X, y for placement
@@ -1037,7 +1037,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usLineColor;
-  INT8 bNumRightIcons = 0;
+  int8_t bNumRightIcons = 0;
 
   // If we are using an extern buffer...
   if (fUseExternBuffer) {
@@ -1552,8 +1552,8 @@ void NewMouth(FACETYPE *pFace) {
 void HandleAutoFaces() {
   uint32_t uiCount;
   FACETYPE *pFace;
-  INT8 bLife;
-  INT8 bAPs;
+  int8_t bLife;
+  int8_t bAPs;
   BOOLEAN fRerender = FALSE;
   BOOLEAN fHandleFace;
   BOOLEAN fHandleUIHatch;

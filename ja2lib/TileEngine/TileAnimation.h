@@ -68,7 +68,7 @@ typedef struct TAG_anitile {
   uint8_t ubUserData2;
   uint32_t uiUserData3;
 
-  INT8 bFrameCountAfterStart;
+  int8_t bFrameCountAfterStart;
 
 } ANITILE;
 

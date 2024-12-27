@@ -55,7 +55,7 @@ void ShowItemCursor(INT32 iMapIndex);
 
 void SetEditorItemsTaskbarMode(uint16_t usNewMode);
 
-void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, INT8 bEvent);
+void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, int8_t bEvent);
 
 extern INT32 giDefaultExistChance;
 

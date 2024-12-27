@@ -45,7 +45,7 @@ INT16 sStatueGridNos[] = {13829, 13830, 13669, 13670};
 
 struct SOLDIERTYPE *gpKillerSoldier = NULL;
 INT16 gsGridNo;
-INT8 gbLevel;
+int8_t gbLevel;
 
 // This function checks if our statue exists in the current sector at given gridno
 BOOLEAN DoesO3SectorStatueExistHere(INT16 sGridNo) {
@@ -78,15 +78,15 @@ void ChangeO3SectorStatue(BOOLEAN fFromExplosion) {
   ApplyMapChangesToMapTempFile(TRUE);
   // Remove it!
   // Get index for it...
-  GetTileIndexFromTypeSubIndex(EIGHTOSTRUCT, (INT8)(5), &usTileIndex);
+  GetTileIndexFromTypeSubIndex(EIGHTOSTRUCT, (int8_t)(5), &usTileIndex);
   RemoveStruct(13830, usTileIndex);
 
   // Add new one...
   if (fFromExplosion) {
     // Use damaged peice
-    GetTileIndexFromTypeSubIndex(EIGHTOSTRUCT, (INT8)(7), &usTileIndex);
+    GetTileIndexFromTypeSubIndex(EIGHTOSTRUCT, (int8_t)(7), &usTileIndex);
   } else {
-    GetTileIndexFromTypeSubIndex(EIGHTOSTRUCT, (INT8)(8), &usTileIndex);
+    GetTileIndexFromTypeSubIndex(EIGHTOSTRUCT, (int8_t)(8), &usTileIndex);
     // Play sound...
 
     PlayJA2Sample(OPEN_STATUE, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
@@ -119,7 +119,7 @@ void ChangeO3SectorStatue(BOOLEAN fFromExplosion) {
 
 void DeidrannaTimerCallback(void) { HandleDeidrannaDeath(gpKillerSoldier, gsGridNo, gbLevel); }
 
-void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel) {
   gpKillerSoldier = pKillerSoldier;
   gsGridNo = sGridNo;
   gbLevel = bLevel;
@@ -134,7 +134,7 @@ void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo
   SetCustomizableTimerCallbackAndDelay(2000, DeidrannaTimerCallback, FALSE);
 }
 
-void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
@@ -354,7 +354,7 @@ void HandleDoneLastEndGameQuote() {
 
 void QueenBitchTimerCallback(void) { HandleQueenBitchDeath(gpKillerSoldier, gsGridNo, gbLevel); }
 
-void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
 
@@ -394,7 +394,7 @@ void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridN
   }
 }
 
-void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;

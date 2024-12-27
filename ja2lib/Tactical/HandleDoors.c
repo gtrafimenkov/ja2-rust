@@ -209,7 +209,7 @@ void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, uint8_t ubHandleCode) 
 }
 
 BOOLEAN DoTrapCheckOnStartingMenu(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT8 bDetectLevel;
+  int8_t bDetectLevel;
 
   if (pDoor && pDoor->fLocked && pDoor->ubTrapID != NO_TRAP &&
       pDoor->bPerceivedTrapped == DOOR_PERCEIVED_UNKNOWN) {

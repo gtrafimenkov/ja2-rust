@@ -73,8 +73,8 @@ ITEM_POOL_LOCATOR FlashItemSlots[NUM_ITEM_FLASH_SLOTS];
 uint32_t guiNumFlashItemSlots = 0;
 
 struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel);
-INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sFontX, INT16 sFontY,
-                         INT8 bCurStart);
+int8_t GetListMouseHotSpot(INT16 sLargestLineWidth, int8_t bNumItemsListed, INT16 sFontX,
+                           INT16 sFontY, int8_t bCurStart);
 void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel,
                                 struct LEVELNODE *pLevelNode);
 
@@ -89,7 +89,7 @@ BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool);
 // Disgusting hacks: have to keep track of these values for accesses in callbacks
 static struct SOLDIERTYPE *gpTempSoldier;
 static INT16 gsTempGridno;
-static INT8 bTempFrequency;
+static int8_t bTempFrequency;
 
 void BombMessageBoxCallBack(uint8_t ubExitValue);
 void BoobyTrapMessageBoxCallBack(uint8_t ubExitValue);
@@ -102,30 +102,30 @@ void MineSpottedMessageBoxCallBack(uint8_t ubExitValue);
 void CheckForPickedOwnership(void);
 void BoobyTrapInMapScreenMessageBoxCallBack(uint8_t ubExitValue);
 
-BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
+BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel,
                               INT32 iItemIndex, BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote);
 extern BOOLEAN ItemIsCool(struct OBJECTTYPE *pObj);
-extern INT8 gbItemPointerSrcSlot;
+extern int8_t gbItemPointerSrcSlot;
 extern void MAPEndItemPointer();
 extern BOOLEAN gfResetUIMovementOptimization;
 
 BOOLEAN ItemPoolOKForPickup(struct SOLDIERTYPE *pSoldier, struct ITEM_POOL *pItemPool,
-                            INT8 bZLevel);
+                            int8_t bZLevel);
 
 struct SOLDIERTYPE *gpBoobyTrapSoldier;
 struct ITEM_POOL *gpBoobyTrapItemPool;
 INT16 gsBoobyTrapGridNo;
-INT8 gbBoobyTrapLevel;
+int8_t gbBoobyTrapLevel;
 BOOLEAN gfDisarmingBuriedBomb;
 extern BOOLEAN gfDontChargeAPsToPickup;
-INT8 gbTrapDifficulty;
+int8_t gbTrapDifficulty;
 BOOLEAN gfJustFoundBoobyTrap = FALSE;
 
 void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 
 BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
                                             struct SOLDIERTYPE *pTargetSoldier, INT16 sTargetGridNo,
-                                            INT8 bLevel) {
+                                            int8_t bLevel) {
   BOOLEAN fBadChangeToGetThrough = FALSE;
 
   if (pTargetSoldier != NULL) {
@@ -134,7 +134,7 @@ BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
       fBadChangeToGetThrough = TRUE;
     }
   } else {
-    if (SoldierToLocationChanceToGetThrough(pSoldier, sTargetGridNo, (INT8)bLevel, 0, NOBODY) <
+    if (SoldierToLocationChanceToGetThrough(pSoldier, sTargetGridNo, (int8_t)bLevel, 0, NOBODY) <
         OK_CHANCE_TO_GET_THROUGH) {
       fBadChangeToGetThrough = TRUE;
     }
@@ -177,8 +177,8 @@ BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
   return (TRUE);
 }
 
-INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, uint16_t usHandItem,
-                 BOOLEAN fFromUI) {
+INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, int8_t bLevel,
+                 uint16_t usHandItem, BOOLEAN fFromUI) {
   struct SOLDIERTYPE *pTargetSoldier = NULL;
   uint16_t usSoldierIndex;
   INT16 sTargetGridNo;
@@ -409,7 +409,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
       //		EVENT_FireSoldierWeapon( pSoldier, sTargetGridNo );
       if (fFromUI) {
         // set the target level; if the AI calls this it will have set the level already...
-        pSoldier->bTargetLevel = (INT8)gsInterfaceLevel;
+        pSoldier->bTargetLevel = (int8_t)gsInterfaceLevel;
       }
 
       if (Item[usHandItem].usItemClass != IC_THROWING_KNIFE) {
@@ -1234,7 +1234,7 @@ void HandleSoldierThrowItem(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 }
 
 void SoldierGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                     struct OBJECTTYPE *pObject, INT8 bInvPos) {
+                     struct OBJECTTYPE *pObject, int8_t bInvPos) {
   INT16 sActionGridNo, sAdjustedGridNo;
   uint8_t ubDirection;
 
@@ -1293,7 +1293,7 @@ BOOLEAN SoldierDropItem(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
 }
 
 void SoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
-                       INT8 bZLevel) {
+                       int8_t bZLevel) {
   INT16 sActionGridNo;
 
   // Remove any previous actions
@@ -1353,7 +1353,7 @@ void HandleAutoPlaceFail(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 s
 }
 
 void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
-                             INT8 bZLevel, BOOLEAN *pfSelectionList) {
+                             int8_t bZLevel, BOOLEAN *pfSelectionList) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolToDelete = NULL;
   struct OBJECTTYPE Object;
@@ -1553,7 +1553,7 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
 }
 
 void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
-                             INT8 bZLevel) {
+                             int8_t bZLevel) {
   struct ITEM_POOL *pItemPool;
   uint16_t usNum;
 
@@ -1698,22 +1698,23 @@ void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel,
 }
 
 // INVENTORY POOL STUFF
-struct OBJECTTYPE *AddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                 uint8_t ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel) {
+struct OBJECTTYPE *AddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, int8_t bVisible,
+                                 uint8_t ubLevel, uint16_t usFlags,
+                                 int8_t bRenderZHeightAboveLevel) {
   return InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                bRenderZHeightAboveLevel, NULL);
 }
 
 struct OBJECTTYPE *AddItemToPoolAndGetIndex(INT16 sGridNo, struct OBJECTTYPE *pObject,
-                                            INT8 bVisible, uint8_t ubLevel, uint16_t usFlags,
-                                            INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
+                                            int8_t bVisible, uint8_t ubLevel, uint16_t usFlags,
+                                            int8_t bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   return (InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                 bRenderZHeightAboveLevel, piItemIndex));
 }
 
-struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                         uint8_t ubLevel, uint16_t usFlags,
-                                         INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
+struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pObject,
+                                         int8_t bVisible, uint8_t ubLevel, uint16_t usFlags,
+                                         int8_t bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
   INT32 iWorldItem;
@@ -1723,7 +1724,7 @@ struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pOb
   struct LEVELNODE *pNode;
   BOOLEAN fForceOnGround = FALSE;
   BOOLEAN fObjectInOpenable = FALSE;
-  INT8 bTerrainID;
+  int8_t bTerrainID;
 
   Assert(pObject->ubNumberOfObjects <= MAX_OBJECTS_PER_SLOT);
 
@@ -2061,7 +2062,7 @@ BOOLEAN DoesItemPoolContainAllHiddenItems(struct ITEM_POOL *pItemPool) {
   return (TRUE);
 }
 
-BOOLEAN LookForHiddenItems(INT16 sGridNo, INT8 ubLevel, BOOLEAN fSetLocator, INT8 bZLevel) {
+BOOLEAN LookForHiddenItems(INT16 sGridNo, int8_t ubLevel, BOOLEAN fSetLocator, int8_t bZLevel) {
   struct ITEM_POOL *pItemPool = NULL;
   struct ITEM_POOL *pHeadItemPool = NULL;
   BOOLEAN fFound = FALSE;
@@ -2090,8 +2091,8 @@ BOOLEAN LookForHiddenItems(INT16 sGridNo, INT8 ubLevel, BOOLEAN fSetLocator, INT
   return (fFound);
 }
 
-INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, uint8_t ubLevel,
-                                       struct STRUCTURE *pStructure) {
+int8_t GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, uint8_t ubLevel,
+                                         struct STRUCTURE *pStructure) {
   struct ITEM_POOL *pItemPool;
 
   if (pStructure == NULL) {
@@ -2105,7 +2106,7 @@ INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, uint8_t ubLevel,
   return (0);
 }
 
-INT8 GetLargestZLevelOfItemPool(struct ITEM_POOL *pItemPool) {
+int8_t GetLargestZLevelOfItemPool(struct ITEM_POOL *pItemPool) {
   // OK, loop through pools and get any height != 0........
   while (pItemPool != NULL) {
     if (pItemPool->bRenderZHeightAboveLevel > 0) {
@@ -2201,11 +2202,11 @@ void HandleItemObscuredFlag(INT16 sGridNo, uint8_t ubLevel) {
   }
 }
 
-BOOLEAN SetItemPoolVisibilityOn(struct ITEM_POOL *pItemPool, INT8 bAllGreaterThan,
+BOOLEAN SetItemPoolVisibilityOn(struct ITEM_POOL *pItemPool, int8_t bAllGreaterThan,
                                 BOOLEAN fSetLocator) {
   struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fAtLeastModified = FALSE, fDeleted = FALSE;
-  INT8 bVisibleValue;
+  int8_t bVisibleValue;
   // struct OBJECTTYPE *pObj;
 
   pItemPoolTemp = pItemPool;
@@ -2527,7 +2528,7 @@ void AllSoldiersLookforItems(BOOLEAN fShowLocators) {
   }
 }
 
-INT16 GetNumOkForDisplayItemsInPool(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
+INT16 GetNumOkForDisplayItemsInPool(struct ITEM_POOL *pItemPool, int8_t bZLevel) {
   INT32 cnt;
 
   // Determine total #
@@ -2543,7 +2544,7 @@ INT16 GetNumOkForDisplayItemsInPool(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
   return ((uint16_t)cnt);
 }
 
-BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
+BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, int8_t bZLevel) {
   if ((gTacticalStatus.uiFlags & SHOW_ALL_ITEMS)) {
     return (TRUE);
   }
@@ -2562,7 +2563,7 @@ BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
   return (FALSE);
 }
 
-BOOLEAN ItemPoolOKForDisplay(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
+BOOLEAN ItemPoolOKForDisplay(struct ITEM_POOL *pItemPool, int8_t bZLevel) {
   if (gTacticalStatus.uiFlags & SHOW_ALL_ITEMS) {
     return (TRUE);
   }
@@ -2581,7 +2582,7 @@ BOOLEAN ItemPoolOKForDisplay(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
 }
 
 BOOLEAN ItemPoolOKForPickup(struct SOLDIERTYPE *pSoldier, struct ITEM_POOL *pItemPool,
-                            INT8 bZLevel) {
+                            int8_t bZLevel) {
   if (gTacticalStatus.uiFlags & SHOW_ALL_ITEMS) {
     return (TRUE);
   }
@@ -2604,8 +2605,8 @@ BOOLEAN ItemPoolOKForPickup(struct SOLDIERTYPE *pSoldier, struct ITEM_POOL *pIte
 extern void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 
-BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCommand, INT8 bZLevel,
-                         INT16 sXPos, INT16 sYPos) {
+BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCommand,
+                         int8_t bZLevel, INT16 sXPos, INT16 sYPos) {
   INT16 sY;
   struct ITEM_POOL *pTempItemPool;
   CHAR16 pStr[100];
@@ -2613,11 +2614,11 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCo
   INT16 sLargeLineWidth = 0, sLineWidth;
   BOOLEAN fSelectionDone = FALSE;
 
-  INT8 gbCurrentItemSel = 0;
-  INT8 bNumItemsListed = 0;
+  int8_t gbCurrentItemSel = 0;
+  int8_t bNumItemsListed = 0;
   INT16 sFontX, sFontY;
   INT16 sLargestLineWidth = 30;
-  INT8 bCurStart = 0;
+  int8_t bCurStart = 0;
   BOOLEAN fDoBack;
 
   // Take a look at each guy in current sqaud and check for compatible ammo...
@@ -2663,7 +2664,7 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCo
   while (pTempItemPool != NULL) {
     // ATE: Put some conditions on this....
     if (ItemPoolOKForDisplay(pTempItemPool, bZLevel)) {
-      HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(),
+      HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(),
                                              &(gWorldItems[pTempItemPool->iItemIndex].o), FALSE);
     }
 
@@ -2675,7 +2676,7 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCo
     cnt++;
   }
 
-  bNumItemsListed = (INT8)cnt;
+  bNumItemsListed = (int8_t)cnt;
 
   // RENDER LIST!
   // Determine max length
@@ -2806,13 +2807,13 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCo
   return (fSelectionDone);
 }
 
-INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sFontX, INT16 sFontY,
-                         INT8 bCurStart) {
+int8_t GetListMouseHotSpot(INT16 sLargestLineWidth, int8_t bNumItemsListed, INT16 sFontX,
+                           INT16 sFontY, int8_t bCurStart) {
   INT16 cnt = 0;
   INT16 sTestX1, sTestX2, sTestY1, sTestY2;
   INT16 sLineHeight;
-  INT8 gbCurrentItemSel = -1;
-  INT8 bListedItems;
+  int8_t gbCurrentItemSel = -1;
+  int8_t bListedItems;
 
   sLineHeight = GetFontHeight(SMALLFONT1) - 2;
 
@@ -2830,7 +2831,7 @@ INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sF
       sTestY2 = sFontY + (sLineHeight * (cnt + 1));
 
       if (gusMouseYPos > sTestY1 && gusMouseYPos < sTestY2) {
-        gbCurrentItemSel = (INT8)cnt;
+        gbCurrentItemSel = (int8_t)cnt;
         break;
       }
     }
@@ -3126,7 +3127,7 @@ BOOLEAN VerifyGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarg
 
 void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pTSoldier;
-  INT8 bInvPos;
+  int8_t bInvPos;
   struct OBJECTTYPE TempObject;
   uint8_t ubProfile;
   uint16_t usItemNum;
@@ -3435,7 +3436,7 @@ void BombMessageBoxCallBack(uint8_t ubExitValue) {
   }
 }
 
-BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
+BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, int8_t bSlot) {
   BOOLEAN fItemJustBroke = FALSE, fItemWorks = TRUE;
   struct OBJECTTYPE *pObj;
 
@@ -3455,7 +3456,7 @@ BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
 
         // item breaks, and becomes unusable...  so its status is reduced
         // to somewhere between 1 and the 1 less than USABLE
-        pObj->bStatus[0] = (INT8)(1 + Random(USABLE - 1));
+        pObj->bStatus[0] = (int8_t)(1 + Random(USABLE - 1));
       }
     } else  // it's already unusable
     {
@@ -3517,10 +3518,10 @@ void SetOffBoobyTrap(struct ITEM_POOL *pItemPool) {
   }
 }
 
-BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
+BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel,
                               INT32 iItemIndex, BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote) {
   BOOLEAN fBoobyTrapKnowledge;
-  INT8 bTrapDifficulty, bTrapDetectLevel;
+  int8_t bTrapDifficulty, bTrapDetectLevel;
   struct OBJECTTYPE *pObj;
 
   pObj = &(gWorldItems[iItemIndex].o);
@@ -3641,10 +3642,10 @@ void BoobyTrapMessageBoxCallBack(uint8_t ubExitValue) {
       if (gfDisarmingBuriedBomb) {
         if (Object.usItem == SWITCH) {
           // give the player a remote trigger instead
-          CreateItem(REMOTEBOMBTRIGGER, (INT8)(1 + Random(9)), &Object);
+          CreateItem(REMOTEBOMBTRIGGER, (int8_t)(1 + Random(9)), &Object);
         } else if (Object.usItem == ACTION_ITEM && Object.bActionValue != ACTION_ITEM_BLOW_UP) {
           // give the player a detonator instead
-          CreateItem(DETONATOR, (INT8)(1 + Random(9)), &Object);
+          CreateItem(DETONATOR, (int8_t)(1 + Random(9)), &Object);
         } else {
           // switch action item to the real item type
           CreateItem(Object.usBombItem, Object.bBombStatus, &Object);
@@ -3673,7 +3674,7 @@ void BoobyTrapMessageBoxCallBack(uint8_t ubExitValue) {
       }
     } else {
       // oops! trap goes off
-      StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (INT8)(3 * gbTrapDifficulty), FROM_FAILURE);
+      StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (int8_t)(3 * gbTrapDifficulty), FROM_FAILURE);
 
       DoMercBattleSound(gpBoobyTrapSoldier, BATTLE_SOUND_CURSE1);
 
@@ -3722,10 +3723,10 @@ void BoobyTrapInMapScreenMessageBoxCallBack(uint8_t ubExitValue) {
       if (gfDisarmingBuriedBomb) {
         if (Object.usItem == SWITCH) {
           // give the player a remote trigger instead
-          CreateItem(REMOTEBOMBTRIGGER, (INT8)(1 + Random(9)), &Object);
+          CreateItem(REMOTEBOMBTRIGGER, (int8_t)(1 + Random(9)), &Object);
         } else if (Object.usItem == ACTION_ITEM && Object.bActionValue != ACTION_ITEM_BLOW_UP) {
           // give the player a detonator instead
-          CreateItem(DETONATOR, (INT8)(1 + Random(9)), &Object);
+          CreateItem(DETONATOR, (int8_t)(1 + Random(9)), &Object);
         } else {
           // switch action item to the real item type
           CreateItem(Object.usBombItem, Object.bBombStatus, &Object);
@@ -3745,7 +3746,7 @@ void BoobyTrapInMapScreenMessageBoxCallBack(uint8_t ubExitValue) {
       HandleButtonStatesWhileMapInventoryActive();
     } else {
       // oops! trap goes off
-      StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (INT8)(3 * gbTrapDifficulty), FROM_FAILURE);
+      StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (int8_t)(3 * gbTrapDifficulty), FROM_FAILURE);
 
       DoMercBattleSound(gpBoobyTrapSoldier, BATTLE_SOUND_CURSE1);
 
@@ -3962,7 +3963,7 @@ void RemoveBlueFlagDialogueCallBack(uint8_t ubExitValue) {
   }
 }
 
-void AddBlueFlag(INT16 sGridNo, INT8 bLevel) {
+void AddBlueFlag(INT16 sGridNo, int8_t bLevel) {
   struct LEVELNODE *pNode;
 
   ApplyMapChangesToMapTempFile(TRUE);
@@ -3979,7 +3980,7 @@ void AddBlueFlag(INT16 sGridNo, INT8 bLevel) {
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
-void RemoveBlueFlag(INT16 sGridNo, INT8 bLevel) {
+void RemoveBlueFlag(INT16 sGridNo, int8_t bLevel) {
   ApplyMapChangesToMapTempFile(TRUE);
   gpWorldLevelData[sGridNo].uiFlags &= ~(MAPELEMENT_PLAYER_MINE_PRESENT);
 
@@ -4126,7 +4127,7 @@ void ToggleItemGlow(BOOLEAN fOn) {
 
 BOOLEAN ContinuePastBoobyTrapInMapScreen(struct OBJECTTYPE *pObject, struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fBoobyTrapKnowledge;
-  INT8 bTrapDifficulty, bTrapDetectLevel;
+  int8_t bTrapDifficulty, bTrapDetectLevel;
 
   if (pObject->bTrap > 0) {
     if (pSoldier->bTeam == gbPlayerNum) {
@@ -4190,7 +4191,7 @@ void RefreshItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems) {
   RefreshWorldItemsIntoItemPools(pItemList, iNumberOfItems);
 }
 
-INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
+INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, int8_t ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;

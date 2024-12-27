@@ -114,7 +114,7 @@ typedef struct {
   uint16_t usMouthHeight;
 
   uint16_t sEyeFrame;
-  INT8 ubEyeWait;
+  int8_t ubEyeWait;
   uint32_t uiEyelast;
   uint32_t uiEyeDelay;
   uint32_t uiBlinkFrequency;
@@ -123,12 +123,12 @@ typedef struct {
 
   uint8_t ubExpression;
 
-  INT8 bOldSoldierLife;
-  INT8 bOldActionPoints;
+  int8_t bOldSoldierLife;
+  int8_t bOldActionPoints;
   BOOLEAN fOldHandleUIHatch;
   BOOLEAN fOldShowHighlight;
-  INT8 bOldAssignment;
-  INT8 ubOldServiceCount;
+  int8_t bOldAssignment;
+  int8_t ubOldServiceCount;
   uint8_t ubOldServicePartner;
   BOOLEAN fOldShowMoveHilight;
 
@@ -147,7 +147,7 @@ typedef struct {
   BOOLEAN fCompatibleItems;
   BOOLEAN fOldCompatibleItems;
   BOOLEAN bOldStealthMode;
-  INT8 bOldOppCnt;
+  int8_t bOldOppCnt;
 
   AudioGapList GapList;
 

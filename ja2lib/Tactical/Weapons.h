@@ -181,7 +181,7 @@ typedef struct {
   uint8_t ubBulletSpeed;   // bullet's travelling speed
   uint8_t ubImpact;        // weapon's max damage impact (size & speed)
   uint8_t ubDeadliness;    // comparative ratings of guns
-  INT8 bAccuracy;          // accuracy or penalty
+  int8_t bAccuracy;        // accuracy or penalty
   uint8_t ubMagSize;
   uint16_t usRange;
   uint16_t usReloadDelay;
@@ -224,14 +224,14 @@ extern ARMOURTYPE Armour[];
 extern MAGTYPE Magazine[];
 extern EXPLOSIVETYPE Explosive[];
 
-extern INT8 EffectiveArmour(struct OBJECTTYPE *pObj);
-extern INT8 ArmourVersusExplosivesPercent(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveArmour(struct OBJECTTYPE *pObj);
+extern int8_t ArmourVersusExplosivesPercent(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN FireWeapon(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
 extern void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, INT16 sDamage,
                       INT16 sBreathLoss, uint16_t usDirection, INT16 sXPos, INT16 sYPos,
                       INT16 sZPos, INT16 sRange, uint8_t ubAttackerID, BOOLEAN fHit,
                       uint8_t ubSpecial, uint8_t ubHitLocation);
-extern void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus,
+extern void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
                          uint8_t ubAttackerID, uint16_t sXPos, INT16 sYPos, INT16 sZPos,
                          uint16_t usStructureID, INT32 iImpact, BOOLEAN fStopped);
 extern void WindowHit(INT16 sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
@@ -255,7 +255,7 @@ extern BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos
 extern INT32 CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation);
 extern INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
                                    uint8_t ubHitLocation, INT32 iImpact, uint8_t ubAmmoType);
-extern INT8 ArmourPercent(struct SOLDIERTYPE *pSoldier);
+extern int8_t ArmourPercent(struct SOLDIERTYPE *pSoldier);
 
 extern void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo,
                                     FLOAT *pdXPos, FLOAT *pdYPos, FLOAT *pdZPos);

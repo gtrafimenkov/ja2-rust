@@ -27,12 +27,12 @@ typedef struct {
   uint8_t bFirstID;
   uint8_t bLastID;
   COLORVAL RadarColor;
-  INT8 bSide;
-  INT8 bMenInSector;
+  int8_t bSide;
+  int8_t bMenInSector;
   uint8_t ubLastMercToRadio;
-  INT8 bTeamActive;
-  INT8 bAwareOfOpposition;
-  INT8 bHuman;
+  int8_t bTeamActive;
+  int8_t bAwareOfOpposition;
+  int8_t bHuman;
 } TacticalTeamType;
 
 // for use with TacticalStatusType.ubEnemyIntention
@@ -61,7 +61,7 @@ typedef struct {
   INT16 sSlideTarget;
   INT16 sSlideReason;
   uint32_t uiTimeSinceMercAIStart;
-  INT8 fPanicFlags;
+  int8_t fPanicFlags;
   INT16 sPanicTriggerGridnoUnused;
   INT16 sHandGrid;
   uint8_t ubSpottersCalledForBy;
@@ -76,12 +76,12 @@ typedef struct {
   uint8_t ubLastBattleSectorX;
   uint8_t ubLastBattleSectorY;
   BOOLEAN fLastBattleWon;
-  INT8 bOriginalSizeOfEnemyForce;
-  INT8 bPanicTriggerIsAlarmUnused;
+  int8_t bOriginalSizeOfEnemyForce;
+  int8_t bPanicTriggerIsAlarmUnused;
   BOOLEAN fVirginSector;
   BOOLEAN fEnemyInSector;
   BOOLEAN fInterruptOccurred;
-  INT8 bRealtimeSpeed;
+  int8_t bRealtimeSpeed;
   uint8_t ubEnemyIntention;
   uint8_t ubEnemyIntendedRetreatDirection;
   uint8_t ubEnemySightingOnTheirTurnEnemyID;
@@ -89,7 +89,7 @@ typedef struct {
   BOOLEAN fEnemySightingOnTheirTurn;
   BOOLEAN fAutoBandageMode;
   uint8_t ubAttackBusyCount;
-  INT8 bNumEnemiesFoughtInBattleUnused;
+  int8_t bNumEnemiesFoughtInBattleUnused;
   uint8_t ubEngagedInConvFromActionMercID;
   uint16_t usTactialTurnLimitCounter;
   BOOLEAN fInTopMessage;
@@ -98,19 +98,19 @@ typedef struct {
   uint16_t usTactialTurnLimitMax;
   uint32_t uiTactialTurnLimitClock;
   BOOLEAN fTactialTurnLimitStartedBeep;
-  INT8 bBoxingState;
-  INT8 bConsNumTurnsNotSeen;
+  int8_t bBoxingState;
+  int8_t bConsNumTurnsNotSeen;
   uint8_t ubArmyGuysKilled;
 
   INT16 sPanicTriggerGridNo[NUM_PANIC_TRIGGERS];
-  INT8 bPanicTriggerIsAlarm[NUM_PANIC_TRIGGERS];
+  int8_t bPanicTriggerIsAlarm[NUM_PANIC_TRIGGERS];
   uint8_t ubPanicTolerance[NUM_PANIC_TRIGGERS];
   BOOLEAN fAtLeastOneGuyOnMultiSelect;
   BOOLEAN fSaidCreatureFlavourQuote;
   BOOLEAN fHaveSeenCreature;
   BOOLEAN fKilledEnemyOnAttack;
   uint8_t ubEnemyKilledOnAttack;
-  INT8 bEnemyKilledOnAttackLevel;
+  int8_t bEnemyKilledOnAttackLevel;
   uint16_t ubEnemyKilledOnAttackLocation;
   BOOLEAN fItemsSeenOnAttack;
   BOOLEAN ubItemsSeenOnAttackSoldier;
@@ -131,22 +131,22 @@ typedef struct {
   uint8_t ubNumCrowsPossible;
   uint32_t uiTimeCounterForGiveItemSrc;
   BOOLEAN fUnLockUIAfterHiddenInterrupt;
-  INT8 bNumFoughtInBattle[MAXTEAMS];
+  int8_t bNumFoughtInBattle[MAXTEAMS];
   uint32_t uiDecayBloodLastUpdate;
   uint32_t uiTimeSinceLastInTactical;
   BOOLEAN fHasAGameBeenStarted;
-  INT8 bConsNumTurnsWeHaventSeenButEnemyDoes;
+  int8_t bConsNumTurnsWeHaventSeenButEnemyDoes;
   BOOLEAN fSomeoneHit;
   uint8_t ubPaddingSmall;
   uint32_t uiTimeSinceLastOpplistDecay;
-  INT8 bMercArrivingQuoteBeingUsed;
+  int8_t bMercArrivingQuoteBeingUsed;
   uint8_t ubEnemyKilledOnAttackKiller;
   BOOLEAN fCountingDownForGuideDescription;
-  INT8 bGuideDescriptionCountDown;
+  int8_t bGuideDescriptionCountDown;
   uint8_t ubGuideDescriptionToUse;
-  INT8 bGuideDescriptionSectorX;
-  INT8 bGuideDescriptionSectorY;
-  INT8 fEnemyFlags;
+  int8_t bGuideDescriptionSectorX;
+  int8_t bGuideDescriptionSectorY;
+  int8_t fEnemyFlags;
   BOOLEAN fAutoBandagePending;
   BOOLEAN fHasEnteredCombatModeSinceEntering;
   BOOLEAN fDontAddNewCrows;
@@ -159,7 +159,7 @@ typedef struct {
 } TacticalStatusType;
 
 extern uint8_t gbPlayerNum;
-extern INT8 gbShowEnemies;
+extern int8_t gbShowEnemies;
 
 extern uint16_t gusSelectedSoldier;
 extern uint16_t gusOldSelectedSoldier;
@@ -171,7 +171,7 @@ extern CHAR8 gzDirectionStr[][30];
 // TEMP FOR E3
 extern uint8_t gubCurrentScene;
 extern CHAR8 *GetSceneFilename();
-extern INT8 ubLevelMoveLink[10];
+extern int8_t ubLevelMoveLink[10];
 
 // Soldier List used for all soldier overhead interaction
 extern struct SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
@@ -192,7 +192,7 @@ BOOLEAN ShutdownOverhead();
 BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, uint16_t usSoldierIndex);
 
 INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo,
-                       INT8 bLevel);
+                       int8_t bLevel);
 
 // Simple check to see if a (one-tiled) soldier can occupy a given location on the ground or roof.
 extern BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof);
@@ -240,7 +240,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint
                                INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
 
 void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier);
-BOOLEAN TeamMemberNear(INT8 bTeam, INT16 sGridNo, INT32 iRange);
+BOOLEAN TeamMemberNear(int8_t bTeam, INT16 sGridNo, INT32 iRange);
 BOOLEAN IsValidTargetMerc(uint8_t ubSoldierID);
 
 // FUNCTIONS FOR MANIPULATING MERC SLOTS - A LIST OF ALL ACTIVE MERCS
@@ -270,7 +270,7 @@ struct SOLDIERTYPE *FreeUpAttacker(uint8_t ubID);
 
 BOOLEAN PlayerTeamFull();
 
-void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, INT8 bNumMercsWaiting,
+void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, int8_t bNumMercsWaiting,
                                          uint32_t uiData1, uint32_t uiData2, uint32_t uiData3);
 
 void ResetAllMercSpeeds();
@@ -288,19 +288,19 @@ void CencelAllActionsForTimeCompression(void);
 
 BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated);
 
-void AddManToTeam(INT8 bTeam);
+void AddManToTeam(int8_t bTeam);
 
-void RemoveManFromTeam(INT8 bTeam);
+void RemoveManFromTeam(int8_t bTeam);
 
 void RemoveSoldierFromTacticalSector(struct SOLDIERTYPE *pSoldier, BOOLEAN fAdjustSelected);
 
-void MakeCivHostile(struct SOLDIERTYPE *pSoldier, INT8 bNewSide);
+void MakeCivHostile(struct SOLDIERTYPE *pSoldier, int8_t bNewSide);
 
 #define REASON_NORMAL_ATTACK 1
 #define REASON_EXPLOSION 2
 
 BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
-                                      INT8 bReason);
+                                      int8_t bReason);
 
 INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
                               INT16 *psAdjustedTargetGridNo, uint8_t *pubDirection);

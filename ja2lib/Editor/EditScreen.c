@@ -1203,7 +1203,7 @@ void HandleJA2ToolbarSelection(void) {
 //	Select action to be taken based on the user's current key press (if any)
 //
 
-extern INT8 gbCurrSelect;
+extern int8_t gbCurrSelect;
 extern void DeleteSelectedMercsItem();
 void HandleKeyboardShortcuts() {
   static BOOLEAN fShowTrees = TRUE;

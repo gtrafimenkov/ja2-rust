@@ -36,7 +36,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+extern BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ,
                                             uint32_t uiNumberOfItems, WORLDITEM *pData);
 
 // status bar colors
@@ -549,29 +549,29 @@ void SaveSeenAndUnseenItems(void) {
 
   // if this is the loaded sector handle here
   if ((gWorldSectorX == sSelMapX) && (gWorldSectorY == sSelMapY) &&
-      (gbWorldSectorZ == (INT8)(iCurrentMapSectorZ))) {
+      (gbWorldSectorZ == (int8_t)(iCurrentMapSectorZ))) {
     ReBuildWorldItemStashForLoadedSector(iItemCount, uiNumberOfUnSeenItems, pSeenItemsList,
                                          pSaveList);
   } else {
     // now copy over unseen and seen
     if (uiNumberOfUnSeenItems > 0) {
       // over write file and copy unseen
-      AddWorldItemsToUnLoadedSector(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), 0,
+      AddWorldItemsToUnLoadedSector(sSelMapX, sSelMapY, (int8_t)(iCurrentMapSectorZ), 0,
                                     uiNumberOfUnSeenItems, pSaveList, TRUE);
 
       // check if seen items exist too
       if (iItemCount > 0) {
-        AddWorldItemsToUnLoadedSector(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), 0, iItemCount,
-                                      pSeenItemsList, FALSE);
+        AddWorldItemsToUnLoadedSector(sSelMapX, sSelMapY, (int8_t)(iCurrentMapSectorZ), 0,
+                                      iItemCount, pSeenItemsList, FALSE);
       }
 
     } else if (iItemCount > 0) {
       // copy only seen items
-      AddWorldItemsToUnLoadedSector(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), 0, iItemCount,
+      AddWorldItemsToUnLoadedSector(sSelMapX, sSelMapY, (int8_t)(iCurrentMapSectorZ), 0, iItemCount,
                                     pSeenItemsList, TRUE);
     } else {
       // get rid of the file
-      SaveWorldItemsToTempItemFile(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), 0, NULL);
+      SaveWorldItemsToTempItemFile(sSelMapX, sSelMapY, (int8_t)(iCurrentMapSectorZ), 0, NULL);
       return;
     }
   }
@@ -936,11 +936,11 @@ void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
   } else {
     // not loaded, load
     // get total number, visable and invisible
-    fReturn = GetNumberOfWorldItemsFromTempItemFile(sMapX, sMapY, (INT8)(sMapZ),
+    fReturn = GetNumberOfWorldItemsFromTempItemFile(sMapX, sMapY, (int8_t)(sMapZ),
                                                     &(uiTotalNumberOfItems), FALSE);
     Assert(fReturn);
 
-    fReturn = GetNumberOfActiveWorldItemsFromTempFile(sMapX, sMapY, (INT8)(sMapZ),
+    fReturn = GetNumberOfActiveWorldItemsFromTempFile(sMapX, sMapY, (int8_t)(sMapZ),
                                                       &(uiTotalNumberOfRealItems));
     Assert(fReturn);
 
@@ -949,7 +949,7 @@ void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
       pTotalSectorList = (WORLDITEM *)MemAlloc(sizeof(WORLDITEM) * uiTotalNumberOfItems);
 
       // now load into mem
-      LoadWorldItemsFromTempItemFile(sMapX, sMapY, (INT8)(sMapZ), pTotalSectorList);
+      LoadWorldItemsFromTempItemFile(sMapX, sMapY, (int8_t)(sMapZ), pTotalSectorList);
     }
 
     // now run through list and
@@ -1145,11 +1145,11 @@ INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCou
     }
   } else {
     // get total number, visable and invisible
-    fReturn = GetNumberOfActiveWorldItemsFromTempFile(sMapX, sMapY, (INT8)(sMapZ),
+    fReturn = GetNumberOfActiveWorldItemsFromTempFile(sMapX, sMapY, (int8_t)(sMapZ),
                                                       &(uiTotalNumberOfRealItems));
     Assert(fReturn);
 
-    fReturn = GetNumberOfWorldItemsFromTempItemFile(sMapX, sMapY, (INT8)(sMapZ),
+    fReturn = GetNumberOfWorldItemsFromTempItemFile(sMapX, sMapY, (int8_t)(sMapZ),
                                                     &(uiTotalNumberOfItems), FALSE);
     Assert(fReturn);
 
@@ -1158,7 +1158,7 @@ INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCou
       pTotalSectorList = (WORLDITEM *)MemAlloc(sizeof(WORLDITEM) * uiTotalNumberOfItems);
 
       // now load into mem
-      LoadWorldItemsFromTempItemFile(sMapX, sMapY, (INT8)(sMapZ), pTotalSectorList);
+      LoadWorldItemsFromTempItemFile(sMapX, sMapY, (int8_t)(sMapZ), pTotalSectorList);
     }
 
     // now run through list and
@@ -1316,9 +1316,9 @@ BOOLEAN PlaceObjectInInventoryStash(struct OBJECTTYPE *pInventorySlot,
         // always allow money to be combined!
         // average out the status values using a weighted average...
         pInventorySlot->bStatus[0] =
-            (INT8)(((uint32_t)pInventorySlot->bMoneyStatus * pInventorySlot->uiMoneyAmount +
-                    (uint32_t)pItemPtr->bMoneyStatus * pItemPtr->uiMoneyAmount) /
-                   (pInventorySlot->uiMoneyAmount + pItemPtr->uiMoneyAmount));
+            (int8_t)(((uint32_t)pInventorySlot->bMoneyStatus * pInventorySlot->uiMoneyAmount +
+                      (uint32_t)pItemPtr->bMoneyStatus * pItemPtr->uiMoneyAmount) /
+                     (pInventorySlot->uiMoneyAmount + pItemPtr->uiMoneyAmount));
         pInventorySlot->uiMoneyAmount += pItemPtr->uiMoneyAmount;
 
         DeleteObj(pItemPtr);

@@ -22,7 +22,7 @@ typedef struct {
   INT16 sZ;       // World Z ( optional )
   INT16 sGridNo;  // World GridNo
   BOOLEAN fLocate;
-  INT8 bLevel;  // World level
+  int8_t bLevel;  // World level
   uint8_t ubUnsed[1];
 
 } EXPLOSION_PARAMS;
@@ -69,22 +69,22 @@ extern uint8_t gubElementsOnExplosionQueue;
 extern BOOLEAN gfExplosionQueueActive;
 
 void IgniteExplosion(uint8_t ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo, uint16_t usItem,
-                     INT8 bLevel);
+                     int8_t bLevel);
 void InternalIgniteExplosion(uint8_t ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo,
-                             uint16_t usItem, BOOLEAN fLocate, INT8 bLevel);
+                             uint16_t usItem, BOOLEAN fLocate, int8_t bLevel);
 
 void GenerateExplosion(EXPLOSION_PARAMS *pExpParams);
 
 void SpreadEffect(INT16 sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ubOwner,
-                  BOOLEAN fSubsequent, INT8 bLevel, INT32 iSmokeEffectNum);
+                  BOOLEAN fSubsequent, int8_t bLevel, INT32 iSmokeEffectNum);
 
 void AddBombToQueue(uint32_t uiWorldBombIndex, uint32_t uiTimeStamp);
 
 void DecayBombTimers(void);
-void SetOffBombsByFrequency(uint8_t ubID, INT8 bFrequency);
-BOOLEAN SetOffBombsInGridNo(uint8_t ubID, INT16 sGridNo, BOOLEAN fAllBombs, INT8 bLevel);
+void SetOffBombsByFrequency(uint8_t ubID, int8_t bFrequency);
+BOOLEAN SetOffBombsInGridNo(uint8_t ubID, INT16 sGridNo, BOOLEAN fAllBombs, int8_t bLevel);
 void ActivateSwitchInGridNo(uint8_t ubID, INT16 sGridNo);
-void SetOffPanicBombs(uint8_t ubID, INT8 bPanicTrigger);
+void SetOffPanicBombs(uint8_t ubID, int8_t bPanicTrigger);
 
 void UpdateExplosionFrame(INT32 iIndex, INT16 sCurrentFrame);
 void RemoveExplosionData(INT32 iIndex);

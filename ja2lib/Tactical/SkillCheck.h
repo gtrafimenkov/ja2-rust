@@ -7,19 +7,19 @@ struct SOLDIERTYPE;
 
 extern void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, uint16_t *pusPoints);
 extern INT32 GetSkillCheckPenaltyForFatigue(struct SOLDIERTYPE *pSoldier, INT32 iSkill);
-extern INT32 SkillCheck(struct SOLDIERTYPE *pSoldier, INT8 bReason, INT8 bDifficulty);
-extern INT8 CalcTrapDetectLevel(struct SOLDIERTYPE *pSoldier, BOOLEAN fExamining);
+extern INT32 SkillCheck(struct SOLDIERTYPE *pSoldier, int8_t bReason, int8_t bDifficulty);
+extern int8_t CalcTrapDetectLevel(struct SOLDIERTYPE *pSoldier, BOOLEAN fExamining);
 
-extern INT8 EffectiveStrength(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveWisdom(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveAgility(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveMechanical(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveExplosive(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveLeadership(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveMarksmanship(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveDexterity(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveExpLevel(struct SOLDIERTYPE *pSoldier);
-extern INT8 EffectiveMedical(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveStrength(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveWisdom(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveAgility(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveMechanical(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveExplosive(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveLeadership(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveMarksmanship(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveDexterity(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveExpLevel(struct SOLDIERTYPE *pSoldier);
+extern int8_t EffectiveMedical(struct SOLDIERTYPE *pSoldier);
 
 typedef enum {
   NO_CHECK = 0,

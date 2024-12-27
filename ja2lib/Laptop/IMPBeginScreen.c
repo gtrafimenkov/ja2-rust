@@ -70,7 +70,7 @@ uint32_t uiFullNameCharacterPosition = 0;
 uint32_t uiNickNameCharacterPosition = 0;
 
 // non gender
-INT8 bGenderFlag = -1;
+int8_t bGenderFlag = -1;
 
 // IMP begin page buttons
 INT32 giIMPBeginScreenButton[1];

@@ -422,8 +422,8 @@ uint32_t CalculateSpeechVolume(uint32_t uiVolume);
 // Calculates a volume based on the current Sound Effects Volume level
 uint32_t CalculateSoundEffectsVolume(uint32_t uiVolume);
 
-INT8 SoundDir(INT16 sGridNo);
-INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo);
+int8_t SoundDir(INT16 sGridNo);
+int8_t SoundVolume(int8_t bInitialVolume, INT16 sGridNo);
 
 // ATE: Warning! Use this sparingly! NOT very robust - can
 // have only 1 delayed sound at a time, and uses the global custom

@@ -65,34 +65,34 @@ struct OBJECTTYPE {
   uint8_t ubNumberOfObjects;
   union {
     struct {
-      INT8 bGunStatus;         // status % of gun
+      int8_t bGunStatus;       // status % of gun
       uint8_t ubGunAmmoType;   // ammo type, as per weapons.h
       uint8_t ubGunShotsLeft;  // duh, amount of ammo left
       uint16_t usGunAmmoItem;  // the item # for the item table
-      INT8 bGunAmmoStatus;     // only for "attached ammo" - grenades, mortar shells
+      int8_t bGunAmmoStatus;   // only for "attached ammo" - grenades, mortar shells
       uint8_t ubGunUnused[MAX_OBJECTS_PER_SLOT - 6];
     };
     struct {
       uint8_t ubShotsLeft[MAX_OBJECTS_PER_SLOT];
     };
     struct {
-      INT8 bStatus[MAX_OBJECTS_PER_SLOT];
+      int8_t bStatus[MAX_OBJECTS_PER_SLOT];
     };
     struct {
-      INT8 bMoneyStatus;
+      int8_t bMoneyStatus;
       uint32_t uiMoneyAmount;
       uint8_t ubMoneyUnused[MAX_OBJECTS_PER_SLOT - 5];
     };
-    struct {                // this is used by placed bombs, switches, and the action item
-      INT8 bBombStatus;     // % status
-      INT8 bDetonatorType;  // timed, remote, or pressure-activated
-      uint16_t usBombItem;  // the usItem of the bomb.
+    struct {                  // this is used by placed bombs, switches, and the action item
+      int8_t bBombStatus;     // % status
+      int8_t bDetonatorType;  // timed, remote, or pressure-activated
+      uint16_t usBombItem;    // the usItem of the bomb.
       union {
         struct {
-          INT8 bDelay;  // >=0 values used only
+          int8_t bDelay;  // >=0 values used only
         };
         struct {
-          INT8 bFrequency;  // >=0 values used only
+          int8_t bFrequency;  // >=0 values used only
         };
       };
       uint8_t ubBombOwner;   // side which placed the bomb
@@ -107,7 +107,7 @@ struct OBJECTTYPE {
       };
     };
     struct {
-      INT8 bKeyStatus[6];
+      int8_t bKeyStatus[6];
       uint8_t ubKeyID;
       uint8_t ubKeyUnused[1];
     };
@@ -119,11 +119,11 @@ struct OBJECTTYPE {
   };
   // attached objects
   uint16_t usAttachItem[MAX_ATTACHMENTS];
-  INT8 bAttachStatus[MAX_ATTACHMENTS];
+  int8_t bAttachStatus[MAX_ATTACHMENTS];
 
-  INT8 fFlags;
+  int8_t fFlags;
   uint8_t ubMission;
-  INT8 bTrap;           // 1-10 exp_lvl to detect
+  int8_t bTrap;         // 1-10 exp_lvl to detect
   uint8_t ubImprintID;  // ID of merc that item is imprinted on
   uint8_t ubWeight;
   uint8_t fUsed;  // flags for whether the item is used or not
@@ -133,9 +133,9 @@ struct OBJECTTYPE {
 typedef struct
 {
         uint8_t		ubCursor;
-        INT8		bSoundType;
+        int8_t		bSoundType;
         uint8_t		ubGraphicNum;
-        INT8		bMaxLoad;
+        int8_t		bMaxLoad;
 
         uint8_t		ubPerPocket;
         uint8_t		ubCanDamage;
@@ -242,15 +242,15 @@ typedef struct {
   uint32_t usItemClass;
   uint8_t ubClassIndex;
   uint8_t ubCursor;
-  INT8 bSoundType;
+  int8_t bSoundType;
   uint8_t ubGraphicType;
   uint8_t ubGraphicNum;
   uint8_t ubWeight;  // 2 units per kilogram; roughly 1 unit per pound
   uint8_t ubPerPocket;
   uint16_t usPrice;
   uint8_t ubCoolness;
-  INT8 bReliability;
-  INT8 bRepairEase;
+  int8_t bReliability;
+  int8_t bRepairEase;
   uint16_t fFlags;
 } INVTYPE;
 

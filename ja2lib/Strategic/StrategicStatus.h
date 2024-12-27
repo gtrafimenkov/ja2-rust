@@ -97,7 +97,7 @@ typedef struct STRATEGIC_STATUS {
   uint8_t ubNumNewSectorsVisitedToday;
   uint8_t ubNumberOfDaysOfInactivity;
 
-  INT8 bPadding[70];
+  int8_t bPadding[70];
 
 } STRATEGIC_STATUS;
 
@@ -111,7 +111,7 @@ BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile);
 
 uint8_t CalcDeathRate(void);
 
-void ModifyPlayerReputation(INT8 bRepChange);
+void ModifyPlayerReputation(int8_t bRepChange);
 
 BOOLEAN MercThinksDeathRateTooHigh(uint8_t ubProfileID);
 BOOLEAN MercThinksBadReputationTooHigh(uint8_t ubProfileID);
@@ -121,7 +121,7 @@ void HandleEnricoEmail(void);
 
 void TrackEnemiesKilled(uint8_t ubKilledHow, uint8_t ubSoldierClass);
 
-INT8 SoldierClassToRankIndex(uint8_t ubSoldierClass);
+int8_t SoldierClassToRankIndex(uint8_t ubSoldierClass);
 uint8_t RankIndexToSoldierClass(uint8_t ubRankIndex);
 
 void UpdateLastDayOfPlayerActivity(uint16_t usDay);

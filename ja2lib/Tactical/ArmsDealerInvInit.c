@@ -11,7 +11,7 @@
 #include "Tactical/ShopKeeperInterface.h"
 #include "Tactical/Weapons.h"
 
-extern INT8 gbSelectedArmsDealerID;
+extern int8_t gbSelectedArmsDealerID;
 
 // This table controls the order items appear in inventory at BR's and dealers, and which kinds of
 // items are sold used
@@ -595,9 +595,9 @@ DEALER_POSSIBLE_INV gFredoInventory[] = {
 
 // prototypes
 
-INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex);
+int8_t GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex);
 
-INT8 GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex) {
+int8_t GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex) {
   switch (ubDealerID) {
     case ARMS_DEALER_TONY:
       return (GetMaxItemAmount(gTonyInventory, usItemIndex));
@@ -682,7 +682,7 @@ INT8 GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex) {
   }
 }
 
-INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex) {
+int8_t GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex) {
   uint16_t usCnt = 0;
 
   // loop through the array until a the LAST_DEALER_ITEM is hit
@@ -780,7 +780,7 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(uint8_t ubArmsDealerID
   }
 }
 
-uint8_t GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex) {
+uint8_t GetCurrentSuitabilityForItem(int8_t bArmsDealer, uint16_t usItemIndex) {
   uint8_t ubItemCoolness;
   uint8_t ubMinCoolness, ubMaxCoolness;
 
@@ -886,7 +886,7 @@ uint8_t GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex) {
   return (ITEM_SUITABILITY_LOW);
 }
 
-uint8_t ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
+uint8_t ChanceOfItemTransaction(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
                                 BOOLEAN fUsed) {
   uint8_t ubItemCoolness;
   uint8_t ubChance = 0;
@@ -961,7 +961,7 @@ uint8_t ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN 
   return (ubChance);
 }
 
-BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
+BOOLEAN ItemTransactionOccurs(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
                               BOOLEAN fUsed) {
   uint8_t ubChance;
   INT16 sInventorySlot;
@@ -994,7 +994,7 @@ BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fD
   }
 }
 
-uint8_t DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
+uint8_t DetermineInitialInvItems(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
                                  BOOLEAN fUsed) {
   uint8_t ubNumBought;
   uint8_t ubCnt;
@@ -1011,7 +1011,7 @@ uint8_t DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, uint8
   return (ubNumBought);
 }
 
-uint8_t HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
+uint8_t HowManyItemsAreSold(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
                             BOOLEAN fUsed) {
   uint8_t ubNumSold;
   uint8_t ubCnt;

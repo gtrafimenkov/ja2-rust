@@ -29,7 +29,7 @@ void RenderFrontPageIndent(INT16 sX, INT16 sY);
 
 BOOLEAN LoadAnalyse(void);
 void DeleteAnalyse(void);
-void RenderAnalyse(INT16 sX, INT16 sY, INT8 bImageNumber);
+void RenderAnalyse(INT16 sX, INT16 sY, int8_t bImageNumber);
 
 BOOLEAN LoadAttributeGraph(void);
 void DeleteAttributeGraph(void);

@@ -18,7 +18,7 @@ BOOLEAN PrepareCreaturesForBattle();
 void CreatureNightPlanning();
 void CreatureAttackTown(uint8_t ubSectorID, BOOLEAN fOverrideTest);
 
-void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 void ForceCreaturesToAvoidMineTemporarily(uint8_t ubMineIndex);
 
@@ -27,7 +27,7 @@ extern BOOLEAN gfUseCreatureMusic;
 BOOLEAN MineClearOfMonsters(uint8_t ubMineIndex);
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ,
+BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ,
                               INT16 *psInsertionGridNo);
 
 extern INT16 gsCreatureInsertionCode;

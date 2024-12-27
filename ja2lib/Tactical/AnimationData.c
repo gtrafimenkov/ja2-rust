@@ -32,7 +32,7 @@
 struct ANIM_PROF *gpAnimProfiles = NULL;
 uint8_t gubNumAnimProfiles = 0;
 
-INT8 gbAnimUsageHistory[NUMANIMATIONSURFACETYPES][MAX_NUM_SOLDIERS];
+int8_t gbAnimUsageHistory[NUMANIMATIONSURFACETYPES][MAX_NUM_SOLDIERS];
 
 AnimationSurfaceType gAnimSurfaceDatabase[NUMANIMATIONSURFACETYPES] = {
     RGMBASICWALKING,
@@ -4225,7 +4225,7 @@ struct STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(uint16_t usSoldierID
                                                             uint16_t usSurfaceIndex,
                                                             uint16_t usAnimState,
                                                             BOOLEAN fUseAbsolute) {
-  INT8 bStructDataType;
+  int8_t bStructDataType;
 
   if (usSurfaceIndex == INVALID_ANIMATION_SURFACE) {
     return (NULL);
@@ -4469,15 +4469,15 @@ BOOLEAN LoadAnimationProfiles() {
         }
 
         //				if ( fread( &pProfileDirs->pTiles[ iTileCount ].bTileX,
-        // sizeof( INT8 ), 1, pInput ) != 1 )
-        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileX, sizeof(INT8),
+        // sizeof( int8_t ), 1, pInput ) != 1 )
+        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileX, sizeof(int8_t),
                          &uiBytesRead) != 1) {
           return (FALSE);
         }
 
         //				if ( fread( &pProfileDirs->pTiles[ iTileCount ].bTileY,
-        // sizeof( INT8 ), 1, pInput ) != 1 )
-        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileY, sizeof(INT8),
+        // sizeof( int8_t ), 1, pInput ) != 1 )
+        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileY, sizeof(int8_t),
                          &uiBytesRead) != 1) {
           return (FALSE);
         }

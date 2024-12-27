@@ -716,8 +716,8 @@ INVTYPE Item[MAXITEMS] = {
 typedef struct {
   uint16_t usItem;
   uint32_t uiItemClass;
-  INT8 bAttachmentSkillCheck;
-  INT8 bAttachmentSkillCheckMod;
+  int8_t bAttachmentSkillCheck;
+  int8_t bAttachmentSkillCheckMod;
 } AttachmentInfoStruct;
 
 // NB hack:  if an item appears in this array with an item class of IC_MISC,
@@ -1200,7 +1200,7 @@ BOOLEAN WeaponInHand(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-uint8_t ItemSlotLimit(uint16_t usItem, INT8 bSlot) {
+uint8_t ItemSlotLimit(uint16_t usItem, int8_t bSlot) {
   uint8_t ubSlotLimit;
 
   if (bSlot < BIGPOCK1POS) {
@@ -1214,7 +1214,7 @@ uint8_t ItemSlotLimit(uint16_t usItem, INT8 bSlot) {
   }
 }
 
-uint32_t MoneySlotLimit(INT8 bSlot) {
+uint32_t MoneySlotLimit(int8_t bSlot) {
   if (bSlot >= SMALLPOCK1POS) {
     return (MAX_MONEY_PER_SLOT / 2);
   } else {
@@ -1222,8 +1222,8 @@ uint32_t MoneySlotLimit(INT8 bSlot) {
   }
 }
 
-INT8 FindObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
-  INT8 bLoop;
+int8_t FindObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == usItem) {
@@ -1233,8 +1233,8 @@ INT8 FindObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
   return (NO_SLOT);
 }
 
-INT8 FindUsableObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
-  INT8 bLoop;
+int8_t FindUsableObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == usItem && pSoldier->inv[bLoop].bStatus[0] >= USABLE) {
@@ -1244,8 +1244,8 @@ INT8 FindUsableObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
   return (NO_SLOT);
 }
 
-INT8 FindObjExcludingSlot(struct SOLDIERTYPE *pSoldier, uint16_t usItem, INT8 bExcludeSlot) {
-  INT8 bLoop;
+int8_t FindObjExcludingSlot(struct SOLDIERTYPE *pSoldier, uint16_t usItem, int8_t bExcludeSlot) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (bLoop == bExcludeSlot) {
@@ -1258,8 +1258,8 @@ INT8 FindObjExcludingSlot(struct SOLDIERTYPE *pSoldier, uint16_t usItem, INT8 bE
   return (NO_SLOT);
 }
 
-INT8 FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
-  INT8 bLoop;
+int8_t FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if ((pObj == &(pSoldier->inv[bLoop])) &&
@@ -1270,8 +1270,8 @@ INT8 FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
   return (NO_SLOT);
 }
 
-INT8 FindObjWithin(struct SOLDIERTYPE *pSoldier, uint16_t usItem, INT8 bLower, INT8 bUpper) {
-  INT8 bLoop;
+int8_t FindObjWithin(struct SOLDIERTYPE *pSoldier, uint16_t usItem, int8_t bLower, int8_t bUpper) {
+  int8_t bLoop;
 
   for (bLoop = bLower; bLoop <= bUpper; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == usItem) {
@@ -1281,8 +1281,8 @@ INT8 FindObjWithin(struct SOLDIERTYPE *pSoldier, uint16_t usItem, INT8 bLower, I
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindObjInObjRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem1, uint16_t usItem2) {
-  INT8 bLoop;
+int8_t FindObjInObjRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem1, uint16_t usItem2) {
+  int8_t bLoop;
   uint16_t usTemp;
 
   if (usItem1 > usItem2) {
@@ -1302,8 +1302,8 @@ INT8 FindObjInObjRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem1, uint16_t 
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
-  INT8 bLoop;
+int8_t FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (Item[pSoldier->inv[bLoop].usItem].usItemClass & usItemClass) {
@@ -1313,8 +1313,9 @@ INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   return (NO_SLOT);
 }
 
-INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, uint32_t usItemClass) {
-  INT8 bLoop;
+int8_t FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, int8_t bStartAfter,
+                             uint32_t usItemClass) {
+  int8_t bLoop;
 
   for (bLoop = bStartAfter + 1; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (Item[pSoldier->inv[bLoop].usItem].usItemClass == usItemClass) {
@@ -1324,12 +1325,12 @@ INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, uint3
   return (NO_SLOT);
 }
 
-INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
+int8_t FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   // finds the first object of the specified class which does NOT have
   // the "unusable by AI" flag set.
 
   // uses & rather than == so that this function can search for any weapon
-  INT8 bLoop;
+  int8_t bLoop;
 
   // This is for the AI only so:
 
@@ -1348,9 +1349,9 @@ INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   return (NO_SLOT);
 }
 
-INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass, INT8 bLower,
-                                INT8 bUpper) {
-  INT8 bLoop;
+int8_t FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass, int8_t bLower,
+                                  int8_t bUpper) {
+  int8_t bLoop;
 
   // This is for the AI only so:
   // Do not consider tank cannons or rocket launchers to be "guns"
@@ -1368,8 +1369,8 @@ INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemCla
   return (NO_SLOT);
 }
 
-INT8 FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, INT8 bLower, INT8 bUpper) {
-  INT8 bLoop;
+int8_t FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, int8_t bLower, int8_t bUpper) {
+  int8_t bLoop;
 
   for (bLoop = bLower; bLoop <= bUpper; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == 0) {
@@ -1383,7 +1384,7 @@ INT8 FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, INT8 bLower, INT8 bUpper)
   return (ITEM_NOT_FOUND);
 }
 
-BOOLEAN GLGrenadeInSlot(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
+BOOLEAN GLGrenadeInSlot(struct SOLDIERTYPE *pSoldier, int8_t bSlot) {
   switch (pSoldier->inv[bSlot].usItem) {
     case GL_HE_GRENADE:
     case GL_TEARGAS_GRENADE:
@@ -1396,8 +1397,8 @@ BOOLEAN GLGrenadeInSlot(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
 }
 
 // for grenade launchers
-INT8 FindGLGrenade(struct SOLDIERTYPE *pSoldier) {
-  INT8 bLoop;
+int8_t FindGLGrenade(struct SOLDIERTYPE *pSoldier) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (GLGrenadeInSlot(pSoldier, bLoop)) {
@@ -1407,8 +1408,8 @@ INT8 FindGLGrenade(struct SOLDIERTYPE *pSoldier) {
   return (NO_SLOT);
 }
 
-INT8 FindThrowableGrenade(struct SOLDIERTYPE *pSoldier) {
-  INT8 bLoop;
+int8_t FindThrowableGrenade(struct SOLDIERTYPE *pSoldier) {
+  int8_t bLoop;
   BOOLEAN fCheckForFlares = FALSE;
 
   // JA2Gold: give some priority to looking for flares when at night
@@ -1436,8 +1437,8 @@ INT8 FindThrowableGrenade(struct SOLDIERTYPE *pSoldier) {
   return (NO_SLOT);
 }
 
-INT8 FindAttachment(struct OBJECTTYPE *pObj, uint16_t usItem) {
-  INT8 bLoop;
+int8_t FindAttachment(struct OBJECTTYPE *pObj, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
     if (pObj->usAttachItem[bLoop] == usItem) {
@@ -1447,8 +1448,8 @@ INT8 FindAttachment(struct OBJECTTYPE *pObj, uint16_t usItem) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass) {
-  INT8 bLoop;
+int8_t FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
     if (Item[pObj->usAttachItem[bLoop]].usItemClass == uiItemClass) {
@@ -1458,8 +1459,8 @@ INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindLaunchable(struct SOLDIERTYPE *pSoldier, uint16_t usWeapon) {
-  INT8 bLoop;
+int8_t FindLaunchable(struct SOLDIERTYPE *pSoldier, uint16_t usWeapon) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (ValidLaunchable(pSoldier->inv[bLoop].usItem, usWeapon)) {
@@ -1469,8 +1470,8 @@ INT8 FindLaunchable(struct SOLDIERTYPE *pSoldier, uint16_t usWeapon) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindLaunchableAttachment(struct OBJECTTYPE *pObj, uint16_t usWeapon) {
-  INT8 bLoop;
+int8_t FindLaunchableAttachment(struct OBJECTTYPE *pObj, uint16_t usWeapon) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
     if (pObj->usAttachItem[bLoop] != NOTHING &&
@@ -1513,12 +1514,12 @@ BOOLEAN ValidAttachmentClass(uint16_t usAttachment, uint16_t usItem) {
   return (FALSE);
 }
 
-INT8 GetAttachmentInfoIndex(uint16_t usItem) {
+int8_t GetAttachmentInfoIndex(uint16_t usItem) {
   INT32 iLoop = 0;
 
   while (1) {
     if (AttachmentInfo[iLoop].usItem == usItem) {
-      return ((INT8)iLoop);
+      return ((int8_t)iLoop);
     }
     iLoop++;
     if (AttachmentInfo[iLoop].usItem == 0) {
@@ -1955,7 +1956,7 @@ void GetObjFrom(struct OBJECTTYPE *pObj, uint8_t ubGetIndex, struct OBJECTTYPE *
 }
 
 void SwapWithinObj(struct OBJECTTYPE *pObj, uint8_t ubIndex1, uint8_t ubIndex2) {
-  INT8 bTemp;
+  int8_t bTemp;
 
   if (pObj->ubNumberOfObjects >= ubIndex1 || pObj->ubNumberOfObjects >= ubIndex1) {
     return;
@@ -1966,7 +1967,7 @@ void SwapWithinObj(struct OBJECTTYPE *pObj, uint8_t ubIndex1, uint8_t ubIndex2) 
   pObj->bStatus[ubIndex2] = bTemp;
 }
 
-void DamageObj(struct OBJECTTYPE *pObj, INT8 bAmount) {
+void DamageObj(struct OBJECTTYPE *pObj, int8_t bAmount) {
   if (bAmount >= pObj->bStatus[0]) {
     pObj->bStatus[0] = 1;
   } else {
@@ -1995,8 +1996,8 @@ void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
 }
 
 void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
-  INT8 bLoop, bLoop2;
-  INT8 bMaxPoints, bPointsToMove;
+  int8_t bLoop, bLoop2;
+  int8_t bMaxPoints, bPointsToMove;
 
   if (!(Item[pObj->usItem].usItemClass & IC_AMMO || Item[pObj->usItem].usItemClass & IC_KIT ||
         Item[pObj->usItem].usItemClass & IC_MEDKIT)) {
@@ -2010,7 +2011,7 @@ void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
   }
 
   if (pCursorObj && pCursorObj->usItem == pObj->usItem) {
-    for (bLoop = (INT8)pCursorObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
+    for (bLoop = (int8_t)pCursorObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
       if (pCursorObj->bStatus[bLoop] > 0) {
         // take the points here and distribute over the lower #d items
         for (bLoop2 = pObj->ubNumberOfObjects - 1; bLoop2 >= 0; bLoop2--) {
@@ -2032,7 +2033,7 @@ void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
     }
   }
 
-  for (bLoop = (INT8)pObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
+  for (bLoop = (int8_t)pObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
     if (pObj->bStatus[bLoop] > 0) {
       // take the points here and distribute over the lower #d items
       for (bLoop2 = bLoop - 1; bLoop2 >= 0; bLoop2--) {
@@ -2056,7 +2057,7 @@ void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
 
 BOOLEAN PlaceObjectAtObjectIndex(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
                                  uint8_t ubIndex) {
-  INT8 bTemp;
+  int8_t bTemp;
 
   if (pSourceObj->usItem != pTargetObj->usItem) {
     return (TRUE);
@@ -2083,13 +2084,13 @@ BOOLEAN PlaceObjectAtObjectIndex(struct OBJECTTYPE *pSourceObj, struct OBJECTTYP
 BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun, struct OBJECTTYPE *pAmmo) {
   struct OBJECTTYPE OldAmmo;
   uint8_t ubBulletsToMove;
-  INT8 bAPs;
+  int8_t bAPs;
   uint16_t usReloadSound;
   BOOLEAN fSameAmmoType;
   BOOLEAN fSameMagazineSize;
   BOOLEAN fReloadingWithStack;
   BOOLEAN fEmptyGun;
-  INT8 bReloadType;
+  int8_t bReloadType;
   uint16_t usNewAmmoItem;
 
   if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT)) {
@@ -2194,7 +2195,7 @@ BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun, struct 
           // (suppose his inventory is full!)
 
           if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
-              !EnoughPoints(pSoldier, (INT8)(bAPs + AP_PICKUP_ITEM), 0, FALSE)) {
+              !EnoughPoints(pSoldier, (int8_t)(bAPs + AP_PICKUP_ITEM), 0, FALSE)) {
             // try autoplace
             if (!AutoPlaceObject(pSoldier, &OldAmmo, FALSE)) {
               // put it on the ground
@@ -2342,9 +2343,9 @@ BOOLEAN ReloadLauncher( struct OBJECTTYPE * pLauncher, struct OBJECTTYPE * pAmmo
 }
 */
 
-INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize,
-              INT8 bExcludeSlot) {
-  INT8 bLoop;
+int8_t FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize,
+                int8_t bExcludeSlot) {
+  int8_t bLoop;
   INVTYPE *pItem;
 
   for (bLoop = HANDPOS; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -2362,9 +2363,9 @@ INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize
   return (NO_SLOT);
 }
 
-INT8 FindAmmoToReload(struct SOLDIERTYPE *pSoldier, INT8 bWeaponIn, INT8 bExcludeSlot) {
+int8_t FindAmmoToReload(struct SOLDIERTYPE *pSoldier, int8_t bWeaponIn, int8_t bExcludeSlot) {
   struct OBJECTTYPE *pObj;
-  INT8 bSlot;
+  int8_t bSlot;
 
   if (pSoldier == NULL) {
     return (NO_SLOT);
@@ -2403,7 +2404,7 @@ INT8 FindAmmoToReload(struct SOLDIERTYPE *pSoldier, INT8 bWeaponIn, INT8 bExclud
 
 BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
   struct OBJECTTYPE *pObj;
-  INT8 bSlot, bAPCost;
+  int8_t bSlot, bAPCost;
   BOOLEAN fRet;
 
   CHECKF(pSoldier);
@@ -2441,9 +2442,9 @@ BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT8 GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
-  INT8 bIndex = 0;
-  INT8 bAttachLoop, bAttachPos;
+int8_t GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
+  int8_t bIndex = 0;
+  int8_t bAttachLoop, bAttachPos;
 
   while (AttachmentComboMerge[bIndex].usItem != NOTHING) {
     if (pObj->usItem == AttachmentComboMerge[bIndex].usItem) {
@@ -2469,10 +2470,10 @@ INT8 GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
   return (-1);
 }
 
-void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, INT8 bAttachmentComboMerge) {
-  INT8 bAttachLoop, bAttachPos;
+void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, int8_t bAttachmentComboMerge) {
+  int8_t bAttachLoop, bAttachPos;
   uint32_t uiStatusTotal = 0;
-  INT8 bNumStatusContributors = 0;
+  int8_t bNumStatusContributors = 0;
 
   // This object has been validated as available for an attachment combo merge.
   // - find all attachments in list and destroy them
@@ -2500,17 +2501,17 @@ void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, INT8 bAttachmentComboM
   bNumStatusContributors++;
 
   pObj->usItem = AttachmentComboMerge[bAttachmentComboMerge].usResult;
-  pObj->bStatus[0] = (INT8)(uiStatusTotal / bNumStatusContributors);
+  pObj->bStatus[0] = (int8_t)(uiStatusTotal / bNumStatusContributors);
 }
 
 BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj,
                      struct OBJECTTYPE *pAttachment) {
-  INT8 bAttachPos, bSecondAttachPos;  //, bAbility, bSuccess;
+  int8_t bAttachPos, bSecondAttachPos;  //, bAbility, bSuccess;
   uint16_t usResult;
-  INT8 bLoop;
+  int8_t bLoop;
   uint8_t ubType, ubLimit;
   INT32 iCheckResult;
-  INT8 bAttachInfoIndex = -1, bAttachComboMerge;
+  int8_t bAttachInfoIndex = -1, bAttachComboMerge;
   BOOLEAN fValidLaunchable = FALSE;
 
   fValidLaunchable = ValidLaunchable(pAttachment->usItem, pTargetObj->usItem);
@@ -2553,8 +2554,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
                          AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod);
           if (iCheckResult < 0) {
             // the attach failure damages both items
-            DamageObj(pTargetObj, (INT8)-iCheckResult);
-            DamageObj(pAttachment, (INT8)-iCheckResult);
+            DamageObj(pTargetObj, (int8_t)-iCheckResult);
+            DamageObj(pAttachment, (int8_t)-iCheckResult);
             // there should be a quote here!
             DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
             if (gfInItemDescBox) {
@@ -2621,7 +2622,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
         if (bAttachInfoIndex != -1 &&
             AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod < 20) {
           StatChange(pSoldier, MECHANAMT,
-                     (INT8)(20 - AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod), FALSE);
+                     (int8_t)(20 - AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod),
+                     FALSE);
         }
       }
 
@@ -2675,8 +2677,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
         if (pSoldier) {
           iCheckResult = SkillCheck(pSoldier, ATTACHING_SPECIAL_ELECTRONIC_ITEM_CHECK, -30);
           if (iCheckResult < 0) {
-            DamageObj(pTargetObj, (INT8)-iCheckResult);
-            DamageObj(pAttachment, (INT8)-iCheckResult);
+            DamageObj(pTargetObj, (int8_t)-iCheckResult);
+            DamageObj(pAttachment, (int8_t)-iCheckResult);
             DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
             return (FALSE);
           }
@@ -2692,8 +2694,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
             if (iCheckResult < 0) {
               // could have a chance of detonation
               // for now, damage both objects
-              DamageObj(pTargetObj, (INT8)-iCheckResult);
-              DamageObj(pAttachment, (INT8)-iCheckResult);
+              DamageObj(pTargetObj, (int8_t)-iCheckResult);
+              DamageObj(pAttachment, (int8_t)-iCheckResult);
               DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
               return (FALSE);
             }
@@ -2719,10 +2721,10 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
   return (FALSE);
 }
 
-BOOLEAN CanItemFitInPosition(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, INT8 bPos,
+BOOLEAN CanItemFitInPosition(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, int8_t bPos,
                              BOOLEAN fDoingPlacement) {
   uint8_t ubSlotLimit;
-  INT8 bNewPos;
+  int8_t bNewPos;
 
   switch (bPos) {
     case SECONDHANDPOS:
@@ -2797,7 +2799,7 @@ BOOLEAN CanItemFitInPosition(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pO
   return (TRUE);
 }
 
-BOOLEAN DropObjIfThereIsRoom(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *pObj) {
+BOOLEAN DropObjIfThereIsRoom(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
   // try autoplacing item in bSlot elsewhere, then do a placement
   BOOLEAN fAutoPlacedOld;
 
@@ -2809,7 +2811,7 @@ BOOLEAN DropObjIfThereIsRoom(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJ
   }
 }
 
-BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *pObj) {
+BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
   // returns object to have in hand after placement... same as original in the
   // case of error
 
@@ -2995,8 +2997,8 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
 }
 
 BOOLEAN InternalAutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj,
-                                BOOLEAN fNewItem, INT8 bExcludeSlot) {
-  INT8 bSlot;
+                                BOOLEAN fNewItem, int8_t bExcludeSlot) {
+  int8_t bSlot;
   INVTYPE *pItem;
   uint8_t ubPerSlot;
 
@@ -3186,7 +3188,7 @@ BOOLEAN AutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, B
   return (InternalAutoPlaceObject(pSoldier, pObj, fNewItem, NO_SLOT));
 }
 
-BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *pObj) {
+BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
   CHECKF(pObj);
   if (pSoldier->inv[bPos].ubNumberOfObjects == 0) {
     return (FALSE);
@@ -3197,7 +3199,7 @@ BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJ
   }
 }
 
-BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
+BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
                           struct OBJECTTYPE *pObj) {
   uint8_t ubItem = 0;
 
@@ -3225,7 +3227,7 @@ BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
   return (FALSE);
 }
 
-BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
+BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
                            uint8_t ubNumberOfKeys, struct OBJECTTYPE *pObj) {
   uint8_t ubItems = 0;
 
@@ -3255,7 +3257,7 @@ BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
 }
 
 // return number added
-uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
+uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
                       struct OBJECTTYPE *pObj) {
   uint8_t ubNumberNotAdded = 0;
 
@@ -3295,7 +3297,7 @@ uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
   return (pObj->ubNumberOfObjects);
 }
 
-uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
+uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
                        struct OBJECTTYPE *pObj) {
   // swap keys in keyring slot and keys in pocket
   struct OBJECTTYPE TempObj;
@@ -3358,12 +3360,12 @@ uint16_t TotalPoints(struct OBJECTTYPE *pObj) {
 uint16_t UseKitPoints(struct OBJECTTYPE *pObj, uint16_t usPoints, struct SOLDIERTYPE *pSoldier) {
   // start consuming from the last kit in, so we end up with fewer fuller kits rather than
   // lots of half-empty ones.
-  INT8 bLoop;
+  int8_t bLoop;
   uint16_t usOriginalPoints = usPoints;
 
   for (bLoop = pObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
     if (usPoints < (uint16_t)pObj->bStatus[bLoop]) {
-      pObj->bStatus[bLoop] -= (INT8)usPoints;
+      pObj->bStatus[bLoop] -= (int8_t)usPoints;
       return (usOriginalPoints);
     } else {
       // consume this kit totally
@@ -3675,7 +3677,7 @@ uint16_t RandomMagazine(uint16_t usItem, uint8_t ubPercentStandard) {
     }
 }
 
-BOOLEAN CreateGun(uint16_t usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateGun(uint16_t usItem, int8_t bStatus, struct OBJECTTYPE *pObj) {
   uint16_t usAmmo;
 
   Assert(pObj != NULL);
@@ -3739,7 +3741,7 @@ BOOLEAN CreateMagazine(uint16_t usItem, struct OBJECTTYPE *pObj) {
   return (TRUE);
 }
 
-BOOLEAN CreateItem(uint16_t usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateItem(uint16_t usItem, int8_t bStatus, struct OBJECTTYPE *pObj) {
   BOOLEAN fRet;
 
   memset(pObj, 0, sizeof(struct OBJECTTYPE));
@@ -3772,7 +3774,7 @@ BOOLEAN CreateItem(uint16_t usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
   return (fRet);
 }
 
-BOOLEAN CreateItems(uint16_t usItem, INT8 bStatus, uint8_t ubNumber, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateItems(uint16_t usItem, int8_t bStatus, uint8_t ubNumber, struct OBJECTTYPE *pObj) {
   BOOLEAN fOk;
   uint8_t ubLoop;
 
@@ -3811,7 +3813,7 @@ BOOLEAN CreateMoney(uint32_t uiMoney, struct OBJECTTYPE *pObj) {
   return (fOk);
 }
 
-BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, INT8 bSetting) {
+BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, int8_t bSetting) {
   BOOLEAN fRemote = FALSE;
   BOOLEAN fPressure = FALSE;
   BOOLEAN fTimed = FALSE;
@@ -3879,8 +3881,8 @@ BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, INT8 bSetting) {
 void RenumberAttachments(struct OBJECTTYPE *pObj) {
   // loop through attachment positions and make sure we don't have any empty
   // attachment slots before filled ones
-  INT8 bAttachPos;
-  INT8 bFirstSpace;
+  int8_t bAttachPos;
+  int8_t bFirstSpace;
   BOOLEAN fDone = FALSE;
 
   while (!fDone) {
@@ -3910,8 +3912,8 @@ void RenumberAttachments(struct OBJECTTYPE *pObj) {
   }
 }
 
-BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, INT8 bAttachPos, struct OBJECTTYPE *pNewObj) {
-  INT8 bGrenade;
+BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, int8_t bAttachPos, struct OBJECTTYPE *pNewObj) {
+  int8_t bGrenade;
 
   CHECKF(pObj);
 
@@ -3962,10 +3964,10 @@ void SetNewItem(struct SOLDIERTYPE *pSoldier, uint8_t ubInvPos, BOOLEAN fNewItem
 }
 
 BOOLEAN PlaceObjectInSoldierProfile(uint8_t ubProfile, struct OBJECTTYPE *pObject) {
-  INT8 bLoop, bLoop2;
+  int8_t bLoop, bLoop2;
   struct SOLDIERTYPE *pSoldier;
   uint16_t usItem;
-  INT8 bStatus;
+  int8_t bStatus;
   BOOLEAN fReturnVal = FALSE;
 
   usItem = pObject->usItem;
@@ -4030,7 +4032,7 @@ BOOLEAN PlaceObjectInSoldierProfile(uint8_t ubProfile, struct OBJECTTYPE *pObjec
 }
 
 BOOLEAN RemoveObjectFromSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
-  INT8 bLoop;
+  int8_t bLoop;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fReturnVal = FALSE;
 
@@ -4062,7 +4064,7 @@ BOOLEAN RemoveObjectFromSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
 }
 
 void SetMoneyInSoldierProfile(uint8_t ubProfile, uint32_t uiMoney) {
-  // INT8						bSlot;
+  // int8_t						bSlot;
   struct OBJECTTYPE Object;
   // struct SOLDIERTYPE *		pSoldier;
   BOOLEAN fRet;
@@ -4081,8 +4083,8 @@ void SetMoneyInSoldierProfile(uint8_t ubProfile, uint32_t uiMoney) {
   }
 }
 
-INT8 FindObjectInSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
-  INT8 bLoop;
+int8_t FindObjectInSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < 19; bLoop++) {
     if (gMercProfiles[ubProfile].bInvNumber[bLoop] > 0) {
@@ -4095,14 +4097,14 @@ INT8 FindObjectInSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
 }
 
 BOOLEAN ObjectExistsInSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
-  INT8 bSlot;
+  int8_t bSlot;
 
   bSlot = FindObjectInSoldierProfile(ubProfile, usItem);
   return (bSlot != NO_SLOT);
 }
 
 void RemoveInvObject(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
-  INT8 bInvPos;
+  int8_t bInvPos;
 
   // find object
   bInvPos = FindObj(pSoldier, usItem);
@@ -4115,8 +4117,8 @@ void RemoveInvObject(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
   }
 }
 
-INT8 CheckItemForDamage(uint16_t usItem, INT32 iMaxDamage) {
-  INT8 bDamage = 0;
+int8_t CheckItemForDamage(uint16_t usItem, INT32 iMaxDamage) {
+  int8_t bDamage = 0;
 
   // if the item is protective armour, reduce the amount of damage
   // by its armour value
@@ -4130,12 +4132,12 @@ INT8 CheckItemForDamage(uint16_t usItem, INT32 iMaxDamage) {
     iMaxDamage *= 2;
   }
   if (iMaxDamage > 0) {
-    bDamage = (INT8)PreRandom(iMaxDamage);
+    bDamage = (int8_t)PreRandom(iMaxDamage);
   }
   return (bDamage);
 }
 
-BOOLEAN CheckForChainReaction(uint16_t usItem, INT8 bStatus, INT8 bDamage, BOOLEAN fOnGround) {
+BOOLEAN CheckForChainReaction(uint16_t usItem, int8_t bStatus, int8_t bDamage, BOOLEAN fOnGround) {
   INT32 iChance;
 
   iChance = Explosive[Item[usItem].ubClassIndex].ubVolatility;
@@ -4157,8 +4159,8 @@ BOOLEAN CheckForChainReaction(uint16_t usItem, INT8 bStatus, INT8 bDamage, BOOLE
 }
 
 BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround) {
-  INT8 bLoop;
-  INT8 bDamage;
+  int8_t bLoop;
+  int8_t bDamage;
 
   if ((Item[pObject->usItem].fFlags & ITEM_DAMAGEABLE ||
        Item[pObject->usItem].usItemClass == IC_AMMO) &&
@@ -4226,7 +4228,7 @@ BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround)
 }
 
 void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
-  INT8 bSlot;
+  int8_t bSlot;
   BOOLEAN fBlowsUp;
   uint8_t ubNumberOfObjects;
 
@@ -4260,7 +4262,7 @@ void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
 
 void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
   // glass jars etc can be damaged by falling over
-  INT8 bSlot;
+  int8_t bSlot;
   uint8_t ubNumberOfObjects;
   BOOLEAN fPlayedGlassBreak = FALSE;
 
@@ -4286,7 +4288,7 @@ void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDam
   }
 }
 
-BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, INT8 bLevel, INT32 iDamage,
+BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, int8_t bLevel, INT32 iDamage,
                            uint8_t ubOwner) {
   BOOLEAN fBlowsUp;
 
@@ -4306,7 +4308,7 @@ BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, INT8 bLeve
 }
 
 // is the item a medical kit/first aid kit item?
-INT8 IsMedicalKitItem(struct OBJECTTYPE *pObject) {
+int8_t IsMedicalKitItem(struct OBJECTTYPE *pObject) {
   // check item id against current medical kits
   switch (pObject->usItem) {
     case (MEDICKIT):
@@ -4365,7 +4367,7 @@ void SwapOutHandItem(struct SOLDIERTYPE *pSoldier) {
 
 void WaterDamage(struct SOLDIERTYPE *pSoldier) {
   // damage guy's equipment and camouflage due to water
-  INT8 bLoop, bDamage, bDieSize;
+  int8_t bLoop, bDamage, bDieSize;
   uint32_t uiRoll;
 
   if (pSoldier->bOverTerrainType == DEEP_WATER) {
@@ -4379,7 +4381,7 @@ void WaterDamage(struct SOLDIERTYPE *pSoldier) {
         // 10% chance of getting damage!
         if (uiRoll < 10) {
           // lose between 1 and 10 status points each time
-          bDamage = (INT8)(10 - uiRoll);
+          bDamage = (int8_t)(10 - uiRoll);
 
           // but don't let anything drop lower than 1%
           pSoldier->inv[bLoop].bStatus[0] -= bDamage;
@@ -4421,7 +4423,7 @@ void WaterDamage(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) {
-  INT8 bPointsToUse;
+  int8_t bPointsToUse;
   uint16_t usTotalKitPoints;
 
   (*pfGoodAPs) = TRUE;
@@ -4566,7 +4568,7 @@ BOOLEAN ItemIsCool(struct OBJECTTYPE *pObj) {
 void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2;
   uint32_t uiSlot;
-  INT8 bBatteries;
+  int8_t bBatteries;
 
   // check for batteries
   bBatteries = FindAttachment(&(pSoldier->inv[HANDPOS]), BATTERIES);
@@ -4576,7 +4578,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
   }
 
   // use up 8-12 percent of batteries
-  pSoldier->inv[HANDPOS].bAttachStatus[bBatteries] -= (INT8)(8 + Random(5));
+  pSoldier->inv[HANDPOS].bAttachStatus[bBatteries] -= (int8_t)(8 + Random(5));
   if (pSoldier->inv[HANDPOS].bAttachStatus[bBatteries] <= 0) {
     // destroy batteries
     pSoldier->inv[HANDPOS].usAttachItem[bBatteries] = NOTHING;

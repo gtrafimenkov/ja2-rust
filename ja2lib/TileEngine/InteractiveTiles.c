@@ -65,9 +65,9 @@ typedef struct {
 } CUR_INTERACTIVE_TILE;
 
 typedef struct {
-  INT8 bNum;
+  int8_t bNum;
   CUR_INTERACTIVE_TILE bTiles[MAX_INTTILE_STACK];
-  INT8 bCur;
+  int8_t bCur;
 
 } INTERACTIVE_TILE_STACK_TYPE;
 

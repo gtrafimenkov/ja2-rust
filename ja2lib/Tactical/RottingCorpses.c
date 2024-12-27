@@ -271,7 +271,7 @@ BOOLEAN gbCorpseValidForDecapitation[NUM_CORPSES] = {
     0,
 };
 
-INT8 gDecapitatedCorpse[NUM_CORPSES] = {
+int8_t gDecapitatedCorpse[NUM_CORPSES] = {
     0,
     SMERC_JFK,
     SMERC_JFK,
@@ -368,7 +368,7 @@ void RecountRottingCorpses(void) {
 }
 
 uint16_t GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage) {
-  INT8 bDirection;
+  int8_t bDirection;
 
   switch (pCorpseDef->ubType) {
     case QUEEN_MONSTER_DEAD:
@@ -628,7 +628,7 @@ void RemoveCorpse(INT32 iCorpseID) {
 
 BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
   CHAR8 zColFilename[100];
-  INT8 bBodyTypePalette;
+  int8_t bBodyTypePalette;
   struct SGPPaletteEntry Temp8BPPPalette[256];
 
   pCorpse->p8BPPPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
@@ -687,7 +687,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   INT32 cnt;
   uint16_t usItemFlags = 0;  // WORLD_ITEM_DONTRENDER;
   INT32 iCorpseID;
-  INT8 bVisible = -1;
+  int8_t bVisible = -1;
   struct OBJECTTYPE *pObj;
   uint8_t ubNumGoo;
   INT16 sNewGridNo;
@@ -869,7 +869,7 @@ INT16 FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier) {
 
 void AddCrowToCorpse(ROTTING_CORPSE *pCorpse) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT8 bBodyType = CROW;
+  int8_t bBodyType = CROW;
   uint8_t iNewIndex;
   INT16 sGridNo;
   uint8_t ubDirection;
@@ -955,7 +955,7 @@ void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier) {
 
 void HandleRottingCorpses() {
   ROTTING_CORPSE *pCorpse;
-  INT8 bNumCrows = 0;
+  int8_t bNumCrows = 0;
   uint32_t uiChosenCorpseID;
 
   // Don't allow crows here if flags not set
@@ -1034,7 +1034,7 @@ void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse) {
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
-void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam) {
+void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, int8_t bTeam) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
   INT16 sDistVisible;
@@ -1328,7 +1328,7 @@ void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID) {
                 SoundDir(sGridNo));
 }
 
-INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, INT8 ubRadius) {
+INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, int8_t ubRadius) {
   INT16 sSweetGridNo;
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
@@ -1457,7 +1457,7 @@ BOOLEAN IsValidDecapitationCorpse(ROTTING_CORPSE *pCorpse) {
   return (gbCorpseValidForDecapitation[pCorpse->def.ubType]);
 }
 
-ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, INT8 bLevel) {
+ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, int8_t bLevel) {
   struct STRUCTURE *pStructure, *pBaseStructure;
   INT16 sBaseGridNo;
 
@@ -1478,7 +1478,7 @@ ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, INT8 bLevel) {
   return (NULL);
 }
 
-void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel) {
+void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel) {
   struct OBJECTTYPE Object;
   ROTTING_CORPSE *pCorpse;
   ROTTING_CORPSE_DEFINITION CorpseDef;
@@ -1546,7 +1546,7 @@ void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel) 
 
 void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier) {
   ROTTING_CORPSE *pCorpse;
-  INT8 bObjSlot;
+  int8_t bObjSlot;
   struct OBJECTTYPE Object;
 
   // OK, get corpse
@@ -1601,7 +1601,7 @@ void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iI
 void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                         uint8_t ubLevel) {
   ROTTING_CORPSE *pCorpse;
-  INT8 bToleranceThreshold = 0;
+  int8_t bToleranceThreshold = 0;
   INT32 cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
@@ -1632,7 +1632,7 @@ void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGri
     BeginMultiPurposeLocator(sGridNo, ubLevel, FALSE);
 
     // Reset values....
-    pSoldier->bCorpseQuoteTolerance = (INT8)(Random(3) + 1);
+    pSoldier->bCorpseQuoteTolerance = (int8_t)(Random(3) + 1);
 
     // 50% chance of adding 1 to other mercs....
     if (Random(2) == 1) {

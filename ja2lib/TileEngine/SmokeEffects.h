@@ -22,9 +22,9 @@ typedef struct TAG_SMOKE_EFFECT {
   uint8_t ubDuration;  // the number of turns gas will remain effective
   uint8_t ubRadius;    // the current radius of the cloud in map tiles
   uint8_t bFlags;      // 0 - outdoors (fast spread), 1 - indoors (slow)
-  INT8 bAge;           // the number of turns gas has been around
+  int8_t bAge;         // the number of turns gas has been around
   BOOLEAN fAllocated;
-  INT8 bType;
+  int8_t bType;
   uint16_t usItem;
   uint8_t ubOwner;
   uint8_t ubPadding;
@@ -33,24 +33,24 @@ typedef struct TAG_SMOKE_EFFECT {
 } SMOKEEFFECT;
 
 // Returns NO_SMOKE_EFFECT if none there...
-INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel);
+int8_t GetSmokeEffectOnTile(INT16 sGridNo, int8_t bLevel);
 
 // Decays all smoke effects...
 void DecaySmokeEffects(uint32_t uiTime);
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )
-void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 bLevel);
+void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, INT16 sGridNo, int8_t bLevel);
 
-void RemoveSmokeEffectFromTile(INT16 sGridNo, INT8 bLevel);
+void RemoveSmokeEffectFromTile(INT16 sGridNo, int8_t bLevel);
 
-INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, uint8_t ubOwner);
+INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner);
 
 BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile);
 
-BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
-BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
+BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
 
 void ResetSmokeEffects();
 

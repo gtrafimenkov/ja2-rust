@@ -42,14 +42,14 @@ extern struct ITEM_POOL *gpEditingItemPool;
 uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex,
                                               uint16_t *pusQuantity);  // wrapper for the next three
 uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity);
-uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, INT8 bFrequency);
+uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, int8_t bFrequency);
 uint16_t CountNumberOfPressureActionsInWorld();
 uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID);
 
 // Finds and selects the next item when right clicking on an item type.  Only works if the
 // item actually exists in the world.
 void FindNextItemOfSelectedType();  // wrapper for the next four
-void SelectNextTriggerWithFrequency(uint16_t usItem, INT8 bFrequency);
+void SelectNextTriggerWithFrequency(uint16_t usItem, int8_t bFrequency);
 void SelectNextItemOfType(uint16_t usItem);
 void SelectNextPressureAction();
 void SelectNextKeyOfType(uint8_t ubKeyID);
@@ -622,7 +622,7 @@ void ClearEditorItemsInfo() {
   }
 }
 
-void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, INT8 bEvent) {
+void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, int8_t bEvent) {
   INT16 sIndex;
   uint16_t usQuantity;
   // Calc base index from scrolling index
@@ -702,7 +702,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
   INVTYPE *pItem;
   struct ITEM_POOL *pItemPool;
   INT32 iItemIndex;
-  INT8 bVisibility = INVISIBLE;
+  int8_t bVisibility = INVISIBLE;
   BOOLEAN fFound = FALSE;
   IPListNode *pIPCurr, *pIPPrev;
   uint16_t usFlags;
@@ -747,7 +747,8 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
       else if (eInfo.sSelItemIndex < 6)
         tempObject.bFrequency = PANIC_FREQUENCY_3;
       else
-        tempObject.bFrequency = (INT8)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
+        tempObject.bFrequency =
+            (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
       usFlags |= WORLD_ITEM_ARMED_BOMB;
       break;
     case ACTION_ITEM:
@@ -765,7 +766,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
           tempObject.bFrequency = PANIC_FREQUENCY_3;
         else
           tempObject.bFrequency =
-              (INT8)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
+              (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
       } else {
         tempObject.bDetonatorType = BOMB_PRESSURE;
         tempObject.bDelay = 0;
@@ -795,7 +796,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
       pObject->ubShotsLeft[0] = (uint8_t)Random(Magazine[pItem->ubClassIndex].ubMagSize);
     }
   } else {
-    pObject->bStatus[0] = (INT8)(70 + Random(26));
+    pObject->bStatus[0] = (int8_t)(70 + Random(26));
   }
   if (pItem->usItemClass & IC_GUN) {
     if (pObject->usItem == ROCKET_LAUNCHER) {
@@ -1011,7 +1012,7 @@ void FindNextItemOfSelectedType() {
   usItem = eInfo.pusItemIndex[eInfo.sSelItemIndex];
   if (usItem == ACTION_ITEM || usItem == SWITCH) {
     if (eInfo.sSelItemIndex < PRESSURE_ACTION_ID) {
-      INT8 bFrequency;
+      int8_t bFrequency;
       if (eInfo.sSelItemIndex < 2)
         bFrequency = PANIC_FREQUENCY;
       else if (eInfo.sSelItemIndex < 4)
@@ -1019,7 +1020,7 @@ void FindNextItemOfSelectedType() {
       else if (eInfo.sSelItemIndex < 6)
         bFrequency = PANIC_FREQUENCY_3;
       else
-        bFrequency = (INT8)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
+        bFrequency = (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
       SelectNextTriggerWithFrequency(usItem, bFrequency);
     } else {
       SelectNextPressureAction();
@@ -1135,7 +1136,7 @@ void SelectNextKeyOfType(uint8_t ubKeyID) {
   }
 }
 
-void SelectNextTriggerWithFrequency(uint16_t usItem, INT8 bFrequency) {
+void SelectNextTriggerWithFrequency(uint16_t usItem, int8_t bFrequency) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1259,7 +1260,7 @@ uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuanti
   return num;
 }
 
-uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, INT8 bFrequency) {
+uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, int8_t bFrequency) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   uint16_t num = 0;
@@ -1300,7 +1301,7 @@ uint16_t CountNumberOfPressureActionsInWorld() {
 uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *pusQuantity) {
   uint16_t usNumPlacements;
   if (eInfo.uiItemType == TBAR_MODE_ITEM_TRIGGERS) {  // find identical items with same frequency
-    INT8 bFrequency;
+    int8_t bFrequency;
     if (usEInfoIndex < PRESSURE_ACTION_ID) {
       if (usEInfoIndex < 2)
         bFrequency = PANIC_FREQUENCY;
@@ -1309,7 +1310,7 @@ uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *p
       else if (usEInfoIndex < 6)
         bFrequency = PANIC_FREQUENCY_3;
       else
-        bFrequency = (INT8)(FIRST_MAP_PLACED_FREQUENCY + (usEInfoIndex - 4) / 2);
+        bFrequency = (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (usEInfoIndex - 4) / 2);
       usNumPlacements =
           CountNumberOfItemsWithFrequency(eInfo.pusItemIndex[usEInfoIndex], bFrequency);
       *pusQuantity = usNumPlacements;

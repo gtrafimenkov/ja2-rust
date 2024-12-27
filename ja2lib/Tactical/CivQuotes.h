@@ -74,7 +74,7 @@ void InitCivQuoteSystem();
 
 void StartCivQuote(struct SOLDIERTYPE *pCiv);
 
-INT8 GetCivType(struct SOLDIERTYPE *pCiv);
+int8_t GetCivType(struct SOLDIERTYPE *pCiv);
 
 void HandleCivQuote();
 

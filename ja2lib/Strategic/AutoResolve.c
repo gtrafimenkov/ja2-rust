@@ -97,7 +97,7 @@ typedef struct SOLDIERCELL {
   uint16_t usHitDamage[3];
   struct SOLDIERCELL *pAttacker[3];
   uint32_t uiFlashTime;
-  INT8 bWeaponSlot;
+  int8_t bWeaponSlot;
 } SOLDIERCELL;
 
 typedef struct AUTORESOLVE_STRUCT {
@@ -143,7 +143,7 @@ typedef struct AUTORESOLVE_STRUCT {
   uint8_t ubCivCols, ubCivRows;
   uint8_t ubTimeModifierPercentage;
   uint8_t ubSectorX, ubSectorY;
-  INT8 bVerticalOffset;
+  int8_t bVerticalOffset;
 
   BOOLEAN fRenderAutoResolve;
   BOOLEAN fExitAutoResolve;
@@ -1227,7 +1227,7 @@ uint32_t VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTY
       uiMedcost = uiActual = sKitPts;   // recalc cost AND aid
   }
 
-  bPtsLeft = (INT8)uiActual;
+  bPtsLeft = (int8_t)uiActual;
   // heal real life points first (if below OKLIFE) because we don't want the
   // patient still DYING if bandages run out, or medic is disabled/distracted!
   // NOTE: Dressing wounds for life below OKLIFE now costs 2 pts/life point!
@@ -1310,7 +1310,7 @@ uint32_t AutoBandageMercs() {
   uint16_t usKitPts;
   struct OBJECTTYPE *pKit = NULL;
   BOOLEAN fComplete = TRUE;
-  INT8 bSlot, cnt;
+  int8_t bSlot, cnt;
 
   // Do we have any doctors?  If so, bandage selves first.
   uiMaxPointsUsed = uiParallelPointsUsed = 0;
@@ -3171,7 +3171,7 @@ BOOLEAN FireAShot(SOLDIERCELL *pAttacker) {
     pItem = &pSoldier->inv[i];
 
     if (Item[pItem->usItem].usItemClass == IC_GUN) {
-      pAttacker->bWeaponSlot = (INT8)i;
+      pAttacker->bWeaponSlot = (int8_t)i;
       if (gpAR->fUnlimitedAmmo) {
         PlayAutoResolveSample(Weapon[pItem->usItem].sSound, RATE_11025, 50, 1, MIDDLEPAN);
         return TRUE;
@@ -3204,7 +3204,7 @@ BOOLEAN AttackerHasKnife(SOLDIERCELL *pAttacker) {
   INT32 i;
   for (i = 0; i < NUM_INV_SLOTS; i++) {
     if (Item[pAttacker->pSoldier->inv[i].usItem].usItemClass == IC_BLADE) {
-      pAttacker->bWeaponSlot = (INT8)i;
+      pAttacker->bWeaponSlot = (int8_t)i;
       return TRUE;
     }
   }
@@ -3241,7 +3241,7 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
   BOOLEAN fMelee = FALSE;
   BOOLEAN fKnife = FALSE;
   BOOLEAN fClaw = FALSE;
-  INT8 bAttackIndex = -1;
+  int8_t bAttackIndex = -1;
 
   pAttacker->uiFlags |= CELL_FIREDATTARGET | CELL_DIRTY;
   if (pAttacker->usAttack < 950)
@@ -3383,7 +3383,7 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
     }
     if (pTarget->pSoldier->bLife >= CONSCIOUSNESS || pTarget->uiFlags & CELL_CREATURE) {
       if (gpAR->fSound)
-        DoMercBattleSound(pTarget->pSoldier, (INT8)(BATTLE_SOUND_HIT1 + PreRandom(2)));
+        DoMercBattleSound(pTarget->pSoldier, (int8_t)(BATTLE_SOUND_HIT1 + PreRandom(2)));
     }
     if (!(pTarget->uiFlags & CELL_CREATURE) && iNewLife < OKLIFE &&
         pTarget->pSoldier->bLife >=
@@ -3405,17 +3405,17 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
       }
     }
     // Adjust the soldiers stats based on the damage.
-    pTarget->pSoldier->bLife = (INT8)max(iNewLife, 0);
+    pTarget->pSoldier->bLife = (int8_t)max(iNewLife, 0);
     if (pTarget->uiFlags & CELL_MERC && gpAR->pRobotCell) {
       UpdateRobotControllerGivenRobot(gpAR->pRobotCell->pSoldier);
     }
     if (fKnife || fClaw) {
       if (pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bBleeding - iImpact >=
           pTarget->pSoldier->bLife)
-        pTarget->pSoldier->bBleeding += (INT8)iImpact;
+        pTarget->pSoldier->bBleeding += (int8_t)iImpact;
       else
         pTarget->pSoldier->bBleeding =
-            (INT8)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
+            (int8_t)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
     }
     if (!pTarget->pSoldier->bLife) {
       gpAR->fRenderAutoResolve = TRUE;
@@ -3503,7 +3503,7 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
 
   if (pTarget->pSoldier->bLife >= CONSCIOUSNESS) {
     if (gpAR->fSound)
-      DoMercBattleSound(pTarget->pSoldier, (INT8)(BATTLE_SOUND_HIT1 + PreRandom(2)));
+      DoMercBattleSound(pTarget->pSoldier, (int8_t)(BATTLE_SOUND_HIT1 + PreRandom(2)));
   }
   if (iNewLife < OKLIFE &&
       pTarget->pSoldier->bLife >=
@@ -3575,16 +3575,16 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
 #endif
   }
   // Adjust the soldiers stats based on the damage.
-  pTarget->pSoldier->bLife = (INT8)max(iNewLife, 0);
+  pTarget->pSoldier->bLife = (int8_t)max(iNewLife, 0);
   if (pTarget->uiFlags & CELL_MERC && gpAR->pRobotCell) {
     UpdateRobotControllerGivenRobot(gpAR->pRobotCell->pSoldier);
   }
 
   if (pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bBleeding - pTarget->usHitDamage[index] >=
       pTarget->pSoldier->bLife)
-    pTarget->pSoldier->bBleeding += (INT8)pTarget->usHitDamage[index];
+    pTarget->pSoldier->bBleeding += (int8_t)pTarget->usHitDamage[index];
   else
-    pTarget->pSoldier->bBleeding = (INT8)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
+    pTarget->pSoldier->bBleeding = (int8_t)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
   if (!pTarget->pSoldier->bLife) {
     gpAR->fRenderAutoResolve = TRUE;
     if (pTarget->uiFlags & CELL_MERC) {

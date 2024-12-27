@@ -579,7 +579,7 @@ INT16 CardinalSpacesAway(INT16 sOrigin, INT16 sDest)
   return ((INT16)(sRows + sCols));
 }
 
-INT8 FindNumTurnsBetweenDirs(INT8 sDir1, INT8 sDir2) {
+int8_t FindNumTurnsBetweenDirs(int8_t sDir1, int8_t sDir2) {
   INT16 sDirection;
   INT16 sNumTurns = 0;
 
@@ -609,17 +609,17 @@ INT8 FindNumTurnsBetweenDirs(INT8 sDir1, INT8 sDir2) {
     }
   } while (TRUE);
 
-  return ((INT8)sNumTurns);
+  return ((int8_t)sNumTurns);
 }
 
-BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
-                         INT8 *pbDirection) {
+BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bStartingDir,
+                         int8_t *pbDirection) {
   INT32 cnt;
   INT16 sNewGridNo;
   BOOLEAN fFound = FALSE;
   uint8_t bMinNumTurns = 100;
-  INT8 bNumTurns;
-  INT8 bMinDirection = 0;
+  int8_t bNumTurns;
+  int8_t bMinDirection = 0;
 
   // IF there is a roof over our heads, this is an ivalid....
   // return ( FALSE );l
@@ -637,11 +637,11 @@ BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStar
         fFound = TRUE;
 
         // FInd how many turns we should go to get here
-        bNumTurns = FindNumTurnsBetweenDirs((INT8)cnt, bStartingDir);
+        bNumTurns = FindNumTurnsBetweenDirs((int8_t)cnt, bStartingDir);
 
         if (bNumTurns < bMinNumTurns) {
           bMinNumTurns = bNumTurns;
-          bMinDirection = (INT8)cnt;
+          bMinDirection = (int8_t)cnt;
         }
       }
     }
@@ -655,14 +655,14 @@ BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStar
   return (FALSE);
 }
 
-BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
-                       INT8 *pbDirection) {
+BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bStartingDir,
+                       int8_t *pbDirection) {
   INT32 cnt;
   INT16 sNewGridNo;
   BOOLEAN fFound = FALSE;
   uint8_t bMinNumTurns = 100;
-  INT8 bNumTurns;
-  INT8 bMinDirection = 0;
+  int8_t bNumTurns;
+  int8_t bMinDirection = 0;
 
   // LOOP THROUGH ALL 8 DIRECTIONS
   for (cnt = 0; cnt < 8; cnt += 2) {
@@ -676,11 +676,11 @@ BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStarti
           fFound = TRUE;
 
           // FInd how many turns we should go to get here
-          bNumTurns = FindNumTurnsBetweenDirs((INT8)cnt, bStartingDir);
+          bNumTurns = FindNumTurnsBetweenDirs((int8_t)cnt, bStartingDir);
 
           if (bNumTurns < bMinNumTurns) {
             bMinNumTurns = bNumTurns;
-            bMinDirection = (INT8)cnt;
+            bMinDirection = (int8_t)cnt;
           }
         }
       }
@@ -820,8 +820,8 @@ BOOLEAN GridNoOnVisibleWorldTileGivenYLimits(INT16 sGridNo) {
   return (FALSE);
 }
 
-BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, INT8 *pbDirection) {
-  INT8 bDir;
+BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, int8_t *pbDirection) {
+  int8_t bDir;
 
   // check NE, SE, SW, NW because of tilt of isometric display
 
@@ -836,14 +836,14 @@ BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, INT8 *pbDirection) {
   return (FALSE);
 }
 
-BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
-                               INT8 *pbDirection) {
+BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bStartingDir,
+                               int8_t *pbDirection) {
   INT32 cnt;
   INT16 sNewGridNo, sOtherSideOfFence;
   BOOLEAN fFound = FALSE;
   uint8_t bMinNumTurns = 100;
-  INT8 bNumTurns;
-  INT8 bMinDirection = 0;
+  int8_t bNumTurns;
+  int8_t bMinDirection = 0;
 
   // IF there is a fence in this gridno, return false!
   if (IsJumpableFencePresentAtGridno(sGridNo)) {
@@ -864,11 +864,11 @@ BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8
         fFound = TRUE;
 
         // FInd how many turns we should go to get here
-        bNumTurns = FindNumTurnsBetweenDirs((INT8)cnt, bStartingDir);
+        bNumTurns = FindNumTurnsBetweenDirs((int8_t)cnt, bStartingDir);
 
         if (bNumTurns < bMinNumTurns) {
           bMinNumTurns = bNumTurns;
-          bMinDirection = (INT8)cnt;
+          bMinDirection = (int8_t)cnt;
         }
       }
     }

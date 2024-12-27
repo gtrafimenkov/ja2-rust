@@ -153,7 +153,7 @@ void CalculatePopupTextPosition(INT16 sWidth, INT16 sHeight);
 void CalculatePopupTextOrientation(INT16 sWidth, INT16 sHeight);
 void HandleNPCTrigger();
 BOOLEAN InternalInitiateConversation(struct SOLDIERTYPE *pDestSoldier,
-                                     struct SOLDIERTYPE *pSrcSoldier, INT8 bApproach,
+                                     struct SOLDIERTYPE *pSrcSoldier, int8_t bApproach,
                                      uintptr_t uiApproachData);
 
 extern void EndGameMessageBoxCallBack(uint8_t ubExitValue);
@@ -188,13 +188,13 @@ uint8_t ubRecordThatTriggeredLiePrompt;
 BOOLEAN gfConversationPending = FALSE;
 struct SOLDIERTYPE *gpPendingDestSoldier;
 struct SOLDIERTYPE *gpPendingSrcSoldier;
-INT8 gbPendingApproach;
+int8_t gbPendingApproach;
 uintptr_t guiPendingApproachData;
 extern BOOLEAN fMapPanelDirty;
 
 INT32 giHospitalTempBalance;  // stores amount of money for current doctoring
 INT32 giHospitalRefund;  // stores amount of money given to hospital for doctoring that wasn't used
-INT8 gbHospitalPriceModifier;  // stores discount being offered
+int8_t gbHospitalPriceModifier;  // stores discount being offered
 
 enum {
   HOSPITAL_UNSET = 0,
@@ -206,7 +206,7 @@ enum {
 };
 
 BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYPE *pSrcSoldier,
-                             INT8 bApproach, uintptr_t uiApproachData) {
+                             int8_t bApproach, uintptr_t uiApproachData) {
   // ATE: OK, let's check the status of the Q
   // If it has something in it....delay this until after....
   if (DialogueQueueIsEmptyOrSomebodyTalkingNow()) {
@@ -247,7 +247,7 @@ void HandlePendingInitConv() {
 }
 
 BOOLEAN InternalInitiateConversation(struct SOLDIERTYPE *pDestSoldier,
-                                     struct SOLDIERTYPE *pSrcSoldier, INT8 bApproach,
+                                     struct SOLDIERTYPE *pSrcSoldier, int8_t bApproach,
                                      uintptr_t uiApproachData) {
   // OK, init talking menu
   BOOLEAN fFromPending;
@@ -855,7 +855,7 @@ void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
   if (iReason & MSYS_CALLBACK_REASON_MOVE) {
     // Set current selected guy....
-    gTalkPanel.bCurSelect = (INT8)uiItemPos;
+    gTalkPanel.bCurSelect = (int8_t)uiItemPos;
     gTalkPanel.bOldCurSelect = gTalkPanel.bCurSelect;
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gTalkPanel.bCurSelect = -1;
@@ -918,7 +918,7 @@ void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         if (fDoConverse) {
           // Speak
           Converse(gTalkPanel.ubCharNum, gubSrcSoldierProfile,
-                   (INT8)ubTalkMenuApproachIDs[uiItemPos], 0);
+                   (int8_t)ubTalkMenuApproachIDs[uiItemPos], 0);
         }
       }
     }
@@ -1167,7 +1167,7 @@ void CalculatePopupTextPosition(INT16 sWidth, INT16 sHeight) {
   }
 }
 
-BOOLEAN TalkingMenuGiveItem(uint8_t ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos) {
+BOOLEAN TalkingMenuGiveItem(uint8_t ubNPC, struct OBJECTTYPE *pObject, int8_t bInvPos) {
   CHECKF(SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_GIVE_ITEM, (uint32_t)ubNPC,
                                        (uintptr_t)pObject, (uint32_t)bInvPos, gTalkPanel.iFaceIndex,
                                        DIALOGUE_NPC_UI) != FALSE);
@@ -1240,7 +1240,7 @@ BOOLEAN SourceSoldierPointerIsValidAndReachableForGive(struct SOLDIERTYPE *pGive
   return (TRUE);
 }
 
-void HandleNPCItemGiven(uint8_t ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos) {
+void HandleNPCItemGiven(uint8_t ubNPC, struct OBJECTTYPE *pObject, int8_t bInvPos) {
   // Give it to the NPC soldier
   //	AutoPlaceObject( gpDestSoldier, pObject, FALSE );
 
@@ -1518,9 +1518,9 @@ void HandleFactForNPCUnescorted(uint8_t ubNPC) {
 void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuoteNum) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier, *pSoldier2;
-  INT8 bNumDone = 0;
+  int8_t bNumDone = 0;
   INT16 sGridNo = NOWHERE, sAdjustedGridNo;
-  INT8 bItemIn;
+  int8_t bItemIn;
   uint8_t ubDesiredMercDir;
   EXITGRID ExitGrid;
   INT32 iRandom = 0;
@@ -1634,7 +1634,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
 
         // Look for letter....
         {
-          INT8 bInvPos;
+          int8_t bInvPos;
 
           // Look for item....
           bInvPos = FindObj(pSoldier, 227);
@@ -1685,7 +1685,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
 
         if (pSoldier->inv[HANDPOS].usItem != NOTHING) {
           uint16_t usGun;
-          INT8 bNewSlot, bOldSlot;
+          int8_t bNewSlot, bOldSlot;
 
           usGun = pSoldier->inv[HANDPOS].usItem;
 
@@ -2683,7 +2683,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         pSoldier2 = FindSoldierByProfileID(ROBOT, FALSE);
         if (pSoldier && pSoldier2) {
           // Give weapon to robot
-          INT8 bSlot;
+          int8_t bSlot;
 
           bSlot = FindObjClass(pSoldier, IC_GUN);
           if (bSlot != NO_SLOT) {
@@ -2724,8 +2724,8 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         if (pSoldier) {
           INT16 sNearestPC;
           uint8_t ubID;
-          INT8 bMoneySlot;
-          INT8 bEmptySlot;
+          int8_t bMoneySlot;
+          int8_t bEmptySlot;
 
           sNearestPC = ClosestPC(pSoldier, NULL);
 
@@ -4126,7 +4126,7 @@ void DialogueMessageBoxCallBack(uint8_t ubExitValue) {
     case NPC_ACTION_TRIGGER_MARRY_DARYL_PROMPT:
       gMercProfiles[gpSrcSoldier->ubProfile].ubMiscFlags2 |= PROFILE_MISC_FLAG2_ASKED_BY_HICKS;
       if (ubExitValue == MSG_BOX_RETURN_YES) {
-        gMercProfiles[DARYL].bNPCData = (INT8)gpSrcSoldier->ubProfile;
+        gMercProfiles[DARYL].bNPCData = (int8_t)gpSrcSoldier->ubProfile;
 
         // create key for Daryl to give to player
         pSoldier = FindSoldierByProfileID(DARYL, FALSE);

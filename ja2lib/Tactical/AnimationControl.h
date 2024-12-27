@@ -89,7 +89,7 @@ typedef struct {
   uint32_t uiFlags;
   uint8_t ubHeight;
   uint8_t ubEndHeight;
-  INT8 bProfile;
+  int8_t bProfile;
 
 } ANIMCONTROLTYPE;
 
@@ -541,8 +541,8 @@ void InitAnimationSurfacesPerBodytype();
 BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNewState);
 BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
                                     uint16_t *pusSubState);
-INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
-                                        CHAR8 *zColFilename);
+int8_t GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
+                                          CHAR8 *zColFilename);
 
 BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);

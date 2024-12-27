@@ -30,7 +30,7 @@ SliderChangeCallback
 */
 
 INT32 AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
-                uint16_t usWidth, uint16_t usNumberOfIncrements, INT8 sPriority,
+                uint16_t usWidth, uint16_t usNumberOfIncrements, int8_t sPriority,
                 SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags);
 
 BOOLEAN InitSlider();

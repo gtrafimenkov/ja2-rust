@@ -32,8 +32,8 @@ typedef struct
         uint8_t		ubKeyID[MAX_KEYS_PER_LOCK];
         uint8_t		ubLockType;							// numeric
 lock type value... easier to use than flags!
-        INT8		bPickSkillAdjustment;		// difficulty to pick a lock which takes
-this key INT8		bSmashSkillAdjustment;	// the strength of the lock (resistance to smashing)
+        int8_t		bPickSkillAdjustment;		// difficulty to pick a lock which takes
+this key int8_t		bSmashSkillAdjustment;	// the strength of the lock (resistance to smashing)
 } LOCK;
 */
 
@@ -58,16 +58,16 @@ typedef struct {
 
 typedef struct {
   INT16 sGridNo;
-  BOOLEAN fLocked;         // is the door locked
-  uint8_t ubTrapLevel;     // difficulty of finding the trap, 0-10
-  uint8_t ubTrapID;        // the trap type (0 is no trap)
-  uint8_t ubLockID;        // the lock (0 is no lock)
-  INT8 bPerceivedLocked;   // The perceived lock value can be different than the fLocked.
-                           // Values for this include the fact that we don't know the status of
-                           // the door, etc
-  INT8 bPerceivedTrapped;  // See above, but with respect to traps rather than locked status
-  INT8 bLockDamage;        // Damage to the lock
-  INT8 bPadding[4];        // extra bytes
+  BOOLEAN fLocked;           // is the door locked
+  uint8_t ubTrapLevel;       // difficulty of finding the trap, 0-10
+  uint8_t ubTrapID;          // the trap type (0 is no trap)
+  uint8_t ubLockID;          // the lock (0 is no lock)
+  int8_t bPerceivedLocked;   // The perceived lock value can be different than the fLocked.
+                             // Values for this include the fact that we don't know the status of
+                             // the door, etc
+  int8_t bPerceivedTrapped;  // See above, but with respect to traps rather than locked status
+  int8_t bLockDamage;        // Damage to the lock
+  int8_t bPadding[4];        // extra bytes
 } DOOR;
 
 typedef enum {
@@ -149,7 +149,7 @@ extern uint8_t gubMaxDoors;
 // File I/O for loading the door information from the map.  This automatically allocates
 // the exact number of slots when loading.
 
-extern void LoadDoorTableFromMap(INT8 **hBuffer);
+extern void LoadDoorTableFromMap(int8_t **hBuffer);
 // Saves the existing door information to the map.  Before it actually saves, it'll verify that the
 // door still exists.  Otherwise, it'll ignore it.  It is possible in the editor to delete doors in
 // many different ways, so I opted to put it in the saving routine.
@@ -180,7 +180,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor);
 void UpdateDoorPerceivedValue(DOOR *pDoor);
 
 // Saves the Door Table array to the temp file
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // Load the door table from the temp file
 BOOLEAN LoadDoorTableFromDoorTableTempFile();
@@ -201,7 +201,7 @@ BOOLEAN IsDoorOpen(INT16 sGridNo);
 BOOLEAN IsDoorPerceivedOpen(INT16 sGridNo);
 
 // Saves the Door Status array to the MapTempfile
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // Load the door status from the door status temp file
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile();
@@ -239,7 +239,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded();
 
 void AttachStringToDoor(INT16 sGridNo);
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bVisible,
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel, int8_t bVisible,
                        BOOLEAN fAddToDropList, INT32 iDropListSlot, BOOLEAN fUseUnLoaded);
 
 #endif

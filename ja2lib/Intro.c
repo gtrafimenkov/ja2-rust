@@ -97,7 +97,7 @@ char *gpzSmackerFileNames[] = {
 
 // enums used for when the intro screen can come up, either begining game intro, or end game
 // cinematic
-INT8 gbIntroScreenMode = -1;
+int8_t gbIntroScreenMode = -1;
 
 void GetIntroScreenUserInput();
 BOOLEAN EnterIntroScreen();
@@ -391,7 +391,7 @@ void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay) {
   }
 }
 
-void SetIntroType(INT8 bIntroType) {
+void SetIntroType(int8_t bIntroType) {
   if (bIntroType == INTRO_BEGINING) {
     gbIntroScreenMode = INTRO_BEGINING;
   } else if (bIntroType == INTRO_ENDING) {

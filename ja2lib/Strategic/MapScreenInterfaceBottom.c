@@ -117,7 +117,7 @@ BOOLEAN gfOneFramePauseOnExit = FALSE;
 // BOOLEAN gfNewScrollMessage = FALSE;
 
 // exit states
-INT8 gbExitingMapScreenToWhere = -1;
+int8_t gbExitingMapScreenToWhere = -1;
 
 uint8_t gubFirstMapscreenMessageIndex = 0;
 
@@ -511,7 +511,7 @@ void DrawNameOfLoadedSector(void) {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  GetSectorIDString(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), sString, ARR_SIZE(sString),
+  GetSectorIDString(sSelMapX, sSelMapY, (int8_t)(iCurrentMapSectorZ), sString, ARR_SIZE(sString),
                     TRUE);
   ReduceStringLength(sString, ARR_SIZE(sString), 80, COMPFONT);
 
@@ -845,7 +845,7 @@ void MapScreenMessageScrollBarCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
       // where is the mouse?
       struct Point MousePos = GetMousePoint();
 
-      ubMouseYOffset = (INT8)(MousePos.y - MESSAGE_SCROLL_AREA_START_Y);
+      ubMouseYOffset = (int8_t)(MousePos.y - MESSAGE_SCROLL_AREA_START_Y);
 
       // if clicking in the top 5 pixels of the slider bar
       if (ubMouseYOffset < (SLIDER_HEIGHT / 2)) {
@@ -965,7 +965,7 @@ void CheckForAndHandleAutoMessageScroll( void )
 */
 
 void EnableDisableBottomButtonsAndRegions(void) {
-  INT8 iExitButtonIndex;
+  int8_t iExitButtonIndex;
 
   // this enables and disables the buttons MAP_EXIT_TO_LAPTOP, MAP_EXIT_TO_TACTICAL, and
   // MAP_EXIT_TO_OPTIONS
@@ -1312,7 +1312,7 @@ BOOLEAN AnyUsableRealMercenariesOnTeam(void) {
   return (FALSE);
 }
 
-void RequestTriggerExitFromMapscreen(INT8 bExitToWhere) {
+void RequestTriggerExitFromMapscreen(int8_t bExitToWhere) {
   Assert((bExitToWhere >= MAP_EXIT_TO_LAPTOP) && (bExitToWhere <= MAP_EXIT_TO_SAVE));
 
   // if allowed to do so
@@ -1336,7 +1336,7 @@ void RequestTriggerExitFromMapscreen(INT8 bExitToWhere) {
   }
 }
 
-BOOLEAN AllowedToExitFromMapscreenTo(INT8 bExitToWhere) {
+BOOLEAN AllowedToExitFromMapscreenTo(int8_t bExitToWhere) {
   Assert((bExitToWhere >= MAP_EXIT_TO_LAPTOP) && (bExitToWhere <= MAP_EXIT_TO_SAVE));
 
   // if already leaving, disallow any other attempts to exit

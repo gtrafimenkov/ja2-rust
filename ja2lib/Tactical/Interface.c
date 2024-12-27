@@ -84,11 +84,11 @@ uint8_t gubProgCurEnemy = 0;
 
 typedef struct {
   uint32_t uiSurface;
-  INT8 bCurrentMessage;
+  int8_t bCurrentMessage;
   uint32_t uiTimeOfLastUpdate;
   uint32_t uiTimeSinceLastBeep;
-  INT8 bAnimate;
-  INT8 bYPos;
+  int8_t bAnimate;
+  int8_t bYPos;
   BOOLEAN fCreated;
   INT16 sWorldRenderX;
   INT16 sWorldRenderY;
@@ -1606,7 +1606,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usLineColor;
-  INT8 bBandage;
+  int8_t bBandage;
 
   // Draw breath points
 
@@ -2453,7 +2453,7 @@ BOOLEAN AddTopMessage(uint8_t ubType, CHAR16 *pzString) {
   cnt = 0;
 
   if (fFound) {
-    gTopMessage.bCurrentMessage = (INT8)cnt;
+    gTopMessage.bCurrentMessage = (int8_t)cnt;
 
     gTacticalStatus.ubTopMessageType = ubType;
     gTacticalStatus.fInTopMessage = TRUE;
@@ -2928,7 +2928,7 @@ void UpdateEnemyUIBar() {
 void InitPlayerUIBar(BOOLEAN fInterrupt) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt = 0;
-  INT8 bNumOK = 0, bNumNotOK = 0;
+  int8_t bNumOK = 0, bNumNotOK = 0;
 
   if (!gGameOptions.fTurnTimeLimit) {
     if (fInterrupt == TRUE) {
@@ -3011,8 +3011,8 @@ CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier) {
 }
 
 typedef struct {
-  INT8 bHeight;
-  INT8 bPower;
+  int8_t bHeight;
+  int8_t bPower;
   INT16 sGridNo;
   uint8_t ubLevel;
   struct SOLDIERTYPE *pSoldier;
@@ -3081,8 +3081,8 @@ BOOLEAN AimCubeUIClick() {
   }
 }
 
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, uint8_t bStartPower,
-                    INT8 bStartHeight) {
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t ubLevel,
+                    uint8_t bStartPower, int8_t bStartHeight) {
   gfInAimCubeUI = TRUE;
 
   gCubeUIData.sGridNo = sGridNo;
@@ -3164,7 +3164,7 @@ void RenderAimCubeUI() {
   INT32 cnt;
   INT16 sBarHeight;
   INT32 iBack;
-  INT8 bGraphicNum;
+  int8_t bGraphicNum;
 
   if (gfInAimCubeUI) {
     // OK, given height
@@ -3223,10 +3223,10 @@ void GetLaunchItemParamsFromUI() {}
 
 static BOOLEAN gfDisplayPhysicsUI = FALSE;
 static INT16 gsPhysicsImpactPointGridNo;
-static INT8 gbPhysicsImpactPointLevel;
+static int8_t gbPhysicsImpactPointLevel;
 static BOOLEAN gfBadPhysicsCTGT = FALSE;
 
-void BeginPhysicsTrajectoryUI(INT16 sGridNo, INT8 bLevel, BOOLEAN fBadCTGT) {
+void BeginPhysicsTrajectoryUI(INT16 sGridNo, int8_t bLevel, BOOLEAN fBadCTGT) {
   gfDisplayPhysicsUI = TRUE;
   gsPhysicsImpactPointGridNo = sGridNo;
   gbPhysicsImpactPointLevel = bLevel;
@@ -3277,12 +3277,12 @@ uint32_t CalcUIMessageDuration(STR16 wString) {
 
 BOOLEAN gfMultipurposeLocatorOn = FALSE;
 uint32_t guiMultiPurposeLocatorLastUpdate;
-INT8 gbMultiPurposeLocatorFrame;
+int8_t gbMultiPurposeLocatorFrame;
 INT16 gsMultiPurposeLocatorGridNo;
-INT8 gbMultiPurposeLocatorLevel;
-INT8 gbMultiPurposeLocatorCycles;
+int8_t gbMultiPurposeLocatorLevel;
+int8_t gbMultiPurposeLocatorCycles;
 
-void BeginMultiPurposeLocator(INT16 sGridNo, INT8 bLevel, BOOLEAN fSlideTo) {
+void BeginMultiPurposeLocator(INT16 sGridNo, int8_t bLevel, BOOLEAN fSlideTo) {
   guiMultiPurposeLocatorLastUpdate = 0;
   gbMultiPurposeLocatorCycles = 0;
   gbMultiPurposeLocatorFrame = 0;

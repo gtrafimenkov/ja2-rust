@@ -17,9 +17,9 @@ typedef struct {
   uint8_t ubLevel;
   struct OBJECTTYPE o;
   uint16_t usFlags;
-  INT8 bRenderZHeightAboveLevel;
+  int8_t bRenderZHeightAboveLevel;
 
-  INT8 bVisible;
+  int8_t bVisible;
 
   // This is the chance associated with an item or a trap not-existing in the world.  The reason why
   // this is reversed (10 meaning item has 90% chance of appearing, is because the order that the
@@ -35,11 +35,11 @@ extern WORLDITEM *gWorldItems;
 extern uint32_t guiNumWorldItems;
 
 INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
-                     INT8 bRenderZHeightAboveLevel, INT8 bVisible);
+                     int8_t bRenderZHeightAboveLevel, int8_t bVisible);
 void RemoveItemFromWorld(INT32 iItemIndex);
 INT32 FindWorldItem(uint16_t usItem);
 
-void LoadWorldItemsFromMap(INT8 **hBuffer);
+void LoadWorldItemsFromMap(int8_t **hBuffer);
 void SaveWorldItemsToMap(HWFILE fp);
 
 void TrashWorldItems();
@@ -54,7 +54,7 @@ extern uint32_t guiNumWorldBombs;
 
 extern INT32 AddBombToWorld(INT32 iItemIndex);
 extern void FindPanicBombsAndTriggers(void);
-extern INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, INT8 bLevel);
+extern INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, int8_t bLevel);
 
 void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems);
 

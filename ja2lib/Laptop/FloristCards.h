@@ -12,6 +12,6 @@ void ExitFloristCards();
 void HandleFloristCards();
 void RenderFloristCards();
 
-extern INT8 gbCurrentlySelectedCard;
+extern int8_t gbCurrentlySelectedCard;
 
 #endif

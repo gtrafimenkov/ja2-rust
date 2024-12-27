@@ -112,7 +112,7 @@ void SaveMapInformation(HWFILE fp) {
   FileMan_Write(fp, &gMapInformation, sizeof(MAPCREATE_STRUCT), &uiBytesWritten);
 }
 
-void LoadMapInformation(INT8 **hBuffer) {
+void LoadMapInformation(int8_t **hBuffer) {
   LOADDATA(&gMapInformation, *hBuffer, sizeof(MAPCREATE_STRUCT));
   // FileMan_Read( hfile, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesRead);
 

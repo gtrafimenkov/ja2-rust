@@ -151,7 +151,7 @@ void HandleUpDownArrowBackgrounds();
 
 void EndDeadlockMsg();
 
-void HandleLocateSelectMerc(uint8_t ubID, INT8 bFlag);
+void HandleLocateSelectMerc(uint8_t ubID, int8_t bFlag);
 
 void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, uint8_t ubDirtyLevel);
 
@@ -194,14 +194,14 @@ void ResetAimCubeAI();
 void SetupAimCubeAI();
 void IncrementAimCubeUI();
 void EndAimCubeUI();
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, uint8_t bStartPower,
-                    INT8 bStartHeight);
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t ubLevel,
+                    uint8_t bStartPower, int8_t bStartHeight);
 BOOLEAN AimCubeUIClick();
 
 void ResetPhysicsTrajectoryUI();
 void SetupPhysicsTrajectoryUI();
 void EndPhysicsTrajectoryUI();
-void BeginPhysicsTrajectoryUI(INT16 sGridNo, INT8 bLevel, BOOLEAN fBadCTGT);
+void BeginPhysicsTrajectoryUI(INT16 sGridNo, int8_t bLevel, BOOLEAN fBadCTGT);
 
 void InitPlayerUIBar(BOOLEAN fInterrupt);
 
@@ -209,7 +209,7 @@ void ToggleTacticalPanels();
 
 void DirtyTopMessage();
 
-void BeginMultiPurposeLocator(INT16 sGridNo, INT8 bLevel, BOOLEAN fSlideTo);
+void BeginMultiPurposeLocator(INT16 sGridNo, int8_t bLevel, BOOLEAN fSlideTo);
 void HandleMultiPurposeLocator();
 void RenderTopmostMultiPurposeLocator();
 

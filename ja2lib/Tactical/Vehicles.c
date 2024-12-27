@@ -37,7 +37,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 
-INT8 gubVehicleMovementGroups[MAX_VEHICLES];
+int8_t gubVehicleMovementGroups[MAX_VEHICLES];
 
 // the list of vehicles
 VEHICLETYPE *pVehicleList = NULL;
@@ -46,7 +46,7 @@ VEHICLETYPE *pVehicleList = NULL;
 uint8_t ubNumberOfVehicles = 0;
 
 // the sqaud mvt groups
-extern INT8 SquadMovementGroups[];
+extern int8_t SquadMovementGroups[];
 
 // ATE: These arrays below should all be in a large LUT which contains
 // static info for each vehicle....
@@ -89,7 +89,7 @@ uint8_t ubVehicleTypeProfileID[] = {
 
 /*
 // location of crits based on facing
-INT8 bInternalCritHitsByLocation[ NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE ][
+int8_t bInternalCritHitsByLocation[ NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE ][
 NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ]={ { ENGINE_HIT_LOCATION, ENGINE_HIT_LOCATION,
 CREW_COMPARTMENT_HIT_LOCATION,CREW_COMPARTMENT_HIT_LOCATION, RF_TIRE_HIT_LOCATION,
 LF_TIRE_HIT_LOCATION }, // front { ENGINE_HIT_LOCATION, LF_TIRE_HIT_LOCATION,
@@ -552,7 +552,7 @@ BOOLEAN RemoveSoldierFromVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
       pVehicleList[iId].pPassengers[iCounter]->ubGroupID = 0;
       pVehicleList[iId].pPassengers[iCounter]->sSectorY = pVehicleList[iId].sSectorY;
       pVehicleList[iId].pPassengers[iCounter]->sSectorX = pVehicleList[iId].sSectorX;
-      pVehicleList[iId].pPassengers[iCounter]->bSectorZ = (INT8)pVehicleList[iId].sSectorZ;
+      pVehicleList[iId].pPassengers[iCounter]->bSectorZ = (int8_t)pVehicleList[iId].sSectorZ;
       pVehicleList[iId].pPassengers[iCounter] = NULL;
 
       pSoldier->uiStatusFlags &= (~(SOLDIER_DRIVER | SOLDIER_PASSENGER));
@@ -1093,7 +1093,7 @@ BOOLEAN IsEnoughSpaceInVehicle(INT32 iID) {
   return (TRUE);
 }
 
-BOOLEAN PutSoldierInVehicle(struct SOLDIERTYPE *pSoldier, INT8 bVehicleId) {
+BOOLEAN PutSoldierInVehicle(struct SOLDIERTYPE *pSoldier, int8_t bVehicleId) {
   struct SOLDIERTYPE *pVehicleSoldier = NULL;
 
   if ((GetSolSectorX(pSoldier) != gWorldSectorX) || (GetSolSectorY(pSoldier) != gWorldSectorY) ||
@@ -1354,10 +1354,10 @@ BOOLEAN DoesVehicleNeedAnyRepairs(INT32 iVehicleId) {
   return (FALSE);
 }
 
-INT8 RepairVehicle(INT32 iVehicleId, INT8 bRepairPtsLeft, BOOLEAN *pfNothingToRepair) {
+int8_t RepairVehicle(INT32 iVehicleId, int8_t bRepairPtsLeft, BOOLEAN *pfNothingToRepair) {
   struct SOLDIERTYPE *pVehicleSoldier = NULL;
-  INT8 bRepairPtsUsed = 0;
-  INT8 bOldLife;
+  int8_t bRepairPtsUsed = 0;
+  int8_t bOldLife;
 
   // is the vehicle in fact a valid vehicle
   if (VehicleIdIsValid(iVehicleId) == FALSE) {
@@ -1696,8 +1696,8 @@ BOOLEAN SaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten = 0;
 
   // Save all the vehicle movement id's
-  FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT8) * 5) {
+  FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(int8_t) * 5, &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(int8_t) * 5) {
     return (FALSE);
   }
 
@@ -1710,8 +1710,8 @@ BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesRead = 0;
 
   // Load in the Squad movement id's
-  FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT8) * 5) {
+  FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(int8_t) * 5, &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(int8_t) * 5) {
     return (FALSE);
   }
 
@@ -1731,8 +1731,8 @@ BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten = 0;
 
   // Save all the vehicle movement id's
-  FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT8) * MAX_VEHICLES) {
+  FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(int8_t) * MAX_VEHICLES, &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(int8_t) * MAX_VEHICLES) {
     return (FALSE);
   }
 
@@ -1743,8 +1743,8 @@ BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesRead = 0;
 
   // Load in the Squad movement id's
-  FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT8) * MAX_VEHICLES) {
+  FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(int8_t) * MAX_VEHICLES, &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(int8_t) * MAX_VEHICLES) {
     return (FALSE);
   }
 
@@ -1925,7 +1925,7 @@ BOOLEAN OnlyThisSoldierCanDriveVehicle(struct SOLDIERTYPE *pThisSoldier, INT32 i
   return (TRUE);
 }
 
-BOOLEAN IsSoldierInThisVehicleSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadNumber) {
+BOOLEAN IsSoldierInThisVehicleSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadNumber) {
   INT32 iVehicleId;
   struct SOLDIERTYPE *pVehicleSoldier;
 

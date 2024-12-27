@@ -144,7 +144,7 @@ void DeleteStructureFromTile(MAP_ELEMENT *pMapElement, struct STRUCTURE *pStruct
 // Function operating on a structure tile
 uint8_t FilledTilePositions(DB_STRUCTURE_TILE *pTile) {
   uint8_t ubFilled = 0, ubShapeValue;
-  INT8 bLoopX, bLoopY, bLoopZ;
+  int8_t bLoopX, bLoopY, bLoopZ;
 
   // Loop through all parts of a structure and add up the number of
   // filled spots
@@ -477,7 +477,7 @@ BOOLEAN OkayToAddStructureToTile(
   DB_STRUCTURE_TILE **ppTile;
   struct STRUCTURE *pExistingStructure;
   struct STRUCTURE *pOtherExistingStructure;
-  INT8 bLoop, bLoop2;
+  int8_t bLoop, bLoop2;
   INT16 sGridNo;
   INT16 sOtherGridNo;
 
@@ -559,7 +559,7 @@ BOOLEAN OkayToAddStructureToTile(
               switch (pExistingStructure->ubWallOrientation) {
                 case OUTSIDE_TOP_LEFT:
                 case INSIDE_TOP_LEFT:
-                  sOtherGridNo = NewGridNo(sGridNo, DirectionInc((INT8)(bLoop + 2)));
+                  sOtherGridNo = NewGridNo(sGridNo, DirectionInc((int8_t)(bLoop + 2)));
                   break;
                 case OUTSIDE_TOP_RIGHT:
                 case INSIDE_TOP_RIGHT:
@@ -589,7 +589,7 @@ BOOLEAN OkayToAddStructureToTile(
             switch (pDBStructure->ubWallOrientation) {
               case OUTSIDE_TOP_LEFT:
               case INSIDE_TOP_LEFT:
-                sOtherGridNo = NewGridNo(sGridNo, DirectionInc((INT8)(bLoop + 2)));
+                sOtherGridNo = NewGridNo(sGridNo, DirectionInc((int8_t)(bLoop + 2)));
                 break;
               case OUTSIDE_TOP_RIGHT:
               case INSIDE_TOP_RIGHT:
@@ -670,7 +670,7 @@ BOOLEAN OkayToAddStructureToTile(
   return (TRUE);
 }
 
-BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, int8_t bLevel,
                                           struct DB_STRUCTURE_REF *pDBStructureRef,
                                           INT16 sExclusionID, BOOLEAN fIgnorePeople) {
   uint8_t ubLoop;
@@ -707,7 +707,7 @@ BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
   return (TRUE);
 }
 
-BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, int8_t bLevel,
                                   struct DB_STRUCTURE_REF *pDBStructureRef, INT16 sExclusionID) {
   return (InternalOkayToAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef, sExclusionID,
                                             (BOOLEAN)(sExclusionID == IGNORE_PEOPLE_STRUCTURE_ID)));
@@ -737,7 +737,7 @@ BOOLEAN AddStructureToTile(
 }
 
 struct STRUCTURE *InternalAddStructureToWorld(
-    INT16 sBaseGridNo, INT8 bLevel, struct DB_STRUCTURE_REF *pDBStructureRef,
+    INT16 sBaseGridNo, int8_t bLevel, struct DB_STRUCTURE_REF *pDBStructureRef,
     struct LEVELNODE *pLevelNode) {  // Adds a complete structure to the world at a location plus
                                      // all other locations covered by the structure
   INT16 sGridNo;
@@ -879,7 +879,7 @@ struct STRUCTURE *InternalAddStructureToWorld(
   return (pBaseStructure);
 }
 
-BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, int8_t bLevel,
                             struct DB_STRUCTURE_REF *pDBStructureRef, PTR pLevelN) {
   struct STRUCTURE *pStructure;
 
@@ -997,7 +997,7 @@ struct STRUCTURE *InternalSwapStructureForPartner(INT16 sGridNo, struct STRUCTUR
   struct DB_STRUCTURE_REF *pPartnerDBStructure;
   BOOLEAN fDoor;
 
-  INT8 bDelta;
+  int8_t bDelta;
   uint8_t ubHitPoints;
   INT16 sCubeOffset;
 
@@ -1026,7 +1026,7 @@ struct STRUCTURE *InternalSwapStructureForPartner(INT16 sGridNo, struct STRUCTUR
   if (DeleteStructureFromWorld(pBaseStructure) == FALSE) {
     return (NULL);
   }
-  pNewBaseStructure = InternalAddStructureToWorld(sGridNo, (INT8)(sCubeOffset / PROFILE_Z_SIZE),
+  pNewBaseStructure = InternalAddStructureToWorld(sGridNo, (int8_t)(sCubeOffset / PROFILE_Z_SIZE),
                                                   pPartnerDBStructure, pLevelNode);
   if (pNewBaseStructure == NULL) {
     return (NULL);
@@ -1153,12 +1153,12 @@ INT16 GetBaseTile(struct STRUCTURE *pStructure) {
   }
 }
 
-INT8 StructureHeight(struct STRUCTURE *pStructure) {  // return the height of an object from 1-4
+int8_t StructureHeight(struct STRUCTURE *pStructure) {  // return the height of an object from 1-4
   uint8_t ubLoopX, ubLoopY;
   PROFILE *pShape;
   uint8_t ubShapeValue;
-  INT8 bLoopZ;
-  INT8 bGreatestHeight = -1;
+  int8_t bLoopZ;
+  int8_t bGreatestHeight = -1;
 
   if (pStructure == NULL || pStructure->pShape == NULL) {
     return (0);
@@ -1194,10 +1194,10 @@ INT8 StructureHeight(struct STRUCTURE *pStructure) {  // return the height of an
   return (bGreatestHeight + 1);
 }
 
-INT8 GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
+int8_t GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
   struct STRUCTURE *pCurrent;
-  INT8 iHeight;
-  INT8 iTallest = 0;
+  int8_t iHeight;
+  int8_t iTallest = 0;
   INT16 sDesiredHeight;
 
   if (fOnRoof) {
@@ -1218,10 +1218,10 @@ INT8 GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
   return (iTallest);
 }
 
-INT8 GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
+int8_t GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
   struct STRUCTURE *pCurrent;
-  INT8 iHeight;
-  INT8 iTallest = 0;
+  int8_t iHeight;
+  int8_t iTallest = 0;
   INT16 sDesiredHeight;
 
   if (fOnRoof) {
@@ -1255,13 +1255,13 @@ INT8 GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
   return (iTallest);
 }
 
-INT8 StructureBottomLevel(
+int8_t StructureBottomLevel(
     struct STRUCTURE *pStructure) {  // return the bottom level of an object, from 1-4
   uint8_t ubLoopX, ubLoopY;
   PROFILE *pShape;
   uint8_t ubShapeValue;
-  INT8 bLoopZ;
-  INT8 bLowestHeight = PROFILE_Z_SIZE;
+  int8_t bLoopZ;
+  int8_t bLowestHeight = PROFILE_Z_SIZE;
 
   if (pStructure == NULL || pStructure->pShape == NULL) {
     return (0);
@@ -1438,7 +1438,7 @@ void DebugStructurePage1(void) {
   // struct LEVELNODE *		pLand;
   INT16 sGridNo, sDesiredLevel;
   uint8_t bHeight, bDens0, bDens1, bDens2, bDens3;
-  INT8 bStructures;
+  int8_t bStructures;
 
   static CHAR16 WallOrientationString[5][15] = {L"None", L"Inside left", L"Inside right",
                                                 L"Outside left", L"Outside right"};
@@ -1794,7 +1794,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
 
             // now create the array!
             pCurr->ubNumberOfZChanges = ubNumIncreasing + ubNumStable + ubNumDecreasing;
-            pCurr->pbZChange = (INT8 *)MemAlloc(pCurr->ubNumberOfZChanges);
+            pCurr->pbZChange = (int8_t *)MemAlloc(pCurr->ubNumberOfZChanges);
             if (pCurr->pbZChange == NULL) {
               // augh!
               for (ubLoop2 = 0; ubLoop2 < uiLoop; ubLoop2++) {
@@ -1840,9 +1840,9 @@ BOOLEAN FiniStructureDB(void) {
   return (TRUE);
 }
 
-INT8 GetBlockingStructureInfo(INT16 sGridNo, INT8 bDir, INT8 bNextDir, INT8 bLevel,
-                              INT8 *pStructHeight, struct STRUCTURE **ppTallestStructure,
-                              BOOLEAN fWallsBlock) {
+int8_t GetBlockingStructureInfo(INT16 sGridNo, int8_t bDir, int8_t bNextDir, int8_t bLevel,
+                                int8_t *pStructHeight, struct STRUCTURE **ppTallestStructure,
+                                BOOLEAN fWallsBlock) {
   struct STRUCTURE *pCurrent, *pStructure;
   INT16 sDesiredLevel;
   BOOLEAN fOKStructOnLevel = FALSE;
@@ -1992,7 +1992,7 @@ uint32_t StructureTypeToFlag(uint8_t ubType) {
 }
 
 struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, uint8_t ubType, uint8_t ubWallOrientation,
-                                           INT8 bLevel) {
+                                           int8_t bLevel) {
   struct STRUCTURE *pCurrent;
   uint32_t uiTypeFlag;
 

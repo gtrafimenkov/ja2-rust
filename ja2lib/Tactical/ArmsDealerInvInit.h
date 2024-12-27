@@ -29,18 +29,18 @@ typedef struct {
   BOOLEAN fAllowUsed;
 } ITEM_SORT_ENTRY;
 
-INT8 GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex);
+int8_t GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex);
 
 DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(uint8_t ubArmsDealerID);
 
-uint8_t GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex);
-uint8_t ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
+uint8_t GetCurrentSuitabilityForItem(int8_t bArmsDealer, uint16_t usItemIndex);
+uint8_t ChanceOfItemTransaction(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
                                 BOOLEAN fUsed);
-BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
+BOOLEAN ItemTransactionOccurs(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
                               BOOLEAN fUsed);
-uint8_t DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
+uint8_t DetermineInitialInvItems(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
                                  BOOLEAN fUsed);
-uint8_t HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
+uint8_t HowManyItemsAreSold(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
                             BOOLEAN fUsed);
 uint8_t HowManyItemsToReorder(uint8_t ubWanted, uint8_t ubStillHave);
 

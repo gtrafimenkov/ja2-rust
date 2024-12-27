@@ -190,7 +190,7 @@ BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
+int8_t FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
   uint8_t cnt, cnt2;
   INT16 bBestPriority = 0, sBestAdjGridNo;
   INT16 sPatientGridNo, sBestPatientGridNo;
@@ -198,7 +198,7 @@ INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
   struct SOLDIERTYPE *pPatient;
   struct SOLDIERTYPE *pBestPatient = NULL;
   struct SOLDIERTYPE *pOtherMedic;
-  INT8 bPatientPriority;
+  int8_t bPatientPriority;
   uint8_t ubDirection;
   INT16 sAdjustedGridNo, sAdjacentGridNo, sOtherAdjacentGridNo;
   INT16 sClimbGridNo, sBestClimbGridNo = NOWHERE, sShortestClimbPath = 1000;
@@ -331,8 +331,8 @@ INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
   }
 }
 
-INT8 DecideAutoBandage(struct SOLDIERTYPE *pSoldier) {
-  INT8 bSlot;
+int8_t DecideAutoBandage(struct SOLDIERTYPE *pSoldier) {
+  int8_t bSlot;
   BOOLEAN fDoClimb;
 
   if (pSoldier->bMedical == 0 || pSoldier->ubServicePartner != NOBODY) {

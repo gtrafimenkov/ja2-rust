@@ -336,7 +336,7 @@ void ResetInterface() {
   }
 }
 
-extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
+extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, int8_t bZLevel);
 
 uint32_t guiColors[12] = {FROMRGB(198, 163, 0), FROMRGB(185, 150, 0), FROMRGB(172, 136, 0),
                           FROMRGB(159, 123, 0), FROMRGB(146, 110, 0), FROMRGB(133, 96, 0),
@@ -627,7 +627,7 @@ void RenderTopmostTacticalInterface() {
   RenderRubberBanding();
 
   if (!gfInItemPickupMenu && gpItemPointer == NULL) {
-    HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
+    HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(), NULL, TRUE);
   }
 
   // CHECK IF OUR CURSOR IS OVER AN INV POOL
@@ -638,7 +638,7 @@ void RenderTopmostTacticalInterface() {
         if (GetItemPool(gfUIOverItemPoolGridNo, &pItemPool, pSoldier->bLevel)) {
           struct STRUCTURE *pStructure = NULL;
           INT16 sIntTileGridNo;
-          INT8 bZLevel = 0;
+          int8_t bZLevel = 0;
           INT16 sActionGridNo = usMapPos;
 
           // Get interactive tile...
@@ -657,7 +657,7 @@ void RenderTopmostTacticalInterface() {
             RemoveFlashItemSlot(pItemPool);
           }
         } else {
-          INT8 bCheckLevel;
+          int8_t bCheckLevel;
 
           // ATE: Allow to see list if a different level....
           if (pSoldier->bLevel == 0) {
@@ -670,7 +670,7 @@ void RenderTopmostTacticalInterface() {
           if (GetItemPool(gfUIOverItemPoolGridNo, &pItemPool, bCheckLevel)) {
             struct STRUCTURE *pStructure = NULL;
             INT16 sIntTileGridNo;
-            INT8 bZLevel = 0;
+            int8_t bZLevel = 0;
             INT16 sActionGridNo = usMapPos;
 
             // Get interactive tile...

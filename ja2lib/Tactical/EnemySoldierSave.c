@@ -35,9 +35,9 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
 BOOLEAN gfRestoringEnemySoldiersFromTempFile = FALSE;
 BOOLEAN gfRestoringCiviliansFromTempFile = FALSE;
 
-void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
-void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   CHAR8 zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
@@ -54,7 +54,7 @@ void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   }
 }
 
-void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   // CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS)) {
@@ -84,7 +84,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];
 #endif
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   uint8_t ubSectorID;
   uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
   uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
@@ -382,8 +382,9 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint8_t ubFirstIdTeam,
-                                    uint8_t ubLastIdTeam, BOOLEAN fAppendToFile) {
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+                                    uint8_t ubFirstIdTeam, uint8_t ubLastIdTeam,
+                                    BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
@@ -680,7 +681,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];
 #endif
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   uint8_t ubSectorID;
   uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
   uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
@@ -1049,7 +1050,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];
 #endif
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   uint8_t ubSectorID;
   BOOLEAN fDeleted;
   //	uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
@@ -1242,7 +1243,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
               INT32 iNewLife;
               iNewLife = curr->pDetailedPlacement->bLife + uiTimeSinceLastLoaded / 15;
               iNewLife = min(curr->pDetailedPlacement->bLifeMax, iNewLife);
-              curr->pDetailedPlacement->bLife = (INT8)iNewLife;
+              curr->pDetailedPlacement->bLife = (int8_t)iNewLife;
             }
 
             if (curr->pBasicPlacement->bTeam == CIV_TEAM) {
@@ -1316,7 +1317,7 @@ FAIL_LOAD:
 
 // If we are saving a game and we are in the sector, we will need to preserve the links between the
 // soldiers and the soldier init list.  Otherwise, the temp file will be deleted.
-BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                                  BOOLEAN fEnemy, BOOLEAN fValidateOnly) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
@@ -1605,7 +1606,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];
 #endif
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   uint8_t ubSectorID;
   //	uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
   //	uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;

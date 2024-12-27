@@ -9,9 +9,9 @@ void ExitAIMMembers();
 void HandleAIMMembers();
 BOOLEAN RenderAIMMembers();
 
-BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawNumeralsToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                              uint32_t ulFont, uint8_t ubColor);
-BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawMoneyToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                           uint32_t ulFont, uint8_t ubColor);
 
 void DisplayTextForMercFaceVideoPopUp(STR16 pString);

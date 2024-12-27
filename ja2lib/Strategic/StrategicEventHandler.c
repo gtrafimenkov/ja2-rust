@@ -184,7 +184,7 @@ void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
 
           if (usStandardMapPos == LOST_SHIPMENT_GRIDNO) {
             // damage the item a random amount!
-            Object.bStatus[0] = (INT8)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
+            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
             // make damn sure it can't hit 0
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
@@ -210,7 +210,7 @@ void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
 
           if (usStandardMapPos == LOST_SHIPMENT_GRIDNO) {
             // damage the item a random amount!
-            Object.bStatus[0] = (INT8)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
+            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
             // make damn sure it can't hit 0
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
@@ -355,25 +355,25 @@ void HandleDelayedItemsArrival(uint32_t uiReason) {
       switch (Random(10)) {
         case 0:
           // 1 in 10 chance of a badly damaged gas mask
-          CreateItem(GASMASK, (INT8)(20 + Random(10)), &Object);
+          CreateItem(GASMASK, (int8_t)(20 + Random(10)), &Object);
           break;
         case 1:
         case 2:
           // 2 in 10 chance of a battered Desert Eagle
-          CreateItem(DESERTEAGLE, (INT8)(40 + Random(10)), &Object);
+          CreateItem(DESERTEAGLE, (int8_t)(40 + Random(10)), &Object);
           break;
         case 3:
         case 4:
         case 5:
           // 3 in 10 chance of a stun grenade
-          CreateItem(STUN_GRENADE, (INT8)(70 + Random(10)), &Object);
+          CreateItem(STUN_GRENADE, (int8_t)(70 + Random(10)), &Object);
           break;
         case 6:
         case 7:
         case 8:
         case 9:
           // 4 in 10 chance of two 38s!
-          CreateItems(SW38, (INT8)(90 + Random(10)), 2, &Object);
+          CreateItems(SW38, (int8_t)(90 + Random(10)), 2, &Object);
           break;
       }
       if ((gWorldSectorX == BOBBYR_SHIPPING_DEST_SECTOR_X) &&
@@ -669,7 +669,7 @@ void HandleEarlyMorningEvents(void) {
     gMercProfiles[cnt].ubMiscFlags2 &= (~PROFILE_MISC_FLAG2_BANDAGED_TODAY);
   }
   // reset Father Walker's drunkenness level!
-  gMercProfiles[FATHER].bNPCData = (INT8)Random(4);
+  gMercProfiles[FATHER].bNPCData = (int8_t)Random(4);
   // set Walker's location
   if (Random(2)) {
     // move the father to the other sector, provided neither are loaded

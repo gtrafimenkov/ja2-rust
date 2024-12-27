@@ -89,7 +89,7 @@ SUMMARYFILE *gpCurrentSectorSummary;
 
 struct MOUSE_REGION MapRegion;
 
-extern INT8 gbMercSlotTypes[9];
+extern int8_t gbMercSlotTypes[9];
 
 extern void UpdateSummaryInfo(SUMMARYFILE *pSummary);
 
@@ -643,7 +643,7 @@ void RenderItemDetails() {
   uint32_t uiTriggerQuantity[8], uiActionQuantity[8], uiTriggerExistChance[8],
       uiActionExistChance[8];
   uint32_t xp, yp;
-  INT8 bFreqIndex;
+  int8_t bFreqIndex;
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_GRAY2);
   SetFontShadow(FONT_NEARBLACK);
@@ -1862,7 +1862,7 @@ void MapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
 }
 
 void SummaryToggleLevelCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT8 i;
+  int8_t i;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (GetActiveFieldID() == 1) SelectNextField();
     gfRenderSummary = TRUE;
@@ -2214,7 +2214,7 @@ void WriteSectorSummaryUpdate(CHAR8 *puiFilename, uint8_t ubLevel, SUMMARYFILE *
   char ExecDir[256];
   char Dir[300];
   CHAR8 *ptr;
-  INT8 x, y;
+  int8_t x, y;
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
   Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));

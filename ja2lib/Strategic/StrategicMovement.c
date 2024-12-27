@@ -69,8 +69,8 @@ void ValidateGroups(struct GROUP *pGroup);
 #endif
 
 extern BOOLEAN gubNumAwareBattles;
-extern INT8 SquadMovementGroups[];
-extern INT8 gubVehicleMovementGroups[];
+extern int8_t SquadMovementGroups[];
+extern int8_t gubVehicleMovementGroups[];
 
 BOOLEAN gfDelayAutoResolveStart = FALSE;
 
@@ -119,7 +119,7 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup);
 extern void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum);
 
 void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, u8 sSectorX, u8 sSectorZ,
-                                           INT8 bSectorZ);
+                                           int8_t bSectorZ);
 
 // If there are bloodcats in this sector, then it internally
 BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup);
@@ -131,7 +131,7 @@ BOOLEAN GroupBetweenSectorsAndSectorXYIsInDifferentDirection(struct GROUP *pGrou
 void CancelEmptyPersistentGroupMovement(struct GROUP *pGroup);
 
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup);
-BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(uint8_t ubExitValue);
 void DelayEnemyGroupsIfPathsCross(struct GROUP *pPlayerGroup);
 
@@ -1226,7 +1226,7 @@ void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
   SET_PALETTEREP_ID(Corpse.SkinPal, "PINKSKIN");
   SET_PALETTEREP_ID(Corpse.PantsPal, "GREENPANTS");
 
-  Corpse.bDirection = (INT8)Random(8);
+  Corpse.bDirection = (int8_t)Random(8);
 
   // Set time of death
   // Make sure they will be rotting!
@@ -2391,7 +2391,7 @@ INT32 FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct 
     }
   }
 
-  for (ubCurrentSector = ubStart; ubCurrentSector != ubEnd; ubCurrentSector += (INT8)iDelta) {
+  for (ubCurrentSector = ubStart; ubCurrentSector != ubEnd; ubCurrentSector += (int8_t)iDelta) {
     // find diff between current and next
     iThisCostInTime = GetSectorMvtTimeForGroup(ubCurrentSector, ubDirection, pGroup);
 
@@ -2736,7 +2736,7 @@ void HandleArrivalOfReinforcements(struct GROUP *pGroup) {
   iNumEnemiesInSector = NumEnemiesInSector(pGroup->ubSectorX, pGroup->ubSectorY);
   if (iNumEnemiesInSector) {
     if (pSector->bLastKnownEnemies >= 0) {
-      pSector->bLastKnownEnemies = (INT8)iNumEnemiesInSector;
+      pSector->bLastKnownEnemies = (int8_t)iNumEnemiesInSector;
     }
     // if we don't know how many enemies there are, then we can't update this value.
   } else {
@@ -3790,7 +3790,7 @@ BOOLEAN SpendVehicleFuel(struct SOLDIERTYPE *pSoldier, INT16 sFuelSpent) {
   Assert(pSoldier->uiStatusFlags & SOLDIER_VEHICLE);
   pSoldier->sBreathRed -= sFuelSpent;
   pSoldier->sBreathRed = (INT16)max(0, pSoldier->sBreathRed);
-  pSoldier->bBreath = (INT8)((pSoldier->sBreathRed + 99) / 100);
+  pSoldier->bBreath = (int8_t)((pSoldier->sBreathRed + 99) / 100);
   return (FALSE);
 }
 
@@ -3817,9 +3817,9 @@ void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle
     sFuelAdded = min(sFuelNeeded, sFuelAvailable);
     // Add to vehicle
     pVehicle->sBreathRed += sFuelAdded;
-    pVehicle->bBreath = (INT8)(pVehicle->sBreathRed / 100);
+    pVehicle->bBreath = (int8_t)(pVehicle->sBreathRed / 100);
     // Subtract from item
-    pItem->bStatus[0] = (INT8)(pItem->bStatus[0] - sFuelAdded / 50);
+    pItem->bStatus[0] = (int8_t)(pItem->bStatus[0] - sFuelAdded / 50);
     if (!pItem->bStatus[0]) {  // Gas can is empty, so toast the item.
       DeleteObj(pItem);
     }
@@ -3835,7 +3835,7 @@ void ReportVehicleOutOfGas(INT32 iVehicleID, uint8_t ubSectorX, uint8_t ubSector
 }
 
 void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, u8 sSectorX, u8 sSectorY,
-                                           INT8 bSectorZ) {
+                                           int8_t bSectorZ) {
   PLAYERGROUP *pPlayer = NULL;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -3955,9 +3955,9 @@ BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
   INT32 iHoursElapsed;
   uint8_t ubSectorID;
   uint8_t ubChance;
-  INT8 bDifficultyMaxCats;
-  INT8 bProgressMaxCats;
-  INT8 bNumMercMaxCats;
+  int8_t bDifficultyMaxCats;
+  int8_t bProgressMaxCats;
+  int8_t bNumMercMaxCats;
   BOOLEAN fAlreadyAmbushed = FALSE;
 
   if (pGroup->ubSectorZ) {  // no ambushes underground (no bloodcats either)
@@ -3982,36 +3982,37 @@ BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
       // come back up to the maximum if left long enough.
       INT32 iBloodCatDiff;
       iBloodCatDiff = pSector->bBloodCatPlacements - pSector->bBloodCats;
-      pSector->bBloodCats += (INT8)min(iHoursElapsed / 18, iBloodCatDiff);
+      pSector->bBloodCats += (int8_t)min(iHoursElapsed / 18, iBloodCatDiff);
     }
     // Once 0, the bloodcats will never recupe.
   } else if (pSector->bBloodCats == -1) {  // If we haven't been ambushed by bloodcats yet...
     if (gfAutoAmbush || PreChance(ubChance)) {
       // randomly choose from 5-8, 7-10, 9-12 bloodcats based on easy, normal, and hard,
       // respectively
-      bDifficultyMaxCats = (INT8)(Random(4) + gGameOptions.ubDifficultyLevel * 2 + 3);
+      bDifficultyMaxCats = (int8_t)(Random(4) + gGameOptions.ubDifficultyLevel * 2 + 3);
 
       // maximum of 3 bloodcats or 1 for every 6%, 5%, 4% progress based on easy, normal, and hard,
       // respectively
       bProgressMaxCats =
-          (INT8)max(CurrentPlayerProgressPercentage() / (7 - gGameOptions.ubDifficultyLevel), 3);
+          (int8_t)max(CurrentPlayerProgressPercentage() / (7 - gGameOptions.ubDifficultyLevel), 3);
 
       // make sure bloodcats don't outnumber mercs by a factor greater than 2
       bNumMercMaxCats =
-          (INT8)(PlayerMercsInSector(pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ) * 2);
+          (int8_t)(PlayerMercsInSector(pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ) *
+                   2);
 
       // choose the lowest number of cats calculated by difficulty and progress.
-      pSector->bBloodCats = (INT8)min(bDifficultyMaxCats, bProgressMaxCats);
+      pSector->bBloodCats = (int8_t)min(bDifficultyMaxCats, bProgressMaxCats);
 
       if (gGameOptions.ubDifficultyLevel !=
           DIF_LEVEL_HARD) {  // if not hard difficulty, ensure cats never outnumber mercs by a
                              // factor of 2 (min 3 bloodcats)
-        pSector->bBloodCats = (INT8)min(pSector->bBloodCats, bNumMercMaxCats);
-        pSector->bBloodCats = (INT8)max(pSector->bBloodCats, 3);
+        pSector->bBloodCats = (int8_t)min(pSector->bBloodCats, bNumMercMaxCats);
+        pSector->bBloodCats = (int8_t)max(pSector->bBloodCats, 3);
       }
 
       // ensure that there aren't more bloodcats than placements
-      pSector->bBloodCats = (INT8)min(pSector->bBloodCats, pSector->bBloodCatPlacements);
+      pSector->bBloodCats = (int8_t)min(pSector->bBloodCats, pSector->bBloodCatPlacements);
     }
   } else if (ubSectorID != SEC_I16) {
     if (!gfAutoAmbush &&
@@ -4057,7 +4058,7 @@ void NotifyPlayerOfBloodcatBattle(uint8_t ubSectorX, uint8_t ubSectorY) {
 }
 
 void PlaceGroupInSector(uint8_t ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
-                        INT8 bZ, BOOLEAN fCheckForBattle) {
+                        int8_t bZ, BOOLEAN fCheckForBattle) {
   ClearMercPathsAndWaypointsForAllInGroup(GetGroup(ubGroupID));
 
   // change where they are and where they're going
@@ -4171,7 +4172,7 @@ void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPC
 
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup) {
   INT16 sSectorX = 0, sSectorY = 0;
-  INT8 bSectorZ = 0;
+  int8_t bSectorZ = 0;
   CHAR16 sString[128];
   CHAR16 wSectorName[128];
   INT16 sStrategicSector;
@@ -4245,7 +4246,8 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup
   return (TRUE);
 }
 
-BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(u8 sSectorX, u8 sSectorY,
+                                                         int8_t bSectorZ) {
   uint8_t ubProfile;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fFoundSomebody = FALSE;

@@ -64,9 +64,9 @@ uint32_t gScrollSlideInertiaDirection[NUM_WORLD_DIRECTIONS] = {
 
 // Struct used for cycling through multiple mercs per mouse position
 typedef struct {
-  INT8 bNum;
+  int8_t bNum;
   uint8_t ubIDs[MAX_STACKED_MERCS];
-  INT8 bCur;
+  int8_t bCur;
   BOOLEAN fUseGridNo;
   uint16_t sUseGridNoGridNo;
 
@@ -347,9 +347,9 @@ BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFla
           // Otherwise, look for a bad guy by way of gridno]
           // Selective means don't give out enemy mercs if they are not visible
 
-          ///&& !NewOKDestination( pSoldier, sGridNo, TRUE, (INT8)gsInterfaceLevel )
+          ///&& !NewOKDestination( pSoldier, sGridNo, TRUE, (int8_t)gsInterfaceLevel )
           if (pSoldier->sGridNo == sGridNo &&
-              !NewOKDestination(pSoldier, sGridNo, TRUE, (INT8)gsInterfaceLevel)) {
+              !NewOKDestination(pSoldier, sGridNo, TRUE, (int8_t)gsInterfaceLevel)) {
             // Set it!
             ubBestMerc = GetSolID(pSoldier);
 
@@ -428,7 +428,7 @@ BOOLEAN CycleSoldierFindStack(uint16_t usMapPos) {
   return (gfHandleStack);
 }
 
-struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, INT8 bLevel) {
+struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, int8_t bLevel) {
   uint8_t ubID;
 
   ubID = WhoIsThere2(sGridNo, bLevel);
@@ -676,7 +676,7 @@ BOOLEAN SoldierOnVisibleWorldTile(struct SOLDIERTYPE *pSoldier) {
   return (GridNoOnVisibleWorldTile(pSoldier->sGridNo));
 }
 
-BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, INT8 *pbDirection,
+BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8_t *pbDirection,
                                         uint32_t *puiScrollFlags) {
   INT16 sWorldX;
   INT16 sWorldY;

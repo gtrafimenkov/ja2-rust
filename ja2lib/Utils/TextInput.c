@@ -221,7 +221,7 @@ void KillAllTextInputModes() {
 // of calls to this function dictate the TAB order from traversing from one field to the next.  This
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
-void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, INT8 bPriority,
+void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, int8_t bPriority,
                        STR16 szInitText, uint8_t ubMaxChars, uint16_t usInputType) {
   TEXTINPUTNODE *pNode;
   pNode = (TEXTINPUTNODE *)MemAlloc(sizeof(TEXTINPUTNODE));

@@ -153,12 +153,12 @@ uint32_t guiInsuranceAcceptClearForm3Button;
 //	Function Prototypes
 //
 BOOLEAN DisplayOrderGrid(uint8_t ubGridNumber, uint8_t ubMercID);
-INT8 GetNumberOfHireMercsStartingFromID(uint8_t ubStartMercID);
+int8_t GetNumberOfHireMercsStartingFromID(uint8_t ubStartMercID);
 // INT32			CalculateInsuranceCost( struct SOLDIERTYPE *pSoldier, BOOLEAN
 // fHaveInsurance
 // );
 void InsuranceContractUserTextFieldCallBack(uint8_t ubID, BOOLEAN fEntering);
-INT8 CountInsurableMercs();
+int8_t CountInsurableMercs();
 void DisableInsuranceContractNextPreviousbuttons();
 void CreateDestroyInsuranceContractFormButtons(BOOLEAN fCreate);
 void HandleAcceptButton(uint8_t ubSoldierID, uint8_t ubFormID);
@@ -834,7 +834,7 @@ void BtnInsuranceAcceptClearForm3ButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-INT8 GetNumberOfHireMercsStartingFromID(uint8_t ubStartMercID) {
+int8_t GetNumberOfHireMercsStartingFromID(uint8_t ubStartMercID) {
   uint8_t i;
   uint8_t ubCount = 0;
 
@@ -894,11 +894,11 @@ void SelectInsuranceContractRegionCallBack(struct MOUSE_REGION *pRegion, INT32 i
   }
 }
 
-INT8 CountInsurableMercs() {
+int8_t CountInsurableMercs() {
   INT16 cnt;
   struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
-  INT8 bCount = 0;
+  int8_t bCount = 0;
 
   // Set locator to first merc
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;

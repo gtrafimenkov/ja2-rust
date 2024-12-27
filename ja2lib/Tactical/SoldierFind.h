@@ -31,14 +31,14 @@ BOOLEAN FindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags);
 BOOLEAN SelectiveFindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags);
 BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
                     uint32_t uiFlags);
-struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, INT8 bLevel);
+struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, int8_t bLevel);
 
 BOOLEAN CycleSoldierFindStack(uint16_t usMapPos);
 
 BOOLEAN GridNoOnScreen(INT16 sGridNo);
 
 BOOLEAN SoldierOnScreen(uint16_t usID);
-BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, INT8 *pbDirection,
+BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8_t *pbDirection,
                                         uint32_t *puiScrollFlags);
 void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *psScreenY);
 void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *psWidth);

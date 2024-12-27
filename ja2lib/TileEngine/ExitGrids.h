@@ -23,9 +23,9 @@ void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid);
 void RemoveExitGridFromWorld(INT32 iMapIndex);
 
 void SaveExitGrids(HWFILE fp, uint16_t usNumExitGrids);
-void LoadExitGrids(INT8 **hBuffer);
+void LoadExitGrids(int8_t **hBuffer);
 
-void AttemptToChangeFloorLevel(INT8 bRelativeZLevel);
+void AttemptToChangeFloorLevel(int8_t bRelativeZLevel);
 
 extern EXITGRID gExitGrid;
 extern BOOLEAN gfOverrideInsertionWithExitGrid;
@@ -33,8 +33,8 @@ extern BOOLEAN gfOverrideInsertionWithExitGrid;
 // Finds closest ExitGrid of same type as is at gridno, within a radius.  Checks
 // valid paths, destinations, etc.
 uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                                INT8 ubRadius, uint8_t *pubDirection);
+                                                int8_t ubRadius, uint8_t *pubDirection);
 
-uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubRadius);
+uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t ubRadius);
 
 #endif

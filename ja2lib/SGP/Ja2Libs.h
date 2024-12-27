@@ -15,9 +15,9 @@ enum {
   LANG_NUMBER
 };
 
-extern INT8 gbLocale;
+extern int8_t gbLocale;
 
-INT8 DetectLocale();
+int8_t DetectLocale();
 
 extern STR8 LocaleNames[LANG_NUMBER];
 

@@ -508,7 +508,7 @@ BOOLEAN gfMapPanelWasRedrawn = FALSE;
 uint8_t gubMAP_HandInvDispText[NUM_INV_SLOTS];
 
 // currently selected character's list index
-INT8 bSelectedInfoChar = -1;
+int8_t bSelectedInfoChar = -1;
 
 // map sort button images
 INT32 giMapSortButtonImage[MAX_SORT_METHODS] = {-1, -1, -1, -1, -1, -1};
@@ -632,7 +632,7 @@ extern FACETYPE *gpCurrentTalkingFace;
 // externs for highlighting of ammo/weapons
 extern uint32_t guiMouseOverItemTime;
 extern BOOLEAN gfCheckForMouseOverItem;
-extern INT8 gbCheckForMouseOverItemPos;
+extern int8_t gbCheckForMouseOverItemPos;
 
 // Autoresolve sets this variable which defaults to -1 when not needed.
 extern INT16 gsEnemyGainedControlOfSectorID;
@@ -686,7 +686,7 @@ void SetClockHour(STR16 pStringA, ...);
 void SetHourAlternate(STR16 pStringA, ...);
 void SetDayAlternate(STR16 pStringA, ...);
 
-void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber);
+void RenderIconsForUpperLeftCornerPiece(int8_t bCharNumber);
 void RenderAttributeStringsForUpperLeftHandCorner(uint32_t uiBufferToRenderTo);
 
 void DisplayThePotentialPathForCurrentDestinationCharacterForMapScreenInterface(INT16 sMapX,
@@ -754,7 +754,7 @@ void RebuildWayPointsForAllSelectedCharsGroups(void);
 extern BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, uint32_t uiHandPos,
                                      uint16_t usReplaceItem);
 
-BOOLEAN CharacterIsInTransitAndHasItemPickedUp(INT8 bCharacterNumber);
+BOOLEAN CharacterIsInTransitAndHasItemPickedUp(int8_t bCharacterNumber);
 
 void InterruptTimeForMenus(void);
 
@@ -776,7 +776,7 @@ void HandleShadingOfLinesForContractMenu(void);
 void UpdateStatusOfMapSortButtons(void);
 
 void DisplayIconsForMercsAsleep(void);
-BOOLEAN CharacterIsInLoadedSectorAndWantsToMoveInventoryButIsNotAllowed(INT8 bCharId);
+BOOLEAN CharacterIsInLoadedSectorAndWantsToMoveInventoryButIsNotAllowed(int8_t bCharId);
 
 void HandlePostAutoresolveMessages();
 
@@ -887,30 +887,30 @@ INT32 GetIndexForThisSoldier(struct SOLDIERTYPE *pSoldier);
 
 void CheckForAndRenderNewMailOverlay();
 
-BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber);
+BOOLEAN MapCharacterHasAccessibleInventory(int8_t bCharNumber);
 void CheckForInventoryModeCancellation();
 
 void ChangeMapScreenMaskCursor(uint16_t usCursor);
 void CancelOrShortenPlottedPath(void);
 
-BOOLEAN HandleCtrlOrShiftInTeamPanel(INT8 bCharNumber);
+BOOLEAN HandleCtrlOrShiftInTeamPanel(int8_t bCharNumber);
 
 INT32 GetContractExpiryTime(struct SOLDIERTYPE *pSoldier);
 
 void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, size_t bufSize);
-INT32 GetGroundTravelTimeOfCharacter(INT8 bCharNumber);
+INT32 GetGroundTravelTimeOfCharacter(int8_t bCharNumber);
 
 INT16 CalcLocationValueForChar(INT32 iCounter);
 
 void CancelChangeArrivalSectorMode();
 
-void MakeMapModesSuitableForDestPlotting(INT8 bCharNumber);
+void MakeMapModesSuitableForDestPlotting(int8_t bCharNumber);
 
-BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 void SwapCharactersInList(INT32 iCharA, INT32 iCharB);
 
-BOOLEAN CanChangeDestinationForCharSlot(INT8 bCharNumber, BOOLEAN fShowErrorMessage);
+BOOLEAN CanChangeDestinationForCharSlot(int8_t bCharNumber, BOOLEAN fShowErrorMessage);
 
 BOOLEAN RequestGiveSkyriderNewDestination(void);
 void ExplainWhySkyriderCantFly(void);
@@ -942,7 +942,7 @@ void RememberPreviousPathForAllSelectedChars(void);
 void RestorePreviousPaths(void);
 void ClearPreviousPaths(void);
 
-void SelectAllCharactersInSquad(INT8 bSquadNumber);
+void SelectAllCharactersInSquad(int8_t bSquadNumber);
 
 BOOLEAN CanDrawSectorCursor(void);
 void RestoreMapSectorCursor(INT16 sMapX, INT16 sMapY);
@@ -955,7 +955,7 @@ void ChangeCharacterListSortMethod(INT32 iValue);
 void MapscreenMarkButtonsDirty();
 
 extern BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSectorY,
-                                              INT8 bClickedTownId);
+                                              int8_t bClickedTownId);
 
 extern INT32 GetNumberOfMercsInUpdateList(void);
 
@@ -967,7 +967,7 @@ void DumpItemsList(void);
 
 // the tries to select a mapscreen character by his soldier ID
 BOOLEAN SetInfoChar(uint8_t ubID) {
-  INT8 bCounter;
+  int8_t bCounter;
 
   for (bCounter = 0; bCounter < MAX_CHARACTER_COUNT; bCounter++) {
     // skip invalid characters
@@ -1346,7 +1346,7 @@ void RenderHandPosItem(void) {
                 58, 23, DIRTYLEVEL2, NULL, 0, FALSE, 0);
 }
 
-void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
+void RenderIconsForUpperLeftCornerPiece(int8_t bCharNumber) {
   struct VObject *hHandle;
 
   GetVideoObject(&hHandle, guiULICONS);
@@ -2007,7 +2007,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
 }
 
 // this character is in transit has an item picked up
-BOOLEAN CharacterIsInTransitAndHasItemPickedUp(INT8 bCharacterNumber) {
+BOOLEAN CharacterIsInTransitAndHasItemPickedUp(int8_t bCharacterNumber) {
   // valid character?
   if (bCharacterNumber == -1) {
     // nope
@@ -2658,7 +2658,7 @@ uint32_t MapScreenHandle(void) {
 
     // Load Sector
     // BigCheese
-    if (!SetCurrentWorldSector(sSelMapX, sSelMapY, (INT8)iCurrentMapSectorZ)) {
+    if (!SetCurrentWorldSector(sSelMapX, sSelMapY, (int8_t)iCurrentMapSectorZ)) {
       // Cannot load!
     } else {
       CreateDestroyMapInvButton();
@@ -3298,7 +3298,7 @@ uint32_t MapScreenHandle(void) {
   }
 
   // display town info
-  DisplayTownInfo(sSelMapX, sSelMapY, (INT8)iCurrentMapSectorZ);
+  DisplayTownInfo(sSelMapX, sSelMapY, (int8_t)iCurrentMapSectorZ);
 
   if (fShowTownInfo == TRUE) {
     // force update of town mine info boxes
@@ -4118,7 +4118,7 @@ uint32_t HandleMapUI() {
           fWasAlreadySelected = FALSE;
 
           // select the clicked sector, retaining the same sublevel depth
-          ChangeSelectedMapSector(sMapX, sMapY, (INT8)iCurrentMapSectorZ);
+          ChangeSelectedMapSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ);
         } else {
           fWasAlreadySelected = TRUE;
         }
@@ -4126,7 +4126,7 @@ uint32_t HandleMapUI() {
         // if showing item counts on the map, and not already in sector inventory
         if (fShowItemsFlag && !fShowMapInventoryPool) {
           // show sector inventory for this clicked sector
-          ChangeSelectedMapSector(sMapX, sMapY, (INT8)iCurrentMapSectorZ);
+          ChangeSelectedMapSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ);
 
           fShowMapInventoryPool = TRUE;
           CreateDestroyMapInventoryPoolButtons(TRUE);
@@ -4162,7 +4162,7 @@ uint32_t HandleMapUI() {
           // away.
           if (fWasAlreadySelected) {
             // if there are any movable characters here
-            if (AnyMovableCharsInOrBetweenThisSector(sMapX, sMapY, (INT8)iCurrentMapSectorZ)) {
+            if (AnyMovableCharsInOrBetweenThisSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ)) {
               // if showing the surface level map
               if (iCurrentMapSectorZ == 0) {
                 TurnOnShowTeamsMode();
@@ -4205,7 +4205,7 @@ uint32_t HandleMapUI() {
 
 void GetMapKeyboardInput(uint32_t *puiNewEvent) {
   InputAtom InputEvent;
-  INT8 bSquadNumber;
+  int8_t bSquadNumber;
   uint8_t ubGroupId = 0;
   BOOLEAN fCtrl, fAlt;
   INT16 sMapX, sMapY;
@@ -4575,7 +4575,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
         case '8':
         case '9':
           // multi-selects all characters in that squad.  SHIFT key and 1-0 for squads 11-20
-          bSquadNumber = (INT8)(InputEvent.usParam - '1');  // internal squad #s start at 0
+          bSquadNumber = (int8_t)(InputEvent.usParam - '1');  // internal squad #s start at 0
           SelectAllCharactersInSquad(bSquadNumber);
           break;
 
@@ -4618,14 +4618,14 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
           if (fAlt) {
             if (giHighLine != -1) {
               if (gCharactersList[giHighLine].fValid == TRUE) {
-                bSelectedAssignChar = (INT8)giHighLine;
+                bSelectedAssignChar = (int8_t)giHighLine;
                 RebuildAssignmentsBox();
-                ChangeSelectedInfoChar((INT8)giHighLine, FALSE);
+                ChangeSelectedInfoChar((int8_t)giHighLine, FALSE);
                 fShowAssignmentMenu = TRUE;
               }
             } else if (bSelectedInfoChar != -1) {
               if (gCharactersList[bSelectedInfoChar].fValid == TRUE) {
-                bSelectedAssignChar = (INT8)bSelectedInfoChar;
+                bSelectedAssignChar = (int8_t)bSelectedInfoChar;
                 RebuildAssignmentsBox();
                 fShowAssignmentMenu = TRUE;
               }
@@ -4828,7 +4828,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
             // initialize miners if not already done so (fakes entering Drassen mine first)
             HandleQuestCodeOnSectorEntry(13, 4, 0);
             // test miner quote system
-            IssueHeadMinerQuote((INT8)(1 + Random(MAX_NUMBER_OF_MINES - 1)),
+            IssueHeadMinerQuote((int8_t)(1 + Random(MAX_NUMBER_OF_MINES - 1)),
                                 (uint8_t)(1 + Random(2)));
           }
 #endif
@@ -4898,7 +4898,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
               // check to see if this person is moving, if not...then assign them to mvt group
               if (pSoldier->ubGroupID == 0) {
                 ubGroupId = CreateNewPlayerGroupDepartingFromSector(
-                    (INT8)(GetSolSectorX(pSoldier)), (INT8)(GetSolSectorY(pSoldier)));
+                    (int8_t)(GetSolSectorX(pSoldier)), (int8_t)(GetSolSectorY(pSoldier)));
                 // assign to a group
                 AddPlayerToGroup(ubGroupId, pSoldier);
               }
@@ -5535,7 +5535,7 @@ void PollRightButtonInMapView(uint32_t *puiNewEvent) {
             */
 
             if ((sSelMapX != sMapX) || (sSelMapY != sMapY)) {
-              ChangeSelectedMapSector(sMapX, sMapY, (INT8)iCurrentMapSectorZ);
+              ChangeSelectedMapSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ);
             }
           }
 
@@ -5796,7 +5796,7 @@ void HandleCursorOverRifleAmmo() {
 
   if (gfCheckForMouseOverItem) {
     if (HandleCompatibleAmmoUI(GetSoldierByID(gCharactersList[bSelectedInfoChar].usSolID),
-                               (INT8)gbCheckForMouseOverItemPos, TRUE)) {
+                               (int8_t)gbCheckForMouseOverItemPos, TRUE)) {
       if ((GetJA2Clock() - guiMouseOverItemTime) > 100) {
         fTeamPanelDirty = TRUE;
       }
@@ -5836,12 +5836,12 @@ void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     gubMAP_HandInvDispText[uiHandPos] = 2;
     guiMouseOverItemTime = GetJA2Clock();
     gfCheckForMouseOverItem = TRUE;
-    HandleCompatibleAmmoUI(pSoldier, (INT8)uiHandPos, FALSE);
-    gbCheckForMouseOverItemPos = (INT8)uiHandPos;
+    HandleCompatibleAmmoUI(pSoldier, (int8_t)uiHandPos, FALSE);
+    gbCheckForMouseOverItemPos = (int8_t)uiHandPos;
   }
   if (iReason == MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gubMAP_HandInvDispText[uiHandPos] = 1;
-    HandleCompatibleAmmoUI(pSoldier, (INT8)uiHandPos, FALSE);
+    HandleCompatibleAmmoUI(pSoldier, (int8_t)uiHandPos, FALSE);
     gfCheckForMouseOverItem = FALSE;
     fTeamPanelDirty = TRUE;
     gbCheckForMouseOverItemPos = -1;
@@ -6177,7 +6177,7 @@ void RenderAttributeStringsForUpperLeftHandCorner(uint32_t uiBufferToRenderTo) {
 void DisplayThePotentialPathForCurrentDestinationCharacterForMapScreenInterface(INT16 sMapX,
                                                                                 INT16 sMapY) {
   // simply check if we want to refresh the screen to display path
-  static INT8 bOldDestChar = -1;
+  static int8_t bOldDestChar = -1;
   static INT16 sPrevMapX, sPrevMapY;
   INT32 iDifference = 0;
 
@@ -6523,11 +6523,11 @@ void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
     }
 
     if (gCharactersList[iValue].fValid == TRUE) {
-      if (HandleCtrlOrShiftInTeamPanel((INT8)iValue)) {
+      if (HandleCtrlOrShiftInTeamPanel((int8_t)iValue)) {
         return;
       }
 
-      ChangeSelectedInfoChar((INT8)iValue, TRUE);
+      ChangeSelectedInfoChar((int8_t)iValue, TRUE);
 
       pSoldier = GetSoldierByID(gCharactersList[iValue].usSolID);
 
@@ -6574,7 +6574,7 @@ void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
       pSoldier = GetSoldierByID(gCharactersList[iValue].usSolID);
 
       // select this character
-      ChangeSelectedInfoChar((INT8)iValue, TRUE);
+      ChangeSelectedInfoChar((int8_t)iValue, TRUE);
 
       RequestToggleMercInventoryPanel();
 
@@ -6647,13 +6647,13 @@ void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
     }
 
     if (gCharactersList[iValue].fValid == TRUE) {
-      if (HandleCtrlOrShiftInTeamPanel((INT8)iValue)) {
+      if (HandleCtrlOrShiftInTeamPanel((int8_t)iValue)) {
         return;
       }
 
       // reset list if the clicked character isn't also selected
-      ChangeSelectedInfoChar((INT8)iValue,
-                             (BOOLEAN)(IsEntryInSelectedListSet((INT8)iValue) == FALSE));
+      ChangeSelectedInfoChar((int8_t)iValue,
+                             (BOOLEAN)(IsEntryInSelectedListSet((int8_t)iValue) == FALSE));
 
       pSoldier = GetSoldierByID(gCharactersList[iValue].usSolID);
 
@@ -6666,7 +6666,7 @@ void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
         return;
       }
 
-      bSelectedAssignChar = (INT8)iValue;
+      bSelectedAssignChar = (int8_t)iValue;
       RebuildAssignmentsBox();
 
       // reset dest character
@@ -6771,13 +6771,13 @@ void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iR
     }
 
     if (gCharactersList[iValue].fValid == TRUE) {
-      if (HandleCtrlOrShiftInTeamPanel((INT8)iValue)) {
+      if (HandleCtrlOrShiftInTeamPanel((int8_t)iValue)) {
         return;
       }
 
       // reset list if the clicked character isn't also selected
-      ChangeSelectedInfoChar((INT8)iValue,
-                             (BOOLEAN)(IsEntryInSelectedListSet((INT8)iValue) == FALSE));
+      ChangeSelectedInfoChar((int8_t)iValue,
+                             (BOOLEAN)(IsEntryInSelectedListSet((int8_t)iValue) == FALSE));
 
       // deselect any characters/vehicles that can't accompany the clicked merc
       DeselectSelectedListMercsWhoCantMoveWithThisGuy(&(Menptr[gCharactersList[iValue].usSolID]));
@@ -6787,9 +6787,9 @@ void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iR
 
       // Find out if this guy and everyone travelling with him is allowed to move strategically
       // NOTE: errors are reported within...
-      if (CanChangeDestinationForCharSlot((INT8)iValue, TRUE)) {
+      if (CanChangeDestinationForCharSlot((int8_t)iValue, TRUE)) {
         // turn off sector inventory, turn on show teams filter, etc.
-        MakeMapModesSuitableForDestPlotting((INT8)iValue);
+        MakeMapModesSuitableForDestPlotting((int8_t)iValue);
 
         // check if person is in a vehicle
         if (Menptr[gCharactersList[iValue].usSolID].bAssignment == VEHICLE) {
@@ -6804,7 +6804,7 @@ void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iR
         }
 
         // select this character as the one plotting strategic movement
-        bSelectedDestChar = (INT8)iValue;
+        bSelectedDestChar = (int8_t)iValue;
 
         // remember the current paths for all selected characters so we can restore them if need be
         RememberPreviousPathForAllSelectedChars();
@@ -6846,11 +6846,11 @@ void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iR
   }
 
   if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
-    MakeMapModesSuitableForDestPlotting((INT8)iValue);
+    MakeMapModesSuitableForDestPlotting((int8_t)iValue);
 
     // reset list if the clicked character isn't also selected
-    ChangeSelectedInfoChar((INT8)iValue,
-                           (BOOLEAN)(IsEntryInSelectedListSet((INT8)iValue) == FALSE));
+    ChangeSelectedInfoChar((int8_t)iValue,
+                           (BOOLEAN)(IsEntryInSelectedListSet((int8_t)iValue) == FALSE));
 
     CancelPathsOfAllSelectedCharacters();
 
@@ -6914,16 +6914,16 @@ void TeamListSleepRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
     }
 
     if ((gCharactersList[iValue].fValid == TRUE)) {
-      if (HandleCtrlOrShiftInTeamPanel((INT8)iValue)) {
+      if (HandleCtrlOrShiftInTeamPanel((int8_t)iValue)) {
         return;
       }
 
       // reset list if the clicked character isn't also selected
-      ChangeSelectedInfoChar((INT8)iValue,
-                             (BOOLEAN)(IsEntryInSelectedListSet((INT8)iValue) == FALSE));
+      ChangeSelectedInfoChar((int8_t)iValue,
+                             (BOOLEAN)(IsEntryInSelectedListSet((int8_t)iValue) == FALSE));
 
       // if this slot's sleep status can be changed
-      if (CanChangeSleepStatusForCharSlot((INT8)iValue)) {
+      if (CanChangeSleepStatusForCharSlot((int8_t)iValue)) {
         pSoldier = GetSoldierByID(gCharactersList[iValue].usSolID);
 
         if (pSoldier->fMercAsleep == TRUE) {
@@ -6972,7 +6972,7 @@ void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
     if (gCharactersList[iValue].fValid == TRUE) {
       giHighLine = iValue;
 
-      if (CanChangeSleepStatusForCharSlot((INT8)iValue)) {
+      if (CanChangeSleepStatusForCharSlot((int8_t)iValue)) {
         giSleepHighLine = iValue;
       } else {
         giSleepHighLine = -1;
@@ -6989,7 +6989,7 @@ void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
     // restore background
     RestoreBackgroundForSleepGlowRegionList();
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
-    if (CanChangeSleepStatusForCharSlot((INT8)iValue)) {
+    if (CanChangeSleepStatusForCharSlot((int8_t)iValue)) {
       // play click
       PlayGlowRegionSound();
     }
@@ -7008,7 +7008,7 @@ void TeamListContractRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
   if (gCharactersList[iValue].fValid == TRUE) {
     if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
       // select ONLY this dude
-      ChangeSelectedInfoChar((INT8)iValue, TRUE);
+      ChangeSelectedInfoChar((int8_t)iValue, TRUE);
 
       // reset character
       giDestHighLine = -1;
@@ -7042,7 +7042,7 @@ void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
     if (gCharactersList[iValue].fValid == TRUE) {
       giHighLine = iValue;
 
-      if (CanExtendContractForCharSlot((INT8)iValue)) {
+      if (CanExtendContractForCharSlot((int8_t)iValue)) {
         giContractHighLine = iValue;
       } else {
         giContractHighLine = -1;
@@ -7063,7 +7063,7 @@ void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
     // restore background
     RestoreBackgroundForContractGlowRegionList();
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
-    if (CanExtendContractForCharSlot((INT8)iValue)) {
+    if (CanExtendContractForCharSlot((int8_t)iValue)) {
       // play click
       PlayGlowRegionSound();
     }
@@ -7567,7 +7567,7 @@ void ReBuildCharactersList(void) {
 }
 
 void HandleChangeOfInfoChar(void) {
-  static INT8 bOldInfoChar = -1;
+  static int8_t bOldInfoChar = -1;
 
   if (bSelectedInfoChar != bOldInfoChar) {
     // set auto faces inactive
@@ -7613,7 +7613,7 @@ void TestMessageSystem(void) {
 void EnableDisableTeamListRegionsAndHelpText(void) {
   // check if valid character here, if so, then do nothing..other wise set help text timer to a
   // gazillion
-  INT8 bCharNum;
+  int8_t bCharNum;
 
   for (bCharNum = 0; bCharNum < MAX_CHARACTER_COUNT; bCharNum++) {
     if (gCharactersList[bCharNum].fValid == FALSE) {
@@ -7742,7 +7742,7 @@ BOOLEAN ContinueDialogue(struct SOLDIERTYPE *pSoldier, BOOLEAN fDone) {
   // continue this grunts dialogue, restore when done
   static BOOLEAN fTalkingingGuy = FALSE;
 
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   if (fDone == TRUE) {
     if (fTalkingingGuy == TRUE) {
@@ -8188,8 +8188,8 @@ void UpdateStatusOfMapSortButtons(void) {
   }
 }
 
-INT8 GetLastValidCharacterInTeamPanelList(void) {
-  INT8 iCounter = 0, iValue = 0;
+int8_t GetLastValidCharacterInTeamPanelList(void) {
+  int8_t iCounter = 0, iValue = 0;
 
   // run through the list and find the last valid guy in the list
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -8198,7 +8198,7 @@ INT8 GetLastValidCharacterInTeamPanelList(void) {
         if (fShowMapInventoryPool) {
           if (Menptr[gCharactersList[iCounter].usSolID].sSectorX == sSelMapX &&
               Menptr[gCharactersList[iCounter].usSolID].sSectorY == sSelMapY &&
-              Menptr[gCharactersList[iCounter].usSolID].bSectorZ == (INT8)(iCurrentMapSectorZ)) {
+              Menptr[gCharactersList[iCounter].usSolID].bSectorZ == (int8_t)(iCurrentMapSectorZ)) {
             iValue = iCounter;
           }
         } else {
@@ -8229,9 +8229,9 @@ INT8 GetLastValidCharacterInTeamPanelList(void) {
 
 /*
 // NB These functions weren't being called anywhere!  Use GoToNextCharacterInList etc instead
-INT8 GetPrevValidCharacterInTeamPanelList( INT8 bCurrentIndex )
+int8_t GetPrevValidCharacterInTeamPanelList( int8_t bCurrentIndex )
 {
-        INT8 iCounter = bCurrentIndex, iValue = 0;
+        int8_t iCounter = bCurrentIndex, iValue = 0;
 
         // run through the list and find the last valid guy in the list
         for( iCounter = bCurrentIndex; iCounter > 0; iCounter-- )
@@ -8244,7 +8244,7 @@ INT8 GetPrevValidCharacterInTeamPanelList( INT8 bCurrentIndex )
                                 {
                                         if(  Menptr[ gCharactersList[ iCounter ].usSolID ].sSectorX
 == sSelMapX &&  Menptr[ gCharactersList[ iCounter ].usSolID ].sSectorY == sSelMapY && Menptr[
-gCharactersList[ iCounter ].usSolID ].bSectorZ == ( INT8 )( iCurrentMapSectorZ ) )
+gCharactersList[ iCounter ].usSolID ].bSectorZ == ( int8_t )( iCurrentMapSectorZ ) )
                                         {
                                                 iValue = iCounter;
                                         }
@@ -8284,9 +8284,9 @@ gCharactersList[ bSelectedInfoChar ].usSolID ].bSectorZ )
         return( iValue );
 }
 
-INT8 GetNextValidCharacterInTeamPanelList( INT8 bCurrentIndex )
+int8_t GetNextValidCharacterInTeamPanelList( int8_t bCurrentIndex )
 {
-        INT8 iCounter = bCurrentIndex, iValue = 0;
+        int8_t iCounter = bCurrentIndex, iValue = 0;
 
         // run through the list and find the last valid guy in the list
         for( iCounter = bCurrentIndex; iCounter < MAX_CHARACTER_COUNT; iCounter++ )
@@ -8299,7 +8299,7 @@ INT8 GetNextValidCharacterInTeamPanelList( INT8 bCurrentIndex )
                                 {
                                         if(  Menptr[ gCharactersList[ iCounter ].usSolID ].sSectorX
 == sSelMapX &&  Menptr[ gCharactersList[ iCounter ].usSolID ].sSectorY == sSelMapY && Menptr[
-gCharactersList[ iCounter ].usSolID ].bSectorZ == ( INT8 )( iCurrentMapSectorZ ) )
+gCharactersList[ iCounter ].usSolID ].bSectorZ == ( int8_t )( iCurrentMapSectorZ ) )
                                         {
                                                 iValue = iCounter;
                                         }
@@ -8747,7 +8747,7 @@ void HandleRemovalOfPreLoadedMapGraphics(void) {
   return;
 }
 
-BOOLEAN CharacterIsInLoadedSectorAndWantsToMoveInventoryButIsNotAllowed(INT8 bCharId) {
+BOOLEAN CharacterIsInLoadedSectorAndWantsToMoveInventoryButIsNotAllowed(int8_t bCharId) {
   uint16_t usSoldierId = 0;
 
   // invalid char id
@@ -9206,12 +9206,12 @@ void SortListOfMercsInTeamPanel(BOOLEAN fRetainSelectedMercs) {
 
           // this guy is selected
           if (pSelectedSoldier[iCounter] == pCurrentSoldier) {
-            SetEntryInSelectedCharacterList((INT8)iCounterA);
+            SetEntryInSelectedCharacterList((int8_t)iCounterA);
           }
 
           // update who the currently selected info guy is
           if (pPreviousSelectedInfoChar == pCurrentSoldier) {
-            ChangeSelectedInfoChar((INT8)iCounterA, FALSE);
+            ChangeSelectedInfoChar((int8_t)iCounterA, FALSE);
           }
         }
       }
@@ -9402,7 +9402,7 @@ BOOLEAN CanToggleSelectedCharInventory(void) {
   return (TRUE);
 }
 
-BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber) {
+BOOLEAN MapCharacterHasAccessibleInventory(int8_t bCharNumber) {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   Assert(bCharNumber >= 0);
@@ -9448,7 +9448,7 @@ void CheckForInventoryModeCancellation() {
   }
 }
 
-void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   // ignore while map inventory pool is showing, or else items can be replicated, since sector
   // inventory always applies only to the currently selected sector!!!
   if (fShowMapInventoryPool) return;
@@ -9477,9 +9477,9 @@ void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   fTeamPanelDirty = TRUE;
 }
 
-BOOLEAN CanChangeDestinationForCharSlot(INT8 bCharNumber, BOOLEAN fShowErrorMessage) {
+BOOLEAN CanChangeDestinationForCharSlot(int8_t bCharNumber, BOOLEAN fShowErrorMessage) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT8 bErrorNumber = -1;
+  int8_t bErrorNumber = -1;
 
   if (bCharNumber == -1) return (FALSE);
 
@@ -9504,7 +9504,7 @@ BOOLEAN CanChangeDestinationForCharSlot(INT8 bCharNumber, BOOLEAN fShowErrorMess
   }
 }
 
-BOOLEAN CanExtendContractForCharSlot(INT8 bCharNumber) {
+BOOLEAN CanExtendContractForCharSlot(int8_t bCharNumber) {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (bCharNumber == -1) return (FALSE);
@@ -9531,7 +9531,7 @@ BOOLEAN CanExtendContractForCharSlot(INT8 bCharNumber) {
   return (TRUE);
 }
 
-BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber) {
+BOOLEAN CanChangeSleepStatusForCharSlot(int8_t bCharNumber) {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (bCharNumber == -1) return (FALSE);
@@ -9654,7 +9654,7 @@ void CancelOrShortenPlottedPath(void) {
   fCharacterInfoPanelDirty = TRUE;  // to update ETAs if path reversed or shortened
 }
 
-BOOLEAN HandleCtrlOrShiftInTeamPanel(INT8 bCharNumber) {
+BOOLEAN HandleCtrlOrShiftInTeamPanel(int8_t bCharNumber) {
   // check if shift or ctrl held down, if so, set values in list
   if (_KeyDown(CTRL)) {
     ToggleEntryInSelectedList(bCharNumber);
@@ -9689,7 +9689,7 @@ INT32 GetContractExpiryTime(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void ChangeSelectedInfoChar(INT8 bCharNumber, BOOLEAN fResetSelectedList) {
+void ChangeSelectedInfoChar(int8_t bCharNumber, BOOLEAN fResetSelectedList) {
   Assert((bCharNumber >= -1) && (bCharNumber < MAX_CHARACTER_COUNT));
 
   if ((bCharNumber != -1) && (gCharactersList[bCharNumber].fValid == FALSE)) return;
@@ -9773,7 +9773,7 @@ void CopyPathToAllSelectedCharacters(struct path *pPath) {
 }
 
 void CancelPathsOfAllSelectedCharacters() {
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   BOOLEAN fSkyriderMsgShown = FALSE;
 
@@ -9824,7 +9824,7 @@ void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, si
   swprintf(sString, bufSize, L"%s %02d:%02d", pEtaString[0], uiHour, uiMin);
 }
 
-INT32 GetGroundTravelTimeOfCharacter(INT8 bCharNumber) {
+INT32 GetGroundTravelTimeOfCharacter(int8_t bCharNumber) {
   INT32 iTravelTime = 0;
 
   if (bCharNumber == -1) return (0);
@@ -9872,7 +9872,7 @@ void CancelChangeArrivalSectorMode() {
   MarkForRedrawalStrategicMap();
 }
 
-void MakeMapModesSuitableForDestPlotting(INT8 bCharNumber) {
+void MakeMapModesSuitableForDestPlotting(int8_t bCharNumber) {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (gCharactersList[bCharNumber].fValid == TRUE) {
@@ -9902,7 +9902,7 @@ void MakeMapModesSuitableForDestPlotting(INT8 bCharNumber) {
   }
 }
 
-BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   INT32 iFirstId = 0, iLastId = 0;
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -10144,7 +10144,7 @@ void HandleMilitiaRedistributionClick(void) {
     fTownStillHidden = ((bTownId == TIXA) && !fFoundTixa) || ((bTownId == ORTA) && !fFoundOrta);
 
     if ((bTownId != BLANK_SECTOR) && !fTownStillHidden) {
-      if (MilitiaTrainingAllowedInSector(sSelMapX, sSelMapY, (INT8)iCurrentMapSectorZ)) {
+      if (MilitiaTrainingAllowedInSector(sSelMapX, sSelMapY, (int8_t)iCurrentMapSectorZ)) {
         if (fShowTownInfo == TRUE) {
           fShowTownInfo = FALSE;
         }
@@ -10183,7 +10183,7 @@ void DumpSectorDifficultyInfo(void) {
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Player Kills = %d",
             gStrategicStatus.usPlayerKills);
 
-  GetSectorIDString(sSelMapX, sSelMapY, (INT8)iCurrentMapSectorZ, wSectorName,
+  GetSectorIDString(sSelMapX, sSelMapY, (int8_t)iCurrentMapSectorZ, wSectorName,
                     ARR_SIZE(wSectorName), TRUE);
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"GetSectorID8: %s", wSectorName);
 
@@ -10579,8 +10579,8 @@ void ClearPreviousPaths(void) {
   gpHelicopterPreviousMercPath = ClearStrategicPathList(gpHelicopterPreviousMercPath, 0);
 }
 
-void SelectAllCharactersInSquad(INT8 bSquadNumber) {
-  INT8 bCounter;
+void SelectAllCharactersInSquad(int8_t bSquadNumber) {
+  int8_t bCounter;
   BOOLEAN fFirstOne = TRUE;
   struct SOLDIERTYPE *pSoldier;
 

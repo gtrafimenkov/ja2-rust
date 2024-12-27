@@ -16,7 +16,7 @@ void MakeClosestEnemyChosenOne() {
   INT16 sPathCost, sShortestPath = 1000;
   uint8_t ubClosestEnemy = NOBODY;
   struct SOLDIERTYPE *pSoldier;
-  INT8 bPanicTrigger;
+  int8_t bPanicTrigger;
   INT16 sPanicTriggerGridNo;
 
   if (!(gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE)) {
@@ -156,8 +156,8 @@ void MakeClosestEnemyChosenOne() {
 
 void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
   INT32 iAPCost, iPathCost;
-  // INT8		bOldKeys;
-  INT8 bPanicTrigger;
+  // int8_t		bOldKeys;
+  int8_t bPanicTrigger;
   INT16 sPanicTriggerGridNo;
   uint32_t uiPercentEnemiesKilled;
 
@@ -211,11 +211,11 @@ void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
   pSoldier->bHasKeys = (pSoldier->bHasKeys >> 1);
 }
 
-INT8 PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove) {
+int8_t PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove) {
   BOOLEAN fFoundRoute = FALSE;
-  INT8 bSlot;
+  int8_t bSlot;
   INT32 iPathCost;
-  INT8 bPanicTrigger;
+  int8_t bPanicTrigger;
   INT16 sPanicTriggerGridNo;
 
   // if there are panic bombs here
@@ -360,11 +360,11 @@ void InitPanicSystem(void) {
   FindPanicBombsAndTriggers();
 }
 
-INT8 ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier) {
-  INT8 bLoop;
+int8_t ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier) {
+  int8_t bLoop;
   INT16 sDistance;
   INT16 sClosestDistance = 1000;
-  INT8 bClosestTrigger = -1;
+  int8_t bClosestTrigger = -1;
   uint32_t uiPercentEnemiesKilled;
 
   uiPercentEnemiesKilled = (uint32_t)(100 * (uint32_t)(gTacticalStatus.ubArmyGuysKilled) /
@@ -404,7 +404,7 @@ INT8 ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN NeedToRadioAboutPanicTrigger(void) {
   uint32_t uiPercentEnemiesKilled;
-  INT8 bLoop;
+  int8_t bLoop;
 
   if (!(gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE) ||
       gTacticalStatus.ubTheChosenOne != NOBODY) {
@@ -442,7 +442,7 @@ BOOLEAN NeedToRadioAboutPanicTrigger(void) {
 #define STAIRCASE_GRIDNO 12067
 #define STAIRCASE_DIRECTION 0
 
-INT8 HeadForTheStairCase(struct SOLDIERTYPE *pSoldier) {
+int8_t HeadForTheStairCase(struct SOLDIERTYPE *pSoldier) {
   UNDERGROUND_SECTORINFO *pBasementInfo;
 
   pBasementInfo = FindUnderGroundSector(3, MAP_ROW_P, 1);

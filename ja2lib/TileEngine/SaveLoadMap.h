@@ -57,7 +57,7 @@ typedef struct {
 void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap);
 
 BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
-                                           INT8 bSectorZ);
+                                           int8_t bSectorZ);
 
 // Applies a change TO THE MAP TEMP file
 void AddStructToMapTempFile(uint32_t iMapIndex, uint16_t usIndex);
@@ -75,7 +75,7 @@ void AddRemoveObjectToMapTempFile(uint32_t uiMapIndex, uint16_t usIndex);
 
 void SaveBloodSmellAndRevealedStatesFromMapToTempFile();
 
-BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile();
 
@@ -103,7 +103,7 @@ void AddOpenableStructStatusToMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened);
 void AddWindowHitToMapTempFile(uint32_t uiMapIndex);
 
 BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(uint16_t usSectorX, uint16_t usSectorY,
-                                                     INT8 bSectorZ, uint16_t usGridNo,
+                                                     int8_t bSectorZ, uint16_t usGridNo,
                                                      BOOLEAN fChangeToOpen);
 
 #endif

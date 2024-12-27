@@ -83,7 +83,7 @@ BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {
 void HandleSoldierDeadComments(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt = 0;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT8 bBuddyIndex;
+  int8_t bBuddyIndex;
 
   // IF IT'S THE SELECTED GUY, MAKE ANOTHER SELECTED!
   cnt = gTacticalStatus.Team[pSoldier->bTeam].bFirstID;

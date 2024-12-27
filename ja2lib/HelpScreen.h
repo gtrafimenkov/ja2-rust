@@ -18,7 +18,7 @@ enum {
 };
 
 typedef struct {
-  INT8 bCurrentHelpScreen;
+  int8_t bCurrentHelpScreen;
   uint32_t uiFlags;
 
   uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
@@ -32,15 +32,15 @@ typedef struct {
 
   INT32 iLastMouseClickY;  // last position the mouse was clicked ( if != -1 )
 
-  INT8 bCurrentHelpScreenActiveSubPage;  // used to keep track of the current page being displayed
+  int8_t bCurrentHelpScreenActiveSubPage;  // used to keep track of the current page being displayed
 
-  INT8 bNumberOfButtons;
+  int8_t bNumberOfButtons;
 
   // used so if the user checked the box to show the help, it doesnt automatically come up every
   // frame
   BOOLEAN fHaveAlreadyBeenInHelpScreenSinceEnteringCurrenScreen;
 
-  INT8 bDelayEnteringHelpScreenBy1FrameCount;
+  int8_t bDelayEnteringHelpScreenBy1FrameCount;
   uint16_t usLeftMarginPosX;
 
   uint16_t usCursor;
@@ -61,6 +61,6 @@ BOOLEAN ShouldTheHelpScreenComeUp(uint8_t ubScreenID, BOOLEAN fForceHelpScreenTo
 void HelpScreenHandler();
 void InitHelpScreenSystem();
 void NewScreenSoResetHelpScreen();
-INT8 HelpScreenDetermineWhichMapScreenHelpToShow();
+int8_t HelpScreenDetermineWhichMapScreenHelpToShow();
 
 #endif

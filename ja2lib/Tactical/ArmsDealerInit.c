@@ -889,8 +889,8 @@ BOOLEAN IsMercADealer(uint8_t ubMercID) {
   return (FALSE);
 }
 
-INT8 GetArmsDealerIDFromMercID(uint8_t ubMercID) {
-  INT8 cnt;
+int8_t GetArmsDealerIDFromMercID(uint8_t ubMercID) {
+  int8_t cnt;
 
   // loop through the list of arms dealers
   for (cnt = 0; cnt < NUM_ARMS_DEALERS; cnt++) {
@@ -937,7 +937,7 @@ ubElement ].Info), pSpclItemInfo, sizeof( SPECIAL_ITEM_INFO ) ) == 0 )
 */
 
 BOOLEAN RepairmanIsFixingItemsButNoneAreDoneYet(uint8_t ubProfileID) {
-  INT8 bArmsDealer;
+  int8_t bArmsDealer;
   BOOLEAN fHaveOnlyUnRepairedItems = FALSE;
   uint8_t ubElement;
   uint16_t usItemIndex;
@@ -1170,7 +1170,7 @@ void ArmsDealerGetsFreshStock(uint8_t ubArmsDealer, uint16_t usItemIndex, uint8_
       ubPerfectOnes++;
     } else {
       // add a used item with that condition to his inventory
-      SpclItemInfo.bItemCondition = (INT8)ubItemCondition;
+      SpclItemInfo.bItemCondition = (int8_t)ubItemCondition;
       AddItemToArmsDealerInventory(ubArmsDealer, usItemIndex, &SpclItemInfo, 1);
     }
   }
@@ -1677,7 +1677,7 @@ void RemoveSpecialItemFromArmsDealerInventoryAtElement(uint8_t ubArmsDealer, uin
 }
 
 BOOLEAN AddDeadArmsDealerItemsToWorld(uint8_t ubMercID) {
-  INT8 bArmsDealer;
+  int8_t bArmsDealer;
   struct SOLDIERTYPE *pSoldier;
   uint16_t usItemIndex;
   uint8_t ubElement;
@@ -1786,7 +1786,7 @@ BOOLEAN AddDeadArmsDealerItemsToWorld(uint8_t ubMercID) {
 
 void MakeObjectOutOfDealerItems(uint16_t usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
                                 struct OBJECTTYPE *pObject, uint8_t ubHowMany) {
-  INT8 bItemCondition;
+  int8_t bItemCondition;
   uint8_t ubCnt;
 
   bItemCondition = pSpclItemInfo->bItemCondition;
@@ -2002,7 +2002,7 @@ uint32_t CalculateObjectItemRepairTime(uint8_t ubArmsDealer, struct OBJECTTYPE *
 }
 
 uint32_t CalculateSimpleItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex,
-                                       INT8 bItemCondition) {
+                                       int8_t bItemCondition) {
   uint32_t uiTimeToRepair = 0;
   uint32_t uiRepairCost = 0;
 
@@ -2082,7 +2082,7 @@ uint32_t CalculateObjectItemRepairCost(uint8_t ubArmsDealer, struct OBJECTTYPE *
 }
 
 uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
-                                       INT8 bItemCondition) {
+                                       int8_t bItemCondition) {
   uint32_t uiItemCost = 0;
   uint32_t uiRepairCost = 0;
   INT16 sRepairCostAdj = 0;
@@ -2288,7 +2288,7 @@ uint16_t CalcValueOfItemToDealer(uint8_t ubArmsDealer, uint16_t usItemIndex,
 
   if (!fDealerSelling) {
     // junk dealer won't buy expensive stuff at all, expensive dealer won't buy junk at all
-    if (abs((INT8)ubDealerPriceClass - (INT8)ubItemPriceClass) == 2) {
+    if (abs((int8_t)ubDealerPriceClass - (int8_t)ubItemPriceClass) == 2) {
       return (0);
     }
   }

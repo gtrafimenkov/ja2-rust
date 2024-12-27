@@ -71,7 +71,7 @@ INT16 gsMercArriveSectorY = 1;
 
 void CheckForValidArrivalSector();
 
-INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
+int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   struct SOLDIERTYPE *pSoldier;
   uint8_t iNewIndex;
   uint8_t ubCurrentSoldier = pHireMerc->ubProfileID;
@@ -404,7 +404,7 @@ BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier) {
 }
 
 uint8_t NumberOfMercsOnPlayerTeam() {
-  INT8 cnt;
+  int8_t cnt;
   struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
   uint8_t ubCount = 0;
@@ -424,7 +424,7 @@ uint8_t NumberOfMercsOnPlayerTeam() {
 }
 
 void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier) {
-  INT8 cnt, bHated, bLastTeamID;
+  int8_t cnt, bHated, bLastTeamID;
   struct SOLDIERTYPE *pTeamSoldier;
 
   // If we are approaching with helicopter, don't say any ( yet )

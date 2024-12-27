@@ -676,7 +676,7 @@ BOOLEAN DrawUICursor() {
   struct LEVELNODE *pNode;
   uint16_t usTileCursor;
 
-  // RaiseMouseToLevel( (INT8)gsInterfaceLevel );
+  // RaiseMouseToLevel( (int8_t)gsInterfaceLevel );
 
   HandleLooseCursorDraw();
 

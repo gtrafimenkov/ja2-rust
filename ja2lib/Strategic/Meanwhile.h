@@ -52,7 +52,7 @@ void LocateToMeanwhileCharacter();
 void HandleMeanWhileEventPostingForTownLiberation(uint8_t bTownId);
 
 // post meanwhile event for SAM liberation
-void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSAMId);
+void HandleMeanWhileEventPostingForSAMLiberation(int8_t bSAMId);
 
 // trash world has been called, should we do the first meanwhile?
 void HandleFirstMeanWhileSetUpWithTrashWorld(void);
@@ -72,7 +72,7 @@ void HandleShortCuttingOfMeanwhileSceneByPlayer(uint8_t ubMeanwhileID, INT32 iLa
 void HandleCreatureRelease(void);
 
 // handle sending flowers to the queen
-void HandleFlowersMeanwhileScene(INT8 bTimeCode);
+void HandleFlowersMeanwhileScene(int8_t bTimeCode);
 
 // player reaches the outskirts of Meduna
 void HandleOutskirtsOfMedunaMeanwhileScene(void);

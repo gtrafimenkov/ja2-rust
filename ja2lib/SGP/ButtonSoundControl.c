@@ -6,7 +6,7 @@
 #include "ScreenIDs.h"
 #include "Utils/SoundControl.h"
 
-void SpecifyButtonSoundScheme(INT32 iButtonID, INT8 bSoundScheme) {
+void SpecifyButtonSoundScheme(INT32 iButtonID, int8_t bSoundScheme) {
   ButtonList[iButtonID]->ubSoundSchemeID = (uint8_t)bSoundScheme;
   if (bSoundScheme == BUTTON_SOUND_SCHEME_GENERIC) {
     switch (guiCurrentScreen) {

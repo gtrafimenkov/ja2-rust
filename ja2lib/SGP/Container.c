@@ -65,7 +65,7 @@ typedef struct OrdHeaderTag {
   uint32_t uiMax_size;
   uint32_t uiHead;
   uint32_t uiTail;
-  INT8 (*pCompare)(void *, void *, uint32_t);
+  int8_t (*pCompare)(void *, void *, uint32_t);
 
 } OrdListHeader;
 
@@ -225,7 +225,7 @@ HLIST CreateList(uint32_t uiNum_items, uint32_t uiSiz_each) {
 //
 //*****************************************************************************
 HORDLIST CreateOrdList(uint32_t uiNum_items, uint32_t uiSiz_each,
-                       INT8 (*compare)(void *, void *, uint32_t)) {
+                       int8_t (*compare)(void *, void *, uint32_t)) {
   uint32_t uiAmount;
   HLIST hOrdList;
   OrdListHeader *pOrdList;
@@ -1784,7 +1784,7 @@ HORDLIST AddtoOrdList(HORDLIST hOrdList, void *pdata) {
   void *pTemp_data;
   uint32_t uiOffset;
   BOOLEAN fContinue = FALSE;
-  INT8 sbResult;
+  int8_t sbResult;
   uint32_t uiPosition;
 
   // get a pointer into the list header
@@ -1900,7 +1900,7 @@ HORDLIST AddtoOrdList(HORDLIST hOrdList, void *pdata) {
   return hOrdList;
 }
 
-INT8 Compare(void *p, void *q, uint32_t size) {
+int8_t Compare(void *p, void *q, uint32_t size) {
   TEST *temp1;
   TEST *temp2;
 

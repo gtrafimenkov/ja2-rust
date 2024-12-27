@@ -30,7 +30,7 @@
 #include "Utils/Message.h"
 #include "Utils/TimerControl.h"
 
-extern void DecayPublicOpplist(INT8 bTeam);
+extern void DecayPublicOpplist(int8_t bTeam);
 
 // not in overhead.h!
 extern uint8_t NumEnemyInSector();
@@ -161,7 +161,7 @@ void HandleTacticalEndTurn() {
           if ( gTacticalStatus.Team[ cnt ].bMenInSector > 0 )
           {
                   // decay team's public opplist
-                  DecayPublicOpplist( (INT8)cnt );
+                  DecayPublicOpplist( (int8_t)cnt );
           }
   }
 */

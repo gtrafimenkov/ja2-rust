@@ -36,8 +36,8 @@ void SetSolAssignmentDone(struct SOLDIERTYPE *s) {
 }
 
 // feed this a SOLDIER_CLASS_, it will return you a _MITILIA rank, or -1 if the guy's not militia
-INT8 SoldierClassToMilitiaRank(uint8_t ubSoldierClass) {
-  INT8 bRank = -1;
+int8_t SoldierClassToMilitiaRank(uint8_t ubSoldierClass) {
+  int8_t bRank = -1;
 
   switch (ubSoldierClass) {
     case SOLDIER_CLASS_GREEN_MILITIA:
@@ -55,8 +55,8 @@ INT8 SoldierClassToMilitiaRank(uint8_t ubSoldierClass) {
 }
 
 // feed this a _MITILIA rank, it will return you a SOLDIER_CLASS_, or -1 if the guy's not militia
-INT8 MilitiaRankToSoldierClass(uint8_t ubRank) {
-  INT8 bSoldierClass = -1;
+int8_t MilitiaRankToSoldierClass(uint8_t ubRank) {
+  int8_t bSoldierClass = -1;
 
   switch (ubRank) {
     case GREEN_MILITIA:

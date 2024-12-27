@@ -41,9 +41,9 @@ extern BOOLEAN gfOverheadMapDirty;
 // quantizes it into an 8-bit image ans writes it to an sti file in radarmaps.
 
 typedef struct {
-  INT8 r;
-  INT8 g;
-  INT8 b;
+  int8_t r;
+  int8_t g;
+  int8_t b;
 
 } RGBValues;
 

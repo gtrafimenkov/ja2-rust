@@ -109,7 +109,7 @@ extern BOOLEAN StoreListNode(HLIST hList, void *pdata, uint32_t uiPos);
 // DeleteOrdList(handle to the list) Delete the ordered list container
 
 extern HLIST CreateOrdList(uint32_t num_of_elem, uint32_t siz_of_each,
-                           INT8 (*compare)(void *, void *, uint32_t));
+                           int8_t (*compare)(void *, void *, uint32_t));
 extern HLIST AddtoOrdList(HLIST hList, void *data);
 extern BOOLEAN RemfromOrdList(HLIST hList, void *data, uint32_t position);
 extern BOOLEAN PeekOrdList(HLIST hList, void *data, uint32_t position);

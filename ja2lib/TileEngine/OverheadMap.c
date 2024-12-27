@@ -94,7 +94,7 @@ void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 void DeleteOverheadDB();
 BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(INT16 *psGridNo);
 
-extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
+extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, int8_t bZLevel);
 extern void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 
@@ -209,7 +209,7 @@ void DeleteOverheadDB() {
 }
 
 BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, struct ITEM_POOL **ppReturnedItemPool,
-                           uint8_t ubRadius, INT8 bLevel) {
+                           uint8_t ubRadius, int8_t bLevel) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -393,14 +393,14 @@ void HandleOverheadMap() {
 
     gfUIHandleSelectionAboveGuy = FALSE;
 
-    HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
+    HandleAnyMercInSquadHasCompatibleStuff((int8_t)CurrentSquad(), NULL, TRUE);
 
     if (GetOverheadMouseGridNo(&usMapPos)) {
       // ATE: Find the closest item pool within 5 tiles....
       if (GetClosestItemPool(usMapPos, &pItemPool, 1, 0)) {
         struct STRUCTURE *pStructure = NULL;
         INT16 sIntTileGridNo;
-        INT8 bZLevel = 0;
+        int8_t bZLevel = 0;
         INT16 sActionGridNo = usMapPos;
 
         // Get interactive tile...
@@ -421,7 +421,7 @@ void HandleOverheadMap() {
       }
 
       if (GetClosestItemPool(usMapPos, &pItemPool, 1, 1)) {
-        INT8 bZLevel = 0;
+        int8_t bZLevel = 0;
 
         if (AnyItemsVisibleOnLevel(pItemPool, bZLevel)) {
           DrawItemPoolList(pItemPool, usMapPos, ITEMLIST_DISPLAY, bZLevel, gusMouseXPos,
@@ -596,7 +596,7 @@ INT16 GetModifiedOffsetLandHeight(INT32 sGridNo) {
 
 void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                        INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, BOOLEAN fFromMapUtility) {
-  INT8 bXOddFlag = 0;
+  int8_t bXOddFlag = 0;
   INT16 sModifiedHeight = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
   INT16 sAnchorPosX_S, sAnchorPosY_S;
@@ -1116,7 +1116,7 @@ void RenderOverheadOverlays() {
 void RenderOverheadOverlays( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16
 sStartPointY_S, INT16 sEndXS, INT16 sEndYS )
 {
-        INT8				bXOddFlag = 0;
+        int8_t				bXOddFlag = 0;
         INT16				sAnchorPosX_M, sAnchorPosY_M;
         INT16				sAnchorPosX_S, sAnchorPosY_S;
         INT16				sTempPosX_M, sTempPosY_M;
@@ -1416,7 +1416,7 @@ BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(INT16 *psGridNo) {
   }
 }
 
-void CalculateRestrictedMapCoords(INT8 bDirection, INT16 *psX1, INT16 *psY1, INT16 *psX2,
+void CalculateRestrictedMapCoords(int8_t bDirection, INT16 *psX1, INT16 *psY1, INT16 *psX2,
                                   INT16 *psY2, INT16 sEndXS, INT16 sEndYS) {
   switch (bDirection) {
     case NORTH:

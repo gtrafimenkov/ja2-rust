@@ -63,7 +63,7 @@ typedef struct ENEMYGROUP {
   uint8_t ubIntention;              // the type of group this is:  patrol, assault, spies, etc.
   uint8_t ubTroopsInBattle;         // number of soldiers currently in battle.
   uint8_t ubElitesInBattle;         // number of elite soldiers currently in battle.
-  INT8 bPadding[20];
+  int8_t bPadding[20];
 } ENEMYGROUP;
 
 // NOTE:  ALL FLAGS ARE CLEARED WHENEVER A struct GROUP ARRIVES IN A GetSectorID8, OR ITS WAYPOINTS
@@ -117,7 +117,7 @@ struct GROUP {
                               // a group was created in.
   uint8_t ubSectorIDOfLastReassignment;  // used for debuggin strategic AI.  Records location of any
                                          // reassignments.
-  INT8 bPadding[29];                     //***********************************************//
+  int8_t bPadding[29];                   //***********************************************//
 
   union {
     PLAYERGROUP *pPlayerList;  // list of players in the group
@@ -297,7 +297,7 @@ void RandomizePatrolGroupLocation(struct GROUP *pGroup);
 void InitStrategicMovementCosts();
 
 void PlaceGroupInSector(uint8_t ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
-                        INT8 bZ, BOOLEAN fCheckForBattle);
+                        int8_t bZ, BOOLEAN fCheckForBattle);
 
 void SetGroupArrivalTime(struct GROUP *pGroup, uint32_t uiArrivalTime);
 

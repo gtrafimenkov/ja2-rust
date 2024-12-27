@@ -235,7 +235,7 @@ typedef enum {
 #define MOUSE_LEVEL_GROUND 0
 #define MOUSE_LEVEL_ROOF 1
 
-void RaiseMouseToLevel(INT8 bLevel);
+void RaiseMouseToLevel(int8_t bLevel);
 
 void InitCursors();
 void HandleAnimatedCursors();

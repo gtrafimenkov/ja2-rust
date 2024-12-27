@@ -25,7 +25,7 @@ typedef struct {
   uint8_t ubProfileID;
   INT16 sSectorX;
   INT16 sSectorY;
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   INT16 iTotalContractLength;
   BOOLEAN fCopyProfileItemsOver;
   uint32_t uiTimeTillMercArrives;
@@ -39,7 +39,7 @@ typedef struct {
 extern INT16 gsMercArriveSectorX;
 extern INT16 gsMercArriveSectorY;
 
-INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc);
+int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc);
 void MercArrivesCallback(uint8_t ubSoldierID);
 BOOLEAN IsMercHireable(uint8_t ubMercID);
 BOOLEAN IsMercDead(uint8_t ubMercID);

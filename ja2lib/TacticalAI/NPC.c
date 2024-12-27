@@ -87,7 +87,7 @@ void PCsNearNPC(uint8_t ubNPC);
 void TriggerClosestMercWhoCanSeeNPC(uint8_t ubNPC, NPCQuoteInfo *pQuotePtr);
 BOOLEAN NPCHasUnusedRecordWithGivenApproach(uint8_t ubNPC, uint8_t ubApproach);
 
-INT8 gbFirstApproachFlags[4] = {0x01, 0x02, 0x04, 0x08};
+int8_t gbFirstApproachFlags[4] = {0x01, 0x02, 0x04, 0x08};
 
 uint8_t gubAlternateNPCFileNumsForQueenMeanwhiles[] = {160, 161, 162, 163, 164, 165, 166, 167, 168,
                                                        169, 170, 171, 172, 173, 174, 175, 176};
@@ -451,7 +451,7 @@ INT32 CalcThreateningEffectiveness(uint8_t ubMerc) {
   return ((EffectiveLeadership(pSoldier) + iStrength + iDeadliness) / 2);
 }
 
-uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach) {
+uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach) {
   INT32 iWillingness;
   INT32 iPersonalVal, iTownVal, iApproachVal;
   INT32 iEffectiveLeadership;
@@ -501,7 +501,7 @@ uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach) {
   return ((uint8_t)iWillingness);
 }
 
-void ApproachedForFirstTime(MERCPROFILESTRUCT *pNPCProfile, INT8 bApproach) {
+void ApproachedForFirstTime(MERCPROFILESTRUCT *pNPCProfile, int8_t bApproach) {
   uint8_t ubLoop;
   uint32_t uiTemp;
 
@@ -516,7 +516,7 @@ void ApproachedForFirstTime(MERCPROFILESTRUCT *pNPCProfile, INT8 bApproach) {
   }
 }
 
-uint8_t NPCConsiderTalking(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach, uint8_t ubRecord,
+uint8_t NPCConsiderTalking(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uint8_t ubRecord,
                            NPCQuoteInfo *pNPCQuoteInfoArray, NPCQuoteInfo **ppResultQuoteInfo,
                            uint8_t *pubQuoteNum) {
   // This function returns the opinion level required of the "most difficult" quote
@@ -734,7 +734,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
                 {
 
                         struct SOLDIERTYPE *					pSoldier;
-                        INT8 bMoney; INT8
+                        int8_t bMoney; int8_t
                 bEmptySlot;
 
                         pSoldier = FindSoldierByProfileID( DARREN, FALSE );
@@ -813,7 +813,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
                 case 100:
                 case 200:  // Carla
                   if (CheckFact(FACT_CARLA_AVAILABLE, 0)) {
-                    gMercProfiles[MADAME].bNPCData += (INT8)(pObj->uiMoneyAmount / 100);
+                    gMercProfiles[MADAME].bNPCData += (int8_t)(pObj->uiMoneyAmount / 100);
                     TriggerNPCRecord(MADAME, 16);
                   } else {
                     // see default case
@@ -825,7 +825,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
                 case 500:
                 case 1000:  // Cindy
                   if (CheckFact(FACT_CINDY_AVAILABLE, 0)) {
-                    gMercProfiles[MADAME].bNPCData += (INT8)(pObj->uiMoneyAmount / 500);
+                    gMercProfiles[MADAME].bNPCData += (int8_t)(pObj->uiMoneyAmount / 500);
                     TriggerNPCRecord(MADAME, 17);
                   } else {
                     // see default case
@@ -837,7 +837,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
                 case 300:
                 case 600:  // Bambi
                   if (CheckFact(FACT_BAMBI_AVAILABLE, 0)) {
-                    gMercProfiles[MADAME].bNPCData += (INT8)(pObj->uiMoneyAmount / 300);
+                    gMercProfiles[MADAME].bNPCData += (int8_t)(pObj->uiMoneyAmount / 300);
                     TriggerNPCRecord(MADAME, 18);
                   } else {
                     // see default case
@@ -849,7 +849,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
                 case 400:
                 case 800:  // Maria?
                   if (gubQuest[QUEST_RESCUE_MARIA] == QUESTINPROGRESS) {
-                    gMercProfiles[MADAME].bNPCData += (INT8)(pObj->uiMoneyAmount / 400);
+                    gMercProfiles[MADAME].bNPCData += (int8_t)(pObj->uiMoneyAmount / 400);
                     TriggerNPCRecord(MADAME, 19);
                     break;
                   } else {
@@ -1277,7 +1277,7 @@ void ResetOncePerConvoRecordsForAllNPCsInLoadedSector(void) {
   }
 }
 
-void ReturnItemToPlayerIfNecessary(uint8_t ubMerc, INT8 bApproach, uintptr_t uiApproachData,
+void ReturnItemToPlayerIfNecessary(uint8_t ubMerc, int8_t bApproach, uintptr_t uiApproachData,
                                    NPCQuoteInfo *pQuotePtr) {
   struct OBJECTTYPE *pObj;
   struct SOLDIERTYPE *pSoldier;
@@ -1299,7 +1299,7 @@ void ReturnItemToPlayerIfNecessary(uint8_t ubMerc, INT8 bApproach, uintptr_t uiA
   }
 }
 
-void Converse(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach, uintptr_t uiApproachData) {
+void Converse(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uintptr_t uiApproachData) {
   NPCQuoteInfo QuoteInfo;
   NPCQuoteInfo *pQuotePtr = &(QuoteInfo);
   NPCQuoteInfo *pNPCQuoteInfoArray = NULL;
@@ -1607,7 +1607,7 @@ void Converse(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach, uintptr_t uiApproac
 
             // Is this one of us?
             if (pSoldier->bTeam == gbPlayerNum) {
-              INT8 bSlot;
+              int8_t bSlot;
 
               bSlot = FindExactObj(pSoldier, pObj);
               if (bSlot != NO_SLOT) {
@@ -1698,7 +1698,7 @@ void Converse(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach, uintptr_t uiApproac
           }
         } else if (pQuotePtr->usGiftItem != 0) {
           {
-            INT8 bInvPos;
+            int8_t bInvPos;
 
             // Get soldier
             pSoldier = FindSoldierByProfileID(ubNPC, FALSE);
@@ -2598,7 +2598,7 @@ void TriggerFriendWithHostileQuote(uint8_t ubNPC) {
   struct SOLDIERTYPE *pTeamSoldier;
   struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
-  INT8 bTeam;
+  int8_t bTeam;
 
   // First get pointer to NPC
   pSoldier = FindSoldierByProfileID(ubNPC, FALSE);
@@ -2836,7 +2836,7 @@ BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord) {
   }
 }
 
-INT8 FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   uint8_t ubLoop;
 
   if (sSectorZ > 0) {
@@ -2851,8 +2851,8 @@ INT8 FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   return (-1);
 }
 
-INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed) {
-  INT8 bLoop, bCivQuoteSectorIndex;
+int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed) {
+  int8_t bLoop, bCivQuoteSectorIndex;
   NPCQuoteInfo *pCivQuoteInfoArray;
 
   bCivQuoteSectorIndex = FindCivQuoteFileIndex(sSectorX, sSectorY, sSectorZ);

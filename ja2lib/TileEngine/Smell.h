@@ -20,8 +20,8 @@ struct SOLDIERTYPE;
 void DecaySmells(void);
 void DecayBloodAndSmells(uint32_t uiTime);
 void DropSmell(struct SOLDIERTYPE* pSoldier);
-void DropBlood(struct SOLDIERTYPE* pSoldier, uint8_t ubStrength, INT8 bVisible);
-void UpdateBloodGraphics(INT16 sGridNo, INT8 bLevel);
-void RemoveBlood(INT16 sGridNo, INT8 bLevel);
-void InternalDropBlood(INT16 sGridNo, INT8 bLevel, uint8_t ubType, uint8_t ubStrength,
-                       INT8 bVisible);
+void DropBlood(struct SOLDIERTYPE* pSoldier, uint8_t ubStrength, int8_t bVisible);
+void UpdateBloodGraphics(INT16 sGridNo, int8_t bLevel);
+void RemoveBlood(INT16 sGridNo, int8_t bLevel);
+void InternalDropBlood(INT16 sGridNo, int8_t bLevel, uint8_t ubType, uint8_t ubStrength,
+                       int8_t bVisible);

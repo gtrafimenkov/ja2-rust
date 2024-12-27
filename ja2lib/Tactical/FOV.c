@@ -270,8 +270,8 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
                          uint8_t ubLevel, BOOLEAN fForce) {
   uint32_t maincnt, markercnt, marker, tilesLeftToSee, cnt, prevmarker;
   uint32_t Inc[6], Dir[6];
-  INT8 Blocking, markerDir;
-  INT8 nextDir = 0;
+  int8_t Blocking, markerDir;
+  int8_t nextDir = 0;
   uint8_t dir, range, Path2;
   uint8_t ubRoomNo;
   struct ITEM_POOL *pItemPool;
@@ -284,11 +284,11 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
   uint16_t usIndex;
   BOOLEAN fRevealItems = TRUE;
   BOOLEAN fStopRevealingItemsAfterThisTile = FALSE;
-  INT8 bTallestStructureHeight;
+  int8_t bTallestStructureHeight;
   INT32 iDoorGridNo;
   struct STRUCTURE *pStructure, *pDummy;
-  INT8 bStructHeight;
-  INT8 bThroughWindowDirection;
+  int8_t bStructHeight;
+  int8_t bThroughWindowDirection;
 
   if (pSoldier->uiStatusFlags & SOLDIER_ENEMY) {
     // pSoldier->needToLookForItems = FALSE;
@@ -534,13 +534,13 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
           // GET INDEX FOR ITEM HERE
           // if there IS a direction after this one, nextdir WILL NOT be 99
           if (nextDir != 99) {
-            Blocking =
-                GetBlockingStructureInfo((INT16)marker, (INT8)Dir[markerDir], (INT8)Dir[nextDir],
-                                         ubLevel, &bStructHeight, &pDummy, FALSE);
+            Blocking = GetBlockingStructureInfo((INT16)marker, (int8_t)Dir[markerDir],
+                                                (int8_t)Dir[nextDir], ubLevel, &bStructHeight,
+                                                &pDummy, FALSE);
           } else  // no "next" direction, so pass in a NOWHERE so that
           // "SpecialViewObstruction" will know not to take it UINT32o consideration
           {
-            Blocking = GetBlockingStructureInfo((INT16)marker, (INT8)Dir[markerDir], (INT8)30,
+            Blocking = GetBlockingStructureInfo((INT16)marker, (int8_t)Dir[markerDir], (int8_t)30,
                                                 ubLevel, &bStructHeight, &pDummy, FALSE);
           }
 
@@ -555,7 +555,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
               if (markercnt <= 1)  // Are we right beside it?
               {
                 fThroughWindow = TRUE;
-                bThroughWindowDirection = (INT8)Dir[markerDir];
+                bThroughWindowDirection = (int8_t)Dir[markerDir];
               }
             }
           }
@@ -565,7 +565,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
               if (markercnt <= 1)  // Are we right beside it?
               {
                 fThroughWindow = TRUE;
-                bThroughWindowDirection = (INT8)Dir[markerDir];
+                bThroughWindowDirection = (int8_t)Dir[markerDir];
               }
             }
           }

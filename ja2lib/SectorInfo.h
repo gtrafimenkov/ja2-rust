@@ -13,8 +13,8 @@ struct SectorInfo {
                                  // investigated by the enemy.
   uint8_t ubGarrisonID;  // IF the sector has an ID for this (non 255), then the queen values this
                          // sector and it indexes the garrison group.
-  INT8 ubPendingReinforcements;  // when the enemy owns this sector, this value will keep track of
-                                 // HIGH priority reinforcements -- not regular.
+  int8_t ubPendingReinforcements;  // when the enemy owns this sector, this value will keep track of
+                                   // HIGH priority reinforcements -- not regular.
   BOOLEAN _only_savedgame_fMilitiaTrainingPaid;
   uint8_t ubMilitiaTrainingPercentDone;
   uint8_t ubMilitiaTrainingHundredths;
@@ -28,9 +28,9 @@ struct SectorInfo {
   uint8_t ubNumCreatures;  // only set when immediately before ground attack made!
   uint8_t ubTroopsInBattle, ubElitesInBattle, ubAdminsInBattle, ubCreaturesInBattle;
 
-  INT8 bLastKnownEnemies;  // -1 means never been there, no idea, otherwise it's what we'd observed
-                           // most recently while this is being maintained (partially, surely
-                           // buggy), nothing uses it anymore. ARM
+  int8_t bLastKnownEnemies;  // -1 means never been there, no idea, otherwise it's what we'd
+                             // observed most recently while this is being maintained (partially,
+                             // surely buggy), nothing uses it anymore. ARM
 
   uint32_t ubDayOfLastCreatureAttack;
   uint32_t uiFacilitiesFlags;  // the flags for various facilities
@@ -38,11 +38,11 @@ struct SectorInfo {
   uint8_t ubTraversability[5];  // determines the traversability ratings to adjacent sectors.
                                 // The last index represents the traversability if travelling
                                 // throught the sector without entering it.
-  INT8 townID;
-  INT8 bUSUSED;
-  INT8 bBloodCats;
-  INT8 bBloodCatPlacements;
-  INT8 UNUSEDbSAMCondition;
+  int8_t townID;
+  int8_t bUSUSED;
+  int8_t bBloodCats;
+  int8_t bBloodCatPlacements;
+  int8_t UNUSEDbSAMCondition;
 
   uint8_t ubTravelRating;  // Represents how travelled a sector is.  Typically, the higher the
                            // travel rating, the more people go near it.  A travel rating of 0 means
@@ -70,7 +70,7 @@ struct SectorInfo {
 
   uint32_t uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
 
-  INT8 bPadding[41];
+  int8_t bPadding[41];
 };
 
 #endif

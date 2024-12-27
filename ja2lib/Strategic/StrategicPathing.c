@@ -591,7 +591,7 @@ BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( uint16_t sSourceSector, uint16
 
 
 
-BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSourceSector, INT8 bToDirection  )
+BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSourceSector, int8_t bToDirection  )
 {
 
         if( StrategicMap[ sSourceSector ].uiBadVehicleSector[ bToDirection ] )
@@ -636,7 +636,7 @@ BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( uint16_t sSourceSector, uint16_t 
 }
 
 
-BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSourceSector, INT8 bToDirection )
+BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSourceSector, int8_t bToDirection )
 {
         if( StrategicMap[ sSourceSector ].uiBadFootSector[ bToDirection ]  )
         {
@@ -1323,7 +1323,7 @@ uint32_t GetEtaGivenRoute( struct path* pPath )
 void VerifyAllMercsInGroupAreOnSameSquad(struct GROUP* pGroup) {
   PLAYERGROUP* pPlayer;
   struct SOLDIERTYPE* pSoldier;
-  INT8 bSquad = -1;
+  int8_t bSquad = -1;
 
   // Let's choose somebody in group.....
   pPlayer = pGroup->pPlayerList;

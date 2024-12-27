@@ -190,7 +190,7 @@ void GrenadeTest3();
 void TestMeanWhile(INT32 iID);
 void CreatePlayerControlledMonster();
 void ChangeCurrentSquad(INT32 iSquad);
-void HandleSelectMercSlot(uint8_t ubPanelSlot, INT8 bCode);
+void HandleSelectMercSlot(uint8_t ubPanelSlot, int8_t bCode);
 void EscapeUILock();
 void TestCapture();
 
@@ -271,7 +271,7 @@ void QueryTBLeftButton(uint32_t *puiNewEvent) {
                       // We're on terrain in which we can walk, walk
                       // If we're on terrain,
                       if (gusSelectedSoldier != NO_SOLDIER) {
-                        INT8 bReturnVal = FALSE;
+                        int8_t bReturnVal = FALSE;
 
                         GetSoldier(&pSoldier, gusSelectedSoldier);
 
@@ -1429,7 +1429,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
       INT32 i = 0;
       INT16 sGridNo;
       INT32 iTime = GetJA2Clock();
-      INT8 ubLevel;
+      int8_t ubLevel;
 
       for (i = 0; i < 1000; i++) {
         CalculateLaunchItemChanceToGetThrough(MercPtrs[gusSelectedSoldier],
@@ -1529,7 +1529,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
 
             if (gsCurInterfacePanel == SM_PANEL) {
               // Remember soldier's new value
-              gpSMCurrentMerc->bUIInterfaceLevel = (INT8)gsInterfaceLevel;
+              gpSMCurrentMerc->bUIInterfaceLevel = (int8_t)gsInterfaceLevel;
             }
           }
           break;
@@ -1793,7 +1793,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
                 if (pSoldier1->bLife >= OKLIFE && pSoldier2->ubID != gusSelectedSoldier) {
                   if (pSoldier2->bLife >= OKLIFE) {
                     if (CanSoldierReachGridNoInGivenTileLimit(pSoldier1, pSoldier2->sGridNo, 1,
-                                                              (INT8)gsInterfaceLevel)) {
+                                                              (int8_t)gsInterfaceLevel)) {
                       // Exclude enemies....
                       if (!pSoldier2->bNeutral && (pSoldier2->bSide != gbPlayerNum)) {
                       } else {
@@ -2609,7 +2609,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
             // For each guy on squad...
             {
               struct SOLDIERTYPE *pTeamSoldier;
-              INT8 bLoop;
+              int8_t bLoop;
               BOOLEAN fStealthOn = FALSE;
 
               // Check if at least one guy is on stealth....
@@ -3117,7 +3117,7 @@ void ChangeSoldiersBodyType(uint8_t ubBodyType, BOOLEAN fCreateNewPalette) {
             // pSoldier->inv[ HANDPOS ].usItem = TANK_CANNON;
 
             pSoldier->inv[HANDPOS].usItem = MINIMI;
-            pSoldier->bVehicleID = (INT8)AddVehicleToList(
+            pSoldier->bVehicleID = (int8_t)AddVehicleToList(
                 GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier), HUMMER);
 
             break;
@@ -3257,7 +3257,7 @@ void RandomizeMercProfile() {
 
 void JumpFence() {
   struct SOLDIERTYPE *pSoldier;
-  INT8 bDirection;
+  int8_t bDirection;
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     if (FindFenceJumpDirection(pSoldier, pSoldier->sGridNo, pSoldier->bDirection, &bDirection)) {
       BeginSoldierClimbFence(pSoldier);
@@ -3269,7 +3269,7 @@ void CreateNextCivType() {
   INT16 sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   INT16 usMapPos;
-  static INT8 bBodyType = FATCIV;
+  static int8_t bBodyType = FATCIV;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     uint8_t iNewIndex;
@@ -3441,8 +3441,8 @@ void CreatePlayerControlledMonster() {
   }
 }
 
-INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
-                                                    BOOLEAN fMovementMode) {
+int8_t CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier,
+                                                      uint16_t usMapPos, BOOLEAN fMovementMode) {
   // Look for an item pool
   INT16 sActionGridNo;
   uint8_t ubDirection;
@@ -3572,7 +3572,7 @@ void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
         // ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, TacticalStr[ NO_PATH ] );
         ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, TacticalStr[EPC_CANNOT_DO_THAT]);
       } else if (UIOkForItemPickup(pSoldier, sActionGridNo)) {
-        INT8 bZLevel;
+        int8_t bZLevel;
 
         bZLevel = GetZLevelOfItemPoolGivenStructure(sActionGridNo, pSoldier->bLevel, pStructure);
 
@@ -3621,7 +3621,7 @@ void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
   }
 }
 
-extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
+extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, int8_t bZLevel);
 
 void ExchangeMessageBoxCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
@@ -3629,7 +3629,7 @@ void ExchangeMessageBoxCallBack(uint8_t bExitValue) {
   }
 }
 
-INT8 HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
+int8_t HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
   // Look for an item pool
   struct ITEM_POOL *pItemPool;
   BOOLEAN fContinue = TRUE;
@@ -3638,8 +3638,8 @@ INT8 HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
   INT16 sIntTileGridNo;
   INT16 sActionGridNo;
   uint8_t ubDirection;
-  INT8 bReturnCode = 0;
-  INT8 bZLevel;
+  int8_t bReturnCode = 0;
+  int8_t bZLevel;
   struct STRUCTURE *pStructure = NULL;
 
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
@@ -3739,7 +3739,7 @@ INT8 HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
 }
 
 BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier) {
-  INT8 bAPs = 0;
+  int8_t bAPs = 0;
 
   // CHECK OUR CURRENT CURSOR...
 
@@ -3807,7 +3807,7 @@ void ChangeCurrentSquad(INT32 iSquad) {
   }
 }
 
-void HandleSelectMercSlot(uint8_t ubPanelSlot, INT8 bCode) {
+void HandleSelectMercSlot(uint8_t ubPanelSlot, int8_t bCode) {
   uint8_t ubID;
 
   if (GetPlayerIDFromInterfaceTeamSlot(ubPanelSlot, &ubID)) {

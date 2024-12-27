@@ -81,7 +81,7 @@ MoraleEvent gbMoraleEvent[NUM_MORALE_EVENTS] = {
 
 BOOLEAN gfSomeoneSaidMoraleQuote = FALSE;
 
-INT8 GetMoraleModifier(struct SOLDIERTYPE *pSoldier) {
+int8_t GetMoraleModifier(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->uiStatusFlags & SOLDIER_PC) {
     if (pSoldier->bMorale > 50) {
       // give +1 at 55, +3 at 65, up to +5 at 95 and above
@@ -257,13 +257,13 @@ void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
 
   iActualMorale = min(100, iActualMorale);
   iActualMorale = max(0, iActualMorale);
-  pSoldier->bMorale = (INT8)iActualMorale;
+  pSoldier->bMorale = (int8_t)iActualMorale;
 
   // update mapscreen as needed
   fCharacterInfoPanelDirty = TRUE;
 }
 
-void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, INT8 bMoraleMod) {
+void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, int8_t bMoraleMod) {
   MERCPROFILESTRUCT *pProfile;
   INT32 iMoraleModTotal;
 
@@ -328,19 +328,19 @@ void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, INT8 bMor
     iMoraleModTotal = (INT32)pSoldier->bTacticalMoraleMod + (INT32)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
-    pSoldier->bTacticalMoraleMod = (INT8)iMoraleModTotal;
+    pSoldier->bTacticalMoraleMod = (int8_t)iMoraleModTotal;
   } else if (gTacticalStatus.fEnemyInSector && !pSoldier->bInSector)  // delayed strategic
   {
     iMoraleModTotal = (INT32)pSoldier->bDelayedStrategicMoraleMod + (INT32)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
-    pSoldier->bDelayedStrategicMoraleMod = (INT8)iMoraleModTotal;
+    pSoldier->bDelayedStrategicMoraleMod = (int8_t)iMoraleModTotal;
   } else  // strategic
   {
     iMoraleModTotal = (INT32)pSoldier->bStrategicMoraleMod + (INT32)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
-    pSoldier->bStrategicMoraleMod = (INT8)iMoraleModTotal;
+    pSoldier->bStrategicMoraleMod = (int8_t)iMoraleModTotal;
   }
 
   RefreshSoldierMorale(pSoldier);
@@ -367,13 +367,13 @@ void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, INT8 bMor
   }
 }
 
-void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent) {
+void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent) {
   UpdateSoldierMorale(pSoldier, gbMoraleEvent[bMoraleEvent].ubType,
                       gbMoraleEvent[bMoraleEvent].bChange);
 }
 
-void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX, INT16 sMapY,
-                       INT8 bMapZ) {
+void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent, INT16 sMapX, INT16 sMapY,
+                       int8_t bMapZ) {
   uint8_t ubLoop;
   struct SOLDIERTYPE *pTeamSoldier;
   MERCPROFILESTRUCT *pProfile;
@@ -645,21 +645,21 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
 }
 
 void HourlyMoraleUpdate(void) {
-  INT8 bMercID, bOtherID;
-  INT8 bActualTeamOpinion;
-  INT8 bTeamMoraleModChange, bTeamMoraleModDiff;
-  INT8 bOpinion = -1;
+  int8_t bMercID, bOtherID;
+  int8_t bActualTeamOpinion;
+  int8_t bTeamMoraleModChange, bTeamMoraleModDiff;
+  int8_t bOpinion = -1;
   INT32 iTotalOpinions;
-  INT8 bNumTeamMembers;
-  INT8 bHighestTeamLeadership = 0;
-  INT8 bLastTeamID;
+  int8_t bNumTeamMembers;
+  int8_t bHighestTeamLeadership = 0;
+  int8_t bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pOtherSoldier;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fSameGroupOnly;
-  static INT8 bStrategicMoraleUpdateCounter = 0;
+  static int8_t bStrategicMoraleUpdateCounter = 0;
   BOOLEAN fFoundHated = FALSE;
-  INT8 bHated;
+  int8_t bHated;
 
   bMercID = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   bLastTeamID = gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -754,7 +754,7 @@ void HourlyMoraleUpdate(void) {
         // If teamed with someone we hated, team opinion is automatically minimum
         bActualTeamOpinion = HATED_OPINION;
       } else if (bNumTeamMembers > 0) {
-        bActualTeamOpinion = (INT8)(iTotalOpinions / bNumTeamMembers);
+        bActualTeamOpinion = (int8_t)(iTotalOpinions / bNumTeamMembers);
         // give bonus/penalty for highest leadership value on team
         bActualTeamOpinion += (bHighestTeamLeadership - 50) / 10;
       } else  // alone

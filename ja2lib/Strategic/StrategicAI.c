@@ -152,8 +152,8 @@ priority of the group.  If the priority of the group is high, they
 BOOLEAN gfAutoAIAware = FALSE;
 
 // Saved vars
-INT8 gbPadding2[3] = {0, 0, 0};  // NOT USED
-BOOLEAN gfExtraElites = 0;       // Set when queen compositions are augmented with bonus elites.
+int8_t gbPadding2[3] = {0, 0, 0};  // NOT USED
+BOOLEAN gfExtraElites = 0;         // Set when queen compositions are augmented with bonus elites.
 INT32 giGarrisonArraySize = 0;
 INT32 giPatrolArraySize = 0;
 INT32 giForcePercentage = 0;     // Modifies the starting group sizes relative by percentage
@@ -193,7 +193,7 @@ BOOLEAN gfUseAlternateQueenPosition = FALSE;
 
 // padding for generic globals
 #define SAI_PADDING_BYTES 97
-INT8 gbPadding[SAI_PADDING_BYTES];
+int8_t gbPadding[SAI_PADDING_BYTES];
 // patrol group info plus padding
 #define SAVED_PATROL_GROUPS 50
 PATROL_GROUP *gPatrolGroup = NULL;
@@ -2113,24 +2113,24 @@ void InitStrategicAI() {
     // and adjust them accordingly.
     for (i = 0; i < NUM_ARMY_COMPOSITIONS; i++) {
       if (i != QUEEN_DEFENCE) {
-        gArmyComp[i].bDesiredPopulation = (INT8)min(
+        gArmyComp[i].bDesiredPopulation = (int8_t)min(
             MAX_STRATEGIC_TEAM_SIZE, (gArmyComp[i].bDesiredPopulation * giForcePercentage / 100));
         if (gArmyComp[i].bStartPopulation !=
             MAX_STRATEGIC_TEAM_SIZE) {  // if the value is MAX_STRATEGIC_TEAM_SIZE, then that means
                                         // the particular sector is a spawning location.
           // Don't modify the value if it is MAX_STRATEGIC_TEAM_SIZE.  Everything else is game.
-          gArmyComp[i].bStartPopulation = (INT8)min(
+          gArmyComp[i].bStartPopulation = (int8_t)min(
               MAX_STRATEGIC_TEAM_SIZE, (gArmyComp[i].bStartPopulation * giForcePercentage / 100));
         }
       } else {
         gArmyComp[i].bDesiredPopulation =
-            (INT8)min(32, (gArmyComp[i].bDesiredPopulation * giForcePercentage / 100));
+            (int8_t)min(32, (gArmyComp[i].bDesiredPopulation * giForcePercentage / 100));
         gArmyComp[i].bStartPopulation = gArmyComp[i].bDesiredPopulation;
       }
     }
     for (i = 0; i < giPatrolArraySize;
          i++) {  // force modified range within 1-MAX_STRATEGIC_TEAM_SIZE.
-      gPatrolGroup[i].bSize = (INT8)max(
+      gPatrolGroup[i].bSize = (int8_t)max(
           gubMinEnemyGroupSize,
           min(MAX_STRATEGIC_TEAM_SIZE, (gPatrolGroup[i].bSize * giForcePercentage / 100)));
     }
@@ -2222,7 +2222,7 @@ void InitStrategicAI() {
       iWeight = min(iWeight, -2);
       giReinforcementPoints -= iWeight;
     }
-    gGarrisonGroup[i].bWeight = (INT8)iWeight;
+    gGarrisonGroup[i].bWeight = (int8_t)iWeight;
 
     // Now post an event which allows them to check adjacent sectors periodically.
     // Spread them out so that they process at different times.
@@ -2269,7 +2269,7 @@ void InitStrategicAI() {
     // need to set up the weighting values to prioritize it's reinforcement request so that
     // it gets filled up later in the game.
     //	iWeight = gPatrolGroup[ i ].bSize * 3 * gPatrolGroup[ i ].bPriority / 96;
-    //	gPatrolGroup[ i ].bWeight = (INT8)iWeight;
+    //	gPatrolGroup[ i ].bWeight = (int8_t)iWeight;
     //	giRequestPoints += iWeight;
     //}
   }
@@ -3230,7 +3230,7 @@ void RecalculatePatrolWeight(INT32 iPatrolID) {
   }
   iWeight = iNeedPopulation * 3 * gPatrolGroup[iPatrolID].bPriority / 96;
   iWeight = min(2, iWeight);
-  gPatrolGroup[iPatrolID].bWeight = (INT8)iWeight;
+  gPatrolGroup[iPatrolID].bWeight = (int8_t)iWeight;
   giRequestPoints += iWeight;
 
   ValidateWeights(5);
@@ -3269,10 +3269,10 @@ void RecalculateGarrisonWeight(INT32 iGarrisonID) {
     // generates a value between -2 and -100
     iWeight = iWeight * (100 - iPriority) / 96;
     iWeight = min(iWeight, -2);
-    giReinforcementPoints -= (INT8)iWeight;
+    giReinforcementPoints -= (int8_t)iWeight;
   }
 
-  gGarrisonGroup[iGarrisonID].bWeight = (INT8)iWeight;
+  gGarrisonGroup[iGarrisonID].bWeight = (int8_t)iWeight;
 
   ValidateWeights(7);
 }
@@ -3306,7 +3306,7 @@ INT32 ChooseSuitableGarrisonToProvideReinforcements(INT32 iDstGarrisonID,
   INT32 iSrcGarrisonID, iBestGarrisonID = NO_GARRISON;
   INT32 iReinforcementsAvailable;
   INT32 i, iRandom, iWeight;
-  INT8 bBestWeight;
+  int8_t bBestWeight;
   uint8_t ubSectorID;
 
   // Check to see if we could send reinforcements from Alma.  Only Drassen/Cambria get preferred
@@ -4160,13 +4160,13 @@ void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
     if (gArmyComp[i].bPriority) {
       num = gOrigArmyComp[i].bPriority + iFactor / 2;
       num = min(max(0, num), 100);
-      gArmyComp[i].bPriority = (INT8)num;
+      gArmyComp[i].bPriority = (int8_t)num;
     }
 
     // modify desired population by + or - 50% of original population
     num = gOrigArmyComp[i].bDesiredPopulation * (100 + iFactor) / 100;
     num = min(max(6, num), MAX_STRATEGIC_TEAM_SIZE);
-    gArmyComp[i].bDesiredPopulation = (INT8)num;
+    gArmyComp[i].bDesiredPopulation = (int8_t)num;
 
     // if gfExtraElites is set, then augment the composition sizes
     if (gfExtraElites && iFactor >= 15 && gArmyComp[i].bElitePercentage) {
@@ -4174,13 +4174,13 @@ void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
 
       // increase elite % (max 100)
       iNew = gArmyComp[i].bElitePercentage + iChange;
-      iNew = (INT8)min(100, iNew);
-      gArmyComp[i].bElitePercentage = (INT8)iNew;
+      iNew = (int8_t)min(100, iNew);
+      gArmyComp[i].bElitePercentage = (int8_t)iNew;
 
       // decrease troop % (min 0)
       iNew = gArmyComp[i].bTroopPercentage - iChange;
-      iNew = (INT8)max(0, iNew);
-      gArmyComp[i].bTroopPercentage = (INT8)iNew;
+      iNew = (int8_t)max(0, iNew);
+      gArmyComp[i].bTroopPercentage = (int8_t)iNew;
     }
   }
   if (gfExtraElites) {
@@ -5082,7 +5082,7 @@ void EliminateSurplusTroopsForGarrison(struct GROUP *pGroup, SECTORINFO *pSector
 void UpgradeAdminsToTroops() {
   INT32 i;
   SECTORINFO *pSector;
-  INT8 bPriority;
+  int8_t bPriority;
   uint8_t ubAdminsToCheck;
   struct GROUP *pGroup;
   INT16 sPatrolIndex;

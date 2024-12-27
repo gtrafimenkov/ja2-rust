@@ -14,23 +14,23 @@
 
 BOOLEAN InitPathAI(void);
 void ShutDownPathAI(void);
-INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
-               INT8 bStayOn, uint16_t usMovementMode, INT8 bStealth, INT8 bReverse,
+INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, int8_t bCopyRoute, int8_t bPlot,
+               int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
                INT16 sAPBudget);
-INT16 UIPlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
-                 INT8 bStayOn, uint16_t usMovementMode, INT8 bStealth, INT8 bReverse,
+INT16 UIPlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, int8_t bCopyRoute, int8_t bPlot,
+                 int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
                  INT16 sAPBudget);
-INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
-                       INT8 bStayOn, uint16_t usMovementMode, INT8 bStealth, INT8 bReverse,
-                       INT16 sAPBudget);
+INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, int8_t bCopyRoute,
+                       int8_t bPlot, int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth,
+                       int8_t bReverse, INT16 sAPBudget);
 
 void ErasePath(char bEraseOldOne);
-INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMovementMode,
-                   INT8 bCopy, uint8_t fFlags);
+INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, int8_t ubLevel, INT16 usMovementMode,
+                   int8_t bCopy, uint8_t fFlags);
 void GlobalReachableTest(INT16 sStartGridNo);
 void GlobalItemsReachableTest(INT16 sStartGridNo1, INT16 sStartGridNo2);
 void RoofReachableTest(INT16 sStartGridNo, uint8_t ubBuildingID);
-void LocalReachableTest(INT16 sStartGridNo, INT8 bRadius);
+void LocalReachableTest(INT16 sStartGridNo, int8_t bRadius);
 
 uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
                        BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo);

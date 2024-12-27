@@ -18,8 +18,8 @@ typedef struct {
   uint32_t uiPanelVO;
   INT32 iButtonImages;
   uint32_t uiCancelButton;
-  INT8 bCurSelect;
-  INT8 bOldCurSelect;
+  int8_t bCurSelect;
+  int8_t bOldCurSelect;
   uint16_t usWidth;
   uint16_t usHeight;
   struct MOUSE_REGION Regions[6];
@@ -44,7 +44,7 @@ typedef struct {
 extern NPC_DIALOGUE_TYPE gTalkPanel;
 
 BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYPE *pSrcSoldier,
-                             INT8 bApproach, uintptr_t uiApproachData);
+                             int8_t bApproach, uintptr_t uiApproachData);
 
 // THis fuction will allocate and setup an NPCDiaogue structure. Loads the face for the character..
 BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, INT16 sGridNo);
@@ -65,7 +65,7 @@ void RenderTalkingMenu();
 BOOLEAN HandleTalkingMenuEscape(BOOLEAN fCanDelete, BOOLEAN fFromEscKey);
 
 // Gices an item to buddy
-BOOLEAN TalkingMenuGiveItem(uint8_t ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
+BOOLEAN TalkingMenuGiveItem(uint8_t ubNPC, struct OBJECTTYPE *pObject, int8_t bInvPos);
 // Triggers an NPC record
 BOOLEAN NPCTriggerNPC(uint8_t ubTargetNPC, uint8_t ubTargetRecord, uint8_t ubTargetApproach,
                       BOOLEAN fShowDialogueMenu);
@@ -79,7 +79,7 @@ BOOLEAN NPCClosePanel();
 void HandleWaitTimerForNPCTrigger();
 
 void HandleNPCClosePanel();
-void HandleNPCItemGiven(uint8_t ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
+void HandleNPCItemGiven(uint8_t ubNPC, struct OBJECTTYPE *pObject, int8_t bInvPos);
 void HandleNPCTriggerNPC(uint8_t ubTargetNPC, uint8_t ubTargetRecord, BOOLEAN fShowDialogueMenu,
                          uint8_t ubTargetApproach);
 void HandleNPCGotoGridNo(uint8_t ubTargetNPC, uint16_t usGridNo, uint8_t ubRecordNum);
@@ -354,7 +354,7 @@ enum {
 
 extern INT32 giHospitalTempBalance;
 extern INT32 giHospitalRefund;
-extern INT8 gbHospitalPriceModifier;
+extern int8_t gbHospitalPriceModifier;
 
 extern uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier);
 extern uint32_t CalcMedicalCost(uint8_t ubId);

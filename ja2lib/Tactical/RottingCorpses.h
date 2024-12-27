@@ -93,15 +93,15 @@ typedef struct {
   PaletteRepID VestPal;
   PaletteRepID SkinPal;
 
-  INT8 bDirection;
+  int8_t bDirection;
   uint32_t uiTimeOfDeath;
 
   uint16_t usFlags;
 
-  INT8 bLevel;
+  int8_t bLevel;
 
-  INT8 bVisible;
-  INT8 bNumServicingCrows;
+  int8_t bVisible;
+  int8_t bNumServicingCrows;
   uint8_t ubProfile;
   BOOLEAN fHeadTaken;
   uint8_t ubAIWarningValue;
@@ -139,13 +139,13 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
 
 INT16 FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier);
 
-void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam);
+void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, int8_t bTeam);
 void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier);
 void RebuildAllCorpseShadeTables();
 
 uint16_t CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse);
 
-INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef, INT8 ubRadius);
+INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef, int8_t ubRadius);
 
 void HandleRottingCorpses();
 void AddCrowToCorpse(ROTTING_CORPSE *pCorpse);
@@ -163,9 +163,9 @@ extern ROTTING_CORPSE gRottingCorpse[MAX_ROTTING_CORPSES];
 extern INT32 giNumRottingCorpse;
 extern uint8_t gb4DirectionsFrom8[8];
 
-ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, INT8 bLevel);
+ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, int8_t bLevel);
 BOOLEAN IsValidDecapitationCorpse(ROTTING_CORPSE *pCorpse);
-void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel);
+void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel);
 
 void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier);
 

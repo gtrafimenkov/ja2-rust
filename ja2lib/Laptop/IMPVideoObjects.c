@@ -262,7 +262,7 @@ void DeleteAnalyse(void) {
   return;
 }
 
-void RenderAnalyse(INT16 sX, INT16 sY, INT8 bImageNumber) {
+void RenderAnalyse(INT16 sX, INT16 sY, int8_t bImageNumber) {
   struct VObject* hHandle;
 
   // get the video object

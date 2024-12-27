@@ -29,8 +29,8 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
                     BOOLEAN fTacticalTraversal);
 
 /*
-BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSectorDest, INT8 bToDirection  );
-BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSector, INT8 bToDirection );
+BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSectorDest, int8_t bToDirection  );
+BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSector, int8_t bToDirection );
 BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( uint16_t sSourceSector, uint16_t sDestSector );
 BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( uint16_t sSourceSector, uint16_t sDestSector );
 BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY );

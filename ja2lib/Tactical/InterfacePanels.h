@@ -68,8 +68,8 @@ void DisableTacticalTeamPanelButtons(BOOLEAN fDisable);
 void RenderTownIDString();
 void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-extern INT8 gbNewItem[NUM_INV_SLOTS];
-extern INT8 gbNewItemCycle[NUM_INV_SLOTS];
+extern int8_t gbNewItem[NUM_INV_SLOTS];
+extern int8_t gbNewItemCycle[NUM_INV_SLOTS];
 extern uint8_t gubNewItemMerc;
 
 void ShowRadioLocator(uint8_t ubID, uint8_t ubLocatorSpeed);

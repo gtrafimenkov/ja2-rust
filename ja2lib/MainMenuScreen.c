@@ -70,7 +70,7 @@ uint32_t guiMainMenuBackGroundImage;
 uint32_t guiJa2LogoImage;
 
 struct MOUSE_REGION gBackRegion;
-INT8 gbHandledMainMenu = 0;
+int8_t gbHandledMainMenu = 0;
 BOOLEAN fInitialRender = FALSE;
 // BOOLEAN						gfDoHelpScreen = 0;
 
@@ -301,7 +301,7 @@ void ExitMainMenu() {
 }
 
 void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT8 bID;
+  int8_t bID;
 
   bID = (uint8_t)((uintptr_t)btn->UserData[0]);
 

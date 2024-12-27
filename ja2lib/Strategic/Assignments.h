@@ -91,7 +91,7 @@ typedef struct TOWN_TRAINER_TYPE {
 void ResumeOldAssignment(struct SOLDIERTYPE *pSoldier);
 
 // can character do this assignment?
-// BOOLEAN CanSoldierAssignment( struct SOLDIERTYPE *pSoldier, INT8 bAssignment );
+// BOOLEAN CanSoldierAssignment( struct SOLDIERTYPE *pSoldier, int8_t bAssignment );
 
 // can this character be assigned as a doctor?
 BOOLEAN CanCharacterDoctor(struct SOLDIERTYPE *pCharacter);
@@ -106,7 +106,7 @@ BOOLEAN CanCharacterPatient(struct SOLDIERTYPE *pCharacter);
 BOOLEAN CanCharacterTrainMilitia(struct SOLDIERTYPE *pCharacter);
 
 // can character train stat?..as train self or as trainer?
-BOOLEAN CanCharacterTrainStat(struct SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
+BOOLEAN CanCharacterTrainStat(struct SOLDIERTYPE *pSoldier, int8_t bStat, BOOLEAN fTrainSelf,
                               BOOLEAN fTrainTeammate);
 
 // is character capable of practising at all?
@@ -136,7 +136,7 @@ BOOLEAN CanCharacterVehicle(struct SOLDIERTYPE *pCharacter);
 #define CHARACTER_CAN_JOIN_SQUAD 1
 
 // can character be added to squad
-INT8 CanCharacterSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+int8_t CanCharacterSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // if merc could train militia here, do they have sufficient loyalty?
 BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(struct SOLDIERTYPE *pSoldier);
@@ -149,7 +149,7 @@ BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pCharacter);
 void UpdateAssignments();
 
 // how many people in this secotr have this assignment?
-uint8_t FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment);
+uint8_t FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, int8_t bAssignment);
 
 void MakeSoldiersTacticalAnimationReflectAssignment(struct SOLDIERTYPE *pSoldier);
 
@@ -160,7 +160,7 @@ void BuildSectorsWithSoldiersList(void);
 void InitSectorsWithSoldiersList(void);
 
 // is there a soldier in this sector?..only use after BuildSectorsWithSoldiersList is called
-BOOLEAN IsThereASoldierInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN IsThereASoldierInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 void CheckIfSoldierUnassigned(struct SOLDIERTYPE *pSoldier);
 
@@ -183,15 +183,15 @@ uint8_t CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, uint16_t
 
 // get bonus tarining pts due to an instructor for this student
 INT16 GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
-                                         struct SOLDIERTYPE *pStudent, INT8 bTrainStat,
+                                         struct SOLDIERTYPE *pStudent, int8_t bTrainStat,
                                          BOOLEAN fAtGunRange, uint16_t *pusMaxPts);
 
 // get training pts for this soldier
-INT16 GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
+INT16 GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, int8_t bTrainStat, BOOLEAN fAtGunRange,
                             uint16_t *pusMaxPts);
 
 // pts for being a student for this soldier
-INT16 GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
+INT16 GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, int8_t bTrainStat, BOOLEAN fAtGunRange,
                            uint16_t *pusMaxPts);
 
 // reset these soldiers
@@ -268,7 +268,7 @@ BOOLEAN IsCharacterAliveAndConscious(struct SOLDIERTYPE *pCharacter);
 void CreateDestroyScreenMaskForAssignmentAndContractMenus(void);
 
 BOOLEAN CreateDestroyAssignmentPopUpBoxes(void);
-void SetSoldierAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam1,
+void SetSoldierAssignment(struct SOLDIERTYPE *pSoldier, int8_t bAssignment, INT32 iParam1,
                           INT32 iParam2, INT32 iParam3);
 
 // set merc asleep and awake under the new sleep system implemented June 29, 1998
@@ -293,7 +293,7 @@ BOOLEAN AnyMercInGroupCantContinueMoving(struct GROUP *pGroup);
 BOOLEAN HandleSelectedMercsBeingPutAsleep(BOOLEAN fWakeUp, BOOLEAN fDisplayWarning);
 
 // is any one on the team on this assignment?
-BOOLEAN IsAnyOneOnPlayersTeamOnThisAssignment(INT8 bAssignment);
+BOOLEAN IsAnyOneOnPlayersTeamOnThisAssignment(int8_t bAssignment);
 
 // rebuild assignments box
 void RebuildAssignmentsBox(void);
@@ -303,13 +303,13 @@ void BandageBleedingDyingPatientsBeingTreated();
 void ReEvaluateEveryonesNothingToDo();
 
 // set assignment for list of characters
-void SetAssignmentForList(INT8 bAssignment, INT8 bParam);
+void SetAssignmentForList(int8_t bAssignment, int8_t bParam);
 
 // is this area maxed out on militia?
 BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier);
 
 // function where we actually set someone's assignment so we can trap certain situations
-void ChangeSoldiersAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment);
+void ChangeSoldiersAssignment(struct SOLDIERTYPE *pSoldier, int8_t bAssignment);
 
 void UnEscortEPC(struct SOLDIERTYPE *pSoldier);
 

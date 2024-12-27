@@ -211,9 +211,9 @@ INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier) {
   return (pSoldier->usPatrolGrid[pSoldier->bNextPatrolPnt]);
 }
 
-INT8 PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
+int8_t PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   INT16 sPatrolPoint;
-  INT8 bOldOrders;
+  int8_t bOldOrders;
 
   sPatrolPoint = pSoldier->usPatrolGrid[pSoldier->bNextPatrolPnt];
 
@@ -275,10 +275,10 @@ INT8 PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-INT8 RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
+int8_t RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   INT16 sPatrolPoint;
-  INT8 bOldOrders, bPatrolIndex;
-  INT8 bCnt;
+  int8_t bOldOrders, bPatrolIndex;
+  int8_t bCnt;
 
   sPatrolPoint = pSoldier->usPatrolGrid[pSoldier->bNextPatrolPnt];
 
@@ -291,7 +291,7 @@ INT8 RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
     do {
       // usPatrolGrid[0] gets used for centre of close etc patrols, so we have to add 1 to the
       // Random #
-      bPatrolIndex = (INT8)PreRandom(pSoldier->bPatrolCnt) + 1;
+      bPatrolIndex = (int8_t)PreRandom(pSoldier->bPatrolCnt) + 1;
       sPatrolPoint = pSoldier->usPatrolGrid[bPatrolIndex];
       bCnt++;
     } while ((sPatrolPoint == pSoldier->sGridNo) ||
@@ -353,13 +353,13 @@ INT8 RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid,
-                                       INT8 bReserveAPs, INT8 bAction, INT8 fFlags) {
+                                       int8_t bReserveAPs, int8_t bAction, int8_t fFlags) {
   INT16 sLoop, sAPCost;
   INT16 sTempDest, sGoToGrid;
   uint16_t sOrigin;
   uint16_t usMaxDist;
   uint8_t ubDirection, ubDirsLeft, ubDirChecked[8], fFound = FALSE;
-  INT8 bAPsLeft, fPathFlags;
+  int8_t bAPsLeft, fPathFlags;
   uint8_t ubRoomRequired = 0, ubTempRoom;
 
   if (bReserveAPs == -1) {
@@ -547,9 +547,9 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
       }
 
       // ATE: Direction here?
-      sAPCost += EstimateActionPointCost(pSoldier, sTempDest, (INT8)pSoldier->usPathingData[sLoop],
-                                         pSoldier->usUIMovementMode, (INT8)sLoop,
-                                         (INT8)pSoldier->usPathDataSize);
+      sAPCost += EstimateActionPointCost(
+          pSoldier, sTempDest, (int8_t)pSoldier->usPathingData[sLoop], pSoldier->usUIMovementMode,
+          (int8_t)sLoop, (int8_t)pSoldier->usPathDataSize);
 
       bAPsLeft = pSoldier->bActionPoints - sAPCost;
     }
@@ -598,7 +598,7 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
   }
 }
 
-INT16 GoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid, INT8 bAction) {
+INT16 GoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid, int8_t bAction) {
   return (InternalGoAsFarAsPossibleTowards(pSoldier, sDesGrid, -1, bAction, 0));
 }
 
@@ -648,8 +648,8 @@ void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
 
   // Find out how much it takes to move here!
   bAPCost = EstimateActionPointCost(
-      pSoldier, usNewGridNo, (INT8)pSoldier->usPathingData[pSoldier->usPathIndex],
-      pSoldier->usUIMovementMode, (INT8)pSoldier->usPathIndex, (INT8)pSoldier->usPathDataSize);
+      pSoldier, usNewGridNo, (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex],
+      pSoldier->usUIMovementMode, (int8_t)pSoldier->usPathIndex, (int8_t)pSoldier->usPathDataSize);
 
   if (pSoldier->bActionPoints >= bAPCost) {
     // seems to have enough points...
@@ -746,7 +746,7 @@ INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
   INT32 iXDiff, iYDiff, iXIncr;
   INT32 iStart, iXStart, iYStart;
   INT32 iGridNo;
-  INT8 bDir;
+  int8_t bDir;
   INT32 iBestGridNo = NOWHERE;
   uint8_t ubBestDirDiff = 5, ubBestStrength = 0;
   uint8_t ubDirDiff, ubStrength;

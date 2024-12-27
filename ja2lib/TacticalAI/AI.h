@@ -8,7 +8,7 @@ struct SOLDIERTYPE;
 
 #define TESTAICONTROL
 
-extern INT8 gubAIPathCosts[19][19];
+extern int8_t gubAIPathCosts[19][19];
 #define AI_PATHCOST_RADIUS 9
 
 extern BOOLEAN gfDisplayCoverValues;
@@ -131,45 +131,45 @@ typedef enum {
 #define DIFF_MAX_COVER_RANGE 4
 #define MAX_DIFF_PARMS 5  // how many different difficulty variables?
 
-extern INT8 gbDiff[MAX_DIFF_PARMS][5];
+extern int8_t gbDiff[MAX_DIFF_PARMS][5];
 
 void ActionDone(struct SOLDIERTYPE *pSoldier);
 INT16 ActionInProgress(struct SOLDIERTYPE *pSoldier);
 
-INT8 CalcMorale(struct SOLDIERTYPE *pSoldier);
+int8_t CalcMorale(struct SOLDIERTYPE *pSoldier);
 INT32 CalcPercentBetter(INT32 iOldValue, INT32 iNewValue, INT32 iOldScale, INT32 iNewScale);
 void CallAvailableEnemiesTo(INT16 sGridno);
 void CallAvailableKingpinMenTo(INT16 sGridNo);
-void CallAvailableTeamEnemiesTo(INT16 sGridno, INT8 bTeam);
+void CallAvailableTeamEnemiesTo(INT16 sGridno, int8_t bTeam);
 void CallEldinTo(INT16 sGridNo);
 void CancelAIAction(struct SOLDIERTYPE *pSoldier, uint8_t ubForce);
 void CheckForChangingOrders(struct SOLDIERTYPE *pSoldier);
 
-INT8 ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier);
+int8_t ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier);
 
-INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *pbLevel);
+INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, int8_t *pbLevel);
 INT16 ClosestPC(struct SOLDIERTYPE *pSoldier, INT16 *psDistance);
 BOOLEAN CanAutoBandage(BOOLEAN fDoFullCheck);
 
 void DebugAI(STR szOutput);
-INT8 DecideAction(struct SOLDIERTYPE *pSoldier);
-INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier);
-INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier);
-INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier);
-INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK);
-INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier);
+int8_t DecideAction(struct SOLDIERTYPE *pSoldier);
+int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier);
+int8_t DecideActionEscort(struct SOLDIERTYPE *pSoldier);
+int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier);
+int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK);
+int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier);
 
 INT16 DistanceToClosestFriend(struct SOLDIERTYPE *pSoldier);
 
 void EndAIDeadlock(void);
 void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier);
 
-INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier);
+int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier);
 
 INT16 FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, INT16 sGridno);
 INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *pPercentBetter);
 INT16 FindClosestDoor(struct SOLDIERTYPE *pSoldier);
-INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, INT8 *pbDirection);
+INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, int8_t *pbDirection);
 INT16 FindNearestEdgePoint(INT16 sGridNo);
 
 // Kris:  Added these as I need specific searches on certain sides.
@@ -179,7 +179,7 @@ enum {
   SOUTH_EDGEPOINT_SEARCH,
   WEST_EDGEPOINT_SEARCH,
 };
-INT16 FindNearestEdgepointOnSpecifiedEdge(INT16 sGridNo, INT8 bEdgeCode);
+INT16 FindNearestEdgepointOnSpecifiedEdge(INT16 sGridNo, int8_t bEdgeCode);
 
 INT16 FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier);
 BOOLEAN FindRoofClimbingPoints(struct SOLDIERTYPE *pSoldier, INT16 sDesiredSpot);
@@ -188,7 +188,7 @@ INT16 FindSweetCoverSpot(struct SOLDIERTYPE *pSoldier);
 
 void FreeUpNPCFromAttacking(uint8_t ubID);
 void FreeUpNPCFromPendingAction(struct SOLDIERTYPE *pSoldier);
-void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, INT8 bLook);
+void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, int8_t bLook);
 void FreeUpNPCFromStanceChange(struct SOLDIERTYPE *pSoldier);
 void FreeUpNPCFromLoweringGun(struct SOLDIERTYPE *pSoldier);
 void FreeUpNPCFromRoofClimb(struct SOLDIERTYPE *pSoldier);
@@ -197,7 +197,7 @@ uint8_t GetClosestOpponent(struct SOLDIERTYPE *pSoldier);
 uint8_t GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier);
 
 void HandleSoldierAI(struct SOLDIERTYPE *pSoldier);
-void HandleInitialRedAlert(INT8 bTeam, uint8_t ubCommunicate);
+void HandleInitialRedAlert(int8_t bTeam, uint8_t ubCommunicate);
 
 void InitPanicSystem();
 INT16 InWaterOrGas(struct SOLDIERTYPE *pSoldier, INT16 sGridno);
@@ -210,7 +210,7 @@ void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier);
 void NewDest(struct SOLDIERTYPE *pSoldier, uint16_t sGridno);
 INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier);
 
-INT8 PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove);
+int8_t PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove);
 void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier);
 
 INT16 RandDestWithinRange(struct SOLDIERTYPE *pSoldier);
@@ -226,7 +226,7 @@ void StartNPCAI(struct SOLDIERTYPE *pSoldier);
 void TempHurt(struct SOLDIERTYPE *pVictim, struct SOLDIERTYPE *pAttacker);
 int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno);
 
-BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, INT8 bNewDirection);
+BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, int8_t bNewDirection);
 #ifdef DEBUGDECISIONS
 extern char tempstr[256];
 void AIPopMessage(STR str);

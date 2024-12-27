@@ -166,11 +166,11 @@ BOOLEAN gfSaveGame = TRUE;
 
 BOOLEAN gfSaveLoadScreenButtonsCreated = FALSE;
 
-INT8 gbSaveGameSelectedLocation[NUM_SAVE_GAMES];
-INT8 gbSelectedSaveLocation = -1;
-INT8 gbHighLightedLocation = -1;
-INT8 gbLastHighLightedLocation = -1;
-INT8 gbSetSlotToBeSelected = -1;
+int8_t gbSaveGameSelectedLocation[NUM_SAVE_GAMES];
+int8_t gbSelectedSaveLocation = -1;
+int8_t gbHighLightedLocation = -1;
+int8_t gbLastHighLightedLocation = -1;
+int8_t gbSetSlotToBeSelected = -1;
 
 uint32_t guiSlgBackGroundImage;
 uint32_t guiBackGroundAddOns;
@@ -232,14 +232,14 @@ void RenderSaveLoadScreen();
 void ExitSaveLoadScreen();
 void HandleSaveLoadScreen();
 void GetSaveLoadScreenUserInput();
-void SaveLoadGameNumber(INT8 bSaveGameID);
-BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader);
-BOOLEAN DisplaySaveGameEntry(INT8 bEntryID);  //, uint16_t usPosY );
+void SaveLoadGameNumber(int8_t bSaveGameID);
+BOOLEAN LoadSavedGameHeader(int8_t bEntry, SAVED_GAME_HEADER *pSaveGameHeader);
+BOOLEAN DisplaySaveGameEntry(int8_t bEntryID);  //, uint16_t usPosY );
 BOOLEAN DisplaySaveGameList();
 void InitSaveLoadScreenTextInputBoxes();
 void DestroySaveLoadTextInputBoxes();
 void SetSelection(uint8_t ubNewSelection);
-uint8_t CompareSaveGameVersion(INT8 bSaveGameID);
+uint8_t CompareSaveGameVersion(int8_t bSaveGameID);
 void LoadSavedGameWarningMessageBoxCallBack(uint8_t bExitValue);
 void LoadSavedGameDeleteAllSaveGameMessageBoxCallBack(uint8_t bExitValue);
 void DeleteAllSaveGameFile();
@@ -393,7 +393,7 @@ void SetSaveLoadExitScreen(uint32_t uiScreen) {
 }
 
 BOOLEAN EnterSaveLoadScreen() {
-  INT8 i;
+  int8_t i;
   VOBJECT_DESC VObjectDesc;
   uint16_t usPosX = SLG_FIRST_SAVED_SPOT_X;
   uint16_t usPosY = SLG_FIRST_SAVED_SPOT_Y;
@@ -625,7 +625,7 @@ BOOLEAN EnterSaveLoadScreen() {
 }
 
 void ExitSaveLoadScreen() {
-  INT8 i;
+  int8_t i;
 
   gfLoadGameUponEntry = FALSE;
 
@@ -729,7 +729,7 @@ void HandleSaveLoadScreen() {
 
 void GetSaveLoadScreenUserInput() {
   InputAtom Event;
-  INT8 bActiveTextField;
+  int8_t bActiveTextField;
   static BOOLEAN fWasCtrlHeldDownLastFrame = FALSE;
 
   struct Point MousePos = GetMousePoint();
@@ -819,7 +819,7 @@ void GetSaveLoadScreenUserInput() {
       switch (Event.usParam) {
         case 'a':
           if (gfKeyState[ALT] && !gfSaveGame) {
-            INT8 iFile = GetNumberForAutoSave(TRUE);
+            int8_t iFile = GetNumberForAutoSave(TRUE);
 
             if (iFile == -1) break;
 
@@ -832,7 +832,7 @@ void GetSaveLoadScreenUserInput() {
 
         case 'b':
           if (gfKeyState[ALT] && !gfSaveGame) {
-            INT8 iFile = GetNumberForAutoSave(FALSE);
+            int8_t iFile = GetNumberForAutoSave(FALSE);
 
             if (iFile == -1)
               break;
@@ -881,7 +881,7 @@ void GetSaveLoadScreenUserInput() {
         case ENTER:
 
           if (gfSaveGame) {
-            bActiveTextField = (INT8)GetActiveFieldID();
+            bActiveTextField = (int8_t)GetActiveFieldID();
             if (bActiveTextField && bActiveTextField != -1) {
               Get16BitStringFromField((uint8_t)bActiveTextField, gzGameDescTextField,
                                       ARR_SIZE(gzGameDescTextField));
@@ -911,7 +911,7 @@ void GetSaveLoadScreenUserInput() {
   }
 }
 
-void SaveLoadGameNumber(INT8 bSaveGameID) {
+void SaveLoadGameNumber(int8_t bSaveGameID) {
   //	CHAR16	zTemp[128];
   uint8_t ubRetVal = 0;
 
@@ -920,9 +920,9 @@ void SaveLoadGameNumber(INT8 bSaveGameID) {
   }
 
   if (gfSaveGame) {
-    INT8 bActiveTextField;
+    int8_t bActiveTextField;
 
-    bActiveTextField = (INT8)GetActiveFieldID();
+    bActiveTextField = (int8_t)GetActiveFieldID();
     if (bActiveTextField && bActiveTextField != -1) {
       Get16BitStringFromField((uint8_t)bActiveTextField, gzGameDescTextField,
                               ARR_SIZE(gzGameDescTextField));
@@ -1002,7 +1002,7 @@ BOOLEAN DoSaveLoadMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitSc
 }
 
 BOOLEAN InitSaveGameArray() {
-  INT8 cnt;
+  int8_t cnt;
   CHAR8 zSaveGameName[512];
   SAVED_GAME_HEADER SaveGameHeader;
 
@@ -1023,7 +1023,7 @@ BOOLEAN InitSaveGameArray() {
 }
 
 BOOLEAN DisplaySaveGameList() {
-  INT8 bLoop1;
+  int8_t bLoop1;
   //	uint16_t usPosX = SLG_FIRST_SAVED_SPOT_X;
   uint16_t usPosY = SLG_FIRST_SAVED_SPOT_Y;
 
@@ -1037,7 +1037,7 @@ BOOLEAN DisplaySaveGameList() {
   return (TRUE);
 }
 
-BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, uint16_t usPosY )
+BOOLEAN DisplaySaveGameEntry(int8_t bEntryID)  //, uint16_t usPosY )
 {
   CHAR16 zDateString[128];
   CHAR16 zLocationString[128];
@@ -1294,7 +1294,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, uint16_t usPosY )
   return (TRUE);
 }
 
-BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
+BOOLEAN LoadSavedGameHeader(int8_t bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
   HWFILE hFile;
   CHAR8 zSavedGameName[512];
   uint32_t uiNumBytesRead;
@@ -1433,7 +1433,7 @@ btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 */
 
 void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT8 bActiveTextField;
+  int8_t bActiveTextField;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1528,7 +1528,7 @@ void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
           gfRedrawSaveLoadScreen = TRUE;
 
         } else {
-          bActiveTextField = (INT8)GetActiveFieldID();
+          bActiveTextField = (int8_t)GetActiveFieldID();
           if (bActiveTextField && bActiveTextField != -1) {
             Get16BitStringFromField((uint8_t)bActiveTextField, gzGameDescTextField,
                                     ARR_SIZE(gzGameDescTextField));
@@ -1574,7 +1574,7 @@ void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    INT8 bTemp;
+    int8_t bTemp;
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
 
     bTemp = gbHighLightedLocation;
@@ -1748,7 +1748,7 @@ void SetSelection(uint8_t ubNewSelection) {
           */
 }
 
-uint8_t CompareSaveGameVersion(INT8 bSaveGameID) {
+uint8_t CompareSaveGameVersion(int8_t bSaveGameID) {
   uint8_t ubRetVal = SLS_HEADER_OK;
 
   SAVED_GAME_HEADER SaveGameHeader;
@@ -1827,8 +1827,8 @@ void DisplayOnScreenNumber(BOOLEAN fErase) {
   wchar_t zTempString[16];
   uint16_t usPosX = 6;
   uint16_t usPosY;
-  INT8 bLoopNum;
-  INT8 bNum = 0;
+  int8_t bLoopNum;
+  int8_t bNum = 0;
 
   usPosY = SLG_FIRST_SAVED_SPOT_Y;
 
@@ -2096,7 +2096,7 @@ BOOLEAN DoQuickLoad() {
 }
 
 BOOLEAN IsThereAnySavedGameFiles() {
-  INT8 cnt;
+  int8_t cnt;
   CHAR8 zSaveGameName[512];
 
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {

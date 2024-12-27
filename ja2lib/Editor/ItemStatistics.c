@@ -149,8 +149,8 @@ void ToggleDetonator(GUI_BUTTON *btn, INT32 reason);
 
 uint32_t guiActionItemButton;
 void ActionItemCallback(GUI_BUTTON *btn, INT32 reason);
-INT8 gbActionItemIndex = ACTIONITEM_MEDIUM;
-INT8 gbDefaultBombTrapLevel = 9;
+int8_t gbActionItemIndex = ACTIONITEM_MEDIUM;
+int8_t gbDefaultBombTrapLevel = 9;
 
 void RemoveBombFromWorldByItemIndex(INT32 iItemIndex);
 
@@ -170,7 +170,7 @@ enum {
   EDITING_OWNERSHIP,
 };
 
-INT8 gbEditingMode = EDITING_NOTHING;
+int8_t gbEditingMode = EDITING_NOTHING;
 
 struct OBJECTTYPE *gpItem = NULL;
 BOOLEAN gfShowItemStatsPanel;
@@ -707,7 +707,7 @@ void ExtractAndUpdateGunGUI() {
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bGunStatus = (INT8)i;
+  gpItem->bGunStatus = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the ammo
   i = GetNumericStrictValueFromField(2);
@@ -720,7 +720,7 @@ void ExtractAndUpdateGunGUI() {
   // Update the trap level
   i = GetNumericStrictValueFromField(3);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(3, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(4);
@@ -763,7 +763,7 @@ void ExtractAndUpdateAmmoGUI() {
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(3);
@@ -814,12 +814,12 @@ void ExtractAndUpdateArmourGUI() {
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(3);
@@ -856,12 +856,12 @@ void ExtractAndUpdateEquipGUI() {
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(3);
@@ -920,7 +920,7 @@ void ExtractAndUpdateExplosivesGUI() {
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the quantity
   if (Item[gpItem->usItem].ubPerPocket > 1) {
@@ -936,7 +936,7 @@ void ExtractAndUpdateExplosivesGUI() {
   // Update the trap level
   i = GetNumericStrictValueFromField(3);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(3, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(4);
@@ -1070,13 +1070,13 @@ void ExtractAndUpdateActionItemsGUI() {
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  if (i != gpItem->bTrap) gbDefaultBombTrapLevel = (INT8)i;
-  gpItem->bTrap = (INT8)i;
+  if (i != gpItem->bTrap) gbDefaultBombTrapLevel = (int8_t)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
 
   if (gpEditingItemPool) {
@@ -1132,7 +1132,7 @@ void ExtractAndUpdateTriggersGUI() {
   // Update the trap level
   i = GetNumericStrictValueFromField(1);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
 
   i = GetNumericStrictValueFromField(2);
@@ -1196,7 +1196,7 @@ void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
           CreateItem(usAttachment, gpItem->bGunStatus, &temp);
           AttachObject(NULL, gpItem, &temp);
         } else {  // Button is out, so remove the attachment
-          INT8 slot;
+          int8_t slot;
           gfAttachment[i] = FALSE;
           btn->uiFlags &= ~BUTTON_CLICKED_ON;
           slot = FindAttachment(gpItem, usAttachment);
@@ -1217,7 +1217,7 @@ void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
       CreateItem(CERAMIC_PLATES, gpItem->bStatus[0], &temp);
       AttachObject(NULL, gpItem, &temp);
     } else {
-      INT8 slot;
+      int8_t slot;
       btn->uiFlags &= ~BUTTON_CLICKED_ON;
       slot = FindAttachment(gpItem, CERAMIC_PLATES);
       if (slot != -1) RemoveAttachment(gpItem, slot, &temp);
@@ -1234,7 +1234,7 @@ void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
       CreateItem(DETONATOR, gpItem->bStatus[0], &temp);
       AttachObject(NULL, gpItem, &temp);
     } else {  // Button is out, so remove the attachment
-      INT8 slot;
+      int8_t slot;
       gfDetonator = FALSE;
       btn->uiFlags &= ~BUTTON_CLICKED_ON;
       slot = FindAttachment(gpItem, DETONATOR);
@@ -1249,7 +1249,7 @@ void ActionItemCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex) {
+void ChangeActionItem(struct OBJECTTYPE *pItem, int8_t bActionItemIndex) {
   pItem->usItem = ACTION_ITEM;
   pItem->bActionValue = ACTION_ITEM_BLOW_UP;
   switch (bActionItemIndex) {
@@ -1381,7 +1381,7 @@ void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex) {
   }
 }
 
-void UpdateActionItem(INT8 bActionItemIndex) {
+void UpdateActionItem(int8_t bActionItemIndex) {
   gbActionItemIndex = bActionItemIndex;  // used for future new actionitems as the default.
 
   if (!gpItemPool || !gpItem) return;

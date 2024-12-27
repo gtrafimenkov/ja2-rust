@@ -88,11 +88,11 @@ extern CHAR16 gszActionItemDesc[NUM_ACTIONITEMS][30];
 // Returns a pointer to one of the above string array.
 extern CHAR16 *GetActionItemName(struct OBJECTTYPE *pItem);
 // Called by the popup menu, when a selection is made.
-extern void UpdateActionItem(INT8 bActionItemIndex);
+extern void UpdateActionItem(int8_t bActionItemIndex);
 // Changes an action item into the type specified by the ACTIONITEM enumeration.
-extern void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex);
-extern INT8 gbActionItemIndex;
-extern INT8 gbDefaultBombTrapLevel;
+extern void ChangeActionItem(struct OBJECTTYPE *pItem, int8_t bActionItemIndex);
+extern int8_t gbActionItemIndex;
+extern int8_t gbDefaultBombTrapLevel;
 
 extern void SetOwnershipGroup(uint8_t ubNewGroup);
 

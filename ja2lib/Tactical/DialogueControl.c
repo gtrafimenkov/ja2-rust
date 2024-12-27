@@ -82,7 +82,7 @@
 typedef struct {
   uint16_t usQuoteNum;
   uint8_t ubCharacterNum;
-  INT8 bUIHandlerID;
+  int8_t bUIHandlerID;
   INT32 iFaceIndex;
   INT32 iTimeStamp;
   uintptr_t uiSpecialEventFlag;
@@ -127,7 +127,7 @@ uint8_t gubNumStopTimeQuotes = 2;
 HQUEUE ghDialogueQ = NULL;
 FACETYPE *gpCurrentTalkingFace = NULL;
 uint8_t gubCurrentTalkingID = NO_PROFILE;
-INT8 gbUIHandlerID;
+int8_t gbUIHandlerID;
 
 INT32 giNPCReferenceCount = 0;
 INT32 giNPCSpecialReferenceCount = 0;
@@ -163,7 +163,7 @@ BOOLEAN fPausedTimeDuringQuote = FALSE;
 BOOLEAN fWasPausedDuringDialogue = FALSE;
 extern BOOLEAN gfLockPauseState;
 
-INT8 gubLogForMeTooBleeds = FALSE;
+int8_t gubLogForMeTooBleeds = FALSE;
 
 // has the text region been created?
 BOOLEAN fTextBoxMouseRegionCreated = FALSE;
@@ -186,7 +186,7 @@ void HandleTacticalTextUI(INT32 iFaceIndex, struct SOLDIERTYPE *pSoldier, CHAR16
 void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, CHAR16 *zQuoteStr);
 void HandleTacticalSpeechUI(uint8_t ubCharacterNum, INT32 iFaceIndex);
 void DisplayTextForExternalNPC(uint8_t ubCharacterNum, STR16 zQuoteStr);
-void CreateTalkingUI(INT8 bUIHandlerID, INT32 iFaceIndex, uint8_t ubCharacterNum,
+void CreateTalkingUI(int8_t bUIHandlerID, INT32 iFaceIndex, uint8_t ubCharacterNum,
                      struct SOLDIERTYPE *pSoldier, CHAR16 *zQuoteStr);
 
 void HandleExternNPCSpeechFace(INT32 iIndex);
@@ -878,7 +878,7 @@ void HandleDialogue() {
     if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_EXIT_MAP_SCREEN) {
       // select sector
       ChangeSelectedMapSector((INT16)QItem->uiSpecialEventData, (INT16)QItem->uiSpecialEventData2,
-                              (INT8)QItem->uiSpecialEventData3);
+                              (int8_t)QItem->uiSpecialEventData3);
       RequestTriggerExitFromMapscreen(MAP_EXIT_TO_TACTICAL);
     } else if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_DISPLAY_STAT_CHANGE) {
       // grab soldier ptr from profile ID
@@ -927,7 +927,7 @@ void HandleDialogue() {
       if (QItem->bUIHandlerID == DIALOGUE_NPC_UI) {
         HandleNPCItemGiven((uint8_t)QItem->uiSpecialEventData,
                            (struct OBJECTTYPE *)QItem->uiSpecialEventData2,
-                           (INT8)QItem->uiSpecialEventData3);
+                           (int8_t)QItem->uiSpecialEventData3);
       }
     } else if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_TRIGGER_NPC) {
       if (QItem->bUIHandlerID == DIALOGUE_NPC_UI) {
@@ -1410,7 +1410,7 @@ BOOLEAN ExecuteCharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, IN
   return (TRUE);
 }
 
-void CreateTalkingUI(INT8 bUIHandlerID, INT32 iFaceIndex, uint8_t ubCharacterNum,
+void CreateTalkingUI(int8_t bUIHandlerID, INT32 iFaceIndex, uint8_t ubCharacterNum,
                      struct SOLDIERTYPE *pSoldier, CHAR16 *zQuoteStr) {
   // Show text, if on
   if (gGameSettings.fOptions[TOPTION_SUBTITLES] || !gFacesData[iFaceIndex].fValidSpeech) {
@@ -2093,7 +2093,8 @@ void SayQuoteFromAnyBodyInSector(uint16_t usQuoteNum) {
   }
 }
 
-void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint16_t usQuoteNum) {
+void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
+                                     uint16_t usQuoteNum) {
   uint8_t ubMercsInSector[20] = {0};
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
@@ -2138,7 +2139,7 @@ void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, ui
   }
 }
 
-void SayQuoteFromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, uint16_t usQuoteNum) {
+void SayQuoteFromNearbyMercInSector(INT16 sGridNo, int8_t bDistance, uint16_t usQuoteNum) {
   uint8_t ubMercsInSector[20] = {0};
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
@@ -2160,7 +2161,7 @@ void SayQuoteFromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, uint16_t usQu
         !pTeamSoldier->fMercAsleep &&
         SoldierTo3DLocationLineOfSightTest(pTeamSoldier, sGridNo, 0, 0,
                                            (uint8_t)MaxDistanceVisible(), TRUE)) {
-      if (usQuoteNum == 66 && (INT8)Random(100) > EffectiveWisdom(pTeamSoldier)) {
+      if (usQuoteNum == 66 && (int8_t)Random(100) > EffectiveWisdom(pTeamSoldier)) {
         continue;
       }
       ubMercsInSector[ubNumMercs] = (uint8_t)cnt;
@@ -2179,8 +2180,8 @@ void SayQuoteFromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, uint16_t usQu
   }
 }
 
-void SayQuote58FromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, uint16_t usQuoteNum,
-                                      INT8 bSex) {
+void SayQuote58FromNearbyMercInSector(INT16 sGridNo, int8_t bDistance, uint16_t usQuoteNum,
+                                      int8_t bSex) {
   uint8_t ubMercsInSector[20] = {0};
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;

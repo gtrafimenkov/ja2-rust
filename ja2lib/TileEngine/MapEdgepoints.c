@@ -823,7 +823,7 @@ void SaveMapEdgepoints(HWFILE fp) {
     FileMan_Write(fp, gps2ndWestEdgepointArray, gus2ndWestEdgepointArraySize * sizeof(INT16), NULL);
 }
 
-void OldLoadMapEdgepoints(INT8 **hBuffer) {
+void OldLoadMapEdgepoints(int8_t **hBuffer) {
   LOADDATA(&gus1stNorthEdgepointArraySize, *hBuffer, 2);
   LOADDATA(&gus1stNorthEdgepointMiddleIndex, *hBuffer, 2);
   if (gus1stNorthEdgepointArraySize) {
@@ -854,7 +854,7 @@ void OldLoadMapEdgepoints(INT8 **hBuffer) {
   }
 }
 
-BOOLEAN LoadMapEdgepoints(INT8 **hBuffer) {
+BOOLEAN LoadMapEdgepoints(int8_t **hBuffer) {
   TrashMapEdgepoints();
   if (gMapInformation.ubMapVersion < 17) {  // To prevent invalidation of older maps, which only
                                             // used one layer of edgepoints, and a uint8_t for
@@ -1375,7 +1375,7 @@ BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint) {
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT16 sGridNo;
-  INT8 bDirection;
+  int8_t bDirection;
 
   pSoldier->sGridNo = sEdgepoint;
 

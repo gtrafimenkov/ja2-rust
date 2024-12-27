@@ -33,7 +33,7 @@ void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
 uint8_t CountAllMilitiaInSector(u8 mapX, u8 mapY);
 uint8_t CountAllMilitiaInSectorID8(SectorID8 sectorID);
-INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 struct MilitiaCount GetMilitiaInSector(u8 mapX, u8 mapY);
 struct MilitiaCount GetMilitiaInSectorID8(SectorID8 sectorID);
 u8 GetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank);
@@ -66,7 +66,7 @@ void HandleContinueOfTownTraining(void);
 // clear the list of training completed sectors
 void ClearSectorListForCompletedTrainingOfMilitia(void);
 
-BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ);
+BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, int8_t bSectorZ);
 BOOLEAN MilitiaTrainingAllowedInTown(TownID bTownId);
 
 void HandleMilitiaPromotions(u8 mapX, u8 mapY);

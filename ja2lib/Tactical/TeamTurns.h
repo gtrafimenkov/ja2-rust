@@ -12,9 +12,9 @@ extern BOOLEAN gfHiddenTurnbased;
 #define INTERRUPT_QUEUED (gubOutOfTurnPersons > 0)
 
 extern BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE* pSoldier, uint8_t ubOpponentID,
-                                              INT8 bOldOppList);
-extern INT8 CalcInterruptDuelPts(struct SOLDIERTYPE* pSoldier, uint8_t ubOpponentID,
-                                 BOOLEAN fUseWatchSpots);
+                                              int8_t bOldOppList);
+extern int8_t CalcInterruptDuelPts(struct SOLDIERTYPE* pSoldier, uint8_t ubOpponentID,
+                                   BOOLEAN fUseWatchSpots);
 extern void EndAITurn(void);
 extern void DisplayHiddenInterrupt(struct SOLDIERTYPE* pSoldier);
 extern BOOLEAN InterruptDuel(struct SOLDIERTYPE* pSoldier, struct SOLDIERTYPE* pOpponent);

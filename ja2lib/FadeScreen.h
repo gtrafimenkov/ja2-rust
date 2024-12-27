@@ -22,11 +22,11 @@ typedef void (*FADE_FUNCTION)(void);
 
 extern BOOLEAN gfFadeInitialized;
 extern BOOLEAN gfFadeIn;
-extern INT8 gbFadeType;
+extern int8_t gbFadeType;
 extern FADE_FUNCTION gFadeFunction;
 extern BOOLEAN gfFadeInVideo;
 
-void BeginFade(uint32_t uiExitScreen, INT8 bFadeValue, INT8 bType, uint32_t uiDelay);
+void BeginFade(uint32_t uiExitScreen, int8_t bFadeValue, int8_t bType, uint32_t uiDelay);
 
 BOOLEAN HandleBeginFadeIn(uint32_t uiScreenExit);
 BOOLEAN HandleBeginFadeOut(uint32_t uiScreenExit);

@@ -108,7 +108,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
   EV_S_FIREWEAPON SFireWeapon;
 
   uint16_t sNewAniFrame, anAniFrame;
-  INT8 ubCurrentHeight;
+  int8_t ubCurrentHeight;
   uint16_t usOldAnimState;
   static uint32_t uiJumpAddress = NO_JUMP;
   INT16 sNewGridNo;
@@ -712,7 +712,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             if (pSoldier->sSpreadLocations[pSoldier->fDoSpread - 1] != 0) {
               EVENT_SetSoldierDirection(
                   pSoldier,
-                  (INT8)GetDirectionToGridNoFromGridNo(
+                  (int8_t)GetDirectionToGridNoFromGridNo(
                       pSoldier->sGridNo, pSoldier->sSpreadLocations[pSoldier->fDoSpread - 1]));
               EVENT_SetSoldierDesiredDirection(pSoldier, pSoldier->bDirection);
             }
@@ -1175,7 +1175,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // CODE: Decide to turn from hit.......
           {
-            INT8 bNewDirection;
+            int8_t bNewDirection;
             uint32_t uiChance;
 
             // ONLY DO THIS IF CERTAIN CONDITIONS ARISE!
@@ -1243,8 +1243,8 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             ///	if ( !( pSoldier->uiStatusFlags & SOLDIER_TURNINGFROMHIT ) )
             //	{
             ///		pSoldier->bDirection				=
-            ///(INT8)pSoldier->uiPendingActionData1;
-            //		pSoldier->bDesiredDirection = (INT8)pSoldier->uiPendingActionData1;
+            ///(int8_t)pSoldier->uiPendingActionData1;
+            //		pSoldier->bDesiredDirection = (int8_t)pSoldier->uiPendingActionData1;
             //	}
             //}
           }
@@ -2361,7 +2361,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
               // PlaySoldierJA2Sample( pTarget->ubID, ( S_SLAP_IMPACT ), RATE_11025, SoundVolume(
               // HIGHVOLUME, pTarget->sGridNo ), 1, SoundDir( pTarget->sGridNo ), TRUE );
 
-              // DoMercBattleSound( pTarget, (INT8)( BATTLE_SOUND_HIT1 + Random( 2 ) ) );
+              // DoMercBattleSound( pTarget, (int8_t)( BATTLE_SOUND_HIT1 + Random( 2 ) ) );
             }
           }
           break;
@@ -2386,7 +2386,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
         case 762: {
           // CODE: Set off Trigger
-          INT8 bPanicTrigger;
+          int8_t bPanicTrigger;
 
           bPanicTrigger = ClosestPanicTrigger(pSoldier);
           SetOffPanicBombs(pSoldier->ubID, bPanicTrigger);
@@ -2685,10 +2685,10 @@ BOOLEAN ShouldMercSayHappyWithGunQuote(struct SOLDIERTYPE *pSoldier) {
 }
 
 void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo,
-                                    INT8 bLevel) {
+                                    int8_t bLevel) {
   uint8_t ubMercsInSector[20] = {0};
-  INT8 bBuddyIndex[20] = {-1};
-  INT8 bTempBuddyIndex;
+  int8_t bBuddyIndex[20] = {-1};
+  int8_t bTempBuddyIndex;
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
@@ -2789,7 +2789,7 @@ void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, INT16 sG
 }
 
 void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *pKillerSoldier,
-                       INT16 sGridNo, INT8 bLevel) {
+                       INT16 sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   uint8_t ubMercsInSector[20] = {0};
@@ -2913,9 +2913,9 @@ void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *p
               }
             } else {
               if (Random(50) == 25) {
-                DoMercBattleSound(pKillerSoldier, (INT8)(BATTLE_SOUND_LAUGH1));
+                DoMercBattleSound(pKillerSoldier, (int8_t)(BATTLE_SOUND_LAUGH1));
               } else {
-                DoMercBattleSound(pKillerSoldier, (INT8)(BATTLE_SOUND_COOL1));
+                DoMercBattleSound(pKillerSoldier, (int8_t)(BATTLE_SOUND_COOL1));
               }
             }
           }
@@ -3206,7 +3206,7 @@ void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier) {
     // Randomly fall back or forward, if we are in the standing hit animation
     if (pSoldier->usAnimState == GENERIC_HIT_STAND || pSoldier->usAnimState == STANDING_BURST_HIT ||
         pSoldier->usAnimState == RIFLE_STAND_HIT) {
-      INT8 bTestDirection = pSoldier->bDirection;
+      int8_t bTestDirection = pSoldier->bDirection;
       BOOLEAN fForceDirection = FALSE;
       BOOLEAN fDoFallback = FALSE;
 
@@ -3224,7 +3224,7 @@ void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier) {
         if (pSoldier->ubAttackerID != NOBODY) {
           // Find direction!
           bTestDirection =
-              (INT8)GetDirectionFromGridNo(MercPtrs[pSoldier->ubAttackerID]->sGridNo, pSoldier);
+              (int8_t)GetDirectionFromGridNo(MercPtrs[pSoldier->ubAttackerID]->sGridNo, pSoldier);
           fForceDirection = TRUE;
         }
 
@@ -3494,7 +3494,7 @@ BOOLEAN HandleUnjamAnimation(struct SOLDIERTYPE *pSoldier) {
 						// Randomly fall back or forward, if we are in the standing hit animation
 						if ( pSoldier->usAnimState == GENERIC_HIT_STAND || pSoldier->usAnimState == RIFLE_STAND_HIT )
 						{
-							INT8			bTestDirection = pSoldier->bDirection;
+							int8_t			bTestDirection = pSoldier->bDirection;
 							BOOLEAN		fForceDirection = FALSE;
 							BOOLEAN		fDoFallback			= FALSE;
 
@@ -3507,7 +3507,7 @@ BOOLEAN HandleUnjamAnimation(struct SOLDIERTYPE *pSoldier) {
 								if ( pSoldier->ubAttackerID != NOBODY )
 								{
 									// Find direction!
-									bTestDirection = (INT8)GetDirectionFromGridNo( MercPtrs[ pSoldier->ubAttackerID ]->sGridNo, pSoldier );
+									bTestDirection = (int8_t)GetDirectionFromGridNo( MercPtrs[ pSoldier->ubAttackerID ]->sGridNo, pSoldier );
 									fForceDirection = TRUE;
 								}
 
@@ -3530,8 +3530,8 @@ BOOLEAN HandleUnjamAnimation(struct SOLDIERTYPE *pSoldier) {
 
 #endif
 
-BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
-                        INT8 bTestDirection, uint16_t usAnimState) {
+BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel,
+                        int8_t bTestDirection, uint16_t usAnimState) {
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   uint16_t usAnimSurface;
 

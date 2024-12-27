@@ -73,10 +73,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent);
 
 void DebugRenderHook();
 BOOLEAN DebugKeyboardHook(InputAtom *pInputEvent);
-INT8 gCurDebugPage = 0;
+int8_t gCurDebugPage = 0;
 
 struct VSurface *hVAnims[7];
-INT8 bTitleAnimFrame = 0;
+int8_t bTitleAnimFrame = 0;
 uint32_t uiTitleAnimTime = 0;
 uint32_t uiDoTitleAnimTime = 0;
 BOOLEAN gfDoTitleAnimation = FALSE;
@@ -592,7 +592,7 @@ BOOLEAN DebugKeyboardHook(InputAtom *pInputEvent) {
   return (FALSE);
 }
 
-void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, INT8 ubPage) {
+void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, int8_t ubPage) {
   gDebugRenderOverride[ubPage] = pDebugRenderOverride;
 }
 
@@ -625,7 +625,7 @@ uint32_t SexScreenHandle(void) {
   static uint8_t ubCurrentScreen = 0;
   VOBJECT_DESC VObjectDesc;
   static uint32_t guiSMILY;
-  static INT8 bCurFrame = 0;
+  static int8_t bCurFrame = 0;
   static uint32_t uiTimeOfLastUpdate = 0, uiTime;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
@@ -700,7 +700,7 @@ uint32_t SexScreenHandle(void) {
   if (bCurFrame < 24) {
     BltVideoObjectFromIndex(FRAME_BUFFER, guiSMILY, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   } else {
-    BltVideoObjectFromIndex(FRAME_BUFFER, guiSMILY, (INT8)(bCurFrame % 8), sX, sY,
+    BltVideoObjectFromIndex(FRAME_BUFFER, guiSMILY, (int8_t)(bCurFrame % 8), sX, sY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
@@ -715,7 +715,7 @@ uint32_t DemoExitScreenInit(void) { return (TRUE); }
 
 void DoneFadeOutForDemoExitScreen(void) { gfProgramIsRunning = FALSE; }
 
-extern INT8 gbFadeSpeed;
+extern int8_t gbFadeSpeed;
 
 #ifdef GERMAN
 void DisplayTopwareGermanyAddress() {

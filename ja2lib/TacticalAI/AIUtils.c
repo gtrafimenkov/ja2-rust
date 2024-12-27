@@ -63,7 +63,7 @@ uint16_t MovementMode[LAST_MOVEMENT_ACTION + 1][NUM_URGENCY_STATES] = {
     {RUNNING, RUNNING, RUNNING},  // AI_ACTION_MOVE_TO_CLIMB
 };
 
-INT8 OKToAttack(struct SOLDIERTYPE *pSoldier, int target) {
+int8_t OKToAttack(struct SOLDIERTYPE *pSoldier, int target) {
   // can't shoot yourself
   if (target == pSoldier->sGridNo) return (NOSHOOT_MYSELF);
 
@@ -100,7 +100,7 @@ INT8 OKToAttack(struct SOLDIERTYPE *pSoldier, int target) {
 
 BOOLEAN ConsiderProne(struct SOLDIERTYPE *pSoldier) {
   INT16 sOpponentGridNo;
-  INT8 bOpponentLevel;
+  int8_t bOpponentLevel;
   INT32 iRange;
 
   if (pSoldier->bAIMorale >= MORALE_NORMAL) {
@@ -138,7 +138,7 @@ uint8_t StanceChange(struct SOLDIERTYPE *pSoldier, uint8_t ubAttackAPCost) {
 }
 
 uint8_t ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
-                             INT8 bDesiredDirection) {
+                             int8_t bDesiredDirection) {
   // Figure out the best stance for this attack
 
   // We don't want to go through a lot of complex calculations here,
@@ -146,8 +146,8 @@ uint8_t ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
   // standing, crouched, or prone
 
   uint16_t usRealAnimState, usBestAnimState;
-  INT8 bBestStanceDiff = -1;
-  INT8 bLoop, bStanceNum, bStanceDiff, bAPsAfterAttack;
+  int8_t bBestStanceDiff = -1;
+  int8_t bLoop, bStanceNum, bStanceDiff, bAPsAfterAttack;
   uint32_t uiChanceOfDamage, uiBestChanceOfDamage, uiCurrChanceOfDamage;
   uint32_t uiStanceBonus, uiMinimumStanceBonusPerChange = 20 - 3 * pAttack->ubAimTime;
   INT32 iRange;
@@ -264,7 +264,7 @@ uint8_t ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
   }
 }
 
-uint16_t DetermineMovementMode(struct SOLDIERTYPE *pSoldier, INT8 bAction) {
+uint16_t DetermineMovementMode(struct SOLDIERTYPE *pSoldier, int8_t bAction) {
   if (pSoldier->fUIMovementFast) {
     return (RUNNING);
   } else if (CREATURE_OR_BLOODCAT(pSoldier)) {
@@ -363,7 +363,7 @@ void NewDest(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo) {
 }
 
 BOOLEAN IsActionAffordable(struct SOLDIERTYPE *pSoldier) {
-  INT8 bMinPointsNeeded = 0;
+  int8_t bMinPointsNeeded = 0;
 
   // NumMessage("AffordableAction - Guy#",pSoldier->ubID);
 
@@ -373,7 +373,7 @@ BOOLEAN IsActionAffordable(struct SOLDIERTYPE *pSoldier) {
       break;
 
     case AI_ACTION_CHANGE_FACING:  // turn to face another direction
-      bMinPointsNeeded = (INT8)GetAPsToLook(pSoldier);
+      bMinPointsNeeded = (int8_t)GetAPsToLook(pSoldier);
       break;
 
     case AI_ACTION_RANDOM_PATROL:    // move towards a particular location
@@ -725,15 +725,15 @@ INT16 RandDestWithinRange(struct SOLDIERTYPE *pSoldier) {
 INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK,
                                   BOOLEAN *pfChangeLevel) {
   INT16 *psLastLoc, *pusNoiseGridNo;
-  INT8 *pbLastLevel;
+  int8_t *pbLastLevel;
   INT16 sGridNo = -1;
-  INT8 bLevel, bClosestLevel;
+  int8_t bLevel, bClosestLevel;
   BOOLEAN fClimbingNecessary, fClosestClimbingNecessary = FALSE;
   INT32 iPathCost;
   INT16 sClosestDisturbance = NOWHERE;
   uint32_t uiLoop;
-  INT8 *pbNoiseLevel;
-  INT8 *pbPersOL, *pbPublOL;
+  int8_t *pbNoiseLevel;
+  int8_t *pbPersOL, *pbPublOL;
   INT16 sClimbGridNo;
   struct SOLDIERTYPE *pOpp;
 
@@ -894,12 +894,12 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, uint8_t ubUncons
   return (sClosestDisturbance);
 }
 
-INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *pbLevel) {
+INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, int8_t *pbLevel) {
   INT16 sGridNo, sClosestOpponent = NOWHERE;
   uint32_t uiLoop;
   INT32 iRange, iClosestRange = 1500;
-  INT8 *pbPersOL, *pbPublOL;
-  INT8 bLevel, bClosestLevel;
+  int8_t *pbPersOL, *pbPublOL;
+  int8_t bLevel, bClosestLevel;
   struct SOLDIERTYPE *pOpp;
 
   bClosestLevel = -1;
@@ -986,12 +986,12 @@ INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *
   return (sClosestOpponent);
 }
 
-INT16 ClosestSeenOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *pbLevel) {
+INT16 ClosestSeenOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, int8_t *pbLevel) {
   INT16 sGridNo, sClosestOpponent = NOWHERE;
   uint32_t uiLoop;
   INT32 iRange, iClosestRange = 1500;
-  INT8 *pbPersOL;
-  INT8 bLevel, bClosestLevel;
+  int8_t *pbPersOL;
+  int8_t bLevel, bClosestLevel;
   struct SOLDIERTYPE *pOpp;
 
   bClosestLevel = -1;
@@ -1141,7 +1141,7 @@ INT16 FindClosestClimbPointAvailableToAI(struct SOLDIERTYPE *pSoldier, INT16 sSt
   }
 }
 
-BOOLEAN ClimbingNecessary(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo, INT8 bDestLevel) {
+BOOLEAN ClimbingNecessary(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo, int8_t bDestLevel) {
   if (pSoldier->bLevel == bDestLevel) {
     if ((pSoldier->bLevel == 0) ||
         (gubBuildingInfo[pSoldier->sGridNo] == gubBuildingInfo[sDestGridNo])) {
@@ -1156,7 +1156,7 @@ BOOLEAN ClimbingNecessary(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo, INT8 
 }
 
 INT16 GetInterveningClimbingLocation(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo,
-                                     INT8 bDestLevel, BOOLEAN *pfClimbingNecessary) {
+                                     int8_t bDestLevel, BOOLEAN *pfClimbingNecessary) {
   if (pSoldier->bLevel == bDestLevel) {
     if ((pSoldier->bLevel == 0) ||
         (gubBuildingInfo[pSoldier->sGridNo] == gubBuildingInfo[sDestGridNo])) {
@@ -1184,7 +1184,7 @@ INT16 GetInterveningClimbingLocation(struct SOLDIERTYPE *pSoldier, INT16 sDestGr
   }
 }
 
-INT16 EstimatePathCostToLocation(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo, INT8 bDestLevel,
+INT16 EstimatePathCostToLocation(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo, int8_t bDestLevel,
                                  BOOLEAN fAddCostAfterClimbingUp, BOOLEAN *pfClimbingNecessary,
                                  INT16 *psClimbGridNo) {
   INT16 sPathCost;
@@ -1476,7 +1476,7 @@ BOOLEAN InGas(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 }
 
 BOOLEAN WearGasMaskIfAvailable(struct SOLDIERTYPE *pSoldier) {
-  INT8 bSlot, bNewSlot;
+  int8_t bSlot, bNewSlot;
 
   bSlot = FindObj(pSoldier, GASMASK);
   if (bSlot == NO_SLOT) {
@@ -1498,7 +1498,7 @@ BOOLEAN WearGasMaskIfAvailable(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN InLightAtNight(INT16 sGridNo, INT8 bLevel) {
+BOOLEAN InLightAtNight(INT16 sGridNo, int8_t bLevel) {
   uint8_t ubBackgroundLightLevel;
 
   // do not consider us to be "in light" if we're in an underground sector
@@ -1528,15 +1528,15 @@ BOOLEAN InLightAtNight(INT16 sGridNo, INT8 bLevel) {
   return (FALSE);
 }
 
-INT8 CalcMorale(struct SOLDIERTYPE *pSoldier) {
+int8_t CalcMorale(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoop, uiLoop2;
   INT32 iOurTotalThreat = 0, iTheirTotalThreat = 0;
   INT16 sOppThreatValue, sFrndThreatValue, sMorale;
   INT32 iPercent;
-  INT8 bMostRecentOpplistValue;
-  INT8 bMoraleCategory;
-  INT8 *pSeenOpp;  //,*friendOlPtr;
-  INT8 *pbPersOL, *pbPublOL;
+  int8_t bMostRecentOpplistValue;
+  int8_t bMoraleCategory;
+  int8_t *pSeenOpp;  //,*friendOlPtr;
+  int8_t *pbPersOL, *pbPublOL;
   struct SOLDIERTYPE *pOpponent, *pFriend;
 
   // if army guy has NO weapons left then panic!
@@ -1942,13 +1942,13 @@ INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, uint16_t *pusFromGridNo) {
   }
 }
 
-void RearrangePocket(struct SOLDIERTYPE *pSoldier, INT8 bPocket1, INT8 bPocket2,
+void RearrangePocket(struct SOLDIERTYPE *pSoldier, int8_t bPocket1, int8_t bPocket2,
                      uint8_t bPermanent) {
   // NB there's no such thing as a temporary swap for now...
   SwapObjs(&(pSoldier->inv[bPocket1]), &(pSoldier->inv[bPocket2]));
 }
 
-BOOLEAN FindBetterSpotForItem(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
+BOOLEAN FindBetterSpotForItem(struct SOLDIERTYPE *pSoldier, int8_t bSlot) {
   // looks for a place in the slots to put an item in a hand or armour
   // position, and moves it there.
   if (bSlot >= BIGPOCK1POS) {
@@ -1976,7 +1976,7 @@ BOOLEAN FindBetterSpotForItem(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
   return (TRUE);
 }
 
-uint8_t GetTraversalQuoteActionID(INT8 bDirection) {
+uint8_t GetTraversalQuoteActionID(int8_t bDirection) {
   switch (bDirection) {
     case NORTHEAST:  // east
       return (QUOTE_ACTION_ID_TRAVERSE_EAST);
@@ -1996,8 +1996,8 @@ uint8_t GetTraversalQuoteActionID(INT8 bDirection) {
 }
 
 uint8_t SoldierDifficultyLevel(struct SOLDIERTYPE *pSoldier) {
-  INT8 bDifficultyBase;
-  INT8 bDifficulty;
+  int8_t bDifficultyBase;
+  int8_t bDifficulty;
 
   // difficulty modifier ranges from 0 to 100
   // and we want to end up with a number between 0 and 4 (4=hardest)
@@ -2046,13 +2046,13 @@ uint8_t SoldierDifficultyLevel(struct SOLDIERTYPE *pSoldier) {
   return ((uint8_t)bDifficulty);
 }
 
-BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, INT8 bNewDirection) {
-  INT8 bDirChange;
-  INT8 bTempDir;
-  INT8 bLoop;
+BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, int8_t bNewDirection) {
+  int8_t bDirChange;
+  int8_t bTempDir;
+  int8_t bLoop;
   BOOLEAN fFound;
 
-  bDirChange = (INT8)QuickestDirection(pCreature->bDirection, bNewDirection);
+  bDirChange = (int8_t)QuickestDirection(pCreature->bDirection, bNewDirection);
 
   for (bLoop = 0; bLoop < 2; bLoop++) {
     fFound = TRUE;

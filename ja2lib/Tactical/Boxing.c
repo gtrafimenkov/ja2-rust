@@ -113,7 +113,7 @@ void EndBoxingMatch(struct SOLDIERTYPE* pLoser) {
   TriggerNPCRecord(DARREN, 22);
 }
 
-void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, INT8 bReason) {
+void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, int8_t bReason) {
   if (bReason == BOXER_OUT_OF_RING || bReason == NON_BOXER_IN_RING) {
     EVENT_StopMerc(pOffender, pOffender->sGridNo, pOffender->bDirection);
   }
@@ -404,7 +404,7 @@ void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier) {
   }
 }
 
-void SetBoxingState(INT8 bNewState) {
+void SetBoxingState(int8_t bNewState) {
   if (gTacticalStatus.bBoxingState == NOT_BOXING) {
     if (bNewState != NOT_BOXING) {
       // pause time

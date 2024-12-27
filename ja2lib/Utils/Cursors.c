@@ -113,7 +113,7 @@ struct CursorFileData CursorFileDatabase[] = {
 
 };
 
-void RaiseMouseToLevel(INT8 bLevel) { gsGlobalCursorYOffset = gsMouseGlobalYOffsets[bLevel]; }
+void RaiseMouseToLevel(int8_t bLevel) { gsGlobalCursorYOffset = gsMouseGlobalYOffsets[bLevel]; }
 
 CursorData CursorDatabase[] = {
     {C_MISC, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

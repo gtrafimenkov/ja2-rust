@@ -155,7 +155,7 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
 // day, add an event for it.
 void MercDailyUpdate() {
   INT32 cnt;
-  INT8 bLastTeamID;
+  int8_t bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
   // struct SOLDIERTYPE *pQuitList[ 21 ];
   MERCPROFILESTRUCT *pProfile;
@@ -509,8 +509,8 @@ void RPCWhineAboutNoPay(uint8_t ubID) {
 BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt;
   uint16_t usItem;
-  INT8 bBestArmour = -1;
-  INT8 bBestGun = -1;
+  int8_t bBestArmour = -1;
+  int8_t bBestGun = -1;
 
   for (cnt = 0; cnt < NUM_INV_SLOTS; cnt++) {
     usItem = pSoldier->inv[cnt].usItem;
@@ -582,10 +582,10 @@ void MercComplainAboutEquipment(uint8_t ubProfile) {
 }
 
 void UpdateBuddyAndHatedCounters(void) {
-  INT8 bMercID;
+  int8_t bMercID;
   INT32 iLoop;
-  INT8 bOtherID;
-  INT8 bLastTeamID;
+  int8_t bOtherID;
+  int8_t bLastTeamID;
   uint8_t ubOtherProfileID;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pOtherSoldier;
@@ -798,7 +798,7 @@ void UpdateBuddyAndHatedCounters(void) {
 }
 
 void HourlyCamouflageUpdate(void) {
-  INT8 bMercID, bLastTeamID;
+  int8_t bMercID, bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
 
   bMercID = gTacticalStatus.Team[gbPlayerNum].bFirstID;

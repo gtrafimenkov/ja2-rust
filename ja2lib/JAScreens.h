@@ -122,7 +122,7 @@ typedef void (*RENDER_HOOK)(void);
 
 void SetRenderHook(RENDER_HOOK pRenderOverride);
 void SetCurrentScreen(uint32_t uiNewScreen);
-void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, INT8 ubPage);
+void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, int8_t ubPage);
 
 void DisableFPSOverlay(BOOLEAN fEnable);
 

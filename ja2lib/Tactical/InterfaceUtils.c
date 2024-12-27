@@ -109,7 +109,7 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usLineColor;
-  INT8 bBandage;
+  int8_t bBandage;
 
   // Erase what was there
   if (fErase) {

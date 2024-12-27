@@ -48,7 +48,7 @@
 #include "SGP/Debug.h"
 #endif
 
-extern void DecayPublicOpplist(INT8 bTeam);
+extern void DecayPublicOpplist(int8_t bTeam);
 extern void VerifyAndDecayOpplist(struct SOLDIERTYPE *pSoldier);
 void EndInterrupt(BOOLEAN fMarkInterruptOccurred);
 void DeleteFromIntList(uint8_t ubIndex, BOOLEAN fCommunicate);
@@ -501,7 +501,7 @@ BOOLEAN EveryoneInInterruptListOnSameTeam(void) {
 
 void StartInterrupt(void) {
   uint8_t ubFirstInterrupter;
-  INT8 bTeam;
+  int8_t bTeam;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pTempSoldier;
   uint8_t ubInterrupter;
@@ -923,10 +923,10 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
 }
 
 BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, uint8_t ubOpponentID,
-                                       INT8 bOldOppList) {
+                                       int8_t bOldOppList) {
   //	uint8_t ubAniType;
   uint8_t ubMinPtsNeeded;
-  INT8 bDir;
+  int8_t bDir;
   struct SOLDIERTYPE *pOpponent;
 
   if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
@@ -1165,10 +1165,10 @@ BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, uint8_t ubO
   return (TRUE);
 }
 
-INT8 CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, uint8_t ubOpponentID,
-                          BOOLEAN fUseWatchSpots) {
-  INT8 bPoints;
-  INT8 bLightLevel;
+int8_t CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, uint8_t ubOpponentID,
+                            BOOLEAN fUseWatchSpots) {
+  int8_t bPoints;
+  int8_t bLightLevel;
   uint8_t ubDistance;
 
   // extra check to make sure neutral folks never get interrupts

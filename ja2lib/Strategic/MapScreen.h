@@ -23,15 +23,15 @@ void ReBuildCharactersList(void);
 BOOLEAN HandlePreloadOfMapGraphics(void);
 void HandleRemovalOfPreLoadedMapGraphics(void);
 
-void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
 
 BOOLEAN CanToggleSelectedCharInventory(void);
 
-BOOLEAN CanExtendContractForCharSlot(INT8 bCharNumber);
+BOOLEAN CanExtendContractForCharSlot(int8_t bCharNumber);
 
 void TellPlayerWhyHeCantCompressTime(void);
 
-void ChangeSelectedInfoChar(INT8 bCharNumber, BOOLEAN fResetSelectedList);
+void ChangeSelectedInfoChar(int8_t bCharNumber, BOOLEAN fResetSelectedList);
 
 void MAPEndItemPointer();
 
@@ -44,9 +44,9 @@ void AbortMovementPlottingMode(void);
 
 void ExplainWhySkyriderCantFly(void);
 
-BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber);
+BOOLEAN CanChangeSleepStatusForCharSlot(int8_t bCharNumber);
 BOOLEAN CanChangeSleepStatusForSoldier(struct SOLDIERTYPE* pSoldier);
 
-BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber);
+BOOLEAN MapCharacterHasAccessibleInventory(int8_t bCharNumber);
 
 #endif

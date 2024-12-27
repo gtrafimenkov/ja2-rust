@@ -284,7 +284,8 @@ BOOLEAN gfRenderScreenOnNextLoop = FALSE;
 uint8_t gubSkiDirtyLevel = SKI_DIRTY_LEVEL0;
 INT32 giSKIMessageBox = -1;
 
-INT8 gbSelectedArmsDealerID = -1;  // Contains the enum value for the currently selected arms dealer
+int8_t gbSelectedArmsDealerID =
+    -1;  // Contains the enum value for the currently selected arms dealer
 
 // the quote that is in progress, in certain circumstances, we don't want queuing of related but
 // different quotes
@@ -333,7 +334,7 @@ BOOLEAN gfIsTheShopKeeperTalking;
 
 // the glow for unwanted items
 BOOLEAN fDeltaColorForShopkeepUnwanted = TRUE;
-INT8 bShopKeepGlowIndex = 9;
+int8_t bShopKeepGlowIndex = 9;
 BOOLEAN fDoShopkeepGlow = FALSE;
 
 BOOLEAN gfRemindedPlayerToPickUpHisStuff = FALSE;
@@ -415,7 +416,7 @@ BOOLEAN gfSkiDisplayDropItemToGroundText = FALSE;
 typedef struct {
   BOOLEAN fActive;
   struct OBJECTTYPE ItemObject;
-  INT8 bPreviousInvPos;
+  int8_t bPreviousInvPos;
 
 } ITEM_TO_ADD_AFTER_SKI_OPEN;
 ITEM_TO_ADD_AFTER_SKI_OPEN gItemToAdd;
@@ -524,8 +525,8 @@ BOOLEAN RepairIsDone(uint16_t usItemIndex, uint8_t ubElement);
 uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX, uint16_t usPosY,
                         struct OBJECTTYPE *ItemObject, BOOLEAN fHatchedOut, uint8_t ubItemArea);
 void DisplayArmsDealerOfferArea();
-INT8 AddItemToArmsDealerOfferArea(INVENTORY_IN_SLOT *pInvSlot, INT8 bSlotIdInOtherLocation);
-BOOLEAN RemoveItemFromArmsDealerOfferArea(INT8 bSlotId, BOOLEAN fKeepItem);
+int8_t AddItemToArmsDealerOfferArea(INVENTORY_IN_SLOT *pInvSlot, int8_t bSlotIdInOtherLocation);
+BOOLEAN RemoveItemFromArmsDealerOfferArea(int8_t bSlotId, BOOLEAN fKeepItem);
 void SetSkiRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pRegion,
                           uint8_t ubScreenArea);
 void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pRegion,
@@ -534,8 +535,8 @@ void RestoreTacticalBackGround();
 void DisplayPlayersOfferArea();
 uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, uint16_t usItemID,
                                  FLOAT dModifier, struct OBJECTTYPE *pItemObject);
-FLOAT ItemConditionModifier(uint16_t usItemIndex, INT8 bStatus);
-BOOLEAN RemoveItemFromPlayersOfferArea(INT8 bSlotIdInOtherLocation);
+FLOAT ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus);
+BOOLEAN RemoveItemFromPlayersOfferArea(int8_t bSlotIdInOtherLocation);
 
 // Evaluate:
 // void			EvaluateAllItemsInPlayersOfferArea( );
@@ -545,7 +546,7 @@ uint32_t CalculateTotalPlayersValue();
 void MoveAllArmsDealersItemsInOfferAreaToPlayersOfferArea();
 void PerformTransaction(uint32_t uiMoneyFromPlayersAccount);
 void MovePlayerOfferedItemsOfValueToArmsDealersInventory();
-INT8 AddInventoryToSkiLocation(INVENTORY_IN_SLOT *pInv, uint8_t ubSpotLocation, uint8_t ubWhere);
+int8_t AddInventoryToSkiLocation(INVENTORY_IN_SLOT *pInv, uint8_t ubSpotLocation, uint8_t ubWhere);
 BOOLEAN RemoveItemFromDealersInventory(INVENTORY_IN_SLOT *pInvSlot, uint8_t ubSlot);
 BOOLEAN InitShopKeepersFace(uint8_t ubMercID);
 void DisplayTalkingArmsDealer();
@@ -560,7 +561,7 @@ uint8_t CountNumberOfValuelessItemsInThePlayersOfferArea();
 uint8_t CountNumberOfItemsOfValueInThePlayersOfferArea();
 uint8_t CountNumberOfItemsInThePlayersOfferArea();
 uint8_t CountNumberOfItemsInTheArmsDealersOfferArea();
-INT8 GetSlotNumberForMerc(uint8_t ubProfile);
+int8_t GetSlotNumberForMerc(uint8_t ubProfile);
 void RenderSkiAtmPanel();
 void RemoveSkiAtmButtons();
 void CreateSkiAtmButtons();
@@ -578,15 +579,15 @@ BOOLEAN IsMoneyTheOnlyItemInThePlayersOfferArea();
 
 uint32_t CalculateHowMuchMoneyIsInPlayersOfferArea();
 void MovePlayersItemsToBeRepairedToArmsDealersInventory();
-BOOLEAN RemoveRepairItemFromDealersOfferArea(INT8 bSlot);
+BOOLEAN RemoveRepairItemFromDealersOfferArea(int8_t bSlot);
 
-INT8 GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier);
+int8_t GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier);
 void ClearPlayersOfferSlot(INT32 ubSlotToClear);
 void ClearArmsDealerOfferSlot(INT32 ubSlotToClear);
 void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
 BOOLEAN DoSkiMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
-BOOLEAN WillShopKeeperRejectObjectsFromPlayer(INT8 bDealerId, INT8 bSlotId);
+BOOLEAN WillShopKeeperRejectObjectsFromPlayer(int8_t bDealerId, int8_t bSlotId);
 void CheckAndHandleClearingOfPlayerOfferArea(void);
 void CrossOutUnwantedItems(void);
 BOOLEAN CanShopkeeperOverrideDialogue(void);
@@ -598,29 +599,29 @@ void StartSKIDescriptionBox(void);
 
 BOOLEAN ShopkeeperAutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj,
                                   BOOLEAN fNewItem);
-void ShopkeeperAddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                             uint8_t ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel);
+void ShopkeeperAddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, int8_t bVisible,
+                             uint8_t ubLevel, uint16_t usFlags, int8_t bRenderZHeightAboveLevel);
 
 void IfMercOwnedCopyItemToMercInv(INVENTORY_IN_SLOT *pInv);
 void IfMercOwnedRemoveItemFromMercInv(INVENTORY_IN_SLOT *pInv);
-void IfMercOwnedRemoveItemFromMercInv2(uint8_t ubOwnerProfileId, INT8 bOwnerSlotId);
+void IfMercOwnedRemoveItemFromMercInv2(uint8_t ubOwnerProfileId, int8_t bOwnerSlotId);
 
 void SplitComplexObjectIntoSubObjects(struct OBJECTTYPE *pComplexObject);
 void CountSubObjectsInObject(struct OBJECTTYPE *pComplexObject, uint8_t *pubTotalSubObjects,
                              uint8_t *pubRepairableSubObjects, uint8_t *pubNonRepairableSubObjects);
 BOOLEAN AddObjectForEvaluation(struct OBJECTTYPE *pObject, uint8_t ubOwnerProfileId,
-                               INT8 bOwnerSlotId, BOOLEAN fFirstOne);
+                               int8_t bOwnerSlotId, BOOLEAN fFirstOne);
 BOOLEAN OfferObjectToDealer(struct OBJECTTYPE *pComplexObject, uint8_t ubOwnerProfileId,
-                            INT8 bOwnerSlotId);
+                            int8_t bOwnerSlotId);
 
 BOOLEAN SKITryToReturnInvToOwnerOrCurrentMerc(INVENTORY_IN_SLOT *pInv);
 BOOLEAN SKITryToAddInvToMercsInventory(INVENTORY_IN_SLOT *pInv, struct SOLDIERTYPE *pSoldier);
 
 void ExitSKIRequested();
-void EvaluateItemAddedToPlayersOfferArea(INT8 bSlotID, BOOLEAN fFirstOne);
+void EvaluateItemAddedToPlayersOfferArea(int8_t bSlotID, BOOLEAN fFirstOne);
 void ResetAllQuoteSaidFlags();
 
-INVENTORY_IN_SLOT *GetPtrToOfferSlotWhereThisItemIs(uint8_t ubProfileID, INT8 bInvPocket);
+INVENTORY_IN_SLOT *GetPtrToOfferSlotWhereThisItemIs(uint8_t ubProfileID, int8_t bInvPocket);
 
 void DealWithItemsStillOnTheTable();
 void ReturnItemToPlayerSomehow(INVENTORY_IN_SLOT *pInvSlot, struct SOLDIERTYPE *pDropSoldier);
@@ -1004,7 +1005,7 @@ BOOLEAN EnterShopKeeperInterface() {
 
   if (gItemToAdd.fActive) {
     BOOLEAN fAddedOK = FALSE;
-    INT8 bSlotNum = gItemToAdd.bPreviousInvPos;
+    int8_t bSlotNum = gItemToAdd.bPreviousInvPos;
 
     // if this is NOT a repair dealer or he is is but there is enough space in the player's offer
     // area
@@ -1253,7 +1254,7 @@ void HandleShopKeeperInterface() {
 
     for (iCounter = 0; iCounter < SKI_NUM_TRADING_INV_SLOTS; iCounter++) {
       if (PlayersOfferArea[iCounter].fActive) {
-        EvaluateItemAddedToPlayersOfferArea((INT8)iCounter, fFirstOne);
+        EvaluateItemAddedToPlayersOfferArea((int8_t)iCounter, fFirstOne);
         fFirstOne = FALSE;
       }
     }
@@ -1461,7 +1462,7 @@ void GetShopKeeperInterfaceUserInput() {
 
 #ifdef JA2TESTVERSION
 void DisplayAllDealersCash() {
-  INT8 bArmsDealer;
+  int8_t bArmsDealer;
   uint16_t usPosY = 0;
   CHAR16 zTemp[512];
   uint8_t ubForeColor;
@@ -1735,7 +1736,7 @@ void SelectDealersInventoryRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iR
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
-    INT8 ubLocation;
+    int8_t ubLocation;
 
     if (gpTempDealersInventory == NULL) return;
 
@@ -2026,7 +2027,7 @@ void SelectDealersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 i
 // Mouse Call back for the Players OFFER slot
 void SelectPlayersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
-  INT8 bAddedToSlotID = -1;
+  int8_t bAddedToSlotID = -1;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -2488,7 +2489,7 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
 
   // if we are to display the face
   if (fDisplayMercFace) {
-    INT8 iFaceSlot = GetSlotNumberForMerc(ubMercID);
+    int8_t iFaceSlot = GetSlotNumberForMerc(ubMercID);
 
     // if still in player's employ
     if (iFaceSlot != -1) {
@@ -2705,7 +2706,7 @@ void StoreObjectsInNextFreeDealerInvSlot(uint16_t usItemIndex, SPECIAL_ITEM_INFO
 
 BOOLEAN RepairIsDone(uint16_t usItemIndex, uint8_t ubElement) {
   INVENTORY_IN_SLOT RepairItem;
-  INT8 bSlotNum;
+  int8_t bSlotNum;
   uint8_t ubCnt;
 
   // make a new shopkeeper invslot item out of it
@@ -2931,7 +2932,7 @@ uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly,
   return (uiTotalPrice);
 }
 
-FLOAT ItemConditionModifier(uint16_t usItemIndex, INT8 bStatus) {
+FLOAT ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus) {
   FLOAT dConditionModifier = 1.0f;
 
   // if the item is ammo, the condition modifier is based on how many shots are left
@@ -3033,8 +3034,8 @@ void DisplayArmsDealerOfferArea() {
   }
 }
 
-INT8 AddItemToArmsDealerOfferArea(INVENTORY_IN_SLOT *pInvSlot, INT8 bSlotIdInOtherLocation) {
-  INT8 bCnt;
+int8_t AddItemToArmsDealerOfferArea(INVENTORY_IN_SLOT *pInvSlot, int8_t bSlotIdInOtherLocation) {
+  int8_t bCnt;
 
   for (bCnt = 0; bCnt < SKI_NUM_TRADING_INV_SLOTS; bCnt++) {
     // if there are no items here, copy the data in
@@ -3069,7 +3070,7 @@ INT8 AddItemToArmsDealerOfferArea(INVENTORY_IN_SLOT *pInvSlot, INT8 bSlotIdInOth
   return (-1);
 }
 
-BOOLEAN RemoveItemFromArmsDealerOfferArea(INT8 bSlotId, BOOLEAN fKeepItem) {
+BOOLEAN RemoveItemFromArmsDealerOfferArea(int8_t bSlotId, BOOLEAN fKeepItem) {
   //	uint16_t	usCnt;
 
   // Loop through all the slot to see if the requested one is here
@@ -3135,9 +3136,9 @@ void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pReg
 
 void SkiHelpTextDoneCallBack(void) { gubSkiDirtyLevel = SKI_DIRTY_LEVEL2; }
 
-INT8 AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
-                               INT8 bSlotIdInOtherLocation) {
-  INT8 bCnt;
+int8_t AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
+                                 int8_t bSlotIdInOtherLocation) {
+  int8_t bCnt;
 
   // if we are to check for a previous slot
   if (bSlotIdInOtherLocation != -1) {
@@ -3179,7 +3180,7 @@ INT8 AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
   return (-1);
 }
 
-BOOLEAN RemoveItemFromPlayersOfferArea(INT8 bSlot) {
+BOOLEAN RemoveItemFromPlayersOfferArea(int8_t bSlot) {
   // if the item doesn't have a duplicate copy in its owner merc's inventory slot
   if (PlayersOfferArea[bSlot].bSlotIdInOtherLocation == -1) {
     if (!SKITryToReturnInvToOwnerOrCurrentMerc(&(PlayersOfferArea[bSlot]))) {
@@ -3239,7 +3240,8 @@ void DisplayPlayersOfferArea() {
         // if non-repairman
         if (ArmsDealerInfo[gbSelectedArmsDealerID].ubTypeOfArmsDealer != ARMS_DEALER_REPAIRS) {
           // don't evaluate anything he wouldn't buy!
-          if (WillShopKeeperRejectObjectsFromPlayer(gbSelectedArmsDealerID, (INT8)sCnt) == FALSE) {
+          if (WillShopKeeperRejectObjectsFromPlayer(gbSelectedArmsDealerID, (int8_t)sCnt) ==
+              FALSE) {
             // skip purchased items!
             if (!(PlayersOfferArea[sCnt].uiFlags & ARMS_INV_JUST_PURCHASED)) {
               // re-evaluate the value of the item (needed for Flo's discount handling)
@@ -3292,7 +3294,7 @@ void DisplayPlayersOfferArea() {
   CrossOutUnwantedItems();
 }
 
-INVENTORY_IN_SLOT *GetPtrToOfferSlotWhereThisItemIs(uint8_t ubProfileID, INT8 bInvPocket) {
+INVENTORY_IN_SLOT *GetPtrToOfferSlotWhereThisItemIs(uint8_t ubProfileID, int8_t bInvPocket) {
   uint8_t ubCnt = 0;
 
   for (ubCnt = 0; ubCnt < SKI_NUM_TRADING_INV_SLOTS; ubCnt++) {
@@ -3316,7 +3318,7 @@ INVENTORY_IN_SLOT *GetPtrToOfferSlotWhereThisItemIs(uint8_t ubProfileID, INT8 bI
 BOOLEAN ShouldSoldierDisplayHatchOnItem(uint8_t ubProfileID, INT16 sSlotNum) {
   INVENTORY_IN_SLOT *pInvSlot = NULL;
 
-  pInvSlot = GetPtrToOfferSlotWhereThisItemIs(ubProfileID, (INT8)sSlotNum);
+  pInvSlot = GetPtrToOfferSlotWhereThisItemIs(ubProfileID, (int8_t)sSlotNum);
 
   if (pInvSlot == NULL)
     // not found in either offer area
@@ -3572,7 +3574,7 @@ void PerformTransaction(uint32_t uiMoneyFromPlayersAccount) {
 void MoveAllArmsDealersItemsInOfferAreaToPlayersOfferArea() {
   // for all items in the dealers items offer area
   uint32_t uiCnt;
-  INT8 bSlotID = 0;
+  int8_t bSlotID = 0;
 
   // loop through all the slots in the shopkeeper's offer area
   for (uiCnt = 0; uiCnt < SKI_NUM_TRADING_INV_SLOTS; uiCnt++) {
@@ -3665,7 +3667,7 @@ void MovePlayerOfferedItemsOfValueToArmsDealersInventory() {
   gfResetShopKeepIdleQuote = TRUE;
 }
 
-void BeginSkiItemPointer(uint8_t ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst) {
+void BeginSkiItemPointer(uint8_t ubSource, int8_t bSlotNum, BOOLEAN fOfferToDealerFirst) {
   SGPRect Rect;
   struct OBJECTTYPE TempObject;
 
@@ -3965,8 +3967,8 @@ void SetSkiCursor(uint16_t usCursor) {
   gubSkiDirtyLevel = SKI_DIRTY_LEVEL2;
 }
 
-INT8 AddInventoryToSkiLocation(INVENTORY_IN_SLOT *pInv, uint8_t ubSpotLocation, uint8_t ubWhere) {
-  INT8 bSlotAddedTo = -1;
+int8_t AddInventoryToSkiLocation(INVENTORY_IN_SLOT *pInv, uint8_t ubSpotLocation, uint8_t ubWhere) {
+  int8_t bSlotAddedTo = -1;
 
   switch (ubWhere) {
     case ARMS_DEALER_INVENTORY:
@@ -4079,7 +4081,7 @@ void HandleShopKeeperDialog(uint8_t ubInit) {
   uint32_t uiCurTime = GetJA2Clock();
 
   static uint32_t uiLastTime = 0;
-  static INT8 bSpeech = -1;
+  static int8_t bSpeech = -1;
 
   if (ubInit >= 1) {
     uiLastTime = GetJA2Clock();
@@ -4420,8 +4422,8 @@ uint8_t CountNumberOfItemsInTheArmsDealersOfferArea() {
   return (ubItemCount);
 }
 
-INT8 GetSlotNumberForMerc(uint8_t ubProfile) {
-  INT8 bCnt;
+int8_t GetSlotNumberForMerc(uint8_t ubProfile) {
+  int8_t bCnt;
 
   for (bCnt = 0; bCnt < gubNumberMercsInArray; bCnt++) {
     if (gubArrayOfEmployedMercs[bCnt] == ubProfile) return (bCnt);
@@ -5028,7 +5030,7 @@ void EnableDisableEvaluateAndTransactionButtons() {
 }
 
 void AddItemToPlayersOfferAreaAfterShopKeeperOpen(struct OBJECTTYPE *pItemObject,
-                                                  INT8 bPreviousInvPos) {
+                                                  int8_t bPreviousInvPos) {
   gItemToAdd.fActive = TRUE;
   memcpy(&gItemToAdd.ItemObject, pItemObject, sizeof(struct OBJECTTYPE));
   gItemToAdd.bPreviousInvPos = bPreviousInvPos;
@@ -5120,7 +5122,7 @@ void MovePlayersItemsToBeRepairedToArmsDealersInventory() {
   gfResetShopKeepIdleQuote = TRUE;
 }
 
-BOOLEAN RemoveRepairItemFromDealersOfferArea(INT8 bSlot) {
+BOOLEAN RemoveRepairItemFromDealersOfferArea(int8_t bSlot) {
   // if the item doesn't have a duplicate copy in its owner merc's inventory slot
   if (ArmsDealerOfferArea[bSlot].bSlotIdInOtherLocation == -1) {
     if (!SKITryToReturnInvToOwnerOrCurrentMerc(&(ArmsDealerOfferArea[bSlot]))) {
@@ -5139,7 +5141,7 @@ BOOLEAN RemoveRepairItemFromDealersOfferArea(INT8 bSlot) {
   return (TRUE);
 }
 
-INT8 GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier) {
+int8_t GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubCnt;
 
   // loop through the soldier's inventory
@@ -5178,7 +5180,7 @@ void ClearPlayersOfferSlot(INT32 ubSlotToClear) {
   CheckAndHandleClearingOfPlayerOfferArea();
 }
 
-void EvaluateItemAddedToPlayersOfferArea(INT8 bSlotID, BOOLEAN fFirstOne) {
+void EvaluateItemAddedToPlayersOfferArea(int8_t bSlotID, BOOLEAN fFirstOne) {
   uint32_t uiEvalResult = EVAL_RESULT_NORMAL;
   BOOLEAN fRocketRifleWasEvaluated = FALSE;
   uint8_t ubNumberOfItemsAddedToRepairDuringThisEvaluation = 0;
@@ -5234,7 +5236,7 @@ void EvaluateItemAddedToPlayersOfferArea(INT8 bSlotID, BOOLEAN fFirstOne) {
       // if the item is damaged, or is a rocket rifle (which always "need repairing" even at 100%,
       // to reset imprinting)
       if ((PlayersOfferArea[bSlotID].ItemObject.bStatus[0] < 100) || fRocketRifleWasEvaluated) {
-        INT8 bSlotAddedTo;
+        int8_t bSlotAddedTo;
 
         // Move the item to the Dealer's Offer Area
         bSlotAddedTo = AddItemToArmsDealerOfferArea(
@@ -5444,7 +5446,7 @@ void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue
 }
 
 // run through what the player has on the table and see if the shop keep will aceept it or not
-BOOLEAN WillShopKeeperRejectObjectsFromPlayer(INT8 bDealerId, INT8 bSlotId) {
+BOOLEAN WillShopKeeperRejectObjectsFromPlayer(int8_t bDealerId, int8_t bSlotId) {
   BOOLEAN fRejected = TRUE;
 
   if (Item[PlayersOfferArea[bSlotId].sItemIndex].usItemClass == IC_MONEY) {
@@ -5502,7 +5504,7 @@ BOOLEAN CanShopkeeperOverrideDialogue(void) {
 
 void CrossOutUnwantedItems(void) {
   struct VObject *hHandle;
-  INT8 bSlotId = 0;
+  int8_t bSlotId = 0;
   INT16 sBoxStartX = 0, sBoxStartY = 0;
   INT16 sBoxWidth = 0, sBoxHeight = 0;
 
@@ -5753,7 +5755,7 @@ void DeleteShopKeeperItemDescBox() {
 }
 
 BOOLEAN OfferObjectToDealer(struct OBJECTTYPE *pComplexObject, uint8_t ubOwnerProfileId,
-                            INT8 bOwnerSlotId) {
+                            int8_t bOwnerSlotId) {
   uint8_t ubTotalSubObjects;
   uint8_t ubRepairableSubObjects;
   uint8_t ubNonRepairableSubObjects;
@@ -6028,9 +6030,9 @@ void CountSubObjectsInObject(struct OBJECTTYPE *pComplexObject, uint8_t *pubTota
 }
 
 BOOLEAN AddObjectForEvaluation(struct OBJECTTYPE *pObject, uint8_t ubOwnerProfileId,
-                               INT8 bOwnerSlotId, BOOLEAN fFirstOne) {
+                               int8_t bOwnerSlotId, BOOLEAN fFirstOne) {
   INVENTORY_IN_SLOT InvSlot;
-  INT8 bAddedToSlotID;
+  int8_t bAddedToSlotID;
 
   // Make a new inv slot out of the subobject
   memset(&InvSlot, 0, sizeof(INVENTORY_IN_SLOT));
@@ -6089,8 +6091,8 @@ BOOLEAN ShopkeeperAutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYP
 // The Shopkeeper interface *MUST* use this intermediary function instead of calling AddItemToPool()
 // directly! This is because the OBJECTTYPEs used within Shopkeeper may contain an illegal
 // ubNumberOfObjects
-void ShopkeeperAddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                             uint8_t ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel) {
+void ShopkeeperAddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, int8_t bVisible,
+                             uint8_t ubLevel, uint16_t usFlags, int8_t bRenderZHeightAboveLevel) {
   struct OBJECTTYPE CopyOfObject;
   uint8_t ubObjectsLeftToPlace;
 
@@ -6137,7 +6139,7 @@ void IfMercOwnedRemoveItemFromMercInv(INVENTORY_IN_SLOT *pInv) {
   IfMercOwnedRemoveItemFromMercInv2(pInv->ubIdOfMercWhoOwnsTheItem, pInv->bSlotIdInOtherLocation);
 }
 
-void IfMercOwnedRemoveItemFromMercInv2(uint8_t ubOwnerProfileId, INT8 bOwnerSlotId) {
+void IfMercOwnedRemoveItemFromMercInv2(uint8_t ubOwnerProfileId, int8_t bOwnerSlotId) {
   INT16 sSoldierID;
   BOOLEAN fSuccess;
   struct OBJECTTYPE ObjectToRemove;
@@ -6201,7 +6203,7 @@ BOOLEAN SKITryToReturnInvToOwnerOrCurrentMerc(INVENTORY_IN_SLOT *pInv) {
 }
 
 BOOLEAN SKITryToAddInvToMercsInventory(INVENTORY_IN_SLOT *pInv, struct SOLDIERTYPE *pSoldier) {
-  INT8 bMoneyInvPos;
+  int8_t bMoneyInvPos;
   BOOLEAN fNewItem = FALSE;
 
   // if the item is money
@@ -6239,7 +6241,7 @@ BOOLEAN SKITryToAddInvToMercsInventory(INVENTORY_IN_SLOT *pInv, struct SOLDIERTY
 BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pShopkeeper;
   INT16 sDestGridNo;
-  INT8 bDestLevel;
+  int8_t bDestLevel;
   INT16 sDistVisible;
   uint32_t uiRange;
 

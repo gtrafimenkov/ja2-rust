@@ -24,7 +24,7 @@
 typedef struct {
   INT16 uiID;  // The soldiers ID
   INT16 sPadding[5];
-  //	INT8	bSquadValue;		// The squad id
+  //	int8_t	bSquadValue;		// The squad id
 
 } SAVE_SQUAD_INFO_STRUCT;
 
@@ -35,7 +35,7 @@ struct SOLDIERTYPE *Squad[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 
 // the movement group ids
-INT8 SquadMovementGroups[NUMBER_OF_SQUADS];
+int8_t SquadMovementGroups[NUMBER_OF_SQUADS];
 
 BOOLEAN fExitingVehicleToSquad = FALSE;
 
@@ -44,10 +44,10 @@ extern void RemoveAllPlayersFromSlot();
 extern INT32 iHelicopterVehicleId;
 
 // update current merc selected in tactical
-void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue);
+void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, int8_t bSquadValue);
 
 // is the passed squad between sectors?
-void RebuildSquad(INT8 bSquadValue);
+void RebuildSquad(int8_t bSquadValue);
 
 BOOLEAN AddDeadCharacterToSquadDeadGuys(struct SOLDIERTYPE *pSoldier, INT32 iSquadValue);
 BOOLEAN IsDeadGuyOnAnySquad(struct SOLDIERTYPE *pSoldier);
@@ -80,7 +80,7 @@ void InitSquads(void) {
   return;
 }
 
-BOOLEAN IsThisSquadFull(INT8 bSquadValue) {
+BOOLEAN IsThisSquadFull(int8_t bSquadValue) {
   INT32 iCounter = 0;
 
   // run through entries in the squad list, make sure there is a free entry
@@ -96,7 +96,7 @@ BOOLEAN IsThisSquadFull(INT8 bSquadValue) {
   return (TRUE);
 }
 
-INT8 GetFirstEmptySquad(void) {
+int8_t GetFirstEmptySquad(void) {
   uint8_t ubCounter = 0;
 
   for (ubCounter = 0; ubCounter < NUMBER_OF_SQUADS; ubCounter++) {
@@ -111,10 +111,10 @@ INT8 GetFirstEmptySquad(void) {
   return (-1);
 }
 
-BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
-  INT8 bCounter = 0;
+BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
+  int8_t bCounter = 0;
   INT16 sX, sY;
-  INT8 bZ;
+  int8_t bZ;
   //	BOOLEAN fBetweenSectors = FALSE;
   struct GROUP *pGroup;
   BOOLEAN fNewSquad;
@@ -262,11 +262,11 @@ BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
       }
 
       // if current tactical sqaud...upadte panel
-      if (NumberOfPeopleInSquad((INT8)iCurrentTacticalSquad) == 0) {
+      if (NumberOfPeopleInSquad((int8_t)iCurrentTacticalSquad) == 0) {
         SetCurrentSquad(bSquadValue, TRUE);
       }
 
-      if (bSquadValue == (INT8)iCurrentTacticalSquad) {
+      if (bSquadValue == (int8_t)iCurrentTacticalSquad) {
         CheckForAndAddMercToTeamPanel(Squad[iCurrentTacticalSquad][bCounter]);
       }
 
@@ -284,8 +284,8 @@ BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
 // find the first slot we can fit the guy in
 BOOLEAN AddCharacterToAnySquad(struct SOLDIERTYPE *pCharacter) {
   // add character to any squad, if character is assigned to a squad, returns TRUE
-  INT8 bCounter = 0;
-  INT8 bFirstEmptySquad = -1;
+  int8_t bCounter = 0;
+  int8_t bFirstEmptySquad = -1;
 
   // remove them from current squad
   RemoveCharacterFromSquads(pCharacter);
@@ -318,9 +318,9 @@ BOOLEAN AddCharacterToAnySquad(struct SOLDIERTYPE *pCharacter) {
 }
 
 // find the first slot we can fit the guy in
-INT8 AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter) {
+int8_t AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter) {
   // add character to any squad, if character is assigned to a squad, returns TRUE
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   // check if character on a squad
 
@@ -338,7 +338,7 @@ INT8 AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter) {
   return (-1);
 }
 
-BOOLEAN SquadIsEmpty(INT8 bSquadValue) {
+BOOLEAN SquadIsEmpty(int8_t bSquadValue) {
   // run through this squad's slots and find if they ALL are empty
   INT32 iCounter = 0;
 
@@ -379,14 +379,14 @@ BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter) {
         pCharacter->ubGroupID = 0;
 
         if ((pCharacter->fBetweenSectors) && (pCharacter->uiStatusFlags & SOLDIER_VEHICLE)) {
-          ubGroupId = CreateNewPlayerGroupDepartingFromSector((INT8)(pCharacter->sSectorX),
-                                                              (INT8)(pCharacter->sSectorY));
+          ubGroupId = CreateNewPlayerGroupDepartingFromSector((int8_t)(pCharacter->sSectorX),
+                                                              (int8_t)(pCharacter->sSectorY));
 
           // assign to a group
           AddPlayerToGroup(ubGroupId, pCharacter);
         }
 
-        RebuildSquad((INT8)iCounterA);
+        RebuildSquad((int8_t)iCounterA);
 
         if (pCharacter->bLife == 0) {
           AddDeadCharacterToSquadDeadGuys(pCharacter, iCounterA);
@@ -394,7 +394,7 @@ BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter) {
 
         // if we are not loading a saved game
         if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME) && IsTacticalMode()) {
-          UpdateCurrentlySelectedMerc(pCharacter, (INT8)iCounterA);
+          UpdateCurrentlySelectedMerc(pCharacter, (int8_t)iCounterA);
         }
 
         return (TRUE);
@@ -406,7 +406,7 @@ BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter) {
   return (FALSE);
 }
 
-BOOLEAN RemoveCharacterFromASquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
+BOOLEAN RemoveCharacterFromASquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
   INT32 iCounter = 0, iCounterA = 0;
 
   // remove character from particular squad..return if successful
@@ -436,7 +436,7 @@ BOOLEAN RemoveCharacterFromASquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadVal
   return (FALSE);
 }
 
-BOOLEAN IsCharacterInSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
+BOOLEAN IsCharacterInSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
   INT32 iCounter = 0;
   // find character in particular squad..return if successful
   for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
@@ -451,8 +451,8 @@ BOOLEAN IsCharacterInSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
   return (FALSE);
 }
 
-INT8 SlotCharacterIsInSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
-  INT8 bCounter = 0;
+int8_t SlotCharacterIsInSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
+  int8_t bCounter = 0;
 
   // find character in particular squad..return slot if successful, else -1
   for (bCounter = 0; bCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; bCounter++) {
@@ -467,9 +467,9 @@ INT8 SlotCharacterIsInSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
   return (-1);
 }
 
-INT8 SquadCharacterIsIn(struct SOLDIERTYPE *pCharacter) {
+int8_t SquadCharacterIsIn(struct SOLDIERTYPE *pCharacter) {
   // returns which squad character is in, -1 if none found
-  INT8 iCounterA = 0, iCounter = 0;
+  int8_t iCounterA = 0, iCounter = 0;
 
   // squad?
   for (iCounterA = 0; iCounterA < NUMBER_OF_SQUADS; iCounterA++) {
@@ -487,9 +487,9 @@ INT8 SquadCharacterIsIn(struct SOLDIERTYPE *pCharacter) {
   return (-1);
 }
 
-INT8 NumberOfPeopleInSquad(INT8 bSquadValue) {
-  INT8 bCounter = 0;
-  INT8 bSquadCount = 0;
+int8_t NumberOfPeopleInSquad(int8_t bSquadValue) {
+  int8_t bCounter = 0;
+  int8_t bSquadCount = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
     return (0);
@@ -508,9 +508,9 @@ INT8 NumberOfPeopleInSquad(INT8 bSquadValue) {
   return (bSquadCount);
 }
 
-INT8 NumberOfNonEPCsInSquad(INT8 bSquadValue) {
-  INT8 bCounter = 0;
-  INT8 bSquadCount = 0;
+int8_t NumberOfNonEPCsInSquad(int8_t bSquadValue) {
+  int8_t bCounter = 0;
+  int8_t bSquadCount = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
     return (0);
@@ -529,8 +529,8 @@ INT8 NumberOfNonEPCsInSquad(INT8 bSquadValue) {
   return (bSquadCount);
 }
 
-BOOLEAN IsRobotControllerInSquad(INT8 bSquadValue) {
-  INT8 bCounter = 0;
+BOOLEAN IsRobotControllerInSquad(int8_t bSquadValue) {
+  int8_t bCounter = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
     return (0);
@@ -549,9 +549,9 @@ BOOLEAN IsRobotControllerInSquad(INT8 bSquadValue) {
   return (FALSE);
 }
 
-BOOLEAN SectorSquadIsIn(INT8 bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMapZ) {
+BOOLEAN SectorSquadIsIn(int8_t bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMapZ) {
   // returns if there is anyone on the squad and what sector ( strategic ) they are in
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   Assert(bSquadValue < ON_DUTY);
 
@@ -570,9 +570,9 @@ BOOLEAN SectorSquadIsIn(INT8 bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMa
   return (FALSE);
 }
 
-BOOLEAN CopyPathOfSquadToCharacter(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
+BOOLEAN CopyPathOfSquadToCharacter(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
   // copy path from squad to character
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   for (bCounter = 0; bCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; bCounter++) {
     if ((Squad[bSquadValue][bCounter] != pCharacter) && (Squad[bSquadValue][bCounter] != NULL)) {
@@ -589,10 +589,10 @@ BOOLEAN CopyPathOfSquadToCharacter(struct SOLDIERTYPE *pCharacter, INT8 bSquadVa
   return (FALSE);
 }
 
-BOOLEAN CopyPathOfCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
+BOOLEAN CopyPathOfCharacterToSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
   // copy path of this character to members of squad
   BOOLEAN fSuccess = FALSE;
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   // anyone else on squad?
   if (NumberOfPeopleInSquad(bSquadValue) < 2) {
@@ -922,8 +922,8 @@ BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
   }
 
   // Save all the squad movement id's
-  FileMan_Write(hFile, SquadMovementGroups, sizeof(INT8) * NUMBER_OF_SQUADS, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT8) * NUMBER_OF_SQUADS) {
+  FileMan_Write(hFile, SquadMovementGroups, sizeof(int8_t) * NUMBER_OF_SQUADS, &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(int8_t) * NUMBER_OF_SQUADS) {
     return (FALSE);
   }
 
@@ -966,15 +966,15 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   }
 
   // Load in the Squad movement id's
-  FileMan_Read(hFile, SquadMovementGroups, sizeof(INT8) * NUMBER_OF_SQUADS, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT8) * NUMBER_OF_SQUADS) {
+  FileMan_Read(hFile, SquadMovementGroups, sizeof(int8_t) * NUMBER_OF_SQUADS, &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(int8_t) * NUMBER_OF_SQUADS) {
     return (FALSE);
   }
 
   return (TRUE);
 }
 
-void GetLocationOfSquad(INT16 *sX, INT16 *sY, INT8 *bZ, INT8 bSquadValue) {
+void GetLocationOfSquad(INT16 *sX, INT16 *sY, int8_t *bZ, int8_t bSquadValue) {
   // run through list of guys, once valid merc found, get his sector x and y and z
   INT32 iCounter = 0;
 
@@ -990,7 +990,7 @@ void GetLocationOfSquad(INT16 *sX, INT16 *sY, INT8 *bZ, INT8 bSquadValue) {
   return;
 }
 
-BOOLEAN IsThisSquadOnTheMove(INT8 bSquadValue) {
+BOOLEAN IsThisSquadOnTheMove(int8_t bSquadValue) {
   INT32 iCounter = 0;
 
   for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
@@ -1003,7 +1003,7 @@ BOOLEAN IsThisSquadOnTheMove(INT8 bSquadValue) {
 }
 
 // rebuild this squad after someone has been removed, to 'squeeze' together any empty spots
-void RebuildSquad(INT8 bSquadValue) {
+void RebuildSquad(int8_t bSquadValue) {
   INT32 iCounter = 0, iCounterB = 0;
 
   for (iCounterB = 0; iCounterB < NUMBER_OF_SOLDIERS_PER_SQUAD - 1; iCounterB++) {
@@ -1020,7 +1020,7 @@ void RebuildSquad(INT8 bSquadValue) {
   return;
 }
 
-void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue) {
+void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, int8_t bSquadValue) {
   uint8_t ubID;
 
   // if this squad is the current one and and the psoldier is the currently selected soldier, get
@@ -1159,7 +1159,8 @@ BOOLEAN IsDeadGuyOnAnySquad(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN IsDeadGuyInThisSquadSlot(INT8 bSlotId, INT8 bSquadValue, INT8 *bNumberOfDeadGuysSoFar) {
+BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue,
+                                 int8_t *bNumberOfDeadGuysSoFar) {
   INT32 iCounter = 0, iCount = 0;
 
   // see if we have gone too far?
@@ -1185,7 +1186,7 @@ BOOLEAN IsDeadGuyInThisSquadSlot(INT8 bSlotId, INT8 bSquadValue, INT8 *bNumberOf
   return (FALSE);
 }
 
-BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue) {
+BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadValue) {
   INT32 iCounter = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
@@ -1240,10 +1241,10 @@ BOOLEAN IsMercOnCurrentSquad(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT8 NumberOfPlayerControllableMercsInSquad(INT8 bSquadValue) {
+int8_t NumberOfPlayerControllableMercsInSquad(int8_t bSquadValue) {
   struct SOLDIERTYPE *pSoldier;
-  INT8 bCounter = 0;
-  INT8 bSquadCount = 0;
+  int8_t bCounter = 0;
+  int8_t bSquadCount = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
     return (0);
@@ -1268,9 +1269,9 @@ INT8 NumberOfPlayerControllableMercsInSquad(INT8 bSquadValue) {
   return (bSquadCount);
 }
 
-BOOLEAN DoesVehicleExistInSquad(INT8 bSquadValue) {
+BOOLEAN DoesVehicleExistInSquad(int8_t bSquadValue) {
   struct SOLDIERTYPE *pSoldier;
-  INT8 bCounter = 0;
+  int8_t bCounter = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
     return (FALSE);

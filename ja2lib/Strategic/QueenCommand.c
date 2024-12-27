@@ -1034,7 +1034,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
     iNumEnemiesInSector = NumEnemiesInSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
     if (iNumEnemiesInSector) {
       if (pSector->bLastKnownEnemies >= 0) {
-        pSector->bLastKnownEnemies = (INT8)iNumEnemiesInSector;
+        pSector->bLastKnownEnemies = (int8_t)iNumEnemiesInSector;
       }
     } else {
       pSector->bLastKnownEnemies = 0;
@@ -1592,7 +1592,7 @@ void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->bLife <= 35) {
     pSoldier->bLife = 35;
   } else if (pSoldier->bLife >= 45) {
-    pSoldier->bLife += (INT8)(10 - Random(21));
+    pSoldier->bLife += (int8_t)(10 - Random(21));
   }
 
   // make him quite exhausted when found
@@ -1604,7 +1604,7 @@ void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
 void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
   INT32 i;
   BOOLEAN fMadeCorpse;
-  INT8 bKilledEnemies = 0, bKilledCreatures = 0, bKilledRebels = 0, bKilledCivilians = 0;
+  int8_t bKilledEnemies = 0, bKilledCreatures = 0, bKilledRebels = 0, bKilledCivilians = 0;
   return;
   // If any of the soldiers are dying, kill them now.
   for (i = gTacticalStatus.Team[ENEMY_TEAM].bFirstID; i <= gTacticalStatus.Team[ENEMY_TEAM].bLastID;

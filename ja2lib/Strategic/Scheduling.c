@@ -33,7 +33,7 @@ extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
 #endif
 
 BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime);
-INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule);
+int8_t GetEmptyScheduleEntry(SCHEDULENODE *pSchedule);
 BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule);
 
 #define FOURPM 960
@@ -318,7 +318,7 @@ void PrepareSchedulesForEditorEntry() {
 // Called when leaving the editor to enter the game.  This posts all of the events that apply.
 void PrepareSchedulesForEditorExit() { PostSchedules(); }
 
-void LoadSchedules(INT8 **hBuffer) {
+void LoadSchedules(int8_t **hBuffer) {
   SCHEDULENODE *pSchedule = NULL;
   SCHEDULENODE temp;
   uint8_t ubNum;
@@ -574,7 +574,7 @@ BOOLEAN BumpAnyExistingMerc(INT16 sGridNo) {
 
 void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
   INT16 sCellX, sCellY, sGridNo;
-  INT8 bDirection;
+  int8_t bDirection;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) {
@@ -686,7 +686,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
 void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiStartTime, uiEndTime;
   INT32 i;
-  INT8 bEmpty;
+  int8_t bEmpty;
   SCHEDULENODE *pSchedule;
   uint8_t ubTempAction;
   uint16_t usTemp;
@@ -1072,7 +1072,7 @@ BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTi
 }
 
 BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule) {
-  INT8 bLoop;
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] != SCHEDULE_ACTION_NONE &&
@@ -1085,8 +1085,8 @@ BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule) {
   return (FALSE);
 }
 
-INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule) {
-  INT8 bLoop;
+int8_t GetEmptyScheduleEntry(SCHEDULENODE *pSchedule) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] == SCHEDULE_ACTION_NONE) {
@@ -1127,7 +1127,7 @@ CIV_TEAM ].bLastID; uiLoop++ )
 */
 
 uint16_t FindSleepSpot(SCHEDULENODE *pSchedule) {
-  INT8 bLoop;
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] == SCHEDULE_ACTION_SLEEP) {
@@ -1138,7 +1138,7 @@ uint16_t FindSleepSpot(SCHEDULENODE *pSchedule) {
 }
 
 void ReplaceSleepSpot(SCHEDULENODE *pSchedule, uint16_t usNewSpot) {
-  INT8 bLoop;
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] == SCHEDULE_ACTION_SLEEP) {

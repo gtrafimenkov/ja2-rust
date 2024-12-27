@@ -95,34 +95,34 @@ enum {
 
 typedef struct ARMY_COMPOSITION {
   INT32 iReadability;  // contains the enumeration which is useless, but helps readability.
-  INT8 bPriority;
-  INT8 bElitePercentage;
-  INT8 bTroopPercentage;
-  INT8 bAdminPercentage;
-  INT8 bDesiredPopulation;
-  INT8 bStartPopulation;
-  INT8 bPadding[10];
+  int8_t bPriority;
+  int8_t bElitePercentage;
+  int8_t bTroopPercentage;
+  int8_t bAdminPercentage;
+  int8_t bDesiredPopulation;
+  int8_t bStartPopulation;
+  int8_t bPadding[10];
 } ARMY_COMPOSITION;
 
 // Defines the patrol groups -- movement groups.
 typedef struct PATROL_GROUP {
-  INT8 bSize;
-  INT8 bPriority;
+  int8_t bSize;
+  int8_t bPriority;
   uint8_t ubSectorID[4];
-  INT8 bFillPermittedAfterDayMod100;
+  int8_t bFillPermittedAfterDayMod100;
   uint8_t ubGroupID;
-  INT8 bWeight;
+  int8_t bWeight;
   uint8_t ubPendingGroupID;
-  INT8 bPadding[10];
+  int8_t bPadding[10];
 } PATROL_GROUP;
 
 // Defines all stationary defence forces.
 typedef struct GARRISON_GROUP {
   uint8_t ubSectorID;
   uint8_t ubComposition;
-  INT8 bWeight;
+  int8_t bWeight;
   uint8_t ubPendingGroupID;
-  INT8 bPadding[10];
+  int8_t bPadding[10];
 } GARRISON_GROUP;
 
 #endif

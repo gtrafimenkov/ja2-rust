@@ -19,7 +19,7 @@ extern SOLDIERINITNODE *gSoldierInitTail;
 // These serialization functions are assuming the passing of a valid file
 // pointer to the beginning of the save/load area, at the correct part of the
 // map file.
-BOOLEAN LoadSoldiersFromMap(INT8 **hBuffer);
+BOOLEAN LoadSoldiersFromMap(int8_t **hBuffer);
 BOOLEAN SaveSoldiersToMap(HWFILE fp);
 
 // For the purpose of keeping track of which soldier belongs to which placement within the game,
@@ -37,7 +37,7 @@ SOLDIERINITNODE *AddBasicPlacementToSoldierInitList(BASIC_SOLDIERCREATE_STRUCT *
 void RemoveSoldierNodeFromInitList(SOLDIERINITNODE *pNode);
 SOLDIERINITNODE *FindSoldierInitNodeWithID(uint16_t usID);
 
-uint8_t AddSoldierInitListTeamToWorld(INT8 bTeam, uint8_t ubMaxNum);
+uint8_t AddSoldierInitListTeamToWorld(int8_t bTeam, uint8_t ubMaxNum);
 void AddSoldierInitListEnemyDefenceSoldiers(uint8_t ubTotalAdmin, uint8_t ubTotalTroops,
                                             uint8_t ubTotalElite);
 void AddSoldierInitListCreatures(BOOLEAN fQueen, uint8_t ubNumLarvae, uint8_t ubNumInfants,

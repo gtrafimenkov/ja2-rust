@@ -110,8 +110,8 @@ struct MOUSE_REGION BlanketRegion;
 CHAR8 gszCurrFilename[1024];
 
 enum { IOSTATUS_NONE, INITIATE_MAP_SAVE, SAVING_MAP, INITIATE_MAP_LOAD, LOADING_MAP };
-INT8 gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
-                             // none
+int8_t gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
+                               // none
 uint32_t ProcessFileIO();
 
 // BOOLEAN fSavingFile;
@@ -736,7 +736,7 @@ void SetGlobalSectorValues(STR16 szFilename) {
     pStr = wcsstr(gzFilename, L"_b");
     if (pStr) {
       if (pStr[2] >= '1' && pStr[2] <= '3') {
-        gbWorldSectorZ = (INT8)(pStr[2] - 0x30);
+        gbWorldSectorZ = (int8_t)(pStr[2] - 0x30);
       }
     }
   } else {

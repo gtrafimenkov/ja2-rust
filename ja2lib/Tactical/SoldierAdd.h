@@ -7,29 +7,29 @@ struct SOLDIERTYPE;
 
 // Finds a gridno given a sweet spot
 // Returns a good direction too!
-uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo, INT8 ubRadius,
+uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo, int8_t ubRadius,
                                  uint8_t *pubDirection);
 
 // Ensures a good path.....
 uint16_t FindGridNoFromSweetSpotThroughPeople(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                              INT8 ubRadius, uint8_t *pubDirection);
+                                              int8_t ubRadius, uint8_t *pubDirection);
 
 // Returns a good sweetspot but not the swetspot!
 uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                                   INT8 ubRadius, uint8_t *pubDirection);
+                                                   int8_t ubRadius, uint8_t *pubDirection);
 
 uint16_t FindGridNoFromSweetSpotExcludingSweetSpotInQuardent(struct SOLDIERTYPE *pSoldier,
-                                                             INT16 sSweetGridNo, INT8 ubRadius,
+                                                             INT16 sSweetGridNo, int8_t ubRadius,
                                                              uint8_t *pubDirection,
-                                                             INT8 ubQuardentDir);
+                                                             int8_t ubQuardentDir);
 
 // Finds a gridno near a sweetspot but a random one!
 uint16_t FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                       INT8 ubRadius, uint8_t *pubDirection);
+                                       int8_t ubRadius, uint8_t *pubDirection);
 
 // Finds a sweetspot but excluding this one!
 uint16_t FindRandomGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
-                                                         INT16 sSweetGridNo, INT8 ubRadius,
+                                                         INT16 sSweetGridNo, int8_t ubRadius,
                                                          uint8_t *pubDirection);
 
 // Adds a soldier ( already created in mercptrs[] array )!
@@ -54,7 +54,7 @@ BOOLEAN IsMercOnTeamAndInOmertaAlreadyAndAlive(uint8_t ubMercID);
 INT16 GetSoldierIDFromMercID(uint8_t ubMercID);
 
 uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState,
-                                               INT16 sSweetGridNo, INT8 ubRadius,
+                                               INT16 sSweetGridNo, int8_t ubRadius,
                                                uint8_t *pubDirection, BOOLEAN fClosestToMerc);
 
 /*
@@ -62,7 +62,7 @@ void SoldierInSectorSleep( struct SOLDIERTYPE *pSoldier, INT16 sGridNo );
 */
 
 uint16_t FindGridNoFromSweetSpotWithStructDataFromSoldier(struct SOLDIERTYPE *pSoldier,
-                                                          uint16_t usAnimState, INT8 ubRadius,
+                                                          uint16_t usAnimState, int8_t ubRadius,
                                                           uint8_t *pubDirection,
                                                           BOOLEAN fClosestToMerc,
                                                           struct SOLDIERTYPE *pSrcSoldier);
@@ -72,6 +72,6 @@ void SoldierInSectorDoctor(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 void SoldierInSectorRepair(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 
 BOOLEAN CanSoldierReachGridNoInGivenTileLimit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
-                                              INT16 sMaxTiles, INT8 bLevel);
+                                              INT16 sMaxTiles, int8_t bLevel);
 
 #endif

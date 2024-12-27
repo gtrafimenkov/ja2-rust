@@ -37,7 +37,7 @@ typedef struct {
   uint8_t
       ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
                            // dealers inventory, one of the offer areas or in the users inventory)
-  INT8 bSlotIdInOtherLocation;
+  int8_t bSlotIdInOtherLocation;
 
   uint8_t ubIdOfMercWhoOwnsTheItem;
   uint32_t uiItemPrice;  // Only used for the players item that have been evaluated
@@ -76,8 +76,8 @@ void EnterShopKeeperInterfaceScreen(uint8_t ubArmsDealer);
 void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
                           uint16_t usHeight);
 BOOLEAN ShouldSoldierDisplayHatchOnItem(uint8_t ubProfileID, INT16 sSlotNum);
-INT8 AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
-                               INT8 bSlotIdInOtherLocation);
+int8_t AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
+                                 int8_t bSlotIdInOtherLocation);
 void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
 void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(uint8_t bExitValue);
 
@@ -87,9 +87,9 @@ void SetSkiCursor(uint16_t usCursor);
 void InitShopKeeperSubTitledText(STR16 pString);
 
 void AddItemToPlayersOfferAreaAfterShopKeeperOpen(struct OBJECTTYPE *pItemObject,
-                                                  INT8 bPreviousInvPos);
+                                                  int8_t bPreviousInvPos);
 
-void BeginSkiItemPointer(uint8_t ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst);
+void BeginSkiItemPointer(uint8_t ubSource, int8_t bSlotNum, BOOLEAN fOfferToDealerFirst);
 
 void DeleteShopKeeperItemDescBox();
 

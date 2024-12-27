@@ -118,9 +118,9 @@ void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHow
 // these are used to handle global loyalty events (ones that effect EVERY town on the map)
 void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease);
 void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease);
-void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
-                                         INT8 bSectorZ);
+                                         int8_t bSectorZ);
 
 // handle a town being liberated for the first time
 void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY);
@@ -132,7 +132,7 @@ BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId);
 void SetTheFirstBattleSector(INT16 sSectorValue);
 
 // gte number of whole towns but exclude this one
-INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude);
+INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude);
 
 // Function assumes that mercs have retreated already.  Handles two cases, one for general merc
 // retreat which slightly demoralizes the mercs, the other handles abandonment of militia forces
@@ -141,7 +141,7 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude);
 #define RETREAT_TACTICAL_TRAVERSAL 0
 #define RETREAT_PBI 1
 #define RETREAT_AUTORESOLVE 2
-void HandleLoyaltyImplicationsOfMercRetreat(INT8 bRetreatCode, u8 sSectorX, u8 sSectorY,
+void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, u8 sSectorX, u8 sSectorY,
                                             INT16 sSectorZ);
 
 void MaximizeLoyaltyForDeidrannaKilled(void);

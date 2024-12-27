@@ -7,7 +7,7 @@ struct SOLDIERTYPE;
 
 void ContinueMercMovement(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN IsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bNewStance);
+BOOLEAN IsValidStance(struct SOLDIERTYPE *pSoldier, int8_t bNewStance);
 void SelectMoveAnimationFromStance(struct SOLDIERTYPE *pSoldier);
 BOOLEAN IsValidMovementMode(struct SOLDIERTYPE *pSoldier, INT16 usMovementMode);
 FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
@@ -20,7 +20,7 @@ void HandlePlacingRoofMarker(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEA
                              BOOLEAN fForce);
 
 void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
-                         INT8 bZLevel);
+                         int8_t bZLevel);
 
 void MercStealFromMerc(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget);
 

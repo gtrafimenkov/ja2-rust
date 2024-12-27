@@ -198,8 +198,8 @@ BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, uint8_t ubProfileId) {
   return (FALSE);
 }
 
-INT8 NumWoundedMercsNearby(uint8_t ubProfileID) {
-  INT8 bNumber = 0;
+int8_t NumWoundedMercsNearby(uint8_t ubProfileID) {
+  int8_t bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
@@ -225,8 +225,8 @@ INT8 NumWoundedMercsNearby(uint8_t ubProfileID) {
   return (bNumber);
 }
 
-INT8 NumMercsNear(uint8_t ubProfileID, uint8_t ubMaxDist) {
-  INT8 bNumber = 0;
+int8_t NumMercsNear(uint8_t ubProfileID, uint8_t ubMaxDist) {
+  int8_t bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
@@ -289,7 +289,7 @@ BOOLEAN NPCInRoomRange(uint8_t ubProfileID, uint8_t ubRoomID1, uint8_t ubRoomID2
 BOOLEAN PCInSameRoom(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
   uint8_t ubRoom;
-  INT8 bLoop;
+  int8_t bLoop;
   struct SOLDIERTYPE *pSoldier;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -346,8 +346,8 @@ BOOLEAN CheckTalkerUnpropositionedFemale(void) {
   return (FALSE);
 }
 
-INT8 NumMalesPresent(uint8_t ubProfileID) {
-  INT8 bNumber = 0;
+int8_t NumMalesPresent(uint8_t ubProfileID) {
+  int8_t bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
@@ -404,7 +404,7 @@ BOOLEAN FemalePresent(uint8_t ubProfileID) {
 }
 
 BOOLEAN CheckPlayerHasHead(void) {
-  INT8 bLoop;
+  int8_t bLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (bLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -421,7 +421,7 @@ BOOLEAN CheckPlayerHasHead(void) {
   return (FALSE);
 }
 
-BOOLEAN CheckNPCSector(uint8_t ubProfileID, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN CheckNPCSector(uint8_t ubProfileID, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ubProfileID, TRUE);
@@ -512,7 +512,7 @@ BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
 }
 
 BOOLEAN CheckFact(uint16_t usFact, uint8_t ubProfileID) {
-  INT8 bTown = -1;
+  int8_t bTown = -1;
 
   switch (usFact) {
     case FACT_DIMITRI_DEAD:

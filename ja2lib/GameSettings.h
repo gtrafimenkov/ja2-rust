@@ -52,7 +52,7 @@ enum {
 };
 
 typedef struct {
-  INT8 bLastSavedGameSlot;  // The last saved game number goes in here
+  int8_t bLastSavedGameSlot;  // The last saved game number goes in here
 
   uint8_t ubMusicVolumeSetting;
   uint8_t ubSoundEffectsVolume;

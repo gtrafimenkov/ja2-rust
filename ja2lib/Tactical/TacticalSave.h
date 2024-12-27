@@ -16,7 +16,7 @@ enum {
 };
 
 // Add
-BOOLEAN AddMapModification(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN AddMapModification(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
 
 // Load the Map modifications from the saved game file
 BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile);
@@ -25,10 +25,10 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile);
 BOOLEAN SaveMapTempFilesToSavedGameFile(HWFILE hFile);
 
 // delete temp file
-BOOLEAN DeleteTempItemMapFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN DeleteTempItemMapFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
 
 // Retrieves the number of items in the sectors temp item file
-BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ,
                                               uint32_t *puiNumberOfItems, BOOLEAN fIfEmptyCreate);
 
 // Saves the Current Sectors, ( world Items, rotting corpses, ... )  to the temporary file used to
@@ -40,16 +40,16 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile();
 BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile();
 
 // Loads a World Item array from that sectors temp item file
-BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WORLDITEM *pData);
+BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ, WORLDITEM *pData);
 
 //  Adds an array of Item Objects to the specified location on a unloaded map.
 //  If you want to overwrite all the items in the array set fReplaceEntireFile to TRUE.
-BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
+BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ, INT16 sGridNo,
                                  uint32_t uiNumberOfItems, struct OBJECTTYPE *pObject,
-                                 uint8_t ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel,
-                                 INT8 bVisible, BOOLEAN fReplaceEntireFile);
+                                 uint8_t ubLevel, uint16_t usFlags, int8_t bRenderZHeightAboveLevel,
+                                 int8_t bVisible, BOOLEAN fReplaceEntireFile);
 
-BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
+BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ, INT16 sGridNo,
                                       uint32_t uiNumberOfItems, WORLDITEM *pWorldItem,
                                       BOOLEAN fOverWrite);
 
@@ -57,15 +57,15 @@ BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT1
 BOOLEAN InitTacticalSave(BOOLEAN fCreateTempDir);
 
 // Gets the number of ACTIVE ( Not the TOTAL number ) of World Items from the sectors temp file
-BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ,
                                                 uint32_t *pNumberOfData);
 
 // Call this function to set the new sector a NPC will travel to
-void ChangeNpcToDifferentSector(uint8_t ubNpcId, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void ChangeNpcToDifferentSector(uint8_t ubNpcId, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // Adds a rotting corpse definition to the end of a sectors rotting corpse temp file
 BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
-    INT16 sMapX, INT16 sMapY, INT8 bMapZ, ROTTING_CORPSE_DEFINITION *pRottingCorpseDef);
+    INT16 sMapX, INT16 sMapY, int8_t bMapZ, ROTTING_CORPSE_DEFINITION *pRottingCorpseDef);
 
 // Flags used for the AddDeadSoldierToUnLoadedSector() function
 #define ADD_DEAD_SOLDIER_USE_GRIDNO \
@@ -110,13 +110,13 @@ BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrit
 // If hacker's mess with our save/temp files, this is our final line of defence.
 void InitExitGameDialogBecauseFileHackDetected();
 
-void HandleAllReachAbleItemsInTheSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void HandleAllReachAbleItemsInTheSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
-void GetMapTempFileName(uint32_t uiType, STR pMapName, INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+void GetMapTempFileName(uint32_t uiType, STR pMapName, INT16 sMapX, INT16 sMapY, int8_t bMapZ);
 
 uint32_t GetNumberOfVisibleWorldItemsFromSectorStructureForSector(INT16 sMapX, INT16 sMapY,
-                                                                  INT8 bMapZ);
-void SetNumberOfVisibleWorldItemsInSectorStructureForSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+                                                                  int8_t bMapZ);
+void SetNumberOfVisibleWorldItemsInSectorStructureForSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ,
                                                             uint32_t uiNumberOfItems);
 
 #define NEW_ROTATION_ARRAY_SIZE 49

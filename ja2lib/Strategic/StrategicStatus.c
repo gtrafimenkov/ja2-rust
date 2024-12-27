@@ -63,7 +63,7 @@ uint8_t CalcDeathRate(void) {
   return ((uint8_t)uiDeathRate);
 }
 
-void ModifyPlayerReputation(INT8 bRepChange) {
+void ModifyPlayerReputation(int8_t bRepChange) {
   INT32 iNewBadRep;
 
   // subtract, so that a negative reputation change results in an increase in bad reputation
@@ -77,7 +77,7 @@ void ModifyPlayerReputation(INT8 bRepChange) {
 }
 
 BOOLEAN MercThinksDeathRateTooHigh(uint8_t ubProfileID) {
-  INT8 bDeathRateTolerance;
+  int8_t bDeathRateTolerance;
 
   bDeathRateTolerance = gMercProfiles[ubProfileID].bDeathRate;
 
@@ -97,7 +97,7 @@ BOOLEAN MercThinksDeathRateTooHigh(uint8_t ubProfileID) {
 }
 
 BOOLEAN MercThinksBadReputationTooHigh(uint8_t ubProfileID) {
-  INT8 bRepTolerance;
+  int8_t bRepTolerance;
 
   bRepTolerance = gMercProfiles[ubProfileID].bReputationTolerance;
 
@@ -118,8 +118,8 @@ BOOLEAN MercThinksBadReputationTooHigh(uint8_t ubProfileID) {
 
 // only meaningful for already hired mercs
 BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier) {
-  INT8 bRepTolerance;
-  INT8 bMoraleTolerance;
+  int8_t bRepTolerance;
+  int8_t bMoraleTolerance;
 
   bRepTolerance = gMercProfiles[GetSolProfile(pSoldier)].bReputationTolerance;
 
@@ -215,7 +215,7 @@ void HandleEnricoEmail(void) {
         // E-mail
         gStrategicStatus.usEnricoEmailFlags |= ENRICO_EMAIL_FLAG_SETBACK_OVER;
       } else if (GetWorldDay() > (uint32_t)(gStrategicStatus.usLastDayOfPlayerActivity)) {
-        INT8 bComplaint = 0;
+        int8_t bComplaint = 0;
         uint8_t ubTolerance;
 
         gStrategicStatus.ubNumberOfDaysOfInactivity++;
@@ -290,7 +290,7 @@ void HandleEnricoEmail(void) {
 }
 
 void TrackEnemiesKilled(uint8_t ubKilledHow, uint8_t ubSoldierClass) {
-  INT8 bRankIndex;
+  int8_t bRankIndex;
 
   bRankIndex = SoldierClassToRankIndex(ubSoldierClass);
 
@@ -307,8 +307,8 @@ void TrackEnemiesKilled(uint8_t ubKilledHow, uint8_t ubSoldierClass) {
   }
 }
 
-INT8 SoldierClassToRankIndex(uint8_t ubSoldierClass) {
-  INT8 bRankIndex = -1;
+int8_t SoldierClassToRankIndex(uint8_t ubSoldierClass) {
+  int8_t bRankIndex = -1;
 
   // the soldier class defines are not in natural ascending order, elite comes before army!
   switch (ubSoldierClass) {

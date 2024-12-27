@@ -258,7 +258,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
   uint8_t ubNumMobileEnemies = 0;
   uint8_t ubNumMercs;
   BOOLEAN fUsePluralVersion = FALSE;
-  INT8 bBestExpLevel = 0;
+  int8_t bBestExpLevel = 0;
   BOOLEAN fRetreatAnOption = TRUE;
   SECTORINFO *pSector;
 
@@ -1017,7 +1017,7 @@ void RenderPreBattleInterface() {
       // know exactly how many
       i = NumEnemiesInSector(gubPBSectorX, gubPBSectorY);
       swprintf(str, ARR_SIZE(str), L"%d", i);
-      SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies = (INT8)i;
+      SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies = (int8_t)i;
     }
     x = 57 + (27 - StringPixLength(str, FONT14ARIAL)) / 2;
     y = 36;
@@ -1564,7 +1564,7 @@ void PutNonSquadMercsInBattleSectorOnSquads(BOOLEAN fExitVehicles) {
 void PutNonSquadMercsInPlayerGroupOnSquads(struct GROUP *pGroup, BOOLEAN fExitVehicles) {
   PLAYERGROUP *pPlayer, *pNextPlayer;
   struct SOLDIERTYPE *pSoldier;
-  INT8 bUniqueVehicleSquad = -1;
+  int8_t bUniqueVehicleSquad = -1;
   BOOLEAN fSuccess;
 
   if (pGroup->fVehicle) {

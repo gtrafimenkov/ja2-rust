@@ -400,7 +400,7 @@ INT32 gLaptopProgramStates[LAPTOP_PROGRAM_HISTORY + 1];
 BOOLEAN fMaximizingProgram = FALSE;
 
 // program we are maximizing
-INT8 bProgramBeingMaximized = -1;
+int8_t bProgramBeingMaximized = -1;
 
 // are we minimizing
 BOOLEAN fMinizingProgram = FALSE;
@@ -3828,7 +3828,7 @@ BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
 
 BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t usTopLeftX,
                                        uint16_t usTopLeftY, uint16_t usTopRightX) {
-  static INT8 ubCount;
+  static int8_t ubCount;
   INT16 sPosX, sPosY, sPosRightX, sPosBottomY, sWidth, sHeight;
   SGPRect SrcRect;
   SGPRect DestRect;

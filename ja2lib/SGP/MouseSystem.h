@@ -12,7 +12,7 @@ typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback
 
 struct MOUSE_REGION {
   uint16_t IDNumber;     // Region's ID number, set by mouse system
-  INT8 PriorityLevel;    // Region's Priority, set by system and/or caller
+  int8_t PriorityLevel;  // Region's Priority, set by system and/or caller
   uint32_t uiFlags;      // Region's state flags
   INT16 RegionTopLeftX;  // Screen area affected by this region (absolute coordinates)
   INT16 RegionTopLeftY;
@@ -144,14 +144,14 @@ void MSYS_SetCurrentCursor(uint16_t Cursor);
 INT32 MSYS_Init(void);
 void MSYS_Shutdown(void);
 void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
-                       uint16_t bry, INT8 priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
+                       uint16_t bry, int8_t priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback);
 void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, uint16_t crsr);
 INT32 MSYS_AddRegion(struct MOUSE_REGION *region);
 void MSYS_RemoveRegion(struct MOUSE_REGION *region);
 void MSYS_EnableRegion(struct MOUSE_REGION *region);
 void MSYS_DisableRegion(struct MOUSE_REGION *region);
-void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, INT8 priority);
+void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, int8_t priority);
 void MSYS_SetRegionUserData(struct MOUSE_REGION *region, INT32 index, INT32 userdata);
 INT32 MSYS_GetRegionUserData(struct MOUSE_REGION *region, INT32 index);
 

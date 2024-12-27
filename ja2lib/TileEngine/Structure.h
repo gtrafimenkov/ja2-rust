@@ -36,11 +36,11 @@ BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile);
 //
 // functions at the structure instance level
 //
-BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, int8_t bLevel,
                                   struct DB_STRUCTURE_REF *pDBStructureRef, INT16 sExclusionID);
 
 // for the PTR argument of AddStructureToWorld, pass in a struct LEVELNODE * please!
-BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, int8_t bLevel,
                             struct DB_STRUCTURE_REF *pDBStructureRef, PTR pLevelN);
 BOOLEAN DeleteStructureFromWorld(struct STRUCTURE *pStructure);
 
@@ -64,10 +64,10 @@ struct STRUCTURE *SwapStructureForPartnerAndStoreChangeInMap(INT16 sGridNo,
 //
 // functions useful for AI that return info about heights
 //
-INT8 StructureHeight(struct STRUCTURE *pStructure);
-INT8 StructureBottomLevel(struct STRUCTURE *pStructure);
-INT8 GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof);
-INT8 GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof);
+int8_t StructureHeight(struct STRUCTURE *pStructure);
+int8_t StructureBottomLevel(struct STRUCTURE *pStructure);
+int8_t GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof);
+int8_t GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof);
 
 BOOLEAN StructureDensity(struct STRUCTURE *pStructure, uint8_t *pubLevel0, uint8_t *pubLevel1,
                          uint8_t *pubLevel2, uint8_t *pubLevel3);
@@ -82,9 +82,9 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
                                INT16 sSTIStartIndex);
 
 // FUNCTIONS FOR DETERMINING STUFF THAT BLOCKS VIEW FOR TILE_bASED LOS
-INT8 GetBlockingStructureInfo(INT16 sGridNo, INT8 bDir, INT8 bNextDir, INT8 bLevel,
-                              INT8 *pStructHeight, struct STRUCTURE **ppTallestStructure,
-                              BOOLEAN fWallsBlock);
+int8_t GetBlockingStructureInfo(INT16 sGridNo, int8_t bDir, int8_t bNextDir, int8_t bLevel,
+                                int8_t *pStructHeight, struct STRUCTURE **ppTallestStructure,
+                                BOOLEAN fWallsBlock);
 
 BOOLEAN DamageStructure(struct STRUCTURE *pStructure, uint8_t ubDamage, uint8_t ubReason,
                         INT16 sGridNo, INT16 sX, INT16 sY, uint8_t ubOwner);
@@ -126,7 +126,7 @@ enum {
 extern INT32 guiMaterialHitSound[NUM_MATERIAL_TYPES];
 
 struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, uint8_t ubType, uint8_t ubWallOrientation,
-                                           INT8 bLevel);
+                                           int8_t bLevel);
 uint32_t StructureTypeToFlag(uint8_t ubType);
 uint8_t StructureFlagToType(uint32_t uiFlag);
 

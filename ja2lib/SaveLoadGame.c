@@ -107,7 +107,7 @@ BOOLEAN fFirstTimeInMapScreen = TRUE;
 //
 /////////////////////////////////////////////////////
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ);
+void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ);
 extern void NextLoopCheckForEnoughFreeHardDriveSpace();
 extern void UpdatePersistantGroupsFromOldSave(uint32_t uiSavedGameVersion);
 extern void TrashAllSoldiers();
@@ -278,7 +278,7 @@ typedef struct {
   INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 
   // levels of publicly known noises
-  INT8 gbPublicNoiseLevel[MAXTEAMS];
+  int8_t gbPublicNoiseLevel[MAXTEAMS];
 
   uint8_t gubScreenCount;
 
@@ -342,15 +342,15 @@ typedef struct {
 
   uint32_t uiMeanWhileFlags;
 
-  INT8 bSelectedInfoChar;
-  INT8 bHospitalPriceModifier;
-  INT8 bUnused2[2];
+  int8_t bSelectedInfoChar;
+  int8_t bHospitalPriceModifier;
+  int8_t bUnused2[2];
 
   INT32 iHospitalTempBalance;
   INT32 iHospitalRefund;
 
-  INT8 fPlayerTeamSawJoey;
-  INT8 fMikeShouldSayHi;
+  int8_t fPlayerTeamSawJoey;
+  int8_t fMikeShouldSayHi;
 
   uint8_t ubFiller[550];  // This structure should be 1024 bytes
 
@@ -1086,7 +1086,7 @@ BOOLEAN LoadSavedGame(uint8_t ubSavedGameID) {
 
   INT16 sLoadSectorX;
   INT16 sLoadSectorY;
-  INT8 bLoadSectorZ;
+  int8_t bLoadSectorZ;
   CHAR8 zSaveGameName[512];
   uint32_t uiRelStartPerc;
   uint32_t uiRelEndPerc;
@@ -3040,7 +3040,7 @@ BOOLEAN SaveWatchedLocsToSavedGame(HWFILE hFile) {
     return (FALSE);
   }
 
-  uiSaveSize = uiArraySize * sizeof(INT8);
+  uiSaveSize = uiArraySize * sizeof(int8_t);
 
   FileMan_Write(hFile, gbWatchedLocLevel, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
@@ -3073,7 +3073,7 @@ BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile) {
     return (FALSE);
   }
 
-  uiLoadSize = uiArraySize * sizeof(INT8);
+  uiLoadSize = uiArraySize * sizeof(int8_t);
   FileMan_Read(hFile, gbWatchedLocLevel, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
@@ -3421,7 +3421,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
 
   // Save boxing info
   memcpy(&sGeneralInfo.sBoxerGridNo, &gsBoxerGridNo, NUM_BOXERS * sizeof(INT16));
-  memcpy(&sGeneralInfo.ubBoxerID, &gubBoxerID, NUM_BOXERS * sizeof(INT8));
+  memcpy(&sGeneralInfo.ubBoxerID, &gubBoxerID, NUM_BOXERS * sizeof(int8_t));
   memcpy(&sGeneralInfo.fBoxerFought, &gfBoxerFought, NUM_BOXERS * sizeof(BOOLEAN));
 
   // Save the helicopter status
@@ -3448,7 +3448,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
          sizeof(INT16) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
 
   // level of public noises
-  memcpy(&sGeneralInfo.gbPublicNoiseLevel, &gbPublicNoiseLevel, sizeof(INT8) * MAXTEAMS);
+  memcpy(&sGeneralInfo.gbPublicNoiseLevel, &gbPublicNoiseLevel, sizeof(int8_t) * MAXTEAMS);
 
   // The screen count for the initscreen
   sGeneralInfo.gubScreenCount = gubScreenCount;
@@ -3666,7 +3666,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   fDisableMapInterfaceDueToBattle = sGeneralInfo.fDisableMapInterfaceDueToBattle;
 
   memcpy(&gsBoxerGridNo, &sGeneralInfo.sBoxerGridNo, NUM_BOXERS * sizeof(INT16));
-  memcpy(&gubBoxerID, &sGeneralInfo.ubBoxerID, NUM_BOXERS * sizeof(INT8));
+  memcpy(&gubBoxerID, &sGeneralInfo.ubBoxerID, NUM_BOXERS * sizeof(int8_t));
   memcpy(&gfBoxerFought, &sGeneralInfo.fBoxerFought, NUM_BOXERS * sizeof(BOOLEAN));
 
   // Load the helicopter status
@@ -3693,7 +3693,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
          sizeof(INT16) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
 
   // level of public noises
-  memcpy(&gbPublicNoiseLevel, &sGeneralInfo.gbPublicNoiseLevel, sizeof(INT8) * MAXTEAMS);
+  memcpy(&gbPublicNoiseLevel, &sGeneralInfo.gbPublicNoiseLevel, sizeof(int8_t) * MAXTEAMS);
 
   // the screen count for the init screen
   gubScreenCount = sGeneralInfo.gubScreenCount;
@@ -3911,7 +3911,7 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveG
 
 #endif
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ) {
+void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ) {
   // if the current sector is valid
   if (gfWorldLoaded) {
     *psSectorX = gWorldSectorX;
@@ -4008,7 +4008,7 @@ void UpdateMercMercContractInfo() {
   }
 }
 
-INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
+int8_t GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
   char zFileName1[256];
   char zFileName2[256];
   HWFILE hFile;

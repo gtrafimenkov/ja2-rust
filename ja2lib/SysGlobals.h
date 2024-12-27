@@ -18,7 +18,7 @@ extern uint32_t guiDoneButton;
 
 extern BOOLEAN gfMode;
 extern INT16 gsCurrentActionPoints;
-extern INT8 gbFPSDisplay;
+extern int8_t gbFPSDisplay;
 extern BOOLEAN gfResetInputCheck;
 extern BOOLEAN gfGlobalError;
 

@@ -112,7 +112,7 @@ void RemoveBombFromWorldByItemIndex(INT32 iItemIndex) {
   }
 }
 
-INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, INT8 bLevel) {
+INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, int8_t bLevel) {
   uint32_t uiBombIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
@@ -132,7 +132,7 @@ void FindPanicBombsAndTriggers(void) {
   struct OBJECTTYPE *pObj;
   struct STRUCTURE *pSwitch;
   INT16 sGridNo = NOWHERE;
-  INT8 bPanicIndex;
+  int8_t bPanicIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
     if (gWorldBombs[uiBombIndex].fExists) {
@@ -237,7 +237,7 @@ uint32_t GetNumUsedWorldItems(void) {
 }
 
 INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
-                     INT8 bRenderZHeightAboveLevel, INT8 bVisible) {
+                     int8_t bRenderZHeightAboveLevel, int8_t bVisible) {
   uint32_t iItemIndex;
   INT32 iReturn;
 
@@ -319,7 +319,7 @@ void SaveWorldItemsToMap(HWFILE fp) {
   }
 }
 
-void LoadWorldItemsFromMap(INT8 **hBuffer) {
+void LoadWorldItemsFromMap(int8_t **hBuffer) {
   // Start loading itmes...
 
   uint32_t i;
@@ -361,7 +361,7 @@ void LoadWorldItemsFromMap(INT8 **hBuffer) {
 
             // do replacements?
             if (Item[dummyItem.o.usItem].usItemClass == IC_GUN) {
-              INT8 bAmmo, bNewAmmo;
+              int8_t bAmmo, bNewAmmo;
 
               usReplacement = StandardGunListReplacement(dummyItem.o.usItem);
               if (usReplacement) {
@@ -474,7 +474,7 @@ void DeleteWorldItemsBelongingToQueenIfThere(void) {
   uint32_t uiLoop2;
   INT16 sGridNo;
   uint8_t ubLevel;
-  INT8 bSlot;
+  int8_t bSlot;
 
   if (gMercProfiles[QUEEN].sSectorX == gWorldSectorX &&
       gMercProfiles[QUEEN].sSectorY == gWorldSectorY &&

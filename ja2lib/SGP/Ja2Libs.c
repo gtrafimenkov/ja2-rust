@@ -4,15 +4,15 @@
 #include "SGP/LibraryDataBase.h"
 #include "platform.h"
 
-INT8 gbLocale = ENGLISH_LANG;
+int8_t gbLocale = ENGLISH_LANG;
 
 STR8 LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
                                  "polish",  "french",  "italian"};
 
 #define _MAX_PATH 260
 
-INT8 DetectLocale() {
-  INT8 bLoc;
+int8_t DetectLocale() {
+  int8_t bLoc;
   CHAR8 zPath[_MAX_PATH];
   CHAR8 zLocalePath[_MAX_PATH];
 

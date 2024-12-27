@@ -120,16 +120,16 @@ typedef struct {
   uint16_t usSoldierID;
   uint32_t uiUniqueId;
   INT16 sTargetGridNo;
-  INT8 bTargetLevel;
-  INT8 bTargetCubeLevel;
+  int8_t bTargetLevel;
+  int8_t bTargetCubeLevel;
 } EV_S_BEGINFIREWEAPON;
 
 typedef struct {
   uint16_t usSoldierID;
   uint32_t uiUniqueId;
   INT16 sTargetGridNo;
-  INT8 bTargetLevel;
-  INT8 bTargetCubeLevel;
+  int8_t bTargetLevel;
+  int8_t bTargetCubeLevel;
 } EV_S_FIREWEAPON;
 
 typedef struct {
@@ -155,7 +155,7 @@ typedef struct {
   INT16 sYPos;
   INT16 sZPos;
   uint16_t usWeaponIndex;
-  INT8 bWeaponStatus;
+  int8_t bWeaponStatus;
   uint8_t ubAttackerID;
   uint16_t usStructureID;
   INT32 iImpact;
@@ -186,7 +186,7 @@ typedef struct {
 typedef struct {
   uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  INT8 bDirection;
+  int8_t bDirection;
   INT16 sGridNo;
   INT16 sXPos;
   INT16 sYPos;
@@ -201,9 +201,9 @@ typedef struct {
   uint8_t usCurrentPathIndex;  // Index the owner of the merc is at when sending packet
   uint8_t usPathData[NETWORK_PATH_DATA_SIZE];  // make define  // Next X tile to go to
   uint8_t ubNewState;                          // new movment Anim
-  //	INT8		bActionPoints;
-  //	INT8		bBreath;			// current breath value
-  //	INT8		bDesiredDirection;
+  //	int8_t		bActionPoints;
+  //	int8_t		bBreath;			// current breath value
+  //	int8_t		bDesiredDirection;
 
   // maybe send current action & breath points
 } EV_S_SENDPATHTONETWORK;
@@ -211,9 +211,9 @@ typedef struct {
 typedef struct {
   uint8_t usSoldierID;
   uint32_t uiUniqueId;
-  INT16 sAtGridNo;     // Owner merc is at this tile when sending packet
-  INT8 bActionPoints;  // current A.P. value
-  INT8 bBreath;        // current breath value
+  INT16 sAtGridNo;       // Owner merc is at this tile when sending packet
+  int8_t bActionPoints;  // current A.P. value
+  int8_t bBreath;        // current breath value
 } EV_S_UPDATENETWORKSOLDIER;
 
 // FUNCTIONS

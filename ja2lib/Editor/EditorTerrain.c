@@ -41,7 +41,7 @@ void EntryInitEditorTerrainInfo() {
 }
 
 void ResetTerrainTileWeights() {
-  INT8 x;
+  int8_t x;
   for (x = 0; x < NUM_TERRAIN_TILE_REGIONS; x++) {
     ubTerrainTileButtonWeight[x] = 0;
   }
@@ -51,7 +51,7 @@ void ResetTerrainTileWeights() {
 }
 
 void HideTerrainTileButtons() {
-  INT8 x;
+  int8_t x;
   if (gfShowTerrainTileButtons) {
     for (x = BASE_TERRAIN_TILE_REGION_ID; x < NUM_TERRAIN_TILE_REGIONS; x++) {
       DisableEditorRegion(x);
@@ -61,7 +61,7 @@ void HideTerrainTileButtons() {
 }
 
 void ShowTerrainTileButtons() {
-  INT8 x;
+  int8_t x;
   if (!gfShowTerrainTileButtons) {
     for (x = BASE_TERRAIN_TILE_REGION_ID; x < NUM_TERRAIN_TILE_REGIONS; x++) {
       EnableEditorRegion(x);

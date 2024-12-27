@@ -80,7 +80,7 @@ struct TILE_IMAGERY {
 
 typedef struct {
   uint16_t *pusFrames;
-  INT8 bCurrentFrame;
+  int8_t bCurrentFrame;
   uint8_t ubNumFrames;
 
 } TILE_ANIMATION_DATA;

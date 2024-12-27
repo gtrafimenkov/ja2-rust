@@ -19,7 +19,7 @@ struct history {
   uint32_t uiDate;       // time in the world in global time
   INT16 sSectorX;        // sector X this took place in
   INT16 sSectorY;        // sector Y this took place in
-  INT8 bSectorZ;
+  int8_t bSectorZ;
   uint8_t ubColor;
   struct history *Next;  // next unit in the list
 };

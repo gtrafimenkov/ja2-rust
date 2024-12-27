@@ -409,10 +409,10 @@ typedef struct UNDERGROUND_SECTORINFO {
   uint8_t ubSectorX, ubSectorY, ubSectorZ;
   uint8_t ubNumElites, ubNumTroops, ubNumAdmins, ubNumCreatures;
   uint8_t fVisited;
-  INT8 ubTravelRating;  // Represents how travelled a sector is.  Typically, the higher the travel
-                        // rating, the more people go near it.  A travel rating of 0 means there are
-                        // never people around.  This value is used for determining how often items
-                        // would "vanish" from a sector.
+  int8_t ubTravelRating;  // Represents how travelled a sector is.  Typically, the higher the travel
+                          // rating, the more people go near it.  A travel rating of 0 means there
+                          // are never people around.  This value is used for determining how often
+                          // items would "vanish" from a sector.
   uint32_t
       uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
   struct UNDERGROUND_SECTORINFO *next;
@@ -422,7 +422,7 @@ typedef struct UNDERGROUND_SECTORINFO {
   uint8_t ubElitesInBattle, ubTroopsInBattle, ubAdminsInBattle, ubCreaturesInBattle;
 
   uint32_t uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
-  INT8 bPadding[36];
+  int8_t bPadding[36];
   // no padding left!
 } UNDERGROUND_SECTORINFO;
 

@@ -163,7 +163,7 @@ uint32_t guiSpeechSliderMoving = 0xffffffff;
 
 INT32 giOptionsMessageBox = -1;  // Options pop up messages index value
 
-INT8 gbHighLightedOptionText = -1;
+int8_t gbHighLightedOptionText = -1;
 
 BOOLEAN gfHideBloodAndGoreOption =
     FALSE;  // If a germany build we are to hide the blood and gore option
@@ -1112,7 +1112,7 @@ void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 }
 
 void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
-  INT8 bButton = (INT8)MSYS_GetRegionUserData(pRegion, 0);
+  int8_t bButton = (int8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     HandleHighLightedText(FALSE);
@@ -1133,10 +1133,10 @@ void HandleHighLightedText(BOOLEAN fHighLight) {
   uint16_t usPosX = 0;
   uint16_t usPosY = 0;
   uint8_t ubCnt;
-  INT8 bHighLight = -1;
+  int8_t bHighLight = -1;
   uint16_t usWidth;
 
-  static INT8 bLastRegion = -1;
+  static int8_t bLastRegion = -1;
 
   if (gbHighLightedOptionText == -1) fHighLight = FALSE;
 

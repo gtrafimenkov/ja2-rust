@@ -18,16 +18,16 @@ uint8_t GetTownOpinionOfMerc(uint8_t ubProfileId, uint8_t ubTownId);
 uint8_t GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId);
 
 // update merc reputation for this town by this amount
-void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, INT8 bAmount);
+void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, int8_t bAmount);
 void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId,
-                                           INT8 bAmount);
+                                           int8_t bAmount);
 
 // global handling of spread
 void HandleSpreadOfAllTownsOpinion(void);
 // handles the spread of town opinion for one merc
 void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId);
 // handles the opinion spread between these two towns about this merc at the distance between them
-void HandleOpinionOfTownsAboutSoldier(INT8 bTownA, INT8 bTownB, INT32 iDistanceBetweenThem,
+void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, INT32 iDistanceBetweenThem,
                                       uint8_t ubProfile);
 
 /*

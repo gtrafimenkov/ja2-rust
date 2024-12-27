@@ -605,7 +605,7 @@ int x,dif,absDif;
 }
 #endif
 
-INT8 SoundDir(INT16 sGridNo) {
+int8_t SoundDir(INT16 sGridNo) {
   INT16 sWorldX, sWorldY;
   INT16 sScreenX, sScreenY;
   INT16 sMiddleX;
@@ -650,7 +650,7 @@ INT8 SoundDir(INT16 sGridNo) {
     return (MIDDLE);
 }
 
-INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
+int8_t SoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
   INT16 sWorldX, sWorldY;
   INT16 sScreenX, sScreenY;
   INT16 sMiddleX, sMiddleY;
@@ -865,7 +865,7 @@ void SetPositionSndsInActive() {
   }
 }
 
-INT8 PositionSoundDir(INT16 sGridNo) {
+int8_t PositionSoundDir(INT16 sGridNo) {
   INT16 sWorldX, sWorldY;
   INT16 sScreenX, sScreenY;
   INT16 sMiddleX;
@@ -910,7 +910,7 @@ INT8 PositionSoundDir(INT16 sGridNo) {
     return (MIDDLE);
 }
 
-INT8 PositionSoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
+int8_t PositionSoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
   INT16 sWorldX, sWorldY;
   INT16 sScreenX, sScreenY;
   INT16 sMiddleX, sMiddleY;
@@ -954,13 +954,13 @@ INT8 PositionSoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
   }
 
   // Scale
-  return ((INT8)(bInitialVolume * ((sMaxSoundDist - sSoundDist) / sMaxSoundDist)));
+  return ((int8_t)(bInitialVolume * ((sMaxSoundDist - sSoundDist) / sMaxSoundDist)));
 }
 
 void SetPositionSndsVolumeAndPanning() {
   uint32_t cnt;
   POSITIONSND *pPositionSnd;
-  INT8 bVolume, bPan;
+  int8_t bVolume, bPan;
   struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumPositionSnds; cnt++) {

@@ -37,7 +37,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
   struct SOLDIERTYPE *pPlanSoldier;
   INT16 sXPos, sYPos;
   INT16 sAPCost = 0;
-  INT8 bDirection;
+  int8_t bDirection;
   INT32 iLoop;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   uint8_t ubNewIndex;
@@ -47,7 +47,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
   // If we have a planned action here, ignore!
 
   // If not OK Dest, ignore!
-  if (!NewOKDestination(gpUIPlannedSoldier, sGridNo, FALSE, (INT8)gsInterfaceLevel)) {
+  if (!NewOKDestination(gpUIPlannedSoldier, sGridNo, FALSE, (int8_t)gsInterfaceLevel)) {
     return (FALSE);
   }
 
@@ -99,7 +99,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
 
         // Get direction
         bDirection =
-            (INT8)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
+            (int8_t)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
 
         // Set direction
         pPlanSoldier->bDirection = bDirection;
@@ -125,7 +125,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
     }
   } else if (ubPlanID == UIPLAN_ACTION_FIRE) {
     sAPCost = CalcTotalAPsToAttack(gpUIPlannedSoldier, sGridNo, TRUE,
-                                   (INT8)(gpUIPlannedSoldier->bShownAimTime / 2));
+                                   (int8_t)(gpUIPlannedSoldier->bShownAimTime / 2));
 
     // Get XY from Gridno
     ConvertGridNoToCenterCellXY(sGridNo, &sXPos, &sYPos);
@@ -169,7 +169,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
 
           // Get direction
           bDirection =
-              (INT8)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
+              (int8_t)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
 
           // Set direction
           pPlanSoldier->bDirection = bDirection;
@@ -193,7 +193,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
       gpUIPlannedSoldier->ubPlannedUIAPCost = (uint8_t)gpUIPlannedSoldier->bActionPoints;
 
       // Get direction from gridno
-      bDirection = (INT8)GetDirectionFromGridNo(sGridNo, gpUIPlannedSoldier);
+      bDirection = (int8_t)GetDirectionFromGridNo(sGridNo, gpUIPlannedSoldier);
 
       // Set direction
       gpUIPlannedSoldier->bDirection = bDirection;

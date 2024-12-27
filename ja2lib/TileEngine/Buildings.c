@@ -38,12 +38,12 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
   uint32_t uiLoop;
   INT16 sTempGridNo, sNextTempGridNo, sVeryTemporaryGridNo;
   INT16 sStartGridNo, sCurrGridNo, sPrevGridNo = NOWHERE, sRightGridNo;
-  INT8 bDirection, bTempDirection;
+  int8_t bDirection, bTempDirection;
   BOOLEAN fFoundDir, fFoundWall;
   uint32_t uiChanceIn = ROOF_LOCATION_CHANCE;  // chance of a location being considered
   INT16 sWallGridNo;
-  INT8 bDesiredOrientation;
-  INT8 bSkipSpots = 0;
+  int8_t bDesiredOrientation;
+  int8_t bSkipSpots = 0;
   struct SOLDIERTYPE FakeSoldier;
   BUILDING* pBuilding;
   uint8_t ubBuildingID = 0;

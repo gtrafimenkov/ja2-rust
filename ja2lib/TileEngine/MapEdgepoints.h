@@ -14,7 +14,7 @@ void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, uint8_t ubStrategi
                          uint8_t ubNumDesiredPoints);
 void GenerateMapEdgepoints();
 void SaveMapEdgepoints(HWFILE fp);
-BOOLEAN LoadMapEdgepoints(INT8 **hBuffer);
+BOOLEAN LoadMapEdgepoints(int8_t **hBuffer);
 void TrashMapEdgepoints();
 
 // dynamic arrays that contain the valid gridno's for each edge

@@ -39,7 +39,7 @@
 
 #define MAX_MEANWHILE_PROFILES 10
 
-INT8 gzMeanwhileStr[][30] = {
+int8_t gzMeanwhileStr[][30] = {
     "End of player's first battle",
     "Drassen Lib. ",
     "Cambria Lib.",
@@ -705,8 +705,8 @@ void EndMeanwhile() {
       if (ubProfile != NO_PROFILE) {
         gMercProfiles[ubProfile].sSectorX = gNPCSaveData[cnt].sX;
         gMercProfiles[ubProfile].sSectorY = gNPCSaveData[cnt].sY;
-        gMercProfiles[ubProfile].bSectorZ = (INT8)gNPCSaveData[cnt].sZ;
-        gMercProfiles[ubProfile].sGridNo = (INT8)gNPCSaveData[cnt].sGridNo;
+        gMercProfiles[ubProfile].bSectorZ = (int8_t)gNPCSaveData[cnt].sZ;
+        gMercProfiles[ubProfile].sGridNo = (int8_t)gNPCSaveData[cnt].sGridNo;
 
         // Ensure NPC files loaded...
         ReloadQuoteFile(ubProfile);
@@ -723,7 +723,7 @@ void DoneFadeOutMeanwhileOnceDone() {
   gfReloadingScreenFromMeanwhile = TRUE;
 
   if (gfWorldWasLoaded) {
-    SetCurrentWorldSector(gsOldSectorX, gsOldSectorY, (INT8)gsOldSectorZ);
+    SetCurrentWorldSector(gsOldSectorX, gsOldSectorY, (int8_t)gsOldSectorZ);
 
     ExamineCurrentSquadLights();
   } else {
@@ -734,7 +734,7 @@ void DoneFadeOutMeanwhileOnceDone() {
     gbWorldSectorZ = -1;
   }
 
-  ChangeSelectedMapSector(gsOldSelectedSectorX, gsOldSelectedSectorY, (INT8)gsOldSelectedSectorZ);
+  ChangeSelectedMapSector(gsOldSelectedSectorX, gsOldSelectedSectorY, (int8_t)gsOldSelectedSectorZ);
 
   gfReloadingScreenFromMeanwhile = FALSE;
 
@@ -745,8 +745,8 @@ void DoneFadeOutMeanwhileOnceDone() {
     if (ubProfile != NO_PROFILE) {
       gMercProfiles[ubProfile].sSectorX = gNPCSaveData[cnt].sX;
       gMercProfiles[ubProfile].sSectorY = gNPCSaveData[cnt].sY;
-      gMercProfiles[ubProfile].bSectorZ = (INT8)gNPCSaveData[cnt].sZ;
-      gMercProfiles[ubProfile].sGridNo = (INT8)gNPCSaveData[cnt].sGridNo;
+      gMercProfiles[ubProfile].bSectorZ = (int8_t)gNPCSaveData[cnt].sZ;
+      gMercProfiles[ubProfile].sGridNo = (int8_t)gNPCSaveData[cnt].sGridNo;
 
       // Ensure NPC files loaded...
       ReloadQuoteFile(ubProfile);
@@ -889,7 +889,7 @@ void HandleMeanWhileEventPostingForTownLoss(uint8_t bTownId) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSamId) {
+void HandleMeanWhileEventPostingForSAMLiberation(int8_t bSamId) {
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
   uint8_t ubId = 0;
@@ -937,7 +937,7 @@ void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSamId) {
   }
 }
 
-void HandleFlowersMeanwhileScene(INT8 bTimeCode) {
+void HandleFlowersMeanwhileScene(int8_t bTimeCode) {
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
