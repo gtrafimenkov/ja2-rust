@@ -14,7 +14,7 @@
 void MakeClosestEnemyChosenOne() {
   uint32_t cnt;
   INT16 sPathCost, sShortestPath = 1000;
-  UINT8 ubClosestEnemy = NOBODY;
+  uint8_t ubClosestEnemy = NOBODY;
   struct SOLDIERTYPE *pSoldier;
   INT8 bPanicTrigger;
   INT16 sPanicTriggerGridNo;
@@ -211,7 +211,7 @@ void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
   pSoldier->bHasKeys = (pSoldier->bHasKeys >> 1);
 }
 
-INT8 PanicAI(struct SOLDIERTYPE *pSoldier, UINT8 ubCanMove) {
+INT8 PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove) {
   BOOLEAN fFoundRoute = FALSE;
   INT8 bSlot;
   INT32 iPathCost;

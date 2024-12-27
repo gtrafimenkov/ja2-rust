@@ -80,7 +80,7 @@ uint32_t guiMercBackBoxButton;
 
 void DisplayHiredMercs();
 void SettleMercAccounts();
-void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue);
+void MercAuthorizePaymentMessageBoxCallBack(uint8_t bExitValue);
 
 void GameInitMercsAccount() {}
 
@@ -264,8 +264,8 @@ void DisplayHiredMercs() {
   uint16_t usPosY;
   uint32_t uiContractCharge;
   wchar_t sTemp[20];
-  UINT8 i, usMercID;
-  UINT8 ubFontColor;
+  uint8_t i, usMercID;
+  uint8_t ubFontColor;
 
   giMercTotalContractCharge = 0;
 
@@ -278,7 +278,7 @@ void DisplayHiredMercs() {
     usMercID = GetMercIDFromMERCArray(i);
 
     // is the merc on the team, or is owed money
-    if (IsMercOnTeam((UINT8)usMercID) || gMercProfiles[usMercID].iMercMercContractLength != 0) {
+    if (IsMercOnTeam((uint8_t)usMercID) || gMercProfiles[usMercID].iMercMercContractLength != 0) {
       // if the merc is dead, make the color red, else white
       if (IsMercDead(usMercID))
         ubFontColor = MERC_ACCOUNT_DEAD_TEXT_COLOR;
@@ -327,13 +327,13 @@ void DisplayHiredMercs() {
 void SettleMercAccounts() {
   //	struct SOLDIERTYPE *pSoldier;
   INT16 i;
-  UINT8 ubMercID;
+  uint8_t ubMercID;
   INT32 iPartialPayment = 0;
   INT32 iContractCharge = 0;
 
   // loop through all the MERC mercs the player has on the team
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
-    ubMercID = GetMercIDFromMERCArray((UINT8)i);
+    ubMercID = GetMercIDFromMERCArray((uint8_t)i);
 
     // if the merc is on the team, or does the player owe money for a fired merc
     if (IsMercOnTeam(ubMercID) || (gMercProfiles[ubMercID].iMercMercContractLength != 0)) {
@@ -394,7 +394,7 @@ void SettleMercAccounts() {
   gubArrivedFromMercSubSite = MERC_CAME_FROM_ACCOUNTS_PAGE;
 }
 
-void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue) {
+void MercAuthorizePaymentMessageBoxCallBack(uint8_t bExitValue) {
   // yes, clear the form
   if (bExitValue == MSG_BOX_RETURN_YES) {
     // if the player owes Speck money, then settle the accounts
@@ -403,7 +403,7 @@ void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue) {
 }
 
 uint32_t CalculateHowMuchPlayerOwesSpeck() {
-  UINT8 i = 0;
+  uint8_t i = 0;
   uint32_t uiContractCharge = 0;
   uint16_t usMercID;
 
@@ -413,7 +413,7 @@ uint32_t CalculateHowMuchPlayerOwesSpeck() {
     if (i == MERC_LARRY_ROACHBURN) continue;
 
     usMercID = GetMercIDFromMERCArray(i);
-    // if( IsMercOnTeam( (UINT8)usMercID ) )
+    // if( IsMercOnTeam( (uint8_t)usMercID ) )
     {
       // Calc salary for the # of days the merc has worked since last paid
       uiContractCharge +=

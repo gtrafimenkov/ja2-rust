@@ -36,7 +36,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   struct LEVELNODE *pNode;
   INT32 iCachedTile = -1;
   INT16 sGridNo;
-  UINT8 ubLevel;
+  uint8_t ubLevel;
   INT16 usTileType;
   INT16 usTileIndex;
   INT16 sDelay;
@@ -44,7 +44,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   uint32_t uiFlags;
   struct LEVELNODE *pGivenNode;
   INT16 sX, sY, sZ;
-  UINT8 ubTempDir;
+  uint8_t ubTempDir;
 
   // Get some parameters from structure sent in...
   sGridNo = pAniParams->sGridNo;
@@ -339,7 +339,7 @@ void DeleteAniTile(ANITILE *pAniTile) {
           // Freeup attacker from explosion
           DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                    String("@@@@@@@ Reducing attacker busy count..., EXPLOSION effect gone off"));
-          ReduceAttackBusyCount((UINT8)pAniNode->ubUserData2, FALSE);
+          ReduceAttackBusyCount((uint8_t)pAniNode->ubUserData2, FALSE);
         }
 
         if (pAniNode->uiFlags & ANITILE_RELEASE_ATTACKER_WHEN_DONE) {
@@ -348,7 +348,7 @@ void DeleteAniTile(ANITILE *pAniTile) {
 
           DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                    String("@@@@@@@ Freeing up attacker - miss finished animation"));
-          FreeUpAttacker((UINT8)pAniNode->ubAttackerMissed);
+          FreeUpAttacker((uint8_t)pAniNode->ubAttackerMissed);
         }
 
       } else {
@@ -397,7 +397,7 @@ void UpdateAniTiles() {
   ANITILE *pNode = NULL;
   uint32_t uiClock = GetJA2Clock();
   uint16_t usMaxFrames, usMinFrames;
-  UINT8 ubTempDir;
+  uint8_t ubTempDir;
 
   // LOOP THROUGH EACH NODE
   pAniNode = pAniTileHead;
@@ -468,7 +468,7 @@ void UpdateAniTiles() {
 
           // CHECK IF WE SHOULD BE DISPLAYING TRANSLUCENTLY!
           if (pNode->sCurrentFrame == pNode->ubKeyFrame2) {
-            UINT8 ubExpType;
+            uint8_t ubExpType;
 
             switch (pNode->uiKeyFrame2Code) {
               case ANI_KEYFRAME_BEGIN_DAMAGE:
@@ -482,11 +482,11 @@ void UpdateAniTiles() {
                   // pNode->sGridNo ), 1, SoundDir( pNode->sGridNo ) );
                   NewSmokeEffect(pNode->sGridNo, (uint16_t)pNode->uiUserData,
                                  gExplosionData[pNode->uiUserData3].Params.bLevel,
-                                 (UINT8)pNode->ubUserData2);
+                                 (uint8_t)pNode->ubUserData2);
                 } else {
                   SpreadEffect(pNode->sGridNo,
                                Explosive[Item[(uint16_t)pNode->uiUserData].ubClassIndex].ubRadius,
-                               (uint16_t)pNode->uiUserData, (UINT8)pNode->ubUserData2, FALSE,
+                               (uint16_t)pNode->uiUserData, (uint8_t)pNode->ubUserData2, FALSE,
                                gExplosionData[pNode->uiUserData3].Params.bLevel, -1);
                 }
                 // Forfait any other animations this frame....
@@ -635,7 +635,7 @@ void UpdateAniTiles() {
 }
 
 void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
-  UINT8 ubTempDir;
+  uint8_t ubTempDir;
   INT16 sStartFrame = 0;
 
   if ((pAniTile->uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME)) {
@@ -653,7 +653,7 @@ void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
   pAniTile->sCurrentFrame = sStartFrame;
 }
 
-ANITILE *GetCachedAniTileOfType(INT16 sGridNo, UINT8 ubLevelID, uint32_t uiFlags) {
+ANITILE *GetCachedAniTileOfType(INT16 sGridNo, uint8_t ubLevelID, uint32_t uiFlags) {
   struct LEVELNODE *pNode = NULL;
 
   switch (ubLevelID) {

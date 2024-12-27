@@ -23,12 +23,12 @@ void ShutdownInteractiveTileManagement();
 BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, uint32_t uiFlags,
                            uint16_t usType);
 BOOLEAN StartInteractiveObject(INT16 sGridNo, uint16_t usStructureID, struct SOLDIERTYPE *pSoldier,
-                               UINT8 ubDirection);
-BOOLEAN StartInteractiveObjectFromMouse(struct SOLDIERTYPE *pSoldier, UINT8 ubDirection);
+                               uint8_t ubDirection);
+BOOLEAN StartInteractiveObjectFromMouse(struct SOLDIERTYPE *pSoldier, uint8_t ubDirection);
 void CompileInteractiveTiles();
 uint32_t GetInteractiveTileCursor(uint32_t uiOldCursor, BOOLEAN fConfirm);
 BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                      UINT8 ubDirection);
+                                      uint8_t ubDirection);
 BOOLEAN SoldierHandleInteractiveObject(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, struct STRUCTURE *pStructure, INT16 *psAPCost,
@@ -36,7 +36,7 @@ BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, struct STRUCTURE *pStructure, IN
 
 void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 
-void BeginCurInteractiveTileCheck(UINT8 bCheckFlags);
+void BeginCurInteractiveTileCheck(uint8_t bCheckFlags);
 void EndCurInteractiveTileCheck();
 void LogMouseOverInteractiveTile(INT16 sGridNo);
 BOOLEAN ShouldCheckForMouseDetections();

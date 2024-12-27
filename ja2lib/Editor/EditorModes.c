@@ -320,7 +320,7 @@ void SetEditorMapInfoTaskbarMode(uint16_t usNewMode) {
   }
 }
 
-void SetEditorSmoothingMode(UINT8 ubNewMode) {
+void SetEditorSmoothingMode(uint8_t ubNewMode) {
   UnclickEditorButtons(MAPINFO_RADIO_NORMAL, MAPINFO_RADIO_CAVES);
   if (iCurrentTaskbar == TASK_BUILDINGS)
     HideEditorButtons(BUILDING_NEW_ROOM, BUILDING_CAVE_DRAWING);

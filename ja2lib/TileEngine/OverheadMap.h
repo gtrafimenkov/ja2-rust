@@ -5,7 +5,7 @@
 
 struct MOUSE_REGION;
 
-void InitNewOverheadDB(UINT8 ubTilesetID);
+void InitNewOverheadDB(uint8_t ubTilesetID);
 void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                        INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, BOOLEAN fFromMapUtility);
 

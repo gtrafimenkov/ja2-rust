@@ -27,7 +27,7 @@ BOOLEAN gfApplyChangesToTempFile = FALSE;
 
 //  There are 3200 bytes, and each bit represents the revelaed status.
 //	3200 bytes * 8 bits = 25600 map elements
-UINT8 *gpRevealedMap;
+uint8_t *gpRevealedMap;
 
 void RemoveSavedStructFromMap(uint32_t uiMapIndex, uint16_t usIndex);
 void AddObjectFromMapTempFileToMap(uint32_t uiMapIndex, uint16_t usIndex);
@@ -227,8 +227,8 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
         EXITGRID ExitGrid;
         gfLoadingExitGrids = TRUE;
         ExitGrid.usGridNo = pMap->usSubImageIndex;
-        ExitGrid.ubGotoSectorX = (UINT8)pMap->usImageType;
-        ExitGrid.ubGotoSectorY = (UINT8)(pMap->usImageType >> 8);
+        ExitGrid.ubGotoSectorX = (uint8_t)pMap->usImageType;
+        ExitGrid.ubGotoSectorY = (uint8_t)(pMap->usImageType >> 8);
         ExitGrid.ubGotoSectorZ = pMap->ubExtra;
 
         AddExitGridToWorld(pMap->usGridNo, &ExitGrid);
@@ -389,7 +389,7 @@ void SaveBloodSmellAndRevealedStatesFromMapToTempFile() {
   uint16_t cnt;
   struct STRUCTURE *pStructure;
 
-  gpRevealedMap = (UINT8 *)MemAlloc(NUM_REVEALED_BYTES);
+  gpRevealedMap = (uint8_t *)MemAlloc(NUM_REVEALED_BYTES);
   if (gpRevealedMap == NULL) AssertMsg(0, "Failed allocating memory for the revealed map");
   memset(gpRevealedMap, 0, NUM_REVEALED_BYTES);
 
@@ -429,8 +429,8 @@ void SaveBloodSmellAndRevealedStatesFromMapToTempFile() {
       while (pCurrent) {
         // if the structure has been damaged
         if (pCurrent->ubHitPoints < pCurrent->pDBStructureRef->pDBStructure->ubHitPoints) {
-          UINT8 ubBitToSet = 0x80;
-          UINT8 ubLevel = 0;
+          uint8_t ubBitToSet = 0x80;
+          uint8_t ubLevel = 0;
 
           if (pCurrent->sCubeOffset != 0) ubLevel |= ubBitToSet;
 
@@ -472,7 +472,7 @@ void SaveBloodSmellAndRevealedStatesFromMapToTempFile() {
 
 // The BloodInfo is saved in the bottom byte and the smell info in the upper byte
 void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
-  gpWorldLevelData[pMap->usGridNo].ubBloodInfo = (UINT8)pMap->usImageType;
+  gpWorldLevelData[pMap->usGridNo].ubBloodInfo = (uint8_t)pMap->usImageType;
 
   // if the blood and gore option IS set, add blood
   if (gGameSettings.fOptions[TOPTION_BLOOD_N_GORE]) {
@@ -483,7 +483,7 @@ void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
     UpdateBloodGraphics(pMap->usGridNo, 1);
   }
 
-  gpWorldLevelData[pMap->usGridNo].ubSmellInfo = (UINT8)pMap->usSubImageIndex;
+  gpWorldLevelData[pMap->usGridNo].ubSmellInfo = (uint8_t)pMap->usSubImageIndex;
 }
 
 BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
@@ -555,7 +555,7 @@ BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
 
   // Allocate memory
   Assert(gpRevealedMap == NULL);
-  gpRevealedMap = (UINT8 *)MemAlloc(NUM_REVEALED_BYTES);
+  gpRevealedMap = (uint8_t *)MemAlloc(NUM_REVEALED_BYTES);
   if (gpRevealedMap == NULL) AssertMsg(0, "Failed allocating memory for the revealed map");
   memset(gpRevealedMap, 0, NUM_REVEALED_BYTES);
 
@@ -578,7 +578,7 @@ BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
 
 void SetSectorsRevealedBit(uint16_t usMapIndex) {
   uint16_t usByteNumber;
-  UINT8 ubBitNumber;
+  uint8_t ubBitNumber;
 
   usByteNumber = usMapIndex / 8;
   ubBitNumber = usMapIndex % 8;
@@ -588,7 +588,7 @@ void SetSectorsRevealedBit(uint16_t usMapIndex) {
 
 void SetMapRevealedStatus() {
   uint16_t usByteCnt;
-  UINT8 ubBitCnt;
+  uint8_t ubBitCnt;
   uint16_t usMapIndex;
 
   if (gpRevealedMap == NULL) AssertMsg(0, "gpRevealedMap is NULL.  DF 1");
@@ -616,9 +616,9 @@ void SetMapRevealedStatus() {
 void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
   struct STRUCTURE *pCurrent = NULL;
   INT8 bLevel;
-  UINT8 ubWallOrientation;
-  UINT8 ubBitToSet = 0x80;
-  UINT8 ubType = 0;
+  uint8_t ubWallOrientation;
+  uint8_t ubBitToSet = 0x80;
+  uint8_t ubType = 0;
 
   // Find the base structure
   pCurrent = FindStructure((INT16)pMap->usGridNo, STRUCTURE_BASE_TILE);
@@ -627,14 +627,14 @@ void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
 
   bLevel = pMap->ubExtra & ubBitToSet;
   ubWallOrientation = pMap->ubExtra & ~ubBitToSet;
-  ubType = (UINT8)pMap->usImageType;
+  ubType = (uint8_t)pMap->usImageType;
 
   // Check to see if the desired strucure node is in this tile
   pCurrent = FindStructureBySavedInfo(pMap->usGridNo, ubType, ubWallOrientation, bLevel);
 
   if (pCurrent != NULL) {
     // Assign the hitpoints
-    pCurrent->ubHitPoints = (UINT8)(pMap->usSubImageIndex);
+    pCurrent->ubHitPoints = (uint8_t)(pMap->usSubImageIndex);
 
     gpWorldLevelData[pCurrent->sGridNo].uiFlags |= MAPELEMENT_STRUCTURE_DAMAGED;
   }
@@ -643,7 +643,7 @@ void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
 //////////////
 
 void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                    INT16 sSectorY, UINT8 ubSectorZ) {
+                                    INT16 sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -666,7 +666,7 @@ void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16
 }
 
 void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                    INT16 sSectorY, UINT8 ubSectorZ) {
+                                    INT16 sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -689,7 +689,7 @@ void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16
 }
 
 void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                         INT16 sSectorY, UINT8 ubSectorZ) {
+                                         INT16 sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -712,7 +712,7 @@ void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, 
 }
 
 void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                          INT16 sSectorY, UINT8 ubSectorZ) {
+                                          INT16 sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -735,7 +735,7 @@ void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex,
 }
 
 void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSectorX, u8 sSectorY,
-                              UINT8 ubSectorZ) {
+                              uint8_t ubSectorZ) {
   MODIFY_MAP Map;
 
   if (!gfApplyChangesToTempFile) {
@@ -761,7 +761,7 @@ void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSector
 }
 
 BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, u8 sSectorX, u8 sSectorY,
-                                  UINT8 ubSectorZ) {
+                                  uint8_t ubSectorZ) {
   CHAR8 zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;

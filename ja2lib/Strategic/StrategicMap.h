@@ -76,9 +76,9 @@ void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLE
                     BOOLEAN fAddAlternateMapLetter);
 
 // Called from within tactical.....
-void JumpIntoAdjacentSector(UINT8 ubDirection, UINT8 ubJumpCode, INT16 sAdditionalData);
+void JumpIntoAdjacentSector(uint8_t ubDirection, uint8_t ubJumpCode, INT16 sAdditionalData);
 
-BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ);
+BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, uint8_t ubZ);
 
 void UpdateAirspaceControl(void);
 
@@ -86,15 +86,15 @@ void UpdateAirspaceControl(void);
 void InitializeSAMSites(void);
 
 // get town sector size
-UINT8 GetTownSectorSize(TownID bTownId);
+uint8_t GetTownSectorSize(TownID bTownId);
 
 // get town sector size, that is under play control
-UINT8 GetTownSectorsUnderControl(TownID bTownId);
+uint8_t GetTownSectorsUnderControl(TownID bTownId);
 
 // is this sector part of this town
 BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY);
 
-// BOOLEAN IsThereAnyOneInThisTown( UINT8 ubTownId );
+// BOOLEAN IsThereAnyOneInThisTown( uint8_t ubTownId );
 
 BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
                                uint16_t usAdditionalData);
@@ -108,7 +108,7 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile);
 void AllMercsHaveWalkedOffSector();
 
 void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
-                                  UINT8 ubTacticalDirection);
+                                  uint8_t ubTacticalDirection);
 
 void AllMercsWalkedToExitGrid();
 
@@ -147,7 +147,7 @@ BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle();
 extern BOOLEAN gfInvalidTraversal;
 extern BOOLEAN gfLoneEPCAttemptingTraversal;
 extern BOOLEAN gfRobotWithoutControllerAttemptingTraversal;
-extern UINT8 gubLoneMercAttemptingToAbandonEPCs;
+extern uint8_t gubLoneMercAttemptingToAbandonEPCs;
 extern INT8 gbPotentiallyAbandonedEPCSlotID;
 
 #endif

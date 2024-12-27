@@ -58,8 +58,8 @@ typedef struct {
   INT16 sOffsetY;
   uint16_t usHeight;
   uint16_t usWidth;
-  UINT8 bFlags;
-  UINT8 bFlashIndex;
+  uint8_t bFlags;
+  uint8_t bFlashIndex;
 
 } CursorData;
 

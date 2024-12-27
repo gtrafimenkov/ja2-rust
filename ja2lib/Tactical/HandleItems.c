@@ -72,17 +72,18 @@
 ITEM_POOL_LOCATOR FlashItemSlots[NUM_ITEM_FLASH_SLOTS];
 uint32_t guiNumFlashItemSlots = 0;
 
-struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel);
+struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel);
 INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sFontX, INT16 sFontY,
                          INT8 bCurStart);
-void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
+void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel,
                                 struct LEVELNODE *pLevelNode);
 
-struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel);
+struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, uint8_t ubLevel);
 
 INT32 GetFreeFlashItemSlot(void);
 void RecountFlashItemSlots(void);
-INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback, UINT8 ubFlags);
+INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback,
+                       uint8_t ubFlags);
 BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool);
 
 // Disgusting hacks: have to keep track of these values for accesses in callbacks
@@ -90,16 +91,16 @@ static struct SOLDIERTYPE *gpTempSoldier;
 static INT16 gsTempGridno;
 static INT8 bTempFrequency;
 
-void BombMessageBoxCallBack(UINT8 ubExitValue);
-void BoobyTrapMessageBoxCallBack(UINT8 ubExitValue);
-void SwitchMessageBoxCallBack(UINT8 ubExitValue);
+void BombMessageBoxCallBack(uint8_t ubExitValue);
+void BoobyTrapMessageBoxCallBack(uint8_t ubExitValue);
+void SwitchMessageBoxCallBack(uint8_t ubExitValue);
 void BoobyTrapDialogueCallBack(void);
 void MineSpottedDialogueCallBack(void);
 void MineSpottedLocatorCallback(void);
-void RemoveBlueFlagDialogueCallBack(UINT8 ubExitValue);
-void MineSpottedMessageBoxCallBack(UINT8 ubExitValue);
+void RemoveBlueFlagDialogueCallBack(uint8_t ubExitValue);
+void MineSpottedMessageBoxCallBack(uint8_t ubExitValue);
 void CheckForPickedOwnership(void);
-void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue);
+void BoobyTrapInMapScreenMessageBoxCallBack(uint8_t ubExitValue);
 
 BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
                               INT32 iItemIndex, BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote);
@@ -183,7 +184,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
   INT16 sTargetGridNo;
   INT16 sAPCost;
   INT16 sActionGridNo;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   INT16 sAdjustedGridNo;
   BOOLEAN fDropBomb = FALSE;
   BOOLEAN fAddingTurningCost = FALSE;
@@ -429,11 +430,11 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
         }
 
       } else {
-        UINT8 ubDirection;
+        uint8_t ubDirection;
         // Start knife throw attack
 
         // Get direction
-        ubDirection = (UINT8)GetDirectionFromGridNo(sTargetGridNo, pSoldier);
+        ubDirection = (uint8_t)GetDirectionFromGridNo(sTargetGridNo, pSoldier);
 
         EVENT_SoldierBeginKnifeThrowAttack(pSoldier, sTargetGridNo, ubDirection);
       }
@@ -473,7 +474,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
   if (Item[usHandItem].usItemClass == IC_PUNCH) {
     INT16 sCnt;
     INT16 sSpot;
-    UINT8 ubGuyThere;
+    uint8_t ubGuyThere;
     INT16 sGotLocation = NOWHERE;
     BOOLEAN fGotAdjacent = FALSE;
 
@@ -493,7 +494,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
         // Who is the one we want......
         sGotLocation = sSpot;
         sAdjustedGridNo = pTargetSoldier->sGridNo;
-        ubDirection = (UINT8)sCnt;
+        ubDirection = (uint8_t)sCnt;
         break;
       }
     }
@@ -659,14 +660,14 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
   }
 
   if (usHandItem == TOOLKIT) {
-    UINT8 ubMercID;
+    uint8_t ubMercID;
     BOOLEAN fVehicle = FALSE;
     INT16 sVehicleGridNo = -1;
 
     // For repair, check if we are over a vehicle, then get gridnot to edge of that vehicle!
     if (IsRepairableStructAtGridNo(usGridNo, &ubMercID) == 2) {
       INT16 sNewGridNo;
-      UINT8 ubDirection;
+      uint8_t ubDirection;
 
       sNewGridNo = FindGridNoFromSweetSpotWithStructDataFromSoldier(
           pSoldier, pSoldier->usUIMovementMode, 5, &ubDirection, 0, MercPtrs[ubMercID]);
@@ -729,13 +730,13 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
   }
 
   if (usHandItem == GAS_CAN) {
-    UINT8 ubMercID;
+    uint8_t ubMercID;
     INT16 sVehicleGridNo = -1;
 
     // For repair, check if we are over a vehicle, then get gridnot to edge of that vehicle!
     if (IsRefuelableStructAtGridNo(usGridNo, &ubMercID)) {
       INT16 sNewGridNo;
-      UINT8 ubDirection;
+      uint8_t ubDirection;
 
       sNewGridNo = FindGridNoFromSweetSpotWithStructDataFromSoldier(
           pSoldier, pSoldier->usUIMovementMode, 5, &ubDirection, 0, MercPtrs[ubMercID]);
@@ -1051,7 +1052,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, u
 
     // Check if these is room to place mortar!
     if (usHandItem == MORTAR) {
-      ubDirection = (UINT8)GetDirectionFromGridNo(sTargetGridNo, pSoldier);
+      ubDirection = (uint8_t)GetDirectionFromGridNo(sTargetGridNo, pSoldier);
 
       // Get new gridno!
       sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(ubDirection));
@@ -1179,7 +1180,7 @@ void SoldierHandleDropItem(struct SOLDIERTYPE *pSoldier) {
 
 void HandleSoldierThrowItem(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   // Determine what to do
-  UINT8 ubDirection;
+  uint8_t ubDirection;
 
   // Set attacker to NOBODY, since it's not a combat attack
   pSoldier->ubTargetID = NOBODY;
@@ -1193,7 +1194,7 @@ void HandleSoldierThrowItem(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
         PickDropItemAnimation(pSoldier);
       } else {
         // CHANGE DIRECTION AT LEAST
-        ubDirection = (UINT8)GetDirectionFromGridNo(sGridNo, pSoldier);
+        ubDirection = (uint8_t)GetDirectionFromGridNo(sGridNo, pSoldier);
 
         SoldierGotoStationaryStance(pSoldier);
 
@@ -1224,7 +1225,7 @@ void HandleSoldierThrowItem(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
         }
       } else {
         // OK, go from prone/crouch to stand first!
-        ubDirection = (UINT8)GetDirectionFromGridNo(sGridNo, pSoldier);
+        ubDirection = (uint8_t)GetDirectionFromGridNo(sGridNo, pSoldier);
         EVENT_SetSoldierDesiredDirection(pSoldier, ubDirection);
 
         ChangeSoldierState(pSoldier, THROW_ITEM, 0, FALSE);
@@ -1235,7 +1236,7 @@ void HandleSoldierThrowItem(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 void SoldierGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
                      struct OBJECTTYPE *pObject, INT8 bInvPos) {
   INT16 sActionGridNo, sAdjustedGridNo;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
 
   // Remove any previous actions
   pSoldier->ubPendingAction = NO_PENDING_ACTION;
@@ -1399,7 +1400,7 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
               bTempFrequency = Object.bFrequency;
               gpTempSoldier = pSoldier;
               DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[ACTIVATE_SWITCH_PROMPT], GAME_SCREEN,
-                           (UINT8)MSG_BOX_FLAG_YESNO, SwitchMessageBoxCallBack, NULL);
+                           (uint8_t)MSG_BOX_FLAG_YESNO, SwitchMessageBoxCallBack, NULL);
               pItemPool = pItemPool->pNext;
             } else {
               if (!AutoPlaceObject(pSoldier, &Object, TRUE)) {
@@ -1480,7 +1481,7 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
           bTempFrequency = Object.bFrequency;
           gpTempSoldier = pSoldier;
           DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[ACTIVATE_SWITCH_PROMPT], GAME_SCREEN,
-                       (UINT8)MSG_BOX_FLAG_YESNO, SwitchMessageBoxCallBack, NULL);
+                       (uint8_t)MSG_BOX_FLAG_YESNO, SwitchMessageBoxCallBack, NULL);
         } else {
           /*
                                                   // handle theft.. will return true if theft has
@@ -1585,7 +1586,7 @@ void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
         gbTrapDifficulty = gWorldItems[iItemIndex].o.bTrap;
 
         DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[DISARM_TRAP_PROMPT], GAME_SCREEN,
-                     (UINT8)MSG_BOX_FLAG_YESNO, BoobyTrapMessageBoxCallBack, NULL);
+                     (uint8_t)MSG_BOX_FLAG_YESNO, BoobyTrapMessageBoxCallBack, NULL);
       } else {
         // OK, only hidden items exist...
         if (pSoldier->bTeam == gbPlayerNum && DoesItemPoolContainAllHiddenItems(pItemPool)) {
@@ -1630,7 +1631,7 @@ void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
   }
 }
 
-struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel) {
+struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel) {
   uint16_t usTileIndex;
   struct LEVELNODE *pNode;
 
@@ -1658,7 +1659,7 @@ struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubL
   return (pNode);
 }
 
-void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
+void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, uint8_t ubLevel,
                                 struct LEVELNODE *pLevelNode) {
   struct LEVELNODE *pNode;
 
@@ -1698,20 +1699,20 @@ void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
 
 // INVENTORY POOL STUFF
 struct OBJECTTYPE *AddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                 UINT8 ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel) {
+                                 uint8_t ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel) {
   return InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                bRenderZHeightAboveLevel, NULL);
 }
 
 struct OBJECTTYPE *AddItemToPoolAndGetIndex(INT16 sGridNo, struct OBJECTTYPE *pObject,
-                                            INT8 bVisible, UINT8 ubLevel, uint16_t usFlags,
+                                            INT8 bVisible, uint8_t ubLevel, uint16_t usFlags,
                                             INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   return (InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                 bRenderZHeightAboveLevel, piItemIndex));
 }
 
 struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                         UINT8 ubLevel, uint16_t usFlags,
+                                         uint8_t ubLevel, uint16_t usFlags,
                                          INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
@@ -1805,7 +1806,7 @@ struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pOb
         }
         // Else can we place an item on top?
         else if (pStructure->fFlags & (STRUCTURE_GENERIC)) {
-          UINT8 ubLevel0, ubLevel1, ubLevel2, ubLevel3;
+          uint8_t ubLevel0, ubLevel1, ubLevel2, ubLevel3;
 
           // If we are going into a raised struct AND we have above level set to -1
           if (StructureBottomLevel(pStructure) != 1 && fForceOnGround) {
@@ -1954,7 +1955,7 @@ struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pOb
   return (&(gWorldItems[iWorldItem].o));
 }
 
-BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
+BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, uint8_t ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
 
@@ -1973,7 +1974,7 @@ BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
   return (FALSE);
 }
 
-BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, uint16_t usItem, UINT8 ubLevel,
+BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, uint16_t usItem, uint8_t ubLevel,
                                  INT32 *piItemIndex) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
@@ -1996,7 +1997,7 @@ BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, uint16_t usItem, UINT8 ubLevel,
   return (FALSE);
 }
 
-INT32 GetItemOfClassTypeInPool(INT16 sGridNo, uint32_t uiItemClass, UINT8 ubLevel) {
+INT32 GetItemOfClassTypeInPool(INT16 sGridNo, uint32_t uiItemClass, uint8_t ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
 
@@ -2015,7 +2016,7 @@ INT32 GetItemOfClassTypeInPool(INT16 sGridNo, uint32_t uiItemClass, UINT8 ubLeve
   return (-1);
 }
 
-struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
+struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, uint8_t ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
 
@@ -2089,7 +2090,8 @@ BOOLEAN LookForHiddenItems(INT16 sGridNo, INT8 ubLevel, BOOLEAN fSetLocator, INT
   return (fFound);
 }
 
-INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, UINT8 ubLevel, struct STRUCTURE *pStructure) {
+INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, uint8_t ubLevel,
+                                       struct STRUCTURE *pStructure) {
   struct ITEM_POOL *pItemPool;
 
   if (pStructure == NULL) {
@@ -2142,7 +2144,7 @@ BOOLEAN DoesItemPoolContainAllItemsOfZeroZLevel(struct ITEM_POOL *pItemPool) {
   return (TRUE);
 }
 
-void RemoveItemPool(INT16 sGridNo, UINT8 ubLevel) {
+void RemoveItemPool(INT16 sGridNo, uint8_t ubLevel) {
   struct ITEM_POOL *pItemPool;
 
   // Check for and existing pool on the object layer
@@ -2151,7 +2153,7 @@ void RemoveItemPool(INT16 sGridNo, UINT8 ubLevel) {
   }
 }
 
-void RemoveAllUnburiedItems(INT16 sGridNo, UINT8 ubLevel) {
+void RemoveAllUnburiedItems(INT16 sGridNo, uint8_t ubLevel) {
   struct ITEM_POOL *pItemPool;
 
   // Check for and existing pool on the object layer
@@ -2168,7 +2170,7 @@ void RemoveAllUnburiedItems(INT16 sGridNo, UINT8 ubLevel) {
   }
 }
 
-void LoopLevelNodeForShowThroughFlag(struct LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel) {
+void LoopLevelNodeForShowThroughFlag(struct LEVELNODE *pNode, INT16 sGridNo, uint8_t ubLevel) {
   while (pNode != NULL) {
     if (pNode->uiFlags & LEVELNODE_ITEM) {
       if (ubLevel == 0) {
@@ -2187,7 +2189,7 @@ void LoopLevelNodeForShowThroughFlag(struct LEVELNODE *pNode, INT16 sGridNo, UIN
   }
 }
 
-void HandleItemObscuredFlag(INT16 sGridNo, UINT8 ubLevel) {
+void HandleItemObscuredFlag(INT16 sGridNo, uint8_t ubLevel) {
   struct LEVELNODE *pNode;
 
   if (ubLevel == 0) {
@@ -2352,7 +2354,7 @@ void AdjustItemPoolVisibility(struct ITEM_POOL *pItemPool) {
   HandleItemObscuredFlag(pItemPool->sGridNo, pItemPool->ubLevel);
 }
 
-BOOLEAN RemoveItemFromPool(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
+BOOLEAN RemoveItemFromPool(INT16 sGridNo, INT32 iItemIndex, uint8_t ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fItemFound = FALSE;
@@ -2470,7 +2472,7 @@ BOOLEAN MoveItemPools(INT16 sStartPos, INT16 sEndPos) {
   return (TRUE);
 }
 
-BOOLEAN GetItemPool(uint16_t usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLevel) {
+BOOLEAN GetItemPool(uint16_t usMapPos, struct ITEM_POOL **ppItemPool, uint8_t ubLevel) {
   struct LEVELNODE *pObject;
 
   if (ubLevel == 0) {
@@ -2599,10 +2601,10 @@ BOOLEAN ItemPoolOKForPickup(struct SOLDIERTYPE *pSoldier, struct ITEM_POOL *pIte
   return (TRUE);
 }
 
-extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
+extern void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 
-BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bCommand, INT8 bZLevel,
+BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, uint8_t bCommand, INT8 bZLevel,
                          INT16 sXPos, INT16 sYPos) {
   INT16 sY;
   struct ITEM_POOL *pTempItemPool;
@@ -2878,7 +2880,7 @@ void RecountFlashItemSlots(void) {
 }
 
 INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback,
-                       UINT8 ubFlags) {
+                       uint8_t ubFlags) {
   INT32 iFlashItemIndex;
 
   if ((iFlashItemIndex = GetFreeFlashItemSlot()) == (-1)) return (-1);
@@ -3074,12 +3076,12 @@ BOOLEAN VerifyGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarg
   struct SOLDIERTYPE *pTSoldier;
   uint16_t usSoldierIndex;
   INT16 sGridNo;
-  UINT8 ubTargetMercID;
+  uint8_t ubTargetMercID;
 
   // DO SOME CHECKS IF WE CAN DO ANIMATION.....
 
   sGridNo = pSoldier->sPendingActionData2;
-  ubTargetMercID = (UINT8)pSoldier->uiPendingActionData4;
+  ubTargetMercID = (uint8_t)pSoldier->uiPendingActionData4;
 
   usSoldierIndex = WhoIsThere2(sGridNo, pSoldier->bLevel);
 
@@ -3126,7 +3128,7 @@ void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pTSoldier;
   INT8 bInvPos;
   struct OBJECTTYPE TempObject;
-  UINT8 ubProfile;
+  uint8_t ubProfile;
   uint16_t usItemNum;
   BOOLEAN fToTargetPlayer = FALSE;
 
@@ -3302,9 +3304,9 @@ INT16 AdjustGridNoForItemPlacement(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) 
   INT16 sDesiredLevel;
   INT16 sActionGridNo;
   BOOLEAN fStructFound = FALSE;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   INT16 sAdjustedGridNo;
-  UINT8 ubTargetID;
+  uint8_t ubTargetID;
 
   sActionGridNo = sGridNo;
 
@@ -3343,13 +3345,13 @@ INT16 AdjustGridNoForItemPlacement(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) 
 }
 
 void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
 
   gpTempSoldier = pSoldier;
   gsTempGridno = sGridNo;
   if (pSoldier->inv[HANDPOS].usItem == REMOTEBOMBTRIGGER) {
     DoMessageBox(MSG_BOX_BASIC_SMALL_BUTTONS, TacticalStr[CHOOSE_BOMB_FREQUENCY_STR], GAME_SCREEN,
-                 (UINT8)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
+                 (uint8_t)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
   } else if (pSoldier->inv[HANDPOS].usItem == REMOTETRIGGER) {
     // PLay sound....
     PlayJA2Sample(USE_STATUE_REMOTE, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
@@ -3371,14 +3373,14 @@ void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 
   } else if (FindAttachment(&(pSoldier->inv[HANDPOS]), DETONATOR) != ITEM_NOT_FOUND) {
     DoMessageBox(MSG_BOX_BASIC_SMALL_BUTTONS, TacticalStr[CHOOSE_TIMER_STR], GAME_SCREEN,
-                 (UINT8)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
+                 (uint8_t)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
   } else if (FindAttachment(&(pSoldier->inv[HANDPOS]), REMDETONATOR) != ITEM_NOT_FOUND) {
     DoMessageBox(MSG_BOX_BASIC_SMALL_BUTTONS, TacticalStr[CHOOSE_REMOTE_FREQUENCY_STR], GAME_SCREEN,
-                 (UINT8)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
+                 (uint8_t)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
   }
 }
 
-void BombMessageBoxCallBack(UINT8 ubExitValue) {
+void BombMessageBoxCallBack(uint8_t ubExitValue) {
   if (gpTempSoldier) {
     if (gpTempSoldier->inv[HANDPOS].usItem == REMOTEBOMBTRIGGER) {
       SetOffBombsByFrequency(gpTempSoldier->ubID, ubExitValue);
@@ -3405,7 +3407,7 @@ void BombMessageBoxCallBack(UINT8 ubExitValue) {
             ubExitValue = 1;
           } else {
             // change up/down by 1
-            ubExitValue = (UINT8)(ubExitValue + Random(3) - 1);
+            ubExitValue = (uint8_t)(ubExitValue + Random(3) - 1);
           }
           // and continue
         } else {
@@ -3483,7 +3485,7 @@ BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
 }
 
 void SetOffBoobyTrapInMapScreen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
-  UINT8 ubPtsDmg = 0;
+  uint8_t ubPtsDmg = 0;
 
   // check if trapped item is an explosive, if so then up the amount of dmg
   if ((pObject->usItem == TNT) || (pObject->usItem == RDX)) {
@@ -3571,10 +3573,10 @@ BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 
 
         if (fInStrategic) {
           DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[DISARM_BOOBYTRAP_PROMPT], MAP_SCREEN,
-                       (UINT8)MSG_BOX_FLAG_YESNO, BoobyTrapInMapScreenMessageBoxCallBack, NULL);
+                       (uint8_t)MSG_BOX_FLAG_YESNO, BoobyTrapInMapScreenMessageBoxCallBack, NULL);
         } else {
           DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[DISARM_BOOBYTRAP_PROMPT], GAME_SCREEN,
-                       (UINT8)MSG_BOX_FLAG_YESNO, BoobyTrapMessageBoxCallBack, NULL);
+                       (uint8_t)MSG_BOX_FLAG_YESNO, BoobyTrapMessageBoxCallBack, NULL);
         }
       } else {
         // oops!
@@ -3594,15 +3596,15 @@ void BoobyTrapDialogueCallBack(void) {
 
   // now prompt the user...
   if (IsMapScreen()) {
-    DoScreenIndependantMessageBox(TacticalStr[DISARM_BOOBYTRAP_PROMPT], (UINT8)MSG_BOX_FLAG_YESNO,
+    DoScreenIndependantMessageBox(TacticalStr[DISARM_BOOBYTRAP_PROMPT], (uint8_t)MSG_BOX_FLAG_YESNO,
                                   BoobyTrapInMapScreenMessageBoxCallBack);
   } else {
-    DoScreenIndependantMessageBox(TacticalStr[DISARM_BOOBYTRAP_PROMPT], (UINT8)MSG_BOX_FLAG_YESNO,
+    DoScreenIndependantMessageBox(TacticalStr[DISARM_BOOBYTRAP_PROMPT], (uint8_t)MSG_BOX_FLAG_YESNO,
                                   BoobyTrapMessageBoxCallBack);
   }
 }
 
-void BoobyTrapMessageBoxCallBack(UINT8 ubExitValue) {
+void BoobyTrapMessageBoxCallBack(uint8_t ubExitValue) {
   if (gfJustFoundBoobyTrap) {
     // NOW award for finding boobytrap
     // WISDOM GAIN:  Detected a booby-trap
@@ -3684,13 +3686,13 @@ void BoobyTrapMessageBoxCallBack(UINT8 ubExitValue) {
   } else {
     if (gfDisarmingBuriedBomb) {
       DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[REMOVE_BLUE_FLAG_PROMPT], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, RemoveBlueFlagDialogueCallBack, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, RemoveBlueFlagDialogueCallBack, NULL);
     }
     // otherwise do nothing
   }
 }
 
-void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue) {
+void BoobyTrapInMapScreenMessageBoxCallBack(uint8_t ubExitValue) {
   if (gfJustFoundBoobyTrap) {
     // NOW award for finding boobytrap
 
@@ -3756,13 +3758,13 @@ void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue) {
   } else {
     if (gfDisarmingBuriedBomb) {
       DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[REMOVE_BLUE_FLAG_PROMPT], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, RemoveBlueFlagDialogueCallBack, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, RemoveBlueFlagDialogueCallBack, NULL);
     }
     // otherwise do nothing
   }
 }
 
-void SwitchMessageBoxCallBack(UINT8 ubExitValue) {
+void SwitchMessageBoxCallBack(uint8_t ubExitValue) {
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     // Message that switch is activated...
     ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[60]);
@@ -3775,14 +3777,14 @@ BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                BOOLEAN fCheckAroundGridno, uint16_t *psProblemGridNo) {
   INT16 sNextGridNo;
   // BOOLEAN fWorthChecking = FALSE, fProblemExists = FALSE, fDetectedProblem = FALSE;
-  UINT8 ubDetectLevel, ubDirection;
+  uint8_t ubDetectLevel, ubDirection;
   MAP_ELEMENT *pMapElement;
   uint32_t fCheckFlag;
   uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
   BOOLEAN fMining, fFoundMetal = FALSE;
   //	struct ITEM_POOL *			pItemPool;
-  UINT8 ubMovementCost;
+  uint8_t ubMovementCost;
 
   ubDetectLevel = 0;
 
@@ -3823,7 +3825,7 @@ BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   for (ubDirection = 0; ubDirection < 8; ubDirection++) {
     if (fCheckAroundGridno) {
       // get the gridno of the next spot adjacent to lastGridno in that direction
-      sNextGridNo = NewGridNo(sGridNo, (INT16)DirectionInc((UINT8)ubDirection));
+      sNextGridNo = NewGridNo(sGridNo, (INT16)DirectionInc((uint8_t)ubDirection));
 
       // don't check directions that are impassable!
       ubMovementCost = gubWorldMovementCosts[sNextGridNo][ubDirection][pSoldier->bLevel];
@@ -3944,17 +3946,17 @@ void MineSpottedLocatorCallback(void) {
 
   // now ask the player if he wants to place a blue flag.
   DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[PLACE_BLUE_FLAG_PROMPT], GAME_SCREEN,
-               (UINT8)MSG_BOX_FLAG_YESNO, MineSpottedMessageBoxCallBack, NULL);
+               (uint8_t)MSG_BOX_FLAG_YESNO, MineSpottedMessageBoxCallBack, NULL);
 }
 
-void MineSpottedMessageBoxCallBack(UINT8 ubExitValue) {
+void MineSpottedMessageBoxCallBack(uint8_t ubExitValue) {
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     // place a blue flag where the mine was found
     AddBlueFlag(gsBoobyTrapGridNo, gbBoobyTrapLevel);
   }
 }
 
-void RemoveBlueFlagDialogueCallBack(UINT8 ubExitValue) {
+void RemoveBlueFlagDialogueCallBack(uint8_t ubExitValue) {
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     RemoveBlueFlag(gsBoobyTrapGridNo, gbBoobyTrapLevel);
   }
@@ -4032,8 +4034,8 @@ void TestPotentialOwner(struct SOLDIERTYPE *pSoldier) {
   if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE) {
     if (SoldierToSoldierLineOfSightTest(
             pSoldier, gpTempSoldier,
-            (UINT8)DistanceVisible(pSoldier, DIRECTION_IRRELEVANT, 0, gpTempSoldier->sGridNo,
-                                   gpTempSoldier->bLevel),
+            (uint8_t)DistanceVisible(pSoldier, DIRECTION_IRRELEVANT, 0, gpTempSoldier->sGridNo,
+                                     gpTempSoldier->bLevel),
             TRUE)) {
       MakeNPCGrumpyForMinorOffense(pSoldier, gpTempSoldier);
     }
@@ -4042,10 +4044,10 @@ void TestPotentialOwner(struct SOLDIERTYPE *pSoldier) {
 
 void CheckForPickedOwnership(void) {
   struct ITEM_POOL *pItemPool;
-  UINT8 ubProfile;
-  UINT8 ubCivGroup;
+  uint8_t ubProfile;
+  uint8_t ubCivGroup;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   // LOOP THROUGH LIST TO FIND NODE WE WANT
   GetItemPool(gsTempGridno, &pItemPool, gpTempSoldier->bLevel);
@@ -4079,7 +4081,7 @@ void CheckForPickedOwnership(void) {
   }
 }
 
-void LoopLevelNodeForItemGlowFlag(struct LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel,
+void LoopLevelNodeForItemGlowFlag(struct LEVELNODE *pNode, INT16 sGridNo, uint8_t ubLevel,
                                   BOOLEAN fOn) {
   while (pNode != NULL) {
     if (pNode->uiFlags & LEVELNODE_ITEM) {
@@ -4093,7 +4095,7 @@ void LoopLevelNodeForItemGlowFlag(struct LEVELNODE *pNode, INT16 sGridNo, UINT8 
   }
 }
 
-void HandleItemGlowFlag(INT16 sGridNo, UINT8 ubLevel, BOOLEAN fOn) {
+void HandleItemGlowFlag(INT16 sGridNo, uint8_t ubLevel, BOOLEAN fOn) {
   struct LEVELNODE *pNode;
 
   if (ubLevel == 0) {
@@ -4157,7 +4159,7 @@ BOOLEAN ContinuePastBoobyTrapInMapScreen(struct OBJECTTYPE *pObject, struct SOLD
         gpBoobyTrapSoldier = pSoldier;
         gbTrapDifficulty = pObject->bTrap;
         DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[DISARM_BOOBYTRAP_PROMPT], MAP_SCREEN,
-                     (UINT8)MSG_BOX_FLAG_YESNO, BoobyTrapInMapScreenMessageBoxCallBack, NULL);
+                     (uint8_t)MSG_BOX_FLAG_YESNO, BoobyTrapInMapScreenMessageBoxCallBack, NULL);
       } else {
         // oops!
         SetOffBoobyTrapInMapScreen(pSoldier, pObject);
@@ -4198,8 +4200,8 @@ INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
-  UINT8 ubSaveNPCAPBudget;
-  UINT8 ubSaveNPCDistLimit;
+  uint8_t ubSaveNPCAPBudget;
+  uint8_t ubSaveNPCDistLimit;
 
   // Save AI pathing vars.  changing the distlimit restricts how
   // far away the pathing will consider.

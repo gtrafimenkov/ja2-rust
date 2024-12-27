@@ -97,7 +97,7 @@ void DeleteMouseRegionsForLevelMarkers(void);
 
 void InitMapScreenFlags(void);
 
-void MapBorderButtonOff(UINT8 ubBorderButtonIndex);
-void MapBorderButtonOn(UINT8 ubBorderButtonIndex);
+void MapBorderButtonOff(uint8_t ubBorderButtonIndex);
+void MapBorderButtonOn(uint8_t ubBorderButtonIndex);
 
 #endif

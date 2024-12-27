@@ -41,16 +41,16 @@ typedef ScrollStringSt *ScrollStringStPtr;
 
 extern ScrollStringStPtr pStringS;
 extern uint32_t StringCount;
-extern UINT8 gubCurrentMapMessageString;
+extern uint8_t gubCurrentMapMessageString;
 extern BOOLEAN fDisableJustForIan;
 
 // are we allowed to beep on message scroll in tactical
 extern BOOLEAN fOkToBeepNewMessage;
 
-void ScreenMsg(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...);
+void ScreenMsg(uint16_t usColor, uint8_t ubPriority, STR16 pStringA, ...);
 
 // same as screen message, but only display to mapscreen message system, not tactical
-void MapScreenMessage(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...);
+void MapScreenMessage(uint16_t usColor, uint8_t ubPriority, STR16 pStringA, ...);
 
 void ScrollString(void);
 void DisplayStringsInMapScreenMessageList(void);
@@ -58,7 +58,7 @@ void DisplayStringsInMapScreenMessageList(void);
 void InitGlobalMessageList(void);
 void FreeGlobalMessageList(void);
 
-UINT8 GetRangeOfMapScreenMessages(void);
+uint8_t GetRangeOfMapScreenMessages(void);
 
 void EnableDisableScrollStringVideoOverlay(BOOLEAN fEnable);
 
@@ -80,17 +80,17 @@ void DisableScrollMessages(void);
 void EnableScrollMessages(void);
 
 /* unused functions, written by Mr. Carter, so don't expect these to work...
-UINT8 GetTheRelativePositionOfCurrentMessage( void );
+uint8_t GetTheRelativePositionOfCurrentMessage( void );
 void MoveCurrentMessagePointerDownList( void );
 void MoveCurrentMessagePointerUpList( void );
-void ScrollToHereInMapScreenMessageList( UINT8 ubPosition );
+void ScrollToHereInMapScreenMessageList( uint8_t ubPosition );
 BOOLEAN IsThereAnEmptySlotInTheMapScreenMessageList( void );
-UINT8 GetFirstEmptySlotInTheMapScreenMessageList( void );
+uint8_t GetFirstEmptySlotInTheMapScreenMessageList( void );
 void RemoveMapScreenMessageListString( ScrollStringStPtr pStringSt );
-BOOLEAN AreThereASetOfStringsAfterThisIndex( UINT8 ubMsgIndex, INT32 iNumberOfStrings );
-UINT8 GetCurrentMessageValue( void );
-UINT8 GetCurrentTempMessageValue( void );
-UINT8 GetNewMessageValueGivenPosition( UINT8 ubPosition );
+BOOLEAN AreThereASetOfStringsAfterThisIndex( uint8_t ubMsgIndex, INT32 iNumberOfStrings );
+uint8_t GetCurrentMessageValue( void );
+uint8_t GetCurrentTempMessageValue( void );
+uint8_t GetNewMessageValueGivenPosition( uint8_t ubPosition );
 BOOLEAN IsThisTheLastMessageInTheList( void );
 BOOLEAN IsThisTheFirstMessageInTheList( void );
 void DisplayLastMessage( void );

@@ -70,8 +70,8 @@ INT32 giAutoBandagesSoldierFaces[2 * MAX_CHARACTER_COUNT];
 // has the button for autobandage end been setup yet
 BOOLEAN fAutoEndBandageButtonCreated = FALSE;
 
-void BeginAutoBandageCallBack(UINT8 bExitValue);
-void CancelAutoBandageCallBack(UINT8 bExitValue);
+void BeginAutoBandageCallBack(uint8_t bExitValue);
+void CancelAutoBandageCallBack(uint8_t bExitValue);
 
 // the update box for autobandaging mercs
 void CreateTerminateAutoBandageButton(INT16 sX, INT16 sY);
@@ -87,7 +87,7 @@ BOOLEAN RemoveFacesForAutoBandage(void);
 
 extern BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier);
-extern UINT8 NumEnemyInSector();
+extern uint8_t NumEnemyInSector();
 
 void BeginAutoBandage() {
   INT32 cnt;
@@ -98,7 +98,7 @@ void BeginAutoBandage() {
   // If we are in combat, we con't...
   if ((gTacticalStatus.uiFlags & INCOMBAT) || (NumEnemyInSector() != 0)) {
     DoMessageBox(MSG_BOX_BASIC_STYLE, Message[STR_SECTOR_NOT_CLEARED], GAME_SCREEN,
-                 (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                 (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
     return;
   }
 
@@ -129,18 +129,18 @@ void BeginAutoBandage() {
 
   if (!fFoundAGuy) {
     DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[AUTOBANDAGE_NOT_NEEDED], GAME_SCREEN,
-                 (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                 (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
   } else if (!fFoundAMedKit) {
-    DoMessageBox(MSG_BOX_BASIC_STYLE, gzLateLocalizedString[9], GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK,
-                 NULL, NULL);
+    DoMessageBox(MSG_BOX_BASIC_STYLE, gzLateLocalizedString[9], GAME_SCREEN,
+                 (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
   } else {
     if (!CanAutoBandage(FALSE)) {
       DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[CANT_AUTOBANDAGE_PROMPT], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                   (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
     } else {
       // Confirm if we want to start or not....
       DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[BEGIN_AUTOBANDAGE_PROMPT_STR], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, BeginAutoBandageCallBack, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, BeginAutoBandageCallBack, NULL);
     }
   }
 }
@@ -268,7 +268,7 @@ BOOLEAN HandleAutoBandage() {
 
 BOOLEAN CreateAutoBandageString(void) {
   INT32 cnt;
-  UINT8 ubDoctor[20], ubDoctors = 0;
+  uint8_t ubDoctor[20], ubDoctors = 0;
   uint32_t uiDoctorNameStringLength = 1;  // for end-of-string character
   STR16 sTemp;
   struct SOLDIERTYPE *pSoldier;
@@ -338,7 +338,7 @@ void SetAutoBandageComplete(void) {
 
 void AutoBandage(BOOLEAN fStart) {
   SGPRect aRect;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
 
@@ -463,7 +463,7 @@ void AutoBandage(BOOLEAN fStart) {
   ResetAllMercSpeeds();
 }
 
-void BeginAutoBandageCallBack(UINT8 bExitValue) {
+void BeginAutoBandageCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
     fRestoreBackgroundForMessageBox = TRUE;
     AutoBandage(TRUE);

@@ -21,15 +21,15 @@ enum {
 };
 
 // Mode and priority for the Quest Debug Messages
-UINT8 gubQuestDebugOutPutLevel = QD_OUTPUT_LEVEL_ALL;
+uint8_t gubQuestDebugOutPutLevel = QD_OUTPUT_LEVEL_ALL;
 
 // Mode and priority for the NPC interaction Debug Messages
-UINT8 gubNPCDebugOutPutLevel = QD_OUTPUT_LEVEL_ALL;
+uint8_t gubNPCDebugOutPutLevel = QD_OUTPUT_LEVEL_ALL;
 
 // set the current output mode for either the NPC or the quest output
-void ToggleQuestDebugModes(UINT8 ubType) {
+void ToggleQuestDebugModes(uint8_t ubType) {
   wchar_t sType[16];
-  UINT8 ubLevel;
+  uint8_t ubLevel;
 
   if (ubType == QD_NPC_MSG) {
     wcscpy(sType, L"NPC Debug:");
@@ -66,7 +66,7 @@ void ToggleQuestDebugModes(UINT8 ubType) {
     ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"%s Level %d", sType, ubLevel);
 }
 
-void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
+void QuestDebugFileMsg(uint8_t ubQuoteType, uint8_t ubPriority, STR pStringA, ...) {
   static BOOLEAN fFirstTimeIn = TRUE;
   static uint32_t uiLineNumber = 1;
   HWFILE hFile;

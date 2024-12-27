@@ -79,11 +79,11 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 // the actual debug functions directly
 
 #define DbgMessage(a, b, c) \
-  DbgMessageReal((uint16_t)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (char *)(c))
+  DbgMessageReal((uint16_t)(a), (uint8_t)(TOPIC_MESSAGE), (uint8_t)(b), (char *)(c))
 #define FastDebugMsg(a) _DebugMessage((STR8)(a), (uint32_t)(__LINE__), (STR8)(__FILE__))
 
 #define UnRegisterDebugTopic(a, b) \
-  DbgTopicRegistration((UINT8)TOPIC_UNREGISTER, (uint16_t *)(&(a)), (char *)(b))
+  DbgTopicRegistration((uint8_t)TOPIC_UNREGISTER, (uint16_t *)(&(a)), (char *)(b))
 #define ClearAllDebugTopics() DbgClearAllTopics()
 
 #define ErrorMsg(a) _DebugMessage((STR8)(a), (uint32_t)(__LINE__), (STR8)(__FILE__))
@@ -94,12 +94,13 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 #define DebugMsg(a, b, c) DbgMessageReal((a), TOPIC_MESSAGE, (b), (c))
 
 // public interface to debug methods:
-extern void DbgMessageReal(uint16_t TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *Str);
-extern BOOLEAN DbgSetDebugLevel(uint16_t TopicId, UINT8 uiDebugLevel);
+extern void DbgMessageReal(uint16_t TopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char *Str);
+extern BOOLEAN DbgSetDebugLevel(uint16_t TopicId, uint8_t uiDebugLevel);
 extern void DbgFailedAssertion(BOOLEAN fExpression, char *szFile, int nLine);
-// extern	void		_FailMessage(UINT8 *pString, uint32_t uiLineNum, UINT8 *pSourceFile
+// extern	void		_FailMessage(uint8_t *pString, uint32_t uiLineNum, uint8_t
+// *pSourceFile
 // );
-extern void DbgTopicRegistration(UINT8 ubCmd, uint16_t *usTopicID, char *zMessage);
+extern void DbgTopicRegistration(uint8_t ubCmd, uint16_t *usTopicID, char *zMessage);
 extern void DbgClearAllTopics(void);
 extern void _DebugMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile);
 

@@ -55,11 +55,12 @@ enum {
   NUM_EXP_BONUS_TYPES,
 };
 
-void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, uint16_t usNumChances, UINT8 ubReason);
-void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, uint16_t usNumChances,
-                       UINT8 ubReason);
-void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, uint16_t usNumChances,
-                       UINT8 ubReason);
+void StatChange(struct SOLDIERTYPE *pSoldier, uint8_t ubStat, uint16_t usNumChances,
+                uint8_t ubReason);
+void ProfileStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
+                       uint8_t ubReason);
+void ProcessStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
+                       uint8_t ubReason);
 
 void UpdateStats(struct SOLDIERTYPE *pSoldier);
 void ProfileUpdateStats(MERCPROFILESTRUCT *pProfile);
@@ -67,23 +68,23 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
 
 uint32_t CalcNewSalary(uint32_t uiOldSalary, BOOLEAN fIncrease, uint32_t uiMaxLimit);
 uint32_t RoundOffSalary(uint32_t uiSalary);
-uint16_t SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel);
+uint16_t SubpointsPerPoint(uint8_t ubStat, INT8 bExpLevel);
 
 void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile);
 void HandleUnhiredMercDeaths(INT32 iProfileID);
 
-UINT8 CurrentPlayerProgressPercentage(void);
-UINT8 HighestPlayerProgressPercentage(void);
+uint8_t CurrentPlayerProgressPercentage(void);
+uint8_t HighestPlayerProgressPercentage(void);
 
 void HourlyProgressUpdate(void);
 
 void HandleAnyStatChangesAfterAttack(void);
 
-void AwardExperienceBonusToActiveSquad(UINT8 ubExpBonusType);
+void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType);
 
 void BuildStatChangeString(STR16 wString, size_t bufSize, STR16 wName, BOOLEAN fIncrease,
-                           INT16 sPtsChanged, UINT8 ubStat);
+                           INT16 sPtsChanged, uint8_t ubStat);
 
-void MERCMercWentUpALevelSendEmail(UINT8 ubMercMercIdValue);
+void MERCMercWentUpALevelSendEmail(uint8_t ubMercMercIdValue);
 
 #endif

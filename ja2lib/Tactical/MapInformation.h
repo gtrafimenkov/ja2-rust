@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 
 extern FLOAT gdMajorMapVersion;
-extern UINT8 gubMinorMapVersion;
+extern uint8_t gubMinorMapVersion;
 
 enum  // for use with MAPCREATE_STRUCT.ubEditorSmoothingType
 {
@@ -26,10 +26,10 @@ typedef struct {
   INT16 sWestGridNo;
   // This contains the number of individuals in the map.
   // Individuals include NPCs, enemy placements, creatures, civilians, rebels, and animals.
-  UINT8 ubNumIndividuals;
-  UINT8 ubMapVersion;
-  UINT8 ubRestrictedScrollID;
-  UINT8 ubEditorSmoothingType;  // normal, basement, or caves
+  uint8_t ubNumIndividuals;
+  uint8_t ubMapVersion;
+  uint8_t ubRestrictedScrollID;
+  uint8_t ubEditorSmoothingType;  // normal, basement, or caves
   INT16 sCenterGridNo;
   INT16 sIsolatedGridNo;
   INT8 bPadding[83];  // I'm sure lots of map info will be added

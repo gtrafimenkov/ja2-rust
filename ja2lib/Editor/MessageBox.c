@@ -17,7 +17,7 @@ INT32 iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
 SGPRect MsgBoxRect;
 
 BOOLEAN gfMessageBoxResult = FALSE;
-UINT8 gubMessageBoxStatus = MESSAGEBOX_NONE;
+uint8_t gubMessageBoxStatus = MESSAGEBOX_NONE;
 
 void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason);
 void MsgBoxCnclClkCallback(GUI_BUTTON *butn, INT32 reason);

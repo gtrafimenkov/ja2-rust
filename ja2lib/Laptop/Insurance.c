@@ -125,7 +125,7 @@ BOOLEAN EnterInsurance() {
 }
 
 void ExitInsurance() {
-  UINT8 i;
+  uint8_t i;
 
   RemoveInsuranceDefaults();
 
@@ -272,7 +272,7 @@ BOOLEAN InitInsuranceDefaults() {
 
 void DisplayInsuranceDefaults() {
   struct VObject *hPixHandle;
-  UINT8 i;
+  uint8_t i;
   uint16_t usPosY;
 
   WebPageTileBackground(4, 4, INSURANCE_BACKGROUND_WIDTH, INSURANCE_BACKGROUND_HEIGHT,
@@ -334,7 +334,7 @@ void RemoveInsuranceDefaults() {
 void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX,
                                    uint16_t EndY) {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 
@@ -351,7 +351,7 @@ void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void GetInsuranceText(UINT8 ubNumber, STR16 pString) {
+void GetInsuranceText(uint8_t ubNumber, STR16 pString) {
   uint32_t uiStartLoc = 0;
 
   if (ubNumber < INS_MULTI_LINE_BEGINS) {

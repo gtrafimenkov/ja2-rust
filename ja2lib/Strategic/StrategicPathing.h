@@ -34,7 +34,7 @@ BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSector, INT8 bToDirection );
 BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( uint16_t sSourceSector, uint16_t sDestSector );
 BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( uint16_t sSourceSector, uint16_t sDestSector );
 BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY );
-void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, UINT8
+void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, uint8_t
 ubFromDirection);
 */
 BOOLEAN AddSectorToPathList(struct path* pPath, uint16_t uiSectorNum);
@@ -99,17 +99,17 @@ void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup);
 void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier);
 
 // start movement of this group to this sector...not to be used by the player merc groups.
-BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
+BOOLEAN MoveGroupFromSectorToSector(uint8_t ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
                                     INT16 sDestY);
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroupID, INT16 sStartX,
+BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID, INT16 sStartX,
                                                                    INT16 sStartY, INT16 sDestX,
                                                                    INT16 sDestY);
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
-    UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY);
+    uint8_t ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY);
 
 /*
-BOOLEAN MoveGroupToOriginalSector( UINT8 ubGroupID );
+BOOLEAN MoveGroupToOriginalSector( uint8_t ubGroupID );
 */
 
 // get length of path
@@ -122,7 +122,7 @@ BOOLEAN CheckIfPathIsEmpty(struct path* pHeadPath);
 struct path* GetSoldierMercPathPtr(struct SOLDIERTYPE* pSoldier);
 struct path* GetGroupMercPathPtr(struct GROUP* pGroup);
 
-UINT8 GetSoldierGroupId(struct SOLDIERTYPE* pSoldier);
+uint8_t GetSoldierGroupId(struct SOLDIERTYPE* pSoldier);
 
 // clears this groups strategic movement (mercpaths and waypoints), include those in the vehicle
 // structs(!)
@@ -130,7 +130,7 @@ void ClearMercPathsAndWaypointsForAllInGroup(struct GROUP* pGroup);
 
 void ClearPathForSoldier(struct SOLDIERTYPE* pSoldier);
 
-void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, UINT8 ubSectorX,
-                                                     UINT8 ubSectorY);
+void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, uint8_t ubSectorX,
+                                                     uint8_t ubSectorY);
 
 #endif

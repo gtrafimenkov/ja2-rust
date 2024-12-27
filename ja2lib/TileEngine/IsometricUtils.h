@@ -21,13 +21,13 @@ struct SOLDIERTYPE;
 
 #define ADJUST_Y_FOR_HEIGHT(pos, y) (y -= gpWorldLevelData[pos].sHeight)
 
-extern UINT8 gOppositeDirection[NUM_WORLD_DIRECTIONS];
-extern UINT8 gTwoCCDirection[NUM_WORLD_DIRECTIONS];
-extern UINT8 gTwoCDirection[NUM_WORLD_DIRECTIONS];
-extern UINT8 gOneCDirection[NUM_WORLD_DIRECTIONS];
-extern UINT8 gOneCCDirection[NUM_WORLD_DIRECTIONS];
+extern uint8_t gOppositeDirection[NUM_WORLD_DIRECTIONS];
+extern uint8_t gTwoCCDirection[NUM_WORLD_DIRECTIONS];
+extern uint8_t gTwoCDirection[NUM_WORLD_DIRECTIONS];
+extern uint8_t gOneCDirection[NUM_WORLD_DIRECTIONS];
+extern uint8_t gOneCCDirection[NUM_WORLD_DIRECTIONS];
 
-extern UINT8 gPurpendicularDirection[NUM_WORLD_DIRECTIONS][NUM_WORLD_DIRECTIONS];
+extern uint8_t gPurpendicularDirection[NUM_WORLD_DIRECTIONS][NUM_WORLD_DIRECTIONS];
 
 // Macros
 

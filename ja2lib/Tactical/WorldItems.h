@@ -14,7 +14,7 @@
 typedef struct {
   BOOLEAN fExists;
   INT16 sGridNo;
-  UINT8 ubLevel;
+  uint8_t ubLevel;
   struct OBJECTTYPE o;
   uint16_t usFlags;
   INT8 bRenderZHeightAboveLevel;
@@ -27,14 +27,14 @@ typedef struct {
   // added. Because this value is zero in the saved maps, we can't change it to 100, hence the
   // reversal method. This check is only performed the first time a map is loaded.  Later, it is
   // entirely skipped.
-  UINT8 ubNonExistChance;
+  uint8_t ubNonExistChance;
 
 } WORLDITEM;
 
 extern WORLDITEM *gWorldItems;
 extern uint32_t guiNumWorldItems;
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, uint16_t usFlags,
+INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible);
 void RemoveItemFromWorld(INT32 iItemIndex);
 INT32 FindWorldItem(uint16_t usItem);

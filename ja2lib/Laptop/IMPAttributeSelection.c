@@ -106,8 +106,8 @@ BOOLEAN fReturnStatus = FALSE;
 void ProcessAttributes(void);
 void DestroyIMPAttributeSelectionButtons(void);
 void CreateIMPAttributeSelectionButtons(void);
-UINT8 IncrementStat(INT32 iStatToIncrement);
-UINT8 DecrementStat(INT32 iStatToDecrement);
+uint8_t IncrementStat(INT32 iStatToIncrement);
+uint8_t DecrementStat(INT32 iStatToDecrement);
 BOOLEAN DoWeHaveThisManyBonusPoints(INT32 iBonusPoints);
 void CreateAttributeSliderButtons(void);
 void DestroyAttributeSliderButtons(void);
@@ -126,7 +126,7 @@ void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, INT32 reason);
 void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void StatAtZeroBoxCallBack(UINT8 bExitValue);
+void StatAtZeroBoxCallBack(uint8_t bExitValue);
 
 void EnterIMPAttributeSelection(void) {
   // set attributes and skills
@@ -387,7 +387,7 @@ void ProcessAttributes(void) {
   return;
 }
 
-UINT8 IncrementStat(INT32 iStatToIncrement) {
+uint8_t IncrementStat(INT32 iStatToIncrement) {
   // this function is responsable for incrementing a stat
 
   // review mode, do not allow changes
@@ -538,7 +538,7 @@ UINT8 IncrementStat(INT32 iStatToIncrement) {
   return (SLIDER_OK);
 }
 
-UINT8 DecrementStat(INT32 iStatToDecrement) {
+uint8_t DecrementStat(INT32 iStatToDecrement) {
   // review mode, do not allow changes
   if (fReviewStats) {
     return (SLIDER_ERROR);
@@ -1409,7 +1409,7 @@ void SetGeneratedCharacterAttributes(void) {
   return;
 }
 
-void StatAtZeroBoxCallBack(UINT8 bExitValue) {
+void StatAtZeroBoxCallBack(uint8_t bExitValue) {
   // yes, so start over, else stay here and do nothing for now
   if (bExitValue == MSG_BOX_RETURN_YES) {
     MarkButtonsDirty();

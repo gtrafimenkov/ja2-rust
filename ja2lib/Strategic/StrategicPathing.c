@@ -30,7 +30,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
-void AddSectorToFrontOfMercPath(struct path** ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY);
+void AddSectorToFrontOfMercPath(struct path** ppMercPath, uint8_t ubSectorX, uint8_t ubSectorY);
 
 // mvt modifier
 // #define FOOT_MVT_MODIFIER 2
@@ -42,7 +42,7 @@ BOOLEAN gfPlotToAvoidPlayerInfuencedSectors = FALSE;
 
 // uint16_t gusEndPlotGridNo;
 
-UINT8 ubFromMapDirToInsertionCode[] = {
+uint8_t ubFromMapDirToInsertionCode[] = {
     INSERTION_CODE_SOUTH,  // NORTH_STRATEGIC_MOVE
     INSERTION_CODE_WEST,   // EAST_STRATEGIC_MOVE
     INSERTION_CODE_NORTH,  // SOUTH_STRATEGIC_MOVE
@@ -170,7 +170,7 @@ INT16 diStratDelta[8] = {
     -MAP_WIDTH - 1  // NW
 };
 
-extern UINT8 GetTraversability(INT16 sStartSector, INT16 sEndSector);
+extern uint8_t GetTraversability(INT16 sStartSector, INT16 sEndSector);
 
 // this will find if a shortest strategic path
 
@@ -190,7 +190,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   // be! so this is just to keep things happy!
 
   // for player groups only!
-  pGroup = GetGroup((UINT8)sMvtGroupNumber);
+  pGroup = GetGroup((uint8_t)sMvtGroupNumber);
   if (pGroup->fPlayer) {
     // if player is holding down SHIFT key, find the shortest route instead of the quickest route!
     if (_KeyDown(SHIFT)) {
@@ -280,7 +280,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
         if (GetNumberOfMilitiaInSector(sSectorX, sSectorY, 0)) {
           continue;
         }
-        if (!OkayForEnemyToMoveThroughSector((UINT8)GetSectorID8(sSectorX, sSectorY))) {
+        if (!OkayForEnemyToMoveThroughSector((uint8_t)GetSectorID8(sSectorX, sSectorY))) {
           continue;
         }
       }
@@ -289,8 +289,8 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
       if (sMvtGroupNumber != 0) {
         if (iHelicopterVehicleId != -1) {
           nextCost = GetTravelTimeForGroup(
-              (UINT8)(GetSectorID8((SectorID16_X(curLoc)), (SectorID16_Y(curLoc)))),
-              (UINT8)(iCnt / 2), (UINT8)sMvtGroupNumber);
+              (uint8_t)(GetSectorID8((SectorID16_X(curLoc)), (SectorID16_Y(curLoc)))),
+              (uint8_t)(iCnt / 2), (uint8_t)sMvtGroupNumber);
           if (nextCost != 0xffffffff &&
               sMvtGroupNumber == pVehicleList[iHelicopterVehicleId].ubMovementGroup) {
             // is a heli, its pathing is determined not by time (it's always the same) but by total
@@ -303,12 +303,13 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
           }
         } else {
           nextCost = GetTravelTimeForGroup(
-              (UINT8)(GetSectorID8((SectorID16_X(curLoc)), (SectorID16_Y(curLoc)))),
-              (UINT8)(iCnt / 2), (UINT8)sMvtGroupNumber);
+              (uint8_t)(GetSectorID8((SectorID16_X(curLoc)), (SectorID16_Y(curLoc)))),
+              (uint8_t)(iCnt / 2), (uint8_t)sMvtGroupNumber);
         }
       } else {
         nextCost = GetTravelTimeForFootTeam(
-            (UINT8)(GetSectorID8(SectorID16_X(curLoc), SectorID16_Y(curLoc))), (UINT8)(iCnt / 2));
+            (uint8_t)(GetSectorID8(SectorID16_X(curLoc), SectorID16_Y(curLoc))),
+            (uint8_t)(iCnt / 2));
       }
 
       if (nextCost == 0xffffffff) {
@@ -498,8 +499,8 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
   if( fTempPath == FALSE )
   {
           // change in direction..add waypoint
-          AddWaypointToGroup( ( UINT8 )sMvtGroupNumber, ( UINT8 )( iCurrentSectorNum% MAP_WORLD_X ),
-( UINT8 )( SectorID16_Y(iCurrentSectorNum) ) );
+          AddWaypointToGroup( ( uint8_t )sMvtGroupNumber, ( uint8_t )( iCurrentSectorNum%
+MAP_WORLD_X ), ( uint8_t )( SectorID16_Y(iCurrentSectorNum) ) );
 }
   */
 
@@ -661,7 +662,7 @@ BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT
 
 
 
-void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, UINT8
+void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, uint8_t
 ubFromDirection )
 {
   // will move a merc ( pSoldier )to a sector sX, sY
@@ -763,7 +764,7 @@ struct path* ClearStrategicPathList(struct path* pHeadOfPath, INT16 sMvtGroup) {
 
   if ((sMvtGroup != -1) && (sMvtGroup != 0)) {
     // clear this groups mvt pathing
-    RemoveGroupWaypoints((UINT8)sMvtGroup);
+    RemoveGroupWaypoints((uint8_t)sMvtGroup);
   }
 
   return (pNode);
@@ -1358,13 +1359,13 @@ void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup) {
     return;
   }
 
-  pGroup = GetGroup((UINT8)sMvtGroup);
+  pGroup = GetGroup((uint8_t)sMvtGroup);
 
   // KRIS!  Added this because it was possible to plot a new course to the same destination, and the
   //       group would add new arrival events without removing the existing one(s).
   DeleteStrategicEvent(EVENT_GROUP_ARRIVAL, sMvtGroup);
 
-  RemoveGroupWaypoints((UINT8)sMvtGroup);
+  RemoveGroupWaypoints((uint8_t)sMvtGroup);
 
   if (pGroup->fPlayer) {
 #ifdef BETA_VERSION
@@ -1461,7 +1462,7 @@ void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier) {
   ClearMercPathsAndWaypointsForAllInGroup(pGroup);
 }
 
-BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
+BOOLEAN MoveGroupFromSectorToSector(uint8_t ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
                                     INT16 sDestY) {
   struct path* pNode = NULL;
 
@@ -1484,8 +1485,8 @@ BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStart
   return (TRUE);
 }
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY,
-                                                      INT16 sDestX, INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(uint8_t ubGroupID, INT16 sStartX,
+                                                      INT16 sStartY, INT16 sDestX, INT16 sDestY) {
   struct path* pNode = NULL;
 
   // build the path
@@ -1510,7 +1511,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, INT16 sSt
   return (TRUE);
 }
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroupID, INT16 sStartX,
+BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID, INT16 sStartX,
                                                                    INT16 sStartY, INT16 sDestX,
                                                                    INT16 sDestY) {
   struct path* pNode = NULL;
@@ -1551,7 +1552,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroup
 }
 
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
-    UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY) {
+    uint8_t ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY) {
   struct path* pNode = NULL;
 
   // init sectors with soldiers in them
@@ -1594,10 +1595,10 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSect
 }
 
 /*
-BOOLEAN MoveGroupToOriginalSector( UINT8 ubGroupID )
+BOOLEAN MoveGroupToOriginalSector( uint8_t ubGroupID )
 {
         struct GROUP *pGroup;
-        UINT8 ubDestX, ubDestY;
+        uint8_t ubDestX, ubDestY;
         pGroup = GetGroup( ubGroupID );
         ubDestX = ( pGroup->ubOriginalSector % 16 ) + 1;
         ubDestY = ( pGroup->ubOriginalSector / 16 ) + 1;
@@ -1687,8 +1688,8 @@ struct path* GetGroupMercPathPtr(struct GROUP* pGroup) {
   return (pMercPath);
 }
 
-UINT8 GetSoldierGroupId(struct SOLDIERTYPE* pSoldier) {
-  UINT8 ubGroupId = 0;
+uint8_t GetSoldierGroupId(struct SOLDIERTYPE* pSoldier) {
+  uint8_t ubGroupId = 0;
 
   // IN a vehicle?
   if (GetSolAssignment(pSoldier) == VEHICLE) {
@@ -1766,8 +1767,8 @@ void ClearPathForSoldier(struct SOLDIERTYPE* pSoldier) {
   }
 }
 
-void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, UINT8 ubSectorX,
-                                                     UINT8 ubSectorY) {
+void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, uint8_t ubSectorX,
+                                                     uint8_t ubSectorY) {
   PLAYERGROUP* pPlayer = NULL;
   struct SOLDIERTYPE* pSoldier = NULL;
 
@@ -1797,7 +1798,7 @@ void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, UINT8
   }
 }
 
-void AddSectorToFrontOfMercPath(struct path** ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY) {
+void AddSectorToFrontOfMercPath(struct path** ppMercPath, uint8_t ubSectorX, uint8_t ubSectorY) {
   struct path* pNode = NULL;
 
   // allocate and hang a new node at the front of the path list

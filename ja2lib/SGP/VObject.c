@@ -88,7 +88,7 @@ enum {
   DEBUGSTR_DELETEVIDEOOBJECTFROMINDEX
 };
 
-UINT8 gubVODebugCode = 0;
+uint8_t gubVODebugCode = 0;
 
 void CheckValidVObjectIndex(uint32_t uiIndex);
 #endif
@@ -664,10 +664,10 @@ BOOLEAN PixelateVideoObjectRect(uint32_t uiDestVSurface, INT32 X1, INT32 Y1, INT
   uint16_t *pBuffer;
   uint32_t uiPitch;
   SGPRect area;
-  UINT8 uiPattern[8][8] = {{0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
-                           {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
-                           {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
-                           {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0}};
+  uint8_t uiPattern[8][8] = {{0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
+                             {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
+                             {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
+                             {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0}};
 
   // Lock video surface
   pBuffer = (uint16_t *)LockVideoSurface(uiDestVSurface, &uiPitch);
@@ -797,9 +797,9 @@ uint32_t	uiPitch;
         Given a VOBJECT and ETRLE image index, retrieves the value of the pixel located at the
         given image coordinates. The value returned is an 8-bit palette index
 ********************************************************************************************/
-BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, uint16_t usETRLEIndex,
+BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETRLEIndex,
                            uint16_t usX, uint16_t usY) {
-  UINT8 *pCurrent;
+  uint8_t *pCurrent;
   uint16_t usLoopX = 0;
   uint16_t usLoopY = 0;
   uint16_t ubRunLength;
@@ -815,7 +815,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, uint16_t usET
   CHECKF(usY < pETRLEObject->usHeight);
 
   // Assuming everything's okay, go ahead and look...
-  pCurrent = &((UINT8 *)hVObject->pPixData)[pETRLEObject->uiDataOffset];
+  pCurrent = &((uint8_t *)hVObject->pPixData)[pETRLEObject->uiDataOffset];
 
   // Skip past all uninteresting scanlines
   while (usLoopY < usY) {
@@ -940,7 +940,7 @@ BOOLEAN CopyVideoObjectPalette16BPP(INT32 uiVideoObject, uint16_t *ppPal16) {
   return (TRUE);
 }
 
-BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, uint16_t usRegionIndex, UINT8 ubShadeLevel,
+BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, uint16_t usRegionIndex, uint8_t ubShadeLevel,
                             uint16_t *pusIndex) {
   uint16_t usLoop;
   SixteenBPPObjectInfo *p16BPPObject;
@@ -961,15 +961,15 @@ BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, uint16_t usRegionIndex, UI
 }
 
 BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, uint16_t usRegionIndex,
-                                    UINT8 ubShadeLevel) {
+                                    uint8_t ubShadeLevel) {
   SixteenBPPObjectInfo *p16BPPObject;
-  UINT8 *pInput;
-  UINT8 *pOutput;
+  uint8_t *pInput;
+  uint8_t *pOutput;
   uint16_t *p16BPPPalette;
   uint32_t uiDataLoop;
   uint32_t uiDataLength;
-  UINT8 ubRunLoop;
-  // UINT8					ubRunLength;
+  uint8_t ubRunLoop;
+  // uint8_t					ubRunLength;
   INT8 bData;
   uint32_t uiLen;
 
@@ -1015,14 +1015,14 @@ BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, uint16_t usRegionI
 
   // get the palette
   p16BPPPalette = hVObject->pShades[ubShadeLevel];
-  pInput = (UINT8 *)hVObject->pPixData + hVObject->pETRLEObject[usRegionIndex].uiDataOffset;
+  pInput = (uint8_t *)hVObject->pPixData + hVObject->pETRLEObject[usRegionIndex].uiDataOffset;
 
   uiDataLength = hVObject->pETRLEObject[usRegionIndex].uiDataLength;
 
   // now actually do the conversion
 
   uiLen = 0;
-  pOutput = (UINT8 *)p16BPPObject->p16BPPData;
+  pOutput = (uint8_t *)p16BPPObject->p16BPPData;
   for (uiDataLoop = 0; uiDataLoop < uiDataLength; uiDataLoop++) {
     bData = *pInput;
     if (bData & 0x80) {

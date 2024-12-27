@@ -25,17 +25,17 @@ typedef struct {
   uint32_t uiFlags;
 
 #ifdef CRIPPLED_VERSION
-  UINT8 ubCrippleFiller[20];
+  uint8_t ubCrippleFiller[20];
 #endif
 
   // The following will be used to quickly access info to display in the save/load screen
   uint32_t uiDay;
-  UINT8 ubHour;
-  UINT8 ubMin;
+  uint8_t ubHour;
+  uint8_t ubMin;
   INT16 sSectorX;
   INT16 sSectorY;
   INT8 bSectorZ;
-  UINT8 ubNumOfMercsOnPlayersTeam;
+  uint8_t ubNumOfMercsOnPlayersTeam;
   INT32 iCurrentBalance;
 
   uint32_t uiCurrentScreen;
@@ -44,24 +44,24 @@ typedef struct {
 
   BOOLEAN fWorldLoaded;
 
-  UINT8 ubLoadScreenID;  // The load screen that should be used when loading the saved game
+  uint8_t ubLoadScreenID;  // The load screen that should be used when loading the saved game
 
   GAME_OPTIONS sInitialGameOptions;  // need these in the header so we can get the info from it on
                                      // the save load screen.
 
   uint32_t uiRandom;
 
-  UINT8 ubFiller[110];
+  uint8_t ubFiller[110];
 
 } SAVED_GAME_HEADER;
 
 extern uint32_t guiScreenToGotoAfterLoadingSavedGame;
 extern uint32_t guiSaveGameVersion;
 
-void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName);
+void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, STR pzNewFileName);
 
-BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize);
-BOOLEAN LoadSavedGame(UINT8 ubSavedGameID);
+BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize);
+BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
 
 BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
                                          struct SOLDIERTYPE *pSourceInfo);

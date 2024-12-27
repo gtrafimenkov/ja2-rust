@@ -22,9 +22,9 @@ BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                              struct STRUCTURE *pStructure);
 
 void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                UINT8 ubDirection, BOOLEAN fDoor);
+                                uint8_t ubDirection, BOOLEAN fDoor);
 
-void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, UINT8 ubHandleCode);
+void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, uint8_t ubHandleCode);
 
 void SetDoorString(INT16 sGridNo);
 

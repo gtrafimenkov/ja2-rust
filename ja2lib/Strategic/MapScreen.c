@@ -346,9 +346,9 @@ enum {
 // STRUCTURES / TYPEDEFS
 
 struct rgbcolor {
-  UINT8 ubRed;
-  UINT8 ubGreen;
-  UINT8 ubBlue;
+  uint8_t ubRed;
+  uint8_t ubGreen;
+  uint8_t ubBlue;
 };
 
 typedef struct rgbcolor RGBCOLOR;
@@ -505,7 +505,7 @@ BOOLEAN gfFirstMapscreenFrame = FALSE;
 
 BOOLEAN gfMapPanelWasRedrawn = FALSE;
 
-UINT8 gubMAP_HandInvDispText[NUM_INV_SLOTS];
+uint8_t gubMAP_HandInvDispText[NUM_INV_SLOTS];
 
 // currently selected character's list index
 INT8 bSelectedInfoChar = -1;
@@ -544,7 +544,7 @@ INT32 giMapInvNextImage;
 extern uint32_t guiVObjectSize;
 extern uint32_t guiVSurfaceSize;
 
-extern UINT8 gubHandPos;
+extern uint8_t gubHandPos;
 extern uint16_t gusOldItemIndex;
 extern uint16_t gusNewItemIndex;
 extern BOOLEAN gfDeductPoints;
@@ -713,7 +713,7 @@ void DrawName(STR16 pName, INT16 sRowIndex, INT32 iFont);
 void DrawAssignment(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont);
 void DrawLocation(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont);
 void DrawDestination(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont);
-void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, UINT8 ubFontColor);
+void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, uint8_t ubFontColor);
 
 void HandleAssignmentsDoneAndAwaitingFurtherOrders(void);
 void HandleCommonGlowTimer(void);
@@ -861,7 +861,7 @@ void DoneInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason);
 // handle cursor for invenetory mode..update to object selected, if needed
 void HandleMapInventoryCursor();
 void MAPEndItemPointer();
-void MAPBeginItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos);
+void MAPBeginItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos);
 
 // create/destroy inventory button as needed
 void CreateDestroyMapInvButton();
@@ -872,7 +872,7 @@ void NextInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason);
 void UpdateCursorIfInLastSector(void);
 
 void ContractButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
+void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
 
 // blt inventory panel
 void BltCharInvPanel();
@@ -914,7 +914,7 @@ BOOLEAN CanChangeDestinationForCharSlot(INT8 bCharNumber, BOOLEAN fShowErrorMess
 
 BOOLEAN RequestGiveSkyriderNewDestination(void);
 void ExplainWhySkyriderCantFly(void);
-UINT8 PlayerMercsInHelicopterSector(void);
+uint8_t PlayerMercsInHelicopterSector(void);
 
 void HandleNewDestConfirmation(INT16 sMapX, INT16 sMapY);
 void RandomAwakeSelectedMercConfirmsStrategicMove(void);
@@ -925,7 +925,7 @@ void HandleMilitiaRedistributionClick(void);
 void StartChangeSectorArrivalMode(void);
 BOOLEAN CanMoveBullseyeAndClickedOnIt(INT16 sMapX, INT16 sMapY);
 void CreateBullsEyeOrChopperSelectionPopup(void);
-void BullsEyeOrChopperSelectionPopupCallback(UINT8 ubExitValue);
+void BullsEyeOrChopperSelectionPopupCallback(uint8_t ubExitValue);
 
 void WakeUpAnySleepingSelectedMercsOnFootOrDriving(void);
 
@@ -935,7 +935,7 @@ void GetMapscreenMercLocationString(struct SOLDIERTYPE *pSoldier, wchar_t sStrin
 void GetMapscreenMercDestinationString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                        int sStringSize);
 void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
-                                     int sStringSize, UINT8 *pubFontColor);
+                                     int sStringSize, uint8_t *pubFontColor);
 
 void InitPreviousPaths(void);
 void RememberPreviousPathForAllSelectedChars(void);
@@ -966,7 +966,7 @@ void DumpItemsList(void);
 #endif
 
 // the tries to select a mapscreen character by his soldier ID
-BOOLEAN SetInfoChar(UINT8 ubID) {
+BOOLEAN SetInfoChar(uint8_t ubID) {
   INT8 bCounter;
 
   for (bCounter = 0; bCounter < MAX_CHARACTER_COUNT; bCounter++) {
@@ -1012,7 +1012,7 @@ void ContractBoxGlow(void) {
    static BOOLEAN fOldContractGlow = FALSE;
    uint16_t usColor;
    uint32_t uiDestPitchBYTES;
-   UINT8	*pDestBuf;
+   uint8_t	*pDestBuf;
 
 
           // stopped glowing?
@@ -1075,7 +1075,7 @@ void ContractListRegionBoxGlow(uint16_t usCount) {
   static BOOLEAN fDelta = FALSE;
   uint16_t usColor;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   INT16 usY = 0;
   INT16 sYAdd = 0;
 
@@ -1134,7 +1134,7 @@ void GlowFace(void) {
   static BOOLEAN fOldFaceGlow = FALSE;
   uint16_t usColor;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   // not glowing right now, leave
   if (fShowFaceHightLight == FALSE) {
@@ -1185,7 +1185,7 @@ void GlowItem(void) {
   static BOOLEAN fOldItemGlow = FALSE;
   uint16_t usColor;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   // not glowing right now, leave
   if (fShowItemHighLight == FALSE) {
@@ -1237,7 +1237,7 @@ void GlowTrashCan(void) {
   static BOOLEAN fOldTrashCanGlow = FALSE;
   uint16_t usColor;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   if (fShowInventoryFlag == FALSE) {
     fShowTrashCanHighLight = FALSE;
@@ -2059,7 +2059,7 @@ INT32 GetPathTravelTimeDuringPlotting(struct path *pPath) {
   WAYPOINT pCurrent;
   WAYPOINT pNext;
   struct GROUP *pGroup;
-  UINT8 ubGroupId = 0;
+  uint8_t ubGroupId = 0;
   BOOLEAN fSkipFirstNode = FALSE;
 
   if ((bSelectedDestChar == -1) && (fPlotForHelicopter == FALSE)) {
@@ -2106,7 +2106,7 @@ INT32 GetPathTravelTimeDuringPlotting(struct path *pPath) {
       }
     } else {
       ubGroupId = Menptr[gCharactersList[bSelectedDestChar].usSolID].ubGroupID;
-      pGroup = GetGroup((UINT8)(ubGroupId));
+      pGroup = GetGroup((uint8_t)(ubGroupId));
     }
   } else {
     ubGroupId = pVehicleList[iHelicopterVehicleId].ubMovementGroup;
@@ -2130,12 +2130,12 @@ INT32 GetPathTravelTimeDuringPlotting(struct path *pPath) {
   while (pPath->pNext) {
     if (!fSkipFirstNode) {
       // grab the current location
-      pCurrent.x = (UINT8)(SectorID16_X(pPath->uiSectorId));
-      pCurrent.y = (UINT8)(SectorID16_Y(pPath->uiSectorId));
+      pCurrent.x = (uint8_t)(SectorID16_X(pPath->uiSectorId));
+      pCurrent.y = (uint8_t)(SectorID16_Y(pPath->uiSectorId));
 
       // grab the next location
-      pNext.x = (UINT8)(SectorID16_X(pPath->pNext->uiSectorId));
-      pNext.y = (UINT8)(SectorID16_Y(pPath->pNext->uiSectorId));
+      pNext.x = (uint8_t)(SectorID16_X(pPath->pNext->uiSectorId));
+      pNext.y = (uint8_t)(SectorID16_Y(pPath->pNext->uiSectorId));
 
       iTravelTime += FindTravelTimeBetweenWaypoints(&pCurrent, &pNext, pGroup);
     } else {
@@ -2185,7 +2185,7 @@ void DisplayGroundEta(void) {
 
 void HighLightAssignLine() {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usColor;
   static INT32 iColorNum = STARTING_COLOR_NUM;
   static BOOLEAN fDelta = FALSE;
@@ -2268,7 +2268,7 @@ void HighLightAssignLine() {
 
 void HighLightDestLine() {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usColor;
   static INT32 iColorNum = STARTING_COLOR_NUM;
   static BOOLEAN fDelta = FALSE;
@@ -2346,7 +2346,7 @@ void HighLightDestLine() {
 
 void HighLightSleepLine() {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usColor;
   static INT32 iColorNum = STARTING_COLOR_NUM;
   static BOOLEAN fDelta = FALSE;
@@ -2532,7 +2532,7 @@ void LoadCharacters(void) {
 
 void DisplayCharacterList() {
   INT16 sCount = 0;
-  UINT8 ubForegroundColor = 0;
+  uint8_t ubForegroundColor = 0;
 
   if ((fShowAssignmentMenu == TRUE) && (fTeamPanelDirty == FALSE)) {
     SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
@@ -3759,7 +3759,7 @@ void DrawDestination(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont) {
              ((uint32_t)iFont));
 }
 
-void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, UINT8 ubFontColor) {
+void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, uint8_t ubFontColor) {
   INT16 usX = 0;
   INT16 usY = 0;
   wchar_t sString[32];
@@ -4206,7 +4206,7 @@ uint32_t HandleMapUI() {
 void GetMapKeyboardInput(uint32_t *puiNewEvent) {
   InputAtom InputEvent;
   INT8 bSquadNumber;
-  UINT8 ubGroupId = 0;
+  uint8_t ubGroupId = 0;
   BOOLEAN fCtrl, fAlt;
   INT16 sMapX, sMapY;
 
@@ -4460,7 +4460,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
         case F9:
 #ifdef JA2TESTVERSION
           if (fAlt) {
-            UINT8 ubSamIndex;
+            uint8_t ubSamIndex;
 
             // ALT-F9: Reveal all SAM sites
             for (ubSamIndex = 0; ubSamIndex < NUMBER_OF_SAM_SITES; ubSamIndex++) {
@@ -4829,7 +4829,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
             HandleQuestCodeOnSectorEntry(13, 4, 0);
             // test miner quote system
             IssueHeadMinerQuote((INT8)(1 + Random(MAX_NUMBER_OF_MINES - 1)),
-                                (UINT8)(1 + Random(2)));
+                                (uint8_t)(1 + Random(2)));
           }
 #endif
           break;
@@ -5341,7 +5341,7 @@ BOOLEAN GetMapXY(INT16 sX, INT16 sY, INT16 *psMapWorldX, INT16 *psMapWorldY) {
 void RenderMapHighlight(INT16 sMapX, INT16 sMapY, uint16_t usLineColor, BOOLEAN fStationary) {
   INT16 sScreenX, sScreenY;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   Assert((sMapX >= 1) && (sMapX <= 16));
   Assert((sMapY >= 1) && (sMapY <= 16));
@@ -5547,7 +5547,7 @@ void PollRightButtonInMapView(uint32_t *puiNewEvent) {
             {
               // if on the surface, or a real underground sector (we've visited it)
               if ((iCurrentMapSectorZ == 0) ||
-                  (GetSectorFlagStatus(sMapX, sMapY, (UINT8)iCurrentMapSectorZ,
+                  (GetSectorFlagStatus(sMapX, sMapY, (uint8_t)iCurrentMapSectorZ,
                                        SF_ALREADY_VISITED) == TRUE)) {
                 // toggle sector info for this sector
                 fShowTownInfo = !fShowTownInfo;
@@ -5570,7 +5570,7 @@ void PollRightButtonInMapView(uint32_t *puiNewEvent) {
 }
 
 void PopupText(CHAR16 *pFontString, ...) {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   va_list argptr;
   INT16 sX, sY;
@@ -5849,7 +5849,7 @@ void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 // mapscreen wrapper to init the item description box
-BOOLEAN MAPInternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, UINT8 ubStatusIndex,
+BOOLEAN MAPInternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, uint8_t ubStatusIndex,
                                           struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fRet;
 
@@ -5902,7 +5902,7 @@ void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       usOldItemIndex = pSoldier->inv[uiHandPos].usItem;
 
       // pick it up
-      MAPBeginItemPointer(pSoldier, (UINT8)uiHandPos);
+      MAPBeginItemPointer(pSoldier, (uint8_t)uiHandPos);
 
       // remember which gridno the object came from
       sObjectSourceGridNo = pSoldier->sGridNo;
@@ -5952,7 +5952,7 @@ void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
           }
 
           /*
-          gubHandPos = (UINT8) uiHandPos;
+          gubHandPos = (uint8_t) uiHandPos;
           gusOldItemIndex = usOldItemIndex;
           gusNewItemIndex = usNewItemIndex;
           gfDeductPoints = fDeductPoints;
@@ -5965,7 +5965,7 @@ void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       }
 
       // Else, try to place here
-      if (PlaceObject(pSoldier, (UINT8)uiHandPos, gpItemPointer)) {
+      if (PlaceObject(pSoldier, (uint8_t)uiHandPos, gpItemPointer)) {
         HandleTacticalEffectsOfEquipmentChange(pSoldier, uiHandPos, usOldItemIndex, usNewItemIndex);
 
         // Dirty
@@ -6024,15 +6024,15 @@ void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     // Some global stuff here - for esc, etc
     // Check for # of slots in item
     if ((pSoldier->inv[uiHandPos].ubNumberOfObjects > 1) &&
-        (ItemSlotLimit(pSoldier->inv[uiHandPos].usItem, (UINT8)uiHandPos) > 0)) {
+        (ItemSlotLimit(pSoldier->inv[uiHandPos].usItem, (uint8_t)uiHandPos) > 0)) {
       if (!InItemStackPopup()) {
-        InitItemStackPopup(pSoldier, (UINT8)uiHandPos, 0, INV_REGION_Y, 261, 248);
+        InitItemStackPopup(pSoldier, (uint8_t)uiHandPos, 0, INV_REGION_Y, 261, 248);
         fTeamPanelDirty = TRUE;
         fInterfacePanelDirty = DIRTYLEVEL2;
       }
     } else {
       if (!InItemDescriptionBox()) {
-        InitItemDescriptionBox(pSoldier, (UINT8)uiHandPos, MAP_ITEMDESC_START_X,
+        InitItemDescriptionBox(pSoldier, (uint8_t)uiHandPos, MAP_ITEMDESC_START_X,
                                MAP_ITEMDESC_START_Y, 0);
         fShowDescriptionFlag = TRUE;
         fTeamPanelDirty = TRUE;
@@ -6070,7 +6070,7 @@ void InternalMAPBeginItemPointer(struct SOLDIERTYPE *pSoldier) {
   gfReEvaluateEveryonesNothingToDo = TRUE;
 }
 
-void MAPBeginItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos) {
+void MAPBeginItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos) {
   BOOLEAN fOk;
 
   // If not null return
@@ -6091,7 +6091,7 @@ void MAPBeginItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos) {
   }
 }
 
-void MAPBeginKeyRingItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 uiKeySlot) {
+void MAPBeginKeyRingItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t uiKeySlot) {
   // If not null return
   if (gpItemPointer != NULL) {
     return;
@@ -7887,7 +7887,7 @@ void RebuildWayPointsForAllSelectedCharsGroups(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehicleId;
   struct path **ppMovePath = NULL;
-  UINT8 ubGroupId;
+  uint8_t ubGroupId;
 
   memset(fGroupIDRebuilt, FALSE, sizeof(fGroupIDRebuilt));
 
@@ -8110,7 +8110,7 @@ void DestroyTheItemInCursor() {
   gpItemPointer = NULL;
 }
 
-void TrashItemMessageBoxCallBack(UINT8 bExitValue) {
+void TrashItemMessageBoxCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
     // find the item and get rid of it
 
@@ -8419,7 +8419,7 @@ void DoneInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void StartConfirmMapMoveMode(INT16 sMapY) {
-  UINT8 ubPosition = (sMapY < 8) ? MSG_MAP_UI_POSITION_LOWER : MSG_MAP_UI_POSITION_UPPER;
+  uint8_t ubPosition = (sMapY < 8) ? MSG_MAP_UI_POSITION_LOWER : MSG_MAP_UI_POSITION_UPPER;
 
   // tell player what to do - to click again to confirm move
   MapScreenMessage(FONT_MCOLOR_LTYELLOW, ubPosition, pMapPlotStrings[0]);
@@ -8952,7 +8952,7 @@ void TellPlayerWhyHeCantCompressTime(void) {
   }
 }
 
-void MapScreenDefaultOkBoxCallback(UINT8 bExitValue) {
+void MapScreenDefaultOkBoxCallback(uint8_t bExitValue) {
   // yes, load the game
   if (bExitValue == MSG_BOX_RETURN_OK) {
     MarkForRedrawalStrategicMap();
@@ -9348,7 +9348,7 @@ void CheckForAndRenderNewMailOverlay() {
                                 NULL);
         if (!(ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags & BUTTON_ENABLED)) {
           uint32_t uiDestPitchBYTES;
-          UINT8 *pDestBuf;
+          uint8_t *pDestBuf;
           SGPRect area = {463, 417, 477, 425};
 
           pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
@@ -10018,7 +10018,7 @@ void ExplainWhySkyriderCantFly(void) {
   // no explainable reason
 }
 
-UINT8 PlayerMercsInHelicopterSector(void) {
+uint8_t PlayerMercsInHelicopterSector(void) {
   struct GROUP *pGroup = NULL;
 
   Assert(iHelicopterVehicleId != -1);
@@ -10032,7 +10032,7 @@ UINT8 PlayerMercsInHelicopterSector(void) {
 }
 
 void HandleNewDestConfirmation(INT16 sMapX, INT16 sMapY) {
-  UINT8 ubCurrentProgress;
+  uint8_t ubCurrentProgress;
 
   // if moving the chopper itself, or moving a character aboard the chopper
   if (fPlotForHelicopter) {
@@ -10085,10 +10085,10 @@ void HandleNewDestConfirmation(INT16 sMapX, INT16 sMapY) {
 void RandomAwakeSelectedMercConfirmsStrategicMove(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter;
-  UINT8 ubSelectedMercID[20];
-  UINT8 ubSelectedMercIndex[20];
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubSelectedMercID[20];
+  uint8_t ubSelectedMercIndex[20];
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if (IsCharSelected(iCounter)) {
@@ -10097,7 +10097,7 @@ void RandomAwakeSelectedMercConfirmsStrategicMove(void) {
       if (pSoldier->bLife >= OKLIFE && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
           !AM_A_ROBOT(pSoldier) && !AM_AN_EPC(pSoldier) && !pSoldier->fMercAsleep) {
         ubSelectedMercID[ubNumMercs] = GetSolID(pSoldier);
-        ubSelectedMercIndex[ubNumMercs] = (UINT8)iCounter;
+        ubSelectedMercIndex[ubNumMercs] = (uint8_t)iCounter;
 
         ubNumMercs++;
       }
@@ -10105,13 +10105,13 @@ void RandomAwakeSelectedMercConfirmsStrategicMove(void) {
   }
 
   if (ubNumMercs > 0) {
-    ubChosenMerc = (UINT8)Random(ubNumMercs);
+    ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
     // select that merc so that when he speaks we're showing his portrait and not someone else
     ChangeSelectedInfoChar(ubSelectedMercIndex[ubChosenMerc], FALSE);
 
     DoMercBattleSound(MercPtrs[ubSelectedMercID[ubChosenMerc]],
-                      (UINT8)(Random(2) ? BATTLE_SOUND_OK1 : BATTLE_SOUND_OK2));
+                      (uint8_t)(Random(2) ? BATTLE_SOUND_OK1 : BATTLE_SOUND_OK2));
     // TacticalCharacterDialogue( MercPtrs[ ubSelectedMercID[ ubChosenMerc ] ], ubQuoteNum );
   }
 }
@@ -10242,7 +10242,7 @@ void CreateBullsEyeOrChopperSelectionPopup(void) {
                                 BullsEyeOrChopperSelectionPopupCallback);
 }
 
-void BullsEyeOrChopperSelectionPopupCallback(UINT8 ubExitValue) {
+void BullsEyeOrChopperSelectionPopupCallback(uint8_t ubExitValue) {
   // button 1 pressed?
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     // chose chopper
@@ -10295,7 +10295,7 @@ void HandlePostAutoresolveMessages() {
   if (gsCiviliansEatenByMonsters >= 1) {
     AdjustLoyaltyForCivsEatenByMonsters(SectorID8_X(gsEnemyGainedControlOfSectorID),
                                         SectorID8_Y(gsEnemyGainedControlOfSectorID),
-                                        (UINT8)gsCiviliansEatenByMonsters);
+                                        (uint8_t)gsCiviliansEatenByMonsters);
     gsCiviliansEatenByMonsters = -2;
   } else if (gsCiviliansEatenByMonsters == -2) {
     MarkForRedrawalStrategicMap();
@@ -10396,7 +10396,7 @@ void GetMapscreenMercDestinationString(struct SOLDIERTYPE *pSoldier, wchar_t sSt
 }
 
 void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
-                                     int sStringSize, UINT8 *pubFontColor) {
+                                     int sStringSize, uint8_t *pubFontColor) {
   INT32 iMinsRemaining = 0;
   INT32 iDaysRemaining = 0;
   INT32 iHoursRemaining = 0;
@@ -10472,7 +10472,7 @@ void RestorePreviousPaths(void) {
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   struct path **ppMovePath = NULL;
-  UINT8 ubGroupId = 0;
+  uint8_t ubGroupId = 0;
   BOOLEAN fPathChanged = FALSE;
 
   // invalid if we're not plotting movement

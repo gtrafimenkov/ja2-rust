@@ -505,29 +505,29 @@ void CheckAndUpdateStatesOfSelectedMilitiaSectorButtons(void);
 void HandleLowerLevelMapBlit(void);
 void ShowSAMSitesOnStrategicMap(void);
 
-// UINT8 NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ );
-// UINT8 NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ );
+// uint8_t NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ );
+// uint8_t NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ );
 
 // callbacks
 void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // display potential path, yes or no?
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
-void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, UINT8 ubIconPosition);
+void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, uint8_t ubIconPosition);
 void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY);
 void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                        UINT8 ubIconPosition);
+                                        uint8_t ubIconPosition);
 
 BOOLEAN CanMilitiaAutoDistribute(void);
 
 void ShowItemsOnMap(void);
 void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, INT16 sMapX, INT16 sMapY,
-                    UINT8 ubIconPosition);
+                    uint8_t ubIconPosition);
 void DisplayDestinationOfHelicopter(void);
 void DrawOrta();
 void DrawTixa();
 void DrawBullseye();
-void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY);
+void HideExistenceOfUndergroundMapSector(uint8_t ubSectorX, uint8_t ubSectorY);
 
 BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
@@ -555,7 +555,7 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow) {
   for (iCount = 1; iCount <= MAX_VIEW_SECTORS; iCount++) {
     if (fDrawCursors && (iCount == sSelMapX) && (bSelectedDestChar == -1) &&
         (fPlotForHelicopter == FALSE))
-      SetFontForeground((UINT8)(fSelectedCursorIsYellow ? FONT_YELLOW : FONT_WHITE));
+      SetFontForeground((uint8_t)(fSelectedCursorIsYellow ? FONT_YELLOW : FONT_WHITE));
     else if (fDrawCursors && (iCount == gsHighlightSectorX))
       SetFontForeground(FONT_WHITE);
     else
@@ -568,7 +568,7 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow) {
 
     if (fDrawCursors && (iCount == sSelMapY) && (bSelectedDestChar == -1) &&
         (fPlotForHelicopter == FALSE))
-      SetFontForeground((UINT8)(fSelectedCursorIsYellow ? FONT_YELLOW : FONT_WHITE));
+      SetFontForeground((uint8_t)(fSelectedCursorIsYellow ? FONT_YELLOW : FONT_WHITE));
     else if (fDrawCursors && (iCount == gsHighlightSectorY))
       SetFontForeground(FONT_WHITE);
     else
@@ -610,8 +610,8 @@ MAP_HORT_INDEX_X+(MAX_VIEW_SECTORS)*MAP_GRID_X, MAP_HORT_INDEX_Y+MAP_GRID_Y, FAL
         for(iCount=1; iCount <= MAX_VIEW_SECTORS; iCount++)
         {
          if( fDrawCursors && ( iCount == sSelMapX ) && ( bSelectedDestChar == -1 ) && (
-fPlotForHelicopter == FALSE ) ) SetFontForeground( ( UINT8 ) ( fSelectedCursorIsYellow ? FONT_YELLOW
-: FONT_WHITE ) ); else if( fDrawCursors && ( iCount == gsHighlightSectorX ) )
+fPlotForHelicopter == FALSE ) ) SetFontForeground( ( uint8_t ) ( fSelectedCursorIsYellow ?
+FONT_YELLOW : FONT_WHITE ) ); else if( fDrawCursors && ( iCount == gsHighlightSectorX ) )
     SetFontForeground(FONT_WHITE);
    else
     SetFontForeground(MAP_INDEX_COLOR);
@@ -626,8 +626,8 @@ MAP_VERT_INDEX_X+MAP_GRID_X, MAP_VERT_INDEX_Y+(MAX_VIEW_SECTORS)*MAP_GRID_Y, FAL
         for(iCount=1; iCount <= MAX_VIEW_SECTORS; iCount++)
         {
          if( fDrawCursors && ( iCount == sSelMapY) && ( bSelectedDestChar == -1 ) && (
-fPlotForHelicopter == FALSE ) ) SetFontForeground( ( UINT8 ) ( fSelectedCursorIsYellow ? FONT_YELLOW
-: FONT_WHITE ) ); else if( fDrawCursors && ( iCount == gsHighlightSectorY ) )
+fPlotForHelicopter == FALSE ) ) SetFontForeground( ( uint8_t ) ( fSelectedCursorIsYellow ?
+FONT_YELLOW : FONT_WHITE ) ); else if( fDrawCursors && ( iCount == gsHighlightSectorY ) )
     SetFontForeground(FONT_WHITE);
    else
     SetFontForeground(MAP_INDEX_COLOR);
@@ -667,7 +667,7 @@ uint32_t DrawMap(void) {
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
   SGPRect clip;
   INT16 cnt, cnt2;
   INT32 iCounter = 0;
@@ -718,7 +718,8 @@ uint32_t DrawMap(void) {
       for (cnt2 = 1; cnt2 < MAP_WORLD_Y - 1; cnt2++) {
         // LATE DESIGN CHANGE: darken sectors not yet visited, instead of those under known enemy
         // control
-        if (GetSectorFlagStatus(cnt, cnt2, (UINT8)iCurrentMapSectorZ, SF_ALREADY_VISITED) == FALSE)
+        if (GetSectorFlagStatus(cnt, cnt2, (uint8_t)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
+            FALSE)
         //				if ( IsTheSectorPerceivedToBeUnderEnemyControl( cnt, cnt2, (
         // INT8
         //)( iCurrentMapSectorZ ) ) )
@@ -893,7 +894,7 @@ void ShowTownText(void) {
 
       // red for low loyalty, green otherwise
       SetFontForeground(
-          (UINT8)(fLoyaltyTooLowToTrainMilitia ? FONT_MCOLOR_RED : FONT_MCOLOR_LTGREEN));
+          (uint8_t)(fLoyaltyTooLowToTrainMilitia ? FONT_MCOLOR_RED : FONT_MCOLOR_LTGREEN));
 
       DrawTownLabels(sString, sStringA, usX, usY);
     }
@@ -949,7 +950,7 @@ void DrawTownLabels(STR16 pString, STR16 pStringA, uint16_t usFirstX, uint16_t u
 
 // "on duty" includes mercs inside vehicles
 INT32 ShowOnDutyTeam(INT16 sMapX, INT16 sMapY) {
-  UINT8 ubCounter = 0, ubIconPosition = 0;
+  uint8_t ubCounter = 0, ubIconPosition = 0;
   struct VObject *hIconHandle;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -974,7 +975,7 @@ INT32 ShowOnDutyTeam(INT16 sMapX, INT16 sMapY) {
 }
 
 INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
-  UINT8 ubCounter, ubIconPosition;
+  uint8_t ubCounter, ubIconPosition;
   struct VObject *hIconHandle;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -982,7 +983,7 @@ INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
   ubCounter = 0;
 
   // run through list
-  ubIconPosition = (UINT8)iCount;
+  ubIconPosition = (uint8_t)iCount;
 
   while (gCharactersList[ubCounter].fValid) {
     pSoldier = MercPtrs[gCharactersList[ubCounter].usSolID];
@@ -1009,14 +1010,14 @@ INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
 }
 
 INT32 ShowVehicles(INT16 sMapX, INT16 sMapY, INT32 iCount) {
-  UINT8 ubCounter, ubIconPosition;
+  uint8_t ubCounter, ubIconPosition;
   struct VObject *hIconHandle;
   struct SOLDIERTYPE *pVehicleSoldier;
 
   GetVideoObject(&hIconHandle, guiCHARICONS);
   ubCounter = 0;
 
-  ubIconPosition = (UINT8)iCount;
+  ubIconPosition = (uint8_t)iCount;
 
   // run through list of vehicles
   while (ubCounter < ubNumberOfVehicles) {
@@ -1047,9 +1048,9 @@ INT32 ShowVehicles(INT16 sMapX, INT16 sMapY, INT32 iCount) {
   return ubIconPosition;
 }
 
-void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, UINT8 ubIconPosition) {
+void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, uint8_t ubIconPosition) {
   struct VObject *hIconHandle;
-  UINT8 ubEnemy = 0;
+  uint8_t ubEnemy = 0;
 
   // get the video object
   GetVideoObject(&hIconHandle, guiCHARICONS);
@@ -1138,7 +1139,7 @@ void ShowTeamAndVehicles(INT32 fShowFlags) {
 
       if (fShowFlags & SHOW_TEAMMATES) {
         HandleShowingOfEnemyForcesInSector(sMapX, sMapY, (INT8)iCurrentMapSectorZ,
-                                           (UINT8)iIconOffset);
+                                           (uint8_t)iIconOffset);
         ShowPeopleInMotion(sMapX, sMapY);
       }
     }
@@ -1153,7 +1154,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
   SGPRect clip;
   uint16_t *pOriginalPallette;
 
@@ -1322,8 +1323,8 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  // UINT8 *pDestBuf2;
-  UINT8 *pSrcBuf;
+  // uint8_t *pDestBuf2;
+  uint8_t *pSrcBuf;
   SGPRect clip;
   uint16_t *pOriginalPallette;
 
@@ -1667,8 +1668,8 @@ void CancelPathForCharacter(struct SOLDIERTYPE *pCharacter) {
   // This causes the group to effectively reverse directions (even if they've never actually left),
   // so handle that. They are going to return to their current X,Y sector.
   RebuildWayPointsForGroupPath(pCharacter->pMercPath, pCharacter->ubGroupID);
-  //	GroupReversingDirectionsBetweenSectors( GetGroup( pCharacter->ubGroupID ), ( UINT8 )(
-  // pCharacter->sSectorX ), ( UINT8 )( pCharacter->sSectorY ), FALSE );
+  //	GroupReversingDirectionsBetweenSectors( GetGroup( pCharacter->ubGroupID ), ( uint8_t )(
+  // pCharacter->sSectorX ), ( uint8_t )( pCharacter->sSectorY ), FALSE );
 
   // if he's in a vehicle, clear out the vehicle, too
   if (pCharacter->bAssignment == VEHICLE) {
@@ -1699,7 +1700,7 @@ void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed) {
     // left), so handle that. They are going to return to their current X,Y sector.
     RebuildWayPointsForGroupPath(pVehicle->pMercPath, pVehicle->ubMovementGroup);
     //		GroupReversingDirectionsBetweenSectors( GetGroup( pVehicle->ubMovementGroup ), (
-    // UINT8 ) ( pVehicle->sSectorX ), ( UINT8 ) ( pVehicle->sSectorY ), FALSE );
+    // uint8_t ) ( pVehicle->sSectorX ), ( uint8_t ) ( pVehicle->sSectorY ), FALSE );
   }
 
   // display "travel route canceled" message
@@ -2558,7 +2559,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
   static struct path *pCurrentNode = NULL;
   static BOOLEAN fUpDateFlag = FALSE;
   static BOOLEAN fPauseFlag = TRUE;
-  static UINT8 ubCounter = 1;
+  static uint8_t ubCounter = 1;
 
   struct VObject *hMapHandle;
   BOOLEAN fSpeedFlag = FALSE;
@@ -4061,8 +4062,8 @@ void BlitMineIcon(INT16 sMapX, INT16 sMapY) {
 void BlitMineText(INT16 sMapX, INT16 sMapY) {
   INT16 sScreenX, sScreenY;
   CHAR16 wString[32], wSubString[32];
-  UINT8 ubMineIndex;
-  UINT8 ubLineCnt = 0;
+  uint8_t ubMineIndex;
+  uint8_t ubLineCnt = 0;
 
   if (fZoomFlag) {
     GetScreenXYFromMapXYStationary((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
@@ -4171,7 +4172,7 @@ void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX) {
 void BlitTownGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usColor = 0;
   INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
@@ -4247,7 +4248,7 @@ void BlitTownGridMarkers(void) {
 void BlitMineGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usColor = 0;
   INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
@@ -4311,11 +4312,11 @@ void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, IN
 }
 
 
-UINT8 NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ )
+uint8_t NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ )
 {
         struct SOLDIERTYPE *pTeamSoldier;
         INT32				cnt = 0;
-        UINT8				ubNumFriendlies = 0;
+        uint8_t				ubNumFriendlies = 0;
 
         // Check if the battle is won!
         // Loop through all mercs and make go
@@ -4365,7 +4366,7 @@ void DisplayLevelString(void) {
 }
 
 // function to manipulate the number of towns people on the cursor
-static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, INT16 sX, INT16 sY) {
+static BOOLEAN PickUpATownPersonFromSector(uint8_t ubType, INT16 sX, INT16 sY) {
   // see if there are any militia of this type in this sector
   if (GetMilitiaOfRankInSector(sX, sY, ubType) == 0) {
     // failed, no one here
@@ -4406,7 +4407,7 @@ static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, INT16 sX, INT16 sY) {
   return (TRUE);
 }
 
-BOOLEAN DropAPersonInASector(UINT8 ubType, INT16 sX, INT16 sY) {
+BOOLEAN DropAPersonInASector(uint8_t ubType, INT16 sX, INT16 sY) {
   // are they in the same town as they were pickedup from
   if (GetTownIdForSector(sX, sY) != sSelectedMilitiaTown) {
     return (FALSE);
@@ -4930,7 +4931,7 @@ void MilitiaButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
-      DropAPersonInASector((UINT8)(iValue), (INT16)((sGlobalMapSector % 16) + 1),
+      DropAPersonInASector((uint8_t)(iValue), (INT16)((sGlobalMapSector % 16) + 1),
                            (INT16)((sGlobalMapSector / 16) + 1));
     }
   } else if (reason & MSYS_CALLBACK_REASON_RBUTTON_DWN) {
@@ -4938,7 +4939,7 @@ void MilitiaButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   } else if (reason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
-      PickUpATownPersonFromSector((UINT8)(iValue), (INT16)((sGlobalMapSector % 16) + 1),
+      PickUpATownPersonFromSector((uint8_t)(iValue), (INT16)((sGlobalMapSector % 16) + 1),
                                   (INT16)((sGlobalMapSector / 16) + 1));
     }
   }
@@ -5391,7 +5392,7 @@ void DrawTownMilitiaForcesOnMap(void) {
           iIconValue += 2;
         }
 
-        DrawMapBoxIcon(hVObject, (uint16_t)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
+        DrawMapBoxIcon(hVObject, (uint16_t)iIconValue, sSectorX, sSectorY, (uint8_t)iCounterB);
       }
     }
 
@@ -5426,7 +5427,7 @@ void DrawTownMilitiaForcesOnMap(void) {
           iIconValue += 2;
         }
 
-        DrawMapBoxIcon(hVObject, (uint16_t)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
+        DrawMapBoxIcon(hVObject, (uint16_t)iIconValue, sSectorX, sSectorY, (uint8_t)iCounterB);
       }
     }
   }
@@ -5508,7 +5509,7 @@ void ShadeSubLevelsNotVisited(void) {
   // run through all (real & possible) underground sectors
   while (pNode) {
     // if the sector is on the currently displayed sublevel, and has never been visited
-    if (pNode->ubSectorZ == (UINT8)iCurrentMapSectorZ && !pNode->fVisited) {
+    if (pNode->ubSectorZ == (uint8_t)iCurrentMapSectorZ && !pNode->fVisited) {
       // remove that portion of the "mine" graphics from view
       HideExistenceOfUndergroundMapSector(pNode->ubSectorX, pNode->ubSectorY);
     }
@@ -5665,7 +5666,7 @@ BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
 }
 
 void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                        UINT8 ubIconPosition) {
+                                        uint8_t ubIconPosition) {
   INT16 sNumberOfEnemies = 0;
 
   // ATE: If game has just started, don't do it!
@@ -5705,11 +5706,11 @@ void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
 }
 
 /*
-UINT8 NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ )
+uint8_t NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ )
 {
         INT32 iCounter = 0;
         struct SOLDIERTYPE *pSoldier = NULL;
-        UINT8 ubNumberOnTeam = 0;
+        uint8_t ubNumberOnTeam = 0;
 
         for( iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++ )
         {
@@ -5824,7 +5825,7 @@ void ShowSAMSitesOnStrategicMap(void) {
 void BlitSAMGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usColor = 0;
   INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
@@ -5935,11 +5936,11 @@ void ShowItemsOnMap(void) {
   for (sMapX = 1; sMapX < (MAP_WORLD_X - 1); sMapX++) {
     for (sMapY = 1; sMapY < (MAP_WORLD_Y - 1); sMapY++) {
       // to speed this up, only look at sector that player has visited
-      if (GetSectorFlagStatus(sMapX, sMapY, (UINT8)iCurrentMapSectorZ, SF_ALREADY_VISITED)) {
+      if (GetSectorFlagStatus(sMapX, sMapY, (uint8_t)iCurrentMapSectorZ, SF_ALREADY_VISITED)) {
         //				uiItemCnt = GetSizeOfStashInSector( sMapX, sMapY, ( INT16 )
         // iCurrentMapSectorZ, FALSE );
         uiItemCnt = GetNumberOfVisibleWorldItemsFromSectorStructureForSector(
-            sMapX, sMapY, (UINT8)iCurrentMapSectorZ);
+            sMapX, sMapY, (uint8_t)iCurrentMapSectorZ);
 
         if (uiItemCnt > 0) {
           sXCorner = (INT16)(MAP_VIEW_START_X + (sMapX * MAP_GRID_X));
@@ -5963,7 +5964,7 @@ void ShowItemsOnMap(void) {
 }
 
 void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, INT16 sMapX, INT16 sMapY,
-                    UINT8 ubIconPosition) {
+                    uint8_t ubIconPosition) {
   INT32 iRowNumber, iColumnNumber;
   INT32 iX, iY;
 
@@ -6012,7 +6013,7 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, INT16 sMapX
 void DrawOrta() {
   uint32_t uiDestPitchBYTES;
   INT16 sX, sY;
-  UINT8 ubVidObjIndex;
+  uint8_t ubVidObjIndex;
   struct VObject *hHandle;
 
   if (fZoomFlag) {
@@ -6041,7 +6042,7 @@ void DrawOrta() {
 void DrawTixa() {
   uint32_t uiDestPitchBYTES;
   INT16 sX, sY;
-  UINT8 ubVidObjIndex;
+  uint8_t ubVidObjIndex;
   struct VObject *hHandle;
 
   if (fZoomFlag) {
@@ -6078,7 +6079,7 @@ void DrawBullseye() {
   BltVideoObject(guiSAVEBUFFER, hHandle, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
-void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY) {
+void HideExistenceOfUndergroundMapSector(uint8_t ubSectorX, uint8_t ubSectorY) {
   INT16 sScreenX;
   INT16 sScreenY;
 
@@ -6090,7 +6091,7 @@ void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY) {
 }
 
 void InitMapSecrets(void) {
-  UINT8 ubSamIndex;
+  uint8_t ubSamIndex;
 
   fFoundTixa = FALSE;
   fFoundOrta = FALSE;

@@ -4,9 +4,9 @@
 #include "SGP/Types.h"
 #include "TileEngine/AmbientTypes.h"
 
-BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID);
+BOOLEAN LoadAmbientControlFile(uint8_t ubAmbientID);
 
-void HandleNewSectorAmbience(UINT8 ubAmbientID);
+void HandleNewSectorAmbience(uint8_t ubAmbientID);
 uint32_t SetupNewAmbientSound(uint32_t uiAmbientID);
 
 void StopAmbients();
@@ -15,7 +15,7 @@ void DeleteAllAmbients();
 extern AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
 extern INT16 gsNumAmbData;
 
-BOOLEAN SetSteadyStateAmbience(UINT8 ubAmbience);
+BOOLEAN SetSteadyStateAmbience(uint8_t ubAmbience);
 
 #define SOUND_NAME_SIZE 256
 #define NUM_SOUNDS_PER_TIMEFRAME 8

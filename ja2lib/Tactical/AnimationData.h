@@ -517,7 +517,7 @@ typedef struct {
   uint16_t ubName;
   CHAR8 Filename[50];
   CHAR8 bStructDataType;
-  UINT8 ubFlags;
+  uint8_t ubFlags;
   uint32_t uiNumDirections;
   uint32_t uiNumFramesPerDir;
   struct VObject *hVideoObject;
@@ -552,7 +552,7 @@ struct STRUCTURE_FILE_REF *GetDefaultStructureRef(uint16_t usSoldierID);
 
 // Profile data
 extern struct ANIM_PROF *gpAnimProfiles;
-extern UINT8 gubNumAnimProfiles;
+extern uint8_t gubNumAnimProfiles;
 
 void ZeroAnimSurfaceCounts();
 

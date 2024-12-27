@@ -47,8 +47,8 @@ typedef struct {
   INT16 sPatrolGrid[MAXPATROLGRIDS];  // possible locations to visit, patrol, etc.
   INT8 bPatrolCnt;
   BOOLEAN fOnRoof;
-  UINT8 ubSoldierClass;  // army, administrator, elite
-  UINT8 ubCivilianGroup;
+  uint8_t ubSoldierClass;  // army, administrator, elite
+  uint8_t ubCivilianGroup;
   BOOLEAN fPriorityExistance;  // These slots are used first
   BOOLEAN fHasKeys;
   INT8 PADDINGSLOTS[14];
@@ -60,7 +60,7 @@ typedef struct {
   BOOLEAN fStatic;
 
   // Profile information used for special NPCs and player mercs.
-  UINT8 ubProfile;
+  uint8_t ubProfile;
   BOOLEAN fPlayerMerc;
   BOOLEAN fPlayerPlan;
   BOOLEAN fCopyProfileItemsOver;
@@ -113,7 +113,7 @@ typedef struct {
   BOOLEAN fVisible;
   CHAR16 name[10];
 
-  UINT8 ubSoldierClass;  // army, administrator, elite
+  uint8_t ubSoldierClass;  // army, administrator, elite
 
   BOOLEAN fOnRoof;
 
@@ -121,10 +121,10 @@ typedef struct {
 
   struct SOLDIERTYPE *pExistingSoldier;
   BOOLEAN fUseExistingSoldier;
-  UINT8 ubCivilianGroup;
+  uint8_t ubCivilianGroup;
 
   BOOLEAN fKillSlotIfOwnerDies;
-  UINT8 ubScheduleID;
+  uint8_t ubScheduleID;
 
   BOOLEAN fUseGivenVehicle;
   INT8 bUseGivenVehicleID;
@@ -138,26 +138,26 @@ typedef struct {
 BOOLEAN TacticalRemoveSoldier(uint16_t usSoldierIndex);
 BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle);
 
-INT8 CalcDifficultyModifier(UINT8 ubSoldierClass);
+INT8 CalcDifficultyModifier(uint8_t ubSoldierClass);
 
 void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct);
 
 // Kris:
 // Modified return type from BOOLEAN to struct SOLDIERTYPE*
-struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *pubID);
+struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, uint8_t *pubID);
 
 // Randomly generated enemies used by strategic AI.
 struct SOLDIERTYPE *TacticalCreateAdministrator();
 struct SOLDIERTYPE *TacticalCreateEliteEnemy();
 struct SOLDIERTYPE *TacticalCreateArmyTroop();
-struct SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass);
+struct SOLDIERTYPE *TacticalCreateMilitia(uint8_t ubMilitiaClass);
 struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType);
 
 // randomly generates a relative level rating (attributes or equipment)
-void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass);
+void RandomizeRelativeLevel(INT8 *pbRelLevel, uint8_t ubSoldierClass);
 
 // get the pythag. distance from the passed sector to the palace..
-UINT8 GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY);
+uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY);
 
 // These following functions are currently used exclusively by the editor.
 // Now, this will be useful for the strategic AI.
@@ -220,18 +220,18 @@ void UpdateSoldierWithStaticDetailedInformation(struct SOLDIERTYPE *s, SOLDIERCR
 // In the case of setting a profile ID in order to extract a soldier from the profile array, we
 // also want to copy that information to the static detailed placement, for editor viewing purposes.
 void UpdateStaticDetailedPlacementWithProfileInformation(SOLDIERCREATE_STRUCT *spp,
-                                                         UINT8 ubProfile);
+                                                         uint8_t ubProfile);
 
 // When the editor modifies the soldier's relative attribute level,
 // this function is called to update that information.
 void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s, INT8 bLevel);
 
 // Force the soldier to be a different ID
-void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, UINT8 ubProfileID);
+void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, uint8_t ubProfileID);
 
-void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubSoldierClass);
+void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubSoldierClass);
 
-void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID);
+void QuickCreateProfileMerc(INT8 bTeam, uint8_t ubProfileID);
 
 BOOLEAN InternalTacticalRemoveSoldier(uint16_t usSoldierIndex, BOOLEAN fRemoveVehicle);
 

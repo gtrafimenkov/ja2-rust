@@ -60,7 +60,7 @@
 uint32_t guiCurrentScreen;
 
 // GLOBAL FOR PAL EDITOR
-UINT8 CurrentPalette = 0;
+uint8_t CurrentPalette = 0;
 uint32_t guiBackgroundRect;
 BOOLEAN gfExitPalEditScreen = FALSE;
 BOOLEAN gfExitDebugScreen = FALSE;
@@ -256,7 +256,7 @@ uint32_t InitScreenInitialize(void) { return (TRUE); }
 uint32_t InitScreenHandle(void) {
   VSURFACE_DESC vs_desc;
   static struct VSurface *hVSurface;
-  static UINT8 ubCurrentScreen = 255;
+  static uint8_t ubCurrentScreen = 255;
 
   if (ubCurrentScreen == 255) {
 #ifdef ENGLISH
@@ -380,12 +380,12 @@ void PalEditRenderHook() {
 }
 
 BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
-  UINT8 ubType;
+  uint8_t ubType;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubPaletteRep;
+  uint8_t ubPaletteRep;
   uint32_t cnt;
-  UINT8 ubStartRep = 0;
-  UINT8 ubEndRep = 0;
+  uint8_t ubStartRep = 0;
+  uint8_t ubEndRep = 0;
 
   if (gusSelectedSoldier == NO_SOLDIER) {
     return (FALSE);
@@ -408,10 +408,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -435,10 +435,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -462,10 +462,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -489,10 +489,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -622,7 +622,7 @@ uint32_t SexScreenInit(void) { return (TRUE); }
 #define SMILY_END_DELAY 1000
 
 uint32_t SexScreenHandle(void) {
-  static UINT8 ubCurrentScreen = 0;
+  static uint8_t ubCurrentScreen = 0;
   VOBJECT_DESC VObjectDesc;
   static uint32_t guiSMILY;
   static INT8 bCurFrame = 0;
@@ -721,7 +721,7 @@ extern INT8 gbFadeSpeed;
 void DisplayTopwareGermanyAddress() {
   VOBJECT_DESC vo_desc;
   uint32_t uiTempID;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
 

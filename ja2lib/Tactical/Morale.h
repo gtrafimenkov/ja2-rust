@@ -49,7 +49,7 @@ typedef enum {
 typedef enum { TACTICAL_MORALE_EVENT = 0, STRATEGIC_MORALE_EVENT } MoraleEventType;
 
 typedef struct MoraleEvent {
-  UINT8 ubType;
+  uint8_t ubType;
   INT8 bChange;
 } MoraleEvent;
 

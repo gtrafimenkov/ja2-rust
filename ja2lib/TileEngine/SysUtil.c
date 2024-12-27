@@ -24,7 +24,7 @@ BOOLEAN InitializeGameVideoObjects() {
   VSURFACE_DESC vs_desc;
   uint16_t usWidth;
   uint16_t usHeight;
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
 
   // Create render buffer
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);

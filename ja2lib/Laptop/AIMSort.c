@@ -97,10 +97,10 @@ uint16_t AimSortCheckBoxLoc[] = {
     (AIM_SORT_SORT_BY_X + 172), (AIM_SORT_SORT_BY_Y + 4),   (AIM_SORT_SORT_BY_X + 172),
     (AIM_SORT_SORT_BY_Y + 17)};
 
-UINT8 gubCurrentSortMode;
-UINT8 gubOldSortMode;
-UINT8 gubCurrentListMode;
-UINT8 gubOldListMode;
+uint8_t gubCurrentSortMode;
+uint8_t gubOldSortMode;
+uint8_t gubCurrentListMode;
+uint8_t gubOldListMode;
 
 // Mouse stuff
 // Clicking on To Mugshot
@@ -140,7 +140,7 @@ void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 struct MOUSE_REGION gSelectedDescendBoxRegion;
 void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-void DrawSelectLight(UINT8 ubMode, UINT8 ubImage);
+void DrawSelectLight(uint8_t ubMode, uint8_t ubImage);
 INT32 QsortCompare(const void *pNum1, const void *pNum2);
 INT32 CompareValue(const INT32 Num1, const INT32 Num2);
 BOOLEAN SortMercArray(void);
@@ -160,9 +160,9 @@ void GameInitAimSort() {
 
 BOOLEAN EnterAimSort() {
   VOBJECT_DESC VObjectDesc;
-  UINT8 ubCurNumber = 0;
+  uint8_t ubCurNumber = 0;
   uint16_t ubWidth;
-  UINT8 i;
+  uint8_t i;
 
   // Everytime into Aim Sort, reset array.
   for (i = 0; i < MAX_NUMBER_MERCS; i++) {
@@ -568,7 +568,7 @@ void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
+void DrawSelectLight(uint8_t ubMode, uint8_t ubImage) {
   struct VObject *hSelectLightHandle;
 
   ubMode *= 2;
@@ -585,14 +585,14 @@ void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
 }
 
 BOOLEAN SortMercArray(void) {
-  qsort((void *)AimMercArray, (size_t)MAX_NUMBER_MERCS, sizeof(UINT8), QsortCompare);
+  qsort((void *)AimMercArray, (size_t)MAX_NUMBER_MERCS, sizeof(uint8_t), QsortCompare);
 
   return (TRUE);
 }
 
 INT32 QsortCompare(const void *pNum1, const void *pNum2) {
-  UINT8 Num1 = *(UINT8 *)pNum1;
-  UINT8 Num2 = *(UINT8 *)pNum2;
+  uint8_t Num1 = *(uint8_t *)pNum1;
+  uint8_t Num2 = *(uint8_t *)pNum2;
 
   switch (gubCurrentSortMode) {
     // Price						INT16	uiWeeklySalary

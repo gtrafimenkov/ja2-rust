@@ -16,10 +16,10 @@
 typedef struct BUILDING {
   INT16 sUpClimbSpots[MAX_CLIMBSPOTS_PER_BUILDING];
   INT16 sDownClimbSpots[MAX_CLIMBSPOTS_PER_BUILDING];
-  UINT8 ubNumClimbSpots;
+  uint8_t ubNumClimbSpots;
 } BUILDING;
 
-extern UINT8 gubBuildingInfo[WORLD_MAX];
+extern uint8_t gubBuildingInfo[WORLD_MAX];
 
 BOOLEAN InBuilding(INT16 sGridNo);
 BUILDING* GenerateBuilding(INT16 sDesiredSpot);

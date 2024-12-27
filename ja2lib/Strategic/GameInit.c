@@ -57,16 +57,16 @@
 #include "Utils/SoundControl.h"
 
 // Temp function
-void QuickSetupOfMercProfileItems(uint32_t uiCount, UINT8 ubProfileIndex);
-BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier);
+void QuickSetupOfMercProfileItems(uint32_t uiCount, uint8_t ubProfileIndex);
+BOOLEAN QuickGameMemberHireMerc(uint8_t ubCurrentSoldier);
 extern uint32_t guiExitScreen;
 extern uint32_t uiMeanWhileFlags;
 extern BOOLEAN gfGamePaused;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, uint8_t bMapZ);
 extern void InitVehicles();
 
-UINT8 gubScreenCount = 0;
+uint8_t gubScreenCount = 0;
 
 void InitNPCs(void) {
   MERCPROFILESTRUCT *pProfile;
@@ -469,34 +469,34 @@ BOOLEAN AnyMercsHired() {
 void QuickStartGame() {
   INT32 cnt;
   uint16_t usVal;
-  UINT8 ub1 = 0, ub2 = 0;
+  uint8_t ub1 = 0, ub2 = 0;
 
   for (cnt = 0; cnt < 3; cnt++) {
     if (cnt == 0) {
       usVal = (uint16_t)Random(40);
 
-      QuickSetupOfMercProfileItems(cnt, (UINT8)usVal);
-      QuickGameMemberHireMerc((UINT8)usVal);
+      QuickSetupOfMercProfileItems(cnt, (uint8_t)usVal);
+      QuickGameMemberHireMerc((uint8_t)usVal);
     } else if (cnt == 1) {
       do {
         usVal = (uint16_t)Random(40);
       } while (usVal != ub1);
 
-      QuickSetupOfMercProfileItems(cnt, (UINT8)usVal);
-      QuickGameMemberHireMerc((UINT8)usVal);
+      QuickSetupOfMercProfileItems(cnt, (uint8_t)usVal);
+      QuickGameMemberHireMerc((uint8_t)usVal);
     } else if (cnt == 2) {
       do {
         usVal = (uint16_t)Random(40);
       } while (usVal != ub1 && usVal != ub2);
 
-      QuickSetupOfMercProfileItems(cnt, (UINT8)usVal);
-      QuickGameMemberHireMerc((UINT8)usVal);
+      QuickSetupOfMercProfileItems(cnt, (uint8_t)usVal);
+      QuickGameMemberHireMerc((uint8_t)usVal);
     }
   }
 }
 
 // TEMP FUNCTION!
-void QuickSetupOfMercProfileItems(uint32_t uiCount, UINT8 ubProfileIndex) {
+void QuickSetupOfMercProfileItems(uint32_t uiCount, uint8_t ubProfileIndex) {
   // Quickly give some guys we hire some items
 
   if (uiCount == 0) {
@@ -573,7 +573,7 @@ void QuickSetupOfMercProfileItems(uint32_t uiCount, UINT8 ubProfileIndex) {
     gMercProfiles[ubProfileIndex].bInvNumber[SMALLPOCK6POS] = 1;
 
   } else {
-    gMercProfiles[ubProfileIndex].inv[HANDPOS] = (UINT8)Random(30);
+    gMercProfiles[ubProfileIndex].inv[HANDPOS] = (uint8_t)Random(30);
     gMercProfiles[ubProfileIndex].bInvNumber[HANDPOS] = 1;
   }
 
@@ -599,7 +599,7 @@ void QuickSetupOfMercProfileItems(uint32_t uiCount, UINT8 ubProfileIndex) {
   // gMercProfiles[ 78 ].bInvNumber[ SMALLPOCK4POS ] = 1;
 }
 
-BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier) {
+BOOLEAN QuickGameMemberHireMerc(uint8_t ubCurrentSoldier) {
   MERC_HIRE_STRUCT HireMercStruct;
 
   memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));

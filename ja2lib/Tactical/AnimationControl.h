@@ -87,8 +87,8 @@ typedef struct {
   INT16 sSpeed;
   FLOAT dMovementChange;
   uint32_t uiFlags;
-  UINT8 ubHeight;
-  UINT8 ubEndHeight;
+  uint8_t ubHeight;
+  uint8_t ubEndHeight;
   INT8 bProfile;
 
 } ANIMCONTROLTYPE;
@@ -100,12 +100,12 @@ typedef struct {
 } ANI_SPEED_DEF;
 
 typedef struct {
-  UINT8 ubHandRestriction;
+  uint8_t ubHandRestriction;
   INT16 sAnimID;
-  UINT8 ubStartRoll;
-  UINT8 ubEndRoll;
-  UINT8 ubFlags;
-  UINT8 ubAnimHeight;
+  uint8_t ubStartRoll;
+  uint8_t ubEndRoll;
+  uint8_t ubFlags;
+  uint8_t ubAnimHeight;
   CHAR8 zSoundFile[30];
 
 } RANDOM_ANI_DEF;
@@ -526,7 +526,7 @@ extern ANI_SPEED_DEF gubAnimWalkSpeeds[TOTALBODYTYPES];
 extern ANI_SPEED_DEF gubAnimRunSpeeds[TOTALBODYTYPES];
 extern ANI_SPEED_DEF gubAnimSwatSpeeds[TOTALBODYTYPES];
 extern ANI_SPEED_DEF gubAnimCrawlSpeeds[TOTALBODYTYPES];
-extern UINT8 gubMaxActionPoints[TOTALBODYTYPES];
+extern uint8_t gubMaxActionPoints[TOTALBODYTYPES];
 
 // OK, this array contains definitions for random animations based on bodytype, total # allowed, and
 // what is in their hand....
@@ -541,7 +541,7 @@ void InitAnimationSurfacesPerBodytype();
 BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNewState);
 BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
                                     uint16_t *pusSubState);
-INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, UINT8 ubBodyType,
+INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
                                         CHAR8 *zColFilename);
 
 BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);

@@ -698,8 +698,8 @@ void MercsInventorySlotCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void MercsSetEnemyColorCodeCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubColorCode;
-    ubColorCode = (UINT8)MSYS_GetBtnUserData(btn, 0);
+    uint8_t ubColorCode;
+    ubColorCode = (uint8_t)MSYS_GetBtnUserData(btn, 0);
     SetEnemyColorCode(ubColorCode);
   }
 }
@@ -933,18 +933,19 @@ void MercsScheduleModeCallback(GUI_BUTTON *btn, INT32 reason) {
 
 // multiple orders buttons
 void MercsSetOrdersCallback(GUI_BUTTON *btn, INT32 reason) {
-  if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) SetMercOrders((UINT8)MSYS_GetBtnUserData(btn, 0));
+  if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) SetMercOrders((uint8_t)MSYS_GetBtnUserData(btn, 0));
 }
 
 // multiple attitude buttons
 void MercsSetAttitudeCallback(GUI_BUTTON *btn, INT32 reason) {
-  if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) SetMercAttitude((UINT8)MSYS_GetBtnUserData(btn, 0));
+  if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
+    SetMercAttitude((uint8_t)MSYS_GetBtnUserData(btn, 0));
 }
 
 // multiple direction buttons
 void MercsDirectionSetCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
-    SetMercDirection((UINT8)MSYS_GetBtnUserData(btn, 0));
+    SetMercDirection((uint8_t)MSYS_GetBtnUserData(btn, 0));
 }
 
 void MercsFindSelectedMercCallback(GUI_BUTTON *btn, INT32 reason) {

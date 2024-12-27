@@ -10,24 +10,24 @@ void HandleAIMMembers();
 BOOLEAN RenderAIMMembers();
 
 BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
-                             uint32_t ulFont, UINT8 ubColor);
+                             uint32_t ulFont, uint8_t ubColor);
 BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
-                          uint32_t ulFont, UINT8 ubColor);
+                          uint32_t ulFont, uint8_t ubColor);
 
 void DisplayTextForMercFaceVideoPopUp(STR16 pString);
 BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32 iFaceIndex);
 void EnterInitAimMembers();
 BOOLEAN RenderAIMMembersTopLevel();
-void ResetMercAnnoyanceAtPlayer(UINT8 ubMercID);
+void ResetMercAnnoyanceAtPlayer(uint8_t ubMercID);
 BOOLEAN DisableNewMailMessage();
 void DisplayPopUpBoxExplainingMercArrivalLocationAndTime();
 
 // which mode are we in during video conferencing?..0 means no video conference
-extern UINT8 gubVideoConferencingMode;
+extern uint8_t gubVideoConferencingMode;
 
 // TEMP!!!
 #ifdef JA2TESTVERSION
-void TempHiringOfMercs(UINT8 ubNumberOfMercs, BOOLEAN fReset);
+void TempHiringOfMercs(uint8_t ubNumberOfMercs, BOOLEAN fReset);
 #endif
 
 #if defined(JA2TESTVERSION)

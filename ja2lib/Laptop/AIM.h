@@ -12,7 +12,7 @@
 #define AIM_HISTORY_LINE_SIZE 400 * 2
 
 #define MAX_NUMBER_MERCS 40
-extern UINT8 AimMercArray[MAX_NUMBER_MERCS];
+extern uint8_t AimMercArray[MAX_NUMBER_MERCS];
 
 #define NUM_AIM_SCREENS 6
 

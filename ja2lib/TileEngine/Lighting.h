@@ -79,8 +79,8 @@ struct VObject;
 // stucture of node in linked list for lights
 typedef struct light_p {
   INT16 iDX, iDY;
-  UINT8 uiFlags;
-  UINT8 ubLight;
+  uint8_t uiFlags;
+  uint8_t ubLight;
 } LIGHT_NODE;
 
 // structure of light instance, or sprite (a copy of the template)
@@ -106,17 +106,17 @@ BOOLEAN SetDefaultWorldLightingColors(void);
 // Low-Level Template Interface
 
 // Sets the normal light level for all tiles in the world
-BOOLEAN LightSetBaseLevel(UINT8 iIntensity);
+BOOLEAN LightSetBaseLevel(uint8_t iIntensity);
 // Adds a light value to all tiles
-BOOLEAN LightAddBaseLevel(uint32_t uiLightType, UINT8 iIntensity);
+BOOLEAN LightAddBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Subtracts a light value from all tiles
-BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, UINT8 iIntensity);
+BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Creates an omni (circular) light
-INT32 LightCreateOmni(UINT8 ubIntensity, INT16 iRadius);
+INT32 LightCreateOmni(uint8_t ubIntensity, INT16 iRadius);
 // Creates an oval-shaped light (two separate radii)
-INT32 LightCreateElliptical(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2);
+INT32 LightCreateElliptical(uint8_t ubIntensity, INT16 iRadius1, INT16 iRadius2);
 // Creates a square light
-INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2);
+INT32 LightCreateSquare(uint8_t ubIntensity, INT16 iRadius1, INT16 iRadius2);
 // Draws a light into the scene at X,Y
 BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite);
 // Reverts the tiles a light has affected back to normal
@@ -127,9 +127,9 @@ BOOLEAN LightSave(INT32 uiLight, STR pFilename);
 INT32 LightLoad(STR pFilename);
 
 // Sets the RGB values and number of light colors (1/2)
-BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors);
+BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, uint8_t ubNumColors);
 // Returns the number of colors active (1/2) and the palette colors
-UINT8 LightGetColors(struct SGPPaletteEntry *pPal);
+uint8_t LightGetColors(struct SGPPaletteEntry *pPal);
 
 // High-Level Sprite Interface
 
@@ -166,7 +166,7 @@ BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase
 uint16_t CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
-UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel);
+uint8_t LightTrueLevel(INT16 sGridNo, INT8 bLevel);
 
 // system variables
 extern LIGHT_NODE *pLightList[MAX_LIGHT_TEMPLATES];
@@ -187,11 +187,11 @@ extern STR pLightNames[MAX_LIGHT_TEMPLATES];
 extern LIGHT_SPRITE LightSprites[MAX_LIGHT_SPRITES];
 
 // Lighting system general data
-extern UINT8 ubAmbientLightLevel;
-extern UINT8 gubNumLightColors;
+extern uint8_t ubAmbientLightLevel;
+extern uint8_t gubNumLightColors;
 
 // Lighting colors
-extern UINT8 gubNumLightColors;
+extern uint8_t gubNumLightColors;
 extern struct SGPPaletteEntry gpLightColors[3];
 
 // macros

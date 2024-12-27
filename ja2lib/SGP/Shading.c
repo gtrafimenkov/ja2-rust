@@ -22,11 +22,11 @@ BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
                                struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
                                uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono);
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
-                  UINT8 *pTable);
-void FindMaskIndecies(UINT8 *, UINT8 *, UINT8 *);
+                  uint8_t *pTable);
+void FindMaskIndecies(uint8_t *, uint8_t *, uint8_t *);
 
 struct SGPPaletteEntry Shaded8BPPPalettes[HVOBJECT_SHADE_TABLES + 3][256];
-UINT8 ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
+uint8_t ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
 
 uint16_t IntensityTable[65536];
 uint16_t ShadeTable[65536];
@@ -100,16 +100,16 @@ BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
       bmod = (usBlue * pSrcPalette[cnt].peBlue / 255);
     }
 
-    pDestPalette[cnt].peRed = (UINT8)min(rmod, 255);
-    pDestPalette[cnt].peGreen = (UINT8)min(gmod, 255);
-    pDestPalette[cnt].peBlue = (UINT8)min(bmod, 255);
+    pDestPalette[cnt].peRed = (uint8_t)min(rmod, 255);
+    pDestPalette[cnt].peGreen = (uint8_t)min(gmod, 255);
+    pDestPalette[cnt].peBlue = (uint8_t)min(bmod, 255);
   }
 
   return (TRUE);
 }
 
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
-                  UINT8 *pTable) {
+                  uint8_t *pTable) {
   uint16_t usCurIndex, usCurDelta, usCurCount;
   uint32_t *pSavedPtr;
 
@@ -281,9 +281,9 @@ void Init8BitTables(void) {
 
   // calculate a grey-scale table for the default palette
   for (uiCount = 0; uiCount < 256; uiCount++) {
-    Pal[uiCount].peRed = (UINT8)(uiCount % 128) + 128;
-    Pal[uiCount].peGreen = (UINT8)(uiCount % 128) + 128;
-    Pal[uiCount].peBlue = (UINT8)(uiCount % 128) + 128;
+    Pal[uiCount].peRed = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].peGreen = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].peBlue = (uint8_t)(uiCount % 128) + 128;
   }
 
   Pal[0].peRed = 0;

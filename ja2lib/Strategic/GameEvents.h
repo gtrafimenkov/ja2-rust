@@ -11,9 +11,9 @@ typedef struct STRATEGICEVENT {
   uint32_t uiTimeStamp;
   uint32_t uiParam;
   uint32_t uiTimeOffset;
-  UINT8 ubEventType;
-  UINT8 ubCallbackID;
-  UINT8 ubFlags;
+  uint8_t ubEventType;
+  uint8_t ubCallbackID;
+  uint8_t ubFlags;
   INT8 bPadding[6];
 } STRATEGICEVENT;
 
@@ -26,7 +26,7 @@ void UnlockStrategicEventFromDeletion(STRATEGICEVENT *pEvent);
 BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile);
 BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile);
 
-STRATEGICEVENT *AddAdvancedStrategicEvent(UINT8 ubEventType, UINT8 ubCallbackID,
+STRATEGICEVENT *AddAdvancedStrategicEvent(uint8_t ubEventType, uint8_t ubCallbackID,
                                           uint32_t uiTimeStamp, uint32_t uiParam);
 
 BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent);

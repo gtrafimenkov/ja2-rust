@@ -90,7 +90,7 @@ uint32_t uiPercentLoyaltyDecreaseForCivMurder[] = {
 // on a scale of 1-100, this is a measure of how much each town hates the Queen's opression & is
 // willing to stand against it it primarily controls the RATE of loyalty change in each town: the
 // loyalty effect of the same events depends on it
-UINT8 gubTownRebelSentiment[NUM_TOWNS] = {
+uint8_t gubTownRebelSentiment[NUM_TOWNS] = {
     0,   // not a town - blank sector index
     90,  // OMERTA,	- They ARE the rebels!!!
     30,  // DRASSEN,	- Rebel friendly, makes it pretty easy to get first mine's income going at
@@ -154,10 +154,10 @@ void HandleTheftByCiviliansInSector( INT16 sX, INT16 sY, INT32 iLoyalty );
 void HandleTownTheft( void );
 */
 
-extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
+extern void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
 
 void InitTownLoyalty(void) {
-  UINT8 ubTown = 0;
+  uint8_t ubTown = 0;
 
   // set up town loyalty table
   for (ubTown = FIRST_TOWN; ubTown < NUM_TOWNS; ubTown++) {
@@ -202,7 +202,7 @@ void StartTownLoyaltyIfFirstTime(TownID bTownId) {
 
 // set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you
 // want)
-void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
+void SetTownLoyalty(TownID bTownId, uint8_t ubNewLoyaltyRating) {
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
   // if the town does use loyalty
@@ -287,9 +287,9 @@ void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease) {
 // update town loyalty rating based on gain values
 void UpdateTownLoyaltyRating(TownID bTownId) {
   // check gain value and update loyaty
-  UINT8 ubOldLoyaltyRating = 0;
+  uint8_t ubOldLoyaltyRating = 0;
   INT16 sRatingChange = 0;
-  UINT8 ubMaxLoyalty = 0;
+  uint8_t ubMaxLoyalty = 0;
 
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
@@ -655,7 +655,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   return;
 }
 
-void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubChance) {
+void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubChance) {
   // remove random items in sector
   uint32_t uiNumberOfItems = 0, iCounter = 0;
   WORLDITEM *pItemList;
@@ -664,7 +664,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
 
   // stealing should fail anyway 'cause there shouldn't be a temp file for unvisited sectors, but
   // let's check anyway
-  Assert(GetSectorFlagStatus(sSectorX, sSectorY, (UINT8)sSectorZ, SF_ALREADY_VISITED) == TRUE);
+  Assert(GetSectorFlagStatus(sSectorX, sSectorY, (uint8_t)sSectorZ, SF_ALREADY_VISITED) == TRUE);
 
   // get sector name string
   GetSectorIDString(sSectorX, sSectorY, (INT8)sSectorZ, wSectorName, ARR_SIZE(wSectorName), TRUE);
@@ -675,7 +675,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
   if (gWorldSectorX != sSectorX || gWorldSectorY != sSectorY || gbWorldSectorZ != sSectorZ) {
     // if the player has never been there, there's no temp file, and 0 items will get returned,
     // preventing any stealing
-    GetNumberOfWorldItemsFromTempItemFile(sSectorX, sSectorY, (UINT8)sSectorZ, &uiNumberOfItems,
+    GetNumberOfWorldItemsFromTempItemFile(sSectorX, sSectorY, (uint8_t)sSectorZ, &uiNumberOfItems,
                                           FALSE);
 
     if (uiNumberOfItems == 0) {
@@ -685,7 +685,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
     pItemList = (WORLDITEM *)MemAlloc(sizeof(WORLDITEM) * uiNumberOfItems);
 
     // now load items
-    LoadWorldItemsFromTempItemFile(sSectorX, sSectorY, (UINT8)sSectorZ, pItemList);
+    LoadWorldItemsFromTempItemFile(sSectorX, sSectorY, (uint8_t)sSectorZ, pItemList);
     uiNewTotal = uiNumberOfItems;
 
     // set up item list ptrs
@@ -707,7 +707,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
 
     // only save if something was stolen
     if (uiNewTotal < uiNumberOfItems) {
-      AddWorldItemsToUnLoadedSector(sSectorX, sSectorY, (UINT8)sSectorZ, 0, uiNumberOfItems,
+      AddWorldItemsToUnLoadedSector(sSectorX, sSectorY, (uint8_t)sSectorZ, 0, uiNumberOfItems,
                                     pItemList, TRUE);
     }
 
@@ -733,9 +733,9 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
 #ifdef JA2TESTVERSION
 void CalcDistancesBetweenTowns(void) {
   // run though each town sector and compare it to the next in terms of distance
-  UINT8 ubTownA, ubTownB;
+  uint8_t ubTownA, ubTownB;
   uint32_t uiCounterA, uiCounterB;
-  UINT8 ubTempGroupId = 0;
+  uint8_t ubTempGroupId = 0;
   INT32 iDistance = 0;
 
   // this is a little bit tricky, since towns can have multiple sectors, we have to measure all
@@ -762,8 +762,8 @@ void CalcDistancesBetweenTowns(void) {
     uiCounterB = uiCounterA;
 
     while ((*townSectors)[uiCounterB].townID != 0) {
-      ubTownA = (UINT8)(*townSectors)[uiCounterA].townID;
-      ubTownB = (UINT8)(*townSectors)[uiCounterB].townID;
+      ubTownA = (uint8_t)(*townSectors)[uiCounterA].townID;
+      ubTownB = (uint8_t)(*townSectors)[uiCounterB].townID;
 
       // if they're not in the same town
       if (ubTownA != ubTownB) {
@@ -810,7 +810,7 @@ void WriteOutDistancesBetweenTowns(void) {
 void DumpDistancesBetweenTowns(void) {
   CHAR8 zPrintFileName[60];
   FILE *FDump;
-  UINT8 ubTownA, ubTownB;
+  uint8_t ubTownA, ubTownB;
   CHAR16 wHeading[4];
 
   // open output file
@@ -864,7 +864,9 @@ void ReadInDistancesBetweenTowns(void) {
   return;
 }
 
-INT32 GetTownDistances(UINT8 ubTown, UINT8 ubTownA) { return (iTownDistances[ubTown][ubTownA]); }
+INT32 GetTownDistances(uint8_t ubTown, uint8_t ubTownA) {
+  return (iTownDistances[ubTown][ubTownA]);
+}
 
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten;
@@ -906,7 +908,7 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
     } else {
       // loyalty in other places is also strongly affected by this falling out with rebels, but this
       // is not permanent
-      SetTownLoyalty(bTownId, (UINT8)(gTownLoyalty[bTownId].ubRating / 3));
+      SetTownLoyalty(bTownId, (uint8_t)(gTownLoyalty[bTownId].ubRating / 3));
     }
   }
 }
@@ -962,7 +964,7 @@ INT32 IsTownUnderCompleteControlByEnemy(TownID bTownId) {
   return (FALSE);
 }
 
-void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, UINT8 ubHowMany) {
+void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHowMany) {
   TownID bTownId = 0;
   uint32_t uiLoyaltyChange = 0;
   CHAR16 str[256];
@@ -1004,7 +1006,7 @@ void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease) {
   }
 }
 // this applies the change to every town differently, depending on the distance from the event
-void HandleGlobalLoyaltyEvent(UINT8 ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   INT32 iLoyaltyChange;
   TownID bTownId = 0;
 
@@ -1078,7 +1080,7 @@ void HandleGlobalLoyaltyEvent(UINT8 ubEventType, u8 sSectorX, u8 sSectorY, INT8 
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          INT8 bSectorZ) {
   INT16 sEventSector;
-  UINT8 ubTempGroupId;
+  uint8_t ubTempGroupId;
   TownID bTownId;
   uint32_t uiIndex;
   INT32 iThisDistance;
@@ -1094,14 +1096,14 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
   sEventSector = sSectorX + (MAP_WORLD_X * sSectorY);
 
   // need a temporary group create to use for laying down distance paths
-  ubTempGroupId = CreateNewPlayerGroupDepartingFromSector((UINT8)sSectorX, (UINT8)sSectorY);
+  ubTempGroupId = CreateNewPlayerGroupDepartingFromSector((uint8_t)sSectorX, (uint8_t)sSectorY);
 
   // calc distance to the event sector from EACH GetSectorID8 of each town, keeping only the
   // shortest one for every town
   uiIndex = 0;
   const TownSectors *townSectors = GetAllTownSectors();
   while ((*townSectors)[uiIndex].townID != 0) {
-    bTownId = (UINT8)(*townSectors)[uiIndex].townID;
+    bTownId = (uint8_t)(*townSectors)[uiIndex].townID;
 
     // skip path test if distance is already known to be zero to speed this up a bit
     if (iShortestDistance[bTownId] > 0) {
@@ -1208,7 +1210,7 @@ void CheckIfEntireTownHasBeenLost(TownID bTownId, u8 sSectorX, u8 sSectorY) {
   }
 }
 
-void HandleLoyaltyChangeForNPCAction(UINT8 ubNPCProfileId) {
+void HandleLoyaltyChangeForNPCAction(uint8_t ubNPCProfileId) {
   switch (ubNPCProfileId) {
     case MIGUEL:
       // Omerta loyalty increases when Miguel receives letter from Enrico
@@ -1272,7 +1274,7 @@ BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId) {
 }
 
 uint32_t PlayerStrength(void) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiStrength, uiTotal = 0;
 
@@ -1295,7 +1297,7 @@ uint32_t PlayerStrength(void) {
 }
 
 uint32_t EnemyStrength(void) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiStrength, uiTotal = 0;
 

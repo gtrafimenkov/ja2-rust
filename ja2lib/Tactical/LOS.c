@@ -137,7 +137,7 @@ static DOUBLE ddShotgunSpread[3][BUCKSHOT_SHOTS][2] = {
 
 };
 
-static UINT8 gubTreeSightReduction[ANIM_STAND + 1] = {
+static uint8_t gubTreeSightReduction[ANIM_STAND + 1] = {
     0,
     8,  // prone
     0,
@@ -193,13 +193,13 @@ static uint16_t guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_S
 
 struct STRUCTURE *gpLocalStructure[MAX_LOCAL_STRUCTURES];
 uint32_t guiLocalStructureCTH[MAX_LOCAL_STRUCTURES];
-UINT8 gubLocalStructureNumTimesHit[MAX_LOCAL_STRUCTURES];
+uint8_t gubLocalStructureNumTimesHit[MAX_LOCAL_STRUCTURES];
 
 BOOLEAN CalculateLOSNormal(struct STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ,
                            FLOAT dDeltaX, FLOAT dDeltaY, FLOAT dDeltaZ, FLOAT *pdNormalX,
                            FLOAT *pdNormalY, FLOAT *pdNormalZ);
 
-extern UINT8 gubMaterialArmour[];
+extern uint8_t gubMaterialArmour[];
 
 #ifdef LOS_DEBUG
 LOSResults gLOSTestResults = {0};
@@ -589,8 +589,8 @@ BOOLEAN ResolveHitOnWall(struct STRUCTURE *pStructure, INT32 iGridNo, INT8 bLOSI
  *
  */
 INT32 LineOfSightTest(FLOAT dStartX, FLOAT dStartY, FLOAT dStartZ, FLOAT dEndX, FLOAT dEndY,
-                      FLOAT dEndZ, UINT8 ubTileSightLimit, UINT8 ubTreeSightReduction, INT8 bAware,
-                      INT8 bCamouflage, BOOLEAN fSmell, INT16 *psWindowGridNo) {
+                      FLOAT dEndZ, uint8_t ubTileSightLimit, uint8_t ubTreeSightReduction,
+                      INT8 bAware, INT8 bCamouflage, BOOLEAN fSmell, INT16 *psWindowGridNo) {
   // Parameters...
   // the X,Y,Z triplets should be obvious
   // TileSightLimit is the max # of tiles of distance visible
@@ -1213,8 +1213,8 @@ INT32 LineOfSightTest(FLOAT dStartX, FLOAT dStartY, FLOAT dStartZ, FLOAT dEndX, 
           iSightLimit);
 }
 
-BOOLEAN CalculateSoldierZPos(struct SOLDIERTYPE *pSoldier, UINT8 ubPosType, FLOAT *pdZPos) {
-  UINT8 ubHeight;
+BOOLEAN CalculateSoldierZPos(struct SOLDIERTYPE *pSoldier, uint8_t ubPosType, FLOAT *pdZPos) {
+  uint8_t ubHeight;
 
   if (pSoldier->ubBodyType == CROW) {
     // Crow always as prone...
@@ -1374,13 +1374,13 @@ BOOLEAN CalculateSoldierZPos(struct SOLDIERTYPE *pSoldier, UINT8 ubPosType, FLOA
 }
 
 INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
-                                      struct SOLDIERTYPE *pEndSoldier, UINT8 ubTileSightLimit,
+                                      struct SOLDIERTYPE *pEndSoldier, uint8_t ubTileSightLimit,
                                       INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   BOOLEAN fOk;
   BOOLEAN fSmell;
   INT8 bEffectiveCamo;
-  UINT8 ubTreeReduction;
+  uint8_t ubTreeReduction;
 
   // TO ADD: if target is camouflaged and in cover, reduce sight distance by 30%
   // TO ADD: if in tear gas, reduce sight limit to 2 tiles
@@ -1447,7 +1447,7 @@ INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
         case HIGH_GRASS:
           iTemp = ubTileSightLimit;
           iTemp -= iTemp * (bEffectiveCamo / 3) / 100;
-          ubTileSightLimit = (UINT8)iTemp;
+          ubTileSightLimit = (uint8_t)iTemp;
           break;
         default:
           break;
@@ -1498,7 +1498,7 @@ INT16 SoldierToLocationWindowTest(struct SOLDIERTYPE *pStartSoldier, INT16 sEndG
 
 BOOLEAN SoldierToSoldierLineOfSightTimingTest(struct SOLDIERTYPE *pStartSoldier,
                                               struct SOLDIERTYPE *pEndSoldier,
-                                              UINT8 ubTileSightLimit, INT8 bAware) {
+                                              uint8_t ubTileSightLimit, INT8 bAware) {
   uint32_t uiLoopLimit = 100000;
   uint32_t uiLoop;
   uint32_t uiStartTime, uiEndTime;
@@ -1524,11 +1524,11 @@ BOOLEAN SoldierToSoldierLineOfSightTimingTest(struct SOLDIERTYPE *pStartSoldier,
 }
 
 INT32 SoldierTo3DLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                         INT8 bLevel, INT8 bCubeLevel, UINT8 ubTileSightLimit,
+                                         INT8 bLevel, INT8 bCubeLevel, uint8_t ubTileSightLimit,
                                          INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos;
-  UINT8 ubTargetID;
+  uint8_t ubTargetID;
   struct SOLDIERTYPE *pTarget;
   BOOLEAN fOk;
 
@@ -1564,14 +1564,14 @@ INT32 SoldierTo3DLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT1
 }
 
 INT32 SoldierToBodyPartLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                       INT8 bLevel, UINT8 ubAimLocation, UINT8 ubTileSightLimit,
+                                       INT8 bLevel, uint8_t ubAimLocation, uint8_t ubTileSightLimit,
                                        INT8 bAware) {
   struct SOLDIERTYPE *pEndSoldier;
-  UINT8 ubTargetID;
+  uint8_t ubTargetID;
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos;
   BOOLEAN fOk;
-  UINT8 ubPosType;
+  uint8_t ubPosType;
 
   // CJC August 13, 2002: for this routine to work there MUST be a target at the location specified
   ubTargetID = WhoIsThere2(sGridNo, bLevel);
@@ -1616,7 +1616,7 @@ INT32 SoldierToBodyPartLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 
 }
 
 INT32 SoldierToVirtualSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                             INT8 bLevel, INT8 bStance, UINT8 ubTileSightLimit,
+                                             INT8 bLevel, INT8 bStance, uint8_t ubTileSightLimit,
                                              INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos;
@@ -1657,16 +1657,16 @@ INT32 SoldierToVirtualSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, 
 }
 
 INT32 SoldierToLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                       UINT8 ubTileSightLimit, INT8 bAware) {
+                                       uint8_t ubTileSightLimit, INT8 bAware) {
   return (
       SoldierTo3DLocationLineOfSightTest(pStartSoldier, sGridNo, 0, 0, ubTileSightLimit, bAware));
 }
 
 INT32 LocationToLocationLineOfSightTest(INT16 sStartGridNo, INT8 bStartLevel, INT16 sEndGridNo,
-                                        INT8 bEndLevel, UINT8 ubTileSightLimit, INT8 bAware) {
+                                        INT8 bEndLevel, uint8_t ubTileSightLimit, INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   INT16 sStartXPos, sStartYPos, sEndXPos, sEndYPos;
-  UINT8 ubStartID;
+  uint8_t ubStartID;
 
   ubStartID = WhoIsThere2(sStartGridNo, bStartLevel);
   if (ubStartID != NOBODY) {
@@ -1715,11 +1715,11 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
   INT16 sRange;
   struct SOLDIERTYPE *pFirer = pBullet->pFirer;
   FLOAT dZPosRelToMerc;
-  UINT8 ubHitLocation = AIM_SHOT_RANDOM;
-  UINT8 ubAttackDirection;
-  UINT8 ubAmmoType;
+  uint8_t ubHitLocation = AIM_SHOT_RANDOM;
+  uint8_t ubAttackDirection;
+  uint8_t ubAmmoType;
   uint32_t uiChanceThrough;
-  UINT8 ubSpecial = FIRE_WEAPON_NO_SPECIAL;
+  uint8_t ubSpecial = FIRE_WEAPON_NO_SPECIAL;
   INT16 sHitBy;
   BOOLEAN fStopped = TRUE;
   INT8 bSlot;
@@ -1775,7 +1775,7 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
       // adult monster types have a weak spot
       if ((pTarget->ubBodyType >= ADULTFEMALEMONSTER) && (pTarget->ubBodyType <= YAM_MONSTER)) {
         ubAttackDirection =
-            (UINT8)GetDirectionToGridNoFromGridNo(pBullet->pFirer->sGridNo, pTarget->sGridNo);
+            (uint8_t)GetDirectionToGridNoFromGridNo(pBullet->pFirer->sGridNo, pTarget->sGridNo);
         if (ubAttackDirection == pTarget->bDirection ||
             ubAttackDirection == gOneCCDirection[pTarget->bDirection] ||
             ubAttackDirection == gOneCDirection[pTarget->bDirection]) {
@@ -1841,10 +1841,10 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
 
     if ((ubAmmoType == AMMO_MONSTER) && (ubHitLocation == AIM_SHOT_HEAD) &&
         (!(pTarget->uiStatusFlags & SOLDIER_MONSTER))) {
-      UINT8 ubOppositeDirection;
+      uint8_t ubOppositeDirection;
 
       ubAttackDirection =
-          (UINT8)GetDirectionToGridNoFromGridNo(pBullet->pFirer->sGridNo, pTarget->sGridNo);
+          (uint8_t)GetDirectionToGridNoFromGridNo(pBullet->pFirer->sGridNo, pTarget->sGridNo);
       ubOppositeDirection = gOppositeDirection[ubAttackDirection];
 
       if (!(ubOppositeDirection == pTarget->bDirection ||
@@ -2003,7 +2003,7 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
     if (iDamage < iImpact) {
       iImpact = iDamage;
     }
-    uiChanceThrough = (UINT8)max(0, (iImpact - 20));
+    uiChanceThrough = (uint8_t)max(0, (iImpact - 20));
     if (PreRandom(100) < uiChanceThrough) {
       // bullet MAY go through
       // adjust for bullet going through person
@@ -2048,7 +2048,7 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
 
     if (fCanSpewBlood) {
       // Drop blood dude!
-      InternalDropBlood(sNewGridNo, bSpewBloodLevel, 0, (UINT8)(MAXBLOODQUANTITY), 1);
+      InternalDropBlood(sNewGridNo, bSpewBloodLevel, 0, (uint8_t)(MAXBLOODQUANTITY), 1);
     }
   }
 
@@ -2302,7 +2302,7 @@ INT32 CTGTHandleBulletStructureInteraction(BULLET *pBullet, struct STRUCTURE *pS
   return (iImpactReduction);
 }
 
-UINT8 CalcChanceToGetThrough(BULLET *pBullet) {
+uint8_t CalcChanceToGetThrough(BULLET *pBullet) {
   FIXEDPT qLandHeight;
   INT32 iCurrAboveLevelZ;
   INT32 iCurrCubesAboveLevelZ;
@@ -2574,7 +2574,7 @@ UINT8 CalcChanceToGetThrough(BULLET *pBullet) {
                     iChanceToGetThrough = iChanceToGetThrough *
                                           (pBullet->iImpact - pBullet->iImpactReduction) /
                                           pBullet->iImpact;
-                    return ((UINT8)iChanceToGetThrough);
+                    return ((uint8_t)iChanceToGetThrough);
                   } else {
                     gubLocalStructureNumTimesHit[iStructureLoop]++;
                   }
@@ -2696,11 +2696,11 @@ UINT8 CalcChanceToGetThrough(BULLET *pBullet) {
   if (iChanceToGetThrough < 0) {
     iChanceToGetThrough = 0;
   }
-  return ((UINT8)iChanceToGetThrough);
+  return ((uint8_t)iChanceToGetThrough);
 }
 
-UINT8 SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
-                                         struct SOLDIERTYPE *pEndSoldier) {
+uint8_t SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                           struct SOLDIERTYPE *pEndSoldier) {
   FLOAT dEndZPos;
   BOOLEAN fOk;
 
@@ -2721,13 +2721,13 @@ UINT8 SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
                              (FLOAT)CenterY(pEndSoldier->sGridNo), dEndZPos));
 }
 
-UINT8 SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
-                                                 struct SOLDIERTYPE *pEndSoldier,
-                                                 UINT8 ubAimLocation) {
+uint8_t SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                                   struct SOLDIERTYPE *pEndSoldier,
+                                                   uint8_t ubAimLocation) {
   // does like StS-CTGT but with a particular body part in mind
   FLOAT dEndZPos;
   BOOLEAN fOk;
-  UINT8 ubPosType;
+  uint8_t ubPosType;
 
   if (pStartSoldier == pEndSoldier) {
     return (0);
@@ -2761,8 +2761,8 @@ UINT8 SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldi
                              (FLOAT)CenterY(pEndSoldier->sGridNo), dEndZPos));
 }
 
-UINT8 SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                          INT8 bLevel, INT8 bCubeLevel, UINT8 ubTargetID) {
+uint8_t SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                            INT8 bLevel, INT8 bCubeLevel, uint8_t ubTargetID) {
   FLOAT dEndZPos;
   INT16 sXPos;
   INT16 sYPos;
@@ -2805,12 +2805,12 @@ UINT8 SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT
   }
 }
 
-UINT8 AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
-                                           struct SOLDIERTYPE *pEndSoldier) {
+uint8_t AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                             struct SOLDIERTYPE *pEndSoldier) {
   // Like a standard CTGT algorithm BUT fakes the start soldier at standing height
   FLOAT dEndZPos;
   BOOLEAN fOk;
-  UINT8 ubChance;
+  uint8_t ubChance;
   uint16_t usTrueState;
 
   if (pStartSoldier == pEndSoldier) {
@@ -2835,8 +2835,8 @@ UINT8 AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
   return (ubChance);
 }
 
-UINT8 AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
-                                            INT8 bLevel, INT8 bCubeLevel) {
+uint8_t AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                              INT8 bLevel, INT8 bCubeLevel) {
   FLOAT dEndZPos;
   INT16 sXPos;
   INT16 sYPos;
@@ -2844,7 +2844,7 @@ UINT8 AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, I
   struct SOLDIERTYPE *pEndSoldier;
 
   uint16_t usTrueState;
-  UINT8 ubChance;
+  uint8_t ubChance;
 
   if (pStartSoldier->sGridNo == sGridNo) {
     return (0);
@@ -3060,11 +3060,11 @@ INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY,
 
   INT32 iDistance;
 
-  UINT8 ubLoop;
-  UINT8 ubShots;
-  UINT8 ubImpact;
+  uint8_t ubLoop;
+  uint8_t ubShots;
+  uint8_t ubImpact;
   INT8 bCTGT;
-  UINT8 ubSpreadIndex = 0;
+  uint8_t ubSpreadIndex = 0;
   uint16_t usBulletFlags = 0;
 
   CalculateSoldierZPos(pFirer, FIRING_POS, &dStartZ);
@@ -3279,7 +3279,7 @@ void MoveBullet(INT32 iBullet) {
   FIXEDPT qLastZ;
 
   struct SOLDIERTYPE *pTarget;
-  UINT8 ubTargetID;
+  uint8_t ubTargetID;
   BOOLEAN fIntended;
   BOOLEAN fStopped;
   INT8 bOldLOSIndexX;

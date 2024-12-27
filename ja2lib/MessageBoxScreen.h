@@ -56,16 +56,16 @@ void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, uint16_t usFlags,
                                            const SGPRect *pCenteringRect);
 
 // wrappers for other screens
-BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                          uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect);
-INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+INT32 DoMapMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                               uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                               const SGPRect *pCenteringRect);
-BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect);
-BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoSaveLoadMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                      uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                      const SGPRect *pCenteringRect);
 

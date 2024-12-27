@@ -407,7 +407,7 @@ void DisplaySirtechSplashScreen() {
   uint32_t uiLogoID;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   // JA3Gold: do nothing until we have a graphic to replace Talonsoft's
   // return;

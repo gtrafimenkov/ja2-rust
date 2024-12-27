@@ -37,13 +37,13 @@ uint32_t guiInsCmntBulletImage;
 struct MOUSE_REGION gSelectedInsuranceCommentLinkRegion[3];
 void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
-BOOLEAN DisplayComment(UINT8 ubCommentorsName, UINT8 ubComment, uint16_t usPosY);
+BOOLEAN DisplayComment(uint8_t ubCommentorsName, uint8_t ubComment, uint16_t usPosY);
 
 void GameInitInsuranceComments() {}
 
 BOOLEAN EnterInsuranceComments() {
   VOBJECT_DESC VObjectDesc;
-  UINT8 i;
+  uint8_t i;
   uint16_t usPosX;
 
   InitInsuranceDefaults();
@@ -71,7 +71,7 @@ BOOLEAN EnterInsuranceComments() {
 }
 
 void ExitInsuranceComments() {
-  UINT8 i;
+  uint8_t i;
   RemoveInsuranceDefaults();
   DeleteVideoObjectFromIndex(guiInsCmntBulletImage);
 
@@ -169,7 +169,7 @@ void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT3
   }
 }
 
-BOOLEAN DisplayComment(UINT8 ubCommentorsName, UINT8 ubComment, uint16_t usPosY) {
+BOOLEAN DisplayComment(uint8_t ubCommentorsName, uint8_t ubComment, uint16_t usPosY) {
   wchar_t sText[800];
   struct VObject* hPixHandle;
   uint16_t sNumPixels = 0;

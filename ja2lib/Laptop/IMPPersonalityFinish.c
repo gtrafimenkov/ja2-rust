@@ -18,7 +18,7 @@
 
 // this is the amount of time, the player waits until booted back to main profileing screen
 
-UINT8 bPersonalityEndState = 0;
+uint8_t bPersonalityEndState = 0;
 
 #define PERSONALITY_CONFIRM_FINISH_DELAY 2500
 

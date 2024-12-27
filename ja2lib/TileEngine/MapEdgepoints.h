@@ -4,14 +4,14 @@
 #include "SGP/Types.h"
 
 typedef struct MAPEDGEPOINTINFO {
-  UINT8 ubNumPoints;
-  UINT8 ubStrategicInsertionCode;
+  uint8_t ubNumPoints;
+  uint8_t ubStrategicInsertionCode;
   uint16_t sGridNo[32];
 } MAPEDGEPOINTINFO;
 
-uint16_t ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode);
-void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategicInsertionCode,
-                         UINT8 ubNumDesiredPoints);
+uint16_t ChooseMapEdgepoint(uint8_t ubStrategicInsertionCode);
+void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, uint8_t ubStrategicInsertionCode,
+                         uint8_t ubNumDesiredPoints);
 void GenerateMapEdgepoints();
 void SaveMapEdgepoints(HWFILE fp);
 BOOLEAN LoadMapEdgepoints(INT8 **hBuffer);
@@ -62,8 +62,8 @@ extern uint16_t gus2ndWestEdgepointMiddleIndex;
 // anybody else.
 void BeginMapEdgepointSearch();
 void EndMapEdgepointSearch();
-INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode);
-INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode);
+INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCode);
+INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCode);
 
 // There are two classes of edgepoints.
 // PRIMARY		: The default list of edgepoints.  This list includes edgepoints that are
@@ -72,7 +72,7 @@ INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode
 // traversing 						to these areas is possible.  Examples would
 // be isolated sections of Grumm or Alma, which you can't immediately
 //
-UINT8 CalcMapEdgepointClassInsertionCode(INT16 sGridNo);
+uint8_t CalcMapEdgepointClassInsertionCode(INT16 sGridNo);
 
 #ifdef JA2EDITOR
 void ShowMapEdgepoints();

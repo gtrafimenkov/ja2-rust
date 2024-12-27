@@ -56,12 +56,12 @@ void EnvDisableTOD(void);
 
 void BuildDayAmbientSounds();
 void BuildDayLightLevels();
-UINT8 GetTimeOfDayAmbientLightLevel();
+uint8_t GetTimeOfDayAmbientLightLevel();
 
-void EnvBeginRainStorm(UINT8 ubIntensity);
+void EnvBeginRainStorm(uint8_t ubIntensity);
 void EnvEndRainStorm();
 
-extern UINT8 gubEnvLightValue;
+extern uint8_t gubEnvLightValue;
 extern BOOLEAN gfDoLighting;
 extern uint32_t guiEnvWeather;
 
@@ -77,6 +77,6 @@ extern BOOLEAN gfBasement;
 
 extern INT8 SectorTemperature(uint32_t uiTime, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
-extern void UpdateTemperature(UINT8 ubTemperatureCode);
+extern void UpdateTemperature(uint8_t ubTemperatureCode);
 
 #endif

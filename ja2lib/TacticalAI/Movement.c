@@ -26,8 +26,8 @@ extern INT16 DirYIncrementer[8];
 // GoAsFarAsPossibleTowards - C.O. stuff related to current animation esp first aid
 // SetCivilianDestination - C.O. stuff for if we don't control the civ
 
-int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPathMode,
-                        UINT8 ubWaterOK, UINT8 fFlags) {
+int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, uint8_t ubPathMode,
+                        uint8_t ubWaterOK, uint8_t fFlags) {
   BOOLEAN fSkipTilesWithMercs;
 
   if ((sGridno < 0) || (sGridno >= GRIDSIZE)) {
@@ -96,8 +96,8 @@ int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPat
 }
 
 int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
-  UINT8 ubGottaCancel = FALSE;
-  UINT8 ubSuccess = FALSE;
+  uint8_t ubGottaCancel = FALSE;
+  uint8_t ubSuccess = FALSE;
 
   // have to make sure the old destination is still legal (somebody may
   // have occupied the destination gridno in the meantime!)
@@ -358,9 +358,9 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
   INT16 sTempDest, sGoToGrid;
   uint16_t sOrigin;
   uint16_t usMaxDist;
-  UINT8 ubDirection, ubDirsLeft, ubDirChecked[8], fFound = FALSE;
+  uint8_t ubDirection, ubDirsLeft, ubDirChecked[8], fFound = FALSE;
   INT8 bAPsLeft, fPathFlags;
-  UINT8 ubRoomRequired = 0, ubTempRoom;
+  uint8_t ubRoomRequired = 0, ubTempRoom;
 
   if (bReserveAPs == -1) {
     // default reserve points
@@ -436,7 +436,7 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
         }
         // randomly select a direction which hasn't been 'checked' yet
         do {
-          ubDirection = (UINT8)Random(8);
+          ubDirection = (uint8_t)Random(8);
         } while (ubDirChecked[ubDirection]);
 
         ubDirChecked[ubDirection] = TRUE;
@@ -644,7 +644,7 @@ void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
   }
 
   usNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
-                          DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
+                          DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
 
   // Find out how much it takes to move here!
   bAPCost = EstimateActionPointCost(
@@ -692,7 +692,7 @@ void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void SetCivilianDestination(UINT8 ubWho, INT16 sGridno) {
+void SetCivilianDestination(uint8_t ubWho, INT16 sGridno) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = MercPtrs[ubWho];
@@ -748,9 +748,9 @@ INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
   INT32 iGridNo;
   INT8 bDir;
   INT32 iBestGridNo = NOWHERE;
-  UINT8 ubBestDirDiff = 5, ubBestStrength = 0;
-  UINT8 ubDirDiff, ubStrength;
-  UINT8 ubSoughtSmell;
+  uint8_t ubBestDirDiff = 5, ubBestStrength = 0;
+  uint8_t ubDirDiff, ubStrength;
+  uint8_t ubSoughtSmell;
   MAP_ELEMENT *pMapElement;
 
   iStart = pSoldier->sGridNo;

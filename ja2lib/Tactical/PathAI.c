@@ -36,7 +36,7 @@
 
 extern uint16_t gubAnimSurfaceIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
 
-// extern UINT8 gubDiagCost[20];
+// extern uint8_t gubDiagCost[20];
 // skiplist has extra level of pointers every 4 elements, so a level 5is optimized for
 // 4 to the power of 5 elements, or 2 to the power of 10, 1024
 
@@ -54,9 +54,9 @@ BOOLEAN gfDrawPathPoints = FALSE;
 
 BOOLEAN gfPlotPathToExitGrid = FALSE;
 BOOLEAN gfRecalculatingExistingPathCost = FALSE;
-UINT8 gubGlobalPathFlags = 0;
+uint8_t gubGlobalPathFlags = 0;
 
-UINT8 gubBuildingInfoToSet;
+uint8_t gubBuildingInfoToSet;
 
 // ABSOLUTE maximums
 // #ifdef JA2EDITOR
@@ -96,8 +96,8 @@ struct path_s {
   TRAILCELLTYPE usCostToGo;                     // 2
   TRAILCELLTYPE usTotalCost;                    // 2
   INT8 bLevel;                                  // 1
-  UINT8 ubTotalAPCost;                          // 1
-  UINT8 ubLegDistance;                          // 1
+  uint8_t ubTotalAPCost;                        // 1
+  uint8_t ubLegDistance;                        // 1
 };
 
 typedef struct path_s path_t;
@@ -155,8 +155,8 @@ static INT32 iSkipListLevelLimit[8] = {0, 4, 16, 64, 256, 1024, 4192, 16384};
   { (str).iLocation = loc; }
 
 static TRAILCELLTYPE *trailCost;
-static UINT8 *trailCostUsed;
-static UINT8 gubGlobalPathCount = 0;
+static uint8_t *trailCostUsed;
+static uint8_t gubGlobalPathCount = 0;
 static trail_t *trailTree;
 
 static short trailTreeNdx = 0;
@@ -356,11 +356,11 @@ static path_t *pClosedHead;
 #define BLUESTEPSTART 48
 #define ORANGESTEPSTART 64
 
-UINT8 gubNPCAPBudget = 0;
+uint8_t gubNPCAPBudget = 0;
 uint16_t gusNPCMovementMode;
-UINT8 gubNPCDistLimit = 0;
+uint8_t gubNPCDistLimit = 0;
 BOOLEAN gfNPCCircularDistLimit = FALSE;
-UINT8 gubNPCPathCount;
+uint8_t gubNPCPathCount;
 
 BOOLEAN gfPlotDirectPath = FALSE;
 BOOLEAN gfEstimatePath = FALSE;
@@ -405,7 +405,7 @@ INT8 RandomSkipListLevel(void) {
 BOOLEAN InitPathAI(void) {
   pathQ = (path_t *)MemAlloc(ABSMAX_PATHQ * sizeof(path_t));
   trailCost = (TRAILCELLTYPE *)MemAlloc(MAPLENGTH * sizeof(TRAILCELLTYPE));
-  trailCostUsed = (UINT8 *)MemAlloc(MAPLENGTH);
+  trailCostUsed = (uint8_t *)MemAlloc(MAPLENGTH);
   trailTree = (trail_t *)MemAlloc(ABSMAX_TRAIL_TREE * sizeof(trail_t));
   if (!pathQ || !trailCost || !trailCostUsed || !trailTree) {
     return (FALSE);
@@ -450,14 +450,14 @@ void RestorePathAIToDefaults(void) {
 //	FINDBESTPATH                                                   /
 ////////////////////////////////////////////////////////////////////////
 INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMovementMode,
-                   INT8 bCopy, UINT8 fFlags) {
+                   INT8 bCopy, uint8_t fFlags) {
   INT32 iDestination = sDestination, iOrigination;
   INT32 iCnt = -1, iStructIndex;
   INT32 iLoopStart = 0, iLoopEnd = 0;
   INT8 bLoopState = LOOPING_CLOCKWISE;
   // BOOLEAN fLoopForwards = FALSE;
   BOOLEAN fCheckedBehind = FALSE;
-  UINT8 ubMerc;
+  uint8_t ubMerc;
   INT32 iDestX, iDestY, iLocX, iLocY, dx, dy;
   INT32 newLoc, curLoc;
   // INT32 curY;
@@ -465,8 +465,8 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
   INT16 sCurPathNdx;
   INT32 prevCost;
   INT32 iWaterToWater;
-  UINT8 ubCurAPCost, ubAPCost;
-  UINT8 ubNewAPCost = 0;
+  uint8_t ubCurAPCost, ubAPCost;
+  uint8_t ubNewAPCost = 0;
 #ifdef VEHICLE
   BOOLEAN fMultiTile;
   struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
@@ -1306,7 +1306,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
           case RUNNING:
           case ADULTMONSTER_WALKING:
             // save on casting
-            ubAPCost = ubAPCost * 10 / ((UINT8)(RUNDIVISOR * 10));
+            ubAPCost = ubAPCost * 10 / ((uint8_t)(RUNDIVISOR * 10));
             // ubAPCost = (INT16)(DOUBLE)( (sTileCost / RUNDIVISOR) );	break;
             break;
           case WALKING:
@@ -1843,7 +1843,7 @@ void GlobalItemsReachableTest(INT16 sStartGridNo1, INT16 sStartGridNo2) {
   RestorePathAIToDefaults();
 }
 
-void RoofReachableTest(INT16 sStartGridNo, UINT8 ubBuildingID) {
+void RoofReachableTest(INT16 sStartGridNo, uint8_t ubBuildingID) {
   struct SOLDIERTYPE s;
 
   memset(&s, 0, sizeof(struct SOLDIERTYPE));
@@ -1942,7 +1942,7 @@ INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, IN
 
   sFootOrderIndex = 0;
 
-  // gubNPCMovementMode = (UINT8) usMovementMode;
+  // gubNPCMovementMode = (uint8_t) usMovementMode;
   // distance limit to reduce the cost of plotting a path to a location we can't reach
 
   // For now, use known hight adjustment
@@ -2308,9 +2308,9 @@ INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyR
   return (sRet);
 }
 
-UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
-                             BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
-                             BOOLEAN fReturnDoorCost) {
+uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
+                               BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
+                               BOOLEAN fReturnDoorCost) {
   // This function will return either TRAVELCOST_DOOR (in place of closed door cost),
   // TRAVELCOST_OBSTACLE, or the base ground terrain
   // travel cost, depending on whether or not the door is open or closed etc.
@@ -2320,7 +2320,7 @@ UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 
   DOOR *pDoor;
   struct STRUCTURE *pDoorStructure;
   BOOLEAN fDoorIsOpen;
-  UINT8 ubReplacementCost;
+  uint8_t ubReplacementCost;
 
   if (IS_TRAVELCOST_DOOR(ubMovementCost)) {
     ubReplacementCost = TRAVELCOST_OBSTACLE;
@@ -2473,8 +2473,8 @@ UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 
   return (ubMovementCost);
 }
 
-UINT8 DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
-                     BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo) {
+uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
+                       BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo) {
   return (InternalDoorTravelCost(pSoldier, iGridNo, ubMovementCost, fReturnPerceivedValue,
                                  piDoorGridNo, FALSE));
 }

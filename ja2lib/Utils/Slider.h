@@ -29,7 +29,7 @@ SliderChangeCallback
         void SliderChangeCallBack( INT32 iNewValue )
 */
 
-INT32 AddSlider(UINT8 ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
+INT32 AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
                 uint16_t usWidth, uint16_t usNumberOfIncrements, INT8 sPriority,
                 SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags);
 

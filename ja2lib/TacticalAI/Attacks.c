@@ -98,10 +98,10 @@ void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
   INT32 iThreatValue;
   INT32 iHitRate, iBestHitRate, iPercentBetter;
   INT32 iEstDamage;
-  UINT8 ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
-  UINT8 ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit, ubBestChanceToHit = 0;
+  uint8_t ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
+  uint8_t ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit, ubBestChanceToHit = 0;
   struct SOLDIERTYPE *pOpponent;
-  UINT8 ubBurstAPs;
+  uint8_t ubBurstAPs;
 
   ubBestChanceToHit = ubBestAimTime = ubChanceToHit = 0;
 
@@ -223,7 +223,7 @@ void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
       // NumMessage("ubAimTime = ",ubAimTime);
 
       ubChanceToHit =
-          (UINT8)AICalcChanceToHitGun(pSoldier, pOpponent->sGridNo, ubAimTime, AIM_SHOT_TORSO);
+          (uint8_t)AICalcChanceToHitGun(pSoldier, pOpponent->sGridNo, ubAimTime, AIM_SHOT_TORSO);
       // ExtMen[pOpponent->ubID].haveStats = TRUE;
       // NumMessage("chance to Hit = ",ubChanceToHit);
 
@@ -321,7 +321,7 @@ BOOLEAN CloseEnoughForGrenadeToss(INT16 sGridNo, INT16 sGridNo2) {
   INT16 sTempGridNo;
   INT8 bDirection;
   INT16 sXPos, sYPos, sXPos2, sYPos2;
-  UINT8 ubMovementCost;
+  uint8_t ubMovementCost;
 
   if (sGridNo == sGridNo2) {
     // checking the same space; if there is a closed door next to location in ANY direction then
@@ -371,31 +371,31 @@ BOOLEAN CloseEnoughForGrenadeToss(INT16 sGridNo, INT16 sGridNo2) {
 
 void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   // September 9, 1998: added code for LAWs (CJC)
-  UINT8 ubLoop, ubLoop2;
+  uint8_t ubLoop, ubLoop2;
   INT32 iAttackValue;
   INT32 iHitRate, iThreatValue, iTotalThreatValue, iOppThreatValue[MAXMERCS];
   INT16 sGridNo, sEndGridNo, sFriendTile[MAXMERCS], sOpponentTile[MAXMERCS];
   INT8 bFriendLevel[MAXMERCS], bOpponentLevel[MAXMERCS];
   INT32 iEstDamage;
-  UINT8 ubFriendCnt = 0, ubOpponentCnt = 0, ubOpponentID[MAXMERCS];
-  UINT8 ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime;
-  UINT8 ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit;
+  uint8_t ubFriendCnt = 0, ubOpponentCnt = 0, ubOpponentID[MAXMERCS];
+  uint8_t ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime;
+  uint8_t ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit;
   uint32_t uiPenalty;
-  UINT8 ubSearchRange;
+  uint8_t ubSearchRange;
   uint16_t usOppDist;
   BOOLEAN fFriendsNearby;
   uint16_t usInHand, usGrenade;
-  UINT8 ubOppsInRange, ubOppsAdjacent;
+  uint8_t ubOppsInRange, ubOppsAdjacent;
   BOOLEAN fSkipLocation;
   INT8 bPayloadPocket;
   INT8 bMaxLeft, bMaxRight, bMaxUp, bMaxDown, bXOffset, bYOffset;
   INT8 bPersOL, bPublOL;
   struct SOLDIERTYPE *pOpponent, *pFriend;
   static INT16 sExcludeTile[100];  // This array is for storing tiles that we have
-  UINT8 ubNumExcludedTiles = 0;    // already considered, to prevent duplication of effort
+  uint8_t ubNumExcludedTiles = 0;  // already considered, to prevent duplication of effort
   INT32 iTossRange;
-  UINT8 ubSafetyMargin = 0;
-  UINT8 ubDiff;
+  uint8_t ubSafetyMargin = 0;
+  uint8_t ubDiff;
   INT8 bEndLevel;
 
   usInHand = pSoldier->inv[HANDPOS].usItem;
@@ -837,7 +837,7 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
               // to penalize being far from the target
               uiPenalty = 100 * PythSpacesAway(sGridNo, sEndGridNo) / (ubSafetyMargin - 1);
               if (uiPenalty < 100) {
-                ubChanceToGetThrough = 100 - (UINT8)uiPenalty;
+                ubChanceToGetThrough = 100 - (uint8_t)uiPenalty;
               } else {
                 continue;
               }
@@ -868,13 +868,13 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
 
         if (EXPLOSIVE_GUN(usInHand)) {
           ubRawAPCost = MinAPsToShootOrStab(pSoldier, sGridNo, FALSE);
-          ubChanceToHit =
-              (UINT8)AICalcChanceToHitGun(pSoldier, sGridNo, ubMaxPossibleAimTime, AIM_SHOT_TORSO);
+          ubChanceToHit = (uint8_t)AICalcChanceToHitGun(pSoldier, sGridNo, ubMaxPossibleAimTime,
+                                                        AIM_SHOT_TORSO);
         } else {
           // NB grenade launcher is NOT a direct fire weapon!
-          ubRawAPCost = (UINT8)MinAPsToThrow(pSoldier, sGridNo, FALSE);
-          ubChanceToHit =
-              (UINT8)CalcThrownChanceToHit(pSoldier, sGridNo, ubMaxPossibleAimTime, AIM_SHOT_TORSO);
+          ubRawAPCost = (uint8_t)MinAPsToThrow(pSoldier, sGridNo, FALSE);
+          ubChanceToHit = (uint8_t)CalcThrownChanceToHit(pSoldier, sGridNo, ubMaxPossibleAimTime,
+                                                         AIM_SHOT_TORSO);
         }
 
         // mortars are inherently quite inaccurate, don't get proximity bonus
@@ -954,8 +954,8 @@ void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN f
   INT32 iAttackValue;
   INT32 iThreatValue, iHitRate, iBestHitRate, iPercentBetter, iEstDamage;
   BOOLEAN fSurpriseStab;
-  UINT8 ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
-  UINT8 ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
+  uint8_t ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
+  uint8_t ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
   struct SOLDIERTYPE *pOpponent;
   uint16_t usTrueMovementMode;
 
@@ -1054,9 +1054,9 @@ void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN f
 
       if (!fSurpriseStab) {
         if (fBladeAttack) {
-          ubChanceToHit = (UINT8)CalcChanceToStab(pSoldier, pOpponent, ubAimTime);
+          ubChanceToHit = (uint8_t)CalcChanceToStab(pSoldier, pOpponent, ubAimTime);
         } else {
-          ubChanceToHit = (UINT8)CalcChanceToPunch(pSoldier, pOpponent, ubAimTime);
+          ubChanceToHit = (uint8_t)CalcChanceToPunch(pSoldier, pOpponent, ubAimTime);
         }
       } else
         ubChanceToHit = MAXCHANCETOHIT;
@@ -1144,8 +1144,8 @@ void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
   INT32 iAttackValue;
   INT32 iThreatValue, iHitRate, iBestHitRate, iEstDamage;
   BOOLEAN fSurpriseStab;
-  UINT8 ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
-  UINT8 ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
+  uint8_t ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
+  uint8_t ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
   struct SOLDIERTYPE *pOpponent;
 
   InitAttackType(pBestStab);  // set all structure fields to defaults
@@ -1213,7 +1213,7 @@ void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
       // NumMessage("ubAimTime = ",ubAimTime);
 
       if (!fSurpriseStab) {
-        ubChanceToHit = (UINT8)CalcChanceToStab(pSoldier, pOpponent, ubAimTime);
+        ubChanceToHit = (uint8_t)CalcChanceToStab(pSoldier, pOpponent, ubAimTime);
       } else
         ubChanceToHit = MAXCHANCETOHIT;
       // NumMessage("chance to Hit = ",ubChanceToHit);
@@ -1275,7 +1275,7 @@ void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
   }
 }
 
-UINT8 NumMercsCloseTo(INT16 sGridNo, UINT8 ubMaxDist) {
+uint8_t NumMercsCloseTo(INT16 sGridNo, uint8_t ubMaxDist) {
   INT8 bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
@@ -1294,14 +1294,14 @@ UINT8 NumMercsCloseTo(INT16 sGridNo, UINT8 ubMaxDist) {
 }
 
 INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         UINT8 ubChanceToHit) {
+                         uint8_t ubChanceToHit) {
   INT32 iRange, iMaxRange, iPowerLost;
   INT32 iDamage;
-  UINT8 ubBonus;
+  uint8_t ubBonus;
   INT32 iHeadProt = 0, iTorsoProt = 0, iLegProt = 0;
   INT32 iTotalProt;
   INT8 bPlatePos;
-  UINT8 ubAmmoType;
+  uint8_t ubAmmoType;
 
   /*
           if ( pOpponent->uiStatusFlags & SOLDIER_VEHICLE )
@@ -1422,9 +1422,9 @@ INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOppo
   return (iDamage);
 }
 
-INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, UINT8 ubItemPos,
+INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
                           struct SOLDIERTYPE *pOpponent, INT16 sGridno) {
-  UINT8 ubExplosiveIndex;
+  uint8_t ubExplosiveIndex;
   INT32 iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
   INT8 bSlot;
 
@@ -1500,7 +1500,7 @@ INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, UINT8 ubItemPos,
 }
 
 INT32 EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         UINT8 ubChanceToHit, BOOLEAN fBladeAttack) {
+                         uint8_t ubChanceToHit, BOOLEAN fBladeAttack) {
   INT32 iImpact, iFluke, iBonus;
 
   if (fBladeAttack) {
@@ -1639,7 +1639,7 @@ INT8 CanNPCAttack(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CheckIfTossPossible(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
-  UINT8 ubMinAPcost;
+  uint8_t ubMinAPcost;
 
   if (TANK(pSoldier)) {
     pBestThrow->bWeaponIn = FindObj(pSoldier, TANK_CANNON);

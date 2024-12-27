@@ -87,7 +87,7 @@ INT32 giFilesPage = 0;
 #define SLAY_LENGTH 12
 #define ENRICO_LENGTH 0
 
-UINT8 ubFileRecordsLength[] = {
+uint8_t ubFileRecordsLength[] = {
     ENRICO_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH,
 };
 
@@ -128,7 +128,7 @@ struct MOUSE_REGION pFilesRegions[MAX_FILES_PAGE];
 void RenderFilesBackGround(void);
 BOOLEAN LoadFiles(void);
 void RemoveFiles(void);
-uint32_t ProcessAndEnterAFilesRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat,
+uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
                                      STR8 pFirstPicFile, STR8 pSecondPicFile, BOOLEAN fRead);
 void OpenAndReadFilesFile(void);
 BOOLEAN OpenAndWriteFilesFile(void);
@@ -154,7 +154,7 @@ void CheckForUnreadFiles(void);
 // file string structure manipulations
 void ClearFileStringList(void);
 void AddStringToFilesList(STR16 pString);
-BOOLEAN HandleSpecialFiles(UINT8 ubFormat);
+BOOLEAN HandleSpecialFiles(uint8_t ubFormat);
 BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName);
 
 // callbacks
@@ -167,9 +167,9 @@ void ClearOutWidthRecordsList(FileRecordWidthPtr pFileRecordWidthList);
 FileRecordWidthPtr CreateWidthRecordsForAruloIntelFile(void);
 FileRecordWidthPtr CreateWidthRecordsForTerroristFile(void);
 FileRecordWidthPtr CreateRecordWidth(INT32 iRecordNumber, INT32 iRecordWidth,
-                                     INT32 iRecordHeightAdjustment, UINT8 ubFlags);
+                                     INT32 iRecordHeightAdjustment, uint8_t ubFlags);
 
-uint32_t AddFilesToPlayersLog(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
+uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, STR8 pFirstPicFile,
                               STR8 pSecondPicFile) {
   // adds Files item to player's log(Files List), returns unique id number of it
   // outside of the Files system(the code in this .c file), this is the only function you'll ever
@@ -349,7 +349,7 @@ void RemoveFiles(void) {
   return;
 }
 
-uint32_t ProcessAndEnterAFilesRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat,
+uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
                                      STR8 pFirstPicFile, STR8 pSecondPicFile, BOOLEAN fRead) {
   uint32_t uiId = 0;
   FilesUnitPtr pFiles = pFilesListHead;
@@ -434,13 +434,13 @@ uint32_t ProcessAndEnterAFilesRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubForm
 void OpenAndReadFilesFile(void) {
   // this procedure will open and read in data to the finance list
   HWFILE hFileHandle;
-  UINT8 ubCode;
+  uint8_t ubCode;
   uint32_t uiDate;
   uint32_t iBytesRead = 0;
   uint32_t uiByteCount = 0;
   CHAR8 pFirstFilePath[128];
   CHAR8 pSecondFilePath[128];
-  UINT8 ubFormat;
+  uint8_t ubFormat;
   BOOLEAN fRead;
 
   // clear out the old list
@@ -466,7 +466,7 @@ void OpenAndReadFilesFile(void) {
   // file exists, read in data, continue until file end
   while (FileMan_GetSize(hFileHandle) > uiByteCount) {
     // read in data
-    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
 
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
 
@@ -474,14 +474,15 @@ void OpenAndReadFilesFile(void) {
 
     FileMan_Read(hFileHandle, &pSecondFilePath, 128, &iBytesRead);
 
-    FileMan_Read(hFileHandle, &ubFormat, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubFormat, sizeof(uint8_t), &iBytesRead);
 
-    FileMan_Read(hFileHandle, &fRead, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &fRead, sizeof(uint8_t), &iBytesRead);
     // add transaction
     ProcessAndEnterAFilesRecord(ubCode, uiDate, ubFormat, pFirstFilePath, pSecondFilePath, fRead);
 
     // increment byte counter
-    uiByteCount += sizeof(uint32_t) + sizeof(UINT8) + 128 + 128 + sizeof(UINT8) + sizeof(BOOLEAN);
+    uiByteCount +=
+        sizeof(uint32_t) + sizeof(uint8_t) + 128 + 128 + sizeof(uint8_t) + sizeof(BOOLEAN);
   }
 
   // close file
@@ -519,12 +520,12 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   // write info, while there are elements left in the list
   while (pFilesList) {
     // now write date and amount, and code
-    FileMan_Write(hFileHandle, &(pFilesList->ubCode), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->ubCode), sizeof(uint8_t), NULL);
     FileMan_Write(hFileHandle, &(pFilesList->uiDate), sizeof(uint32_t), NULL);
     FileMan_Write(hFileHandle, &(pFirstFilePath), 128, NULL);
     FileMan_Write(hFileHandle, &(pSecondFilePath), 128, NULL);
-    FileMan_Write(hFileHandle, &(pFilesList->ubFormat), sizeof(UINT8), NULL);
-    FileMan_Write(hFileHandle, &(pFilesList->fRead), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->ubFormat), sizeof(uint8_t), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->fRead), sizeof(uint8_t), NULL);
 
     // next element in list
     pFilesList = pFilesList->Next;
@@ -886,7 +887,7 @@ BOOLEAN DisplayFormattedText(void) {
   return (TRUE);
 }
 
-BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
+BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
   INT32 iCounter = 0;
   wchar_t sString[2048];
   FileStringPtr pTempString = NULL;
@@ -1258,7 +1259,7 @@ void HandleFileViewerButtonStates(void) {
 }
 
 FileRecordWidthPtr CreateRecordWidth(INT32 iRecordNumber, INT32 iRecordWidth,
-                                     INT32 iRecordHeightAdjustment, UINT8 ubFlags) {
+                                     INT32 iRecordHeightAdjustment, uint8_t ubFlags) {
   FileRecordWidthPtr pTempRecord = NULL;
 
   // allocs and inits a width info record for the multipage file viewer...this will tell the
@@ -1557,7 +1558,7 @@ BOOLEAN AddFileAboutTerrorist(INT32 iProfileId) {
   for (iCounter = 1; iCounter < 7; iCounter++) {
     if (usProfileIdsForTerroristFiles[iCounter] == iProfileId) {
       // checked, and this file is there
-      AddFilesToPlayersLog((UINT8)iCounter, 0, 3, NULL, NULL);
+      AddFilesToPlayersLog((uint8_t)iCounter, 0, 3, NULL, NULL);
       return (TRUE);
     }
   }

@@ -9,7 +9,7 @@ struct SOLDIERTYPE;
 #define UIPLAN_ACTION_FIRE 2
 
 BOOLEAN BeginUIPlan(struct SOLDIERTYPE *pSoldier);
-BOOLEAN AddUIPlan(uint16_t sGridNo, UINT8 ubPlanID);
+BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID);
 void EndUIPlan();
 BOOLEAN InUIPlanMode();
 

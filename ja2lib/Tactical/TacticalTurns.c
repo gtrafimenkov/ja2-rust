@@ -33,12 +33,12 @@
 extern void DecayPublicOpplist(INT8 bTeam);
 
 // not in overhead.h!
-extern UINT8 NumEnemyInSector();
+extern uint8_t NumEnemyInSector();
 
 void HandleRPCDescription() {
-  UINT8 ubMercsInSector[20] = {0};
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubMercsInSector[20] = {0};
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt2;
   BOOLEAN fSAMSite = FALSE;
@@ -96,7 +96,7 @@ void HandleRPCDescription() {
             pTeamSoldier->bSectorZ == gbWorldSectorZ && !pTeamSoldier->fBetweenSectors) {
           if (pTeamSoldier->ubProfile == IRA || pTeamSoldier->ubProfile == MIGUEL ||
               pTeamSoldier->ubProfile == CARLOS || pTeamSoldier->ubProfile == DIMITRI) {
-            ubMercsInSector[ubNumMercs] = (UINT8)cnt2;
+            ubMercsInSector[ubNumMercs] = (uint8_t)cnt2;
             ubNumMercs++;
           }
         }
@@ -105,7 +105,7 @@ void HandleRPCDescription() {
 
     // If we are > 0
     if (ubNumMercs > 0) {
-      ubChosenMerc = (UINT8)Random(ubNumMercs);
+      ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
       TacticalCharacterDialogueWithSpecialEvent(MercPtrs[ubMercsInSector[ubChosenMerc]],
                                                 gTacticalStatus.ubGuideDescriptionToUse,

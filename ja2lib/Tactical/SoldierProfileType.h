@@ -158,23 +158,23 @@ typedef struct {
   uint32_t uiGruntSound;
   uint32_t uiGrunt2Sound;
   uint32_t uiOkSound;
-  UINT8 ubFaceIndex;
+  uint8_t ubFaceIndex;
   PaletteRepID PANTS;
   PaletteRepID VEST;
   PaletteRepID SKIN;
   PaletteRepID HAIR;
   INT8 bSex;
   INT8 bArmourAttractiveness;
-  UINT8 ubMiscFlags2;
+  uint8_t ubMiscFlags2;
   INT8 bEvolution;
-  UINT8 ubMiscFlags;
-  UINT8 bSexist;
+  uint8_t ubMiscFlags;
+  uint8_t bSexist;
   INT8 bLearnToHate;
 
   // skills
   INT8 bStealRate;
   INT8 bVocalVolume;
-  UINT8 ubQuoteRecord;
+  uint8_t ubQuoteRecord;
   INT8 bDeathRate;
   INT8 bScientific;
 
@@ -188,7 +188,7 @@ typedef struct {
   INT16 sMechanicGain;
   INT16 sExplosivesGain;
 
-  UINT8 ubBodyType;
+  uint8_t ubBodyType;
   INT8 bMedical;
 
   uint16_t usEyesX;
@@ -248,13 +248,13 @@ typedef struct {
   INT8 bExpLevel;  // general experience level
 
   INT8 bMarksmanship;
-  UINT8 bMinService;
+  uint8_t bMinService;
   INT8 bWisdom;
-  UINT8 bResigned;
-  UINT8 bActive;
+  uint8_t bResigned;
+  uint8_t bActive;
 
-  UINT8 bInvStatus[19];
-  UINT8 bInvNumber[19];
+  uint8_t bInvStatus[19];
+  uint8_t bInvNumber[19];
   uint16_t usApproachFactor[4];
 
   INT8 bMainGunAttractiveness;
@@ -262,24 +262,24 @@ typedef struct {
 
   BOOLEAN fUseProfileInsertionInfo;  // Set to various flags, ( contained in TacticalSave.h )
   INT16 sGridNo;                     // The Gridno the NPC was in before leaving the sector
-  UINT8 ubQuoteActionID;
+  uint8_t ubQuoteActionID;
   INT8 bMechanical;
 
-  UINT8 ubInvUndroppable;
-  UINT8 ubRoomRangeStart[2];
+  uint8_t ubInvUndroppable;
+  uint8_t ubRoomRangeStart[2];
   uint16_t inv[19];
   INT8 bMercTownReputation[20];
 
   uint16_t usStatChangeChances[12];    // used strictly for balancing, never shown!
   uint16_t usStatChangeSuccesses[12];  // used strictly for balancing, never shown!
 
-  UINT8 ubStrategicInsertionCode;
+  uint8_t ubStrategicInsertionCode;
 
-  UINT8 ubRoomRangeEnd[2];
+  uint8_t ubRoomRangeEnd[2];
 
   INT8 bPadding[4];
 
-  UINT8 ubLastQuoteSaid;
+  uint8_t ubLastQuoteSaid;
 
   INT8 bRace;
   INT8 bNationality;
@@ -298,8 +298,8 @@ typedef struct {
   uint16_t sMedicalDepositAmount;
 
   INT8 bLearnToLike;
-  UINT8 ubApproachVal[4];
-  UINT8 ubApproachMod[3][4];
+  uint8_t ubApproachVal[4];
+  uint8_t ubApproachMod[3][4];
   INT8 bTown;
   INT8 bTownAttachment;
   uint16_t usOptionalGearCost;
@@ -314,8 +314,8 @@ typedef struct {
   INT8 bHatedCount[5];
   INT8 bLearnToLikeCount;
   INT8 bLearnToHateCount;
-  UINT8 ubLastDateSpokenTo;
-  UINT8 bLastQuoteSaidWasSpecial;
+  uint8_t ubLastDateSpokenTo;
+  uint8_t bLastQuoteSaidWasSpecial;
   INT8 bSectorZ;
   uint16_t usStrategicInsertionData;
   INT8 bFriendlyOrDirectDefaultResponseUsedRecently;
@@ -325,31 +325,31 @@ typedef struct {
   INT32 iBalance;
   INT16 sTrueSalary;  // for use when the person is working for us for free but has a positive
                       // salary value
-  UINT8 ubCivilianGroup;
-  UINT8 ubNeedForSleep;
+  uint8_t ubCivilianGroup;
+  uint8_t ubNeedForSleep;
   uint32_t uiMoney;
   INT8 bNPCData2;  // NPC specific
 
-  UINT8 ubMiscFlags3;
+  uint8_t ubMiscFlags3;
 
-  UINT8 ubDaysOfMoraleHangover;  // used only when merc leaves team while having poor morale
-  UINT8
-  ubNumTimesDrugUseInLifetime;  // The # times a drug has been used in the player's lifetime...
+  uint8_t ubDaysOfMoraleHangover;  // used only when merc leaves team while having poor morale
+  uint8_t
+      ubNumTimesDrugUseInLifetime;  // The # times a drug has been used in the player's lifetime...
 
   // Flags used for the precedent to repeating oneself in Contract negotiations.  Used for quote 80
   // -  ~107.  Gets reset every day
   uint32_t uiPrecedentQuoteSaid;
   uint32_t uiProfileChecksum;
   INT16 sPreCombatGridNo;
-  UINT8 ubTimeTillNextHatedComplaint;
-  UINT8 ubSuspiciousDeath;
+  uint8_t ubTimeTillNextHatedComplaint;
+  uint8_t ubSuspiciousDeath;
 
   INT32 iMercMercContractLength;  // Used for MERC mercs, specifies how many days the merc has gone
                                   // since last page
 
   uint32_t uiTotalCostToDate;  // The total amount of money that has been paid to the merc for their
                                // salary
-  UINT8 ubBuffer[4];
+  uint8_t ubBuffer[4];
 } MERCPROFILESTRUCT;
 
 #define TIME_BETWEEN_HATED_COMPLAINTS 24

@@ -46,7 +46,7 @@ BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WOR
 //  If you want to overwrite all the items in the array set fReplaceEntireFile to TRUE.
 BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
                                  uint32_t uiNumberOfItems, struct OBJECTTYPE *pObject,
-                                 UINT8 ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel,
+                                 uint8_t ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel,
                                  INT8 bVisible, BOOLEAN fReplaceEntireFile);
 
 BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
@@ -61,7 +61,7 @@ BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 b
                                                 uint32_t *pNumberOfData);
 
 // Call this function to set the new sector a NPC will travel to
-void ChangeNpcToDifferentSector(UINT8 ubNpcId, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void ChangeNpcToDifferentSector(uint8_t ubNpcId, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 // Adds a rotting corpse definition to the end of a sectors rotting corpse temp file
 BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
@@ -79,14 +79,15 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
 // ADD_DEAD_SOLDIER_TO_SWEETSPOT
 //
 // This function DOES NOT remove the soldier from the soldier struct.  YOU must do it.
-BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
+BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, uint8_t bMapZ,
                                        struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                        uint32_t uiFlags);
 
-BOOLEAN GetSectorFlagStatus(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, uint32_t uiFlagToSet);
-BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, uint32_t uiFlagToSet);
-BOOLEAN ReSetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, UINT8 ubSectorZ, uint32_t uiFlagToSet);
-BOOLEAN ReSetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, uint32_t uiFlagToSet);
+BOOLEAN GetSectorFlagStatus(INT16 sMapX, INT16 sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
+BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
+BOOLEAN ReSetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, uint8_t ubSectorZ,
+                                   uint32_t uiFlagToSet);
+BOOLEAN ReSetSectorFlag(INT16 sMapX, INT16 sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
 
 // Saves the NPC temp Quote file to the saved game file
 BOOLEAN LoadTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);

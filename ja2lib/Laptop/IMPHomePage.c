@@ -159,7 +159,7 @@ void DisplayActivationStringCursor(void) {
   uint32_t uiDestPitchBYTES;
   static uint32_t uiBaseTime = 0;
   uint32_t uiDeltaTime = 0;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
 

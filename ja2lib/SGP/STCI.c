@@ -243,7 +243,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
 
   if (fContents & IMAGE_APPDATA && pHeader->uiAppDataSize > 0) {
     // load application-specific data
-    hImage->pAppData = (UINT8 *)MemAlloc(pHeader->uiAppDataSize);
+    hImage->pAppData = (uint8_t *)MemAlloc(pHeader->uiAppDataSize);
     if (hImage->pAppData == NULL) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
       FileMan_Close(hFile);

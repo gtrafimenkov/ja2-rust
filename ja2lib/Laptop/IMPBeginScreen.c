@@ -77,7 +77,7 @@ INT32 giIMPBeginScreenButton[1];
 INT32 giIMPBeginScreenButtonImage[1];
 
 // current mode of entering text we are in, ie FULL or Nick name?
-UINT8 ubTextEnterMode = 0;
+uint8_t ubTextEnterMode = 0;
 
 // cursor position
 uint32_t uiNickNameCursorPosition = 196 + LAPTOP_SCREEN_UL_X;
@@ -537,7 +537,7 @@ void DisplayFullNameStringCursor(void) {
   static uint32_t uiBaseTime = 0;
   uint32_t uiDeltaTime = 0;
   static uint32_t iCurrentState = 0;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   static BOOLEAN fIncrement = TRUE;
 
   if (uiBaseTime == 0) {
@@ -592,7 +592,7 @@ void DisplayNickNameStringCursor(void) {
   uint32_t uiDestPitchBYTES;
   static uint32_t uiBaseTime = 0;
   uint32_t uiDeltaTime = 0;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
 
@@ -699,7 +699,7 @@ void DisplayMaleGlowCursor(void) {
   uint32_t uiDeltaTime = 0;
   static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   if (uiBaseTime == 0) {
     uiBaseTime = GetJA2Clock();
@@ -754,7 +754,7 @@ void DisplayFemaleGlowCursor(void) {
   uint32_t uiDeltaTime = 0;
   static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   if (uiBaseTime == 0) {
     uiBaseTime = GetJA2Clock();

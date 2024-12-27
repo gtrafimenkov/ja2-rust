@@ -142,11 +142,11 @@ BOOLEAN ShutDownPopUpBoxes() {
 }
 
 // Pass in the background index, and pointers to the font and shadow color
-void GetMercPopupBoxFontColor(UINT8 ubBackgroundIndex, UINT8 *pubFontColor,
-                              UINT8 *pubFontShadowColor);
+void GetMercPopupBoxFontColor(uint8_t ubBackgroundIndex, uint8_t *pubFontColor,
+                              uint8_t *pubFontShadowColor);
 
 // Tactical Popup
-BOOLEAN LoadTextMercPopupImages(UINT8 ubBackgroundIndex, UINT8 ubBorderIndex) {
+BOOLEAN LoadTextMercPopupImages(uint8_t ubBackgroundIndex, uint8_t ubBorderIndex) {
   VSURFACE_DESC vs_desc;
   VOBJECT_DESC VObjectDesc;
 
@@ -275,9 +275,9 @@ INT32 AddPopUpBoxToList(MercPopUpBox *pPopUpTextBox) {
 // get box with this id
 MercPopUpBox *GetPopUpBoxIndex(INT32 iId) { return (gpPopUpBoxList[iId]); }
 
-INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderIndex, STR16 pString,
-                          uint16_t usWidth, uint16_t usMarginX, uint16_t usMarginTopY,
-                          uint16_t usMarginBottomY, uint16_t *pActualWidth,
+INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBorderIndex,
+                          STR16 pString, uint16_t usWidth, uint16_t usMarginX,
+                          uint16_t usMarginTopY, uint16_t usMarginBottomY, uint16_t *pActualWidth,
                           uint16_t *pActualHeight) {
   uint16_t usNumberVerticalPixels;
   uint16_t usTextWidth, usHeight;
@@ -291,8 +291,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  UINT8 *pSrcBuf;
-  UINT8 ubFontColor, ubFontShadowColor;
+  uint8_t *pSrcBuf;
+  uint8_t ubFontColor, ubFontShadowColor;
   uint16_t usColorVal;
   uint16_t usLoopEnd;
   INT16 sDispTextXPos;
@@ -587,8 +587,8 @@ BOOLEAN RemoveMercPopupBoxFromIndex(uint32_t uiId) {
 }
 
 // Pass in the background index, and pointers to the font and shadow color
-void GetMercPopupBoxFontColor(UINT8 ubBackgroundIndex, UINT8 *pubFontColor,
-                              UINT8 *pubFontShadowColor) {
+void GetMercPopupBoxFontColor(uint8_t ubBackgroundIndex, uint8_t *pubFontColor,
+                              uint8_t *pubFontShadowColor) {
   switch (ubBackgroundIndex) {
     case BASIC_MERC_POPUP_BACKGROUND:
       *pubFontColor = TEXT_POPUP_COLOR;

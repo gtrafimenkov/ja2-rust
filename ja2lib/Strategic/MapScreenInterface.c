@@ -139,7 +139,7 @@ INT32 giSizeOfInterfaceFastHelpTextList = 0;
 // Animated sector locator icon variables.
 INT16 gsSectorLocatorX;
 INT16 gsSectorLocatorY;
-UINT8 gubBlitSectorLocatorCode;      // color
+uint8_t gubBlitSectorLocatorCode;    // color
 uint32_t guiSectorLocatorGraphicID;  // icon graphic ID
 // the animate time per frame in milliseconds
 #define ANIMATED_BATTLEICON_FRAME_TIME 80
@@ -192,7 +192,7 @@ extern uint32_t guiSAVEBUFFER;
 
 extern BOOLEAN fShowInventoryFlag;
 extern FACETYPE *gpCurrentTalkingFace;
-extern UINT8 gubCurrentTalkingID;
+extern uint8_t gubCurrentTalkingID;
 extern BOOLEAN fMapScreenBottomDirty;
 extern struct MOUSE_REGION gMPanelRegion;
 
@@ -320,7 +320,7 @@ extern void RebuildContractBoxForMerc(struct SOLDIERTYPE *pCharacter);
 
 extern void SetUpCursorForStrategicMap(void);
 
-extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
+extern void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
 
 extern BOOLEAN PlayerSoldierTooTiredToTravel(struct SOLDIERTYPE *pSoldier);
 
@@ -450,7 +450,7 @@ void BuildSelectedListFromAToB(INT8 bA, INT8 bB) {
 }
 
 BOOLEAN MultipleCharacterListEntriesSelected(void) {
-  UINT8 ubSelectedCnt = 0;
+  uint8_t ubSelectedCnt = 0;
   INT32 iCounter = 0;
 
   // check if more than one person is selected in the selected list
@@ -853,7 +853,7 @@ void EnableTeamInfoPanels(void) {
   return;
 }
 
-INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+INT32 DoMapMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                               uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                               const SGPRect *pCenteringRect) {  // reset the highlighted line
   giHighLine = -1;
@@ -862,7 +862,7 @@ INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScr
                       pCenteringRect);
 }
 
-INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+INT32 DoMapMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                       MSGBOX_CALLBACK ReturnCallback) {
   // reset the highlighted line
   giHighLine = -1;
@@ -961,7 +961,7 @@ void CheckAndUpdateBasedOnContractTimes(void) {
 void HandleDisplayOfSelectedMercArrows(void) {
   INT16 sYPosition = 0;
   struct VObject *hHandle;
-  UINT8 ubCount = 0;
+  uint8_t ubCount = 0;
   // blit an arrow by the name of each merc in a selected list
   if (bSelectedInfoChar == -1) {
     return;
@@ -1363,8 +1363,8 @@ INT32 SetUpDropItemListForMerc(uint32_t uiMercId) {
   DropKeysInKeyRing(MercPtrs[uiMercId], NOWHERE, 0, 0, TRUE, iSlotIndex, FALSE);
 
   // zero out profiles
-  memset((gMercProfiles[Menptr[uiMercId].ubProfile].bInvStatus), 0, sizeof(UINT8) * 19);
-  memset((gMercProfiles[Menptr[uiMercId].ubProfile].bInvNumber), 0, sizeof(UINT8) * 19);
+  memset((gMercProfiles[Menptr[uiMercId].ubProfile].bInvStatus), 0, sizeof(uint8_t) * 19);
+  memset((gMercProfiles[Menptr[uiMercId].ubProfile].bInvNumber), 0, sizeof(uint8_t) * 19);
   memset((gMercProfiles[Menptr[uiMercId].ubProfile].inv), 0, sizeof(uint16_t) * 19);
 
   return (iSlotIndex);
@@ -1735,9 +1735,9 @@ void UpdateMapScreenAssignmentPositions(void) {
 void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum) {
   PLAYERGROUP *pPlayer;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubMercsInGroup[20];
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubMercsInGroup[20];
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
 
   // if traversing tactically, don't do this, unless time compression was required for some reason
   // (don't go to sector)
@@ -1763,7 +1763,7 @@ void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum) {
 
   // At least say quote....
   if (ubNumMercs > 0) {
-    ubChosenMerc = (UINT8)Random(ubNumMercs);
+    ubChosenMerc = (uint8_t)Random(ubNumMercs);
     pSoldier = MercPtrs[ubMercsInGroup[ubChosenMerc]];
 
     TacticalCharacterDialogue(pSoldier, usQuoteNum);
@@ -1952,7 +1952,7 @@ void GoToPrevCharacterInList(void) {
   }
 }
 
-void HandleMinerEvent(UINT8 bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuoteNumber,
+void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuoteNumber,
                       BOOLEAN fForceMapscreen) {
   BOOLEAN fFromMapscreen = FALSE;
 
@@ -1982,22 +1982,22 @@ void HandleMinerEvent(UINT8 bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuote
     MarkForRedrawalStrategicMap();
 
     // post dialogue events for miners to say this quote and flash the sector where his mine is
-    CharacterDialogueWithSpecialEvent((UINT8)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
+    CharacterDialogueWithSpecialEvent((uint8_t)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
                                       bMinerNumber, DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE,
                                       DIALOGUE_SPECIAL_EVENT_MINESECTOREVENT,
                                       START_RED_SECTOR_LOCATOR, 1);
-    CharacterDialogue((UINT8)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
-                      (UINT8)(UINT8)uiExternalStaticNPCFaces[bMinerNumber],
+    CharacterDialogue((uint8_t)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
+                      (uint8_t)(uint8_t)uiExternalStaticNPCFaces[bMinerNumber],
                       DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE);
-    CharacterDialogueWithSpecialEvent((UINT8)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
+    CharacterDialogueWithSpecialEvent((uint8_t)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
                                       bMinerNumber, DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE,
                                       DIALOGUE_SPECIAL_EVENT_MINESECTOREVENT,
                                       STOP_RED_SECTOR_LOCATOR, 1);
   } else  // stay in tactical
   {
     // no need to to highlight mine sector
-    CharacterDialogue((UINT8)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
-                      (UINT8)(UINT8)uiExternalStaticNPCFaces[bMinerNumber],
+    CharacterDialogue((uint8_t)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
+                      (uint8_t)(uint8_t)uiExternalStaticNPCFaces[bMinerNumber],
                       DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE);
   }
 }
@@ -2114,7 +2114,7 @@ void DisplayFastHelpRegions(FASTHELPREGION *pRegion, INT32 iSize) {
 // show one region
 void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
   INT32 iX, iY, iW, iH;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
 
   iX = pRegion->iX;
@@ -4214,7 +4214,7 @@ void SetOrtaAsFound(void) {
   MarkForRedrawalStrategicMap();
 }
 
-void SetSAMSiteAsFound(UINT8 uiSamIndex) {
+void SetSAMSiteAsFound(uint8_t uiSamIndex) {
   // set this SAM site as being found by the player
   fSamSiteFound[uiSamIndex] = TRUE;
   MarkForRedrawalStrategicMap();
@@ -4321,7 +4321,7 @@ DoneHandlePlayerFirstEntryToMapScreen );
 }
 
 
-void DoneHandlePlayerFirstEntryToMapScreen(  UINT8 bExitValue )
+void DoneHandlePlayerFirstEntryToMapScreen(  uint8_t bExitValue )
 {
         static BOOLEAN fFirstTime = TRUE;
 
@@ -4646,7 +4646,7 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   if ((GetSolSectorX(pSoldier) == 12) && (GetSolSectorY(pSoldier) == MAP_ROW_L) &&
       (GetSolSectorZ(pSoldier) == 0) && (!pSoldier->fBetweenSectors) &&
       gMercProfiles[ELDIN].bMercStatus != MERC_IS_DEAD) {
-    UINT8 ubRoom, cnt;
+    uint8_t ubRoom, cnt;
     struct SOLDIERTYPE *pSoldier2;
 
     if (InARoom(pSoldier->sGridNo, &ubRoom) && ubRoom >= 22 && ubRoom <= 41) {
@@ -4741,8 +4741,8 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
 BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber) {
   struct SOLDIERTYPE *pCurrentSoldier = NULL;
   INT32 iCounter = 0;
-  UINT8 ubGroup = 0;
-  UINT8 ubCurrentGroup = 0;
+  uint8_t ubGroup = 0;
+  uint8_t ubCurrentGroup = 0;
 
   // first check the requested character himself
   if (CanCharacterMoveInStrategic(pSoldier, pbErrorNumber) == FALSE) {
@@ -5067,7 +5067,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
   return (TRUE);
 }
 
-void TurnOnSectorLocator(UINT8 ubProfileID) {
+void TurnOnSectorLocator(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pSoldier;
 
   Assert(ubProfileID != NO_PROFILE);
@@ -5103,9 +5103,9 @@ void TurnOffSectorLocator() {
   MarkForRedrawalStrategicMap();
 }
 
-void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubLocatorID) {
-  static UINT8 ubFrame = 0;
-  UINT8 ubBaseFrame = 0;
+void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubLocatorID) {
+  static uint8_t ubFrame = 0;
+  uint8_t ubBaseFrame = 0;
   uint32_t uiTimer = 0;
   struct VObject *hHandle;
   INT16 sScreenX, sScreenY;
@@ -5132,11 +5132,11 @@ void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UIN
     // grab zoomed out icon
     case LOCATOR_COLOR_RED:
       ubBaseFrame = 0;
-      ubFrame = (UINT8)(ubFrame % 13);
+      ubFrame = (uint8_t)(ubFrame % 13);
       break;
     case LOCATOR_COLOR_YELLOW:
       ubBaseFrame = 13;
-      ubFrame = (UINT8)(13 + (ubFrame % 13));
+      ubFrame = (uint8_t)(13 + (ubFrame % 13));
       break;
     default:
       // not supported

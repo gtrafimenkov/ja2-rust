@@ -41,7 +41,7 @@ typedef struct MERCPLACEMENT {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiVObjectID;
   struct MOUSE_REGION region;
-  UINT8 ubStrategicInsertionCode;
+  uint8_t ubStrategicInsertionCode;
   BOOLEAN fPlaced;
 } MERCPLACEMENT;
 
@@ -53,7 +53,7 @@ uint32_t iTPButtons[NUM_TP_BUTTONS];
 extern BOOLEAN gfOverheadMapDirty;
 extern BOOLEAN GetOverheadMouseGridNo(INT16 *psGridNo);
 
-UINT8 gubDefaultButton = CLEAR_BUTTON;
+uint8_t gubDefaultButton = CLEAR_BUTTON;
 BOOLEAN gfTacticalPlacementGUIActive = FALSE;
 BOOLEAN gfTacticalPlacementFirstTime = FALSE;
 BOOLEAN gfEnterTacticalPlacementGUI = FALSE;
@@ -68,9 +68,9 @@ SGPRect gTPClipRect = {0, 0, 0, 0};
 BOOLEAN gfValidCursor = FALSE;
 BOOLEAN gfEveryonePlaced = FALSE;
 
-UINT8 gubSelectedGroupID = 0;
-UINT8 gubHilightedGroupID = 0;
-UINT8 gubCursorGroupID = 0;
+uint8_t gubSelectedGroupID = 0;
+uint8_t gubHilightedGroupID = 0;
+uint8_t gubCursorGroupID = 0;
 INT8 gbSelectedMercID = -1;
 INT8 gbHilightedMercID = -1;
 INT8 gbCursorMercID = -1;
@@ -88,7 +88,7 @@ void MercClickCallback(struct MOUSE_REGION *reg, INT32 reason);
 void PlaceMercs();
 void FastHelpRemovedCallback();
 void FastHelpRemoved2Callback();
-void DialogRemoved(UINT8 ubResult);
+void DialogRemoved(uint8_t ubResult);
 
 void PutDownMercPiece(INT32 iPlacement);
 void PickUpMercPiece(INT32 iPlacement);
@@ -100,7 +100,7 @@ void SelectNextUnplacedUnit();
 BOOLEAN gfNorthValid, gfEastValid, gfSouthValid, gfWestValid;
 BOOLEAN gfChangedEntrySide = FALSE;
 
-void FindValidInsertionCode(UINT8 *pubStrategicInsertionCode) {
+void FindValidInsertionCode(uint8_t *pubStrategicInsertionCode) {
   if (gMapInformation.sNorthGridNo == -1 && gMapInformation.sEastGridNo == -1 &&
       gMapInformation.sSouthGridNo == -1 && gMapInformation.sWestGridNo == -1) {
     AssertMsg(0, "Map has no entry points at all.  Can't generate edge points.  LC:1");
@@ -154,7 +154,7 @@ void FindValidInsertionCode(UINT8 *pubStrategicInsertionCode) {
   }
 }
 
-void CheckForValidMapEdge(UINT8 *pubStrategicInsertionCode) {
+void CheckForValidMapEdge(uint8_t *pubStrategicInsertionCode) {
   switch (*pubStrategicInsertionCode) {
     case INSERTION_CODE_NORTH:
       if (!gps1stNorthEdgepointArray) FindValidInsertionCode(pubStrategicInsertionCode);
@@ -176,7 +176,7 @@ void CheckForValidMapEdge(UINT8 *pubStrategicInsertionCode) {
 void InitTacticalPlacementGUI() {
   VOBJECT_DESC VObjectDesc;
   INT32 i, xp, yp;
-  UINT8 ubFaceIndex;
+  uint8_t ubFaceIndex;
   gfTacticalPlacementGUIActive = TRUE;
   gfTacticalPlacementGUIDirty = TRUE;
   gfValidLocationsChanged = TRUE;
@@ -284,7 +284,7 @@ void InitTacticalPlacementGUI() {
 
       if (MercPtrs[i]->ubStrategicInsertionCode == INSERTION_CODE_PRIMARY_EDGEINDEX ||
           MercPtrs[i]->ubStrategicInsertionCode == INSERTION_CODE_SECONDARY_EDGEINDEX) {
-        MercPtrs[i]->ubStrategicInsertionCode = (UINT8)MercPtrs[i]->usStrategicInsertionData;
+        MercPtrs[i]->ubStrategicInsertionCode = (uint8_t)MercPtrs[i]->usStrategicInsertionData;
       }
       gMercPlacement[giPlacements].pSoldier = MercPtrs[i];
       gMercPlacement[giPlacements].ubStrategicInsertionCode = MercPtrs[i]->ubStrategicInsertionCode;
@@ -362,8 +362,8 @@ void RenderTacticalPlacementGUI() {
   uint32_t uiDestPitchBYTES;
   uint16_t usHatchColor;
   CHAR16 str[128];
-  UINT8 *pDestBuf;
-  UINT8 ubColor;
+  uint8_t *pDestBuf;
+  uint8_t ubColor;
   if (gfTacticalPlacementFirstTime) {
     gfTacticalPlacementFirstTime = FALSE;
     DisableScrollMessages();
@@ -661,7 +661,7 @@ void KillTacticalPlacementGUI() {
   if (gsCurInterfacePanel < 0 || gsCurInterfacePanel >= NUM_UI_PANELS)
     gsCurInterfacePanel = TEAM_PANEL;
 
-  SetCurrentInterfacePanel((UINT8)gsCurInterfacePanel);
+  SetCurrentInterfacePanel((uint8_t)gsCurInterfacePanel);
 
   // Leave the overhead map.
   KillOverheadMap();
@@ -940,7 +940,7 @@ void SetCursorMerc(INT8 bPlacementID) {
 
 void PutDownMercPiece(INT32 iPlacement) {
   INT16 sGridNo, sCellX, sCellY;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
 
   struct SOLDIERTYPE *pSoldier;
   pSoldier = gMercPlacement[iPlacement].pSoldier;
@@ -989,7 +989,7 @@ void FastHelpRemoved2Callback() {
   gfValidLocationsChanged = 2;  // because fast help text covers it.
 }
 
-void DialogRemoved(UINT8 ubResult) {
+void DialogRemoved(uint8_t ubResult) {
   gfTacticalPlacementGUIDirty = TRUE;
   gfValidLocationsChanged = TRUE;
 }

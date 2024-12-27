@@ -51,9 +51,9 @@
 #define RECORD_HEADER_Y 90
 
 #define NUM_RECORDS_PER_PAGE PAGE_SIZE
-#define SIZE_OF_HISTORY_FILE_RECORD                                                         \
-  (sizeof(UINT8) + sizeof(UINT8) + sizeof(uint32_t) + sizeof(uint16_t) + sizeof(uint16_t) + \
-   sizeof(UINT8) + sizeof(UINT8))
+#define SIZE_OF_HISTORY_FILE_RECORD                                                             \
+  (sizeof(uint8_t) + sizeof(uint8_t) + sizeof(uint32_t) + sizeof(uint16_t) + sizeof(uint16_t) + \
+   sizeof(uint8_t) + sizeof(uint8_t))
 
 // button positions
 #define NEXT_BTN_X 577
@@ -100,8 +100,8 @@ void CreateHistoryButtons(void);
 void DestroyHistoryButtons(void);
 void CreateHistoryButtons(void);
 void DrawHistoryTitleText(void);
-uint32_t ProcessAndEnterAHistoryRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubSecondCode,
-                                       u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubColor);
+uint32_t ProcessAndEnterAHistoryRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubSecondCode,
+                                       u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint8_t ubColor);
 void OpenAndReadHistoryFile(void);
 BOOLEAN OpenAndWriteHistoryFile(void);
 void ClearHistoryList(void);
@@ -119,8 +119,8 @@ void SetLastPageInHistoryRecords(void);
 uint32_t ReadInLastElementOfHistoryListAndReturnIdNumber(void);
 BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory);
 BOOLEAN WriteOutHistoryRecords(uint32_t uiPage);
-void GetQuestStartedString(UINT8 ubQuestValue, STR16 sQuestString);
-void GetQuestEndedString(UINT8 ubQuestValue, STR16 sQuestString);
+void GetQuestStartedString(uint8_t ubQuestValue, STR16 sQuestString);
+void GetQuestEndedString(uint8_t ubQuestValue, STR16 sQuestString);
 INT32 GetNumberOfHistoryPages();
 
 #ifdef JA2TESTVERSION
@@ -131,13 +131,13 @@ void PerformCheckOnHistoryRecord(uint32_t uiErrorCode, u8 sSectorX, u8 sSectorY,
 void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason);
 void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason);
 
-uint32_t SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, uint32_t uiDate, INT16 sSectorX,
+uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, INT16 sSectorX,
                         INT16 sSectorY) {
   // adds History item to player's log(History List), returns unique id number of it
   // outside of the History system(the code in this .c file), this is the only function you'll ever
   // need
   uint32_t uiId = 0;
-  UINT8 ubColor = 0;
+  uint8_t ubColor = 0;
   HistoryUnitPtr pHistory = pHistoryListHead;
 
   // clear the list
@@ -171,8 +171,8 @@ uint32_t SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, uint32_t uiDate, INT16
   return uiId;
 }
 
-uint32_t AddHistoryToPlayersLog(UINT8 ubCode, UINT8 ubSecondCode, uint32_t uiDate, INT16 sSectorX,
-                                INT16 sSectorY) {
+uint32_t AddHistoryToPlayersLog(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate,
+                                INT16 sSectorX, INT16 sSectorY) {
   // adds History item to player's log(History List), returns unique id number of it
   // outside of the History system(the code in this .c file), this is the only function you'll ever
   // need
@@ -475,11 +475,11 @@ BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
   uiFileSize = FileMan_GetSize(hFileHandle) - 1;
   uiSizeOfRecordsOnEachPage =
       (NUM_RECORDS_PER_PAGE *
-       (sizeof(UINT8) + sizeof(uint32_t) + 3 * sizeof(UINT8) + sizeof(INT16) + sizeof(INT16)));
+       (sizeof(uint8_t) + sizeof(uint32_t) + 3 * sizeof(uint8_t) + sizeof(INT16) + sizeof(INT16)));
 
   // is the file long enough?
-  //  if( ( FileMan_GetSize( hFileHandle ) - 1 ) / ( NUM_RECORDS_PER_PAGE * ( sizeof( UINT8 ) +
-  //  sizeof( uint32_t ) + 3*sizeof( UINT8 )+ sizeof(INT16) + sizeof( INT16 ) ) ) + 1 < ( uint32_t
+  //  if( ( FileMan_GetSize( hFileHandle ) - 1 ) / ( NUM_RECORDS_PER_PAGE * ( sizeof( uint8_t ) +
+  //  sizeof( uint32_t ) + 3*sizeof( uint8_t )+ sizeof(INT16) + sizeof( INT16 ) ) ) + 1 < ( uint32_t
   //  )( iCurrentHistoryPage + 1 ) )
   if (uiFileSize / uiSizeOfRecordsOnEachPage + 1 < (uint32_t)(iCurrentHistoryPage + 1)) {
     // nope
@@ -495,8 +495,8 @@ BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
   return (TRUE);
 }
 
-uint32_t ProcessAndEnterAHistoryRecord(UINT8 ubCode, uint32_t uiDate, UINT8 ubSecondCode,
-                                       u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubColor) {
+uint32_t ProcessAndEnterAHistoryRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ubSecondCode,
+                                       u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint8_t ubColor) {
   uint32_t uiId = 0;
   HistoryUnitPtr pHistory = pHistoryListHead;
 
@@ -547,11 +547,11 @@ void OpenAndReadHistoryFile(void) {
   // this procedure will open and read in data to the History list
 
   HWFILE hFileHandle;
-  UINT8 ubCode, ubSecondCode;
+  uint8_t ubCode, ubSecondCode;
   uint32_t uiDate;
   INT16 sSectorX, sSectorY;
   INT8 bSectorZ = 0;
-  UINT8 ubColor;
+  uint8_t ubColor;
   uint32_t iBytesRead = 0;
   uint32_t uiByteCount = 0;
 
@@ -578,13 +578,13 @@ void OpenAndReadHistoryFile(void) {
   // file exists, read in data, continue until file end
   while (FileMan_GetSize(hFileHandle) > uiByteCount) {
     // read in other data
-    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
     FileMan_Read(hFileHandle, &sSectorX, sizeof(INT16), &iBytesRead);
     FileMan_Read(hFileHandle, &sSectorY, sizeof(INT16), &iBytesRead);
     FileMan_Read(hFileHandle, &bSectorZ, sizeof(INT8), &iBytesRead);
-    FileMan_Read(hFileHandle, &ubColor, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubColor, sizeof(uint8_t), &iBytesRead);
 
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
@@ -627,13 +627,13 @@ BOOLEAN OpenAndWriteHistoryFile(void) {
 #endif
 
     // now write date and amount, and code
-    FileMan_Write(hFileHandle, &(pHistoryList->ubCode), sizeof(UINT8), NULL);
-    FileMan_Write(hFileHandle, &(pHistoryList->ubSecondCode), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pHistoryList->ubCode), sizeof(uint8_t), NULL);
+    FileMan_Write(hFileHandle, &(pHistoryList->ubSecondCode), sizeof(uint8_t), NULL);
     FileMan_Write(hFileHandle, &(pHistoryList->uiDate), sizeof(uint32_t), NULL);
     FileMan_Write(hFileHandle, &(pHistoryList->sSectorX), sizeof(INT16), NULL);
     FileMan_Write(hFileHandle, &(pHistoryList->sSectorY), sizeof(INT16), NULL);
     FileMan_Write(hFileHandle, &(pHistoryList->bSectorZ), sizeof(INT8), NULL);
-    FileMan_Write(hFileHandle, &(pHistoryList->ubColor), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pHistoryList->ubColor), sizeof(uint8_t), NULL);
 
     // next element in list
     pHistoryList = pHistoryList->Next;
@@ -1106,11 +1106,11 @@ BOOLEAN LoadInHistoryRecords(uint32_t uiPage) {
   BOOLEAN fOkToContinue = TRUE;
   INT32 iCount = 0;
   HWFILE hFileHandle;
-  UINT8 ubCode, ubSecondCode;
+  uint8_t ubCode, ubSecondCode;
   INT16 sSectorX, sSectorY;
   INT8 bSectorZ;
   uint32_t uiDate;
-  UINT8 ubColor;
+  uint8_t ubColor;
   uint32_t iBytesRead = 0;
   uint32_t uiByteCount = 0;
 
@@ -1151,13 +1151,13 @@ BOOLEAN LoadInHistoryRecords(uint32_t uiPage) {
   // file exists, read in data, continue until end of page
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue)) {
     // read in other data
-    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
     FileMan_Read(hFileHandle, &sSectorX, sizeof(INT16), &iBytesRead);
     FileMan_Read(hFileHandle, &sSectorY, sizeof(INT16), &iBytesRead);
     FileMan_Read(hFileHandle, &bSectorZ, sizeof(INT8), &iBytesRead);
-    FileMan_Read(hFileHandle, &ubColor, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubColor, sizeof(uint8_t), &iBytesRead);
 
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
@@ -1250,13 +1250,13 @@ BOOLEAN WriteOutHistoryRecords(uint32_t uiPage) {
     PerformCheckOnHistoryRecord(4, pList->sSectorX, pList->sSectorY, pList->bSectorZ);
 #endif
 
-    FileMan_Write(hFileHandle, &(pList->ubCode), sizeof(UINT8), NULL);
-    FileMan_Write(hFileHandle, &(pList->ubSecondCode), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pList->ubCode), sizeof(uint8_t), NULL);
+    FileMan_Write(hFileHandle, &(pList->ubSecondCode), sizeof(uint8_t), NULL);
     FileMan_Write(hFileHandle, &(pList->uiDate), sizeof(uint32_t), NULL);
     FileMan_Write(hFileHandle, &(pList->sSectorX), sizeof(INT16), NULL);
     FileMan_Write(hFileHandle, &(pList->sSectorY), sizeof(INT16), NULL);
     FileMan_Write(hFileHandle, &(pList->bSectorZ), sizeof(INT8), NULL);
-    FileMan_Write(hFileHandle, &(pList->ubColor), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pList->ubColor), sizeof(uint8_t), NULL);
 
     pList = pList->Next;
 
@@ -1402,13 +1402,13 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
 #endif
 
   // now write date and amount, and code
-  FileMan_Write(hFileHandle, &(pHistoryList->ubCode), sizeof(UINT8), NULL);
-  FileMan_Write(hFileHandle, &(pHistoryList->ubSecondCode), sizeof(UINT8), NULL);
+  FileMan_Write(hFileHandle, &(pHistoryList->ubCode), sizeof(uint8_t), NULL);
+  FileMan_Write(hFileHandle, &(pHistoryList->ubSecondCode), sizeof(uint8_t), NULL);
   FileMan_Write(hFileHandle, &(pHistoryList->uiDate), sizeof(uint32_t), NULL);
   FileMan_Write(hFileHandle, &(pHistoryList->sSectorX), sizeof(INT16), NULL);
   FileMan_Write(hFileHandle, &(pHistoryList->sSectorY), sizeof(INT16), NULL);
   FileMan_Write(hFileHandle, &(pHistoryList->bSectorZ), sizeof(INT8), NULL);
-  FileMan_Write(hFileHandle, &(pHistoryList->ubColor), sizeof(UINT8), NULL);
+  FileMan_Write(hFileHandle, &(pHistoryList->ubColor), sizeof(uint8_t), NULL);
 
   // close file
   FileMan_Close(hFileHandle);
@@ -1416,7 +1416,7 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
   return (TRUE);
 }
 
-void ResetHistoryFact(UINT8 ubCode, u8 sSectorX, u8 sSectorY) {
+void ResetHistoryFact(uint8_t ubCode, u8 sSectorX, u8 sSectorY) {
   // run through history list
   HistoryUnitPtr pList = pHistoryListHead;
   BOOLEAN fFound = FALSE;
@@ -1457,7 +1457,7 @@ void ResetHistoryFact(UINT8 ubCode, u8 sSectorX, u8 sSectorY) {
   return;
 }
 
-uint32_t GetTimeQuestWasStarted(UINT8 ubCode) {
+uint32_t GetTimeQuestWasStarted(uint8_t ubCode) {
   // run through history list
   HistoryUnitPtr pList = pHistoryListHead;
   BOOLEAN fFound = FALSE;
@@ -1495,12 +1495,12 @@ uint32_t GetTimeQuestWasStarted(UINT8 ubCode) {
   return (uiTime);
 }
 
-void GetQuestStartedString(UINT8 ubQuestValue, STR16 sQuestString) {
+void GetQuestStartedString(uint8_t ubQuestValue, STR16 sQuestString) {
   // open the file and copy the string
   LoadEncryptedDataFromFile("BINARYDATA\\quests.edt", sQuestString, 160 * (ubQuestValue * 2), 160);
 }
 
-void GetQuestEndedString(UINT8 ubQuestValue, STR16 sQuestString) {
+void GetQuestEndedString(uint8_t ubQuestValue, STR16 sQuestString) {
   // open the file and copy the string
   LoadEncryptedDataFromFile("BINARYDATA\\quests.edt", sQuestString, 160 * ((ubQuestValue * 2) + 1),
                             160);
@@ -1546,7 +1546,7 @@ INT32 GetNumberOfHistoryPages() {
   uiFileSize = FileMan_GetSize(hFileHandle) - 1;
   uiSizeOfRecordsOnEachPage =
       (NUM_RECORDS_PER_PAGE *
-       (sizeof(UINT8) + sizeof(uint32_t) + 3 * sizeof(UINT8) + sizeof(INT16) + sizeof(INT16)));
+       (sizeof(uint8_t) + sizeof(uint32_t) + 3 * sizeof(uint8_t) + sizeof(INT16) + sizeof(INT16)));
 
   iNumberOfHistoryPages = (INT32)(uiFileSize / uiSizeOfRecordsOnEachPage);
 

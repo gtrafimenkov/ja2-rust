@@ -58,7 +58,7 @@
 // LUT for which graphic to use based on strength
 //															 0
 // 1, 2,  3,  4,  5,  6, 7
-UINT8 ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
+uint8_t ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
 
 #define SMELL_STRENGTH_MAX 63
 #define BLOOD_STRENGTH_MAX 7
@@ -76,7 +76,7 @@ UINT8 ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
 
 #define DECAY_SMELL_STRENGTH(s)                     \
   {                                                 \
-    UINT8 ubStrength = SMELL_STRENGTH((s));         \
+    uint8_t ubStrength = SMELL_STRENGTH((s));       \
     ubStrength--;                                   \
     ubStrength = ubStrength << SMELL_TYPE_NUM_BITS; \
     (s) = SMELL_TYPE_BITS((s)) | ubStrength;        \
@@ -101,7 +101,7 @@ UINT8 ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
 
 #define DECAY_BLOOD_FLOOR_STRENGTH(b)             \
   {                                               \
-    UINT8 ubFloorStrength;                        \
+    uint8_t ubFloorStrength;                      \
     ubFloorStrength = BLOOD_FLOOR_STRENGTH((b));  \
     ubFloorStrength--;                            \
     SET_BLOOD_FLOOR_STRENGTH(b, ubFloorStrength); \
@@ -109,14 +109,14 @@ UINT8 ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
 
 #define DECAY_BLOOD_ROOF_STRENGTH(b)             \
   {                                              \
-    UINT8 ubRoofStrength;                        \
+    uint8_t ubRoofStrength;                      \
     ubRoofStrength = BLOOD_ROOF_STRENGTH((b));   \
     ubRoofStrength--;                            \
     SET_BLOOD_FLOOR_STRENGTH(b, ubRoofStrength); \
   }
 
 #define SET_BLOOD_DELAY_TIME(b) \
-  { (b) = BLOOD_DELAY_TIME(((UINT8)Random(BLOOD_DELAY_MAX) + 1)) | (b & 0xFC); }
+  { (b) = BLOOD_DELAY_TIME(((uint8_t)Random(BLOOD_DELAY_MAX) + 1)) | (b & 0xFC); }
 
 #define SET_BLOOD_FLOOR_TYPE(s, ntg) \
   { (s) = BLOOD_FLOOR_TYPE(ntg) | (s & 0xFE); }
@@ -233,10 +233,10 @@ void DecayBloodAndSmells(uint32_t uiTime) {
 
 void DropSmell(struct SOLDIERTYPE* pSoldier) {
   MAP_ELEMENT* pMapElement;
-  UINT8 ubOldSmell;
-  UINT8 ubOldStrength;
-  UINT8 ubSmell;
-  UINT8 ubStrength;
+  uint8_t ubOldSmell;
+  uint8_t ubOldStrength;
+  uint8_t ubSmell;
+  uint8_t ubStrength;
 
   /*
    *  Here we are creating a new smell on the ground.  If there is blood in
@@ -295,10 +295,11 @@ void DropSmell(struct SOLDIERTYPE* pSoldier) {
   // otherwise skip dropping smell
 }
 
-void InternalDropBlood(INT16 sGridNo, INT8 bLevel, UINT8 ubType, UINT8 ubStrength, INT8 bVisible) {
+void InternalDropBlood(INT16 sGridNo, INT8 bLevel, uint8_t ubType, uint8_t ubStrength,
+                       INT8 bVisible) {
   MAP_ELEMENT* pMapElement;
-  UINT8 ubOldStrength = 0;
-  UINT8 ubNewStrength = 0;
+  uint8_t ubOldStrength = 0;
+  uint8_t ubNewStrength = 0;
 
   /*
    * Dropping some blood;
@@ -385,8 +386,8 @@ void InternalDropBlood(INT16 sGridNo, INT8 bLevel, UINT8 ubType, UINT8 ubStrengt
   }
 }
 
-void DropBlood(struct SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible) {
-  UINT8 ubType;
+void DropBlood(struct SOLDIERTYPE* pSoldier, uint8_t ubStrength, INT8 bVisible) {
+  uint8_t ubType;
 
   /*
    * Dropping some blood;

@@ -167,7 +167,7 @@ INT8 gbHighLightedOptionText = -1;
 
 BOOLEAN gfHideBloodAndGoreOption =
     FALSE;  // If a germany build we are to hide the blood and gore option
-UINT8 gubFirstColOfOptions = OPT_FIRST_COLUMN_TOGGLE_CUT_OFF;
+uint8_t gubFirstColOfOptions = OPT_FIRST_COLUMN_TOGGLE_CUT_OFF;
 
 BOOLEAN gfSettingOfTreeTopStatusOnEnterOfOptionScreen;
 BOOLEAN gfSettingOfItemGlowStatusOnEnterOfOptionScreen;
@@ -222,11 +222,11 @@ void SetOptionsExitScreen(uint32_t uiExitScreen);
 void SoundFXSliderChangeCallBack(INT32 iNewValue);
 void SpeechSliderChangeCallBack(INT32 iNewValue);
 void MusicSliderChangeCallBack(INT32 iNewValue);
-// BOOLEAN		DoOptionsMessageBox( UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-// UINT8 ubFlags, MSGBOX_CALLBACK ReturnCallback );
-void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue);
+// BOOLEAN		DoOptionsMessageBox( uint8_t ubStyle, CHAR16 *zString, uint32_t
+// uiExitScreen, uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback );
+void ConfirmQuitToMainMenuMessageBoxCallBack(uint8_t bExitValue);
 void HandleSliderBarMovementSounds();
-void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound);
+void HandleOptionToggle(uint8_t ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound);
 void HandleHighLightedText(BOOLEAN fHighLight);
 
 extern void ToggleItemGlow(BOOLEAN fOn);
@@ -305,7 +305,7 @@ uint32_t OptionsScreenShutdown() { return (TRUE); }
 BOOLEAN EnterOptionsScreen() {
   VOBJECT_DESC VObjectDesc;
   uint16_t usPosY;
-  UINT8 cnt;
+  uint8_t cnt;
   uint16_t usTextWidth, usTextHeight;
 
   // Default this to off
@@ -422,7 +422,7 @@ BOOLEAN EnterOptionsScreen() {
 
     if (usTextWidth > OPT_TOGGLE_BOX_TEXT_WIDTH) {
       // Get how many lines will be used to display the string, without displaying the string
-      UINT8 ubNumLines =
+      uint8_t ubNumLines =
           DisplayWrappedString(0, 0, OPT_TOGGLE_BOX_TEXT_WIDTH, 2, OPT_MAIN_FONT,
                                OPT_HIGHLIGHT_COLOR, zOptionsToggleText[cnt], FONT_MCOLOR_BLACK,
                                TRUE, LEFT_JUSTIFIED | DONT_DISPLAY_TEXT) /
@@ -471,7 +471,7 @@ BOOLEAN EnterOptionsScreen() {
 
     if (usTextWidth > OPT_TOGGLE_BOX_TEXT_WIDTH) {
       // Get how many lines will be used to display the string, without displaying the string
-      UINT8 ubNumLines =
+      uint8_t ubNumLines =
           DisplayWrappedString(0, 0, OPT_TOGGLE_BOX_TEXT_WIDTH, 2, OPT_MAIN_FONT,
                                OPT_HIGHLIGHT_COLOR, zOptionsToggleText[cnt], FONT_MCOLOR_BLACK,
                                TRUE, LEFT_JUSTIFIED | DONT_DISPLAY_TEXT) /
@@ -556,7 +556,7 @@ BOOLEAN EnterOptionsScreen() {
 }
 
 void ExitOptionsScreen() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   if (gfExitOptionsDueToMessageBox) {
     gfOptionsScreenExit = FALSE;
@@ -646,7 +646,7 @@ void HandleOptionsScreen() {
 void RenderOptionsScreen() {
   struct VObject *hPixHandle;
   uint16_t usPosY;
-  UINT8 cnt;
+  uint8_t cnt;
   uint16_t usWidth = 0;
 
   // Get and display the background image
@@ -904,7 +904,7 @@ void BtnDoneCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
+  uint8_t ubButton = (uint8_t)MSYS_GetBtnUserData(btn, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
@@ -930,7 +930,7 @@ void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound) {
+void HandleOptionToggle(uint8_t ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound) {
   static uint32_t uiOptionToggleSound = NO_SAMPLE;
 
   if (fState) {
@@ -993,7 +993,7 @@ void SpeechSliderChangeCallBack(INT32 iNewValue) {
 
 void MusicSliderChangeCallBack(INT32 iNewValue) { MusicSetVolume(iNewValue); }
 
-BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect) {
   // reset exit mode
@@ -1008,8 +1008,8 @@ BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiE
   return ((giOptionsMessageBox != -1));
 }
 
-BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
-                            MSGBOX_CALLBACK ReturnCallback) {
+BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+                            uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
   // reset exit mode
@@ -1024,7 +1024,7 @@ BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScree
   return ((giOptionsMessageBox != -1));
 }
 
-void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue) {
+void ConfirmQuitToMainMenuMessageBoxCallBack(uint8_t bExitValue) {
   // yes, Quit to main menu
   if (bExitValue == MSG_BOX_RETURN_YES) {
     gfEnteredFromMapScreen = FALSE;
@@ -1040,7 +1040,7 @@ void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue) {
 }
 
 void SetOptionsScreenToggleBoxes() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_GAME_OPTIONS; cnt++) {
     if (gGameSettings.fOptions[cnt])
@@ -1051,7 +1051,7 @@ void SetOptionsScreenToggleBoxes() {
 }
 
 void GetOptionsScreenToggleBoxes() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_GAME_OPTIONS; cnt++) {
     if (ButtonList[guiOptionsToggles[cnt]]->uiFlags & BUTTON_CLICKED_ON)
@@ -1091,7 +1091,7 @@ void HandleSliderBarMovementSounds() {
 }
 
 void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT8 ubButton = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+  uint8_t ubButton = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     HandleOptionToggle(ubButton, (BOOLEAN)(!gGameSettings.fOptions[ubButton]), FALSE, TRUE);
@@ -1132,7 +1132,7 @@ void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT3
 void HandleHighLightedText(BOOLEAN fHighLight) {
   uint16_t usPosX = 0;
   uint16_t usPosY = 0;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   INT8 bHighLight = -1;
   uint16_t usWidth;
 
@@ -1219,7 +1219,7 @@ void HandleHighLightedText(BOOLEAN fHighLight) {
 void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
   } else if (reason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
-    UINT8 ubCnt;
+    uint8_t ubCnt;
 
     // loop through all the toggle box's and remove the in area flag
     for (ubCnt = 0; ubCnt < NUM_GAME_OPTIONS; ubCnt++) {

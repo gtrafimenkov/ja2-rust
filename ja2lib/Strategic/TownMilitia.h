@@ -23,15 +23,16 @@ struct MilitiaCount {
 // this handles what happens when a new militia unit is finishes getting trained
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY);
 
-void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany);
+void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, uint8_t ubRank, uint8_t ubHowMany);
 
 // this will check for promotions and handle them for you
-UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts);
+uint8_t CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, uint8_t ubCurrentRank,
+                                    uint8_t ubRecentKillPts);
 
 void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
-UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY);
-UINT8 CountAllMilitiaInSectorID8(SectorID8 sectorID);
+uint8_t CountAllMilitiaInSector(u8 mapX, u8 mapY);
+uint8_t CountAllMilitiaInSectorID8(SectorID8 sectorID);
 INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 struct MilitiaCount GetMilitiaInSector(u8 mapX, u8 mapY);
 struct MilitiaCount GetMilitiaInSectorID8(SectorID8 sectorID);

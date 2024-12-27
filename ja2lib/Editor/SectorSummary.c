@@ -74,7 +74,7 @@ BOOLEAN gfMustForceUpdateAllMaps = FALSE;
 uint16_t gusNumberOfMapsToBeForceUpdated = 0;
 BOOLEAN gfMajorUpdate = FALSE;
 
-void LoadSummary(CHAR8 *pSector, UINT8 ubLevel, FLOAT dMajorMapVersion);
+void LoadSummary(CHAR8 *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion);
 void RegenerateSummaryInfoForAllOutdatedMaps();
 
 void SetupItemDetailsMode(BOOLEAN fAllowRecursion);
@@ -156,7 +156,7 @@ enum {
   ITEMMODE_REAL,
   ITEMMODE_ENEMY,
 };
-UINT8 gubSummaryItemMode = ITEMMODE_SCIFI;
+uint8_t gubSummaryItemMode = ITEMMODE_SCIFI;
 
 BOOLEAN gfItemDetailsMode = FALSE;
 
@@ -180,7 +180,7 @@ BOOLEAN gfMapFileDirty;
 // you to save, replacing the existing file.  These states are not persistant, which forces the user
 // to check the box before saving.
 enum { INACTIVE, READONLY, OVERWRITE };
-UINT8 gubOverrideStatus;
+uint8_t gubOverrideStatus;
 // Set when the a new sector/level is selected, forcing the user to reselect the override status.
 BOOLEAN gfOverrideDirty;
 // The state of the override button, true if overriden intended.
@@ -463,7 +463,7 @@ void RenderSectorInformation() {
   // CHAR16 str[ 100 ];
   MAPCREATE_STRUCT *m;
   SUMMARYFILE *s;
-  UINT8 ePoints = 0;
+  uint8_t ePoints = 0;
   uint16_t usLine = 35;
   INT32 iOverall;
 
@@ -560,8 +560,8 @@ void RenderSectorInformation() {
       SetFontForeground(FONT_RED);
       mprintf(10, 265, L"Too many exit grid destinations (more than 4)...");
     } else {
-      UINT8 i;
-      UINT8 ubNumInvalid = 0;
+      uint8_t i;
+      uint8_t ubNumInvalid = 0;
       for (i = 0; i < 4; i++) {
         if (s->fInvalidDest[i]) ubNumInvalid++;
       }
@@ -909,7 +909,7 @@ void RenderItemDetails() {
 }
 
 void RenderSummaryWindow() {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   INT32 i, x, y;
@@ -1208,10 +1208,10 @@ void RenderSummaryWindow() {
             SetFontForeground(FONT_LTBLUE);
           mprintf(MAP_LEFT + 110, MAP_BOTTOM + 46, L"FILE:  %s", gszDisplayName);
           if (gubOverrideStatus == READONLY) {
-            SetFontForeground((UINT8)(gfOverride ? FONT_YELLOW : FONT_LTRED));
+            SetFontForeground((uint8_t)(gfOverride ? FONT_YELLOW : FONT_LTRED));
             mprintf(MAP_LEFT + 124, MAP_BOTTOM + 61, L"Override READONLY");
           } else {
-            SetFontForeground((UINT8)(gfOverride ? FONT_YELLOW : FONT_ORANGE));
+            SetFontForeground((uint8_t)(gfOverride ? FONT_YELLOW : FONT_ORANGE));
             mprintf(MAP_LEFT + 124, MAP_BOTTOM + 61, L"Overwrite File");
           }
         }
@@ -1313,7 +1313,7 @@ void RenderSummaryWindow() {
       UnLockVideoSurface(FRAME_BUFFER);
     }
     if (gfRenderProgress) {
-      UINT8 ubNumUndergroundLevels;
+      uint8_t ubNumUndergroundLevels;
       CHAR16 str[2];
       for (y = 0; y < 16; y++) {
         ClipRect.iTop = MAP_TOP + y * 13;
@@ -1521,7 +1521,7 @@ void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate) {
     else
       szCoord[2] = '\0';
     gusNumEntriesWithOutdatedOrNoSummaryInfo++;
-    EvaluateWorld(szCoord, (UINT8)giCurrLevel);
+    EvaluateWorld(szCoord, (uint8_t)giCurrLevel);
 
     RemoveProgressBar(0);
   } else
@@ -2209,7 +2209,7 @@ void GenerateSummaryList() {
   Plat_SetCurrentDirectory(Dir);
 }
 
-void WriteSectorSummaryUpdate(CHAR8 *puiFilename, UINT8 ubLevel, SUMMARYFILE *pSummaryFileInfo) {
+void WriteSectorSummaryUpdate(CHAR8 *puiFilename, uint8_t ubLevel, SUMMARYFILE *pSummaryFileInfo) {
   FILE *fp;
   char ExecDir[256];
   char Dir[300];
@@ -2274,7 +2274,7 @@ void SummaryNewCaveLevelCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void LoadSummary(CHAR8 *pSector, UINT8 ubLevel, FLOAT dMajorMapVersion) {
+void LoadSummary(CHAR8 *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion) {
   CHAR8 filename[40];
   SUMMARYFILE temp;
   INT32 x, y;
@@ -2337,7 +2337,7 @@ void UpdateMasterProgress() {
   }
 }
 
-void ReportError(CHAR8 *pSector, UINT8 ubLevel) {
+void ReportError(CHAR8 *pSector, uint8_t ubLevel) {
   static INT32 yp = 180;
   CHAR16 str[40];
   CHAR16 temp[10];
@@ -2433,7 +2433,7 @@ void SummaryUpdateCallback(GUI_BUTTON *btn, INT32 reason) {
     }
 
     sprintf(str, "%c%d", gsSelSectorY + 'A' - 1, gsSelSectorX);
-    EvaluateWorld(str, (UINT8)giCurrLevel);
+    EvaluateWorld(str, (uint8_t)giCurrLevel);
 
     gpSectorSummary[gsSelSectorX][gsSelSectorY][giCurrLevel] = gpCurrentSectorSummary;
 
@@ -2747,7 +2747,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   FileMan_Close(hfile);
 }
 
-UINT8 GetCurrentSummaryVersion() {
+uint8_t GetCurrentSummaryVersion() {
   if (gpCurrentSectorSummary) {
     return gpCurrentSectorSummary->MapInfo.ubMapVersion;
   }

@@ -21,7 +21,7 @@ enum {
   MERC_SCHEDULEMODE,    // specifying a schedule for that particular individual
 };
 
-extern UINT8 gubCurrMercMode, gubPrevMercMode;
+extern uint8_t gubCurrMercMode, gubPrevMercMode;
 
 #define EDIT_NUM_COLORS 4
 #define EDIT_COLOR_HEAD 0
@@ -51,7 +51,7 @@ extern CHAR16 *zDiffNames[NUM_DIFF_LVLS];
 extern INT16 sCurBaseDiff;
 extern INT16 gsSelectedMercID;
 extern INT16 gsSelectedMercGridNo;
-extern UINT8 gubCurrMercMode;
+extern uint8_t gubCurrMercMode;
 
 enum _ForUseWithIndicateSelectedMerc {
   SELECT_NEXT_CREATURE = -7,
@@ -74,14 +74,14 @@ void UpdateMercsInfo();
 void ProcessMercEditing();
 void AddMercToWorld(INT32 iMapIndex);
 void HandleRightClickOnMerc(INT32 iMapIndex);
-void SetMercEditingMode(UINT8 ubNewMode);
+void SetMercEditingMode(uint8_t ubNewMode);
 
 void ResetAllMercPositions();
 
 void EraseMercWaypoint();
 void AddMercWaypoint(uint32_t iMapIndex);
 
-void SetEnemyColorCode(UINT8 ubColorCode);
+void SetEnemyColorCode(uint8_t ubColorCode);
 
 void SpecifyEntryPoint(uint32_t iMapIndex);
 
@@ -107,7 +107,7 @@ void HandleMercInventoryPanel(INT16 sX, INT16 sY, INT8 bEvent);
 extern uint16_t gusMercsNewItemIndex;
 extern BOOLEAN gfRenderMercInfo;
 
-void ChangeCivGroup(UINT8 ubNewCivGroup);
+void ChangeCivGroup(uint8_t ubNewCivGroup);
 
 #define MERCINV_LGSLOT_WIDTH 48
 #define MERCINV_SMSLOT_WIDTH 24
@@ -126,12 +126,12 @@ extern BOOLEAN gfShowRebels;
 extern BOOLEAN gfShowCivilians;
 void SetMercTeamVisibility(INT8 bTeam, BOOLEAN fVisible);
 
-extern UINT8 gubCurrentScheduleActionIndex;
+extern uint8_t gubCurrentScheduleActionIndex;
 extern BOOLEAN gfSingleAction;
 extern BOOLEAN gfUseScheduleData2;
 
-void UpdateScheduleAction(UINT8 ubNewAction);
-void FindScheduleGridNo(UINT8 ubScheduleData);
+void UpdateScheduleAction(uint8_t ubNewAction);
+void FindScheduleGridNo(uint8_t ubScheduleData);
 void ClearCurrentSchedule();
 void CancelCurrentScheduleAction();
 void RegisterCurrentScheduleAction(INT32 iMapIndex);

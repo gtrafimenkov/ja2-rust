@@ -83,7 +83,7 @@ BOOLEAN LoadCivQuotesFromLoadGameFile(HWFILE hFile);
 
 BOOLEAN ShutDownQuoteBoxIfActive();
 
-void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX,
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, INT16 sX,
                    INT16 sY);
 
 #endif

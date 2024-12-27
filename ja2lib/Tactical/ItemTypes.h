@@ -62,18 +62,18 @@ typedef enum { BOMB_TIMED = 1, BOMB_REMOTE, BOMB_PRESSURE, BOMB_SWITCH } Detonat
 
 struct OBJECTTYPE {
   uint16_t usItem;
-  UINT8 ubNumberOfObjects;
+  uint8_t ubNumberOfObjects;
   union {
     struct {
       INT8 bGunStatus;         // status % of gun
-      UINT8 ubGunAmmoType;     // ammo type, as per weapons.h
-      UINT8 ubGunShotsLeft;    // duh, amount of ammo left
+      uint8_t ubGunAmmoType;   // ammo type, as per weapons.h
+      uint8_t ubGunShotsLeft;  // duh, amount of ammo left
       uint16_t usGunAmmoItem;  // the item # for the item table
       INT8 bGunAmmoStatus;     // only for "attached ammo" - grenades, mortar shells
-      UINT8 ubGunUnused[MAX_OBJECTS_PER_SLOT - 6];
+      uint8_t ubGunUnused[MAX_OBJECTS_PER_SLOT - 6];
     };
     struct {
-      UINT8 ubShotsLeft[MAX_OBJECTS_PER_SLOT];
+      uint8_t ubShotsLeft[MAX_OBJECTS_PER_SLOT];
     };
     struct {
       INT8 bStatus[MAX_OBJECTS_PER_SLOT];
@@ -81,7 +81,7 @@ struct OBJECTTYPE {
     struct {
       INT8 bMoneyStatus;
       uint32_t uiMoneyAmount;
-      UINT8 ubMoneyUnused[MAX_OBJECTS_PER_SLOT - 5];
+      uint8_t ubMoneyUnused[MAX_OBJECTS_PER_SLOT - 5];
     };
     struct {                // this is used by placed bombs, switches, and the action item
       INT8 bBombStatus;     // % status
@@ -95,26 +95,26 @@ struct OBJECTTYPE {
           INT8 bFrequency;  // >=0 values used only
         };
       };
-      UINT8 ubBombOwner;   // side which placed the bomb
-      UINT8 bActionValue;  // this is used by the ACTION_ITEM fake item
+      uint8_t ubBombOwner;   // side which placed the bomb
+      uint8_t bActionValue;  // this is used by the ACTION_ITEM fake item
       union {
         struct {
-          UINT8 ubTolerance;  // tolerance value for panic triggers
+          uint8_t ubTolerance;  // tolerance value for panic triggers
         };
         struct {
-          UINT8 ubLocationID;  // location value for remote non-bomb (special!) triggers
+          uint8_t ubLocationID;  // location value for remote non-bomb (special!) triggers
         };
       };
     };
     struct {
       INT8 bKeyStatus[6];
-      UINT8 ubKeyID;
-      UINT8 ubKeyUnused[1];
+      uint8_t ubKeyID;
+      uint8_t ubKeyUnused[1];
     };
     struct {
-      UINT8 ubOwnerProfile;
-      UINT8 ubOwnerCivGroup;
-      UINT8 ubOwnershipUnused[6];
+      uint8_t ubOwnerProfile;
+      uint8_t ubOwnerCivGroup;
+      uint8_t ubOwnershipUnused[6];
     };
   };
   // attached objects
@@ -122,34 +122,34 @@ struct OBJECTTYPE {
   INT8 bAttachStatus[MAX_ATTACHMENTS];
 
   INT8 fFlags;
-  UINT8 ubMission;
-  INT8 bTrap;         // 1-10 exp_lvl to detect
-  UINT8 ubImprintID;  // ID of merc that item is imprinted on
-  UINT8 ubWeight;
-  UINT8 fUsed;  // flags for whether the item is used or not
+  uint8_t ubMission;
+  INT8 bTrap;           // 1-10 exp_lvl to detect
+  uint8_t ubImprintID;  // ID of merc that item is imprinted on
+  uint8_t ubWeight;
+  uint8_t fUsed;  // flags for whether the item is used or not
 };
 
 /*
 typedef struct
 {
-        UINT8		ubCursor;
+        uint8_t		ubCursor;
         INT8		bSoundType;
-        UINT8		ubGraphicNum;
+        uint8_t		ubGraphicNum;
         INT8		bMaxLoad;
 
-        UINT8		ubPerPocket;
-        UINT8		ubCanDamage;
-        UINT8		ubWaterDamage;
-        UINT8		ubCanRepair;
+        uint8_t		ubPerPocket;
+        uint8_t		ubCanDamage;
+        uint8_t		ubWaterDamage;
+        uint8_t		ubCanRepair;
 
-        UINT8		ubSeeMeter;
-        UINT8		ubRange;
-        UINT8		ubMetal;
-        UINT8		ubSinkable;
+        uint8_t		ubSeeMeter;
+        uint8_t		ubRange;
+        uint8_t		ubMetal;
+        uint8_t		ubSinkable;
 
         uint16_t	ubPrice;
-        UINT8		ubMission;
-        UINT8		ubCoolness;
+        uint8_t		ubMission;
+        uint8_t		ubCoolness;
 } INVTYPE;
 
 */
@@ -240,15 +240,15 @@ typedef struct
 
 typedef struct {
   uint32_t usItemClass;
-  UINT8 ubClassIndex;
-  UINT8 ubCursor;
+  uint8_t ubClassIndex;
+  uint8_t ubCursor;
   INT8 bSoundType;
-  UINT8 ubGraphicType;
-  UINT8 ubGraphicNum;
-  UINT8 ubWeight;  // 2 units per kilogram; roughly 1 unit per pound
-  UINT8 ubPerPocket;
+  uint8_t ubGraphicType;
+  uint8_t ubGraphicNum;
+  uint8_t ubWeight;  // 2 units per kilogram; roughly 1 unit per pound
+  uint8_t ubPerPocket;
   uint16_t usPrice;
-  UINT8 ubCoolness;
+  uint8_t ubCoolness;
   INT8 bReliability;
   INT8 bRepairEase;
   uint16_t fFlags;

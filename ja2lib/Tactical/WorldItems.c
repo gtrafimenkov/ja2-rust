@@ -236,7 +236,7 @@ uint32_t GetNumUsedWorldItems(void) {
   return (uiNumItems);
 }
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, uint16_t usFlags,
+INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible) {
   uint32_t iItemIndex;
   INT32 iReturn;
@@ -380,7 +380,7 @@ void LoadWorldItemsFromMap(INT8 **hBuffer) {
             if (Item[dummyItem.o.usItem].usItemClass == IC_AMMO) {
               usReplacement = StandardGunListAmmoReplacement(dummyItem.o.usItem);
               if (usReplacement) {
-                UINT8 ubLoop;
+                uint8_t ubLoop;
 
                 // go through status values and scale up/down
                 for (ubLoop = 0; ubLoop < dummyItem.o.ubNumberOfObjects; ubLoop++) {
@@ -438,7 +438,7 @@ void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void) {
   uint32_t uiLoop;
   uint32_t uiLoop2;
   INT16 sGridNo;
-  UINT8 ubLevel;
+  uint8_t ubLevel;
 
   // only do this after Carmen has talked to player and terrorists have been placed
   // if ( CheckFact( FACT_CARMEN_EXPLAINED_DEAL, 0 ) == TRUE )
@@ -473,7 +473,7 @@ void DeleteWorldItemsBelongingToQueenIfThere(void) {
   uint32_t uiLoop;
   uint32_t uiLoop2;
   INT16 sGridNo;
-  UINT8 ubLevel;
+  uint8_t ubLevel;
   INT8 bSlot;
 
   if (gMercProfiles[QUEEN].sSectorX == gWorldSectorX &&

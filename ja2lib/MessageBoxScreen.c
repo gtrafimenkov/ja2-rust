@@ -38,7 +38,7 @@
 #define MSGBOX_SMALL_BUTTON_WIDTH 31
 #define MSGBOX_SMALL_BUTTON_X_SEP 8
 
-typedef void (*MSGBOX_CALLBACK)(UINT8 bExitValue);
+typedef void (*MSGBOX_CALLBACK)(uint8_t bExitValue);
 
 // old mouse x and y positions
 SGPPoint pOldMousePosition;
@@ -77,18 +77,18 @@ extern STR16 pUpdatePanelButtons[];
 CHAR16 gzUserDefinedButton1[128];
 CHAR16 gzUserDefinedButton2[128];
 
-INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+INT32 DoMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                    MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
   VSURFACE_DESC vs_desc;
   uint16_t usTextBoxWidth;
   uint16_t usTextBoxHeight;
   SGPRect aRect;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   INT16 sButtonX, sButtonY, sBlankSpace;
-  UINT8 ubMercBoxBackground = BASIC_MERC_POPUP_BACKGROUND,
-        ubMercBoxBorder = BASIC_MERC_POPUP_BORDER;
-  UINT8 ubFontColor, ubFontShadowColor;
+  uint8_t ubMercBoxBackground = BASIC_MERC_POPUP_BACKGROUND,
+          ubMercBoxBorder = BASIC_MERC_POPUP_BORDER;
+  uint8_t ubFontColor, ubFontShadowColor;
   uint16_t usCursor;
   INT32 iId = -1;
 
@@ -700,7 +700,7 @@ void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
 
 uint32_t ExitMsgBox(INT8 ubExitCode) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   SGPPoint pPosition;
 
   // Delete popup!
@@ -853,7 +853,7 @@ uint32_t MessageBoxScreenHandle() {
     // If in game screen....
     if ((gfStartedFromGameScreen) || (gfStartedFromMapScreen)) {
       // uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-      // UINT8	 *pDestBuf, *pSrcBuf;
+      // uint8_t	 *pDestBuf, *pSrcBuf;
 
       if (gfStartedFromGameScreen) {
         HandleTacticalUILoseCursorFromOtherScreen();

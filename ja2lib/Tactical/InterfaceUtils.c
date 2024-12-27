@@ -107,7 +107,7 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   INT8 bBandage;
 
@@ -189,7 +189,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   struct VObject *hHandle;
 
@@ -291,7 +291,7 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
 
   // Erase what was there
@@ -326,14 +326,14 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos,
+void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, INT16 sXPos, INT16 sYPos,
                      INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
                      uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   INT16 sValue;
 
@@ -395,7 +395,7 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, IN
 void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
                        BOOLEAN fAutoFace) {
   BOOLEAN fDoFace = FALSE;
-  UINT8 ubVehicleType = 0;
+  uint8_t ubVehicleType = 0;
 
   if (IsSolActive(pSoldier)) {
     if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {

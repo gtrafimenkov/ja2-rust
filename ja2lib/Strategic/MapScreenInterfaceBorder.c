@@ -353,7 +353,7 @@ BOOLEAN CreateButtonsForMapBorder(void) {
 }
 
 void DeleteMapBorderButtons(void) {
-  UINT8 ubCnt;
+  uint8_t ubCnt;
 
   /*
           RemoveButton( guiMapBorderScrollButtons[ 0 ]);
@@ -1342,7 +1342,7 @@ void InitMapScreenFlags(void) {
   fShowItemsFlag = FALSE;
 }
 
-void MapBorderButtonOff(UINT8 ubBorderButtonIndex) {
+void MapBorderButtonOff(uint8_t ubBorderButtonIndex) {
   Assert(ubBorderButtonIndex < 6);
 
   if (fShowMapInventoryPool) {
@@ -1359,7 +1359,7 @@ void MapBorderButtonOff(UINT8 ubBorderButtonIndex) {
   ButtonList[giMapBorderButtons[ubBorderButtonIndex]]->uiFlags &= ~(BUTTON_CLICKED_ON);
 }
 
-void MapBorderButtonOn(UINT8 ubBorderButtonIndex) {
+void MapBorderButtonOn(uint8_t ubBorderButtonIndex) {
   Assert(ubBorderButtonIndex < 6);
 
   if (fShowMapInventoryPool) {

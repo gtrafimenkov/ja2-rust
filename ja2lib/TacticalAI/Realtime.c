@@ -65,7 +65,7 @@ uint16_t RealtimeDelay(struct SOLDIERTYPE *pSoldier) {
     return ((uint16_t)REALTIME_CREATURE_AI_DELAY);
   } else {
     if (pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) {
-      UINT8 ubRoom;
+      uint8_t ubRoom;
 
       if (InARoom(pSoldier->sGridNo, &ubRoom) && IN_BROTHEL(ubRoom)) {
         return ((uint16_t)(REALTIME_AI_DELAY / 3));
@@ -187,7 +187,7 @@ void RTHandleAI(struct SOLDIERTYPE *pSoldier) {
       } else {
         pSoldier->usActionData = (uint16_t)REALTIME_AI_DELAY;
         if (pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) {
-          UINT8 ubRoom;
+          uint8_t ubRoom;
 
           if (InARoom(pSoldier->sGridNo, &ubRoom) && IN_BROTHEL(ubRoom)) {
             pSoldier->usActionData /= 3;

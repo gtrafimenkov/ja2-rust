@@ -36,10 +36,10 @@
 
 // Palette structure, mimics that of Win32
 struct SGPPaletteEntry {
-  UINT8 peRed;
-  UINT8 peGreen;
-  UINT8 peBlue;
-  UINT8 peFlags;
+  uint8_t peRed;
+  uint8_t peGreen;
+  uint8_t peBlue;
+  uint8_t peFlags;
 };
 
 #define AUX_FULL_TILE 0x01
@@ -50,14 +50,14 @@ struct SGPPaletteEntry {
 #define AUX_USES_LAND_Z 0x20
 
 struct AuxObjectData {
-  UINT8 ubWallOrientation;
-  UINT8 ubNumberOfTiles;
+  uint8_t ubWallOrientation;
+  uint8_t ubNumberOfTiles;
   uint16_t usTileLocIndex;
-  UINT8 ubUnused1[3];
-  UINT8 ubCurrentFrame;
-  UINT8 ubNumberOfFrames;
-  UINT8 fFlags;
-  UINT8 ubUnused[6];
+  uint8_t ubUnused1[3];
+  uint8_t ubCurrentFrame;
+  uint8_t ubNumberOfFrames;
+  uint8_t fFlags;
+  uint8_t ubUnused[6];
 };
 
 // relative tile location
@@ -87,13 +87,13 @@ typedef struct tagETRLEData {
 typedef struct {
   uint16_t usWidth;
   uint16_t usHeight;
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
   uint16_t fFlags;
   SGPFILENAME ImageFile;
   uint32_t iFileLoader;
   struct SGPPaletteEntry *pPalette;
   uint16_t *pui16BPPPalette;
-  UINT8 *pAppData;
+  uint8_t *pAppData;
   uint32_t uiAppDataSize;
   // This union is used to describe each data type and is flexible to include the
   // data strucutre of the compresssed format, once developed.
@@ -105,13 +105,13 @@ typedef struct {
       PTR pCompressedImageData;
     };
     struct {
-      UINT8 *p8BPPData;
+      uint8_t *p8BPPData;
     };
     struct {
       uint16_t *p16BPPData;
     };
     struct {
-      UINT8 *pPixData8;
+      uint8_t *pPixData8;
       uint32_t uiSizePixData;
       ETRLEObject *pETRLEObject;
       uint16_t usNumberOfObjects;
@@ -167,7 +167,8 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
 uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
 uint16_t Get16BPPColor(uint32_t RGBValue);
 uint32_t GetRGBColor(uint16_t Value16BPP);
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
+                                                 uint8_t *pOldPalette);
 
 extern uint16_t gusAlphaMask;
 extern uint16_t gusRedMask;

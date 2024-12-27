@@ -290,7 +290,7 @@ void RestoreWalls(uint32_t iMapIndex) {
   uint32_t uiTileType;
   uint16_t usWallType;
   uint16_t usWallOrientation;
-  UINT8 ubSaveWallUIValue;
+  uint8_t ubSaveWallUIValue;
   BOOLEAN fDone = FALSE;
 
   pWall = GetHorizontalWall(iMapIndex);
@@ -352,10 +352,10 @@ void RestoreWalls(uint32_t iMapIndex) {
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       usWallType = SearchForWallType(iMapIndex);
     if (usWallType != 0xffff) {
-      ubSaveWallUIValue = gubWallUIValue;  // save the wall UI value.
-      gubWallUIValue = (UINT8)usWallType;  // trick the UI value
-      PasteSmartWall(iMapIndex);           // paste smart wall with fake UI value
-      gubWallUIValue = ubSaveWallUIValue;  // restore the real UI value.
+      ubSaveWallUIValue = gubWallUIValue;    // save the wall UI value.
+      gubWallUIValue = (uint8_t)usWallType;  // trick the UI value
+      PasteSmartWall(iMapIndex);             // paste smart wall with fake UI value
+      gubWallUIValue = ubSaveWallUIValue;    // restore the real UI value.
     }
   }
 }

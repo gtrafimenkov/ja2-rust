@@ -56,7 +56,7 @@ extern INT32 giTimerAirRaidUpdate;
 
 BOOLEAN gfInAirRaid = FALSE;
 BOOLEAN gfAirRaidScheduled = FALSE;
-UINT8 gubAirRaidMode;
+uint8_t gubAirRaidMode;
 uint32_t guiSoundSample;
 uint32_t guiRaidLastUpdate;
 BOOLEAN gfFadingRaidIn = FALSE;
@@ -67,13 +67,13 @@ BOOLEAN gfFadingRaidOut = FALSE;
 INT16 gsDiveX;
 INT16 gsDiveY;
 INT16 gsDiveTargetLocation;
-UINT8 gubDiveDirection;
+uint8_t gubDiveDirection;
 INT16 gsNumGridNosMoved;
 INT32 giNumTurnsSinceLastDive;
 INT32 giNumTurnsSinceDiveStarted;
 INT32 giNumGridNosMovedThisTurn;
 BOOLEAN gfAirRaidHasHadTurn = FALSE;
-UINT8 gubBeginTeamTurn = 0;
+uint8_t gubBeginTeamTurn = 0;
 BOOLEAN gfHaveTBBatton = FALSE;
 INT16 gsNotLocatedYet = FALSE;
 
@@ -82,7 +82,7 @@ AIR_RAID_DEFINITION gAirRaidDef;
 typedef struct {
   BOOLEAN fInAirRaid;
   BOOLEAN fAirRaidScheduled;
-  UINT8 ubAirRaidMode;
+  uint8_t ubAirRaidMode;
   uint32_t uiSoundSample;
   uint32_t uiRaidLastUpdate;
   BOOLEAN fFadingRaidIn;
@@ -93,13 +93,13 @@ typedef struct {
   INT16 sDiveX;
   INT16 sDiveY;
   INT16 sDiveTargetLocation;
-  UINT8 ubDiveDirection;
+  uint8_t ubDiveDirection;
   INT16 sNumGridNosMoved;
   INT32 iNumTurnsSinceLastDive;
   INT32 iNumTurnsSinceDiveStarted;
   INT32 iNumGridNosMovedThisTurn;
   BOOLEAN fAirRaidHasHadTurn;
-  UINT8 ubBeginTeamTurn;
+  uint8_t ubBeginTeamTurn;
   BOOLEAN fHaveTBBatton;
   AIR_RAID_DEFINITION AirRaidDef;
   INT16 sRaidSoldierID;
@@ -110,7 +110,7 @@ typedef struct {
   INT8 bLevel;
   INT8 bTeam;
   INT8 bSide;
-  UINT8 ubAttackerID;
+  uint8_t ubAttackerID;
   uint16_t usAttackingWeapon;
   FLOAT dXPos;
   FLOAT dYPos;
@@ -118,7 +118,7 @@ typedef struct {
   INT16 sY;
   INT16 sGridNo;
 
-  UINT8 ubFiller[32];
+  uint8_t ubFiller[32];
 
 } AIR_RAID_SAVE_STRUCT;
 
@@ -245,9 +245,9 @@ BOOLEAN BeginAirRaid() {
 }
 
 INT16 PickLocationNearAnyMercInSector() {
-  UINT8 ubMercsInSector[20] = {0};
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubMercsInSector[20] = {0};
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
 
@@ -261,14 +261,14 @@ INT16 PickLocationNearAnyMercInSector() {
        cnt++, pTeamSoldier++) {
     // Add guy if he's a candidate...
     if (OK_INSECTOR_MERC(pTeamSoldier)) {
-      ubMercsInSector[ubNumMercs] = (UINT8)cnt;
+      ubMercsInSector[ubNumMercs] = (uint8_t)cnt;
       ubNumMercs++;
     }
   }
 
   // If we are > 0
   if (ubNumMercs > 0) {
-    ubChosenMerc = (UINT8)Random(ubNumMercs);
+    ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
     return (MercPtrs[ubMercsInSector[ubChosenMerc]]->sGridNo);
   }
@@ -810,7 +810,7 @@ void DoBombing() {
             // Drop bombs...
             InternalIgniteExplosion(NOBODY, CenterX(sBombGridNo), CenterY(sBombGridNo), 0,
                                     sBombGridNo, usItem, fLocate,
-                                    (UINT8)IsRoofPresentAtGridno(sBombGridNo));
+                                    (uint8_t)IsRoofPresentAtGridno(sBombGridNo));
           }
         }
 
@@ -988,7 +988,7 @@ void HandleAirRaid() {
 
 BOOLEAN InAirRaid() { return (gfInAirRaid); }
 
-BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam) {
+BOOLEAN HandleAirRaidEndTurn(uint8_t ubTeam) {
   if (!gfInAirRaid) {
     return (TRUE);
   }
@@ -1193,8 +1193,8 @@ void EndAirRaid() {
                                   // struct GROUP *pGroup;
                                   // Create a patrol group originating from sector B9
                                   // pGroup = CreateNewEnemyGroupDepartingFromSector( SEC_B9,
-                                  // (UINT8)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0 );
-                                  // Move the patrol group north to attack Omerta
+                                  // (uint8_t)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0
+                                  // ); Move the patrol group north to attack Omerta
                                   // AddWaypointToPGroup( pGroup, 9, 1 ); //A9
                                   // Because we want them to arrive right away, we will toast the
                                   // arrival event.  The information is already set up though.

@@ -37,8 +37,8 @@
 #define CIV_QUOTE_HINT 99
 
 typedef struct {
-  UINT8 ubNumEntries;
-  UINT8 ubUnusedCurrentEntry;
+  uint8_t ubNumEntries;
+  uint8_t ubUnusedCurrentEntry;
 
 } CIV_QUOTE;
 
@@ -48,15 +48,15 @@ BOOLEAN gfSurrendered = FALSE;
 
 CIV_QUOTE gCivQuotes[NUM_CIV_QUOTES];
 
-UINT8 gubNumEntries[NUM_CIV_QUOTES] = {15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+uint8_t gubNumEntries[NUM_CIV_QUOTES] = {15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 
-                                       15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+                                         15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 
-                                       5,  5,  15, 15, 15, 15, 15, 15, 15, 15,
+                                         5,  5,  15, 15, 15, 15, 15, 15, 15, 15,
 
-                                       15, 15, 2,  15, 15, 10, 10, 5,  3,  10,
+                                         15, 15, 2,  15, 15, 10, 10, 5,  3,  10,
 
-                                       3,  3,  3,  3,  3,  3,  3,  3,  3,  3};
+                                         3,  3,  3,  3,  3,  3,  3,  3,  3,  3};
 
 typedef struct {
   BOOLEAN bActive;
@@ -82,7 +82,7 @@ void CopyNumEntriesIntoQuoteStruct() {
   }
 }
 
-BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
+BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, CHAR16 *zQuote) {
   CHAR8 zFileName[164];
 
   // Build filename....
@@ -109,7 +109,7 @@ BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
   return (TRUE);
 }
 
-void SurrenderMessageBoxCallBack(UINT8 ubExitValue) {
+void SurrenderMessageBoxCallBack(uint8_t ubExitValue) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt = 0;
 
@@ -163,7 +163,7 @@ void ShutDownQuoteBox(BOOLEAN fForce) {
     // do we need to do anything at the end of the civ quote?
     if (gCivQuoteData.pCiv && gCivQuoteData.pCiv->bAction == AI_ACTION_OFFER_SURRENDER) {
       DoMessageBox(MSG_BOX_BASIC_STYLE, Message[STR_SURRENDER], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, SurrenderMessageBoxCallBack, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, SurrenderMessageBoxCallBack, NULL);
     }
   }
 }
@@ -264,7 +264,7 @@ void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX,
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, INT16 sX,
                    INT16 sY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   CHAR16 zQuote[320];
@@ -353,9 +353,9 @@ void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID
   gCivQuoteData.pCiv = pCiv;
 }
 
-UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
-                             BOOLEAN fCanUseHints) {
-  UINT8 ubCivType;
+uint8_t DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, uint8_t *pubCivHintToUse,
+                               BOOLEAN fCanUseHints) {
+  uint8_t ubCivType;
   TownID bTownId;
   BOOLEAN bCivLowLoyalty = FALSE;
   BOOLEAN bCivHighLoyalty = FALSE;
@@ -587,11 +587,11 @@ void HandleCivQuote() {
 }
 
 void StartCivQuote(struct SOLDIERTYPE *pCiv) {
-  UINT8 ubCivQuoteID;
+  uint8_t ubCivQuoteID;
   INT16 sX, sY;
-  UINT8 ubEntryID = 0;
+  uint8_t ubEntryID = 0;
   INT16 sScreenX, sScreenY;
-  UINT8 ubCivHintToUse;
+  uint8_t ubCivHintToUse;
 
   // ATE: Check for old quote.....
   // This could have been stored on last attempt...

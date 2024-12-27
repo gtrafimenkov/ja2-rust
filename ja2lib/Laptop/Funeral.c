@@ -169,7 +169,7 @@ BOOLEAN EnterFuneral() {
 }
 
 void ExitFuneral() {
-  UINT8 i;
+  uint8_t i;
 
   DeleteVideoObjectFromIndex(guiClosedSign);
   DeleteVideoObjectFromIndex(guiLeftColumn);

@@ -357,8 +357,8 @@ BOOLEAN IsCuttableWireFenceAtGridNo(INT16 sGridNo) {
   return (FindCuttableWireFenceAtGridNo(sGridNo) != NULL);
 }
 
-BOOLEAN IsRepairableStructAtGridNo(INT16 sGridNo, UINT8 *pubID) {
-  UINT8 ubMerc;
+BOOLEAN IsRepairableStructAtGridNo(INT16 sGridNo, uint8_t *pubID) {
+  uint8_t ubMerc;
 
   // OK, first look for a vehicle....
   ubMerc = WhoIsThere2(sGridNo, 0);
@@ -382,8 +382,8 @@ BOOLEAN IsRepairableStructAtGridNo(INT16 sGridNo, UINT8 *pubID) {
   return (FALSE);
 }
 
-BOOLEAN IsRefuelableStructAtGridNo(INT16 sGridNo, UINT8 *pubID) {
-  UINT8 ubMerc;
+BOOLEAN IsRefuelableStructAtGridNo(INT16 sGridNo, uint8_t *pubID) {
+  uint8_t ubMerc;
 
   // OK, first look for a vehicle....
   ubMerc = WhoIsThere2(sGridNo, 0);
@@ -440,7 +440,7 @@ INT16 FindDoorAtGridNoOrAdjacent(INT16 sGridNo) {
   return (NOWHERE);
 }
 
-BOOLEAN IsCorpseAtGridNo(INT16 sGridNo, UINT8 ubLevel) {
+BOOLEAN IsCorpseAtGridNo(INT16 sGridNo, uint8_t ubLevel) {
   if (GetCorpseAtGridNo(sGridNo, ubLevel) != NULL) {
     return (TRUE);
   } else {
@@ -448,7 +448,7 @@ BOOLEAN IsCorpseAtGridNo(INT16 sGridNo, UINT8 ubLevel) {
   }
 }
 
-BOOLEAN SetOpenableStructureToClosed(INT16 sGridNo, UINT8 ubLevel) {
+BOOLEAN SetOpenableStructureToClosed(INT16 sGridNo, uint8_t ubLevel) {
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pNewStructure;
 

@@ -4,9 +4,9 @@
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 
-BOOLEAN QuantizeImage(UINT8 *pDest, UINT8 *pSrc, INT16 sWidth, INT16 sHeight,
+BOOLEAN QuantizeImage(uint8_t *pDest, uint8_t *pSrc, INT16 sWidth, INT16 sHeight,
                       struct SGPPaletteEntry *pPalette);
-void MapPalette(UINT8 *pDest, UINT8 *pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
+void MapPalette(uint8_t *pDest, uint8_t *pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
                 struct SGPPaletteEntry *pTable);
 
 #endif

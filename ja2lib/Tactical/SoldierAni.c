@@ -97,10 +97,10 @@ BOOLEAN HandleUnjamAnimation(struct SOLDIERTYPE *pSoldier);
 
 extern void HandleSystemNewAISituation(struct SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
 extern void PlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
-extern UINT8 NumCapableEnemyInSector();
+extern uint8_t NumCapableEnemyInSector();
 extern BOOLEAN gfKillingGuysForLosingBattle;
 
-extern UINT8 gubInterruptProvoker;
+extern uint8_t gubInterruptProvoker;
 
 extern uint16_t PickSoldierReadyAnimation(struct SOLDIERTYPE *pSoldier, BOOLEAN fEndReady);
 
@@ -115,13 +115,13 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
   INT16 sX, sY;
   BOOLEAN fStop;
   uint32_t cnt;
-  UINT8 ubDiceRoll;         // Percentile dice roll
-  UINT8 ubRandomHandIndex;  // Index value into random animation table to use base don what is in
-                            // the guys hand...
+  uint8_t ubDiceRoll;         // Percentile dice roll
+  uint8_t ubRandomHandIndex;  // Index value into random animation table to use base don what is in
+                              // the guys hand...
   uint16_t usItem;
   RANDOM_ANI_DEF *pAnimDef;
-  UINT8 ubNewDirection;
-  UINT8 ubDesiredHeight;
+  uint8_t ubNewDirection;
+  uint8_t ubDesiredHeight;
   BOOLEAN bOKFireWeapon;
   BOOLEAN bWeaponJammed;
   BOOLEAN fFreeUpAttacker = FALSE;
@@ -326,7 +326,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 432:
 
           // PLAY RANDOM IMPACT SOUND!
-          //	PlayJA2Sample( (UINT8)( BULLET_IMPACT_1 + Random(3) ), RATE_11025, MIDVOLUME, 1,
+          //	PlayJA2Sample( (uint8_t)( BULLET_IMPACT_1 + Random(3) ), RATE_11025, MIDVOLUME, 1,
           // MIDDLEPAN );
 
           // PLAY RANDOM GETTING HIT SOUND
@@ -679,7 +679,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             // ATE; Reduce it due to animation being stopped...
             DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                      String("@@@@@@@ Freeing up attacker - Burst animation ended"));
-            ReduceAttackBusyCount((UINT8)pSoldier->ubID, FALSE);
+            ReduceAttackBusyCount((uint8_t)pSoldier->ubID, FALSE);
 
             if (CheckForImproperFireGunEnd(pSoldier)) {
               return (TRUE);
@@ -998,7 +998,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
               // Trigger approach...
               TriggerNPCWithGivenApproach(GetSolProfile(pSoldier),
-                                          (UINT8)pSoldier->uiPendingActionData4, FALSE);
+                                          (uint8_t)pSoldier->uiPendingActionData4, FALSE);
             }
 
             // Are we a martial artist?
@@ -1152,7 +1152,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // CODE: GOTO PREVIOUS ANIMATION
           ChangeSoldierState(pSoldier, (pSoldier->sPendingActionData2),
-                             (UINT8)(pSoldier->uiPendingActionData1 + 1), FALSE);
+                             (uint8_t)(pSoldier->uiPendingActionData1 + 1), FALSE);
           return (TRUE);
           break;
 
@@ -1357,7 +1357,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
               // Don't do any in water!
               if (!MercInWater(pSoldier)) {
                 // OK, make a dice roll
-                ubDiceRoll = (UINT8)Random(100);
+                ubDiceRoll = (uint8_t)Random(100);
 
                 // Determine what is in our hand;
                 usItem = pSoldier->inv[HANDPOS].usItem;
@@ -1947,7 +1947,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
       switch (sNewAniFrame) {
         case 702:
           // Play fall to knees sound
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(FALL_1 + Random(2)), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(FALL_1 + Random(2)), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), FALSE);
           break;
@@ -1961,21 +1961,21 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
         case 705:
           // PLay body splat sound
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)BODY_SPLAT_1, RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)BODY_SPLAT_1, RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
 
         case 706:
           // PLay head splat
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)HEADSPLAT_1, RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)HEADSPLAT_1, RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
 
         case 707:
           // PLay creature battle cry
-          PlayJA2StreamingSample((UINT8)CREATURE_BATTLECRY_1, RATE_11025,
+          PlayJA2StreamingSample((uint8_t)CREATURE_BATTLECRY_1, RATE_11025,
                                  SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                  SoundDir(pSoldier->sGridNo));
           break;
@@ -2158,7 +2158,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
         case 721:
           // Play fall from knees to ground...
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(FALL_TO_GROUND_1 + Random(3)), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(FALL_TO_GROUND_1 + Random(3)), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), FALSE);
           if (pSoldier->usAnimState == FALLFORWARD_FROMHIT_STAND) {
@@ -2168,7 +2168,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
         case 722:
           // Play fall heavy
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(HEAVY_FALL_1), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(HEAVY_FALL_1), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), FALSE);
           if (pSoldier->usAnimState == FALLFORWARD_FROMHIT_CROUCH) {
@@ -2179,7 +2179,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 723:
 
           // Play armpit noise...
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(IDLE_ARMPIT), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(IDLE_ARMPIT), RATE_11025,
                                SoundVolume(LOWVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2187,14 +2187,14 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 724:
 
           // Play ass scratch
-          // PlaySoldierJA2Sample( GetSolID(pSoldier), (UINT8)( IDLE_SCRATCH ), RATE_11025,
+          // PlaySoldierJA2Sample( GetSolID(pSoldier), (uint8_t)( IDLE_SCRATCH ), RATE_11025,
           // SoundVolume( HIGHVOLUME, pSoldier->sGridNo ), 1, SoundDir( pSoldier->sGridNo ), TRUE );
           break;
 
         case 725:
 
           // Play back crack
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(IDLE_BACKCRACK), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(IDLE_BACKCRACK), RATE_11025,
                                SoundVolume(LOWVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2202,7 +2202,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 726:
 
           // Kickin door
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(KICKIN_DOOR), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(KICKIN_DOOR), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2210,7 +2210,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 727:
 
           // Swoosh
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(SWOOSH_1 + Random(6)), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(SWOOSH_1 + Random(6)), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2218,7 +2218,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 728:
 
           // Creature fall
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(ACR_FALL_1), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(ACR_FALL_1), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2226,7 +2226,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 729:
 
           // grab roof....
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(GRAB_ROOF), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(GRAB_ROOF), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2234,7 +2234,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 730:
 
           // end climb roof....
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(LAND_ON_ROOF), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(LAND_ON_ROOF), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2242,7 +2242,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 731:
 
           // Stop climb roof..
-          PlaySoldierJA2Sample(pSoldier->ubID, (UINT8)(FALL_TO_GROUND_1 + Random(3)), RATE_11025,
+          PlaySoldierJA2Sample(pSoldier->ubID, (uint8_t)(FALL_TO_GROUND_1 + Random(3)), RATE_11025,
                                SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 1,
                                SoundDir(pSoldier->sGridNo), TRUE);
           break;
@@ -2282,13 +2282,13 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                    String("@@@@@@@ Reducing attacker busy count..., CODE FROM ANIMATION %s ( %d )",
                           gAnimControl[pSoldier->usAnimState].zAnimStr, pSoldier->usAnimState));
-          ReduceAttackBusyCount((UINT8)pSoldier->ubID, FALSE);
+          ReduceAttackBusyCount((uint8_t)pSoldier->ubID, FALSE);
 
           // ATE: Here, reduce again if creaturequeen tentical attack...
           if (pSoldier->usAnimState == QUEEN_SWIPE) {
             DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                      String("@@@@@@@ Reducing attacker busy count for end of queen swipe"));
-            ReduceAttackBusyCount((UINT8)pSoldier->ubID, FALSE);
+            ReduceAttackBusyCount((uint8_t)pSoldier->ubID, FALSE);
           }
           break;
 
@@ -2306,7 +2306,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // Reload robot....
           {
-            UINT8 ubPerson;
+            uint8_t ubPerson;
             struct SOLDIERTYPE *pRobot;
 
             // Get pointer...
@@ -2428,14 +2428,15 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           {
             INT16 sNewGridNo;
 
-            InternalDropBlood(pSoldier->sGridNo, pSoldier->bLevel, 0, (UINT8)(MAXBLOODQUANTITY), 1);
+            InternalDropBlood(pSoldier->sGridNo, pSoldier->bLevel, 0, (uint8_t)(MAXBLOODQUANTITY),
+                              1);
 
             // Move forward one gridno....
             sNewGridNo =
                 NewGridNo((uint16_t)pSoldier->sGridNo,
                           (uint16_t)(DirectionInc(gOppositeDirection[pSoldier->bDirection])));
 
-            InternalDropBlood(sNewGridNo, pSoldier->bLevel, 0, (UINT8)(MAXBLOODQUANTITY), 1);
+            InternalDropBlood(sNewGridNo, pSoldier->bLevel, 0, (uint8_t)(MAXBLOODQUANTITY), 1);
           }
           break;
 
@@ -2469,7 +2470,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // REFUELING A VEHICLE
           // THE GAS_CAN IS IN THE MERCS MAIN HAND AT THIS TIME
           {
-            UINT8 ubPerson;
+            uint8_t ubPerson;
             struct SOLDIERTYPE *pVehicle;
 
             // Get pointer to vehicle...
@@ -2685,11 +2686,11 @@ BOOLEAN ShouldMercSayHappyWithGunQuote(struct SOLDIERTYPE *pSoldier) {
 
 void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo,
                                     INT8 bLevel) {
-  UINT8 ubMercsInSector[20] = {0};
+  uint8_t ubMercsInSector[20] = {0};
   INT8 bBuddyIndex[20] = {-1};
   INT8 bTempBuddyIndex;
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
@@ -2736,21 +2737,21 @@ void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, INT16 sG
         sDistVisible = DistanceVisible(pTeamSoldier, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT,
                                        pKillerSoldier->sGridNo, pKillerSoldier->bLevel);
         if (SoldierTo3DLocationLineOfSightTest(pTeamSoldier, pKillerSoldier->sGridNo,
-                                               pKillerSoldier->bLevel, (UINT8)3,
-                                               (UINT8)sDistVisible, TRUE) == 0) {
+                                               pKillerSoldier->bLevel, (uint8_t)3,
+                                               (uint8_t)sDistVisible, TRUE) == 0) {
           continue;
         }
 
         // Can we see location of killed?
         sDistVisible = DistanceVisible(pTeamSoldier, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT,
                                        sGridNo, bLevel);
-        if (SoldierTo3DLocationLineOfSightTest(pTeamSoldier, sGridNo, bLevel, (UINT8)3,
-                                               (UINT8)sDistVisible, TRUE) == 0) {
+        if (SoldierTo3DLocationLineOfSightTest(pTeamSoldier, sGridNo, bLevel, (uint8_t)3,
+                                               (uint8_t)sDistVisible, TRUE) == 0) {
           continue;
         }
 
         // OK, a good candidate...
-        ubMercsInSector[ubNumMercs] = (UINT8)cnt;
+        ubMercsInSector[ubNumMercs] = (uint8_t)cnt;
         bBuddyIndex[ubNumMercs] = bTempBuddyIndex;
         ubNumMercs++;
       }
@@ -2761,7 +2762,7 @@ void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, INT16 sG
   if (ubNumMercs > 0) {
     // Do random check here...
     if (Random(100) < 20) {
-      ubChosenMerc = (UINT8)Random(ubNumMercs);
+      ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
       switch (bBuddyIndex[ubChosenMerc]) {
         case 0:
@@ -2791,9 +2792,9 @@ void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *p
                        INT16 sGridNo, INT8 bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
-  UINT8 ubMercsInSector[20] = {0};
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubMercsInSector[20] = {0};
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   BOOLEAN fDoSomeoneElse = FALSE;
   BOOLEAN fCanWeSeeLocation = FALSE;
   INT16 sDistVisible = FALSE;
@@ -2804,8 +2805,9 @@ void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *p
   sDistVisible =
       DistanceVisible(pKillerSoldier, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT, sGridNo, bLevel);
 
-  fCanWeSeeLocation = (SoldierTo3DLocationLineOfSightTest(pKillerSoldier, sGridNo, bLevel, (UINT8)3,
-                                                          (UINT8)sDistVisible, TRUE) != 0);
+  fCanWeSeeLocation =
+      (SoldierTo3DLocationLineOfSightTest(pKillerSoldier, sGridNo, bLevel, (uint8_t)3,
+                                          (uint8_t)sDistVisible, TRUE) != 0);
 
   // Are we killing mike?
   if (pKilledSoldier->ubProfile == 149 &&
@@ -2857,8 +2859,8 @@ void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *p
                                              DIRECTION_IRRELEVANT, sGridNo, bLevel);
 
               if (SoldierTo3DLocationLineOfSightTest(pTeamSoldier, sGridNo, bLevel, 3,
-                                                     (UINT8)sDistVisible, TRUE)) {
-                ubMercsInSector[ubNumMercs] = (UINT8)cnt;
+                                                     (uint8_t)sDistVisible, TRUE)) {
+                ubMercsInSector[ubNumMercs] = (uint8_t)cnt;
                 ubNumMercs++;
               }
             }
@@ -2867,7 +2869,7 @@ void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *p
 
         // Did we find anybody?
         if (ubNumMercs > 0) {
-          ubChosenMerc = (UINT8)Random(ubNumMercs);
+          ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
           // We have a random chance of not saying our we killed a guy quote
           if (Random(100) < 50) {
@@ -2964,7 +2966,7 @@ BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) 
         pSoldier->uiStatusFlags |= SOLDIER_DEAD;
       }
     } else {
-      UINT8 ubAssister;
+      uint8_t ubAssister;
 
       // IF this guy has an attacker and he's a good guy, play sound
       if (pSoldier->ubAttackerID != NOBODY) {

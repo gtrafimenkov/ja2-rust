@@ -162,17 +162,17 @@ void ExtractAndUpdateMapInfo() {
   temp = min(GetNumericStrictValueFromField(1), 255);
   if (temp != -1 && temp != gEditorLightColor.peRed) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.peRed = (UINT8)temp;
+    gEditorLightColor.peRed = (uint8_t)temp;
   }
   temp = min(GetNumericStrictValueFromField(2), 255);
   if (temp != -1 && temp != gEditorLightColor.peGreen) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.peGreen = (UINT8)temp;
+    gEditorLightColor.peGreen = (uint8_t)temp;
   }
   temp = min(GetNumericStrictValueFromField(3), 255);
   if (temp != -1 && temp != gEditorLightColor.peBlue) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.peBlue = (UINT8)temp;
+    gEditorLightColor.peBlue = (uint8_t)temp;
   }
   if (fUpdateLight1) {
     gfEditorForceShadeTableRebuild = TRUE;
@@ -187,7 +187,7 @@ void ExtractAndUpdateMapInfo() {
   if (temp != -1 && temp != gusLightLevel) {
     gusLightLevel = (uint16_t)temp;
     gfRenderWorld = TRUE;
-    ubAmbientLightLevel = (UINT8)(EDITOR_LIGHT_MAX - gusLightLevel);
+    ubAmbientLightLevel = (uint8_t)(EDITOR_LIGHT_MAX - gusLightLevel);
     LightSetBaseLevel(ubAmbientLightLevel);
     LightSpriteRenderAll();
   }
@@ -196,21 +196,21 @@ void ExtractAndUpdateMapInfo() {
   if (temp == -1)
     gMapInformation.ubRestrictedScrollID = 0;
   else
-    gMapInformation.ubRestrictedScrollID = (UINT8)temp;
+    gMapInformation.ubRestrictedScrollID = (uint8_t)temp;
 
   // set up fields for exitgrid information
   Get16BitStringFromField(7, str, ARR_SIZE(str));
   if (str[0] >= 'a' && str[0] <= 'z') str[0] -= 32;  // uppercase it!
   if (str[0] >= 'A' && str[0] <= 'Z' && str[1] >= '0' &&
       str[1] <= '9') {  // only update, if coordinate is valid.
-    gExitGrid.ubGotoSectorY = (UINT8)(str[0] - 'A' + 1);
-    gExitGrid.ubGotoSectorX = (UINT8)(str[1] - '0');
+    gExitGrid.ubGotoSectorY = (uint8_t)(str[0] - 'A' + 1);
+    gExitGrid.ubGotoSectorX = (uint8_t)(str[1] - '0');
     if (str[2] >= '0' && str[2] <= '9')
-      gExitGrid.ubGotoSectorX = (UINT8)(gExitGrid.ubGotoSectorX * 10 + str[2] - '0');
-    gExitGrid.ubGotoSectorX = (UINT8)max(min(gExitGrid.ubGotoSectorX, 16), 1);
-    gExitGrid.ubGotoSectorY = (UINT8)max(min(gExitGrid.ubGotoSectorY, 16), 1);
+      gExitGrid.ubGotoSectorX = (uint8_t)(gExitGrid.ubGotoSectorX * 10 + str[2] - '0');
+    gExitGrid.ubGotoSectorX = (uint8_t)max(min(gExitGrid.ubGotoSectorX, 16), 1);
+    gExitGrid.ubGotoSectorY = (uint8_t)max(min(gExitGrid.ubGotoSectorY, 16), 1);
   }
-  gExitGrid.ubGotoSectorZ = (UINT8)max(min(GetNumericStrictValueFromField(8), 3), 0);
+  gExitGrid.ubGotoSectorZ = (uint8_t)max(min(GetNumericStrictValueFromField(8), 3), 0);
   gExitGrid.usGridNo = (uint16_t)max(min(GetNumericStrictValueFromField(9), 25600), 0);
 
   UpdateMapInfoFields();

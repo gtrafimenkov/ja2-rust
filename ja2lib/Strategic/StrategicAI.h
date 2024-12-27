@@ -19,33 +19,33 @@ enum {
 
 void ExecuteStrategicAIAction(uint16_t usActionCode, u8 sSectorX, u8 sSectorY);
 
-void CheckEnemyControlledSector(UINT8 ubSectorID);
+void CheckEnemyControlledSector(uint8_t ubSectorID);
 void EvaluateQueenSituation();
 
 extern BOOLEAN gfUseAlternateQueenPosition;
 
 // returns TRUE if the group was deleted.
 BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup);
-void RemoveGroupFromStrategicAILists(UINT8 ubGroupID);
-void RecalculateSectorWeight(UINT8 ubSectorID);
+void RemoveGroupFromStrategicAILists(uint8_t ubGroupID);
+void RecalculateSectorWeight(uint8_t ubSectorID);
 void RecalculateGroupWeight(struct GROUP *pGroup);
 
-BOOLEAN OkayForEnemyToMoveThroughSector(UINT8 ubSectorID);
-BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, UINT8 ubSectorID);
+BOOLEAN OkayForEnemyToMoveThroughSector(uint8_t ubSectorID);
+BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, uint8_t ubSectorID);
 
 void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 
-void InvestigateSector(UINT8 ubSectorID);
+void InvestigateSector(uint8_t ubSectorID);
 
 void WakeUpQueen();
 
-void StrategicHandleMineThatRanOut(UINT8 ubSectorID);
+void StrategicHandleMineThatRanOut(uint8_t ubSectorID);
 
-INT16 FindPatrolGroupIndexForGroupID(UINT8 ubGroupID);
-INT16 FindPatrolGroupIndexForGroupIDPending(UINT8 ubGroupID);
-INT16 FindGarrisonIndexForGroupIDPending(UINT8 ubGroupID);
+INT16 FindPatrolGroupIndexForGroupID(uint8_t ubGroupID);
+INT16 FindPatrolGroupIndexForGroupIDPending(uint8_t ubGroupID);
+INT16 FindGarrisonIndexForGroupIDPending(uint8_t ubGroupID);
 
-struct GROUP *FindPendingGroupInSector(UINT8 ubSectorID);
+struct GROUP *FindPendingGroupInSector(uint8_t ubSectorID);
 
 void RepollSAIGroup(struct GROUP *pGroup);
 
@@ -58,7 +58,7 @@ BOOLEAN PermittedToFillPatrolGroup(INT32 iPatrolID);
 extern BOOLEAN gfDisplayStrategicAILogs;
 extern BOOLEAN gfFirstBattleMeanwhileScenePending;
 
-extern UINT8 gubSAIVersion;
+extern uint8_t gubSAIVersion;
 
 // These enumerations define all of the various types of stationary garrison
 // groups, and index their compositions for forces, etc.
@@ -108,20 +108,20 @@ typedef struct ARMY_COMPOSITION {
 typedef struct PATROL_GROUP {
   INT8 bSize;
   INT8 bPriority;
-  UINT8 ubSectorID[4];
+  uint8_t ubSectorID[4];
   INT8 bFillPermittedAfterDayMod100;
-  UINT8 ubGroupID;
+  uint8_t ubGroupID;
   INT8 bWeight;
-  UINT8 ubPendingGroupID;
+  uint8_t ubPendingGroupID;
   INT8 bPadding[10];
 } PATROL_GROUP;
 
 // Defines all stationary defence forces.
 typedef struct GARRISON_GROUP {
-  UINT8 ubSectorID;
-  UINT8 ubComposition;
+  uint8_t ubSectorID;
+  uint8_t ubComposition;
   INT8 bWeight;
-  UINT8 ubPendingGroupID;
+  uint8_t ubPendingGroupID;
   INT8 bPadding[10];
 } GARRISON_GROUP;
 

@@ -26,7 +26,7 @@
 #include "Utils/Utilities.h"
 
 BOOLEAN gfShowTerrainTileButtons;
-UINT8 ubTerrainTileButtonWeight[NUM_TERRAIN_TILE_REGIONS];
+uint8_t ubTerrainTileButtonWeight[NUM_TERRAIN_TILE_REGIONS];
 uint16_t usTotalWeight;
 BOOLEAN fPrevShowTerrainTileButtons = TRUE;
 BOOLEAN fUseTerrainWeights = FALSE;

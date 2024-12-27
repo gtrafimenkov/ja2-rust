@@ -9,7 +9,7 @@
 struct AnimationSurfaceCache {
   uint16_t *usCachedSurfaces;
   INT16 *sCacheHits;
-  UINT8 ubCacheSize;
+  uint8_t ubCacheSize;
 };
 
 extern uint32_t guiCacheSize;

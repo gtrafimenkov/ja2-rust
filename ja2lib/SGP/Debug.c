@@ -22,7 +22,7 @@ char gubAssertString[128];
 
 #define MAX_MSG_LENGTH2 512
 char gbTmpDebugString[8][MAX_MSG_LENGTH2];
-UINT8 gubStringIndex = 0;
+uint8_t gubStringIndex = 0;
 
 // #ifdef SGP_DEBUG
 
@@ -67,7 +67,7 @@ uint16_t TOPIC_JA2OPPLIST = INVALID_TOPIC;
 uint16_t TOPIC_JA2AI = INVALID_TOPIC;
 
 // uint32_t guiTimerID = 0;
-// UINT8 guiDebugLevels[NUM_TOPIC_IDS];  // don't change this, Luis!!!!
+// uint8_t guiDebugLevels[NUM_TOPIC_IDS];  // don't change this, Luis!!!!
 
 // BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 // uint16_t *gpDbgTopicPtrs[MAX_TOPICS_ALLOTED];
@@ -139,13 +139,13 @@ BOOLEAN DbgInitialize(void) {
   return (TRUE);
 }
 
-void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage);
+void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char *strMessage);
 
 void DbgShutdown(void) { DbgMessageReal((uint16_t)(-1), CLIENT_SHUTDOWN, 0, "SGP Going Down"); }
 
 #ifdef SGP_DEBUG
 
-void DbgTopicRegistration(UINT8 ubCmd, uint16_t *usTopicID, char *zMessage) {
+void DbgTopicRegistration(uint8_t ubCmd, uint16_t *usTopicID, char *zMessage) {
   //   uint16_t usIndex, usUse;
   //   BOOLEAN fFound;
 
@@ -214,12 +214,12 @@ void DbgClearAllTopics(void) {
   //   }
 }
 
-void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
+void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char *strMessage) {
   printf("%4d / %4d / %4d / %s\n", uiTopicId, uiCommand, uiDebugLevel, strMessage);
 }
 
-// void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
-// #ifndef _NO_DEBUG_TXT
+// void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char
+// *strMessage) { #ifndef _NO_DEBUG_TXT
 //   FILE *OutFile;
 // #endif
 
@@ -253,7 +253,7 @@ void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, cha
 // //
 // //**************************************************************************
 
-// BOOLEAN DbgSetDebugLevel(uint16_t uiTopicId, UINT8 uiDebugLevel) { return (TRUE); }
+// BOOLEAN DbgSetDebugLevel(uint16_t uiTopicId, uint8_t uiDebugLevel) { return (TRUE); }
 
 // //**************************************************************************
 // //
@@ -407,7 +407,7 @@ void _FailMessage(STR8 pString, uint32_t uiLineNum, STR8 pSourceFile) {
 // release mode builds. -- DB
 char *String(const char *string, ...) {
   va_list ArgPtr;
-  UINT8 usIndex;
+  uint8_t usIndex;
 
   // Record string index. This index is used since we live in a multitasking environment.
   // It is still not bulletproof, but it's better than a single string

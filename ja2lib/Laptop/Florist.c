@@ -132,7 +132,7 @@ void HandleFlorist() {}
 void RenderFlorist() {
   struct VObject *hPixHandle;
   uint16_t i, usPosY;
-  UINT8 ubTextCounter;
+  uint8_t ubTextCounter;
 
   GetVideoObject(&hPixHandle, guiHandBullet);
 

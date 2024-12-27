@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 #include "Tactical/Faces.h"
 
-typedef UINT8 AudioSample8;
+typedef uint8_t AudioSample8;
 typedef INT16 AudioSample16;
 
 void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList);

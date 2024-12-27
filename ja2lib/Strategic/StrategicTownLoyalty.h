@@ -27,12 +27,12 @@ typedef enum {
 } GlobalLoyaltyEventTypes;
 
 typedef struct TOWN_LOYALTY {
-  UINT8 ubRating;
+  uint8_t ubRating;
   INT16 sChange;
   BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first enters
                      // that town
-  UINT8 UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
-                                 // value...
+  uint8_t UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
+                                   // value...
   BOOLEAN fLiberatedAlready;
   BYTE filler[19];  // reserved for expansion
 
@@ -48,7 +48,7 @@ extern BOOLEAN gfTownUsesLoyalty[NUM_TOWNS];
 void StartTownLoyaltyIfFirstTime(TownID bTownId);
 
 // set a speciafied town's loyalty rating
-void SetTownLoyalty(TownID bTownId, UINT8 ubLoyaltyValue);
+void SetTownLoyalty(TownID bTownId, uint8_t ubLoyaltyValue);
 
 // update the loyalty based on current % control of the town
 void UpdateLoyaltyBasedOnControl(TownID bTownId);
@@ -73,10 +73,10 @@ BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier);
 void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sPointsDmg);
 
 // remove random item from this sector
-void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubChance);
+void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubChance);
 
 // get the shortest distance between these two towns via roads
-INT32 GetTownDistances(UINT8 ubTown, UINT8 ubTownA);
+INT32 GetTownDistances(uint8_t ubTown, uint8_t ubTownA);
 
 #ifdef JA2TESTVERSION
 
@@ -113,12 +113,12 @@ INT32 GetNumberOfWholeTownsUnderControl(void);
 INT32 IsTownUnderCompleteControlByPlayer(TownID bTownId);
 
 // used when monsters attack a town sector without going through tactical and they win
-void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, UINT8 ubHowMany);
+void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHowMany);
 
 // these are used to handle global loyalty events (ones that effect EVERY town on the map)
 void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease);
 void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease);
-void HandleGlobalLoyaltyEvent(UINT8 ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          INT8 bSectorZ);
 
@@ -126,7 +126,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
 void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY);
 void CheckIfEntireTownHasBeenLost(TownID bTownId, u8 sSectorX, u8 sSectorY);
 
-void HandleLoyaltyChangeForNPCAction(UINT8 ubNPCProfileId);
+void HandleLoyaltyChangeForNPCAction(uint8_t ubNPCProfileId);
 
 BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId);
 void SetTheFirstBattleSector(INT16 sSectorValue);

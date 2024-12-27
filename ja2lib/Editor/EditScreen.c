@@ -134,8 +134,8 @@ BOOLEAN gfFakeLights = FALSE;
 
 INT16 gsLightRadius = 5;
 
-BOOLEAN gfOldDoVideoScroll;    // Saved for returning to previous settings
-UINT8 gubOldCurScrollSpeedID;  // Saved for returning to previous settings
+BOOLEAN gfOldDoVideoScroll;      // Saved for returning to previous settings
+uint8_t gubOldCurScrollSpeedID;  // Saved for returning to previous settings
 
 INT32 iOldTaskMode = TASK_OPTIONS;
 
@@ -388,7 +388,7 @@ BOOLEAN EditModeInit(void) {
       AddAllPits();
     }
 
-    LightSetBaseLevel((UINT8)(EDITOR_LIGHT_MAX - gusLightLevel));
+    LightSetBaseLevel((uint8_t)(EDITOR_LIGHT_MAX - gusLightLevel));
     ShowLightPositionHandles();
     LightSpriteRenderAll();
   } else {
@@ -504,7 +504,7 @@ BOOLEAN EditModeShutdown(void) {
     WarpGameTime(1, WARPTIME_PROCESS_EVENTS_NORMALLY);  // to avoid helicopter setup
     gfNeedToInitGame = FALSE;
   } else {
-    if (!gfBasement && !gfCaves) LightSetBaseLevel((UINT8)gusGameLightLevel);
+    if (!gfBasement && !gfCaves) LightSetBaseLevel((uint8_t)gusGameLightLevel);
     UpdateMercsInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
   }
 
@@ -723,7 +723,7 @@ void ShowCurrentDrawingMode(void) {
   INT16 sTempOffsetY;
   ETRLEObject *pETRLEObject;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usFillColor;
   INT32 iIndexToUse;
 
@@ -986,7 +986,7 @@ void HandleJA2ToolbarSelection(void) {
         gusLightLevel = EDITOR_LIGHT_FAKE;
       } else
         gusLightLevel = gusSavedLightLevel;
-      LightSetBaseLevel((UINT8)(EDITOR_LIGHT_MAX - gusLightLevel));
+      LightSetBaseLevel((uint8_t)(EDITOR_LIGHT_MAX - gusLightLevel));
       LightSpriteRenderAll();
       break;
 
@@ -1239,7 +1239,7 @@ void HandleKeyboardShortcuts() {
               gusLightLevel = gusSavedLightLevel;
               UnclickEditorButton(MAPINFO_TOGGLE_FAKE_LIGHTS);
             }
-            LightSetBaseLevel((UINT8)(EDITOR_LIGHT_MAX - gusLightLevel));
+            LightSetBaseLevel((uint8_t)(EDITOR_LIGHT_MAX - gusLightLevel));
             LightSpriteRenderAll();
             break;
 
@@ -2167,7 +2167,7 @@ uint32_t ProcessEditscreenMessageBoxResponse() {
       RemoveAllObjectsOfTypeRange(i, GOODRING, GOODRING);
     }
     MarkWorldDirty();
-    LightSetBaseLevel((UINT8)(15 - ubAmbientLightLevel));
+    LightSetBaseLevel((uint8_t)(15 - ubAmbientLightLevel));
     gfRemoveLightsPending = FALSE;
   }
   if (gfScheduleReversalPending) {
@@ -2483,7 +2483,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
 //
 BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType) {
   INT32 iLightHandle;
-  UINT8 ubIntensity;
+  uint8_t ubIntensity;
   STRING512 Filename;
   INT32 iMapIndex;
   uint16_t usTmpIndex;
@@ -2493,7 +2493,7 @@ BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType) {
   // Attempt to create light
   if ((iLightHandle = LightSpriteCreate(Filename, sType)) == (-1)) {
     // Couldn't load file because it doesn't exist. So let's make the file
-    ubIntensity = (UINT8)((float)sRadius / LIGHT_DECAY);
+    ubIntensity = (uint8_t)((float)sRadius / LIGHT_DECAY);
     if ((iLightHandle = LightCreateOmni(ubIntensity, sRadius)) == (-1)) {
       // Can't create light template
       DebugMsg(TOPIC_GAME, DBG_LEVEL_1,
@@ -2601,7 +2601,7 @@ BOOLEAN RemoveLight(INT16 iMapX, INT16 iMapY) {
     // should work.  Basically, the radius values aren't stored in the lights, so I have pull
     // the radius out of the filename.  Ex:  L-RO5.LHT
     usRadius = pLastLightName[4] - 0x30;
-    AddLightToUndoList(iMapIndex, usRadius, (UINT8)uiLastLightType);
+    AddLightToUndoList(iMapIndex, usRadius, (uint8_t)uiLastLightType);
   }
 
   return (fRemovedLight);

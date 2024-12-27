@@ -54,12 +54,12 @@ enum {
 typedef struct {
   INT8 bLastSavedGameSlot;  // The last saved game number goes in here
 
-  UINT8 ubMusicVolumeSetting;
-  UINT8 ubSoundEffectsVolume;
-  UINT8 ubSpeechVolume;
+  uint8_t ubMusicVolumeSetting;
+  uint8_t ubSoundEffectsVolume;
+  uint8_t ubSpeechVolume;
 
   // The following are set from the status of the toggle boxes in the Options Screen
-  UINT8 fOptions[NUM_ALL_GAME_OPTIONS];
+  uint8_t fOptions[NUM_ALL_GAME_OPTIONS];
 
   CHAR8 zVersionNumber[14];
 
@@ -69,10 +69,10 @@ typedef struct {
   BOOLEAN fHideHelpInAllScreens;
 
   BOOLEAN fUNUSEDPlayerFinishedTheGame;  // JA2Gold: for UB compatibility
-  UINT8 ubSizeOfDisplayCover;
-  UINT8 ubSizeOfLOS;
+  uint8_t ubSizeOfDisplayCover;
+  uint8_t ubSizeOfLOS;
 
-  UINT8 ubFiller[17];
+  uint8_t ubFiller[17];
 
 } GAME_SETTINGS;
 
@@ -88,11 +88,11 @@ enum {
 typedef struct {
   BOOLEAN fGunNut;
   BOOLEAN fSciFi;
-  UINT8 ubDifficultyLevel;
+  uint8_t ubDifficultyLevel;
   BOOLEAN fTurnTimeLimit;
   BOOLEAN fIronManMode;
 
-  UINT8 ubFiller[7];
+  uint8_t ubFiller[7];
 
 } GAME_OPTIONS;
 
@@ -109,9 +109,9 @@ void InitGameOptions();
 
 void DisplayGameSettings();
 
-BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile);
+BOOLEAN MeanwhileSceneSeen(uint8_t ubMeanwhile);
 
-BOOLEAN SetMeanwhileSceneSeen(UINT8 ubMeanwhile);
+BOOLEAN SetMeanwhileSceneSeen(uint8_t ubMeanwhile);
 
 BOOLEAN CanGameBeSaved();
 

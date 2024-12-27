@@ -6,12 +6,13 @@
 struct SOLDIERTYPE;
 struct OBJECTTYPE;
 
-extern UINT8 SlotToPocket[7];
+extern uint8_t SlotToPocket[7];
 
 extern BOOLEAN WeaponInHand(struct SOLDIERTYPE *pSoldier);
 
 extern INT8 FindObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem);
-INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, UINT8 ubCalibre, UINT8 ubMagSize, INT8 bExcludeSlot);
+INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize,
+              INT8 bExcludeSlot);
 
 extern INT8 FindAttachment(struct OBJECTTYPE *pObj, uint16_t usItem);
 extern INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass);
@@ -31,19 +32,19 @@ extern void DeleteObj(struct OBJECTTYPE *pObj);
 extern void CopyObj(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj);
 extern void SwapObjs(struct OBJECTTYPE *pObj1, struct OBJECTTYPE *pObj2);
 
-extern void SwapWithinObj(struct OBJECTTYPE *pObj, UINT8 ubIndex1, UINT8 ubIndex2);
-extern void RemoveObjFrom(struct OBJECTTYPE *pObj, UINT8 ubRemoveIndex);
+extern void SwapWithinObj(struct OBJECTTYPE *pObj, uint8_t ubIndex1, uint8_t ubIndex2);
+extern void RemoveObjFrom(struct OBJECTTYPE *pObj, uint8_t ubRemoveIndex);
 // Returns true if swapped, false if added to end of stack
 extern BOOLEAN PlaceObjectAtObjectIndex(struct OBJECTTYPE *pSourceObj,
-                                        struct OBJECTTYPE *pTargetObj, UINT8 ubIndex);
-extern void GetObjFrom(struct OBJECTTYPE *pObj, UINT8 ubGetIndex, struct OBJECTTYPE *pDest);
+                                        struct OBJECTTYPE *pTargetObj, uint8_t ubIndex);
+extern void GetObjFrom(struct OBJECTTYPE *pObj, uint8_t ubGetIndex, struct OBJECTTYPE *pDest);
 
 extern BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj,
                             struct OBJECTTYPE *pAttachment);
 extern BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, INT8 bAttachPos,
                                 struct OBJECTTYPE *pNewObj);
 
-extern UINT8 CalculateObjectWeight(struct OBJECTTYPE *pObject);
+extern uint8_t CalculateObjectWeight(struct OBJECTTYPE *pObject);
 extern uint32_t CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier);
 
 extern uint16_t TotalPoints(struct OBJECTTYPE *pObj);
@@ -52,23 +53,24 @@ extern uint16_t UseKitPoints(struct OBJECTTYPE *pObj, uint16_t usPoints,
 
 extern BOOLEAN EmptyWeaponMagazine(struct OBJECTTYPE *pWeapon, struct OBJECTTYPE *pAmmo);
 extern BOOLEAN CreateItem(uint16_t usItem, INT8 bStatus, struct OBJECTTYPE *pObj);
-extern BOOLEAN CreateItems(uint16_t usItem, INT8 bStatus, UINT8 ubNumber, struct OBJECTTYPE *pObj);
+extern BOOLEAN CreateItems(uint16_t usItem, INT8 bStatus, uint8_t ubNumber,
+                           struct OBJECTTYPE *pObj);
 extern BOOLEAN CreateMoney(uint32_t uiMoney, struct OBJECTTYPE *pObj);
 extern uint16_t DefaultMagazine(uint16_t usItem);
-uint16_t RandomMagazine(uint16_t usItem, UINT8 ubPercentStandard);
+uint16_t RandomMagazine(uint16_t usItem, uint8_t ubPercentStandard);
 extern BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun,
                          struct OBJECTTYPE *pAmmo);
 
-UINT8 ItemSlotLimit(uint16_t usItem, INT8 bSlot);
+uint8_t ItemSlotLimit(uint16_t usItem, INT8 bSlot);
 
 // Function to put an item in a soldier profile
 // It's very primitive, just finds an empty place!
-BOOLEAN PlaceObjectInSoldierProfile(UINT8 ubProfile, struct OBJECTTYPE *pObject);
-BOOLEAN RemoveObjectFromSoldierProfile(UINT8 ubProfile, uint16_t usItem);
-INT8 FindObjectInSoldierProfile(UINT8 ubProfile, uint16_t usItem);
+BOOLEAN PlaceObjectInSoldierProfile(uint8_t ubProfile, struct OBJECTTYPE *pObject);
+BOOLEAN RemoveObjectFromSoldierProfile(uint8_t ubProfile, uint16_t usItem);
+INT8 FindObjectInSoldierProfile(uint8_t ubProfile, uint16_t usItem);
 
-BOOLEAN ObjectExistsInSoldierProfile(UINT8 ubProfile, uint16_t usItem);
-void SetMoneyInSoldierProfile(UINT8 ubProfile, uint32_t uiMoney);
+BOOLEAN ObjectExistsInSoldierProfile(uint8_t ubProfile, uint16_t usItem);
+void SetMoneyInSoldierProfile(uint8_t ubProfile, uint32_t uiMoney);
 
 void DamageObj(struct OBJECTTYPE *pObj, INT8 bAmount);
 
@@ -87,10 +89,11 @@ BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJ
 
 void RemoveInvObject(struct SOLDIERTYPE *pSoldier, uint16_t usItem);
 
-UINT8 SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct OBJECTTYPE *pObj);
+uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
+                       struct OBJECTTYPE *pObj);
 
 // create a keyobject
-BOOLEAN CreateKeyObject(struct OBJECTTYPE *pObj, UINT8 ubNumberOfKeys, UINT8 ubKeyIdValue);
+BOOLEAN CreateKeyObject(struct OBJECTTYPE *pObj, uint8_t ubNumberOfKeys, uint8_t ubKeyIdValue);
 BOOLEAN DeleteKeyObject(struct OBJECTTYPE *pObj);
 BOOLEAN AllocateObject(struct OBJECTTYPE **pObj);
 
@@ -100,10 +103,10 @@ BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
 
 // take several
 BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
-                           UINT8 ubNumberOfKeys, struct OBJECTTYPE *pObj);
+                           uint8_t ubNumberOfKeys, struct OBJECTTYPE *pObj);
 
 // add the keys to an inventory slot
-UINT8 AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct OBJECTTYPE *pObj);
+uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct OBJECTTYPE *pObj);
 
 // Kris:  December 9, 1997
 // I need a bunch of validation functions for ammo, attachments, etc., so I'll be adding them here.
@@ -137,7 +140,8 @@ BOOLEAN ValidLaunchable(uint16_t usLaunchable, uint16_t usItem);
 uint16_t GetLauncherFromLaunchable(uint16_t usLaunchable);
 
 BOOLEAN ValidMerge(uint16_t usMerge, uint16_t usItem);
-BOOLEAN EvaluateValidMerge(uint16_t usMerge, uint16_t usItem, uint16_t *pusResult, UINT8 *pubType);
+BOOLEAN EvaluateValidMerge(uint16_t usMerge, uint16_t usItem, uint16_t *pusResult,
+                           uint8_t *pubType);
 
 // is the item passed a medical/ first aid kit? and what type?
 INT8 IsMedicalKitItem(struct OBJECTTYPE *pObject);
@@ -149,7 +153,7 @@ void SwapOutHandItem(struct SOLDIERTYPE *pSoldier);
 void SwapHandItems(struct SOLDIERTYPE *pSoldier);
 
 INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass);
-void RemoveObjs(struct OBJECTTYPE *pObj, UINT8 ubNumberToRemove);
+void RemoveObjs(struct OBJECTTYPE *pObj, uint8_t ubNumberToRemove);
 
 void WaterDamage(struct SOLDIERTYPE *pSoldier);
 
@@ -157,20 +161,20 @@ INT8 FindObjWithin(struct SOLDIERTYPE *pSoldier, uint16_t usItem, INT8 bLower, I
 
 BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);
 
-uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(UINT8 ubStatus);
-UINT8 ConvertObjectTypeMoneyValueToProfileMoneyValue(uint32_t uiMoneyAmount);
+uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(uint8_t ubStatus);
+uint8_t ConvertObjectTypeMoneyValueToProfileMoneyValue(uint32_t uiMoneyAmount);
 
 BOOLEAN CheckForChainReaction(uint16_t usItem, INT8 bStatus, INT8 bDamage, BOOLEAN fOnGround);
 
 BOOLEAN ItemIsLegal(uint16_t usItemIndex);
 BOOLEAN ExtendedGunListGun(uint16_t usGun);
 uint16_t StandardGunListReplacement(uint16_t usGun);
-uint16_t FindReplacementMagazine(UINT8 ubCalibre, UINT8 ubMagSize, UINT8 ubAmmoType);
+uint16_t FindReplacementMagazine(uint8_t ubCalibre, uint8_t ubMagSize, uint8_t ubAmmoType);
 uint16_t FindReplacementMagazineIfNecessary(uint16_t usOldGun, uint16_t usOldAmmo,
                                             uint16_t usNewGun);
 
 BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, INT8 bLevel, INT32 iDamage,
-                           UINT8 ubOwner);
+                           uint8_t ubOwner);
 
 BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);
 BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);

@@ -68,7 +68,7 @@ enum {
 };
 
 typedef struct {
-  UINT8 ubType;
+  uint8_t ubType;
   union {
     struct {
       struct VObject *hVObject;

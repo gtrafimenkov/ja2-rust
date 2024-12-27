@@ -17,8 +17,8 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile();
 BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
                                                  BOOLEAN fEnemy, BOOLEAN fValidateOnly);
 
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubFirstIdTeam,
-                                    UINT8 ubLastIdTeam, BOOLEAN fAppendToFile);
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint8_t ubFirstIdTeam,
+                                    uint8_t ubLastIdTeam, BOOLEAN fAppendToFile);
 
 extern BOOLEAN gfRestoringEnemySoldiersFromTempFile;
 

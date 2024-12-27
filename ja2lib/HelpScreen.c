@@ -348,7 +348,7 @@ BOOLEAN gfHaveRenderedFirstFrameToSaveBuffer = FALSE;
 //  must use this cause you have ur cursor over a button when entering the help screen, the button
 //  will burn though.
 // It does this cause that region loses it focus so it draws the button again.
-UINT8 gubRenderHelpScreenTwiceInaRow = 0;
+uint8_t gubRenderHelpScreenTwiceInaRow = 0;
 
 // mmm
 
@@ -446,7 +446,7 @@ void InitHelpScreenSystem() {
   gHelpScreen.fHaveAlreadyBeenInHelpScreenSinceEnteringCurrenScreen = FALSE;
 }
 
-BOOLEAN ShouldTheHelpScreenComeUp(UINT8 ubScreenID, BOOLEAN fForceHelpScreenToComeUp) {
+BOOLEAN ShouldTheHelpScreenComeUp(uint8_t ubScreenID, BOOLEAN fForceHelpScreenToComeUp) {
   // if the screen is being forsced to come up ( user pressed 'h' )
   if (fForceHelpScreenToComeUp) {
     // Set thefact that the user broughtthe help screen up
@@ -1308,7 +1308,7 @@ void BtnHelpScreenBtnsCallback(GUI_BUTTON *btn, INT32 reason) {
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // Get the btn id
-    INT8 bRetValue = (UINT8)MSYS_GetBtnUserData(btn, 0);
+    INT8 bRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
 
     ChangeToHelpScreenSubPage(bRetValue);
     /*
@@ -1411,7 +1411,7 @@ uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_
 }
 
 void BtnHelpScreenDontShowHelpAgainCallback(GUI_BUTTON *btn, INT32 reason) {
-  //	UINT8	ubButton = (UINT8)MSYS_GetBtnUserData( btn, 0 );
+  //	uint8_t	ubButton = (uint8_t)MSYS_GetBtnUserData( btn, 0 );
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1488,7 +1488,7 @@ void BtnHelpScreenExitCallback(GUI_BUTTON *btn, INT32 reason) {
 
 uint16_t RenderLaptopHelpScreen() {
   uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   uint16_t usTotalNumberOfVerticalPixels = 0;
   uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
@@ -1601,7 +1601,7 @@ uint16_t RenderLaptopHelpScreen() {
 
 uint16_t RenderMapScreenNoOneHiredYetHelpScreen() {
   uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   uint16_t usTotalNumberOfVerticalPixels = 0;
   uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
@@ -1636,7 +1636,7 @@ uint16_t RenderMapScreenNoOneHiredYetHelpScreen() {
 
 uint16_t RenderMapScreenNotYetInArulcoHelpScreen() {
   uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   uint16_t usTotalNumberOfVerticalPixels = 0;
   uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
@@ -1670,7 +1670,7 @@ uint16_t RenderMapScreenNotYetInArulcoHelpScreen() {
 
 uint16_t RenderMapScreenSectorInventoryHelpScreen() {
   uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   uint16_t usTotalNumberOfVerticalPixels = 0;
   uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
@@ -1705,7 +1705,7 @@ uint16_t RenderMapScreenSectorInventoryHelpScreen() {
 
 uint16_t RenderTacticalHelpScreen() {
   uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   uint16_t usTotalNumberOfVerticalPixels = 0;
   uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
@@ -1812,7 +1812,7 @@ uint16_t RenderTacticalHelpScreen() {
 
 uint16_t RenderMapScreenHelpScreen() {
   uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   uint16_t usTotalNumberOfVerticalPixels = 0;
   uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
@@ -1950,7 +1950,7 @@ uint16_t RenderMapScreenHelpScreen() {
 }
 
 void RefreshAllHelpScreenButtons() {
-  UINT8 i;
+  uint8_t i;
 
   // loop through all the buttons, and refresh them
   for (i = 0; i < gHelpScreen.bNumberOfButtons; i++) {
@@ -2047,7 +2047,7 @@ void ChangeHelpScreenSubPage() {
 
 void ClearHelpScreenTextBuffer() {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
   pDestBuf = LockVideoSurface(guiHelpScreenTextBufferSurface, &uiDestPitchBYTES);
@@ -2101,7 +2101,7 @@ void ChangeTopLineInTextBufferByAmount(INT32 iAmouontToMove) {
 void DisplayHelpScreenTextBufferScrollBox() {
   INT32 iSizeOfBox;
   INT32 iTopPosScrollBox = 0;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   uint16_t usPosX;
 

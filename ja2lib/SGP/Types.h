@@ -18,7 +18,7 @@
 typedef int32_t INT32;
 
 // integers
-typedef unsigned char UINT8;
+typedef unsigned char uint8_t;
 typedef signed char INT8;
 typedef uint16_t uint16_t;
 typedef int16_t INT16;
@@ -39,7 +39,7 @@ typedef unsigned long FLAGS32;
 typedef unsigned char BOOLEAN;
 typedef void* PTR;
 typedef uint16_t HNDL;
-typedef UINT8 BYTE;
+typedef uint8_t BYTE;
 typedef CHAR8 STRING512[512];
 typedef uint32_t HWFILE;
 

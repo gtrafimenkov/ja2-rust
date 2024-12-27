@@ -149,7 +149,7 @@ struct email {
   STR16 pSubject;
   uint16_t usOffset;
   uint16_t usLength;
-  UINT8 ubSender;
+  uint8_t ubSender;
   uint32_t iDate;
   INT32 iId;
   INT32 iFirstData;
@@ -173,7 +173,7 @@ typedef Email *EmailPtr;
 typedef struct {
   uint16_t usOffset;
   uint16_t usLength;
-  UINT8 ubSender;
+  uint8_t ubSender;
   uint32_t iDate;
   INT32 iId;
   INT32 iFirstData;
@@ -264,13 +264,13 @@ void RenderEmail();
 
 // message manipulation
 void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject, INT32 iDate,
-                     UINT8 ubSender, BOOLEAN fAlreadyRead, INT32 uiFirstData,
+                     uint8_t ubSender, BOOLEAN fAlreadyRead, INT32 uiFirstData,
                      uint32_t uiSecondData);
 void RemoveEmailMessage(INT32 iId);
 EmailPtr GetEmailMessage(INT32 iId);
 void LookForUnread();
-void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate);
-void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate);
+void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender, INT32 iDate);
+void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender, INT32 iDate);
 BOOLEAN DisplayNewMailBox();
 void CreateDestroyNewMailButton();
 void CreateDestroyDeleteNoticeMailButton();
@@ -280,7 +280,7 @@ void ReDrawNewMailBox(void);
 void ReDisplayBoxes(void);
 void ShutDownEmailList();
 void AddMessageToPages(INT32 iMessageId);
-void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
+void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender,
                              INT32 iDate, INT32 iFirstData, uint32_t uiSecondData);
 
 #ifdef JA2BETAVERSION

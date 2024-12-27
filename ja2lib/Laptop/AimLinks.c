@@ -45,7 +45,7 @@
 uint32_t guiBobbyLink;
 uint32_t guiFuneralLink;
 uint32_t guiInsuranceLink;
-UINT8 gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK};
+uint8_t gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK};
 
 // Clicking on guys Face
 struct MOUSE_REGION gSelectedLinkRegion[AIM_LINK_NUM_LINKS];

@@ -27,10 +27,10 @@
 #define SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST 50
 
 struct sectorSearch {
-  UINT8 townID;
+  uint8_t townID;
   INT16 skipX;
   INT16 skipY;
-  UINT8 townSectorsIndex;
+  uint8_t townSectorsIndex;
 };
 
 struct militiaState {
@@ -57,15 +57,15 @@ struct militiaState {
 
 static struct militiaState _st;
 
-static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMany);
+static void promoteMilitia(u8 mapX, u8 mapY, uint8_t ubCurrentRank, uint8_t ubHowMany);
 
 // handle completion of assignment byt his soldier too and inform the player
 static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer);
 
-static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue);
-static void CantTrainMilitiaOkBoxCallback(UINT8 bExitValue);
+static void PayMilitiaTrainingYesNoBoxCallback(uint8_t bExitValue);
+static void CantTrainMilitiaOkBoxCallback(uint8_t bExitValue);
 static void MilitiaTrainingRejected(void);
-static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY);
+static void initNextSectorSearch(uint8_t ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY);
 static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY);
 static INT32 GetNumberOfUnpaidTrainableSectors(void);
 static void ContinueTrainingInThisSector();
@@ -74,10 +74,10 @@ static void PayForTrainingInSector(SectorID8 ubSector);
 static void ResetDoneFlagForAllMilitiaTrainersInSector(SectorID8 ubSector);
 
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY) {
-  UINT8 ubMilitiaTrained = 0;
+  uint8_t ubMilitiaTrained = 0;
   BOOLEAN fFoundOne;
   u8 sNeighbourX, sNeighbourY;
-  UINT8 ubTownId;
+  uint8_t ubTownId;
 
   // get town index
   ubTownId = GetTownIdForSector(mapX, mapY);
@@ -182,7 +182,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
   handleTrainingComplete(pTrainer);
 }
 
-static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMany) {
+static void promoteMilitia(u8 mapX, u8 mapY, uint8_t ubCurrentRank, uint8_t ubHowMany) {
   u8 currentCount = GetMilitiaOfRankInSector(mapX, mapY, ubCurrentRank);
 
   // damn well better have that many around to promote!
@@ -200,7 +200,7 @@ static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMan
   MarkForRedrawalStrategicMap();
 }
 
-void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany) {
+void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, uint8_t ubRank, uint8_t ubHowMany) {
   u8 currentCount = GetMilitiaOfRankInSector(mapX, mapY, ubRank);
 
   // damn well better have that many around to remove!
@@ -218,7 +218,8 @@ void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHo
 }
 
 // kill pts are (2 * kills) + assists
-UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts) {
+uint8_t CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, uint8_t ubCurrentRank,
+                                    uint8_t ubRecentKillPts) {
   uint32_t uiChanceToLevel = 0;
 
   switch (ubCurrentRank) {
@@ -247,7 +248,7 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
       if (ubRecentKillPts > 2) {
         if (CheckOneMilitiaForPromotion(
                 mapX, mapY, REGULAR_MILITIA,
-                (UINT8)(ubRecentKillPts - 2))) {  // success, this militia was promoted twice
+                (uint8_t)(ubRecentKillPts - 2))) {  // success, this militia was promoted twice
           return 2;
         }
       }
@@ -259,9 +260,9 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
 
 // call this if the player attacks his own militia
 void HandleMilitiaDefections(u8 mapX, u8 mapY) {
-  UINT8 ubRank;
-  UINT8 ubMilitiaCnt;
-  UINT8 ubCount;
+  uint8_t ubRank;
+  uint8_t ubMilitiaCnt;
+  uint8_t ubCount;
   uint32_t uiChanceToDefect;
 
   for (ubRank = 0; ubRank < MAX_MILITIA_LEVELS; ubRank++) {
@@ -293,12 +294,12 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
   }
 }
 
-UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY) {
+uint8_t CountAllMilitiaInSector(u8 mapX, u8 mapY) {
   struct MilitiaCount milCount = GetMilitiaInSector(mapX, mapY);
   return milCount.green + milCount.regular + milCount.elite;
 }
 
-UINT8 CountAllMilitiaInSectorID8(SectorID8 sectorID) {
+uint8_t CountAllMilitiaInSectorID8(SectorID8 sectorID) {
   struct MilitiaCount milCount = GetMilitiaInSectorID8(sectorID);
   return milCount.green + milCount.regular + milCount.elite;
 }
@@ -331,7 +332,7 @@ void SetMilitiaInSector(u8 mapX, u8 mapY, struct MilitiaCount newCount) {
   SetMilitiaInSectorID8(GetSectorID8(mapX, mapY), newCount);
 }
 
-void SetMilitiaOfRankInSector(u8 mapX, u8 mapY, UINT8 ubRank, u8 count) {
+void SetMilitiaOfRankInSector(u8 mapX, u8 mapY, uint8_t ubRank, u8 count) {
   SectorID8 sectorID = GetSectorID8(mapX, mapY);
   switch (ubRank) {
     case GREEN_MILITIA:
@@ -361,7 +362,7 @@ void IncMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 increase) {
   }
 }
 
-UINT8 GetMilitiaOfRankInSector(u8 mapX, u8 mapY, UINT8 ubRank) {
+uint8_t GetMilitiaOfRankInSector(u8 mapX, u8 mapY, uint8_t ubRank) {
   struct MilitiaCount count = GetMilitiaInSector(mapX, mapY);
   switch (ubRank) {
     case GREEN_MILITIA:
@@ -388,7 +389,7 @@ void SetMilitiaTrainingPayedForSectorID8(SectorID8 sectorID, bool value) {
   _st.trainingPaid[sectorID] = value;
 }
 
-static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY) {
+static void initNextSectorSearch(uint8_t ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY) {
   _st.sectorSearch.townID = ubTownId;
   _st.sectorSearch.skipX = sSkipSectorX;
   _st.sectorSearch.skipY = sSkipSectorY;
@@ -564,7 +565,7 @@ void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSol
 
 // IMPORTANT: This same callback is used both for initial training and for continue training prompt
 // use '_st.promptForContinue' flag to tell them apart
-static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue) {
+static void PayMilitiaTrainingYesNoBoxCallback(uint8_t bExitValue) {
   CHAR16 sString[128];
 
   Assert(_st.totalCostOfTraining > 0);
@@ -604,7 +605,7 @@ static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue) {
   return;
 }
 
-static void CantTrainMilitiaOkBoxCallback(UINT8 bExitValue) { MilitiaTrainingRejected(); }
+static void CantTrainMilitiaOkBoxCallback(uint8_t bExitValue) { MilitiaTrainingRejected(); }
 
 // reset assignment for mercs trainign militia in this sector
 static void resetTrainersAssignment(u8 mapX, u8 mapY) {
@@ -682,7 +683,7 @@ static void MilitiaTrainingRejected(void) {
 
 BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY) {
   i8 sCounterA = 0, sCounterB = 0;
-  UINT8 ubScoutingRange = 1;
+  uint8_t ubScoutingRange = 1;
 
   // get the sector value
   for (sCounterA = mapX - ubScoutingRange; sCounterA <= mapX + ubScoutingRange; sCounterA++) {

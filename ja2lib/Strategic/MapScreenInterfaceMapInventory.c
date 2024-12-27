@@ -188,7 +188,7 @@ void SortSectorInventory(WORLDITEM *pInventory, uint32_t uiSizeOfArray);
 BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier);
 
 extern void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
-                      UINT8 ubNumberToCopy);
+                      uint8_t ubNumberToCopy);
 extern void MAPEndItemPointer();
 extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX,
                                                                       INT16 *psSectorY,
@@ -1275,7 +1275,7 @@ BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJE
 
 BOOLEAN PlaceObjectInInventoryStash(struct OBJECTTYPE *pInventorySlot,
                                     struct OBJECTTYPE *pItemPtr) {
-  UINT8 ubNumberToDrop, ubSlotLimit, ubLoop;
+  uint8_t ubNumberToDrop, ubSlotLimit, ubLoop;
 
   // if there is something there, swap it, if they are of the same type and stackable then add to
   // the count
@@ -1341,7 +1341,7 @@ BOOLEAN PlaceObjectInInventoryStash(struct OBJECTTYPE *pInventorySlot,
 }
 
 BOOLEAN AutoPlaceObjectInInventoryStash(struct OBJECTTYPE *pItemPtr) {
-  UINT8 ubNumberToDrop, ubSlotLimit, ubLoop;
+  uint8_t ubNumberToDrop, ubSlotLimit, ubLoop;
   struct OBJECTTYPE *pInventorySlot;
 
   // if there is something there, swap it, if they are of the same type and stackable then add to
@@ -1842,8 +1842,8 @@ INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
   WORLDITEM *pSecond = (WORLDITEM *)pNum2;
   uint16_t usItem1Index;
   uint16_t usItem2Index;
-  UINT8 ubItem1Quality;
-  UINT8 ubItem2Quality;
+  uint8_t ubItem1Quality;
+  uint8_t ubItem2Quality;
 
   usItem1Index = pFirst->o.usItem;
   usItem2Index = pSecond->o.usItem;

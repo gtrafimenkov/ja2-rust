@@ -195,7 +195,7 @@ enum {
   PRSNL_EMPLOYMENT,
   PRSNL_INV,
 };
-UINT8 gubPersonnelInfoState = PRSNL_STATS;
+uint8_t gubPersonnelInfoState = PRSNL_STATS;
 
 // enums for the pPersonnelScreenStrings[]
 enum {
@@ -233,7 +233,7 @@ extern void HandleAltTabKeyInLaptop(void);
 extern void HandleShiftAltTabKeyInLaptop(void);
 
 // BOOLEAN fShowInventory = FALSE;
-UINT8 uiCurrentInventoryIndex = 0;
+uint8_t uiCurrentInventoryIndex = 0;
 
 uint32_t guiSliderPosition;
 
@@ -2204,7 +2204,7 @@ void DisplayInventoryForSelectedChar(void) {
 }
 
 void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
-  UINT8 ubCounter = 0;
+  uint8_t ubCounter = 0;
   struct SOLDIERTYPE *pSoldier;
   INT16 sIndex;
   struct VObject *hHandle;
@@ -2212,8 +2212,8 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   INVTYPE *pItem;
   INT16 PosX, PosY, sCenX, sCenY;
   uint32_t usHeight, usWidth;
-  UINT8 ubItemCount = 0;
-  UINT8 ubUpToCount = 0;
+  uint8_t ubItemCount = 0;
+  uint8_t ubUpToCount = 0;
   INT16 sX, sY;
   CHAR16 sString[128];
   INT32 cnt = 0;
@@ -2445,8 +2445,8 @@ void EnableDisableInventoryScrollButtons(void) {
 
 INT32 GetNumberOfInventoryItemsOnCurrentMerc(void) {
   INT32 iId = 0;
-  UINT8 ubCounter = 0;
-  UINT8 ubCount = 0;
+  uint8_t ubCounter = 0;
+  uint8_t ubCount = 0;
   struct SOLDIERTYPE *pSoldier;
 
   // in current team mode?..nope...move on
@@ -2819,7 +2819,7 @@ INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat) {
         // health
 
         // if the soldier is a pow, dont use the health cause it aint known
-        pSoldier = FindSoldierByProfileID((UINT8)cnt, FALSE);
+        pSoldier = FindSoldierByProfileID((uint8_t)cnt, FALSE);
         if (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
           continue;
         }
@@ -2969,7 +2969,7 @@ INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat) {
       case 0:
         // health
 
-        pSoldier = FindSoldierByProfileID((UINT8)cnt, FALSE);
+        pSoldier = FindSoldierByProfileID((uint8_t)cnt, FALSE);
         if (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
           continue;
         }
@@ -3281,7 +3281,7 @@ INT32 GetAvgStatOfCurrentTeamStat(INT32 iStat) {
   INT32 cnt = 0;
   INT32 iTotalStatValue = 0;
   INT8 bNumberOfPows = 0;
-  UINT8 ubNumberOfMercsInCalculation = 0;
+  uint8_t ubNumberOfMercsInCalculation = 0;
 
   // first grunt
   pSoldier = MercPtrs[0];
@@ -4849,7 +4849,7 @@ void AddCharacterToOtherList(struct SOLDIERTYPE *pSoldier) {
 // them again, we must get rid of them from the departed section in the personnel screen.  ( wouldnt
 // make sense for them
 // to be on your team list, and departed list )
-BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(UINT8 ubProfile) {
+BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(uint8_t ubProfile) {
   INT32 iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
@@ -5147,7 +5147,7 @@ void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       guiSliderPosition = iCurrentItemValue * sSizeOfEachSubRegion;
 
       // set current inventory value
-      uiCurrentInventoryIndex = (UINT8)iCurrentItemValue;
+      uiCurrentInventoryIndex = (uint8_t)iCurrentItemValue;
 
       // force update
       fReDrawScreenFlag = TRUE;
@@ -5761,7 +5761,7 @@ void RenderRectangleForPersonnelTransactionAmount(void) {
   INT32 iLength = 0;
   INT32 iHeight = GetFontHeight(ATM_FONT);
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   CHAR16 sTempString[32];
   INT32 iCounter = 0;
 

@@ -310,7 +310,7 @@ BOOLEAN DisplayNumberOfPagesToThisEmail(INT32 iViewerY);
 INT32 GetNumberOfPagesToEmail();
 void PreProcessEmail(EmailPtr pMail);
 void ModifyInsuranceEmails(uint16_t usMessageId, INT32 *iResults, EmailPtr pMail,
-                           UINT8 ubNumberOfRecords);
+                           uint8_t ubNumberOfRecords);
 BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr pMail);
 
 void InitializeMouseRegions() {
@@ -602,7 +602,7 @@ void RenderEmail(void) {
   return;
 }
 
-void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
+void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender,
                              INT32 iDate, INT32 iFirstData, uint32_t uiSecondData) {
   wchar_t pSubject[320];
   Email FakeEmail;
@@ -631,7 +631,7 @@ void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 u
   return;
 }
 
-void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate) {
+void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender, INT32 iDate) {
   wchar_t pSubject[320];
 
   // starts at iSubjectOffset amd goes iSubjectLength, reading in string
@@ -650,7 +650,7 @@ void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 
   return;
 }
 
-void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate) {
+void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender, INT32 iDate) {
   wchar_t pSubject[320];
 
   // starts at iSubjectOffset amd goes iSubjectLength, reading in string
@@ -670,7 +670,7 @@ void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
 }
 
 void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject, INT32 iDate,
-                     UINT8 ubSender, BOOLEAN fAlreadyRead, INT32 iFirstData,
+                     uint8_t ubSender, BOOLEAN fAlreadyRead, INT32 iFirstData,
                      uint32_t uiSecondData) {
   // will add a message to the list of messages
   EmailPtr pEmail = pEmailList;
@@ -1204,7 +1204,7 @@ void DrawSubject(INT32 iCounter, STR16 pSubject, BOOLEAN fRead) {
   return;
 }
 
-void DrawSender(INT32 iCounter, UINT8 ubSender, BOOLEAN fRead) {
+void DrawSender(INT32 iCounter, uint8_t ubSender, BOOLEAN fRead) {
   // draw name of sender in mail viewer
   SetFontShadow(NO_SHADOW);
 
@@ -4426,11 +4426,11 @@ void PreProcessEmail(EmailPtr pMail) {
 }
 
 void ModifyInsuranceEmails(uint16_t usMessageId, INT32 *iResults, EmailPtr pMail,
-                           UINT8 ubNumberOfRecords) {
+                           uint8_t ubNumberOfRecords) {
   INT32 iHeight = 0;
   //	wchar_t pString[MAIL_STRING_SIZE/2 + 1];
   wchar_t pString[MAIL_STRING_SIZE];
-  UINT8 ubCnt;
+  uint8_t ubCnt;
 
   // Replace the name in the subject line
   //	swprintf( pMail->pSubject, gMercProfiles[ pMail->ubFirstData ].zNickname );
@@ -4574,13 +4574,14 @@ void AddAllEmails() {
     uiOffset += MERC_UP_LEVEL_LENGTH_BIFF;
   }
 
-  //	AddEmail( ( UINT8 )( AIM_REPLY_BARRY + ( AIM_REPLY_LENGTH_BARRY ) ), AIM_REPLY_LENGTH_BARRY,
+  //	AddEmail( ( uint8_t )( AIM_REPLY_BARRY + ( AIM_REPLY_LENGTH_BARRY ) ),
+  //AIM_REPLY_LENGTH_BARRY,
   // AIM_REPLY_BARRY, GetWorldTotalMin() );
 
   uiOffset = AIM_REPLY_BARRY;
   for (uiCnt = 0; uiCnt < 40; uiCnt++) {
-    AddEmail((UINT8)(uiOffset + (uiCnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
-             (UINT8)(6 + uiCnt), GetWorldTotalMin());
+    AddEmail((uint8_t)(uiOffset + (uiCnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
+             (uint8_t)(6 + uiCnt), GetWorldTotalMin());
   }
 
   AddEmail(OLD_ENRICO_1, OLD_ENRICO_1_LENGTH, MAIL_ENRICO, GetWorldTotalMin());

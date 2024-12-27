@@ -35,28 +35,28 @@ extern INT16 gsRobotGridNo;
 
 uint32_t guiPabloExtraDaysBribed = 0;
 
-UINT8 gubCambriaMedicalObjects;
+uint8_t gubCambriaMedicalObjects;
 
-void DropOffItemsInMeduna(UINT8 ubOrderNum);
+void DropOffItemsInMeduna(uint8_t ubOrderNum);
 
-void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
-  UINT8 i, j;
+void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
+  uint8_t i, j;
   uint16_t usItem;
   struct OBJECTTYPE Object;
   uint16_t usMapPos, usStandardMapPos;
   uint16_t usNumberOfItems;
   BOOLEAN fSectorLoaded = FALSE;
   uint32_t uiCount = 0, uiStolenCount = 0;
-  static UINT8 ubShipmentsSinceNoBribes = 0;
+  static uint8_t ubShipmentsSinceNoBribes = 0;
   uint32_t uiChanceOfTheft;
   BOOLEAN fPablosStoleSomething = FALSE;
   BOOLEAN fPablosStoleLastItem = FALSE;
   struct OBJECTTYPE *pObject = NULL;
   struct OBJECTTYPE *pStolenObject = NULL;
   BOOLEAN fThisShipmentIsFromJohnKulba = FALSE;  // if it is, dont add an email
-  UINT8 ubItemsDelivered;
-  UINT8 ubTempNumItems;
-  UINT8 ubItemsPurchased;
+  uint8_t ubItemsDelivered;
+  uint8_t ubTempNumItems;
+  uint8_t ubItemsPurchased;
 
   usStandardMapPos = BOBBYR_SHIPPING_DEST_GRIDNO;
 
@@ -336,7 +336,7 @@ void HandleDelayedItemsArrival(uint32_t uiReason) {
   uint32_t uiNumWorldItems, uiLoop;
   BOOLEAN fOk;
   WORLDITEM *pTemp;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct OBJECTTYPE Object;
 
   if (uiReason == NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_RETURN_STOLEN_SHIPMENT_ITEMS) {
@@ -818,7 +818,7 @@ void HandleEarlyMorningEvents(void) {
       gMercProfiles[CARMEN].bNPCData2 = 0;
 
       for (cnt = HEAD_1; cnt <= HEAD_7; cnt++) {
-        RemoveObjectFromSoldierProfile(CARMEN, (UINT8)cnt);
+        RemoveObjectFromSoldierProfile(CARMEN, (uint8_t)cnt);
       }
     }
   } else {
@@ -859,7 +859,7 @@ void HandleEarlyMorningEvents(void) {
   }
 }
 
-void MakeCivGroupHostileOnNextSectorEntrance(UINT8 ubCivGroup) {
+void MakeCivGroupHostileOnNextSectorEntrance(uint8_t ubCivGroup) {
   // if it's the rebels that will become hostile, reduce town loyalties NOW, not later
   if (ubCivGroup == REBEL_CIV_GROUP &&
       gTacticalStatus.fCivGroupHostile[ubCivGroup] == CIV_GROUP_NEUTRAL) {
@@ -869,7 +869,7 @@ void MakeCivGroupHostileOnNextSectorEntrance(UINT8 ubCivGroup) {
   gTacticalStatus.fCivGroupHostile[ubCivGroup] = CIV_GROUP_WILL_BECOME_HOSTILE;
 }
 
-void RemoveAssassin(UINT8 ubProfile) {
+void RemoveAssassin(uint8_t ubProfile) {
   gMercProfiles[ubProfile].sSectorX = 0;
   gMercProfiles[ubProfile].sSectorY = 0;
   gMercProfiles[ubProfile].bLife = gMercProfiles[ubProfile].bLifeMax;
@@ -879,7 +879,7 @@ void CheckForMissingHospitalSupplies(void) {
   uint32_t uiLoop;
   struct ITEM_POOL *pItemPool;
   struct OBJECTTYPE *pObj;
-  UINT8 ubMedicalObjects = 0;
+  uint8_t ubMedicalObjects = 0;
 
   for (uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++) {
     // loop through all items, look for ownership
@@ -924,13 +924,13 @@ void CheckForMissingHospitalSupplies(void) {
   }
 }
 
-void DropOffItemsInMeduna(UINT8 ubOrderNum) {
+void DropOffItemsInMeduna(uint8_t ubOrderNum) {
   BOOLEAN fSectorLoaded = FALSE;
   struct OBJECTTYPE Object;
   uint32_t uiCount = 0;
   struct OBJECTTYPE *pObject = NULL;
   uint16_t usNumberOfItems = 0, usItem;
-  UINT8 ubItemsDelivered, ubTempNumItems;
+  uint8_t ubItemsDelivered, ubTempNumItems;
   uint32_t i;
 
   // if the player doesnt "own" the sector,

@@ -109,9 +109,9 @@ enum {
 };
 
 struct rgbcolor {
-  UINT8 ubRed;
-  UINT8 ubGreen;
-  UINT8 ubBlue;
+  uint8_t ubRed;
+  uint8_t ubGreen;
+  uint8_t ubBlue;
 };
 
 typedef struct rgbcolor RGBCOLOR;
@@ -573,7 +573,7 @@ void CreateLaptopButtonHelpText(INT32 iButtonIndex, uint32_t uiButtonHelpTextID)
 // Used to determine delay if its raining
 BOOLEAN IsItRaining();
 INT32 WWaitDelayIncreasedIfRaining(INT32 iLoadTime);
-void InternetRainDelayMessageBoxCallBack(UINT8 bExitValue);
+void InternetRainDelayMessageBoxCallBack(uint8_t bExitValue);
 
 extern void ClearHistoryList(void);
 
@@ -3726,7 +3726,7 @@ void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   return;
 }
 
-BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
+BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                            MSGBOX_CALLBACK ReturnCallback) {
   SGPRect pCenteringRect = {LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y, LAPTOP_SCREEN_LR_X,
                             LAPTOP_SCREEN_LR_Y};
@@ -3736,14 +3736,14 @@ BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen
 
   // do message box and return
   iLaptopMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                   (UINT8)(ubFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                   (uint8_t)(ubFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                    ReturnCallback, &pCenteringRect);
 
   // send back return state
   return ((iLaptopMessageBox != -1));
 }
 
-BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                          uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect) {
   // reset exit mode
@@ -3758,7 +3758,7 @@ BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_
   return ((iLaptopMessageBox != -1));
 }
 
-BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                  uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
@@ -3773,7 +3773,7 @@ BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExit
 }
 
 // places a tileable pattern down
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, uint16_t usWidth, uint16_t usHeight,
+BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t usHeight,
                               uint32_t uiBackgroundIdentifier) {
   struct VObject *hBackGroundHandle;
   uint16_t x, y, uiPosX, uiPosY;
@@ -4416,7 +4416,7 @@ BOOLEAN DrawDeskTopBackground(void) {
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
   SGPRect clip;
 
   // set clipping region
@@ -4628,7 +4628,7 @@ void HandleKeyBoardShortCutsForLapTop(uint16_t usEvent, uint32_t usParam, uint16
   else if ((usEvent == KEY_DOWN) && (usParam == 'q')) {
     // if we dont currently have mercs on the team, hire some
     if (NumberOfMercsOnPlayerTeam() == 0) {
-      UINT8 ubRand = (UINT8)Random(2) + 2;
+      uint8_t ubRand = (uint8_t)Random(2) + 2;
       TempHiringOfMercs(ubRand, FALSE);
       //	QuickStartGame( );
     }
@@ -5396,7 +5396,7 @@ BOOLEAN IsItRaining() {
     return (FALSE);
 }
 
-void InternetRainDelayMessageBoxCallBack(UINT8 bExitValue) {
+void InternetRainDelayMessageBoxCallBack(uint8_t bExitValue) {
   GoToWebPage(giRainDelayInternetSite);
 
   // Set to -2 so we dont due the message for this occurence of laptop

@@ -187,7 +187,7 @@ CHAR8 zNoBloodCorpseFilenames[NUM_CORPSES][70] = {
     "ANIMS\\CORPSES\\S_EXPLD.STI",
 };
 
-UINT8 gb4DirectionsFrom8[8] = {
+uint8_t gb4DirectionsFrom8[8] = {
     7,  // NORTH
     0,  // NE
     0,  // E
@@ -198,7 +198,7 @@ UINT8 gb4DirectionsFrom8[8] = {
     0   // NW
 };
 
-UINT8 gb2DirectionsFrom8[8] = {
+uint8_t gb2DirectionsFrom8[8] = {
     0,  // NORTH
     7,  // NE
     7,  // E
@@ -421,11 +421,11 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   INT32 iIndex;
   ROTTING_CORPSE *pCorpse;
   ANITILE_PARAMS AniParams;
-  UINT8 ubLevelID;
+  uint8_t ubLevelID;
   struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
   CHAR8 zFilename[150];
   struct DB_STRUCTURE_REF *pDBStructureRef;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   INT16 sTileGridNo;
   DB_STRUCTURE_TILE **ppTile;
   uint16_t usStructIndex;
@@ -683,13 +683,13 @@ BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
 BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
                               BOOLEAN fCheckForLOS) {
   ROTTING_CORPSE_DEFINITION Corpse;
-  UINT8 ubType;
+  uint8_t ubType;
   INT32 cnt;
   uint16_t usItemFlags = 0;  // WORLD_ITEM_DONTRENDER;
   INT32 iCorpseID;
   INT8 bVisible = -1;
   struct OBJECTTYPE *pObj;
-  UINT8 ubNumGoo;
+  uint8_t ubNumGoo;
   INT16 sNewGridNo;
   struct OBJECTTYPE ItemObject;
 
@@ -725,7 +725,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   }
 
   // Determine corpse type!
-  ubType = (UINT8)gubAnimSurfaceCorpseID[pSoldier->ubBodyType][pSoldier->usAnimState];
+  ubType = (uint8_t)gubAnimSurfaceCorpseID[pSoldier->ubBodyType][pSoldier->usAnimState];
 
   Corpse.bDirection = pSoldier->bDirection;
 
@@ -870,11 +870,11 @@ INT16 FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier) {
 void AddCrowToCorpse(ROTTING_CORPSE *pCorpse) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
   INT8 bBodyType = CROW;
-  UINT8 iNewIndex;
+  uint8_t iNewIndex;
   INT16 sGridNo;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubRoomNum;
+  uint8_t ubRoomNum;
 
   // No crows inside :(
   if (InARoom(pCorpse->def.sGridNo, &ubRoomNum)) {
@@ -941,7 +941,7 @@ void HandleCrowLeave(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   INT16 sGridNo;
 
   // Set desired height
@@ -975,7 +975,7 @@ void HandleRottingCorpses() {
   // ATE: Check for multiple crows.....
   // Couint how many we have now...
   {
-    UINT8 bLoop;
+    uint8_t bLoop;
     struct SOLDIERTYPE *pSoldier;
 
     for (bLoop = gTacticalStatus.Team[CIV_TEAM].bFirstID, pSoldier = MercPtrs[bLoop];
@@ -1067,7 +1067,7 @@ void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam) {
         // and we can trace a line of sight to his x,y coordinates?
         // (taking into account we are definitely aware of this guy now)
         if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, pCorpse->def.bLevel, 3,
-                                               (UINT8)sDistVisible, TRUE)) {
+                                               (uint8_t)sDistVisible, TRUE)) {
           MakeCorpseVisible(pSoldier, pCorpse);
           return;
         }
@@ -1121,7 +1121,7 @@ void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
           // and we can trace a line of sight to his x,y coordinates?
           // (taking into account we are definitely aware of this guy now)
           if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, pCorpse->def.bLevel, 3,
-                                                 (UINT8)sDistVisible, TRUE)) {
+                                                 (uint8_t)sDistVisible, TRUE)) {
             TacticalCharacterDialogue(pSoldier, QUOTE_HEADSHOT);
 
             pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_ROTTINGCORPSE;
@@ -1167,12 +1167,12 @@ uint16_t CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
   // create the basic shade table
   for (uiCount = 0; uiCount < 256; uiCount++) {
     // combine the rgb of the light color with the object's palette
-    LightPal[uiCount].peRed = (UINT8)(min(
+    LightPal[uiCount].peRed = (uint8_t)(min(
         (uint16_t)pCorpse->p8BPPPalette[uiCount].peRed + (uint16_t)gpLightColors[0].peRed, 255));
-    LightPal[uiCount].peGreen = (UINT8)(min(
+    LightPal[uiCount].peGreen = (uint8_t)(min(
         (uint16_t)pCorpse->p8BPPPalette[uiCount].peGreen + (uint16_t)gpLightColors[0].peGreen,
         255));
-    LightPal[uiCount].peBlue = (UINT8)(min(
+    LightPal[uiCount].peBlue = (uint8_t)(min(
         (uint16_t)pCorpse->p8BPPPalette[uiCount].peBlue + (uint16_t)gpLightColors[0].peBlue, 255));
   }
   // build the shade tables
@@ -1319,7 +1319,7 @@ void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID) {
 
     if (pCorpse->def.bLevel == 0) {
       // Set some blood......
-      SpreadEffect(sBaseGridNo, (UINT8)((2)), 0, NOBODY, BLOOD_SPREAD_EFFECT, 0, -1);
+      SpreadEffect(sBaseGridNo, (uint8_t)((2)), 0, NOBODY, BLOOD_SPREAD_EFFECT, 0, -1);
     }
   }
 
@@ -1339,11 +1339,11 @@ INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, INT8 
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
-  UINT8 ubSaveNPCAPBudget;
-  UINT8 ubSaveNPCDistLimit;
+  uint8_t ubSaveNPCAPBudget;
+  uint8_t ubSaveNPCDistLimit;
   struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
   CHAR8 zFilename[150];
-  UINT8 ubBestDirection = 0;
+  uint8_t ubBestDirection = 0;
   BOOLEAN fSetDirection = FALSE;
 
   cnt3 = 0;
@@ -1425,7 +1425,7 @@ INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, INT8 
 
             if (uiRange < uiLowestRange) {
               if (fCanSetDirection) {
-                ubBestDirection = (UINT8)cnt3;
+                ubBestDirection = (uint8_t)cnt3;
                 fSetDirection = TRUE;
               }
               sLowestGridNo = sGridNo;
@@ -1591,7 +1591,7 @@ void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iI
     // if it's ammo
     if (Item[pObj->usItem].usItemClass == IC_AMMO) {
       // don't drop all the clips, just a random # of them between 1 and how many there are
-      pObj->ubNumberOfObjects = (UINT8)(1 + Random(pObj->ubNumberOfObjects));
+      pObj->ubNumberOfObjects = (uint8_t)(1 + Random(pObj->ubNumberOfObjects));
       // recalculate the weight
       pObj->ubWeight = CalculateObjectWeight(pObj);
     }
@@ -1599,7 +1599,7 @@ void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iI
 }
 
 void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
-                                        UINT8 ubLevel) {
+                                        uint8_t ubLevel) {
   ROTTING_CORPSE *pCorpse;
   INT8 bToleranceThreshold = 0;
   INT32 cnt;
@@ -1652,7 +1652,7 @@ void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGri
   }
 }
 
-INT16 GetGridNoOfCorpseGivenProfileID(UINT8 ubProfileID) {
+INT16 GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID) {
   INT32 cnt;
   ROTTING_CORPSE *pCorpse;
 
@@ -1683,10 +1683,10 @@ void DecayRottingCorpseAIWarnings(void) {
   }
 }
 
-UINT8 GetNearestRottingCorpseAIWarning(INT16 sGridNo) {
+uint8_t GetNearestRottingCorpseAIWarning(INT16 sGridNo) {
   INT32 cnt;
   ROTTING_CORPSE *pCorpse;
-  UINT8 ubHighestWarning = 0;
+  uint8_t ubHighestWarning = 0;
 
   for (cnt = 0; cnt < giNumRottingCorpse; cnt++) {
     pCorpse = &(gRottingCorpse[cnt]);

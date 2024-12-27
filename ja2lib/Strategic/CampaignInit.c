@@ -20,7 +20,8 @@ void InitKnowFacilitiesFlags();
 
 UNDERGROUND_SECTORINFO *gpUndergroundSectorInfoTail = NULL;
 
-UNDERGROUND_SECTORINFO *NewUndergroundNode(UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ) {
+UNDERGROUND_SECTORINFO *NewUndergroundNode(uint8_t ubSectorX, uint8_t ubSectorY,
+                                           uint8_t ubSectorZ) {
   UNDERGROUND_SECTORINFO *curr;
   curr = (UNDERGROUND_SECTORINFO *)MemAlloc(sizeof(UNDERGROUND_SECTORINFO));
   AssertMsg(curr, "Failed to create an underground sector info node.");
@@ -110,26 +111,26 @@ void InitMiningLocations() {
 // Mobile groups are handled separately from sectors, because they are on the move.
 void GeneratePatrolGroups() {
   struct GROUP *pGroup;
-  UINT8 ubNumTroops;
-  ubNumTroops = (UINT8)(3 + gGameOptions.ubDifficultyLevel + Random(3));
+  uint8_t ubNumTroops;
+  ubNumTroops = (uint8_t)(3 + gGameOptions.ubDifficultyLevel + Random(3));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_C7, 0, ubNumTroops, 0);
   pGroup->ubTransportationMask = CAR;
   AddWaypointToPGroup(pGroup, 8, 3);  // C8
   AddWaypointToPGroup(pGroup, 7, 3);  // C7
 
-  ubNumTroops = (UINT8)(3 + gGameOptions.ubDifficultyLevel + Random(3));
+  ubNumTroops = (uint8_t)(3 + gGameOptions.ubDifficultyLevel + Random(3));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_D9, 0, ubNumTroops, 0);
   AddWaypointToPGroup(pGroup, 9, 5);  // E9
   AddWaypointToPGroup(pGroup, 9, 4);  // D9
   pGroup->ubTransportationMask = TRUCK;
 
-  ubNumTroops = (UINT8)(3 + gGameOptions.ubDifficultyLevel + Random(3));
+  ubNumTroops = (uint8_t)(3 + gGameOptions.ubDifficultyLevel + Random(3));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_B9, 0, ubNumTroops, 0);
   AddWaypointToPGroup(pGroup, 12, 2);  // B12
   AddWaypointToPGroup(pGroup, 9, 2);   // B9
   pGroup->ubTransportationMask = FOOT;
 
-  ubNumTroops = (UINT8)(3 + gGameOptions.ubDifficultyLevel + Random(3));
+  ubNumTroops = (uint8_t)(3 + gGameOptions.ubDifficultyLevel + Random(3));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_A14, 0, ubNumTroops, 0);
   pGroup->ubMoveType = ENDTOEND_FORWARDS;
   AddWaypointToPGroup(pGroup, 13, 1);  // A13
@@ -140,13 +141,13 @@ void GeneratePatrolGroups() {
   AddWaypointToPGroup(pGroup, 12, 3);  // C12
   pGroup->ubTransportationMask = TRACKED;
 
-  ubNumTroops = (UINT8)(5 + gGameOptions.ubDifficultyLevel * 2 + Random(4));
+  ubNumTroops = (uint8_t)(5 + gGameOptions.ubDifficultyLevel * 2 + Random(4));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_N6, 0, ubNumTroops, 0);
   AddWaypointToPGroup(pGroup, 9, 14);  // N9
   AddWaypointToPGroup(pGroup, 6, 14);  // N6
   pGroup->ubTransportationMask = CAR;
 
-  ubNumTroops = (UINT8)(5 + gGameOptions.ubDifficultyLevel * 2 + Random(4));
+  ubNumTroops = (uint8_t)(5 + gGameOptions.ubDifficultyLevel * 2 + Random(4));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_N10, 0, ubNumTroops, 0);
   AddWaypointToPGroup(pGroup, 10, 11);  // K10
   AddWaypointToPGroup(pGroup, 10, 14);  // N10
@@ -202,30 +203,30 @@ void BuildUndergroundSectorInfoList() {
   }
   // J9 feeding zone
   curr = NewUndergroundNode(9, 10, 2);
-  curr->ubNumCreatures = (UINT8)(2 + gGameOptions.ubDifficultyLevel * 2 + Random(2));
+  curr->ubNumCreatures = (uint8_t)(2 + gGameOptions.ubDifficultyLevel * 2 + Random(2));
 
   // K4
   curr = NewUndergroundNode(4, 11, 1);
-  curr->ubNumTroops = (UINT8)(6 + gGameOptions.ubDifficultyLevel * 2 + Random(3));
-  curr->ubNumElites = (UINT8)(4 + gGameOptions.ubDifficultyLevel + Random(2));
+  curr->ubNumTroops = (uint8_t)(6 + gGameOptions.ubDifficultyLevel * 2 + Random(3));
+  curr->ubNumElites = (uint8_t)(4 + gGameOptions.ubDifficultyLevel + Random(2));
 
   // O3
   curr = NewUndergroundNode(3, 15, 1);
-  curr->ubNumTroops = (UINT8)(6 + gGameOptions.ubDifficultyLevel * 2 + Random(3));
-  curr->ubNumElites = (UINT8)(4 + gGameOptions.ubDifficultyLevel + Random(2));
+  curr->ubNumTroops = (uint8_t)(6 + gGameOptions.ubDifficultyLevel * 2 + Random(3));
+  curr->ubNumElites = (uint8_t)(4 + gGameOptions.ubDifficultyLevel + Random(2));
   curr->ubAdjacentSectors |= SOUTH_ADJACENT_SECTOR;
 
   // P3
   curr = NewUndergroundNode(3, 16, 1);
   switch (gGameOptions.ubDifficultyLevel) {
     case DIF_LEVEL_EASY:
-      curr->ubNumElites = (UINT8)(8 + Random(3));
+      curr->ubNumElites = (uint8_t)(8 + Random(3));
       break;
     case DIF_LEVEL_MEDIUM:
-      curr->ubNumElites = (UINT8)(10 + Random(5));
+      curr->ubNumElites = (uint8_t)(10 + Random(5));
       break;
     case DIF_LEVEL_HARD:
-      curr->ubNumElites = (UINT8)(14 + Random(6));
+      curr->ubNumElites = (uint8_t)(14 + Random(6));
       break;
   }
   curr->ubAdjacentSectors |= NORTH_ADJACENT_SECTOR;

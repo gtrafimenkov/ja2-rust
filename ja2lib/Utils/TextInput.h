@@ -66,7 +66,7 @@ void InitTextInputMode();
 // A hybrid version of InitTextInput() which uses a specific scheme.  JA2's editor uses scheme 1, so
 // feel free to add new color/font schemes.
 enum { DEFAULT_SCHEME };
-void InitTextInputModeWithScheme(UINT8 ubSchemeID);
+void InitTextInputModeWithScheme(uint8_t ubSchemeID);
 
 // Clears any existing fields, and ends text input mode.
 void KillTextInputMode();
@@ -90,7 +90,7 @@ uint16_t GetTextInputCursor();
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
 void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, INT8 bPriority,
-                       STR16 szInitText, UINT8 ubMaxChars, uint16_t usInputType);
+                       STR16 szInitText, uint8_t ubMaxChars, uint16_t usInputType);
 
 // This allows you to insert special processing functions and modes that can't be determined here.
 // An example would be a file dialog where there would be a file list.  This file list would be
@@ -100,41 +100,41 @@ void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, INT
 // with that letter, and setting the field in the text input field.  Pressing TAB again would place
 // you back in the text input field.  All of that stuff would be handled externally, except for the
 // TAB keys.
-typedef void (*INPUT_CALLBACK)(UINT8, BOOLEAN);
+typedef void (*INPUT_CALLBACK)(uint8_t, BOOLEAN);
 void AddUserInputField(INPUT_CALLBACK userFunction);
 // INPUT_CALLBACK explanation:
-// The function must use this signature:  void FunctionName( UINT8 ubFieldID, BOOLEAN fEntering );
+// The function must use this signature:  void FunctionName( uint8_t ubFieldID, BOOLEAN fEntering );
 // ubFieldID contains the fieldID of that field
 // fEntering is true if you are entering the user field, false if exiting.
 
 // Removes the specified field from the existing fields.  If it doesn't exist, then there will be an
 // assertion failure.
-void RemoveTextInputField(UINT8 ubField);
+void RemoveTextInputField(uint8_t ubField);
 
 // This is a useful call made from an external user input field.  Using the previous file dialog
 // example, this call would be made when the user selected a different filename in the list via
 // clicking or scrolling with the arrows, or even using alpha chars to jump to the appropriate
 // filename.
-void SetInputFieldStringWith16BitString(UINT8 ubField, STR16 szNewText);
+void SetInputFieldStringWith16BitString(uint8_t ubField, STR16 szNewText);
 void SetInputFieldStringWith8BitString(CHAR8 ubField, STR8 szNewText);
 
 // Allows external functions to access the strings within the fields at anytime.
-void Get16BitStringFromField(UINT8 ubField, STR16 szString, size_t bufSize);
+void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize);
 
 // Utility functions for the INPUTTYPE_EXCLUSIVE_24HOURCLOCK input type.
-uint16_t GetExclusive24HourTimeValueFromField(UINT8 ubField);
-void SetExclusive24HourTimeValue(UINT8 ubField, uint16_t usTime);
+uint16_t GetExclusive24HourTimeValueFromField(uint8_t ubField);
+void SetExclusive24HourTimeValue(uint8_t ubField, uint16_t usTime);
 
 // Converts the field's string into a number, then returns that number
 // returns -1 if blank or invalid.  Only works for positive numbers.
-INT32 GetNumericStrictValueFromField(UINT8 ubField);
+INT32 GetNumericStrictValueFromField(uint8_t ubField);
 
 // Converts a number to a numeric strict value.  If the number is negative, the
 // field will be blank.
-void SetInputFieldStringWithNumericStrictValue(UINT8 ubField, INT32 iNumber);
+void SetInputFieldStringWithNumericStrictValue(uint8_t ubField, INT32 iNumber);
 
 // Sets the active field to the specified ID number.
-void SetActiveField(UINT8 ubField);
+void SetActiveField(uint8_t ubField);
 void SelectNextField();
 void SelectPrevField();
 
@@ -147,10 +147,11 @@ INT16 GetActiveFieldID();
 // colors can be set at anytime, but will effect all of the colors.
 void SetTextInputFont(uint16_t usFont);
 void Set16BPPTextFieldColor(uint16_t usTextFieldColor);
-void SetTextInputRegularColors(UINT8 ubForeColor, UINT8 ubShadowColor);
-void SetTextInputHilitedColors(UINT8 ubForeColor, UINT8 ubShadowColor, UINT8 ubBackColor);
+void SetTextInputRegularColors(uint8_t ubForeColor, uint8_t ubShadowColor);
+void SetTextInputHilitedColors(uint8_t ubForeColor, uint8_t ubShadowColor, uint8_t ubBackColor);
 // optional color setups
-void SetDisabledTextFieldColors(UINT8 ubForeColor, UINT8 ubShadowColor, uint16_t usTextFieldColor);
+void SetDisabledTextFieldColors(uint8_t ubForeColor, uint8_t ubShadowColor,
+                                uint16_t usTextFieldColor);
 void SetBevelColors(uint16_t usBrighterColor, uint16_t usDarkerColor);
 void SetCursorColor(uint16_t usCursorColor);
 
@@ -173,13 +174,13 @@ BOOLEAN HandleTextInput(InputAtom *Event);
 
 // Required in your screen loop to update the values, as well as blinking the cursor.
 void RenderActiveTextField();
-void RenderInactiveTextField(UINT8 ubID);
+void RenderInactiveTextField(uint8_t ubID);
 void RenderAllTextFields();
 
-void EnableTextField(UINT8 ubID);
-void DisableTextField(UINT8 ubID);
-void EnableTextFields(UINT8 ubFirstID, UINT8 ubLastID);
-void DisableTextFields(UINT8 ubFirstID, UINT8 ubLastID);
+void EnableTextField(uint8_t ubID);
+void DisableTextField(uint8_t ubID);
+void EnableTextFields(uint8_t ubFirstID, uint8_t ubLastID);
+void DisableTextFields(uint8_t ubFirstID, uint8_t ubLastID);
 void EnableAllTextFields();
 void DisableAllTextFields();
 

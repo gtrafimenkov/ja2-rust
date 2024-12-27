@@ -80,7 +80,7 @@ void InitArmyGunTypes(void) {
   uint32_t uiGunLevel;
   uint32_t uiChoice;
   INT8 bItemNo;
-  UINT8 ubWeapon;
+  uint8_t ubWeapon;
 
   // depending on selection of the gun nut option
   if (gGameOptions.fGunNut) {
@@ -97,7 +97,7 @@ void InitArmyGunTypes(void) {
     uiChoice = Random(pGunChoiceTable[uiGunLevel].ubChoices);
     bItemNo = pGunChoiceTable[uiGunLevel].bItemNo[uiChoice];
     AssertMsg(bItemNo != -1, "Invalid army gun choice in table");
-    gStrategicStatus.ubStandardArmyGunIndex[uiGunLevel] = (UINT8)bItemNo;
+    gStrategicStatus.ubStandardArmyGunIndex[uiGunLevel] = (uint8_t)bItemNo;
   }
 
   // set all flags that track whether this weapon type has been dropped before to FALSE
@@ -173,7 +173,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
   BOOLEAN fLAW = FALSE;
   INT32 i;
   INT8 bEquipmentModifier;
-  UINT8 ubMaxSpecialWeaponRoll;
+  uint8_t ubMaxSpecialWeaponRoll;
 
   Assert(pp);
 
@@ -518,7 +518,7 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
   uint16_t usGunIndex = 0;
   uint16_t usAmmoIndex = 0;
   uint16_t usAttachIndex = 0;
-  UINT8 ubChanceStandardAmmo;
+  uint8_t ubChanceStandardAmmo;
   INT8 bStatus;
 
   // Choose weapon:
@@ -560,7 +560,7 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
   }
 
   // the weapon class here ranges from 1 to 11, so subtract 1 to get a gun level
-  usGunIndex = SelectStandardArmyGun((UINT8)(bWeaponClass - 1));
+  usGunIndex = SelectStandardArmyGun((uint8_t)(bWeaponClass - 1));
 
   if (bAmmoClips) {  // We have a gun, so choose ammo clips
 
@@ -665,16 +665,16 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
   struct OBJECTTYPE Object;
   INT16 sNumPoints;
   uint16_t usItem;
-  UINT8 ubBaseQuality;
-  UINT8 ubQualityVariation;
+  uint8_t ubBaseQuality;
+  uint8_t ubQualityVariation;
   // numbers of each type the player will get!
-  UINT8 ubNumStun = 0;
-  UINT8 ubNumTear = 0;
-  UINT8 ubNumMustard = 0;
-  UINT8 ubNumMini = 0;
-  UINT8 ubNumReg = 0;
-  UINT8 ubNumSmoke = 0;
-  UINT8 ubNumFlare = 0;
+  uint8_t ubNumStun = 0;
+  uint8_t ubNumTear = 0;
+  uint8_t ubNumMustard = 0;
+  uint8_t ubNumMini = 0;
+  uint8_t ubNumReg = 0;
+  uint8_t ubNumSmoke = 0;
+  uint8_t ubNumFlare = 0;
 
   // determine how many *points* the enemy will get to spend on grenades...
   sNumPoints = bGrenades * bGrenadeClass;
@@ -694,7 +694,7 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
 
   // determine the quality of grenades.  The elite guys get the best quality, while the others
   // get progressively worse.
-  ubBaseQuality = (UINT8)min(45 + bGrenadeClass * 5, 90);
+  ubBaseQuality = (uint8_t)min(45 + bGrenadeClass * 5, 90);
   ubQualityVariation = 101 - ubBaseQuality;
 
   // now, purchase the grenades.
@@ -1327,7 +1327,7 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECT
     return FALSE;
   } else {
     pObject->ubNumberOfObjects =
-        (UINT8)min(Item[pObject->usItem].ubPerPocket, pObject->ubNumberOfObjects);
+        (uint8_t)min(Item[pObject->usItem].ubPerPocket, pObject->ubNumberOfObjects);
     // try to get it into a small pocket first
     for (i = SMALLPOCK1POS; i <= SMALLPOCK8POS; i++) {
       if (!(pp->Inv[i].usItem) && !(pp->Inv[i].fFlags & OBJECT_NO_OVERWRITE)) {
@@ -1350,11 +1350,11 @@ void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldie
   INT32 i;
   //	uint16_t usRandomNum;
   uint32_t uiItemClass;
-  UINT8 ubNumMatches = 0;
+  uint8_t ubNumMatches = 0;
   uint16_t usItem;
-  UINT8 ubAmmoDropRate;
-  UINT8 ubGrenadeDropRate;
-  UINT8 ubOtherDropRate;
+  uint8_t ubAmmoDropRate;
+  uint8_t ubGrenadeDropRate;
+  uint8_t ubOtherDropRate;
   BOOLEAN fWeapon = FALSE;
   BOOLEAN fGrenades = FALSE;  // this includes all  grenades!
   BOOLEAN fAmmo = FALSE;
@@ -1819,7 +1819,7 @@ void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
   }
 }
 
-uint16_t SelectStandardArmyGun(UINT8 uiGunLevel) {
+uint16_t SelectStandardArmyGun(uint8_t uiGunLevel) {
   ARMY_GUN_CHOICE_TYPE *pGunChoiceTable;
   uint32_t uiChoice;
   uint16_t usGunIndex;

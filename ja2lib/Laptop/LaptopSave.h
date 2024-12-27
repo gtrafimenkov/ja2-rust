@@ -14,8 +14,8 @@
 
 typedef struct {
   BOOLEAN fActive;
-  UINT8 ubSoldierID;
-  UINT8 ubMercID;
+  uint8_t ubSoldierID;
+  uint8_t ubMercID;
   INT32 iPayOutPrice;
 } LIFE_INSURANCE_PAYOUT;
 
@@ -28,7 +28,7 @@ typedef struct {
 
 typedef struct {
   uint16_t usItemIndex;
-  UINT8 ubNumberPurchased;
+  uint8_t ubNumberPurchased;
   INT8 bItemQuality;
   uint16_t usBobbyItemIndex;  // Item number in the BobbyRayInventory structure
   BOOLEAN fUsed;  // Indicates wether or not the item is from the used inventory or the regular
@@ -38,7 +38,7 @@ typedef struct {
 typedef struct {
   BOOLEAN fActive;
   BobbyRayPurchaseStruct BobbyRayPurchase[MAX_PURCHASE_AMOUNT];
-  UINT8 ubNumberPurchases;
+  uint8_t ubNumberPurchases;
 } BobbyRayOrderStruct;
 
 // used when the player goes to bobby rays when it is still down
@@ -66,9 +66,9 @@ typedef struct {
   INT16 ubOtherCharactersList[256];
 
   // MERC site info
-  UINT8 gubPlayersMercAccountStatus;
+  uint8_t gubPlayersMercAccountStatus;
   uint32_t guiPlayersMercAccountNumber;
-  UINT8 gubLastMercIndex;
+  uint8_t gubLastMercIndex;
 
   // Aim Site
 
@@ -77,20 +77,20 @@ typedef struct {
   STORE_INVENTORY BobbyRayUsedInventory[MAXITEMS];
 
   BobbyRayOrderStruct *BobbyRayOrdersOnDeliveryArray;
-  UINT8 usNumberOfBobbyRayOrderItems;  // The number of elements in the array
-  UINT8 usNumberOfBobbyRayOrderUsed;   // The number of items in the array that are used
+  uint8_t usNumberOfBobbyRayOrderItems;  // The number of elements in the array
+  uint8_t usNumberOfBobbyRayOrderUsed;   // The number of items in the array that are used
 
   // Flower Site
   // NONE
 
   // Insurance Site
   LIFE_INSURANCE_PAYOUT *pLifeInsurancePayouts;
-  UINT8 ubNumberLifeInsurancePayouts;     // The number of elements in the array
-  UINT8 ubNumberLifeInsurancePayoutUsed;  // The number of items in the array that are used
+  uint8_t ubNumberLifeInsurancePayouts;     // The number of elements in the array
+  uint8_t ubNumberLifeInsurancePayoutUsed;  // The number of items in the array that are used
 
   BOOLEAN fBobbyRSiteCanBeAccessed;
 
-  UINT8 ubPlayerBeenToMercSiteStatus;
+  uint8_t ubPlayerBeenToMercSiteStatus;
   BOOLEAN fFirstVisitSinceServerWentDown;
   BOOLEAN fNewMercsAvailableAtMercSite;
   BOOLEAN fSaidGenericOpeningInMercSite;
@@ -98,7 +98,7 @@ typedef struct {
   BOOLEAN fHasAMercDiedAtMercSite;
 
 #ifdef CRIPPLED_VERSION
-  UINT8 ubCrippleFiller[20];
+  uint8_t ubCrippleFiller[20];
 #endif
 
   INT8 gbNumDaysTillFirstMercArrives;
@@ -112,11 +112,11 @@ typedef struct {
 
   INT32 iVoiceId;
 
-  UINT8 ubHaveBeenToBobbyRaysAtLeastOnceWhileUnderConstruction;
+  uint8_t ubHaveBeenToBobbyRaysAtLeastOnceWhileUnderConstruction;
 
   BOOLEAN fMercSiteHasGoneDownYet;
 
-  UINT8 ubSpeckCanSayPlayersLostQuote;
+  uint8_t ubSpeckCanSayPlayersLostQuote;
 
   LAST_HIRED_MERC_STRUCT sLastHiredMerc;
 
@@ -130,8 +130,8 @@ typedef struct {
 
   uint32_t uiTotalMoneyPaidToSpeck;
 
-  UINT8 ubLastMercAvailableId;
-  UINT8 bPadding[86];
+  uint8_t ubLastMercAvailableId;
+  uint8_t bPadding[86];
 
 } LaptopSaveInfoStruct;
 

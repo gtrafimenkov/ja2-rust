@@ -52,7 +52,7 @@
 #include "Utils/Text.h"
 
 extern INT8 gbNumMercsUntilWaitingOver;
-extern UINT8 gubWaitingForAllMercsToExitCode;
+extern uint8_t gubWaitingForAllMercsToExitCode;
 
 #define NEXT_TILE_CHECK_DELAY 700
 
@@ -65,7 +65,7 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
     uint16_t usNewGridNo;
 
     usNewGridNo = NewGridNo(pSoldier->sGridNo,
-                            DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
+                            DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
 
     // provide more info!!
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -76,7 +76,7 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
 
     for (uiLoop = 0; uiLoop < pSoldier->usPathDataSize; uiLoop++) {
       if (uiLoop > pSoldier->usPathIndex) {
-        usTemp = NewGridNo(usTemp, DirectionInc((UINT8)pSoldier->usPathingData[uiLoop]));
+        usTemp = NewGridNo(usTemp, DirectionInc((uint8_t)pSoldier->usPathingData[uiLoop]));
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("  Soldier path[%d]: %d == gridno %d", uiLoop,
                         pSoldier->usPathingData[uiLoop], usTemp));
@@ -95,7 +95,7 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
 #endif
 
 void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, INT8 bValue) {
-  UINT8 ubPerson;
+  uint8_t ubPerson;
 
   // Cancel AI Action
   // CancelAIAction( pSoldier, TRUE );
@@ -184,7 +184,7 @@ void UnMarkMovementReserved(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, INT8 bLevel) {
-  UINT8 ubPerson;
+  uint8_t ubPerson;
   INT16 sTempDestGridNo;
   INT16 sNewGridNo;
 
@@ -233,10 +233,10 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
 
               // Is the next tile blocked too?
               sNewGridNo =
-                  NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
+                  NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((uint8_t)guiPathingData[0]));
 
               return (
-                  TileIsClear(pSoldier, (UINT8)guiPathingData[0], sNewGridNo, pSoldier->bLevel));
+                  TileIsClear(pSoldier, (uint8_t)guiPathingData[0], sNewGridNo, pSoldier->bLevel));
             } else {
               // Not for multi-tiled things...
               if (!(pSoldier->uiStatusFlags & SOLDIER_MULTITILE)) {
@@ -443,9 +443,9 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   INT8 bBlocked, bPathBlocked;
   INT16 sCost;
   INT16 sNewGridNo, sCheckGridNo;
-  UINT8 ubDirection, bCauseDirection;
-  UINT8 ubPerson;
-  UINT8 fFlags = 0;
+  uint8_t ubDirection, bCauseDirection;
+  uint8_t ubPerson;
+  uint8_t fFlags = 0;
 
   if (pSoldier->fDelayedMovement) {
     if (TIMECOUNTERDONE(pSoldier->NextTileCounter, NEXT_TILE_CHECK_DELAY)) {
@@ -538,10 +538,10 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
         if (sCost > 0) {
           // Is the next tile blocked too?
           sNewGridNo =
-              NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
+              NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((uint8_t)guiPathingData[0]));
 
           bPathBlocked =
-              TileIsClear(pSoldier, (UINT8)guiPathingData[0], sNewGridNo, pSoldier->bLevel);
+              TileIsClear(pSoldier, (uint8_t)guiPathingData[0], sNewGridNo, pSoldier->bLevel);
 
           if (bPathBlocked == MOVE_TILE_STATIONARY_BLOCKED) {
             // Try to path around everyone except dest person
@@ -559,10 +559,10 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
 
             // Is the next tile in this new path blocked too?
             sNewGridNo =
-                NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
+                NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((uint8_t)guiPathingData[0]));
 
             bPathBlocked =
-                TileIsClear(pSoldier, (UINT8)guiPathingData[0], sNewGridNo, pSoldier->bLevel);
+                TileIsClear(pSoldier, (uint8_t)guiPathingData[0], sNewGridNo, pSoldier->bLevel);
 
             // now working with a path which does not go through people
             pSoldier->ubDelayedMovementFlags &= (~DELAYED_MOVEMENT_FLAG_PATH_THROUGH_PEOPLE);

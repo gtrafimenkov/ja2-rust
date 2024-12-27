@@ -3285,7 +3285,7 @@ ANI_SPEED_DEF gubAnimWalkSpeeds[TOTALBODYTYPES] = {
     -10, (FLOAT)4.0,  // JEEP
 };
 
-UINT8 gubMaxActionPoints[TOTALBODYTYPES] = {
+uint8_t gubMaxActionPoints[TOTALBODYTYPES] = {
     AP_MAXIMUM,          // REGMALE
     AP_MAXIMUM,          // BIGMALE
     AP_MAXIMUM,          // STOCKYMALE
@@ -5440,7 +5440,7 @@ BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTes
   return (fSubFound);
 }
 
-INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, UINT8 ubBodyType,
+INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
                                         CHAR8 *zColFilename) {
   switch (ubBodyType) {
     case REGMALE:
@@ -5557,7 +5557,7 @@ uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t
   uint16_t usAnimSurface;
   uint16_t usAltAnimSurface;
   uint16_t usItem;
-  UINT8 ubWaterHandIndex = 1;
+  uint8_t ubWaterHandIndex = 1;
   INT32 cnt;
   BOOLEAN fAdjustedForItem = FALSE;
   uint16_t usNewAnimState;

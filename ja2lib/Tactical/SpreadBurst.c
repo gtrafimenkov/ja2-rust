@@ -54,11 +54,11 @@ void AccumulateBurstLocation(INT16 sGridNo) {
 }
 
 void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubShotsPerBurst;
+  uint8_t ubShotsPerBurst;
   FLOAT dAccululator = 0;
   FLOAT dStep = 0;
   INT32 cnt;
-  UINT8 ubLocationNum;
+  uint8_t ubLocationNum;
 
   // OK, using the # of locations, spread them evenly between our current weapon shots per burst
   // value
@@ -72,7 +72,7 @@ void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
   // Loop through our shots!
   for (cnt = 0; cnt < ubShotsPerBurst; cnt++) {
     // Get index into list
-    ubLocationNum = (UINT8)(dAccululator);
+    ubLocationNum = (uint8_t)(dAccululator);
 
     // Add to merc location
     pSoldier->sSpreadLocations[cnt] = gsBurstLocations[ubLocationNum].sGridNo;
@@ -86,11 +86,11 @@ void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
 
 void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, INT8 bTargets,
                           struct SOLDIERTYPE *pTargets[5]) {
-  UINT8 ubShotsPerBurst;
+  uint8_t ubShotsPerBurst;
   FLOAT dAccululator = 0;
   FLOAT dStep = 0;
   INT32 cnt;
-  UINT8 ubLocationNum;
+  uint8_t ubLocationNum;
 
   // OK, using the # of locations, spread them evenly between our current weapon shots per burst
   // value
@@ -106,7 +106,7 @@ void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, INT8 bTargets,
   // Loop through our shots!
   for (cnt = 0; cnt < ubShotsPerBurst; cnt++) {
     // Get index into list
-    ubLocationNum = (UINT8)(dAccululator);
+    ubLocationNum = (uint8_t)(dAccululator);
 
     // Add to merc location
     pSoldier->sSpreadLocations[cnt] = pTargets[ubLocationNum]->sGridNo;

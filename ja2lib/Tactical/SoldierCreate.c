@@ -71,7 +71,7 @@ BOOLEAN TacticalCopySoldierFromProfile(struct SOLDIERTYPE *pSoldier,
 BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
                                             SOLDIERCREATE_STRUCT *pCreateStruct);
 void CopyProfileItems(struct SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct);
-UINT8 GetLocationModifier(UINT8 ubSoldierClass);
+uint8_t GetLocationModifier(uint8_t ubSoldierClass);
 void ReduceHighExpLevels(INT8 *pbExpLevel);
 
 BOOLEAN gfProfiledEnemyAdded = FALSE;
@@ -80,37 +80,37 @@ uint32_t guiCurrentUniqueSoldierId = 1;
 
 // CJC note: trust me, it's easiest just to put this here; this is the only
 // place it should need to be used
-UINT8 gubItemDroppableFlag[NUM_INV_SLOTS] = {0x01, 0x02, 0x04, 0, 0, 0x08, 0, 0x10, 0x20, 0x40,
-                                             0x80, 0,    0,    0, 0, 0,    0, 0,    0};
+uint8_t gubItemDroppableFlag[NUM_INV_SLOTS] = {0x01, 0x02, 0x04, 0, 0, 0x08, 0, 0x10, 0x20, 0x40,
+                                               0x80, 0,    0,    0, 0, 0,    0, 0,    0};
 
 void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct) {
-  pCreateStruct->bLifeMax = (UINT8)Random(50) + 50;
+  pCreateStruct->bLifeMax = (uint8_t)Random(50) + 50;
   pCreateStruct->bLife = pCreateStruct->bLifeMax;
-  pCreateStruct->bAgility = (UINT8)Random(50) + 50;
-  pCreateStruct->bDexterity = (UINT8)Random(50) + 50;
-  pCreateStruct->bExpLevel = 1 + (UINT8)Random(4);
+  pCreateStruct->bAgility = (uint8_t)Random(50) + 50;
+  pCreateStruct->bDexterity = (uint8_t)Random(50) + 50;
+  pCreateStruct->bExpLevel = 1 + (uint8_t)Random(4);
 
   // Randomize skills (for now)
-  pCreateStruct->bMarksmanship = (UINT8)Random(50) + 50;
-  pCreateStruct->bMedical = (UINT8)Random(50) + 50;
-  pCreateStruct->bMechanical = (UINT8)Random(50) + 50;
-  pCreateStruct->bExplosive = (UINT8)Random(50) + 50;
-  pCreateStruct->bLeadership = (UINT8)Random(50) + 50;
-  pCreateStruct->bStrength = (UINT8)Random(50) + 50;
-  pCreateStruct->bWisdom = (UINT8)Random(50) + 50;
+  pCreateStruct->bMarksmanship = (uint8_t)Random(50) + 50;
+  pCreateStruct->bMedical = (uint8_t)Random(50) + 50;
+  pCreateStruct->bMechanical = (uint8_t)Random(50) + 50;
+  pCreateStruct->bExplosive = (uint8_t)Random(50) + 50;
+  pCreateStruct->bLeadership = (uint8_t)Random(50) + 50;
+  pCreateStruct->bStrength = (uint8_t)Random(50) + 50;
+  pCreateStruct->bWisdom = (uint8_t)Random(50) + 50;
   pCreateStruct->bAttitude = (INT8)Random(MAXATTITUDES);
   pCreateStruct->bOrders = FARPATROL;
   pCreateStruct->bMorale = 50;
   pCreateStruct->bAIMorale = MORALE_FEARLESS;
 }
 
-struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *pubID) {
+struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, uint8_t *pubID) {
   struct SOLDIERTYPE Soldier;
   INT32 cnt;
   struct SOLDIERTYPE *pTeamSoldier;
   BOOLEAN fGuyAvail = FALSE;
-  UINT8 bLastTeamID;
-  UINT8 ubVehicleID = 0;
+  uint8_t bLastTeamID;
+  uint8_t ubVehicleID = 0;
 
   *pubID = NOBODY;
 
@@ -240,7 +240,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
       }
 
       // OK, set ID
-      Soldier.ubID = (UINT8)cnt;
+      Soldier.ubID = (uint8_t)cnt;
       *pubID = Soldier.ubID;
     }
 
@@ -318,13 +318,13 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
     // OK, If not given a profile num, set a randomized defualt battle sound set
     // and then adjust it according to body type!
     if (Soldier.ubProfile == NO_PROFILE) {
-      Soldier.ubBattleSoundID = (UINT8)Random(3);
+      Soldier.ubBattleSoundID = (uint8_t)Random(3);
     }
 
     // ATE: TEMP : No enemy women mercs (unless elite)!
     if (Soldier.ubProfile == NO_PROFILE && Soldier.bTeam == ENEMY_TEAM &&
         Soldier.ubBodyType == REGFEMALE && Soldier.ubSoldierClass != SOLDIER_CLASS_ELITE) {
-      Soldier.ubBodyType = (UINT8)(REGMALE + Random(3));
+      Soldier.ubBodyType = (uint8_t)(REGMALE + Random(3));
     }
 
     // ATE
@@ -376,14 +376,14 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
       case HATKIDCIV:
       case KIDCIV:
 
-        Soldier.ubBattleSoundID = (UINT8)Random(2);
+        Soldier.ubBattleSoundID = (uint8_t)Random(2);
         break;
 
       case REGFEMALE:
       case MINICIV:
       case DRESSCIV:
 
-        Soldier.ubBattleSoundID = 7 + (UINT8)Random(2);
+        Soldier.ubBattleSoundID = 7 + (uint8_t)Random(2);
         Soldier.bNormalSmell = NORMAL_HUMAN_SMELL_STRENGTH;
         break;
 
@@ -532,7 +532,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
     return MercPtrs[Soldier.ubID];
   } else {  // We are creating a dynamically allocated soldier for autoresolve.
     struct SOLDIERTYPE *pSoldier;
-    UINT8 ubSectorID;
+    uint8_t ubSectorID;
     ubSectorID = GetAutoResolveSectorID();
     pSoldier = (struct SOLDIERTYPE *)MemAlloc(sizeof(struct SOLDIERTYPE));
     if (!pSoldier) return NULL;
@@ -548,7 +548,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
 
 BOOLEAN TacticalCopySoldierFromProfile(struct SOLDIERTYPE *pSoldier,
                                        SOLDIERCREATE_STRUCT *pCreateStruct) {
-  UINT8 ubProfileIndex;
+  uint8_t ubProfileIndex;
   MERCPROFILESTRUCT *pProfile;
 
   ubProfileIndex = pCreateStruct->ubProfile;
@@ -677,7 +677,7 @@ INT32 ChooseHairColor(struct SOLDIERTYPE *pSoldier, INT32 skin) {
   return hair;
 }
 
-void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubSoldierClass) {
+void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubSoldierClass) {
   INT32 skin, hair;
   BOOLEAN fMercClothingScheme;
   hair = -1;
@@ -930,7 +930,7 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
   if (pSoldier->ubSoldierClass == SOLDIER_CLASS_ELITE ||
       pSoldier->ubSoldierClass == SOLDIER_CLASS_ELITE_MILITIA) {
     INT32 iChance;
-    UINT8 ubProgress;
+    uint8_t ubProgress;
 
     ubProgress = HighestPlayerProgressPercentage();
 
@@ -951,7 +951,7 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
   } else if (pSoldier->ubSoldierClass == SOLDIER_CLASS_ARMY ||
              pSoldier->ubSoldierClass == SOLDIER_CLASS_REG_MILITIA) {
     INT32 iChance;
-    UINT8 ubProgress;
+    uint8_t ubProgress;
 
     ubProgress = HighestPlayerProgressPercentage();
 
@@ -1156,10 +1156,10 @@ BOOLEAN TacticalRemoveSoldier(uint16_t usSoldierIndex) {
 // returns a soldier difficulty modifier from 0 to 100 based on player's progress, distance from the
 // Palace, mining income, and playing difficulty level.  Used for generating soldier stats,
 // equipment, and AI skill level.
-INT8 CalcDifficultyModifier(UINT8 ubSoldierClass) {
+INT8 CalcDifficultyModifier(uint8_t ubSoldierClass) {
   INT8 bDiffModifier = 0;
-  UINT8 ubProgress;
-  UINT8 ubProgressModifier;
+  uint8_t ubProgress;
+  uint8_t ubProgressModifier;
 
   if (gfEditMode) {
     // return an average rating for editor purposes
@@ -1236,11 +1236,11 @@ INT8 CalcDifficultyModifier(UINT8 ubSoldierClass) {
 void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
                                                     BASIC_SOLDIERCREATE_STRUCT *bp) {
   INT8 bBaseAttribute;
-  UINT8 ubSoldierClass;
-  UINT8 ubDiffFactor;
+  uint8_t ubSoldierClass;
+  uint8_t ubDiffFactor;
   INT8 bExpLevelModifier;
   INT8 bStatsModifier;
-  UINT8 ubStatsLevel;
+  uint8_t ubStatsLevel;
 
   if (!pp || !bp) return;
   pp->fStatic = FALSE;
@@ -1714,7 +1714,7 @@ void UpdateSoldierWithStaticDetailedInformation(struct SOLDIERTYPE *s, SOLDIERCR
 // In the case of setting a profile ID in order to extract a soldier from the profile array, we
 // also want to copy that information to the static detailed placement, for editor viewing purposes.
 void UpdateStaticDetailedPlacementWithProfileInformation(SOLDIERCREATE_STRUCT *spp,
-                                                         UINT8 ubProfile) {
+                                                         uint8_t ubProfile) {
   uint32_t cnt;
   MERCPROFILESTRUCT *pProfile;
 
@@ -1785,7 +1785,7 @@ void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s,
   s->bMorale = (INT8)(bBaseAttribute + Random(9) + Random(8));
 }
 
-void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, UINT8 ubProfileID) {
+void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, uint8_t ubProfileID) {
   SOLDIERCREATE_STRUCT CreateStruct;
 
   memset(&CreateStruct, 0, sizeof(CreateStruct));
@@ -1809,7 +1809,7 @@ void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, UINT8 ubProfileID) {
 #define CENTRAL_GRIDNO 13202
 #define CENTRAL_RADIUS 30
 
-struct SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(UINT8 ubSoldierClass) {
+struct SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(uint8_t ubSoldierClass) {
   INT32 i, iStart, iEnd;
   struct SOLDIERTYPE *pSoldier;
   // This code looks for a soldier of specified type that currently exists in tactical and
@@ -1848,7 +1848,7 @@ struct SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(UINT8 ubSoldierClass) {
 struct SOLDIERTYPE *TacticalCreateAdministrator() {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
-  UINT8 ubID;
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
@@ -1880,7 +1880,7 @@ struct SOLDIERTYPE *TacticalCreateAdministrator() {
 struct SOLDIERTYPE *TacticalCreateArmyTroop() {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
-  UINT8 ubID;
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
@@ -1912,7 +1912,7 @@ struct SOLDIERTYPE *TacticalCreateArmyTroop() {
 struct SOLDIERTYPE *TacticalCreateEliteEnemy() {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
-  UINT8 ubID;
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
@@ -1949,10 +1949,10 @@ struct SOLDIERTYPE *TacticalCreateEliteEnemy() {
   return (pSoldier);
 }
 
-struct SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass) {
+struct SOLDIERTYPE *TacticalCreateMilitia(uint8_t ubMilitiaClass) {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
-  UINT8 ubID;
+  uint8_t ubID;
 
   memset(&bp, 0, sizeof(BASIC_SOLDIERCREATE_STRUCT));
   memset(&pp, 0, sizeof(SOLDIERCREATE_STRUCT));
@@ -1971,7 +1971,7 @@ struct SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass) {
 struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType) {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
-  UINT8 ubID;
+  uint8_t ubID;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
     return ReserveTacticalSoldierForAutoresolve(SOLDIER_CLASS_CREATURE);
@@ -1990,8 +1990,8 @@ struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType) {
   return TacticalCreateSoldier(&pp, &ubID);
 }
 
-void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass) {
-  UINT8 ubLocationModifier;
+void RandomizeRelativeLevel(INT8 *pbRelLevel, uint8_t ubSoldierClass) {
+  uint8_t ubLocationModifier;
   INT8 bRollModifier;
   INT8 bRoll, bAdjustedRoll;
 
@@ -2081,11 +2081,11 @@ void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass) {
 }
 
 // This function shouldn't be called outside of tactical
-void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID) {
+void QuickCreateProfileMerc(INT8 bTeam, uint8_t ubProfileID) {
   // Create guy # X
   SOLDIERCREATE_STRUCT MercCreateStruct;
   INT16 sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
-  UINT8 ubID;
+  uint8_t ubID;
   uint16_t usMapPos;
 
   if (GetMouseXY(&sGridX, &sGridY)) {
@@ -2265,9 +2265,9 @@ void TrashAllSoldiers() {
   }
 }
 
-UINT8 GetLocationModifier(UINT8 ubSoldierClass) {
-  UINT8 ubLocationModifier;
-  UINT8 ubPalaceDistance;
+uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
+  uint8_t ubLocationModifier;
+  uint8_t ubPalaceDistance;
   INT16 sSectorX, sSectorY, sSectorZ;
   TownID bTownId;
   BOOLEAN fSuccess;
@@ -2308,8 +2308,8 @@ UINT8 GetLocationModifier(UINT8 ubSoldierClass) {
 }
 
 // grab the distance from the palace
-UINT8 GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY) {
-  UINT8 ubDistance = 0;
+uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY) {
+  uint8_t ubDistance = 0;
   INT16 sRows = 0, sCols = 0;
   float fValue = 0.0;
 
@@ -2322,21 +2322,21 @@ UINT8 GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY) {
   fValue = (float)sqrt((float)(sRows * sRows) + (float)(sCols * sCols));
 
   if (fmod((float)fValue, 1.0f) >= 0.50) {
-    ubDistance = (UINT8)(1 + fValue);
+    ubDistance = (uint8_t)(1 + fValue);
   } else {
-    ubDistance = (UINT8)fValue;
+    ubDistance = (uint8_t)fValue;
   }
 
   return (ubDistance);
 }
 
 void ReduceHighExpLevels(INT8 *pbExpLevel) {
-  UINT8 ubRoll;
+  uint8_t ubRoll;
   // important: must reset these to 0 by default for logic to work!
-  UINT8 ubChanceLvl8 = 0;
-  UINT8 ubChanceLvl7 = 0;
-  UINT8 ubChanceLvl6 = 0;
-  UINT8 ubChanceLvl5 = 0;
+  uint8_t ubChanceLvl8 = 0;
+  uint8_t ubChanceLvl7 = 0;
+  uint8_t ubChanceLvl6 = 0;
+  uint8_t ubChanceLvl5 = 0;
 
   // this function reduces the experience levels of very high level enemies to something that player
   // can compete with for interrupts.  It doesn't affect attributes and skills, those are rolled
@@ -2398,7 +2398,7 @@ void ReduceHighExpLevels(INT8 *pbExpLevel) {
       break;
   }
 
-  ubRoll = (UINT8)Random(100);
+  ubRoll = (uint8_t)Random(100);
 
   if (ubRoll < ubChanceLvl8)
     *pbExpLevel = 8;

@@ -127,17 +127,17 @@ extern INT32 giSortStateForMapScreenList;
 extern INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 extern INT32 giRTAILastUpdateTime;
 extern BOOLEAN gfRedrawSaveLoadScreen;
-extern UINT8 gubScreenCount;
+extern uint8_t gubScreenCount;
 extern INT16 sWorldSectorLocationOfFirstBattle;
 extern BOOLEAN gfGamePaused;
 extern BOOLEAN gfLockPauseState;
 extern BOOLEAN gfLoadedGame;
 extern HELP_SCREEN_STRUCT gHelpScreen;
-extern UINT8 gubDesertTemperature;
-extern UINT8 gubGlobalTemperature;
+extern uint8_t gubDesertTemperature;
+extern uint8_t gubGlobalTemperature;
 extern BOOLEAN gfCreatureMeanwhileScenePlayed;
 #ifdef JA2BETAVERSION
-extern UINT8 gubReportMapscreenLock;
+extern uint8_t gubReportMapscreenLock;
 #endif
 
 BOOLEAN gMusicModeToPlay = FALSE;
@@ -161,7 +161,7 @@ typedef struct {
   uint32_t uiCurrentUniqueSoldierId;
 
   // The music that was playing when the game was saved
-  UINT8 ubMusicMode;
+  uint8_t ubMusicMode;
 
   // Flag indicating that we have purchased something from Tony
   BOOLEAN fHavePurchasedItemsFromTony;
@@ -225,12 +225,12 @@ typedef struct {
 
   uint32_t uiEnvWeather;
 
-  UINT8 ubDefaultButton;
+  uint8_t ubDefaultButton;
 
   BOOLEAN fSkyriderEmptyHelpGiven;
   BOOLEAN fEnterMapDueToContract;
-  UINT8 ubHelicopterHitsTaken;
-  UINT8 ubQuitType;
+  uint8_t ubHelicopterHitsTaken;
+  uint8_t ubQuitType;
   BOOLEAN fSkyriderSaidCongratsOnTakingSAM;
   INT16 sContractRehireSoldierID;
 
@@ -243,7 +243,7 @@ typedef struct {
 
   INT16 sCurInterfacePanel;
 
-  UINT8 ubSMCurrentMercID;
+  uint8_t ubSMCurrentMercID;
 
   BOOLEAN fFirstTimeInMapScreen;
 
@@ -252,7 +252,7 @@ typedef struct {
   BOOLEAN fDisableMapInterfaceDueToBattle;
 
   INT16 sBoxerGridNo[NUM_BOXERS];
-  UINT8 ubBoxerID[NUM_BOXERS];
+  uint8_t ubBoxerID[NUM_BOXERS];
   BOOLEAN fBoxerFought[NUM_BOXERS];
 
   BOOLEAN fHelicopterDestroyed;    // if the chopper is destroyed
@@ -280,7 +280,7 @@ typedef struct {
   // levels of publicly known noises
   INT8 gbPublicNoiseLevel[MAXTEAMS];
 
-  UINT8 gubScreenCount;
+  uint8_t gubScreenCount;
 
   uint16_t usOldMeanWhileFlags;
 
@@ -303,8 +303,8 @@ typedef struct {
 
   BOOLEAN fSamSiteFound[NUMBER_OF_SAMS];
 
-  UINT8 ubNumTerrorists;
-  UINT8 ubCambriaMedicalObjects;
+  uint8_t ubNumTerrorists;
+  uint8_t ubCambriaMedicalObjects;
 
   BOOLEAN fDisableTacticalPanelButtons;
 
@@ -314,31 +314,31 @@ typedef struct {
 
   uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
   BOOLEAN fHideHelpInAllScreens;
-  UINT8 ubBoxingMatchesWon;
+  uint8_t ubBoxingMatchesWon;
 
-  UINT8 ubBoxersRests;
+  uint8_t ubBoxersRests;
   BOOLEAN fBoxersResting;
-  UINT8 ubDesertTemperature;
-  UINT8 ubGlobalTemperature;
+  uint8_t ubDesertTemperature;
+  uint8_t ubGlobalTemperature;
 
   INT16 sMercArriveSectorX;
   INT16 sMercArriveSectorY;
 
   BOOLEAN fCreatureMeanwhileScenePlayed;
-  UINT8 ubPlayerNum;
+  uint8_t ubPlayerNum;
   // New stuff for the Prebattle interface / autoresolve
   BOOLEAN fPersistantPBI;
-  UINT8 ubEnemyEncounterCode;
+  uint8_t ubEnemyEncounterCode;
 
   BOOLEAN ubExplicitEnemyEncounterCode;
   BOOLEAN fBlitBattleSectorLocator;
-  UINT8 ubPBSectorX;
-  UINT8 ubPBSectorY;
+  uint8_t ubPBSectorX;
+  uint8_t ubPBSectorY;
 
-  UINT8 ubPBSectorZ;
+  uint8_t ubPBSectorZ;
   BOOLEAN fCantRetreatInPBI;
   BOOLEAN fExplosionQueueActive;
-  UINT8 ubUnused[1];
+  uint8_t ubUnused[1];
 
   uint32_t uiMeanWhileFlags;
 
@@ -352,7 +352,7 @@ typedef struct {
   INT8 fPlayerTeamSawJoey;
   INT8 fMikeShouldSayHi;
 
-  UINT8 ubFiller[550];  // This structure should be 1024 bytes
+  uint8_t ubFiller[550];  // This structure should be 1024 bytes
 
 } GENERAL_SAVE_INFO;
 
@@ -366,7 +366,7 @@ uint32_t guiSaveGameVersion = 0;
 
 // CHAR8		gsSaveGameNameWithPath[ 512 ];
 
-UINT8 gubSaveGameLoc = 0;
+uint8_t gubSaveGameLoc = 0;
 
 uint32_t guiScreenToGotoAfterLoadingSavedGame = 0;
 
@@ -400,8 +400,8 @@ BOOLEAN SetMercsInsertionGridNo();
 BOOLEAN LoadOppListInfoFromSavedGame(HWFILE hFile);
 BOOLEAN SaveOppListInfoToSavedGame(HWFILE hFile);
 
-BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFilem, UINT8 ubID);
-BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFilem, UINT8 ubID);
+BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFilem, uint8_t ubID);
+BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFilem, uint8_t ubID);
 
 BOOLEAN LoadGeneralInfo(HWFILE hFile);
 BOOLEAN SaveGeneralInfo(HWFILE hFile);
@@ -426,11 +426,11 @@ void InitLoadGameFilePosition();
 void SaveGameFilePosition(INT32 iPos, STR pMsg);
 void LoadGameFilePosition(INT32 iPos, STR pMsg);
 
-void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGameID);
+void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveGameID);
 #endif
 
 #ifdef JA2BETAVERSION
-extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
+extern BOOLEAN ValidateSoldierInitLinks(uint8_t ubCode);
 #endif
 
 /////////////////////////////////////////////////////
@@ -439,7 +439,7 @@ extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
 //
 /////////////////////////////////////////////////////
 
-BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
+BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   uint32_t uiNumBytesWritten = 0;
   HWFILE hFile = 0;
   SAVED_GAME_HEADER SaveGameHeader;
@@ -587,8 +587,8 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
 
   // The following will be used to quickly access info to display in the save/load screen
   SaveGameHeader.uiDay = GetWorldDay();
-  SaveGameHeader.ubHour = (UINT8)GetWorldHour();
-  SaveGameHeader.ubMin = (UINT8)guiMin;
+  SaveGameHeader.ubHour = (uint8_t)GetWorldHour();
+  SaveGameHeader.ubMin = (uint8_t)guiMin;
 
   // copy over the initial game options
   memcpy(&SaveGameHeader.sInitialGameOptions, &gGameOptions, sizeof(GAME_OPTIONS));
@@ -1079,7 +1079,7 @@ FAILED_TO_SAVE:
 
 uint32_t guiBrokenSaveGameVersion = 0;
 
-BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
+BOOLEAN LoadSavedGame(uint8_t ubSavedGameID) {
   HWFILE hFile;
   SAVED_GAME_HEADER SaveGameHeader;
   uint32_t uiNumBytesRead = 0;
@@ -2014,7 +2014,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // if the UI was locked in the saved game file
   if (gTacticalStatus.ubAttackBusyCount > 1) {
     // Lock the ui
-    SetUIBusy((UINT8)gusSelectedSoldier);
+    SetUIBusy((uint8_t)gusSelectedSoldier);
   }
 
   // Reset the shadow
@@ -2171,8 +2171,8 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
 BOOLEAN SaveSoldierStructure(HWFILE hFile) {
   uint16_t cnt;
   uint32_t uiNumBytesWritten = 0;
-  UINT8 ubOne = 1;
-  UINT8 ubZero = 0;
+  uint8_t ubOne = 1;
+  uint8_t ubZero = 0;
 
   uint32_t uiSaveSize = sizeof(struct SOLDIERTYPE);
 
@@ -2207,7 +2207,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
       //
 
       // Save the pMercPath
-      if (!SaveMercPathFromSoldierStruct(hFile, (UINT8)cnt)) return (FALSE);
+      if (!SaveMercPathFromSoldierStruct(hFile, (uint8_t)cnt)) return (FALSE);
 
       //
       // do we have a 	KEY_ON_RING
@@ -2245,9 +2245,9 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
   uint32_t uiNumBytesRead = 0;
   struct SOLDIERTYPE SavedSoldierInfo;
   uint32_t uiSaveSize = sizeof(struct SOLDIERTYPE);
-  UINT8 ubId;
-  UINT8 ubOne = 1;
-  UINT8 ubActive = 1;
+  uint8_t ubId;
+  uint8_t ubOne = 1;
+  uint8_t ubActive = 1;
   uint32_t uiPercentage;
 
   SOLDIERCREATE_STRUCT CreateStruct;
@@ -2411,8 +2411,8 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
 /*
 BOOLEAN SavePtrInfo( PTR *pData, uint32_t uiSizeOfObject, HWFILE hFile )
 {
-        UINT8		ubOne = 1;
-        UINT8		ubZero = 0;
+        uint8_t		ubOne = 1;
+        uint8_t		ubZero = 0;
         uint32_t	uiNumBytesWritten;
 
         if( pData != NULL )
@@ -2451,8 +2451,8 @@ to File" ) ); return(FALSE);
 
 BOOLEAN LoadPtrInfo( PTR *pData, uint32_t uiSizeOfObject, HWFILE hFile )
 {
-        UINT8		ubOne = 1;
-        UINT8		ubZero = 0;
+        uint8_t		ubOne = 1;
+        uint8_t		ubZero = 0;
         uint32_t	uiNumBytesRead;
 
         // Read the file to see if we have to load the ....
@@ -2500,7 +2500,7 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   uint32_t uiFileSize;
   uint32_t uiNumBytesWritten = 0;
   HWFILE hSrcFile;
-  UINT8 *pData;
+  uint8_t *pData;
   uint32_t uiNumBytesRead;
 
   // open the file
@@ -2524,7 +2524,7 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   }
 
   // Allocate a buffer to read the data into
-  pData = (UINT8 *)MemAlloc(uiFileSize);
+  pData = (uint8_t *)MemAlloc(uiFileSize);
   if (pData == NULL) return (FALSE);
   memset(pData, 0, uiFileSize);
 
@@ -2559,7 +2559,7 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
   uint32_t uiFileSize;
   uint32_t uiNumBytesWritten = 0;
   HWFILE hSrcFile;
-  UINT8 *pData;
+  uint8_t *pData;
   uint32_t uiNumBytesRead;
 
   // If the source file exists, delete it
@@ -2596,7 +2596,7 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
   }
 
   // Allocate a buffer to read the data into
-  pData = (UINT8 *)MemAlloc(uiFileSize);
+  pData = (uint8_t *)MemAlloc(uiFileSize);
   if (pData == NULL) {
     FileMan_Close(hSrcFile);
     return (FALSE);
@@ -2705,7 +2705,7 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
   uint32_t uiSizeOfSubject = 0;
   EmailPtr pEmail = pEmailList;
   EmailPtr pTempEmail = NULL;
-  UINT8 *pData = NULL;
+  uint8_t *pData = NULL;
   uint32_t cnt;
   SavedEmailStruct SavedEmail;
   uint32_t uiNumBytesRead = 0;
@@ -2736,7 +2736,7 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
     }
 
     // allocate space for the subject
-    pData = (UINT8 *)MemAlloc(EMAIL_SUBJECT_LENGTH * sizeof(wchar_t));
+    pData = (uint8_t *)MemAlloc(EMAIL_SUBJECT_LENGTH * sizeof(wchar_t));
     if (pData == NULL) return (FALSE);
     memset(pData, 0, EMAIL_SUBJECT_LENGTH * sizeof(wchar_t));
 
@@ -3092,7 +3092,7 @@ BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName) {
+void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, STR pzNewFileName) {
   // if we are creating the QuickSave file
   if (ubSaveGameID == 0) {
 #ifdef JA2BETAVERSION
@@ -3133,7 +3133,7 @@ void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName) {
             pMessageStrings[MSG_SAVE_NAME], ubSaveGameID, pMessageStrings[MSG_SAVEEXTENSION]);
 }
 
-BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
+BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, uint8_t ubID) {
   uint32_t uiNumOfNodes = 0;
   struct path *pTempPath = Menptr[ubID].pMercPath;
   uint32_t uiNumBytesWritten = 0;
@@ -3167,7 +3167,7 @@ BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
   return (TRUE);
 }
 
-BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
+BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, uint8_t ubID) {
   uint32_t uiNumOfNodes = 0;
   struct path *pTempPath = NULL;
   struct path *pTemp = NULL;
@@ -3866,7 +3866,7 @@ BOOLEAN DoesUserHaveEnoughHardDriveSpace() {
 
 #ifdef JA2BETAVERSION
 
-void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGameID) {
+void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveGameID) {
   CHAR8 zFileName[128];
   HWFILE hFile;
   CHAR8 zTempString[512];
@@ -3993,7 +3993,7 @@ void UnPauseAfterSaveGame(void) {
 }
 
 void UpdateMercMercContractInfo() {
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   struct SOLDIERTYPE *pSoldier;
 
   for (ubCnt = BIFF; ubCnt <= BUBBA; ubCnt++) {

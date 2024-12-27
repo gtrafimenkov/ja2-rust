@@ -52,7 +52,7 @@
 
 typedef struct {
   INT16 sGridNo;
-  UINT8 ubFlags;
+  uint8_t ubFlags;
   INT16 sTileIndex;
   INT16 sMaxScreenY;
   INT16 sHeighestScreenY;
@@ -99,7 +99,7 @@ BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, uint32_t
 }
 
 BOOLEAN StartInteractiveObject(INT16 sGridNo, uint16_t usStructureID, struct SOLDIERTYPE *pSoldier,
-                               UINT8 ubDirection) {
+                               uint8_t ubDirection) {
   struct STRUCTURE *pStructure;
 
   // ATE: Patch fix: Don't allow if alreay in animation
@@ -160,7 +160,7 @@ BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, struct STRUCTURE *pStructure, IN
 }
 
 BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                      UINT8 ubDirection) {
+                                      uint8_t ubDirection) {
   BOOLEAN fDoor = FALSE;
 
   if (pStructure == NULL) {
@@ -589,7 +589,7 @@ struct LEVELNODE *GetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo,
   return (ConditionalGetCurInteractiveTileGridNoAndStructure(psGridNo, ppStructure, TRUE));
 }
 
-void BeginCurInteractiveTileCheck(UINT8 bCheckFlags) {
+void BeginCurInteractiveTileCheck(uint8_t bCheckFlags) {
   gfOverIntTile = FALSE;
 
   // OK, release our stack, stuff could be different!
@@ -771,7 +771,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint
                                                INT32 iTestX, INT32 iTestY) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
-  UINT8 *SrcPtr;
+  uint8_t *SrcPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
   BOOLEAN fDataFound = FALSE;
@@ -792,7 +792,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint
   iStartPos = 0;
   LineSkip = usWidth;
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
 
 #ifdef _WINDOWS
   __asm {

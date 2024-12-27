@@ -42,9 +42,9 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
 
   // Read in a palette entry at a time
   for (cnt = 0; cnt < 256; cnt++) {
-    FileMan_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
-    FileMan_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
-    FileMan_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(uint8_t), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(uint8_t), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(uint8_t), NULL);
   }
 
   // Close file
@@ -53,13 +53,13 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
   return (TRUE);
 }
 
-BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos,
+BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
                           uint32_t uiDestSurface) {
   uint16_t us16BPPColor;
   uint32_t cnt1;
-  UINT8 ubSize;
+  uint8_t ubSize;
   INT16 sTLX, sTLY, sBRX, sBRY;
-  UINT8 ubPaletteRep;
+  uint8_t ubPaletteRep;
 
   // Create 16BPP Palette
   CHECKF(GetPaletteRepIndexFromID(aPalRep, &ubPaletteRep));

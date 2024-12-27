@@ -58,11 +58,11 @@ extern void AdjustNoAPToFinishMove(struct SOLDIERTYPE *pSoldier, BOOLEAN fSet);
 void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier);
 void HandleAITacticalTraversal(struct SOLDIERTYPE *pSoldier);
 
-extern UINT8 gubElementsOnExplosionQueue;
+extern uint8_t gubElementsOnExplosionQueue;
 
 extern BOOLEAN gfWaitingForTriggerTimer;
 
-UINT8 gubAICounter;
+uint8_t gubAICounter;
 
 //
 // Commented out/ to fix:
@@ -567,7 +567,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 #define NOSCORE 99
 
 void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubID;
+  uint8_t ubID;
 
   if (gfTurnBasedAI) {
     if (gTacticalStatus.uiFlags & PLAYER_TEAM_DEAD) {
@@ -597,7 +597,7 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->ubCivilianGroup != NON_CIV_GROUP && !pSoldier->bNeutral) {
       if (!(pSoldier->uiStatusFlags & SOLDIER_BOXER) ||
           !(gTacticalStatus.bBoxingState == PRE_BOXING || gTacticalStatus.bBoxingState == BOXING)) {
-        UINT8 ubFirstProfile;
+        uint8_t ubFirstProfile;
 
         ubFirstProfile = CivilianGroupMembersChangeSidesWithinProximity(pSoldier);
         if (ubFirstProfile != NO_PROFILE) {
@@ -791,11 +791,11 @@ INT16 FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   return (sCheapestDest);
 }
 
-UINT8 GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier) {
+uint8_t GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoop;
   INT32 iThreatVal, iMinThreat = 30000;
   struct SOLDIERTYPE *pTargetSoldier;
-  UINT8 ubTargetSoldier = NO_SOLDIER;
+  uint8_t ubTargetSoldier = NO_SOLDIER;
 
   // Loop through all mercs
 
@@ -861,7 +861,7 @@ void FreeUpNPCFromPendingAction(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void FreeUpNPCFromAttacking(UINT8 ubID) {
+void FreeUpNPCFromAttacking(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = MercPtrs[ubID];
@@ -1051,7 +1051,7 @@ void ActionDone(struct SOLDIERTYPE *pSoldier) {
 
 // GLOBALS:
 
-UINT8 SkipCoverCheck = FALSE;
+uint8_t SkipCoverCheck = FALSE;
 THREATTYPE Threat[MAXMERCS];
 
 // threat percentage is based on the certainty of opponent knowledge:
@@ -1095,7 +1095,7 @@ void NPCDoesNothing(struct SOLDIERTYPE *pSoldier) {
   // *** IAN deleted lots of interrupt related code here to simplify JA2	development
 }
 
-void CancelAIAction(struct SOLDIERTYPE *pSoldier, UINT8 ubForce) {
+void CancelAIAction(struct SOLDIERTYPE *pSoldier, uint8_t ubForce) {
 #ifdef DEBUGDECISIONS
   if (SkipCoverCheck) DebugAI(String("CancelAIAction: SkipCoverCheck turned OFF\n"));
 #endif
@@ -1724,7 +1724,8 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       DebugAI(String("ExecuteAction: SkipCoverCheck ON\n"));
 #endif
 
-      //			pSoldier->bDesiredDirection = (UINT8) ;   // turn to face direction
+      //			pSoldier->bDesiredDirection = (uint8_t) ;   // turn to face
+      //direction
       // in actionData
       SendSoldierSetDesiredDirectionEvent(pSoldier, pSoldier->usActionData);
       // now we'll have to wait for the turning to finish; no need to call TurnSoldier here
@@ -1864,7 +1865,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
               ReplaceLocationInNPCDataFromProfileID(
                   GetSolProfile(pSoldier), pSoldier->sAbsoluteFinalDestination, pSoldier->sGridNo);
               NPCGotoGridNo(GetSolProfile(pSoldier), pSoldier->sGridNo,
-                            (UINT8)(pSoldier->ubQuoteRecord - 1));
+                            (uint8_t)(pSoldier->ubQuoteRecord - 1));
             } else {
               // This is important, so try taking a path through people (and bumping them aside)
               if (LegalNPCDestination(pSoldier, pSoldier->usActionData, ENSURE_PATH, WATEROK,
@@ -2104,7 +2105,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
 #ifdef DEBUGDECISIONS
       DebugAI(String("ExecuteAction: SkipCoverCheck ON\n"));
 #endif
-      SendChangeSoldierStanceEvent(pSoldier, (UINT8)pSoldier->usActionData);
+      SendChangeSoldierStanceEvent(pSoldier, (uint8_t)pSoldier->usActionData);
       break;
 
     case AI_ACTION_COWER:
@@ -2291,7 +2292,7 @@ void InitAttackType(ATTACKTYPE *pAttack) {
   pAttack->ubAPCost = 0;
 }
 
-void HandleInitialRedAlert(INT8 bTeam, UINT8 ubCommunicate) {
+void HandleInitialRedAlert(INT8 bTeam, uint8_t ubCommunicate) {
   /*
    if (ubCommunicate)
     {
@@ -2363,7 +2364,7 @@ void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier) {
     if (PythSpacesAway(pSoldier->sGridNo, pFriend->sGridNo) <= sDistVisible) {
       // and can trace a line of sight to his x,y coordinates
       // if (1) //*** SoldierToSoldierLineOfSightTest(pSoldier,pFriend,STRAIGHT,TRUE))
-      if (SoldierToSoldierLineOfSightTest(pSoldier, pFriend, (UINT8)sDistVisible, TRUE)) {
+      if (SoldierToSoldierLineOfSightTest(pSoldier, pFriend, (uint8_t)sDistVisible, TRUE)) {
         // if my friend is in battle or something is clearly happening there
         if ((pFriend->bAlertStatus >= STATUS_RED) || pFriend->bUnderFire ||
             (pFriend->bLife < OKLIFE)) {

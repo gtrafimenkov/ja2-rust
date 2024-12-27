@@ -24,7 +24,7 @@
 #define PCX_OUTOFMEMORY 8
 
 BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage);
-BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, uint16_t usBufferWidth,
+BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
                         uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp);
 PcxObject *LoadPcx(CHAR8 *pFilename);
 
@@ -47,7 +47,7 @@ BOOLEAN LoadPCXFileToImage(HIMAGE hImage, uint16_t fContents) {
   // Read and allocate bitmap block if requested
   if (fContents & IMAGE_BITMAPDATA) {
     // Allocate memory for buffer
-    hImage->p8BPPData = (UINT8 *)MemAlloc(hImage->usWidth * hImage->usHeight);
+    hImage->p8BPPData = (uint8_t *)MemAlloc(hImage->usWidth * hImage->usHeight);
 
     if (!BlitPcxToBuffer(pPcxObject, hImage->p8BPPData, hImage->usWidth, hImage->usHeight, 0, 0,
                          FALSE)) {
@@ -75,7 +75,7 @@ PcxObject *LoadPcx(STR8 pFilename) {
   PcxObject *pCurrentPcxObject;
   HWFILE hFileHandle;
   uint32_t uiFileSize;
-  UINT8 *pPcxBuffer;
+  uint8_t *pPcxBuffer;
 
   // Open and read in the file
   if ((hFileHandle = FileMan_Open(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE)) ==
@@ -95,7 +95,7 @@ PcxObject *LoadPcx(STR8 pFilename) {
     return (NULL);
   }
 
-  pCurrentPcxObject->pPcxBuffer = (UINT8 *)MemAlloc(uiFileSize - (sizeof(PcxHeader) + 768));
+  pCurrentPcxObject->pPcxBuffer = (uint8_t *)MemAlloc(uiFileSize - (sizeof(PcxHeader) + 768));
 
   if (pCurrentPcxObject->pPcxBuffer == NULL) {
     return (NULL);
@@ -134,14 +134,14 @@ PcxObject *LoadPcx(STR8 pFilename) {
   return pCurrentPcxObject;
 }
 
-BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, uint16_t usBufferWidth,
+BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
                         uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp) {
-  UINT8 *pPcxBuffer;
-  UINT8 ubRepCount;
+  uint8_t *pPcxBuffer;
+  uint8_t ubRepCount;
   uint16_t usMaxX, usMaxY;
   uint32_t uiImageSize;
-  UINT8 ubCurrentByte = 0;
-  UINT8 ubMode;
+  uint8_t ubCurrentByte = 0;
+  uint8_t ubMode;
   uint16_t usCurrentX, usCurrentY;
   uint32_t uiOffset, uiIndex;
   uint32_t uiNextLineOffset, uiStartOffset, uiCurrentOffset;
@@ -296,7 +296,7 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, uint16_t u
 
 BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage) {
   uint16_t Index;
-  UINT8 *pubPalette;
+  uint8_t *pubPalette;
 
   pubPalette = &(pCurrentPcxObject->ubPalette[0]);
 

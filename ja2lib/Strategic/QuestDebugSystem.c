@@ -365,8 +365,8 @@ typedef struct {
   uint16_t usNumDisplayedItems;         //	Num of displayed item
   uint16_t usMaxNumDisplayedItems;      //  Max number of Displayed items
 
-  UINT8 ubCurScrollBoxAction;  //	Holds the status of the current action ( create; destroy...
-                               //)
+  uint8_t ubCurScrollBoxAction;  //	Holds the status of the current action ( create; destroy...
+                                 //)
 
 } SCROLL_BOX;
 
@@ -398,18 +398,18 @@ SCROLL_BOX *gpActiveListBox;  // Only 1 scroll box is active at a time, this is 
 
 INT16 gsQdsEnteringGridNo = 0;
 
-UINT8 gubTextEntryAction = QD_DROP_DOWN_NO_ACTION;
+uint8_t gubTextEntryAction = QD_DROP_DOWN_NO_ACTION;
 BOOLEAN gfTextEntryActive = FALSE;
 // wchar_t			gzTextEntryReturnString[ 16 ];
 
 BOOLEAN gfUseLocalNPCs = FALSE;
 
-UINT8 gubNPCInventoryPopupAction = QD_DROP_DOWN_NO_ACTION;
+uint8_t gubNPCInventoryPopupAction = QD_DROP_DOWN_NO_ACTION;
 
-UINT8 gubCurrentNpcInSector[QUEST_DBS_SIZE_NPC_ARRAY];
-UINT8 gubNumNPCinSector;
+uint8_t gubCurrentNpcInSector[QUEST_DBS_SIZE_NPC_ARRAY];
+uint8_t gubNumNPCinSector;
 
-UINT8 gubCurQuestSelected;
+uint8_t gubCurQuestSelected;
 uint16_t gusCurFactSelected;
 uint16_t gusFactAtTopOfList;
 
@@ -558,7 +558,7 @@ void DisplaySelectedListBox();
 void DisplaySelectedNPC();
 void DisplaySelectedItem();
 void TextEntryBox(STR16 pString, TEXT_ENTRY_CALLBACK TextEntryCallBack);
-BOOLEAN CreateDestroyDisplayTextEntryBox(UINT8 ubAction, STR16 pString,
+BOOLEAN CreateDestroyDisplayTextEntryBox(uint8_t ubAction, STR16 pString,
                                          TEXT_ENTRY_CALLBACK TextEntryCallBack);
 void InitQuestDebugTextInputBoxes();
 void DestroyQuestDebugTextInputBoxes();
@@ -567,13 +567,13 @@ void AddItemToGridNo(INT32 iGridNo);
 void StartMercTalkingFromQuoteNum(INT32 iGridNo);
 void AddKeyToGridNo(INT32 iGridNo);
 void ChangeDayNumber(INT32 iDayToChangeTo);
-void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction);
+void CreateDestroyDisplayNPCInventoryPopup(uint8_t ubAction);
 void AddNPCsInSectorToArray();
 void ChangeQuestState(INT32 iNumber);
 void ChangeFactState(INT32 iNumber);
 void DisplayCurrentGridNo();
 void EnableQDSButtons();
-BOOLEAN DoQDSMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
+BOOLEAN DoQDSMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 void IncrementActiveDropDownBox(INT16 sIncrementValue);
 INT16 IsMercInTheSector(uint16_t usMercID);
@@ -582,7 +582,7 @@ void SetQDSMercProfile();
 void HandleQDSTalkingMerc();
 void DisplayQDSCurrentlyQuoteNum();
 void SetTalkingMercPauseState(BOOLEAN fState);
-UINT8 WhichPanelShouldTalkingMercUse();
+uint8_t WhichPanelShouldTalkingMercUse();
 void EndMercTalking();
 void EnableFactMouseRegions();
 void DisableFactMouseRegions();
@@ -748,7 +748,7 @@ uint32_t QuestDebugScreenHandle() {
 uint32_t QuestDebugScreenShutdown() { return (TRUE); }
 
 BOOLEAN EnterQuestDebugSystem() {
-  UINT8 i;
+  uint8_t i;
   uint16_t usPosX, usPosY;
   wchar_t zName[128];
   //	uint16_t	usListBoxFontHeight = GetFontHeight( QUEST_DBS_FONT_LISTBOX_TEXT ) + 2;
@@ -1143,7 +1143,7 @@ void DisplayCurrentGridNo() {
 
 void GetUserInput() {
   InputAtom Event;
-  UINT8 ubPanelMercShouldUse = WhichPanelShouldTalkingMercUse();
+  uint8_t ubPanelMercShouldUse = WhichPanelShouldTalkingMercUse();
 
   while (DequeueEvent(&Event)) {
     if (!HandleTextInput(&Event) && Event.usEvent == KEY_DOWN) {
@@ -1325,7 +1325,7 @@ void QuestDebug_EnterTactical() { EnterTacticalScreen(); }
 
 void DisplaySectionLine() {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usStartX;
   uint16_t usStartY;
   uint16_t usEndX;
@@ -1947,7 +1947,7 @@ void DisplaySelectedItem() {
 void SelectNpcListRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubSelected = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    uint8_t ubSelected = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
     gpActiveListBox->ubCurScrollBoxAction = QD_DROP_DOWN_DESTROY;  // qq
     gpActiveListBox->sCurSelectedItem = ubSelected + gpActiveListBox->usItemDisplayedOnTopOfList;
@@ -2005,7 +2005,7 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, uint16_t usStartPosX, ui
                                // uint16_t usScrollAreaHeight, uint16_t usNumEntries )
 {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usWidth, usTempPosY;
   uint16_t usHeight, usPosY, usPosX;
 
@@ -2065,7 +2065,7 @@ void ScrollArrowsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if ((iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) ||
              (iReason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT)) {
-    UINT8 ubSelected = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    uint8_t ubSelected = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
     // if down arrow
     if (ubSelected) {
@@ -2231,7 +2231,7 @@ void BtnQuestDebugGiveItemToNPCButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     if (gfUseLocalNPCs)
       pSoldier = FindSoldierByProfileID(gubCurrentNpcInSector[gNpcListBox.sCurSelectedItem], FALSE);
     else
-      pSoldier = FindSoldierByProfileID((UINT8)gNpcListBox.sCurSelectedItem, FALSE);
+      pSoldier = FindSoldierByProfileID((uint8_t)gNpcListBox.sCurSelectedItem, FALSE);
 
     if (!pSoldier) {
       // Failed to get npc, put error message
@@ -2363,7 +2363,7 @@ void BtnQuestDebugNPCRefreshButtonButtonCallback(GUI_BUTTON *btn, INT32 reason) 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     BOOLEAN fRetVal = FALSE;
     CHAR16 zTemp[128];
-    UINT8 ubMercID = 0;
+    uint8_t ubMercID = 0;
 
     if (gfUseLocalNPCs) {
       ubMercID = gubCurrentNpcInSector[gNpcListBox.sCurSelectedItem];
@@ -2371,8 +2371,8 @@ void BtnQuestDebugNPCRefreshButtonButtonCallback(GUI_BUTTON *btn, INT32 reason) 
     } else {
       if (gNpcListBox.sCurSelectedItem != -1) {
         // NB ubMercID is really profile ID
-        ubMercID = (UINT8)gNpcListBox.sCurSelectedItem;
-        fRetVal = ReloadQuoteFile((UINT8)gNpcListBox.sCurSelectedItem);
+        ubMercID = (uint8_t)gNpcListBox.sCurSelectedItem;
+        fRetVal = ReloadQuoteFile((uint8_t)gNpcListBox.sCurSelectedItem);
         gMercProfiles[ubMercID].ubLastDateSpokenTo = 0;
       }
     }
@@ -2425,7 +2425,7 @@ void BtnQuestDebugStartMercTalkingButtonButtonCallback(GUI_BUTTON *btn, INT32 re
   }
 }
 
-BOOLEAN CreateDestroyDisplayTextEntryBox(UINT8 ubAction, STR16 pString,
+BOOLEAN CreateDestroyDisplayTextEntryBox(uint8_t ubAction, STR16 pString,
                                          TEXT_ENTRY_CALLBACK EntryCallBack) {
   static BOOLEAN fMouseRegionCreated = FALSE;
   static wchar_t zString[256];
@@ -2569,7 +2569,7 @@ void ScrollQuestListRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     wchar_t String[512];
 
-    gubCurQuestSelected = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gubCurQuestSelected = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
     // qqq
     swprintf(String, ARR_SIZE(String), L"%s %s %d \"%s\" ( %s )",
@@ -2588,7 +2588,7 @@ void ScrollFactListRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     wchar_t String[512];
 
-    gusCurFactSelected = (UINT8)MSYS_GetRegionUserData(pRegion, 0) + gusFactAtTopOfList;
+    gusCurFactSelected = (uint8_t)MSYS_GetRegionUserData(pRegion, 0) + gusFactAtTopOfList;
 
     if (FactDescText[gusCurFactSelected][0] == '\0')
       swprintf(String, ARR_SIZE(String), L"%s %s %d \"%s\" ( %s )",
@@ -2630,13 +2630,13 @@ void DestroyQuestDebugTextInputBoxes() { KillTextInputMode(); }
 void AddNPCToGridNo(INT32 iGridNo) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
   INT16 sSectorX, sSectorY;
-  UINT8 ubID;
+  uint8_t ubID;
 
   GetCurrentWorldSector(&sSectorX, &sSectorY);
 
   memset(&MercCreateStruct, 0, sizeof(MercCreateStruct));
   MercCreateStruct.bTeam = CIV_TEAM;
-  MercCreateStruct.ubProfile = (UINT8)gpActiveListBox->sCurSelectedItem;
+  MercCreateStruct.ubProfile = (uint8_t)gpActiveListBox->sCurSelectedItem;
   MercCreateStruct.sSectorX = sSectorX;
   MercCreateStruct.sSectorY = sSectorY;
   MercCreateStruct.bSectorZ = gbWorldSectorZ;
@@ -2667,8 +2667,8 @@ void AddItemToGridNo(INT32 iGridNo) {
     //		swprintf( zTemp, L"Please enter the Key ID" );
     //		TextEntryBox( zTemp, AddKeyToGridNo );
   } else {
-    CreateItem(gItemListBox.sCurSelectedItem, (UINT8)(gfDropDamagedItems ? (20 + Random(60)) : 100),
-               &Object);
+    CreateItem(gItemListBox.sCurSelectedItem,
+               (uint8_t)(gfDropDamagedItems ? (20 + Random(60)) : 100), &Object);
 
     // add the item to the world
     AddItemToPool((uint16_t)iGridNo, &Object, -1, 0, 0, 0);
@@ -2679,7 +2679,7 @@ void AddKeyToGridNo(INT32 iKeyID) {
   struct OBJECTTYPE Object;
 
   if (iKeyID < NUM_KEYS) {
-    CreateKeyObject(&Object, 1, (UINT8)iKeyID);
+    CreateKeyObject(&Object, 1, (uint8_t)iKeyID);
 
     // add the item to the world
     AddItemToPool(gsQdsEnteringGridNo, &Object, -1, 0, 0, 0);
@@ -2706,7 +2706,7 @@ void ChangeDayNumber(INT32 iDayToChangeTo) {
   }
 }
 
-void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
+void CreateDestroyDisplayNPCInventoryPopup(uint8_t ubAction) {
   static BOOLEAN fMouseRegionCreated = FALSE;
   uint16_t usPosY, i;
   struct SOLDIERTYPE *pSoldier;
@@ -2722,7 +2722,7 @@ void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
         pSoldier =
             FindSoldierByProfileID(gubCurrentNpcInSector[gNpcListBox.sCurSelectedItem], FALSE);
       else
-        pSoldier = FindSoldierByProfileID((UINT8)gNpcListBox.sCurSelectedItem, FALSE);
+        pSoldier = FindSoldierByProfileID((uint8_t)gNpcListBox.sCurSelectedItem, FALSE);
 
       if (!pSoldier) {
         // qq Display error box
@@ -2777,7 +2777,7 @@ void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
         pSoldier =
             FindSoldierByProfileID(gubCurrentNpcInSector[gNpcListBox.sCurSelectedItem], FALSE);
       else
-        pSoldier = FindSoldierByProfileID((UINT8)gNpcListBox.sCurSelectedItem, FALSE);
+        pSoldier = FindSoldierByProfileID((uint8_t)gNpcListBox.sCurSelectedItem, FALSE);
 
       if (pSoldier) {
         // color the background of the popup
@@ -2917,19 +2917,19 @@ void AddNPCsInSectorToArray() {
       }
     }
   }
-  gubNumNPCinSector = (UINT8)i;
+  gubNumNPCinSector = (uint8_t)i;
 }
 
 void ChangeQuestState(INT32 iNumber) {
   if ((iNumber >= 0) && (iNumber <= 2)) {
-    gubQuest[gubCurQuestSelected] = (UINT8)iNumber;
+    gubQuest[gubCurQuestSelected] = (uint8_t)iNumber;
     gfRedrawQuestDebugSystem = TRUE;
   }
 }
 
 void ChangeFactState(INT32 iNumber) {
   if ((iNumber >= 0) && (iNumber <= 1)) {
-    gubFact[gusCurFactSelected] = (UINT8)iNumber;
+    gubFact[gusCurFactSelected] = (uint8_t)iNumber;
     gfRedrawQuestDebugSystem = TRUE;
   }
 }
@@ -2986,7 +2986,8 @@ void BtnQDPgDownButtonButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8 ubApproach) {
+void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
+                          uint8_t ubApproach) {
   static BOOLEAN fFirstTimeIn = TRUE;
 
   HWFILE hFile;
@@ -3057,7 +3058,7 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
   FileMan_Close(hFile);
 }
 
-void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
+void NpcRecordLogging(uint8_t ubApproach, STR pStringA, ...) {
   HWFILE hFile;
   uint32_t uiByteWritten;
   va_list argptr;
@@ -3158,7 +3159,7 @@ void EnableQDSButtons() {
   */
 }
 
-BOOLEAN DoQDSMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
+BOOLEAN DoQDSMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect pCenteringRect = {0, 0, 639, 479};
 
@@ -3168,8 +3169,8 @@ BOOLEAN DoQDSMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, U
 
   // do message box and return
   giQdsMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                 (UINT8)(ubFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
-                                 &pCenteringRect);
+                                 (uint8_t)(ubFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                 ReturnCallback, &pCenteringRect);
 
   // send back return state
   return ((giQdsMessageBox != -1));
@@ -3222,7 +3223,7 @@ void IncrementActiveDropDownBox(INT16 sIncrementValue) {
 }
 
 INT16 IsMercInTheSector(uint16_t usMercID) {
-  UINT8 cnt;
+  uint8_t cnt;
 
   if (usMercID == -1) return (FALSE);
 
@@ -3321,7 +3322,7 @@ void EndMercTalking() {
 void HandleQDSTalkingMerc() {
   //	static BOOLEAN	fWas
   BOOLEAN fIsTheMercTalking = FALSE;
-  UINT8 ubPanelMercShouldUse;
+  uint8_t ubPanelMercShouldUse;
 
   if (giSelectedMercCurrentQuote != -1) {
     if (gTalkingMercSoldier == NULL) return;
@@ -3404,7 +3405,7 @@ void SetQDSMercProfile() {
   // Get selected soldier
   if (GetSoldier(&gTalkingMercSoldier, gusSelectedSoldier)) {
     // Change guy!
-    ForceSoldierProfileID(gTalkingMercSoldier, (UINT8)gNpcListBox.sCurSelectedItem);
+    ForceSoldierProfileID(gTalkingMercSoldier, (uint8_t)gNpcListBox.sCurSelectedItem);
 
     // if it is an rpc
     if (gTalkingMercSoldier->ubProfile >= 57 && gTalkingMercSoldier->ubProfile <= 72) {
@@ -3498,7 +3499,7 @@ void BtnQuestDebugRPCSaySectorDescToggleCallback(GUI_BUTTON *btn, INT32 reason) 
   }
 }
 
-UINT8 WhichPanelShouldTalkingMercUse() {
+uint8_t WhichPanelShouldTalkingMercUse() {
   if (gTalkingMercSoldier == NULL) {
     return (QDS_NO_PANEL);
   }
@@ -3528,7 +3529,7 @@ void EnableFactMouseRegions() {
 
 INT32 GetMaxNumberOfQuotesToPlay() {
   INT32 iNumberOfQuotes = 0;
-  UINT8 ubProfileID = (UINT8)gNpcListBox.sCurSelectedItem;
+  uint8_t ubProfileID = (uint8_t)gNpcListBox.sCurSelectedItem;
 
   // if it is the RPCs and they are to say the sector descs
   if (gfRpcToSaySectorDesc && ubProfileID >= 57 && ubProfileID <= 60) {
@@ -3559,7 +3560,7 @@ void GetDebugLocationString(uint16_t usProfileID, STR16 pzText, size_t bufSize) 
   struct SOLDIERTYPE *pSoldier;
 
   // Get a soldier pointer
-  pSoldier = FindSoldierByProfileID((UINT8)usProfileID, FALSE);
+  pSoldier = FindSoldierByProfileID((uint8_t)usProfileID, FALSE);
 
   // if their is a soldier, the soldier is alive and the soldier is off the map
   if (pSoldier != NULL && IsSolActive(pSoldier) && pSoldier->uiStatusFlags & SOLDIER_OFF_MAP) {

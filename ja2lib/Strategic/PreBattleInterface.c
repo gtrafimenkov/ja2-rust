@@ -107,7 +107,7 @@ void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason);
 void RetreatMercsCallback(GUI_BUTTON *btn, INT32 reason);
 
 void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
-                             UINT8 *pubHPPercent, UINT8 *pubBPPercent);
+                             uint8_t *pubHPPercent, uint8_t *pubBPPercent);
 
 void CheckForRobotAndIfItsControlled(void);
 
@@ -161,7 +161,7 @@ BOOLEAN gfPersistantPBI = FALSE;
 // Contains general information about the type of encounter the player is faced with.  This
 // determines whether or not you can autoresolve the battle or even retreat.  This code
 // dictates the header that is used at the top of the PBI.
-UINT8 gubEnemyEncounterCode = NO_ENCOUNTER_CODE;
+uint8_t gubEnemyEncounterCode = NO_ENCOUNTER_CODE;
 
 // The autoresolve during tactical battle option needs more detailed information than the
 // gubEnemyEncounterCode can provide.  The explicit version contains possibly unique codes
@@ -174,9 +174,9 @@ BOOLEAN gubExplicitEnemyEncounterCode = NO_ENCOUNTER_CODE;
 // icon is to be blitted.
 BOOLEAN gfBlitBattleSectorLocator = FALSE;
 
-UINT8 gubPBSectorX = 0;
-UINT8 gubPBSectorY = 0;
-UINT8 gubPBSectorZ = 0;
+uint8_t gubPBSectorX = 0;
+uint8_t gubPBSectorY = 0;
+uint8_t gubPBSectorZ = 0;
 
 BOOLEAN gfCantRetreatInPBI = FALSE;
 // SAVE END
@@ -193,15 +193,15 @@ extern void GetMapscreenMercLocationString(struct SOLDIERTYPE *pSoldier, wchar_t
 extern void GetMapscreenMercDestinationString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                               int sStringSize);
 extern void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
-                                            int sStringSize, UINT8 *pubFontColor);
+                                            int sStringSize, uint8_t *pubFontColor);
 
 #ifdef JA2BETAVERSION
 // The group is passed so we can extract the sector location
 void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  UINT8 ubSectorID;
-  UINT8 ubInvalidGroups = 0;
+  uint8_t ubSectorID;
+  uint8_t ubInvalidGroups = 0;
 
   if (!pLocGroup->ubSectorZ) {
     pGroup = gpGroupList;
@@ -222,7 +222,7 @@ void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
     }
   }
 
-  ubSectorID = (UINT8)GetSectorID8(pLocGroup->ubSectorX, pLocGroup->ubSectorY);
+  ubSectorID = (uint8_t)GetSectorID8(pLocGroup->ubSectorX, pLocGroup->ubSectorY);
   pSector = &SectorInfo[ubSectorID];
 
   if (ubInvalidGroups || pSector->ubAdminsInBattle || pSector->ubTroopsInBattle ||
@@ -253,10 +253,10 @@ void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
 void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) {
   VOBJECT_DESC VObjectDesc;
   INT32 i;
-  UINT8 ubGroupID = 0;
-  UINT8 ubNumStationaryEnemies = 0;
-  UINT8 ubNumMobileEnemies = 0;
-  UINT8 ubNumMercs;
+  uint8_t ubGroupID = 0;
+  uint8_t ubNumStationaryEnemies = 0;
+  uint8_t ubNumMobileEnemies = 0;
+  uint8_t ubNumMercs;
   BOOLEAN fUsePluralVersion = FALSE;
   INT8 bBestExpLevel = 0;
   BOOLEAN fRetreatAnOption = TRUE;
@@ -524,8 +524,8 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
               INT32 iChance;
               pSector = &SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)];
               if (!(pSector->uiFlags & SF_ALREADY_VISITED)) {
-                iChance = (UINT8)(4 - bBestExpLevel + 2 * gGameOptions.ubDifficultyLevel +
-                                  CurrentPlayerProgressPercentage() / 10);
+                iChance = (uint8_t)(4 - bBestExpLevel + 2 * gGameOptions.ubDifficultyLevel +
+                                    CurrentPlayerProgressPercentage() / 10);
                 if (pSector->uiFlags & SF_ENEMY_AMBUSH_LOCATION) {
                   iChance += 20;
                 }
@@ -887,9 +887,9 @@ void RenderPreBattleInterface() {
   INT32 i, x, y, line, width;
   CHAR16 str[100];
   CHAR16 pSectorName[128];
-  UINT8 ubHPPercent, ubBPPercent;
+  uint8_t ubHPPercent, ubBPPercent;
   BOOLEAN fMouseInRetreatButtonArea;
-  UINT8 ubJunk;
+  uint8_t ubJunk;
   // PLAYERGROUP *pPlayer;
 
   // This code determines if the cursor is inside the rectangle consisting of the
@@ -1293,9 +1293,9 @@ enum {
 };
 
 void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
-                             UINT8 *pubHPPercent, UINT8 *pubBPPercent) {
+                             uint8_t *pubHPPercent, uint8_t *pubBPPercent) {
   Assert(pSoldier);
-  *pubHPPercent = (UINT8)(pSoldier->bLife * 100 / pSoldier->bLifeMax);
+  *pubHPPercent = (uint8_t)(pSoldier->bLife * 100 / pSoldier->bLifeMax);
   *pubBPPercent = pSoldier->bBreath;
   // Go from the worst condition to the best.
   if (!pSoldier->bLife) {  // 0 life
@@ -1520,9 +1520,9 @@ void CalculateNonPersistantPBIInfo() {
     }
     if (gubExplicitEnemyEncounterCode !=
         NO_ENCOUNTER_CODE) {  // Set up the location as well as turning on the blit flag.
-      gubPBSectorX = (UINT8)gWorldSectorX;
-      gubPBSectorY = (UINT8)gWorldSectorY;
-      gubPBSectorZ = (UINT8)gbWorldSectorZ;
+      gubPBSectorX = (uint8_t)gWorldSectorX;
+      gubPBSectorY = (uint8_t)gWorldSectorY;
+      gubPBSectorZ = (uint8_t)gbWorldSectorZ;
       gfBlitBattleSectorLocator = TRUE;
     }
   }
@@ -1751,7 +1751,7 @@ void CheckForRobotAndIfItsControlled(void) {
   }
 }
 
-void LogBattleResults(UINT8 ubVictoryCode) {
+void LogBattleResults(uint8_t ubVictoryCode) {
   INT16 sSectorX, sSectorY, sSectorZ;
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   if (ubVictoryCode == LOG_VICTORY) {

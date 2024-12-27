@@ -62,7 +62,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t
   return FALSE;
 }
 
-BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, UINT8 uiHow) { return FALSE; }
+BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) { return FALSE; }
 
 INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
 

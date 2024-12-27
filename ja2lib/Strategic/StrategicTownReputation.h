@@ -14,21 +14,21 @@ void InitializeProfilesForTownReputation(void);
 void PostEventsForSpreadOfTownOpinion(void);
 
 // get the towns opinion of this merc...indexed by profile type
-UINT8 GetTownOpinionOfMerc(UINT8 ubProfileId, UINT8 ubTownId);
-UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId);
+uint8_t GetTownOpinionOfMerc(uint8_t ubProfileId, uint8_t ubTownId);
+uint8_t GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId);
 
 // update merc reputation for this town by this amount
-void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount);
-void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId,
+void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, INT8 bAmount);
+void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId,
                                            INT8 bAmount);
 
 // global handling of spread
 void HandleSpreadOfAllTownsOpinion(void);
 // handles the spread of town opinion for one merc
-void HandleSpreadOfTownOpinionForMerc(UINT8 ubProfileId);
+void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId);
 // handles the opinion spread between these two towns about this merc at the distance between them
 void HandleOpinionOfTownsAboutSoldier(INT8 bTownA, INT8 bTownB, INT32 iDistanceBetweenThem,
-                                      UINT8 ubProfile);
+                                      uint8_t ubProfile);
 
 /*
 // handle only for mercs on players team

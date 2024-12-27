@@ -13,7 +13,7 @@ typedef struct {
   CHAR8 zRootName[30];            // Root name
   struct TILE_IMAGERY *pImagery;  // Tile imagery
   INT16 sHits;
-  UINT8 ubNumFrames;
+  uint8_t ubNumFrames;
   INT16 sStructRefID;
 
 } TILE_CACHE_ELEMENT;

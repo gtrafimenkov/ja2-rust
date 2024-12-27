@@ -19,11 +19,11 @@ void DailyUpdateOfInsuredMercs();
 // void InsuranceContractPayLifeInsuranceForDeadMerc( LIFE_INSURANCE_PAYOUT *pPayoutStruct );
 
 BOOLEAN AddLifeInsurancePayout(struct SOLDIERTYPE *pSoldier);
-void InsuranceContractPayLifeInsuranceForDeadMerc(UINT8 ubPayoutID);
-void StartInsuranceInvestigation(UINT8 ubPayoutID);
-void EndInsuranceInvestigation(UINT8 ubPayoutID);
+void InsuranceContractPayLifeInsuranceForDeadMerc(uint8_t ubPayoutID);
+void StartInsuranceInvestigation(uint8_t ubPayoutID);
+void EndInsuranceInvestigation(uint8_t ubPayoutID);
 
-INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID);
+INT32 CalculateInsuranceContractCost(INT32 iLength, uint8_t ubMercID);
 
 void InsuranceContractEndGameShutDown();
 

@@ -18,7 +18,7 @@ enum {
   QD_LEVEL_5,
 };
 
-void ToggleQuestDebugModes(UINT8 ubType);
-void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...);
+void ToggleQuestDebugModes(uint8_t ubType);
+void QuestDebugFileMsg(uint8_t ubQuoteType, uint8_t ubPriority, STR pStringA, ...);
 
 #endif

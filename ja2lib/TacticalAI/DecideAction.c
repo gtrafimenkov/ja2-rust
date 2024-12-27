@@ -56,7 +56,7 @@ void DoneScheduleAction(struct SOLDIERTYPE *pSoldier) {
 INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
   INT32 iScheduleIndex;
-  UINT8 ubScheduleAction;
+  uint8_t ubScheduleAction;
   uint16_t usGridNo1, usGridNo2;
   INT16 sX, sY;
   INT8 bDirection;
@@ -432,9 +432,9 @@ INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
 }
 
 INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
   INT16 sDesiredMercLoc;
-  UINT8 ubDesiredMercDir;
+  uint8_t ubDesiredMercDir;
 
   // boxer, should move into ring!
   if (InARoom(pSoldier->sGridNo, &ubRoom)) {
@@ -474,8 +474,8 @@ INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
 
 INT8 DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
   INT16 sDesiredMercLoc;
-  UINT8 ubDesiredMercDir;
-  UINT8 ubDesiredMerc;
+  uint8_t ubDesiredMercDir;
+  uint8_t ubDesiredMerc;
   INT16 sDesiredMercDist;
 
   // if a quote record has been set and we're not doing movement, then
@@ -574,8 +574,8 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
       if (gTacticalStatus.bBoxingState == PRE_BOXING) {
         return (DecideActionBoxerEnteringRing(pSoldier));
       } else {
-        UINT8 ubRoom;
-        UINT8 ubLoop;
+        uint8_t ubRoom;
+        uint8_t ubLoop;
 
         // boxer... but since in status green, it's time to leave the ring!
         if (InARoom(pSoldier->sGridNo, &ubRoom)) {
@@ -611,7 +611,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
     // else if ( (gTacticalStatus.bBoxingState == PRE_BOXING || gTacticalStatus.bBoxingState ==
     // BOXING) && ( PythSpacesAway( pSoldier->sGridNo, CENTER_OF_RING ) <= MaxDistanceVisible() ) )
     else if (PythSpacesAway(pSoldier->sGridNo, CENTER_OF_RING) <= MaxDistanceVisible()) {
-      UINT8 ubRingDir;
+      uint8_t ubRingDir;
       // face ring!
 
       ubRingDir = atan8(CenterX(pSoldier->sGridNo), CenterY(pSoldier->sGridNo),
@@ -996,7 +996,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
 INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   INT32 iDummy;
-  UINT8 ubNoiseDir;
+  uint8_t ubNoiseDir;
   INT16 sNoiseGridNo;
   INT32 iNoiseValue;
   INT32 iChance, iSneaky;
@@ -1505,12 +1505,12 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
+INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
   INT8 bActionReturned;
   INT32 iDummy;
   INT16 iChance, sClosestOpponent, sClosestFriend;
   INT16 sClosestDisturbance, sDistVisible, sCheckGridNo;
-  UINT8 ubCanMove, ubOpponentDir;
+  uint8_t ubCanMove, ubOpponentDir;
   INT8 bInWater, bInDeepWater, bInGas;
   INT8 bSeekPts = 0, bHelpPts = 0, bHidePts = 0, bWatchPts = 0;
   INT8 bHighestWatchLoc;
@@ -1724,7 +1724,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
     if (BestThrow.ubPossible) {
       // if firing mortar make sure we have room
       if (pSoldier->inv[BestThrow.bWeaponIn].usItem == MORTAR) {
-        ubOpponentDir = (UINT8)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
+        ubOpponentDir = (uint8_t)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
 
         // Get new gridno!
         sCheckGridNo =
@@ -2159,7 +2159,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
                   if (PythSpacesAway(pSoldier->usActionData, sClosestDisturbance) < 5 ||
                       LocationToLocationLineOfSightTest(pSoldier->usActionData, pSoldier->bLevel,
                                                         sClosestDisturbance, pSoldier->bLevel,
-                                                        (UINT8)MaxDistanceVisible(), TRUE)) {
+                                                        (uint8_t)MaxDistanceVisible(), TRUE)) {
                     // reserve APs for a possible crouch plus a shot
                     pSoldier->usActionData = InternalGoAsFarAsPossibleTowards(
                         pSoldier, sClosestDisturbance,
@@ -2442,10 +2442,10 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         ubOpponentDir = atan8(CenterX(pSoldier->sGridNo), CenterY(pSoldier->sGridNo),
                               CenterX(sClosestDisturbance), CenterY(sClosestDisturbance));
         if (pSoldier->bDirection == ubOpponentDir) {
-          ubOpponentDir = (UINT8)PreRandom(NUM_WORLD_DIRECTIONS);
+          ubOpponentDir = (uint8_t)PreRandom(NUM_WORLD_DIRECTIONS);
         }
       } else {
-        ubOpponentDir = (UINT8)PreRandom(NUM_WORLD_DIRECTIONS);
+        ubOpponentDir = (uint8_t)PreRandom(NUM_WORLD_DIRECTIONS);
       }
 
       if ((pSoldier->bDirection != ubOpponentDir)) {
@@ -2612,10 +2612,10 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   INT32 iCoverPercentBetter, iOffense, iDefense, iChance;
   INT16 sClosestOpponent, sBestCover = NOWHERE;
   INT16 sClosestDisturbance;
-  UINT8 ubMinAPCost, ubCanMove;
+  uint8_t ubMinAPCost, ubCanMove;
   INT8 bInDeepWater, bInGas;
   INT8 bDirection;
-  UINT8 ubBestAttackAction = AI_ACTION_NONE;
+  uint8_t ubBestAttackAction = AI_ACTION_NONE;
   INT8 bCanAttack, bActionReturned;
   INT8 bWeaponIn;
   BOOLEAN fTryPunching = FALSE;
@@ -2624,11 +2624,11 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
                         (pSoldier->ubBodyType >= FATCIV && pSoldier->ubBodyType <= CRIPPLECIV)));
-  UINT8 ubBestStance, ubStanceCost;
+  uint8_t ubBestStance, ubStanceCost;
   BOOLEAN fChangeStanceFirst;  // before firing
   BOOLEAN fClimb;
-  UINT8 ubBurstAPs;
-  UINT8 ubOpponentDir;
+  uint8_t ubBurstAPs;
+  uint8_t ubOpponentDir;
   INT16 sCheckGridNo;
 
   BOOLEAN fAllowCoverCheck = FALSE;
@@ -2980,7 +2980,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
 
       if (BestThrow.ubPossible) {
         if (pSoldier->inv[BestThrow.bWeaponIn].usItem == MORTAR) {
-          ubOpponentDir = (UINT8)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
+          ubOpponentDir = (uint8_t)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
 
           // Get new gridno!
           sCheckGridNo =
@@ -3348,7 +3348,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
             fChangeStanceFirst = TRUE;
 
             // account for increased AP cost
-            ubStanceCost = (UINT8)GetAPsToChangeStance(pSoldier, ubBestStance);
+            ubStanceCost = (uint8_t)GetAPsToChangeStance(pSoldier, ubBestStance);
             if (BestAttack.ubAPCost + ubStanceCost > pSoldier->bActionPoints) {
               // AP cost would balance (plus X, minus X) but aim time is reduced
               BestAttack.ubAimTime -= (BestAttack.ubAimTime - ubStanceCost);

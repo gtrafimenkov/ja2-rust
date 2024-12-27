@@ -81,8 +81,8 @@ typedef enum {
 #define ROTTING_CORPSE_VEHICLE 0x40                // Vehicle Corpse
 
 typedef struct {
-  UINT8 ubType;
-  UINT8 ubBodyType;
+  uint8_t ubType;
+  uint8_t ubBodyType;
   INT16 sGridNo;
   FLOAT dXPos;
   FLOAT dYPos;
@@ -102,11 +102,11 @@ typedef struct {
 
   INT8 bVisible;
   INT8 bNumServicingCrows;
-  UINT8 ubProfile;
+  uint8_t ubProfile;
   BOOLEAN fHeadTaken;
-  UINT8 ubAIWarningValue;
+  uint8_t ubAIWarningValue;
 
-  UINT8 ubFiller[12];
+  uint8_t ubFiller[12];
 
 } ROTTING_CORPSE_DEFINITION;
 
@@ -161,7 +161,7 @@ void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier);
 
 extern ROTTING_CORPSE gRottingCorpse[MAX_ROTTING_CORPSES];
 extern INT32 giNumRottingCorpse;
-extern UINT8 gb4DirectionsFrom8[8];
+extern uint8_t gb4DirectionsFrom8[8];
 
 ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, INT8 bLevel);
 BOOLEAN IsValidDecapitationCorpse(ROTTING_CORPSE *pCorpse);
@@ -171,11 +171,12 @@ void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier);
 
 uint16_t GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage);
 
-void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel);
+void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+                                        uint8_t ubLevel);
 
-INT16 GetGridNoOfCorpseGivenProfileID(UINT8 ubProfileID);
+INT16 GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID);
 
 void DecayRottingCorpseAIWarnings(void);
-UINT8 GetNearestRottingCorpseAIWarning(INT16 sGridNo);
+uint8_t GetNearestRottingCorpseAIWarning(INT16 sGridNo);
 
 #endif

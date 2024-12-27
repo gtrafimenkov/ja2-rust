@@ -31,6 +31,6 @@ INT32 GetFundsOnMerc(struct SOLDIERTYPE *pSoldier);
 BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrentBalance);
 BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, INT32 iCurrentBalance);
 
-BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(UINT8 ubProfile);
+BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(uint8_t ubProfile);
 
 #endif

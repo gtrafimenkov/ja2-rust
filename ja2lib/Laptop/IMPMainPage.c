@@ -49,7 +49,7 @@ void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, INT32 reason);
 void ShadeUnSelectableButtons(void);
 void UpDateIMPMainPageButtons(void);
-void BeginMessageBoxCallBack(UINT8 bExitValue);
+void BeginMessageBoxCallBack(uint8_t bExitValue);
 void DestoryMouseRegionsForIMPMainPageBasedOnCharGenStatus(void);
 void CreateMouseRegionsForIMPMainPageBasedOnCharGenStatus(void);
 void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
@@ -508,7 +508,7 @@ void UpDateIMPMainPageButtons(void) {
   return;
 }
 
-void BeginMessageBoxCallBack(UINT8 bExitValue) {
+void BeginMessageBoxCallBack(uint8_t bExitValue) {
   // yes, so start over, else stay here and do nothing for now
   if (bExitValue == MSG_BOX_RETURN_YES) {
     iCurrentImpPage = IMP_BEGIN;

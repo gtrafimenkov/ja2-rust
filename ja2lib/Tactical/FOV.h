@@ -5,7 +5,7 @@
 #include "Tactical/Overhead.h"
 
 void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEAN fShowLocators,
-                         UINT8 ubLevel, BOOLEAN fForce);
+                         uint8_t ubLevel, BOOLEAN fForce);
 
 INT32 GetFreeSlantRoof(void);
 void RecountSlantRoofs(void);

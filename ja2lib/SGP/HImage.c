@@ -233,7 +233,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDest
                                   SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   uint32_t cnt;
-  UINT8 *pDest, *pSrc;
+  uint8_t *pDest, *pSrc;
 
   // Assertions
   Assert(hImage != NULL);
@@ -257,7 +257,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDest
   Assert(usDestHeight >= uiNumLines);
 
   // Copy line by line
-  pDest = (UINT8 *)pDestBuf + uiDestStart;
+  pDest = (uint8_t *)pDestBuf + uiDestStart;
   pSrc = hImage->p8BPPData + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
@@ -322,7 +322,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDes
                                    SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   uint32_t rows, cols;
-  UINT8 *pSrc, *pSrcTemp;
+  uint8_t *pSrc, *pSrcTemp;
   uint16_t *pDest, *pDestTemp;
   uint16_t *p16BPPPalette;
 
@@ -378,7 +378,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDes
 uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
   uint16_t *p16BPPPalette, r16, g16, b16, usColor;
   uint32_t cnt;
-  UINT8 r, g, b;
+  uint8_t r, g, b;
 
   Assert(pPalette != NULL);
 
@@ -445,7 +445,7 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
   uint16_t *p16BPPPalette, r16, g16, b16, usColor;
   uint32_t cnt, lumin;
   uint32_t rmod, gmod, bmod;
-  UINT8 r, g, b;
+  uint8_t r, g, b;
 
   Assert(pPalette != NULL);
 
@@ -464,9 +464,9 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
       bmod = (bscale * pPalette[cnt].peBlue / 256);
     }
 
-    r = (UINT8)min(rmod, 255);
-    g = (UINT8)min(gmod, 255);
-    b = (UINT8)min(bmod, 255);
+    r = (uint8_t)min(rmod, 255);
+    g = (uint8_t)min(gmod, 255);
+    b = (uint8_t)min(bmod, 255);
 
     if (gusRedShift < 0)
       r16 = ((uint16_t)r >> (-gusRedShift));
@@ -499,7 +499,7 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
 // Convert from RGB to 16 bit value
 uint16_t Get16BPPColor(uint32_t RGBValue) {
   uint16_t r16, g16, b16, usColor;
-  UINT8 r, g, b;
+  uint8_t r, g, b;
 
   r = SGPGetRValue(RGBValue);
   g = SGPGetGValue(RGBValue);
@@ -580,7 +580,8 @@ uint32_t GetRGBColor(uint16_t Value16BPP) {
 //
 //*****************************************************************************
 
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette) {
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
+                                                 uint8_t *pOldPalette) {
   uint16_t Index;
   struct SGPPaletteEntry *pPalEntry;
   struct SGPPaletteEntry *pInitEntry;

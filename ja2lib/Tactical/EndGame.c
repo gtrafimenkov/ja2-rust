@@ -138,7 +138,7 @@ void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
-  UINT8 ubKillerSoldierID = NOBODY;
+  uint8_t ubKillerSoldierID = NOBODY;
 
   // Start victory music here...
   SetMusicMode(MUSIC_TACTICAL_VICTORY);
@@ -164,7 +164,7 @@ void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT
                                          sGridNo, bLevel);
 
           if (SoldierTo3DLocationLineOfSightTest(pTeamSoldier, sGridNo, bLevel, 3,
-                                                 (UINT8)sDistVisible, TRUE)) {
+                                                 (uint8_t)sDistVisible, TRUE)) {
             TacticalCharacterDialogue(pTeamSoldier, QUOTE_KILLING_DEIDRANNA);
           }
         }
@@ -398,7 +398,7 @@ void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, IN
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
-  UINT8 ubKillerSoldierID = NOBODY;
+  uint8_t ubKillerSoldierID = NOBODY;
 
   // Start victory music here...
   SetMusicMode(MUSIC_TACTICAL_VICTORY);
@@ -424,7 +424,7 @@ void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, IN
                                          sGridNo, bLevel);
 
           if (SoldierTo3DLocationLineOfSightTest(pTeamSoldier, sGridNo, bLevel, 3,
-                                                 (UINT8)sDistVisible, TRUE)) {
+                                                 (uint8_t)sDistVisible, TRUE)) {
             TacticalCharacterDialogue(pTeamSoldier, QUOTE_KILLING_QUEEN);
           }
         }

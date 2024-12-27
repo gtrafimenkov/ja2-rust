@@ -13,7 +13,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "Utils/Message.h"
 
-UINT8 gubNumUIPlannedMoves = 0;
+uint8_t gubNumUIPlannedMoves = 0;
 struct SOLDIERTYPE *gpUIPlannedSoldier = NULL;
 struct SOLDIERTYPE *gpUIStartPlannedSoldier = NULL;
 BOOLEAN gfInUIPlanMode = FALSE;
@@ -33,14 +33,14 @@ BOOLEAN BeginUIPlan(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN AddUIPlan(uint16_t sGridNo, UINT8 ubPlanID) {
+BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
   struct SOLDIERTYPE *pPlanSoldier;
   INT16 sXPos, sYPos;
   INT16 sAPCost = 0;
   INT8 bDirection;
   INT32 iLoop;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT8 ubNewIndex;
+  uint8_t ubNewIndex;
 
   // Depeding on stance and direction facing, add guy!
 
@@ -95,7 +95,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, UINT8 ubPlanID) {
 
         pPlanSoldier->bActionPoints = gpUIPlannedSoldier->bActionPoints - sAPCost;
 
-        pPlanSoldier->ubPlannedUIAPCost = (UINT8)pPlanSoldier->bActionPoints;
+        pPlanSoldier->ubPlannedUIAPCost = (uint8_t)pPlanSoldier->bActionPoints;
 
         // Get direction
         bDirection =
@@ -165,7 +165,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, UINT8 ubPlanID) {
 
           pPlanSoldier->bActionPoints = gpUIPlannedSoldier->bActionPoints - sAPCost;
 
-          pPlanSoldier->ubPlannedUIAPCost = (UINT8)pPlanSoldier->bActionPoints;
+          pPlanSoldier->ubPlannedUIAPCost = (uint8_t)pPlanSoldier->bActionPoints;
 
           // Get direction
           bDirection =
@@ -190,7 +190,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, UINT8 ubPlanID) {
 
       gpUIPlannedSoldier->bActionPoints = gpUIPlannedSoldier->bActionPoints - sAPCost;
 
-      gpUIPlannedSoldier->ubPlannedUIAPCost = (UINT8)gpUIPlannedSoldier->bActionPoints;
+      gpUIPlannedSoldier->ubPlannedUIAPCost = (uint8_t)gpUIPlannedSoldier->bActionPoints;
 
       // Get direction from gridno
       bDirection = (INT8)GetDirectionFromGridNo(sGridNo, gpUIPlannedSoldier);

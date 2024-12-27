@@ -61,7 +61,7 @@ typedef struct MINE_LOCATION_TYPE {
 } MINE_LOCATION_TYPE;
 
 typedef struct MINE_STATUS_TYPE {
-  UINT8 ubMineType;  // type of mine (silver or gold)
+  uint8_t ubMineType;  // type of mine (silver or gold)
   BYTE filler1[3];
   uint32_t uiMaxRemovalRate;  // fastest rate we can move ore from this mine in period
 
@@ -85,8 +85,8 @@ typedef struct MINE_STATUS_TYPE {
                                       // produced from it
   BOOLEAN fAttackedHeadMiner;         // player has attacked the head miner, shutting down mine &
                                       // decreasing loyalty
-  uint16_t usValidDayCreaturesCanInfest;  // Creatures will be permitted to spread if the game day
-                                          // is greater than this value.
+  uint16_t usValidDayCreaturesCanInfest;   // Creatures will be permitted to spread if the game day
+                                           // is greater than this value.
   uint32_t uiTimePlayerProductionStarted;  // time in minutes when 'fMineHasProducedForPlayer' was
                                            // first set
 
@@ -97,7 +97,7 @@ typedef struct MINE_STATUS_TYPE {
 typedef struct HEAD_MINER_TYPE {
   uint16_t usProfileId;
   INT8 bQuoteNum[NUM_HEAD_MINER_STRATEGIC_QUOTES];
-  UINT8 ubExternalFace;
+  uint8_t ubExternalFace;
 } HEAD_MINER_TYPE;
 
 // init mines
@@ -160,44 +160,44 @@ void MineShutdownIsPermanent(INT8 bMineIndex);
 
 BOOLEAN IsMineShutDown(INT8 bMineIndex);
 
-UINT8 GetHeadMinerIndexForMine(INT8 bMineIndex);
+uint8_t GetHeadMinerIndexForMine(INT8 bMineIndex);
 uint16_t GetHeadMinerProfileIdForMine(INT8 bMineIndex);
 
 // Find the sector location of a mine
-void GetMineSector(UINT8 ubMineIndex, INT16* psX, INT16* psY);
+void GetMineSector(uint8_t ubMineIndex, INT16* psX, INT16* psY);
 
-void IssueHeadMinerQuote(INT8 bMineIndex, UINT8 ubQuoteType);
+void IssueHeadMinerQuote(INT8 bMineIndex, uint8_t ubQuoteType);
 
-UINT8 GetHeadMinersMineIndex(UINT8 ubMinerProfileId);
+uint8_t GetHeadMinersMineIndex(uint8_t ubMinerProfileId);
 
-void PlayerSpokeToHeadMiner(UINT8 ubMinerProfile);
+void PlayerSpokeToHeadMiner(uint8_t ubMinerProfile);
 
-BOOLEAN IsHisMineRunningOut(UINT8 ubMinerProfileId);
-BOOLEAN IsHisMineEmpty(UINT8 ubMinerProfileId);
-BOOLEAN IsHisMineDisloyal(UINT8 ubMinerProfileId);
-BOOLEAN IsHisMineInfested(UINT8 ubMinerProfileId);
-BOOLEAN IsHisMineLostAndRegained(UINT8 ubMinerProfileId);
-BOOLEAN IsHisMineAtMaxProduction(UINT8 ubMinerProfileId);
-void ResetQueenRetookMine(UINT8 ubMinerProfileId);
+BOOLEAN IsHisMineRunningOut(uint8_t ubMinerProfileId);
+BOOLEAN IsHisMineEmpty(uint8_t ubMinerProfileId);
+BOOLEAN IsHisMineDisloyal(uint8_t ubMinerProfileId);
+BOOLEAN IsHisMineInfested(uint8_t ubMinerProfileId);
+BOOLEAN IsHisMineLostAndRegained(uint8_t ubMinerProfileId);
+BOOLEAN IsHisMineAtMaxProduction(uint8_t ubMinerProfileId);
+void ResetQueenRetookMine(uint8_t ubMinerProfileId);
 
 void QueenHasRegainedMineSector(INT8 bMineIndex);
 
 BOOLEAN HasAnyMineBeenAttackedByMonsters(void);
 
-void PlayerAttackedHeadMiner(UINT8 ubMinerProfileId);
+void PlayerAttackedHeadMiner(uint8_t ubMinerProfileId);
 
-BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(UINT8 ubMinerProfileId);
+BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId);
 
 // given sector value, get mine id value
 INT8 GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 // use this for miner (civilian) quotes when *underground* in a mine
-BOOLEAN PlayerForgotToTakeOverMine(UINT8 ubMineIndex);
+BOOLEAN PlayerForgotToTakeOverMine(uint8_t ubMineIndex);
 
 // use this to determine whether or not to place miners into a underground mine level
-BOOLEAN AreThereMinersInsideThisMine(UINT8 ubMineIndex);
+BOOLEAN AreThereMinersInsideThisMine(uint8_t ubMineIndex);
 
 // use this to determine whether or not the player has spoken to a head miner
-BOOLEAN SpokenToHeadMiner(UINT8 ubMineIndex);
+BOOLEAN SpokenToHeadMiner(uint8_t ubMineIndex);
 
 #endif

@@ -245,10 +245,10 @@ void UpdateAnimatedCursorFrames(uint32_t uiCursorIndex);
 
 void SyncPairedCursorFrames(uint32_t uiSrcCursor, uint32_t uiDestCursor);
 
-void SetCursorSpecialFrame(uint32_t uiCursor, UINT8 ubFrame);
+void SetCursorSpecialFrame(uint32_t uiCursor, uint8_t ubFrame);
 
-void SetCursorFlags(uint32_t uiCursor, UINT8 ubFlags);
+void SetCursorFlags(uint32_t uiCursor, uint8_t ubFlags);
 
-void RemoveCursorFlags(uint32_t uiCursor, UINT8 ubFlags);
+void RemoveCursorFlags(uint32_t uiCursor, uint8_t ubFlags);
 
 #endif

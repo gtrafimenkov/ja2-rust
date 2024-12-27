@@ -123,7 +123,7 @@ enum {
 typedef struct {
   uint16_t usMoneyPaid;
   uint16_t usDay;
-  UINT8 ubMercArrayID;
+  uint8_t ubMercArrayID;
 
 } CONTITION_FOR_MERC_AVAILABLE;
 
@@ -159,8 +159,8 @@ uint32_t guiMercBackGround;
 uint32_t guiMercVideoFaceBackground;
 uint32_t guiMercVideoPopupBackground;
 
-UINT8 gubMercArray[NUMBER_OF_MERCS];
-UINT8 gubCurMercIndex;
+uint8_t gubMercArray[NUMBER_OF_MERCS];
+uint8_t gubCurMercIndex;
 
 INT32 iMercPopUpBox = -1;
 
@@ -179,7 +179,7 @@ enum {
   MERC_VIDEO_EXIT_VIDEO_MODE,
 };
 
-UINT8 gubCurrentMercVideoMode;
+uint8_t gubCurrentMercVideoMode;
 BOOLEAN gfMercVideoIsBeingDisplayed;
 INT32 giVideoSpeckFaceIndex;
 uint16_t gusMercVideoSpeckSpeech;
@@ -187,7 +187,7 @@ uint16_t gusMercVideoSpeckSpeech;
 BOOLEAN gfDisplaySpeckTextBox = FALSE;
 
 BOOLEAN gfJustEnteredMercSite = FALSE;
-UINT8 gubArrivedFromMercSubSite =
+uint8_t gubArrivedFromMercSubSite =
     MERC_CAME_FROM_OTHER_PAGE;  // the merc is arriving from one of the merc sub pages
 BOOLEAN gfDoneIntroSpeech = TRUE;
 
@@ -201,7 +201,7 @@ BOOLEAN gfFirstTimeIntoMERCSiteSinceEnteringLaptop = FALSE;
 
 // used for the random quotes to try to balance the ones that are said
 typedef struct {
-  UINT8 ubQuoteID;
+  uint8_t ubQuoteID;
   uint32_t uiNumberOfTimesQuoteSaid;
 
 } NUMBER_TIMES_QUOTE_SAID;
@@ -266,8 +266,8 @@ BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
                               uint16_t usHeight);
 BOOLEAN IsAnyMercMercsHired();
 BOOLEAN IsAnyMercMercsDead();
-UINT8 CountNumberOfMercMercsHired();
-UINT8 CountNumberOfMercMercsWhoAreDead();
+uint8_t CountNumberOfMercMercsHired();
+uint8_t CountNumberOfMercMercsWhoAreDead();
 BOOLEAN GetSpeckConditionalOpening(BOOLEAN fJustEnteredScreen);
 void RemoveSpeckPopupTextBox();
 BOOLEAN ShouldSpeckStartTalkingDueToActionOnSubPage();
@@ -276,15 +276,15 @@ void HandleSpeckIdleConversation(BOOLEAN fReset);
 INT16 GetRandomQuoteThatHasBeenSaidTheLeast();
 void StopSpeckFromTalking();
 BOOLEAN HasLarryRelapsed();
-void IncreaseMercRandomQuoteValue(UINT8 ubQuoteID, UINT8 ubValue);
+void IncreaseMercRandomQuoteValue(uint8_t ubQuoteID, uint8_t ubValue);
 BOOLEAN ShouldTheMercSiteServerGoDown();
 void DrawMercVideoBackGround();
 BOOLEAN CanMercQuoteBeSaid(uint32_t uiQuoteID);
-UINT8 NumberOfMercMercsDead();
+uint8_t NumberOfMercMercsDead();
 void MakeBiffAwayForCoupleOfDays();
 BOOLEAN AreAnyOfTheNewMercsAvailable();
 void ShouldAnyNewMercMercBecomeAvailable();
-BOOLEAN CanMercBeAvailableYet(UINT8 ubMercToCheck);
+BOOLEAN CanMercBeAvailableYet(uint8_t ubMercToCheck);
 uint32_t CalcMercDaysServed();
 // ppp
 
@@ -679,7 +679,7 @@ void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 void DailyUpdateOfMercSite(uint16_t usDate) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sSoldierID, i;
-  UINT8 ubMercID;
+  uint8_t ubMercID;
   INT32 iNumDays;
 
   // if its the first day, leave
@@ -689,7 +689,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
 
   // loop through all of the hired mercs from M.E.R.C.
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
-    ubMercID = GetMercIDFromMERCArray((UINT8)i);
+    ubMercID = GetMercIDFromMERCArray((uint8_t)i);
     if (IsMercOnTeam(ubMercID)) {
       // if it larry Roach burn advance.  ( cause larry is in twice, a sober larry and a stoned
       // larry )
@@ -742,10 +742,10 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
           //If we should advacne the number of days that the good mercs arrive
   //	if( LaptopSaveInfo.guiNumberOfMercPaymentsInDays > 4 )
           {
-                  UINT8 ubNumDays;
+                  uint8_t ubNumDays;
 
-  //		ubNumDays = (UINT8) LaptopSaveInfo.guiNumberOfMercPaymentsInDays / 4;
-                  ubNumDays = (UINT8) LaptopSaveInfo.guiNumberOfMercPaymentsInDays;
+  //		ubNumDays = (uint8_t) LaptopSaveInfo.guiNumberOfMercPaymentsInDays / 4;
+                  ubNumDays = (uint8_t) LaptopSaveInfo.guiNumberOfMercPaymentsInDays;
 
   //		LaptopSaveInfo.guiNumberOfMercPaymentsInDays =
   LaptopSaveInfo.guiNumberOfMercPaymentsInDays % 4; LaptopSaveInfo.guiNumberOfMercPaymentsInDays =
@@ -888,7 +888,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
 }
 
 // Gets the actual merc id from the array
-UINT8 GetMercIDFromMERCArray(UINT8 ubMercID) {
+uint8_t GetMercIDFromMERCArray(uint8_t ubMercID) {
   // if it is one of the regular MERCS
   if (ubMercID <= 6) {
     return (gubMercArray[ubMercID]);
@@ -1043,17 +1043,17 @@ BOOLEAN HandleSpeckTalking(BOOLEAN fReset) {
 }
 
 void HandleCurrentMercDistortion() {
-  static UINT8 ubCurrentMercDistortionMode = MERC_DISTORTION_NO_DISTORTION;
+  static uint8_t ubCurrentMercDistortionMode = MERC_DISTORTION_NO_DISTORTION;
   BOOLEAN fReturnStatus;
 
   // if there is no current distortion mode, randomly choose one
   if (ubCurrentMercDistortionMode == MERC_DISTORTION_NO_DISTORTION) {
-    UINT8 ubRandom;
+    uint8_t ubRandom;
 
-    ubRandom = (UINT8)Random(200);
+    ubRandom = (uint8_t)Random(200);
 
     if (ubRandom < 40) {
-      ubRandom = (UINT8)Random(100);
+      ubRandom = (uint8_t)Random(100);
       if (ubRandom < 10)
         ubCurrentMercDistortionMode = MERC_DISRTORTION_DISTORT_IMAGE;
       else if (ubRandom < 30)
@@ -1097,7 +1097,7 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, uint16_t usPosX, uint16_t usPosY, ui
   uint16_t *pBuffer = NULL, DestColor;
   uint32_t uiPitch;
   uint16_t i, j;
-  static UINT8 ubPixelationAmount = 255;
+  static uint8_t ubPixelationAmount = 255;
   BOOLEAN fReturnStatus = FALSE;
   i = 0;
 
@@ -1168,9 +1168,9 @@ BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
   uint16_t i, j;
   uint16_t *pBuffer = NULL, DestColor;
   uint32_t uiColor;
-  UINT8 red, green, blue;
+  uint8_t red, green, blue;
   static uint16_t usDistortionValue = 255;
-  UINT8 uiReturnValue;
+  uint8_t uiReturnValue;
   uint16_t usEndOnLine = 0;
 
   pBuffer = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
@@ -1201,9 +1201,9 @@ BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
 
         uiColor = GetRGBColor(DestColor);
 
-        red = (UINT8)uiColor;
-        green = (UINT8)(uiColor >> 8);
-        blue = (UINT8)(uiColor >> 16);
+        red = (uint8_t)uiColor;
+        green = (uint8_t)(uiColor >> 8);
+        blue = (uint8_t)(uiColor >> 16);
 
         DestColor = Get16BPPColor(FROMRGB(255 - red, 250 - green, 250 - blue));
 
@@ -1461,7 +1461,7 @@ void CheatToGetAll5Merc() {
 
 BOOLEAN GetSpeckConditionalOpening(BOOLEAN fJustEnteredScreen) {
   static uint16_t usQuoteToSay = MERC_VIDEO_SPECK_SPEECH_NOT_TALKING;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
   BOOLEAN fCanSayLackOfPaymentQuote = TRUE;
   BOOLEAN fCanUseIdleTag = FALSE;
 
@@ -1544,7 +1544,7 @@ BOOLEAN GetSpeckConditionalOpening(BOOLEAN fJustEnteredScreen) {
     }
 
     else {
-      UINT8 ubRandom = (UINT8)Random(100);
+      uint8_t ubRandom = (uint8_t)Random(100);
 
       // if business is good
       //			if( ubRandom < 40 && ubNumMercsDead < 2 &&
@@ -1581,7 +1581,7 @@ BOOLEAN GetSpeckConditionalOpening(BOOLEAN fJustEnteredScreen) {
     }
 
     if (fCanUseIdleTag) {
-      UINT8 ubRandom = Random(100);
+      uint8_t ubRandom = Random(100);
 
       if (ubRandom < 50) {
         ubRandom = Random(4);
@@ -1710,8 +1710,8 @@ BOOLEAN GetSpeckConditionalOpening(BOOLEAN fJustEnteredScreen) {
 }
 
 BOOLEAN IsAnyMercMercsHired() {
-  UINT8 ubMercID;
-  UINT8 i;
+  uint8_t ubMercID;
+  uint8_t i;
 
   // loop through all of the hired mercs from M.E.R.C.
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
@@ -1725,7 +1725,7 @@ BOOLEAN IsAnyMercMercsHired() {
 }
 
 BOOLEAN IsAnyMercMercsDead() {
-  UINT8 i;
+  uint8_t i;
 
   // loop through all of the hired mercs from M.E.R.C.
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
@@ -1735,9 +1735,9 @@ BOOLEAN IsAnyMercMercsDead() {
   return (FALSE);
 }
 
-UINT8 NumberOfMercMercsDead() {
-  UINT8 i;
-  UINT8 ubNumDead = 0;
+uint8_t NumberOfMercMercsDead() {
+  uint8_t i;
+  uint8_t ubNumDead = 0;
 
   // loop through all of the hired mercs from M.E.R.C.
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
@@ -1747,10 +1747,10 @@ UINT8 NumberOfMercMercsDead() {
   return (ubNumDead);
 }
 
-UINT8 CountNumberOfMercMercsHired() {
-  UINT8 ubMercID;
-  UINT8 i;
-  UINT8 ubCount = 0;
+uint8_t CountNumberOfMercMercsHired() {
+  uint8_t ubMercID;
+  uint8_t i;
+  uint8_t ubCount = 0;
 
   // loop through all of the hired mercs from M.E.R.C.
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
@@ -1763,9 +1763,9 @@ UINT8 CountNumberOfMercMercsHired() {
   return (ubCount);
 }
 
-UINT8 CountNumberOfMercMercsWhoAreDead() {
-  UINT8 i;
-  UINT8 ubCount = 0;
+uint8_t CountNumberOfMercMercsWhoAreDead() {
+  uint8_t i;
+  uint8_t ubCount = 0;
 
   // loop through all of the hired mercs from M.E.R.C.
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
@@ -1800,7 +1800,7 @@ void RemoveSpeckPopupTextBox() {
   gfRedrawMercSite = TRUE;
 }
 
-void HandlePlayerHiringMerc(UINT8 ubHiredMercID) {
+void HandlePlayerHiringMerc(uint8_t ubHiredMercID) {
   gusMercVideoSpeckSpeech = MERC_VIDEO_SPECK_SPEECH_NOT_TALKING;
 
   // if the players is in good finacial standing
@@ -1854,8 +1854,8 @@ void HandlePlayerHiringMerc(UINT8 ubHiredMercID) {
   gubArrivedFromMercSubSite = MERC_CAME_FROM_HIRE_PAGE;
 }
 
-BOOLEAN IsMercMercAvailable(UINT8 ubMercID) {
-  UINT8 cnt;
+BOOLEAN IsMercMercAvailable(uint8_t ubMercID) {
+  uint8_t cnt;
 
   // loop through the array of mercs
   for (cnt = 0; cnt < LaptopSaveInfo.gubLastMercIndex; cnt++) {
@@ -1949,13 +1949,13 @@ void HandleSpeckIdleConversation(BOOLEAN fReset) {
     if (!gfMercVideoIsBeingDisplayed) {
       sLeastSaidQuote = GetRandomQuoteThatHasBeenSaidTheLeast();
 
-      if (sLeastSaidQuote != -1) gusMercVideoSpeckSpeech = (UINT8)sLeastSaidQuote;
+      if (sLeastSaidQuote != -1) gusMercVideoSpeckSpeech = (uint8_t)sLeastSaidQuote;
 
       // Say the aim slander quotes the least
       if (sLeastSaidQuote >= 47 && sLeastSaidQuote <= 57) {
-        IncreaseMercRandomQuoteValue((UINT8)sLeastSaidQuote, 1);
+        IncreaseMercRandomQuoteValue((uint8_t)sLeastSaidQuote, 1);
       } else if (sLeastSaidQuote != -1)
-        IncreaseMercRandomQuoteValue((UINT8)sLeastSaidQuote, 3);
+        IncreaseMercRandomQuoteValue((uint8_t)sLeastSaidQuote, 3);
     }
 
     uiLastTime = GetJA2Clock();
@@ -1963,7 +1963,7 @@ void HandleSpeckIdleConversation(BOOLEAN fReset) {
 }
 
 INT16 GetRandomQuoteThatHasBeenSaidTheLeast() {
-  UINT8 cnt;
+  uint8_t cnt;
   INT16 sSmallestNumber = 255;
 
   for (cnt = 0; cnt < MERC_NUMBER_OF_RANDOM_QUOTES; cnt++) {
@@ -1983,8 +1983,8 @@ INT16 GetRandomQuoteThatHasBeenSaidTheLeast() {
     return (gNumberOfTimesQuoteSaid[sSmallestNumber].ubQuoteID);
 }
 
-void IncreaseMercRandomQuoteValue(UINT8 ubQuoteID, UINT8 ubValue) {
-  UINT8 cnt;
+void IncreaseMercRandomQuoteValue(uint8_t ubQuoteID, uint8_t ubValue) {
+  uint8_t cnt;
 
   for (cnt = 0; cnt < MERC_NUMBER_OF_RANDOM_QUOTES; cnt++) {
     if (gNumberOfTimesQuoteSaid[cnt].ubQuoteID == ubQuoteID) {
@@ -2130,8 +2130,8 @@ void InitializeNumDaysMercArrive() {
 void MakeBiffAwayForCoupleOfDays() { gMercProfiles[BIFF].uiDayBecomesAvailable = Random(2) + 2; }
 
 BOOLEAN AreAnyOfTheNewMercsAvailable() {
-  UINT8 i;
-  UINT8 ubMercID;
+  uint8_t i;
+  uint8_t ubMercID;
 
   if (LaptopSaveInfo.fNewMercsAvailableAtMercSite) return (FALSE);
 
@@ -2188,7 +2188,7 @@ void ShouldAnyNewMercMercBecomeAvailable() {
   }
 }
 
-BOOLEAN CanMercBeAvailableYet(UINT8 ubMercToCheck) {
+BOOLEAN CanMercBeAvailableYet(uint8_t ubMercToCheck) {
   // if the merc is already available
   if (gConditionsForMercAvailability[ubMercToCheck].ubMercArrayID <=
       LaptopSaveInfo.gubLastMercIndex)
@@ -2261,7 +2261,7 @@ void NewMercsAvailableAtMercSiteCallBack() {
 
 // used for older saves
 void CalcAproximateAmountPaidToSpeck() {
-  UINT8 i, ubMercID;
+  uint8_t i, ubMercID;
 
   // loop through all the mercs and tally up the amount speck should have been paid
   for (i = 0; i < NUMBER_OF_MERCS; i++) {
@@ -2275,7 +2275,7 @@ void CalcAproximateAmountPaidToSpeck() {
 
 // CJC Dec 1 2002: calculate whether any MERC characters have been used at all
 uint32_t CalcMercDaysServed() {
-  UINT8 i, ubMercID;
+  uint8_t i, ubMercID;
   uint32_t uiDaysServed = 0;
 
   for (i = 0; i < NUMBER_OF_MERCS; i++) {

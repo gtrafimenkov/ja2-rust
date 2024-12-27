@@ -66,7 +66,7 @@ uint16_t gusMeanWhileGridNo[] = {
 };
 
 typedef struct {
-  UINT8 ubProfile;
+  uint8_t ubProfile;
   INT16 sX;
   INT16 sY;
   INT16 sZ;
@@ -93,9 +93,9 @@ uint32_t guiNumNPCSaves = 0;
 BOOLEAN gfReloadingScreenFromMeanwhile = FALSE;
 INT16 gsOldCurInterfacePanel = 0;
 BOOLEAN gfWorldWasLoaded = FALSE;
-UINT8 ubCurrentMeanWhileId = 0;
+uint8_t ubCurrentMeanWhileId = 0;
 
-void BeginMeanwhileCallBack(UINT8 bExitValue);
+void BeginMeanwhileCallBack(uint8_t bExitValue);
 void DoneFadeOutMeanwhile(void);
 void DoneFadeInMeanwhile(void);
 void DoneFadeOutMeanwhileOnceDone(void);
@@ -128,7 +128,7 @@ extern void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce);
 void ProcessImplicationsOfMeanwhile(void);
 
 // set flag for this event
-void SetMeanWhileFlag(UINT8 ubMeanwhileID) {
+void SetMeanWhileFlag(uint8_t ubMeanwhileID) {
   switch (ubMeanwhileID) {
     case END_OF_PLAYERS_FIRST_BATTLE:
       uiMeanWhileFlags |= END_OF_PLAYERS_FIRST_BATTLE_FLAG;
@@ -185,7 +185,7 @@ void SetMeanWhileFlag(UINT8 ubMeanwhileID) {
 }
 
 // is this flag set?
-BOOLEAN GetMeanWhileFlag(UINT8 ubMeanwhileID) {
+BOOLEAN GetMeanWhileFlag(uint8_t ubMeanwhileID) {
   uint32_t uiTrue = FALSE;
   switch (ubMeanwhileID) {
     case END_OF_PLAYERS_FIRST_BATTLE:
@@ -298,7 +298,7 @@ void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, uint32_t uiTime
   AddStrategicEvent(EVENT_MEANWHILE, uiTime, pMeanwhileDef->ubMeanwhileID);
 }
 
-BOOLEAN BeginMeanwhile(UINT8 ubMeanwhileID) {
+BOOLEAN BeginMeanwhile(uint8_t ubMeanwhileID) {
   INT32 cnt;
 
   // copy meanwhile data from array to structure for current
@@ -339,7 +339,7 @@ void BringupMeanwhileBox() {
     DoMessageBox(MSG_BOX_BASIC_STYLE, zStr, guiCurrentScreen, MSG_BOX_FLAG_OKSKIP,
                  BeginMeanwhileCallBack, NULL);
   } else {
-    DoMessageBox(MSG_BOX_BASIC_STYLE, zStr, guiCurrentScreen, (UINT8)MSG_BOX_FLAG_OK,
+    DoMessageBox(MSG_BOX_BASIC_STYLE, zStr, guiCurrentScreen, (uint8_t)MSG_BOX_FLAG_OK,
                  BeginMeanwhileCallBack, NULL);
   }
 }
@@ -397,7 +397,7 @@ void StartMeanwhile() {
   gfWorldWasLoaded = gfWorldLoaded;
 
   // OK, we have been told to start.....
-  SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+  SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
 
   // Setup NPC locations, depending on meanwhile type...
   switch (gCurrentMeanwhileDef.ubMeanwhileID) {
@@ -548,11 +548,11 @@ void DoneFadeInMeanwhile() {
     }
 
     TriggerNPCRecordImmediately(gCurrentMeanwhileDef.ubNPCNumber,
-                                (UINT8)gCurrentMeanwhileDef.usTriggerEvent);
+                                (uint8_t)gCurrentMeanwhileDef.usTriggerEvent);
   }
 }
 
-void BeginMeanwhileCallBack(UINT8 bExitValue) {
+void BeginMeanwhileCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_OK || bExitValue == MSG_BOX_RETURN_YES) {
     gTacticalStatus.uiFlags |= ENGAGED_IN_CONV;
     // Increment reference count...
@@ -667,7 +667,7 @@ void ProcessImplicationsOfMeanwhile(void) {
 
 void EndMeanwhile() {
   uint32_t cnt;
-  UINT8 ubProfile;
+  uint8_t ubProfile;
 
   EmptyDialogueQueue();
   ProcessImplicationsOfMeanwhile();
@@ -717,7 +717,7 @@ void EndMeanwhile() {
 
 void DoneFadeOutMeanwhileOnceDone() {
   uint32_t cnt;
-  UINT8 ubProfile;
+  uint8_t ubProfile;
 
   // OK, insertion data found, enter sector!
   gfReloadingScreenFromMeanwhile = TRUE;
@@ -763,7 +763,7 @@ void DoneFadeOutMeanwhileOnceDone() {
 
     case GAME_SCREEN:
       // restore old interface panel flag
-      SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+      SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
       break;
   }
 
@@ -797,7 +797,7 @@ void LocateToMeanwhileCharacter() {
 
 BOOLEAN AreReloadingFromMeanwhile() { return (gfReloadingScreenFromMeanwhile); }
 
-UINT8 GetMeanwhileID() { return (gCurrentMeanwhileDef.ubMeanwhileID); }
+uint8_t GetMeanwhileID() { return (gCurrentMeanwhileDef.ubMeanwhileID); }
 
 void HandleCreatureRelease(void) {
   uint32_t uiTime = 0;
@@ -816,12 +816,12 @@ void HandleCreatureRelease(void) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleMeanWhileEventPostingForTownLiberation(UINT8 bTownId) {
+void HandleMeanWhileEventPostingForTownLiberation(uint8_t bTownId) {
   // post event for meanwhile whithin the next 6 hours if it still will be daylight, otherwise the
   // next morning
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
   BOOLEAN fHandled = FALSE;
 
   MeanwhileDef.sSectorX = 3;
@@ -867,7 +867,7 @@ void HandleMeanWhileEventPostingForTownLiberation(UINT8 bTownId) {
   }
 }
 
-void HandleMeanWhileEventPostingForTownLoss(UINT8 bTownId) {
+void HandleMeanWhileEventPostingForTownLoss(uint8_t bTownId) {
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
@@ -892,7 +892,7 @@ void HandleMeanWhileEventPostingForTownLoss(UINT8 bTownId) {
 void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSamId) {
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
   BOOLEAN fHandled = FALSE;
 
   if (bSamId == -1) {
@@ -1057,7 +1057,7 @@ void HandleInterrogationMeanwhileScene(void) {
 void HandleFirstBattleVictory(void) {
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
     return;
@@ -1081,7 +1081,7 @@ void HandleFirstBattleVictory(void) {
 void HandleDelayedFirstBattleVictory(void) {
   uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
     return;

@@ -62,8 +62,8 @@ void DeleteAnimationCache(uint16_t usSoldierID, struct AnimationSurfaceCache *pA
 
 BOOLEAN GetCachedAnimationSurface(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache,
                                   uint16_t usSurfaceIndex, uint16_t usCurrentAnimation) {
-  UINT8 cnt;
-  UINT8 ubLowestIndex = 0;
+  uint8_t cnt;
+  uint8_t ubLowestIndex = 0;
   INT16 sMostHits = (INT16)32000;
   uint16_t usCurrentAnimSurface;
 
@@ -134,7 +134,7 @@ BOOLEAN GetCachedAnimationSurface(uint16_t usSoldierID, struct AnimationSurfaceC
 }
 
 void UnLoadCachedAnimationSurfaces(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
-  UINT8 cnt;
+  uint8_t cnt;
 
   // Check to see if surface exists already
   for (cnt = 0; cnt < pAnimCache->ubCacheSize; cnt++) {

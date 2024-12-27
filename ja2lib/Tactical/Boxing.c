@@ -26,20 +26,20 @@
 #include "Utils/MusicControl.h"
 
 INT16 gsBoxerGridNo[NUM_BOXERS] = {11393, 11233, 11073};
-UINT8 gubBoxerID[NUM_BOXERS] = {NOBODY, NOBODY, NOBODY};
+uint8_t gubBoxerID[NUM_BOXERS] = {NOBODY, NOBODY, NOBODY};
 BOOLEAN gfBoxerFought[NUM_BOXERS] = {FALSE, FALSE, FALSE};
 BOOLEAN gfLastBoxingMatchWonByPlayer = FALSE;
-UINT8 gubBoxingMatchesWon = 0;
-UINT8 gubBoxersRests = 0;
+uint8_t gubBoxingMatchesWon = 0;
+uint8_t gubBoxersRests = 0;
 BOOLEAN gfBoxersResting = FALSE;
 
 extern void RecalculateOppCntsDueToBecomingNeutral(struct SOLDIERTYPE* pSoldier);
 
 void ExitBoxing(void) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
   struct SOLDIERTYPE* pSoldier;
   uint32_t uiLoop;
-  UINT8 ubPass;
+  uint8_t ubPass;
 
   // find boxers and turn them neutral again
 
@@ -149,11 +149,11 @@ void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSoldier) {
   SetBoxingState(NOT_BOXING);
 }
 
-UINT8 CountPeopleInBoxingRing(void) {
+uint8_t CountPeopleInBoxingRing(void) {
   struct SOLDIERTYPE* pSoldier;
   uint32_t uiLoop;
-  UINT8 ubRoom;
-  UINT8 ubTotalInRing = 0;
+  uint8_t ubRoom;
+  uint8_t ubTotalInRing = 0;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
     pSoldier = MercSlots[uiLoop];
@@ -170,9 +170,9 @@ UINT8 CountPeopleInBoxingRing(void) {
 
 void CountPeopleInBoxingRingAndDoActions(void) {
   uint32_t uiLoop;
-  UINT8 ubTotalInRing = 0;
-  UINT8 ubRoom;
-  UINT8 ubPlayersInRing = 0;
+  uint8_t ubTotalInRing = 0;
+  uint8_t ubRoom;
+  uint8_t ubPlayersInRing = 0;
   struct SOLDIERTYPE* pSoldier;
   struct SOLDIERTYPE* pInRing[2] = {NULL, NULL};
   struct SOLDIERTYPE* pNonBoxingPlayer = NULL;
@@ -256,7 +256,7 @@ void CountPeopleInBoxingRingAndDoActions(void) {
 
 BOOLEAN CheckOnBoxers(void) {
   uint32_t uiLoop;
-  UINT8 ubID;
+  uint8_t ubID;
 
   // repick boxer IDs every time
   if (gubBoxerID[0] == NOBODY) {
@@ -326,7 +326,7 @@ BOOLEAN PickABoxer(void) {
 }
 
 BOOLEAN BoxerAvailable(void) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   // No way around this, BoxerAvailable will have to go find boxer IDs if they aren't set.
   if (CheckOnBoxers() == FALSE) {
@@ -344,9 +344,9 @@ BOOLEAN BoxerAvailable(void) {
 
 // NOTE THIS IS NOW BROKEN BECAUSE NPC.C ASSUMES THAT BOXERSAVAILABLE < 3 IS A
 // SEQUEL FIGHT.   Maybe we could check Kingpin's location instead!
-UINT8 BoxersAvailable(void) {
-  UINT8 ubLoop;
-  UINT8 ubCount = 0;
+uint8_t BoxersAvailable(void) {
+  uint8_t ubLoop;
+  uint8_t ubCount = 0;
 
   for (ubLoop = 0; ubLoop < NUM_BOXERS; ubLoop++) {
     if (gubBoxerID[ubLoop] != NOBODY && !gfBoxerFought[ubLoop]) {
@@ -362,9 +362,9 @@ BOOLEAN AnotherFightPossible(void) {
   // a player has at least OKLIFE + 5 life
 
   // and at least one fight HAS occurred
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct SOLDIERTYPE* pSoldier;
-  UINT8 ubAvailable;
+  uint8_t ubAvailable;
 
   ubAvailable = BoxersAvailable();
 
@@ -386,7 +386,7 @@ BOOLEAN AnotherFightPossible(void) {
 }
 
 void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
 
   if (InARoom(pSoldier->sGridNo, &ubRoom) && ubRoom == BOXING_RING) {
     // someone moving in/into the ring

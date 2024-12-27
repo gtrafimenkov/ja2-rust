@@ -265,7 +265,7 @@ void CalculateCoverInRadiusAroundGridno(INT16 sTargetGridNo, INT8 bSearchRange) 
   struct SOLDIERTYPE *pSoldier = NULL;
   INT16 sGridNo;
   INT16 sCounterX, sCounterY;
-  UINT8 ubID;
+  uint8_t ubID;
   INT8 bStance;
   //	BOOLEAN fRoof;
 
@@ -410,7 +410,7 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT
 
     // if actual LOS check fails, then chance to hit is 0, ignore this guy
     if (SoldierToVirtualSoldierLineOfSightTest(pOpponent, sTargetGridNo, pSoldier->bLevel, bStance,
-                                               (UINT8)usSightLimit, TRUE) == 0) {
+                                               (uint8_t)usSightLimit, TRUE) == 0) {
       continue;
     }
 
@@ -812,7 +812,7 @@ INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo
   INT32 iLosForGridNo = 0;
   uint16_t usSightLimit = 0;
   INT8 *pPersOL, *pbPublOL;
-  UINT8 ubID;
+  uint8_t ubID;
   BOOLEAN bAware = FALSE;
 
   if (fRoof) {
@@ -838,7 +838,7 @@ INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo
   // Prone
   //
   iLosForGridNo = SoldierToVirtualSoldierLineOfSightTest(pSoldier, sTargetGridNo, fRoof, ANIM_PRONE,
-                                                         (UINT8)usSightLimit, bAware);
+                                                         (uint8_t)usSightLimit, bAware);
   if (iLosForGridNo != 0) {
     bRetVal++;
   }
@@ -846,8 +846,8 @@ INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo
   //
   // Crouch
   //
-  iLosForGridNo = SoldierToVirtualSoldierLineOfSightTest(pSoldier, sTargetGridNo, fRoof,
-                                                         ANIM_CROUCH, (UINT8)usSightLimit, bAware);
+  iLosForGridNo = SoldierToVirtualSoldierLineOfSightTest(
+      pSoldier, sTargetGridNo, fRoof, ANIM_CROUCH, (uint8_t)usSightLimit, bAware);
   if (iLosForGridNo != 0) {
     bRetVal++;
   }
@@ -856,7 +856,7 @@ INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo
   // Standing
   //
   iLosForGridNo = SoldierToVirtualSoldierLineOfSightTest(pSoldier, sTargetGridNo, fRoof, ANIM_STAND,
-                                                         (UINT8)usSightLimit, bAware);
+                                                         (uint8_t)usSightLimit, bAware);
   if (iLosForGridNo != 0) {
     bRetVal++;
   }
@@ -865,7 +865,7 @@ INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo
 }
 
 BOOLEAN IsTheRoofVisible(INT16 sGridNo) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
 
   if (InARoom(sGridNo, &ubRoom)) {
     if (gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) {
@@ -908,7 +908,7 @@ void ChangeSizeOfDisplayCover(INT32 iNewSize) {
   }
 
   // Set new size
-  gGameSettings.ubSizeOfDisplayCover = (UINT8)iNewSize;
+  gGameSettings.ubSizeOfDisplayCover = (uint8_t)iNewSize;
 
   // redisplay the cover
   RemoveCoverOfSelectedGridNo();
@@ -924,7 +924,7 @@ void ChangeSizeOfLOS(INT32 iNewSize) {
   }
 
   // Set new size
-  gGameSettings.ubSizeOfLOS = (UINT8)iNewSize;
+  gGameSettings.ubSizeOfLOS = (uint8_t)iNewSize;
 
   // ReDisplay the los
   RemoveVisibleGridNoAtSelectedGridNo();

@@ -75,7 +75,7 @@ typedef struct {
 
 SMALL_TILE_SURF gSmTileSurf[NUMBEROFTILETYPES];
 SMALL_TILE_DB gSmTileDB[NUMBEROFTILES];
-UINT8 gubSmTileNum = 0;
+uint8_t gubSmTileNum = 0;
 BOOLEAN gfSmTileLoaded = FALSE;
 BOOLEAN gfInOverheadMap = FALSE;
 struct MOUSE_REGION OverheadRegion;
@@ -95,7 +95,7 @@ void DeleteOverheadDB();
 BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(INT16 *psGridNo);
 
 extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
-extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
+extern void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 
 // Isometric utilities (for overhead stuff only)
@@ -105,7 +105,7 @@ void CopyOverheadDBShadetablesFromTileset();
 
 void RenderOverheadOverlays();
 
-void InitNewOverheadDB(UINT8 ubTilesetID) {
+void InitNewOverheadDB(uint8_t ubTilesetID) {
   uint32_t uiLoop;
   VOBJECT_DESC VObjectDesc;
   struct VObject *hVObject;
@@ -209,7 +209,7 @@ void DeleteOverheadDB() {
 }
 
 BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, struct ITEM_POOL **ppReturnedItemPool,
-                           UINT8 ubRadius, INT8 bLevel) {
+                           uint8_t ubRadius, INT8 bLevel) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -254,7 +254,7 @@ BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, struct ITEM_POOL **ppReturnedItem
 }
 
 BOOLEAN GetClosestMercInOverheadMap(INT16 sSweetGridNo, struct SOLDIERTYPE **ppReturnedSoldier,
-                                    UINT8 ubRadius) {
+                                    uint8_t ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -349,7 +349,7 @@ void HandleOverheadMap() {
     }
   }
 
-  gubSmTileNum = (UINT8)giCurrentTilesetID;
+  gubSmTileNum = (uint8_t)giCurrentTilesetID;
 
   if (gfSmTileLoaded == FALSE) {
     // LOAD LAND
@@ -506,7 +506,7 @@ void GoIntoOverheadMap() {
     // Make sure we are in team panel mode...
     gfSwitchPanel = TRUE;
     gbNewPanel = TEAM_PANEL;
-    gubNewPanelParam = (UINT8)gusSelectedSoldier;
+    gubNewPanelParam = (uint8_t)gusSelectedSoldier;
     fInterfacePanelDirty = DIRTYLEVEL2;
 
     // Disable tactical buttons......
@@ -523,7 +523,7 @@ void GoIntoOverheadMap() {
 void HandleOverheadUI() {
   InputAtom InputEvent;
   INT16 sMousePos = 0;
-  UINT8 ubID;
+  uint8_t ubID;
 
   // CHECK FOR MOUSE OVER REGIONS...
   if (GetOverheadMouseGridNo(&sMousePos)) {
@@ -606,7 +606,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
   uint32_t usTileIndex;
   INT16 sX, sY;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   struct LEVELNODE *pNode;
   SMALL_TILE_DB *pTile;
   INT16 sHeight;
@@ -932,9 +932,9 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
     // Update the save buffer
     {
       uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-      UINT8 *pDestBuf, *pSrcBuf;
+      uint8_t *pDestBuf, *pSrcBuf;
       uint16_t usWidth, usHeight;
-      UINT8 ubBitDepth;
+      uint8_t ubBitDepth;
 
       // Update saved buffer - do for the viewport size ony!
       GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
@@ -960,8 +960,8 @@ void RenderOverheadOverlays() {
   INT16 sX, sY;
   uint16_t end;
   uint16_t usLineColor = 0;
-  UINT8 *pDestBuf;
-  UINT8 ubPassengers = 0;
+  uint8_t *pDestBuf;
+  uint8_t ubPassengers = 0;
 
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   GetVideoObject(&hVObject, uiPERSONS);
@@ -1125,7 +1125,7 @@ sStartPointY_S, INT16 sEndXS, INT16 sEndYS )
         uint32_t			usTileIndex;
         INT16				sX, sY;
         uint32_t			uiDestPitchBYTES;
-        UINT8				*pDestBuf;
+        uint8_t				*pDestBuf;
         struct LEVELNODE		*pNode;
         uint16_t			usLineColor;
         INT16				sHeight;

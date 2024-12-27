@@ -51,35 +51,35 @@
 extern void DecayPublicOpplist(INT8 bTeam);
 extern void VerifyAndDecayOpplist(struct SOLDIERTYPE *pSoldier);
 void EndInterrupt(BOOLEAN fMarkInterruptOccurred);
-void DeleteFromIntList(UINT8 ubIndex, BOOLEAN fCommunicate);
+void DeleteFromIntList(uint8_t ubIndex, BOOLEAN fCommunicate);
 
 #define END_OF_INTERRUPTS 255
 
-UINT8 gubOutOfTurnOrder[MAXMERCS] = {END_OF_INTERRUPTS, 0};
-UINT8 gubOutOfTurnPersons = 0;
+uint8_t gubOutOfTurnOrder[MAXMERCS] = {END_OF_INTERRUPTS, 0};
+uint8_t gubOutOfTurnPersons = 0;
 
 #define LATEST_INTERRUPT_GUY (gubOutOfTurnOrder[gubOutOfTurnPersons])
-#define REMOVE_LATEST_INTERRUPT_GUY() (DeleteFromIntList((UINT8)(gubOutOfTurnPersons), TRUE))
+#define REMOVE_LATEST_INTERRUPT_GUY() (DeleteFromIntList((uint8_t)(gubOutOfTurnPersons), TRUE))
 #define INTERRUPTS_OVER (gubOutOfTurnPersons == 1)
 
 INT16 InterruptOnlyGuynum = NOBODY;
 BOOLEAN InterruptsAllowed = TRUE;
 BOOLEAN gfHiddenInterrupt = FALSE;
-UINT8 gubLastInterruptedGuy = 0;
+uint8_t gubLastInterruptedGuy = 0;
 
 extern uint16_t gsWhoThrewRock;
-extern UINT8 gubSightFlags;
+extern uint8_t gubSightFlags;
 
 typedef struct {
-  UINT8 ubOutOfTurnPersons;
+  uint8_t ubOutOfTurnPersons;
 
   INT16 InterruptOnlyGuynum;
   INT16 sWhoThrewRock;
   BOOLEAN InterruptsAllowed;
   BOOLEAN fHiddenInterrupt;
-  UINT8 ubLastInterruptedGuy;
+  uint8_t ubLastInterruptedGuy;
 
-  UINT8 ubFiller[16];
+  uint8_t ubFiller[16];
 } TEAM_TURN_SAVE_STRUCT;
 
 #define MIN_APS_TO_INTERRUPT 4
@@ -208,7 +208,7 @@ void FreezeInterfaceForEnemyTurn(void) {
   }
 }
 
-void EndTurn(UINT8 ubNextTeam) {
+void EndTurn(uint8_t ubNextTeam) {
   struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
 
@@ -320,9 +320,9 @@ void EndTurnEvents(void) {
   DecayRottingCorpseAIWarnings();
 }
 
-void BeginTeamTurn(UINT8 ubTeam) {
+void BeginTeamTurn(uint8_t ubTeam) {
   INT32 cnt;
-  UINT8 ubID;
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
   while (1) {
@@ -484,8 +484,8 @@ void DisplayHiddenTurnbased(struct SOLDIERTYPE *pActingSoldier) {
 }
 
 BOOLEAN EveryoneInInterruptListOnSameTeam(void) {
-  UINT8 ubLoop;
-  UINT8 ubTeam = 255;
+  uint8_t ubLoop;
+  uint8_t ubTeam = 255;
 
   for (ubLoop = 1; ubLoop <= gubOutOfTurnPersons; ubLoop++) {
     if (ubTeam == 255) {
@@ -500,11 +500,11 @@ BOOLEAN EveryoneInInterruptListOnSameTeam(void) {
 }
 
 void StartInterrupt(void) {
-  UINT8 ubFirstInterrupter;
+  uint8_t ubFirstInterrupter;
   INT8 bTeam;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pTempSoldier;
-  UINT8 ubInterrupter;
+  uint8_t ubInterrupter;
   INT32 cnt;
 
   ubFirstInterrupter = LATEST_INTERRUPT_GUY;
@@ -534,7 +534,7 @@ void StartInterrupt(void) {
   if (pSoldier->bTeam == OUR_TEAM) {
     // start interrupts for everyone on our side at once
     CHAR16 sTemp[255];
-    UINT8 ubInterrupters = 0;
+    uint8_t ubInterrupters = 0;
     INT32 iSquad, iCounter;
 
     // build string for display of who gets interrupt
@@ -700,12 +700,12 @@ void StartInterrupt(void) {
 }
 
 void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
-  UINT8 ubInterruptedSoldier;
+  uint8_t ubInterruptedSoldier;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pTempSoldier;
   INT32 cnt;
   BOOLEAN fFound;
-  UINT8 ubMinAPsToAttack;
+  uint8_t ubMinAPsToAttack;
 
   for (cnt = gubOutOfTurnPersons; cnt > 0; cnt--) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -922,10 +922,10 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
   }
 }
 
-BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
+BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, uint8_t ubOpponentID,
                                        INT8 bOldOppList) {
-  //	UINT8 ubAniType;
-  UINT8 ubMinPtsNeeded;
+  //	uint8_t ubAniType;
+  uint8_t ubMinPtsNeeded;
   INT8 bDir;
   struct SOLDIERTYPE *pOpponent;
 
@@ -1165,11 +1165,11 @@ BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, UINT8 ubOpp
   return (TRUE);
 }
 
-INT8 CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
+INT8 CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, uint8_t ubOpponentID,
                           BOOLEAN fUseWatchSpots) {
   INT8 bPoints;
   INT8 bLightLevel;
-  UINT8 ubDistance;
+  uint8_t ubDistance;
 
   // extra check to make sure neutral folks never get interrupts
   if (pSoldier->bNeutral) {
@@ -1218,7 +1218,7 @@ INT8 CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
   // if soldier is still in shock from recent injuries, that penalizes him
   bPoints -= pSoldier->bShock;
 
-  ubDistance = (UINT8)PythSpacesAway(pSoldier->sGridNo, MercPtrs[ubOpponentID]->sGridNo);
+  ubDistance = (uint8_t)PythSpacesAway(pSoldier->sGridNo, MercPtrs[ubOpponentID]->sGridNo);
 
   // if we are in combat mode - thus doing an interrupt rather than determine who gets first turn -
   // then give bonus
@@ -1334,8 +1334,8 @@ BOOLEAN InterruptDuel(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponen
   return (fResult);
 }
 
-void DeleteFromIntList(UINT8 ubIndex, BOOLEAN fCommunicate) {
-  UINT8 ubLoop;
+void DeleteFromIntList(uint8_t ubIndex, BOOLEAN fCommunicate) {
+  uint8_t ubLoop;
 
   if (ubIndex > gubOutOfTurnPersons) {
     return;
@@ -1367,8 +1367,8 @@ void DeleteFromIntList(UINT8 ubIndex, BOOLEAN fCommunicate) {
   */
 }
 
-void AddToIntList(UINT8 ubID, BOOLEAN fGainControl, BOOLEAN fCommunicate) {
-  UINT8 ubLoop;
+void AddToIntList(uint8_t ubID, BOOLEAN fGainControl, BOOLEAN fCommunicate) {
+  uint8_t ubLoop;
 
   //	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"%d added to int list", ubID );
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -1420,11 +1420,11 @@ void AddToIntList(UINT8 ubID, BOOLEAN fGainControl, BOOLEAN fCommunicate) {
 }
 
 void VerifyOutOfTurnOrderArray() {
-  UINT8 ubTeamHighest[MAXTEAMS] = {0};
-  UINT8 ubTeamsInList;
-  UINT8 ubNextInArrayOnTeam, ubNextIndex;
-  UINT8 ubTeam;
-  UINT8 ubLoop, ubLoop2;
+  uint8_t ubTeamHighest[MAXTEAMS] = {0};
+  uint8_t ubTeamsInList;
+  uint8_t ubNextInArrayOnTeam, ubNextIndex;
+  uint8_t ubTeam;
+  uint8_t ubLoop, ubLoop2;
   BOOLEAN fFoundLoop = FALSE;
 
   for (ubLoop = 1; ubLoop <= gubOutOfTurnPersons; ubLoop++) {
@@ -1506,7 +1506,7 @@ void VerifyOutOfTurnOrderArray() {
   }
 }
 
-void DoneAddingToIntList(struct SOLDIERTYPE *pSoldier, BOOLEAN fChange, UINT8 ubInterruptType) {
+void DoneAddingToIntList(struct SOLDIERTYPE *pSoldier, BOOLEAN fChange, uint8_t ubInterruptType) {
   if (fChange) {
     VerifyOutOfTurnOrderArray();
     if (EveryoneInInterruptListOnSameTeam()) {
@@ -1517,14 +1517,14 @@ void DoneAddingToIntList(struct SOLDIERTYPE *pSoldier, BOOLEAN fChange, UINT8 ub
   }
 }
 
-void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
-  UINT8 ubTeam, ubOpp;
-  UINT8 ubIntCnt;
-  UINT8 ubIntList[MAXMERCS];
-  UINT8 ubIntDiff[MAXMERCS];
-  UINT8 ubSmallestDiff;
-  UINT8 ubSlot, ubSmallestSlot;
-  UINT8 ubLoop;
+void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, uint8_t ubInterruptType) {
+  uint8_t ubTeam, ubOpp;
+  uint8_t ubIntCnt;
+  uint8_t ubIntList[MAXMERCS];
+  uint8_t ubIntDiff[MAXMERCS];
+  uint8_t ubSmallestDiff;
+  uint8_t ubSlot, ubSmallestSlot;
+  uint8_t ubLoop;
   BOOLEAN fIntOccurs;
   struct SOLDIERTYPE *pOpponent;
   BOOLEAN fControlChanged = FALSE;
@@ -1641,7 +1641,7 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
       // USUALLY pSoldier->guynum, but NOT always, because one enemy can
       // "interrupt" on another enemy's turn if he hears another team's wound
       // victim's screaming...  the guy screaming is pSoldier here, it's not his turn!
-      // AddToIntList( (UINT8) gusSelectedSoldier, FALSE, TRUE);
+      // AddToIntList( (uint8_t) gusSelectedSoldier, FALSE, TRUE);
 
       if ((gTacticalStatus.ubCurrentTeam != pSoldier->bTeam) &&
           !(gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bHuman)) {
@@ -1702,8 +1702,8 @@ BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Save the gubTurn Order Array
-  FileMan_Write(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT8) * MAXMERCS) {
+  FileMan_Write(hFile, gubOutOfTurnOrder, sizeof(uint8_t) * MAXMERCS, &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint8_t) * MAXMERCS) {
     return (FALSE);
   }
 
@@ -1729,8 +1729,8 @@ BOOLEAN LoadTeamTurnsFromTheSavedGameFile(HWFILE hFile) {
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Load the gubTurn Order Array
-  FileMan_Read(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8) * MAXMERCS) {
+  FileMan_Read(hFile, gubOutOfTurnOrder, sizeof(uint8_t) * MAXMERCS, &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint8_t) * MAXMERCS) {
     return (FALSE);
   }
 
@@ -1757,7 +1757,7 @@ BOOLEAN NPCFirstDraw(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSo
   if (pTargetSoldier->ubProfile != NO_PROFILE && pTargetSoldier->ubProfile != SLAY &&
       pTargetSoldier->bNeutral && pTargetSoldier->bOppList[pSoldier->ubID] == SEEN_CURRENTLY &&
       (FindAIUsableObjClass(pTargetSoldier, IC_WEAPON) != NO_SLOT)) {
-    UINT8 ubLargerHalf, ubSmallerHalf, ubTargetLargerHalf, ubTargetSmallerHalf;
+    uint8_t ubLargerHalf, ubSmallerHalf, ubTargetLargerHalf, ubTargetSmallerHalf;
 
     // roll the dice!
     // e.g. if level 5, roll Random( 3 + 1 ) + 2 for result from 2 to 5

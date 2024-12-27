@@ -107,8 +107,8 @@ struct LEVELNODE {
   struct LEVELNODE *pNext;
   uint32_t uiFlags;  // flags struct
 
-  UINT8 ubSumLights;  // LIGHTING INFO
-  UINT8 ubMaxLights;  // MAX LIGHTING INFO
+  uint8_t ubSumLights;  // LIGHTING INFO
+  uint8_t ubMaxLights;  // MAX LIGHTING INFO
 
   union {
     struct LEVELNODE *pPrevNode;       // FOR LAND, GOING BACKWARDS POINTER
@@ -156,10 +156,10 @@ struct LEVELNODE {
     };
   };
 
-  INT16 sRelativeZ;           // Relative position values
-  UINT8 ubShadeLevel;         // LIGHTING INFO
-  UINT8 ubNaturalShadeLevel;  // LIGHTING INFO
-  UINT8 ubFakeShadeLevel;     // LIGHTING INFO
+  INT16 sRelativeZ;             // Relative position values
+  uint8_t ubShadeLevel;         // LIGHTING INFO
+  uint8_t ubNaturalShadeLevel;  // LIGHTING INFO
+  uint8_t ubFakeShadeLevel;     // LIGHTING INFO
 };
 
 #define LAND_START_INDEX 1
@@ -199,24 +199,24 @@ typedef struct {
   struct STRUCTURE *pStructureTail;
 
   uint16_t uiFlags;
-  UINT8 ubExtFlags[2];
+  uint8_t ubExtFlags[2];
   uint16_t sSumRealLights[1];
-  UINT8 sHeight;
-  UINT8 ubAdjacentSoldierCnt;
-  UINT8 ubTerrainID;
+  uint8_t sHeight;
+  uint8_t ubAdjacentSoldierCnt;
+  uint8_t ubTerrainID;
 
-  UINT8 ubReservedSoldierID;
-  UINT8 ubBloodInfo;
-  UINT8 ubSmellInfo;
+  uint8_t ubReservedSoldierID;
+  uint8_t ubBloodInfo;
+  uint8_t ubSmellInfo;
 } MAP_ELEMENT;
 
 // World Data
 extern MAP_ELEMENT *gpWorldLevelData;
 
 // World Movement Costs
-extern UINT8 gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
+extern uint8_t gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 
-extern UINT8 gubCurrentLevel;
+extern uint8_t gubCurrentLevel;
 extern INT32 giCurrentTilesetID;
 
 extern struct VObject *hRenderVObject;
@@ -258,7 +258,7 @@ struct LEVELNODE *GetAnimProfileFlags(uint16_t sGridNo, uint16_t *usFlags,
                                       struct SOLDIERTYPE **ppTargSoldier,
                                       struct LEVELNODE *pGivenNode);
 
-void ReloadTileset(UINT8 ubID);
+void ReloadTileset(uint8_t ubID);
 
 BOOLEAN FloorAtGridNo(uint32_t iMapIndex);
 BOOLEAN DoorAtGridNo(uint32_t iMapIndex);

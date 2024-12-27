@@ -54,7 +54,7 @@ void PostEventsForSpreadOfTownOpinion(void) {
   */
 }
 
-UINT8 GetTownOpinionOfMerc(UINT8 ubProfileId, UINT8 ubTownId) {
+uint8_t GetTownOpinionOfMerc(uint8_t ubProfileId, uint8_t ubTownId) {
   Assert(ubProfileId < FIRST_NPC);
   Assert(ubTownId < NUM_TOWNS);
 
@@ -62,7 +62,7 @@ UINT8 GetTownOpinionOfMerc(UINT8 ubProfileId, UINT8 ubTownId) {
   return (gMercProfiles[ubProfileId].bMercTownReputation[ubTownId]);
 }
 
-UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId) {
+uint8_t GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId) {
   // error check
   if (pSoldier == NULL) {
     return (0);
@@ -74,7 +74,7 @@ UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownI
   return (GetTownOpinionOfMerc(GetSolProfile(pSoldier), ubTownId));
 }
 
-void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount) {
+void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, INT8 bAmount) {
   Assert(ubProfileId < FIRST_NPC);
   Assert(ubTownId < NUM_TOWNS);
 
@@ -92,7 +92,7 @@ void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount
   }
 }
 
-void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId,
+void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId,
                                            INT8 bAmount) {
   // error check
   if (pSoldier == NULL) {
@@ -106,7 +106,7 @@ void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 u
 }
 
 void HandleSpreadOfAllTownsOpinion(void) {
-  UINT8 ubProfileId;
+  uint8_t ubProfileId;
 
   // debug message
   ScreenMsg(MSG_FONT_RED, MSG_DEBUG, L"%s - Spreading town opinions about mercs", WORLDTIMESTR);
@@ -117,7 +117,7 @@ void HandleSpreadOfAllTownsOpinion(void) {
   }
 }
 
-void HandleSpreadOfTownOpinionForMerc(UINT8 ubProfileId) {
+void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId) {
   // handle opinion spread for this grunt
   INT32 iDistanceBetweenTowns;
   INT8 iCounterA, iCounterB;
@@ -142,7 +142,7 @@ void HandleSpreadOfTownOpinionForMerc(UINT8 ubProfileId) {
 }
 
 void HandleOpinionOfTownsAboutSoldier(INT8 bTownA, INT8 bTownB, INT32 iDistanceBetweenThem,
-                                      UINT8 ubProfile) {
+                                      uint8_t ubProfile) {
   // ARM: System has been scrapped
 }
 

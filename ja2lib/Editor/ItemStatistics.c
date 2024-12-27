@@ -241,7 +241,7 @@ void EnableItemStatsPanel() {}
 
 void DisableItemStatsPanel() {}
 
-void ExecuteItemStatsCmd(UINT8 ubAction) {
+void ExecuteItemStatsCmd(uint8_t ubAction) {
   switch (ubAction) {
     case ITEMSTATS_APPLY:
       if (gpItem && gpItem->usItem == ACTION_ITEM) {
@@ -715,7 +715,7 @@ void ExtractAndUpdateGunGUI() {
     i = Random(1 + Weapon[gpItem->usItem].ubMagSize);
   else
     i = min(i, Weapon[gpItem->usItem].ubMagSize);
-  gpItem->ubGunShotsLeft = (UINT8)i;
+  gpItem->ubGunShotsLeft = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(3);
@@ -727,7 +727,7 @@ void ExtractAndUpdateGunGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(4, giDefaultExistChance);
   }
 }
@@ -757,7 +757,7 @@ void ExtractAndUpdateAmmoGUI() {
     i = 1 + Random(Item[gpItem->usItem].ubPerPocket);
   else
     i = max(1, min(i, Item[gpItem->usItem].ubPerPocket));
-  gpItem->ubNumberOfObjects = (UINT8)i;
+  gpItem->ubNumberOfObjects = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   CreateItems(gpItem->usItem, 100, gpItem->ubNumberOfObjects, gpItem);
   // Update the trap level
@@ -770,7 +770,7 @@ void ExtractAndUpdateAmmoGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
@@ -826,7 +826,7 @@ void ExtractAndUpdateArmourGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
@@ -868,7 +868,7 @@ void ExtractAndUpdateEquipGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
@@ -929,7 +929,7 @@ void ExtractAndUpdateExplosivesGUI() {
       i = 1 + Random(Item[gpItem->usItem].ubPerPocket);
     else
       i = max(1, min(i, Item[gpItem->usItem].ubPerPocket));
-    gpItem->ubNumberOfObjects = (UINT8)i;
+    gpItem->ubNumberOfObjects = (uint8_t)i;
     SetInputFieldStringWithNumericStrictValue(2, i);
     CreateItems(gpItem->usItem, gpItem->bStatus[0], gpItem->ubNumberOfObjects, gpItem);
   }
@@ -943,7 +943,7 @@ void ExtractAndUpdateExplosivesGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(4, giDefaultExistChance);
   }
 }
@@ -975,7 +975,7 @@ void ExtractAndUpdateMoneyGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(2, giDefaultExistChance);
   }
 }
@@ -998,7 +998,7 @@ void OwnershipGroupButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SetOwnershipGroup(UINT8 ubNewGroup) {
+void SetOwnershipGroup(uint8_t ubNewGroup) {
   gpItem->ubOwnerCivGroup = ubNewGroup;
   SpecifyButtonText(giOwnershipGroupButton, gszCivGroupNames[ubNewGroup]);
 }
@@ -1011,7 +1011,7 @@ void ExtractAndUpdateOwnershipGUI() {
     i = Random(0);
   else
     i = max(0, min(i, 255));
-  gpItem->ubOwnerProfile = (UINT8)i;
+  gpItem->ubOwnerProfile = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
 }
 
@@ -1037,7 +1037,7 @@ void ExtractAndUpdateKeysGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(1, giDefaultExistChance);
   }
 }
@@ -1084,7 +1084,7 @@ void ExtractAndUpdateActionItemsGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
@@ -1137,7 +1137,7 @@ void ExtractAndUpdateTriggersGUI() {
 
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : max(0, min(i, 99));
-  gpItem->ubTolerance = (UINT8)i;
+  gpItem->ubTolerance = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
 
   if (gpEditingItemPool) {
@@ -1145,7 +1145,7 @@ void ExtractAndUpdateTriggersGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }

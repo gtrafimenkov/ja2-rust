@@ -34,7 +34,7 @@ enum {
   ITEMSTATS_HIDE,
   ITEMSTATS_SHOW,
 };
-void ExecuteItemStatsCmd(UINT8 ubAction);
+void ExecuteItemStatsCmd(uint8_t ubAction);
 
 extern struct OBJECTTYPE *gpItem;
 extern INT16 gsItemGridNo;
@@ -94,6 +94,6 @@ extern void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex);
 extern INT8 gbActionItemIndex;
 extern INT8 gbDefaultBombTrapLevel;
 
-extern void SetOwnershipGroup(UINT8 ubNewGroup);
+extern void SetOwnershipGroup(uint8_t ubNewGroup);
 
 #endif

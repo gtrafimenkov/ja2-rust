@@ -84,7 +84,7 @@ real Kdl = (float)(0.1 * TIME_MULTI);  // LINEAR DAMPENING ( WIND RESISTANCE )
 void SimulateObject(REAL_OBJECT *pObject, real deltaT);
 
 void CheckForObjectHittingMerc(REAL_OBJECT *pObject, uint16_t usStructureID);
-extern void DoGenericHit(struct SOLDIERTYPE *pSoldier, UINT8 ubSpecial, INT16 bDirection);
+extern void DoGenericHit(struct SOLDIERTYPE *pSoldier, uint8_t ubSpecial, INT16 bDirection);
 
 BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime);
 BOOLEAN PhysicsComputeForces(REAL_OBJECT *pObject);
@@ -144,8 +144,8 @@ void RecountObjectSlots(void) {
 }
 
 INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
-                           real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
-                           UINT8 ubActionCode, uint32_t uiActionData) {
+                           real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
+                           uint8_t ubActionCode, uint32_t uiActionData) {
   INT32 iObjectIndex;
   FLOAT mass;
   REAL_OBJECT *pObject;
@@ -339,7 +339,7 @@ BOOLEAN PhysicsComputeForces(REAL_OBJECT *pObject) {
 }
 
 BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime) {
-  UINT8 bLevel = 0;
+  uint8_t bLevel = 0;
 
   pObject->dLifeSpan += DeltaTime;
 
@@ -385,11 +385,11 @@ BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime) {
       // Make impact noise....
       if (pObject->Obj.usItem == ROCK || pObject->Obj.usItem == ROCK2) {
         MakeNoise(pObject->ubOwner, pObject->sGridNo, 0,
-                  gpWorldLevelData[pObject->sGridNo].ubTerrainID, (UINT8)(9 + PreRandom(9)),
+                  gpWorldLevelData[pObject->sGridNo].ubTerrainID, (uint8_t)(9 + PreRandom(9)),
                   NOISE_ROCK_IMPACT);
       } else if (Item[pObject->Obj.usItem].usItemClass & IC_GRENADE) {
         MakeNoise(pObject->ubOwner, pObject->sGridNo, 0,
-                  gpWorldLevelData[pObject->sGridNo].ubTerrainID, (UINT8)(9 + PreRandom(9)),
+                  gpWorldLevelData[pObject->sGridNo].ubTerrainID, (uint8_t)(9 + PreRandom(9)),
                   NOISE_GRENADE_IMPACT);
       }
 
@@ -1478,7 +1478,7 @@ INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pIte
   return (100);
 }
 
-FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight,
+FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubHeight,
                                real dForce, struct OBJECTTYPE *pItem, INT16 *psGridNo) {
   real dAngle;
   INT16 sSrcX, sSrcY;
@@ -1494,7 +1494,7 @@ FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
 }
 
 void CalculateLaunchItemBasicParams(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pItem,
-                                    INT16 sGridNo, UINT8 ubLevel, INT16 sEndZ, FLOAT *pdMagForce,
+                                    INT16 sGridNo, uint8_t ubLevel, INT16 sEndZ, FLOAT *pdMagForce,
                                     FLOAT *pdDegrees, INT16 *psFinalGridNo, BOOLEAN fArmed) {
   INT16 sInterGridNo;
   INT16 sStartZ;
@@ -1646,7 +1646,7 @@ void CalculateLaunchItemBasicParams(struct SOLDIERTYPE *pSoldier, struct OBJECTT
 
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
                                               struct OBJECTTYPE *pItem, INT16 sGridNo,
-                                              UINT8 ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
+                                              uint8_t ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
                                               BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
@@ -1736,9 +1736,9 @@ FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
 #define MIN_MISS_BY 1
 #define MAX_MISS_RADIUS 5
 
-void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
+void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubLevel,
                                        INT16 sEndZ, struct OBJECTTYPE *pItem, INT8 bMissBy,
-                                       UINT8 ubActionCode, uint32_t uiActionData) {
+                                       uint8_t ubActionCode, uint32_t uiActionData) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
   vector_3 vForce, vDirNormal;
@@ -1889,7 +1889,7 @@ void CheckForObjectHittingMerc(REAL_OBJECT *pObject, uint16_t usStructureID) {
   if (pObject->fTestObject == NO_TEST_OBJECT) {
     // Is it a guy?
     if (usStructureID < INVALID_STRUCTURE_ID) {
-      if (pObject->ubLastTargetTakenDamage != (UINT8)usStructureID) {
+      if (pObject->ubLastTargetTakenDamage != (uint8_t)usStructureID) {
         pSoldier = MercPtrs[usStructureID];
 
         sDamage = 1;
@@ -1898,7 +1898,7 @@ void CheckForObjectHittingMerc(REAL_OBJECT *pObject, uint16_t usStructureID) {
         EVENT_SoldierGotHit(pSoldier, NOTHING, sDamage, sBreath, pSoldier->bDirection, 0,
                             pObject->ubOwner, FIRE_WEAPON_TOSSED_OBJECT_SPECIAL, 0, 0, NOWHERE);
 
-        pObject->ubLastTargetTakenDamage = (UINT8)(usStructureID);
+        pObject->ubLastTargetTakenDamage = (uint8_t)(usStructureID);
       }
     }
   }
@@ -1944,7 +1944,7 @@ BOOLEAN CheckForCatchObject(REAL_OBJECT *pObject) {
 
 BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubChanceToCatch;
+  uint8_t ubChanceToCatch;
 
   // Get intended target
   pSoldier = MercPtrs[pObject->uiActionData];

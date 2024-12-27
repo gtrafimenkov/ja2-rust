@@ -8,7 +8,7 @@ struct SOLDIERTYPE;
 
 typedef struct {
   uint16_t usItem;         // index in item table for key
-  UINT8 fFlags;            // flags...
+  uint8_t fFlags;          // flags...
   uint16_t usSectorFound;  // where and
   uint16_t usDateFound;    // when the key was found
 } KEY;
@@ -29,8 +29,8 @@ typedef struct {
 /*
 typedef struct
 {
-        UINT8		ubKeyID[MAX_KEYS_PER_LOCK];
-        UINT8		ubLockType;							// numeric
+        uint8_t		ubKeyID[MAX_KEYS_PER_LOCK];
+        uint8_t		ubLockType;							// numeric
 lock type value... easier to use than flags!
         INT8		bPickSkillAdjustment;		// difficulty to pick a lock which takes
 this key INT8		bSmashSkillAdjustment;	// the strength of the lock (resistance to smashing)
@@ -39,12 +39,12 @@ this key INT8		bSmashSkillAdjustment;	// the strength of the lock (resistance to
 
 #define MAXLOCKDESCLENGTH 40
 typedef struct {
-  UINT8 ubEditorName[MAXLOCKDESCLENGTH];  // name to display in editor
-  uint16_t usKeyItem;                     // key for this door uses which graphic (item #)?
-  UINT8 ubLockType;                       // regular, padlock, electronic, etc
-  UINT8 ubPickDifficulty;                 // difficulty to pick such a lock
-  UINT8 ubSmashDifficulty;                // difficulty to smash such a lock
-  UINT8 ubFiller;
+  uint8_t ubEditorName[MAXLOCKDESCLENGTH];  // name to display in editor
+  uint16_t usKeyItem;                       // key for this door uses which graphic (item #)?
+  uint8_t ubLockType;                       // regular, padlock, electronic, etc
+  uint8_t ubPickDifficulty;                 // difficulty to pick such a lock
+  uint8_t ubSmashDifficulty;                // difficulty to smash such a lock
+  uint8_t ubFiller;
 } LOCK;
 
 // Defines below for the perceived value of the door
@@ -59,9 +59,9 @@ typedef struct {
 typedef struct {
   INT16 sGridNo;
   BOOLEAN fLocked;         // is the door locked
-  UINT8 ubTrapLevel;       // difficulty of finding the trap, 0-10
-  UINT8 ubTrapID;          // the trap type (0 is no trap)
-  UINT8 ubLockID;          // the lock (0 is no lock)
+  uint8_t ubTrapLevel;     // difficulty of finding the trap, 0-10
+  uint8_t ubTrapID;        // the trap type (0 is no trap)
+  uint8_t ubLockID;        // the lock (0 is no lock)
   INT8 bPerceivedLocked;   // The perceived lock value can be different than the fLocked.
                            // Values for this include the fact that we don't know the status of
                            // the door, etc
@@ -86,7 +86,7 @@ typedef enum {
 #define DOOR_TRAP_SILENT 0x04
 
 typedef struct {
-  UINT8 fFlags;  // stops action?  recurring trap?
+  uint8_t fFlags;  // stops action?  recurring trap?
 } DOORTRAP;
 
 // The status of the door, either open or closed
@@ -100,7 +100,7 @@ typedef struct {
 
 typedef struct {
   INT16 sGridNo;
-  UINT8 ubFlags;
+  uint8_t ubFlags;
 
 } DOOR_STATUS;
 
@@ -119,14 +119,14 @@ extern KEY KeyTable[NUM_KEYS];
 extern LOCK LockTable[NUM_LOCKS];
 extern DOORTRAP DoorTrapTable[NUM_DOOR_TRAPS];
 
-extern BOOLEAN AddKeysToKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 ubNumber);
-extern BOOLEAN RemoveKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubPos,
+extern BOOLEAN AddKeysToKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID, uint8_t ubNumber);
+extern BOOLEAN RemoveKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubPos,
                                     struct OBJECTTYPE *pObj);
-extern BOOLEAN RemoveAllOfKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubPos,
+extern BOOLEAN RemoveAllOfKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubPos,
                                          struct OBJECTTYPE *pObj);
-extern BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID);
-extern BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *pubPos);
-extern BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID);
+extern BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID);
+extern BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID, uint8_t *pubPos);
+extern BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID);
 
 extern STR16 sKeyDescriptionStrings[];
 /**********************************
@@ -140,12 +140,12 @@ extern STR16 sKeyDescriptionStrings[];
 extern DOOR *DoorTable;
 
 // Current number of doors in world.
-extern UINT8 gubNumDoors;
+extern uint8_t gubNumDoors;
 // Current max number of doors.  This is only used by the editor.  When adding doors to the
 // world, we may run out of space in the DoorTable, so we will allocate a new array with extra
 // slots, then copy everything over again.  gubMaxDoors holds the arrays actual number of slots,
 // even though the current number (gubNumDoors) will be <= to it.
-extern UINT8 gubMaxDoors;
+extern uint8_t gubMaxDoors;
 // File I/O for loading the door information from the map.  This automatically allocates
 // the exact number of slots when loading.
 

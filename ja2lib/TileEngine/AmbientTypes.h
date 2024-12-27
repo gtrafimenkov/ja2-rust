@@ -13,7 +13,7 @@
 typedef struct {
   uint32_t uiMinTime;
   uint32_t uiMaxTime;
-  UINT8 ubTimeCatagory;
+  uint8_t ubTimeCatagory;
   SGPFILENAME zFilename;
   uint32_t uiVol;
 

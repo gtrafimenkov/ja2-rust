@@ -16,8 +16,8 @@
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
 INT16 gsNumAmbData = 0;
 
-UINT8 gubCurrentSteadyStateAmbience = SSA_NONE;
-UINT8 gubCurrentSteadyStateSound = 0;
+uint8_t gubCurrentSteadyStateAmbience = SSA_NONE;
+uint8_t gubCurrentSteadyStateSound = 0;
 uint32_t guiCurrentSteadyStateSoundHandle = NO_SAMPLE;
 STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
     // NONE
@@ -186,7 +186,7 @@ STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
     },
 };
 
-BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
+BOOLEAN LoadAmbientControlFile(uint8_t ubAmbientID) {
   char zFilename[200];
   HWFILE hFile;
   INT32 cnt;
@@ -227,7 +227,7 @@ void GetAmbientDataPtr(AMBIENTDATA_STRUCT **ppAmbData, uint16_t *pusNumData) {
 
 void StopAmbients() { SoundStopAllRandom(); }
 
-void HandleNewSectorAmbience(UINT8 ubAmbientID) {
+void HandleNewSectorAmbience(uint8_t ubAmbientID) {
   // OK, we could have just loaded a sector, erase all ambient sounds from queue, shutdown all
   // ambient groupings
   SoundStopAllRandom();
@@ -278,11 +278,11 @@ uint32_t StartSteadyStateAmbient(uint32_t ubVolume, uint32_t ubLoops) {
                     &spParms));
 }
 
-BOOLEAN SetSteadyStateAmbience(UINT8 ubAmbience) {
+BOOLEAN SetSteadyStateAmbience(uint8_t ubAmbience) {
   BOOLEAN fInNight = FALSE;
   INT32 cnt;
-  UINT8 ubNumSounds = 0;
-  UINT8 ubChosenSound;
+  uint8_t ubNumSounds = 0;
+  uint8_t ubChosenSound;
 
   // Stop all ambients...
   if (guiCurrentSteadyStateSoundHandle != NO_SAMPLE) {
@@ -309,7 +309,7 @@ BOOLEAN SetSteadyStateAmbience(UINT8 ubAmbience) {
   }
 
   // Pick one
-  ubChosenSound = (UINT8)Random(ubNumSounds);
+  ubChosenSound = (uint8_t)Random(ubNumSounds);
 
   // Set!
   gubCurrentSteadyStateAmbience = ubAmbience;

@@ -62,9 +62,9 @@ uint32_t guiFlowerImages[3];
 
 uint32_t guiCurrentlySelectedFlower = 0;
 
-UINT8 gubCurFlowerIndex = 0;
-UINT8 gubCurNumberOfFlowers = 0;
-UINT8 gubPrevNumberOfFlowers = 0;
+uint8_t gubCurFlowerIndex = 0;
+uint8_t gubCurNumberOfFlowers = 0;
+uint8_t gubPrevNumberOfFlowers = 0;
 BOOLEAN gfRedrawFloristGallery = FALSE;
 
 BOOLEAN FloristGallerySubPagesVisitedFlag[4];
@@ -82,7 +82,7 @@ uint32_t guiFloralGalleryButton[2];
 BOOLEAN InitFlowerButtons();
 void DeleteFlowerButtons();
 BOOLEAN DisplayFloralDescriptions();
-void ChangingFloristGallerySubPage(UINT8 ubSubPageNumber);
+void ChangingFloristGallerySubPage(uint8_t ubSubPageNumber);
 
 void GameInitFloristGallery() {}
 
@@ -232,7 +232,7 @@ void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
-      guiCurrentlySelectedFlower = (UINT8)MSYS_GetBtnUserData(btn, 0);
+      guiCurrentlySelectedFlower = (uint8_t)MSYS_GetBtnUserData(btn, 0);
       guiCurrentLaptopMode = LAPTOP_MODE_FLORIST_ORDERFORM;
 
       gfShowBookmarks = FALSE;
@@ -369,7 +369,7 @@ BOOLEAN DisplayFloralDescriptions() {
   return (TRUE);
 }
 
-void ChangingFloristGallerySubPage(UINT8 ubSubPageNumber) {
+void ChangingFloristGallerySubPage(uint8_t ubSubPageNumber) {
   fLoadPendingFlag = TRUE;
 
   // there are 3 flowers per page

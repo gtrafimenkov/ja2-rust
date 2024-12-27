@@ -23,8 +23,8 @@ typedef struct {
   CHAR8 sFileName[FILENAME_SIZE];
   uint32_t uiOffset;
   uint32_t uiLength;
-  UINT8 ubState;
-  UINT8 ubReserved;
+  uint8_t ubState;
+  uint8_t ubReserved;
   struct _FILETIME sFileTime;
   uint16_t usReserved2;
 } DIRENTRY;
@@ -669,7 +669,7 @@ BOOLEAN CloseLibraryFile(INT16 sLibraryID, uint32_t uiFileID) {
 }
 
 BOOLEAN LibraryFileSeek(INT16 sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
-                        UINT8 uiHowToSeek) {
+                        uint8_t uiHowToSeek) {
   uint32_t uiCurPos, uiSize;
 
   // if the library is not open, return an error

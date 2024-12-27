@@ -30,7 +30,7 @@
 #define ANIMPROFILEFILENAME "BINARYDATA\\JA2PROF.DAT"
 
 struct ANIM_PROF *gpAnimProfiles = NULL;
-UINT8 gubNumAnimProfiles = 0;
+uint8_t gubNumAnimProfiles = 0;
 
 INT8 gbAnimUsageHistory[NUMANIMATIONSURFACETYPES][MAX_NUM_SOLDIERS];
 
@@ -4448,9 +4448,10 @@ BOOLEAN LoadAnimationProfiles() {
       pProfileDirs = &(gpAnimProfiles[iProfileCount].Dirs[iDirectionCount]);
 
       // Read # tiles
-      //			if ( fread( &pProfileDirs->ubNumTiles, sizeof( UINT8 ), 1, pInput )
+      //			if ( fread( &pProfileDirs->ubNumTiles, sizeof( uint8_t ), 1, pInput
+      //)
       //!= 1 )
-      if (FileMan_Read(pInput, &pProfileDirs->ubNumTiles, sizeof(UINT8), &uiBytesRead) != 1) {
+      if (FileMan_Read(pInput, &pProfileDirs->ubNumTiles, sizeof(uint8_t), &uiBytesRead) != 1) {
         return (FALSE);
       }
 

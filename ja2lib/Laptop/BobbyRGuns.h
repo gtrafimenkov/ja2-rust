@@ -20,7 +20,7 @@
 #define BOBBYR_NO_ITEMS 65535
 
 extern uint16_t gusCurWeaponIndex;
-extern UINT8 gubLastGunIndex;
+extern uint8_t gubLastGunIndex;
 extern INT32 giBobbyRHomeImage;
 
 void GameInitBobbyRGuns();

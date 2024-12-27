@@ -79,8 +79,8 @@ INT32 giMenuAnchorX, giMenuAnchorY;
 #define PROG_BAR_LENGTH 627
 
 BOOLEAN gfProgBarActive = FALSE;
-UINT8 gubProgNumEnemies = 0;
-UINT8 gubProgCurEnemy = 0;
+uint8_t gubProgNumEnemies = 0;
+uint8_t gubProgCurEnemy = 0;
 
 typedef struct {
   uint32_t uiSurface;
@@ -98,7 +98,7 @@ typedef struct {
 TOP_MESSAGE gTopMessage;
 BOOLEAN gfTopMessageDirty = FALSE;
 
-void CreateTopMessage(uint32_t uiSurface, UINT8 ubType, CHAR16 *psString);
+void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString);
 extern uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
                                            uint16_t usAnimState);
 
@@ -128,7 +128,7 @@ BOOLEAN gfPanelAllocated = FALSE;
 extern struct MOUSE_REGION gDisableRegion;
 extern struct MOUSE_REGION gUserTurnRegion;
 extern BOOLEAN gfUserTurnRegionActive;
-extern UINT8 gubSelectSMPanelToMerc;
+extern uint8_t gubSelectSMPanelToMerc;
 extern BOOLEAN gfIgnoreOnSelectedGuy;
 
 enum {
@@ -459,7 +459,7 @@ void ShutdownCurrentPanel() {
   }
 }
 
-void SetCurrentTacticalPanelCurrentMerc(UINT8 ubID) {
+void SetCurrentTacticalPanelCurrentMerc(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   // Disable faces
@@ -481,7 +481,7 @@ void SetCurrentTacticalPanelCurrentMerc(UINT8 ubID) {
       break;
 
     case TEAM_PANEL:
-      SetTEAMPanelCurrentMerc((UINT8)gusSelectedSoldier);
+      SetTEAMPanelCurrentMerc((uint8_t)gusSelectedSoldier);
       break;
   }
 }
@@ -498,7 +498,7 @@ void CreateCurrentTacticalPanelButtons() {
   }
 }
 
-void SetCurrentInterfacePanel(UINT8 ubNewPanel) {
+void SetCurrentInterfacePanel(uint8_t ubNewPanel) {
   ShutdownCurrentPanel();
 
   // INit new panel
@@ -509,7 +509,7 @@ void SetCurrentInterfacePanel(UINT8 ubNewPanel) {
 
 void ToggleTacticalPanels() {
   gfSwitchPanel = TRUE;
-  gubNewPanelParam = (UINT8)gusSelectedSoldier;
+  gubNewPanelParam = (uint8_t)gusSelectedSoldier;
 
   if (gsCurInterfacePanel == SM_PANEL) {
     gbNewPanel = TEAM_PANEL;
@@ -530,7 +530,7 @@ void RemoveCurrentTacticalPanelButtons() {
   }
 }
 
-BOOLEAN IsMercPortraitVisible(UINT8 ubSoldierID) {
+BOOLEAN IsMercPortraitVisible(uint8_t ubSoldierID) {
   if (gsCurInterfacePanel == TEAM_PANEL) {
     return (TRUE);
   }
@@ -1179,7 +1179,7 @@ void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16
                                  BOOLEAN fRadio) {
   INT16 sMercScreenX, sMercScreenY;
   INT16 sOffsetX, sOffsetY;
-  UINT8 ubAnimUseHeight;
+  uint8_t ubAnimUseHeight;
   INT16 sStanceOffset = 0;
   INT16 sTextBodyTypeYOffset = 62;
 
@@ -1604,7 +1604,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   INT8 bBandage;
 
@@ -1728,7 +1728,7 @@ void RestoreInterface() {
 }
 
 void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
 
   BltVideoSurface(pBlitter->uiDestBuff, guiINTEXT, 0, pBlitter->pBackground->sLeft,
@@ -1746,7 +1746,7 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   UnLockVideoSurface(pBlitter->uiDestBuff);
 }
 
-void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {
+void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, uint8_t ubDirtyLevel) {
   if (pSoldier->bTeam == gbPlayerNum) {
     // ONly set to a higher level!
     if (fInterfacePanelDirty < ubDirtyLevel) {
@@ -1758,7 +1758,7 @@ void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {
 typedef struct {
   struct SOLDIERTYPE *pSoldier;
   struct STRUCTURE *pStructure;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   INT16 sX;
   INT16 sY;
   BOOLEAN fMenuHandled;
@@ -1770,7 +1770,7 @@ OPENDOOR_MENU gOpenDoorMenu;
 BOOLEAN gfInOpenDoorMenu = FALSE;
 
 BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                         UINT8 ubDirection, BOOLEAN fClosingDoor) {
+                         uint8_t ubDirection, BOOLEAN fClosingDoor) {
   INT16 sHeight, sWidth;
   INT16 sScreenX, sScreenY;
 
@@ -2150,7 +2150,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Check APs
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_OPEN_DOOR, BP_OPEN_DOOR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         if (gOpenDoorMenu.fClosingDoor) {
           ChangeSoldierState(gOpenDoorMenu.pSoldier,
@@ -2169,7 +2169,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Boot door
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_BOOT_DOOR, BP_BOOT_DOOR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_FORCE);
       } else {
@@ -2182,7 +2182,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Unlock door
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_UNLOCK_DOOR, BP_UNLOCK_DOOR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_UNLOCK);
       } else {
@@ -2195,7 +2195,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Lockpick
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_PICKLOCK, BP_PICKLOCK, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_LOCKPICK);
       } else {
@@ -2208,7 +2208,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Lockpick
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_EXAMINE_DOOR, BP_EXAMINE_DOOR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_EXAMINE);
       } else {
@@ -2221,7 +2221,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Explode
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_EXPLODE_DOOR, BP_EXPLODE_DOOR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_EXPLODE);
       } else {
@@ -2234,7 +2234,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Explode
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_UNTRAP_DOOR, BP_UNTRAP_DOOR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_UNTRAP);
       } else {
@@ -2247,7 +2247,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
       // Explode
       if (EnoughPoints(gOpenDoorMenu.pSoldier, AP_USE_CROWBAR, BP_USE_CROWBAR, FALSE)) {
         // Set UI
-        SetUIBusy((UINT8)gOpenDoorMenu.pSoldier->ubID);
+        SetUIBusy((uint8_t)gOpenDoorMenu.pSoldier->ubID);
 
         InteractWithClosedDoor(gOpenDoorMenu.pSoldier, HANDLE_DOOR_CROWBAR);
       } else {
@@ -2350,7 +2350,7 @@ void BeginUIMessage(CHAR16 *pFontString, ...) {
   InternalBeginUIMessage(FALSE, MsgString);
 }
 
-void BeginMapUIMessage(UINT8 ubPosition, CHAR16 *pFontString, ...) {
+void BeginMapUIMessage(uint8_t ubPosition, CHAR16 *pFontString, ...) {
   va_list argptr;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t MsgString[512];
@@ -2434,7 +2434,7 @@ void EndUIMessage() {
 #define PLAYER_TEAM_TIMER_TIME_BETWEEN_BEEPS (500)
 #define PLAYER_TEAM_TIMER_TICKS_PER_ENEMY (2000 / PLAYER_TEAM_TIMER_SEC_PER_TICKS)
 
-BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString) {
+BOOLEAN AddTopMessage(uint8_t ubType, CHAR16 *pzString) {
   uint32_t cnt;
   BOOLEAN fFound = FALSE;
 
@@ -2469,7 +2469,7 @@ BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString) {
   return (FALSE);
 }
 
-void CreateTopMessage(uint32_t uiSurface, UINT8 ubType, CHAR16 *psString) {
+void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
   uint32_t uiBAR, uiPLAYERBAR, uiINTBAR;
   VOBJECT_DESC VObjectDesc;
   INT16 sX, sY;
@@ -2668,7 +2668,7 @@ void CreateTopMessage(uint32_t uiSurface, UINT8 ubType, CHAR16 *psString) {
   gfTopMessageDirty = TRUE;
 }
 
-void TurnExpiredCallBack(UINT8 bExitValue) {
+void TurnExpiredCallBack(uint8_t bExitValue) {
   // End turn...
   UIHandleEndTurn(NULL);
 }
@@ -2684,7 +2684,7 @@ void CheckForAndHandleEndPlayerTimeLimit() {
           gTacticalStatus.usTactialTurnLimitCounter++;
 
           // OK, set message that time limit has expired....
-          // DoMessageBox( MSG_BOX_BASIC_STYLE, L"Turn has Expired!", GAME_SCREEN, ( UINT8
+          // DoMessageBox( MSG_BOX_BASIC_STYLE, L"Turn has Expired!", GAME_SCREEN, ( uint8_t
           // )MSG_BOX_FLAG_OK, TurnExpiredCallBack, NULL );
 
           // End turn...
@@ -2894,7 +2894,7 @@ void PauseRT(BOOLEAN fPause) {
   }
 }
 
-void InitEnemyUIBar(UINT8 ubNumEnemies, UINT8 ubDoneEnemies) {
+void InitEnemyUIBar(uint8_t ubNumEnemies, uint8_t ubDoneEnemies) {
   // OK, set value
   gubProgNumEnemies = ubNumEnemies + ubDoneEnemies;
   gubProgCurEnemy = ubDoneEnemies;
@@ -3014,7 +3014,7 @@ typedef struct {
   INT8 bHeight;
   INT8 bPower;
   INT16 sGridNo;
-  UINT8 ubLevel;
+  uint8_t ubLevel;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fShowHeight;
   BOOLEAN fShowPower;
@@ -3026,7 +3026,7 @@ typedef struct {
   FLOAT dForce;
   FLOAT dDegrees;
   FLOAT dMaxForce;
-  UINT8 ubPowerIndex;
+  uint8_t ubPowerIndex;
 
 } AIMCUBE_UI_DATA;
 
@@ -3036,14 +3036,14 @@ static AIMCUBE_UI_DATA gCubeUIData;
 #define GET_CUBES_HEIGHT_FROM_UIHEIGHT(h) (32 + (h * 64))
 
 void CalculateAimCubeUIPhysics() {
-  UINT8 ubHeight;
+  uint8_t ubHeight;
 
   ubHeight = GET_CUBES_HEIGHT_FROM_UIHEIGHT(gCubeUIData.bHeight);
 
   if (gCubeUIData.fActiveHeightBar) {
     // OK, determine which power to use.....
     // TODO this: take force / max force * 10....
-    gCubeUIData.ubPowerIndex = (UINT8)(gCubeUIData.dForce / gCubeUIData.dMaxForce * 10);
+    gCubeUIData.ubPowerIndex = (uint8_t)(gCubeUIData.dForce / gCubeUIData.dMaxForce * 10);
   }
 
   if (gCubeUIData.fActivePowerBar) {
@@ -3081,7 +3081,7 @@ BOOLEAN AimCubeUIClick() {
   }
 }
 
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, uint8_t bStartPower,
                     INT8 bStartHeight) {
   gfInAimCubeUI = TRUE;
 
@@ -3128,7 +3128,7 @@ void IncrementAimCubeUI() {
 
       // OK, determine which power to use.....
       // TODO this: take force / max force * 10....
-      gCubeUIData.ubPowerIndex = (UINT8)(gCubeUIData.dForce / gCubeUIData.dMaxForce * 10);
+      gCubeUIData.ubPowerIndex = (uint8_t)(gCubeUIData.dForce / gCubeUIData.dMaxForce * 10);
     }
 
     // Cycle the last height yellow once

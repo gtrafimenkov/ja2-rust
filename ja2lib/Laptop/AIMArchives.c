@@ -107,11 +107,11 @@ uint32_t guiPageButtons;
 uint32_t guiAlumniPopUp;
 uint32_t guiPopUpPic;
 
-UINT8 gubPageNum;
-UINT8 gunAlumniButtonDown = 255;
+uint8_t gubPageNum;
+uint8_t gunAlumniButtonDown = 255;
 BOOLEAN gfExitingAimArchives;
-UINT8 gubDrawOldMerc;
-UINT8 gfDrawPopUpBox = FALSE;
+uint8_t gubDrawOldMerc;
+uint8_t gfDrawPopUpBox = FALSE;
 BOOLEAN gfDestroyPopUpBox;
 BOOLEAN gfFaceMouseRegionsActive;
 // BOOLEAN		gfDestroyDoneRegion;
@@ -141,7 +141,7 @@ void DestroyPopUpBox();
 void InitAlumniFaceRegions();
 void RemoveAimAlumniFaceRegion();
 void CreateDestroyDoneMouseRegion(uint16_t usPosY);
-void ChangingAimArchiveSubPage(UINT8 ubSubPageNumber);
+void ChangingAimArchiveSubPage(uint8_t ubSubPageNumber);
 
 void GameInitAimArchives() {}
 
@@ -165,7 +165,7 @@ BOOLEAN EnterAimArchives() {
   InitAimDefaults();
   InitAimMenuBar();
 
-  gubPageNum = (UINT8)giCurrentSubPage;
+  gubPageNum = (uint8_t)giCurrentSubPage;
 
   // load the Alumni Frame and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -266,7 +266,7 @@ void RenderAimArchives() {
   struct VObject *hFaceHandle;
   //  struct VObject*	hBottomButtonHandle;
   uint16_t usPosX, usPosY, x, y, i = 0;
-  UINT8 ubNumRows = 0;
+  uint8_t ubNumRows = 0;
   uint32_t uiStartLoc = 0;
   wchar_t sText[400];
 
@@ -368,13 +368,13 @@ void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
     gfDrawPopUpBox = TRUE;
     gfReDrawScreen = TRUE;
 
-    gubDrawOldMerc = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gubDrawOldMerc = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
   }
 }
 
 void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT8 ubRetValue = (UINT8)MSYS_GetBtnUserData(btn, 0);
+  uint8_t ubRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
 
@@ -436,9 +436,9 @@ void DisableAimArchiveButton() {
 }
 
 void DisplayAlumniOldMercPopUp() {
-  UINT8 i, ubNumLines = 11;  // 17
+  uint8_t i, ubNumLines = 11;  // 17
   uint16_t usPosY;
-  UINT8 ubNumDescLines;
+  uint8_t ubNumDescLines;
   struct VObject *hAlumniPopUpHandle;
   struct VObject *hDoneHandle;
   struct VObject *hFacePaneHandle;
@@ -459,7 +459,7 @@ void DisplayAlumniOldMercPopUp() {
   LoadEncryptedDataFromFile(AIM_ALUMNI_FILE, sDesc, uiStartLoc, AIM_ALUMNI_DECRIPTION_SIZE);
 
   usStringPixLength = StringPixLength(sDesc, AIM_ALUMNI_POPUP_FONT);
-  ubNumDescLines = (UINT8)(usStringPixLength / AIM_POPUP_TEXT_WIDTH);
+  ubNumDescLines = (uint8_t)(usStringPixLength / AIM_POPUP_TEXT_WIDTH);
 
   ubNumLines += ubNumDescLines;
 
@@ -630,7 +630,7 @@ void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void ChangingAimArchiveSubPage(UINT8 ubSubPageNumber) {
+void ChangingAimArchiveSubPage(uint8_t ubSubPageNumber) {
   fLoadPendingFlag = TRUE;
 
   if (AimArchivesSubPagesVisitedFlag[ubSubPageNumber] == FALSE) {

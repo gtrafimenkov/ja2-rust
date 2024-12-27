@@ -74,9 +74,9 @@ void IncreaseGameTimeCompressionRate();
 // movement under fast time compression, so objects don't warp around.
 void SetClockResolutionToDefault();  // 1 time per second
 // Valid range is 1 - 60 times per second.
-void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond);
+void SetClockResolutionPerSecond(uint8_t ubNumTimesPerSecond);
 // Function for accessing the current rate
-UINT8 ClockResolution();
+uint8_t ClockResolution();
 
 // time compression defines
 enum {
@@ -106,7 +106,7 @@ enum {
   WARPTIME_PROCESS_EVENTS_NORMALLY,
   WARPTIME_PROCESS_TARGET_TIME_FIRST,
 };
-void WarpGameTime(uint32_t uiAdjustment, UINT8 ubWarpCode);
+void WarpGameTime(uint32_t uiAdjustment, uint8_t ubWarpCode);
 
 void AdvanceToNextDay();
 

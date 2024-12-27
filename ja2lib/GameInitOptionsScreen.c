@@ -136,7 +136,7 @@ BOOLEAN gfGIOScreenExit = FALSE;
 BOOLEAN gfReRenderGIOScreen = TRUE;
 BOOLEAN gfGIOButtonsAllocated = FALSE;
 
-UINT8 gubGameOptionScreenHandler = GIO_NOTHING;
+uint8_t gubGameOptionScreenHandler = GIO_NOTHING;
 
 uint32_t gubGIOExitScreen = GAME_INIT_OPTIONS_SCREEN;
 
@@ -145,9 +145,9 @@ uint32_t guiGIOMainBackGroundImage;
 INT32 giGioMessageBox = -1;
 // BOOLEAN		gfExitGioDueToMessageBox=FALSE;
 
-// UINT8			gubDifficultySettings[ NUM_DIFF_SETTINGS ];
-// UINT8			gubGameSettings[ NUM_GAME_STYLES ];
-// UINT8			gubGunSettings[ NUM_GUN_OPTIONS ];
+// uint8_t			gubDifficultySettings[ NUM_DIFF_SETTINGS ];
+// uint8_t			gubGameSettings[ NUM_GAME_STYLES ];
+// uint8_t			gubGunSettings[ NUM_GUN_OPTIONS ];
 
 // extern	INT32						gp16PointArial;
 
@@ -197,22 +197,22 @@ BOOLEAN ExitGIOScreen();
 void HandleGIOScreen();
 BOOLEAN RenderGIOScreen();
 void GetGIOScreenUserInput();
-UINT8 GetCurrentGunButtonSetting();
+uint8_t GetCurrentGunButtonSetting();
 // JA2Gold: added save (iron man) button setting
-UINT8 GetCurrentGameSaveButtonSetting();
-UINT8 GetCurrentGameStyleButtonSetting();
-UINT8 GetCurrentDifficultyButtonSetting();
+uint8_t GetCurrentGameSaveButtonSetting();
+uint8_t GetCurrentGameStyleButtonSetting();
+uint8_t GetCurrentDifficultyButtonSetting();
 void RestoreGIOButtonBackGrounds();
 void DoneFadeOutForExitGameInitOptionScreen(void);
 void DoneFadeInForExitGameInitOptionScreen(void);
 // JA2Gold: no more timed turns setting
-// UINT8			GetCurrentTimedTurnsButtonSetting();
-BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+// uint8_t			GetCurrentTimedTurnsButtonSetting();
+BOOLEAN DoGioMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 void DisplayMessageToUserAboutGameDifficulty();
-void ConfirmGioDifSettingMessageBoxCallBack(UINT8 bExitValue);
+void ConfirmGioDifSettingMessageBoxCallBack(uint8_t bExitValue);
 BOOLEAN DisplayMessageToUserAboutIronManMode();
-void ConfirmGioIronManMessageBoxCallBack(UINT8 bExitValue);
+void ConfirmGioIronManMessageBoxCallBack(uint8_t bExitValue);
 
 // ppp
 
@@ -572,7 +572,7 @@ BOOLEAN RenderGIOScreen() {
   // Display the Gun Settings Title Text
   //	DrawTextToScreen( gzGIOScreenText[ GIO_GUN_OPTIONS_TEXT ], GIO_GUN_SETTINGS_X,
   //(uint16_t)(GIO_GUN_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_GUN_SETTINGS_WIDTH,
-  //GIO_TOGGLE_TEXT_FONT,
+  // GIO_TOGGLE_TEXT_FONT,
   // GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
   DisplayWrappedString(GIO_GUN_SETTINGS_X, (uint16_t)(GIO_GUN_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
                        GIO_GUN_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
@@ -674,7 +674,7 @@ void GetGIOScreenUserInput() {
 void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
-      UINT8 cnt;
+      uint8_t cnt;
 
       for (cnt = 0; cnt < NUM_DIFF_SETTINGS; cnt++) {
         ButtonList[guiDifficultySettingsToggles[cnt]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -683,7 +683,7 @@ void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
       // enable the current button
       btn->uiFlags |= BUTTON_CLICKED_ON;
     } else {
-      UINT8 cnt;
+      uint8_t cnt;
       BOOLEAN fAnyChecked = FALSE;
 
       // if none of the other boxes are checked, do not uncheck this box
@@ -701,7 +701,7 @@ void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
-      UINT8 cnt;
+      uint8_t cnt;
 
       for (cnt = 0; cnt < NUM_GAME_STYLES; cnt++) {
         ButtonList[guiGameStyleToggles[cnt]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -710,7 +710,7 @@ void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
       // enable the current button
       btn->uiFlags |= BUTTON_CLICKED_ON;
     } else {
-      UINT8 cnt;
+      uint8_t cnt;
       BOOLEAN fAnyChecked = FALSE;
 
       // if none of the other boxes are checked, do not uncheck this box
@@ -727,10 +727,10 @@ void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    //		UINT8	ubButton = (UINT8)MSYS_GetBtnUserData( btn, 0 );
+    //		uint8_t	ubButton = (uint8_t)MSYS_GetBtnUserData( btn, 0 );
 
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
-      UINT8 cnt;
+      uint8_t cnt;
 
       for (cnt = 0; cnt < NUM_SAVE_OPTIONS; cnt++) {
         ButtonList[guiGameSaveToggles[cnt]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -739,7 +739,7 @@ void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
       // enable the current button
       btn->uiFlags |= BUTTON_CLICKED_ON;
     } else {
-      UINT8 cnt;
+      uint8_t cnt;
       BOOLEAN fAnyChecked = FALSE;
 
       // if none of the other boxes are checked, do not uncheck this box
@@ -757,7 +757,7 @@ void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
-      UINT8 cnt;
+      uint8_t cnt;
 
       for (cnt = 0; cnt < NUM_GUN_OPTIONS; cnt++) {
         ButtonList[guiGunOptionToggles[cnt]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -766,7 +766,7 @@ void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
       // enable the current button
       btn->uiFlags |= BUTTON_CLICKED_ON;
     } else {
-      UINT8 cnt;
+      uint8_t cnt;
       BOOLEAN fAnyChecked = FALSE;
 
       // if none of the other boxes are checked, do not uncheck this box
@@ -787,11 +787,11 @@ void BtnTimedTurnsTogglesCallback( GUI_BUTTON *btn, INT32 reason )
 {
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
         {
-                UINT8	ubButton = (UINT8)MSYS_GetBtnUserData( btn, 0 );
+                uint8_t	ubButton = (uint8_t)MSYS_GetBtnUserData( btn, 0 );
 
                 if( btn->uiFlags & BUTTON_CLICKED_ON )
                 {
-                        UINT8	cnt;
+                        uint8_t	cnt;
 
                         for( cnt=0; cnt<GIO_NUM_TIMED_TURN_OPTIONS; cnt++)
                         {
@@ -804,7 +804,7 @@ void BtnTimedTurnsTogglesCallback( GUI_BUTTON *btn, INT32 reason )
                 }
                 else
                 {
-                        UINT8	cnt;
+                        uint8_t	cnt;
                         BOOLEAN fAnyChecked=FALSE;
 
                         //if none of the other boxes are checked, do not uncheck this box
@@ -860,8 +860,8 @@ void BtnGIOCancelCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-UINT8 GetCurrentDifficultyButtonSetting() {
-  UINT8 cnt;
+uint8_t GetCurrentDifficultyButtonSetting() {
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_DIFF_SETTINGS; cnt++) {
     if (ButtonList[guiDifficultySettingsToggles[cnt]]->uiFlags & BUTTON_CLICKED_ON) {
@@ -872,8 +872,8 @@ UINT8 GetCurrentDifficultyButtonSetting() {
   return (0);
 }
 
-UINT8 GetCurrentGameStyleButtonSetting() {
-  UINT8 cnt;
+uint8_t GetCurrentGameStyleButtonSetting() {
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_GAME_STYLES; cnt++) {
     if (ButtonList[guiGameStyleToggles[cnt]]->uiFlags & BUTTON_CLICKED_ON) {
@@ -883,8 +883,8 @@ UINT8 GetCurrentGameStyleButtonSetting() {
   return (0);
 }
 
-UINT8 GetCurrentGunButtonSetting() {
-  UINT8 cnt;
+uint8_t GetCurrentGunButtonSetting() {
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_GUN_OPTIONS; cnt++) {
     if (ButtonList[guiGunOptionToggles[cnt]]->uiFlags & BUTTON_CLICKED_ON) {
@@ -896,9 +896,9 @@ UINT8 GetCurrentGunButtonSetting() {
 
 // JA2 Gold: no timed turns
 /*
-UINT8	GetCurrentTimedTurnsButtonSetting()
+uint8_t	GetCurrentTimedTurnsButtonSetting()
 {
-        UINT8	cnt;
+        uint8_t	cnt;
 
         for( cnt=0; cnt<GIO_NUM_TIMED_TURN_OPTIONS; cnt++)
         {
@@ -911,8 +911,8 @@ UINT8	GetCurrentTimedTurnsButtonSetting()
 }
 */
 
-UINT8 GetCurrentGameSaveButtonSetting() {
-  UINT8 cnt;
+uint8_t GetCurrentGameSaveButtonSetting() {
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_SAVE_OPTIONS; cnt++) {
     if (ButtonList[guiGameSaveToggles[cnt]]->uiFlags & BUTTON_CLICKED_ON) {
@@ -923,7 +923,7 @@ UINT8 GetCurrentGameSaveButtonSetting() {
 }
 
 void RestoreGIOButtonBackGrounds() {
-  UINT8 cnt;
+  uint8_t cnt;
   uint16_t usPosY;
 
   usPosY = GIO_DIF_SETTINGS_Y - GIO_OFFSET_TO_TOGGLE_BOX_Y;
@@ -1003,7 +1003,7 @@ void DoneFadeOutForExitGameInitOptionScreen(void) {
 
 void DoneFadeInForExitGameInitOptionScreen(void) { SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR); }
 
-BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+BOOLEAN DoGioMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
@@ -1020,7 +1020,7 @@ BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, u
 }
 
 void DisplayMessageToUserAboutGameDifficulty() {
-  UINT8 ubDiffLevel = GetCurrentDifficultyButtonSetting();
+  uint8_t ubDiffLevel = GetCurrentDifficultyButtonSetting();
 
   switch (ubDiffLevel) {
     case 0:
@@ -1041,14 +1041,14 @@ void DisplayMessageToUserAboutGameDifficulty() {
   }
 }
 
-void ConfirmGioDifSettingMessageBoxCallBack(UINT8 bExitValue) {
+void ConfirmGioDifSettingMessageBoxCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
     gubGameOptionScreenHandler = GIO_EXIT;
   }
 }
 
 BOOLEAN DisplayMessageToUserAboutIronManMode() {
-  UINT8 ubIronManMode = GetCurrentGameSaveButtonSetting();
+  uint8_t ubIronManMode = GetCurrentGameSaveButtonSetting();
 
   // if the user has selected IRON MAN mode
   if (ubIronManMode) {
@@ -1062,7 +1062,7 @@ BOOLEAN DisplayMessageToUserAboutIronManMode() {
   return (FALSE);
 }
 
-void ConfirmGioIronManMessageBoxCallBack(UINT8 bExitValue) {
+void ConfirmGioIronManMessageBoxCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
     gubGameOptionScreenHandler = GIO_IRON_MAN_MODE;
   } else {

@@ -8,7 +8,7 @@
 struct SOLDIERTYPE;
 
 extern INT8 gbSkillTraitBonus[NUM_SKILLTRAITS];
-extern UINT8 gubTerrorists[];
+extern uint8_t gubTerrorists[];
 extern INT16 gsTerroristSector[][5][2];
 extern BOOLEAN gfPotentialTeamChangeDuringDeath;
 
@@ -160,27 +160,27 @@ typedef enum {
 BOOLEAN LoadMercProfiles(void);
 
 // This function will overload the default for the face index ( which is the ubCharNum )
-void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, uint16_t usEyesX, uint16_t usEyesY,
+void SetProfileFaceData(uint8_t ubCharNum, uint8_t ubFaceIndex, uint16_t usEyesX, uint16_t usEyesY,
                         uint16_t usMouthX, uint16_t usMouthY);
-struct SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMercsOnly);
+struct SOLDIERTYPE *FindSoldierByProfileID(uint8_t ubProfileID, BOOLEAN fPlayerMercsOnly);
 
-BOOLEAN RecruitRPC(UINT8 ubCharNum);
+BOOLEAN RecruitRPC(uint8_t ubCharNum);
 
-BOOLEAN RecruitEPC(UINT8 ubCharNum);
-BOOLEAN UnRecruitEPC(UINT8 ubCharNum);
+BOOLEAN RecruitEPC(uint8_t ubCharNum);
+BOOLEAN UnRecruitEPC(uint8_t ubCharNum);
 
-INT8 WhichBuddy(UINT8 ubCharNum, UINT8 ubBuddy);
-INT8 WhichHated(UINT8 ubCharNum, UINT8 ubHated);
+INT8 WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy);
+INT8 WhichHated(uint8_t ubCharNum, uint8_t ubHated);
 
-struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam);
+struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, uint8_t ubTeam);
 
-BOOLEAN IsProfileATerrorist(UINT8 ubProfile);
-BOOLEAN IsProfileAHeadMiner(UINT8 ubProfile);
+BOOLEAN IsProfileATerrorist(uint8_t ubProfile);
+BOOLEAN IsProfileAHeadMiner(uint8_t ubProfile);
 
 void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs);
 
 // Returns true if a buddy of the merc is on team
-BOOLEAN DoesMercHaveABuddyOnTheTeam(UINT8 ubMercID);
+BOOLEAN DoesMercHaveABuddyOnTheTeam(uint8_t ubMercID);
 
 void StartSomeMercsOnAssignment(void);
 

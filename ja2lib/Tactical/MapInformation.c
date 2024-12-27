@@ -39,7 +39,7 @@ MAPCREATE_STRUCT gMapInformation;
 
 // Current minor map version updater.
 #define MINOR_MAP_VERSION 25
-UINT8 gubMinorMapVersion = MINOR_MAP_VERSION;
+uint8_t gubMinorMapVersion = MINOR_MAP_VERSION;
 
 /*
 MINOR_MAP_VERSION Log -- Created by Kris Morness, November 14, 1997
@@ -68,7 +68,7 @@ existance.  So, all current detailed placements will also have priority existanc
 -- obsolete April 16, 1998 MAJOR CONFLICT RESULTING IN A MAJOR VERSION UPDATE 2.00! Bug 10) Padding
 on detailed placements is uninitialized.  Clear all data starting at fKillSlotIfOwnerDies. Version 9
 -- Kris -- obsolete April 26, 1998 This version requires no auto updating, but external code has
-adjusted the size of the mapedgepoint arraysize from UINT8 to uint16_t.  See Map Edgepoints.c. Bug
+adjusted the size of the mapedgepoint arraysize from uint8_t to uint16_t.  See Map Edgepoints.c. Bug
 11) Convert all wheelchaired placement bodytypes to cows.  Result of change in the animation
 database. Version 11 -- Kris -- obsolete May 2, 1998 Added new center entry point.  Need to
 initialize the original padding to -1.

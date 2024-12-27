@@ -146,7 +146,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(uint16_t *pBuffer, uint32_t uiDestPit
                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                            uint16_t usIndex, SGPRect *clipregion);
 
-BOOLEAN Blt8BPPTo8BPP(UINT8 *pDest, uint32_t uiDestPitch, UINT8 *pSrc, uint32_t uiSrcPitch,
+BOOLEAN Blt8BPPTo8BPP(uint8_t *pDest, uint32_t uiDestPitch, uint8_t *pSrc, uint32_t uiSrcPitch,
                       INT32 iDestXPos, INT32 iDestYPos, INT32 iSrcXPos, INT32 iSrcYPos,
                       uint32_t uiWidth, uint32_t uiHeight);
 BOOLEAN Blt16BPPTo16BPP(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *pSrc, uint32_t uiSrcPitch,
@@ -160,9 +160,9 @@ BOOLEAN Blt16BPPTo16BPPMirror(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *p
                               INT32 iSrcYPos, uint32_t uiWidth, uint32_t uiHeight);
 
 BOOLEAN Blt16BPPBufferPixelateRectWithColor(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                            SGPRect *area, UINT8 Pattern[8][8], uint16_t usColor);
+                                            SGPRect *area, uint8_t Pattern[8][8], uint16_t usColor);
 BOOLEAN Blt16BPPBufferPixelateRect(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, SGPRect *area,
-                                   UINT8 Pattern[8][8]);
+                                   uint8_t Pattern[8][8]);
 
 // A wrapper for the Blt16BPPBufferPixelateRect that automatically passes a hatch pattern.
 BOOLEAN Blt16BPPBufferHatchRect(uint16_t *pBuffer, uint32_t uiDestPitchBYTES, SGPRect *area);
@@ -176,18 +176,18 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(uint16_t *pBuffer, uint32_t uiDestPitchBY
                                        uint16_t usIndex);
 
 BOOLEAN Blt8BPPDataTo16BPPBuffer(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                 struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer, INT32 iX,
+                                 struct VSurface *hSrcVSurface, uint8_t *pSrcBuffer, INT32 iX,
                                  INT32 iY);
 BOOLEAN Blt8BPPDataSubTo16BPPBuffer(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                    struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
+                                    struct VSurface *hSrcVSurface, uint8_t *pSrcBuffer,
                                     uint32_t uiSrcPitch, INT32 iX, INT32 iY, SGPRect *pRect);
 
 // Blits from flat 8bpp source, to 16bpp dest, divides in half
 BOOLEAN Blt8BPPDataTo16BPPBufferHalf(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                     struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
+                                     struct VSurface *hSrcVSurface, uint8_t *pSrcBuffer,
                                      uint32_t uiSrcPitch, INT32 iX, INT32 iY);
 BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                         struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
+                                         struct VSurface *hSrcVSurface, uint8_t *pSrcBuffer,
                                          uint32_t uiSrcPitch, INT32 iX, INT32 iY, SGPRect *pRect);
 
 // New 16/16 blitters

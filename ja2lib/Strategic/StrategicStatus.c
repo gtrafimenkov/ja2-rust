@@ -50,7 +50,7 @@ BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile) {
 
 #define DEATH_RATE_SEVERITY 1.0f  // increase to make death rates higher for same # of deaths/time
 
-UINT8 CalcDeathRate(void) {
+uint8_t CalcDeathRate(void) {
   uint32_t uiDeathRate = 0;
 
   // give the player a grace period of 1 day
@@ -60,7 +60,7 @@ UINT8 CalcDeathRate(void) {
                              gStrategicStatus.uiManDaysPlayed);
   }
 
-  return ((UINT8)uiDeathRate);
+  return ((uint8_t)uiDeathRate);
 }
 
 void ModifyPlayerReputation(INT8 bRepChange) {
@@ -73,10 +73,10 @@ void ModifyPlayerReputation(INT8 bRepChange) {
   iNewBadRep = max(0, iNewBadRep);
   iNewBadRep = min(100, iNewBadRep);
 
-  gStrategicStatus.ubBadReputation = (UINT8)iNewBadRep;
+  gStrategicStatus.ubBadReputation = (uint8_t)iNewBadRep;
 }
 
-BOOLEAN MercThinksDeathRateTooHigh(UINT8 ubProfileID) {
+BOOLEAN MercThinksDeathRateTooHigh(uint8_t ubProfileID) {
   INT8 bDeathRateTolerance;
 
   bDeathRateTolerance = gMercProfiles[ubProfileID].bDeathRate;
@@ -96,7 +96,7 @@ BOOLEAN MercThinksDeathRateTooHigh(UINT8 ubProfileID) {
   }
 }
 
-BOOLEAN MercThinksBadReputationTooHigh(UINT8 ubProfileID) {
+BOOLEAN MercThinksBadReputationTooHigh(uint8_t ubProfileID) {
   INT8 bRepTolerance;
 
   bRepTolerance = gMercProfiles[ubProfileID].bReputationTolerance;
@@ -149,7 +149,7 @@ void UpdateLastDayOfPlayerActivity(uint16_t usDay) {
   }
 }
 
-UINT8 LackOfProgressTolerance(void) {
+uint8_t LackOfProgressTolerance(void) {
   if (gGameOptions.ubDifficultyLevel >= DIF_LEVEL_HARD) {
     // give an EXTRA day over normal
     return (7 - DIF_LEVEL_MEDIUM + gStrategicStatus.ubHighestProgress / 42);
@@ -161,8 +161,8 @@ UINT8 LackOfProgressTolerance(void) {
 // called once per day in the morning, decides whether Enrico should send any new E-mails to the
 // player
 void HandleEnricoEmail(void) {
-  UINT8 ubCurrentProgress = CurrentPlayerProgressPercentage();
-  UINT8 ubHighestProgress = HighestPlayerProgressPercentage();
+  uint8_t ubCurrentProgress = CurrentPlayerProgressPercentage();
+  uint8_t ubHighestProgress = HighestPlayerProgressPercentage();
 
   // if creatures have attacked a mine (doesn't care if they're still there or not at the moment)
   if (HasAnyMineBeenAttackedByMonsters() &&
@@ -216,7 +216,7 @@ void HandleEnricoEmail(void) {
         gStrategicStatus.usEnricoEmailFlags |= ENRICO_EMAIL_FLAG_SETBACK_OVER;
       } else if (GetWorldDay() > (uint32_t)(gStrategicStatus.usLastDayOfPlayerActivity)) {
         INT8 bComplaint = 0;
-        UINT8 ubTolerance;
+        uint8_t ubTolerance;
 
         gStrategicStatus.ubNumberOfDaysOfInactivity++;
         ubTolerance = LackOfProgressTolerance();
@@ -289,7 +289,7 @@ void HandleEnricoEmail(void) {
       min(gStrategicStatus.ubNumNewSectorsVisitedToday, NEW_SECTORS_EQUAL_TO_ACTIVITY) / 3;
 }
 
-void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass) {
+void TrackEnemiesKilled(uint8_t ubKilledHow, uint8_t ubSoldierClass) {
   INT8 bRankIndex;
 
   bRankIndex = SoldierClassToRankIndex(ubSoldierClass);
@@ -307,7 +307,7 @@ void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass) {
   }
 }
 
-INT8 SoldierClassToRankIndex(UINT8 ubSoldierClass) {
+INT8 SoldierClassToRankIndex(uint8_t ubSoldierClass) {
   INT8 bRankIndex = -1;
 
   // the soldier class defines are not in natural ascending order, elite comes before army!
@@ -330,8 +330,8 @@ INT8 SoldierClassToRankIndex(UINT8 ubSoldierClass) {
   return (bRankIndex);
 }
 
-UINT8 RankIndexToSoldierClass(UINT8 ubRankIndex) {
-  UINT8 ubSoldierClass = 0;
+uint8_t RankIndexToSoldierClass(uint8_t ubRankIndex) {
+  uint8_t ubSoldierClass = 0;
 
   Assert(ubRankIndex < NUM_ENEMY_RANKS);
 

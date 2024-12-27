@@ -18,7 +18,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
 void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                      INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer);
 
-void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos,
+void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, INT16 sXPos, INT16 sYPos,
                      INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
                      uint32_t uiBuffer);
 

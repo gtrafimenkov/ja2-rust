@@ -35,7 +35,7 @@ extern BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead,
 extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite,
                              uint32_t *puiBytesWritten);
 
-extern BOOLEAN FileMan_Seek(HWFILE, uint32_t uiDistance, UINT8 uiHow);
+extern BOOLEAN FileMan_Seek(HWFILE, uint32_t uiDistance, uint8_t uiHow);
 extern INT32 FileMan_GetPos(HWFILE);
 
 // returns true if at end of file, else false

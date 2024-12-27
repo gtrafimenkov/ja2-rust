@@ -56,7 +56,7 @@ void GameInitFloristCards() {}
 BOOLEAN EnterFloristCards() {
   uint16_t i, j, usPosX, usPosY;
   VOBJECT_DESC VObjectDesc;
-  UINT8 ubCount;
+  uint8_t ubCount;
 
   InitFloristDefaults();
 
@@ -100,7 +100,7 @@ BOOLEAN EnterFloristCards() {
 }
 
 void ExitFloristCards() {
-  UINT8 i;
+  uint8_t i;
 
   RemoveFloristDefaults();
   DeleteVideoObjectFromIndex(guiCardBackground);
@@ -115,7 +115,7 @@ void ExitFloristCards() {
 void HandleFloristCards() {}
 
 void RenderFloristCards() {
-  UINT8 i, j, ubCount;
+  uint8_t i, j, ubCount;
   uint16_t usPosX, usPosY;
   wchar_t sTemp[640];
   uint32_t uiStartLoc = 0;
@@ -169,7 +169,7 @@ void RenderFloristCards() {
 void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    gbCurrentlySelectedCard = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gbCurrentlySelectedCard = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST_ORDERFORM;
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {

@@ -73,8 +73,8 @@ void CheckForValidArrivalSector();
 
 INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 iNewIndex;
-  UINT8 ubCurrentSoldier = pHireMerc->ubProfileID;
+  uint8_t iNewIndex;
+  uint8_t ubCurrentSoldier = pHireMerc->ubProfileID;
   MERCPROFILESTRUCT *pMerc;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   BOOLEAN fReturn = FALSE;
@@ -137,7 +137,7 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   }
 
   // record how long the merc will be gone for
-  pMerc->bMercStatus = (UINT8)pHireMerc->iTotalContractLength;
+  pMerc->bMercStatus = (uint8_t)pHireMerc->iTotalContractLength;
 
   pSoldier = GetSoldierByID(iNewIndex);
 
@@ -253,7 +253,7 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   return (MERC_HIRE_OK);
 }
 
-void MercArrivesCallback(UINT8 ubSoldierID) {
+void MercArrivesCallback(uint8_t ubSoldierID) {
   MERCPROFILESTRUCT *pMerc;
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiTimeOfPost;
@@ -264,7 +264,7 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
     // Seeing we don't support entry into a hostile sector (except for the beginning),
     // we will nuke any enemies in this sector first.
     if (gWorldSectorX != 9 || gWorldSectorY != 1 || gbWorldSectorZ) {
-      EliminateAllEnemies((UINT8)gsMercArriveSectorX, (UINT8)gsMercArriveSectorY);
+      EliminateAllEnemies((uint8_t)gsMercArriveSectorX, (uint8_t)gsMercArriveSectorY);
     }
   }
 
@@ -338,7 +338,7 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
   }
 
   // record how long the merc will be gone for
-  pMerc->bMercStatus = (UINT8)pSoldier->iTotalContractLength;
+  pMerc->bMercStatus = (uint8_t)pSoldier->iTotalContractLength;
 
   // remember when excatly he ARRIVED in Arulco, in case he gets fired early
   pSoldier->uiTimeOfLastContractUpdate = GetWorldTotalMin();
@@ -366,14 +366,14 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
   fTeamPanelDirty = TRUE;
 
   // if the currently selected sector has no one in it, select this one instead
-  if (!CanGoToTacticalInSector(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ)) {
+  if (!CanGoToTacticalInSector(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ)) {
     ChangeSelectedMapSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), 0);
   }
 
   return;
 }
 
-BOOLEAN IsMercHireable(UINT8 ubMercID) {
+BOOLEAN IsMercHireable(uint8_t ubMercID) {
   // If the merc has an .EDT file, is not away on assignment, and isnt already hired (but not
   // arrived yet), he is not DEAD and he isnt returning home
   if ((gMercProfiles[ubMercID].bMercStatus == MERC_HAS_NO_TEXT_FILE) ||
@@ -389,7 +389,7 @@ BOOLEAN IsMercHireable(UINT8 ubMercID) {
     return (TRUE);
 }
 
-BOOLEAN IsMercDead(UINT8 ubMercID) {
+BOOLEAN IsMercDead(uint8_t ubMercID) {
   if (gMercProfiles[ubMercID].bMercStatus == MERC_IS_DEAD)
     return (TRUE);
   else
@@ -403,11 +403,11 @@ BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
 }
 
-UINT8 NumberOfMercsOnPlayerTeam() {
+uint8_t NumberOfMercsOnPlayerTeam() {
   INT8 cnt;
   struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
-  UINT8 ubCount = 0;
+  uint8_t ubCount = 0;
 
   // Set locator to first merc
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -540,7 +540,7 @@ void CheckForValidArrivalSector() {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2, sGoodX, sGoodY;
-  UINT8 ubRadius = 4;
+  uint8_t ubRadius = 4;
   INT32 leftmost;
   INT16 sSectorGridNo, sSectorGridNo2;
   INT32 uiRange, uiLowestRange = 999999;

@@ -61,12 +61,12 @@ uint32_t MapUtilScreenHandle() {
   VSURFACE_DESC vs_desc;
   uint16_t usWidth;
   uint16_t usHeight;
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint16_t *pDestBuf, *pSrcBuf;
-  UINT8 *pDataPtr;
+  uint8_t *pDataPtr;
 
-  static UINT8 *p24BitDest = NULL;
+  static uint8_t *p24BitDest = NULL;
   static RGBValues *p24BitValues = NULL;
 
   uint32_t uiRGBColor;
@@ -117,7 +117,7 @@ uint32_t MapUtilScreenHandle() {
 
     // Allocate 24 bit Surface
     p24BitValues = (RGBValues *)MemAlloc(MINIMAP_X_SIZE * MINIMAP_Y_SIZE * sizeof(RGBValues));
-    p24BitDest = (UINT8 *)p24BitValues;
+    p24BitDest = (uint8_t *)p24BitValues;
 
     // Allocate 8-bit surface
     vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
@@ -145,7 +145,7 @@ uint32_t MapUtilScreenHandle() {
   }
 
   // Render small map
-  InitNewOverheadDB((UINT8)giCurrentTilesetID);
+  InitNewOverheadDB((uint8_t)giCurrentTilesetID);
 
   gfOverheadMapDirty = TRUE;
 
@@ -214,9 +214,9 @@ uint32_t MapUtilScreenHandle() {
       }
 
       if (iCount > 0) {
-        bAvR = bR / (UINT8)iCount;
-        bAvG = bG / (UINT8)iCount;
-        bAvB = bB / (UINT8)iCount;
+        bAvR = bR / (uint8_t)iCount;
+        bAvG = bG / (uint8_t)iCount;
+        bAvB = bB / (uint8_t)iCount;
 
         sDest16BPPColor = Get16BPPColor(FROMRGB(bAvR, bAvG, bAvB));
       }
@@ -224,9 +224,9 @@ uint32_t MapUtilScreenHandle() {
       // Write into dest!
       pDestBuf[(iY * (uiDestPitchBYTES / 2)) + iX] = sDest16BPPColor;
 
-      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].r = (UINT8)bAvR;
-      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].g = (UINT8)bAvG;
-      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].b = (UINT8)bAvB;
+      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].r = (uint8_t)bAvR;
+      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].g = (uint8_t)bAvG;
+      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].b = (uint8_t)bAvB;
 
       // Increment
       dY += gdYStep;
@@ -243,7 +243,7 @@ uint32_t MapUtilScreenHandle() {
   BltVideoSurface(FRAME_BUFFER, giMiniMap, 0, 20, 360, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
 
   // QUantize!
-  pDataPtr = (UINT8 *)LockVideoSurface(gi8BitMiniMap, &uiSrcPitchBYTES);
+  pDataPtr = (uint8_t *)LockVideoSurface(gi8BitMiniMap, &uiSrcPitchBYTES);
   pDestBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   QuantizeImage(pDataPtr, p24BitDest, MINIMAP_X_SIZE, MINIMAP_Y_SIZE, pPalette);
   SetVideoSurfacePalette(ghvSurface, pPalette);
@@ -261,9 +261,9 @@ uint32_t MapUtilScreenHandle() {
     for (cnt = 0; cnt < 256; cnt++) {
       usLineColor =
           Get16BPPColor(FROMRGB(pPalette[cnt].peRed, pPalette[cnt].peGreen, pPalette[cnt].peBlue));
-      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (UINT8 *)pDestBuf);
+      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
       sX++;
-      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (UINT8 *)pDestBuf);
+      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
       sX++;
     }
   }

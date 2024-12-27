@@ -22,29 +22,29 @@ void RenderBobbyR();
 /*
 extern	uint16_t	gusFirstGunIndex;
 extern	uint16_t	gusLastGunIndex;
-extern	UINT8		gubNumGunPages;
+extern	uint8_t		gubNumGunPages;
 
 extern	uint16_t	gusFirstAmmoIndex;
 extern	uint16_t	gusLastAmmoIndex;
-extern	UINT8		gubNumAmmoPages;
+extern	uint8_t		gubNumAmmoPages;
 
 extern	uint16_t	gusFirstMiscIndex;
 extern	uint16_t	gusLastMiscIndex;
-extern	UINT8		gubNumMiscPages;
+extern	uint8_t		gubNumMiscPages;
 
 extern	uint16_t  gusFirstArmourIndex;
 extern	uint16_t  gusLastArmourIndex;
-extern	UINT8		gubNumArmourPages;
+extern	uint8_t		gubNumArmourPages;
 
 extern	uint16_t  gusFirstUsedIndex;
 extern	uint16_t  gusLastUsedIndex;
-extern	UINT8		gubNumUsedPages;
+extern	uint8_t		gubNumUsedPages;
 */
 
 extern uint32_t guiLastBobbyRayPage;
 
-// BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, uint16_t usWidth, uint16_t usHeight,
-// uint32_t uiBackGround);
+// BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t
+// usHeight, uint32_t uiBackGround);
 BOOLEAN DrawBobbyRWoodBackground();
 BOOLEAN DeleteBobbyRWoodBackground();
 BOOLEAN InitBobbyRWoodBackground();
@@ -55,7 +55,8 @@ void AddFreshBobbyRayInventory(uint16_t usItemIndex);
 void InitBobbyRayInventory();
 BOOLEAN InitBobbyRayNewInventory();
 BOOLEAN InitBobbyRayUsedInventory();
-UINT8 HowManyBRItemsToOrder(uint16_t usItemIndex, UINT8 ubCurrentlyOnHand, UINT8 ubBobbyRayNewUsed);
+uint8_t HowManyBRItemsToOrder(uint16_t usItemIndex, uint8_t ubCurrentlyOnHand,
+                              uint8_t ubBobbyRayNewUsed);
 void CancelAllPendingBRPurchaseOrders(void);
 INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
                               BOOLEAN fUsed);

@@ -53,7 +53,7 @@ uint16_t sTotalButtonWidth = 0;
 extern MINE_LOCATION_TYPE gMineLocation[];
 extern MINE_STATUS_TYPE gMineStatus[];
 extern BOOLEAN fMapScreenBottomDirty;
-// extern UINT8 gubMonsterMineInfestation[];
+// extern uint8_t gubMonsterMineInfestation[];
 
 // create the town/mine info box
 void CreateTownInfoBox(void);
@@ -253,7 +253,7 @@ void CreateTownInfoBox(void) {
 void AddTextToTownBox(void) {
   uint32_t hStringHandle = 0;
   CHAR16 wString[64];
-  UINT8 ubTownId = 0;
+  uint8_t ubTownId = 0;
   uint16_t usTownSectorIndex;
   INT16 sMineSector = 0;
 
@@ -347,8 +347,8 @@ void AddTextToTownBox(void) {
 
 // adds text to mine info box
 void AddTextToMineBox(void) {
-  UINT8 ubMineIndex;
-  UINT8 ubTown;
+  uint8_t ubMineIndex;
+  uint8_t ubTown;
   uint32_t hStringHandle;
   CHAR16 wString[64];
 
@@ -526,7 +526,7 @@ void AddCommonInfoToBox(void) {
   CHAR16 wString[64];
   uint32_t hStringHandle = 0;
   BOOLEAN fUnknownSAMSite = FALSE;
-  UINT8 ubNumEnemies;
+  uint8_t ubNumEnemies;
 
   switch (GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY)) {
     case SEC_D2:  // Chitzena SAM
@@ -565,7 +565,7 @@ void AddCommonInfoToBox(void) {
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[11]);
     AddMonoString(&hStringHandle, wString);
 
-    UINT8 ubMilitiaTotal =
+    uint8_t ubMilitiaTotal =
         CountAllMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
     if (ubMilitiaTotal > 0) {
       // some militia, show total & their breakdown by level

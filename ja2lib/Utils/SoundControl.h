@@ -387,7 +387,7 @@ enum AmbientDefines {
 
 typedef void (*SOUND_STOP_CALLBACK)(void *pData);
 
-extern UINT8 AmbientVols[NUM_AMBIENTS];
+extern uint8_t AmbientVols[NUM_AMBIENTS];
 
 extern char szSoundEffects[NUM_SAMPLES][255];
 

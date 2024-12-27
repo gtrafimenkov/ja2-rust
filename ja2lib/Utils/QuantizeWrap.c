@@ -139,8 +139,7 @@ static void CQuantizer_ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReduc
   // Find the deepest level containing at least one reducible node.
   //
   int i;
-  for (i = nColorBits - 1; (i > 0) && (pReducibleNodes[i] == NULL); i--)
-    ;
+  for (i = nColorBits - 1; (i > 0) && (pReducibleNodes[i] == NULL); i--);
 
   //
   // Reduce the node most recently added to the list at level i.
@@ -198,13 +197,13 @@ static void CQuantizer_GetColorTable(struct CQuantizer* cq, RGBQUAD* prgb) {
 ///////////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
-  UINT8 r;
-  UINT8 g;
-  UINT8 b;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
 
 } RGBValues;
 
-BOOLEAN QuantizeImage(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight,
+BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, INT16 sWidth, INT16 sHeight,
                       struct SGPPaletteEntry* pPalette) {
   INT16 sNumColors;
 
@@ -227,13 +226,13 @@ BOOLEAN QuantizeImage(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight,
   return (TRUE);
 }
 
-void MapPalette(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
+void MapPalette(uint8_t* pDest, uint8_t* pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
                 struct SGPPaletteEntry* pTable) {
   INT32 cX, cY, cnt, bBest;
   real dLowestDist;
   real dCubeDist;
   vector_3 vTableVal, vSrcVal, vDiffVal;
-  UINT8* pData;
+  uint8_t* pData;
   RGBValues* pRGBData;
 
   pRGBData = (RGBValues*)pSrc;
@@ -271,7 +270,7 @@ void MapPalette(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight, INT16 sN
       pData = &(pDest[(cY * sWidth) + cX]);
 
       // Set!
-      *pData = (UINT8)bBest;
+      *pData = (uint8_t)bBest;
     }
   }
 }

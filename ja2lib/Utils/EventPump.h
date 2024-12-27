@@ -48,8 +48,8 @@ typedef enum {
 typedef struct {
   uint16_t usIndex;
   uint16_t usRate;
-  UINT8 ubVolume;
-  UINT8 ubLoops;
+  uint8_t ubVolume;
+  uint8_t ubLoops;
   uint32_t uiPan;
 
 } EV_E_PLAYSOUND;
@@ -96,7 +96,7 @@ typedef struct {
 typedef struct {
   uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT8 ubNewStance;
+  uint8_t ubNewStance;
   INT16 sXPos;
   INT16 sYPos;
 
@@ -143,10 +143,10 @@ typedef struct {
   INT16 sYPos;
   INT16 sZPos;
   INT16 sRange;
-  UINT8 ubAttackerID;
+  uint8_t ubAttackerID;
   BOOLEAN fHit;
-  UINT8 ubSpecial;
-  UINT8 ubLocation;
+  uint8_t ubSpecial;
+  uint8_t ubLocation;
 
 } EV_S_WEAPONHIT;
 
@@ -156,7 +156,7 @@ typedef struct {
   INT16 sZPos;
   uint16_t usWeaponIndex;
   INT8 bWeaponStatus;
-  UINT8 ubAttackerID;
+  uint8_t ubAttackerID;
   uint16_t usStructureID;
   INT32 iImpact;
   INT32 iBullet;
@@ -171,16 +171,16 @@ typedef struct {
 } EV_S_WINDOWHIT;
 
 typedef struct {
-  UINT8 ubAttackerID;
+  uint8_t ubAttackerID;
 } EV_S_MISS;
 
 typedef struct {
-  UINT8 ubNoiseMaker;
+  uint8_t ubNoiseMaker;
   INT16 sGridNo;
-  UINT8 bLevel;
-  UINT8 ubTerrType;
-  UINT8 ubVolume;
-  UINT8 ubNoiseType;
+  uint8_t bLevel;
+  uint8_t ubTerrType;
+  uint8_t ubVolume;
+  uint8_t ubNoiseType;
 } EV_S_NOISE;
 
 typedef struct {
@@ -194,13 +194,13 @@ typedef struct {
 } EV_S_STOP_MERC;
 
 typedef struct {
-  UINT8 usSoldierID;
+  uint8_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT8 usPathDataSize;      // Size of Path
-  INT16 sAtGridNo;           // Owner merc is at this tile when sending packet
-  UINT8 usCurrentPathIndex;  // Index the owner of the merc is at when sending packet
-  UINT8 usPathData[NETWORK_PATH_DATA_SIZE];  // make define  // Next X tile to go to
-  UINT8 ubNewState;                          // new movment Anim
+  uint8_t usPathDataSize;      // Size of Path
+  INT16 sAtGridNo;             // Owner merc is at this tile when sending packet
+  uint8_t usCurrentPathIndex;  // Index the owner of the merc is at when sending packet
+  uint8_t usPathData[NETWORK_PATH_DATA_SIZE];  // make define  // Next X tile to go to
+  uint8_t ubNewState;                          // new movment Anim
   //	INT8		bActionPoints;
   //	INT8		bBreath;			// current breath value
   //	INT8		bDesiredDirection;
@@ -209,7 +209,7 @@ typedef struct {
 } EV_S_SENDPATHTONETWORK;
 
 typedef struct {
-  UINT8 usSoldierID;
+  uint8_t usSoldierID;
   uint32_t uiUniqueId;
   INT16 sAtGridNo;     // Owner merc is at this tile when sending packet
   INT8 bActionPoints;  // current A.P. value

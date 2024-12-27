@@ -18,7 +18,7 @@ extern BOOLEAN InitializeVideoManager(struct PlatformInitParams *params);
 extern void ShutdownVideoManager(void);
 extern void SuspendVideoManager(void);
 extern BOOLEAN RestoreVideoManager(void);
-extern void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, UINT8 *ubBitDepth);
+extern void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, uint8_t *ubBitDepth);
 extern void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom);
 extern void InvalidateScreen(void);
 extern PTR LockPrimarySurface(uint32_t *uiPitch);

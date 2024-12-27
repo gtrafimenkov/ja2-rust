@@ -97,7 +97,7 @@ BOOLEAN IsThisSquadFull(INT8 bSquadValue) {
 }
 
 INT8 GetFirstEmptySquad(void) {
-  UINT8 ubCounter = 0;
+  uint8_t ubCounter = 0;
 
   for (ubCounter = 0; ubCounter < NUMBER_OF_SQUADS; ubCounter++) {
     if (SquadIsEmpty(ubCounter) == TRUE) {
@@ -355,7 +355,7 @@ BOOLEAN SquadIsEmpty(INT8 bSquadValue) {
 BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter) {
   INT32 iCounterA = 0;
   INT32 iCounter = 0;
-  UINT8 ubGroupId = 0;
+  uint8_t ubGroupId = 0;
   // find character and remove.. check characters in all squads
 
   // squad?
@@ -734,7 +734,7 @@ void RebuildCurrentSquad(void) {
     for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
       if (sDeadMercs[iCurrentTacticalSquad][iCounter] != -1) {
         pDeadSoldier =
-            FindSoldierByProfileID((UINT8)(sDeadMercs[iCurrentTacticalSquad][iCounter]), TRUE);
+            FindSoldierByProfileID((uint8_t)(sDeadMercs[iCurrentTacticalSquad][iCounter]), TRUE);
 
         if (pDeadSoldier) {
           // squad set, now add soldiers in
@@ -747,7 +747,7 @@ void RebuildCurrentSquad(void) {
 
 void ExamineCurrentSquadLights(void) {
   // rebuilds current squad to reset faces in tactical
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   // OK, we should add lights for any guy currently bInSector who is not bad OKLIFE...
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -861,8 +861,8 @@ INT32 GetLastSquadActive(void) {
   return (iLastSquad);
 }
 
-void GetSquadPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubPrevY,
-                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, UINT8 ubSquadValue) {
+void GetSquadPosition(uint8_t *ubNextX, uint8_t *ubNextY, uint8_t *ubPrevX, uint8_t *ubPrevY,
+                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, uint8_t ubSquadValue) {
   // grab the mvt group for this squad and find all this information
 
   if (SquadMovementGroups[ubSquadValue] == 0) {
@@ -882,9 +882,9 @@ void GetSquadPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubP
   return;
 }
 
-void SetSquadPositionBetweenSectors(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY,
-                                    uint32_t uiTraverseTime, uint32_t uiArriveTime,
-                                    UINT8 ubSquadValue) {
+void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX,
+                                    uint8_t ubPrevY, uint32_t uiTraverseTime, uint32_t uiArriveTime,
+                                    uint8_t ubSquadValue) {
   // set mvt group position for squad for
 
   if (SquadMovementGroups[ubSquadValue] == 0) {
@@ -1021,7 +1021,7 @@ void RebuildSquad(INT8 bSquadValue) {
 }
 
 void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue) {
-  UINT8 ubID;
+  uint8_t ubID;
 
   // if this squad is the current one and and the psoldier is the currently selected soldier, get
   // rid of 'em
@@ -1046,7 +1046,7 @@ void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue)
   return;
 }
 
-BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, UINT8 ubSquad) {
+BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, uint8_t ubSquad) {
   if (pSoldier == NULL) {
     return (FALSE);
   }
@@ -1080,7 +1080,7 @@ BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, UINT8 ubSquad) {
   return (TRUE);
 }
 
-BOOLEAN IsAnyMercOnSquadAsleep(UINT8 ubSquadValue) {
+BOOLEAN IsAnyMercOnSquadAsleep(uint8_t ubSquadValue) {
   INT32 iCounter = 0;
 
   if (SquadIsEmpty(ubSquadValue) == TRUE) {
@@ -1111,7 +1111,7 @@ BOOLEAN AddDeadCharacterToSquadDeadGuys(struct SOLDIERTYPE *pSoldier, INT32 iSqu
   for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
     // valid soldier?
     if (sDeadMercs[iSquadValue][iCounter] != -1) {
-      pTempSoldier = FindSoldierByProfileID((UINT8)(sDeadMercs[iSquadValue][iCounter]), TRUE);
+      pTempSoldier = FindSoldierByProfileID((uint8_t)(sDeadMercs[iSquadValue][iCounter]), TRUE);
 
       if (pSoldier == pTempSoldier) {
         return (TRUE);
@@ -1124,7 +1124,7 @@ BOOLEAN AddDeadCharacterToSquadDeadGuys(struct SOLDIERTYPE *pSoldier, INT32 iSqu
     // valid soldier?
     if (sDeadMercs[iSquadValue][iCounter] != -1) {
       // yep
-      pTempSoldier = FindSoldierByProfileID((UINT8)(sDeadMercs[iSquadValue][iCounter]), TRUE);
+      pTempSoldier = FindSoldierByProfileID((uint8_t)(sDeadMercs[iSquadValue][iCounter]), TRUE);
 
       // valid soldier?
       if (pTempSoldier == NULL) {

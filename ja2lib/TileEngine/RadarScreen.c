@@ -238,7 +238,7 @@ void RenderRadarScreen() {
   INT16 sXSoldPos, sYSoldPos, sXSoldScreen, sYSoldScreen, sXSoldRadar, sYSoldRadar;
 
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   uint32_t cnt;
   INT16 sHeight, sWidth, sX;

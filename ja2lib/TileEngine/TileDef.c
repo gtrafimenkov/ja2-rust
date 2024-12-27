@@ -27,7 +27,7 @@ uint16_t gusAnimatedTiles[MAX_ANIMATED_TILES];
 
 uint16_t gTileTypeStartIndex[NUMBEROFTILETYPES];
 
-UINT8 gubEncryptionArray2[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
+uint8_t gubEncryptionArray2[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
     {81,  168, 102, 49,  61,  70,  172, 127, 7,   148, 115, 179, 10,  117, 253, 35, 30,
      218, 76,  63,  116, 210, 241, 65,  169, 157, 4,   9,   29,  205, 160, 111, 41, 213,
      193, 190, 86,  19,  207, 133, 25,  190, 187, 131, 66,  196, 253, 227, 163},
@@ -258,7 +258,7 @@ UINT8 gubEncryptionArray2[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY
 };
 
 // These values coorespond to TerrainTypeDefines order
-UINT8 gTileTypeMovementCost[NUM_TERRAIN_TYPES] = {
+uint8_t gTileTypeMovementCost[NUM_TERRAIN_TYPES] = {
     TRAVELCOST_FLAT,         // NO_TERRAIN
     TRAVELCOST_FLAT,         // FLAT GROUND
     TRAVELCOST_FLATFLOOR,    // FLAT FLOOR
@@ -274,7 +274,7 @@ UINT8 gTileTypeMovementCost[NUM_TERRAIN_TYPES] = {
 
 void CreateTileDatabase() {
   uint32_t cnt1, cnt2;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   uint32_t NumRegions;
   struct TILE_IMAGERY *TileSurf;
   TILE_ELEMENT TileElement;
@@ -294,7 +294,7 @@ void CreateTileDatabase() {
       if (NumRegions > gNumTilesPerType[cnt1]) {
 #ifdef JA2EDITOR
         // Display warning
-        gfWarning = (UINT8)cnt1;
+        gfWarning = (uint8_t)cnt1;
 #endif
 
         // Cutof
@@ -397,7 +397,7 @@ void CreateTileDatabase() {
       if (NumRegions < gNumTilesPerType[cnt1]) {
 #ifdef JA2EDITOR
         // Display warning here
-        gfWarning = (UINT8)cnt1;
+        gfWarning = (uint8_t)cnt1;
 #endif
 
         // Do underflows here
@@ -450,7 +450,7 @@ BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType) {
 
 BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete) {
   uint16_t usTempIndex;
-  UINT8 ubLastHighLevel = 0;
+  uint8_t ubLastHighLevel = 0;
 
   if (fDelete) {
     RemoveLand(iMapIndex, usIndex);
@@ -463,7 +463,7 @@ BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOL
       // Replace with new index
       return (ReplaceLandIndex(iMapIndex, usTempIndex, usIndex));
     } else {
-      return (InsertLandIndexAtLevel(iMapIndex, usIndex, (UINT8)(ubLastHighLevel + 1)));
+      return (InsertLandIndexAtLevel(iMapIndex, usIndex, (uint8_t)(ubLastHighLevel + 1)));
     }
 
   } else {
@@ -479,7 +479,7 @@ BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOL
 }
 
 BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType,
-                               UINT8 ubRadius, BOOLEAN fReplace) {
+                               uint8_t ubRadius, BOOLEAN fReplace) {
   uint16_t usTempIndex;
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
@@ -526,8 +526,8 @@ BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNew
   return (TRUE);
 }
 
-BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, UINT8 *pubLevel) {
-  UINT8 level = 0;
+BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, uint8_t *pubLevel) {
+  uint8_t level = 0;
   struct LEVELNODE *pLand;
   uint32_t fTileType = 0;
 
@@ -550,8 +550,8 @@ BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, UINT8 *pubLevel
   return (FALSE);
 }
 
-UINT8 GetLandLevelDepth(uint32_t iMapIndex) {
-  UINT8 level = 0;
+uint8_t GetLandLevelDepth(uint32_t iMapIndex) {
+  uint8_t level = 0;
   struct LEVELNODE *pLand;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
@@ -585,12 +585,12 @@ BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, uint16_t usIndex,
 }
 
 BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, uint16_t usIndex,
-                                         UINT8 *pubSubIndex) {
+                                         uint8_t *pubSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
 
-  *pubSubIndex = (UINT8)(usIndex - gTileTypeStartIndex[uiCheckType] + 1);
+  *pubSubIndex = (uint8_t)(usIndex - gTileTypeStartIndex[uiCheckType] + 1);
 
   return (TRUE);
 }
@@ -643,15 +643,15 @@ BOOLEAN GetTileFlags(uint16_t usIndex, uint32_t *puiFlags) {
   return (TRUE);
 }
 
-BOOLEAN GetTileTypeLogicalHeight(uint32_t fType, UINT8 *pubLogHeight) {
+BOOLEAN GetTileTypeLogicalHeight(uint32_t fType, uint8_t *pubLogHeight) {
   *pubLogHeight = gTileTypeLogicalHeight[fType];
 
   return (TRUE);
 }
 
 BOOLEAN LandTypeHeigher(uint32_t uiDestType, uint32_t uiSrcType) {
-  UINT8 ubDestLogHeight;
-  UINT8 ubSrcLogHeight;
+  uint8_t ubDestLogHeight;
+  uint8_t ubSrcLogHeight;
 
   // Get logical height of type at head and type we wish to paste
   GetTileTypeLogicalHeight(uiDestType, &ubDestLogHeight);
@@ -660,12 +660,12 @@ BOOLEAN LandTypeHeigher(uint32_t uiDestType, uint32_t uiSrcType) {
   return (ubDestLogHeight > ubSrcLogHeight);
 }
 
-BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel) {
+BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, uint8_t *pubLastLevel) {
   struct LEVELNODE *pLand = NULL;
-  UINT8 ubSrcLogHeight = 0;
+  uint8_t ubSrcLogHeight = 0;
   uint32_t fTileType = 0;
-  UINT8 level = 0;
-  UINT8 ubSrcTypeLevel = 0;
+  uint8_t level = 0;
+  uint8_t ubSrcTypeLevel = 0;
   BOOLEAN fFound = FALSE;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
@@ -700,12 +700,12 @@ BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLev
   return (fFound);
 }
 
-BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel) {
+BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, uint8_t *pubLastLevel) {
   struct LEVELNODE *pLand = NULL;
-  UINT8 ubSrcLogHeight;
+  uint8_t ubSrcLogHeight;
   uint32_t fTileType = 0;
-  UINT8 level = 0;
-  UINT8 ubSrcTypeLevel;
+  uint8_t level = 0;
+  uint8_t ubSrcTypeLevel;
   TILE_ELEMENT TileElem;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
@@ -756,9 +756,9 @@ BOOLEAN GetWallOrientation(uint16_t usIndex, uint16_t *pusWallOrientation) {
 }
 
 BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
-                                UINT8 *pubLevel) {
+                                uint8_t *pubLevel) {
   struct LEVELNODE *pStruct = NULL;
-  UINT8 level = 0;
+  uint8_t level = 0;
   uint16_t usCheckWallOrient = 0;
 
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
@@ -787,16 +787,16 @@ BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, uint16_t usWal
 // sharing the same tile.  This case only happens with the exterior and
 // interior bottom corners.  Otherwise, it returns the orientation of the
 // first wall encountered -- not that there should be duplicate walls...
-UINT8 CalculateWallOrientationsAtGridNo(INT32 iMapIndex) {
+uint8_t CalculateWallOrientationsAtGridNo(INT32 iMapIndex) {
   uint16_t usCheckWallOrientation = 0;
   struct LEVELNODE *pStruct = NULL;
-  UINT8 ubFinalWallOrientation = NO_ORIENTATION;
+  uint8_t ubFinalWallOrientation = NO_ORIENTATION;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   // Traverse all of the pStructs
   while (pStruct != NULL) {
     GetWallOrientation(pStruct->usIndex, &usCheckWallOrientation);
     if (ubFinalWallOrientation == NO_ORIENTATION) {  // Get the first valid orientation.
-      ubFinalWallOrientation = (UINT8)usCheckWallOrientation;
+      ubFinalWallOrientation = (uint8_t)usCheckWallOrientation;
     } else
       switch (ubFinalWallOrientation) {  // If the first valid orientation has the key counterpart
                                          // orientation,
@@ -821,7 +821,7 @@ UINT8 CalculateWallOrientationsAtGridNo(INT32 iMapIndex) {
   return ubFinalWallOrientation;
 }
 
-BOOLEAN AllocateAnimTileData(TILE_ELEMENT *pTileElem, UINT8 ubNumFrames) {
+BOOLEAN AllocateAnimTileData(TILE_ELEMENT *pTileElem, uint8_t ubNumFrames) {
   pTileElem->pAnimData = (TILE_ANIMATION_DATA *)MemAlloc(sizeof(TILE_ANIMATION_DATA));
 
   CHECKF(pTileElem->pAnimData != NULL);

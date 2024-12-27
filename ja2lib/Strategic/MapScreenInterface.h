@@ -315,7 +315,7 @@ void DisableTeamInfoPanels(void);
 void EnableTeamInfoPanels(void);
 
 // activate pop up for soldiers in the pre battle interface
-void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPopupType, INT16 xp, INT16 yp);
+void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPopupType, INT16 xp, INT16 yp);
 
 // hop up one leve,l int he map screen level interface
 void GoUpOneLevelInMap(void);
@@ -404,7 +404,7 @@ void GoToPrevCharacterInList(void);
 void GoToNextCharacterInList(void);
 
 // this does the whole miner giving player info speil
-void HandleMinerEvent(UINT8 bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuoteNumber,
+void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuoteNumber,
                       BOOLEAN fForceMapscreen);
 
 // set up the event of animating a mine sector
@@ -425,17 +425,17 @@ void StopMapScreenHelpText(void);
 // set up the help text
 void SetUpMapScreenFastHelpText(void);
 
-void TurnOnSectorLocator(UINT8 ubProfileID);
+void TurnOnSectorLocator(uint8_t ubProfileID);
 void TurnOffSectorLocator();
 
 extern INT16 gsSectorLocatorX;
 extern INT16 gsSectorLocatorY;
-extern UINT8 gubBlitSectorLocatorCode;
+extern uint8_t gubBlitSectorLocatorCode;
 
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };
 
 extern uint32_t guiSectorLocatorGraphicID;
-void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubLocatorID);
+void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubLocatorID);
 
 // the tactical version
 
@@ -494,7 +494,7 @@ void SetTixaAsFound(void);
 void SetOrtaAsFound(void);
 
 // set this SAM site as being found by the player
-void SetSAMSiteAsFound(UINT8 uiSamIndex);
+void SetSAMSiteAsFound(uint8_t uiSamIndex);
 
 // init time menus
 void InitTimersForMoveMenuMouseRegions(void);

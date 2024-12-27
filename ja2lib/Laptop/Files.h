@@ -12,8 +12,8 @@ void HandleFiles();
 void RenderFiles();
 
 struct files {
-  UINT8 ubCode;         // the code index in the files code table
-  UINT8 ubFormat;       // layout format
+  uint8_t ubCode;       // the code index in the files code table
+  uint8_t ubFormat;     // layout format
   uint32_t uiIdNumber;  // unique id number
   uint32_t uiDate;      // time in the world in global time (resolution, minutes)
   BOOLEAN fRead;
@@ -46,7 +46,7 @@ enum {
   ELGIN_BACKGROUND,
 
 };
-extern UINT8 ubFileRecordsLength[];
+extern uint8_t ubFileRecordsLength[];
 extern BOOLEAN fEnteredFileViewerFromNewFileIcon;
 extern BOOLEAN fNewFilesInFileViewer;
 
@@ -59,13 +59,13 @@ struct filerecordwidth {
   INT32 iRecordNumber;
   INT32 iRecordWidth;
   INT32 iRecordHeightAdjustment;
-  UINT8 ubFlags;
+  uint8_t ubFlags;
   struct filerecordwidth *Next;
 };
 
 typedef struct filerecordwidth FileRecordWidth;
 typedef struct filerecordwidth *FileRecordWidthPtr;
-uint32_t AddFilesToPlayersLog(UINT8 ubCode, uint32_t uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
+uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, STR8 pFirstPicFile,
                               STR8 pSecondPicFile);
 
 // add a file about this terrorist

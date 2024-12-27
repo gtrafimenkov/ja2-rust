@@ -227,7 +227,7 @@ enum {
 
 INT8 gbNewItem[NUM_INV_SLOTS];
 INT8 gbNewItemCycle[NUM_INV_SLOTS];
-UINT8 gubNewItemMerc;
+uint8_t gubNewItemMerc;
 
 // AN ARRAY OF MOUSE REGIONS, ONE FOR EACH OBJECT POSITION ON BUDDY
 struct MOUSE_REGION gInvRegions[NUM_INV_SLOTS];
@@ -236,7 +236,7 @@ extern struct MOUSE_REGION gMPanelRegion;
 extern BOOLEAN fMapInventoryItem;
 extern BOOLEAN gfAddingMoneyToMercFromPlayersAccount;
 extern struct SOLDIERTYPE *gpSMCurrentMerc;
-extern UINT8 gubSelectSMPanelToMerc;
+extern uint8_t gubSelectSMPanelToMerc;
 extern struct MOUSE_REGION gSM_SELMERCMoneyRegion;
 extern uint32_t guiMapInvSecondHandBlockout;
 
@@ -274,7 +274,7 @@ CHAR16 gzFullItemTemp[SIZE_ITEM_PROS];  // necessary, unfortunately
 void ItemDescCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 INT16 gsInvDescX;
 INT16 gsInvDescY;
-UINT8 gubItemDescStatusIndex;
+uint8_t gubItemDescStatusIndex;
 INT32 giItemDescAmmoButtonImages;
 INT32 giItemDescAmmoButton;
 BOOLEAN gfItemAmmoDown = FALSE;
@@ -289,7 +289,7 @@ INT32 guiMoneyButtonImage;
 INT32 guiMoneyDoneButtonImage;
 
 uint16_t gusOriginalAttachItem[MAX_ATTACHMENTS];
-UINT8 gbOriginalAttachStatus[MAX_ATTACHMENTS];
+uint8_t gbOriginalAttachStatus[MAX_ATTACHMENTS];
 struct SOLDIERTYPE *gpAttachSoldier;
 extern BOOLEAN gfSMDisableForItems;
 
@@ -324,7 +324,7 @@ INT16 gsItemPopupY;
 struct MOUSE_REGION gItemPopupRegions[8];
 struct MOUSE_REGION gKeyRingRegions[NUMBER_KEYS_ON_KEYRING];
 BOOLEAN gfInKeyRingPopup = FALSE;
-UINT8 gubNumItemPopups = 0;
+uint8_t gubNumItemPopups = 0;
 struct MOUSE_REGION gItemPopupRegion;
 INT16 gsItemPopupInvX;
 INT16 gsItemPopupInvY;
@@ -358,13 +358,13 @@ extern void HelpTextDoneCallback(void);
 void RemoveMoney();
 BOOLEAN CompatibleItemForApplyingOnMerc(struct OBJECTTYPE *pTestObject);
 
-extern BOOLEAN MAPInternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, UINT8 ubStatusIndex,
+extern BOOLEAN MAPInternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, uint8_t ubStatusIndex,
                                                  struct SOLDIERTYPE *pSoldier);
 extern void StartSKIDescriptionBox(void);
 
 void UpdateItemHatches();
 
-UINT8 ubRGBItemCyclePlacedItemColors[] = {
+uint8_t ubRGBItemCyclePlacedItemColors[] = {
     25,  25,  25,  50,  50,  50,  75,  75,  75,  100, 100, 100, 125, 125, 125, 150,
     150, 150, 175, 175, 175, 200, 200, 200, 225, 225, 225, 250, 250, 250,
 
@@ -670,7 +670,7 @@ void GenerateProsString(CHAR16 *zItemPros, struct OBJECTTYPE *pObject, uint32_t 
   uint32_t uiStringLength = 0;
   CHAR16 *zTemp;
   uint16_t usItem = pObject->usItem;
-  UINT8 ubWeight;
+  uint8_t ubWeight;
 
   zItemPros[0] = 0;
 
@@ -755,7 +755,7 @@ void GenerateProsString(CHAR16 *zItemPros, struct OBJECTTYPE *pObject, uint32_t 
 void GenerateConsString(CHAR16 *zItemCons, struct OBJECTTYPE *pObject, uint32_t uiPixLimit) {
   uint32_t uiStringLength = 0;
   CHAR16 *zTemp;
-  UINT8 ubWeight;
+  uint8_t ubWeight;
   uint16_t usItem = pObject->usItem;
 
   zItemCons[0] = 0;
@@ -991,7 +991,7 @@ void RenderInvBodyPanel(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY) {
                           sY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
-void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, UINT8 fDirtyLevel) {
+void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, uint8_t fDirtyLevel) {
   INT32 cnt;
   static CHAR16 pStr[150];
 
@@ -1022,13 +1022,13 @@ void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, UINT8 fDirtyLevel) {
   }
 }
 
-void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fDirtyLevel) {
+void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, uint8_t fDirtyLevel) {
   INT16 sX, sY;
   INT16 sBarX, sBarY;
   struct OBJECTTYPE *pObject;
   BOOLEAN fOutline = FALSE;
   INT16 sOutlineColor = 0;
-  UINT8 fRenderDirtyLevel;
+  uint8_t fRenderDirtyLevel;
   BOOLEAN fHatchItOut = FALSE;
 
   // Assign the screen
@@ -1044,7 +1044,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
 
     /*	OLD VERSION OF GUN/AMMO MATCH HIGHLIGHTING
                     uint32_t	uiDestPitchBYTES;
-                    UINT8		*pDestBuf;
+                    uint8_t		*pDestBuf;
                     uint16_t	usLineColor;
 
                     if ( ( Item [ pSoldier->inv[ HANDPOS ].usItem ].usItemClass & IC_GUN )  && (
@@ -1219,7 +1219,7 @@ BOOLEAN SoldierContainsAnyCompatibleStuff(struct SOLDIERTYPE *pSoldier,
   return (FALSE);
 }
 
-void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
+void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
                                             BOOLEAN fReset) {
   INT32 iCounter = 0;
 
@@ -1616,12 +1616,12 @@ BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, INT8 bInvPos, BOOLE
   return (InternalHandleCompatibleAmmoUI(pSoldier, pTestObject, fOn));
 }
 
-void GetSlotInvXY(UINT8 ubPos, INT16 *psX, INT16 *psY) {
+void GetSlotInvXY(uint8_t ubPos, INT16 *psX, INT16 *psY) {
   *psX = gSMInvData[ubPos].sX;
   *psY = gSMInvData[ubPos].sY;
 }
 
-void GetSlotInvHeightWidth(UINT8 ubPos, INT16 *psWidth, INT16 *psHeight) {
+void GetSlotInvHeightWidth(uint8_t ubPos, INT16 *psWidth, INT16 *psHeight) {
   *psWidth = gSMInvData[ubPos].sWidth;
   *psHeight = gSMInvData[ubPos].sHeight;
 }
@@ -1724,8 +1724,8 @@ void InitItemInterface() {
 }
 
 void INVRenderItem(uint32_t uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
-                   INT16 sX, INT16 sY, INT16 sWidth, INT16 sHeight, UINT8 fDirtyLevel,
-                   UINT8 *pubHighlightCounter, UINT8 ubStatusIndex, BOOLEAN fOutline,
+                   INT16 sX, INT16 sY, INT16 sWidth, INT16 sHeight, uint8_t fDirtyLevel,
+                   uint8_t *pubHighlightCounter, uint8_t ubStatusIndex, BOOLEAN fOutline,
                    INT16 sOutlineColor) {
   uint16_t uiStringLength;
   INVTYPE *pItem;
@@ -1980,8 +1980,8 @@ void CycleItemDescriptionItem() {
                                  gpItemDescSoldier);
 }
 
-BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16 sX, INT16 sY,
-                               UINT8 ubStatusIndex) {
+BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, INT16 sX, INT16 sY,
+                               uint8_t ubStatusIndex) {
   struct OBJECTTYPE *pObject;
 
   // DEF:
@@ -1998,8 +1998,8 @@ BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, I
   return (InternalInitItemDescriptionBox(pObject, sX, sY, ubStatusIndex, pSoldier));
 }
 
-BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16 sX,
-                                  INT16 sY, UINT8 ubStatusIndex) {
+BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, INT16 sX,
+                                  INT16 sY, uint8_t ubStatusIndex) {
   struct OBJECTTYPE *pObject;
 
   AllocateObject(&pObject);
@@ -2010,7 +2010,7 @@ BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition
 }
 
 BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT16 sY,
-                                       UINT8 ubStatusIndex, struct SOLDIERTYPE *pSoldier) {
+                                       uint8_t ubStatusIndex, struct SOLDIERTYPE *pSoldier) {
   VOBJECT_DESC VObjectDesc;
   CHAR8 ubString[48];
   INT32 cnt;
@@ -2117,7 +2117,7 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
                               ITEMDESC_AMMO_TEXT_WIDTH, GetFontHeight(TINYFONT1), pStr, TINYFONT1,
                               &usX, &usY);
 
-    SpecifyButtonTextOffsets(giItemDescAmmoButton, (UINT8)usX, (UINT8)usY, TRUE);
+    SpecifyButtonTextOffsets(giItemDescAmmoButton, (uint8_t)usX, (uint8_t)usY, TRUE);
 
     gfItemAmmoDown = FALSE;
   }
@@ -2504,7 +2504,7 @@ void DoAttachment(void) {
   gfReEvaluateEveryonesNothingToDo = TRUE;
 }
 
-void PermanantAttachmentMessageBoxCallBack(UINT8 ubExitValue) {
+void PermanantAttachmentMessageBoxCallBack(uint8_t ubExitValue) {
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     DoAttachment();
   }
@@ -2538,7 +2538,7 @@ void ItemDescAttachmentsCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         if ((Item[gpItemPointer->usItem].fFlags & ITEM_INSEPARABLE) &&
             ValidAttachment(gpItemPointer->usItem, gpItemDescObject->usItem)) {
           DoScreenIndependantMessageBox(Message[STR_PERMANENT_ATTACHMENT],
-                                        (UINT8)MSG_BOX_FLAG_YESNO,
+                                        (uint8_t)MSG_BOX_FLAG_YESNO,
                                         PermanantAttachmentMessageBoxCallBack);
           return;
         }
@@ -2550,7 +2550,7 @@ void ItemDescAttachmentsCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       if (EnoughPoints(gpItemDescSoldier, (AP_RELOAD_GUN + AP_PICKUP_ITEM), 0, TRUE)) {
         // Get attachment if there is one
         // The follwing function will handle if no attachment is here
-        if (RemoveAttachment(gpItemDescObject, (UINT8)uiItemPos, &gItemPointer)) {
+        if (RemoveAttachment(gpItemDescObject, (uint8_t)uiItemPos, &gItemPointer)) {
           gpItemPointer = &gItemPointer;
           gpItemPointerSoldier = gpItemDescSoldier;
 
@@ -2626,7 +2626,7 @@ void RenderItemDescriptionBox() {
   INT32 cnt;
   FLOAT fWeight;
   INT16 usX, usY;
-  UINT8 ubAttackAPs;
+  uint8_t ubAttackAPs;
   BOOLEAN fHatchOutAttachments =
       gfItemDescObjectIsAttachment;  // if examining attachment, always hatch out attachment slots
   INT16 sProsConsIndent;
@@ -2690,11 +2690,11 @@ void RenderItemDescriptionBox() {
           INVRenderItem(guiSAVEBUFFER, NULL, gpItemDescObject, sCenX, sCenY,
                         gMapItemDescAttachmentsXY[cnt].sWidth,
                         gMapItemDescAttachmentsXY[cnt].sHeight, DIRTYLEVEL2, NULL,
-                        (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
+                        (uint8_t)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
 
           sCenX = sCenX - gMapItemDescAttachmentsXY[cnt].sBarDx;
           sCenY = sCenY + gMapItemDescAttachmentsXY[cnt].sBarDy;
-          DrawItemUIBarEx(gpItemDescObject, (UINT8)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
+          DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
                           sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
                           Get16BPPColor(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
@@ -2705,11 +2705,11 @@ void RenderItemDescriptionBox() {
           INVRenderItem(guiSAVEBUFFER, NULL, gpItemDescObject, sCenX, sCenY,
                         gMapItemDescAttachmentsXY[cnt].sWidth,
                         gMapItemDescAttachmentsXY[cnt].sHeight, DIRTYLEVEL2, NULL,
-                        (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
+                        (uint8_t)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
 
           sCenX = sCenX - gItemDescAttachmentsXY[cnt].sBarDx;
           sCenY = sCenY + gItemDescAttachmentsXY[cnt].sBarDy;
-          DrawItemUIBarEx(gpItemDescObject, (UINT8)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
+          DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
                           sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
                           Get16BPPColor(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
         }
@@ -3198,12 +3198,12 @@ void RenderItemDescriptionBox() {
 
         INVRenderItem(guiSAVEBUFFER, NULL, gpItemDescObject, sCenX, sCenY,
                       gItemDescAttachmentsXY[cnt].sWidth, gItemDescAttachmentsXY[cnt].sHeight,
-                      DIRTYLEVEL2, NULL, (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
+                      DIRTYLEVEL2, NULL, (uint8_t)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
 
         sCenX = sCenX - gItemDescAttachmentsXY[cnt].sBarDx;
         sCenY = sCenY + gItemDescAttachmentsXY[cnt].sBarDy;
-        DrawItemUIBarEx(gpItemDescObject, (UINT8)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX, sCenY,
-                        ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
+        DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
+                        sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
                         Get16BPPColor(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
         SetRegionFastHelpText(&(gItemDescAttachmentRegions[cnt]),
@@ -3798,7 +3798,7 @@ void InternalBeginItemPointer(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *p
   gfReEvaluateEveryonesNothingToDo = TRUE;
 }
 
-void BeginItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos) {
+void BeginItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos) {
   BOOLEAN fOk;
   struct OBJECTTYPE pObject;
 
@@ -3816,7 +3816,7 @@ void BeginItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos) {
   }
 }
 
-void BeginKeyRingItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyRingPosition) {
+void BeginKeyRingItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyRingPosition) {
   BOOLEAN fOk;
 
   // If not null return
@@ -3936,7 +3936,7 @@ BOOLEAN SoldierCanSeeCatchComing(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo)
 void DrawItemTileCursor() {
   INT16 usMapPos;
   uint16_t usIndex;
-  UINT8 ubSoldierID;
+  uint8_t ubSoldierID;
   INT16 sAPCost;
   BOOLEAN fRecalc;
   uint32_t uiCursorFlags;
@@ -3945,7 +3945,7 @@ void DrawItemTileCursor() {
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fGiveItem = FALSE;
   INT16 sActionGridNo;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   static uint32_t uiOldCursorId = 0;
   static uint16_t usOldMousePos = 0;
   INT16 sEndZ = 0;
@@ -4017,13 +4017,13 @@ void DrawItemTileCursor() {
             if (sDist <= PASSING_ITEM_DISTANCE_OKLIFE) {
               // OK, on a valid pass
               gfUIMouseOnValidCatcher = 4;
-              gubUIValidCatcherID = (UINT8)gusUIFullTargetID;
+              gubUIValidCatcherID = (uint8_t)gusUIFullTargetID;
             } else {
               // Can they see the throw?
               if (SoldierCanSeeCatchComing(pSoldier, gpItemPointerSoldier->sGridNo)) {
                 // OK, set global that this buddy can see catch...
                 gfUIMouseOnValidCatcher = TRUE;
-                gubUIValidCatcherID = (UINT8)gusUIFullTargetID;
+                gubUIValidCatcherID = (uint8_t)gusUIFullTargetID;
               }
             }
           }
@@ -4050,7 +4050,7 @@ void DrawItemTileCursor() {
 
         // OK, set global that this buddy can see catch...
         gfUIMouseOnValidCatcher = 2;
-        gubUIValidCatcherID = (UINT8)gusUIFullTargetID;
+        gubUIValidCatcherID = (uint8_t)gusUIFullTargetID;
 
         // If this is a robot, change to say 'reload'
         if (MercPtrs[gusUIFullTargetID]->uiStatusFlags & SOLDIER_ROBOT) {
@@ -4191,12 +4191,12 @@ BOOLEAN IsValidAmmoToReloadRobot(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE
 
 BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
   // Determine what to do
-  UINT8 ubDirection;
-  UINT8 ubSoldierID;
+  uint8_t ubDirection;
+  uint8_t ubSoldierID;
   uint16_t usItem;
   INT16 sAPCost;
   struct SOLDIERTYPE *pSoldier = NULL;
-  UINT8 ubThrowActionCode = 0;
+  uint8_t ubThrowActionCode = 0;
   uint32_t uiThrowActionData = 0;
   INT16 sEndZ = 0;
   BOOLEAN fGiveItem = FALSE;
@@ -4299,7 +4299,7 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
         // Check if we can reload robot....
         if (IsValidAmmoToReloadRobot(MercPtrs[ubSoldierID], &TempObject)) {
           INT16 sActionGridNo;
-          UINT8 ubDirection;
+          uint8_t ubDirection;
           INT16 sAdjustedGridNo;
 
           // Walk up to him and reload!
@@ -4442,7 +4442,7 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
           // Change to inventory....
           // gfSwitchPanel = TRUE;
           // gbNewPanel = SM_PANEL;
-          // gubNewPanelParam = (UINT8)pSoldier->ubID;
+          // gubNewPanelParam = (uint8_t)pSoldier->ubID;
           if (!EnoughPoints(pSoldier, 3, 0, TRUE) ||
               !EnoughPoints(gpItemPointerSoldier, 3, 0, TRUE)) {
             return (FALSE);
@@ -4455,7 +4455,7 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
           // Check LOS....
           if (!SoldierTo3DLocationLineOfSightTest(pSoldier, gpItemPointerSoldier->sGridNo,
                                                   gpItemPointerSoldier->bLevel, 3,
-                                                  (UINT8)sDistVisible, TRUE)) {
+                                                  (uint8_t)sDistVisible, TRUE)) {
             return (FALSE);
           }
 
@@ -4477,11 +4477,11 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
 
             // OK, make guys turn towards each other and do animation...
             {
-              UINT8 ubFacingDirection;
+              uint8_t ubFacingDirection;
 
               // Get direction to face.....
               ubFacingDirection =
-                  (UINT8)GetDirectionFromGridNo(gpItemPointerSoldier->sGridNo, pSoldier);
+                  (uint8_t)GetDirectionFromGridNo(gpItemPointerSoldier->sGridNo, pSoldier);
 
               // Stop merc first....
               EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
@@ -4566,7 +4566,7 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
             }
 
             // Get direction
-            ubDirection = (UINT8)GetDirectionFromGridNo(gpItemPointerSoldier->sGridNo, pSoldier);
+            ubDirection = (uint8_t)GetDirectionFromGridNo(gpItemPointerSoldier->sGridNo, pSoldier);
 
             // ATE: Goto stationary...
             SoldierGotoStationaryStance(pSoldier);
@@ -4578,7 +4578,7 @@ BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
       }
 
       // CHANGE DIRECTION AT LEAST
-      ubDirection = (UINT8)GetDirectionFromGridNo(sGridNo, gpItemPointerSoldier);
+      ubDirection = (uint8_t)GetDirectionFromGridNo(sGridNo, gpItemPointerSoldier);
       EVENT_SetSoldierDesiredDirection(gpItemPointerSoldier, ubDirection);
       gpItemPointerSoldier->fTurningUntilDone = TRUE;
 
@@ -4616,12 +4616,12 @@ BOOLEAN InItemStackPopup() { return (gfInItemStackPopup); }
 
 BOOLEAN InKeyRingPopup() { return (gfInKeyRingPopup); }
 
-BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16 sInvX, INT16 sInvY,
-                           INT16 sInvWidth, INT16 sInvHeight) {
+BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, INT16 sInvX,
+                           INT16 sInvY, INT16 sInvWidth, INT16 sInvHeight) {
   VOBJECT_DESC VObjectDesc;
   INT16 sX, sY, sCenX, sCenY;
   SGPRect aRect;
-  UINT8 ubLimit;
+  uint8_t ubLimit;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT32 cnt;
@@ -4777,14 +4777,14 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
       sY = (INT16)(gsItemPopupY + 3);
 
       INVRenderItem(FRAME_BUFFER, NULL, gpItemPopupObject, sX, sY, 29, 23, DIRTYLEVEL2, NULL,
-                    (UINT8)RENDER_ITEM_NOSTATUS, FALSE, 0);
+                    (uint8_t)RENDER_ITEM_NOSTATUS, FALSE, 0);
 
       // Do status bar here...
       sNewX = (INT16)(gsItemPopupX + (cnt * usWidth) + 7);
       sNewY = gsItemPopupY + INV_BAR_DY + 3;
-      DrawItemUIBarEx(gpItemPopupObject, (UINT8)cnt, sNewX, sNewY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT,
-                      Get16BPPColor(STATUS_BAR), Get16BPPColor(STATUS_BAR_SHADOW), TRUE,
-                      FRAME_BUFFER);
+      DrawItemUIBarEx(gpItemPopupObject, (uint8_t)cnt, sNewX, sNewY, ITEM_BAR_WIDTH,
+                      ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR), Get16BPPColor(STATUS_BAR_SHADOW),
+                      TRUE, FRAME_BUFFER);
     }
   }
 
@@ -5064,7 +5064,7 @@ BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo) {
   CHAR8 zName[100];
   uint32_t uiVo;
   VOBJECT_DESC VObjectDesc;
-  UINT8 ubGraphic;
+  uint8_t ubGraphic;
 
   // CHECK SUBCLASS
   ubGraphic = pItem->ubGraphicNum;
@@ -5177,7 +5177,7 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     // If one in our hand, place it
     if (gpItemPointer != NULL) {
-      if (!PlaceObjectAtObjectIndex(gpItemPointer, gpItemPopupObject, (UINT8)uiItemPos)) {
+      if (!PlaceObjectAtObjectIndex(gpItemPointer, gpItemPopupObject, (uint8_t)uiItemPos)) {
         if ((IsMapScreen())) {
           MAPEndItemPointer();
         } else {
@@ -5201,8 +5201,8 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     } else {
       if (uiItemPos < gpItemPopupObject->ubNumberOfObjects) {
         // Here, grab an item and put in cursor to swap
-        // RemoveObjFrom( struct OBJECTTYPE * pObj, UINT8 ubRemoveIndex )
-        GetObjFrom(gpItemPopupObject, (UINT8)uiItemPos, &gItemPointer);
+        // RemoveObjFrom( struct OBJECTTYPE * pObj, uint8_t ubRemoveIndex )
+        GetObjFrom(gpItemPopupObject, (uint8_t)uiItemPos, &gItemPointer);
 
         if ((IsMapScreen())) {
           // pick it up
@@ -5249,10 +5249,11 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       RestoreExternBackgroundRect(gsItemPopupInvX, gsItemPopupInvY, gsItemPopupInvWidth,
                                   gsItemPopupInvHeight);
       if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
-        MAPInternalInitItemDescriptionBox(gpItemPopupObject, (UINT8)uiItemPos, gpItemPopupSoldier);
+        MAPInternalInitItemDescriptionBox(gpItemPopupObject, (uint8_t)uiItemPos,
+                                          gpItemPopupSoldier);
       } else {
         InternalInitItemDescriptionBox(gpItemPopupObject, (INT16)ITEMDESC_START_X,
-                                       (INT16)ITEMDESC_START_Y, (UINT8)uiItemPos,
+                                       (INT16)ITEMDESC_START_Y, (uint8_t)uiItemPos,
                                        gpItemPopupSoldier);
       }
     }
@@ -5294,7 +5295,7 @@ typedef struct {
   INT32 ubScrollAnchor;
   INT32 ubTotalItems;
   INT32 bCurSelect;
-  UINT8 bNumSlotsPerPage;
+  uint8_t bNumSlotsPerPage;
   uint32_t uiPanelVo;
   INT32 iUpButtonImages;
   INT32 iDownButtonImages;
@@ -5400,7 +5401,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   // Change to INV panel if not there already...
   gfSwitchPanel = TRUE;
   gbNewPanel = SM_PANEL;
-  gubNewPanelParam = (UINT8)pSoldier->ubID;
+  gubNewPanelParam = (uint8_t)pSoldier->ubID;
 
   // Determine total #
   cnt = 0;
@@ -5412,7 +5413,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
     pTempItemPool = pTempItemPool->pNext;
   }
-  gItemPickupMenu.ubTotalItems = (UINT8)cnt;
+  gItemPickupMenu.ubTotalItems = (uint8_t)cnt;
 
   // Determine # of slots per page
   if (gItemPickupMenu.ubTotalItems > NUM_PICKUP_SLOTS) {
@@ -5650,7 +5651,7 @@ void SetupPickupPage(INT8 bPage) {
   }
 
   gItemPickupMenu.bScrollPage = bPage;
-  gItemPickupMenu.ubScrollAnchor = (UINT8)iStart;
+  gItemPickupMenu.ubScrollAnchor = (uint8_t)iStart;
 
   if (gItemPickupMenu.bNumSlotsPerPage == NUM_PICKUP_SLOTS &&
       gItemPickupMenu.ubTotalItems > NUM_PICKUP_SLOTS) {
@@ -5716,7 +5717,7 @@ void RenderItemPickupMenu() {
   uint16_t usItemTileIndex;
   INT16 sX, sY, sCenX, sCenY, sFontX, sFontY, sNewX, sNewY;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   CHAR16 pStr[100];
   uint16_t usSubRegion, usHeight, usWidth;
   INVTYPE *pItem;
@@ -5979,7 +5980,7 @@ void ItemPickupScrollUp(GUI_BUTTON *btn, INT32 reason) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
-    SetupPickupPage((UINT8)(gItemPickupMenu.bScrollPage - 1));
+    SetupPickupPage((uint8_t)(gItemPickupMenu.bScrollPage - 1));
   } else if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
   }
@@ -5990,7 +5991,7 @@ void ItemPickupScrollDown(GUI_BUTTON *btn, INT32 reason) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
-    SetupPickupPage((UINT8)(gItemPickupMenu.bScrollPage + 1));
+    SetupPickupPage((uint8_t)(gItemPickupMenu.bScrollPage + 1));
   } else if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
   }
@@ -6114,7 +6115,7 @@ void ItemPickupBackgroundClick(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 void ItemPickMenuMouseClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 uiItemPos;
-  UINT8 cnt;
+  uint8_t cnt;
   BOOLEAN fEnable = FALSE;
 
   uiItemPos = MSYS_GetRegionUserData(pRegion, 0);
@@ -6178,7 +6179,7 @@ void BtnMoneyButtonCallback(GUI_BUTTON *btn, INT32 reason) {
                      btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
+    uint8_t ubButton = (uint8_t)MSYS_GetBtnUserData(btn, 0);
 
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
@@ -6192,11 +6193,11 @@ void BtnMoneyButtonCallback(GUI_BUTTON *btn, INT32 reason) {
             if (guiCurrentScreen == SHOPKEEPER_SCREEN)
               DoMessageBox(MSG_BOX_BASIC_STYLE,
                            gzMoneyWithdrawMessageText[MONEY_TEXT_WITHDRAW_MORE_THEN_MAXIMUM],
-                           SHOPKEEPER_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                           SHOPKEEPER_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
             else
               DoMessageBox(MSG_BOX_BASIC_STYLE,
                            gzMoneyWithdrawMessageText[MONEY_TEXT_WITHDRAW_MORE_THEN_MAXIMUM],
-                           GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                           GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
             return;
           }
 
@@ -6212,7 +6213,7 @@ void BtnMoneyButtonCallback(GUI_BUTTON *btn, INT32 reason) {
               (gRemoveMoney.uiMoneyRemoving + 100) > MAX_MONEY_PER_SLOT) {
             DoMessageBox(MSG_BOX_BASIC_STYLE,
                          gzMoneyWithdrawMessageText[MONEY_TEXT_WITHDRAW_MORE_THEN_MAXIMUM],
-                         GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                         GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
             return;
           }
 
@@ -6228,7 +6229,7 @@ void BtnMoneyButtonCallback(GUI_BUTTON *btn, INT32 reason) {
               (gRemoveMoney.uiMoneyRemoving + 10) > MAX_MONEY_PER_SLOT) {
             DoMessageBox(MSG_BOX_BASIC_STYLE,
                          gzMoneyWithdrawMessageText[MONEY_TEXT_WITHDRAW_MORE_THEN_MAXIMUM],
-                         GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+                         GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
             return;
           }
 
@@ -6254,7 +6255,7 @@ void BtnMoneyButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 
   if (reason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
-    UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
+    uint8_t ubButton = (uint8_t)MSYS_GetBtnUserData(btn, 0);
 
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
@@ -6435,7 +6436,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObjec
   swprintf(pzStr, bufSize, L"%s", pStr);
 }
 
-UINT8 GetPrefferedItemSlotGraphicNum(uint16_t usItem) {
+uint8_t GetPrefferedItemSlotGraphicNum(uint16_t usItem) {
   // Check for small item...
   if (Item[usItem].ubPerPocket >= 1) {
     // Small
@@ -6480,8 +6481,8 @@ void CancelItemPointer() {
 
 typedef struct {
   struct OBJECTTYPE ItemPointerInfo;
-  UINT8 ubSoldierID;
-  UINT8 ubInvSlot;
+  uint8_t ubSoldierID;
+  uint8_t ubInvSlot;
   BOOLEAN fCursorActive;
   INT8 bPadding[5];
 

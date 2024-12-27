@@ -567,9 +567,9 @@ void FadeInFrameBufferRealFade() {
 
 BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   uint16_t usWidth, usHeight;
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
 
   // Update saved buffer - do for the viewport size ony!
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);

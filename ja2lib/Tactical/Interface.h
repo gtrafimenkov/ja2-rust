@@ -60,8 +60,8 @@ enum { I_GROUND_LEVEL, I_ROOF_LEVEL, I_NUMLEVELS };
 
 extern BOOLEAN gfSwitchPanel;
 extern BOOLEAN gfUIStanceDifferent;
-extern UINT8 gbNewPanel;
-extern UINT8 gubNewPanelParam;
+extern uint8_t gbNewPanel;
+extern uint8_t gubNewPanelParam;
 extern INT16 gsCurInterfacePanel;
 
 extern uint32_t guiCLOSE;
@@ -121,7 +121,7 @@ void CancelMovementMenu();
 void PopDownOpenDoorMenu();
 void RenderOpenDoorMenu();
 BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                         UINT8 ubDirection, BOOLEAN fClosingDoor);
+                         uint8_t ubDirection, BOOLEAN fClosingDoor);
 BOOLEAN HandleOpenDoorMenu();
 void CancelOpenDoorMenu();
 
@@ -134,9 +134,9 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID);
 
 void CreateCurrentTacticalPanelButtons();
 void RemoveCurrentTacticalPanelButtons();
-void SetCurrentTacticalPanelCurrentMerc(UINT8 ubID);
-void SetCurrentInterfacePanel(UINT8 ubNewPanel);
-BOOLEAN IsMercPortraitVisible(UINT8 ubSoldierID);
+void SetCurrentTacticalPanelCurrentMerc(uint8_t ubID);
+void SetCurrentInterfacePanel(uint8_t ubNewPanel);
+BOOLEAN IsMercPortraitVisible(uint8_t ubSoldierID);
 
 BOOLEAN InitializeCurrentPanel();
 void ShutdownCurrentPanel();
@@ -151,16 +151,16 @@ void HandleUpDownArrowBackgrounds();
 
 void EndDeadlockMsg();
 
-void HandleLocateSelectMerc(UINT8 ubID, INT8 bFlag);
+void HandleLocateSelectMerc(uint8_t ubID, INT8 bFlag);
 
-void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel);
+void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, uint8_t ubDirtyLevel);
 
 void EndUIMessage();
 void BeginUIMessage(CHAR16 *pFontString, ...);
 void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...);
 
 // map screen version, for centering over the map area
-void BeginMapUIMessage(UINT8 fPosition, CHAR16 *pFontString, ...);
+void BeginMapUIMessage(uint8_t fPosition, CHAR16 *pFontString, ...);
 
 extern uint16_t gusUIOldSelectedSoldier;
 extern INT32 giUIMessageOverlay;
@@ -178,13 +178,13 @@ typedef enum {
 } MESSAGE_TYPES;
 
 void HandleTopMessages();
-BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString);
+BOOLEAN AddTopMessage(uint8_t ubType, CHAR16 *pzString);
 BOOLEAN InTopMessageBarAnimation();
 void EndTopMessage();
 
 void PauseRT(BOOLEAN fPause);
 
-void InitEnemyUIBar(UINT8 ubNumEnemies, UINT8 ubDoneEnemies);
+void InitEnemyUIBar(uint8_t ubNumEnemies, uint8_t ubDoneEnemies);
 
 CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier);
 
@@ -194,7 +194,7 @@ void ResetAimCubeAI();
 void SetupAimCubeAI();
 void IncrementAimCubeUI();
 void EndAimCubeUI();
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, uint8_t bStartPower,
                     INT8 bStartHeight);
 BOOLEAN AimCubeUIClick();
 

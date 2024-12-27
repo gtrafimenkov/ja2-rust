@@ -26,14 +26,14 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
-BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius);
+BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius);
 BOOLEAN PasteExistingTexture(uint32_t iMapIndex, uint16_t usIndex);
-BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, UINT8 ubRadius);
-BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius,
+BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, uint8_t ubRadius);
+BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius,
                                     BOOLEAN fReplace);
 
 void PasteTextureEx(INT16 sGridNo, uint16_t usType);
-void PasteTextureFromRadiusEx(INT16 sGridNo, uint16_t usType, UINT8 ubRadius);
+void PasteTextureFromRadiusEx(INT16 sGridNo, uint16_t usType, uint8_t ubRadius);
 
 BOOLEAN gfWarning = FALSE;
 
@@ -258,7 +258,7 @@ void PasteSingleRoof(uint32_t iMapIndex) {
   PasteSingleWallCommon(iMapIndex);
 }
 
-void PasteRoomNumber(uint32_t iMapIndex, UINT8 ubRoomNumber) {
+void PasteRoomNumber(uint32_t iMapIndex, uint8_t ubRoomNumber) {
   if (gubWorldRoomInfo[iMapIndex] != ubRoomNumber) {
     AddToUndoList(iMapIndex);
     gubWorldRoomInfo[iMapIndex] = ubRoomNumber;
@@ -610,7 +610,7 @@ void PasteTexture(uint32_t iMapIndex) {
 // should all be placed into the undo 	stack as the same undo command.
 //
 void PasteTextureCommon(uint32_t iMapIndex) {
-  UINT8 ubLastHighLevel;
+  uint8_t ubLastHighLevel;
   uint16_t usTileIndex;
   // uint16_t					Dummy;
 
@@ -658,10 +658,10 @@ void PasteTextureCommon(uint32_t iMapIndex) {
 //
 void PasteHigherTexture(uint32_t iMapIndex, uint32_t fNewType) {
   uint16_t NewTile;
-  UINT8 ubLastHighLevel;
+  uint8_t ubLastHighLevel;
   uint32_t *puiDeletedTypes = NULL;
-  UINT8 ubNumTypes;
-  UINT8 cnt;
+  uint8_t ubNumTypes;
+  uint8_t cnt;
 
   // Here we do the following:
   // - Remove old type from layer
@@ -712,7 +712,7 @@ void PasteHigherTexture(uint32_t iMapIndex, uint32_t fNewType) {
 //
 //	Like above function except it performs it's operation on a redial area.
 //
-BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius) {
+BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -796,7 +796,7 @@ BOOLEAN PasteExistingTexture(uint32_t iMapIndex, uint16_t usIndex) {
 //
 //	As above, but on a radial area
 //
-BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, UINT8 ubRadius) {
+BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, uint8_t ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -833,7 +833,7 @@ BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, UINT8 
 //
 //	Puts a land index "under" an existing ground texture. Affects a radial area.
 //
-BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 ubRadius,
+BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius,
                                     BOOLEAN fReplace) {
   uint16_t usTempIndex;
   INT16 sTop, sBottom;
@@ -842,7 +842,7 @@ BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 u
   INT32 iNewIndex;
   BOOLEAN fDoPaste = FALSE;
   INT32 leftmost;
-  UINT8 ubLastHighLevel;
+  uint8_t ubLastHighLevel;
   uint32_t *puiSmoothTiles = NULL;
   INT16 sNumSmoothTiles = 0;
   uint16_t usTemp;
@@ -921,7 +921,7 @@ BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, UINT8 u
 // ATE FIXES
 void PasteTextureEx(INT16 sGridNo, uint16_t usType) {
   uint16_t usIndex;
-  UINT8 ubTypeLevel;
+  uint8_t ubTypeLevel;
   uint16_t NewTile;
 
   // CHECK IF THIS TEXTURE EXISTS!
@@ -940,7 +940,7 @@ void PasteTextureEx(INT16 sGridNo, uint16_t usType) {
   }
 }
 
-void PasteTextureFromRadiusEx(INT16 sGridNo, uint16_t usType, UINT8 ubRadius) {
+void PasteTextureFromRadiusEx(INT16 sGridNo, uint16_t usType, uint8_t ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -984,7 +984,7 @@ void RaiseWorldLand() {
   TILE_ELEMENT *pTileElement;
   BOOLEAN fRaiseSet;
   BOOLEAN fSomethingRaised = FALSE;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   uint16_t usIndex;
   INT32 iStartNumberOfRaises = 0;
   INT32 iNumberOfRaises = 0;

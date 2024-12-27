@@ -36,11 +36,11 @@ void BuildListFile();
 
 BOOLEAN gfAniEditMode = FALSE;
 static uint16_t usStartAnim = 0;
-static UINT8 ubStartHeight = 0;
+static uint8_t ubStartHeight = 0;
 static struct SOLDIERTYPE *pSoldier;
 
 static BOOLEAN fOKFiles = FALSE;
-static UINT8 ubNumStates = 0;
+static uint8_t ubNumStates = 0;
 static uint16_t *pusStates = NULL;
 static INT8 ubCurLoadedState = 0;
 
@@ -50,7 +50,7 @@ void CycleAnimations() {
   // FInd the next animation with start height the same...
   for (cnt = usStartAnim + 1; cnt < NUMANIMATIONSTATES; cnt++) {
     if (gAnimControl[cnt].ubHeight == ubStartHeight) {
-      usStartAnim = (UINT8)cnt;
+      usStartAnim = (uint8_t)cnt;
       EVENT_InitNewSoldierAnim(pSoldier, usStartAnim, 0, TRUE);
       return;
     }
@@ -310,11 +310,11 @@ void BuildListFile() {
 
     if (usState != 5555) {
       cnt++;
-      ubNumStates = (UINT8)cnt;
+      ubNumStates = (uint8_t)cnt;
       pusStates[cnt] = usState;
     } else {
       swprintf(zError, ARR_SIZE(zError), L"Animation str %S is not known: ", currFilename);
-      DoMessageBox(MSG_BOX_BASIC_STYLE, zError, ANIEDIT_SCREEN, (UINT8)MSG_BOX_FLAG_YESNO, NULL,
+      DoMessageBox(MSG_BOX_BASIC_STYLE, zError, ANIEDIT_SCREEN, (uint8_t)MSG_BOX_FLAG_YESNO, NULL,
                    NULL);
       fclose(infoFile);
       return;

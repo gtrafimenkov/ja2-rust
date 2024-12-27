@@ -52,16 +52,16 @@ extern INT16 sVehicleOrigArmorValues[NUMBER_OF_TYPES_OF_VEHICLES]
 
 // struct for vehicles
 typedef struct {
-  struct path *pMercPath;  // vehicle's stategic path list
-  UINT8 ubMovementGroup;   // the movement group this vehicle belongs to
-  UINT8 ubVehicleType;     // type of vehicle
-  INT16 sSectorX;          // X position on the Stategic Map
-  INT16 sSectorY;          // Y position on the Stategic Map
+  struct path *pMercPath;   // vehicle's stategic path list
+  uint8_t ubMovementGroup;  // the movement group this vehicle belongs to
+  uint8_t ubVehicleType;    // type of vehicle
+  INT16 sSectorX;           // X position on the Stategic Map
+  INT16 sSectorY;           // Y position on the Stategic Map
   INT16 sSectorZ;
   BOOLEAN fBetweenSectors;  // between sectors?
   INT16 sGridNo;            // location in tactical
   struct SOLDIERTYPE *pPassengers[10];
-  UINT8 ubDriver;
+  uint8_t ubDriver;
   INT16 sInternalHitLocations[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
   INT16 sArmourType;
   INT16 sExternalArmorLocationsStatus[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
@@ -73,7 +73,7 @@ typedef struct {
   BOOLEAN fFunctional;
   BOOLEAN fDestroyed;
   INT32 iMovementSoundID;
-  UINT8 ubProfileID;
+  uint8_t ubProfileID;
 
   BOOLEAN fValid;
 
@@ -83,14 +83,14 @@ typedef struct {
 extern VEHICLETYPE *pVehicleList;
 
 // number of vehicles on the list
-extern UINT8 ubNumberOfVehicles;
+extern uint8_t ubNumberOfVehicles;
 
 extern INT32 iMvtTypes[];
 
 void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle);
 
 // add vehicle to list and return id value
-INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, UINT8 ubType);
+INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, uint8_t ubType);
 
 // remove this vehicle from the list
 BOOLEAN RemoveVehicleFromList(INT32 iId);
@@ -129,13 +129,13 @@ BOOLEAN CopyVehiclePathToSoldier(struct SOLDIERTYPE *pSoldier);
 void UpdatePositionOfMercsInVehicle(INT32 iId);
 
 // find vehicle id of group with this vehicle
-INT32 GivenMvtGroupIdFindVehicleId(UINT8 ubGroupId);
+INT32 GivenMvtGroupIdFindVehicleId(uint8_t ubGroupId);
 
 // given vehicle id, add all peopel in vehicle to mvt group, after clearing mvt group out
 BOOLEAN AddVehicleMembersToMvtGroup(INT32 iId);
 
 // injure this person in the vehicle
-BOOLEAN InjurePersonInVehicle(INT32 iId, struct SOLDIERTYPE *pSoldier, UINT8 ubPointsOfDmg);
+BOOLEAN InjurePersonInVehicle(INT32 iId, struct SOLDIERTYPE *pSoldier, uint8_t ubPointsOfDmg);
 
 // kill this person in the vehicle
 BOOLEAN KillPersonInVehicle(INT32 iId, struct SOLDIERTYPE *pSoldier);
@@ -164,23 +164,23 @@ BOOLEAN ExitVehicle(struct SOLDIERTYPE *pSoldier);
 
 void AddPassangersToTeamPanel(INT32 iId);
 
-void VehicleTakeDamage(UINT8 ubID, UINT8 ubReason, INT16 sDamage, INT16 sGridNo,
-                       UINT8 ubAttackerID);
+void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, INT16 sDamage, INT16 sGridNo,
+                       uint8_t ubAttackerID);
 
 // the soldiertype containing this tactical incarnation of this vehicle
 struct SOLDIERTYPE *GetSoldierStructureForVehicle(INT32 iId);
 
-void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints);
+void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints);
 
 // get orig armor values for vehicle in this location
-// INT16 GetOrigInternalArmorValueForVehicleInLocation( UINT8 ubID, UINT8 ubLocation );
+// INT16 GetOrigInternalArmorValueForVehicleInLocation( uint8_t ubID, uint8_t ubLocation );
 
 // handle crit hit to vehicle in this location
-void HandleCriticalHitForVehicleInLocation(UINT8 ubID, INT16 sDmg, INT16 sGridNo,
-                                           UINT8 ubAttackerID);
+void HandleCriticalHitForVehicleInLocation(uint8_t ubID, INT16 sDmg, INT16 sGridNo,
+                                           uint8_t ubAttackerID);
 
 // ste up armor values for this vehicle
-void SetUpArmorForVehicle(UINT8 ubID);
+void SetUpArmorForVehicle(uint8_t ubID);
 
 // does it need fixing?
 BOOLEAN DoesVehicleNeedAnyRepairs(INT32 iVehicleId);
@@ -200,7 +200,7 @@ BOOLEAN TakeSoldierOutOfVehicle(struct SOLDIERTYPE *pSoldier);
 // put soldier in vehicle
 BOOLEAN PutSoldierInVehicle(struct SOLDIERTYPE *pSoldier, INT8 bVehicleId);
 
-void SetVehicleSectorValues(INT32 iVehId, UINT8 ubSectorX, UINT8 ubSectorY);
+void SetVehicleSectorValues(INT32 iVehId, uint8_t ubSectorX, uint8_t ubSectorY);
 
 void UpdateAllVehiclePassengersGridNo(struct SOLDIERTYPE *pSoldier);
 
@@ -209,7 +209,7 @@ BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile);
 BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile);
 BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile);
 
-BOOLEAN OKUseVehicle(UINT8 ubProfile);
+BOOLEAN OKUseVehicle(uint8_t ubProfile);
 
 BOOLEAN IsRobotControllerInVehicle(INT32 iId);
 

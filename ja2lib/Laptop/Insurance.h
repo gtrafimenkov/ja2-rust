@@ -33,6 +33,6 @@ void DisplayInsuranceDefaults();
 void RemoveInsuranceDefaults();
 void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX,
                                    uint16_t EndY);
-void GetInsuranceText(UINT8 ubNumber, STR16 pString);
+void GetInsuranceText(uint8_t ubNumber, STR16 pString);
 
 #endif

@@ -23,8 +23,8 @@ BOOLEAN fMusicFadingIn = FALSE;
 
 BOOLEAN gfMusicEnded = FALSE;
 
-UINT8 gubMusicMode = 0;
-UINT8 gubOldMusicMode = 0;
+uint8_t gubMusicMode = 0;
+uint8_t gubOldMusicMode = 0;
 
 INT8 gbVictorySongCount = 0;
 INT8 gbDeathSongCount = 0;
@@ -297,7 +297,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
   return (TRUE);
 }
 
-BOOLEAN SetMusicMode(UINT8 ubMusicMode) {
+BOOLEAN SetMusicMode(uint8_t ubMusicMode) {
   static INT8 bPreviousMode = 0;
 
   // OK, check if we want to restore

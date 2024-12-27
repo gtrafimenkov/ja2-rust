@@ -29,7 +29,7 @@
 // - make sure that everything in this header is nicely aligned
 // - don't exceed the 64-byte maximum
 typedef struct {
-  UINT8 cID[STCI_ID_LEN];
+  uint8_t cID[STCI_ID_LEN];
   uint32_t uiOriginalSize;
   uint32_t uiStoredSize;  // equal to uiOriginalSize if data uncompressed
   uint32_t uiTransparentValue;
@@ -42,24 +42,24 @@ typedef struct {
       uint32_t uiGreenMask;
       uint32_t uiBlueMask;
       uint32_t uiAlphaMask;
-      UINT8 ubRedDepth;
-      UINT8 ubGreenDepth;
-      UINT8 ubBlueDepth;
-      UINT8 ubAlphaDepth;
+      uint8_t ubRedDepth;
+      uint8_t ubGreenDepth;
+      uint8_t ubBlueDepth;
+      uint8_t ubAlphaDepth;
     } RGB;
     struct {  // For indexed files, the palette will contain 3 separate bytes for red, green, and
               // blue
       uint32_t uiNumberOfColours;
       uint16_t usNumberOfSubImages;
-      UINT8 ubRedDepth;
-      UINT8 ubGreenDepth;
-      UINT8 ubBlueDepth;
-      UINT8 cIndexedUnused[11];
+      uint8_t ubRedDepth;
+      uint8_t ubGreenDepth;
+      uint8_t ubBlueDepth;
+      uint8_t cIndexedUnused[11];
     } Indexed;
   };
-  UINT8 ubDepth;  // size in bits of one pixel as stored in the file
+  uint8_t ubDepth;  // size in bits of one pixel as stored in the file
   uint32_t uiAppDataSize;
-  UINT8 cUnused[15];
+  uint8_t cUnused[15];
 } STCIHeader;
 
 #define STCI_HEADER_SIZE 64
@@ -76,9 +76,9 @@ typedef struct {
 #define STCI_SUBIMAGE_SIZE 16
 
 typedef struct {
-  UINT8 ubRed;
-  UINT8 ubGreen;
-  UINT8 ubBlue;
+  uint8_t ubRed;
+  uint8_t ubGreen;
+  uint8_t ubBlue;
 } STCIPaletteElement;
 
 #define STCI_PALETTE_ELEMENT_SIZE 3

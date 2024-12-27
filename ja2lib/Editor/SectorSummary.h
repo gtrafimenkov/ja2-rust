@@ -29,6 +29,6 @@ extern uint16_t gusNumEntriesWithOutdatedOrNoSummaryInfo;
 
 extern BOOLEAN gfUpdateSummaryInfo;
 
-extern UINT8 GetCurrentSummaryVersion();
+extern uint8_t GetCurrentSummaryVersion();
 
 #endif

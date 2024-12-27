@@ -22,14 +22,14 @@ struct SOLDIERTYPE;
 //// 7:30 am
 
 typedef struct {
-  UINT8 ubProfileID;
+  uint8_t ubProfileID;
   INT16 sSectorX;
   INT16 sSectorY;
   INT8 bSectorZ;
   INT16 iTotalContractLength;
   BOOLEAN fCopyProfileItemsOver;
   uint32_t uiTimeTillMercArrives;
-  UINT8 ubInsertionCode;
+  uint8_t ubInsertionCode;
   uint16_t usInsertionData;
   BOOLEAN fUseLandingZoneForArrival;
 
@@ -40,10 +40,10 @@ extern INT16 gsMercArriveSectorX;
 extern INT16 gsMercArriveSectorY;
 
 INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc);
-void MercArrivesCallback(UINT8 ubSoldierID);
-BOOLEAN IsMercHireable(UINT8 ubMercID);
-BOOLEAN IsMercDead(UINT8 ubMercID);
-UINT8 NumberOfMercsOnPlayerTeam();
+void MercArrivesCallback(uint8_t ubSoldierID);
+BOOLEAN IsMercHireable(uint8_t ubMercID);
+BOOLEAN IsMercDead(uint8_t ubMercID);
+uint8_t NumberOfMercsOnPlayerTeam();
 BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier);
 void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier);
 void UpdateAnyInTransitMercsWithGlobalArrivalSector();

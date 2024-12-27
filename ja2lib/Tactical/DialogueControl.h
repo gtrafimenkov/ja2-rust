@@ -228,18 +228,18 @@ void HandleDialogue();
 void HandleImportantMercQuote(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNumber);
 
 // Send in a profile number to see if text dialog exists for this guy....
-BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, uint16_t usQuoteNum,
+BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuoteNum,
                                          BOOLEAN fWavFile, CHAR8 **ppStr);
 
 // Do special event as well as dialogue!
-BOOLEAN CharacterDialogueWithSpecialEvent(UINT8 ubCharacterNum, uint16_t usQuoteNum,
-                                          INT32 iFaceIndex, UINT8 bUIHandlerID,
+BOOLEAN CharacterDialogueWithSpecialEvent(uint8_t ubCharacterNum, uint16_t usQuoteNum,
+                                          INT32 iFaceIndex, uint8_t bUIHandlerID,
                                           BOOLEAN fFromSoldier, BOOLEAN fDelayed, uint32_t uiFlag,
                                           uintptr_t uiData1, uint32_t uiData2);
 
 // Do special event as well as dialogue!
-BOOLEAN CharacterDialogueWithSpecialEventEx(UINT8 ubCharacterNum, uint16_t usQuoteNum,
-                                            INT32 iFaceIndex, UINT8 bUIHandlerID,
+BOOLEAN CharacterDialogueWithSpecialEventEx(uint8_t ubCharacterNum, uint16_t usQuoteNum,
+                                            INT32 iFaceIndex, uint8_t bUIHandlerID,
                                             BOOLEAN fFromSoldier, BOOLEAN fDelayed, uint32_t uiFlag,
                                             uint32_t uiData1, uint32_t uiData2, uint32_t uiData3);
 
@@ -261,13 +261,13 @@ BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuote
 BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum);
 
 // A more general purpose function for processing quotes
-BOOLEAN CharacterDialogue(UINT8 ubCharacterNum, uint16_t usQuoteNum, INT32 iFaceIndex,
-                          UINT8 bUIHandlerID, BOOLEAN fFromSoldier, BOOLEAN fDelayed);
+BOOLEAN CharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, INT32 iFaceIndex,
+                          uint8_t bUIHandlerID, BOOLEAN fFromSoldier, BOOLEAN fDelayed);
 
 // A special event can be setup which can be queued with other speech
 BOOLEAN SpecialCharacterDialogueEvent(uintptr_t uiSpecialEventFlag, uintptr_t uiSpecialEventData1,
                                       uintptr_t uiSpecialEventData2, uint32_t uiSpecialEventData3,
-                                      INT32 iFaceIndex, UINT8 bUIHandlerID);
+                                      INT32 iFaceIndex, uint8_t bUIHandlerID);
 
 // Same as above, for triggers, with extra param to hold approach value
 BOOLEAN SpecialCharacterDialogueEventWithExtraParam(uint32_t uiSpecialEventFlag,
@@ -275,11 +275,11 @@ BOOLEAN SpecialCharacterDialogueEventWithExtraParam(uint32_t uiSpecialEventFlag,
                                                     uint32_t uiSpecialEventData2,
                                                     uint32_t uiSpecialEventData3,
                                                     uint32_t uiSpecialEventData4, INT32 iFaceIndex,
-                                                    UINT8 bUIHandlerID);
+                                                    uint8_t bUIHandlerID);
 
 // execute specific character dialogue
-BOOLEAN ExecuteCharacterDialogue(UINT8 ubCharacterNum, uint16_t usQuoteNum, INT32 iFaceIndex,
-                                 UINT8 bUIHandlerID, BOOLEAN fSoldier);
+BOOLEAN ExecuteCharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, INT32 iFaceIndex,
+                                 uint8_t bUIHandlerID, BOOLEAN fSoldier);
 
 // Called when a face stops talking...
 void HandleDialogueEnd(FACETYPE *pFace);
@@ -330,13 +330,13 @@ extern INT32 giNPCSpecialReferenceCount;
 
 #define NUMBER_VALID_MERC_PRECEDENT_QUOTES 13
 
-extern UINT8 gubMercValidPrecedentQuoteID[NUMBER_VALID_MERC_PRECEDENT_QUOTES];
+extern uint8_t gubMercValidPrecedentQuoteID[NUMBER_VALID_MERC_PRECEDENT_QUOTES];
 
-BOOLEAN ShouldMercSayPrecedentToRepeatOneSelf(UINT8 ubMercID, uint32_t uiQuoteID);
-BOOLEAN GetMercPrecedentQuoteBitStatus(UINT8 ubMercID, UINT8 ubQuoteBit);
-BOOLEAN SetMercPrecedentQuoteBitStatus(UINT8 ubMercID, UINT8 ubBitToSet);
+BOOLEAN ShouldMercSayPrecedentToRepeatOneSelf(uint8_t ubMercID, uint32_t uiQuoteID);
+BOOLEAN GetMercPrecedentQuoteBitStatus(uint8_t ubMercID, uint8_t ubQuoteBit);
+BOOLEAN SetMercPrecedentQuoteBitStatus(uint8_t ubMercID, uint8_t ubBitToSet);
 BOOLEAN IsQuoteInPrecedentArray(uint32_t uiQuoteID);
-UINT8 GetQuoteBitNumberFromQuoteID(uint32_t uiQuoteID);
+uint8_t GetQuoteBitNumberFromQuoteID(uint32_t uiQuoteID);
 void HandleShutDownOfMapScreenWhileExternfaceIsTalking(void);
 
 void StopAnyCurrentlyTalkingSpeech();

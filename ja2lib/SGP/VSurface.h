@@ -80,7 +80,7 @@ typedef struct {
 typedef struct {
   SGPRect RegionCoords;  // Rectangle describing coordinates of region
   SGPPoint Origin;       // Origin used for hot spots, etc
-  UINT8 ubHitMask;       // Byte flags for hit detection
+  uint8_t ubHitMask;     // Byte flags for hit detection
 
 } VSURFACE_REGION;
 
@@ -91,7 +91,7 @@ typedef struct {
 struct VSurface {
   uint16_t usHeight;       // Height of Video Surface
   uint16_t usWidth;        // Width of Video Surface
-  UINT8 ubBitDepth;        // BPP ALWAYS 16!
+  uint8_t ubBitDepth;      // BPP ALWAYS 16!
   PTR pSurfaceData;        // A void pointer, but for this implementation, is really a
                            // lpDirectDrawSurface;
   PTR pSurfaceData1;       // Direct Draw One Interface
@@ -118,7 +118,7 @@ typedef struct {
   SGPFILENAME ImageFile;  // Filename of image data to use
   uint16_t usWidth;       // Width, ignored if given from file
   uint16_t usHeight;      // Height, ignored if given from file
-  UINT8 ubBitDepth;       // BPP, ignored if given from file
+  uint8_t ubBitDepth;     // BPP, ignored if given from file
 
 } VSURFACE_DESC;
 
@@ -179,7 +179,7 @@ BOOLEAN AddVideoSurfaceRegion(uint32_t uiIndex, VSURFACE_REGION *pNewRegion);
 
 // Gets width, hight, bpp information
 BOOLEAN GetVideoSurfaceDescription(uint32_t uiIndex, uint16_t *usWidth, uint16_t *usHeight,
-                                   UINT8 *ubBitDepth);
+                                   uint8_t *ubBitDepth);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //

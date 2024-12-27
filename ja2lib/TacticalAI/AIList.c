@@ -26,11 +26,11 @@
 AILIST gAIList[AI_LIST_SIZE];
 AILIST* gpFirstAIListEntry = NULL;
 
-BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, UINT8* pubDoneCount,
+BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, uint8_t* pubDoneCount,
                                   BOOLEAN fDoRandomChecks);
 
 void ClearAIList(void) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   for (ubLoop = 0; ubLoop < AI_LIST_SIZE; ubLoop++) {
     gAIList[ubLoop].ubID = NOBODY;
@@ -46,8 +46,8 @@ void DeleteAIListEntry(AILIST* pEntry) {
   pEntry->pNext = NULL;
 }
 
-UINT8 FindEmptyAIListEntry(void) {
-  UINT8 ubLoop;
+uint8_t FindEmptyAIListEntry(void) {
+  uint8_t ubLoop;
 
   for (ubLoop = 0; ubLoop < AI_LIST_SIZE; ubLoop++) {
     if (gAIList[ubLoop].ubID == NOBODY) {
@@ -58,16 +58,16 @@ UINT8 FindEmptyAIListEntry(void) {
   return (AI_LIST_SIZE);
 }
 
-AILIST* CreateNewAIListEntry(UINT8 ubNewEntry, UINT8 ubID, INT8 bPriority) {
+AILIST* CreateNewAIListEntry(uint8_t ubNewEntry, uint8_t ubID, INT8 bPriority) {
   gAIList[ubNewEntry].ubID = ubID;
   gAIList[ubNewEntry].bPriority = bPriority;
   gAIList[ubNewEntry].pNext = NULL;
   return (&(gAIList[ubNewEntry]));
 }
 
-UINT8 RemoveFirstAIListEntry(void) {
+uint8_t RemoveFirstAIListEntry(void) {
   AILIST* pOldFirstEntry;
-  UINT8 ubID;
+  uint8_t ubID;
 
   while (gpFirstAIListEntry != NULL) {
     // record pointer to start of list, and advance head ptr
@@ -87,7 +87,7 @@ UINT8 RemoveFirstAIListEntry(void) {
   return (NOBODY);
 }
 
-void RemoveAIListEntryForID(UINT8 ubID) {
+void RemoveAIListEntryForID(uint8_t ubID) {
   AILIST* pEntry;
   AILIST* pPrevEntry;
 
@@ -110,8 +110,8 @@ void RemoveAIListEntryForID(UINT8 ubID) {
   // none found, that's okay
 }
 
-BOOLEAN InsertIntoAIList(UINT8 ubID, INT8 bPriority) {
-  UINT8 ubNewEntry;
+BOOLEAN InsertIntoAIList(uint8_t ubID, INT8 bPriority) {
+  uint8_t ubNewEntry;
   AILIST *pEntry, *pNewEntry, *pPrevEntry = NULL;
 
   ubNewEntry = FindEmptyAIListEntry();
@@ -153,7 +153,7 @@ BOOLEAN InsertIntoAIList(UINT8 ubID, INT8 bPriority) {
   return (FALSE);
 }
 
-BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, UINT8* pubDoneCount,
+BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, uint8_t* pubDoneCount,
                                   BOOLEAN fDoRandomChecks) {
   if ((gTacticalStatus.bBoxingState == BOXING) && !(pSoldier->uiStatusFlags & SOLDIER_BOXER)) {
     return (FALSE);
@@ -231,11 +231,11 @@ BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, UINT8* pubDoneCo
   return (TRUE);
 }
 
-BOOLEAN MoveToFrontOfAIList(UINT8 ubID) {
+BOOLEAN MoveToFrontOfAIList(uint8_t ubID) {
   // we'll have to fake this guy's alert status (in the list) to be the same as the current
   // front of the list
   INT8 bPriority;
-  UINT8 ubNewEntry;
+  uint8_t ubNewEntry;
   AILIST* pNewEntry;
 
   if (!SatisfiesAIListConditions(MercPtrs[ubID], NULL, FALSE)) {
@@ -265,8 +265,8 @@ BOOLEAN BuildAIListForTeam(INT8 bTeam) {
   BOOLEAN fInsertRet;
   struct SOLDIERTYPE* pSoldier;
   BOOLEAN fRet = FALSE;
-  UINT8 ubCount = 0;
-  UINT8 ubDoneCount = 0;
+  uint8_t ubCount = 0;
+  uint8_t ubDoneCount = 0;
   INT8 bPriority;
 
   // this team is being given control so reset their muzzle flashes
@@ -306,7 +306,7 @@ BOOLEAN BuildAIListForTeam(INT8 bTeam) {
   return (fRet);
 }
 
-UINT8 gubEncryptionArray1[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
+uint8_t gubEncryptionArray1[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
     {11,  129, 18,  136, 163, 80,  128, 53,  174, 146, 188, 240, 208, 162, 127, 192, 251,
      6,   52,  128, 119, 123, 234, 131, 60,  66,  171, 237, 89,  192, 17,  37,  139, 20,
      185, 48,  218, 176, 116, 87,  91,  156, 166, 224, 215, 100, 237, 71,  157},

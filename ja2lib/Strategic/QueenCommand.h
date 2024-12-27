@@ -9,19 +9,19 @@ struct SOLDIERTYPE;
 
 extern BOOLEAN gfPendingEnemies;
 
-UINT8 NumFreeEnemySlots();
+uint8_t NumFreeEnemySlots();
 
-UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+uint8_t NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 
-UINT8 NumEnemiesInSector(u8 sSectorX, u8 sSectorY);
-UINT8 NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY);
-UINT8 NumMobileEnemiesInSector(u8 sSectorX, u8 sSectorY);
-void GetNumberOfMobileEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins,
-                                      UINT8 *pubNumTroops, UINT8 *pubNumElites);
-void GetNumberOfStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins,
-                                          UINT8 *pubNumTroops, UINT8 *pubNumElites);
-void GetNumberOfEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins, UINT8 *pubNumTroops,
-                                UINT8 *pubNumElites);
+uint8_t NumEnemiesInSector(u8 sSectorX, u8 sSectorY);
+uint8_t NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY);
+uint8_t NumMobileEnemiesInSector(u8 sSectorX, u8 sSectorY);
+void GetNumberOfMobileEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
+                                      uint8_t *pubNumTroops, uint8_t *pubNumElites);
+void GetNumberOfStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
+                                          uint8_t *pubNumTroops, uint8_t *pubNumElites);
+void GetNumberOfEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
+                                uint8_t *pubNumTroops, uint8_t *pubNumElites);
 
 // Called when entering a sector so the campaign AI can automatically insert the
 // correct number of troops of each type based on the current number in the sector
@@ -29,8 +29,8 @@ void GetNumberOfEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins, U
 BOOLEAN PrepareEnemyForSectorBattle();
 BOOLEAN PrepareEnemyForUndergroundBattle();
 
-void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ubNumAdmins,
-                        UINT8 ubNumTroops, UINT8 ubNumElites, BOOLEAN fMagicallyAppeared);
+void AddEnemiesToBattle(struct GROUP *pGroup, uint8_t ubStrategicInsertionCode, uint8_t ubNumAdmins,
+                        uint8_t ubNumTroops, uint8_t ubNumElites, BOOLEAN fMagicallyAppeared);
 void AddPossiblePendingEnemiesToBattle();
 void EndTacticalBattleForEnemy();
 
@@ -41,13 +41,13 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile);
 BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile);
 
 // Finds and returns the specified underground structure ( DONT MODIFY IT ).  Else returns NULL
-UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
+UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, uint8_t bMapZ);
 
 void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier);
 void BeginCaptureSquence();
 void EndCaptureSequence();
 
-BOOLEAN PlayerSectorDefended(UINT8 ubSectorID);
+BOOLEAN PlayerSectorDefended(uint8_t ubSectorID);
 
 BOOLEAN OnlyHostileCivsInSector();
 

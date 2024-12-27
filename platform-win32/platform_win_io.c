@@ -527,7 +527,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t
 //
 //		HWFILE	-> handle to file to seek in
 //		uint32_t	-> distance to seek
-//		UINT8		-> how to seek
+//		uint8_t		-> how to seek
 //
 // Return Value :
 //
@@ -542,7 +542,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t
 //
 //**************************************************************************
 
-BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, UINT8 uiHow) {
+BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) {
   HANDLE hRealFile;
   LONG lDistanceToMove;
   INT32 iDistance = 0;
@@ -951,7 +951,7 @@ BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
   INT16 sLibraryID;
   uint32_t uiFileNum;
   HANDLE hRealFile;
-  //	UINT8		Data;
+  //	uint8_t		Data;
   uint32_t uiNumberOfBytesRead = 0;
   uint32_t uiOldFilePtrLoc = 0;
   uint32_t uiEndOfFilePtrLoc = 0;

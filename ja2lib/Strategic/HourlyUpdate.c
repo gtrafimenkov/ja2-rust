@@ -76,7 +76,7 @@ void HandleHourlyUpdate() {
 }
 
 void UpdateRegenCounters(void) {
-  UINT8 ubID;
+  uint8_t ubID;
 
   for (ubID = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        ubID <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubID++) {
@@ -105,7 +105,7 @@ void HourlyQuestUpdate(void) {
 
   // bar/nightclub
   if (uiHour == 15) {
-    UINT8 ubLoop;
+    uint8_t ubLoop;
 
     SetFactTrue(FACT_CLUB_OPEN);
     SetFactFalse(FACT_PAST_CLUB_CLOSING_AND_PLAYER_WARNED);
@@ -274,7 +274,7 @@ void HourlyCheckIfSlayAloneSoHeCanLeave() {
   if (!IsSolActive(pSoldier) || !pSoldier->bLife) {
     return;
   }
-  if (PlayerMercsInSector((UINT8)GetSolSectorX(pSoldier), (UINT8)GetSolSectorY(pSoldier),
+  if (PlayerMercsInSector((uint8_t)GetSolSectorX(pSoldier), (uint8_t)GetSolSectorY(pSoldier),
                           GetSolSectorZ(pSoldier)) == 1) {
     if (Chance(15)) {
       pSoldier->ubLeaveHistoryCode = HISTORY_SLAY_MYSTERIOUSLY_LEFT;

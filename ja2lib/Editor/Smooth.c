@@ -41,7 +41,7 @@ INT16 gbSmoothWaterStruct[] =
      864,  1, 39, 0,  1040, 1, 40, 0,  1014, 2, 41, 17, 432,  1, 42, 0,  510, 1, 43, 13,
      54,   1, 44, 0,  108,  1, 45, 0,  -1};
 
-BOOLEAN HigherLevel(uint32_t gridno, UINT8 NewLevel);
+BOOLEAN HigherLevel(uint32_t gridno, uint8_t NewLevel);
 BOOLEAN ContainsWater(uint32_t gridno);
 
 void SmoothTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN fForceSmooth) {
@@ -164,7 +164,7 @@ void SmoothTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN fForce
   *piNewTile = usTileIndex;
 }
 
-void SmoothExitGridRadius(INT16 sMapIndex, UINT8 ubRadius) {
+void SmoothExitGridRadius(INT16 sMapIndex, uint8_t ubRadius) {
   struct LEVELNODE *pShadow;
   INT16 x, y;
   INT16 centerX, centerY;
@@ -337,7 +337,7 @@ void SmoothAllTerrainWorld(void) {
   }
 }
 
-void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, UINT8 ubRadius,
+void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, uint8_t ubRadius,
                          BOOLEAN fForceSmooth) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
@@ -373,7 +373,7 @@ void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, UINT8 ubRadiu
   }
 }
 
-void SmoothAllTerrainTypeRadius(uint32_t iMapIndex, UINT8 ubRadius, BOOLEAN fForceSmooth) {
+void SmoothAllTerrainTypeRadius(uint32_t iMapIndex, uint8_t ubRadius, BOOLEAN fForceSmooth) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2, cnt3;

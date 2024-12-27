@@ -22,8 +22,8 @@ uint32_t SaveLoadScreenShutdown(void);
 uint32_t SaveLoadScreenHandle(void);
 uint32_t SaveLoadScreenInit(void);
 
-BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, STR16 zString, uint32_t uiExitScreen, uint16_t usFlags,
-                             MSGBOX_CALLBACK ReturnCallback);
+BOOLEAN DoSaveLoadMessageBox(uint8_t ubStyle, STR16 zString, uint32_t uiExitScreen,
+                             uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
 
 BOOLEAN InitSaveGameArray();
 
@@ -35,6 +35,6 @@ BOOLEAN DoQuickLoad();
 
 BOOLEAN IsThereAnySavedGameFiles();
 
-void DeleteSaveGameNumber(UINT8 ubSaveGameSlotID);
+void DeleteSaveGameNumber(uint8_t ubSaveGameSlotID);
 
 #endif

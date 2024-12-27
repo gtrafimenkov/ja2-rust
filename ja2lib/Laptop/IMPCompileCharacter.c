@@ -525,7 +525,7 @@ void SelectMercFace(void) {
 
   // now the offsets
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].ubFaceIndex =
-      200 + (UINT8)iPortraitNumber;
+      200 + (uint8_t)iPortraitNumber;
 
   // eyes
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].usEyesX =

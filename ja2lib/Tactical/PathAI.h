@@ -26,31 +26,31 @@ INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyR
 
 void ErasePath(char bEraseOldOne);
 INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMovementMode,
-                   INT8 bCopy, UINT8 fFlags);
+                   INT8 bCopy, uint8_t fFlags);
 void GlobalReachableTest(INT16 sStartGridNo);
 void GlobalItemsReachableTest(INT16 sStartGridNo1, INT16 sStartGridNo2);
-void RoofReachableTest(INT16 sStartGridNo, UINT8 ubBuildingID);
+void RoofReachableTest(INT16 sStartGridNo, uint8_t ubBuildingID);
 void LocalReachableTest(INT16 sStartGridNo, INT8 bRadius);
 
-UINT8 DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
-                     BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo);
-UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
-                             BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
-                             BOOLEAN fReturnDoorCost);
+uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
+                       BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo);
+uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
+                               BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
+                               BOOLEAN fReturnDoorCost);
 
 INT16 RecalculatePathCost(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
 
 // Exporting these global variables
 extern uint32_t guiPathingData[256];
-extern UINT8 gubNPCAPBudget;
+extern uint8_t gubNPCAPBudget;
 extern uint16_t gusNPCMovementMode;
-extern UINT8 gubNPCDistLimit;
-extern UINT8 gubNPCPathCount;
+extern uint8_t gubNPCDistLimit;
+extern uint8_t gubNPCPathCount;
 extern BOOLEAN gfPlotPathToExitGrid;
 extern BOOLEAN gfNPCCircularDistLimit;
 extern BOOLEAN gfEstimatePath;
 extern BOOLEAN gfPathAroundObstacles;
-extern UINT8 gubGlobalPathFlags;
+extern uint8_t gubGlobalPathFlags;
 
 // Ian's terrain values for travelling speed/pathing purposes
 // Fixed by CJC March 4, 1998.  Please do not change these unless familiar

@@ -19,37 +19,37 @@
 
 typedef struct {
   INT16 sItemIndex;
-  UINT8 ubOptimalNumber;
+  uint8_t ubOptimalNumber;
 
 } DEALER_POSSIBLE_INV;
 
 typedef struct {
   uint32_t uiItemClass;
-  UINT8 ubWeaponClass;
+  uint8_t ubWeaponClass;
   BOOLEAN fAllowUsed;
 } ITEM_SORT_ENTRY;
 
-INT8 GetDealersMaxItemAmount(UINT8 ubDealerID, uint16_t usItemIndex);
+INT8 GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex);
 
-DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(UINT8 ubArmsDealerID);
+DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(uint8_t ubArmsDealerID);
 
-UINT8 GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex);
-UINT8 ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
-                              BOOLEAN fUsed);
+uint8_t GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex);
+uint8_t ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
+                                BOOLEAN fUsed);
 BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
                               BOOLEAN fUsed);
-UINT8 DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubChances,
-                               BOOLEAN fUsed);
-UINT8 HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubNumInStock,
-                          BOOLEAN fUsed);
-UINT8 HowManyItemsToReorder(UINT8 ubWanted, UINT8 ubStillHave);
+uint8_t DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
+                                 BOOLEAN fUsed);
+uint8_t HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
+                            BOOLEAN fUsed);
+uint8_t HowManyItemsToReorder(uint8_t ubWanted, uint8_t ubStillHave);
 
 int BobbyRayItemQsortCompare(const void *pArg1, const void *pArg2);
 int ArmsDealerItemQsortCompare(const void *pArg1, const void *pArg2);
 int RepairmanItemQsortCompare(const void *pArg1, const void *pArg2);
-int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, UINT8 ubItem1Quality,
-                           UINT8 ubItem2Quality);
-UINT8 GetDealerItemCategoryNumber(uint16_t usItemIndex);
+int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, uint8_t ubItem1Quality,
+                           uint8_t ubItem2Quality);
+uint8_t GetDealerItemCategoryNumber(uint16_t usItemIndex);
 BOOLEAN CanDealerItemBeSoldUsed(uint16_t usItemIndex);
 
 #endif

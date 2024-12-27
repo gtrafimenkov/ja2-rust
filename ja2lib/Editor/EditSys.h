@@ -47,7 +47,7 @@ void PasteSingleDecoration(uint32_t iMapIndex);
 void PasteSingleDecal(uint32_t iMapIndex);
 void PasteSingleFloor(uint32_t iMapIndex);
 void PasteSingleToilet(uint32_t iMapIndex);
-void PasteRoomNumber(uint32_t iMapIndex, UINT8 ubRoomNumber);
+void PasteRoomNumber(uint32_t iMapIndex, uint8_t ubRoomNumber);
 
 void PasteSingleWallCommon(uint32_t iMapIndex);
 

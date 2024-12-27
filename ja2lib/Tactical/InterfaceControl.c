@@ -58,7 +58,7 @@ uint32_t guiTacticalInterfaceFlags;
 
 uint16_t gusUICurIntTileEffectIndex;
 INT16 gsUICurIntTileEffectGridNo;
-UINT8 gsUICurIntTileOldShade;
+uint8_t gsUICurIntTileOldShade;
 
 BOOLEAN gfRerenderInterfaceFromHelpText = FALSE;
 
@@ -77,7 +77,7 @@ BOOLEAN gfPausedTacticalRenderFlags = FALSE;
 
 // which assignment menu can be shown?
 extern void DetermineWhichAssignmentMenusCanBeShown(void);
-extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
+extern void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 extern BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool);
 
@@ -346,7 +346,7 @@ uint32_t guiColors[12] = {FROMRGB(198, 163, 0), FROMRGB(185, 150, 0), FROMRGB(17
 void RenderRubberBanding() {
   uint16_t usLineColor;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   INT16 iLeft, iRight, iTop, iBottom;
   INT32 iBack = -1;
   static INT32 iFlashColor = 0;

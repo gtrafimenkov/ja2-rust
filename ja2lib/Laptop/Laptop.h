@@ -26,16 +26,16 @@ void SetLaptopNewGameFlag();
 uint32_t DrawLapTopIcons();
 void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void HandleRightButtonUpEvent(void);
-BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
+BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                            MSGBOX_CALLBACK ReturnCallback);
 void GoToWebPage(INT32 iPageId);
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, uint16_t usWidth, uint16_t usHeight,
+BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t usHeight,
                               uint32_t uiBackGround);
 void BlitTitleBarIcons(void);
 void HandleKeyBoardShortCutsForLapTop(uint16_t usEvent, uint32_t usParam, uint16_t usKeyState);
 BOOLEAN RenderWWWProgramTitleBar(void);
 void DisplayProgramBoundingBox(BOOLEAN fMarkButtons);
-BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                  uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
 BOOLEAN RemoveBookMark(INT32 iBookId);
 void CreateFileAndNewEmailIconFastHelpText(uint32_t uiHelpTextID, BOOLEAN fClearHelpText);
@@ -78,7 +78,7 @@ extern uint32_t guiSHADELINE;
 
 extern uint32_t guiBottomButton;
 extern uint32_t guiBottomButton2;
-extern UINT8 gubCurPageNum;
+extern uint8_t gubCurPageNum;
 
 extern uint32_t guiContentButton;
 

@@ -142,7 +142,7 @@ void CallAvailableEnemiesTo(INT16 sGridno);
 void CallAvailableKingpinMenTo(INT16 sGridNo);
 void CallAvailableTeamEnemiesTo(INT16 sGridno, INT8 bTeam);
 void CallEldinTo(INT16 sGridNo);
-void CancelAIAction(struct SOLDIERTYPE *pSoldier, UINT8 ubForce);
+void CancelAIAction(struct SOLDIERTYPE *pSoldier, uint8_t ubForce);
 void CheckForChangingOrders(struct SOLDIERTYPE *pSoldier);
 
 INT8 ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier);
@@ -156,7 +156,7 @@ INT8 DecideAction(struct SOLDIERTYPE *pSoldier);
 INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier);
 INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier);
 INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier);
-INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK);
+INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK);
 INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier);
 
 INT16 DistanceToClosestFriend(struct SOLDIERTYPE *pSoldier);
@@ -186,18 +186,18 @@ BOOLEAN FindRoofClimbingPoints(struct SOLDIERTYPE *pSoldier, INT16 sDesiredSpot)
 INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier);
 INT16 FindSweetCoverSpot(struct SOLDIERTYPE *pSoldier);
 
-void FreeUpNPCFromAttacking(UINT8 ubID);
+void FreeUpNPCFromAttacking(uint8_t ubID);
 void FreeUpNPCFromPendingAction(struct SOLDIERTYPE *pSoldier);
 void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, INT8 bLook);
 void FreeUpNPCFromStanceChange(struct SOLDIERTYPE *pSoldier);
 void FreeUpNPCFromLoweringGun(struct SOLDIERTYPE *pSoldier);
 void FreeUpNPCFromRoofClimb(struct SOLDIERTYPE *pSoldier);
 
-UINT8 GetClosestOpponent(struct SOLDIERTYPE *pSoldier);
-UINT8 GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier);
+uint8_t GetClosestOpponent(struct SOLDIERTYPE *pSoldier);
+uint8_t GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier);
 
 void HandleSoldierAI(struct SOLDIERTYPE *pSoldier);
-void HandleInitialRedAlert(INT8 bTeam, UINT8 ubCommunicate);
+void HandleInitialRedAlert(INT8 bTeam, uint8_t ubCommunicate);
 
 void InitPanicSystem();
 INT16 InWaterOrGas(struct SOLDIERTYPE *pSoldier, INT16 sGridno);
@@ -210,17 +210,17 @@ void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier);
 void NewDest(struct SOLDIERTYPE *pSoldier, uint16_t sGridno);
 INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier);
 
-INT8 PanicAI(struct SOLDIERTYPE *pSoldier, UINT8 ubCanMove);
+INT8 PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove);
 void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier);
 
 INT16 RandDestWithinRange(struct SOLDIERTYPE *pSoldier);
 INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier);
 INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, uint16_t *pFromGridno);
 
-void SetCivilianDestination(UINT8 ubWho, INT16 sGridno);
+void SetCivilianDestination(uint8_t ubWho, INT16 sGridno);
 void SetNewSituation(struct SOLDIERTYPE *pSoldier);
 
-UINT8 SoldierDifficultyLevel(struct SOLDIERTYPE *pSoldier);
+uint8_t SoldierDifficultyLevel(struct SOLDIERTYPE *pSoldier);
 void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier);
 void StartNPCAI(struct SOLDIERTYPE *pSoldier);
 void TempHurt(struct SOLDIERTYPE *pVictim, struct SOLDIERTYPE *pAttacker);
@@ -238,6 +238,6 @@ void AINameMessage(struct SOLDIERTYPE *pSoldier, const STR str, INT32 num);
 #endif
 
 BOOLEAN WearGasMaskIfAvailable(struct SOLDIERTYPE *pSoldier);
-INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, UINT8 ubInSightOnly);
+INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, uint8_t ubInSightOnly);
 
 #endif

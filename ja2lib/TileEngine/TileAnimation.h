@@ -40,7 +40,7 @@ typedef struct TAG_anitile {
   uint32_t uiTimeLastUpdate;  // Stuff for animated tiles
 
   struct LEVELNODE *pLevelNode;
-  UINT8 ubLevelID;
+  uint8_t ubLevelID;
   INT16 sCurrentFrame;
   INT16 sStartFrame;
   INT16 sDelay;
@@ -58,14 +58,14 @@ typedef struct TAG_anitile {
   uint16_t usCachedTileSubIndex;  // sub Index
   INT16 sCachedTileID;            // Index into cached tile ID
 
-  UINT8 ubOwner;
-  UINT8 ubKeyFrame1;
+  uint8_t ubOwner;
+  uint8_t ubKeyFrame1;
   uint32_t uiKeyFrame1Code;
-  UINT8 ubKeyFrame2;
+  uint8_t ubKeyFrame2;
   uint32_t uiKeyFrame2Code;
 
   uint32_t uiUserData;
-  UINT8 ubUserData2;
+  uint8_t ubUserData2;
   uint32_t uiUserData3;
 
   INT8 bFrameCountAfterStart;
@@ -74,7 +74,7 @@ typedef struct TAG_anitile {
 
 typedef struct TAG_anitile_params {
   uint32_t uiFlags;      // flags struct
-  UINT8 ubLevelID;       // Level ID for rendering layer
+  uint8_t ubLevelID;     // Level ID for rendering layer
   INT16 sStartFrame;     // Start frame
   INT16 sDelay;          // Delay time
   uint16_t usTileType;   // Tile databse type ( optional )
@@ -87,14 +87,14 @@ typedef struct TAG_anitile_params {
   struct LEVELNODE *pGivenLevelNode;  // Levelnode for existing tile ( optional )
   CHAR8 zCachedFile[100];             // Filename for cached tile name ( optional )
 
-  UINT8 ubOwner;             // UBID for the owner
-  UINT8 ubKeyFrame1;         // Key frame 1
+  uint8_t ubOwner;           // UBID for the owner
+  uint8_t ubKeyFrame1;       // Key frame 1
   uint32_t uiKeyFrame1Code;  // Key frame code
-  UINT8 ubKeyFrame2;         // Key frame 2
+  uint8_t ubKeyFrame2;       // Key frame 2
   uint32_t uiKeyFrame2Code;  // Key frame code
 
   uint32_t uiUserData;
-  UINT8 ubUserData2;
+  uint8_t ubUserData2;
   uint32_t uiUserData3;
 
 } ANITILE_PARAMS;
@@ -121,7 +121,7 @@ void DeleteAniTiles();
 void HideAniTile(ANITILE *pAniTile, BOOLEAN fHide);
 void PauseAniTile(ANITILE *pAniTile, BOOLEAN fPause);
 
-ANITILE *GetCachedAniTileOfType(INT16 sGridNo, UINT8 ubLevelID, uint32_t uiFlags);
+ANITILE *GetCachedAniTileOfType(INT16 sGridNo, uint8_t ubLevelID, uint32_t uiFlags);
 
 void PauseAllAniTilesOfType(uint32_t uiType, BOOLEAN fPause);
 

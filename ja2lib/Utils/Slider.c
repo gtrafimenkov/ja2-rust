@@ -28,7 +28,7 @@
 typedef struct TAG_SLIDER {
   uint32_t uiSliderID;
 
-  UINT8 ubStyle;
+  uint8_t ubStyle;
   uint16_t usPosX;
   uint16_t usPosY;
   uint16_t usWidth;
@@ -49,8 +49,8 @@ typedef struct TAG_SLIDER {
 
   uint32_t uiFlags;
 
-  UINT8 ubSliderWidth;
-  UINT8 ubSliderHeight;
+  uint8_t ubSliderWidth;
+  uint8_t ubSliderHeight;
 
   struct TAG_SLIDER *pNext;
   struct TAG_SLIDER *pPrev;
@@ -138,7 +138,7 @@ void ShutDownSlider() {
   DeleteVideoObjectFromIndex(guiSliderBoxImage);
 }
 
-INT32 AddSlider(UINT8 ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
+INT32 AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
                 uint16_t usWidth, uint16_t usNumberOfIncrements, INT8 sPriority,
                 SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags) {
   SLIDER *pTemp = NULL;
@@ -559,7 +559,7 @@ void CalculateNewSliderIncrement(uint32_t uiSliderID, uint16_t usPos) {
 void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY,
                     INT16 iColor) {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 

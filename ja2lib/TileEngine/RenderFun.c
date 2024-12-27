@@ -23,8 +23,8 @@
 #include "Utils/TimerControl.h"
 
 // Room Information
-UINT8 gubWorldRoomInfo[WORLD_MAX];
-UINT8 gubWorldRoomHidden[MAX_ROOMS];
+uint8_t gubWorldRoomInfo[WORLD_MAX];
+uint8_t gubWorldRoomHidden[MAX_ROOMS];
 
 BOOLEAN InitRoomDatabase() {
   memset(gubWorldRoomInfo, NO_ROOM, sizeof(gubWorldRoomInfo));
@@ -34,12 +34,12 @@ BOOLEAN InitRoomDatabase() {
 
 void ShutdownRoomDatabase() {}
 
-void SetTileRoomNum(INT16 sGridNo, UINT8 ubRoomNum) {
+void SetTileRoomNum(INT16 sGridNo, uint8_t ubRoomNum) {
   // Add to global room list
   gubWorldRoomInfo[sGridNo] = ubRoomNum;
 }
 
-void SetTileRangeRoomNum(SGPRect *pSelectRegion, UINT8 ubRoomNum) {
+void SetTileRangeRoomNum(SGPRect *pSelectRegion, uint8_t ubRoomNum) {
   INT32 cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
@@ -49,7 +49,7 @@ void SetTileRangeRoomNum(SGPRect *pSelectRegion, UINT8 ubRoomNum) {
   }
 }
 
-BOOLEAN InARoom(uint16_t sGridNo, UINT8 *pubRoomNo) {
+BOOLEAN InARoom(uint16_t sGridNo, uint8_t *pubRoomNo) {
   if (gubWorldRoomInfo[sGridNo] != NO_ROOM) {
     if (pubRoomNo) {
       *pubRoomNo = gubWorldRoomInfo[sGridNo];
@@ -60,7 +60,7 @@ BOOLEAN InARoom(uint16_t sGridNo, UINT8 *pubRoomNo) {
   return (FALSE);
 }
 
-BOOLEAN InAHiddenRoom(uint16_t sGridNo, UINT8 *pubRoomNo) {
+BOOLEAN InAHiddenRoom(uint16_t sGridNo, uint8_t *pubRoomNo) {
   if (gubWorldRoomInfo[sGridNo] != NO_ROOM) {
     if ((gubWorldRoomHidden[gubWorldRoomInfo[sGridNo]])) {
       *pubRoomNo = gubWorldRoomInfo[sGridNo];
@@ -150,7 +150,7 @@ void SetGridNoRevealedFlag(uint16_t sGridNo) {
 void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo) {
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure, *pBase;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   DB_STRUCTURE_TILE **ppTile;
   INT16 sGridNo;
   uint16_t usIndex;
@@ -205,7 +205,7 @@ void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo) {
   }
 }
 
-void RemoveRoomRoof(uint16_t sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier) {
+void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSoldier) {
   uint32_t cnt;
   struct ITEM_POOL *pItemPool;
   INT16 sX, sY;

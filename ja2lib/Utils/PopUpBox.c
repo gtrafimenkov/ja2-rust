@@ -536,7 +536,7 @@ uint32_t GetBoxFont(INT32 hBoxHandle) {
 }
 
 // set the foreground color of this string in this pop up box
-void SetBoxLineForeground(INT32 iBox, INT32 iStringValue, UINT8 ubColor) {
+void SetBoxLineForeground(INT32 iBox, INT32 iStringValue, uint8_t ubColor) {
   if ((iBox < 0) || (iBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[iBox]);
@@ -546,7 +546,7 @@ void SetBoxLineForeground(INT32 iBox, INT32 iStringValue, UINT8 ubColor) {
   return;
 }
 
-void SetBoxSecondaryShade(INT32 iBox, UINT8 ubColor) {
+void SetBoxSecondaryShade(INT32 iBox, uint8_t ubColor) {
   uint32_t uiCounter;
 
   if ((iBox < 0) || (iBox >= MAX_POPUP_BOX_COUNT)) return;
@@ -583,7 +583,7 @@ void SetPopUpSecondColumnStringFont(INT32 hStringHandle, uint32_t uiFont) {
   return;
 }
 
-void SetStringSecondaryShade(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringSecondaryShade(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -593,7 +593,7 @@ void SetStringSecondaryShade(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringForeground(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringForeground(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -603,7 +603,7 @@ void SetStringForeground(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringBackground(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringBackground(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -613,7 +613,7 @@ void SetStringBackground(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringHighLight(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringHighLight(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -623,7 +623,7 @@ void SetStringHighLight(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringShade(INT32 hStringHandle, UINT8 ubShade) {
+void SetStringShade(INT32 hStringHandle, uint8_t ubShade) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -633,7 +633,7 @@ void SetStringShade(INT32 hStringHandle, UINT8 ubShade) {
   return;
 }
 
-void SetStringSecondColumnForeground(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringSecondColumnForeground(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -643,7 +643,7 @@ void SetStringSecondColumnForeground(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringSecondColumnBackground(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringSecondColumnBackground(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -653,7 +653,7 @@ void SetStringSecondColumnBackground(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringSecondColumnHighLight(INT32 hStringHandle, UINT8 ubColor) {
+void SetStringSecondColumnHighLight(INT32 hStringHandle, uint8_t ubColor) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -663,7 +663,7 @@ void SetStringSecondColumnHighLight(INT32 hStringHandle, UINT8 ubColor) {
   return;
 }
 
-void SetStringSecondColumnShade(INT32 hStringHandle, UINT8 ubShade) {
+void SetStringSecondColumnShade(INT32 hStringHandle, uint8_t ubShade) {
   if ((guiCurrentBox < 0) || (guiCurrentBox >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[guiCurrentBox] != NULL);
@@ -673,7 +673,7 @@ void SetStringSecondColumnShade(INT32 hStringHandle, UINT8 ubShade) {
   return;
 }
 
-void SetBoxForeground(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxForeground(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t uiCounter;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -688,7 +688,7 @@ void SetBoxForeground(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxBackground(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxBackground(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t uiCounter;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -703,7 +703,7 @@ void SetBoxBackground(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxHighLight(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxHighLight(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t uiCounter;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -718,7 +718,7 @@ void SetBoxHighLight(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxShade(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxShade(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t uiCounter;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -733,7 +733,7 @@ void SetBoxShade(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxSecondColumnForeground(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxSecondColumnForeground(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t iCounter = 0;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -749,7 +749,7 @@ void SetBoxSecondColumnForeground(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxSecondColumnBackground(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxSecondColumnBackground(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t iCounter = 0;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -765,7 +765,7 @@ void SetBoxSecondColumnBackground(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxSecondColumnHighLight(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxSecondColumnHighLight(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t iCounter = 0;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -781,7 +781,7 @@ void SetBoxSecondColumnHighLight(INT32 hBoxHandle, UINT8 ubColor) {
   return;
 }
 
-void SetBoxSecondColumnShade(INT32 hBoxHandle, UINT8 ubColor) {
+void SetBoxSecondColumnShade(INT32 hBoxHandle, uint8_t ubColor) {
   uint32_t iCounter = 0;
 
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
@@ -1025,7 +1025,7 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
   SGPRect clip;
   uint16_t usTopX, usTopY;
   uint16_t usWidth, usHeight;

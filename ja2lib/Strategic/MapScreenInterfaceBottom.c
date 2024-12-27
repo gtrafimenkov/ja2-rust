@@ -119,7 +119,7 @@ BOOLEAN gfOneFramePauseOnExit = FALSE;
 // exit states
 INT8 gbExitingMapScreenToWhere = -1;
 
-UINT8 gubFirstMapscreenMessageIndex = 0;
+uint8_t gubFirstMapscreenMessageIndex = 0;
 
 uint32_t guiCompressionStringBaseTime = 0;
 
@@ -145,7 +145,7 @@ struct MOUSE_REGION gTimeCompressionMask[3];
 
 // EXTERNS
 
-extern UINT8 gubStartOfMapScreenMessageList;
+extern uint8_t gubStartOfMapScreenMessageList;
 
 extern INT32 giMapInvDoneButton;
 
@@ -254,9 +254,9 @@ void RenderMapScreenInterfaceBottom(void) {
     BltVideoObject(guiSAVEBUFFER, hHandle, 0, MAP_BOTTOM_X, MAP_BOTTOM_Y, VO_BLT_SRCTRANSPARENCY,
                    NULL);
 
-    if (GetSectorFlagStatus(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
+    if (GetSectorFlagStatus(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
         TRUE) {
-      GetMapFileName(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ, bFilename, TRUE, TRUE);
+      GetMapFileName(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ, bFilename, TRUE, TRUE);
       LoadRadarScreenBitmap(bFilename);
     } else {
       ClearOutRadarMapImage();
@@ -722,7 +722,7 @@ void BtnMessageUpMapScreenCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void EnableDisableMessageScrollButtonsAndRegions(void) {
-  UINT8 ubNumMessages;
+  uint8_t ubNumMessages;
 
   ubNumMessages = GetRangeOfMapScreenMessages();
 
@@ -754,7 +754,7 @@ void EnableDisableMessageScrollButtonsAndRegions(void) {
 void DisplayCompressMode(void) {
   INT16 sX, sY;
   CHAR16 sString[128];
-  static UINT8 usColor = FONT_LTGREEN;
+  static uint8_t usColor = FONT_LTGREEN;
 
   // get compress speed
   if (giTimeCompressMode != NOT_USING_TIME_COMPRESSION) {
@@ -826,10 +826,10 @@ void DeleteMapScreenBottomMessageScrollRegion(void) {
 }
 
 void MapScreenMessageScrollBarCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT8 ubMouseYOffset;
-  UINT8 ubDesiredSliderOffset;
-  UINT8 ubDesiredMessageIndex;
-  UINT8 ubNumMessages;
+  uint8_t ubMouseYOffset;
+  uint8_t ubDesiredSliderOffset;
+  uint8_t ubDesiredMessageIndex;
+  uint8_t ubNumMessages;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
@@ -880,8 +880,8 @@ void MapScreenMessageScrollBarCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
 
 void DisplayScrollBarSlider() {
   // will display the scroll bar icon
-  UINT8 ubNumMessages;
-  UINT8 ubSliderOffset;
+  uint8_t ubNumMessages;
+  uint8_t ubSliderOffset;
   struct VObject *hHandle;
 
   ubNumMessages = GetRangeOfMapScreenMessages();
@@ -1398,12 +1398,12 @@ BOOLEAN AllowedToExitFromMapscreenTo(INT8 bExitToWhere) {
     if (((gTacticalStatus.uiFlags & INCOMBAT) ||
          (gTacticalStatus.fEnemyInSector) /*|| InAirRaid( )*/) &&
         ((sSelMapX != gWorldSectorX) || (sSelMapY != gWorldSectorY) ||
-         ((UINT8)iCurrentMapSectorZ) != gbWorldSectorZ)) {
+         ((uint8_t)iCurrentMapSectorZ) != gbWorldSectorZ)) {
       return (FALSE);
     }
 
     // must have some mercs there
-    if (!CanGoToTacticalInSector(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ)) {
+    if (!CanGoToTacticalInSector(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ)) {
       return (FALSE);
     }
   }
@@ -1443,7 +1443,7 @@ void HandleExitsFromMapScreen(void) {
           break;
 
         case MAP_EXIT_TO_TACTICAL:
-          SetCurrentWorldSector(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ);
+          SetCurrentWorldSector(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ);
           break;
 
         case MAP_EXIT_TO_OPTIONS:
@@ -1476,8 +1476,8 @@ void HandleExitsFromMapScreen(void) {
   }
 }
 
-void MapScreenMsgScrollDown(UINT8 ubLinesDown) {
-  UINT8 ubNumMessages;
+void MapScreenMsgScrollDown(uint8_t ubLinesDown) {
+  uint8_t ubNumMessages;
 
   ubNumMessages = GetRangeOfMapScreenMessages();
 
@@ -1488,24 +1488,24 @@ void MapScreenMsgScrollDown(UINT8 ubLinesDown) {
   }
 
   if (ubLinesDown > 0) {
-    ChangeCurrentMapscreenMessageIndex((UINT8)(gubFirstMapscreenMessageIndex + ubLinesDown));
+    ChangeCurrentMapscreenMessageIndex((uint8_t)(gubFirstMapscreenMessageIndex + ubLinesDown));
   }
 }
 
-void MapScreenMsgScrollUp(UINT8 ubLinesUp) {
+void MapScreenMsgScrollUp(uint8_t ubLinesUp) {
   // check if we can go that far, only go as far as we can
   if (gubFirstMapscreenMessageIndex < ubLinesUp) {
     ubLinesUp = gubFirstMapscreenMessageIndex;
   }
 
   if (ubLinesUp > 0) {
-    ChangeCurrentMapscreenMessageIndex((UINT8)(gubFirstMapscreenMessageIndex - ubLinesUp));
+    ChangeCurrentMapscreenMessageIndex((uint8_t)(gubFirstMapscreenMessageIndex - ubLinesUp));
   }
 }
 
 void MoveToEndOfMapScreenMessageList(void) {
-  UINT8 ubDesiredMessageIndex;
-  UINT8 ubNumMessages;
+  uint8_t ubDesiredMessageIndex;
+  uint8_t ubNumMessages;
 
   ubNumMessages = GetRangeOfMapScreenMessages();
 
@@ -1513,7 +1513,7 @@ void MoveToEndOfMapScreenMessageList(void) {
   ChangeCurrentMapscreenMessageIndex(ubDesiredMessageIndex);
 }
 
-void ChangeCurrentMapscreenMessageIndex(UINT8 ubNewMessageIndex) {
+void ChangeCurrentMapscreenMessageIndex(uint8_t ubNewMessageIndex) {
   Assert(ubNewMessageIndex + MAX_MESSAGES_ON_MAP_BOTTOM <=
          max(MAX_MESSAGES_ON_MAP_BOTTOM, GetRangeOfMapScreenMessages()));
 

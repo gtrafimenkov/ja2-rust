@@ -78,7 +78,7 @@ enum {
 
 } HeliCodes;
 
-UINT8 ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
+uint8_t ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
     // HELI_APPROACH
     HELI_REST,
     HELI_REST,
@@ -340,7 +340,7 @@ UINT8 ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
 };
 
 BOOLEAN gfHandleHeli = FALSE;
-UINT8 gusHeliSeats[MAX_MERC_IN_HELI];
+uint8_t gusHeliSeats[MAX_MERC_IN_HELI];
 INT8 gbNumHeliSeatsOccupied = 0;
 
 BOOLEAN gfFirstGuyDown = FALSE;
@@ -351,7 +351,7 @@ INT16 gsHeliXPos;
 INT16 gsHeliYPos;
 FLOAT gdHeliZPos;
 INT16 gsHeliScript;
-UINT8 gubHeliState;
+uint8_t gubHeliState;
 uint32_t guiHeliLastUpdate;
 INT8 gbCurDrop;
 INT8 gbExitCount;
@@ -369,7 +369,7 @@ void HandleFirstHeliDropOfGame();
 
 void ResetHeliSeats() { gbNumHeliSeatsOccupied = 0; }
 
-void AddMercToHeli(UINT8 ubID) {
+void AddMercToHeli(uint8_t ubID) {
   INT32 cnt;
 
   if (gbNumHeliSeatsOccupied < MAX_MERC_IN_HELI) {
@@ -425,7 +425,7 @@ void StartHelicopterRun(INT16 sGridNoSweetSpot) {
 }
 
 void HandleHeliDrop() {
-  UINT8 ubScriptCode;
+  uint8_t ubScriptCode;
   uint32_t uiClock;
   // INT16 sWorldX, sWorldY;
   INT32 iVol;

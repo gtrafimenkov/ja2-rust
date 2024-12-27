@@ -25,8 +25,8 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
-INT8 FromWorldFlagsToSmokeType(UINT8 ubWorldFlags);
-UINT8 FromSmokeTypeToWorldFlags(INT8 bType);
+INT8 FromWorldFlagsToSmokeType(uint8_t ubWorldFlags);
+uint8_t FromSmokeTypeToWorldFlags(INT8 bType);
 
 #define NUM_SMOKE_EFFECT_SLOTS 25
 
@@ -62,7 +62,7 @@ void RecountSmokeEffects(void) {
 
 // Returns NO_SMOKE_EFFECT if none there...
 INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel) {
-  UINT8 ubExtFlags;
+  uint8_t ubExtFlags;
 
   ubExtFlags = gpWorldLevelData[sGridNo].ubExtFlags[bLevel];
 
@@ -75,7 +75,7 @@ INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel) {
   return (NO_SMOKE_EFFECT);
 }
 
-INT8 FromWorldFlagsToSmokeType(UINT8 ubWorldFlags) {
+INT8 FromWorldFlagsToSmokeType(uint8_t ubWorldFlags) {
   if (ubWorldFlags & MAPELEMENT_EXT_SMOKE) {
     return (NORMAL_SMOKE_EFFECT);
   } else if (ubWorldFlags & MAPELEMENT_EXT_TEARGAS) {
@@ -89,7 +89,7 @@ INT8 FromWorldFlagsToSmokeType(UINT8 ubWorldFlags) {
   }
 }
 
-UINT8 FromSmokeTypeToWorldFlags(INT8 bType) {
+uint8_t FromSmokeTypeToWorldFlags(INT8 bType) {
   switch (bType) {
     case NORMAL_SMOKE_EFFECT:
 
@@ -117,12 +117,12 @@ UINT8 FromSmokeTypeToWorldFlags(INT8 bType) {
   }
 }
 
-INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, UINT8 ubOwner) {
+INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, uint8_t ubOwner) {
   SMOKEEFFECT *pSmoke;
   INT32 iSmokeIndex;
   INT8 bSmokeEffectType = 0;
-  UINT8 ubDuration = 0;
-  UINT8 ubStartRadius = 0;
+  uint8_t ubDuration = 0;
+  uint8_t ubStartRadius = 0;
 
   if ((iSmokeIndex = GetFreeSmokeEffect()) == (-1)) return (-1);
 
@@ -337,7 +337,7 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 
 
 void RemoveSmokeEffectFromTile(INT16 sGridNo, INT8 bLevel) {
   ANITILE *pAniTile;
-  UINT8 ubLevelID;
+  uint8_t ubLevelID;
 
   // Get ANI tile...
   if (bLevel == 0) {

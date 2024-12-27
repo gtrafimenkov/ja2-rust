@@ -8,10 +8,10 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
-UINT8 gubDoorUIValue = 0;
-UINT8 gubWindowUIValue = 0;
-UINT8 gubWallUIValue = FIRSTWALL;
-UINT8 gubBrokenWallUIValue = 0;
+uint8_t gubDoorUIValue = 0;
+uint8_t gubWindowUIValue = 0;
+uint8_t gubWallUIValue = FIRSTWALL;
+uint8_t gubBrokenWallUIValue = 0;
 
 void CalcSmartWallDefault(uint16_t *pusObjIndex, uint16_t *pusUseIndex) {
   *pusUseIndex = 0;

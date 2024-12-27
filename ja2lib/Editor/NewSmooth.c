@@ -16,8 +16,8 @@
 #include "TileEngine/WorldMan.h"
 
 BOOLEAN CaveAtGridNo(INT32 iMapIndex);
-uint16_t GetCaveTileIndexFromPerimeterValue(UINT8 ubTotal);
-UINT8 CalcNewCavePerimeterValue(INT32 iMapIndex);
+uint16_t GetCaveTileIndexFromPerimeterValue(uint8_t ubTotal);
+uint8_t CalcNewCavePerimeterValue(INT32 iMapIndex);
 
 BOOLEAN CaveAtGridNo(INT32 iMapIndex) {
   struct STRUCTURE *pStruct;
@@ -41,7 +41,7 @@ BOOLEAN CaveAtGridNo(INT32 iMapIndex) {
   return FALSE;
 }
 
-uint16_t GetCaveTileIndexFromPerimeterValue(UINT8 ubTotal) {
+uint16_t GetCaveTileIndexFromPerimeterValue(uint8_t ubTotal) {
   uint16_t usType = FIRSTWALL;
   uint16_t usIndex;
   uint16_t usTileIndex;
@@ -419,8 +419,8 @@ uint16_t GetCaveTileIndexFromPerimeterValue(UINT8 ubTotal) {
 // which piece to use for all of these combinations.  In many cases,
 // up to 16 combinations can share the same graphic image, as corners
 // may not effect the look of the piece.
-UINT8 CalcNewCavePerimeterValue(INT32 iMapIndex) {
-  UINT8 ubTotal = 0;
+uint8_t CalcNewCavePerimeterValue(INT32 iMapIndex) {
+  uint8_t ubTotal = 0;
   if (CaveAtGridNo(iMapIndex - WORLD_COLS)) ubTotal += 0x01;      // north
   if (CaveAtGridNo(iMapIndex + 1)) ubTotal += 0x02;               // east
   if (CaveAtGridNo(iMapIndex + WORLD_COLS)) ubTotal += 0x04;      // south
@@ -512,7 +512,7 @@ void EraseRoof(uint32_t iMapIndex);
 void EraseFloor(uint32_t iMapIndex);
 void EraseBuilding(uint32_t iMapIndex);
 void EraseFloorOwnedBuildingPieces(uint32_t iMapIndex);
-void ConsiderEffectsOfNewWallPiece(uint32_t iMapIndex, UINT8 usWallOrientation);
+void ConsiderEffectsOfNewWallPiece(uint32_t iMapIndex, uint8_t usWallOrientation);
 
 //----------------------------------------------------------------------------------------------------
 // BEGIN IMPLEMENTATION OF PRIVATE FUNCTIONS
@@ -602,7 +602,7 @@ uint16_t PickAWallPiece(uint16_t usWallPieceType) {
 // NOTE:  Passing NULL for usWallType will force it to calculate the closest existing wall type, and
 //  use that for building this new wall.  It is necessary for restructuring a building, but not for
 //  adding on to an existing building, where the type is already known.
-void BuildWallPiece(uint32_t iMapIndex, UINT8 ubWallPiece, uint16_t usWallType) {
+void BuildWallPiece(uint32_t iMapIndex, uint8_t ubWallPiece, uint16_t usWallType) {
   INT16 sIndex;
   uint16_t usTileIndex;
   uint16_t ubWallClass;
@@ -941,8 +941,8 @@ void EraseFloorOwnedBuildingPieces(uint32_t iMapIndex) {
 
 /*
 BOOLEAN CaveAtGridNo( INT32 iMapIndex );
-uint16_t GetCaveTileIndexFromPerimeterValue( UINT8 ubTotal );
-UINT8 CalcNewCavePerimeterValue( INT32 iMapIndex );
+uint16_t GetCaveTileIndexFromPerimeterValue( uint8_t ubTotal );
+uint8_t CalcNewCavePerimeterValue( INT32 iMapIndex );
 void AddCave( INT32 iMapIndex, uint16_t usIndex );
 */
 
@@ -950,7 +950,7 @@ void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
   uint32_t top, left, right, bottom, x, y;
   uint32_t iMapIndex;
   uint16_t usIndex;
-  UINT8 ubPerimeterValue;
+  uint8_t ubPerimeterValue;
   top = pSelectRegion->iTop;
   left = pSelectRegion->iLeft;
   right = pSelectRegion->iRight;
@@ -983,7 +983,7 @@ void AddCaveSectionToWorld(SGPRect *pSelectRegion) {
   INT32 top, left, right, bottom, x, y;
   uint32_t uiMapIndex;
   uint16_t usIndex;
-  UINT8 ubPerimeterValue;
+  uint8_t ubPerimeterValue;
   top = pSelectRegion->iTop;
   left = pSelectRegion->iLeft;
   right = pSelectRegion->iRight;

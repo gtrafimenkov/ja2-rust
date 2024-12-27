@@ -52,7 +52,7 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
   STR pSourceFileName;
   STR pDestFileName;
   char sFileName[256];
-  UINT8 counter = 0;
+  uint8_t counter = 0;
   AUDIO_GAP *pCurrentGap, *pPreviousGap;
   uint32_t Start;
   uint32_t uiNumBytesRead;

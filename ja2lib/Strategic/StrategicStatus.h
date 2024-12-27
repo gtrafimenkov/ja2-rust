@@ -64,29 +64,29 @@ enum {
 
 typedef struct STRATEGIC_STATUS {
   uint32_t uiFlags;
-  UINT8 ubNumCapturedForRescue;
+  uint8_t ubNumCapturedForRescue;
 
-  UINT8 ubHighestProgress;  // the highest level of progress player has attained thus far in the
-                            // game (0-100)
+  uint8_t ubHighestProgress;  // the highest level of progress player has attained thus far in the
+                              // game (0-100)
 
-  UINT8 ubStandardArmyGunIndex[ARMY_GUN_LEVELS];  // type of gun in each group that Queen's army is
-                                                  // using this game
+  uint8_t ubStandardArmyGunIndex[ARMY_GUN_LEVELS];  // type of gun in each group that Queen's army
+                                                    // is using this game
   BOOLEAN fWeaponDroppedAlready[MAX_WEAPONS];  // flag that tracks whether this weapon type has been
                                                // dropped before
 
-  UINT8 ubMercDeaths;        // how many soldiers have bit it while in the player's employ (0-100)
+  uint8_t ubMercDeaths;      // how many soldiers have bit it while in the player's employ (0-100)
   uint32_t uiManDaysPlayed;  // once per day, # living mercs on player's team is added to this
                              // running total
 
-  UINT8 ubBadReputation;  // how bad a reputation player has earned through his actions,
-                          // performance, etc. (0-100)
+  uint8_t ubBadReputation;  // how bad a reputation player has earned through his actions,
+                            // performance, etc. (0-100)
 
   uint16_t usEnricoEmailFlags;  // bit flags that control progress-related E-mails from Enrico
 
-  UINT8 ubInsuranceInvestigationsCnt;  // how many times merc has been investigated for possible
-                                       // insurance fraud
+  uint8_t ubInsuranceInvestigationsCnt;  // how many times merc has been investigated for possible
+                                         // insurance fraud
 
-  UINT8 ubUnhiredMercDeaths;  // how many mercs have died while NOT working for the player
+  uint8_t ubUnhiredMercDeaths;  // how many mercs have died while NOT working for the player
 
   uint16_t usPlayerKills;  // kills achieved by all mercs controlled by player together.  *Excludes*
                            // militia kills!
@@ -94,8 +94,8 @@ typedef struct STRATEGIC_STATUS {
   uint16_t usEnemiesKilled[NUM_WAYS_ENEMIES_KILLED]
                           [NUM_ENEMY_RANKS];  // admin/troop/elite.  Includes kills by militia, too
   uint16_t usLastDayOfPlayerActivity;
-  UINT8 ubNumNewSectorsVisitedToday;
-  UINT8 ubNumberOfDaysOfInactivity;
+  uint8_t ubNumNewSectorsVisitedToday;
+  uint8_t ubNumberOfDaysOfInactivity;
 
   INT8 bPadding[70];
 
@@ -109,20 +109,20 @@ BOOLEAN SaveStrategicStatusToSaveGameFile(HWFILE hFile);
 
 BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile);
 
-UINT8 CalcDeathRate(void);
+uint8_t CalcDeathRate(void);
 
 void ModifyPlayerReputation(INT8 bRepChange);
 
-BOOLEAN MercThinksDeathRateTooHigh(UINT8 ubProfileID);
-BOOLEAN MercThinksBadReputationTooHigh(UINT8 ubProfileID);
+BOOLEAN MercThinksDeathRateTooHigh(uint8_t ubProfileID);
+BOOLEAN MercThinksBadReputationTooHigh(uint8_t ubProfileID);
 BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier);
 
 void HandleEnricoEmail(void);
 
-void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass);
+void TrackEnemiesKilled(uint8_t ubKilledHow, uint8_t ubSoldierClass);
 
-INT8 SoldierClassToRankIndex(UINT8 ubSoldierClass);
-UINT8 RankIndexToSoldierClass(UINT8 ubRankIndex);
+INT8 SoldierClassToRankIndex(uint8_t ubSoldierClass);
+uint8_t RankIndexToSoldierClass(uint8_t ubRankIndex);
 
 void UpdateLastDayOfPlayerActivity(uint16_t usDay);
 

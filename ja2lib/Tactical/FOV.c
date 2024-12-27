@@ -43,14 +43,14 @@
 
 extern INT16 DirIncrementer[8];
 
-UINT8 gubGridNoMarkers[WORLD_MAX];
-UINT8 gubGridNoValue = 254;
+uint8_t gubGridNoMarkers[WORLD_MAX];
+uint8_t gubGridNoValue = 254;
 
 #ifdef _DEBUG
-UINT8 gubFOVDebugInfoInfo[WORLD_MAX];
+uint8_t gubFOVDebugInfoInfo[WORLD_MAX];
 #endif
 
-UINT8 ViewPath[MAXVIEWPATHS][VIEWPATHLENGTH] = {
+uint8_t ViewPath[MAXVIEWPATHS][VIEWPATHLENGTH] = {
     {NOVIEW, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP},
     {UP, UP, UP, UP, DRIGHT, UP, UP, UP, UP, UP, UP, UP, UP},
     {UP, UP, UP, UP, DLEFT, UP, UP, UP, UP, UP, UP, UP, UP},
@@ -78,7 +78,7 @@ UINT8 ViewPath[MAXVIEWPATHS][VIEWPATHLENGTH] = {
     {RIGHT, RIGHT, RIGHT, UP, RIGHT, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW,
      NOVIEW}};
 
-UINT8 ViewPath2[MAXVIEWPATHS][VIEWPATHLENGTH] = {
+uint8_t ViewPath2[MAXVIEWPATHS][VIEWPATHLENGTH] = {
     {NOVIEW, UP, UP, UP, UP, UP, UP, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW},
     {UP, UP, DLEFT, UP, UP, UP, DLEFT, DRIGHT, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW},
     {UP, UP, DLEFT, UP, UP, UP, DRIGHT, DLEFT, NOVIEW, NOVIEW, NOVIEW, NOVIEW, NOVIEW},
@@ -267,16 +267,16 @@ void ExamineSlantRoofFOVSlots() {
 }
 
 void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEAN fShowLocators,
-                         UINT8 ubLevel, BOOLEAN fForce) {
+                         uint8_t ubLevel, BOOLEAN fForce) {
   uint32_t maincnt, markercnt, marker, tilesLeftToSee, cnt, prevmarker;
   uint32_t Inc[6], Dir[6];
   INT8 Blocking, markerDir;
   INT8 nextDir = 0;
-  UINT8 dir, range, Path2;
-  UINT8 ubRoomNo;
+  uint8_t dir, range, Path2;
+  uint8_t ubRoomNo;
   struct ITEM_POOL *pItemPool;
   BOOLEAN fHiddenStructVisible;
-  UINT8 ubMovementCost;
+  uint8_t ubMovementCost;
   BOOLEAN fTravelCostObs;
   BOOLEAN fGoneThroughDoor = FALSE;
   BOOLEAN fThroughWindow = FALSE;
@@ -429,7 +429,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
       if (_KeyDown(NUM_LOCK)) {
         int cnt = GetJA2Clock();
 
-        gubFOVDebugInfoInfo[marker] = (UINT8)markercnt;
+        gubFOVDebugInfoInfo[marker] = (uint8_t)markercnt;
 
         StartFrameBufferRender();
 

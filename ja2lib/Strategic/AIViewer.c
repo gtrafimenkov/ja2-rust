@@ -160,11 +160,11 @@ void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason);
 void ExtractAndUpdatePopulations();
 void PrintEnemyPopTable();
 void PrintEnemiesKilledTable();
-UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites);
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, uint32_t uiX, uint32_t uiY,
+uint8_t ChooseEnemyIconColor(uint8_t ubAdmins, uint8_t ubTroops, uint8_t ubElites);
+void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject);
-void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
-                                      UINT8 ubSectorY);
+void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, uint8_t ubSectorX,
+                                      uint8_t ubSectorY);
 
 struct MOUSE_REGION ViewerRegion;
 
@@ -411,8 +411,8 @@ void RenderStationaryGroups() {
   INT32 x, y, xp, yp;
   CHAR16 str[20];
   INT32 iSector = 0;
-  UINT8 ubIconColor;
-  UINT8 ubGroupSize = 0;
+  uint8_t ubIconColor;
+  uint8_t ubGroupSize = 0;
 
   SetFont(FONT10ARIAL);
   SetFontShadow(FONT_NEARBLACK);
@@ -478,13 +478,13 @@ void RenderMovingGroupsAndMercs() {
   struct GROUP *pGroup;
   struct VObject *hVObject;
   INT32 x, y;
-  UINT8 ubNumTroops, ubNumAdmins, ubNumElites;
+  uint8_t ubNumTroops, ubNumAdmins, ubNumElites;
   float ratio;
   INT32 minX, maxX, minY, maxY;
   INT32 iSector = 0;
-  UINT8 ubIconType;
-  UINT8 ubIconColor;
-  UINT8 ubFontColor;
+  uint8_t ubIconType;
+  uint8_t ubIconColor;
+  uint8_t ubFontColor;
 
   SetFont(FONT10ARIAL);
   SetFontShadow(FONT_NEARBLACK);
@@ -592,8 +592,8 @@ void RenderMovingGroupsAndMercs() {
 }
 
 void RenderInfoInSector() {
-  UINT8 ubSectorX, ubSectorY;
-  UINT8 ubMercs = 0, ubActive = 0, ubUnconcious = 0, ubCollapsed = 0;
+  uint8_t ubSectorX, ubSectorY;
+  uint8_t ubMercs = 0, ubActive = 0, ubUnconcious = 0, ubCollapsed = 0;
   INT32 i, yp;
 
   if (gfViewEnemies && !gbViewLevel) {
@@ -621,12 +621,12 @@ void RenderInfoInSector() {
       (gsHiSectorX != gsSelSectorX ||
        gsHiSectorY != gsSelSectorY)) {  // Render sector info for the hilighted sector
     SetFontForeground(FONT_YELLOW);
-    ubSectorX = (UINT8)gsHiSectorX;
-    ubSectorY = (UINT8)gsHiSectorY;
+    ubSectorX = (uint8_t)gsHiSectorX;
+    ubSectorY = (uint8_t)gsHiSectorY;
   } else if (gsSelSectorX && gsSelSectorY) {  // Render sector info for the selected sector
     SetFontForeground(FONT_RED);
-    ubSectorX = (UINT8)gsSelSectorX;
-    ubSectorY = (UINT8)gsSelSectorY;
+    ubSectorX = (uint8_t)gsSelSectorX;
+    ubSectorY = (uint8_t)gsSelSectorY;
   } else {
     return;
   }
@@ -655,8 +655,8 @@ void RenderInfoInSector() {
   yp = 375;
   if (!gbViewLevel) {
     struct GROUP *pGroup;
-    UINT8 ubNumAdmins = 0, ubNumTroops = 0, ubNumElites = 0, ubAdminsInBattle = 0,
-          ubTroopsInBattle = 0, ubElitesInBattle = 0, ubNumGroups = 0;
+    uint8_t ubNumAdmins = 0, ubNumTroops = 0, ubNumElites = 0, ubAdminsInBattle = 0,
+            ubTroopsInBattle = 0, ubElitesInBattle = 0, ubNumGroups = 0;
 
     SECTORINFO *pSector = &SectorInfo[GetSectorID8(ubSectorX, ubSectorY)];
 
@@ -738,7 +738,7 @@ void RenderInfoInSector() {
 }
 
 void RenderViewer() {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   INT32 i, x, y, xp, yp;
@@ -870,12 +870,12 @@ void HandleViewerInput() {
               struct MilitiaCount newCount = {15, 4, 1};
               SetMilitiaInSector(gsSelSectorX, gsSelSectorY, newCount);
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsSelSectorX, (UINT8)gsSelSectorY);
+              EliminateAllEnemies((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY);
             } else if (gsHiSectorX && gsHiSectorY) {
               struct MilitiaCount newCount = {15, 4, 1};
               SetMilitiaInSector(gsHiSectorX, gsHiSectorY, newCount);
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsHiSectorX, (UINT8)gsHiSectorY);
+              EliminateAllEnemies((uint8_t)gsHiSectorX, (uint8_t)gsHiSectorY);
             }
           }
           break;
@@ -885,10 +885,10 @@ void HandleViewerInput() {
             pSector = NULL;
             if (gsSelSectorX && gsSelSectorY) {
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsSelSectorX, (UINT8)gsSelSectorY);
+              EliminateAllEnemies((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY);
             } else if (gsHiSectorX && gsHiSectorY) {
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsHiSectorX, (UINT8)gsHiSectorY);
+              EliminateAllEnemies((uint8_t)gsHiSectorX, (uint8_t)gsHiSectorY);
             }
           }
           break;
@@ -1109,7 +1109,7 @@ void Compression6HCallback(GUI_BUTTON *btn, INT32 reason) {
 void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct GROUP *pGroup;
-    UINT8 ubSector;
+    uint8_t ubSector;
     uint32_t uiWorldMin;
     Compression0Callback(ButtonList[iViewerButton[COMPRESSION0]], MSYS_CALLBACK_REASON_LBUTTON_UP);
     if ((gsSelSectorX == 0) || (gsSelSectorY == 0)) gsSelSectorX = 9, gsSelSectorY = 1;
@@ -1119,8 +1119,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     gfRenderViewer = TRUE;
     if (gsSelSectorY > 1) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector - 16, 0, 11, 5);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 10;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 10);
@@ -1130,8 +1130,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gsSelSectorY < 16) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector + 16, 0, 8, 8);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 12;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 12);
@@ -1141,8 +1141,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gsSelSectorX > 1) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector - 1, 0, 11, 5);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 11;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 11);
@@ -1152,8 +1152,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gsSelSectorX < 16) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector + 1, 0, 14, 0);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 13;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 13);
@@ -1194,7 +1194,7 @@ void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason) {
         AddStrategicEventUsingSeconds(EVENT_CREATURE_ATTACK, GetWorldTotalSeconds() + 4,
                                       GetSectorID8(gsSelSectorX, gsSelSectorY));
       } else {
-        CreatureAttackTown((UINT8)GetSectorID8(gsSelSectorX, gsSelSectorY), TRUE);
+        CreatureAttackTown((uint8_t)GetSectorID8(gsSelSectorX, gsSelSectorY), TRUE);
       }
     }
   }
@@ -1318,8 +1318,8 @@ void PrintEnemyPopTable() {
   uint16_t usX, usY;
   uint16_t usEnemyPopTable[TABLE_ENEMY_RANKS][POP_TABLE_ENEMY_TYPES];
   uint32_t uiSector = 0;
-  UINT8 ubEnemyRank;
-  UINT8 ubEnemyType;
+  uint8_t ubEnemyRank;
+  uint8_t ubEnemyType;
   SECTORINFO *pSector;
   struct GROUP *pGroup;
   CHAR16 wPrintSpec[10];
@@ -1484,8 +1484,8 @@ CHAR16 EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
 void PrintEnemiesKilledTable() {
   uint16_t usX, usY;
   uint16_t usEnemiesKilledTable[TABLE_ENEMY_RANKS][KILLED_TABLE_ROWS];
-  UINT8 ubEnemyRank;
-  UINT8 ubKillType;
+  uint8_t ubEnemyRank;
+  uint8_t ubKillType;
   CHAR16 wPrintSpec[10];
   CHAR16 wTempString[10];
 
@@ -1587,8 +1587,8 @@ void PrintEnemiesKilledTable() {
   }
 }
 
-UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites) {
-  UINT8 ubIconColor;
+uint8_t ChooseEnemyIconColor(uint8_t ubAdmins, uint8_t ubTroops, uint8_t ubElites) {
+  uint8_t ubIconColor;
 
   // The colors are:
   //	Yellow		Admins only
@@ -1620,9 +1620,9 @@ UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites) {
   return (ubIconColor);
 }
 
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, uint32_t uiX, uint32_t uiY,
+void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject) {
-  UINT8 ubObjectIndex;
+  uint8_t ubObjectIndex;
 
   Assert(ubIconType < NUM_ICON_TYPES);
   Assert(ubIconColor < NUM_ICON_COLORS);
@@ -1631,13 +1631,13 @@ void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, uint32_t uiX, uint32_t u
   BltVideoObject(FRAME_BUFFER, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
-void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
-                                      UINT8 ubSectorY) {
+void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, uint8_t ubSectorX,
+                                      uint8_t ubSectorY) {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
   INT32 iDesired, iSurplus;
-  UINT8 ubGroupCnt = 0;
-  UINT8 ubSectorID;
+  uint8_t ubGroupCnt = 0;
+  uint8_t ubSectorID;
   CHAR16 wString[120];
   CHAR16 wSubString[120];
   INT16 iGarrisonIndex;

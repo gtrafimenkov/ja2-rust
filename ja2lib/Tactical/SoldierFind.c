@@ -65,7 +65,7 @@ uint32_t gScrollSlideInertiaDirection[NUM_WORLD_DIRECTIONS] = {
 // Struct used for cycling through multiple mercs per mouse position
 typedef struct {
   INT8 bNum;
-  UINT8 ubIDs[MAX_STACKED_MERCS];
+  uint8_t ubIDs[MAX_STACKED_MERCS];
   INT8 bCur;
   BOOLEAN fUseGridNo;
   uint16_t sUseGridNoGridNo;
@@ -173,7 +173,7 @@ BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFla
   INT16 sXMapPos, sYMapPos, sScreenX, sScreenY;
   INT16 sMaxScreenMercY, sHeighestMercScreenY = -32000;
   BOOLEAN fDoFull;
-  UINT8 ubBestMerc = NOBODY;
+  uint8_t ubBestMerc = NOBODY;
   uint16_t usAnimSurface;
   INT32 iMercScreenX, iMercScreenY;
   BOOLEAN fInScreenRect = FALSE;
@@ -208,7 +208,7 @@ BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFla
 
         // If we want same level, skip if buggy's not on the same level!
         if (uiFlags & FIND_SOLDIER_SAMELEVEL) {
-          if (pSoldier->bLevel != (UINT8)(uiFlags >> 16)) {
+          if (pSoldier->bLevel != (uint8_t)(uiFlags >> 16)) {
             continue;
           }
         }
@@ -429,7 +429,7 @@ BOOLEAN CycleSoldierFindStack(uint16_t usMapPos) {
 }
 
 struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, INT8 bLevel) {
-  UINT8 ubID;
+  uint8_t ubID;
 
   ubID = WhoIsThere2(sGridNo, bLevel);
   if (ubID == NOBODY) {
@@ -439,7 +439,7 @@ struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, INT8 bLevel) {
   }
 }
 
-BOOLEAN IsValidTargetMerc(UINT8 ubSoldierID) {
+BOOLEAN IsValidTargetMerc(uint8_t ubSoldierID) {
   struct SOLDIERTYPE *pSoldier = MercPtrs[ubSoldierID];
 
   // CHECK IF ACTIVE!
@@ -803,7 +803,7 @@ BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFl
 }
 
 // VERY quickly finds a soldier at gridno , ( that is visible )
-UINT8 QuickFindSoldier(INT16 sGridNo) {
+uint8_t QuickFindSoldier(INT16 sGridNo) {
   uint32_t cnt;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -813,7 +813,7 @@ UINT8 QuickFindSoldier(INT16 sGridNo) {
 
     if (pSoldier != NULL) {
       if (pSoldier->sGridNo == sGridNo && pSoldier->bVisible != -1) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     }
   }
@@ -821,7 +821,7 @@ UINT8 QuickFindSoldier(INT16 sGridNo) {
   return (NOBODY);
 }
 
-void GetGridNoScreenPos(INT16 sGridNo, UINT8 ubLevel, INT16 *psScreenX, INT16 *psScreenY) {
+void GetGridNoScreenPos(INT16 sGridNo, uint8_t ubLevel, INT16 *psScreenX, INT16 *psScreenY) {
   INT16 sScreenX, sScreenY;
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;

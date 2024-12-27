@@ -34,11 +34,12 @@ typedef struct {
   INT16 sItemIndex;
   uint32_t uiFlags;
   struct OBJECTTYPE ItemObject;
-  UINT8 ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
-                             // dealers inventory, one of the offer areas or in the users inventory)
+  uint8_t
+      ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
+                           // dealers inventory, one of the offer areas or in the users inventory)
   INT8 bSlotIdInOtherLocation;
 
-  UINT8 ubIdOfMercWhoOwnsTheItem;
+  uint8_t ubIdOfMercWhoOwnsTheItem;
   uint32_t uiItemPrice;  // Only used for the players item that have been evaluated
 
   INT16 sSpecialItemElement;  // refers to which special item element an item in a dealer's
@@ -58,7 +59,7 @@ enum {
   SKI_DIRTY_LEVEL2,  // redraw everything
 };
 
-extern UINT8 gubSkiDirtyLevel;
+extern uint8_t gubSkiDirtyLevel;
 
 extern struct OBJECTTYPE *gpHighLightedItemObject;
 
@@ -70,15 +71,15 @@ uint32_t ShopKeeperScreenInit(void);
 uint32_t ShopKeeperScreenHandle(void);
 uint32_t ShopKeeperScreenShutdown(void);
 
-void EnterShopKeeperInterfaceScreen(UINT8 ubArmsDealer);
+void EnterShopKeeperInterfaceScreen(uint8_t ubArmsDealer);
 
 void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
                           uint16_t usHeight);
-BOOLEAN ShouldSoldierDisplayHatchOnItem(UINT8 ubProfileID, INT16 sSlotNum);
-INT8 AddItemToPlayersOfferArea(UINT8 ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
+BOOLEAN ShouldSoldierDisplayHatchOnItem(uint8_t ubProfileID, INT16 sSlotNum);
+INT8 AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
                                INT8 bSlotIdInOtherLocation);
-void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(UINT8 bExitValue);
-void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(UINT8 bExitValue);
+void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
+void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(uint8_t bExitValue);
 
 void SkiHelpTextDoneCallBack(void);
 void SetSkiCursor(uint16_t usCursor);
@@ -88,16 +89,16 @@ void InitShopKeeperSubTitledText(STR16 pString);
 void AddItemToPlayersOfferAreaAfterShopKeeperOpen(struct OBJECTTYPE *pItemObject,
                                                   INT8 bPreviousInvPos);
 
-void BeginSkiItemPointer(UINT8 ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst);
+void BeginSkiItemPointer(uint8_t ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst);
 
 void DeleteShopKeeperItemDescBox();
 
 BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier);
 
-void DealerGetsBribed(UINT8 ubProfileId, uint32_t uiMoneyAmount);
+void DealerGetsBribed(uint8_t ubProfileId, uint32_t uiMoneyAmount);
 
 #ifdef JA2TESTVERSION
-void AddShopkeeperToGridNo(UINT8 ubProfile, INT16 sGridNo);
+void AddShopkeeperToGridNo(uint8_t ubProfile, INT16 sGridNo);
 #endif
 
 void RestrictSkiMouseCursor();

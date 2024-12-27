@@ -285,7 +285,7 @@ void DisplayPreviousShipments() {
   uint32_t uiNumItems = CountNumberValidShipmentForTheShipmentsPage();
   uint32_t uiNumberItemsInShipments = 0;
   uint32_t uiItemCnt;
-  UINT8 ubFontColor = BOBBYR_SHIPMENT_STATIC_TEXT_COLOR;
+  uint8_t ubFontColor = BOBBYR_SHIPMENT_STATIC_TEXT_COLOR;
 
   // loop through all the shipments
   for (uiCnt = 0; uiCnt < uiNumItems; uiCnt++) {

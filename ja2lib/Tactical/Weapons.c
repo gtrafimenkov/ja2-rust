@@ -79,7 +79,7 @@
 // JA2 GOLD: for weapons and attachments, give penalties only for status values below 85
 #define WEAPON_STATUS_MOD(x) ((x) >= 85 ? 100 : (((x) * 100) / 85))
 
-extern void TeamChangesSides(UINT8 ubTeam, INT8 bSide);
+extern void TeamChangesSides(uint8_t ubTeam, INT8 bSide);
 
 extern BOOLEAN gfNextFireJam;
 
@@ -100,32 +100,88 @@ BOOLEAN gfReportHitChances = FALSE;
 
 // TODO: Move strings to extern file
 
-#define PISTOL(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av,  \
-               hv, sd, bsd)                                                                       \
-  {HANDGUNCLASS,    GUN_PISTOL,  ammo, rt,    rof, burstrof, burstpenal, update, (UINT8)(impact), \
-   deadl,           acc,         clip, range, 200, av,       hv,         sd,     bsd,             \
-   S_RELOAD_PISTOL, S_LNL_PISTOL}
+#define PISTOL(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
+               hv, sd, bsd)                                                                      \
+  {                                                                                              \
+      HANDGUNCLASS,                                                                              \
+      GUN_PISTOL,                                                                                \
+      ammo,                                                                                      \
+      rt,                                                                                        \
+      rof,                                                                                       \
+      burstrof,                                                                                  \
+      burstpenal,                                                                                \
+      update,                                                                                    \
+      (uint8_t)(impact),                                                                         \
+      deadl,                                                                                     \
+      acc,                                                                                       \
+      clip,                                                                                      \
+      range,                                                                                     \
+      200,                                                                                       \
+      av,                                                                                        \
+      hv,                                                                                        \
+      sd,                                                                                        \
+      bsd,                                                                                       \
+      S_RELOAD_PISTOL,                                                                           \
+      S_LNL_PISTOL}
 #define M_PISTOL(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
                  hv, sd, bsd)                                                                      \
-  {HANDGUNCLASS,    GUN_M_PISTOL, ammo, rt,    rof, burstrof, burstpenal, update, (UINT8)(impact), \
-   deadl,           acc,          clip, range, 200, av,       hv,         sd,     bsd,             \
-   S_RELOAD_PISTOL, S_LNL_PISTOL}
+  {                                                                                                \
+      HANDGUNCLASS,                                                                                \
+      GUN_M_PISTOL,                                                                                \
+      ammo,                                                                                        \
+      rt,                                                                                          \
+      rof,                                                                                         \
+      burstrof,                                                                                    \
+      burstpenal,                                                                                  \
+      update,                                                                                      \
+      (uint8_t)(impact),                                                                           \
+      deadl,                                                                                       \
+      acc,                                                                                         \
+      clip,                                                                                        \
+      range,                                                                                       \
+      200,                                                                                         \
+      av,                                                                                          \
+      hv,                                                                                          \
+      sd,                                                                                          \
+      bsd,                                                                                         \
+      S_RELOAD_PISTOL,                                                                             \
+      S_LNL_PISTOL}
 #define SMG(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, hv, \
             sd, bsd)                                                                              \
-  {SMGCLASS, GUN_SMG, ammo,  rt,  rof, burstrof, burstpenal, update, (UINT8)(impact), deadl,      \
-   acc,      clip,    range, 200, av,  hv,       sd,         bsd,    S_RELOAD_SMG,    S_LNL_SMG}
+  {SMGCLASS, GUN_SMG, ammo,  rt,  rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl,    \
+   acc,      clip,    range, 200, av,  hv,       sd,         bsd,    S_RELOAD_SMG,      S_LNL_SMG}
 #define SN_RIFLE(ammo, update, impact, rt, rof, burstrof, deadl, acc, clip, range, av, hv, sd, \
                  bsd)                                                                          \
-  {RIFLECLASS, GUN_SN_RIFLE, ammo,  rt,  rof, burstrof, 0,  update, (UINT8)(impact), deadl,    \
-   acc,        clip,         range, 200, av,  hv,       sd, bsd,    S_RELOAD_RIFLE,  S_LNL_RIFLE}
+  {                                                                                            \
+      RIFLECLASS,     GUN_SN_RIFLE, ammo, rt,    rof, burstrof, 0,  update, (uint8_t)(impact), \
+      deadl,          acc,          clip, range, 200, av,       hv, sd,     bsd,               \
+      S_RELOAD_RIFLE, S_LNL_RIFLE}
 #define RIFLE(ammo, update, impact, rt, rof, burstrof, deadl, acc, clip, range, av, hv, sd, bsd) \
-  {RIFLECLASS, GUN_RIFLE, ammo,  rt,  rof, burstrof, 0,  update, (UINT8)(impact), deadl,         \
-   acc,        clip,      range, 200, av,  hv,       sd, bsd,    S_RELOAD_RIFLE,  S_LNL_RIFLE}
+  {RIFLECLASS, GUN_RIFLE, ammo,  rt,  rof, burstrof, 0,  update, (uint8_t)(impact), deadl,       \
+   acc,        clip,      range, 200, av,  hv,       sd, bsd,    S_RELOAD_RIFLE,    S_LNL_RIFLE}
 #define ASRIFLE(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
                 hv, sd, bsd)                                                                      \
-  {RIFLECLASS,     GUN_AS_RIFLE, ammo, rt,    rof, burstrof, burstpenal, update, (UINT8)(impact), \
-   deadl,          acc,          clip, range, 200, av,       hv,         sd,     bsd,             \
-   S_RELOAD_RIFLE, S_LNL_RIFLE}
+  {                                                                                               \
+      RIFLECLASS,                                                                                 \
+      GUN_AS_RIFLE,                                                                               \
+      ammo,                                                                                       \
+      rt,                                                                                         \
+      rof,                                                                                        \
+      burstrof,                                                                                   \
+      burstpenal,                                                                                 \
+      update,                                                                                     \
+      (uint8_t)(impact),                                                                          \
+      deadl,                                                                                      \
+      acc,                                                                                        \
+      clip,                                                                                       \
+      range,                                                                                      \
+      200,                                                                                        \
+      av,                                                                                         \
+      hv,                                                                                         \
+      sd,                                                                                         \
+      bsd,                                                                                        \
+      S_RELOAD_RIFLE,                                                                             \
+      S_LNL_RIFLE}
 #define SHOTGUN(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
                 hv, sd, bsd)                                                                      \
   {SHOTGUNCLASS,                                                                                  \
@@ -136,7 +192,7 @@ BOOLEAN gfReportHitChances = FALSE;
    burstrof,                                                                                      \
    burstpenal,                                                                                    \
    update,                                                                                        \
-   (UINT8)(impact),                                                                               \
+   (uint8_t)(impact),                                                                             \
    deadl,                                                                                         \
    acc,                                                                                           \
    clip,                                                                                          \
@@ -150,8 +206,8 @@ BOOLEAN gfReportHitChances = FALSE;
    S_LNL_SHOTGUN}
 #define LMG(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, hv, \
             sd, bsd)                                                                              \
-  {MGCLASS, GUN_LMG, ammo,  rt,  rof, burstrof, burstpenal, update, (UINT8)(impact), deadl,       \
-   acc,     clip,    range, 200, av,  hv,       sd,         bsd,    S_RELOAD_LMG,    S_LNL_LMG}
+  {MGCLASS, GUN_LMG, ammo,  rt,  rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl,     \
+   acc,     clip,    range, 200, av,  hv,       sd,         bsd,    S_RELOAD_LMG,      S_LNL_LMG}
 #define BLADE(impact, rof, deadl, range, av, sd) \
   {KNIFECLASS,                                   \
    NOT_GUN,                                      \
@@ -161,7 +217,7 @@ BOOLEAN gfReportHitChances = FALSE;
    0,                                            \
    0,                                            \
    0,                                            \
-   (UINT8)(impact),                              \
+   (uint8_t)(impact),                            \
    deadl,                                        \
    0,                                            \
    0,                                            \
@@ -182,7 +238,7 @@ BOOLEAN gfReportHitChances = FALSE;
    0,                                                    \
    0,                                                    \
    0,                                                    \
-   (UINT8)(impact),                                      \
+   (uint8_t)(impact),                                    \
    deadl,                                                \
    0,                                                    \
    0,                                                    \
@@ -203,7 +259,7 @@ BOOLEAN gfReportHitChances = FALSE;
    0,                                           \
    0,                                           \
    0,                                           \
-   (UINT8)(impact),                             \
+   (uint8_t)(impact),                           \
    deadl,                                       \
    0,                                           \
    0,                                           \
@@ -287,7 +343,7 @@ BOOLEAN gfReportHitChances = FALSE;
    0,                                                          \
    0,                                                          \
    250,                                                        \
-   (UINT8)(impact),                                            \
+   (uint8_t)(impact),                                          \
    deadl,                                                      \
    0,                                                          \
    clip,                                                       \
@@ -580,7 +636,7 @@ INT8 gzBurstSndStrings[][30] = {
 
 // the amount of momentum reduction for the head, torso, and legs
 // used to determine whether the bullet will go through someone
-UINT8 BodyImpactReduction[4] = {0, 15, 30, 23};
+uint8_t BodyImpactReduction[4] = {0, 15, 30, 23};
 
 uint16_t GunRange(struct OBJECTTYPE *pObj) {
   INT8 bAttachPos;
@@ -713,7 +769,7 @@ INT8 ArmourVersusExplosivesPercent(struct SOLDIERTYPE *pSoldier) {
   return ((INT8)(iHelmet + iVest + iLeg));
 }
 
-void AdjustImpactByHitLocation(INT32 iImpact, UINT8 ubHitLocation, INT32 *piNewImpact,
+void AdjustImpactByHitLocation(INT32 iImpact, uint8_t ubHitLocation, INT32 *piNewImpact,
                                INT32 *piImpactForCrits) {
   switch (ubHitLocation) {
     case AIM_SHOT_HEAD:
@@ -848,7 +904,7 @@ BOOLEAN FireWeapon(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   if (sTargetGridNo == pSoldier->sGridNo) {
     // FREE UP NPC!
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - attack on own gridno!"));
-    FreeUpAttacker((UINT8)pSoldier->ubID);
+    FreeUpAttacker((uint8_t)pSoldier->ubID);
     return (FALSE);
   }
 
@@ -999,12 +1055,12 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   FLOAT dTargetZ;
   uint16_t usItemNum;
   BOOLEAN fBuckshot;
-  UINT8 ubVolume;
+  uint8_t ubVolume;
   INT8 bSilencerPos;
   CHAR8 zBurstString[50];
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   INT16 sNewGridNo;
-  UINT8 ubMerc;
+  uint8_t ubMerc;
   BOOLEAN fGonnaHit = FALSE;
   uint16_t usExpGain = 0;
   uint32_t uiDepreciateTest;
@@ -1159,7 +1215,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
                                                     pSoldier->bAimShotLocation) > 0)) {
       if (fGonnaHit) {
         // grant extra exp for hitting a difficult target
-        usExpGain += (UINT8)(100 - uiHitChance) / 25;
+        usExpGain += (uint8_t)(100 - uiHitChance) / 25;
 
         if (pSoldier->bAimTime && !pSoldier->bDoBurst) {
           // gain extra exp for aiming, up to the amount from
@@ -1191,7 +1247,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
       }
 
       // MARKSMANSHIP GAIN: gun attack
-      StatChange(pSoldier, MARKAMT, usExpGain, (UINT8)(fGonnaHit ? FALSE : FROM_FAILURE));
+      StatChange(pSoldier, MARKAMT, usExpGain, (uint8_t)(fGonnaHit ? FALSE : FROM_FAILURE));
     }
 
     // set buckshot and muzzle flash
@@ -1220,7 +1276,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
     if (PTR_OURTEAM && pSoldier->ubTargetID != NOBODY) {
       if (fGonnaHit) {
         // grant extra exp for hitting a difficult target
-        usExpGain += (UINT8)(100 - uiHitChance) / 10;
+        usExpGain += (uint8_t)(100 - uiHitChance) / 10;
 
         if (pSoldier->bAimTime) {
           // gain extra exp for aiming, up to the amount from
@@ -1247,9 +1303,9 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
 
       // MARKSMANSHIP/DEXTERITY GAIN: throwing knife attack
       StatChange(pSoldier, MARKAMT, (uint16_t)(usExpGain / 2),
-                 (UINT8)(fGonnaHit ? FALSE : FROM_FAILURE));
+                 (uint8_t)(fGonnaHit ? FALSE : FROM_FAILURE));
       StatChange(pSoldier, DEXTAMT, (uint16_t)(usExpGain / 2),
-                 (UINT8)(fGonnaHit ? FALSE : FROM_FAILURE));
+                 (uint8_t)(fGonnaHit ? FALSE : FROM_FAILURE));
     }
   }
 
@@ -1447,13 +1503,13 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
       }
       DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                String("@@@@@@@ Freeing up attacker - missed in knife attack"));
-      FreeUpAttacker((UINT8)pSoldier->ubID);
+      FreeUpAttacker((uint8_t)pSoldier->ubID);
     }
 
     if (PTR_OURTEAM && pSoldier->ubTargetID != NOBODY) {
       if (fGonnaHit) {
         // grant extra exp for hitting a difficult target
-        usExpGain += (UINT8)(100 - iHitChance) / 10;
+        usExpGain += (uint8_t)(100 - iHitChance) / 10;
 
         if (pSoldier->bAimTime) {
           // gain extra exp for aiming, up to the amount from
@@ -1479,12 +1535,12 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
       }
 
       // DEXTERITY GAIN:  Made a knife attack, successful or not
-      StatChange(pSoldier, DEXTAMT, usExpGain, (UINT8)(fGonnaHit ? FALSE : FROM_FAILURE));
+      StatChange(pSoldier, DEXTAMT, usExpGain, (uint8_t)(fGonnaHit ? FALSE : FROM_FAILURE));
     }
   } else {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("@@@@@@@ Freeing up attacker - missed in knife attack"));
-    FreeUpAttacker((UINT8)pSoldier->ubID);
+    FreeUpAttacker((uint8_t)pSoldier->ubID);
   }
 
   // possibly reduce monster smell
@@ -1503,7 +1559,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
   EV_S_WEAPONHIT SWeaponHit;
   INT32 iImpact;
   uint16_t usOldItem;
-  UINT8 ubExpGain;
+  uint8_t ubExpGain;
 
   // Deduct points!
   // August 13 2002: unless stealing - APs already deducted elsewhere
@@ -1629,7 +1685,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
 #ifdef JA2BETAVERSION
       DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - steal"));
 #endif
-      FreeUpAttacker((UINT8)pSoldier->ubID);
+      FreeUpAttacker((uint8_t)pSoldier->ubID);
 
     } else {
       // ATE/CC: if doing ninja spin kick (only), automatically make it a hit
@@ -1693,7 +1749,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
       } else {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("@@@@@@@ Freeing up attacker - missed in HTH attack"));
-        FreeUpAttacker((UINT8)pSoldier->ubID);
+        FreeUpAttacker((uint8_t)pSoldier->ubID);
       }
     }
   }
@@ -1709,7 +1765,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
 BOOLEAN UseThrown(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   uint32_t uiHitChance, uiDiceRoll;
   INT8 bLoop;
-  UINT8 ubTargetID;
+  uint8_t ubTargetID;
   struct SOLDIERTYPE *pTargetSoldier;
 
   uiHitChance = CalcThrownChanceToHit(pSoldier, sTargetGridNo, pSoldier->bAimTime, AIM_SHOT_TORSO);
@@ -1884,11 +1940,11 @@ BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   return (TRUE);
 }
 
-BOOLEAN DoSpecialEffectAmmoMiss(UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos, INT16 sYPos,
+BOOLEAN DoSpecialEffectAmmoMiss(uint8_t ubAttackerID, INT16 sGridNo, INT16 sXPos, INT16 sYPos,
                                 INT16 sZPos, BOOLEAN fSoundOnly, BOOLEAN fFreeupAttacker,
                                 INT32 iBullet) {
   ANITILE_PARAMS AniParams;
-  UINT8 ubAmmoType;
+  uint8_t ubAmmoType;
   uint16_t usItem;
 
   ubAmmoType = MercPtrs[ubAttackerID]->inv[MercPtrs[ubAttackerID]->ubAttackingHand].ubGunAmmoType;
@@ -1915,7 +1971,7 @@ BOOLEAN DoSpecialEffectAmmoMiss(UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos, 
         RemoveBullet(iBullet);
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("@@@@@@@ Freeing up attacker - bullet hit structure - explosive ammo"));
-        FreeUpAttacker((UINT8)ubAttackerID);
+        FreeUpAttacker((uint8_t)ubAttackerID);
       }
     }
 
@@ -1960,7 +2016,7 @@ BOOLEAN DoSpecialEffectAmmoMiss(UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos, 
 
 void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, INT16 sDamage, INT16 sBreathLoss,
                uint16_t usDirection, INT16 sXPos, INT16 sYPos, INT16 sZPos, INT16 sRange,
-               UINT8 ubAttackerID, BOOLEAN fHit, UINT8 ubSpecial, UINT8 ubHitLocation) {
+               uint8_t ubAttackerID, BOOLEAN fHit, uint8_t ubSpecial, uint8_t ubHitLocation) {
   struct SOLDIERTYPE *pTargetSoldier;
 
   // Get Target
@@ -2006,7 +2062,7 @@ void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, INT16 sDamage, INT1
   }
 }
 
-void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UINT8 ubAttackerID,
+void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, uint8_t ubAttackerID,
                   uint16_t sXPos, INT16 sYPos, INT16 sZPos, uint16_t usStructureID, INT32 iImpact,
                   BOOLEAN fStopped) {
   BOOLEAN fDoMissForGun = FALSE;
@@ -2065,7 +2121,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
 
       IgniteExplosion(ubAttackerID, (INT16)CenterX(sGridNo), (INT16)CenterY(sGridNo), 0, sGridNo,
                       C1, (INT8)(sZPos >= WALL_HEIGHT));
-      // FreeUpAttacker( (UINT8) ubAttackerID );
+      // FreeUpAttacker( (uint8_t) ubAttackerID );
 
       return;
     }
@@ -2079,7 +2135,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
 
       IgniteExplosion(ubAttackerID, (INT16)CenterX(sGridNo), (INT16)CenterY(sGridNo), 0, sGridNo,
                       TANK_SHELL, (INT8)(sZPos >= WALL_HEIGHT));
-      // FreeUpAttacker( (UINT8) ubAttackerID );
+      // FreeUpAttacker( (uint8_t) ubAttackerID );
 
       return;
     }
@@ -2089,7 +2145,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
   if (usStructureID != INVALID_STRUCTURE_ID) {
     pStructure = FindStructureByID(sGridNo, usStructureID);
 
-    DamageStructure(pStructure, (UINT8)iImpact, STRUCTURE_DAMAGE_GUNFIRE, sGridNo, sXPos, sYPos,
+    DamageStructure(pStructure, (uint8_t)iImpact, STRUCTURE_DAMAGE_GUNFIRE, sGridNo, sXPos, sYPos,
                     ubAttackerID);
   }
 
@@ -2120,7 +2176,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
       RemoveBullet(iBullet);
       DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                String("@@@@@@@ Freeing up attacker - monster attack hit structure"));
-      FreeUpAttacker((UINT8)ubAttackerID);
+      FreeUpAttacker((uint8_t)ubAttackerID);
 
       // PlayJA2Sample( SPIT_RICOCHET , RATE_11025, uiMissVolume, 1, SoundDir( sGridNo ) );
       break;
@@ -2149,7 +2205,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
         RemoveBullet(iBullet);
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("@@@@@@@ Freeing up attacker - knife attack hit structure"));
-        FreeUpAttacker((UINT8)ubAttackerID);
+        FreeUpAttacker((uint8_t)ubAttackerID);
       }
   }
 
@@ -2161,7 +2217,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
 
     // Free guy!
     // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - bullet hit
-    // structure") ); FreeUpAttacker( (UINT8) ubAttackerID );
+    // structure") ); FreeUpAttacker( (uint8_t) ubAttackerID );
 
     // PLAY SOUND AND FLING DEBRIS
     // RANDOMIZE SOUND SYSTEM
@@ -2173,7 +2229,7 @@ void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UIN
         RemoveBullet(iBullet);
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("@@@@@@@ Freeing up attacker - bullet hit same structure twice"));
-        FreeUpAttacker((UINT8)ubAttackerID);
+        FreeUpAttacker((uint8_t)ubAttackerID);
       }
     } else {
       if (!fStopped || !DoSpecialEffectAmmoMiss(ubAttackerID, sGridNo, sXPos, sYPos, sZPos, FALSE,
@@ -2389,8 +2445,8 @@ BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   return (FALSE);
 }
 
-uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT8 ubAimTime,
-                            UINT8 ubAimPos) {
+uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint8_t ubAimTime,
+                            uint8_t ubAimPos) {
   // struct SOLDIERTYPE *vicpSoldier;
   struct SOLDIERTYPE *pTarget;
   INT32 iChance, iRange, iSightRange, iMaxRange, iScopeBonus, iBonus;  //, minRange;
@@ -2401,8 +2457,8 @@ uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT
   INT8 bAttachPos;
   INT8 bBandaged;
   INT16 sDistVis;
-  UINT8 ubAdjAimPos;
-  UINT8 ubTargetID;
+  uint8_t ubAdjAimPos;
+  uint8_t ubTargetID;
 
   if (pSoldier->bMarksmanship == 0) {
     // always min chance
@@ -2547,14 +2603,14 @@ uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT
       gbPublicOpplist[pSoldier->bTeam][ubTargetID] == SEEN_CURRENTLY) {
     iSightRange = SoldierToBodyPartLineOfSightTest(pSoldier, sGridNo, pSoldier->bTargetLevel,
                                                    pSoldier->bAimShotLocation,
-                                                   (UINT8)(MaxDistanceVisible() * 2), TRUE);
+                                                   (uint8_t)(MaxDistanceVisible() * 2), TRUE);
   }
 
   if (iSightRange == -1)  // didn't do a bodypart-based test
   {
     iSightRange = SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, pSoldier->bTargetLevel,
                                                      pSoldier->bTargetCubeLevel,
-                                                     (UINT8)(MaxDistanceVisible() * 2), TRUE);
+                                                     (uint8_t)(MaxDistanceVisible() * 2), TRUE);
   }
 
   iSightRange *= 2;
@@ -2921,8 +2977,8 @@ uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT
   return (iChance);
 }
 
-uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT8 ubAimTime,
-                              UINT8 ubAimPos) {
+uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint8_t ubAimTime,
+                              uint8_t ubAimPos) {
   uint16_t usTrueState;
   uint32_t uiChance;
 
@@ -2934,7 +2990,7 @@ uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UI
   return (uiChance);
 }
 
-INT32 CalcBodyImpactReduction(UINT8 ubAmmoType, UINT8 ubHitLocation) {
+INT32 CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation) {
   // calculate how much bullets are slowed by passing through someone
   INT32 iReduction = BodyImpactReduction[ubHitLocation];
 
@@ -2955,8 +3011,8 @@ INT32 CalcBodyImpactReduction(UINT8 ubAmmoType, UINT8 ubHitLocation) {
   return (iReduction);
 }
 
-INT32 ArmourProtection(struct SOLDIERTYPE *pTarget, UINT8 ubArmourType, INT8 *pbStatus,
-                       INT32 iImpact, UINT8 ubAmmoType) {
+INT32 ArmourProtection(struct SOLDIERTYPE *pTarget, uint8_t ubArmourType, INT8 *pbStatus,
+                       INT32 iImpact, uint8_t ubAmmoType) {
   INT32 iProtection, iAppliedProtection, iFailure;
 
   iProtection = Armour[ubArmourType].ubProtection;
@@ -3022,7 +3078,7 @@ INT32 ArmourProtection(struct SOLDIERTYPE *pTarget, UINT8 ubArmourType, INT8 *pb
 }
 
 INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
-                            UINT8 ubHitLocation, INT32 iImpact, UINT8 ubAmmoType) {
+                            uint8_t ubHitLocation, INT32 iImpact, uint8_t ubAmmoType) {
   INT32 iTotalProtection = 0, iSlot;
   struct OBJECTTYPE *pArmour;
   INT8 bPlatePos = -1;
@@ -3034,7 +3090,7 @@ INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTar
     // ubHitLocation ];
 
     iTotalProtection +=
-        ArmourProtection(pTarget, (UINT8)pVehicleList[pTarget->bVehicleID].sArmourType,
+        ArmourProtection(pTarget, (uint8_t)pVehicleList[pTarget->bVehicleID].sArmourType,
                          &bDummyStatus, iImpact, ubAmmoType);
 
     // pVehicleList[ pTarget->bVehicleID ].sExternalArmorLocationsStatus[ ubHitLocation ] =
@@ -3097,11 +3153,11 @@ INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTar
   return (iTotalProtection);
 }
 
-INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, UINT8 ubHitLocation,
-                   INT32 iOrigImpact, INT16 sHitBy, UINT8 *pubSpecial) {
+INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, uint8_t ubHitLocation,
+                   INT32 iOrigImpact, INT16 sHitBy, uint8_t *pubSpecial) {
   INT32 iImpact, iFluke, iBonus, iImpactForCrits = 0;
   INT8 bStatLoss;
-  UINT8 ubAmmoType;
+  uint8_t ubAmmoType;
 
   // NOTE: reduction of bullet impact due to range and obstacles is handled
   // in MoveBullet.
@@ -3458,7 +3514,7 @@ INT32 HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, INT32
   return (iImpact);
 }
 
-void ShotMiss(UINT8 ubAttackerID, INT32 iBullet) {
+void ShotMiss(uint8_t ubAttackerID, INT32 iBullet) {
   BOOLEAN fDoMissForGun = FALSE;
   struct SOLDIERTYPE *pAttacker;
   BULLET *pBullet;
@@ -3520,9 +3576,9 @@ void ShotMiss(UINT8 ubAttackerID, INT32 iBullet) {
 }
 
 uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                       UINT8 ubAimTime, UINT8 ubMode) {
+                       uint8_t ubAimTime, uint8_t ubMode) {
   uint16_t usInHand;
-  UINT8 ubBandaged;
+  uint8_t ubBandaged;
   INT32 iAttRating, iDefRating;
   INT32 iChance;
 
@@ -3783,21 +3839,21 @@ uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefen
 }
 
 uint32_t CalcChanceToStab(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                          UINT8 ubAimTime) {
+                          uint8_t ubAimTime) {
   return (CalcChanceHTH(pAttacker, pDefender, ubAimTime, HTH_MODE_STAB));
 }
 
 uint32_t CalcChanceToPunch(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                           UINT8 ubAimTime) {
+                           uint8_t ubAimTime) {
   return (CalcChanceHTH(pAttacker, pDefender, ubAimTime, HTH_MODE_PUNCH));
 }
 
 uint32_t CalcChanceToSteal(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                           UINT8 ubAimTime) {
+                           uint8_t ubAimTime) {
   return (CalcChanceHTH(pAttacker, pDefender, ubAimTime, HTH_MODE_STEAL));
 }
 
-void ReloadWeapon(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos) {
+void ReloadWeapon(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos) {
   // NB this is a cheat function, don't award experience
 
   if (pSoldier->inv[ubHandPos].usItem != NOTHING) {
@@ -3807,7 +3863,7 @@ void ReloadWeapon(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos) {
   }
 }
 
-BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos, BOOLEAN fNotify) {
+BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos, BOOLEAN fNotify) {
   BOOLEAN fCapable = FALSE;
 
   if (pSoldier->inv[ubHandPos].usItem != NOTHING) {
@@ -3877,8 +3933,8 @@ INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fA
   return (iRange);
 }
 
-uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTime,
-                               UINT8 ubAimPos) {
+uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubAimTime,
+                               uint8_t ubAimPos) {
   INT32 iChance, iMaxRange, iRange;
   uint16_t usHandItem;
   INT8 bPenalty, bBandaged;

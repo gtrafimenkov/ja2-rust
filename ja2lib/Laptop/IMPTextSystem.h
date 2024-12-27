@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 
 void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
-                           INT16 sIMPTextRecordNumber, uint32_t uiFont, UINT8 ubColor,
+                           INT16 sIMPTextRecordNumber, uint32_t uiFont, uint8_t ubColor,
                            BOOLEAN fShadow, uint32_t uiFlags);
 void InitializeImpRecordLengthList(void);
 void PrintImpText(void);

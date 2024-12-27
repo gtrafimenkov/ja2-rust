@@ -142,8 +142,8 @@
 #define FLOWER_ORDER_NAME_FIELD_NUM_CHARS 35
 
 typedef struct {
-  UINT8 ubNextDayDeliveryCost;
-  UINT8 ubWhenItGetsThereCost;
+  uint8_t ubNextDayDeliveryCost;
+  uint8_t ubWhenItGetsThereCost;
 } FlowerOrderLocationStruct;
 
 #define FLOWER_ORDER_NUMBER_OF_DROP_DOWN_LOCATIONS 17
@@ -177,8 +177,8 @@ enum {
   FLOWER_ORDER_DROP_DOWN_DISPLAY,
 };
 // the current mode of the drop down display
-UINT8 gubFlowerDestDropDownMode;
-UINT8 gubCurrentlySelectedFlowerLocation;
+uint8_t gubFlowerDestDropDownMode;
+uint8_t gubCurrentlySelectedFlowerLocation;
 
 wchar_t gsSentimentTextField[FLOWER_ORDER_PERSONEL_SENTIMENT_NUM_CHARS] = {0};
 wchar_t gsNameTextField[FLOWER_ORDER_NAME_FIELD_NUM_CHARS] = {0};
@@ -186,7 +186,7 @@ wchar_t gsNameTextField[FLOWER_ORDER_NAME_FIELD_NUM_CHARS] = {0};
 // buttons
 INT32 guiFlowerOrderButtonImage;
 
-UINT8 gubFlowerOrder_AdditioanalServicePrices[] = {10, 20, 10, 10};
+uint8_t gubFlowerOrder_AdditioanalServicePrices[] = {10, 20, 10, 10};
 
 void BtnFlowerOrderBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
 uint32_t guiFlowerOrderBackButton;
@@ -232,19 +232,19 @@ void SelectFlowerDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 iR
 
 void DisplayFloristCheckBox();
 void DisplayFlowerDynamicItems();
-BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode);
-void FlowerOrderDrawSelectedCity(UINT8 ubNumber);
+BOOLEAN CreateDestroyFlowerOrderDestDropDown(uint8_t ubDropDownMode);
+void FlowerOrderDrawSelectedCity(uint8_t ubNumber);
 void FlowerOrderDisplayShippingLocationCity();
 void InitFlowerOrderTextInputBoxes();
 void DestroyFlowerOrderTextInputBoxes();
 void HandleFloristOrderKeyBoardInput();
-void FlowerOrderUserTextFieldCallBack(UINT8 ubID, BOOLEAN fEntering);
+void FlowerOrderUserTextFieldCallBack(uint8_t ubID, BOOLEAN fEntering);
 
 void GameInitFloristOrderForm() {}
 
 BOOLEAN EnterFloristOrderForm() {
   VOBJECT_DESC VObjectDesc;
-  UINT8 i;
+  uint8_t i;
   char sTemp[40];
   uint16_t usPosX, usWidth, usHeight;
 
@@ -420,7 +420,7 @@ BOOLEAN EnterFloristOrderForm() {
   // FLOWER_ORDER_SENTIMENT_BOX_X, FLOWER_ORDER_SENTIMENT_BOX_Y,
   //(uint16_t)(FLOWER_ORDER_SENTIMENT_BOX_X + FLOWER_ORDER_SENTIMENT_BOX_WIDTH),
   //(uint16_t)(FLOWER_ORDER_SENTIMENT_BOX_Y + FLOWER_ORDER_SENTIMENT_BOX_HEIGHT),
-  //MSYS_PRIORITY_HIGH, 					 CURSOR_WWW, MSYS_NO_CALLBACK,
+  // MSYS_PRIORITY_HIGH, 					 CURSOR_WWW, MSYS_NO_CALLBACK,
   // SelectFloristPersonalSentimentBoxRegionCallBack); 	MSYS_AddRegion(
   //&gSelectedFloristPersonalSentimentBoxRegion );
 
@@ -444,7 +444,7 @@ void InitFloristOrderFormVariables() {
 }
 
 void ExitFloristOrderForm() {
-  UINT8 i;
+  uint8_t i;
   RemoveFloristDefaults();
 
   DeleteVideoObjectFromIndex(guiDeliveryLocation);
@@ -983,7 +983,7 @@ void SelectFloristDisableDropDownRegionCallBack(struct MOUSE_REGION *pRegion, IN
 void SelectFlowerDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    gubCurrentlySelectedFlowerLocation = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gubCurrentlySelectedFlowerLocation = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
     FlowerOrderDrawSelectedCity(gubCurrentlySelectedFlowerLocation);
     gubFlowerDestDropDownMode = FLOWER_ORDER_DROP_DOWN_DESTROY;
   }
@@ -997,7 +997,7 @@ void SelectFlowerDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 re
   } else if (reason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
     pRegion->uiFlags |= BUTTON_CLICKED_ON;
 
-    gubCurrentlySelectedFlowerLocation = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gubCurrentlySelectedFlowerLocation = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
     FlowerOrderDrawSelectedCity(gubCurrentlySelectedFlowerLocation);
 
     InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX,
@@ -1005,7 +1005,7 @@ void SelectFlowerDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 re
   }
 }
 
-BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
+BOOLEAN CreateDestroyFlowerOrderDestDropDown(uint8_t ubDropDownMode) {
   static uint16_t usHeight;
   static BOOLEAN fMouseRegionsCreated = FALSE;
 
@@ -1014,11 +1014,11 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
     } break;
 
     case FLOWER_ORDER_DROP_DOWN_CREATE: {
-      UINT8 i;
+      uint8_t i;
       uint16_t usPosX, usPosY;
       uint16_t usTemp;
       uint16_t usFontHeight = GetFontHeight(FLOWER_ORDEER_DROP_DOWN_FONT);
-      UINT8 ubTextFieldID;
+      uint8_t ubTextFieldID;
 
       if (fMouseRegionsCreated) {
         return (FALSE);
@@ -1026,7 +1026,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
       }
 
       // Get the current text from the text box
-      ubTextFieldID = (UINT8)GetActiveFieldID();
+      ubTextFieldID = (uint8_t)GetActiveFieldID();
 
       // if its the personel sentiment field
       if (ubTextFieldID == 1) {
@@ -1069,7 +1069,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
     } break;
 
     case FLOWER_ORDER_DROP_DOWN_DESTROY: {
-      UINT8 i;
+      uint8_t i;
 
       if (!fMouseRegionsCreated) break;
 
@@ -1099,7 +1099,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
     } break;
 
     case FLOWER_ORDER_DROP_DOWN_DISPLAY: {
-      UINT8 i;
+      uint8_t i;
       uint16_t usPosY, usPosX;
       uint16_t usFontHeight = GetFontHeight(FLOWER_ORDEER_DROP_DOWN_FONT);
       struct VObject *hImageHandle;
@@ -1176,7 +1176,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
   return (TRUE);
 }
 
-void FlowerOrderDrawSelectedCity(UINT8 ubNumber) {
+void FlowerOrderDrawSelectedCity(uint8_t ubNumber) {
   uint16_t usPosY;
   uint16_t usFontHeight = GetFontHeight(FLOWER_ORDEER_DROP_DOWN_FONT);
 
@@ -1263,11 +1263,11 @@ void HandleFloristOrderKeyBoardInput() {
 
   while (DequeueEvent(&InputEvent) == TRUE) {
     if (!HandleTextInput(&InputEvent) && InputEvent.usEvent == KEY_DOWN) {
-      UINT8 ubTextFieldID;
+      uint8_t ubTextFieldID;
       switch (InputEvent.usParam) {
         case ENTER:
 
-          ubTextFieldID = (UINT8)GetActiveFieldID();
+          ubTextFieldID = (uint8_t)GetActiveFieldID();
 
           // if its the personel sentiment field
           if (ubTextFieldID == 1) {
@@ -1294,7 +1294,7 @@ void HandleFloristOrderKeyBoardInput() {
   }
 }
 
-void FlowerOrderUserTextFieldCallBack(UINT8 ubID, BOOLEAN fEntering) {
+void FlowerOrderUserTextFieldCallBack(uint8_t ubID, BOOLEAN fEntering) {
   if (fEntering) {
     //		SetActiveField(1);
   }

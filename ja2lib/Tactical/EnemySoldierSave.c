@@ -29,7 +29,8 @@
 #include "Utils/Message.h"
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
-    UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures);
+    uint8_t *pubNumElites, uint8_t *pubNumRegulars, uint8_t *pubNumAdmins,
+    uint8_t *pubNumCreatures);
 
 BOOLEAN gfRestoringEnemySoldiersFromTempFile = FALSE;
 BOOLEAN gfRestoringCiviliansFromTempFile = FALSE;
@@ -84,9 +85,9 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   CHAR8 zReason[256];
 #endif
   INT8 bSectorZ;
-  UINT8 ubSectorID;
-  UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
-  UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  uint8_t ubSectorID;
+  uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
+  uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   gfRestoringEnemySoldiersFromTempFile = TRUE;
 
@@ -381,8 +382,8 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubFirstIdTeam,
-                                    UINT8 ubLastIdTeam, BOOLEAN fAppendToFile) {
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, uint8_t ubFirstIdTeam,
+                                    uint8_t ubLastIdTeam, BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
@@ -394,7 +395,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
   SCHEDULENODE *pSchedule;
   uint16_t usCheckSum;
   CHAR8 zMapName[128];
-  UINT8 ubSectorID;
+  uint8_t ubSectorID;
 
   // STEP ONE:  Prep the soldiers for saving...
 
@@ -680,9 +681,9 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   CHAR8 zReason[256];
 #endif
   INT8 bSectorZ;
-  UINT8 ubSectorID;
-  UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
-  UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  uint8_t ubSectorID;
+  uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
+  uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   gfRestoringEnemySoldiersFromTempFile = TRUE;
 
@@ -1049,9 +1050,9 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   CHAR8 zReason[256];
 #endif
   INT8 bSectorZ;
-  UINT8 ubSectorID;
+  uint8_t ubSectorID;
   BOOLEAN fDeleted;
-  //	UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  //	uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   gfRestoringCiviliansFromTempFile = TRUE;
 
@@ -1326,11 +1327,11 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 
   HWFILE hfile;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
-  UINT8 ubSectorID;
+  uint8_t ubSectorID;
   uint16_t usCheckSum;
 
-  UINT8 ubStartID = 0;
-  UINT8 ubEndID = 0;
+  uint8_t ubStartID = 0;
+  uint8_t ubEndID = 0;
 
   // if we are saving the enemy info to the enemy temp file
   if (fEnemy) {
@@ -1589,7 +1590,8 @@ FAIL_SAVE:
 }
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
-    UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures) {
+    uint8_t *pubNumElites, uint8_t *pubNumRegulars, uint8_t *pubNumAdmins,
+    uint8_t *pubNumCreatures) {
   //	SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
   INT32 i;
@@ -1604,9 +1606,9 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   CHAR8 zReason[256];
 #endif
   INT8 bSectorZ;
-  UINT8 ubSectorID;
-  //	UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
-  //	UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  uint8_t ubSectorID;
+  //	uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
+  //	uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   // make sure the variables are initialized
   *pubNumElites = 0;

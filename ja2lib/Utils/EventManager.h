@@ -24,10 +24,10 @@ BOOLEAN InitializeEventManager();
 BOOLEAN ShutdownEventManager();
 
 BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
-                 UINT8 ubQueueID);
-BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID);
-BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID);
+                 uint8_t ubQueueID);
+BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID);
+BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID);
 BOOLEAN FreeEvent(EVENT *pEvent);
-uint32_t EventQueueSize(UINT8 ubQueueID);
+uint32_t EventQueueSize(uint8_t ubQueueID);
 
 #endif

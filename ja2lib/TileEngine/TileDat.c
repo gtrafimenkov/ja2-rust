@@ -118,7 +118,7 @@ INT16 gForwardShadowBuddys[] = {
 };
 
 // Global variable used to initialize tile database with full tile spec
-UINT8 gFullBaseTileValues[] =
+uint8_t gFullBaseTileValues[] =
 
     {
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // First Texture
@@ -319,7 +319,7 @@ uint16_t gNumTilesPerType[NUMBEROFTILETYPES] = {
     FIRSTMISS5 - FIRSTMISS1 + 1, SECONDMISS5 - SECONDMISS1 + 1, THIRDMISS14 - THIRDMISS1 + 1,
     WIREFRAMES15 - WIREFRAMES1 + 1};
 
-UINT8 gTileTypeLogicalHeight[NUMBEROFTILETYPES] = {
+uint8_t gTileTypeLogicalHeight[NUMBEROFTILETYPES] = {
     2,   // First texture
     2,   // Second texture
     2,   // Third texture
@@ -333,7 +333,7 @@ UINT8 gTileTypeLogicalHeight[NUMBEROFTILETYPES] = {
 
 void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT *TileElement,
                                BOOLEAN fUseRaisedObjectType) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   INT16 sIndexDiff;
   uint32_t cnt;
 

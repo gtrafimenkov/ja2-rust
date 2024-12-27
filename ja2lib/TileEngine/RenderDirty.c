@@ -238,7 +238,7 @@ void SetBackgroundRectFilled(uint32_t uiBackgroundID) {
 
 BOOLEAN RestoreBackgroundRects(void) {
   uint32_t uiCount, uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
@@ -334,7 +334,7 @@ BOOLEAN EmptyBackgroundRects(void) {
 
 BOOLEAN SaveBackgroundRects(void) {
   uint32_t uiCount, uiDestPitchBYTES;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 
@@ -452,9 +452,9 @@ void DisableBackgroundRect(INT32 iIndex, BOOLEAN fDisabled) {
 
 BOOLEAN UpdateSaveBuffer(void) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   uint16_t usWidth, usHeight;
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
 
   // Update saved buffer - do for the viewport size ony!
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
@@ -474,7 +474,7 @@ BOOLEAN UpdateSaveBuffer(void) {
 
 BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
@@ -495,7 +495,7 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
 BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   INT16 sLeft, sTop, sWidth, sHeight;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   if (!gBackSaves[iBack].fAllocated) {
     return (FALSE);
@@ -524,7 +524,7 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
 
 BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
@@ -909,7 +909,7 @@ void SaveVideoOverlaysArea(uint32_t uiSrcBuffer) {
   uint32_t uiCount;
   uint32_t iBackIndex;
   uint32_t uiSrcPitchBYTES;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
 
@@ -938,7 +938,7 @@ void SaveVideoOverlaysArea(uint32_t uiSrcBuffer) {
 void SaveVideoOverlayArea(uint32_t uiSrcBuffer, uint32_t uiCount) {
   uint32_t iBackIndex;
   uint32_t uiSrcPitchBYTES;
-  UINT8 *pSrcBuf;
+  uint8_t *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
 
@@ -988,7 +988,7 @@ void DeleteVideoOverlaysArea() {
 
 BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   uint32_t uiCount, uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t iBackIndex;
 
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -1060,7 +1060,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   return (TRUE);
 }
 
-BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, UINT8 ubNum, uint32_t uiData) {
+BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, uint8_t ubNum, uint32_t uiData) {
   if (!gVideoOverlays[iVideoOverlay].fAllocated) {
     return (FALSE);
   }
@@ -1076,7 +1076,7 @@ BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, UINT8 ubNum, uint32_t uiData) {
 
 // Common callbacks for topmost blitters
 void BlitMFont(VIDEO_OVERLAY *pBlitter) {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
 
   pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
@@ -1094,7 +1094,7 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
 BOOLEAN BlitBufferToBuffer(uint32_t uiSrcBuffer, uint32_t uiDestBuffer, uint16_t usSrcX,
                            uint16_t usSrcY, uint16_t usWidth, uint16_t usHeight) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   BOOLEAN fRetVal;
 
   pDestBuf = LockVideoSurface(uiDestBuffer, &uiDestPitchBYTES);

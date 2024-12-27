@@ -8,7 +8,7 @@
 #include "Tactical/ShopKeeperInterface.h"
 #include "Tactical/Weapons.h"
 
-UINT8 StoreInventory[MAXITEMS][BOBBY_RAY_LISTS] = {
+uint8_t StoreInventory[MAXITEMS][BOBBY_RAY_LISTS] = {
     //
     // The first column is for Bobby Rays new inventory,
     // BOBBY_RAY_NEW,
@@ -526,7 +526,7 @@ INT16 WeaponROF[MAX_WEAPONS] = {
 void SetupStoreInventory(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
   uint16_t i;
   uint16_t usItemIndex;
-  UINT8 ubNumBought;
+  uint8_t ubNumBought;
 
   // loop through all items BR can stock to init a starting quantity on hand
   for (i = 0; i < LaptopSaveInfo.usInventoryListLength[fUsed]; i++) {
@@ -540,7 +540,7 @@ void SetupStoreInventory(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
       if (fUsed) {
         // then there should only be 1 of them, and it's damaged
         pInventoryArray[i].ubQtyOnHand = 1;
-        pInventoryArray[i].ubItemQuality = 20 + (UINT8)Random(60);
+        pInventoryArray[i].ubItemQuality = 20 + (uint8_t)Random(60);
       } else  // new
       {
         pInventoryArray[i].ubQtyOnHand = ubNumBought;
@@ -554,7 +554,7 @@ void SetupStoreInventory(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
   }
 }
 
-BOOLEAN DoesGunOfSameClassExistInInventory(UINT8 ubItemIndex, UINT8 ubDealerID) {
+BOOLEAN DoesGunOfSameClassExistInInventory(uint8_t ubItemIndex, uint8_t ubDealerID) {
   uint16_t i;
 
   STORE_INVENTORY *pInventoryArray;
@@ -583,7 +583,7 @@ BOOLEAN DoesGunOfSameClassExistInInventory(UINT8 ubItemIndex, UINT8 ubDealerID) 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-STORE_INVENTORY *GetPtrToStoreInventory(UINT8 ubDealerID) {
+STORE_INVENTORY *GetPtrToStoreInventory(uint8_t ubDealerID) {
   if (ubDealerID >= BOBBY_RAY_LISTS) return (NULL);
 
   if (ubDealerID == BOBBY_RAY_NEW)
@@ -599,7 +599,7 @@ STORE_INVENTORY *GetPtrToStoreInventory(UINT8 ubDealerID) {
 }
 
 /*
-INT16	CountNumberOfItemsInStoreInventory( UINT8 ubArmsDealerID )
+INT16	CountNumberOfItemsInStoreInventory( uint8_t ubArmsDealerID )
 {
         uint16_t	cnt;
         INT16		ubNumItems=0;

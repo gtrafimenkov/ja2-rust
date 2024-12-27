@@ -66,7 +66,7 @@ INT16 gsBRGridNo = 12635;
 BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint);
 BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepoint2);
 
-extern UINT8 gubTacticalDirection;
+extern uint8_t gubTacticalDirection;
 
 void TrashMapEdgepoints() {
   // Primary edgepoints
@@ -857,7 +857,7 @@ void OldLoadMapEdgepoints(INT8 **hBuffer) {
 BOOLEAN LoadMapEdgepoints(INT8 **hBuffer) {
   TrashMapEdgepoints();
   if (gMapInformation.ubMapVersion < 17) {  // To prevent invalidation of older maps, which only
-                                            // used one layer of edgepoints, and a UINT8 for
+                                            // used one layer of edgepoints, and a uint8_t for
     // containing the size, we will preserve that paradigm, then kill the loaded edgepoints and
     // regenerate them.
     OldLoadMapEdgepoints(hBuffer);
@@ -929,7 +929,7 @@ BOOLEAN LoadMapEdgepoints(INT8 **hBuffer) {
   return TRUE;
 }
 
-uint16_t ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode) {
+uint16_t ChooseMapEdgepoint(uint8_t ubStrategicInsertionCode) {
   INT16 *psArray = NULL;
   uint16_t usArraySize = 0;
 
@@ -962,8 +962,8 @@ uint16_t ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode) {
   return psArray[Random(usArraySize)];
 }
 
-void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategicInsertionCode,
-                         UINT8 ubNumDesiredPoints) {
+void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, uint8_t ubStrategicInsertionCode,
+                         uint8_t ubNumDesiredPoints) {
   INT16 *psArray = NULL;
   uint16_t usArraySize = 0;
   INT32 i = -1;
@@ -1067,7 +1067,7 @@ void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategicI
 
   if (ubNumDesiredPoints >=
       usArraySize) {  // We don't have enough points for everyone, return them all.
-    pMapEdgepointInfo->ubNumPoints = (UINT8)usArraySize;
+    pMapEdgepointInfo->ubNumPoints = (uint8_t)usArraySize;
     for (i = 0; i < usArraySize; i++) pMapEdgepointInfo->sGridNo[i] = psArray[i];
 
     // JA2Gold: free the temp array
@@ -1128,7 +1128,7 @@ void EndMapEdgepointSearch() {
 }
 
 // THIS CODE ISN'T RECOMMENDED FOR TIME CRITICAL AREAS.
-INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode) {
+INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCode) {
   INT32 i, iDirectionLoop;
   INT16 *psArray = NULL;
   INT16 sRadius, sDistance, sDirection, sOriginalGridNo;
@@ -1247,7 +1247,7 @@ INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode) 
   return NOWHERE;
 }
 
-INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode) {
+INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCode) {
   INT32 i, iDirectionLoop;
   INT16 *psArray = NULL;
   INT16 sRadius, sDistance, sDirection, sOriginalGridNo;
@@ -1462,7 +1462,7 @@ BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 s
   // walk into within range.  We have to set some things up first...
 
   // set the distance limit of the square region
-  gubNPCDistLimit = (UINT8)iSearchRange;
+  gubNPCDistLimit = (uint8_t)iSearchRange;
 
   // reset the "reachable" flags in the region we're looking at
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
@@ -1479,7 +1479,7 @@ BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 s
   return FALSE;
 }
 
-UINT8 CalcMapEdgepointClassInsertionCode(INT16 sGridNo) {
+uint8_t CalcMapEdgepointClassInsertionCode(INT16 sGridNo) {
   struct SOLDIERTYPE Soldier;
   INT32 iLoop;
   INT16 *psEdgepointArray1, *psEdgepointArray2;

@@ -24,8 +24,8 @@
 
 BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
 uint16_t usCurrentMode;
-UINT8 gubCurrRoomNumber;
-UINT8 gubMaxRoomNumber;
+uint8_t gubCurrRoomNumber;
+uint8_t gubMaxRoomNumber;
 BOOLEAN gfEditingDoor;
 
 // BEGINNNING OF BUILDING INITIALIZATION FUNCTIONS
@@ -469,18 +469,18 @@ void ExtractAndUpdateDoorInfo() {
   door.sGridNo = (INT16)iDoorMapIndex;
 
   num = min(GetNumericStrictValueFromField(0), NUM_LOCKS - 1);
-  door.ubLockID = (UINT8)num;
+  door.ubLockID = (uint8_t)num;
   SetInputFieldStringWithNumericStrictValue(0, num);
   if (num >= 0) fCursor = TRUE;
 
   num = min(max(GetNumericStrictValueFromField(1), 0), 10);
-  door.ubTrapID = (UINT8)num;
+  door.ubTrapID = (uint8_t)num;
   SetInputFieldStringWithNumericStrictValue(1, num);
   if (num) fCursor = TRUE;
 
   num = min(max(GetNumericStrictValueFromField(2), 0), 20);
   if (door.ubTrapID && !num) num = 1;  // Can't have a trap without a traplevel!
-  door.ubTrapLevel = (UINT8)num;
+  door.ubTrapLevel = (uint8_t)num;
   SetInputFieldStringWithNumericStrictValue(2, num);
   if (num) fCursor = TRUE;
 
@@ -613,7 +613,7 @@ void ExtractAndUpdateBuildingInfo() {
   // extract light1 colors
   temp = min(GetNumericStrictValueFromField(1), 255);
   if (temp != -1) {
-    gubCurrRoomNumber = (UINT8)temp;
+    gubCurrRoomNumber = (uint8_t)temp;
   } else {
     gubCurrRoomNumber = 0;
   }

@@ -181,7 +181,7 @@ uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
   }
 }
 
-void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, UINT8 ubHandleCode) {
+void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, uint8_t ubHandleCode) {
   pSoldier->ubDoorHandleCode = ubHandleCode;
 
   switch (ubHandleCode) {
@@ -228,7 +228,7 @@ BOOLEAN DoTrapCheckOnStartingMenu(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                UINT8 ubDirection, BOOLEAN fDoor) {
+                                uint8_t ubDirection, BOOLEAN fDoor) {
   struct STRUCTURE *pBaseStructure;
   BOOLEAN fDoMenu = FALSE;
   DOOR *pDoor;
@@ -320,13 +320,13 @@ void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *
 }
 
 void ProcessImplicationsOfPCMessingWithDoor(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
   struct SOLDIERTYPE *pGoon;
   // if player is hacking at a door in the brothel and a kingpin guy can see him
   if ((InARoom(pSoldier->sGridNo, &ubRoom) && IN_BROTHEL(ubRoom)) ||
       (gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_D && gbWorldSectorZ == 0 &&
        (pSoldier->sGridNo == 11010 || pSoldier->sGridNo == 11177 || pSoldier->sGridNo == 11176))) {
-    UINT8 ubLoop;
+    uint8_t ubLoop;
 
     // see if a kingpin goon can see us
     for (ubLoop = gTacticalStatus.Team[CIV_TEAM].bFirstID;

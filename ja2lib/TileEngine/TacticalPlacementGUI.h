@@ -20,6 +20,6 @@ extern struct SOLDIERTYPE *gpTacticalPlacementSelectedSoldier;
 extern struct SOLDIERTYPE *gpTacticalPlacementHilightedSoldier;
 
 // Saved value.  Contains the last choice for future battles.
-extern UINT8 gubDefaultButton;
+extern uint8_t gubDefaultButton;
 
 #endif

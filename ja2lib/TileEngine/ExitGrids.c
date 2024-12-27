@@ -40,9 +40,9 @@ INT32 ConvertExitGridToINT32(EXITGRID *pExitGrid) {
 
 void ConvertINT32ToExitGrid(INT32 iExitGridInfo, EXITGRID *pExitGrid) {
   // convert the int into 4 unsigned bytes.
-  pExitGrid->ubGotoSectorX = (UINT8)(((iExitGridInfo & 0xf0000000) >> 28) + 1);
-  pExitGrid->ubGotoSectorY = (UINT8)(((iExitGridInfo & 0x0f000000) >> 24) + 1);
-  pExitGrid->ubGotoSectorZ = (UINT8)((iExitGridInfo & 0x00f00000) >> 20);
+  pExitGrid->ubGotoSectorX = (uint8_t)(((iExitGridInfo & 0xf0000000) >> 28) + 1);
+  pExitGrid->ubGotoSectorY = (uint8_t)(((iExitGridInfo & 0x0f000000) >> 24) + 1);
+  pExitGrid->ubGotoSectorZ = (uint8_t)((iExitGridInfo & 0x00f00000) >> 20);
   pExitGrid->usGridNo = (uint16_t)(iExitGridInfo & 0x0000ffff);
 }
 
@@ -165,7 +165,7 @@ void LoadExitGrids(INT8 **hBuffer) {
 }
 
 void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
-  UINT8 ubLookForLevel = 0;
+  uint8_t ubLookForLevel = 0;
   uint16_t i;
   if (bRelativeZLevel != 1 && bRelativeZLevel != -1) return;
   // Check if on ground level -- if so, can't go up!
@@ -178,7 +178,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
     ScreenMsg(FONT_DKYELLOW, MSG_INTERFACE, pMessageStrings[MSG_CANT_GO_DOWN], ubLookForLevel);
     return;
   }
-  ubLookForLevel = (UINT8)(gbWorldSectorZ + bRelativeZLevel);
+  ubLookForLevel = (uint8_t)(gbWorldSectorZ + bRelativeZLevel);
   for (i = 0; i < WORLD_MAX; i++) {
     if (GetExitGrid(i, &gExitGrid)) {
       if (gExitGrid.ubGotoSectorZ ==
@@ -186,7 +186,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
         gfOverrideInsertionWithExitGrid = TRUE;
         // change all current mercs in the loaded sector, and move them
         // to the new sector.
-        MoveAllGroupsInCurrentSectorToSector((UINT8)gWorldSectorX, (UINT8)gWorldSectorY,
+        MoveAllGroupsInCurrentSectorToSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                              ubLookForLevel);
         if (ubLookForLevel)
           ScreenMsg(FONT_YELLOW, MSG_INTERFACE, pMessageStrings[MSG_ENTERING_LEVEL],
@@ -202,7 +202,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
 }
 
 uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                                INT8 ubRadius, UINT8 *pubDirection) {
+                                                INT8 ubRadius, uint8_t *pubDirection) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -212,10 +212,10 @@ uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, IN
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
-  UINT8 ubSaveNPCAPBudget;
-  UINT8 ubSaveNPCDistLimit;
+  uint8_t ubSaveNPCAPBudget;
+  uint8_t ubSaveNPCDistLimit;
   EXITGRID ExitGrid;
-  UINT8 ubGotoSectorX, ubGotoSectorY, ubGotoSectorZ;
+  uint8_t ubGotoSectorX, ubGotoSectorY, ubGotoSectorZ;
 
   // Turn off at end of function...
   gfPlotPathToExitGrid = TRUE;
@@ -303,7 +303,7 @@ uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, IN
 
   if (fFound) {
     // Set direction to center of map!
-    *pubDirection = (UINT8)GetDirectionToGridNoFromGridNo(
+    *pubDirection = (uint8_t)GetDirectionToGridNoFromGridNo(
         sLowestGridNo, (((WORLD_ROWS / 2) * WORLD_COLS) + (WORLD_COLS / 2)));
     return (sLowestGridNo);
   } else {

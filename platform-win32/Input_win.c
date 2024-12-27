@@ -395,7 +395,7 @@ BOOLEAN DequeueEvent(InputAtom *Event) {
   }
 }
 
-void KeyChange(uint32_t usParam, uint32_t uiParam, UINT8 ufKeyState) {
+void KeyChange(uint32_t usParam, uint32_t uiParam, uint8_t ufKeyState) {
   uint32_t ubKey;
   uint16_t ubChar;
   uint32_t uiTmpLParam;

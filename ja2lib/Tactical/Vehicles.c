@@ -43,7 +43,7 @@ INT8 gubVehicleMovementGroups[MAX_VEHICLES];
 VEHICLETYPE *pVehicleList = NULL;
 
 // number of vehicle slots on the list
-UINT8 ubNumberOfVehicles = 0;
+uint8_t ubNumberOfVehicles = 0;
 
 // the sqaud mvt groups
 extern INT8 SquadMovementGroups[];
@@ -83,7 +83,7 @@ INT32 iMoveVehicleSndID[] = {
     S_VECH1_MOVE, S_VECH1_MOVE, S_VECH1_MOVE, S_VECH1_MOVE, S_VECH1_MOVE, S_VECH1_MOVE,
 };
 
-UINT8 ubVehicleTypeProfileID[] = {
+uint8_t ubVehicleTypeProfileID[] = {
 
     PROF_ELDERODO, PROF_HUMMER, PROF_ICECREAM, NPC164, NPC164, PROF_HELICOPTER};
 
@@ -147,11 +147,11 @@ helicopter
 // #define VEHICLE_MAX_INTERNAL 250
 
 // set the driver of the vehicle
-void SetDriver(INT32 iID, UINT8 ubID);
+void SetDriver(INT32 iID, uint8_t ubID);
 
 // void RemoveSoldierFromVehicleBetweenSectors( pSoldier, iId );
 
-void TeleportVehicleToItsClosestSector(INT32 iVehicleId, UINT8 ubGroupID);
+void TeleportVehicleToItsClosestSector(INT32 iVehicleId, uint8_t ubGroupID);
 
 // Loop through and create a few soldier squad ID's for vehicles ( max # 3 )
 void InitVehicles() {
@@ -180,7 +180,7 @@ void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle) {
   pVehicle->ubWhatKindOfMercAmI = MERC_TYPE__VEHICLE;
 }
 
-INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, UINT8 ubType) {
+INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, uint8_t ubType) {
   // insert this vehicle into the list
   // how many vehicles are there?
   INT32 iVehicleIdValue = -1;
@@ -270,17 +270,17 @@ INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, UINT8 ubType) {
     Assert(0);
   }
 
-  pGroup->ubTransportationMask = (UINT8)iMvtTypes[ubType];
+  pGroup->ubTransportationMask = (uint8_t)iMvtTypes[ubType];
 
   // ARM: setup group movement defaults
-  pGroup->ubSectorX = (UINT8)sMapX;
-  pGroup->ubNextX = (UINT8)sMapX;
-  pGroup->ubSectorY = (UINT8)sMapY;
-  pGroup->ubNextY = (UINT8)sMapY;
+  pGroup->ubSectorX = (uint8_t)sMapX;
+  pGroup->ubNextX = (uint8_t)sMapX;
+  pGroup->ubSectorY = (uint8_t)sMapY;
+  pGroup->ubNextY = (uint8_t)sMapY;
   pGroup->uiTraverseTime = 0;
   pGroup->uiArrivalTime = 0;
 
-  SetUpArmorForVehicle((UINT8)iCount);
+  SetUpArmorForVehicle((uint8_t)iCount);
 
   return (iVehicleIdValue);
 }
@@ -799,10 +799,11 @@ BOOLEAN SetUpMvtGroupForVehicle(struct SOLDIERTYPE *pSoldier) {
   // if( pVehicleList[ iId ].ubMovementGroup == 0 )
   //{
   // get the vehicle a mvt group
-  // pVehicleList[ iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( UINT8 )(
-  // pVehicleList[ iId ].sSectorX ), ( UINT8 )( pVehicleList[ iId ].sSectorY ), iId ); pVehicleList[
-  // iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( UINT8 )( pVehicleList[ iId
-  // ].sSectorX ), ( UINT8 )( pVehicleList[ iId ].sSectorY ), iId );
+  // pVehicleList[ iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( uint8_t )(
+  // pVehicleList[ iId ].sSectorX ), ( uint8_t )( pVehicleList[ iId ].sSectorY ), iId );
+  // pVehicleList[ iId ].ubMovementGroup = CreateNewVehicleGroupDepartingFromSector( ( uint8_t )(
+  // pVehicleList[ iId
+  // ].sSectorX ), ( uint8_t )( pVehicleList[ iId ].sSectorY ), iId );
 
   // add everyone in vehicle to this mvt group
   // for( iCounter = 0; iCounter < iSeatingCapacities[ pVehicleList[ iId ].ubVehicleType ];
@@ -881,7 +882,7 @@ void UpdatePositionOfMercsInVehicle(INT32 iId) {
   return;
 }
 
-INT32 GivenMvtGroupIdFindVehicleId(UINT8 ubGroupId) {
+INT32 GivenMvtGroupIdFindVehicleId(uint8_t ubGroupId) {
   INT32 iCounter = 0;
 
   // given the id of a mvt group, find a vehicle in this group
@@ -922,7 +923,7 @@ BOOLEAN AddVehicleMembersToMvtGroup(INT32 iId) {
   return (TRUE);
 }
 
-BOOLEAN InjurePersonInVehicle(INT32 iId, struct SOLDIERTYPE *pSoldier, UINT8 ubPointsOfDmg) {
+BOOLEAN InjurePersonInVehicle(INT32 iId, struct SOLDIERTYPE *pSoldier, uint8_t ubPointsOfDmg) {
   // find this person, see if they have this many pts left, if not, kill them
 
   // find if vehicle is valid
@@ -1073,7 +1074,7 @@ BOOLEAN AnyAccessibleVehiclesInSoldiersSector(struct SOLDIERTYPE *pSoldier) {
 
 struct SOLDIERTYPE *GetDriver(INT32 iID) { return (MercPtrs[pVehicleList[iID].ubDriver]); }
 
-void SetDriver(INT32 iID, UINT8 ubID) { pVehicleList[iID].ubDriver = ubID; }
+void SetDriver(INT32 iID, uint8_t ubID) { pVehicleList[iID].ubDriver = ubID; }
 
 #ifdef JA2TESTVERSION
 void VehicleTest(void) { SetUpHelicopterForPlayer(9, 1); }
@@ -1172,7 +1173,7 @@ struct SOLDIERTYPE *GetVehicleSoldierPointerFromPassenger(struct SOLDIERTYPE *pS
 
 BOOLEAN ExitVehicle(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pVehicle;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
   INT16 sGridNo;
 
   // Get vehicle from soldier...
@@ -1241,8 +1242,8 @@ void AddPassangersToTeamPanel(INT32 iId) {
   }
 }
 
-void VehicleTakeDamage(UINT8 ubID, UINT8 ubReason, INT16 sDamage, INT16 sGridNo,
-                       UINT8 ubAttackerID) {
+void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, INT16 sDamage, INT16 sGridNo,
+                       uint8_t ubAttackerID) {
   if (ubReason != TAKE_DAMAGE_GAS) {
     PlayJA2Sample((uint32_t)(S_METAL_IMPACT3), RATE_11025, SoundVolume(MIDVOLUME, sGridNo), 1,
                   SoundDir(sGridNo));
@@ -1266,8 +1267,8 @@ void VehicleTakeDamage(UINT8 ubID, UINT8 ubReason, INT16 sDamage, INT16 sGridNo,
   }
 }
 
-void HandleCriticalHitForVehicleInLocation(UINT8 ubID, INT16 sDmg, INT16 sGridNo,
-                                           UINT8 ubAttackerID) {
+void HandleCriticalHitForVehicleInLocation(uint8_t ubID, INT16 sDmg, INT16 sGridNo,
+                                           uint8_t ubAttackerID) {
   // check state the armor was s'posed to be in vs. the current state..the difference / orig state
   // is % chance that a critical hit will occur
   struct SOLDIERTYPE *pSoldier;
@@ -1397,7 +1398,7 @@ INT8 RepairVehicle(INT32 iVehicleId, INT8 bRepairPtsLeft, BOOLEAN *pfNothingToRe
 }
 
 /*
-INT16 GetOrigInternalArmorValueForVehicleInLocation( UINT8 ubID, UINT8 ubLocation )
+INT16 GetOrigInternalArmorValueForVehicleInLocation( uint8_t ubID, uint8_t ubLocation )
 {
         INT16 sArmorValue = 0;
 
@@ -1432,14 +1433,14 @@ struct SOLDIERTYPE *GetSoldierStructureForVehicle(INT32 iId) {
   return (pFoundSoldier);
 }
 
-void SetUpArmorForVehicle(UINT8 ubID) {
+void SetUpArmorForVehicle(uint8_t ubID) {
   // for armour type, store the index into the armour table itself
   pVehicleList[ubID].sArmourType =
       Item[sVehicleArmourType[pVehicleList[ubID].ubVehicleType]].ubClassIndex;
 }
 
-void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
-  UINT8 pubDeducations = 0;
+void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) {
+  uint8_t pubDeducations = 0;
   INT32 iCounter = 0;
 
   (*pubPoints) += 35;
@@ -1470,13 +1471,13 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten;
   struct path *pTempPathPtr;
   uint32_t uiNodeCount = 0;
-  UINT8 cnt;
+  uint8_t cnt;
   VEHICLETYPE TempVehicle;
-  UINT8 ubPassengerCnt = 0;
+  uint8_t ubPassengerCnt = 0;
 
   // Save the number of elements
-  FileMan_Write(hFile, &ubNumberOfVehicles, sizeof(UINT8), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT8)) {
+  FileMan_Write(hFile, &ubNumberOfVehicles, sizeof(uint8_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint8_t)) {
     return (FALSE);
   }
 
@@ -1549,18 +1550,18 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
 BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, uint32_t uiSavedGameVersion) {
   uint32_t uiNumBytesRead;
   uint32_t uiTotalNodeCount = 0;
-  UINT8 cnt;
+  uint8_t cnt;
   uint32_t uiNodeCount = 0;
   struct path *pPath = NULL;
-  UINT8 ubPassengerCnt = 0;
+  uint8_t ubPassengerCnt = 0;
   struct path *pTempPath;
 
   // Clear out th vehicle list
   ClearOutVehicleList();
 
   // Load the number of elements
-  FileMan_Read(hFile, &ubNumberOfVehicles, sizeof(UINT8), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8)) {
+  FileMan_Read(hFile, &ubNumberOfVehicles, sizeof(uint8_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint8_t)) {
     return (FALSE);
   }
 
@@ -1594,16 +1595,16 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, uint32_t uiSavedGa
           if (uiSavedGameVersion < 86) {
             if (pVehicleList[cnt].pPassengers[ubPassengerCnt] != 0) {
               // ! The id of the soldier was saved in the passenger pointer.  The passenger pointer
-              // is converted back ! to a UINT8 so we can get the REAL pointer to the soldier.
+              // is converted back ! to a uint8_t so we can get the REAL pointer to the soldier.
               pVehicleList[cnt].pPassengers[ubPassengerCnt] = FindSoldierByProfileID(
-                  (UINT8)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
+                  (uint8_t)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
             }
           } else {
             if (pVehicleList[cnt].pPassengers[ubPassengerCnt] != (struct SOLDIERTYPE *)NO_PROFILE) {
               // ! The id of the soldier was saved in the passenger pointer.  The passenger pointer
-              // is converted back ! to a UINT8 so we can get the REAL pointer to the soldier.
+              // is converted back ! to a uint8_t so we can get the REAL pointer to the soldier.
               pVehicleList[cnt].pPassengers[ubPassengerCnt] = FindSoldierByProfileID(
-                  (UINT8)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
+                  (uint8_t)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
             } else {
               pVehicleList[cnt].pPassengers[ubPassengerCnt] = NULL;
             }
@@ -1661,7 +1662,7 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, uint32_t uiSavedGa
   return (TRUE);
 }
 
-void SetVehicleSectorValues(INT32 iVehId, UINT8 ubSectorX, UINT8 ubSectorY) {
+void SetVehicleSectorValues(INT32 iVehId, uint8_t ubSectorX, uint8_t ubSectorY) {
   pVehicleList[iVehId].sSectorX = ubSectorX;
   pVehicleList[iVehId].sSectorY = ubSectorY;
 
@@ -1750,7 +1751,7 @@ BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN OKUseVehicle(UINT8 ubProfile) {
+BOOLEAN OKUseVehicle(uint8_t ubProfile) {
   if (ubProfile == PROF_HUMMER) {
     return (CheckFact(FACT_OK_USE_HUMMER, NO_PROFILE));
   } else if (ubProfile == PROF_ICECREAM) {
@@ -1764,7 +1765,7 @@ BOOLEAN OKUseVehicle(UINT8 ubProfile) {
   }
 }
 
-void TeleportVehicleToItsClosestSector(INT32 iVehicleId, UINT8 ubGroupID) {
+void TeleportVehicleToItsClosestSector(INT32 iVehicleId, uint8_t ubGroupID) {
   struct GROUP *pGroup = NULL;
   uint32_t uiTimeToNextSector;
   uint32_t uiTimeToLastSector;
@@ -1958,8 +1959,8 @@ BOOLEAN IsSoldierInThisVehicleSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadNum
 }
 
 struct SOLDIERTYPE *PickRandomPassengerFromVehicle(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   INT32 iCounter, iId;
 
   // If not a vehicle, ignore!
@@ -1977,7 +1978,7 @@ struct SOLDIERTYPE *PickRandomPassengerFromVehicle(struct SOLDIERTYPE *pSoldier)
   }
 
   if (ubNumMercs > 0) {
-    ubChosenMerc = (UINT8)Random(ubNumMercs);
+    ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
     // If we are air raid, AND red exists somewhere...
     return (pVehicleList[iId].pPassengers[ubChosenMerc]);

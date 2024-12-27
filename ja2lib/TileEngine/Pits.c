@@ -35,9 +35,9 @@ void Add3X3Pit(INT32 iMapIndex) {
   AddObjectToTail(iMapIndex + 1, REGWATERTEXTURE8);
   AddObjectToTail(iMapIndex - 159, REGWATERTEXTURE9);
   if (!gfEditMode) {  // Add the exitgrids associated with the pit.
-    ExitGrid.ubGotoSectorX = (UINT8)gWorldSectorX;
-    ExitGrid.ubGotoSectorY = (UINT8)gWorldSectorY;
-    ExitGrid.ubGotoSectorZ = (UINT8)(gbWorldSectorZ + 1);
+    ExitGrid.ubGotoSectorX = (uint8_t)gWorldSectorX;
+    ExitGrid.ubGotoSectorY = (uint8_t)gWorldSectorY;
+    ExitGrid.ubGotoSectorZ = (uint8_t)(gbWorldSectorZ + 1);
     ExitGrid.usGridNo = (uint16_t)iMapIndex;
     AddExitGridToWorld(iMapIndex + 159, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 1, &ExitGrid);
@@ -84,9 +84,9 @@ void Add5X5Pit(INT32 iMapIndex) {
   AddObjectToTail(iMapIndex - 158, REGWATERTEXTURE33);
   AddObjectToTail(iMapIndex - 318, REGWATERTEXTURE34);
   if (!gfEditMode) {  // Add the exitgrids associated with the pit.
-    ExitGrid.ubGotoSectorX = (UINT8)gWorldSectorX;
-    ExitGrid.ubGotoSectorY = (UINT8)gWorldSectorY;
-    ExitGrid.ubGotoSectorZ = (UINT8)(gbWorldSectorZ + 1);
+    ExitGrid.ubGotoSectorX = (uint8_t)gWorldSectorX;
+    ExitGrid.ubGotoSectorY = (uint8_t)gWorldSectorY;
+    ExitGrid.ubGotoSectorZ = (uint8_t)(gbWorldSectorZ + 1);
     ExitGrid.usGridNo = (uint16_t)iMapIndex;
     AddExitGridToWorld(iMapIndex + 318, &ExitGrid);
     AddExitGridToWorld(iMapIndex + 158, &ExitGrid);
@@ -187,7 +187,7 @@ void RemoveAllPits() {
 
 void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sRadius) {
   INT16 x, y, sNewGridNo;
-  UINT8 ubID;
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
   PlayJA2Sample(CAVE_COLLAPSE, RATE_11025, SoundVolume(HIGHVOLUME, sGridNo), 1, SoundDir(sGridNo));
@@ -213,7 +213,7 @@ void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sR
     }
 }
 
-void HandleFallIntoPitFromAnimation(UINT8 ubID) {
+void HandleFallIntoPitFromAnimation(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier = MercPtrs[ubID];
   EXITGRID ExitGrid;
   INT16 sPitGridNo;

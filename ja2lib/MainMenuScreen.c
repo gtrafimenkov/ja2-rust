@@ -279,7 +279,7 @@ BOOLEAN InitMainMenu() {
 }
 
 void ExitMainMenu() {
-  //	uint32_t uiDestPitchBYTES; 	UINT8
+  //	uint32_t uiDestPitchBYTES; 	uint8_t
   //*pDestBuf;
 
   //	if( !gfDoHelpScreen )
@@ -303,7 +303,7 @@ void ExitMainMenu() {
 void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   INT8 bID;
 
-  bID = (UINT8)((uintptr_t)btn->UserData[0]);
+  bID = (uint8_t)((uintptr_t)btn->UserData[0]);
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -403,7 +403,7 @@ void HandleHelpScreenInput() {
 
 void ClearMainMenu() {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
@@ -637,7 +637,7 @@ void RenderMainMenu() {
 }
 
 void RestoreButtonBackGrounds() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   //	RestoreExternBackgroundRect( (uint16_t)(320 - gusMainMenuButtonWidths[TITLE]/2),
   // MAINMENU_TITLE_Y, gusMainMenuButtonWidths[TITLE], 23 );

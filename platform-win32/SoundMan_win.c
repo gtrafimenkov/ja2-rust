@@ -39,7 +39,7 @@ typedef struct {
   uint32_t uiFlags;      // Status flags
   uint32_t uiSpeed;      // Playback frequency
   BOOLEAN fStereo;       // Stereo/Mono
-  UINT8 ubBits;          // 8/16 bits
+  uint8_t ubBits;        // 8/16 bits
   PTR pData;             // pointer to sample data memory
   PTR pSoundStart;       // pointer to start of sound data
   uint32_t uiCacheHits;
@@ -70,7 +70,7 @@ typedef struct {
   uint32_t uiFlags;
   uint32_t uiSoundID;
   uint32_t uiPriority;
-  void (*pCallback)(UINT8 *, uint32_t, uint32_t, uint32_t, void *);
+  void (*pCallback)(uint8_t *, uint32_t, uint32_t, uint32_t, void *);
   void *pData;
   void (*EOSCallback)(void *);
   void *pCallbackData;
@@ -841,7 +841,7 @@ BOOLEAN SoundStopAllRandom(void) {
 //*******************************************************************************
 BOOLEAN SoundServiceStreams(void) {
   uint32_t uiCount, uiSpeed, uiBuffLen, uiBytesPerSample;
-  UINT8 *pBuffer;
+  uint8_t *pBuffer;
   void *pData;
 
   if (fSoundSystemInit) {
@@ -1266,7 +1266,7 @@ BOOLEAN SoundProcessWAVHeader(uint32_t uiSample) {
 
   pSampleList[uiSample].uiSpeed = ailInfo.rate;
   pSampleList[uiSample].fStereo = (BOOLEAN)(ailInfo.channels == 2);
-  pSampleList[uiSample].ubBits = (UINT8)ailInfo.bits;
+  pSampleList[uiSample].ubBits = (uint8_t)ailInfo.bits;
 
   pSampleList[uiSample].pSoundStart = (PTR)ailInfo.data_ptr;
   pSampleList[uiSample].uiSoundSize = ailInfo.data_len;

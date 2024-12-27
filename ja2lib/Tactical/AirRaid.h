@@ -14,15 +14,15 @@ typedef struct {
   INT16 sSectorZ;
   INT8 bIntensity;
   uint32_t uiFlags;
-  UINT8 ubNumMinsFromCurrentTime;
-  UINT8 ubFiller[8];
+  uint8_t ubNumMinsFromCurrentTime;
+  uint8_t ubFiller[8];
 
 } AIR_RAID_DEFINITION;
 
 extern BOOLEAN gfInAirRaid;
 
 // what ari raid mode are we in?
-extern UINT8 gubAirRaidMode;
+extern uint8_t gubAirRaidMode;
 
 typedef enum {
   AIR_RAID_TRYING_TO_START,
@@ -45,7 +45,7 @@ void HandleAirRaid();
 BOOLEAN BeginAirRaid();
 BOOLEAN InAirRaid();
 
-BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam);
+BOOLEAN HandleAirRaidEndTurn(uint8_t ubTeam);
 
 // Save the air raid info to the saved game
 BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile);

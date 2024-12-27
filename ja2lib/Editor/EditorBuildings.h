@@ -5,8 +5,8 @@
 #include "SGP/Types.h"
 
 extern BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
-extern UINT8 gubCurrRoomNumber;
-extern UINT8 gubMaxRoomNumber;
+extern uint8_t gubCurrRoomNumber;
+extern uint8_t gubMaxRoomNumber;
 
 void SetupTextInputForBuildings();
 void ExtractAndUpdateBuildingInfo();

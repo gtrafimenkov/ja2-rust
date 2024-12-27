@@ -111,13 +111,13 @@ void SetDefaultSquadOnSectorEntry(BOOLEAN fForce);
 INT32 GetLastSquadActive(void);
 
 // set squads between sector position
-void SetSquadPositionBetweenSectors(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY,
-                                    uint32_t uiTraverseTime, uint32_t uiArriveTime,
-                                    UINT8 ubSquadValue);
+void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX,
+                                    uint8_t ubPrevY, uint32_t uiTraverseTime, uint32_t uiArriveTime,
+                                    uint8_t ubSquadValue);
 
 // get squads between sector positions and times
-void GetSquadPosition(UINT8 *ubNextX, UINT8 *ubNextY, UINT8 *ubPrevX, UINT8 *ubPrevY,
-                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, UINT8 ubSquadValue);
+void GetSquadPosition(uint8_t *ubNextX, uint8_t *ubNextY, uint8_t *ubPrevX, uint8_t *ubPrevY,
+                      uint32_t *uiTraverseTime, uint32_t *uiArriveTime, uint8_t ubSquadValue);
 
 void ExamineCurrentSquadLights(void);
 
@@ -134,10 +134,10 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile);
 INT8 GetFirstEmptySquad(void);
 
 // is this squad in the same sector as soldier?
-BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, UINT8 ubSquad);
+BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, uint8_t ubSquad);
 
 // is any merc on squad asleep?
-BOOLEAN IsAnyMercOnSquadAsleep(UINT8 ubSquadValue);
+BOOLEAN IsAnyMercOnSquadAsleep(uint8_t ubSquadValue);
 
 // is therea  dead guy here
 BOOLEAN IsDeadGuyInThisSquadSlot(INT8 bSlotId, INT8 bSquadValue, INT8 *bNumberOfDeadGuysSoFar);

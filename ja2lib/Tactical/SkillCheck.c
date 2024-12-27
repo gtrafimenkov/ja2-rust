@@ -154,8 +154,8 @@ INT8 EffectiveDexterity(struct SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffDexterity);
 }
 
-UINT8 GetPenaltyForFatigue(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubPercentPenalty;
+uint8_t GetPenaltyForFatigue(struct SOLDIERTYPE *pSoldier) {
+  uint8_t ubPercentPenalty;
 
   if (pSoldier->bBreathMax >= 85)
     ubPercentPenalty = 0;

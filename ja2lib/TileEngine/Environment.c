@@ -60,7 +60,7 @@ uint32_t guiEnvWeather = 0;
 uint32_t guiRainLoop = NO_SAMPLE;
 
 // frame cues for lightning
-UINT8 ubLightningTable[3][10][2] = {
+uint8_t ubLightningTable[3][10][2] = {
     {{0, 15}, {1, 0}, {2, 0}, {3, 6}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
 
     {{0, 15}, {1, 0}, {2, 0}, {3, 6}, {4, 0}, {5, 15}, {6, 0}, {7, 6}, {8, 0}, {9, 0}},
@@ -68,30 +68,30 @@ UINT8 ubLightningTable[3][10][2] = {
     {{0, 15}, {1, 0}, {2, 15}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}}};
 
 // CJC: I don't think these are used anywhere!
-UINT8 guiTODFlags[ENV_NUM_TIMES] = {ENV_TOD_FLAGS_NIGHT,   // 00
-                                    ENV_TOD_FLAGS_NIGHT,   // 01
-                                    ENV_TOD_FLAGS_NIGHT,   // 02
-                                    ENV_TOD_FLAGS_NIGHT,   // 03
-                                    ENV_TOD_FLAGS_NIGHT,   // 04
-                                    ENV_TOD_FLAGS_DAWN,    // 05
-                                    ENV_TOD_FLAGS_DAWN,    // 06
-                                    ENV_TOD_FLAGS_DAWN,    // 07
-                                    ENV_TOD_FLAGS_DAY,     // 08
-                                    ENV_TOD_FLAGS_DAY,     // 09
-                                    ENV_TOD_FLAGS_DAY,     // 10
-                                    ENV_TOD_FLAGS_DAY,     // 11
-                                    ENV_TOD_FLAGS_DAY,     // 12
-                                    ENV_TOD_FLAGS_DAY,     // 13
-                                    ENV_TOD_FLAGS_DAY,     // 14
-                                    ENV_TOD_FLAGS_DAY,     // 15
-                                    ENV_TOD_FLAGS_DAY,     // 16
-                                    ENV_TOD_FLAGS_DAY,     // 17
-                                    ENV_TOD_FLAGS_DAY,     // 18
-                                    ENV_TOD_FLAGS_DUSK,    // 19
-                                    ENV_TOD_FLAGS_DUSK,    // 20
-                                    ENV_TOD_FLAGS_DUSK,    // 21
-                                    ENV_TOD_FLAGS_NIGHT,   // 22
-                                    ENV_TOD_FLAGS_NIGHT};  // 23
+uint8_t guiTODFlags[ENV_NUM_TIMES] = {ENV_TOD_FLAGS_NIGHT,   // 00
+                                      ENV_TOD_FLAGS_NIGHT,   // 01
+                                      ENV_TOD_FLAGS_NIGHT,   // 02
+                                      ENV_TOD_FLAGS_NIGHT,   // 03
+                                      ENV_TOD_FLAGS_NIGHT,   // 04
+                                      ENV_TOD_FLAGS_DAWN,    // 05
+                                      ENV_TOD_FLAGS_DAWN,    // 06
+                                      ENV_TOD_FLAGS_DAWN,    // 07
+                                      ENV_TOD_FLAGS_DAY,     // 08
+                                      ENV_TOD_FLAGS_DAY,     // 09
+                                      ENV_TOD_FLAGS_DAY,     // 10
+                                      ENV_TOD_FLAGS_DAY,     // 11
+                                      ENV_TOD_FLAGS_DAY,     // 12
+                                      ENV_TOD_FLAGS_DAY,     // 13
+                                      ENV_TOD_FLAGS_DAY,     // 14
+                                      ENV_TOD_FLAGS_DAY,     // 15
+                                      ENV_TOD_FLAGS_DAY,     // 16
+                                      ENV_TOD_FLAGS_DAY,     // 17
+                                      ENV_TOD_FLAGS_DAY,     // 18
+                                      ENV_TOD_FLAGS_DUSK,    // 19
+                                      ENV_TOD_FLAGS_DUSK,    // 20
+                                      ENV_TOD_FLAGS_DUSK,    // 21
+                                      ENV_TOD_FLAGS_NIGHT,   // 22
+                                      ENV_TOD_FLAGS_NIGHT};  // 23
 
 typedef enum { COOL, WARM, HOT } Temperatures;
 
@@ -119,11 +119,11 @@ typedef enum {
 BOOLEAN fTimeOfDayControls = TRUE;
 uint32_t guiEnvTime = 0;
 uint32_t guiEnvDay = 0;
-UINT8 gubEnvLightValue = 0;
+uint8_t gubEnvLightValue = 0;
 BOOLEAN gfDoLighting = FALSE;
 
-UINT8 gubDesertTemperature = 0;
-UINT8 gubGlobalTemperature = 0;
+uint8_t gubDesertTemperature = 0;
+uint8_t gubGlobalTemperature = 0;
 
 // local prototypes
 void EnvDoLightning(void);
@@ -131,7 +131,7 @@ void EnvDoLightning(void);
 // polled by the game to handle time/atmosphere changes from gamescreen
 void EnvironmentController(BOOLEAN fCheckForLights) {
   uint32_t uiOldWorldHour;
-  UINT8 ubLightAdjustFromWeather = 0;
+  uint8_t ubLightAdjustFromWeather = 0;
 
   // do none of this stuff in the basement or caves
   if (gfBasement || gfCaves) {
@@ -199,11 +199,11 @@ void EnvironmentController(BOOLEAN fCheckForLights) {
 					// Thunder showers.. make darker
 					if ( guiEnvWeather & ( WEATHER_FORECAST_THUNDERSHOWERS ) )
 					{
-						ubLightAdjustFromWeather = (UINT8)(min( gubEnvLightValue+2, NORMAL_LIGHTLEVEL_NIGHT ));
+						ubLightAdjustFromWeather = (uint8_t)(min( gubEnvLightValue+2, NORMAL_LIGHTLEVEL_NIGHT ));
 					}
 					else
 					{
-						ubLightAdjustFromWeather = (UINT8)(min( gubEnvLightValue+1, NORMAL_LIGHTLEVEL_NIGHT ));
+						ubLightAdjustFromWeather = (uint8_t)(min( gubEnvLightValue+1, NORMAL_LIGHTLEVEL_NIGHT ));
 					}
 				}
 #endif
@@ -329,7 +329,7 @@ void EnvDisableTOD(void) { fTimeOfDayControls = FALSE; }
 
 void EnvDoLightning(void) {
   static uint32_t uiCount = 0, uiIndex = 0, uiStrike = 0, uiFrameNext = 1000;
-  static UINT8 ubLevel = 0, ubLastLevel = 0;
+  static uint8_t ubLevel = 0, ubLastLevel = 0;
 
   if (gfPauseDueToPlayerGamePause) {
     return;
@@ -360,10 +360,10 @@ void EnvDoLightning(void) {
     } else {
       if (ubLastLevel != ubLevel) {
         if (ubLevel > ubLastLevel) {
-          LightAddBaseLevel(0, (UINT8)(ubLevel - ubLastLevel));
+          LightAddBaseLevel(0, (uint8_t)(ubLevel - ubLastLevel));
           if (ubLevel > 0) RenderSetShadows(TRUE);
         } else {
-          LightSubtractBaseLevel(0, (UINT8)(ubLastLevel - ubLevel));
+          LightSubtractBaseLevel(0, (uint8_t)(ubLastLevel - ubLevel));
           if (ubLevel > 0) RenderSetShadows(TRUE);
         }
         SetRenderFlags(RENDER_FLAG_FULL);
@@ -372,7 +372,7 @@ void EnvDoLightning(void) {
   }
 }
 
-UINT8 GetTimeOfDayAmbientLightLevel() {
+uint8_t GetTimeOfDayAmbientLightLevel() {
   if (SectorTemperature(GetWorldMinutesInDay(), gWorldSectorX, gWorldSectorY, gbWorldSectorZ) ==
       HOT) {
     return (HOT_DAY_LIGHTLEVEL);
@@ -381,7 +381,7 @@ UINT8 GetTimeOfDayAmbientLightLevel() {
   }
 }
 
-void EnvBeginRainStorm(UINT8 ubIntensity) {
+void EnvBeginRainStorm(uint8_t ubIntensity) {
   if (!gfBasement && !gfCaves) {
     gfDoLighting = TRUE;
 
@@ -449,7 +449,7 @@ void TurnOffPrimeLights() {
   }
 }
 
-void UpdateTemperature(UINT8 ubTemperatureCode) {
+void UpdateTemperature(uint8_t ubTemperatureCode) {
   switch (ubTemperatureCode) {
     case TEMPERATURE_DESERT_COOL:
       gubDesertTemperature = 0;

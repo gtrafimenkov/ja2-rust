@@ -103,7 +103,7 @@ RPC_SMALL_FACE_VALUES gRPCSmallFaceValues[] = {
 
 };
 
-UINT8 gubRPCSmallFaceProfileNum[] = {
+uint8_t gubRPCSmallFaceProfileNum[] = {
     57,  // entry 0
     58,  59,  60,  61,  62, 63, 64, 65,
     66,  // entry 9
@@ -115,7 +115,7 @@ UINT8 gubRPCSmallFaceProfileNum[] = {
 
 };
 
-UINT8 ubRPCNumSmallFaceValues = 28;
+uint8_t ubRPCNumSmallFaceValues = 28;
 
 extern BOOLEAN gfSMDisableForItems;
 extern INT16 gsCurInterfacePanel;
@@ -163,7 +163,7 @@ INT32 InitSoldierFace(struct SOLDIERTYPE *pSoldier) {
   return (InitFace(GetSolProfile(pSoldier), GetSolID(pSoldier), 0));
 }
 
-INT32 InitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, uint32_t uiInitFlags) {
+INT32 InitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags) {
   uint32_t uiBlinkFrequency;
   uint32_t uiExpressionFrequency;
 
@@ -185,7 +185,7 @@ INT32 InitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, uint32_t uiInitFlags) {
                            uiExpressionFrequency));
 }
 
-INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, uint32_t uiInitFlags,
+INT32 InternalInitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags,
                        INT32 iFaceFileID, uint32_t uiBlinkFrequency,
                        uint32_t uiExpressionFrequency) {
   FACETYPE *pFace;
@@ -300,9 +300,9 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, uint32_t uiInit
         Create16BPPPaletteShaded(hVObject->pPaletteEntry, 100, 100, 100, FALSE);
 
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      Pal[uiCount].peRed = (UINT8)(uiCount % 128) + 128;
-      Pal[uiCount].peGreen = (UINT8)(uiCount % 128) + 128;
-      Pal[uiCount].peBlue = (UINT8)(uiCount % 128) + 128;
+      Pal[uiCount].peRed = (uint8_t)(uiCount % 128) + 128;
+      Pal[uiCount].peGreen = (uint8_t)(uiCount % 128) + 128;
+      Pal[uiCount].peBlue = (uint8_t)(uiCount % 128) + 128;
     }
     hVObject->pShades[FLASH_PORTRAIT_GRAYSHADE] =
         Create16BPPPaletteShaded(Pal, 255, 255, 255, FALSE);
@@ -383,7 +383,7 @@ void DeleteFace(INT32 iFaceIndex) {
 }
 
 void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
-                                  UINT8 ubSoldierID, uint16_t usFaceX, uint16_t usFaceY) {
+                                  uint8_t ubSoldierID, uint16_t usFaceX, uint16_t usFaceY) {
   if (ubSoldierID == NOBODY) {
     return;
   }
@@ -460,7 +460,7 @@ void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffe
   VSURFACE_DESC vs_desc;
   uint16_t usWidth;
   uint16_t usHeight;
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
 
   // Check face index
   CHECKV(iFaceIndex != -1);
@@ -545,7 +545,7 @@ void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffe
   }
 }
 
-void SetAutoFaceInActiveFromSoldier(UINT8 ubSoldierID) {
+void SetAutoFaceInActiveFromSoldier(uint8_t ubSoldierID) {
   // Check for valid soldier
   CHECKV(ubSoldierID != NOBODY);
 
@@ -713,7 +713,7 @@ void BlinkAutoFace(INT32 iFaceIndex) {
 
 void HandleFaceHilights(FACETYPE *pFace, uint32_t uiBuffer, INT16 sFaceX, INT16 sFaceY) {
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   INT32 iFaceIndex;
 
@@ -960,7 +960,7 @@ void SetFaceShade(struct SOLDIERTYPE *pSoldier, FACETYPE *pFace, BOOLEAN fExtern
   }
 }
 
-BOOLEAN RenderAutoFaceFromSoldier(UINT8 ubSoldierID) {
+BOOLEAN RenderAutoFaceFromSoldier(uint8_t ubSoldierID) {
   // Check for valid soldier
   CHECKF(ubSoldierID != NOBODY);
 
@@ -1035,7 +1035,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
   INT16 sFontX, sFontY;
   INT16 sX1, sY1, sY2, sX2;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint16_t usLineColor;
   INT8 bNumRightIcons = 0;
 
@@ -1384,7 +1384,7 @@ BOOLEAN RenderAutoFace(INT32 iFaceIndex) {
   return (TRUE);
 }
 
-BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, UINT8 ubSoldierID, INT16 sX, INT16 sY) {
+BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, uint8_t ubSoldierID, INT16 sX, INT16 sY) {
   // Check for valid soldier
   CHECKF(ubSoldierID != NOBODY);
 
@@ -1756,7 +1756,7 @@ BOOLEAN FaceRestoreSavedBackgroundRect(INT32 iFaceIndex, INT16 sDestLeft, INT16 
                                        INT16 sSrcLeft, INT16 sSrcTop, INT16 sWidth, INT16 sHeight) {
   FACETYPE *pFace;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   // Check face index
   CHECKF(iFaceIndex != -1);

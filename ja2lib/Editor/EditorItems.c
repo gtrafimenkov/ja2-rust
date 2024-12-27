@@ -44,7 +44,7 @@ uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex,
 uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity);
 uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, INT8 bFrequency);
 uint16_t CountNumberOfPressureActionsInWorld();
-uint16_t CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID);
+uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID);
 
 // Finds and selects the next item when right clicking on an item type.  Only works if the
 // item actually exists in the world.
@@ -52,7 +52,7 @@ void FindNextItemOfSelectedType();  // wrapper for the next four
 void SelectNextTriggerWithFrequency(uint16_t usItem, INT8 bFrequency);
 void SelectNextItemOfType(uint16_t usItem);
 void SelectNextPressureAction();
-void SelectNextKeyOfType(UINT8 ubKeyID);
+void SelectNextKeyOfType(uint8_t ubKeyID);
 
 INT32 giDefaultExistChance = 100;
 
@@ -179,7 +179,7 @@ void EntryInitEditorItemsInfo() {
 
 void InitEditorItemsInfo(uint32_t uiItemType) {
   VSURFACE_DESC vs_desc;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   SGPRect SaveRect, NewRect;
@@ -191,7 +191,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
   uint16_t usCounter;
   CHAR16 pStr[100];  //, pStr2[ 100 ];
   CHAR16 pItemName[SIZE_ITEM_NAME];
-  UINT8 ubBitDepth;
+  uint8_t ubBitDepth;
   BOOLEAN fTypeMatch;
   INT32 iEquipCount = 0;
 
@@ -480,7 +480,7 @@ void DetermineItemsScrolling() {
 }
 
 void RenderEditorItemsInfo() {
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint8_t *pDestBuf, *pSrcBuf;
   uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   struct VObject *hVObject;
@@ -712,7 +712,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
 
   // memset( &tempObject, 0, sizeof( struct OBJECTTYPE ) );
   if (eInfo.uiItemType == TBAR_MODE_ITEM_KEYS) {
-    CreateKeyObject(&tempObject, 1, (UINT8)eInfo.sSelItemIndex);
+    CreateKeyObject(&tempObject, 1, (uint8_t)eInfo.sSelItemIndex);
   } else {
     CreateItem(eInfo.pusItemIndex[eInfo.sSelItemIndex], 100, &tempObject);
   }
@@ -782,7 +782,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
 
   pObject = InternalAddItemToPool(&sGridNo, &tempObject, bVisibility, 0, usFlags, 0, &iItemIndex);
   if (tempObject.usItem != OWNERSHIP) {
-    gWorldItems[iItemIndex].ubNonExistChance = (UINT8)(100 - giDefaultExistChance);
+    gWorldItems[iItemIndex].ubNonExistChance = (uint8_t)(100 - giDefaultExistChance);
   } else {
     gWorldItems[iItemIndex].ubNonExistChance = 0;
   }
@@ -792,7 +792,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
     if (Random(2)) {
       pObject->ubShotsLeft[0] = Magazine[pItem->ubClassIndex].ubMagSize;
     } else {
-      pObject->ubShotsLeft[0] = (UINT8)Random(Magazine[pItem->ubClassIndex].ubMagSize);
+      pObject->ubShotsLeft[0] = (uint8_t)Random(Magazine[pItem->ubClassIndex].ubMagSize);
     }
   } else {
     pObject->bStatus[0] = (INT8)(70 + Random(26));
@@ -801,7 +801,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
     if (pObject->usItem == ROCKET_LAUNCHER) {
       pObject->ubGunShotsLeft = 1;
     } else {
-      pObject->ubGunShotsLeft = (UINT8)(Random(Weapon[pObject->usItem].ubMagSize));
+      pObject->ubGunShotsLeft = (uint8_t)(Random(Weapon[pObject->usItem].ubMagSize));
     }
   }
 
@@ -1025,7 +1025,7 @@ void FindNextItemOfSelectedType() {
       SelectNextPressureAction();
     }
   } else if (Item[usItem].usItemClass == IC_KEY) {
-    SelectNextKeyOfType((UINT8)eInfo.sSelItemIndex);
+    SelectNextKeyOfType((uint8_t)eInfo.sSelItemIndex);
   } else {
     SelectNextItemOfType(usItem);
   }
@@ -1083,7 +1083,7 @@ void SelectNextItemOfType(uint16_t usItem) {
   }
 }
 
-void SelectNextKeyOfType(UINT8 ubKeyID) {
+void SelectNextKeyOfType(uint8_t ubKeyID) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1318,7 +1318,7 @@ uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *p
       *pusQuantity = usNumPlacements;
     }
   } else if (eInfo.uiItemType == TBAR_MODE_ITEM_KEYS) {
-    usNumPlacements = CountNumberOfKeysOfTypeInWorld((UINT8)usEInfoIndex);
+    usNumPlacements = CountNumberOfKeysOfTypeInWorld((uint8_t)usEInfoIndex);
     *pusQuantity = usNumPlacements;
   } else {
     usNumPlacements =
@@ -1327,7 +1327,7 @@ uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *p
   return usNumPlacements;
 }
 
-uint16_t CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID) {
+uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   INT16 num = 0;
@@ -1361,7 +1361,7 @@ void DisplayItemStatistics() {
       eInfo.sHilitedItemIndex == -1 || eInfo.sHilitedItemIndex == eInfo.sSelItemIndex;
 
   SetFont(SMALLCOMPFONT);
-  SetFontForeground((UINT8)(fUseSelectedItem ? FONT_LTRED : FONT_YELLOW));
+  SetFontForeground((uint8_t)(fUseSelectedItem ? FONT_LTRED : FONT_YELLOW));
 
   // Extract all of the item information.
   if (!eInfo.pusItemIndex) return;

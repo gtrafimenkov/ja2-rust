@@ -21,7 +21,7 @@
 #include "Networking.h"
 #endif
 
-UINT8 gubEncryptionArray4[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
+uint8_t gubEncryptionArray4[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
     {177, 131, 58,  218, 175, 130, 210, 59,  25,  190, 170, 189, 227, 245, 104, 118, 7,
      168, 136, 178, 184, 4,   27,  64,  199, 101, 160, 24,  83,  177, 178, 232, 185, 40,
      122, 109, 38,  253, 160, 14,  133, 106, 190, 206, 58,  102, 244, 229, 124},
@@ -275,7 +275,7 @@ EV_S_SENDPATHTONETWORK SUpdateNetworkSoldier;
 
 extern BOOLEAN gfAmINetworked;
 
-BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, UINT8 ubQueueID);
+BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint8_t ubQueueID);
 BOOLEAN ExecuteGameEvent(EVENT *pEvent);
 
 BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData) {
@@ -312,7 +312,7 @@ BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, PTR pEventDa
   return (AddGameEventToQueue(uiEvent, usDelay, pEventData, PRIMARY_EVENT_QUEUE));
 }
 
-BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, UINT8 ubQueueID) {
+BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint8_t ubQueueID) {
   uint32_t uiDataSize;
 
   // Check range of Event ui

@@ -55,7 +55,7 @@ enum {
   INS_INFO_CANCELATION,
   INS_INFO_LAST_PAGE,
 };
-UINT8 gubCurrentInsInfoSubPage = 0;
+uint8_t gubCurrentInsInfoSubPage = 0;
 
 BOOLEAN InsuranceInfoSubPagesVisitedFlag[INS_INFO_LAST_PAGE - 1];
 
@@ -79,7 +79,7 @@ void DisplayPremiumPage();
 void DisplayRenewingPremiumPage();
 void DisplayCancelationPagePage();
 void DisableArrowButtonsIfOnLastOrFirstPage();
-void ChangingInsuranceInfoSubPage(UINT8 ubSubPageNumber);
+void ChangingInsuranceInfoSubPage(uint8_t ubSubPageNumber);
 void DisplayInfoTocPage();
 
 void GameInitInsuranceInfo() {}
@@ -486,7 +486,7 @@ void DisableArrowButtonsIfOnLastOrFirstPage() {
     EnableButton(guiInsNextBackButton);
 }
 
-void ChangingInsuranceInfoSubPage(UINT8 ubSubPageNumber) {
+void ChangingInsuranceInfoSubPage(uint8_t ubSubPageNumber) {
   fLoadPendingFlag = TRUE;
 
   if (InsuranceInfoSubPagesVisitedFlag[ubSubPageNumber] == FALSE) {

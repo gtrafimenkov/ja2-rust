@@ -87,11 +87,11 @@ BOOLEAN fLoadingCharacterForPreviousImpProfile = FALSE;
 
 void CreateConfirmButtons(void);
 void DestroyConfirmButtons(void);
-void GiveItemsToPC(UINT8 ubProfileId);
-void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, UINT8 ubStatus,
-                               UINT8 ubHowMany);
+void GiveItemsToPC(uint8_t ubProfileId);
+void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, uint8_t ubStatus,
+                               uint8_t ubHowMany);
 void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, uint16_t usItem,
-                                UINT8 ubStatus, UINT8 ubHowMany);
+                                uint8_t ubStatus, uint8_t ubHowMany);
 INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, uint16_t usItem);
 
 // callbacks
@@ -169,7 +169,7 @@ BOOLEAN AddCharacterToPlayersTeam(void) {
 
   memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));
 
-  HireMercStruct.ubProfileID = (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId);
+  HireMercStruct.ubProfileID = (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId);
 
   if (fLoadingCharacterForPreviousImpProfile == FALSE) {
     // give them items
@@ -188,7 +188,7 @@ BOOLEAN AddCharacterToPlayersTeam(void) {
   HireMercStruct.ubInsertionCode = INSERTION_CODE_ARRIVING_GAME;
   HireMercStruct.uiTimeTillMercArrives = GetMercArrivalTimeOfDay();
 
-  SetProfileFaceData(HireMercStruct.ubProfileID, (UINT8)(200 + iPortraitNumber),
+  SetProfileFaceData(HireMercStruct.ubProfileID, (uint8_t)(200 + iPortraitNumber),
                      uiEyeXPositions[iPortraitNumber], uiEyeYPositions[iPortraitNumber],
                      uiMouthXPositions[iPortraitNumber], uiMouthYPositions[iPortraitNumber]);
 
@@ -225,14 +225,15 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
       LaptopSaveInfo.fIMPCompletedFlag = TRUE;
 
       // charge the player
-      AddTransactionToPlayersBook(IMP_PROFILE,
-                                  (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
-                                  -(COST_OF_PROFILE));
+      AddTransactionToPlayersBook(
+          IMP_PROFILE, (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
+          -(COST_OF_PROFILE));
       AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetWorldTotalMin(), -1, -1);
       AddCharacterToPlayersTeam();
 
       // write the created imp merc
-      WriteOutCurrentImpCharacter((UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId));
+      WriteOutCurrentImpCharacter(
+          (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId));
 
       fButtonPendingFlag = TRUE;
       iCurrentImpPage = IMP_HOME_PAGE;
@@ -323,7 +324,7 @@ void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
 
 #define PROFILE_HAS_SKILL_TRAIT(p, t) ((p->bSkillTrait == t) || (p->bSkillTrait2 == t))
 
-void GiveItemsToPC(UINT8 ubProfileId) {
+void GiveItemsToPC(uint8_t ubProfileId) {
   MERCPROFILESTRUCT *pProfile;
 
   // gives starting items to merc
@@ -407,8 +408,8 @@ void GiveItemsToPC(UINT8 ubProfileId) {
   }
 }
 
-void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, UINT8 ubStatus,
-                               UINT8 ubHowMany) {
+void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, uint8_t ubStatus,
+                               uint8_t ubHowMany) {
   INT32 iSlot;
 
   iSlot = FirstFreeBigEnoughPocket(pProfile, usItem);
@@ -423,7 +424,7 @@ void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, UIN
 }
 
 void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, uint16_t usItem,
-                                UINT8 ubStatus, UINT8 ubHowMany) {
+                                uint8_t ubStatus, uint8_t ubHowMany) {
   pProfile->inv[uiPos] = usItem;
   pProfile->bInvStatus[uiPos] = ubStatus;
   pProfile->bInvNumber[uiPos] = ubHowMany;
@@ -534,7 +535,7 @@ void LoadInCurrentImpCharacter(void) {
   return;
 }
 
-void ResetIMPCharactersEyesAndMouthOffsets(UINT8 ubMercProfileID) {
+void ResetIMPCharactersEyesAndMouthOffsets(uint8_t ubMercProfileID) {
   // ATE: Check boundary conditions!
   if (((gMercProfiles[ubMercProfileID].ubFaceIndex - 200) > 16) ||
       (ubMercProfileID >= PROF_HUMMER)) {

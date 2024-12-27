@@ -8,7 +8,7 @@ void SetEditorItemsTaskbarMode(uint16_t usNewMode);
 void SetEditorBuildingTaskbarMode(uint16_t usNewMode);
 void SetEditorTerrainTaskbarMode(uint16_t usNewMode);
 void SetEditorMapInfoTaskbarMode(uint16_t usNewMode);
-void SetEditorSmoothingMode(UINT8 ubNewMode);
+void SetEditorSmoothingMode(uint8_t ubNewMode);
 
 void ShowExitGrids();
 void HideExitGrids();

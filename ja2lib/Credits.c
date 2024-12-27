@@ -271,7 +271,7 @@ BOOLEAN gfCreditsScreenEntry = TRUE;
 BOOLEAN gfCreditsScreenExit = FALSE;
 uint32_t guiCreditsExitScreen;
 
-UINT8 gubCreditScreenRenderFlags = CRDT_RENDER_ALL;
+uint8_t gubCreditScreenRenderFlags = CRDT_RENDER_ALL;
 
 CRDT_NODE *gCrdtRootNode = NULL;
 CRDT_NODE *gCrdtLastAddedNode = NULL;
@@ -287,8 +287,8 @@ INT32 giCurrentlySelectedFace = -1;
 
 uint32_t guiCreditScreenActiveFont;  // the font that is used
 uint32_t guiCreditScreenTitleFont;   // the font that is used
-UINT8 gubCreditScreenActiveColor;    // color of the font
-UINT8 gubCreditScreenTitleColor;     // color of a Title node
+uint8_t gubCreditScreenActiveColor;  // color of the font
+uint8_t gubCreditScreenTitleColor;   // color of a Title node
 // uint32_t		guiCreditScreenActiveDisplayFlags;	//
 
 uint32_t guiCrdtNodeScrollSpeed = CRDT_NODE_DELAY_AMOUNT;  // speed credits go up at
@@ -299,8 +299,8 @@ uint32_t guiCrdtNodeScrollSpeed = CRDT_NODE_DELAY_AMOUNT;  // speed credits go u
 // //delay between major credits sections ( programming and art ) appearing on the screen uint32_t
 // guiCrdtDelayBetweenNodes = CRDT_DELAY_BN_NODES;		//delay between credits appearing on
 // the screen
-uint32_t guiCrdtLastTimeUpdatingNode = 0;       // the last time a node was read from the file
-UINT8 gubCrdtJustification = CENTER_JUSTIFIED;  // the current justification
+uint32_t guiCrdtLastTimeUpdatingNode = 0;         // the last time a node was read from the file
+uint8_t gubCrdtJustification = CENTER_JUSTIFIED;  // the current justification
 
 uint32_t guiGapBetweenCreditSections = CRDT_SPACE_BN_SECTIONS;
 uint32_t guiGapBetweenCreditNodes = CRDT_SPACE_BN_NODES;
@@ -675,7 +675,7 @@ BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, STR16 pString) {
   CRDT_NODE *pTemp = NULL;
   uint32_t uiSizeOfString = (wcslen(pString) + 2) * 2;
   uint32_t uiFontToUse;
-  UINT8 uiColorToUse;
+  uint8_t uiColorToUse;
 
   // if
   if (uiType == CRDT_NODE_NONE) {
@@ -1201,7 +1201,7 @@ void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
 }
 
 void InitCreditEyeBlinking() {
-  UINT8 ubCnt;
+  uint8_t ubCnt;
 
   for (ubCnt = 0; ubCnt < NUM_PEOPLE_IN_CREDITS; ubCnt++) {
     gCreditFaces[ubCnt].uiLastBlinkTime =
@@ -1211,14 +1211,14 @@ void InitCreditEyeBlinking() {
 
 void HandleCreditEyeBlinking() {
   struct VObject *hPixHandle;
-  UINT8 ubCnt;
+  uint8_t ubCnt;
 
   GetVideoObject(&hPixHandle, guiCreditFaces);
 
   for (ubCnt = 0; ubCnt < NUM_PEOPLE_IN_CREDITS; ubCnt++) {
     if ((GetJA2Clock() - gCreditFaces[ubCnt].uiLastBlinkTime) >
         (uint32_t)gCreditFaces[ubCnt].sBlinkFreq) {
-      BltVideoObject(FRAME_BUFFER, hPixHandle, (UINT8)(ubCnt * 3), gCreditFaces[ubCnt].sEyeX,
+      BltVideoObject(FRAME_BUFFER, hPixHandle, (uint8_t)(ubCnt * 3), gCreditFaces[ubCnt].sEyeX,
                      gCreditFaces[ubCnt].sEyeY, VO_BLT_SRCTRANSPARENCY, NULL);
       InvalidateRegion(gCreditFaces[ubCnt].sEyeX, gCreditFaces[ubCnt].sEyeY,
                        gCreditFaces[ubCnt].sEyeX + CRDT_EYE_WIDTH,

@@ -22,8 +22,8 @@
 #include "platform_strings.h"
 
 struct TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
-UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
-UINT8 gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
+uint8_t gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
+uint8_t gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
 
 struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   // Add tile surface

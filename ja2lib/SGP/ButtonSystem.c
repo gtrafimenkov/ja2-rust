@@ -612,7 +612,7 @@ BOOLEAN DisableButton(INT32 iButtonID) {
 //
 BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, INT32 DefaultBPP) {
   VOBJECT_DESC vo_desc;
-  UINT8 Pix;
+  uint8_t Pix;
   int x;
 
   // Set up the default settings
@@ -854,7 +854,7 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
                               INT16 OffsetY) {
   INT16 ImgSlot;
   VOBJECT_DESC vo_desc;
-  UINT8 Pix;
+  uint8_t Pix;
 
   // if the images for Off-Normal and On-Normal don't exist, abort call
   if ((OffNormName == BUTTON_NO_FILENAME) || (OnNormName == BUTTON_NO_FILENAME)) {
@@ -2683,7 +2683,7 @@ void DrawQuickButton(GUI_BUTTON *b) {
 }
 
 void DrawHatchOnButton(GUI_BUTTON *b) {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   ClipRect.iLeft = b->Area.RegionTopLeftX;
@@ -2696,7 +2696,7 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
 }
 
 void DrawShadeOnButton(GUI_BUTTON *b) {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
   ClipRect.iLeft = b->Area.RegionTopLeftX;
@@ -2709,7 +2709,7 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
 }
 
 void DrawDefaultOnButton(GUI_BUTTON *b) {
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
@@ -2992,23 +2992,23 @@ void DrawTextOnButton(GUI_BUTTON *b) {
 
     // print the text
     SetFontBackground(FONT_MCOLOR_BLACK);
-    SetFontForeground((UINT8)b->sForeColor);
+    SetFontForeground((uint8_t)b->sForeColor);
     sForeColor = b->sForeColor;
-    if (b->sShadowColor != -1) SetFontShadow((UINT8)b->sShadowColor);
+    if (b->sShadowColor != -1) SetFontShadow((uint8_t)b->sShadowColor);
     // Override the colors if necessary.
     if (b->uiFlags & BUTTON_ENABLED && b->Area.uiFlags & MSYS_MOUSE_IN_AREA &&
         b->sForeColorHilited != -1) {
-      SetFontForeground((UINT8)b->sForeColorHilited);
+      SetFontForeground((uint8_t)b->sForeColorHilited);
       sForeColor = b->sForeColorHilited;
     } else if (b->uiFlags & BUTTON_CLICKED_ON && b->sForeColorDown != -1) {
-      SetFontForeground((UINT8)b->sForeColorDown);
+      SetFontForeground((uint8_t)b->sForeColorDown);
       sForeColor = b->sForeColorDown;
     }
     if (b->uiFlags & BUTTON_ENABLED && b->Area.uiFlags & MSYS_MOUSE_IN_AREA &&
         b->sShadowColorHilited != -1) {
-      SetFontShadow((UINT8)b->sShadowColorHilited);
+      SetFontShadow((uint8_t)b->sShadowColorHilited);
     } else if (b->uiFlags & BUTTON_CLICKED_ON && b->sShadowColorDown != -1) {
-      SetFontShadow((UINT8)b->sShadowColorDown);
+      SetFontShadow((uint8_t)b->sShadowColorDown);
     }
     if (b->uiFlags & BUTTON_CLICKED_ON &&
         b->fShiftText) {  // Was the button clicked on? if so, move the text slightly for the
@@ -3018,7 +3018,7 @@ void DrawTextOnButton(GUI_BUTTON *b) {
       yp++;
     }
     if (b->sWrappedWidth != -1) {
-      UINT8 bJustified = 0;
+      uint8_t bJustified = 0;
       switch (b->bJustification) {
         case BUTTON_TEXT_LEFT:
           bJustified = LEFT_JUSTIFIED;
@@ -3058,7 +3058,7 @@ void DrawTextOnButton(GUI_BUTTON *b) {
       yp += b->bTextYSubOffSet;
       xp += b->bTextXSubOffSet;
       DisplayWrappedString((uint16_t)xp, (uint16_t)yp, b->sWrappedWidth, 1, b->usFont,
-                           (UINT8)sForeColor, b->string, FONT_MCOLOR_BLACK, FALSE, bJustified);
+                           (uint8_t)sForeColor, b->string, FONT_MCOLOR_BLACK, FALSE, bJustified);
     } else {
       yp += b->bTextYSubOffSet;
       xp += b->bTextXSubOffSet;
@@ -3080,7 +3080,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   INT32 iBorderHeight, iBorderWidth;
   struct VObject *BPic;
   uint32_t uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint8_t *pDestBuf;
   SGPRect ClipRect;
 
   // Select the graphics to use depending on the current state of the button

@@ -37,10 +37,10 @@ enum MusicMode {
 
 extern uint32_t uiMusicHandle;
 extern BOOLEAN fMusicPlaying;
-extern UINT8 gubMusicMode;
+extern uint8_t gubMusicMode;
 extern BOOLEAN gfForceMusicToTense;
 
-BOOLEAN SetMusicMode(UINT8 ubMusicMode);
+BOOLEAN SetMusicMode(uint8_t ubMusicMode);
 BOOLEAN MusicPlay(uint32_t uiNum);
 BOOLEAN MusicSetVolume(uint32_t uiVolume);
 uint32_t MusicGetVolume(void);

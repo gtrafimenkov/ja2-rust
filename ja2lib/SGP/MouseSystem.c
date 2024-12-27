@@ -1078,7 +1078,7 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
       region->uiFlags |= MSYS_GOT_BACKGROUND;
       region->uiFlags |= MSYS_HAS_BACKRECT;
     } else {
-      UINT8 *pDestBuf;
+      uint8_t *pDestBuf;
       uint32_t uiDestPitchBYTES;
       pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
       SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);

@@ -805,8 +805,8 @@ void RenderSelectionWindow(void) {
   GUI_BUTTON *button;
   INT32 iSX, iSY, iEX, iEY;
   uint16_t usFillColor;
-  static UINT8 usFillGreen = 0;
-  static UINT8 usDir = 5;
+  static uint8_t usFillGreen = 0;
+  static uint8_t usDir = 5;
 
   if (!fButtonsPresent) return;
 

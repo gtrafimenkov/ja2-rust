@@ -138,9 +138,9 @@ BOOLEAN SaveGameSettings() {
 
   // Record the current settings into the game settins structure
 
-  gGameSettings.ubSoundEffectsVolume = (UINT8)GetSoundEffectsVolume();
-  gGameSettings.ubSpeechVolume = (UINT8)GetSpeechVolume();
-  gGameSettings.ubMusicVolumeSetting = (UINT8)MusicGetVolume();
+  gGameSettings.ubSoundEffectsVolume = (uint8_t)GetSoundEffectsVolume();
+  gGameSettings.ubSpeechVolume = (uint8_t)GetSpeechVolume();
+  gGameSettings.ubMusicVolumeSetting = (uint8_t)MusicGetVolume();
 
   strcpy(gGameSettings.zVersionNumber, czVersionNumber);
 
@@ -260,7 +260,7 @@ void DisplayGameSettings() {
   }
 }
 
-BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile) {
+BOOLEAN MeanwhileSceneSeen(uint8_t ubMeanwhile) {
   uint32_t uiCheckFlag;
 
   if (ubMeanwhile > 32 || ubMeanwhile > NUM_MEANWHILES) {
@@ -276,7 +276,7 @@ BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile) {
   }
 }
 
-BOOLEAN SetMeanwhileSceneSeen(UINT8 ubMeanwhile) {
+BOOLEAN SetMeanwhileSceneSeen(uint8_t ubMeanwhile) {
   uint32_t uiCheckFlag;
 
   if (ubMeanwhile > 32 || ubMeanwhile > NUM_MEANWHILES) {

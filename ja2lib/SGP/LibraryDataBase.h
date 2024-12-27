@@ -135,7 +135,7 @@ BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibrar
 BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, uint32_t uiFileIndex, PTR pData,
                             uint32_t uiBytesToRead, uint32_t *pBytesRead);
 BOOLEAN LibraryFileSeek(INT16 sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
-                        UINT8 uiHowToSeek);
+                        uint8_t uiHowToSeek);
 
 // used to open and close libraries during the game
 BOOLEAN CloseLibrary(INT16 sLibraryID);

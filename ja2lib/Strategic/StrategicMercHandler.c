@@ -351,7 +351,7 @@ void MercDailyUpdate() {
     pProfile->uiPrecedentQuoteSaid = 0;
 
     // skip anyone currently on the player's team
-    if (IsMercOnTeam((UINT8)cnt)) {
+    if (IsMercOnTeam((uint8_t)cnt)) {
       continue;
     }
 
@@ -390,8 +390,8 @@ void MercDailyUpdate() {
             pProfile->ubMiscFlags3 &= ~PROFILE_MISC_FLAG3_PLAYER_LEFT_MSG_FOR_MERC_AT_AIM;
 
             // TO DO: send E-mail to player telling him the merc has returned from an assignment
-            AddEmail((UINT8)(iOffset + (cnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
-                     (UINT8)(6 + cnt), GetWorldTotalMin());
+            AddEmail((uint8_t)(iOffset + (cnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
+                     (uint8_t)(6 + cnt), GetWorldTotalMin());
           }
         }
       }
@@ -444,7 +444,7 @@ void MercDailyUpdate() {
 
 // ATE: This function deals with MERC MERC and NPC's leaving because of not getting paid...
 // NOT AIM renewals....
-void MercsContractIsFinished(UINT8 ubID) {
+void MercsContractIsFinished(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetSoldierByID(ubID);
@@ -491,7 +491,7 @@ void MercsContractIsFinished(UINT8 ubID) {
 }
 
 // ATE: Called for RPCs who should now complain about no pay...
-void RPCWhineAboutNoPay(UINT8 ubID) {
+void RPCWhineAboutNoPay(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetSoldierByID(ubID);
@@ -554,7 +554,7 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-void MercComplainAboutEquipment(UINT8 ubProfile) {
+void MercComplainAboutEquipment(uint8_t ubProfile) {
   struct SOLDIERTYPE *pSoldier;
 
   if (ubProfile == LARRY_NORMAL) {
@@ -586,7 +586,7 @@ void UpdateBuddyAndHatedCounters(void) {
   INT32 iLoop;
   INT8 bOtherID;
   INT8 bLastTeamID;
-  UINT8 ubOtherProfileID;
+  uint8_t ubOtherProfileID;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pOtherSoldier;
   MERCPROFILESTRUCT *pProfile;

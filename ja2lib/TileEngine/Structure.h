@@ -69,8 +69,8 @@ INT8 StructureBottomLevel(struct STRUCTURE *pStructure);
 INT8 GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof);
 INT8 GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof);
 
-BOOLEAN StructureDensity(struct STRUCTURE *pStructure, UINT8 *pubLevel0, UINT8 *pubLevel1,
-                         UINT8 *pubLevel2, UINT8 *pubLevel3);
+BOOLEAN StructureDensity(struct STRUCTURE *pStructure, uint8_t *pubLevel0, uint8_t *pubLevel1,
+                         uint8_t *pubLevel2, uint8_t *pubLevel3);
 
 BOOLEAN FindAndSwapStructure(INT16 sGridNo);
 INT16 GetBaseTile(struct STRUCTURE *pStructure);
@@ -86,8 +86,8 @@ INT8 GetBlockingStructureInfo(INT16 sGridNo, INT8 bDir, INT8 bNextDir, INT8 bLev
                               INT8 *pStructHeight, struct STRUCTURE **ppTallestStructure,
                               BOOLEAN fWallsBlock);
 
-BOOLEAN DamageStructure(struct STRUCTURE *pStructure, UINT8 ubDamage, UINT8 ubReason, INT16 sGridNo,
-                        INT16 sX, INT16 sY, UINT8 ubOwner);
+BOOLEAN DamageStructure(struct STRUCTURE *pStructure, uint8_t ubDamage, uint8_t ubReason,
+                        INT16 sGridNo, INT16 sX, INT16 sY, uint8_t ubOwner);
 
 // Material armour type enumeration
 enum {
@@ -125,10 +125,10 @@ enum {
 
 extern INT32 guiMaterialHitSound[NUM_MATERIAL_TYPES];
 
-struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ubWallOrientation,
+struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, uint8_t ubType, uint8_t ubWallOrientation,
                                            INT8 bLevel);
-uint32_t StructureTypeToFlag(UINT8 ubType);
-UINT8 StructureFlagToType(uint32_t uiFlag);
+uint32_t StructureTypeToFlag(uint8_t ubType);
+uint8_t StructureFlagToType(uint32_t uiFlag);
 
 uint32_t GetStructureOpenSound(struct STRUCTURE *pStructure, BOOLEAN fClose);
 

@@ -69,7 +69,7 @@ void FDlgUpCallback(GUI_BUTTON *butn, INT32 reason);
 void FDlgDwnCallback(GUI_BUTTON *butn, INT32 reason);
 void FDlgNamesCallback(GUI_BUTTON *butn, INT32 reason);
 void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason);
-void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering);
+void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering);
 
 uint32_t ProcessLoadSaveScreenMessageBoxResult();
 BOOLEAN RemoveFromFDlgList(struct FileDialogList **head, struct FileDialogList *node);
@@ -437,7 +437,7 @@ void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason) {
 // This is a hook into the text input code.  This callback is called whenever the user is currently
 // editing text, and presses Tab to transfer to the file dialog mode.  When this happens, we set the
 // text field to the currently selected file in the list which is already know.
-void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering) {
+void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering) {
   INT32 x;
   struct FileDialogList *FListNode;
   if (fEntering) {

@@ -597,7 +597,7 @@ DEALER_POSSIBLE_INV gFredoInventory[] = {
 
 INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex);
 
-INT8 GetDealersMaxItemAmount(UINT8 ubDealerID, uint16_t usItemIndex) {
+INT8 GetDealersMaxItemAmount(uint8_t ubDealerID, uint16_t usItemIndex) {
   switch (ubDealerID) {
     case ARMS_DEALER_TONY:
       return (GetMaxItemAmount(gTonyInventory, usItemIndex));
@@ -697,7 +697,7 @@ INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex) {
   return (NO_DEALER_ITEM);
 }
 
-DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(UINT8 ubArmsDealerID) {
+DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(uint8_t ubArmsDealerID) {
   switch (ubArmsDealerID) {
     case ARMS_DEALER_TONY:
       return (gTonyInventory);
@@ -780,9 +780,9 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(UINT8 ubArmsDealerID) 
   }
 }
 
-UINT8 GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex) {
-  UINT8 ubItemCoolness;
-  UINT8 ubMinCoolness, ubMaxCoolness;
+uint8_t GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex) {
+  uint8_t ubItemCoolness;
+  uint8_t ubMinCoolness, ubMaxCoolness;
 
   // item suitability varies with the player's maximum progress through the game.  The farther he
   // gets, the better items we make available.  Weak items become more and more infrequent later in
@@ -886,10 +886,10 @@ UINT8 GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex) {
   return (ITEM_SUITABILITY_LOW);
 }
 
-UINT8 ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
-                              BOOLEAN fUsed) {
-  UINT8 ubItemCoolness;
-  UINT8 ubChance = 0;
+uint8_t ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
+                                BOOLEAN fUsed) {
+  uint8_t ubItemCoolness;
+  uint8_t ubChance = 0;
   BOOLEAN fBobbyRay = FALSE;
 
   // make sure dealers don't carry used items that they shouldn't
@@ -963,7 +963,7 @@ UINT8 ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fD
 
 BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
                               BOOLEAN fUsed) {
-  UINT8 ubChance;
+  uint8_t ubChance;
   INT16 sInventorySlot;
 
   ubChance = ChanceOfItemTransaction(bArmsDealer, usItemIndex, fDealerIsSelling, fUsed);
@@ -994,10 +994,10 @@ BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fD
   }
 }
 
-UINT8 DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubChances,
-                               BOOLEAN fUsed) {
-  UINT8 ubNumBought;
-  UINT8 ubCnt;
+uint8_t DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
+                                 BOOLEAN fUsed) {
+  uint8_t ubNumBought;
+  uint8_t ubCnt;
 
   // initial inventory is now rolled for one item at a time, instead of one type at a time, to
   // improve variety
@@ -1011,10 +1011,10 @@ UINT8 DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 u
   return (ubNumBought);
 }
 
-UINT8 HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubNumInStock,
-                          BOOLEAN fUsed) {
-  UINT8 ubNumSold;
-  UINT8 ubCnt;
+uint8_t HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
+                            BOOLEAN fUsed) {
+  uint8_t ubNumSold;
+  uint8_t ubCnt;
 
   // items are now virtually "sold" one at a time
   ubNumSold = 0;
@@ -1027,8 +1027,8 @@ UINT8 HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubNumI
   return (ubNumSold);
 }
 
-UINT8 HowManyItemsToReorder(UINT8 ubWanted, UINT8 ubStillHave) {
-  UINT8 ubNumReordered;
+uint8_t HowManyItemsToReorder(uint8_t ubWanted, uint8_t ubStillHave) {
+  uint8_t ubNumReordered;
 
   Assert(ubStillHave <= ubWanted);
 
@@ -1051,8 +1051,8 @@ UINT8 HowManyItemsToReorder(UINT8 ubWanted, UINT8 ubStillHave) {
 int BobbyRayItemQsortCompare(const void *pArg1, const void *pArg2) {
   uint16_t usItem1Index;
   uint16_t usItem2Index;
-  UINT8 ubItem1Quality;
-  UINT8 ubItem2Quality;
+  uint8_t ubItem1Quality;
+  uint8_t ubItem2Quality;
 
   usItem1Index = ((STORE_INVENTORY *)pArg1)->usItemIndex;
   usItem2Index = ((STORE_INVENTORY *)pArg2)->usItemIndex;
@@ -1066,8 +1066,8 @@ int BobbyRayItemQsortCompare(const void *pArg1, const void *pArg2) {
 int ArmsDealerItemQsortCompare(const void *pArg1, const void *pArg2) {
   uint16_t usItem1Index;
   uint16_t usItem2Index;
-  UINT8 ubItem1Quality;
-  UINT8 ubItem2Quality;
+  uint8_t ubItem1Quality;
+  uint8_t ubItem2Quality;
 
   usItem1Index = ((INVENTORY_IN_SLOT *)pArg1)->sItemIndex;
   usItem2Index = ((INVENTORY_IN_SLOT *)pArg2)->sItemIndex;
@@ -1107,14 +1107,14 @@ int RepairmanItemQsortCompare(const void *pArg1, const void *pArg2) {
   }
 }
 
-int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, UINT8 ubItem1Quality,
-                           UINT8 ubItem2Quality) {
-  UINT8 ubItem1Category;
-  UINT8 ubItem2Category;
+int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, uint8_t ubItem1Quality,
+                           uint8_t ubItem2Quality) {
+  uint8_t ubItem1Category;
+  uint8_t ubItem2Category;
   uint16_t usItem1Price;
   uint16_t usItem2Price;
-  UINT8 ubItem1Coolness;
-  UINT8 ubItem2Coolness;
+  uint8_t ubItem1Coolness;
+  uint8_t ubItem2Coolness;
 
   ubItem1Category = GetDealerItemCategoryNumber(usItem1Index);
   ubItem2Category = GetDealerItemCategoryNumber(usItem2Index);
@@ -1127,10 +1127,10 @@ int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, UINT8 u
   } else {
     // the same category
     if (Item[usItem1Index].usItemClass == IC_AMMO && Item[usItem2Index].usItemClass == IC_AMMO) {
-      UINT8 ubItem1Calibre;
-      UINT8 ubItem2Calibre;
-      UINT8 ubItem1MagSize;
-      UINT8 ubItem2MagSize;
+      uint8_t ubItem1Calibre;
+      uint8_t ubItem2Calibre;
+      uint8_t ubItem1MagSize;
+      uint8_t ubItem2MagSize;
 
       // AMMO is sorted by caliber first
       ubItem1Calibre = Magazine[Item[usItem1Index].ubClassIndex].ubCalibre;
@@ -1196,10 +1196,10 @@ int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, UINT8 u
   }
 }
 
-UINT8 GetDealerItemCategoryNumber(uint16_t usItemIndex) {
+uint8_t GetDealerItemCategoryNumber(uint16_t usItemIndex) {
   uint32_t uiItemClass;
-  UINT8 ubWeaponClass;
-  UINT8 ubCategory = 0;
+  uint8_t ubWeaponClass;
+  uint8_t ubCategory = 0;
 
   uiItemClass = Item[usItemIndex].usItemClass;
 

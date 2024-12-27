@@ -3,18 +3,18 @@
 #include "SGP/Types.h"
 
 typedef struct AILIST {
-  UINT8 ubID;
+  uint8_t ubID;
   INT8 bPriority;
-  UINT8 ubUnused;
+  uint8_t ubUnused;
   struct AILIST* pNext;
 } AILIST;
 
 #define MAX_AI_PRIORITY 100
 
 extern void ClearAIList(void);
-extern AILIST* CreateNewAIListEntry(UINT8 ubNewEntry, UINT8 ubID, INT8 bAlertStatus);
-extern BOOLEAN InsertIntoAIList(UINT8 ubID, INT8 bAlertStatus);
-extern UINT8 RemoveFirstAIListEntry(void);
+extern AILIST* CreateNewAIListEntry(uint8_t ubNewEntry, uint8_t ubID, INT8 bAlertStatus);
+extern BOOLEAN InsertIntoAIList(uint8_t ubID, INT8 bAlertStatus);
+extern uint8_t RemoveFirstAIListEntry(void);
 extern BOOLEAN BuildAIListForTeam(INT8 bTeam);
-extern BOOLEAN MoveToFrontOfAIList(UINT8 ubID);
+extern BOOLEAN MoveToFrontOfAIList(uint8_t ubID);
 #endif

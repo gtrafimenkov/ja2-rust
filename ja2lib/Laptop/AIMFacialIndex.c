@@ -57,13 +57,13 @@ void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 struct MOUSE_REGION gScreenMouseRegions;
 void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, uint16_t usPosX, uint16_t usPosY, UINT8 ubImage);
+BOOLEAN DrawMercsFaceToScreen(uint8_t ubMercID, uint16_t usPosX, uint16_t usPosY, uint8_t ubImage);
 
 void GameInitAimFacialIndex() {}
 
 BOOLEAN EnterAimFacialIndex() {
   VOBJECT_DESC VObjectDesc;
-  UINT8 i;
+  uint8_t i;
   uint16_t usPosX, usPosY, x, y;
   STR sFaceLoc = "FACES\\";
   char sTemp[100];
@@ -113,7 +113,7 @@ BOOLEAN EnterAimFacialIndex() {
 }
 
 void ExitAimFacialIndex() {
-  UINT8 i;
+  uint8_t i;
 
   RemoveAimDefaults();
 
@@ -136,7 +136,7 @@ void HandleAimFacialIndex() {
 BOOLEAN RenderAimFacialIndex() {
   uint16_t usPosX, usPosY, x, y;
   wchar_t sString[150];
-  UINT8 i;
+  uint8_t i;
 
   DrawAimDefaults();
 
@@ -204,7 +204,7 @@ void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS;
-    gbCurrentIndex = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gbCurrentIndex = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES;
   }
@@ -218,10 +218,10 @@ void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
-  UINT8 ubMercNum;
+  uint8_t ubMercNum;
   uint16_t usPosX, usPosY;
 
-  ubMercNum = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+  ubMercNum = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   usPosY = ubMercNum / AIM_FI_NUM_MUHSHOTS_X;
   usPosY = AIM_FI_FIRST_MUGSHOT_Y + (AIM_FI_PORTRAIT_HEIGHT + AIM_FI_MUGSHOT_GAP_Y) * usPosY;
@@ -244,7 +244,7 @@ void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason
   }
 }
 
-BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, uint16_t usPosX, uint16_t usPosY, UINT8 ubImage) {
+BOOLEAN DrawMercsFaceToScreen(uint8_t ubMercID, uint16_t usPosX, uint16_t usPosY, uint8_t ubImage) {
   struct VObject *hMugShotBorderHandle;
   struct VObject *hFaceHandle;
   struct SOLDIERTYPE *pSoldier = NULL;

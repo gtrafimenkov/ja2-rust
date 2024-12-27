@@ -50,8 +50,8 @@ typedef struct {
   struct OBJECTTYPE Obj;
   BOOLEAN fFirstTimeMoved;
   INT16 sFirstGridNo;
-  UINT8 ubOwner;
-  UINT8 ubActionCode;
+  uint8_t ubOwner;
+  uint8_t ubActionCode;
   uint32_t uiActionData;
   BOOLEAN fDropItem;
   uint32_t uiNumTilesMoved;
@@ -65,8 +65,8 @@ typedef struct {
   BOOLEAN fPotentialForDebug;
   INT16 sLevelNodeGridNo;
   INT32 iSoundID;
-  UINT8 ubLastTargetTakenDamage;
-  UINT8 ubPadding[1];
+  uint8_t ubLastTargetTakenDamage;
+  uint8_t ubPadding[1];
 
 } REAL_OBJECT;
 
@@ -76,22 +76,22 @@ extern REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
 
 // OBJECT LIST STUFF
 INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
-                           real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
-                           UINT8 ubActionCode, uint32_t uiActionData);
+                           real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
+                           uint8_t ubActionCode, uint32_t uiActionData);
 BOOLEAN RemoveObjectSlot(INT32 iObject);
 void RemoveAllPhysicsObjects();
 
-FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight,
+FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubHeight,
                                real dForce, struct OBJECTTYPE *pItem, INT16 *psGridNo);
 
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
                                               struct OBJECTTYPE *pItem, INT16 sGridNo,
-                                              UINT8 ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
+                                              uint8_t ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
                                               BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI);
 
-void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
+void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubLevel,
                                        INT16 sZPos, struct OBJECTTYPE *pItem, INT8 bMissBy,
-                                       UINT8 ubActionCode, uint32_t uiActionData);
+                                       uint8_t ubActionCode, uint32_t uiActionData);
 
 // SIMULATE WORLD
 void SimulateWorld();

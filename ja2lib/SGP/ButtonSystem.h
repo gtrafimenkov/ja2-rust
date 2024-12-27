@@ -133,11 +133,11 @@ typedef struct _GUI_BUTTON {
   INT8 bIconYOffset;    //-1 means vertically centered
   BOOLEAN fShiftImage;  // if true, icon is shifted +1,+1 when button state is down.
 
-  UINT8 ubToggleButtonOldState;  // Varibles for new toggle buttons that work
-  UINT8 ubToggleButtonActivated;
+  uint8_t ubToggleButtonOldState;  // Varibles for new toggle buttons that work
+  uint8_t ubToggleButtonActivated;
 
   INT32 BackRect;  // Handle to a Background Rectangle
-  UINT8 ubSoundSchemeID;
+  uint8_t ubSoundSchemeID;
 } GUI_BUTTON;
 
 #define MAX_BUTTONS 400

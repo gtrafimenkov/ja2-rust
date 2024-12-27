@@ -55,7 +55,7 @@ void RecountBullets(void) {
   guiNumBullets = 0;
 }
 
-INT32 CreateBullet(UINT8 ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
+INT32 CreateBullet(uint8_t ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
   INT32 iBulletIndex;
   BULLET *pBullet;
 
@@ -85,7 +85,7 @@ void HandleBulletSpecialFlags(INT32 iBulletIndex) {
   BULLET *pBullet;
   ANITILE_PARAMS AniParams;
   FLOAT dX, dY;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
 
   pBullet = &(gBullets[iBulletIndex]);
 

@@ -62,10 +62,10 @@ void DisableUndo() { gfUndoEnabled = FALSE; }
 typedef struct {
   INT32 iMapIndex;
   MAP_ELEMENT *pMapTile;
-  BOOLEAN fLightSaved;  // determines that a light has been saved
-  UINT8 ubLightRadius;  // the radius of the light to build if undo is called
-  UINT8 ubLightID;      // only applies if a light was saved.
-  UINT8 ubRoomNum;
+  BOOLEAN fLightSaved;    // determines that a light has been saved
+  uint8_t ubLightRadius;  // the radius of the light to build if undo is called
+  uint8_t ubLightID;      // only applies if a light was saved.
+  uint8_t ubRoomNum;
 } undo_struct;
 
 // Undo stack node
@@ -314,7 +314,7 @@ void CropStackToMaxLength(INT32 iMaxCmds) {
 // this will handle the way the undo command is handled.  If there is no lightradius in
 // our saved light, then we intend on erasing the light upon undo execution, otherwise, we
 // save the light radius and light ID, so that we place it during undo execution.
-void AddLightToUndoList(INT32 iMapIndex, INT32 iLightRadius, UINT8 ubLightID) {
+void AddLightToUndoList(INT32 iMapIndex, INT32 iLightRadius, uint8_t ubLightID) {
   undo_stack *pNode;
   undo_struct *pUndoInfo;
 
@@ -338,7 +338,7 @@ void AddLightToUndoList(INT32 iMapIndex, INT32 iLightRadius, UINT8 ubLightID) {
   pUndoInfo->fLightSaved = TRUE;
   // if ubLightRadius is 0, then we don't need to save the light information because we
   // will erase it when it comes time to execute the undo command.
-  pUndoInfo->ubLightRadius = (UINT8)iLightRadius;
+  pUndoInfo->ubLightRadius = (uint8_t)iLightRadius;
   pUndoInfo->ubLightID = ubLightID;
   pUndoInfo->iMapIndex = iMapIndex;
   pUndoInfo->pMapTile = NULL;
@@ -379,7 +379,7 @@ BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
   MAP_ELEMENT *pData;
   struct STRUCTURE *pStructure;
   INT32 iCoveredMapIndex;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   if ((pNode = (undo_stack *)MemAlloc(sizeof(undo_stack))) == NULL) {
     return (FALSE);
@@ -456,7 +456,7 @@ BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
 
 void CheckMapIndexForMultiTileStructures(uint16_t usMapIndex) {
   struct STRUCTURE *pStructure;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   INT32 iCoveredMapIndex;
 
   pStructure = gpWorldLevelData[usMapIndex].pStructureHead;

@@ -11,12 +11,12 @@
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
 
-UINT8 gubLastLoadingScreenID = LOADINGSCREEN_NOTHING;
+uint8_t gubLastLoadingScreenID = LOADINGSCREEN_NOTHING;
 
-// returns the UINT8 ID for the specified sector.
-UINT8 GetLoadScreenID(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+// returns the uint8_t ID for the specified sector.
+uint8_t GetLoadScreenID(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   SECTORINFO* pSector;
-  UINT8 ubSectorID;
+  uint8_t ubSectorID;
   BOOLEAN fNight = FALSE;
 
   ubSectorID = GetSectorID8(sSectorX, sSectorY);
@@ -173,7 +173,7 @@ extern BOOLEAN gfSchedulesHosed;
 
 // sets up the loadscreen with specified ID, and draws it to the FRAME_BUFFER,
 // and refreshing the screen with it.
-void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
+void DisplayLoadScreenWithID(uint8_t ubLoadScreenID) {
   VSURFACE_DESC vs_desc;
   struct VSurface* hVSurface;
   uint32_t uiLoadScreen;

@@ -4,7 +4,7 @@
 #include "SGP/MouseSystem.h"
 #include "TacticalAI/NPC.h"
 
-extern UINT8 gubSrcSoldierProfile;
+extern uint8_t gubSrcSoldierProfile;
 
 // Structure used in Tactical display of NPC dialogue
 typedef struct {
@@ -13,8 +13,8 @@ typedef struct {
   INT16 sY;
   INT16 sPopupX;
   INT16 sPopupY;
-  UINT8 ubPopupOrientation;
-  UINT8 ubCharNum;
+  uint8_t ubPopupOrientation;
+  uint8_t ubCharNum;
   uint32_t uiPanelVO;
   INT32 iButtonImages;
   uint32_t uiCancelButton;
@@ -47,7 +47,7 @@ BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYP
                              INT8 bApproach, uintptr_t uiApproachData);
 
 // THis fuction will allocate and setup an NPCDiaogue structure. Loads the face for the character..
-BOOLEAN InitTalkingMenu(UINT8 ubCharacterNum, INT16 sGridNo);
+BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, INT16 sGridNo);
 
 // Begins quote of NPC Dialogue
 BOOLEAN TalkingMenuDialogue(uint16_t usQuoteNum);
@@ -65,31 +65,31 @@ void RenderTalkingMenu();
 BOOLEAN HandleTalkingMenuEscape(BOOLEAN fCanDelete, BOOLEAN fFromEscKey);
 
 // Gices an item to buddy
-BOOLEAN TalkingMenuGiveItem(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
+BOOLEAN TalkingMenuGiveItem(uint8_t ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
 // Triggers an NPC record
-BOOLEAN NPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, UINT8 ubTargetApproach,
+BOOLEAN NPCTriggerNPC(uint8_t ubTargetNPC, uint8_t ubTargetRecord, uint8_t ubTargetApproach,
                       BOOLEAN fShowDialogueMenu);
 // NPC goto gridno
-BOOLEAN NPCGotoGridNo(UINT8 ubTargetNPC, uint16_t usGridNo, UINT8 ubQuoteNum);
+BOOLEAN NPCGotoGridNo(uint8_t ubTargetNPC, uint16_t usGridNo, uint8_t ubQuoteNum);
 // NPC Do action
-BOOLEAN NPCDoAction(UINT8 ubTargetNPC, uint16_t usActionCode, UINT8 ubQuoteNum);
+BOOLEAN NPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuoteNum);
 
 BOOLEAN NPCClosePanel();
 
 void HandleWaitTimerForNPCTrigger();
 
 void HandleNPCClosePanel();
-void HandleNPCItemGiven(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
-void HandleNPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, BOOLEAN fShowDialogueMenu,
-                         UINT8 ubTargetApproach);
-void HandleNPCGotoGridNo(UINT8 ubTargetNPC, uint16_t usGridNo, UINT8 ubRecordNum);
-void HandleNPCDoAction(UINT8 ubTargetNPC, uint16_t usActionCode, UINT8 ubQuoteNum);
+void HandleNPCItemGiven(uint8_t ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
+void HandleNPCTriggerNPC(uint8_t ubTargetNPC, uint8_t ubTargetRecord, BOOLEAN fShowDialogueMenu,
+                         uint8_t ubTargetApproach);
+void HandleNPCGotoGridNo(uint8_t ubTargetNPC, uint16_t usGridNo, uint8_t ubRecordNum);
+void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuoteNum);
 
-BOOLEAN ProfileCurrentlyTalkingInDialoguePanel(UINT8 ubProfile);
+BOOLEAN ProfileCurrentlyTalkingInDialoguePanel(uint8_t ubProfile);
 
-BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY);
+BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, INT16 sX, INT16 sY);
 
-void HandleFactForNPCUnescorted(UINT8 ubNPC);
+void HandleFactForNPCUnescorted(uint8_t ubNPC);
 
 enum {
   NPC_ACTION_NONE = 0,
@@ -357,7 +357,7 @@ extern INT32 giHospitalRefund;
 extern INT8 gbHospitalPriceModifier;
 
 extern uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier);
-extern uint32_t CalcMedicalCost(UINT8 ubId);
+extern uint32_t CalcMedicalCost(uint8_t ubId);
 
 extern BOOLEAN gfInTalkPanel;
 

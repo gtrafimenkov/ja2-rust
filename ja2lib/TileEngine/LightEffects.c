@@ -83,8 +83,8 @@ void UpdateLightingSprite(LIGHTEFFECT *pLight) {
 INT32 NewLightEffect(INT16 sGridNo, INT8 bType) {
   LIGHTEFFECT *pLight;
   INT32 iLightIndex;
-  UINT8 ubDuration = 0;
-  UINT8 ubStartRadius = 0;
+  uint8_t ubDuration = 0;
+  uint8_t ubStartRadius = 0;
 
   if ((iLightIndex = GetFreeLightEffect()) == (-1)) return (-1);
 

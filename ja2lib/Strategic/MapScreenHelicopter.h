@@ -66,7 +66,7 @@ enum {
 };
 
 // list of refueling site's sector locations
-extern UINT8 ubRefuelList[NUMBER_OF_REFUEL_SITES][2];
+extern uint8_t ubRefuelList[NUMBER_OF_REFUEL_SITES][2];
 
 // is the helicopter available to player?
 extern BOOLEAN fHelicopterAvailable;
@@ -118,9 +118,9 @@ extern uint32_t guiTimeOfLastSkyriderMonologue;
 extern BOOLEAN fSkyRiderSetUp;
 extern BOOLEAN fRefuelingSiteAvailable[NUMBER_OF_REFUEL_SITES];
 
-extern UINT8 gubHelicopterHitsTaken;
+extern uint8_t gubHelicopterHitsTaken;
 extern BOOLEAN gfSkyriderSaidCongratsOnTakingSAM;
-extern UINT8 gubPlayerProgressSkyriderLastCommentedOn;
+extern uint8_t gubPlayerProgressSkyriderLastCommentedOn;
 
 // add and remove grunts from the helicopter
 BOOLEAN AddSoldierToHelicopter(struct SOLDIERTYPE *pSoldier);
@@ -164,7 +164,7 @@ INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY);
 void SkyriderDestroyed(void);
 
 // have pilot say different stuff
-void HelicopterDialogue(UINT8 ubDialogueCondition);
+void HelicopterDialogue(uint8_t ubDialogueCondition);
 
 // is the helicopter available for flight?
 BOOLEAN CanHelicopterFly(void);
@@ -236,7 +236,7 @@ void HandleHelicopterOnGroundGraphic(void);
 
 void HandleHelicopterOnGroundSkyriderProfile(void);
 
-BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite);
+BOOLEAN IsHelicopterOnGroundAtRefuelingSite(uint8_t ubRefuelingSite);
 
 BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY);
 
@@ -258,6 +258,6 @@ INT16 GetNumUnSafeSectorsInPath(void);
 
 BOOLEAN SoldierAboardAirborneHeli(struct SOLDIERTYPE *pSoldier);
 
-UINT8 MoveAllInHelicopterToFootMovementGroup(void);
+uint8_t MoveAllInHelicopterToFootMovementGroup(void);
 
 #endif

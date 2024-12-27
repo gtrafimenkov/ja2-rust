@@ -287,20 +287,20 @@ extern CHAR16 gszCivGroupNames[NUM_CIV_GROUPS][20];
 
 // PALETTE SUBSITUTION TYPES
 typedef struct {
-  UINT8 ubStart;
-  UINT8 ubEnd;
+  uint8_t ubStart;
+  uint8_t ubEnd;
 
 } PaletteSubRangeType;
 
 typedef CHAR8 PaletteRepID[30];
 
 typedef struct {
-  UINT8 ubType;
+  uint8_t ubType;
   PaletteRepID ID;
-  UINT8 ubPaletteSize;
-  UINT8 *r;
-  UINT8 *g;
-  UINT8 *b;
+  uint8_t ubPaletteSize;
+  uint8_t *r;
+  uint8_t *g;
+  uint8_t *b;
 
 } PaletteReplacementType;
 

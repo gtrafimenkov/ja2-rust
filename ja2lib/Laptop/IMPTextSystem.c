@@ -33,7 +33,7 @@ void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset);
 #define QTN_SECOND_COLUMN_X 320
 
 void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
-                           INT16 sIMPTextRecordNumber, uint32_t uiFont, UINT8 ubColor,
+                           INT16 sIMPTextRecordNumber, uint32_t uiFont, uint8_t ubColor,
                            BOOLEAN fShadow, uint32_t uiFlags) {
   // this procedure will load and display to the screen starting at postion X, Y relative to the
   // start of the laptop screen it will access record sIMPTextRecordNumber and go until all records

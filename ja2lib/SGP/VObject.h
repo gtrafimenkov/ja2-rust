@@ -37,16 +37,16 @@ typedef struct {
 
 // Z-buffer info structure for properly assigning Z values
 typedef struct {
-  INT8 bInitialZChange;      // difference in Z value between the leftmost and base strips
-  UINT8 ubFirstZStripWidth;  // # of pixels in the leftmost strip
-  UINT8 ubNumberOfZChanges;  // number of strips (after the first)
-  INT8 *pbZChange;           // change to the Z value in each strip (after the first)
+  INT8 bInitialZChange;        // difference in Z value between the leftmost and base strips
+  uint8_t ubFirstZStripWidth;  // # of pixels in the leftmost strip
+  uint8_t ubNumberOfZChanges;  // number of strips (after the first)
+  INT8 *pbZChange;             // change to the Z value in each strip (after the first)
 } ZStripInfo;
 
 typedef struct {
   uint16_t *p16BPPData;
   uint16_t usRegionIndex;
-  UINT8 ubShadeLevel;
+  uint8_t ubShadeLevel;
   uint16_t usWidth;
   uint16_t usHeight;
   INT16 sOffsetX;
@@ -56,7 +56,7 @@ typedef struct {
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
 // From RGB to COLORVAL
 #define FROMRGB(r, g, b) \
-  ((uint32_t)(((UINT8)(r) | ((uint16_t)(g) << 8)) | (((uint32_t)(UINT8)(b)) << 16)))
+  ((uint32_t)(((uint8_t)(r) | ((uint16_t)(g) << 8)) | (((uint32_t)(uint8_t)(b)) << 16)))
 
 // Video object creation flags
 // Used in the VOBJECT_DESC structure to describe creation flags
@@ -84,13 +84,13 @@ struct VObject {
   uint16_t *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables
   uint16_t *pShadeCurrent;
   uint16_t *pGlow;            // glow highlight table
-  UINT8 *pShade8;             // 8-bit shading index table
-  UINT8 *pGlow8;              // 8-bit glow table
+  uint8_t *pShade8;           // 8-bit shading index table
+  uint8_t *pGlow8;            // 8-bit glow table
   ZStripInfo **ppZStripInfo;  // Z-value strip info arrays
 
   uint16_t usNumberOf16BPPObjects;
   uint16_t usNumberOfObjects;  // Total number of objects
-  UINT8 ubBitDepth;            // BPP
+  uint8_t ubBitDepth;          // BPP
 
   // Reserved for added room and 32-byte boundaries
   BYTE bReserved[1];
@@ -107,7 +107,7 @@ typedef struct {
       HIMAGE hImage;
     };
   };
-  UINT8 ubBitDepth;  // BPP, ignored if given from file
+  uint8_t ubBitDepth;  // BPP, ignored if given from file
 } VOBJECT_DESC;
 
 // **********************************************************************************
@@ -185,7 +185,7 @@ uint16_t SetObjectHandleShade(uint32_t uiHandle, uint32_t uiShade);
 uint16_t FillObjectRect(uint32_t iObj, INT32 x1, INT32 y1, INT32 x2, INT32 y2, COLORVAL color32);
 
 // Retrieves an struct VObject* pixel value
-BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, uint16_t usETLREIndex,
+BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETLREIndex,
                            uint16_t usX, uint16_t usY);
 
 // ****************************************************************************
@@ -233,8 +233,8 @@ BOOLEAN GetVideoObjectPalette16BPP(INT32 uiVideoObject, uint16_t **ppPal16);
 BOOLEAN CopyVideoObjectPalette16BPP(INT32 uiVideoObject, uint16_t *ppPal16);
 
 BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, uint16_t usRegionIndex,
-                                    UINT8 ubShadeLevel);
-BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, uint16_t usRegionIndex, UINT8 ubShadeLevel,
+                                    uint8_t ubShadeLevel);
+BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, uint16_t usRegionIndex, uint8_t ubShadeLevel,
                             uint16_t *pusIndex);
 
 BOOLEAN BltVideoObjectOutlineFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,

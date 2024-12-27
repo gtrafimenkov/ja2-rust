@@ -7,8 +7,8 @@
 #define MORTAR_GRENADE_CLASS 100
 
 typedef struct ARMY_GUN_CHOICE_TYPE {
-  UINT8 ubChoices;  // how many valid choices there are in this category
-  INT8 bItemNo[5];  // room for up to 5 choices of gun in each category
+  uint8_t ubChoices;  // how many valid choices there are in this category
+  INT8 bItemNo[5];    // room for up to 5 choices of gun in each category
 } ARMY_GUN_CHOICE_TYPE;
 
 enum {
@@ -72,7 +72,7 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier);
 
 void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass);
 
-uint16_t SelectStandardArmyGun(UINT8 uiGunLevel);
+uint16_t SelectStandardArmyGun(uint8_t uiGunLevel);
 
 INT8 GetWeaponClass(uint16_t usGun);
 void MarkAllWeaponsOfSameGunClassAsDropped(uint16_t usWeapon);

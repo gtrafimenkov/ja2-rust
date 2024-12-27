@@ -13,7 +13,7 @@ struct VObject;
 
 extern BOOLEAN gfDoVideoScroll;
 extern BOOLEAN gfDoSubtileScroll;
-extern UINT8 gubCurScrollSpeedID;
+extern uint8_t gubCurScrollSpeedID;
 
 // RENDERING FLAGS
 #define RENDER_FLAG_FULL 0x00000001
@@ -124,7 +124,7 @@ extern BOOLEAN gfIgnoreScrollDueToCenterAdjust;
 
 // FUNCTIONS
 void ScrollWorld();
-void InitRenderParams(UINT8 ubRestrictionID);
+void InitRenderParams(uint8_t ubRestrictionID);
 void RenderWorld();
 
 void ResetLayerOptimizing(void);

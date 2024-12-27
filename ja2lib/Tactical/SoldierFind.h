@@ -48,7 +48,7 @@ BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, INT16 sX, INT1
 BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFlags, INT16 sX,
                                     INT16 sY);
 
-UINT8 QuickFindSoldier(INT16 sGridNo);
-void GetGridNoScreenPos(INT16 sGridNo, UINT8 ubLevel, INT16 *psScreenX, INT16 *psScreenY);
+uint8_t QuickFindSoldier(INT16 sGridNo);
+void GetGridNoScreenPos(INT16 sGridNo, uint8_t ubLevel, INT16 *psScreenX, INT16 *psScreenY);
 
 #endif

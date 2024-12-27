@@ -87,12 +87,12 @@ INT32 giFPSOverlay = 0;
 INT32 giCounterPeriodOverlay = 0;
 
 BOOLEAN gfExitToNewSector = FALSE;
-// UINT8		gubNewSectorExitDirection;
+// uint8_t		gubNewSectorExitDirection;
 
 BOOLEAN gfGameScreenLocateToSoldier = FALSE;
 BOOLEAN gfEnteringMapScreen = FALSE;
 uint32_t uiOldMouseCursor;
-UINT8 gubPreferredInitialSelectedGuy = NOBODY;
+uint8_t gubPreferredInitialSelectedGuy = NOBODY;
 
 BOOLEAN gfTacticalIsModal = FALSE;
 struct MOUSE_REGION gTacticalDisableRegion;
@@ -211,7 +211,7 @@ void EnterTacticalScreen() {
     }
   } else {
     // otherwise, make sure interface is team panel...
-    SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+    SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
   }
 
   if (!gfTacticalPlacementGUIActive) {
@@ -232,7 +232,7 @@ void EnterTacticalScreen() {
     if (gsCurInterfacePanel < 0 || gsCurInterfacePanel >= NUM_UI_PANELS)
       gsCurInterfacePanel = TEAM_PANEL;
 
-    SetCurrentInterfacePanel((UINT8)gsCurInterfacePanel);
+    SetCurrentInterfacePanel((uint8_t)gsCurInterfacePanel);
   }
 
   SetTacticalInterfaceFlags(0);
@@ -333,7 +333,7 @@ void InternalLeaveTacticalScreen(uint32_t uiNewScreen) {
 extern INT32 iInterfaceDialogueBox;
 
 #ifdef JA2BETAVERSION
-extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
+extern BOOLEAN ValidateSoldierInitLinks(uint8_t ubCode);
 extern BOOLEAN gfDoDialogOnceGameScreenFadesIn;
 #endif
 

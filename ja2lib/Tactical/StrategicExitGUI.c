@@ -71,11 +71,11 @@ typedef struct {
   INT16 sX;
   INT16 sY;
   INT16 sAdditionalData;
-  UINT8 ubFlags;
-  UINT8 ubLeaveSectorType;
-  UINT8 ubLeaveSectorCode;
-  UINT8 ubDirection;
-  UINT8 ubNumPeopleOnSquad;
+  uint8_t ubFlags;
+  uint8_t ubLeaveSectorType;
+  uint8_t ubLeaveSectorCode;
+  uint8_t ubDirection;
+  uint8_t ubNumPeopleOnSquad;
   INT8 bSingleMoveWillIsolateEPC;  // if not -1, then that means the slot number is an EPC
   INT8 bHandled;
   BOOLEAN fRender;
@@ -100,7 +100,7 @@ typedef struct {
 
 EXIT_DIALOG_STRUCT gExitDialog;
 
-UINT8 gubExitGUIDirection;
+uint8_t gubExitGUIDirection;
 INT16 gsExitGUIAdditionalData;
 INT16 gsWarpWorldX;
 INT16 gsWarpWorldY;
@@ -111,7 +111,7 @@ INT16 gsWarpGridNo;
 // gExitDialog struct 		 and calculated upon entry to this function instead of passing in
 // multiple
 // arguments and calculating it prior.
-BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
+BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
   uint32_t uiTraverseTimeInMinutes;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
@@ -230,8 +230,8 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
   } else {  // check to see if we have one selected merc and one or more EPCs.
     // If so, don't allow the selected merc to leave by himself.
     // Assuming that the matching squad assignment is in the same sector.
-    UINT8 ubNumMercs = 1;  // selected soldier is a merc
-    UINT8 ubNumEPCs = 0;
+    uint8_t ubNumMercs = 1;  // selected soldier is a merc
+    uint8_t ubNumEPCs = 0;
     for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          i++) {
       if (i == gusSelectedSoldier) {
@@ -403,7 +403,7 @@ void DoneFadeOutWarpCallback(void) {
   FadeInGameScreen();
 }
 
-void WarpToSurfaceCallback(UINT8 bExitValue) {
+void WarpToSurfaceCallback(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
     gFadeOutDoneCallback = DoneFadeOutWarpCallback;
 
@@ -413,7 +413,7 @@ void WarpToSurfaceCallback(UINT8 bExitValue) {
   }
 }
 
-BOOLEAN InitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
+BOOLEAN InitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
   gubExitGUIDirection = ubDirection;
   gsExitGUIAdditionalData = sAdditionalData;
 
@@ -421,7 +421,7 @@ BOOLEAN InitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
     if (GetWarpOutOfMineCodes(&gsWarpWorldX, &gsWarpWorldY, &gbWarpWorldZ, &gsWarpGridNo)) {
       // ATE: Check if we are in a creature lair and bring up box if so....
       DoMessageBox(MSG_BOX_BASIC_STYLE, gzLateLocalizedString[33], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, WarpToSurfaceCallback, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, WarpToSurfaceCallback, NULL);
 
       return (TRUE);
     }
@@ -686,7 +686,7 @@ void RemoveSectorExitMenu(BOOLEAN fOk) {
         swprintf(Str, ARR_SIZE(Str), pMessageStrings[MSG_EPC_CANT_TRAVERSE],
                  MercPtrs[gusSelectedSoldier]->name);
 
-        DoMessageBox(MSG_BOX_BASIC_STYLE, Str, GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+        DoMessageBox(MSG_BOX_BASIC_STYLE, Str, GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
         return;
       }
     }

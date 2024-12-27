@@ -37,7 +37,7 @@ struct OBJECTTYPE;
 
 typedef struct {
 #if defined(CRIPPLED_VERSION) || defined(RUSSIAN)
-  UINT8 ubIdentifier[4];
+  uint8_t ubIdentifier[4];
 #endif
 
   uint16_t fFlags;
@@ -49,29 +49,29 @@ typedef struct {
   };
   uint16_t usFactMustBeTrue;   // ...before saying quote
   uint16_t usFactMustBeFalse;  // ...before saying quote
-  UINT8 ubQuest;               // quest must be current to say quote
-  UINT8 ubFirstDay;            // first day quote can be said
-  UINT8 ubLastDay;             // last day quote can be said
-  UINT8 ubApproachRequired;    // must use this approach to generate quote
-  UINT8 ubOpinionRequired;     // opinion needed for this quote     13 bytes
+  uint8_t ubQuest;             // quest must be current to say quote
+  uint8_t ubFirstDay;          // first day quote can be said
+  uint8_t ubLastDay;           // last day quote can be said
+  uint8_t ubApproachRequired;  // must use this approach to generate quote
+  uint8_t ubOpinionRequired;   // opinion needed for this quote     13 bytes
 
   // quote to say (if any)
-  UINT8 ubQuoteNum;   // this is the quote to say
-  UINT8 ubNumQuotes;  // total # of quotes to say          15 bytes
+  uint8_t ubQuoteNum;   // this is the quote to say
+  uint8_t ubNumQuotes;  // total # of quotes to say          15 bytes
 
   // actions
-  UINT8 ubStartQuest;
-  UINT8 ubEndQuest;
-  UINT8 ubTriggerNPC;
-  UINT8 ubTriggerNPCRec;
-  UINT8 ubFiller;  //                                       20 bytes
+  uint8_t ubStartQuest;
+  uint8_t ubEndQuest;
+  uint8_t ubTriggerNPC;
+  uint8_t ubTriggerNPCRec;
+  uint8_t ubFiller;  //                                       20 bytes
   uint16_t usSetFactTrue;
   uint16_t usGiftItem;  // item NPC gives to merc after saying quote
   uint16_t usGoToGridno;
   INT16 sActionData;  // special action value
 
 #if !defined(CRIPPLED_VERSION) && !defined(RUSSIAN)
-  UINT8 ubUnused[4];
+  uint8_t ubUnused[4];
 #endif
 
 } NPCQuoteInfo;  // 32 bytes
@@ -134,56 +134,57 @@ typedef enum {
 
 extern INT8 gbFirstApproachFlags[4];
 
-extern UINT8 gubTeamPenalty;
+extern uint8_t gubTeamPenalty;
 
 extern void ShutdownNPCQuotes(void);
 
-extern void SetQuoteRecordAsUsed(UINT8 ubNPC, UINT8 ubRecord);
+extern void SetQuoteRecordAsUsed(uint8_t ubNPC, uint8_t ubRecord);
 
 // uiApproachData is used for approach things like giving items, etc.
-extern UINT8 CalcDesireToTalk(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach);
-extern void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachData);
+extern uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach);
+extern void Converse(uint8_t ubNPC, uint8_t ubMerc, INT8 bApproach, uintptr_t uiApproachData);
 
-extern BOOLEAN NPCOkToGiveItem(UINT8 ubNPC, UINT8 ubMerc, uint16_t usItem);
+extern BOOLEAN NPCOkToGiveItem(uint8_t ubNPC, uint8_t ubMerc, uint16_t usItem);
 extern void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere);
-extern void PCsNearNPC(UINT8 ubNPC);
-extern BOOLEAN PCDoesFirstAidOnNPC(UINT8 ubNPC);
-extern void TriggerNPCRecord(UINT8 ubTriggerNPC, UINT8 ubTriggerNPCRec);
-extern BOOLEAN TriggerNPCWithIHateYouQuote(UINT8 ubTriggerNPC);
+extern void PCsNearNPC(uint8_t ubNPC);
+extern BOOLEAN PCDoesFirstAidOnNPC(uint8_t ubNPC);
+extern void TriggerNPCRecord(uint8_t ubTriggerNPC, uint8_t ubTriggerNPCRec);
+extern BOOLEAN TriggerNPCWithIHateYouQuote(uint8_t ubTriggerNPC);
 
-extern void TriggerNPCRecordImmediately(UINT8 ubTriggerNPC, UINT8 ubTriggerNPCRec);
+extern void TriggerNPCRecordImmediately(uint8_t ubTriggerNPC, uint8_t ubTriggerNPCRec);
 
-extern BOOLEAN TriggerNPCWithGivenApproach(UINT8 ubTriggerNPC, UINT8 ubApproach,
+extern BOOLEAN TriggerNPCWithGivenApproach(uint8_t ubTriggerNPC, uint8_t ubApproach,
                                            BOOLEAN fShowPanel);
 
-extern BOOLEAN ReloadQuoteFile(UINT8 ubNPC);
+extern BOOLEAN ReloadQuoteFile(uint8_t ubNPC);
 extern BOOLEAN ReloadAllQuoteFiles(void);
 
 // Save and loads the npc info to a saved game file
 extern BOOLEAN SaveNPCInfoToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion);
 
-extern void TriggerFriendWithHostileQuote(UINT8 ubNPC);
+extern void TriggerFriendWithHostileQuote(uint8_t ubNPC);
 
-extern void ReplaceLocationInNPCDataFromProfileID(UINT8 ubNPC, INT16 sOldGridNo, INT16 sNewGridNo);
+extern void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, INT16 sOldGridNo,
+                                                  INT16 sNewGridNo);
 
-extern UINT8 ActionIDForMovementRecord(UINT8 ubNPC, UINT8 ubRecord);
+extern uint8_t ActionIDForMovementRecord(uint8_t ubNPC, uint8_t ubRecord);
 
 // total amount given to doctors
 extern uint32_t uiTotalAmountGivenToDoctors;
 
 // handle money being npc being
-extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPCId, uint32_t uiMoneyAmount,
-                                                UINT8 *pQuoteValue);
+extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPCId, uint32_t uiMoneyAmount,
+                                                uint8_t *pQuoteValue);
 
 // given a victory in this sector, handle specific facts
 void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 
 // check if this shopkeep has been shutdown, if so do soething and return the fact
-BOOLEAN HandleShopKeepHasBeenShutDown(UINT8 ubCharNum);
+BOOLEAN HandleShopKeepHasBeenShutDown(uint8_t ubCharNum);
 
-BOOLEAN NPCHasUnusedRecordWithGivenApproach(UINT8 ubNPC, UINT8 ubApproach);
-BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pObj);
+BOOLEAN NPCHasUnusedRecordWithGivenApproach(uint8_t ubNPC, uint8_t ubApproach);
+BOOLEAN NPCWillingToAcceptItem(uint8_t ubNPC, uint8_t ubMerc, struct OBJECTTYPE *pObj);
 
 BOOLEAN SaveBackupNPCInfoToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion);
@@ -196,17 +197,17 @@ void UpdateDarrelScriptToGoTo(struct SOLDIERTYPE *pSoldier);
 
 #define WALTER_BRIBE_AMOUNT 20000
 
-BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, uint16_t *pusQuoteNum, uint16_t *pusFactToSetTrue);
+BOOLEAN GetInfoForAbandoningEPC(uint8_t ubNPC, uint16_t *pusQuoteNum, uint16_t *pusFactToSetTrue);
 
-BOOLEAN RecordHasDialogue(UINT8 ubNPC, UINT8 ubRecord);
+BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord);
 
 INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed);
 
-void ResetOncePerConvoRecordsForNPC(UINT8 ubNPC);
+void ResetOncePerConvoRecordsForNPC(uint8_t ubNPC);
 
 void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN NPCHasUnusedHostileRecord(UINT8 ubNPC, UINT8 ubApproach);
+BOOLEAN NPCHasUnusedHostileRecord(uint8_t ubNPC, uint8_t ubApproach);
 
 void ResetOncePerConvoRecordsForAllNPCsInLoadedSector(void);
 

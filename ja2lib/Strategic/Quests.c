@@ -36,14 +36,14 @@
 extern struct SOLDIERTYPE *gpSrcSoldier;
 extern struct SOLDIERTYPE *gpDestSoldier;
 
-UINT8 gubQuest[MAX_QUESTS];
-UINT8 gubFact[NUM_FACTS];  // this has to be updated when we figure out how many facts we have
+uint8_t gubQuest[MAX_QUESTS];
+uint8_t gubFact[NUM_FACTS];  // this has to be updated when we figure out how many facts we have
 
 INT16 gsFoodQuestSectorX;
 INT16 gsFoodQuestSectorY;
 
-extern void GuaranteeAtLeastXItemsOfIndex(UINT8 ubArmsDealer, uint16_t usItemIndex,
-                                          UINT8 ubHowMany);
+extern void GuaranteeAtLeastXItemsOfIndex(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                          uint8_t ubHowMany);
 
 void SetFactTrue(uint16_t usFact) {
   // This function is here just for control flow purposes (debug breakpoints)
@@ -52,7 +52,7 @@ void SetFactTrue(uint16_t usFact) {
   // must intercept when Jake is first trigered to start selling fuel
   if ((usFact == FACT_ESTONI_REFUELLING_POSSIBLE) && (CheckFact(usFact, 0) == FALSE)) {
     // give him some gas...
-    GuaranteeAtLeastXItemsOfIndex(ARMS_DEALER_JAKE, GAS_CAN, (UINT8)(4 + Random(3)));
+    GuaranteeAtLeastXItemsOfIndex(ARMS_DEALER_JAKE, GAS_CAN, (uint8_t)(4 + Random(3)));
   }
 
   gubFact[usFact] = TRUE;
@@ -73,7 +73,7 @@ BOOLEAN CheckForNewShipment(void) {
   return (FALSE);
 }
 
-BOOLEAN CheckNPCWounded(UINT8 ubProfileID, BOOLEAN fByPlayerOnly) {
+BOOLEAN CheckNPCWounded(uint8_t ubProfileID, BOOLEAN fByPlayerOnly) {
   struct SOLDIERTYPE *pSoldier;
 
   // is the NPC is wounded at all?
@@ -93,7 +93,7 @@ BOOLEAN CheckNPCWounded(UINT8 ubProfileID, BOOLEAN fByPlayerOnly) {
   }
 }
 
-BOOLEAN CheckNPCInOkayHealth(UINT8 ubProfileID) {
+BOOLEAN CheckNPCInOkayHealth(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pSoldier;
 
   // is the NPC at better than half health?
@@ -105,7 +105,7 @@ BOOLEAN CheckNPCInOkayHealth(UINT8 ubProfileID) {
   }
 }
 
-BOOLEAN CheckNPCBleeding(UINT8 ubProfileID) {
+BOOLEAN CheckNPCBleeding(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pSoldier;
 
   // the NPC is wounded...
@@ -117,7 +117,7 @@ BOOLEAN CheckNPCBleeding(UINT8 ubProfileID) {
   }
 }
 
-BOOLEAN CheckNPCWithin(UINT8 ubFirstNPC, UINT8 ubSecondNPC, UINT8 ubMaxDistance) {
+BOOLEAN CheckNPCWithin(uint8_t ubFirstNPC, uint8_t ubSecondNPC, uint8_t ubMaxDistance) {
   struct SOLDIERTYPE *pFirstNPC, *pSecondNPC;
 
   pFirstNPC = FindSoldierByProfileID(ubFirstNPC, FALSE);
@@ -128,7 +128,7 @@ BOOLEAN CheckNPCWithin(UINT8 ubFirstNPC, UINT8 ubSecondNPC, UINT8 ubMaxDistance)
   return (PythSpacesAway(pFirstNPC->sGridNo, pSecondNPC->sGridNo) <= ubMaxDistance);
 }
 
-BOOLEAN CheckGuyVisible(UINT8 ubNPC, UINT8 ubGuy) {
+BOOLEAN CheckGuyVisible(uint8_t ubNPC, uint8_t ubGuy) {
   // NB ONLY WORKS IF ON DIFFERENT TEAMS
   struct SOLDIERTYPE *pNPC, *pGuy;
 
@@ -144,7 +144,7 @@ BOOLEAN CheckGuyVisible(UINT8 ubNPC, UINT8 ubGuy) {
   }
 }
 
-BOOLEAN CheckNPCAt(UINT8 ubNPC, INT16 sGridNo) {
+BOOLEAN CheckNPCAt(uint8_t ubNPC, INT16 sGridNo) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubNPC, FALSE);
@@ -154,7 +154,7 @@ BOOLEAN CheckNPCAt(UINT8 ubNPC, INT16 sGridNo) {
   return (pNPC->sGridNo == sGridNo);
 }
 
-BOOLEAN CheckNPCIsEnemy(UINT8 ubProfileID) {
+BOOLEAN CheckNPCIsEnemy(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -175,7 +175,7 @@ BOOLEAN CheckNPCIsEnemy(UINT8 ubProfileID) {
   }
 }
 
-BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, UINT8 ubProfileId) {
+BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, uint8_t ubProfileId) {
   struct SOLDIERTYPE *pNPC;
   INT16 sGridNo;
 
@@ -198,7 +198,7 @@ BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, UINT8 ubProfileId) {
   return (FALSE);
 }
 
-INT8 NumWoundedMercsNearby(UINT8 ubProfileID) {
+INT8 NumWoundedMercsNearby(uint8_t ubProfileID) {
   INT8 bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
@@ -225,7 +225,7 @@ INT8 NumWoundedMercsNearby(UINT8 ubProfileID) {
   return (bNumber);
 }
 
-INT8 NumMercsNear(UINT8 ubProfileID, UINT8 ubMaxDist) {
+INT8 NumMercsNear(uint8_t ubProfileID, uint8_t ubMaxDist) {
   INT8 bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
@@ -251,7 +251,7 @@ INT8 NumMercsNear(UINT8 ubProfileID, UINT8 ubMaxDist) {
   return (bNumber);
 }
 
-BOOLEAN CheckNPCIsEPC(UINT8 ubProfileID) {
+BOOLEAN CheckNPCIsEPC(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
 
   if (gMercProfiles[ubProfileID].bMercStatus == MERC_IS_DEAD) {
@@ -265,7 +265,7 @@ BOOLEAN CheckNPCIsEPC(UINT8 ubProfileID) {
   return ((pNPC->ubWhatKindOfMercAmI == MERC_TYPE__EPC));
 }
 
-BOOLEAN NPCInRoom(UINT8 ubProfileID, UINT8 ubRoomID) {
+BOOLEAN NPCInRoom(uint8_t ubProfileID, uint8_t ubRoomID) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -275,7 +275,7 @@ BOOLEAN NPCInRoom(UINT8 ubProfileID, UINT8 ubRoomID) {
   return (TRUE);
 }
 
-BOOLEAN NPCInRoomRange(UINT8 ubProfileID, UINT8 ubRoomID1, UINT8 ubRoomID2) {
+BOOLEAN NPCInRoomRange(uint8_t ubProfileID, uint8_t ubRoomID1, uint8_t ubRoomID2) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -286,9 +286,9 @@ BOOLEAN NPCInRoomRange(UINT8 ubProfileID, UINT8 ubRoomID1, UINT8 ubRoomID2) {
   return (TRUE);
 }
 
-BOOLEAN PCInSameRoom(UINT8 ubProfileID) {
+BOOLEAN PCInSameRoom(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
-  UINT8 ubRoom;
+  uint8_t ubRoom;
   INT8 bLoop;
   struct SOLDIERTYPE *pSoldier;
 
@@ -346,7 +346,7 @@ BOOLEAN CheckTalkerUnpropositionedFemale(void) {
   return (FALSE);
 }
 
-INT8 NumMalesPresent(UINT8 ubProfileID) {
+INT8 NumMalesPresent(uint8_t ubProfileID) {
   INT8 bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
@@ -375,7 +375,7 @@ INT8 NumMalesPresent(UINT8 ubProfileID) {
   return (bNumber);
 }
 
-BOOLEAN FemalePresent(UINT8 ubProfileID) {
+BOOLEAN FemalePresent(uint8_t ubProfileID) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
@@ -421,7 +421,7 @@ BOOLEAN CheckPlayerHasHead(void) {
   return (FALSE);
 }
 
-BOOLEAN CheckNPCSector(UINT8 ubProfileID, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN CheckNPCSector(uint8_t ubProfileID, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ubProfileID, TRUE);
@@ -458,7 +458,7 @@ BOOLEAN AIMMercWithin(INT16 sGridNo, INT16 sDistance) {
   return (FALSE);
 }
 
-BOOLEAN CheckNPCCowering(UINT8 ubProfileID) {
+BOOLEAN CheckNPCCowering(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -468,9 +468,9 @@ BOOLEAN CheckNPCCowering(UINT8 ubProfileID) {
   return (((pNPC->uiStatusFlags & SOLDIER_COWERING) != 0));
 }
 
-UINT8 CountBartenders(void) {
-  UINT8 ubLoop;
-  UINT8 ubBartenders = 0;
+uint8_t CountBartenders(void) {
+  uint8_t ubLoop;
+  uint8_t ubBartenders = 0;
 
   for (ubLoop = HERVE; ubLoop <= CARLO; ubLoop++) {
     if (gMercProfiles[ubLoop].bNPCData != 0) {
@@ -480,7 +480,7 @@ UINT8 CountBartenders(void) {
   return (ubBartenders);
 }
 
-BOOLEAN CheckNPCIsUnderFire(UINT8 ubProfileID) {
+BOOLEAN CheckNPCIsUnderFire(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -490,7 +490,7 @@ BOOLEAN CheckNPCIsUnderFire(UINT8 ubProfileID) {
   return (pNPC->bUnderFire != 0);
 }
 
-BOOLEAN NPCHeardShot(UINT8 ubProfileID) {
+BOOLEAN NPCHeardShot(uint8_t ubProfileID) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -501,7 +501,7 @@ BOOLEAN NPCHeardShot(UINT8 ubProfileID) {
 }
 
 BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
-  UINT8 ubTown;
+  uint8_t ubTown;
 
   ubTown = GetTownIdForSector(sSectorX, sSectorY);
   if ((ubTown != BLANK_SECTOR) && gTownLoyalty[ubTown].fStarted && gfTownUsesLoyalty[ubTown]) {
@@ -511,7 +511,7 @@ BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
   }
 }
 
-BOOLEAN CheckFact(uint16_t usFact, UINT8 ubProfileID) {
+BOOLEAN CheckFact(uint16_t usFact, uint8_t ubProfileID) {
   INT8 bTown = -1;
 
   switch (usFact) {
@@ -1126,11 +1126,11 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
   return (gubFact[usFact]);
 }
 
-void StartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY) {
+void StartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY) {
   InternalStartQuest(ubQuest, sSectorX, sSectorY, TRUE);
 }
 
-void InternalStartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
+void InternalStartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
   if (gubQuest[ubQuest] == QUESTNOTSTARTED) {
     gubQuest[ubQuest] = QUESTINPROGRESS;
 
@@ -1142,11 +1142,11 @@ void InternalStartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdate
   }
 }
 
-void EndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY) {
+void EndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY) {
   InternalEndQuest(ubQuest, sSectorX, sSectorY, TRUE);
 }
 
-void InternalEndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
+void InternalEndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory) {
   if (gubQuest[ubQuest] == QUESTINPROGRESS) {
     gubQuest[ubQuest] = QUESTDONE;
 

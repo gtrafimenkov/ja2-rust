@@ -149,7 +149,7 @@ BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pCharacter);
 void UpdateAssignments();
 
 // how many people in this secotr have this assignment?
-UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment);
+uint8_t FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment);
 
 void MakeSoldiersTacticalAnimationReflectAssignment(struct SOLDIERTYPE *pSoldier);
 
@@ -178,8 +178,8 @@ uint16_t CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pSoldier, uint16_t 
                                          BOOLEAN fMakeSureKitIsInHand);
 
 // find number of repair pts repairman has available
-UINT8 CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, uint16_t *pusMaxPts,
-                                        BOOLEAN fMakeSureKitIsInHand);
+uint8_t CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, uint16_t *pusMaxPts,
+                                          BOOLEAN fMakeSureKitIsInHand);
 
 // get bonus tarining pts due to an instructor for this student
 INT16 GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,

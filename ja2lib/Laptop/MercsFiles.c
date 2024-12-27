@@ -134,10 +134,10 @@ uint32_t guiMercBackButton;
 //
 //****************************
 
-BOOLEAN DisplayMercFace(UINT8 ubMercID);
-void LoadAndDisplayMercBio(UINT8 ubMercID);
-void DisplayMercsStats(UINT8 ubMercID);
-BOOLEAN MercFilesHireMerc(UINT8 ubMercID);
+BOOLEAN DisplayMercFace(uint8_t ubMercID);
+void LoadAndDisplayMercBio(uint8_t ubMercID);
+void DisplayMercsStats(uint8_t ubMercID);
+BOOLEAN MercFilesHireMerc(uint8_t ubMercID);
 void EnableDisableMercFilesNextPreviousButton();
 
 void GameInitMercsFiles() {}
@@ -251,7 +251,7 @@ void RenderMercsFiles() {
                    LEFT_JUSTIFIED);
 
   // Load and display the mercs bio
-  LoadAndDisplayMercBio((UINT8)(GetMercIDFromMERCArray(gubCurMercIndex) - BIFF));
+  LoadAndDisplayMercBio((uint8_t)(GetMercIDFromMERCArray(gubCurMercIndex) - BIFF));
 
   // Display the mercs statistic
   DisplayMercsStats(GetMercIDFromMERCArray(gubCurMercIndex));
@@ -387,7 +387,7 @@ void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-BOOLEAN DisplayMercFace(UINT8 ubMercID) {
+BOOLEAN DisplayMercFace(uint8_t ubMercID) {
   struct VObject *hFaceHandle;
   struct VObject *hPortraitHandle;
   STR sFaceLoc = "FACES\\BIGFACES\\";
@@ -481,7 +481,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
   return (TRUE);
 }
 
-void LoadAndDisplayMercBio(UINT8 ubMercID) {
+void LoadAndDisplayMercBio(uint8_t ubMercID) {
   wchar_t sText[400];
   uint32_t uiStartLoc = 0;
 
@@ -503,7 +503,7 @@ void LoadAndDisplayMercBio(UINT8 ubMercID) {
   }
 }
 
-void DisplayMercsStats(UINT8 ubMercID) {
+void DisplayMercsStats(uint8_t ubMercID) {
   uint16_t usPosY, usPosX;
   wchar_t sString[128];
 
@@ -607,7 +607,7 @@ void DisplayMercsStats(UINT8 ubMercID) {
                    FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 }
 
-BOOLEAN MercFilesHireMerc(UINT8 ubMercID) {
+BOOLEAN MercFilesHireMerc(uint8_t ubMercID) {
   MERC_HIRE_STRUCT HireMercStruct;
   INT8 bReturnCode;
 

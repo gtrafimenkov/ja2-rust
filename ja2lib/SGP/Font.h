@@ -59,9 +59,9 @@ extern BOOLEAN FontDestWrap;
 // functions
 
 void SetFontColors(uint16_t usColors);
-void SetFontForeground(UINT8 ubForeground);
-void SetFontBackground(UINT8 ubBackground);
-void SetFontShadow(UINT8 ubBackground);
+void SetFontForeground(uint8_t ubForeground);
+void SetFontBackground(uint8_t ubBackground);
+void SetFontShadow(uint8_t ubBackground);
 
 // Kris:  added these
 void SetRGBFontForeground(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue);
@@ -79,9 +79,9 @@ extern struct VObject *GetFontObject(INT32 iFont);
 extern uint32_t gprintf(INT32 x, INT32 y, STR16 pFontString, ...);
 extern uint32_t gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...);
 extern uint32_t mprintf(INT32 x, INT32 y, STR16 pFontString, ...);
-extern uint32_t gprintf_buffer(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
+extern uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
                                INT32 x, INT32 y, STR16 pFontString, ...);
-extern uint32_t mprintf_buffer(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
+extern uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
                                INT32 x, INT32 y, STR16 pFontString, ...);
 
 // Function for displaying coded test. Since it's slower to do this, it's separate from  the normal
@@ -89,7 +89,7 @@ extern uint32_t mprintf_buffer(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint3
 #define FONT_CODE_BEGINCOLOR 180
 #define FONT_CODE_RESETCOLOR 181
 
-uint32_t mprintf_buffer_coded(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
+uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
                               INT32 x, INT32 y, STR16 pFontString, ...);
 uint32_t mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...);
 

@@ -1141,7 +1141,7 @@ void GetRTMousePositionInput(uint32_t *puiNewEvent) {
 
         // Check for being on terrain
         if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
-          UINT8 ubItemCursor;
+          uint8_t ubItemCursor;
 
           // get cursor for item
           ubItemCursor = GetActionModeCursor(pSoldier);
@@ -1153,7 +1153,7 @@ void GetRTMousePositionInput(uint32_t *puiNewEvent) {
             return;
           } else {
             if (gfUIFullTargetFound) {
-              if (IsValidTalkableNPC((UINT8)gusUIFullTargetID, FALSE, FALSE, FALSE) &&
+              if (IsValidTalkableNPC((uint8_t)gusUIFullTargetID, FALSE, FALSE, FALSE) &&
                   !_KeyDown(SHIFT) && !AM_AN_EPC(pSoldier) &&
                   MercPtrs[gusUIFullTargetID]->bTeam != ENEMY_TEAM &&
                   !ValidQuickExchangePosition()) {
@@ -1192,7 +1192,7 @@ void GetRTMousePositionInput(uint32_t *puiNewEvent) {
         if (gfUIFullTargetFound)
         // if ( gfUIFullTargetFound )
         {
-          if (IsValidTargetMerc((UINT8)gusUIFullTargetID)) {
+          if (IsValidTargetMerc((uint8_t)gusUIFullTargetID)) {
             guiUITargetSoldierId = gusUIFullTargetID;
 
             if (MercPtrs[gusUIFullTargetID]->bTeam != gbPlayerNum) {

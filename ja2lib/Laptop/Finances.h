@@ -13,11 +13,11 @@ void RenderFinances();
 
 // the financial structure
 struct finance {
-  UINT8 ubCode;         // the code index in the finance code table
-  uint32_t uiIdNumber;  // unique id number
-  UINT8 ubSecondCode;   // secondary code
-  uint32_t uiDate;      // time in the world in global time
-  INT32 iAmount;        // the amount of the transaction
+  uint8_t ubCode;        // the code index in the finance code table
+  uint32_t uiIdNumber;   // unique id number
+  uint8_t ubSecondCode;  // secondary code
+  uint32_t uiDate;       // time in the world in global time
+  INT32 iAmount;         // the amount of the transaction
   INT32 iBalanceToDate;
   struct finance *Next;  // next unit in the list
 };
@@ -58,7 +58,7 @@ typedef struct finance FinanceUnit;
 typedef struct finance *FinanceUnitPtr;
 
 extern FinanceUnitPtr pFinanceListHead;
-uint32_t AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmount);
+uint32_t AddTransactionToPlayersBook(uint8_t ubCode, uint8_t ubSecondCode, INT32 iAmount);
 void InsertDollarSignInToString(STR16 pString);
 void InsertCommasForDollarFigure(STR16 pString);
 INT32 GetTodaysDaysIncome(void);

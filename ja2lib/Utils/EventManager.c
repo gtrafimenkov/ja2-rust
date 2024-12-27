@@ -19,8 +19,8 @@ HLIST hDemandEventQueue = NULL;
 #define QUEUE_RESIZE 20
 
 // LOCAL FUNCTIONS
-HLIST GetQueue(UINT8 ubQueueID);
-void SetQueue(UINT8 ubQueueID, HLIST hQueue);
+HLIST GetQueue(uint8_t ubQueueID);
+void SetQueue(uint8_t ubQueueID, HLIST hQueue);
 
 BOOLEAN InitializeEventManager() {
   // Create Queue
@@ -65,7 +65,7 @@ BOOLEAN ShutdownEventManager() {
 }
 
 BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
-                 UINT8 ubQueueID) {
+                 uint8_t ubQueueID) {
   EVENT *pEvent;
   uint32_t uiEventSize = sizeof(EVENT);
   HLIST hQueue;
@@ -94,7 +94,7 @@ BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t ui
   return (TRUE);
 }
 
-BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID) {
+BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID) {
   uint32_t uiQueueSize;
   HLIST hQueue;
 
@@ -116,7 +116,7 @@ BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID) {
   return (TRUE);
 }
 
-BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID) {
+BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID) {
   uint32_t uiQueueSize;
   HLIST hQueue;
 
@@ -147,7 +147,7 @@ BOOLEAN FreeEvent(EVENT *pEvent) {
   return (TRUE);
 }
 
-uint32_t EventQueueSize(UINT8 ubQueueID) {
+uint32_t EventQueueSize(uint8_t ubQueueID) {
   uint32_t uiQueueSize;
   HLIST hQueue;
 
@@ -162,7 +162,7 @@ uint32_t EventQueueSize(UINT8 ubQueueID) {
   return (uiQueueSize);
 }
 
-HLIST GetQueue(UINT8 ubQueueID) {
+HLIST GetQueue(uint8_t ubQueueID) {
   switch (ubQueueID) {
     case PRIMARY_EVENT_QUEUE:
       return (hEventQueue);
@@ -183,7 +183,7 @@ HLIST GetQueue(UINT8 ubQueueID) {
   }
 }
 
-void SetQueue(UINT8 ubQueueID, HQUEUE hQueue) {
+void SetQueue(uint8_t ubQueueID, HQUEUE hQueue) {
   switch (ubQueueID) {
     case PRIMARY_EVENT_QUEUE:
       hEventQueue = hQueue;

@@ -65,10 +65,10 @@ extern INT16 gsLastKnownOppLoc[TOTAL_SOLDIERS][TOTAL_SOLDIERS];  // merc vs. mer
 extern INT8 gbLastKnownOppLevel[TOTAL_SOLDIERS][TOTAL_SOLDIERS];
 extern INT16 gsPublicLastKnownOppLoc[MAXTEAMS][TOTAL_SOLDIERS];  // team vs. merc
 extern INT8 gbPublicLastKnownOppLevel[MAXTEAMS][TOTAL_SOLDIERS];
-extern UINT8 gubPublicNoiseVolume[MAXTEAMS];
+extern uint8_t gubPublicNoiseVolume[MAXTEAMS];
 extern INT16 gsPublicNoiseGridno[MAXTEAMS];
 extern INT8 gbPublicNoiseLevel[MAXTEAMS];
-extern UINT8 gubKnowledgeValue[10][10];
+extern uint8_t gubKnowledgeValue[10][10];
 extern INT8 gbLookDistance[8][8];
 extern INT8 gfKnowAboutOpponents;
 
@@ -77,30 +77,30 @@ extern BOOLEAN gfMikeShouldSayHi;
 
 extern INT16 gsWatchedLoc[TOTAL_SOLDIERS][NUM_WATCHED_LOCS];
 extern INT8 gbWatchedLocLevel[TOTAL_SOLDIERS][NUM_WATCHED_LOCS];
-extern UINT8 gubWatchedLocPoints[TOTAL_SOLDIERS][NUM_WATCHED_LOCS];
+extern uint8_t gubWatchedLocPoints[TOTAL_SOLDIERS][NUM_WATCHED_LOCS];
 extern BOOLEAN gfWatchedLocReset[TOTAL_SOLDIERS][NUM_WATCHED_LOCS];
 
 #define BEST_SIGHTING_ARRAY_SIZE 6
 #define BEST_SIGHTING_ARRAY_SIZE_ALL_TEAMS_LOOK_FOR_ALL 6
 #define BEST_SIGHTING_ARRAY_SIZE_NONCOMBAT 3
 #define BEST_SIGHTING_ARRAY_SIZE_INCOMBAT 0
-extern UINT8 gubBestToMakeSightingSize;
+extern uint8_t gubBestToMakeSightingSize;
 
 INT16 AdjustMaxSightRangeForEnvEffects(struct SOLDIERTYPE *pSoldier, INT8 bLightLevel,
                                        INT16 sDistVisible);
-INT16 ManLooksForMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent, UINT8 ubCaller);
-void HandleSight(struct SOLDIERTYPE *pSoldier, UINT8 ubSightFlags);
-void AllTeamsLookForAll(UINT8 ubAllowInterrupts);
+INT16 ManLooksForMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent, uint8_t ubCaller);
+void HandleSight(struct SOLDIERTYPE *pSoldier, uint8_t ubSightFlags);
+void AllTeamsLookForAll(uint8_t ubAllowInterrupts);
 void GloballyDecideWhoSeesWho(void);
 uint16_t GetClosestMerc(uint16_t usSoldierIndex);
 void ManLooksForOtherTeams(struct SOLDIERTYPE *pSoldier);
 void OtherTeamsLookForMan(struct SOLDIERTYPE *pOpponent);
 void ManSeesMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent, INT16 sOppGridno,
-                INT8 bOppLevel, UINT8 ubCaller, UINT8 ubCaller2);
-void DecideTrueVisibility(struct SOLDIERTYPE *pSoldier, UINT8 ubLocate);
+                INT8 bOppLevel, uint8_t ubCaller, uint8_t ubCaller2);
+void DecideTrueVisibility(struct SOLDIERTYPE *pSoldier, uint8_t ubLocate);
 void AddOneOpponent(struct SOLDIERTYPE *pSoldier);
 void RemoveOneOpponent(struct SOLDIERTYPE *pSoldier);
-void UpdatePersonal(struct SOLDIERTYPE *pSoldier, UINT8 ubID, INT8 bNewOpplist, INT16 sGridno,
+void UpdatePersonal(struct SOLDIERTYPE *pSoldier, uint8_t ubID, INT8 bNewOpplist, INT16 sGridno,
                     INT8 bLevel);
 INT16 MaxDistanceVisible(void);
 INT16 DistanceVisible(struct SOLDIERTYPE *pSoldier, INT8 bFacingDir, INT8 bSubjectDir,
@@ -112,22 +112,22 @@ void InitOpponentKnowledgeSystem(void);
 void InitSoldierOppList(struct SOLDIERTYPE *pSoldier);
 void BetweenTurnsVisibilityAdjustments(void);
 void RemoveManAsTarget(struct SOLDIERTYPE *pSoldier);
-void UpdatePublic(UINT8 ubTeam, UINT8 ubID, INT8 bNewOpplist, INT16 sGridno, INT8 bLevel);
-void RadioSightings(struct SOLDIERTYPE *pSoldier, UINT8 ubAbout, UINT8 ubTeamToRadioTo);
-void OurTeamRadiosRandomlyAbout(UINT8 ubAbout);
+void UpdatePublic(uint8_t ubTeam, uint8_t ubID, INT8 bNewOpplist, INT16 sGridno, INT8 bLevel);
+void RadioSightings(struct SOLDIERTYPE *pSoldier, uint8_t ubAbout, uint8_t ubTeamToRadioTo);
+void OurTeamRadiosRandomlyAbout(uint8_t ubAbout);
 void DebugSoldierPage1();
 void DebugSoldierPage2();
 void DebugSoldierPage3();
 void DebugSoldierPage4();
 
-UINT8 MovementNoise(struct SOLDIERTYPE *pSoldier);
-UINT8 DoorOpeningNoise(struct SOLDIERTYPE *pSoldier);
-void MakeNoise(UINT8 ubNoiseMaker, INT16 sGridNo, INT8 bLevel, UINT8 ubTerrType, UINT8 ubVolume,
-               UINT8 ubNoiseType);
-void OurNoise(UINT8 ubNoiseMaker, INT16 sGridNo, INT8 bLevel, UINT8 ubTerrType, UINT8 ubVolume,
-              UINT8 ubNoiseType);
+uint8_t MovementNoise(struct SOLDIERTYPE *pSoldier);
+uint8_t DoorOpeningNoise(struct SOLDIERTYPE *pSoldier);
+void MakeNoise(uint8_t ubNoiseMaker, INT16 sGridNo, INT8 bLevel, uint8_t ubTerrType,
+               uint8_t ubVolume, uint8_t ubNoiseType);
+void OurNoise(uint8_t ubNoiseMaker, INT16 sGridNo, INT8 bLevel, uint8_t ubTerrType,
+              uint8_t ubVolume, uint8_t ubNoiseType);
 
-void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType);
+void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, uint8_t ubInterruptType);
 
 void VerifyAndDecayOpplist(struct SOLDIERTYPE *pSoldier);
 void DecayIndividualOpplist(struct SOLDIERTYPE *pSoldier);
@@ -137,20 +137,20 @@ void NoticeUnseenAttacker(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDe
 
 BOOLEAN MercSeesCreature(struct SOLDIERTYPE *pSoldier);
 
-INT8 GetWatchedLocPoints(UINT8 ubID, INT16 sGridNo, INT8 bLevel);
-INT8 GetHighestVisibleWatchedLoc(UINT8 ubID);
-INT8 GetHighestWatchedLocPoints(UINT8 ubID);
+INT8 GetWatchedLocPoints(uint8_t ubID, INT16 sGridNo, INT8 bLevel);
+INT8 GetHighestVisibleWatchedLoc(uint8_t ubID);
+INT8 GetHighestWatchedLocPoints(uint8_t ubID);
 
 void TurnOffEveryonesMuzzleFlashes(void);
-void TurnOffTeamsMuzzleFlashes(UINT8 ubTeam);
+void TurnOffTeamsMuzzleFlashes(uint8_t ubTeam);
 void EndMuzzleFlash(struct SOLDIERTYPE *pSoldier);
 void NonCombatDecayPublicOpplist(uint32_t uiTime);
 
 void CheckHostileOrSayQuoteList(void);
 void InitOpplistForDoorOpening(void);
-UINT8 DoorOpeningNoise(struct SOLDIERTYPE *pSoldier);
+uint8_t DoorOpeningNoise(struct SOLDIERTYPE *pSoldier);
 
-void AddToShouldBecomeHostileOrSayQuoteList(UINT8 ubID);
+void AddToShouldBecomeHostileOrSayQuoteList(uint8_t ubID);
 
 extern INT8 gbLightSighting[1][16];
 

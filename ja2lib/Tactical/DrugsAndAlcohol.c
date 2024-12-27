@@ -13,11 +13,11 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
-UINT8 ubDrugTravelRate[] = {4, 2};
-UINT8 ubDrugWearoffRate[] = {2, 2};
-UINT8 ubDrugEffect[] = {15, 8};
-UINT8 ubDrugSideEffect[] = {20, 10};
-UINT8 ubDrugSideEffectRate[] = {2, 1};
+uint8_t ubDrugTravelRate[] = {4, 2};
+uint8_t ubDrugWearoffRate[] = {2, 2};
+uint8_t ubDrugEffect[] = {15, 8};
+uint8_t ubDrugSideEffect[] = {20, 10};
+uint8_t ubDrugSideEffectRate[] = {2, 1};
 
 INT32 giDrunkModifier[] = {
     100,  // Sober
@@ -30,7 +30,7 @@ INT32 giDrunkModifier[] = {
 #define HANGOVER_AP_REDUCE 5
 #define HANGOVER_BP_REDUCE 200
 
-UINT8 GetDrugType(uint16_t usItem) {
+uint8_t GetDrugType(uint16_t usItem) {
   if (usItem == ADRENALINE_BOOSTER) {
     return (DRUG_TYPE_ADRENALINE);
   }
@@ -47,8 +47,8 @@ UINT8 GetDrugType(uint16_t usItem) {
 }
 
 BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
-  UINT8 ubDrugType;
-  UINT8 ubKitPoints;
+  uint8_t ubDrugType;
+  uint8_t ubKitPoints;
   INT8 bRegenPointsGained;
   uint16_t usItem;
 
@@ -265,11 +265,11 @@ void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType) {
+INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
   return (pSoldier->bDrugEffect[ubDrugType]);
 }
 
-INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType) {
+INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
   // If we have a o-positive effect
   if (pSoldier->bDrugEffect[ubDrugType] > 0) {
     return (0);
@@ -278,7 +278,7 @@ INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType) {
   }
 }
 
-void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
+void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) {
   INT8 bDrunkLevel;
   INT16 sPoints = (*pubPoints);
 
@@ -306,7 +306,7 @@ void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
     }
   }
 
-  (*pubPoints) = (UINT8)sPoints;
+  (*pubPoints) = (uint8_t)sPoints;
 }
 
 void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPointReduction) {

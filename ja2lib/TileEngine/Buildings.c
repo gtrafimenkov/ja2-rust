@@ -17,11 +17,11 @@
 
 #define ROOF_LOCATION_CHANCE 8
 
-UINT8 gubBuildingInfo[WORLD_MAX];
+uint8_t gubBuildingInfo[WORLD_MAX];
 BUILDING gBuildings[MAX_BUILDINGS];
-UINT8 gubNumberOfBuildings;
+uint8_t gubNumberOfBuildings;
 
-BUILDING* CreateNewBuilding(UINT8* pubBuilding) {
+BUILDING* CreateNewBuilding(uint8_t* pubBuilding) {
   if (gubNumberOfBuildings + 1 >= MAX_BUILDINGS) {
     return (NULL);
   }
@@ -46,7 +46,7 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
   INT8 bSkipSpots = 0;
   struct SOLDIERTYPE FakeSoldier;
   BUILDING* pBuilding;
-  UINT8 ubBuildingID = 0;
+  uint8_t ubBuildingID = 0;
 
   pBuilding = CreateNewBuilding(&ubBuildingID);
   if (!pBuilding) {
@@ -287,8 +287,8 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
 }
 
 BUILDING* FindBuilding(INT16 sGridNo) {
-  UINT8 ubBuildingID;
-  // UINT8					ubRoomNo;
+  uint8_t ubBuildingID;
+  // uint8_t					ubRoomNo;
 
   if (sGridNo <= 0 || sGridNo > WORLD_MAX) {
     return (NULL);
@@ -331,7 +331,7 @@ void GenerateBuildings(void) {
   uint32_t uiLoop;
 
   // init building structures and variables
-  memset(&gubBuildingInfo, 0, WORLD_MAX * sizeof(UINT8));
+  memset(&gubBuildingInfo, 0, WORLD_MAX * sizeof(uint8_t));
   memset(&gBuildings, 0, MAX_BUILDINGS * sizeof(BUILDING));
   gubNumberOfBuildings = 0;
 
@@ -360,9 +360,9 @@ void GenerateBuildings(void) {
 
 INT16 FindClosestClimbPoint(INT16 sStartGridNo, INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
   BUILDING* pBuilding;
-  UINT8 ubNumClimbSpots;
+  uint8_t ubNumClimbSpots;
   INT16* psClimbSpots;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   INT16 sDistance, sClosestDistance = 1000, sClosestSpot = NOWHERE;
 
   pBuilding = FindBuilding(sDesiredGridNo);

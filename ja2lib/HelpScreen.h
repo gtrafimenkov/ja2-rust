@@ -23,7 +23,7 @@ typedef struct {
 
   uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
 
-  UINT8 ubHelpScreenDirty;
+  uint8_t ubHelpScreenDirty;
 
   uint16_t usScreenLocX;
   uint16_t usScreenLocY;
@@ -57,7 +57,7 @@ typedef struct {
 
 extern HELP_SCREEN_STRUCT gHelpScreen;
 
-BOOLEAN ShouldTheHelpScreenComeUp(UINT8 ubScreenID, BOOLEAN fForceHelpScreenToComeUp);
+BOOLEAN ShouldTheHelpScreenComeUp(uint8_t ubScreenID, BOOLEAN fForceHelpScreenToComeUp);
 void HelpScreenHandler();
 void InitHelpScreenSystem();
 void NewScreenSoResetHelpScreen();

@@ -134,7 +134,7 @@ void DecayStrategicMorale(struct SOLDIERTYPE *pSoldier) {
 
 void DecayTacticalMoraleModifiers(void) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubLoop, ubLoop2;
+  uint8_t ubLoop, ubLoop2;
   BOOLEAN fHandleNervous;
 
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -217,7 +217,7 @@ void DecayTacticalMoraleModifiers(void) {
 
 void DecayStrategicMoraleModifiers(void) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[ubLoop]; ubLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -263,7 +263,7 @@ void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
   fCharacterInfoPanelDirty = TRUE;
 }
 
-void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoraleMod) {
+void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, INT8 bMoraleMod) {
   MERCPROFILESTRUCT *pProfile;
   INT32 iMoraleModTotal;
 
@@ -374,7 +374,7 @@ void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent
 
 void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX, INT16 sMapY,
                        INT8 bMapZ) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct SOLDIERTYPE *pTeamSoldier;
   MERCPROFILESTRUCT *pProfile;
 
@@ -622,11 +622,11 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
       break;
     case MORALE_TEAMMATE_DIED:
       // impact depends on that dude's level of experience
-      ModifyPlayerReputation((UINT8)(pSoldier->bExpLevel * REPUTATION_SOLDIER_DIED));
+      ModifyPlayerReputation((uint8_t)(pSoldier->bExpLevel * REPUTATION_SOLDIER_DIED));
       break;
     case MORALE_MERC_CAPTURED:
       // impact depends on that dude's level of experience
-      ModifyPlayerReputation((UINT8)(pSoldier->bExpLevel * REPUTATION_SOLDIER_CAPTURED));
+      ModifyPlayerReputation((uint8_t)(pSoldier->bExpLevel * REPUTATION_SOLDIER_CAPTURED));
       break;
     case MORALE_KILLED_CIVILIAN:
       ModifyPlayerReputation(REPUTATION_KILLED_CIVILIAN);

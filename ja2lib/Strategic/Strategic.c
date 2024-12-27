@@ -66,8 +66,8 @@ BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {
     HandleSoldierDeadComments(pSoldier);
 
     // put the dead guys down
-    AddDeadSoldierToUnLoadedSector((UINT8)(GetSolSectorX(pSoldier)),
-                                   (UINT8)(GetSolSectorY(pSoldier)), GetSolSectorZ(pSoldier),
+    AddDeadSoldierToUnLoadedSector((uint8_t)(GetSolSectorX(pSoldier)),
+                                   (uint8_t)(GetSolSectorY(pSoldier)), GetSolSectorZ(pSoldier),
                                    pSoldier, RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
 
     fTeamPanelDirty = TRUE;

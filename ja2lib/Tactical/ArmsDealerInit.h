@@ -131,8 +131,8 @@ typedef struct {
     };
   };
 
-  UINT8 ubShopKeeperID;      // Merc Id for the dealer
-  UINT8 ubTypeOfArmsDealer;  // Whether he buys/sells, sells, buys, or repairs
+  uint8_t ubShopKeeperID;      // Merc Id for the dealer
+  uint8_t ubTypeOfArmsDealer;  // Whether he buys/sells, sells, buys, or repairs
   INT32 iInitialCash;  // How much cash dealer starts with (we now reset to this amount once / day)
   uint32_t uiFlags;    // various flags which control the dealer's operations
 } ARMS_DEALER_INFO;
@@ -141,8 +141,8 @@ typedef struct {
 typedef struct {
   uint32_t uiArmsDealersCash;  // How much money the arms dealer currently has
 
-  UINT8 ubSpecificDealerFlags;   // Misc state flags for specific dealers
-  BOOLEAN fOutOfBusiness;        // Set when a dealer has been killed, etc.
+  uint8_t ubSpecificDealerFlags;  // Misc state flags for specific dealers
+  BOOLEAN fOutOfBusiness;         // Set when a dealer has been killed, etc.
   BOOLEAN fRepairDelayBeenUsed;  // Set when a repairman has missed his repair time estimate & given
                                  // his excuse for it
   BOOLEAN fUnusedKnowsPlayer;    // Set if the shopkeeper has met with the player before [UNUSED]
@@ -150,7 +150,7 @@ typedef struct {
   uint32_t uiTimePlayerLastInSKI;  // game time (in total world minutes) when player last talked to
                                    // this dealer in SKI
 
-  UINT8 ubPadding[8];
+  uint8_t ubPadding[8];
 
 } ARMS_DEALER_STATUS;
 
@@ -162,11 +162,11 @@ typedef struct {
                         // -1 to -100 means the item is in for repairs, flip sign for the actual
                         // status
 
-  UINT8 ubImprintID;  // imprint ID for imprinted items (during repair!)
+  uint8_t ubImprintID;  // imprint ID for imprinted items (during repair!)
 
   INT8 bAttachmentStatus[MAX_ATTACHMENTS];  // status of any attachments on the item
 
-  UINT8 ubPadding[2];  // filler
+  uint8_t ubPadding[2];  // filler
 
 } SPECIAL_ITEM_INFO;
 
@@ -183,9 +183,9 @@ typedef struct {
   BOOLEAN fActive;  // TRUE means an item is stored here (empty elements may not always be freed
                     // immediately)
 
-  UINT8 ubOwnerProfileId;  // stores which merc previously owned an item being repaired
+  uint8_t ubOwnerProfileId;  // stores which merc previously owned an item being repaired
 
-  UINT8 ubPadding[6];  // filler
+  uint8_t ubPadding[6];  // filler
 
 } DEALER_SPECIAL_ITEM;
 
@@ -195,22 +195,22 @@ typedef struct {
   // NOTE: special item elements may remain allocated long after item has been removed, to reduce
   // memory fragmentation!!!
 
-  UINT8 ubTotalItems;    // sum of all the items (all perfect ones + all special ones)
-  UINT8 ubPerfectItems;  // non-special (perfect) items held by dealer
-  UINT8 ubStrayAmmo;     // partially-depleted ammo mags are stored here as #bullets, and can be
-                         // converted to full packs
+  uint8_t ubTotalItems;    // sum of all the items (all perfect ones + all special ones)
+  uint8_t ubPerfectItems;  // non-special (perfect) items held by dealer
+  uint8_t ubStrayAmmo;     // partially-depleted ammo mags are stored here as #bullets, and can be
+                           // converted to full packs
 
-  UINT8 ubElementsAlloced;  // number of DEALER_SPECIAL_ITEM array elements alloced for the special
-                            // item array
+  uint8_t ubElementsAlloced;  // number of DEALER_SPECIAL_ITEM array elements alloced for the
+                              // special item array
   DEALER_SPECIAL_ITEM *SpecialItem;  // dynamic array of special items with this same item index
 
   uint32_t uiOrderArrivalTime;  // Day the items ordered will arrive on.  It's uint32_t in case we
                                 // change this to minutes.
-  UINT8 ubQtyOnOrder;           // The number of items currently on order
+  uint8_t ubQtyOnOrder;         // The number of items currently on order
   BOOLEAN fPreviouslyEligible;  // whether or not dealer has been eligible to sell this item in days
                                 // prior to today
 
-  UINT8 ubPadding[2];  // filler
+  uint8_t ubPadding[2];  // filler
 
 } DEALER_ITEM_HEADER;
 
@@ -224,22 +224,22 @@ void ShutDownArmsDealers();
 uint32_t GetArmsDealerItemTypeFromItemNumber(uint16_t usItem);
 
 // Count every single item the dealer has in stock
-// uint32_t	CountTotalItemsInArmsDealersInventory( UINT8 ubArmsDealer );
+// uint32_t	CountTotalItemsInArmsDealersInventory( uint8_t ubArmsDealer );
 // Count only the # of "distinct" item types (for shopkeeper purposes)
-uint32_t CountDistinctItemsInArmsDealersInventory(UINT8 ubArmsDealer);
-UINT8 CountActiveSpecialItemsInArmsDealersInventory(UINT8 ubArmsDealer, uint16_t usItemIndex);
-uint16_t CountTotalItemsRepairDealerHasInForRepairs(UINT8 ubArmsDealer);
-UINT8 CountSpecificItemsRepairDealerHasInForRepairs(UINT8 ubArmsDealer, uint16_t usItemIndex);
+uint32_t CountDistinctItemsInArmsDealersInventory(uint8_t ubArmsDealer);
+uint8_t CountActiveSpecialItemsInArmsDealersInventory(uint8_t ubArmsDealer, uint16_t usItemIndex);
+uint16_t CountTotalItemsRepairDealerHasInForRepairs(uint8_t ubArmsDealer);
+uint8_t CountSpecificItemsRepairDealerHasInForRepairs(uint8_t ubArmsDealer, uint16_t usItemIndex);
 
-void AddObjectToArmsDealerInventory(UINT8 ubArmsDealer, struct OBJECTTYPE *pObject);
+void AddObjectToArmsDealerInventory(uint8_t ubArmsDealer, struct OBJECTTYPE *pObject);
 
-void RemoveItemFromArmsDealerInventory(UINT8 ubArmsDealer, uint16_t usItemIndex,
-                                       SPECIAL_ITEM_INFO *pSpclItemInfo, UINT8 ubHowMany);
-void RemoveSpecialItemFromArmsDealerInventoryAtElement(UINT8 ubArmsDealer, uint16_t usItemIndex,
-                                                       UINT8 ubElement);
+void RemoveItemFromArmsDealerInventory(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                       SPECIAL_ITEM_INFO *pSpclItemInfo, uint8_t ubHowMany);
+void RemoveSpecialItemFromArmsDealerInventoryAtElement(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                                       uint8_t ubElement);
 
-BOOLEAN IsMercADealer(UINT8 ubMercID);
-INT8 GetArmsDealerIDFromMercID(UINT8 ubMercID);
+BOOLEAN IsMercADealer(uint8_t ubMercID);
+INT8 GetArmsDealerIDFromMercID(uint8_t ubMercID);
 
 BOOLEAN SaveArmsDealerInventoryToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludesElgin,
@@ -247,50 +247,52 @@ BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludes
 
 void DailyUpdateOfArmsDealersInventory();
 
-UINT8 GetTypeOfArmsDealer(UINT8 ubDealerID);
+uint8_t GetTypeOfArmsDealer(uint8_t ubDealerID);
 
-BOOLEAN DoesDealerDoRepairs(UINT8 ubArmsDealer);
-BOOLEAN RepairmanIsFixingItemsButNoneAreDoneYet(UINT8 ubProfileID);
+BOOLEAN DoesDealerDoRepairs(uint8_t ubArmsDealer);
+BOOLEAN RepairmanIsFixingItemsButNoneAreDoneYet(uint8_t ubProfileID);
 
-uint32_t GetTimeToFixItemBeingRepaired(UINT8 ubArmsDealer, uint16_t usItemIndex, UINT8 ubElement);
+uint32_t GetTimeToFixItemBeingRepaired(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                       uint8_t ubElement);
 
-BOOLEAN CanDealerTransactItem(UINT8 ubArmsDealer, uint16_t usItemIndex,
+BOOLEAN CanDealerTransactItem(uint8_t ubArmsDealer, uint16_t usItemIndex,
                               BOOLEAN fPurchaseFromPlayer);
-BOOLEAN CanDealerRepairItem(UINT8 ubArmsDealer, uint16_t usItemIndex);
+BOOLEAN CanDealerRepairItem(uint8_t ubArmsDealer, uint16_t usItemIndex);
 
-BOOLEAN AddDeadArmsDealerItemsToWorld(UINT8 ubMercID);
+BOOLEAN AddDeadArmsDealerItemsToWorld(uint8_t ubMercID);
 
 void MakeObjectOutOfDealerItems(uint16_t usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
-                                struct OBJECTTYPE *pObject, UINT8 ubHowMany);
+                                struct OBJECTTYPE *pObject, uint8_t ubHowMany);
 
-void GiveObjectToArmsDealerForRepair(UINT8 ubArmsDealer, struct OBJECTTYPE *pObject,
-                                     UINT8 ubOwnerProfileId);
-void GiveItemToArmsDealerforRepair(UINT8 ubArmsDealer, uint16_t usItemIndex,
-                                   SPECIAL_ITEM_INFO *pSpclItemInfo, UINT8 ubOwnerProfileId);
-uint32_t WhenWillRepairmanBeAllDoneRepairing(UINT8 ubArmsDealer);
+void GiveObjectToArmsDealerForRepair(uint8_t ubArmsDealer, struct OBJECTTYPE *pObject,
+                                     uint8_t ubOwnerProfileId);
+void GiveItemToArmsDealerforRepair(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                   SPECIAL_ITEM_INFO *pSpclItemInfo, uint8_t ubOwnerProfileId);
+uint32_t WhenWillRepairmanBeAllDoneRepairing(uint8_t ubArmsDealer);
 
-uint32_t CalculateSpecialItemRepairTime(UINT8 ubArmsDealer, uint16_t usItemIndex,
+uint32_t CalculateSpecialItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex,
                                         SPECIAL_ITEM_INFO *pSpclItemInfo);
-uint32_t CalculateObjectItemRepairTime(UINT8 ubArmsDealer, struct OBJECTTYPE *pItemObject);
-uint32_t CalculateSimpleItemRepairTime(UINT8 ubArmsDealer, uint16_t usItemIndex,
+uint32_t CalculateObjectItemRepairTime(uint8_t ubArmsDealer, struct OBJECTTYPE *pItemObject);
+uint32_t CalculateSimpleItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex,
                                        INT8 bItemCondition);
 
-uint32_t CalculateSpecialItemRepairCost(UINT8 ubArmsDealer, uint16_t usItemIndex,
+uint32_t CalculateSpecialItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
                                         SPECIAL_ITEM_INFO *pSpclItemInfo);
-uint32_t CalculateObjectItemRepairCost(UINT8 ubArmsDealer, struct OBJECTTYPE *pItemObject);
-uint32_t CalculateSimpleItemRepairCost(UINT8 ubArmsDealer, uint16_t usItemIndex,
+uint32_t CalculateObjectItemRepairCost(uint8_t ubArmsDealer, struct OBJECTTYPE *pItemObject);
+uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
                                        INT8 bItemCondition);
 
 void SetSpecialItemInfoToDefaults(SPECIAL_ITEM_INFO *pSpclItemInfo);
 void SetSpecialItemInfoFromObject(SPECIAL_ITEM_INFO *pSpclItemInfo, struct OBJECTTYPE *pObject);
 
-uint16_t CalcValueOfItemToDealer(UINT8 ubArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling);
+uint16_t CalcValueOfItemToDealer(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                 BOOLEAN fDealerSelling);
 
 BOOLEAN DealerItemIsSafeToStack(uint16_t usItemIndex);
 
-uint32_t CalculateOvernightRepairDelay(UINT8 ubArmsDealer, uint32_t uiTimeWhenFreeToStartIt,
+uint32_t CalculateOvernightRepairDelay(uint8_t ubArmsDealer, uint32_t uiTimeWhenFreeToStartIt,
                                        uint32_t uiMinutesToFix);
-uint32_t CalculateMinutesClosedBetween(UINT8 ubArmsDealer, uint32_t uiStartTime,
+uint32_t CalculateMinutesClosedBetween(uint8_t ubArmsDealer, uint32_t uiStartTime,
                                        uint32_t uiEndTime);
 
 #endif

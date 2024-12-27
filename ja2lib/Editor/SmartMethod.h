@@ -35,9 +35,9 @@ void PasteSmartDoor(uint32_t iMapIndex);
 void PasteSmartWindow(uint32_t iMapIndex);
 void PasteSmartBrokenWall(uint32_t iMapIndex);
 
-extern UINT8 gubDoorUIValue;
-extern UINT8 gubWindowUIValue;
-extern UINT8 gubWallUIValue;
-extern UINT8 gubBrokenWallUIValue;
+extern uint8_t gubDoorUIValue;
+extern uint8_t gubWindowUIValue;
+extern uint8_t gubWallUIValue;
+extern uint8_t gubBrokenWallUIValue;
 
 #endif

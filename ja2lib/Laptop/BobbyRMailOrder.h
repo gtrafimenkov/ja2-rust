@@ -45,24 +45,24 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint1
 
 typedef struct {
   BOOLEAN fActive;
-  UINT8 ubDeliveryLoc;     // the city the shipment is going to
-  UINT8 ubDeliveryMethod;  // type of delivery: next day, 2 days ...
+  uint8_t ubDeliveryLoc;     // the city the shipment is going to
+  uint8_t ubDeliveryMethod;  // type of delivery: next day, 2 days ...
   BobbyRayPurchaseStruct BobbyRayPurchase[MAX_PURCHASE_AMOUNT];
-  UINT8 ubNumberPurchases;
+  uint8_t ubNumberPurchases;
 
   uint32_t uiPackageWeight;
   uint32_t uiOrderedOnDayNum;
 
   BOOLEAN fDisplayedInShipmentPage;
 
-  UINT8 ubFiller[7];
+  uint8_t ubFiller[7];
 } NewBobbyRayOrderStruct;
 
 extern NewBobbyRayOrderStruct *gpNewBobbyrShipments;
 extern INT32 giNumberOfNewBobbyRShipment;
 
-BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, UINT8 ubDeliveryLoc,
-                             UINT8 ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,
+BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ubDeliveryLoc,
+                             uint8_t ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,
                              uint32_t uiPackageWeight);
 
 uint16_t CountNumberOfBobbyPurchasesThatAreInTransit();
