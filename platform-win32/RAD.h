@@ -1,3 +1,7 @@
+// This is not free software.
+// This file contains code derived from the code released under the terms
+// of Strategy First Inc. Source Code License Agreement. See SFI-SCLA.txt.
+
 #ifndef __RAD__
 #define __RAD__
 
@@ -179,8 +183,8 @@
 RADDEFSTART
 
 #define s8 signed char
-#define uint8_t unsigned char
-#define uint32_t unsigned long
+#define u8 unsigned char
+#define u32 unsigned long
 #define s32 signed long
 #define u64 unsigned __int64
 #define s64 signed __int64
@@ -211,16 +215,16 @@ RADDEFSTART
 
 #define radstrcpy strcpy
 
-static uint32_t inline radsqr(s32 a) { return (a * a); }
+static u32 inline radsqr(s32 a) { return (a * a); }
 
 #ifdef __RAD68K__
 
 #pragma parameter __D0 mult64anddiv(__D0, __D1, __D2)
-uint32_t mult64anddiv(uint32_t m1, uint32_t m2, uint32_t d) = { 0x4C01, 0x0C01, 0x4C42, 0x0C01 };
+u32 mult64anddiv(u32 m1, u32 m2, u32 d) = { 0x4C01, 0x0C01, 0x4C42, 0x0C01 };
 //  muls.l d1,d1:d0  divs.l d2,d1:d0
 
 #pragma parameter radconv32a(__A0, __D0)
-void radconv32a(void* p, uint32_t n) = {
+void radconv32a(void* p, u32 n) = {
   0x4A80,
   0x600C,
   0x2210,
@@ -236,9 +240,9 @@ void radconv32a(void* p, uint32_t n) = {
 
 #else
 
-uint32_t mult64anddiv(uint32_t m1, uint32_t m2, uint32_t d);
+u32 mult64anddiv(u32 m1, u32 m2, u32 d);
 
-void radconv32a(void* p, uint32_t n);
+void radconv32a(void* p, u32 n);
 
 #endif
 
@@ -246,10 +250,10 @@ void radconv32a(void* p, uint32_t n);
 
 #ifdef __WATCOMC__
 
-uint32_t radsqr(s32 a);
+u32 radsqr(s32 a);
 #pragma aux radsqr = "mul eax" parm[eax] modify[EDX eax];
 
-uint32_t mult64anddiv(uint32_t m1, uint32_t m2, uint32_t d);
+u32 mult64anddiv(u32 m1, u32 m2, u32 d);
 #pragma aux mult64anddiv = \
     "mul ecx"              \
     "div ebx" parm[eax][ecx][ebx] modify[EDX eax];
@@ -263,7 +267,7 @@ s32 radabs(s32 ab);
 
 #define radabs32 radabs
 
-uint32_t DOSOut(const char* str);
+u32 DOSOut(const char* str);
 #pragma aux DOSOut =     \
     "cld"                \
     "mov ecx,0xffffffff" \
@@ -276,13 +280,13 @@ uint32_t DOSOut(const char* str);
     "mov ah,0x40"        \
     "int 0x21" parm[EDI] modify[EAX EBX ECX EDX EDI] value[ecx];
 
-void DOSOutNum(const char* str, uint32_t len);
+void DOSOutNum(const char* str, u32 len);
 #pragma aux DOSOutNum = \
     "mov ah,0x40"       \
     "mov ebx,1"         \
     "int 0x21" parm[edx][ecx] modify[eax ebx];
 
-uint32_t ErrOut(const char* str);
+u32 ErrOut(const char* str);
 #pragma aux ErrOut =     \
     "cld"                \
     "mov ecx,0xffffffff" \
@@ -295,13 +299,13 @@ uint32_t ErrOut(const char* str);
     "mov ah,0x40"        \
     "int 0x21" parm[EDI] modify[EAX EBX ECX EDX EDI] value[ecx];
 
-void ErrOutNum(const char* str, uint32_t len);
+void ErrOutNum(const char* str, u32 len);
 #pragma aux ErrOutNum = \
     "mov ah,0x40"       \
     "xor ebx,ebx"       \
     "int 0x21" parm[edx][ecx] modify[eax ebx];
 
-void radmemset16(void* dest, u16 value, uint32_t size);
+void radmemset16(void* dest, u16 value, u32 size);
 #pragma aux radmemset16 = \
     "cld"                 \
     "mov bx,ax"           \
@@ -314,7 +318,7 @@ void radmemset16(void* dest, u16 value, uint32_t size);
     "and cl,1"            \
     "rep stosw" parm[EDI][EAX][ECX] modify[EAX EDX EBX ECX EDI];
 
-void radmemset(void* dest, uint8_t value, uint32_t size);
+void radmemset(void* dest, u8 value, u32 size);
 #pragma aux radmemset = \
     "cld"               \
     "mov ah,al"         \
@@ -328,12 +332,12 @@ void radmemset(void* dest, uint8_t value, uint32_t size);
     "mov cl,bl"         \
     "rep stosb" parm[EDI][AL][ECX] modify[EAX EDX EBX ECX EDI];
 
-void radmemset32(void* dest, uint32_t value, uint32_t size);
+void radmemset32(void* dest, u32 value, u32 size);
 #pragma aux radmemset32 = \
     "cld"                 \
     "rep stosd" parm[EDI][EAX][ECX] modify[EAX EDX EBX ECX EDI];
 
-void radmemcpy(void* dest, const void* source, uint32_t size);
+void radmemcpy(void* dest, const void* source, u32 size);
 #pragma aux radmemcpy = \
     "cld"               \
     "mov bl,cl"         \
@@ -343,7 +347,7 @@ void radmemcpy(void* dest, const void* source, uint32_t size);
     "and cl,3"          \
     "rep movsb" parm[EDI][ESI][ECX] modify[EBX ECX EDI ESI];
 
-void __far* radfmemcpy(void __far* dest, const void __far* source, uint32_t size);
+void __far* radfmemcpy(void __far* dest, const void __far* source, u32 size);
 #pragma aux radfmemcpy = \
     "cld"                \
     "push es"            \
@@ -359,7 +363,7 @@ void __far* radfmemcpy(void __far* dest, const void __far* source, uint32_t size
     "pop ds"             \
     "pop es" parm[CX EDI][DX ESI][EAX] modify[ECX EDI ESI] value[CX EDI];
 
-void radmemcpydb(void* dest, const void* source, uint32_t size);  // Destination bigger
+void radmemcpydb(void* dest, const void* source, u32 size);  // Destination bigger
 #pragma aux radmemcpydb = \
     "std"                 \
     "mov bl,cl"           \
@@ -428,7 +432,7 @@ char* radstpcpyrs(void* dest, const void* source);
     "jne lp"              \
     "dec esi" parm[EDI][ESI] modify[EAX EDI ESI] value[ESI];
 
-uint32_t radstrlen(const void* dest);
+u32 radstrlen(const void* dest);
 #pragma aux radstrlen =  \
     "cld"                \
     "mov ecx,0xffffffff" \
@@ -464,7 +468,7 @@ char* radstrchr(const void* dest, char chr);
     "fnd:"              \
     "dec esi" parm[ESI][DL] modify[EAX ESI] value[esi];
 
-s8 radmemcmp(const void* s1, const void* s2, uint32_t len);
+s8 radmemcmp(const void* s1, const void* s2, u32 len);
 #pragma aux radmemcmp = \
     "cld"               \
     "rep cmpsb"         \
@@ -521,7 +525,7 @@ s8 radstricmp(const void* s1, const void* s2);
     "neg al"             \
     "end:" parm[EDI][ESI] modify[EAX EDI ESI];
 
-s8 radstrnicmp(const void* s1, const void* s2, uint32_t len);
+s8 radstrnicmp(const void* s1, const void* s2, u32 len);
 #pragma aux radstrnicmp = \
     "lp:"                 \
     "mov al,[esi]"        \
@@ -583,7 +587,7 @@ char* radstrlwr(void* s1);
     "cmp al,0"          \
     "jne lp" parm[EDI] modify[EAX EDI] value[ecx];
 
-uint32_t radstru32(const void* dest);
+u32 radstru32(const void* dest);
 #pragma aux radstru32 = \
     "cld"               \
     "xor ecx,ecx"       \
@@ -619,8 +623,8 @@ u16 GetDS();
 
 #ifdef __RADWINEXT__
 
-#define _16To32(ptr16)                                                                       \
-  ((void*)(((GetSelectorBase((u16)(((uint32_t)(ptr16)) >> 16)) + ((u16)(uint32_t)(ptr16))) - \
+#define _16To32(ptr16)                                                             \
+  ((void*)(((GetSelectorBase((u16)(((u32)(ptr16)) >> 16)) + ((u16)(u32)(ptr16))) - \
             GetSelectorBase(GetDS()))))
 
 #endif
@@ -644,8 +648,8 @@ u16 GetDS();
 #define radstrlen strlen
 #define radstrchr strchr
 #define radtoupper toupper
-#define radstru32(s) ((uint32_t)atol(s))
-#define radstricmp strcasecmp
+#define radstru32(s) ((u32)atol(s))
+#define radstricmp _stricmp
 #define radstrcmp strcmp
 #define radstrupr _strupr
 #define radstrlwr _strlwr
@@ -657,14 +661,14 @@ u16 GetDS();
 
 typedef char* RADPCHAR;
 
-uint32_t __inline radsqr(uint32_t m) {
+u32 __inline radsqr(u32 m) {
   _asm {
             mov eax,[m]
             mul eax
   }
 }
 
-uint32_t __inline mult64anddiv(uint32_t m1, uint32_t m2, uint32_t d) {
+u32 __inline mult64anddiv(u32 m1, u32 m2, u32 d) {
   _asm {
             mov eax,[m1]
             mov ecx,[m2]
@@ -684,14 +688,14 @@ s32 __inline radabs(s32 ab) {
   }
 }
 
-uint8_t __inline radinp(u16 p) {
+u8 __inline radinp(u16 p) {
   _asm {
             mov dx,[p]
             in al,dx
   }
 }
 
-void __inline radoutp(u16 p, uint8_t v) {
+void __inline radoutp(u16 p, u8 v) {
   _asm {
             mov dx,[p]
             mov al,[v]
@@ -733,7 +737,7 @@ RADPCHAR __inline radstpcpyrs(char* p1, char* p2) {
   }
 }
 
-void __inline radmemset16(void* dest, u16 value, uint32_t sizeb) {
+void __inline radmemset16(void* dest, u16 value, u32 sizeb) {
   _asm {
             mov edi,[dest]
             mov ax,[value]
@@ -750,7 +754,7 @@ void __inline radmemset16(void* dest, u16 value, uint32_t sizeb) {
   }
 }
 
-void __inline radmemset32(void* dest, uint32_t value, uint32_t sizeb) {
+void __inline radmemset32(void* dest, u32 value, u32 sizeb) {
   _asm {
             mov edi,[dest]
             mov eax,[value]
@@ -760,7 +764,7 @@ void __inline radmemset32(void* dest, uint32_t value, uint32_t sizeb) {
   }
 }
 
-uint32_t __inline __stdcall RADsqrt(uint32_t sq) {
+u32 __inline __stdcall RADsqrt(u32 sq) {
   _asm {
             fild dword ptr [sq]
             fsqrt
@@ -769,7 +773,7 @@ uint32_t __inline __stdcall RADsqrt(uint32_t sq) {
   }
 }
 
-void __inline RADCycleTimerStartAddr(uint32_t* addr) {
+void __inline RADCycleTimerStartAddr(u32* addr) {
   _asm {
             mov ecx,[addr]
             __asm __emit 0fh __asm __emit 031h
@@ -777,7 +781,7 @@ void __inline RADCycleTimerStartAddr(uint32_t* addr) {
   }
 }
 
-uint32_t __inline RADCycleTimerDeltaAddr(uint32_t* addr) {
+u32 __inline RADCycleTimerDeltaAddr(u32* addr) {
   _asm {
             __asm __emit 0fh __asm __emit 031h
             mov ecx,[addr]
@@ -805,7 +809,7 @@ uint32_t __inline RADCycleTimerDeltaAddr(uint32_t* addr) {
 
 #ifdef __WATCOMC__
 
-uint32_t radsqr(s32 a);
+u32 radsqr(s32 a);
 #pragma aux radsqr = \
     "shl edx,16"     \
     "mov dx,ax"      \
@@ -830,7 +834,7 @@ s32 radabs32(s32 ab);
     "sbb dx,0"         \
     "skip:" parm[dx ax] value[dx ax];
 
-uint32_t DOSOut(const char far* dest);
+u32 DOSOut(const char far* dest);
 #pragma aux DOSOut = "cld" "and edi,0xffff" "mov dx,di" "mov ecx,0xffffffff" "xor eax,eax" 0x67 "repne scasb" "not ecx" "dec ecx" "mov bx,1" "push ds" "push es" "pop ds" "mov ah,0x40" "int 0x21" "pop ds" "movzx eax,cx" "shr ecx,16" \
        parm [ES DI] modify [AX BX CX DX DI ES] value [CX AX];
 
@@ -844,7 +848,7 @@ void DOSOutNum(const char far* str, u16 len);
     "int 0x21"          \
     "pop ds" parm[cx dx][bx] modify[ax bx cx];
 
-uint32_t ErrOut(const char far* dest);
+u32 ErrOut(const char far* dest);
 #pragma aux ErrOut = "cld" "and edi,0xffff" "mov dx,di" "mov ecx,0xffffffff" "xor eax,eax" 0x67 "repne scasb" "not ecx" "dec ecx" "xor bx,bx" "push ds" "push es" "pop ds" "mov ah,0x40" "int 0x21" "pop ds" "movzx eax,cx" "shr ecx,16" \
        parm [ES DI] modify [AX BX CX DX DI ES] value [CX AX];
 
@@ -858,10 +862,10 @@ void ErrOutNum(const char far* str, u16 len);
     "int 0x21"          \
     "pop ds" parm[cx dx][bx] modify[ax bx cx];
 
-void radmemset(void far* dest, uint8_t value, uint32_t size);
+void radmemset(void far* dest, u8 value, u32 size);
 #pragma aux radmemset = "cld" "and edi,0ffffh" "shl ecx,16" "mov cx,bx" "mov ah,al" "mov bx,ax" "shl eax,16" "mov ax,bx" "mov bl,cl" "shr ecx,2" 0x67 "rep stosd" "mov cl,bl" "and cl,3" "rep stosb" parm [ES DI] [AL] [CX BX];
 
-void radmemset16(void far* dest, u16 value, uint32_t size);
+void radmemset16(void far* dest, u16 value, u32 size);
 #pragma aux radmemset16 = \
     "cld"                 \
     "and edi,0ffffh"      \
@@ -877,10 +881,10 @@ void radmemset16(void far* dest, u16 value, uint32_t size);
     "and cl,1"            \
     "rep stosw" parm[ES DI][AX][CX BX];
 
-void radmemcpy(void far* dest, const void far* source, uint32_t size);
+void radmemcpy(void far* dest, const void far* source, u32 size);
 #pragma aux radmemcpy = "cld" "push ds" "mov ds,dx" "and esi,0ffffh" "and edi,0ffffh" "shl ecx,16" "mov cx,bx" "shr ecx,2" 0x67 "rep movsd" "mov cl,bl" "and cl,3" "rep movsb" "pop ds" parm [ES DI] [DX SI] [CX BX] modify [CX SI DI ES];
 
-s8 radmemcmp(const void far* s1, const void far* s2, uint32_t len);
+s8 radmemcmp(const void far* s1, const void far* s2, u32 len);
 #pragma aux radmemcmp = \
     "cld"               \
     "push ds"           \
@@ -924,7 +928,7 @@ char far* radstpcpy(void far* dest, const void far* source);
     "dec di"            \
     "pop ds" parm[ES DI][DX SI] modify[DI SI ES] value[es di];
 
-uint32_t radstrlen(const void far* dest);
+u32 radstrlen(const void far* dest);
 #pragma aux radstrlen = "cld" "and edi,0xffff" "mov ecx,0xffffffff" "xor eax,eax" 0x67 "repne scasb" "not ecx" "dec ecx" "movzx eax,cx" "shr ecx,16" parm [ES DI] modify [AX CX DI ES] value [CX AX];
 
 char far* radstrcat(void far* dest, const void far* source);
@@ -969,12 +973,12 @@ s8 radstricmp(const void far* s1, const void far* s2);
     "end:"               \
     "pop ds" parm[ES DI][DX SI] modify[AX DI SI];
 
-uint32_t radstru32(const void far* dest);
+u32 radstru32(const void far* dest);
 #pragma aux radstru32 = "cld" "xor ecx,ecx" "xor ebx,ebx" "xor edi,edi" 0x26 "lodsb" "cmp al,45" "jne skip2" "mov edi,1" "jmp skip" "lp:" "mov eax,10" "mul ecx" "lea ecx,[eax+ebx]" \
       "skip:" 0x26 "lodsb" "skip2:" "cmp al,0x39" "ja dne" "cmp al,0x30" "jb dne" "mov bl,al" "sub bl,0x30" "jmp lp" "dne:" "test edi,1" "jz pos" "neg ecx" "pos:" \
       "movzx eax,cx" "shr ecx,16" parm [ES SI] modify [AX BX DX DI SI] value [cx ax];
 
-uint32_t mult64anddiv(uint32_t m1, uint32_t m2, uint32_t d);
+u32 mult64anddiv(u32 m1, u32 m2, u32 d);
 #pragma aux mult64anddiv = \
     "shl ecx,16"           \
     "mov cx,ax"            \
@@ -994,22 +998,22 @@ uint32_t mult64anddiv(uint32_t m1, uint32_t m2, uint32_t d);
 
 RADDEFEND
 
-#define u32neg1 ((uint32_t)(s32) - 1)
+#define u32neg1 ((u32)(s32) - 1)
 #define RAD_align(var) \
   var;                 \
-  uint8_t junk##var[4 - (sizeof(var) & 3)];
-#define RAD_align_after(var) uint8_t junk##var[4 - (sizeof(var) & 3)] = {0};
+  u8 junk##var[4 - (sizeof(var) & 3)];
+#define RAD_align_after(var) u8 junk##var[4 - (sizeof(var) & 3)] = {0};
 #define RAD_align_init(var, val) \
   var = val;                     \
-  uint8_t junk##var[4 - (sizeof(var) & 3)] = {0};
+  u8 junk##var[4 - (sizeof(var) & 3)] = {0};
 #define RAD_align_array(var, num) \
   var[num];                       \
-  uint8_t junk##var[4 - (sizeof(var) & 3)];
+  u8 junk##var[4 - (sizeof(var) & 3)];
 #define RAD_align_string(var, str) \
   char var[] = str;                \
-  uint8_t junk##var[4 - (sizeof(var) & 3)] = {0};
+  u8 junk##var[4 - (sizeof(var) & 3)] = {0};
 
-RADEXPFUNC void PTR4* RADEXPLINK radmalloc(uint32_t numbytes);
+RADEXPFUNC void PTR4* RADEXPLINK radmalloc(u32 numbytes);
 RADEXPFUNC void RADEXPLINK radfree(void PTR4* ptr);
 
 #ifdef __WATCOMC__
@@ -1036,10 +1040,10 @@ char bgetch();
 void BreakPoint();
 #pragma aux BreakPoint = "int 3";
 
-uint8_t radinp(u16 p);
+u8 radinp(u16 p);
 #pragma aux radinp = "in al,dx" parm[DX];
 
-uint8_t radtoupper(uint8_t p);
+u8 radtoupper(u8 p);
 #pragma aux radtoupper = \
     "cmp al,'a'"         \
     "jb c1"              \
@@ -1048,7 +1052,7 @@ uint8_t radtoupper(uint8_t p);
     "sub al,32"          \
     "c1:" parm[al] value[al];
 
-void radoutp(u16 p, uint8_t v);
+void radoutp(u16 p, u8 v);
 #pragma aux radoutp = "out dx,al" parm[DX][AL];
 
 #endif
