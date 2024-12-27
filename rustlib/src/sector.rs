@@ -1,3 +1,7 @@
+// This is not free software.
+// This file may contain code derived from the code released under the terms
+// of Strategy First Inc. Source Code License Agreement. See SFI-SCLA.txt.
+
 pub const MAP_WORLD_X: i16 = 18;
 pub const MAP_WORLD_Y: i16 = 18;
 
