@@ -25,8 +25,8 @@ enum {
   MVT_MODE_FOOT,
 };
 
-INT32 FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumber,
-                    BOOLEAN fTacticalTraversal);
+int32_t FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumber,
+                      BOOLEAN fTacticalTraversal);
 
 /*
 BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSectorDest, int8_t bToDirection  );
@@ -74,7 +74,7 @@ struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, int
 int16_t GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter);
 
 // get id of last sector in mercs path list
-int16_t GetLastSectorIdInVehiclePath(INT32 iId);
+int16_t GetLastSectorIdInVehiclePath(int32_t iId);
 
 // copy paths
 struct path* CopyPaths(struct path* pSourcePath, struct path* pDestPath);
@@ -113,8 +113,8 @@ BOOLEAN MoveGroupToOriginalSector( uint8_t ubGroupID );
 */
 
 // get length of path
-INT32 GetLengthOfPath(struct path* pHeadPath);
-INT32 GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier);
+int32_t GetLengthOfPath(struct path* pHeadPath);
+int32_t GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier);
 
 // is the path empty?
 BOOLEAN CheckIfPathIsEmpty(struct path* pHeadPath);

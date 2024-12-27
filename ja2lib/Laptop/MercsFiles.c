@@ -112,20 +112,20 @@ uint32_t guiMercFace;
 //
 
 // The Prev button
-void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnMercPrevButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiPrevButton;
-INT32 guiButtonImage;
+int32_t guiButtonImage;
 
 // The Next button
-void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnMercNextButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiNextButton;
 
 // The Hire button
-void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnMercHireButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiHireButton;
 
 // The Back button
-void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiMercBackButton;
 
 //****************************
@@ -276,7 +276,7 @@ void RenderMercsFiles() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercPrevButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -307,7 +307,7 @@ void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -338,7 +338,7 @@ void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercHireButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -666,7 +666,7 @@ BOOLEAN MercFilesHireMerc(uint8_t ubMercID) {
   }
 }
 
-void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

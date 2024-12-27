@@ -123,9 +123,9 @@ char gzNameOfMapTempFile[128];
 #endif
 
 extern struct SOLDIERTYPE *gpSMCurrentMerc;
-extern INT32 giSortStateForMapScreenList;
+extern int32_t giSortStateForMapScreenList;
 extern int16_t sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
-extern INT32 giRTAILastUpdateTime;
+extern int32_t giRTAILastUpdateTime;
 extern BOOLEAN gfRedrawSaveLoadScreen;
 extern uint8_t gubScreenCount;
 extern int16_t sWorldSectorLocationOfFirstBattle;
@@ -186,13 +186,13 @@ typedef struct {
   BOOLEAN fHelicopterAvailable;
 
   // helicopter vehicle id
-  INT32 iHelicopterVehicleId;
+  int32_t iHelicopterVehicleId;
 
   // total distance travelled
-  INT32 UNUSEDiTotalHeliDistanceSinceRefuel;
+  int32_t UNUSEDiTotalHeliDistanceSinceRefuel;
 
   // total owed to player
-  INT32 iTotalAccumulatedCostByPlayer;
+  int32_t iTotalAccumulatedCostByPlayer;
 
   // whether or not skyrider is alive and well? and on our side yet?
   BOOLEAN fSkyRiderAvailable;
@@ -258,7 +258,7 @@ typedef struct {
   BOOLEAN fHelicopterDestroyed;    // if the chopper is destroyed
   BOOLEAN fShowMapScreenHelpText;  // If true, displays help in mapscreen
 
-  INT32 iSortStateForMapScreenList;
+  int32_t iSortStateForMapScreenList;
   BOOLEAN fFoundTixa;
 
   uint32_t uiTimeOfLastSkyriderMonologue;
@@ -284,7 +284,7 @@ typedef struct {
 
   uint16_t usOldMeanWhileFlags;
 
-  INT32 iPortraitNumber;
+  int32_t iPortraitNumber;
 
   int16_t sWorldSectorLocationOfFirstBattle;
 
@@ -310,7 +310,7 @@ typedef struct {
 
   int16_t sSelMapX;
   int16_t sSelMapY;
-  INT32 iCurrentMapSectorZ;
+  int32_t iCurrentMapSectorZ;
 
   uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
   BOOLEAN fHideHelpInAllScreens;
@@ -346,8 +346,8 @@ typedef struct {
   int8_t bHospitalPriceModifier;
   int8_t bUnused2[2];
 
-  INT32 iHospitalTempBalance;
-  INT32 iHospitalRefund;
+  int32_t iHospitalTempBalance;
+  int32_t iHospitalRefund;
 
   int8_t fPlayerTeamSawJoey;
   int8_t fMikeShouldSayHi;
@@ -423,8 +423,8 @@ void HandleOldBobbyRMailOrders();
 #ifdef JA2BETAVERSION
 void InitSaveGameFilePosition();
 void InitLoadGameFilePosition();
-void SaveGameFilePosition(INT32 iPos, STR pMsg);
-void LoadGameFilePosition(INT32 iPos, STR pMsg);
+void SaveGameFilePosition(int32_t iPos, STR pMsg);
+void LoadGameFilePosition(int32_t iPos, STR pMsg);
 
 void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveGameID);
 #endif
@@ -447,7 +447,7 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   CHAR8 saveDir[100];
   BOOLEAN fPausedStateBeforeSaving = gfGamePaused;
   BOOLEAN fLockPauseStateBeforeSaving = gfLockPauseState;
-  INT32 iSaveLoadGameMessageBoxID = -1;
+  int32_t iSaveLoadGameMessageBoxID = -1;
   uint16_t usPosX, usActualWidth, usActualHeight;
   BOOLEAN fWePausedIt = FALSE;
 
@@ -3245,7 +3245,7 @@ void InitSaveGameFilePosition() {
   FileMan_Delete(zFileName);
 }
 
-void SaveGameFilePosition(INT32 iPos, STR pMsg) {
+void SaveGameFilePosition(int32_t iPos, STR pMsg) {
   HWFILE hFile;
   CHAR8 zTempString[512];
   uint32_t uiNumBytesWritten;
@@ -3284,7 +3284,7 @@ void InitLoadGameFilePosition() {
 
   FileMan_Delete(zFileName);
 }
-void LoadGameFilePosition(INT32 iPos, STR pMsg) {
+void LoadGameFilePosition(int32_t iPos, STR pMsg) {
   HWFILE hFile;
   CHAR8 zTempString[512];
   uint32_t uiNumBytesWritten;
@@ -4066,8 +4066,8 @@ int8_t GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
 }
 
 void HandleOldBobbyRMailOrders() {
-  INT32 iCnt;
-  INT32 iNewListCnt = 0;
+  int32_t iCnt;
+  int32_t iNewListCnt = 0;
 
   if (LaptopSaveInfo.usNumberOfBobbyRayOrderUsed != 0) {
     // Allocate memory for the list

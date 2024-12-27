@@ -149,9 +149,9 @@ extern void ToggleItemGlow(BOOLEAN fOn);
 extern void HandleTalkingMenuBackspace(void);
 extern void BeginKeyPanelFromKeyShortcut();
 
-extern INT32 iSMPanelButtons[NUM_SM_BUTTONS];
-extern INT32 iTEAMPanelButtons[NUM_TEAM_BUTTONS];
-extern INT32 giSMStealthButton;
+extern int32_t iSMPanelButtons[NUM_SM_BUTTONS];
+extern int32_t iTEAMPanelButtons[NUM_TEAM_BUTTONS];
+extern int32_t giSMStealthButton;
 
 struct SOLDIERTYPE *gpExchangeSoldier1;
 struct SOLDIERTYPE *gpExchangeSoldier2;
@@ -187,9 +187,9 @@ void ToggleRealTimeConfirm();
 void GrenadeTest1();
 void GrenadeTest2();
 void GrenadeTest3();
-void TestMeanWhile(INT32 iID);
+void TestMeanWhile(int32_t iID);
 void CreatePlayerControlledMonster();
-void ChangeCurrentSquad(INT32 iSquad);
+void ChangeCurrentSquad(int32_t iSquad);
 void HandleSelectMercSlot(uint8_t ubPanelSlot, int8_t bCode);
 void EscapeUILock();
 void TestCapture();
@@ -1395,7 +1395,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
       if (InputEvent.usKeyState & ALT_DOWN) {
         if (CHEATER_CHEAT_LEVEL()) {
           static BOOLEAN fShowRoofs = TRUE;
-          INT32 x;
+          int32_t x;
           uint16_t usType;
 
           // Toggle removal of roofs...
@@ -1426,9 +1426,9 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
 #ifdef JA2TESTVERSION
     if ((InputEvent.usEvent == KEY_DOWN) && (InputEvent.usParam == '0') &&
         (InputEvent.usKeyState & ALT_DOWN)) {
-      INT32 i = 0;
+      int32_t i = 0;
       int16_t sGridNo;
-      INT32 iTime = GetJA2Clock();
+      int32_t iTime = GetJA2Clock();
       int8_t ubLevel;
 
       for (i = 0; i < 1000; i++) {
@@ -1479,7 +1479,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
             if (!InKeyRingPopup()) {
               if (_KeyDown(SHIFT)) {
                 struct SOLDIERTYPE *pNewSoldier;
-                INT32 iCurrentSquad;
+                int32_t iCurrentSquad;
 
                 if (gusSelectedSoldier != NO_SOLDIER) {
                   // only allow if nothing in hand and if in SM panel, the Change Squad button must
@@ -1942,7 +1942,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
                    ((gsCurInterfacePanel == TEAM_PANEL) &&
                     (ButtonList[iTEAMPanelButtons[TEAM_DONE_BUTTON]]->uiFlags & BUTTON_ENABLED)))) {
                 if (fAlt) {
-                  INT32 cnt;
+                  int32_t cnt;
                   struct SOLDIERTYPE *pSoldier;
 
                   if (CHEATER_CHEAT_LEVEL()) {
@@ -2474,7 +2474,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
             // ATE: This key will select everybody in the sector
             if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
               struct SOLDIERTYPE *pSoldier;
-              INT32 cnt;
+              int32_t cnt;
 
               cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
               for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -2498,7 +2498,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
               RefreshSoldier();
             }
           } else if (fCtrl) {
-            INT32 cnt;
+            int32_t cnt;
             struct SOLDIERTYPE *pSoldier;
 
 #ifdef GERMAN
@@ -3214,7 +3214,7 @@ void SetBurstMode() {
 }
 
 void ObliterateSector() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pTSoldier;
 
   // Kill everybody!
@@ -3795,7 +3795,7 @@ BOOLEAN ConfirmActionCancel(uint16_t usMapPos, uint16_t usOldMapPos) {
   return (FALSE);
 }
 
-void ChangeCurrentSquad(INT32 iSquad) {
+void ChangeCurrentSquad(int32_t iSquad) {
   // only allow if nothing in hand and the Change Squad button for whichever panel we're in must be
   // enabled
   if ((gpItemPointer == NULL) && !gfDisableTacticalPanelButtons &&
@@ -3818,9 +3818,9 @@ void HandleSelectMercSlot(uint8_t ubPanelSlot, int8_t bCode) {
   }
 }
 
-void TestMeanWhile(INT32 iID) {
+void TestMeanWhile(int32_t iID) {
   MEANWHILE_DEFINITION MeanwhileDef;
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   MeanwhileDef.sSectorX = 3;
@@ -3894,7 +3894,7 @@ void ToggleMercsNeverQuit() {
 void HandleStanceChangeFromUIKeys(uint8_t ubAnimHeight) {
   // If we have multiple guys selected, make all change stance!
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   if (gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     // OK, loop through all guys who are 'multi-selected' and
@@ -3942,7 +3942,7 @@ void ToggleStealthMode(struct SOLDIERTYPE *pSoldier) {
 void HandleStealthChangeFromUIKeys() {
   // If we have multiple guys selected, make all change stance!
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   if (gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     // OK, loop through all guys who are 'multi-selected' and
@@ -3967,7 +3967,7 @@ void HandleStealthChangeFromUIKeys() {
 }
 
 void TestCapture() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiNumChosen = 0;
 

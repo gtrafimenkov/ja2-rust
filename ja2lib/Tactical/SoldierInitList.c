@@ -698,7 +698,7 @@ void AddSoldierInitListEnemyDefenceSoldiers(uint8_t ubTotalAdmin, uint8_t ubTota
                                             uint8_t ubTotalElite) {
   SOLDIERINITNODE *mark;
   SOLDIERINITNODE *curr;
-  INT32 iRandom;
+  int32_t iRandom;
   uint8_t ubMaxNum;
   uint8_t ubElitePDSlots = 0, ubEliteDSlots = 0, ubElitePSlots = 0, ubEliteBSlots = 0;
   uint8_t ubTroopPDSlots = 0, ubTroopDSlots = 0, ubTroopPSlots = 0, ubTroopBSlots = 0;
@@ -1050,7 +1050,7 @@ void AddSoldierInitListEnemyDefenceSoldiers(uint8_t ubTotalAdmin, uint8_t ubTota
 void AddSoldierInitListMilitia(uint8_t ubNumGreen, uint8_t ubNumRegs, uint8_t ubNumElites) {
   SOLDIERINITNODE *mark;
   SOLDIERINITNODE *curr;
-  INT32 iRandom;
+  int32_t iRandom;
   uint8_t ubMaxNum;
   BOOLEAN fDoPlacement;
   uint8_t ubEliteSlots = 0;
@@ -1259,7 +1259,7 @@ void AddSoldierInitListCreatures(BOOLEAN fQueen, uint8_t ubNumLarvae, uint8_t ub
                                  uint8_t ubNumYoungMales, uint8_t ubNumYoungFemales,
                                  uint8_t ubNumAdultMales, uint8_t ubNumAdultFemales) {
   SOLDIERINITNODE *curr;
-  INT32 iRandom;
+  int32_t iRandom;
   uint8_t ubFreeSlots;
   BOOLEAN fDoPlacement;
   uint8_t ubNumCreatures;
@@ -1691,7 +1691,7 @@ SOLDIERINITNODE *FindSoldierInitListNodeByProfile(uint8_t ubProfile) {
 // strategic insertion information, and not editor placements.  The key flag involved for doing it
 // this way is the gMercProfiles[i].fUseProfileInsertionInfo.
 void AddProfilesUsingProfileInsertionData() {
-  INT32 i;
+  int32_t i;
   struct SOLDIERTYPE *pSoldier;
   SOLDIERINITNODE *curr;
 

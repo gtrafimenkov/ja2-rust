@@ -40,7 +40,7 @@ void HandleRPCDescription() {
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt2;
+  int32_t cnt2;
   BOOLEAN fSAMSite = FALSE;
 
   if (!gTacticalStatus.fCountingDownForGuideDescription) {

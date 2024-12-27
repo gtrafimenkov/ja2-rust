@@ -53,7 +53,7 @@ struct FileDialogList;
 
 BOOLEAN gfErrorCatch = FALSE;
 CHAR16 gzErrorCatchString[256] = L"";
-INT32 giErrorCatchMessageBox = 0;
+int32_t giErrorCatchMessageBox = 0;
 
 extern void RemoveMercsInSector();
 
@@ -63,12 +63,12 @@ extern uint16_t Counter;
 
 // Hook into the text input code.  These callbacks help give back control, so we
 // can use the dialog interface in conjunction with the
-void FDlgOkCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgCancelCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgUpCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgDwnCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgNamesCallback(GUI_BUTTON *butn, INT32 reason);
-void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason);
+void FDlgOkCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgCancelCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgUpCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgDwnCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgNamesCallback(GUI_BUTTON *butn, int32_t reason);
+void UpdateWorldInfoCallback(GUI_BUTTON *b, int32_t reason);
 void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering);
 
 uint32_t ProcessLoadSaveScreenMessageBoxResult();
@@ -78,19 +78,19 @@ void DrawFileDialog();
 void HandleMainKeyEvents(InputAtom *pEvent);
 void SetTopFileToLetter(uint16_t usLetter);
 
-INT32 iTotalFiles;
-INT32 iTopFileShown;
-INT32 iCurrFileShown;
-INT32 iLastFileClicked;
-INT32 iLastClickTime;
+int32_t iTotalFiles;
+int32_t iTopFileShown;
+int32_t iCurrFileShown;
+int32_t iLastFileClicked;
+int32_t iLastClickTime;
 
 CHAR16 gzFilename[31];
 
 struct FileDialogList *FileList = NULL;
 
-INT32 iFDlgState = DIALOG_NONE;
+int32_t iFDlgState = DIALOG_NONE;
 BOOLEAN gfDestroyFDlg = FALSE;
-INT32 iFileDlgButtons[7];
+int32_t iFileDlgButtons[7];
 
 BOOLEAN gfLoadError;
 BOOLEAN gfReadOnly;
@@ -182,7 +182,7 @@ uint32_t ProcessLoadSaveScreenMessageBoxResult() {
   }
   if (gfDeleteFile) {
     if (gfMessageBoxResult) {  // delete file
-      INT32 x;
+      int32_t x;
       curr = FileList;
       for (x = 0; x < iCurrFileShown && x < iTotalFiles && curr; x++) {
         curr = curr->pNext;
@@ -250,7 +250,7 @@ uint32_t ProcessLoadSaveScreenMessageBoxResult() {
 
 uint32_t LoadSaveScreenHandle(void) {
   struct FileDialogList *FListNode;
-  INT32 x;
+  int32_t x;
   InputAtom DialogEvent;
 
   if (fEnteringLoadSaveScreen) {
@@ -429,7 +429,7 @@ void CreateFileDialog(CHAR16 *zTitle) {
   AddUserInputField(FileDialogModeCallback);
 }
 
-void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason) {
+void UpdateWorldInfoCallback(GUI_BUTTON *b, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
     gfUpdateSummaryInfo = b->uiFlags & BUTTON_CLICKED_ON ? TRUE : FALSE;
 }
@@ -438,7 +438,7 @@ void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason) {
 // editing text, and presses Tab to transfer to the file dialog mode.  When this happens, we set the
 // text field to the currently selected file in the list which is already know.
 void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering) {
-  INT32 x;
+  int32_t x;
   struct FileDialogList *FListNode;
   if (fEntering) {
     // Skip to first filename
@@ -459,7 +459,7 @@ void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering) {
 }
 
 void RemoveFileDialog(void) {
-  INT32 x;
+  int32_t x;
 
   MSYS_RemoveRegion(&BlanketRegion);
 
@@ -517,7 +517,7 @@ void DrawFileDialog(void) {
 // the user clicked on the hot spot.
 void SelectFileDialogYPos(uint16_t usRelativeYPos) {
   int16_t sSelName;
-  INT32 x;
+  int32_t x;
   struct FileDialogList *FListNode;
 
   sSelName = usRelativeYPos / 15;
@@ -532,8 +532,8 @@ void SelectFileDialogYPos(uint16_t usRelativeYPos) {
   }
 
   for (x = iTopFileShown; x < (iTopFileShown + 8) && x < iTotalFiles && FListNode != NULL; x++) {
-    if ((INT32)sSelName == (x - iTopFileShown)) {
-      INT32 iCurrClickTime;
+    if ((int32_t)sSelName == (x - iTopFileShown)) {
+      int32_t iCurrClickTime;
       iCurrFileShown = x;
       FListNode->FileInfo.zFileName[30] = 0;
       swprintf(gzFilename, ARR_SIZE(gzFilename), L"%S", FListNode->FileInfo.zFileName);
@@ -641,7 +641,7 @@ void SetTopFileToLetter(uint16_t usLetter) {
 }
 
 void HandleMainKeyEvents(InputAtom *pEvent) {
-  INT32 iPrevFileShown = iCurrFileShown;
+  int32_t iPrevFileShown = iCurrFileShown;
   // Replace Alt-x press with ESC.
   if (pEvent->usKeyState & ALT_DOWN && pEvent->usParam == 'x') pEvent->usParam = ESC;
   switch (pEvent->usParam) {
@@ -705,7 +705,7 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
   }
   // Update the text field if the file value has changed.
   if (iCurrFileShown != iPrevFileShown) {
-    INT32 x;
+    int32_t x;
     struct FileDialogList *curr;
     x = 0;
     curr = FileList;
@@ -895,33 +895,33 @@ uint32_t ProcessFileIO() {
 }
 
 // LOADSCREEN
-void FDlgNamesCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgNamesCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     SelectFileDialogYPos(butn->Area.RelativeYPos);
   }
 }
 
-void FDlgOkCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgOkCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     gfDestroyFDlg = TRUE;
     iFDlgState = iCurrentAction == ACTION_SAVE_MAP ? DIALOG_SAVE : DIALOG_LOAD;
   }
 }
 
-void FDlgCancelCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgCancelCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     gfDestroyFDlg = TRUE;
     iFDlgState = DIALOG_CANCEL;
   }
 }
 
-void FDlgUpCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgUpCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     if (iTopFileShown > 0) iTopFileShown--;
   }
 }
 
-void FDlgDwnCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgDwnCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     if ((iTopFileShown + 7) < iTotalFiles) iTopFileShown++;
   }

@@ -109,7 +109,7 @@ void TrashMapEdgepoints() {
 // map. Cases would include an area that is close to the edge, but a fence blocks it from direct
 // access to the edge of the map.
 void ValidateEdgepoints() {
-  INT32 i;
+  int32_t i;
   uint16_t usValidEdgepoints;
   struct SOLDIERTYPE Soldier;
 
@@ -240,7 +240,7 @@ void ValidateEdgepoints() {
 }
 
 void CompactEdgepointArray(int16_t **psArray, uint16_t *pusMiddleIndex, uint16_t *pusArraySize) {
-  INT32 i;
+  int32_t i;
   uint16_t usArraySize, usValidIndex = 0;
 
   usArraySize = *pusArraySize;
@@ -266,7 +266,7 @@ void InternallyClassifyEdgepoints(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                   uint16_t *pusMiddleIndex1, uint16_t *pusArraySize1,
                                   int16_t **psArray2, uint16_t *pusMiddleIndex2,
                                   uint16_t *pusArraySize2) {
-  INT32 i;
+  int32_t i;
   uint16_t us1stBenchmarkID, us2ndBenchmarkID;
   us1stBenchmarkID = us2ndBenchmarkID = 0xffff;
   if (!(*psArray2)) {
@@ -416,7 +416,7 @@ void ClassifyEdgepoints() {
 }
 
 void GenerateMapEdgepoints() {
-  INT32 i = -1;
+  int32_t i = -1;
   int16_t sGridNo = -1;
   int16_t sVGridNo[400];
 
@@ -982,7 +982,7 @@ void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, uint8_t ubStrategi
                          uint8_t ubNumDesiredPoints) {
   int16_t *psArray = NULL;
   uint16_t usArraySize = 0;
-  INT32 i = -1;
+  int32_t i = -1;
   uint16_t usSlots, usCurrSlot;
   int16_t *psTempArray = NULL;
 
@@ -1145,7 +1145,7 @@ void EndMapEdgepointSearch() {
 
 // THIS CODE ISN'T RECOMMENDED FOR TIME CRITICAL AREAS.
 int16_t SearchForClosestPrimaryMapEdgepoint(int16_t sGridNo, uint8_t ubInsertionCode) {
-  INT32 i, iDirectionLoop;
+  int32_t i, iDirectionLoop;
   int16_t *psArray = NULL;
   int16_t sRadius, sDistance, sDirection, sOriginalGridNo;
   uint16_t usArraySize = 0;
@@ -1264,7 +1264,7 @@ int16_t SearchForClosestPrimaryMapEdgepoint(int16_t sGridNo, uint8_t ubInsertion
 }
 
 int16_t SearchForClosestSecondaryMapEdgepoint(int16_t sGridNo, uint8_t ubInsertionCode) {
-  INT32 i, iDirectionLoop;
+  int32_t i, iDirectionLoop;
   int16_t *psArray = NULL;
   int16_t sRadius, sDistance, sDirection, sOriginalGridNo;
   uint16_t usArraySize = 0;
@@ -1388,7 +1388,7 @@ int16_t SearchForClosestSecondaryMapEdgepoint(int16_t sGridNo, uint8_t ubInserti
 
 #define EDGE_OF_MAP_SEARCH 5
 BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, int16_t sEdgepoint) {
-  INT32 iSearchRange;
+  int32_t iSearchRange;
   int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   int16_t sGridNo;
   int8_t bDirection;
@@ -1450,7 +1450,7 @@ BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, int16_t sEdgepoint) {
 }
 
 BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, int16_t sEdgepoint1, int16_t sEdgepoint2) {
-  INT32 iSearchRange;
+  int32_t iSearchRange;
   int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   int16_t sGridNo;
 
@@ -1497,9 +1497,9 @@ BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, int16_t sEdgepoint1, int16
 
 uint8_t CalcMapEdgepointClassInsertionCode(int16_t sGridNo) {
   struct SOLDIERTYPE Soldier;
-  INT32 iLoop;
+  int32_t iLoop;
   int16_t *psEdgepointArray1, *psEdgepointArray2;
-  INT32 iEdgepointArraySize1, iEdgepointArraySize2;
+  int32_t iEdgepointArraySize1, iEdgepointArraySize2;
   int16_t sClosestSpot1 = NOWHERE, sClosestDist1 = 0x7FFF, sTempDist;
   int16_t sClosestSpot2 = NOWHERE, sClosestDist2 = 0x7FFF;
   BOOLEAN fPrimaryValid = FALSE, fSecondaryValid = FALSE;
@@ -1588,7 +1588,7 @@ uint8_t CalcMapEdgepointClassInsertionCode(int16_t sGridNo) {
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 void ShowMapEdgepoints() {
-  INT32 i, usIllegal1 = 0, usIllegal2 = 0;
+  int32_t i, usIllegal1 = 0, usIllegal2 = 0;
   for (i = 0; i < gus1stNorthEdgepointArraySize; i++) {
     if (gps1stNorthEdgepointArray[i] != -1) {
       AddTopmostToTail(gps1stNorthEdgepointArray[i], FIRSTPOINTERS5);
@@ -1660,7 +1660,7 @@ void ShowMapEdgepoints() {
 }
 
 void HideMapEdgepoints() {
-  INT32 i;
+  int32_t i;
   ScreenMsg(0, MSG_TESTVERSION, L"Removing display of map edgepoints");
   for (i = 0; i < gus1stNorthEdgepointArraySize; i++) {
     if (gps1stNorthEdgepointArray[i] != -1) {

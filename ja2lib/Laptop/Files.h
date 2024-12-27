@@ -56,9 +56,9 @@ typedef struct files *FilesUnitPtr;
 extern FilesUnitPtr pFilesListHead;
 
 struct filerecordwidth {
-  INT32 iRecordNumber;
-  INT32 iRecordWidth;
-  INT32 iRecordHeightAdjustment;
+  int32_t iRecordNumber;
+  int32_t iRecordWidth;
+  int32_t iRecordHeightAdjustment;
   uint8_t ubFlags;
   struct filerecordwidth *Next;
 };
@@ -69,6 +69,6 @@ uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
                               STR8 pSecondPicFile);
 
 // add a file about this terrorist
-BOOLEAN AddFileAboutTerrorist(INT32 iProfileId);
+BOOLEAN AddFileAboutTerrorist(int32_t iProfileId);
 
 #endif

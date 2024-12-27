@@ -11,8 +11,8 @@
 #include "TileEngine/RenderFun.h"
 
 void CallAvailableEnemiesTo(int16_t sGridNo) {
-  INT32 iLoop;
-  INT32 iLoop2;
+  int32_t iLoop;
+  int32_t iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
@@ -40,7 +40,7 @@ void CallAvailableEnemiesTo(int16_t sGridNo) {
 }
 
 void CallAvailableTeamEnemiesTo(int16_t sGridno, int8_t bTeam) {
-  INT32 iLoop2;
+  int32_t iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
@@ -69,7 +69,7 @@ void CallAvailableKingpinMenTo(int16_t sGridNo) {
   // like call all enemies, but only affects civgroup KINGPIN guys with
   // NO PROFILE
 
-  INT32 iLoop2;
+  int32_t iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
@@ -129,7 +129,7 @@ void CallEldinTo(int16_t sGridNo) {
   }
 }
 
-int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
+int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, int32_t *piRetValue,
                                 BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
   uint32_t uiLoop;
   int8_t *pbPersOL, *pbPublOL;
@@ -137,8 +137,8 @@ int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
   int8_t *pbNoiseLevel;
   int8_t *pbLastLevel;
   uint8_t *pubNoiseVolume;
-  INT32 iDistAway;
-  INT32 iNoiseValue, iBestValue = -10000;
+  int32_t iDistAway;
+  int32_t iNoiseValue, iBestValue = -10000;
   int16_t sBestGridNo = NOWHERE;
   int8_t bBestLevel = 0;
   int16_t sClimbingGridNo;

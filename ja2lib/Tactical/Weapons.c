@@ -90,8 +90,8 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 BOOLEAN UseThrown(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 
-INT32 HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, INT32 iHitBy,
-                BOOLEAN fBladeAttack);
+int32_t HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, int32_t iHitBy,
+                  BOOLEAN fBladeAttack);
 
 BOOLEAN gfNextShotKills = FALSE;
 BOOLEAN gfReportHitChances = FALSE;
@@ -658,7 +658,7 @@ uint16_t GunRange(struct OBJECTTYPE *pObj) {
 }
 
 int8_t EffectiveArmour(struct OBJECTTYPE *pObj) {
-  INT32 iValue;
+  int32_t iValue;
   int8_t bPlate;
 
   if (pObj == NULL || Item[pObj->usItem].usItemClass != IC_ARMOUR) {
@@ -669,7 +669,7 @@ int8_t EffectiveArmour(struct OBJECTTYPE *pObj) {
 
   bPlate = FindAttachment(pObj, CERAMIC_PLATES);
   if (bPlate != ITEM_NOT_FOUND) {
-    INT32 iValue2;
+    int32_t iValue2;
 
     iValue2 = Armour[Item[CERAMIC_PLATES].ubClassIndex].ubProtection;
     iValue2 = iValue2 * pObj->bAttachStatus[bPlate] / 100;
@@ -680,7 +680,7 @@ int8_t EffectiveArmour(struct OBJECTTYPE *pObj) {
 }
 
 int8_t ArmourPercent(struct SOLDIERTYPE *pSoldier) {
-  INT32 iVest, iHelmet, iLeg;
+  int32_t iVest, iHelmet, iLeg;
 
   if (pSoldier->inv[VESTPOS].usItem) {
     iVest = EffectiveArmour(&(pSoldier->inv[VESTPOS]));
@@ -711,7 +711,7 @@ int8_t ArmourPercent(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t ExplosiveEffectiveArmour(struct OBJECTTYPE *pObj) {
-  INT32 iValue;
+  int32_t iValue;
   int8_t bPlate;
 
   if (pObj == NULL || Item[pObj->usItem].usItemClass != IC_ARMOUR) {
@@ -727,7 +727,7 @@ int8_t ExplosiveEffectiveArmour(struct OBJECTTYPE *pObj) {
 
   bPlate = FindAttachment(pObj, CERAMIC_PLATES);
   if (bPlate != ITEM_NOT_FOUND) {
-    INT32 iValue2;
+    int32_t iValue2;
 
     iValue2 = Armour[Item[CERAMIC_PLATES].ubClassIndex].ubProtection;
     iValue2 = iValue2 * pObj->bAttachStatus[bPlate] / 100;
@@ -739,7 +739,7 @@ int8_t ExplosiveEffectiveArmour(struct OBJECTTYPE *pObj) {
 
 int8_t ArmourVersusExplosivesPercent(struct SOLDIERTYPE *pSoldier) {
   // returns the % damage reduction from grenades
-  INT32 iVest, iHelmet, iLeg;
+  int32_t iVest, iHelmet, iLeg;
 
   if (pSoldier->inv[VESTPOS].usItem) {
     iVest = ExplosiveEffectiveArmour(&(pSoldier->inv[VESTPOS]));
@@ -769,8 +769,8 @@ int8_t ArmourVersusExplosivesPercent(struct SOLDIERTYPE *pSoldier) {
   return ((int8_t)(iHelmet + iVest + iLeg));
 }
 
-void AdjustImpactByHitLocation(INT32 iImpact, uint8_t ubHitLocation, INT32 *piNewImpact,
-                               INT32 *piImpactForCrits) {
+void AdjustImpactByHitLocation(int32_t iImpact, uint8_t ubHitLocation, int32_t *piNewImpact,
+                               int32_t *piImpactForCrits) {
   switch (ubHitLocation) {
     case AIM_SHOT_HEAD:
       // 1.5x damage from successful hits to the head!
@@ -794,7 +794,7 @@ void AdjustImpactByHitLocation(INT32 iImpact, uint8_t ubHitLocation, INT32 *piNe
 
 BOOLEAN CheckForGunJam(struct SOLDIERTYPE *pSoldier) {
   struct OBJECTTYPE *pObj;
-  INT32 iChance, iResult;
+  int32_t iChance, iResult;
 
   // should jams apply to enemies?
   if (pSoldier->uiStatusFlags & SOLDIER_PC) {
@@ -824,7 +824,7 @@ BOOLEAN CheckForGunJam(struct SOLDIERTYPE *pSoldier) {
 #ifdef TESTGUNJAM
         if (1)
 #else
-        if ((INT32)PreRandom(100) < iChance || gfNextFireJam)
+        if ((int32_t)PreRandom(100) < iChance || gfNextFireJam)
 #endif
         {
           gfNextFireJam = FALSE;
@@ -1123,7 +1123,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
         Item[usItemNum].usItemClass != IC_THROWING_KNIFE) {
       // Switch on silencer...
       if (FindAttachment(&(pSoldier->inv[pSoldier->ubAttackingHand]), SILENCER) != NO_SLOT) {
-        INT32 uiSound;
+        int32_t uiSound;
 
         if (Weapon[usItemNum].ubCalibre == AMMO9 || Weapon[usItemNum].ubCalibre == AMMO38 ||
             Weapon[usItemNum].ubCalibre == AMMO57) {
@@ -1399,11 +1399,11 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
 
 BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
   struct SOLDIERTYPE *pTargetSoldier;
-  INT32 iHitChance, iDiceRoll;
+  int32_t iHitChance, iDiceRoll;
   int16_t sXMapPos, sYMapPos;
   int16_t sAPCost;
   EV_S_WEAPONHIT SWeaponHit;
-  INT32 iImpact, iImpactForCrits;
+  int32_t iImpact, iImpactForCrits;
   BOOLEAN fGonnaHit = FALSE;
   uint16_t usExpGain = 0;
   int8_t bMaxDrop;
@@ -1438,7 +1438,7 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
     }
 
     // ROLL DICE
-    iDiceRoll = (INT32)PreRandom(100);
+    iDiceRoll = (int32_t)PreRandom(100);
     // sprintf( gDebugStr, "Hit Chance: %d %d", (int)uiHitChance, uiDiceRoll );
 
     if (iDiceRoll <= iHitChance) {
@@ -1553,11 +1553,11 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
 
 BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, BOOLEAN fStealing) {
   struct SOLDIERTYPE *pTargetSoldier;
-  INT32 iHitChance, iDiceRoll;
+  int32_t iHitChance, iDiceRoll;
   int16_t sXMapPos, sYMapPos;
   int16_t sAPCost;
   EV_S_WEAPONHIT SWeaponHit;
-  INT32 iImpact;
+  int32_t iImpact;
   uint16_t usOldItem;
   uint8_t ubExpGain;
 
@@ -1603,7 +1603,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, BOOLE
     }
 
     // ROLL DICE
-    iDiceRoll = (INT32)PreRandom(100);
+    iDiceRoll = (int32_t)PreRandom(100);
     // sprintf( gDebugStr, "Hit Chance: %d %d", (int)uiHitChance, uiDiceRoll );
 
 #ifdef JA2BETAVERSION
@@ -1649,7 +1649,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, BOOLE
             }
 
             // Item dropped somewhere... roll based on the same chance to determine where!
-            iDiceRoll = (INT32)PreRandom(100);
+            iDiceRoll = (int32_t)PreRandom(100);
             if (iDiceRoll < iHitChance) {
               // Drop item in the our tile
               AddItemToPool(pSoldier->sGridNo, &(pTargetSoldier->inv[HANDPOS]), 1, pSoldier->bLevel,
@@ -1942,7 +1942,7 @@ BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
 
 BOOLEAN DoSpecialEffectAmmoMiss(uint8_t ubAttackerID, int16_t sGridNo, int16_t sXPos, int16_t sYPos,
                                 int16_t sZPos, BOOLEAN fSoundOnly, BOOLEAN fFreeupAttacker,
-                                INT32 iBullet) {
+                                int32_t iBullet) {
   ANITILE_PARAMS AniParams;
   uint8_t ubAmmoType;
   uint16_t usItem;
@@ -2062,9 +2062,9 @@ void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, int16_t sDamage, in
   }
 }
 
-void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus, uint8_t ubAttackerID,
-                  uint16_t sXPos, int16_t sYPos, int16_t sZPos, uint16_t usStructureID,
-                  INT32 iImpact, BOOLEAN fStopped) {
+void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
+                  uint8_t ubAttackerID, uint16_t sXPos, int16_t sYPos, int16_t sZPos,
+                  uint16_t usStructureID, int32_t iImpact, BOOLEAN fStopped) {
   BOOLEAN fDoMissForGun = FALSE;
   ANITILE *pNode;
   int16_t sGridNo;
@@ -2449,9 +2449,9 @@ uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint
                             uint8_t ubAimPos) {
   // struct SOLDIERTYPE *vicpSoldier;
   struct SOLDIERTYPE *pTarget;
-  INT32 iChance, iRange, iSightRange, iMaxRange, iScopeBonus, iBonus;  //, minRange;
-  INT32 iGunCondition, iMarksmanship;
-  INT32 iPenalty;
+  int32_t iChance, iRange, iSightRange, iMaxRange, iScopeBonus, iBonus;  //, minRange;
+  int32_t iGunCondition, iMarksmanship;
+  int32_t iPenalty;
   uint16_t usInHand;
   struct OBJECTTYPE *pInHand;
   int8_t bAttachPos;
@@ -2990,9 +2990,9 @@ uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, ui
   return (uiChance);
 }
 
-INT32 CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation) {
+int32_t CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation) {
   // calculate how much bullets are slowed by passing through someone
-  INT32 iReduction = BodyImpactReduction[ubHitLocation];
+  int32_t iReduction = BodyImpactReduction[ubHitLocation];
 
   switch (ubAmmoType) {
     case AMMO_HP:
@@ -3011,9 +3011,9 @@ INT32 CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation) {
   return (iReduction);
 }
 
-INT32 ArmourProtection(struct SOLDIERTYPE *pTarget, uint8_t ubArmourType, int8_t *pbStatus,
-                       INT32 iImpact, uint8_t ubAmmoType) {
-  INT32 iProtection, iAppliedProtection, iFailure;
+int32_t ArmourProtection(struct SOLDIERTYPE *pTarget, uint8_t ubArmourType, int8_t *pbStatus,
+                         int32_t iImpact, uint8_t ubAmmoType) {
+  int32_t iProtection, iAppliedProtection, iFailure;
 
   iProtection = Armour[ubArmourType].ubProtection;
 
@@ -3077,9 +3077,9 @@ INT32 ArmourProtection(struct SOLDIERTYPE *pTarget, uint8_t ubArmourType, int8_t
   return (iProtection);
 }
 
-INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
-                            uint8_t ubHitLocation, INT32 iImpact, uint8_t ubAmmoType) {
-  INT32 iTotalProtection = 0, iSlot;
+int32_t TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
+                              uint8_t ubHitLocation, int32_t iImpact, uint8_t ubAmmoType) {
+  int32_t iTotalProtection = 0, iSlot;
   struct OBJECTTYPE *pArmour;
   int8_t bPlatePos = -1;
 
@@ -3153,9 +3153,9 @@ INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTar
   return (iTotalProtection);
 }
 
-INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, uint8_t ubHitLocation,
-                   INT32 iOrigImpact, int16_t sHitBy, uint8_t *pubSpecial) {
-  INT32 iImpact, iFluke, iBonus, iImpactForCrits = 0;
+int32_t BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, uint8_t ubHitLocation,
+                     int32_t iOrigImpact, int16_t sHitBy, uint8_t *pubSpecial) {
+  int32_t iImpact, iFluke, iBonus, iImpactForCrits = 0;
   int8_t bStatLoss;
   uint8_t ubAmmoType;
 
@@ -3455,9 +3455,9 @@ INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, uint
   return (iImpact);
 }
 
-INT32 HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, INT32 iHitBy,
-                BOOLEAN fBladeAttack) {
-  INT32 iImpact, iFluke, iBonus;
+int32_t HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, int32_t iHitBy,
+                  BOOLEAN fBladeAttack) {
+  int32_t iImpact, iFluke, iBonus;
 
   if (fBladeAttack) {
     iImpact = (EffectiveExpLevel(pSoldier) / 2);  // 0 to 4 for level
@@ -3514,7 +3514,7 @@ INT32 HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, INT32
   return (iImpact);
 }
 
-void ShotMiss(uint8_t ubAttackerID, INT32 iBullet) {
+void ShotMiss(uint8_t ubAttackerID, int32_t iBullet) {
   BOOLEAN fDoMissForGun = FALSE;
   struct SOLDIERTYPE *pAttacker;
   BULLET *pBullet;
@@ -3579,8 +3579,8 @@ uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefen
                        uint8_t ubAimTime, uint8_t ubMode) {
   uint16_t usInHand;
   uint8_t ubBandaged;
-  INT32 iAttRating, iDefRating;
-  INT32 iChance;
+  int32_t iAttRating, iDefRating;
+  int32_t iChance;
 
   usInHand = pAttacker->usAttackingWeapon;
 
@@ -3883,8 +3883,8 @@ BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos, BOOLE
   return (fCapable);
 }
 
-INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fArmed) {
-  INT32 iRange;
+int32_t CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fArmed) {
+  int32_t iRange;
   uint16_t usSubItem;
 
   if (EXPLOSIVE_GUN(usItem)) {
@@ -3908,7 +3908,7 @@ INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fA
       iRange = 1;
     } else if (Item[usItem].usItemClass == IC_GRENADE) {
       // start with the range based on the soldier's strength and the item's weight
-      INT32 iThrowingStrength = (EffectiveStrength(pSoldier) * 2 + 100) / 3;
+      int32_t iThrowingStrength = (EffectiveStrength(pSoldier) * 2 + 100) / 3;
       iRange = 2 + (iThrowingStrength / min((3 + (Item[usItem].ubWeight) / 3), 4));
     } else {  // not as aerodynamic!
 
@@ -3935,7 +3935,7 @@ INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fA
 
 uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubAimTime,
                                uint8_t ubAimPos) {
-  INT32 iChance, iMaxRange, iRange;
+  int32_t iChance, iMaxRange, iRange;
   uint16_t usHandItem;
   int8_t bPenalty, bBandaged;
 
@@ -4146,9 +4146,9 @@ void DishoutQueenSwipeDamage(struct SOLDIERTYPE *pQueenSoldier) {
   uint32_t cnt, cnt2;
   struct SOLDIERTYPE *pSoldier;
   int8_t bDir;
-  INT32 iChance;
-  INT32 iImpact;
-  INT32 iHitBy;
+  int32_t iChance;
+  int32_t iImpact;
+  int32_t iHitBy;
 
   // Loop through all mercs and make go
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
@@ -4172,7 +4172,7 @@ void DishoutQueenSwipeDamage(struct SOLDIERTYPE *pQueenSoldier) {
 
                 // CC: Look here for chance to hit, damage, etc...
                 // May want to not hit if target is prone, etc....
-                iHitBy = iChance - (INT32)PreRandom(100);
+                iHitBy = iChance - (int32_t)PreRandom(100);
                 if (iHitBy > 0) {
                   // Hit!
                   iImpact = HTHImpact(pQueenSoldier, pSoldier, iHitBy, TRUE);

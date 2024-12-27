@@ -65,8 +65,8 @@ void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, int16_t bSecto
 void HandleMeanWhileEventPostingForTownLoss(uint8_t bTownId);
 
 // handle short cutting past a meanwhilescene while it is being handled
-void HandleShortCuttingOfMeanwhileSceneByPlayer(uint8_t ubMeanwhileID, INT32 iLastProfileId,
-                                                INT32 iLastProfileAction);
+void HandleShortCuttingOfMeanwhileSceneByPlayer(uint8_t ubMeanwhileID, int32_t iLastProfileId,
+                                                int32_t iLastProfileAction);
 
 // handle release of creatures meanwhile
 void HandleCreatureRelease(void);

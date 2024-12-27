@@ -30,23 +30,23 @@
 LIGHTEFFECT gLightEffectData[NUM_LIGHT_EFFECT_SLOTS];
 uint32_t guiNumLightEffects = 0;
 
-INT32 GetFreeLightEffect(void);
+int32_t GetFreeLightEffect(void);
 void RecountLightEffects(void);
 
-INT32 GetFreeLightEffect(void) {
+int32_t GetFreeLightEffect(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumLightEffects; uiCount++) {
-    if ((gLightEffectData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gLightEffectData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumLightEffects < NUM_LIGHT_EFFECT_SLOTS) return ((INT32)guiNumLightEffects++);
+  if (guiNumLightEffects < NUM_LIGHT_EFFECT_SLOTS) return ((int32_t)guiNumLightEffects++);
 
   return (-1);
 }
 
 void RecountLightEffects(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumLightEffects - 1; (uiCount >= 0); uiCount--) {
     if ((gLightEffectData[uiCount].fAllocated)) {
@@ -80,9 +80,9 @@ void UpdateLightingSprite(LIGHTEFFECT *pLight) {
                       (int16_t)(CenterY(pLight->sGridNo) / CELL_Y_SIZE));
 }
 
-INT32 NewLightEffect(int16_t sGridNo, int8_t bType) {
+int32_t NewLightEffect(int16_t sGridNo, int8_t bType) {
   LIGHTEFFECT *pLight;
-  INT32 iLightIndex;
+  int32_t iLightIndex;
   uint8_t ubDuration = 0;
   uint8_t ubStartRadius = 0;
 

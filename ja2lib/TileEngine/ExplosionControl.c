@@ -67,7 +67,7 @@
 // Spreads the effects of explosions...
 BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_t usItem,
                   uint8_t ubOwner, int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel,
-                  INT32 iSmokeEffectID);
+                  int32_t iSmokeEffectID);
 
 extern int8_t gbSAMGraphicList[NUMBER_OF_SAMS];
 extern void AddToShouldBecomeHostileOrSayQuoteList(uint8_t ubID);
@@ -124,25 +124,25 @@ extern uint8_t gubInterruptProvoker;
 EXPLOSIONTYPE gExplosionData[NUM_EXPLOSION_SLOTS];
 uint32_t guiNumExplosions = 0;
 
-INT32 GetFreeExplosion(void);
+int32_t GetFreeExplosion(void);
 void RecountExplosions(void);
 void GenerateExplosionFromExplosionPointer(EXPLOSIONTYPE *pExplosion);
 void HandleBuldingDestruction(int16_t sGridNo, uint8_t ubOwner);
 
-INT32 GetFreeExplosion(void) {
+int32_t GetFreeExplosion(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumExplosions; uiCount++) {
-    if ((gExplosionData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gExplosionData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumExplosions < NUM_EXPLOSION_SLOTS) return ((INT32)guiNumExplosions++);
+  if (guiNumExplosions < NUM_EXPLOSION_SLOTS) return ((int32_t)guiNumExplosions++);
 
   return (-1);
 }
 
 void RecountExplosions(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumExplosions - 1; (uiCount >= 0); uiCount--) {
     if ((gExplosionData[uiCount].fAllocated)) {
@@ -199,7 +199,7 @@ void IgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ, int16_
 void GenerateExplosion(EXPLOSION_PARAMS *pExpParams) {
   EXPLOSIONTYPE *pExplosion;
   int16_t sGridNo;
-  INT32 iIndex;
+  int32_t iIndex;
 
   // Assign param values
   sGridNo = pExpParams->sGridNo;
@@ -335,11 +335,11 @@ void GenerateExplosionFromExplosionPointer(EXPLOSIONTYPE *pExplosion) {
   PlayJA2Sample(uiSoundID, RATE_11025, SoundVolume(HIGHVOLUME, sGridNo), 1, SoundDir(sGridNo));
 }
 
-void UpdateExplosionFrame(INT32 iIndex, int16_t sCurrentFrame) {
+void UpdateExplosionFrame(int32_t iIndex, int16_t sCurrentFrame) {
   gExplosionData[iIndex].sCurrentFrame = sCurrentFrame;
 }
 
-void RemoveExplosionData(INT32 iIndex) {
+void RemoveExplosionData(int32_t iIndex) {
   gExplosionData[iIndex].fAllocated = FALSE;
 
   if (gExplosionData[iIndex].iLightID != -1) {
@@ -1256,7 +1256,7 @@ BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive
 
 BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_t usItem,
                   uint8_t ubOwner, int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel,
-                  INT32 iSmokeEffectID) {
+                  int32_t iSmokeEffectID) {
   int16_t sWoundAmt = 0, sBreathAmt = 0, sStructDmgAmt;
   uint8_t ubPerson;
   struct SOLDIERTYPE *pSoldier;
@@ -1404,7 +1404,7 @@ BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_
         pItemPoolNext = pItemPool->pNext;
 
         if (DamageItemOnGround(&(gWorldItems[pItemPool->iItemIndex].o), sGridNo, bLevel,
-                               (INT32)(sWoundAmt * 2), ubOwner)) {
+                               (int32_t)(sWoundAmt * 2), ubOwner)) {
           // item was destroyed
           RemoveItemFromPool(sGridNo, pItemPool->iItemIndex, bLevel);
         }
@@ -1607,7 +1607,7 @@ BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_
 }
 
 void GetRayStopInfo(uint32_t uiNewSpot, uint8_t ubDir, int8_t bLevel, BOOLEAN fSmokeEffect,
-                    INT32 uiCurRange, INT32 *piMaxRange, uint8_t *pubKeepGoing) {
+                    int32_t uiCurRange, int32_t *piMaxRange, uint8_t *pubKeepGoing) {
   int8_t bStructHeight;
   uint8_t ubMovementCost;
   int8_t Blocking, BlockingTemp;
@@ -1790,9 +1790,9 @@ void GetRayStopInfo(uint32_t uiNewSpot, uint8_t ubDir, int8_t bLevel, BOOLEAN fS
 }
 
 void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ubOwner,
-                  BOOLEAN fSubsequent, int8_t bLevel, INT32 iSmokeEffectID) {
-  INT32 uiNewSpot, uiTempSpot, uiBranchSpot, cnt, branchCnt;
-  INT32 uiTempRange, ubBranchRange;
+                  BOOLEAN fSubsequent, int8_t bLevel, int32_t iSmokeEffectID) {
+  int32_t uiNewSpot, uiTempSpot, uiBranchSpot, cnt, branchCnt;
+  int32_t uiTempRange, ubBranchRange;
   uint8_t ubDir, ubBranchDir, ubKeepGoing;
   int16_t sRange;
   BOOLEAN fRecompileMovement = FALSE;
@@ -1965,7 +1965,7 @@ void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ub
 
   if (fAnyMercHit) {
     // reset explosion hit flag so we can damage mercs again
-    for (cnt = 0; cnt < (INT32)guiNumMercSlots; cnt++) {
+    for (cnt = 0; cnt < (int32_t)guiNumMercSlots; cnt++) {
       if (MercSlots[cnt]) {
         MercSlots[cnt]->ubMiscSoldierFlags &= ~SOLDIER_MISC_HURT_BY_EXPLOSION;
       }
@@ -2837,7 +2837,7 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
 }
 
 BOOLEAN DoesSAMExistHere(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16_t sGridNo) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sSectorNo;
 
   // ATE: If we are belwo, return right away...
@@ -2885,7 +2885,7 @@ void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16
 }
 
 void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sSectorNo;
   BOOLEAN fInSector = FALSE;
   uint16_t usGoodGraphic, usDamagedGraphic;
@@ -2971,7 +2971,7 @@ void HandleBuldingDestruction(int16_t sGridNo, uint8_t ubOwner) {
   }
 }
 
-INT32 FindActiveTimedBomb(void) {
+int32_t FindActiveTimedBomb(void) {
   uint32_t uiWorldBombIndex;
   struct OBJECTTYPE *pObj;
 
@@ -2997,7 +2997,7 @@ BOOLEAN ActiveTimedBombExists(void) {
 }
 
 void RemoveAllActiveTimedBombs(void) {
-  INT32 iItemIndex;
+  int32_t iItemIndex;
 
   do {
     iItemIndex = FindActiveTimedBomb();

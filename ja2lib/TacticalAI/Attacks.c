@@ -94,10 +94,10 @@ void LoadWeaponIfNeeded(struct SOLDIERTYPE *pSoldier) {
 
 void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
   uint32_t uiLoop;
-  INT32 iAttackValue;
-  INT32 iThreatValue;
-  INT32 iHitRate, iBestHitRate, iPercentBetter;
-  INT32 iEstDamage;
+  int32_t iAttackValue;
+  int32_t iThreatValue;
+  int32_t iHitRate, iBestHitRate, iPercentBetter;
+  int32_t iEstDamage;
   uint8_t ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   uint8_t ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit, ubBestChanceToHit = 0;
   struct SOLDIERTYPE *pOpponent;
@@ -372,11 +372,11 @@ BOOLEAN CloseEnoughForGrenadeToss(int16_t sGridNo, int16_t sGridNo2) {
 void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   // September 9, 1998: added code for LAWs (CJC)
   uint8_t ubLoop, ubLoop2;
-  INT32 iAttackValue;
-  INT32 iHitRate, iThreatValue, iTotalThreatValue, iOppThreatValue[MAXMERCS];
+  int32_t iAttackValue;
+  int32_t iHitRate, iThreatValue, iTotalThreatValue, iOppThreatValue[MAXMERCS];
   int16_t sGridNo, sEndGridNo, sFriendTile[MAXMERCS], sOpponentTile[MAXMERCS];
   int8_t bFriendLevel[MAXMERCS], bOpponentLevel[MAXMERCS];
-  INT32 iEstDamage;
+  int32_t iEstDamage;
   uint8_t ubFriendCnt = 0, ubOpponentCnt = 0, ubOpponentID[MAXMERCS];
   uint8_t ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime;
   uint8_t ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit;
@@ -393,7 +393,7 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   struct SOLDIERTYPE *pOpponent, *pFriend;
   static int16_t sExcludeTile[100];  // This array is for storing tiles that we have
   uint8_t ubNumExcludedTiles = 0;    // already considered, to prevent duplication of effort
-  INT32 iTossRange;
+  int32_t iTossRange;
   uint8_t ubSafetyMargin = 0;
   uint8_t ubDiff;
   int8_t bEndLevel;
@@ -951,8 +951,8 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
 
 void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN fBladeAttack) {
   uint32_t uiLoop;
-  INT32 iAttackValue;
-  INT32 iThreatValue, iHitRate, iBestHitRate, iPercentBetter, iEstDamage;
+  int32_t iAttackValue;
+  int32_t iThreatValue, iHitRate, iBestHitRate, iPercentBetter, iEstDamage;
   BOOLEAN fSurpriseStab;
   uint8_t ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   uint8_t ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
@@ -1141,8 +1141,8 @@ void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN f
 
 void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
   uint32_t uiLoop;
-  INT32 iAttackValue;
-  INT32 iThreatValue, iHitRate, iBestHitRate, iEstDamage;
+  int32_t iAttackValue;
+  int32_t iThreatValue, iHitRate, iBestHitRate, iEstDamage;
   BOOLEAN fSurpriseStab;
   uint8_t ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   uint8_t ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
@@ -1293,13 +1293,13 @@ uint8_t NumMercsCloseTo(int16_t sGridNo, uint8_t ubMaxDist) {
   return (bNumber);
 }
 
-INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         uint8_t ubChanceToHit) {
-  INT32 iRange, iMaxRange, iPowerLost;
-  INT32 iDamage;
+int32_t EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                           uint8_t ubChanceToHit) {
+  int32_t iRange, iMaxRange, iPowerLost;
+  int32_t iDamage;
   uint8_t ubBonus;
-  INT32 iHeadProt = 0, iTorsoProt = 0, iLegProt = 0;
-  INT32 iTotalProt;
+  int32_t iHeadProt = 0, iTorsoProt = 0, iLegProt = 0;
+  int32_t iTotalProt;
   int8_t bPlatePos;
   uint8_t ubAmmoType;
 
@@ -1334,33 +1334,35 @@ INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOppo
 
   // if opponent is wearing a helmet
   if (pOpponent->inv[HELMETPOS].usItem) {
-    iHeadProt += (INT32)Armour[Item[pOpponent->inv[HELMETPOS].usItem].ubClassIndex].ubProtection *
-                 (INT32)pOpponent->inv[HELMETPOS].bStatus[0] / 100;
+    iHeadProt += (int32_t)Armour[Item[pOpponent->inv[HELMETPOS].usItem].ubClassIndex].ubProtection *
+                 (int32_t)pOpponent->inv[HELMETPOS].bStatus[0] / 100;
   }
 
   // if opponent is wearing a protective vest
   if (ubAmmoType != AMMO_MONSTER && ubAmmoType != AMMO_KNIFE) {
     // monster spit and knives ignore kevlar vests
     if (pOpponent->inv[VESTPOS].usItem) {
-      iTorsoProt += (INT32)Armour[Item[pOpponent->inv[VESTPOS].usItem].ubClassIndex].ubProtection *
-                    (INT32)pOpponent->inv[VESTPOS].bStatus[0] / 100;
+      iTorsoProt +=
+          (int32_t)Armour[Item[pOpponent->inv[VESTPOS].usItem].ubClassIndex].ubProtection *
+          (int32_t)pOpponent->inv[VESTPOS].bStatus[0] / 100;
     }
   }
 
   // check for ceramic plates; these do affect monster spit
   bPlatePos = FindAttachment(&(pOpponent->inv[VESTPOS]), CERAMIC_PLATES);
   if (bPlatePos != -1) {
-    iTorsoProt += (INT32)Armour[Item[pOpponent->inv[VESTPOS].usAttachItem[bPlatePos]].ubClassIndex]
-                      .ubProtection *
-                  (INT32)pOpponent->inv[VESTPOS].bAttachStatus[bPlatePos] / 100;
+    iTorsoProt +=
+        (int32_t)Armour[Item[pOpponent->inv[VESTPOS].usAttachItem[bPlatePos]].ubClassIndex]
+            .ubProtection *
+        (int32_t)pOpponent->inv[VESTPOS].bAttachStatus[bPlatePos] / 100;
   }
 
   // if opponent is wearing armoured leggings (LEGPOS)
   if (ubAmmoType != AMMO_MONSTER &&
       ubAmmoType != AMMO_KNIFE) {  // monster spit and knives ignore kevlar leggings
     if (pOpponent->inv[LEGPOS].usItem) {
-      iLegProt += (INT32)Armour[Item[pOpponent->inv[LEGPOS].usItem].ubClassIndex].ubProtection *
-                  (INT32)pOpponent->inv[LEGPOS].bStatus[0] / 100;
+      iLegProt += (int32_t)Armour[Item[pOpponent->inv[LEGPOS].usItem].ubClassIndex].ubProtection *
+                  (int32_t)pOpponent->inv[LEGPOS].bStatus[0] / 100;
     }
   }
 
@@ -1422,10 +1424,10 @@ INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOppo
   return (iDamage);
 }
 
-INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
-                          struct SOLDIERTYPE *pOpponent, int16_t sGridno) {
+int32_t EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
+                            struct SOLDIERTYPE *pOpponent, int16_t sGridno) {
   uint8_t ubExplosiveIndex;
-  INT32 iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
+  int32_t iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
   int8_t bSlot;
 
   switch (pSoldier->inv[ubItemPos].usItem) {
@@ -1448,8 +1450,8 @@ INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
     return (5 * (LightTrueLevel(pOpponent->sGridNo, pOpponent->bLevel) - NORMAL_LIGHTLEVEL_DAY));
   }
 
-  iExplosDamage = (((INT32)Explosive[ubExplosiveIndex].ubDamage) * 3) / 2;
-  iBreathDamage = (((INT32)Explosive[ubExplosiveIndex].ubStunDamage) * 5) / 4;
+  iExplosDamage = (((int32_t)Explosive[ubExplosiveIndex].ubDamage) * 3) / 2;
+  iBreathDamage = (((int32_t)Explosive[ubExplosiveIndex].ubStunDamage) * 5) / 4;
 
   if (Explosive[ubExplosiveIndex].ubType == EXPLOSV_TEARGAS ||
       Explosive[ubExplosiveIndex].ubType == EXPLOSV_MUSTGAS) {
@@ -1499,9 +1501,9 @@ INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
   return (iDamage);
 }
 
-INT32 EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         uint8_t ubChanceToHit, BOOLEAN fBladeAttack) {
-  INT32 iImpact, iFluke, iBonus;
+int32_t EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                           uint8_t ubChanceToHit, BOOLEAN fBladeAttack) {
+  int32_t iImpact, iFluke, iBonus;
 
   if (fBladeAttack) {
     iImpact = Weapon[pSoldier->usAttackingWeapon].ubImpact;

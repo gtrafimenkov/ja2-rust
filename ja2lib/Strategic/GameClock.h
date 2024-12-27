@@ -91,7 +91,7 @@ enum {
 };
 
 // dereferenced with the above enumerations to provide the actual time compression rate.
-extern INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
+extern int32_t giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
 
 #define STARTING_TIME ((1 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN) + NUM_SEC_IN_DAY)  // 1am
 #define FIRST_ARRIVAL_DELAY ((6 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN))  // 7am ( 6hours later)
@@ -99,7 +99,7 @@ extern INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
 #define WORLDTIMESTR gswzWorldTimeStr
 
 // compress mode now in use
-extern INT32 giTimeCompressMode;
+extern int32_t giTimeCompressMode;
 
 enum {
   WARPTIME_NO_PROCESSING_OF_EVENTS,

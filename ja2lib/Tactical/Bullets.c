@@ -31,20 +31,20 @@
 BULLET gBullets[NUM_BULLET_SLOTS];
 uint32_t guiNumBullets = 0;
 
-INT32 GetFreeBullet(void) {
+int32_t GetFreeBullet(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBullets; uiCount++) {
-    if ((gBullets[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gBullets[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumBullets < NUM_BULLET_SLOTS) return ((INT32)guiNumBullets++);
+  if (guiNumBullets < NUM_BULLET_SLOTS) return ((int32_t)guiNumBullets++);
 
   return (-1);
 }
 
 void RecountBullets(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumBullets - 1; (uiCount >= 0); uiCount--) {
     if ((gBullets[uiCount].fAllocated)) {
@@ -55,8 +55,8 @@ void RecountBullets(void) {
   guiNumBullets = 0;
 }
 
-INT32 CreateBullet(uint8_t ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
-  INT32 iBulletIndex;
+int32_t CreateBullet(uint8_t ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
+  int32_t iBulletIndex;
   BULLET *pBullet;
 
   if ((iBulletIndex = GetFreeBullet()) == (-1)) return (-1);
@@ -81,7 +81,7 @@ INT32 CreateBullet(uint8_t ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
   return (iBulletIndex);
 }
 
-void HandleBulletSpecialFlags(INT32 iBulletIndex) {
+void HandleBulletSpecialFlags(int32_t iBulletIndex) {
   BULLET *pBullet;
   ANITILE_PARAMS AniParams;
   FLOAT dX, dY;
@@ -131,7 +131,7 @@ void HandleBulletSpecialFlags(INT32 iBulletIndex) {
   }
 }
 
-void RemoveBullet(INT32 iBullet) {
+void RemoveBullet(int32_t iBullet) {
   CHECKV(iBullet < NUM_BULLET_SLOTS);
 
   // decrease soldier's bullet count
@@ -168,7 +168,7 @@ void RemoveBullet(INT32 iBullet) {
   }
 }
 
-void LocateBullet(INT32 iBulletIndex) {
+void LocateBullet(int32_t iBulletIndex) {
   if (gGameSettings.fOptions[TOPTION_SHOW_MISSES]) {
     // Check if a bad guy fired!
     if (gBullets[iBulletIndex].ubFirerID != NOBODY) {
@@ -287,7 +287,7 @@ void UpdateBullets() {
   }
 }
 
-BULLET *GetBulletPtr(INT32 iBullet) {
+BULLET *GetBulletPtr(int32_t iBullet) {
   BULLET *pBullet;
 
   CHECKN(iBullet < NUM_BULLET_SLOTS);
@@ -412,7 +412,7 @@ BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-void StopBullet(INT32 iBullet) {
+void StopBullet(int32_t iBullet) {
   gBullets[iBullet].usFlags |= BULLET_STOPPED;
 
   RemoveStruct(gBullets[iBullet].sGridNo, BULLETTILE1);

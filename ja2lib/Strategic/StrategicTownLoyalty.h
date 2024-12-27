@@ -76,7 +76,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t 
 void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubChance);
 
 // get the shortest distance between these two towns via roads
-INT32 GetTownDistances(uint8_t ubTown, uint8_t ubTownA);
+int32_t GetTownDistances(uint8_t ubTown, uint8_t ubTownA);
 
 #ifdef JA2TESTVERSION
 
@@ -107,10 +107,10 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile);
 void ReduceLoyaltyForRebelsBetrayed(void);
 
 // how many towns under player control?
-INT32 GetNumberOfWholeTownsUnderControl(void);
+int32_t GetNumberOfWholeTownsUnderControl(void);
 
 // is all the sectors of this town under control by the player
-INT32 IsTownUnderCompleteControlByPlayer(TownID bTownId);
+int32_t IsTownUnderCompleteControlByPlayer(TownID bTownId);
 
 // used when monsters attack a town sector without going through tactical and they win
 void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHowMany);
@@ -119,7 +119,7 @@ void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHow
 void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease);
 void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease);
 void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
-void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
+void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          int8_t bSectorZ);
 
 // handle a town being liberated for the first time
@@ -132,7 +132,7 @@ BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId);
 void SetTheFirstBattleSector(int16_t sSectorValue);
 
 // gte number of whole towns but exclude this one
-INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude);
+int32_t GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude);
 
 // Function assumes that mercs have retreated already.  Handles two cases, one for general merc
 // retreat which slightly demoralizes the mercs, the other handles abandonment of militia forces

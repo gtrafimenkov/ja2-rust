@@ -26,11 +26,11 @@
 #include "Utils/FontControl.h"
 #include "Utils/TextInput.h"
 
-INT32 giBothCheckboxButton = -1;
-INT32 giRealisticCheckboxButton = -1;
-INT32 giSciFiCheckboxButton = -1;
-INT32 giAlarmTriggerButton = -1;
-INT32 giOwnershipGroupButton = -1;
+int32_t giBothCheckboxButton = -1;
+int32_t giRealisticCheckboxButton = -1;
+int32_t giSciFiCheckboxButton = -1;
+int32_t giAlarmTriggerButton = -1;
+int32_t giOwnershipGroupButton = -1;
 
 CHAR16 gszActionItemDesc[NUM_ACTIONITEMS][30] = {
     L"Klaxon Mine",      L"Flare Mine",      L"Teargas Explosion",   L"Stun Explosion",
@@ -137,22 +137,22 @@ enum {
 };
 uint32_t guiAttachmentButton[NUM_ATTACHMENT_BUTTONS];
 BOOLEAN gfAttachment[NUM_ATTACHMENT_BUTTONS];
-void ToggleAttachment(GUI_BUTTON *btn, INT32 reason);
+void ToggleAttachment(GUI_BUTTON *btn, int32_t reason);
 
 uint32_t guiCeramicPlatesButton;
 BOOLEAN gfCeramicPlates;
-void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason);
+void ToggleCeramicPlates(GUI_BUTTON *btn, int32_t reason);
 
 uint32_t guiDetonatorButton;
 BOOLEAN gfDetonator;
-void ToggleDetonator(GUI_BUTTON *btn, INT32 reason);
+void ToggleDetonator(GUI_BUTTON *btn, int32_t reason);
 
 uint32_t guiActionItemButton;
-void ActionItemCallback(GUI_BUTTON *btn, INT32 reason);
+void ActionItemCallback(GUI_BUTTON *btn, int32_t reason);
 int8_t gbActionItemIndex = ACTIONITEM_MEDIUM;
 int8_t gbDefaultBombTrapLevel = 9;
 
-void RemoveBombFromWorldByItemIndex(INT32 iItemIndex);
+void RemoveBombFromWorldByItemIndex(int32_t iItemIndex);
 
 enum {
   EDITING_NOTHING,
@@ -217,7 +217,7 @@ void RemoveMoneyGUI();
 void SetupOwnershipGUI();
 void ExtractAndUpdateOwnershipGUI();
 void RemoveOwnershipGUI();
-void OwnershipGroupButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void OwnershipGroupButtonCallback(GUI_BUTTON *btn, int32_t reason);
 
 void SetupKeysGUI();
 void ExtractAndUpdateKeysGUI();
@@ -332,7 +332,7 @@ void RemoveItemGUI() {
     }
 }
 
-void SpecifyItemToEdit(struct OBJECTTYPE *pItem, INT32 iMapIndex) {
+void SpecifyItemToEdit(struct OBJECTTYPE *pItem, int32_t iMapIndex) {
   // Set the global item pointer to point to the new item
   if (gpItem == pItem) return;
   if (gpItem != pItem) {
@@ -512,7 +512,7 @@ void UpdateItemStatsPanel() {
       break;
   }
   if (gpEditingItemPool) {
-    INT32 iPercent = 100 - gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance;
+    int32_t iPercent = 100 - gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance;
     if (iPercent == 100)
       SetFontForeground(FONT_YELLOW);
     else if (iPercent >= 50)
@@ -527,7 +527,7 @@ void UpdateItemStatsPanel() {
   InvalidateRegion(477, 362, 161, 97);
 }
 
-void RealisticOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void RealisticOnlyCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[giRealisticCheckboxButton]->uiFlags |= (BUTTON_CLICKED_ON | BUTTON_DIRTY);
     ButtonList[giSciFiCheckboxButton]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -540,7 +540,7 @@ void RealisticOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SciFiOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void SciFiOnlyCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[giRealisticCheckboxButton]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[giRealisticCheckboxButton]->uiFlags |= BUTTON_DIRTY;
@@ -553,7 +553,7 @@ void SciFiOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BothModesCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void BothModesCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[giRealisticCheckboxButton]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[giRealisticCheckboxButton]->uiFlags |= BUTTON_DIRTY;
@@ -690,7 +690,7 @@ void SetupGunGUI() {
 }
 
 void RemoveGunGUI() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < NUM_ATTACHMENT_BUTTONS; i++) {
     if (guiAttachmentButton[i] != -1) {
       RemoveButton(guiAttachmentButton[i]);
@@ -700,7 +700,7 @@ void RemoveGunGUI() {
 }
 
 void ExtractAndUpdateGunGUI() {
-  INT32 i;
+  int32_t i;
   // Update the gun status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -750,7 +750,7 @@ void RemoveAmmoGUI() {
 }
 
 void ExtractAndUpdateAmmoGUI() {
-  INT32 i;
+  int32_t i;
   // Update the number of clips
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -807,7 +807,7 @@ void RemoveArmourGUI() {
 }
 
 void ExtractAndUpdateArmourGUI() {
-  INT32 i;
+  int32_t i;
   // Update the armour status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -849,7 +849,7 @@ void RemoveEquipGUI() {
 }
 
 void ExtractAndUpdateEquipGUI() {
-  INT32 i;
+  int32_t i;
   // Update the equipment status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -913,7 +913,7 @@ void RemoveExplosivesGUI() {
 }
 
 void ExtractAndUpdateExplosivesGUI() {
-  INT32 i;
+  int32_t i;
   // Update the explosives status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -960,7 +960,7 @@ void SetupMoneyGUI() {
 }
 
 void ExtractAndUpdateMoneyGUI() {
-  INT32 i;
+  int32_t i;
   // Update the amount of cash
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -992,7 +992,7 @@ void SetupOwnershipGUI() {
                        MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, OwnershipGroupButtonCallback);
 }
 
-void OwnershipGroupButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void OwnershipGroupButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     InitPopupMenu(btn->IDNum, OWNERSHIPGROUP_POPUP, DIR_UPLEFT);
   }
@@ -1004,7 +1004,7 @@ void SetOwnershipGroup(uint8_t ubNewGroup) {
 }
 
 void ExtractAndUpdateOwnershipGUI() {
-  INT32 i;
+  int32_t i;
   // Update the amount of cash
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -1063,7 +1063,7 @@ void SetupActionItemsGUI() {
 }
 
 void ExtractAndUpdateActionItemsGUI() {
-  INT32 i;
+  int32_t i;
   // Update the equipment status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -1096,7 +1096,7 @@ void RemoveActionItemsGUI() {
   }
 }
 
-void AlarmTriggerCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void AlarmTriggerCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON)
       gpItem->fFlags |= OBJECT_ALARM_TRIGGER;
@@ -1128,7 +1128,7 @@ void SetupTriggersGUI() {
 }
 
 void ExtractAndUpdateTriggersGUI() {
-  INT32 i;
+  int32_t i;
   // Update the trap level
   i = GetNumericStrictValueFromField(1);
   i = (i == -1) ? 0 : min(i, 20);
@@ -1160,9 +1160,9 @@ void RemoveTriggersGUI() {
   }
 }
 
-void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
+void ToggleAttachment(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    INT32 i;
+    int32_t i;
     uint16_t usAttachment;
     struct OBJECTTYPE temp;
     for (i = 0; i < NUM_ATTACHMENT_BUTTONS;
@@ -1208,7 +1208,7 @@ void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
+void ToggleCeramicPlates(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct OBJECTTYPE temp;
     gfCeramicPlates ^= TRUE;
@@ -1225,7 +1225,7 @@ void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
+void ToggleDetonator(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct OBJECTTYPE temp;
     if (!gfDetonator) {
@@ -1243,7 +1243,7 @@ void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ActionItemCallback(GUI_BUTTON *btn, INT32 reason) {
+void ActionItemCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     InitPopupMenu(guiActionItemButton, ACTIONITEM_POPUP, DIR_UPLEFT);
   }
@@ -1407,7 +1407,7 @@ void UpdateActionItem(int8_t bActionItemIndex) {
 }
 
 void ReEvaluateAttachmentStatii() {
-  INT32 i;
+  int32_t i;
   uint16_t usAttachment;
   for (i = 0; i < NUM_ATTACHMENT_BUTTONS; i++) {
     if (guiAttachmentButton[i] != -1 &&

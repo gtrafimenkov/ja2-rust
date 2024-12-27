@@ -140,17 +140,17 @@ enum {
 
 // Toc menu mouse regions
 struct MOUSE_REGION gSelectedPolicyTocMenuRegion[NUM_AIM_POLICY_TOC_BUTTONS];
-void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Agree/Disagree menu Buttons regions
-void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiPoliciesAgreeButton[2];
-INT32 guiPoliciesButtonImage;
+int32_t guiPoliciesButtonImage;
 
 // Bottom Menu Buttons
-void BtnPoliciesMenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnPoliciesMenuButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiPoliciesMenuButton[AIM_POLICY_MENU_BUTTON_AMOUNT];
-INT32 guiPoliciesMenuButtonImage;
+int32_t guiPoliciesMenuButtonImage;
 
 uint32_t guiBottomButton;
 uint32_t guiBottomButton2;
@@ -516,7 +516,7 @@ BOOLEAN ExitAimPolicyTocMenu() {
   return (TRUE);
 }
 
-void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (gfInPolicyToc) {
     if (iReason & MSYS_CALLBACK_REASON_INIT) {
     } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -679,7 +679,7 @@ uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, uint8_t ubPageNum, FLOAT 
   return (usNumPixels);
 }
 
-void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   uint8_t ubRetValue;
   static BOOLEAN fOnPage = TRUE;
   if (fOnPage) {
@@ -721,7 +721,7 @@ void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnPoliciesMenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnPoliciesMenuButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   uint8_t ubRetValue;
   static BOOLEAN fOnPage = TRUE;
   if (fOnPage) {

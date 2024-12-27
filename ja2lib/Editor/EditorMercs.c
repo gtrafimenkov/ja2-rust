@@ -148,7 +148,7 @@ void SetupTextInputForMercSchedule();
 void ExtractAndUpdateMercAttributes();
 void ExtractAndUpdateMercProfile();
 void ExtractAndUpdateMercSchedule();
-void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, uint32_t uiMax);
+void CalcStringForValue(STR16 str, int bufSize, int32_t iValue, uint32_t uiMax);
 void ChangeBodyType(int8_t bOffset);  //+1 or -1 only
 
 // internal merc variables
@@ -200,18 +200,18 @@ uint16_t gusMercsNewItemIndex = 0xffff;
 // BOOLEAN	fMercEdUseLeftSide = FALSE;
 // BOOLEAN fEditingMerc = FALSE;
 // BOOLEAN fKeepWindowHidden = FALSE;
-INT32 iEditMercPage = 1;
-INT32 iEditMercEnd = -1;
-INT32 iEditMercBkgrndArea = -1;
-INT32 iEditMercLocation;
-INT32 iEditStatTimer = 0;
-INT32 iEditWhichStat = -1;
-INT32 iEditMercMode = EDIT_MERC_NONE;
-INT32 iEditMercColorPage = -1;
-INT32 iEditMercStatPage = -1;
-INT32 iEditMercFindButton = -1;
-INT32 iEditMercSlotNumber;
-INT32 iEditColorStart[EDIT_NUM_COLORS];
+int32_t iEditMercPage = 1;
+int32_t iEditMercEnd = -1;
+int32_t iEditMercBkgrndArea = -1;
+int32_t iEditMercLocation;
+int32_t iEditStatTimer = 0;
+int32_t iEditWhichStat = -1;
+int32_t iEditMercMode = EDIT_MERC_NONE;
+int32_t iEditMercColorPage = -1;
+int32_t iEditMercStatPage = -1;
+int32_t iEditMercFindButton = -1;
+int32_t iEditMercSlotNumber;
+int32_t iEditColorStart[EDIT_NUM_COLORS];
 
 BOOLEAN gfShowPlayers = TRUE;
 BOOLEAN gfShowEnemies = TRUE;
@@ -269,11 +269,11 @@ int8_t gbCurrCreature = BLOODCAT;
 BOOLEAN gfSaveBuffer = FALSE;
 BASIC_SOLDIERCREATE_STRUCT gSaveBufferBasicPlacement;
 SOLDIERCREATE_STRUCT gSaveBufferDetailedPlacement;
-void CopyMercPlacement(INT32 iMapIndex);
-void PasteMercPlacement(INT32 iMapIndex);
+void CopyMercPlacement(int32_t iMapIndex);
+void PasteMercPlacement(int32_t iMapIndex);
 
 void GameInitEditorMercsInfo() {
-  INT32 i;
+  int32_t i;
   // Initialize the placement list
   InitSoldierInitList();
   gMapInformation.ubNumIndividuals = 0;
@@ -293,7 +293,7 @@ void GameShutdownEditorMercsInfo() {
 }
 
 void EntryInitEditorMercsInfo() {
-  INT32 x, iCurStart = 0;
+  int32_t x, iCurStart = 0;
   iEditColorStart[0] = 0;
   for (x = 1; x < EDIT_NUM_COLORS; x++) {
     iCurStart += gubpNumReplacementsPerRange[x - 1];
@@ -437,9 +437,9 @@ void ProcessMercEditing() {
   }
 }
 
-void AddMercToWorld(INT32 iMapIndex) {
+void AddMercToWorld(int32_t iMapIndex) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
+  int32_t i;
 
   memset(&gTempBasicPlacement, 0, sizeof(BASIC_SOLDIERCREATE_STRUCT));
 
@@ -523,7 +523,7 @@ void AddMercToWorld(INT32 iMapIndex) {
   }
 }
 
-void HandleRightClickOnMerc(INT32 iMapIndex) {
+void HandleRightClickOnMerc(int32_t iMapIndex) {
   SOLDIERINITNODE *pNode;
   int16_t sThisMercID;
   int16_t sCellX, sCellY;
@@ -601,12 +601,12 @@ void ResetAllMercPositions() {
 }
 
 void AddMercWaypoint(uint32_t iMapIndex) {
-  INT32 iNum;
+  int32_t iNum;
   // index 0 isn't used
   if (iActionParam == 0) return;
 
   if (gsSelectedMercID == -1 ||
-      (gsSelectedMercID <= (INT32)gTacticalStatus.Team[OUR_TEAM].bLastID) ||
+      (gsSelectedMercID <= (int32_t)gTacticalStatus.Team[OUR_TEAM].bLastID) ||
       gsSelectedMercID >= MAXMERCS)
     return;
 
@@ -635,12 +635,12 @@ void AddMercWaypoint(uint32_t iMapIndex) {
 }
 
 void EraseMercWaypoint() {
-  INT32 iNum;
+  int32_t iNum;
   // index 0 isn't used
   if (iActionParam == 0) return;
 
   if (gsSelectedMercID == -1 ||
-      (gsSelectedMercID <= (INT32)gTacticalStatus.Team[OUR_TEAM].bLastID) ||
+      (gsSelectedMercID <= (int32_t)gTacticalStatus.Team[OUR_TEAM].bLastID) ||
       gsSelectedMercID >= MAXMERCS)
     return;
 
@@ -720,9 +720,9 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
 //	to be displayed, this function will dispatch it instead.
 //
 void DisplayEditMercWindow(void) {
-  INT32 iXPos, iYPos, iHeight, iWidth;
+  int32_t iXPos, iYPos, iHeight, iWidth;
   uint16_t usFillColorBack, usFillColorDark, usFillColorLight, usFillColorTextBk;
-  INT32 x, iXOff;
+  int32_t x, iXOff;
   CHAR16 TempString[30];
   struct SOLDIERTYPE *pSoldier;
   int8_t iEditStat[12];
@@ -826,9 +826,9 @@ void DisplayEditMercWindow(void) {
 //	Checks for a soldier at the given map coordinates. If there is one, it returns it's ID
 // number, 	otherwise it returns -1.
 //
-INT32 IsMercHere(INT32 iMapIndex) {
-  INT32 IDNumber;
-  INT32 RetIDNumber;
+int32_t IsMercHere(int32_t iMapIndex) {
+  int32_t IDNumber;
+  int32_t RetIDNumber;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierFound;
 
@@ -852,35 +852,35 @@ INT32 IsMercHere(INT32 iMapIndex) {
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 
-void EditMercChangeToStatsPageCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercChangeToStatsPageCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditStatTimer = 0;
     iEditMercMode = EDIT_MERC_TO_STATS;
   }
 }
 
-void EditMercChangeToColorPageCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercChangeToColorPageCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditStatTimer = 0;
     iEditMercMode = EDIT_MERC_TO_COLOR;
   }
 }
 
-void EditMercDoneEditCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercDoneEditCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditStatTimer = 0;
     iEditMercMode = EDIT_MERC_DONE;
   }
 }
 
-void EditMercBkgrndCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercBkgrndCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_RBUTTON_DWN) {
     iEditStatTimer = 0;
     iEditMercMode = EDIT_MERC_DONE;
   }
 }
 
-void EditMercPrevOrderCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercPrevOrderCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     iEditStatTimer = 0;
@@ -888,7 +888,7 @@ void EditMercPrevOrderCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercNextOrderCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercNextOrderCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     iEditStatTimer = 0;
@@ -896,7 +896,7 @@ void EditMercNextOrderCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercPrevAttCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercPrevAttCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     iEditStatTimer = 0;
@@ -904,7 +904,7 @@ void EditMercPrevAttCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercNextAttCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercNextAttCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     iEditStatTimer = 0;
@@ -912,8 +912,8 @@ void EditMercNextAttCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercStatUpCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iBtn;
+void EditMercStatUpCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iBtn;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditWhichStat = -1;
@@ -934,8 +934,8 @@ void EditMercStatUpCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercStatDwnCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iBtn;
+void EditMercStatDwnCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iBtn;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditWhichStat = -1;
@@ -956,8 +956,8 @@ void EditMercStatDwnCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercSetDirCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iBtn;
+void EditMercSetDirCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iBtn;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditWhichStat = -1;
@@ -974,7 +974,7 @@ void EditMercSetDirCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercCenterCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercCenterCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditStatTimer = 0;
     iEditMercMode = EDIT_MERC_FIND;
@@ -983,8 +983,8 @@ void EditMercCenterCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercColorDwnCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iBtn;
+void EditMercColorDwnCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iBtn;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditWhichStat = -1;
@@ -1001,7 +1001,7 @@ void EditMercColorDwnCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MercsToggleColorModeCallback(GUI_BUTTON *btn, INT32 reason) {
+void MercsToggleColorModeCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON)  // button is checked
     {
@@ -1025,8 +1025,8 @@ void MercsToggleColorModeCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MercsSetColorsCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iBtn;
+void MercsSetColorsCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iBtn;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iEditWhichStat = -1;
     for (iBtn = FIRST_MERCS_COLOR_BUTTON; iBtn <= LAST_MERCS_COLOR_BUTTON; iBtn++) {
@@ -1041,7 +1041,7 @@ void MercsSetColorsCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MercsSetBodyTypeCallback(GUI_BUTTON *btn, INT32 reason) {
+void MercsSetBodyTypeCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMercInfo = TRUE;
     if (btn->IDNum == iEditorButton[MERCS_BODYTYPE_DOWN])
@@ -1051,7 +1051,7 @@ void MercsSetBodyTypeCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercDecDifficultyCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercDecDifficultyCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
 
@@ -1059,7 +1059,7 @@ void EditMercDecDifficultyCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EditMercIncDifficultyCallback(GUI_BUTTON *btn, INT32 reason) {
+void EditMercIncDifficultyCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
 
@@ -1177,7 +1177,7 @@ void DisplayWayPoints(void) {
   int16_t sGridNo;
 
   if (gsSelectedMercID == -1 ||
-      (gsSelectedMercID <= (INT32)gTacticalStatus.Team[OUR_TEAM].bLastID) ||
+      (gsSelectedMercID <= (int32_t)gTacticalStatus.Team[OUR_TEAM].bLastID) ||
       gsSelectedMercID >= MAXMERCS)
     return;
 
@@ -1226,8 +1226,8 @@ void DisplayWayPoints(void) {
 }
 
 void CreateEditMercWindow(void) {
-  INT32 iXPos, iYPos, iHeight, iWidth;
-  INT32 x;
+  int32_t iXPos, iYPos, iHeight, iWidth;
+  int32_t x;
   struct SOLDIERTYPE *pSoldier;
 
   iWidth = 266;
@@ -1236,7 +1236,7 @@ void CreateEditMercWindow(void) {
   iXPos = 0;
 
   GetSoldier(&pSoldier, (int16_t)gsSelectedMercID);
-  iEditMercLocation = (INT32)pSoldier->sGridNo;
+  iEditMercLocation = (int32_t)pSoldier->sGridNo;
   gpWorldLevelData[iEditMercLocation].pObjectHead->ubShadeLevel = DEFAULT_SHADE_LEVEL;
 
   iEditMercBkgrndArea =
@@ -1680,7 +1680,7 @@ void SetupTextInputForMercAttributes() {
 // In the merc editing, all detailed placement values for generated attributes are set to -1.
 // When making a generated attribute static, we then set the value to its applicable value.
 // This function is similar to the itoa function except that -1 is converted to a null string.
-void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, uint32_t uiMax) {
+void CalcStringForValue(STR16 str, int bufSize, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
@@ -1780,7 +1780,7 @@ void SetupTextInputForMercSchedule() {
 }
 
 void ExtractAndUpdateMercSchedule() {
-  INT32 i;
+  int32_t i;
   BOOLEAN fValidSchedule = FALSE;
   BOOLEAN fScheduleNeedsUpdate = FALSE;
   SCHEDULENODE *pNext = NULL;
@@ -1882,8 +1882,8 @@ void KillDetailedPlacementForMerc() {
 void ChangeBodyType(int8_t bOffset)  //+1 or -1 only
 {
   int8_t *pbArray;
-  INT32 iMax, x;
-  INT32 iIndex;
+  int32_t iMax, x;
+  int32_t iIndex;
 
   gfRenderTaskbar = TRUE;
   gfRenderMercInfo = TRUE;
@@ -2557,7 +2557,7 @@ SGPRect mercRects[9] = {
     {180, 75, 232, 94}   // pack 4
 };
 
-BOOLEAN PointInRect(SGPRect *pRect, INT32 x, INT32 y) {
+BOOLEAN PointInRect(SGPRect *pRect, int32_t x, int32_t y) {
   return (x >= pRect->iLeft && x <= pRect->iRight && y >= pRect->iTop && y <= pRect->iBottom);
 }
 
@@ -2573,9 +2573,9 @@ void DrawRect(SGPRect *pRect, int16_t color) {
 }
 
 void RenderSelectedMercsInventory() {
-  INT32 i;
+  int32_t i;
   uint8_t *pSrc, *pDst;
-  INT32 xp, yp;
+  int32_t xp, yp;
   uint32_t uiSrcPitchBYTES, uiDstPitchBYTES;
   CHAR16 pItemName[100];
   uint8_t ubFontColor;
@@ -2647,8 +2647,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   ETRLEObject *pObject;
   INVTYPE *item;
   SGPRect SrcRect, DstRect;
-  INT32 iSrcWidth, iSrcHeight;
-  INT32 iDstWidth, iDstHeight;
+  int32_t iSrcWidth, iSrcHeight;
+  int32_t iDstWidth, iDstHeight;
   float rScalar, rWidthScalar, rHeightScalar;
   BOOLEAN fUnDroppable;
 
@@ -2772,8 +2772,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
     rScalar = max(rWidthScalar, rHeightScalar);
 
   // apply the scalar to the destination width and height
-  iDstWidth = (INT32)(iSrcWidth * rScalar);
-  iDstHeight = (INT32)(iSrcHeight * rScalar);
+  iDstWidth = (int32_t)(iSrcWidth * rScalar);
+  iDstHeight = (int32_t)(iSrcHeight * rScalar);
 
   // sometimes it is possible to scale too big, so clip if applicable
   if (iDstWidth > MERCINV_LGSLOT_WIDTH)
@@ -2796,7 +2796,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
 }
 
 void RenderMercInventoryPanel() {
-  INT32 x;
+  int32_t x;
   // Draw the graphical panel
   BltVideoObjectFromIndex(FRAME_BUFFER, guiMercInventoryPanel, 0, MERCPANEL_X, MERCPANEL_Y,
                           VO_BLT_SRCTRANSPARENCY, NULL);
@@ -2893,7 +2893,7 @@ void UpdateMercItemSlots() {
 
 void SetDroppableCheckboxesBasedOnMercsInventory() {
   struct OBJECTTYPE *pItem;
-  INT32 i;
+  int32_t i;
   if (gpSelected && gpSelected->pDetailedPlacement) {
     for (i = 0; i < 9; i++) {
       pItem = &gpSelected->pDetailedPlacement->Inv[gbMercSlotTypes[i]];
@@ -3114,7 +3114,7 @@ void SetMercTeamVisibility(int8_t bTeam, BOOLEAN fVisible) {
 }
 
 void DetermineScheduleEditability() {
-  INT32 i;
+  int32_t i;
   EnableEditorButtons(MERCS_SCHEDULE_ACTION1, MERCS_SCHEDULE_DATA4B);
   EnableTextFields(1, 4);
   for (i = 0; i < 4; i++) {
@@ -3162,7 +3162,7 @@ void CancelCurrentScheduleAction() {
   DetermineScheduleEditability();
 }
 
-void RegisterCurrentScheduleAction(INT32 iMapIndex) {
+void RegisterCurrentScheduleAction(int32_t iMapIndex) {
   CHAR16 str[6];
   MarkWorldDirty();
   swprintf(str, ARR_SIZE(str), L"%d", iMapIndex);
@@ -3276,7 +3276,7 @@ void UpdateScheduleAction(uint8_t ubNewAction) {
 
 // 0:1A, 1:1B, 2:2A, 3:2B, ...
 void FindScheduleGridNo(uint8_t ubScheduleData) {
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   switch (ubScheduleData) {
     case 0:  // 1a
       iMapIndex = gCurrSchedule.usData1[0];
@@ -3336,8 +3336,8 @@ void ClearCurrentSchedule() {
 void RenderCurrentSchedule() {
   FLOAT dOffsetX, dOffsetY;
   FLOAT ScrnX, ScrnY;
-  INT32 i;
-  INT32 iMapIndex;
+  int32_t i;
+  int32_t iMapIndex;
   int16_t sXMapPos, sYMapPos;
   int16_t sScreenX, sScreenY;
   int16_t sX, sY;
@@ -3379,7 +3379,7 @@ void RenderCurrentSchedule() {
 }
 
 void UpdateScheduleInfo() {
-  INT32 i;
+  int32_t i;
   SCHEDULENODE *pSchedule;
   CHAR16 str[6];
   if (gpSelected->pSoldier->ubScheduleID) {
@@ -3419,7 +3419,7 @@ void UpdateScheduleInfo() {
   }
 }
 
-void CopyMercPlacement(INT32 iMapIndex) {
+void CopyMercPlacement(int32_t iMapIndex) {
   if (gsSelectedMercID == -1) {
     ScreenMsg(FONT_MCOLOR_LTRED, MSG_INTERFACE,
               L"Placement not copied because no placement selected.");
@@ -3435,10 +3435,10 @@ void CopyMercPlacement(INT32 iMapIndex) {
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Placement copied.");
 }
 
-void PasteMercPlacement(INT32 iMapIndex) {
+void PasteMercPlacement(int32_t iMapIndex) {
   struct SOLDIERTYPE *pSoldier;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
+  int32_t i;
 
   if (!gfSaveBuffer) {
     ScreenMsg(FONT_MCOLOR_LTRED, MSG_INTERFACE,

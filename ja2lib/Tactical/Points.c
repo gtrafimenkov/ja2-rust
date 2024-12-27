@@ -155,7 +155,7 @@ int16_t BreathPointAdjustmentForCarriedWeight(struct SOLDIERTYPE *pSoldier) {
 
 int16_t TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir,
                             uint16_t usMovementMode) {
-  INT32 iPoints = 0;
+  int32_t iPoints = 0;
   uint8_t ubMovementCost;
 
   ubMovementCost = gubWorldMovementCosts[sGridno][bDir][0];
@@ -240,7 +240,7 @@ int16_t TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_
   // ATE: Adjust these by realtime movement
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
     // ATE: ADJUST FOR RT - MAKE BREATH GO A LITTLE FASTER!
-    iPoints = (INT32)(iPoints * TB_BREATH_DEDUCT_MODIFIER);
+    iPoints = (int32_t)(iPoints * TB_BREATH_DEDUCT_MODIFIER);
   }
 
   return ((int16_t)iPoints);
@@ -829,7 +829,7 @@ uint8_t CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
         sAdjustedGridNo = sGridNo;
         sAPCost += (uint8_t)(pSoldier->sWalkToAttackWalkToCost);
       } else {
-        // INT32		cnt;
+        // int32_t		cnt;
         // int16_t		sSpot;
         uint8_t ubGuyThere;
         int16_t sGotLocation = NOWHERE;
@@ -1175,7 +1175,7 @@ uint8_t MinAPsToPunch(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubA
 
 int8_t MinPtsToMove(struct SOLDIERTYPE *pSoldier) {
   // look around all 8 directions and return lowest terrain cost
-  INT32 cnt;
+  int32_t cnt;
   int16_t sLowest = 127;
   int16_t sGridno, sCost;
 
@@ -1675,9 +1675,9 @@ int8_t GetAPsToRefuelVehicle(struct SOLDIERTYPE *pSoldier) {
 #define AP_MAX_AIM_ATTACK 4    // maximum permitted extra aiming
 
 int16_t MinAPsToThrow(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubAddTurningCost) {
-  INT32 iTop, iBottom;
-  INT32 iFullAPs;
-  INT32 iAPCost = AP_MIN_AIM_ATTACK;
+  int32_t iTop, iBottom;
+  int32_t iFullAPs;
+  int32_t iAPCost = AP_MIN_AIM_ATTACK;
   uint16_t usInHand;
   uint16_t usTargID;
   uint32_t uiMercFlags;

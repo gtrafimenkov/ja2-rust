@@ -37,8 +37,8 @@ WRAPPED_STRING *LineWrapForSingleCharWords(uint32_t ulFont, uint16_t usLineWidth
   wchar_t OneChar[2];
   BOOLEAN fNewLine = FALSE;
   //	BOOLEAN					fTheStringIsToLong=FALSE;
-  //	INT32 iCounter=0;
-  //	INT32 iErrorCount = 0;
+  //	int32_t iCounter=0;
+  //	int32_t iErrorCount = 0;
   //  pNullString[0]=L' ';
   //	pNullString[1]=0;
 
@@ -142,8 +142,8 @@ WRAPPED_STRING *LineWrap(uint32_t ulFont, uint16_t usLineWidthPixels,
   wchar_t OneChar[2];
   BOOLEAN fNewLine = FALSE;
   BOOLEAN fTheStringIsToLong = FALSE;
-  INT32 iCounter = 0;
-  INT32 iErrorCount = 0;
+  int32_t iCounter = 0;
+  int32_t iErrorCount = 0;
   pNullString[0] = L' ';
   pNullString[1] = 0;
 
@@ -871,8 +871,8 @@ uint16_t IanDisplayWrappedString(uint16_t usPosX, uint16_t usPosY, uint16_t usWi
 }
 
 void CleanOutControlCodesFromString(STR16 pSourceString, STR16 pDestString) {
-  INT32 iSourceCounter = 0;
-  INT32 iDestCounter = 0;
+  int32_t iSourceCounter = 0;
+  int32_t iDestCounter = 0;
 
   BOOLEAN fRemoveCurrentChar;
   BOOLEAN fRemoveCurrentCharAndNextChar;
@@ -1510,10 +1510,10 @@ uint16_t IanWrappedStringHeight(uint16_t usPosX, uint16_t usPosY, uint16_t usWid
   return (usLinesUsed * (WFGetFontHeight(uiFont) + (uint16_t)ubGap));  // +ubGap
 }
 
-BOOLEAN WillThisStringGetCutOff(INT32 iTotalYPosition, INT32 iBottomOfPage, INT32 iWrapWidth,
-                                uint32_t uiFont, STR16 pString, INT32 iGap, INT32 iPage) {
+BOOLEAN WillThisStringGetCutOff(int32_t iTotalYPosition, int32_t iBottomOfPage, int32_t iWrapWidth,
+                                uint32_t uiFont, STR16 pString, int32_t iGap, int32_t iPage) {
   BOOLEAN fGetCutOff = FALSE;
-  INT32 iHeight;
+  int32_t iHeight;
   // Will return if this string will get cut off
 
   iHeight = IanWrappedStringHeight(0, 0, (int16_t)iWrapWidth, (uint8_t)(iGap), uiFont, 0, pString,
@@ -1526,9 +1526,9 @@ BOOLEAN WillThisStringGetCutOff(INT32 iTotalYPosition, INT32 iBottomOfPage, INT3
   return (fGetCutOff);
 }
 
-BOOLEAN IsThisStringBeforeTheCurrentPage(INT32 iTotalYPosition, INT32 iPageSize, INT32 iCurrentPage,
-                                         INT32 iWrapWidth, uint32_t uiFont, STR16 pString,
-                                         INT32 iGap) {
+BOOLEAN IsThisStringBeforeTheCurrentPage(int32_t iTotalYPosition, int32_t iPageSize,
+                                         int32_t iCurrentPage, int32_t iWrapWidth, uint32_t uiFont,
+                                         STR16 pString, int32_t iGap) {
   // check to see if the current string will appear on the current page
   BOOLEAN fBeforeCurrentPage = FALSE;
 
@@ -1543,10 +1543,10 @@ BOOLEAN IsThisStringBeforeTheCurrentPage(INT32 iTotalYPosition, INT32 iPageSize,
   return (fBeforeCurrentPage);
 }
 
-INT32 GetNewTotalYPositionOfThisString(INT32 iTotalYPosition, INT32 iPageSize, INT32 iCurrentPage,
-                                       INT32 iWrapWidth, uint32_t uiFont, STR16 pString,
-                                       INT32 iGap) {
-  INT32 iNewYPosition = 0;
+int32_t GetNewTotalYPositionOfThisString(int32_t iTotalYPosition, int32_t iPageSize,
+                                         int32_t iCurrentPage, int32_t iWrapWidth, uint32_t uiFont,
+                                         STR16 pString, int32_t iGap) {
+  int32_t iNewYPosition = 0;
   // will returnt he new total y value of this string
 
   iNewYPosition =
@@ -1567,13 +1567,13 @@ void ShadowText(uint32_t uiDestVSurface, STR16 pString, uint32_t uiFont, uint16_
 
 // for email
 RecordPtr GetFirstRecordOnThisPage(RecordPtr RecordList, uint32_t uiFont, uint16_t usWidth,
-                                   uint8_t ubGap, INT32 iPage, INT32 iPageSize) {
+                                   uint8_t ubGap, int32_t iPage, int32_t iPageSize) {
   // get the first record on this page - build pages up until this point
 
   RecordPtr CurrentRecord = NULL;
 
-  INT32 iCurrentPositionOnThisPage = 0;
-  INT32 iCurrentPage = 0;
+  int32_t iCurrentPositionOnThisPage = 0;
+  int32_t iCurrentPage = 0;
 
   // null record list, nothing to do
   if (RecordList == NULL) {
@@ -1613,15 +1613,15 @@ RecordPtr GetFirstRecordOnThisPage(RecordPtr RecordList, uint32_t uiFont, uint16
 
 // for file viewer
 FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, uint32_t uiFont, uint16_t usWidth,
-                                       uint8_t ubGap, INT32 iPage, INT32 iPageSize,
+                                       uint8_t ubGap, int32_t iPage, int32_t iPageSize,
                                        FileRecordWidthPtr WidthList) {
   // get the first record on this page - build pages up until this point
 
   FileStringPtr CurrentRecord = NULL;
 
-  INT32 iCurrentPositionOnThisPage = 0;
-  INT32 iCurrentPage = 0;
-  INT32 iCounter = 0;
+  int32_t iCurrentPositionOnThisPage = 0;
+  int32_t iCurrentPage = 0;
+  int32_t iCounter = 0;
   FileRecordWidthPtr pWidthList = WidthList;
   uint16_t usCurrentWidth = usWidth;
 

@@ -42,7 +42,7 @@ uint32_t guiMapBorder;
 // uint32_t guiMapBorderCorner;
 
 // scroll direction
-INT32 giScrollButtonState = -1;
+int32_t giScrollButtonState = -1;
 
 // flags
 BOOLEAN fShowTownFlag = FALSE;
@@ -60,8 +60,8 @@ BOOLEAN fZoomFlag = FALSE;
 // BOOLEAN fDisabledMapBorder = FALSE;
 
 // buttons & button images
-INT32 giMapBorderButtons[6] = {-1, -1, -1, -1, -1, -1};
-INT32 giMapBorderButtonsImage[6] = {-1, -1, -1, -1, -1, -1};
+int32_t giMapBorderButtons[6] = {-1, -1, -1, -1, -1, -1};
+int32_t giMapBorderButtonsImage[6] = {-1, -1, -1, -1, -1, -1};
 
 // uint32_t guiMapBorderScrollButtons[ 4 ] = { -1, -1, -1, -1 };
 // uint32_t guiMapBorderScrollButtonsImage[ 4 ];
@@ -86,26 +86,26 @@ void DisplayCurrentLevelMarker(void);
 extern void CancelMapUIMessage(void);
 
 // callbacks
-void BtnTownCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnMineCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnItemCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnAircraftCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnTeamCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnMilitiaCallback(GUI_BUTTON *btn, INT32 reason);
-// void BtnZoomCallback(GUI_BUTTON *btn,INT32 reason);
+void BtnTownCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnMineCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnItemCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnAircraftCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnTeamCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnMilitiaCallback(GUI_BUTTON *btn, int32_t reason);
+// void BtnZoomCallback(GUI_BUTTON *btn,int32_t reason);
 
-void BtnGenericMouseMoveButtonCallbackForMapBorder(GUI_BUTTON *btn, INT32 reason);
-void LevelMarkerBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void BtnGenericMouseMoveButtonCallbackForMapBorder(GUI_BUTTON *btn, int32_t reason);
+void LevelMarkerBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void CommonBtnCallbackBtnDownChecks(void);
 
 /*
-void BtnScrollNorthMapScreenCallback( GUI_BUTTON *btn,INT32 reason );
-void BtnScrollSouthMapScreenCallback( GUI_BUTTON *btn,INT32 reason );
-void BtnScrollWestMapScreenCallback( GUI_BUTTON *btn,INT32 reason );
-void BtnScrollEastMapScreenCallback( GUI_BUTTON *btn,INT32 reason );
-void BtnLowerLevelBtnCallback(GUI_BUTTON *btn,INT32 reason);
-void BtnRaiseLevelBtnCallback(GUI_BUTTON *btn,INT32 reason);
+void BtnScrollNorthMapScreenCallback( GUI_BUTTON *btn,int32_t reason );
+void BtnScrollSouthMapScreenCallback( GUI_BUTTON *btn,int32_t reason );
+void BtnScrollWestMapScreenCallback( GUI_BUTTON *btn,int32_t reason );
+void BtnScrollEastMapScreenCallback( GUI_BUTTON *btn,int32_t reason );
+void BtnLowerLevelBtnCallback(GUI_BUTTON *btn,int32_t reason);
+void BtnRaiseLevelBtnCallback(GUI_BUTTON *btn,int32_t reason);
 */
 
 BOOLEAN LoadMapBorderGraphics(void) {
@@ -400,7 +400,7 @@ void DeleteMapBorderButtons(void) {
 // callbacks
 
 /*
-void BtnLowerLevelBtnCallback(GUI_BUTTON *btn,INT32 reason)
+void BtnLowerLevelBtnCallback(GUI_BUTTON *btn,int32_t reason)
 {
 
 
@@ -429,7 +429,7 @@ void BtnLowerLevelBtnCallback(GUI_BUTTON *btn,INT32 reason)
 }
 
 
-void BtnRaiseLevelBtnCallback(GUI_BUTTON *btn,INT32 reason)
+void BtnRaiseLevelBtnCallback(GUI_BUTTON *btn,int32_t reason)
 {
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
@@ -456,7 +456,7 @@ void BtnRaiseLevelBtnCallback(GUI_BUTTON *btn,INT32 reason)
 }
 */
 
-void BtnMilitiaCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMilitiaCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     CommonBtnCallbackBtnDownChecks();
     ToggleShowMilitiaMode();
@@ -465,7 +465,7 @@ void BtnMilitiaCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnTeamCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnTeamCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     CommonBtnCallbackBtnDownChecks();
     ToggleShowTeamsMode();
@@ -474,7 +474,7 @@ void BtnTeamCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnTownCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnTownCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     CommonBtnCallbackBtnDownChecks();
     ToggleShowTownsMode();
@@ -483,7 +483,7 @@ void BtnTownCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnMineCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMineCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     CommonBtnCallbackBtnDownChecks();
     ToggleShowMinesMode();
@@ -492,7 +492,7 @@ void BtnMineCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnAircraftCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnAircraftCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     CommonBtnCallbackBtnDownChecks();
 
@@ -502,7 +502,7 @@ void BtnAircraftCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnItemCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnItemCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     CommonBtnCallbackBtnDownChecks();
 
@@ -513,7 +513,7 @@ void BtnItemCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 /*
-void BtnZoomCallback(GUI_BUTTON *btn,INT32 reason)
+void BtnZoomCallback(GUI_BUTTON *btn,int32_t reason)
 {
         uint16_t sTempXOff=0;
         uint16_t sTempYOff=0;
@@ -727,7 +727,7 @@ void ShowDestinationOfPlottedPath( STR16 pLoc )
 */
 
 /*
-void BtnScrollNorthMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
+void BtnScrollNorthMapScreenCallback( GUI_BUTTON *btn,int32_t reason )
 {
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
@@ -762,7 +762,7 @@ void BtnScrollNorthMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
         }
 }
 
-void BtnScrollSouthMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
+void BtnScrollSouthMapScreenCallback( GUI_BUTTON *btn,int32_t reason )
 {
 
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
@@ -799,7 +799,7 @@ void BtnScrollSouthMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
         }
 }
 
-void BtnScrollEastMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
+void BtnScrollEastMapScreenCallback( GUI_BUTTON *btn,int32_t reason )
 {
 
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
@@ -835,7 +835,7 @@ void BtnScrollEastMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
         }
 }
 
-void BtnScrollWestMapScreenCallback( GUI_BUTTON *btn,INT32 reason )
+void BtnScrollWestMapScreenCallback( GUI_BUTTON *btn,int32_t reason )
 {
 
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
@@ -956,7 +956,7 @@ void HandleMapScrollButtonStates( void )
 */
 
 // generic button mvt callback for mapscreen map border
-void BtnGenericMouseMoveButtonCallbackForMapBorder(GUI_BUTTON *btn, INT32 reason) {
+void BtnGenericMouseMoveButtonCallbackForMapBorder(GUI_BUTTON *btn, int32_t reason) {
   // If the button isn't the anchored button, then we don't want to modify the button state.
 
   if (btn != gpAnchoredButton) {
@@ -1044,9 +1044,9 @@ void DeleteMouseRegionsForLevelMarkers(void) {
   }
 }
 
-void LevelMarkerBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void LevelMarkerBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // btn callback handler for assignment screen mask region
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
 

@@ -76,9 +76,9 @@ uint8_t gubBuildingInfoToSet;
 #define MAX_TRAIL_TREE (4096)
 #define MAX_PATHQ (512)
 
-INT32 iMaxSkipListLevel = MAX_SKIPLIST_LEVEL;
-INT32 iMaxTrailTree = MAX_TRAIL_TREE;
-INT32 iMaxPathQ = MAX_PATHQ;
+int32_t iMaxSkipListLevel = MAX_SKIPLIST_LEVEL;
+int32_t iMaxTrailTree = MAX_TRAIL_TREE;
+int32_t iMaxPathQ = MAX_PATHQ;
 
 extern BOOLEAN gfGeneratingMapEdgepoints;
 
@@ -89,7 +89,7 @@ extern BOOLEAN gfGeneratingMapEdgepoints;
 // OLD PATHAI STUFF
 /////////////////////////////////////////////////
 struct path_s {
-  INT32 iLocation;                              // 4
+  int32_t iLocation;                            // 4
   struct path_s *pNext[ABSMAX_SKIPLIST_LEVEL];  // 4 * MAX_SKIPLIST_LEVEL (5) = 20
   int16_t sPathNdx;                             // 2
   TRAILCELLTYPE usCostSoFar;                    // 2
@@ -122,11 +122,11 @@ enum {
 
 static path_t *pathQ;
 static uint16_t gusPathShown, gusAPtsToMove;
-static INT32 queRequests;
-static INT32 iSkipListSize;
-static INT32 iClosedListSize;
+static int32_t queRequests;
+static int32_t iSkipListSize;
+static int32_t iClosedListSize;
 static int8_t bSkipListLevel;
-static INT32 iSkipListLevelLimit[8] = {0, 4, 16, 64, 256, 1024, 4192, 16384};
+static int32_t iSkipListLevelLimit[8] = {0, 4, 16, 64, 256, 1024, 4192, 16384};
 
 #define ESTIMATE0 ((dx > dy) ? (dx) : (dy))
 #define ESTIMATE1 ((dx < dy) ? ((dx * 14) / 10 + dy) : ((dy * 14) / 10 + dx))
@@ -368,10 +368,10 @@ BOOLEAN gfPathAroundObstacles = TRUE;
 
 static uint32_t guiPlottedPath[256];
 uint32_t guiPathingData[256];
-static INT32 giPathDataSize;
-static INT32 giPlotCnt;
+static int32_t giPathDataSize;
+static int32_t giPlotCnt;
 
-static INT32 dirDelta[8] = {
+static int32_t dirDelta[8] = {
     -MAPWIDTH,     // N
     1 - MAPWIDTH,  // NE
     1,             // E
@@ -423,7 +423,8 @@ void ShutDownPathAI(void) {
   MemFree(trailTree);
 }
 
-void ReconfigurePathAI(INT32 iNewMaxSkipListLevel, INT32 iNewMaxTrailTree, INT32 iNewMaxPathQ) {
+void ReconfigurePathAI(int32_t iNewMaxSkipListLevel, int32_t iNewMaxTrailTree,
+                       int32_t iNewMaxPathQ) {
   // make sure the specified parameters are reasonable
   iNewMaxSkipListLevel = max(iNewMaxSkipListLevel, ABSMAX_SKIPLIST_LEVEL);
   iNewMaxTrailTree = max(iNewMaxTrailTree, ABSMAX_TRAIL_TREE);
@@ -449,22 +450,22 @@ void RestorePathAIToDefaults(void) {
 ///////////////////////////////////////////////////////////////////////
 //	FINDBESTPATH                                                   /
 ////////////////////////////////////////////////////////////////////////
-INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
-                   int16_t usMovementMode, int8_t bCopy, uint8_t fFlags) {
-  INT32 iDestination = sDestination, iOrigination;
-  INT32 iCnt = -1, iStructIndex;
-  INT32 iLoopStart = 0, iLoopEnd = 0;
+int32_t FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
+                     int16_t usMovementMode, int8_t bCopy, uint8_t fFlags) {
+  int32_t iDestination = sDestination, iOrigination;
+  int32_t iCnt = -1, iStructIndex;
+  int32_t iLoopStart = 0, iLoopEnd = 0;
   int8_t bLoopState = LOOPING_CLOCKWISE;
   // BOOLEAN fLoopForwards = FALSE;
   BOOLEAN fCheckedBehind = FALSE;
   uint8_t ubMerc;
-  INT32 iDestX, iDestY, iLocX, iLocY, dx, dy;
-  INT32 newLoc, curLoc;
-  // INT32 curY;
-  INT32 curCost, newTotCost, nextCost;
+  int32_t iDestX, iDestY, iLocX, iLocY, dx, dy;
+  int32_t newLoc, curLoc;
+  // int32_t curY;
+  int32_t curCost, newTotCost, nextCost;
   int16_t sCurPathNdx;
-  INT32 prevCost;
-  INT32 iWaterToWater;
+  int32_t prevCost;
+  int32_t iWaterToWater;
   uint8_t ubCurAPCost, ubAPCost;
   uint8_t ubNewAPCost = 0;
 #ifdef VEHICLE
@@ -473,7 +474,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
   uint16_t usAnimSurface;
 #endif
 
-  INT32 iLastDir = 0;
+  int32_t iLastDir = 0;
 
   path_t *pNewPtr;
   path_t *pCurrPtr;
@@ -483,7 +484,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
   path_t *pNext;
   path_t *pDel;
   uint32_t uiCost;
-  INT32 iCurrLevel, iLoop;
+  int32_t iCurrLevel, iLoop;
 
   BOOLEAN fHiddenStructVisible;  // Used for hidden struct visiblity
   uint16_t usOKToAddStructID = 0;
@@ -491,10 +492,10 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
   BOOLEAN fCopyReachable;
   BOOLEAN fCopyPathCosts;
   BOOLEAN fVisitSpotsOnlyOnce;
-  INT32 iOriginationX, iOriginationY, iX, iY;
+  int32_t iOriginationX, iOriginationY, iX, iY;
 
   BOOLEAN fPathingForPlayer;
-  INT32 iDoorGridNo = -1;
+  int32_t iDoorGridNo = -1;
   BOOLEAN fDoorIsObstacleIfClosed = 0;  // if false, door is obstacle if it is open
   DOOR_STATUS *pDoorStatus;
   DOOR *pDoor;
@@ -519,7 +520,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
 #endif
 
   iOriginationX = iOriginationY = 0;
-  iOrigination = (INT32)s->sGridNo;
+  iOrigination = (int32_t)s->sGridNo;
 
   if (iOrigination < 0 || iOrigination > WORLD_MAX) {
 #ifdef JA2BETAVERSION
@@ -1596,7 +1597,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
 #ifdef PATHAI_SKIPLIST_DEBUG
         // print out contents of queue
         {
-          INT32 iLoop;
+          int32_t iLoop;
           int8_t bTemp;
 
           zTempString[0] = '\0';
@@ -1768,7 +1769,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
 
 void GlobalReachableTest(int16_t sStartGridNo) {
   struct SOLDIERTYPE s;
-  INT32 iCurrentGridNo = 0;
+  int32_t iCurrentGridNo = 0;
 
   memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo;
@@ -1787,8 +1788,8 @@ void GlobalReachableTest(int16_t sStartGridNo) {
 
 void LocalReachableTest(int16_t sStartGridNo, int8_t bRadius) {
   struct SOLDIERTYPE s;
-  INT32 iCurrentGridNo = 0;
-  INT32 iX, iY;
+  int32_t iCurrentGridNo = 0;
+  int32_t iX, iY;
 
   memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo;
@@ -1822,7 +1823,7 @@ void LocalReachableTest(int16_t sStartGridNo, int8_t bRadius) {
 
 void GlobalItemsReachableTest(int16_t sStartGridNo1, int16_t sStartGridNo2) {
   struct SOLDIERTYPE s;
-  INT32 iCurrentGridNo = 0;
+  int32_t iCurrentGridNo = 0;
 
   memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo1;
@@ -1920,8 +1921,8 @@ int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRou
   int16_t sTileCost, sPoints = 0, sTempGrid, sAnimCost = 0;
   int16_t sPointsWalk = 0, sPointsCrawl = 0, sPointsRun = 0, sPointsSwat = 0;
   int16_t sExtraCostStand, sExtraCostSwat, sExtraCostCrawl;
-  INT32 iLastGrid;
-  INT32 iCnt;
+  int32_t iLastGrid;
+  int32_t iCnt;
   int16_t sFootOrderIndex;
   int16_t sSwitchValue;
   int16_t sFootOrder[5] = {GREENSTEPSTART, PURPLESTEPSTART, BLUESTEPSTART, ORANGESTEPSTART,
@@ -2309,14 +2310,14 @@ int16_t EstimatePlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t 
   return (sRet);
 }
 
-uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
-                               BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
-                               BOOLEAN fReturnDoorCost) {
+uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo,
+                               uint8_t ubMovementCost, BOOLEAN fReturnPerceivedValue,
+                               int32_t *piDoorGridNo, BOOLEAN fReturnDoorCost) {
   // This function will return either TRAVELCOST_DOOR (in place of closed door cost),
   // TRAVELCOST_OBSTACLE, or the base ground terrain
   // travel cost, depending on whether or not the door is open or closed etc.
   BOOLEAN fDoorIsObstacleIfClosed = FALSE;
-  INT32 iDoorGridNo = -1;
+  int32_t iDoorGridNo = -1;
   DOOR_STATUS *pDoorStatus;
   DOOR *pDoor;
   struct STRUCTURE *pDoorStructure;
@@ -2474,8 +2475,8 @@ uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint
   return (ubMovementCost);
 }
 
-uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
-                       BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo) {
+uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo, uint8_t ubMovementCost,
+                       BOOLEAN fReturnPerceivedValue, int32_t *piDoorGridNo) {
   return (InternalDoorTravelCost(pSoldier, iGridNo, ubMovementCost, fReturnPerceivedValue,
                                  piDoorGridNo, FALSE));
 }

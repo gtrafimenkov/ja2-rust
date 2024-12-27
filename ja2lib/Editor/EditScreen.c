@@ -71,8 +71,8 @@
 #include "Utils/MusicControl.h"
 #include "Utils/TextInput.h"
 
-extern void CopyMercPlacement(INT32 iMapIndex);
-extern void PasteMercPlacement(INT32 iMapIndex);
+extern void CopyMercPlacement(int32_t iMapIndex);
+extern void PasteMercPlacement(int32_t iMapIndex);
 
 extern CHAR8 *szMusicList[NUM_MUSIC];
 
@@ -137,11 +137,11 @@ int16_t gsLightRadius = 5;
 BOOLEAN gfOldDoVideoScroll;      // Saved for returning to previous settings
 uint8_t gubOldCurScrollSpeedID;  // Saved for returning to previous settings
 
-INT32 iOldTaskMode = TASK_OPTIONS;
+int32_t iOldTaskMode = TASK_OPTIONS;
 
-INT32 iTaskMode = TASK_NONE;
+int32_t iTaskMode = TASK_NONE;
 
-INT32 iEditorTBarButton[NUMBER_EDITOR_BUTTONS];  // For Toolbars
+int32_t iEditorTBarButton[NUMBER_EDITOR_BUTTONS];  // For Toolbars
 
 BOOLEAN gfMercResetUponEditorEntry;
 
@@ -149,13 +149,13 @@ BOOLEAN fHelpScreen = FALSE;
 
 BOOLEAN fDontUseRandom = FALSE;
 
-INT32 TestButtons[10];
+int32_t TestButtons[10];
 
 struct LEVELNODE *gCursorNode = NULL;
 // struct LEVELNODE *gBasicCursorNode = NULL;
 int16_t gsCursorGridNo;
 
-INT32 giMusicID = 0;
+int32_t giMusicID = 0;
 
 void EraseWorldData();
 
@@ -175,15 +175,15 @@ BOOLEAN gfEditorDirty = TRUE;
 
 BOOLEAN fRaiseHeight = FALSE;
 
-INT32 iDrawMode = DRAW_MODE_NOTHING;
-INT32 iCurrentAction, iActionParam;
-INT32 iEditAction = ACTION_NULL;
+int32_t iDrawMode = DRAW_MODE_NOTHING;
+int32_t iCurrentAction, iActionParam;
+int32_t iEditAction = ACTION_NULL;
 
-INT32 iEditorButton[NUMBER_EDITOR_BUTTONS];
-INT32 iEditorToolbarState;
-INT32 iJA2ToolbarLastWallState;
+int32_t iEditorButton[NUMBER_EDITOR_BUTTONS];
+int32_t iEditorToolbarState;
+int32_t iJA2ToolbarLastWallState;
 
-INT32 iCurrentTaskbar;
+int32_t iCurrentTaskbar;
 
 uint16_t iCurBankMapIndex;
 
@@ -197,11 +197,11 @@ BOOLEAN gfRealGunNut = TRUE;
 uint32_t iMapIndex;
 BOOLEAN fNewMap = FALSE;
 
-INT32 iPrevDrawMode = DRAW_MODE_NOTHING;
+int32_t iPrevDrawMode = DRAW_MODE_NOTHING;
 uint16_t PrevCurrentPaste = FIRSTTEXTURE;
-INT32 gPrevCurrentBackground = FIRSTTEXTURE;
-INT32 iPrevJA2ToolbarState = TBAR_MODE_NONE;
-INT32 PrevTerrainTileDrawMode = TERRAIN_TILES_NODRAW;
+int32_t gPrevCurrentBackground = FIRSTTEXTURE;
+int32_t iPrevJA2ToolbarState = TBAR_MODE_NONE;
+int32_t PrevTerrainTileDrawMode = TERRAIN_TILES_NODRAW;
 
 uint16_t gusEditorTaskbarColor;
 uint16_t gusEditorTaskbarHiColor;
@@ -210,7 +210,7 @@ uint16_t gusEditorTaskbarLoColor;
 void CreateGotoGridNoUI();
 void RemoveGotoGridNoUI();
 BOOLEAN gfGotoGridNoUI = FALSE;
-INT32 guiGotoGridNoUIButtonID;
+int32_t guiGotoGridNoUIButtonID;
 struct MOUSE_REGION GotoGridNoUIRegion;
 
 //----------------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ uint32_t EditScreenShutdown(void) {
 //
 BOOLEAN EditModeInit(void) {
   uint32_t x;
-  INT32 i;
+  int32_t i;
   struct SGPPaletteEntry LColors[2];
 
   DebugPrint("Entering editor mode...\n");
@@ -713,19 +713,19 @@ BOOLEAN DrawTempMouseCursorObject(void) {
 // Displays the current drawing object in the small, lower left window of the editor's toolbar.
 void ShowCurrentDrawingMode(void) {
   SGPRect ClipRect, NewRect;
-  INT32 iShowMode;
+  int32_t iShowMode;
   uint16_t usUseIndex;
   uint16_t usObjIndex;
-  INT32 iStartX = 50;
-  INT32 iStartY = 440;
-  INT32 iPicHeight, iPicWidth;
+  int32_t iStartX = 50;
+  int32_t iStartY = 440;
+  int32_t iPicHeight, iPicWidth;
   int16_t sTempOffsetX;
   int16_t sTempOffsetY;
   ETRLEObject *pETRLEObject;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usFillColor;
-  INT32 iIndexToUse;
+  int32_t iIndexToUse;
 
   // Set up a clipping rectangle for the display window.
   NewRect.iLeft = 0;
@@ -904,8 +904,8 @@ void ShowCurrentDrawingMode(void) {
     pETRLEObject =
         &(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface->pETRLEObject[usUseIndex]);
 
-    iPicWidth = (INT32)pETRLEObject->usWidth;
-    iPicHeight = (INT32)pETRLEObject->usHeight;
+    iPicWidth = (int32_t)pETRLEObject->usWidth;
+    iPicHeight = (int32_t)pETRLEObject->usHeight;
 
     // Center the picture in the display window.
     iStartX = (100 - iPicWidth) / 2;
@@ -1418,7 +1418,7 @@ void HandleKeyboardShortcuts() {
 
           case F7:
             if (gfBasement) {
-              INT32 i;
+              int32_t i;
               uint16_t usRoofIndex, usRoofType, usTileIndex;
               pSelList = SelSingleRoof;
               pNumSelList = &iNumRoofsSelected;
@@ -2161,7 +2161,7 @@ uint32_t ProcessEditscreenMessageBoxResponse() {
   }
   if (!gfMessageBoxResult) return EDIT_SCREEN;
   if (gfRemoveLightsPending) {
-    INT32 i;
+    int32_t i;
     LightReset();
     for (i = 0; i < WORLD_MAX; i++) {
       RemoveAllObjectsOfTypeRange(i, GOODRING, GOODRING);
@@ -2375,13 +2375,13 @@ void GetMasterList(void) {}
 //	Displays the image of the currently highlighted tileset slot if it's a video surface.
 //	(usually a 16 bit image)
 //
-void ShowCurrentSlotSurface(uint32_t vSurface, INT32 iWindow) {
+void ShowCurrentSlotSurface(uint32_t vSurface, int32_t iWindow) {
   SGPRect ClipRect, WinRect;
-  INT32 iStartX;
-  INT32 iStartY;
-  INT32 iPicHeight, iPicWidth;
+  int32_t iStartX;
+  int32_t iStartY;
+  int32_t iPicHeight, iPicWidth;
   struct VSurface *hvSurface;
-  INT32 iWinWidth, iWinHeight;
+  int32_t iWinWidth, iWinHeight;
   blt_vs_fx vSfx;
 
   WinRect.iLeft = (iWindow == 0) ? (336) : (488);
@@ -2397,8 +2397,8 @@ void ShowCurrentSlotSurface(uint32_t vSurface, INT32 iWindow) {
 
   GetVideoSurface(&hvSurface, vSurface);
 
-  iPicWidth = (INT32)hvSurface->usWidth;
-  iPicHeight = (INT32)hvSurface->usHeight;
+  iPicWidth = (int32_t)hvSurface->usWidth;
+  iPicHeight = (int32_t)hvSurface->usHeight;
 
   if (iPicWidth > iWinWidth) {
     ClipRect.iLeft = (iPicWidth - iWinWidth) / 2;
@@ -2430,15 +2430,15 @@ void ShowCurrentSlotSurface(uint32_t vSurface, INT32 iWindow) {
 //	Displays the image of the currently highlighted tileset slot image. Usually this is for
 //	8 bit image (.STI) files
 //
-void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
+void ShowCurrentSlotImage(struct VObject *hVObj, int32_t iWindow) {
   SGPRect ClipRect, NewRect;
-  INT32 iStartX;
-  INT32 iStartY;
-  INT32 iPicHeight, iPicWidth;
+  int32_t iStartX;
+  int32_t iStartY;
+  int32_t iPicHeight, iPicWidth;
   int16_t sTempOffsetX;
   int16_t sTempOffsetY;
   ETRLEObject *pETRLEObject;
-  INT32 iWinWidth, iWinHeight;
+  int32_t iWinWidth, iWinHeight;
 
   NewRect.iLeft = (iWindow == 0) ? (336) : (488);
   NewRect.iTop = 211;
@@ -2453,8 +2453,8 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
 
   pETRLEObject = &(hVObj->pETRLEObject[0]);
 
-  iPicWidth = (INT32)pETRLEObject->usWidth;
-  iPicHeight = (INT32)pETRLEObject->usHeight;
+  iPicWidth = (int32_t)pETRLEObject->usWidth;
+  iPicHeight = (int32_t)pETRLEObject->usHeight;
 
   iStartX = ((iWinWidth - iPicWidth) / 2) + NewRect.iLeft;
   iStartY = ((iWinHeight - iPicHeight) / 2) + NewRect.iTop;
@@ -2482,10 +2482,10 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
 //	Creates and places a light of selected radius and color into the world.
 //
 BOOLEAN PlaceLight(int16_t sRadius, int16_t iMapX, int16_t iMapY, int16_t sType) {
-  INT32 iLightHandle;
+  int32_t iLightHandle;
   uint8_t ubIntensity;
   STRING512 Filename;
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   uint16_t usTmpIndex;
 
   sprintf(Filename, "L-R%02d.LHT", sRadius);
@@ -2538,7 +2538,7 @@ BOOLEAN PlaceLight(int16_t sRadius, int16_t iMapX, int16_t iMapY, int16_t sType)
       break;
   }
 
-  iMapIndex = ((INT32)iMapY * WORLD_COLS) + (INT32)iMapX;
+  iMapIndex = ((int32_t)iMapY * WORLD_COLS) + (int32_t)iMapX;
   if (!TypeExistsInObjectLayer(iMapIndex, GOODRING, &usTmpIndex)) {
     AddObjectToHead(iMapIndex, GOODRING1);
     gpWorldLevelData[iMapIndex].pObjectHead->ubShadeLevel = DEFAULT_SHADE_LEVEL;
@@ -2559,12 +2559,12 @@ BOOLEAN PlaceLight(int16_t sRadius, int16_t iMapX, int16_t iMapY, int16_t sType)
 //	i.e. FALSE is not an error condition!
 //
 BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY) {
-  INT32 iCount;
+  int32_t iCount;
   uint16_t cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierLight;
   BOOLEAN fRemovedLight;
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   uint32_t uiLastLightType;
   CHAR8 *pLastLightName;
 
@@ -2589,7 +2589,7 @@ BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY) {
           LightSpritePower(iCount, FALSE);
           LightSpriteDestroy(iCount);
           fRemovedLight = TRUE;
-          iMapIndex = ((INT32)iMapY * WORLD_COLS) + (INT32)iMapX;
+          iMapIndex = ((int32_t)iMapY * WORLD_COLS) + (int32_t)iMapX;
           RemoveAllObjectsOfTypeRange(iMapIndex, GOODRING, GOODRING);
         }
       }
@@ -2614,8 +2614,8 @@ BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY) {
 //	a marker at it's location for editing purposes.
 //
 void ShowLightPositionHandles(void) {
-  INT32 iCount;
-  INT32 iMapIndex;
+  int32_t iCount;
+  int32_t iMapIndex;
   uint16_t cnt;
   uint16_t usTmpIndex;
   struct SOLDIERTYPE *pSoldier;
@@ -2633,7 +2633,8 @@ void ShowLightPositionHandles(void) {
       }
 
       if (!fSoldierLight) {
-        iMapIndex = ((INT32)LightSprites[iCount].iY * WORLD_COLS) + (INT32)LightSprites[iCount].iX;
+        iMapIndex =
+            ((int32_t)LightSprites[iCount].iY * WORLD_COLS) + (int32_t)LightSprites[iCount].iX;
         if (!TypeExistsInObjectLayer(iMapIndex, GOODRING, &usTmpIndex)) {
           AddObjectToHead(iMapIndex, GOODRING1);
           gpWorldLevelData[iMapIndex].pObjectHead->ubShadeLevel = DEFAULT_SHADE_LEVEL;
@@ -2650,8 +2651,8 @@ void ShowLightPositionHandles(void) {
 // present.
 //
 void RemoveLightPositionHandles(void) {
-  INT32 iCount;
-  INT32 iMapIndex;
+  int32_t iCount;
+  int32_t iMapIndex;
   uint16_t cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierLight;
@@ -2668,7 +2669,8 @@ void RemoveLightPositionHandles(void) {
       }
 
       if (!fSoldierLight) {
-        iMapIndex = ((INT32)LightSprites[iCount].iY * WORLD_COLS) + (INT32)LightSprites[iCount].iX;
+        iMapIndex =
+            ((int32_t)LightSprites[iCount].iY * WORLD_COLS) + (int32_t)LightSprites[iCount].iX;
         RemoveAllObjectsOfTypeRange(iMapIndex, GOODRING, GOODRING);
       }
     }
@@ -3170,8 +3172,8 @@ BOOLEAN DoIRenderASpecialMouseCursor() {
   return FALSE;
 }
 
-extern INT32 iEditorToolbarState;
-extern INT32 iEditorToolbarLastWallState;
+extern int32_t iEditorToolbarState;
+extern int32_t iEditorToolbarLastWallState;
 
 void ShowEntryPoints() {
   // make entry points visible
@@ -3197,37 +3199,37 @@ void HideEntryPoints() {
     RemoveAllTopmostsOfTypeRange(gMapInformation.sWestGridNo, FIRSTPOINTERS, FIRSTPOINTERS);
 }
 
-void TaskOptionsCallback(GUI_BUTTON *btn, INT32 reason) {
+void TaskOptionsCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iTaskMode = TASK_OPTIONS;
   }
 }
 
-void TaskTerrainCallback(GUI_BUTTON *btn, INT32 reason) {
+void TaskTerrainCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iTaskMode = TASK_TERRAIN;
   }
 }
 
-void TaskBuildingCallback(GUI_BUTTON *btn, INT32 reason) {
+void TaskBuildingCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iTaskMode = TASK_BUILDINGS;
   }
 }
 
-void TaskItemsCallback(GUI_BUTTON *btn, INT32 reason) {
+void TaskItemsCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iTaskMode = TASK_ITEMS;
   }
 }
 
-void TaskMercsCallback(GUI_BUTTON *btn, INT32 reason) {
+void TaskMercsCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iTaskMode = TASK_MERCS;
   }
 }
 
-void TaskMapInfoCallback(GUI_BUTTON *btn, INT32 reason) {
+void TaskMapInfoCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     iTaskMode = TASK_MAPINFO;
   }
@@ -3284,7 +3286,7 @@ void ProcessAreaSelection(BOOLEAN fWithLeftButton) {
 // appropriate paste function for every gridno within the cursor.  This is not used for functions
 // that rely completely on selection areas, such as buildings.
 void DrawObjectsBasedOnSelectionRegion() {
-  INT32 x, y, iMapIndex;
+  int32_t x, y, iMapIndex;
   BOOLEAN fSkipTest;
 
   // Certain drawing modes are placed with 100% density.  Those cases are checked here,
@@ -3496,7 +3498,7 @@ void CreateGotoGridNoUI() {
 }
 
 void RemoveGotoGridNoUI() {
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   gfGotoGridNoUI = FALSE;
   // Enable the rest of the editor
   EnableEditorTaskbar();

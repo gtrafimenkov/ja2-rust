@@ -641,7 +641,7 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
 }
 
 void EndAIDeadlock(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   int8_t bFound = FALSE;
 
@@ -752,7 +752,7 @@ void StartNPCAI(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pOurTeam;
 
   cnt = gTacticalStatus.Team[pSoldier->bTeam].bFirstID;
@@ -769,7 +769,7 @@ BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
 }
 
 int16_t FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t mods[4] = {-1, -MAPWIDTH, 1, MAPWIDTH};
   int16_t sTempGridno, sCheapestCost = 500, sMovementCost, sCheapestDest = NOWHERE;
 
@@ -793,7 +793,7 @@ int16_t FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
 
 uint8_t GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoop;
-  INT32 iThreatVal, iMinThreat = 30000;
+  int32_t iThreatVal, iMinThreat = 30000;
   struct SOLDIERTYPE *pTargetSoldier;
   uint8_t ubTargetSoldier = NO_SOLDIER;
 
@@ -1675,7 +1675,7 @@ void AIDecideRadioAnimation(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
-  INT32 iRetCode;
+  int32_t iRetCode;
   // NumMessage("ExecuteAction - Guy#",pSoldier->ubID);
 
   // in most cases, merc will change location, or may cause damage to opponents,

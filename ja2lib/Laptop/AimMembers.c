@@ -379,7 +379,7 @@ uint32_t guiTransSnow;
 uint32_t guiVideoContractCharge;
 // uint32_t		guiAnsweringMachineImage;
 uint32_t guiVideoTitleBar;
-INT32 iAimMembersBoxId = -1;
+int32_t iAimMembersBoxId = -1;
 
 uint8_t gbCurrentSoldier = 0;
 uint8_t gbCurrentIndex = 0;
@@ -395,8 +395,8 @@ uint8_t gubPopUpBoxAction = AIM_POPUP_NOTHING;
 BOOLEAN gfRedrawScreen = FALSE;
 static uint8_t gubContractLength;
 BOOLEAN gfBuyEquipment;
-INT32 giContractAmount = 0;
-INT32 giMercFaceIndex;
+int32_t giContractAmount = 0;
+int32_t giMercFaceIndex;
 wchar_t gsTalkingMercText[TEXT_POPUP_STRING_SIZE];
 uint32_t guiTimeThatMercStartedTalking;
 uint32_t guiLastHandleMercTime;
@@ -423,7 +423,7 @@ extern BOOLEAN fExitDueToMessageBox;
 
 BOOLEAN gfWaitingForMercToStopTalkingOrUserToClick = FALSE;
 
-INT32 giIdOfLastHiredMerc = -1;
+int32_t giIdOfLastHiredMerc = -1;
 
 BOOLEAN gfAimMemberDisplayFaceHelpText = FALSE;
 
@@ -436,65 +436,65 @@ BOOLEAN gfAimMemberCanMercSayOpeningQuote = TRUE;
 ////////////////////////////////////////////////////////////////
 
 // Graphic for following
-INT32 guiPreviousContactNextButtonImage;
+int32_t guiPreviousContactNextButtonImage;
 // Previous Button
-void BtnPreviousButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giPreviousButton;
+void BtnPreviousButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giPreviousButton;
 
 // Contact
-void BtnContactButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giContactButton;
+void BtnContactButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giContactButton;
 
 // NExt
-void BtnNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giNextButton;
+void BtnNextButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giNextButton;
 
 // Video conference buttons
-INT32 guiVideoConferenceButtonImage[3];
+int32_t guiVideoConferenceButtonImage[3];
 
 // Contract Length Button
-void BtnContractLengthButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giContractLengthButton[3];
+void BtnContractLengthButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giContractLengthButton[3];
 
 // BuyEquipment Button
-void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giBuyEquipmentButton[2];
+void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giBuyEquipmentButton[2];
 
 // Authorize Payment Button
-void BtnAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giAuthorizeButton[2];
+void BtnAuthorizeButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giAuthorizeButton[2];
 
 // Hang up Button
-void BtnHangUpButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giHangUpButton;
+void BtnHangUpButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giHangUpButton;
 
 // PopupBox button
-void BtnPopUpOkButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnPopUpOkButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiPopUpOkButton;
-INT32 guiPopUpImage;
+int32_t guiPopUpImage;
 
 // First Contact Screen, Goto Hire merc Button
-void BtnFirstContactButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giFirstContactButton[2];
+void BtnFirstContactButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giFirstContactButton[2];
 
 // Leave Message merc Button
-void BtnAnsweringMachineButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giAnsweringMachineButton[2];
+void BtnAnsweringMachineButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giAnsweringMachineButton[2];
 
 // X to Close the video conference Button
-INT32 giXToCloseVideoConfButtonImage;
-void BtnXToCloseVideoConfButtonCallback(GUI_BUTTON *btn, INT32 reason);
-INT32 giXToCloseVideoConfButton;
+int32_t giXToCloseVideoConfButtonImage;
+void BtnXToCloseVideoConfButtonCallback(GUI_BUTTON *btn, int32_t reason);
+int32_t giXToCloseVideoConfButton;
 
 // Mouse Regions
 // Clicking on guys Face
 struct MOUSE_REGION gSelectedFaceRegion;
-void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Clicking To shut merc up
 struct MOUSE_REGION gSelectedShutUpMercRegion;
-void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 //*******************************************
 //
@@ -958,7 +958,7 @@ BOOLEAN RenderAIMMembers() {
   return (TRUE);
 }
 
-BOOLEAN DrawNumeralsToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawNumeralsToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                              uint32_t ulFont, uint8_t ubColor) {
   wchar_t sStr[10];
 
@@ -970,7 +970,7 @@ BOOLEAN DrawNumeralsToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint
   return (TRUE);
 }
 
-BOOLEAN DrawMoneyToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawMoneyToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                           uint32_t ulFont, uint8_t ubColor) {
   wchar_t sStr[10];
 
@@ -986,7 +986,7 @@ BOOLEAN DrawMoneyToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_
   return (TRUE);
 }
 
-void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX;
@@ -999,7 +999,7 @@ void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gfAimMemberDisplayFaceHelpText = FALSE;
     gfRedrawScreen = TRUE;
@@ -1268,8 +1268,9 @@ BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
       usHeight = (uint32_t)pTrav->usHeight;
       usWidth = (uint32_t)pTrav->usWidth;
 
-      sCenX = PosX + (abs((INT32)((INT32)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->sOffsetX;
-      sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
+      sCenX =
+          PosX + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->sOffsetX;
+      sCenY = PosY + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
 
       // blt the shadow of the item
       BltVideoObjectOutlineShadowFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
@@ -1317,7 +1318,7 @@ BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
   return (TRUE);
 }
 
-void BtnPreviousButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnPreviousButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1350,7 +1351,7 @@ void BtnPreviousButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnContactButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnContactButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1380,7 +1381,7 @@ void BtnContactButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1634,7 +1635,7 @@ void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, STR16 pSt
   }
 }
 
-void BtnContractLengthButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnContractLengthButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1668,7 +1669,7 @@ void BtnContractLengthButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1699,7 +1700,7 @@ void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 // Transfer funds button callback
-void BtnAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnAuthorizeButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -2168,7 +2169,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, STR16 sString1, STR16 sStrin
   return (TRUE);
 }
 
-void BtnPopUpOkButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnPopUpOkButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fInCallback = TRUE;
 
   if (fInCallback) {
@@ -2208,7 +2209,7 @@ void BtnPopUpOkButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 // we first contact merc.  We either go to hire him or cancel the call
-void BtnFirstContactButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFirstContactButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -2244,7 +2245,7 @@ void BtnFirstContactButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnAnsweringMachineButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnAnsweringMachineButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -2288,7 +2289,7 @@ void BtnAnsweringMachineButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnHangUpButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnHangUpButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(CONTACT_X, CONTACT_BOX_Y, CONTACT_BR_X, CONTACT_BR_Y);
@@ -2344,7 +2345,7 @@ BOOLEAN InitVideoFaceTalking(uint8_t ubMercID, uint16_t usQuoteNum) {
   return (TRUE);
 }
 
-BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32 iFaceIndex) {
+BOOLEAN DisplayTalkingMercFaceForVideoPopUp(int32_t iFaceIndex) {
   static BOOLEAN fWasTheMercTalking = FALSE;
   BOOLEAN fIsTheMercTalking;
   SGPRect SrcRect;
@@ -2439,7 +2440,7 @@ void DisplayTextForMercFaceVideoPopUp(STR16 pString) {
   gfRedrawScreen = TRUE;
 }
 
-void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   BOOLEAN fInCallBack = TRUE;
 
   if (fInCallBack) {
@@ -2942,7 +2943,7 @@ void StopMercTalking() {
   }
 }
 
-void BtnXToCloseVideoConfButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnXToCloseVideoConfButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -3793,7 +3794,8 @@ void TempHiringOfMercs(uint8_t ubNumberOfMercs, BOOLEAN fReset) {
     HireMerc(&HireMercStruct);
 
     // add an entry in the finacial page for the hiring of the merc
-    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], -(INT32)(gMercProfiles[MercID[i]].sSalary));
+    AddTransactionToPlayersBook(HIRED_MERC, MercID[i],
+                                -(int32_t)(gMercProfiles[MercID[i]].sSalary));
 
     if (gMercProfiles[MercID[i]].bMedicalDeposit) {
       // add an entry in the finacial page for the medical deposit
@@ -4036,7 +4038,8 @@ void DemoHiringOfMercs() {
     HireMerc(&HireMercStruct);
 
     // add an entry in the finacial page for the hiring of the merc
-    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], -(INT32)(gMercProfiles[MercID[i]].sSalary));
+    AddTransactionToPlayersBook(HIRED_MERC, MercID[i],
+                                -(int32_t)(gMercProfiles[MercID[i]].sSalary));
 
     if (gMercProfiles[MercID[i]].bMedicalDeposit) {
       // add an entry in the finacial page for the medical deposit

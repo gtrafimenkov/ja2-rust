@@ -9,13 +9,13 @@ void ExitAIMMembers();
 void HandleAIMMembers();
 BOOLEAN RenderAIMMembers();
 
-BOOLEAN DrawNumeralsToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawNumeralsToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                              uint32_t ulFont, uint8_t ubColor);
-BOOLEAN DrawMoneyToScreen(INT32 iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
+BOOLEAN DrawMoneyToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                           uint32_t ulFont, uint8_t ubColor);
 
 void DisplayTextForMercFaceVideoPopUp(STR16 pString);
-BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32 iFaceIndex);
+BOOLEAN DisplayTalkingMercFaceForVideoPopUp(int32_t iFaceIndex);
 void EnterInitAimMembers();
 BOOLEAN RenderAIMMembersTopLevel();
 void ResetMercAnnoyanceAtPlayer(uint8_t ubMercID);

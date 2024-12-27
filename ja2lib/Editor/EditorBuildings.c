@@ -39,7 +39,7 @@ void GameInitEditorBuildingInfo() {
 
 // BEGINNING OF BUILDING UTILITY FUNCTIONS
 void UpdateRoofsView() {
-  INT32 x;
+  int32_t x;
   uint16_t usType;
   for (x = 0; x < WORLD_MAX; x++) {
     for (usType = FIRSTROOF; usType <= LASTSLANTROOF; usType++) {
@@ -50,7 +50,7 @@ void UpdateRoofsView() {
 }
 
 void UpdateWallsView() {
-  INT32 cnt;
+  int32_t cnt;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (fBuildingShowWalls) {
       RemoveWallLevelnodeFlags((int16_t)cnt, LEVELNODE_HIDDEN);
@@ -126,7 +126,7 @@ void DeleteBuildingLayout() {
   gsBuildingLayoutAnchorGridNo = -1;
 }
 
-void BuildLayout(INT32 iMapIndex, INT32 iOffset) {
+void BuildLayout(int32_t iMapIndex, int32_t iOffset) {
   BUILDINGLAYOUTNODE *curr;
   // First, validate the gridno
   iMapIndex += iOffset;
@@ -159,7 +159,7 @@ void BuildLayout(INT32 iMapIndex, INT32 iOffset) {
 }
 
 // The first step is copying a building.  After that, it either must be pasted or moved.
-void CopyBuilding(INT32 iMapIndex) {
+void CopyBuilding(int32_t iMapIndex) {
   AssertMsg(!gpBuildingLayoutList, "Error:  Attempting to copy building multiple times.");
 
   // First step is to determine if we have a building in the area that we click.  If not, do
@@ -189,9 +189,9 @@ void CopyBuilding(INT32 iMapIndex) {
 
 // depending on the offset, we will either sort in increasing order, or decreasing order.
 // This will prevent overlapping problems.
-void SortBuildingLayout(INT32 iMapIndex) {
+void SortBuildingLayout(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *head, *curr, *prev, *prevBest, *best;
-  INT32 iBestIndex;
+  int32_t iBestIndex;
   head = NULL;
   if (iMapIndex < gsBuildingLayoutAnchorGridNo) {  // Forward sort (in increasing order)
     while (gpBuildingLayoutList) {
@@ -240,7 +240,7 @@ void SortBuildingLayout(INT32 iMapIndex) {
   gpBuildingLayoutList = head;
 }
 
-void PasteMapElementToNewMapElement(INT32 iSrcGridNo, INT32 iDstGridNo) {
+void PasteMapElementToNewMapElement(int32_t iSrcGridNo, int32_t iDstGridNo) {
   MAP_ELEMENT *pSrcMapElement;
   struct LEVELNODE *pNode;
   uint16_t usType;
@@ -295,9 +295,9 @@ void PasteMapElementToNewMapElement(INT32 iSrcGridNo, INT32 iDstGridNo) {
   }
 }
 
-void MoveBuilding(INT32 iMapIndex) {
+void MoveBuilding(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
+  int32_t iOffset;
   if (!gpBuildingLayoutList) return;
   SortBuildingLayout(iMapIndex);
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
@@ -318,9 +318,9 @@ void MoveBuilding(INT32 iMapIndex) {
   MarkWorldDirty();
 }
 
-void PasteBuilding(INT32 iMapIndex) {
+void PasteBuilding(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
+  int32_t iOffset;
   if (!gpBuildingLayoutList) return;
   SortBuildingLayout(iMapIndex);
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
@@ -341,13 +341,13 @@ void PasteBuilding(INT32 iMapIndex) {
 }
 
 typedef struct ROOFNODE {
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   struct ROOFNODE *next;
 } ROOFNODE;
 
 ROOFNODE *gpRoofList = NULL;
 
-void ReplaceRoof(INT32 iMapIndex, uint16_t usRoofType) {
+void ReplaceRoof(int32_t iMapIndex, uint16_t usRoofType) {
   ROOFNODE *curr;
   // First, validate the gridno
   if (iMapIndex < 0 && iMapIndex >= WORLD_COLS * WORLD_ROWS) return;
@@ -375,7 +375,7 @@ void ReplaceRoof(INT32 iMapIndex, uint16_t usRoofType) {
   ReplaceRoof(iMapIndex + 1, usRoofType);
 }
 
-void ReplaceBuildingWithNewRoof(INT32 iMapIndex) {
+void ReplaceBuildingWithNewRoof(int32_t iMapIndex) {
   uint16_t usRoofType;
   ROOFNODE *curr;
   // Not in normal editor mode, then can't do it.
@@ -408,17 +408,17 @@ void ReplaceBuildingWithNewRoof(INT32 iMapIndex) {
 }
 
 // internal door editing vars.
-INT32 iDoorMapIndex = 0;
+int32_t iDoorMapIndex = 0;
 enum { DOOR_BACKGROUND, DOOR_OKAY, DOOR_CANCEL, DOOR_LOCKED, NUM_DOOR_BUTTONS };
-INT32 iDoorButton[NUM_DOOR_BUTTONS];
+int32_t iDoorButton[NUM_DOOR_BUTTONS];
 struct MOUSE_REGION DoorRegion;
-void DoorOkayCallback(GUI_BUTTON *btn, INT32 reason);
-void DoorCancelCallback(GUI_BUTTON *btn, INT32 reason);
-void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason);
+void DoorOkayCallback(GUI_BUTTON *btn, int32_t reason);
+void DoorCancelCallback(GUI_BUTTON *btn, int32_t reason);
+void DoorToggleLockedCallback(GUI_BUTTON *btn, int32_t reason);
 
 extern BOOLEAN OpenableAtGridNo(uint32_t iMapIndex);
 
-void InitDoorEditing(INT32 iMapIndex) {
+void InitDoorEditing(int32_t iMapIndex) {
   DOOR *pDoor;
   if (!DoorAtGridNo(iMapIndex) && !OpenableAtGridNo(iMapIndex)) return;
   gfEditingDoor = TRUE;
@@ -459,7 +459,7 @@ void InitDoorEditing(INT32 iMapIndex) {
 
 void ExtractAndUpdateDoorInfo() {
   struct LEVELNODE *pNode;
-  INT32 num;
+  int32_t num;
   DOOR door;
   BOOLEAN fCursor = FALSE;
   BOOLEAN fCursorExists = FALSE;
@@ -511,7 +511,7 @@ void ExtractAndUpdateDoorInfo() {
 
 void FindNextLockedDoor() {
   DOOR *pDoor;
-  INT32 i;
+  int32_t i;
   for (i = iDoorMapIndex + 1; i < WORLD_MAX; i++) {
     pDoor = FindDoorInfoAtGridNo(i);
     if (pDoor) {
@@ -546,7 +546,7 @@ void RenderDoorEditingWindow() {
 }
 
 void KillDoorEditing() {
-  INT32 i;
+  int32_t i;
   EnableEditorTaskbar();
   MSYS_RemoveRegion(&DoorRegion);
   for (i = 0; i < NUM_DOOR_BUTTONS; i++) RemoveButton(iDoorButton[i]);
@@ -554,20 +554,20 @@ void KillDoorEditing() {
   KillTextInputMode();
 }
 
-void DoorOkayCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoorOkayCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ExtractAndUpdateDoorInfo();
     KillDoorEditing();
   }
 }
 
-void DoorCancelCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoorCancelCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     KillDoorEditing();
   }
 }
 
-void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoorToggleLockedCallback(GUI_BUTTON *btn, int32_t reason) {
   // handled in ExtractAndUpdateDoorInfo();
 }
 
@@ -609,7 +609,7 @@ void SetupTextInputForBuildings() {
 
 void ExtractAndUpdateBuildingInfo() {
   CHAR16 str[4];
-  INT32 temp;
+  int32_t temp;
   // extract light1 colors
   temp = min(GetNumericStrictValueFromField(1), 255);
   if (temp != -1) {

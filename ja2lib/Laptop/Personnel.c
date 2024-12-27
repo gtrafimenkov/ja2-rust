@@ -240,11 +240,11 @@ uint32_t guiSliderPosition;
 // the transfer funds string
 CHAR16 sTransferString[32];
 
-INT32 giPersonnelATMSideButton[NUMBER_ATM_BUTTONS];
-INT32 giPersonnelATMSideButtonImage[NUMBER_ATM_BUTTONS];
+int32_t giPersonnelATMSideButton[NUMBER_ATM_BUTTONS];
+int32_t giPersonnelATMSideButtonImage[NUMBER_ATM_BUTTONS];
 
-INT32 iNumberPadButtons[10];
-INT32 iNumberPadButtonsImages[10];
+int32_t iNumberPadButtons[10];
+int32_t iNumberPadButtonsImages[10];
 
 #define PrsnlOffSetX (-15)  //-20
 #define Prsnl_DATA_OffSetX (36)
@@ -285,20 +285,20 @@ uint32_t guiDEPARTEDTEAM;
 uint32_t guiCURRENTTEAM;
 uint32_t guiPersonnelInventory;
 
-INT32 giPersonnelButton[6];
-INT32 giPersonnelButtonImage[6];
-INT32 giPersonnelInventoryButtons[2];
-INT32 giPersonnelInventoryButtonsImages[2];
-INT32 iStartPersonId;  // iId of the person who is leftmost on the display
-INT32 iLastPersonId;
-INT32 giDepartedButtonImage[2];
-INT32 giDepartedButton[2];
+int32_t giPersonnelButton[6];
+int32_t giPersonnelButtonImage[6];
+int32_t giPersonnelInventoryButtons[2];
+int32_t giPersonnelInventoryButtonsImages[2];
+int32_t iStartPersonId;  // iId of the person who is leftmost on the display
+int32_t iLastPersonId;
+int32_t giDepartedButtonImage[2];
+int32_t giDepartedButton[2];
 
 // buttons for ATM
-INT32 giPersonnelATMStartButton[3];
-INT32 giPersonnelATMStartButtonImage[3];
-INT32 giPersonnelATMButton;
-INT32 giPersonnelATMButtonImage;
+int32_t giPersonnelATMStartButton[3];
+int32_t giPersonnelATMStartButtonImage[3];
+int32_t giPersonnelATMButton;
+int32_t giPersonnelATMButtonImage;
 
 BOOLEAN fATMFlags = 0;
 BOOLEAN fOldATMFlags = 0;
@@ -308,9 +308,9 @@ BOOLEAN fOldATMFlags = 0;
 // int16_t ubOtherCharactersList[ 256 ];
 
 // the id of currently displayed merc in right half of screen
-INT32 iCurrentPersonSelectedId = -1;
+int32_t iCurrentPersonSelectedId = -1;
 
-INT32 giCurrentUpperLeftPortraitNumber = 0;
+int32_t giCurrentUpperLeftPortraitNumber = 0;
 
 // which mode are we showing?..current team?...or deadly departed?
 BOOLEAN fCurrentTeamMode = TRUE;
@@ -335,7 +335,7 @@ struct MOUSE_REGION gTogglePastCurrentTeam[2];
 
 struct MOUSE_REGION gMouseScrollPersonnelINV;
 
-INT32 iCurPortraitId = 0;
+int32_t iCurPortraitId = 0;
 
 // create mouse regions for past/current toggles
 BOOLEAN fCreateRegionsForPastCurrentToggle = FALSE;
@@ -343,74 +343,75 @@ BOOLEAN fCreateRegionsForPastCurrentToggle = FALSE;
 BOOLEAN LoadPersonnelGraphics(void);
 void RemovePersonnelGraphics(void);
 void RenderPersonnel(void);
-void RenderPersonnelStats(INT32 iId, INT32 iSlot);
-BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFired, BOOLEAN fOther);
+void RenderPersonnelStats(int32_t iId, int32_t iSlot);
+BOOLEAN RenderPersonnelFace(int32_t iId, int32_t iSlot, BOOLEAN fDead, BOOLEAN fFired,
+                            BOOLEAN fOther);
 BOOLEAN RenderPersonnelPictures(void);
-void LeftButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-void RightButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-void LeftFFButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-void RightFFButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-void PersonnelPortraitCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void LeftButtonCallBack(GUI_BUTTON *btn, int32_t reason);
+void RightButtonCallBack(GUI_BUTTON *btn, int32_t reason);
+void LeftFFButtonCallBack(GUI_BUTTON *btn, int32_t reason);
+void RightFFButtonCallBack(GUI_BUTTON *btn, int32_t reason);
+void PersonnelPortraitCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void CreatePersonnelButtons(void);
 void DeletePersonnelButtons(void);
 void DisplayHeader(void);
-void DisplayCharName(INT32 iId, INT32 iSlot);
-void DisplayCharStats(INT32 iId, INT32 iSlot);
-INT32 GetLastMercId(void);
+void DisplayCharName(int32_t iId, int32_t iSlot);
+void DisplayCharStats(int32_t iId, int32_t iSlot);
+int32_t GetLastMercId(void);
 void DrawPageNumber(void);
 void SetPersonnelButtonStates(void);
 void CreateDestroyButtonsForPersonnelDepartures(void);
 BOOLEAN LoadPersonnelScreenBackgroundGraphics(void);
 void DeletePersonnelScreenBackgroundGraphics(void);
 void RenderPersonnelScreenBackground(void);
-INT32 GetNumberOfMercsOnPlayersTeam(void);
+int32_t GetNumberOfMercsOnPlayersTeam(void);
 void CreateDestroyMouseRegionsForPersonnelPortraits(void);
 BOOLEAN DisplayPicturesOfCurrentTeam(void);
 void DisplayFaceOfDisplayedMerc();
 void DisplayNumberOnCurrentTeam(void);
 void DisplayNumberDeparted(void);
-INT32 GetTotalDailyCostOfCurrentTeam(void);
+int32_t GetTotalDailyCostOfCurrentTeam(void);
 void DisplayCostOfCurrentTeam(void);
-INT32 GetLowestDailyCostOfCurrentTeam(void);
-INT32 GetHighestDailyCostOfCurrentTeam(void);
-INT32 GetAvgStatOfCurrentTeamStat(INT32 iStat);
+int32_t GetLowestDailyCostOfCurrentTeam(void);
+int32_t GetHighestDailyCostOfCurrentTeam(void);
+int32_t GetAvgStatOfCurrentTeamStat(int32_t iStat);
 void DisplayAverageStatValuesForCurrentTeam(void);
 void DisplayLowestStatValuesForCurrentTeam(void);
 void DisplayHighestStatValuesForCurrentTeam(void);
 void DisplayPersonnelTeamStats(void);
 void InitPastCharactersList(void);
-INT32 GetNumberOfPastMercsOnPlayersTeam(void);
-INT32 GetNumberOfOtherOnPastTeam(void);
-INT32 GetNumberOfLeftOnPastTeam(void);
-INT32 GetNumberOfDeadOnPastTeam(void);
+int32_t GetNumberOfPastMercsOnPlayersTeam(void);
+int32_t GetNumberOfOtherOnPastTeam(void);
+int32_t GetNumberOfLeftOnPastTeam(void);
+int32_t GetNumberOfDeadOnPastTeam(void);
 void DisplayStateOfPastTeamMembers(void);
 void CreateDestroyCurrentDepartedMouseRegions(void);
-void PersonnelCurrentTeamCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void PersonnelDepartedTeamCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void PersonnelCurrentTeamCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void PersonnelDepartedTeamCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void CreateDestroyButtonsForDepartedTeamList(void);
-void DepartedDownCallBack(GUI_BUTTON *btn, INT32 reason);
-void DepartedUpCallBack(GUI_BUTTON *btn, INT32 reason);
+void DepartedDownCallBack(GUI_BUTTON *btn, int32_t reason);
+void DepartedUpCallBack(GUI_BUTTON *btn, int32_t reason);
 void DisplayPastMercsPortraits(void);
-BOOLEAN DisplayPortraitOfPastMerc(INT32 iId, INT32 iCounter, BOOLEAN fDead, BOOLEAN fFired,
+BOOLEAN DisplayPortraitOfPastMerc(int32_t iId, int32_t iCounter, BOOLEAN fDead, BOOLEAN fFired,
                                   BOOLEAN fOther);
-INT32 GetIdOfPastMercInSlot(INT32 iSlot);
-void DisplayDepartedCharStats(INT32 iId, INT32 iSlot, INT32 iState);
+int32_t GetIdOfPastMercInSlot(int32_t iSlot);
+void DisplayDepartedCharStats(int32_t iId, int32_t iSlot, int32_t iState);
 void EnableDisableDeparturesButtons(void);
-void DisplayDepartedCharName(INT32 iId, INT32 iSlot, INT32 iState);
-INT32 GetTheStateOfDepartedMerc(INT32 iId);
+void DisplayDepartedCharName(int32_t iId, int32_t iSlot, int32_t iState);
+int32_t GetTheStateOfDepartedMerc(int32_t iId);
 void DisplayPersonnelTextOnTitleBar(void);
-INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat);
-INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat);
-void RenderInventoryForCharacter(INT32 iId, INT32 iSlot);
+int32_t GetIdOfDepartedMercWithHighestStat(int32_t iStat);
+int32_t GetIdOfDepartedMercWithLowestStat(int32_t iStat);
+void RenderInventoryForCharacter(int32_t iId, int32_t iSlot);
 void DisplayInventoryForSelectedChar(void);
-INT32 GetNumberOfInventoryItemsOnCurrentMerc(void);
+int32_t GetNumberOfInventoryItemsOnCurrentMerc(void);
 void CreateDestroyPersonnelInventoryScrollButtons(void);
 void EnableDisableInventoryScrollButtons(void);
-void PersonnelINVStartButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void EmployementInfoButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void PersonnelStatStartButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-INT32 GetNumberOfMercsDeadOrAliveOnPlayersTeam(void);
+void PersonnelINVStartButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void EmployementInfoButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void PersonnelStatStartButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+int32_t GetNumberOfMercsDeadOrAliveOnPlayersTeam(void);
 
 void RenderSliderBarForPersonnelInventory(void);
 void FindPositionOfPersInvSlider(void);
@@ -419,30 +420,30 @@ void FindPositionOfPersInvSlider(void);
 void UpDateStateOfStartButton(void);
 void HandlePersonnelKeyboard(void);
 
-void DisplayEmploymentinformation(INT32 iId, INT32 iSlot);
+void DisplayEmploymentinformation(int32_t iId, int32_t iSlot);
 
 // AIM merc:  Returns the amount of time left on mercs contract
 // MERC merc: Returns the amount of time the merc has worked
 // IMP merc:	Returns the amount of time the merc has worked
 // else:			returns -1
-INT32 CalcTimeLeftOnMercContract(struct SOLDIERTYPE *pSoldier);
+int32_t CalcTimeLeftOnMercContract(struct SOLDIERTYPE *pSoldier);
 
 // what state is the past merc in?
-BOOLEAN IsPastMercDead(INT32 iId);
-BOOLEAN IsPastMercFired(INT32 iId);
-BOOLEAN IsPastMercOther(INT32 iId);
+BOOLEAN IsPastMercDead(int32_t iId);
+BOOLEAN IsPastMercFired(int32_t iId);
+BOOLEAN IsPastMercOther(int32_t iId);
 
 // display box around currently selected merc
 BOOLEAN DisplayHighLightBox(void);
 
 // id of merc in this slot
-INT32 GetIdOfThisSlot(INT32 iSlot);
+int32_t GetIdOfThisSlot(int32_t iSlot);
 
 // grab appropriate id of soldier first being displayed
-INT32 GetIdOfFirstDisplayedMerc();
+int32_t GetIdOfFirstDisplayedMerc();
 
 // get avg for this stat
-INT32 GetAvgStatOfPastTeamStat(INT32 iStat);
+int32_t GetAvgStatOfPastTeamStat(int32_t iStat);
 
 // render atm panel
 BOOLEAN RenderAtmPanel(void);
@@ -450,14 +451,14 @@ void DisplayATMAmount(void);
 
 // create destroy ATM button
 void CreateDestroyStartATMButton(void);
-void ATMStartButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void ATMStartButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void ATMNumberButtonCallback(GUI_BUTTON *btn, int32_t reason);
 void HandleStateOfATMButtons(void);
-void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void ATMOtherButtonCallback(GUI_BUTTON *btn, int32_t reason);
 
 // atm misc functions
 
-void ATMOther2ButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void ATMOther2ButtonCallback(GUI_BUTTON *btn, int32_t reason);
 void DisplayATMStrings(void);
 void DisplayAmountOnCurrentMerc(void);
 void RenderRectangleForPersonnelTransactionAmount(void);
@@ -703,9 +704,9 @@ BOOLEAN RenderPersonnelPictures(void) {
   // find person with iStartPersonId, unless it is -1, then find first bActive Merc on Staff
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
   BOOLEAN fFound = FALSE;
-  INT32 iSlot = 0;
-  INT32 cnt = 0;
-  INT32 iCurrentId = 0;
+  int32_t iSlot = 0;
+  int32_t cnt = 0;
+  int32_t iCurrentId = 0;
 
   pSoldier = MercPtrs[cnt];
   pTeamSoldier = pSoldier;
@@ -757,7 +758,7 @@ BOOLEAN RenderPersonnelPictures(void) {
   return (TRUE);
 }
 
-void RenderPersonnelStats(INT32 iId, INT32 iSlot) {
+void RenderPersonnelStats(int32_t iId, int32_t iSlot) {
   // will render the stats of person iId in slot iSlot
   SetFont(PERS_FONT);
   SetFontForeground(PERS_TEXT_FONT_COLOR);
@@ -770,7 +771,8 @@ void RenderPersonnelStats(INT32 iId, INT32 iSlot) {
   }
 }
 
-BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFired, BOOLEAN fOther) {
+BOOLEAN RenderPersonnelFace(int32_t iId, int32_t iSlot, BOOLEAN fDead, BOOLEAN fFired,
+                            BOOLEAN fOther) {
   char sTemp[100];
   struct VObject *hFaceHandle;
   VOBJECT_DESC VObjectDesc;
@@ -835,7 +837,7 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
 
   // if the merc is dead, display it
   if (!fCurrentTeamMode) {
-    INT32 iHeightOfText;
+    int32_t iHeightOfText;
 
     iHeightOfText = DisplayWrappedString(
         IMAGE_BOX_X, (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH, 1,
@@ -1051,7 +1053,7 @@ void DeletePersonnelButtons(void) {
   return;
 }
 
-void LeftButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void LeftButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1070,7 +1072,7 @@ void LeftButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void LeftFFButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void LeftFFButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1093,7 +1095,7 @@ void LeftFFButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void RightButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void RightButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1112,7 +1114,7 @@ void RightButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void RightFFButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void RightFFButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1145,14 +1147,14 @@ void DisplayHeader(void) {
   return;
 }
 
-void DisplayCharName(INT32 iId, INT32 iSlot) {
+void DisplayCharName(int32_t iId, int32_t iSlot) {
   // get merc's nickName, assignment, and sector location info
   int16_t sX, sY;
   struct SOLDIERTYPE *pSoldier;
   CHAR16 sString[64];
   CHAR16 sTownName[256];
   TownID bTownId = -1;
-  INT32 iHeightOfText;
+  int32_t iHeightOfText;
 
   sTownName[0] = L'\0';
 
@@ -1265,8 +1267,8 @@ void DisplayCharName(INT32 iId, INT32 iSlot) {
   return;
 }
 
-void DisplayCharStats(INT32 iId, INT32 iSlot) {
-  INT32 iCounter = 0;
+void DisplayCharStats(int32_t iId, int32_t iSlot) {
+  int32_t iCounter = 0;
   wchar_t sString[50];
   //	wchar_t sStringA[ 50 ];
   int16_t sX, sY;
@@ -1653,8 +1655,8 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
 
       // The Mercs Skills
       case 19: {
-        INT32 iWidth;
-        INT32 iMinimumX;
+        int32_t iWidth;
+        int32_t iMinimumX;
         int8_t bScreenLocIndex = 19;  // if you change the '19', change it below in the if statement
 
         // Display the 'Skills' text
@@ -1769,11 +1771,11 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
   return;
 }
 
-INT32 GetLastMercId(void) {
+int32_t GetLastMercId(void) {
   // rolls through list of mercs and returns how many on team
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
-  INT32 cnt = 0;
-  INT32 iCounter = 0;
+  int32_t cnt = 0;
+  int32_t iCounter = 0;
   pSoldier = MercPtrs[0];
 
   for (pTeamSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[pSoldier->bTeam].bLastID;
@@ -1788,7 +1790,7 @@ void DrawPageNumber(void) {
 
   wchar_t sString[10];
   int16_t sX, sY;
-  INT32 iPageNumber, iLastPage;
+  int32_t iPageNumber, iLastPage;
 
   return;
 
@@ -1908,10 +1910,10 @@ void CreateDestroyButtonsForPersonnelDepartures(void) {
   return;
 }
 
-INT32 GetNumberOfMercsOnPlayersTeam(void) {
+int32_t GetNumberOfMercsOnPlayersTeam(void) {
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
-  INT32 cnt = 0;
-  INT32 iCounter = 0;
+  int32_t cnt = 0;
+  int32_t iCounter = 0;
 
   // grab number on team
   pSoldier = MercPtrs[0];
@@ -1928,10 +1930,10 @@ INT32 GetNumberOfMercsOnPlayersTeam(void) {
   return (iCounter);
 }
 
-INT32 GetNumberOfMercsDeadOrAliveOnPlayersTeam(void) {
+int32_t GetNumberOfMercsDeadOrAliveOnPlayersTeam(void) {
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
-  INT32 cnt = 0;
-  INT32 iCounter = 0;
+  int32_t cnt = 0;
+  int32_t iCounter = 0;
 
   // grab number on team
   pSoldier = MercPtrs[0];
@@ -1986,14 +1988,14 @@ void CreateDestroyMouseRegionsForPersonnelPortraits(void) {
 }
 
 BOOLEAN DisplayPicturesOfCurrentTeam(void) {
-  INT32 iCounter = 0;
-  INT32 iTotalOnTeam = 0;
+  int32_t iCounter = 0;
+  int32_t iTotalOnTeam = 0;
   char sTemp[100];
   struct VObject *hFaceHandle;
   VOBJECT_DESC VObjectDesc;
   struct SOLDIERTYPE *pSoldier;
-  INT32 iId = 0;
-  INT32 iCnt = 0;
+  int32_t iId = 0;
+  int32_t iCnt = 0;
 
   // will display the 20 small portraits of the current team
 
@@ -2068,9 +2070,9 @@ BOOLEAN DisplayPicturesOfCurrentTeam(void) {
   return (TRUE);
 }
 
-void PersonnelPortraitCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iPortraitId = 0;
-  INT32 iOldPortraitId;
+void PersonnelPortraitCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iPortraitId = 0;
+  int32_t iOldPortraitId;
 
   iPortraitId = MSYS_GetRegionUserData(pRegion, 0);
   iOldPortraitId = iCurrentPersonSelectedId;
@@ -2204,7 +2206,7 @@ void DisplayInventoryForSelectedChar(void) {
   return;
 }
 
-void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
+void RenderInventoryForCharacter(int32_t iId, int32_t iSlot) {
   uint8_t ubCounter = 0;
   struct SOLDIERTYPE *pSoldier;
   int16_t sIndex;
@@ -2217,8 +2219,8 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   uint8_t ubUpToCount = 0;
   int16_t sX, sY;
   CHAR16 sString[128];
-  INT32 cnt = 0;
-  INT32 iTotalAmmo = 0;
+  int32_t cnt = 0;
+  int32_t iTotalAmmo = 0;
 
   GetVideoObject(&hHandle, guiPersonnelInventory);
   BltVideoObject(FRAME_BUFFER, hHandle, 0, (int16_t)(397), (int16_t)(200), VO_BLT_SRCTRANSPARENCY,
@@ -2260,8 +2262,8 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         usHeight = (uint32_t)pTrav->usHeight;
         usWidth = (uint32_t)pTrav->usWidth;
 
-        sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->sOffsetX;
-        sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->sOffsetY;
+        sCenX = PosX + (abs((int32_t)(57 - usWidth)) / 2) - pTrav->sOffsetX;
+        sCenY = PosY + (abs((int32_t)(22 - usHeight)) / 2) - pTrav->sOffsetY;
 
         // shadow
         // BltVideoObjectOutlineShadowFromIndex( FRAME_BUFFER, GetInterfaceGraphicForItem( pItem ),
@@ -2354,7 +2356,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   return;
 }
 
-void InventoryUpButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void InventoryUpButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -2385,12 +2387,12 @@ void InventoryUpButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void InventoryDownButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void InventoryDownButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT) {
-    if ((INT32)uiCurrentInventoryIndex >=
-        (INT32)(GetNumberOfInventoryItemsOnCurrentMerc() - NUMBER_OF_INVENTORY_PERSONNEL)) {
+    if ((int32_t)uiCurrentInventoryIndex >=
+        (int32_t)(GetNumberOfInventoryItemsOnCurrentMerc() - NUMBER_OF_INVENTORY_PERSONNEL)) {
       return;
     }
 
@@ -2405,8 +2407,8 @@ void InventoryDownButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     if (btn->uiFlags & (BUTTON_CLICKED_ON)) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
 
-      if ((INT32)uiCurrentInventoryIndex >=
-          (INT32)(GetNumberOfInventoryItemsOnCurrentMerc() - NUMBER_OF_INVENTORY_PERSONNEL)) {
+      if ((int32_t)uiCurrentInventoryIndex >=
+          (int32_t)(GetNumberOfInventoryItemsOnCurrentMerc() - NUMBER_OF_INVENTORY_PERSONNEL)) {
         return;
       }
 
@@ -2433,8 +2435,8 @@ void EnableDisableInventoryScrollButtons(void) {
     EnableButton(giPersonnelInventoryButtons[0]);
   }
 
-  if ((INT32)uiCurrentInventoryIndex >=
-      (INT32)(GetNumberOfInventoryItemsOnCurrentMerc() - NUMBER_OF_INVENTORY_PERSONNEL)) {
+  if ((int32_t)uiCurrentInventoryIndex >=
+      (int32_t)(GetNumberOfInventoryItemsOnCurrentMerc() - NUMBER_OF_INVENTORY_PERSONNEL)) {
     ButtonList[giPersonnelInventoryButtons[1]]->uiFlags &= ~(BUTTON_CLICKED_ON);
     DisableButton(giPersonnelInventoryButtons[1]);
   } else {
@@ -2444,8 +2446,8 @@ void EnableDisableInventoryScrollButtons(void) {
   return;
 }
 
-INT32 GetNumberOfInventoryItemsOnCurrentMerc(void) {
-  INT32 iId = 0;
+int32_t GetNumberOfInventoryItemsOnCurrentMerc(void) {
+  int32_t iId = 0;
   uint8_t ubCounter = 0;
   uint8_t ubCount = 0;
   struct SOLDIERTYPE *pSoldier;
@@ -2565,12 +2567,12 @@ void DisplayNumberDeparted(void) {
   return;
 }
 
-INT32 GetTotalDailyCostOfCurrentTeam(void) {
+int32_t GetTotalDailyCostOfCurrentTeam(void) {
   // will return the total daily cost of the current team
 
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt = 0;
-  INT32 iCostOfTeam = 0;
+  int32_t cnt = 0;
+  int32_t iCostOfTeam = 0;
 
   // first grunt
   pSoldier = MercPtrs[0];
@@ -2606,13 +2608,13 @@ INT32 GetTotalDailyCostOfCurrentTeam(void) {
   return iCostOfTeam;
 }
 
-INT32 GetLowestDailyCostOfCurrentTeam(void) {
+int32_t GetLowestDailyCostOfCurrentTeam(void) {
   // will return the lowest daily cost of the current team
 
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt = 0;
-  INT32 iLowest = 999999;
-  INT32 iCost = 0;
+  int32_t cnt = 0;
+  int32_t iLowest = 999999;
+  int32_t iCost = 0;
 
   // first grunt
   pSoldier = MercPtrs[0];
@@ -2659,13 +2661,13 @@ INT32 GetLowestDailyCostOfCurrentTeam(void) {
   return iLowest;
 }
 
-INT32 GetHighestDailyCostOfCurrentTeam(void) {
+int32_t GetHighestDailyCostOfCurrentTeam(void) {
   // will return the lowest daily cost of the current team
 
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt = 0;
-  INT32 iHighest = 0;
-  INT32 iCost = 0;
+  int32_t cnt = 0;
+  int32_t iHighest = 0;
+  int32_t iCost = 0;
 
   // first grunt
   pSoldier = MercPtrs[0];
@@ -2759,13 +2761,13 @@ void DisplayCostOfCurrentTeam(void) {
   }
 }
 
-INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat) {
+int32_t GetIdOfDepartedMercWithHighestStat(int32_t iStat) {
   // will return the id value of the merc on the players team with highest in this stat
   // -1 means error
-  INT32 iId = -1;
-  INT32 iValue = 0;
+  int32_t iId = -1;
+  int32_t iValue = 0;
   MERCPROFILESTRUCT *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
   int8_t bCurrentList = 0;
   int16_t *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
@@ -2910,13 +2912,13 @@ INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat) {
   return (iId);
 }
 
-INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat) {
+int32_t GetIdOfDepartedMercWithLowestStat(int32_t iStat) {
   // will return the id value of the merc on the players team with highest in this stat
   // -1 means error
-  INT32 iId = -1;
-  INT32 iValue = 9999999;
+  int32_t iId = -1;
+  int32_t iValue = 9999999;
   MERCPROFILESTRUCT *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
   int8_t bCurrentList = 0;
   int16_t *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
   BOOLEAN fNotDone = TRUE;
@@ -3060,13 +3062,13 @@ INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat) {
   return (iId);
 }
 
-INT32 GetIdOfMercWithHighestStat(INT32 iStat) {
+int32_t GetIdOfMercWithHighestStat(int32_t iStat) {
   // will return the id value of the merc on the players team with highest in this stat
   // -1 means error
-  INT32 iId = -1;
-  INT32 iValue = 0;
+  int32_t iId = -1;
+  int32_t iValue = 0;
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   // first grunt
   pSoldier = MercPtrs[0];
@@ -3167,13 +3169,13 @@ INT32 GetIdOfMercWithHighestStat(INT32 iStat) {
   return (iId);
 }
 
-INT32 GetIdOfMercWithLowestStat(INT32 iStat) {
+int32_t GetIdOfMercWithLowestStat(int32_t iStat) {
   // will return the id value of the merc on the players team with highest in this stat
   // -1 means error
-  INT32 iId = -1;
-  INT32 iValue = 999999;
+  int32_t iId = -1;
+  int32_t iValue = 999999;
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   // first grunt
   pSoldier = MercPtrs[0];
@@ -3275,12 +3277,12 @@ INT32 GetIdOfMercWithLowestStat(INT32 iStat) {
   return (iId);
 }
 
-INT32 GetAvgStatOfCurrentTeamStat(INT32 iStat) {
+int32_t GetAvgStatOfCurrentTeamStat(int32_t iStat) {
   // will return the id value of the merc on the players team with highest in this stat
   // -1 means error
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
-  INT32 cnt = 0;
-  INT32 iTotalStatValue = 0;
+  int32_t cnt = 0;
+  int32_t iTotalStatValue = 0;
   int8_t bNumberOfPows = 0;
   uint8_t ubNumberOfMercsInCalculation = 0;
 
@@ -3373,11 +3375,11 @@ INT32 GetAvgStatOfCurrentTeamStat(INT32 iStat) {
   }
 }
 
-INT32 GetAvgStatOfPastTeamStat(INT32 iStat) {
+int32_t GetAvgStatOfPastTeamStat(int32_t iStat) {
   // will return the id value of the merc on the players team with highest in this stat
   // -1 means error
-  INT32 cnt = 0;
-  INT32 iTotalStatValue = 0;
+  int32_t cnt = 0;
+  int32_t iTotalStatValue = 0;
   MERCPROFILESTRUCT *pTeamSoldier;
   int8_t bCurrentList = 0;
   int16_t *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
@@ -3510,7 +3512,7 @@ INT32 GetAvgStatOfPastTeamStat(INT32 iStat) {
 void DisplayAverageStatValuesForCurrentTeam(void) {
   // will display the average values for stats for the current team
   int16_t sX, sY;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   CHAR16 sString[32];
 
   // set up font
@@ -3545,7 +3547,7 @@ void DisplayAverageStatValuesForCurrentTeam(void) {
     }
 
     if (fCurrentTeamMode == TRUE) {
-      INT32 iValue = GetAvgStatOfCurrentTeamStat(iCounter);
+      int32_t iValue = GetAvgStatOfCurrentTeamStat(iCounter);
 
       // if there are no values
       if (iValue == -1)
@@ -3569,11 +3571,11 @@ void DisplayAverageStatValuesForCurrentTeam(void) {
 void DisplayLowestStatValuesForCurrentTeam(void) {
   // will display the average values for stats for the current team
   int16_t sX, sY;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   CHAR16 sString[32];
-  INT32 iStat = 0;
-  INT32 iDepartedId = 0;
-  INT32 iId = 0;
+  int32_t iStat = 0;
+  int32_t iDepartedId = 0;
+  int32_t iId = 0;
 
   // set up font
   SetFont(FONT10ARIAL);
@@ -3743,10 +3745,10 @@ void DisplayLowestStatValuesForCurrentTeam(void) {
 void DisplayHighestStatValuesForCurrentTeam(void) {
   // will display the average values for stats for the current team
   int16_t sX, sY;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   CHAR16 sString[32];
-  INT32 iStat = 0;
-  INT32 iId = 0;
+  int32_t iStat = 0;
+  int32_t iId = 0;
 
   // set up font
   SetFont(FONT10ARIAL);
@@ -3914,7 +3916,7 @@ void DisplayHighestStatValuesForCurrentTeam(void) {
 
 void DisplayPersonnelTeamStats(void) {
   // displays the stat title for each row in the team stat list
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // set up font
   SetFont(FONT10ARIAL);
@@ -3937,8 +3939,8 @@ void DisplayPersonnelTeamStats(void) {
   return;
 }
 
-INT32 GetNumberOfPastMercsOnPlayersTeam(void) {
-  INT32 iPastNumberOfMercs = 0;
+int32_t GetNumberOfPastMercsOnPlayersTeam(void) {
+  int32_t iPastNumberOfMercs = 0;
   // will run through the alist of past mercs on the players team and return thier number
 
   // dead
@@ -3962,9 +3964,9 @@ void InitPastCharactersList(void) {
   return;
 }
 
-INT32 GetNumberOfDeadOnPastTeam(void) {
-  INT32 iNumberDead = 0;
-  INT32 iCounter = 0;
+int32_t GetNumberOfDeadOnPastTeam(void) {
+  int32_t iNumberDead = 0;
+  int32_t iCounter = 0;
 
   //	for( iCounter = 0; ( ( iCounter < 256) && ( LaptopSaveInfo.ubDeadCharactersList[ iCounter ]
   //!= -1 ) ) ; iCounter ++ )
@@ -3975,9 +3977,9 @@ INT32 GetNumberOfDeadOnPastTeam(void) {
   return (iNumberDead);
 }
 
-INT32 GetNumberOfLeftOnPastTeam(void) {
-  INT32 iNumberLeft = 0;
-  INT32 iCounter = 0;
+int32_t GetNumberOfLeftOnPastTeam(void) {
+  int32_t iNumberLeft = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubLeftCharactersList[iCounter] != -1) iNumberLeft++;
@@ -3986,9 +3988,9 @@ INT32 GetNumberOfLeftOnPastTeam(void) {
   return (iNumberLeft);
 }
 
-INT32 GetNumberOfOtherOnPastTeam(void) {
-  INT32 iNumberOther = 0;
-  INT32 iCounter = 0;
+int32_t GetNumberOfOtherOnPastTeam(void) {
+  int32_t iNumberOther = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubOtherCharactersList[iCounter] != -1) iNumberOther++;
@@ -4075,7 +4077,7 @@ void CreateDestroyCurrentDepartedMouseRegions(void) {
   return;
 }
 
-void PersonnelCurrentTeamCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void PersonnelCurrentTeamCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     fCurrentTeamMode = TRUE;
 
@@ -4095,7 +4097,7 @@ void PersonnelCurrentTeamCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void PersonnelDepartedTeamCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void PersonnelDepartedTeamCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     fCurrentTeamMode = FALSE;
 
@@ -4150,7 +4152,7 @@ void CreateDestroyButtonsForDepartedTeamList(void) {
   }
 }
 
-void DepartedUpCallBack(GUI_BUTTON *btn, INT32 reason) {
+void DepartedUpCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -4169,7 +4171,7 @@ void DepartedUpCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void DepartedDownCallBack(GUI_BUTTON *btn, INT32 reason) {
+void DepartedDownCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -4193,9 +4195,9 @@ void DisplayPastMercsPortraits(void) {
   // display past mercs portraits, starting at giCurrentUpperLeftPortraitNumber and going up 20
   // mercs start at dead mercs, then fired, then other
 
-  INT32 iCounter = 0;
-  INT32 iCounterA = 0;
-  INT32 iStartArray = 0;  // 0 = dead list, 1 = fired list, 2 = other list
+  int32_t iCounter = 0;
+  int32_t iCounterA = 0;
+  int32_t iStartArray = 0;  // 0 = dead list, 1 = fired list, 2 = other list
 
   // not time to display
   if (fCurrentTeamMode == TRUE) {
@@ -4298,9 +4300,9 @@ void DisplayPastMercsPortraits(void) {
   return;
 }
 
-INT32 GetIdOfPastMercInSlot(INT32 iSlot) {
-  INT32 iCounter = -1;
-  INT32 iCounterA = 0;
+int32_t GetIdOfPastMercInSlot(int32_t iSlot) {
+  int32_t iCounter = -1;
+  int32_t iCounterA = 0;
   // returns ID of Merc in this slot
 
   // not time to display
@@ -4342,7 +4344,7 @@ INT32 GetIdOfPastMercInSlot(INT32 iSlot) {
   return (LaptopSaveInfo.ubOtherCharactersList[iCounterA - 1]);
 }
 
-BOOLEAN DisplayPortraitOfPastMerc(INT32 iId, INT32 iCounter, BOOLEAN fDead, BOOLEAN fFired,
+BOOLEAN DisplayPortraitOfPastMerc(int32_t iId, int32_t iCounter, BOOLEAN fDead, BOOLEAN fFired,
                                   BOOLEAN fOther) {
   char sTemp[100];
   struct VObject *hFaceHandle;
@@ -4419,8 +4421,8 @@ BOOLEAN DisplayPortraitOfPastMerc(INT32 iId, INT32 iCounter, BOOLEAN fDead, BOOL
   return (TRUE);
 }
 
-void DisplayDepartedCharStats(INT32 iId, INT32 iSlot, INT32 iState) {
-  INT32 iCounter = 0;
+void DisplayDepartedCharStats(int32_t iId, int32_t iSlot, int32_t iState) {
+  int32_t iCounter = 0;
   wchar_t sString[50];
   int16_t sX, sY;
   uint32_t uiHits = 0;
@@ -4641,7 +4643,7 @@ void EnableDisableDeparturesButtons(void) {
   return;
 }
 
-void DisplayDepartedCharName(INT32 iId, INT32 iSlot, INT32 iState) {
+void DisplayDepartedCharName(int32_t iId, int32_t iSlot, int32_t iState) {
   // get merc's nickName, assignment, and sector location info
   int16_t sX, sY;
   CHAR16 sString[32];
@@ -4714,8 +4716,8 @@ void DisplayDepartedCharName(INT32 iId, INT32 iSlot, INT32 iState) {
   return;
 }
 
-INT32 GetTheStateOfDepartedMerc(INT32 iId) {
-  INT32 iCounter = 0;
+int32_t GetTheStateOfDepartedMerc(int32_t iId) {
+  int32_t iCounter = 0;
   // will runt hrough each list until merc is found, if not a -1 is returned
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
@@ -4792,7 +4794,7 @@ BOOLEAN DisplayHighLightBox(void) {
 
 // add to dead list
 void AddCharacterToDeadList(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubDeadCharactersList[iCounter] == -1) {
@@ -4811,7 +4813,7 @@ void AddCharacterToDeadList(struct SOLDIERTYPE *pSoldier) {
 }
 
 void AddCharacterToFiredList(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubLeftCharactersList[iCounter] == -1) {
@@ -4830,7 +4832,7 @@ void AddCharacterToFiredList(struct SOLDIERTYPE *pSoldier) {
 }
 
 void AddCharacterToOtherList(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubOtherCharactersList[iCounter] == -1) {
@@ -4853,7 +4855,7 @@ void AddCharacterToOtherList(struct SOLDIERTYPE *pSoldier) {
 // make sense for them
 // to be on your team list, and departed list )
 BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(uint8_t ubProfile) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     // are they already in the Dead list?
@@ -4882,9 +4884,9 @@ BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(uint8_t ubProfile) {
 }
 
 // grab the id of the first merc being displayed
-INT32 GetIdOfFirstDisplayedMerc() {
+int32_t GetIdOfFirstDisplayedMerc() {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   // set current soldier
   pSoldier = MercPtrs[cnt];
@@ -4905,10 +4907,10 @@ INT32 GetIdOfFirstDisplayedMerc() {
   }
 }
 
-INT32 GetIdOfThisSlot(INT32 iSlot) {
+int32_t GetIdOfThisSlot(int32_t iSlot) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt = 0;
-  INT32 iCounter = 0;
+  int32_t cnt = 0;
+  int32_t iCounter = 0;
 
   // set current soldier
   pSoldier = MercPtrs[cnt];
@@ -5079,12 +5081,12 @@ void CreateDestroyStartATMButton(void) {
 }
 
 void FindPositionOfPersInvSlider(void) {
-  INT32 iValue = 0;
-  INT32 iNumberOfItems = 0;
+  int32_t iValue = 0;
+  int32_t iNumberOfItems = 0;
   int16_t sSizeOfEachSubRegion = 0;
 
   // find out how many there are
-  iValue = (INT32)(GetNumberOfInventoryItemsOnCurrentMerc());
+  iValue = (int32_t)(GetNumberOfInventoryItemsOnCurrentMerc());
 
   // otherwise there are more than one item
   iNumberOfItems = iValue - NUMBER_OF_INVENTORY_PERSONNEL;
@@ -5095,16 +5097,16 @@ void FindPositionOfPersInvSlider(void) {
 
   // get the subregion sizes
   sSizeOfEachSubRegion =
-      (int16_t)((INT32)(Y_SIZE_OF_PERSONNEL_SCROLL_REGION - SIZE_OF_PERSONNEL_CURSOR) /
-                (INT32)(iNumberOfItems));
+      (int16_t)((int32_t)(Y_SIZE_OF_PERSONNEL_SCROLL_REGION - SIZE_OF_PERSONNEL_CURSOR) /
+                (int32_t)(iNumberOfItems));
 
   // get slider position
   guiSliderPosition = uiCurrentInventoryIndex * sSizeOfEachSubRegion;
 }
 
-void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
-  INT32 iNumberOfItems = 0;
+void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
+  int32_t iNumberOfItems = 0;
   int16_t sSizeOfEachSubRegion = 0;
   int16_t sYPositionOnBar = 0;
   int16_t iCurrentItemValue = 0;
@@ -5112,10 +5114,10 @@ void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if ((iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) ||
       (iReason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT)) {
     // find out how many there are
-    iValue = (INT32)(GetNumberOfInventoryItemsOnCurrentMerc());
+    iValue = (int32_t)(GetNumberOfInventoryItemsOnCurrentMerc());
 
     // make sure there are more than one page
-    if ((INT32)uiCurrentInventoryIndex >= iValue - NUMBER_OF_INVENTORY_PERSONNEL + 1) {
+    if ((int32_t)uiCurrentInventoryIndex >= iValue - NUMBER_OF_INVENTORY_PERSONNEL + 1) {
       return;
     }
 
@@ -5132,8 +5134,8 @@ void HandleSliderBarClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
     // get the subregion sizes
     sSizeOfEachSubRegion =
-        (int16_t)((INT32)(Y_SIZE_OF_PERSONNEL_SCROLL_REGION - SIZE_OF_PERSONNEL_CURSOR) /
-                  (INT32)(iNumberOfItems));
+        (int16_t)((int32_t)(Y_SIZE_OF_PERSONNEL_SCROLL_REGION - SIZE_OF_PERSONNEL_CURSOR) /
+                  (int32_t)(iNumberOfItems));
 
     // get the cursor placement
     sYPositionOnBar = (int16_t)(MousePos.y - Y_OF_PERSONNEL_SCROLL_REGION);
@@ -5168,7 +5170,7 @@ void RenderSliderBarForPersonnelInventory(void) {
                  VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
-void ATMStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void ATMStartButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -5187,7 +5189,7 @@ void ATMStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void PersonnelINVStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void PersonnelINVStartButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -5201,7 +5203,7 @@ void PersonnelINVStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void PersonnelStatStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void PersonnelStatStartButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -5215,7 +5217,7 @@ void PersonnelStatStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void EmployementInfoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void EmployementInfoButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -5227,8 +5229,8 @@ void EmployementInfoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ATMOther2ButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iValue = 0;
+void ATMOther2ButtonCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iValue = 0;
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -5255,10 +5257,10 @@ void ATMOther2ButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iValue = 0;
+void ATMOtherButtonCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iValue = 0;
   struct SOLDIERTYPE *pSoldier = MercPtrs[0];
-  INT32 iId = 0;
+  int32_t iId = 0;
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -5373,9 +5375,9 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iValue = 0;
-  INT32 iCounter = 0;
+void ATMNumberButtonCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iValue = 0;
+  int32_t iCounter = 0;
   CHAR16 sZero[2] = L"0";
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -5391,7 +5393,7 @@ void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
       // find position in value string, append character at end
-      for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++);
+      for (iCounter = 0; iCounter < (int32_t)wcslen(sTransferString); iCounter++);
       sTransferString[iCounter] = (sZero[0] + (uint16_t)iValue);
       sTransferString[iCounter + 1] = 0;
       fReDrawScreenFlag = TRUE;
@@ -5407,7 +5409,7 @@ void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 void DisplayATMAmount(void) {
   int16_t sX = 0, sY = 0;
   CHAR16 sTempString[32];
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   if (fShowAtmPanel == FALSE) {
     return;
@@ -5417,7 +5419,7 @@ void DisplayATMAmount(void) {
 
   if ((sTempString[0] == 48) && (sTempString[1] != 0)) {
     // strip the zero from the beginning
-    for (iCounter = 1; iCounter < (INT32)wcslen(sTempString); iCounter++) {
+    for (iCounter = 1; iCounter < (int32_t)wcslen(sTempString); iCounter++) {
       sTempString[iCounter - 1] = sTempString[iCounter];
     }
   }
@@ -5444,7 +5446,7 @@ void DisplayATMAmount(void) {
 }
 
 void HandleStateOfATMButtons(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // disable buttons based on state
   if ((fATMFlags == 0)) {
@@ -5468,9 +5470,9 @@ void HandleStateOfATMButtons(void) {
   }
 }
 
-INT32 GetFundsOnMerc(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCurrentAmount = 0;
-  INT32 iCurrentPocket = 0;
+int32_t GetFundsOnMerc(struct SOLDIERTYPE *pSoldier) {
+  int32_t iCurrentAmount = 0;
+  int32_t iCurrentPocket = 0;
   // run through mercs pockets, if any money in them, add to total
 
   // error check
@@ -5488,9 +5490,9 @@ INT32 GetFundsOnMerc(struct SOLDIERTYPE *pSoldier) {
   return iCurrentAmount;
 }
 
-BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrentBalance) {
-  INT32 iCurrentPocket = 0;
-  INT32 iAmountLeftToTake = iCurrentBalance;
+BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, int32_t iCurrentBalance) {
+  int32_t iCurrentPocket = 0;
+  int32_t iAmountLeftToTake = iCurrentBalance;
   struct OBJECTTYPE ObjectToRemove;
 
   // move this amount of money from the grunt to the bank
@@ -5529,7 +5531,7 @@ BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrent
   }
 }
 
-BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, INT32 iCurrentBalance) {
+BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, int32_t iCurrentBalance) {
   struct OBJECTTYPE pMoneyObject;
 
   // move this amount of money from the grunt to the bank
@@ -5617,7 +5619,7 @@ void DisplayATMStrings(void) {
 }
 
 void UpDateStateOfStartButton(void) {
-  INT32 iId = 0;
+  int32_t iId = 0;
 
   // start button being shown?
   if (fShowAtmPanelStartButton == FALSE) {
@@ -5691,9 +5693,9 @@ void UpDateStateOfStartButton(void) {
 
 void DisplayAmountOnCurrentMerc(void) {
   // will display the amount that the merc is carrying on him or herself
-  INT32 iId;
+  int32_t iId;
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iFunds;
+  int32_t iFunds;
   CHAR16 sString[64];
   int16_t sX, sY;
 
@@ -5732,8 +5734,8 @@ void DisplayAmountOnCurrentMerc(void) {
 }
 
 void HandlePersonnelKeyboard(void) {
-  INT32 iCounter = 0;
-  INT32 iValue = 0;
+  int32_t iCounter = 0;
+  int32_t iValue = 0;
   CHAR16 sZero[2] = L"0";
 
   InputAtom InputEvent;
@@ -5742,9 +5744,9 @@ void HandlePersonnelKeyboard(void) {
     if ((InputEvent.usEvent == KEY_DOWN) && (InputEvent.usParam >= '0') &&
         (InputEvent.usParam <= '9')) {
       if ((fShowAtmPanel) && (fATMFlags != 0)) {
-        iValue = (INT32)(InputEvent.usParam - '0');
+        iValue = (int32_t)(InputEvent.usParam - '0');
 
-        for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++);
+        for (iCounter = 0; iCounter < (int32_t)wcslen(sTransferString); iCounter++);
         sTransferString[iCounter] = (sZero[0] + (uint16_t)iValue);
         sTransferString[iCounter + 1] = 0;
         fPausedReDrawScreenFlag = TRUE;
@@ -5761,18 +5763,18 @@ void HandlePersonnelKeyboard(void) {
 }
 
 void RenderRectangleForPersonnelTransactionAmount(void) {
-  INT32 iLength = 0;
-  INT32 iHeight = GetFontHeight(ATM_FONT);
+  int32_t iLength = 0;
+  int32_t iHeight = GetFontHeight(ATM_FONT);
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   CHAR16 sTempString[32];
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   wcscpy(sTempString, sTransferString);
 
   if ((sTempString[0] == 48) && (sTempString[1] != 0)) {
     // strip the zero from the beginning
-    for (iCounter = 1; iCounter < (INT32)wcslen(sTempString); iCounter++) {
+    for (iCounter = 1; iCounter < (int32_t)wcslen(sTempString); iCounter++) {
       sTempString[iCounter - 1] = sTempString[iCounter];
     }
   }
@@ -5824,7 +5826,7 @@ void HandleTimedAtmModes(void) {
   }
 }
 
-BOOLEAN IsPastMercDead(INT32 iId) {
+BOOLEAN IsPastMercDead(int32_t iId) {
   if (GetTheStateOfDepartedMerc(GetIdOfPastMercInSlot(iId)) == DEPARTED_DEAD) {
     return (TRUE);
   } else {
@@ -5832,7 +5834,7 @@ BOOLEAN IsPastMercDead(INT32 iId) {
   }
 }
 
-BOOLEAN IsPastMercFired(INT32 iId) {
+BOOLEAN IsPastMercFired(int32_t iId) {
   if (GetTheStateOfDepartedMerc(GetIdOfPastMercInSlot(iId)) == DEPARTED_FIRED) {
     return (TRUE);
   } else {
@@ -5840,7 +5842,7 @@ BOOLEAN IsPastMercFired(INT32 iId) {
   }
 }
 
-BOOLEAN IsPastMercOther(INT32 iId) {
+BOOLEAN IsPastMercOther(int32_t iId) {
   if (GetTheStateOfDepartedMerc(GetIdOfPastMercInSlot(iId)) == DEPARTED_OTHER) {
     return (TRUE);
   } else {
@@ -5848,8 +5850,8 @@ BOOLEAN IsPastMercOther(INT32 iId) {
   }
 }
 
-void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
-  INT32 iCounter = 0;
+void DisplayEmploymentinformation(int32_t iId, int32_t iSlot) {
+  int32_t iCounter = 0;
   wchar_t sString[50];
   wchar_t sStringA[50];
   int16_t sX, sY;
@@ -5869,12 +5871,13 @@ void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
 
         if (Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||
             Menptr[iId].ubProfile == SLAY) {
-          INT32 iTimeLeftOnContract = CalcTimeLeftOnMercContract(GetSoldierByID(iId));
+          int32_t iTimeLeftOnContract = CalcTimeLeftOnMercContract(GetSoldierByID(iId));
 
           // if the merc is in transit
           if (Menptr[iId].bAssignment == IN_TRANSIT) {
             // and if the ttime left on the cotract is greater then the contract time
-            if (iTimeLeftOnContract > (INT32)(Menptr[iId].iTotalContractLength * uiMinutesInDay)) {
+            if (iTimeLeftOnContract >
+                (int32_t)(Menptr[iId].iTotalContractLength * uiMinutesInDay)) {
               iTimeLeftOnContract = (Menptr[iId].iTotalContractLength * uiMinutesInDay);
             }
           }
@@ -6132,8 +6135,8 @@ void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
 // MERC merc: Returns the amount of time the merc has worked
 // IMP merc:	Returns the amount of time the merc has worked
 // else:			returns -1
-INT32 CalcTimeLeftOnMercContract(struct SOLDIERTYPE *pSoldier) {
-  INT32 iTimeLeftOnContract = -1;
+int32_t CalcTimeLeftOnMercContract(struct SOLDIERTYPE *pSoldier) {
+  int32_t iTimeLeftOnContract = -1;
 
   if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
     iTimeLeftOnContract = pSoldier->iEndofContractTime - GetWorldTotalMin();

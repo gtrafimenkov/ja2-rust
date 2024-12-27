@@ -161,7 +161,7 @@ uint32_t GetSoldierFindFlags(uint16_t ubID) {
 }
 
 extern BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
-                                                      INT32 iTextX, INT32 iTestY);
+                                                      int32_t iTextX, int32_t iTestY);
 
 // THIS FUNCTION IS CALLED FAIRLY REGULARLY
 BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
@@ -175,7 +175,7 @@ BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercF
   BOOLEAN fDoFull;
   uint8_t ubBestMerc = NOBODY;
   uint16_t usAnimSurface;
-  INT32 iMercScreenX, iMercScreenY;
+  int32_t iMercScreenX, iMercScreenY;
   BOOLEAN fInScreenRect = FALSE;
   BOOLEAN fInGridNo = FALSE;
 
@@ -284,8 +284,8 @@ BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercF
               usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
               if (usAnimSurface != INVALID_ANIMATION_SURFACE) {
-                iMercScreenX = (INT32)(sScreenX - aRect.iLeft);
-                iMercScreenY = (INT32)(-1 * (sScreenY - aRect.iBottom));
+                iMercScreenX = (int32_t)(sScreenX - aRect.iLeft);
+                iMercScreenY = (int32_t)(-1 * (sScreenY - aRect.iBottom));
 
                 if (!CheckVideoObjectScreenCoordinateInData(
                         gAnimSurfaceDatabase[usAnimSurface].hVideoObject, pSoldier->usAniFrame,
@@ -463,7 +463,7 @@ BOOLEAN IsValidTargetMerc(uint8_t ubSoldierID) {
 }
 
 BOOLEAN IsGridNoInScreenRect(int16_t sGridNo, SGPRect *pRect) {
-  INT32 iXTrav, iYTrav;
+  int32_t iXTrav, iYTrav;
   int16_t sMapPos;
 
   // Start with top left corner

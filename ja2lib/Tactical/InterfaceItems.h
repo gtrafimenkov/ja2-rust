@@ -153,10 +153,10 @@ BOOLEAN SaveItemCursorToSavedGame(HWFILE hFile);
 void EnableKeyRing(BOOLEAN fEnable);
 
 // handle compatable items for merc and map inventory
-BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, INT32 bInvPos, BOOLEAN fOn,
-                                           BOOLEAN fFromMerc);
-BOOLEAN HandleCompatibleAmmoUIForMapInventory(struct SOLDIERTYPE *pSoldier, INT32 bInvPos,
-                                              INT32 iStartSlotNumber, BOOLEAN fOn,
+BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, int32_t bInvPos,
+                                           BOOLEAN fOn, BOOLEAN fFromMerc);
+BOOLEAN HandleCompatibleAmmoUIForMapInventory(struct SOLDIERTYPE *pSoldier, int32_t bInvPos,
+                                              int32_t iStartSlotNumber, BOOLEAN fOn,
                                               BOOLEAN fFromMerc);
 void ResetCompatibleItemArray();
 

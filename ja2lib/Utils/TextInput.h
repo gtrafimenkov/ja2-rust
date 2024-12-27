@@ -128,11 +128,11 @@ void SetExclusive24HourTimeValue(uint8_t ubField, uint16_t usTime);
 
 // Converts the field's string into a number, then returns that number
 // returns -1 if blank or invalid.  Only works for positive numbers.
-INT32 GetNumericStrictValueFromField(uint8_t ubField);
+int32_t GetNumericStrictValueFromField(uint8_t ubField);
 
 // Converts a number to a numeric strict value.  If the number is negative, the
 // field will be blank.
-void SetInputFieldStringWithNumericStrictValue(uint8_t ubField, INT32 iNumber);
+void SetInputFieldStringWithNumericStrictValue(uint8_t ubField, int32_t iNumber);
 
 // Sets the active field to the specified ID number.
 void SetActiveField(uint8_t ubField);

@@ -363,7 +363,7 @@ void GetScreenXYGridNo(int16_t sScreenX, int16_t sScreenY, int16_t *psMapPos) {
   *psMapPos = MAPROWCOLTOPOS(sWorldY, sWorldX);
 }
 
-void GetWorldXYAbsoluteScreenXY(INT32 sWorldCellX, INT32 sWorldCellY, int16_t *psWorldScreenX,
+void GetWorldXYAbsoluteScreenXY(int32_t sWorldCellX, int32_t sWorldCellY, int16_t *psWorldScreenX,
                                 int16_t *psWorldScreenY) {
   int16_t sScreenCenterX, sScreenCenterY;
   int16_t sDistToCenterY, sDistToCenterX;
@@ -385,8 +385,8 @@ void GetWorldXYAbsoluteScreenXY(INT32 sWorldCellX, INT32 sWorldCellY, int16_t *p
   *psWorldScreenY = sScreenCenterY + gsCY - gsTLY;
 }
 
-void GetFromAbsoluteScreenXYWorldXY(INT32 *psWorldCellX, INT32 *psWorldCellY, int16_t sWorldScreenX,
-                                    int16_t sWorldScreenY) {
+void GetFromAbsoluteScreenXYWorldXY(int32_t *psWorldCellX, int32_t *psWorldCellY,
+                                    int16_t sWorldScreenX, int16_t sWorldScreenY) {
   int16_t sWorldCenterX, sWorldCenterY;
   int16_t sDistToCenterY, sDistToCenterX;
 
@@ -409,7 +409,7 @@ void GetFromAbsoluteScreenXYWorldXY(INT32 *psWorldCellX, INT32 *psWorldCellY, in
 
 // UTILITY FUNTIONS
 
-INT32 OutOfBounds(int16_t sGridno, int16_t sProposedGridno) {
+int32_t OutOfBounds(int16_t sGridno, int16_t sProposedGridno) {
   int16_t sMod, sPropMod;
 
   // get modulas of our origin
@@ -498,8 +498,8 @@ void ConvertGridNoToCenterCellXY(int16_t sGridNo, int16_t *sXPos, int16_t *sYPos
   *sXPos = (*sXPos * CELL_X_SIZE) + (CELL_X_SIZE / 2);
 }
 
-INT32 GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
-  INT32 uiDist;
+int32_t GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
+  int32_t uiDist;
   int16_t sXPos, sYPos, sXPos2, sYPos2;
 
   // Convert our grid-not into an XY
@@ -514,7 +514,7 @@ INT32 GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
   return (uiDist);
 }
 
-INT32 GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
+int32_t GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
   int16_t sXPos, sYPos, sXPos2, sYPos2;
 
   // Convert our grid-not into an XY
@@ -523,9 +523,9 @@ INT32 GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
   // Convert our grid-not into an XY
   ConvertGridNoToXY(sGridNo2, &sXPos2, &sYPos2);
 
-  return ((INT32)(sqrt((float)(sXPos2 - sXPos) * (sXPos2 - sXPos) +
-                       (sYPos2 - sYPos) * (sYPos2 - sYPos)) *
-                  CELL_X_SIZE));
+  return ((int32_t)(sqrt((float)(sXPos2 - sXPos) * (sXPos2 - sXPos) +
+                         (sYPos2 - sYPos) * (sYPos2 - sYPos)) *
+                    CELL_X_SIZE));
 }
 
 BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, SGPRect *pRect) {
@@ -618,7 +618,7 @@ int8_t FindNumTurnsBetweenDirs(int8_t sDir1, int8_t sDir2) {
 
 BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bStartingDir,
                          int8_t *pbDirection) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sNewGridNo;
   BOOLEAN fFound = FALSE;
   uint8_t bMinNumTurns = 100;
@@ -661,7 +661,7 @@ BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t b
 
 BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bStartingDir,
                        int8_t *pbDirection) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sNewGridNo;
   BOOLEAN fFound = FALSE;
   uint8_t bMinNumTurns = 100;
@@ -842,7 +842,7 @@ BOOLEAN GridNoOnEdgeOfMap(int16_t sGridNo, int8_t *pbDirection) {
 
 BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bStartingDir,
                                int8_t *pbDirection) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sNewGridNo, sOtherSideOfFence;
   BOOLEAN fFound = FALSE;
   uint8_t bMinNumTurns = 100;
@@ -888,7 +888,7 @@ BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, in
 
 // Simply chooses a random gridno within valid boundaries (for dropping things in unloaded sectors)
 int16_t RandomGridNo() {
-  INT32 iMapXPos, iMapYPos, iMapIndex;
+  int32_t iMapXPos, iMapYPos, iMapIndex;
   do {
     iMapXPos = Random(WORLD_COLS);
     iMapYPos = Random(WORLD_ROWS);

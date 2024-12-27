@@ -77,7 +77,7 @@ BOOLEAN fScrollMessagesHidden = FALSE;
 uint32_t uiStartOfPauseTime = 0;
 
 // test extern functions
-BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack);
+BOOLEAN RestoreExternBackgroundRectGivenID(int32_t iBack);
 extern VIDEO_OVERLAY gVideoOverlays[];
 
 extern uint16_t gusSubtitleBoxWidth;
@@ -100,7 +100,7 @@ ScrollStringStPtr GetNextString(ScrollStringStPtr pStringSt);
 ScrollStringStPtr GetPrevString(ScrollStringStPtr pStringSt);
 void AlignString(ScrollStringStPtr pPermStringSt);
 
-INT32 GetMessageQueueSize(void);
+int32_t GetMessageQueueSize(void);
 
 ScrollStringStPtr AddString(STR16 string, uint16_t usColor, uint32_t uiFont,
                             BOOLEAN fStartOfNewString, uint8_t ubPriority);
@@ -300,10 +300,10 @@ void ClearDisplayedListOfTacticalStrings(void) {
 void ScrollString() {
   uint32_t suiTimer = 0;
   uint32_t cnt;
-  INT32 iNumberOfNewStrings = 0;  // the count of new strings, so we can update position by
-                                  // WIDTH_BETWEEN_NEW_STRINGS pixels in the y
-  INT32 iNumberOfMessagesOnQueue = 0;
-  INT32 iMaxAge = 0;
+  int32_t iNumberOfNewStrings = 0;  // the count of new strings, so we can update position by
+                                    // WIDTH_BETWEEN_NEW_STRINGS pixels in the y
+  int32_t iNumberOfMessagesOnQueue = 0;
+  int32_t iMaxAge = 0;
   BOOLEAN fDitchLastMessage = FALSE;
 
   // UPDATE TIMER
@@ -433,7 +433,7 @@ void EnableScrollMessages(void) {
 
 void HideMessagesDuringNPCDialogue(void) {
   // will stop the scroll of messages in tactical and hide them during an NPC's dialogue
-  INT32 cnt;
+  int32_t cnt;
 
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
@@ -458,7 +458,7 @@ void HideMessagesDuringNPCDialogue(void) {
 
 void UnHideMessagesDuringNPCDialogue(void) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   memset(&VideoOverlayDesc, 0, sizeof(VideoOverlayDesc));
 
@@ -1136,9 +1136,9 @@ ScrollStringStPtr MoveToBeginningOfMessageQueue(void) {
   return (pStringSt);
 }
 
-INT32 GetMessageQueueSize(void) {
+int32_t GetMessageQueueSize(void) {
   ScrollStringStPtr pStringSt = pStringS;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   pStringSt = MoveToBeginningOfMessageQueue();
 
@@ -1186,7 +1186,7 @@ void WriteMessageToFile(STR16 pString) {
 }
 
 void InitGlobalMessageList(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     gMapScreenMessageList[iCounter] = NULL;
@@ -1201,7 +1201,7 @@ void InitGlobalMessageList(void) {
 }
 
 void FreeGlobalMessageList(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 256; iCounter++) {
     // check if next unit is empty, if not...clear it up
@@ -1388,9 +1388,9 @@ TRUE )
 }
 
 
-BOOLEAN AreThereASetOfStringsAfterThisIndex( uint8_t ubMsgIndex, INT32 iNumberOfStrings )
+BOOLEAN AreThereASetOfStringsAfterThisIndex( uint8_t ubMsgIndex, int32_t iNumberOfStrings )
 {
-        INT32 iCounter;
+        int32_t iCounter;
 
         // go through this number of strings, if they pass, then we have at least iNumberOfStrings
 after index ubMsgIndex for( iCounter = 0; iCounter < iNumberOfStrings; iCounter++ )

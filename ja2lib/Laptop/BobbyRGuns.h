@@ -21,7 +21,7 @@
 
 extern uint16_t gusCurWeaponIndex;
 extern uint8_t gubLastGunIndex;
-extern INT32 giBobbyRHomeImage;
+extern int32_t giBobbyRHomeImage;
 
 void GameInitBobbyRGuns();
 BOOLEAN EnterBobbyRGuns();

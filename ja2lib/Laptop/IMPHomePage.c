@@ -32,13 +32,13 @@ void CreateIMPHomePageButtons(void);
 void RemoveIMPHomePageButtons(void);
 void DisplayActivationStringCursor(void);
 
-INT32 GlowColorsList[][3] = {
+int32_t GlowColorsList[][3] = {
     {0, 0, 0},   {0, 25, 0},  {0, 50, 0},  {0, 75, 0},  {0, 100, 0}, {0, 125, 0},
     {0, 150, 0}, {0, 175, 0}, {0, 200, 0}, {0, 225, 0}, {0, 255, 0},
 };
 
 // btn callbacks
-void BtnIMPAboutUsCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPAboutUsCallback(GUI_BUTTON *btn, int32_t reason);
 
 // position defines
 #define IMP_PLAYER_ACTIVATION_STRING_X LAPTOP_SCREEN_UL_X + 261
@@ -47,14 +47,14 @@ void BtnIMPAboutUsCallback(GUI_BUTTON *btn, INT32 reason);
 #define CURSOR_HEIGHT GetFontHeight(FONT14ARIAL) + 6
 
 // IMP homepage buttons
-INT32 giIMPHomePageButton[1];
-INT32 giIMPHomePageButtonImage[1];
+int32_t giIMPHomePageButton[1];
+int32_t giIMPHomePageButtonImage[1];
 
 // the player activation string
 CHAR16 pPlayerActivationString[32];
 
 // position within player activation string
-INT32 iStringPos = 0;
+int32_t iStringPos = 0;
 uint16_t uiCursorPosition = IMP_PLAYER_ACTIVATION_STRING_X;
 
 // has a new char been added or deleted?
@@ -376,7 +376,7 @@ void RemoveIMPHomePageButtons(void) {
   return;
 }
 
-void BtnIMPAboutUsCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAboutUsCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

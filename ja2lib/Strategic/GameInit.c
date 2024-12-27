@@ -212,7 +212,7 @@ void InitNPCs(void) {
 }
 
 void InitBloodCatSectors() {
-  INT32 i;
+  int32_t i;
   // Hard coded table of bloodcat populations.  We don't have
   // access to the real population (if different) until we physically
   // load the map.  If the real population is different, then an error
@@ -326,7 +326,7 @@ void ShutdownStrategicLayer() {
 }
 
 BOOLEAN InitNewGame(BOOLEAN fReset) {
-  INT32 iStartingCash;
+  int32_t iStartingCash;
 
   //	static fScreenCount = 0;
 
@@ -447,7 +447,7 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
 }
 
 BOOLEAN AnyMercsHired() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
   int16_t bLastTeamID;
 
@@ -467,7 +467,7 @@ BOOLEAN AnyMercsHired() {
 }
 
 void QuickStartGame() {
-  INT32 cnt;
+  int32_t cnt;
   uint16_t usVal;
   uint8_t ub1 = 0, ub2 = 0;
 
@@ -625,7 +625,7 @@ BOOLEAN QuickGameMemberHireMerc(uint8_t ubCurrentSoldier) {
 
   // add an entry in the finacial page for the hiring of the merc
   AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier,
-                              -(INT32)gMercProfiles[ubCurrentSoldier].uiWeeklySalary);
+                              -(int32_t)gMercProfiles[ubCurrentSoldier].uiWeeklySalary);
 
   if (gMercProfiles[ubCurrentSoldier].bMedicalDeposit) {
     // add an entry in the finacial page for the medical deposit

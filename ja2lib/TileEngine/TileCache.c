@@ -23,7 +23,7 @@
 uint32_t guiNumTileCacheStructs = 0;
 uint32_t guiMaxTileCacheSize = 50;
 uint32_t guiCurTileCacheSize = 0;
-INT32 giDefaultStructIndex = -1;
+int32_t giDefaultStructIndex = -1;
 
 TILE_CACHE_ELEMENT *gpTileCache = NULL;
 TILE_CACHE_STRUCT *gpTileCacheStructInfo = NULL;
@@ -123,7 +123,7 @@ int16_t FindCacheStructDataIndex(STR8 cFilename) {
   return (-1);
 }
 
-INT32 GetCachedTile(STR8 cFilename) {
+int32_t GetCachedTile(STR8 cFilename) {
   uint32_t cnt;
   uint32_t ubLowestIndex = 0;
   int16_t sMostHits = (int16_t)15000;
@@ -134,7 +134,7 @@ INT32 GetCachedTile(STR8 cFilename) {
       if (strcasecmp(gpTileCache[cnt].zName, cFilename) == 0) {
         // Found surface, return
         gpTileCache[cnt].sHits++;
-        return ((INT32)cnt);
+        return ((int32_t)cnt);
       }
     }
   }
@@ -204,7 +204,7 @@ INT32 GetCachedTile(STR8 cFilename) {
   return (-1);
 }
 
-BOOLEAN RemoveCachedTile(INT32 iCachedTile) {
+BOOLEAN RemoveCachedTile(int32_t iCachedTile) {
   uint32_t cnt;
 
   // Find tile
@@ -229,7 +229,7 @@ BOOLEAN RemoveCachedTile(INT32 iCachedTile) {
   return (FALSE);
 }
 
-struct VObject *GetCachedTileVideoObject(INT32 iIndex) {
+struct VObject *GetCachedTileVideoObject(int32_t iIndex) {
   if (iIndex == -1) {
     return (NULL);
   }
@@ -241,7 +241,7 @@ struct VObject *GetCachedTileVideoObject(INT32 iIndex) {
   return (gpTileCache[iIndex].pImagery->vo);
 }
 
-struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex) {
+struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(int32_t iIndex) {
   if (iIndex == -1) {
     return (NULL);
   }

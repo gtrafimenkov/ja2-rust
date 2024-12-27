@@ -42,8 +42,8 @@ int16_t GetNumberOfLinesInHeight(STR16 pStringA);
 int16_t GetWidthOfString(STR16 pStringA);
 void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY);
 
-INT32 MSYS_ScanForID = FALSE;
-INT32 MSYS_CurrentID = MSYS_ID_SYSTEM;
+int32_t MSYS_ScanForID = FALSE;
+int32_t MSYS_CurrentID = MSYS_ID_SYSTEM;
 
 int16_t MSYS_CurrentMX = 0;
 int16_t MSYS_CurrentMY = 0;
@@ -118,7 +118,7 @@ BOOLEAN gfRefreshUpdate = FALSE;
 //
 //	Initialize the mouse system.
 //
-INT32 MSYS_Init(void) {
+int32_t MSYS_Init(void) {
   RegisterDebugTopic(TOPIC_MOUSE_SYSTEM, "Mouse Region System");
 
   if (MSYS_RegList != NULL) MSYS_TrashRegList();
@@ -290,9 +290,9 @@ void MSYS_SGP_Mouse_Handler_Hook(uint16_t Type, uint16_t Xcoord, uint16_t Ycoord
 //	Returns a unique ID number for region nodes. If no new ID numbers can be found, the MAX
 // value 	is returned.
 //
-INT32 MSYS_GetNewID(void) {
-  INT32 retID;
-  INT32 Current, found, done;
+int32_t MSYS_GetNewID(void) {
+  int32_t retID;
+  int32_t Current, found, done;
   struct MOUSE_REGION *node;
 
   retID = MSYS_CurrentID;
@@ -347,7 +347,7 @@ void MSYS_TrashRegList(void) {
 //
 void MSYS_AddRegionToList(struct MOUSE_REGION *region) {
   struct MOUSE_REGION *curr;
-  INT32 done;
+  int32_t done;
 
   // If region seems to already be in list, delete it so we can
   // re-insert the region.
@@ -399,9 +399,9 @@ void MSYS_AddRegionToList(struct MOUSE_REGION *region) {
 //
 //	Scan region list for presence of a node with the same region ID number
 //
-INT32 MSYS_RegionInList(struct MOUSE_REGION *region) {
+int32_t MSYS_RegionInList(struct MOUSE_REGION *region) {
   struct MOUSE_REGION *Current;
-  INT32 found;
+  int32_t found;
 
   found = FALSE;
   Current = MSYS_RegList;
@@ -463,7 +463,7 @@ void MSYS_DeleteRegionFromList(struct MOUSE_REGION *region) {
 //	the callback functions
 //
 void MSYS_UpdateMouseRegion(void) {
-  INT32 found;
+  int32_t found;
   uint32_t ButtonReason;
   struct MOUSE_REGION *pTempRegion;
   BOOLEAN fFound = FALSE;
@@ -791,7 +791,7 @@ void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, uint16_t crsr) {
 //	Adds a defined mouse region to the system list. Once inserted, it enables the region then
 //	calls the callback functions, if any, for initialization.
 //
-INT32 MSYS_AddRegion(struct MOUSE_REGION *region) { return (1); }
+int32_t MSYS_AddRegion(struct MOUSE_REGION *region) { return (1); }
 
 //=================================================================================================
 //	MSYS_RemoveRegion
@@ -882,7 +882,7 @@ void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, int8_t priority) {
 //
 //	Sets one of the four user data entries in a mouse region
 //
-void MSYS_SetRegionUserData(struct MOUSE_REGION *region, INT32 index, INT32 userdata) {
+void MSYS_SetRegionUserData(struct MOUSE_REGION *region, int32_t index, int32_t userdata) {
   if (index < 0 || index > 3) {
     CHAR8 str[80];
 #ifdef MOUSESYSTEM_DEBUGGING
@@ -900,7 +900,7 @@ void MSYS_SetRegionUserData(struct MOUSE_REGION *region, INT32 index, INT32 user
 //
 //	Retrieves one of the four user data entries in a mouse region
 //
-INT32 MSYS_GetRegionUserData(struct MOUSE_REGION *region, INT32 index) {
+int32_t MSYS_GetRegionUserData(struct MOUSE_REGION *region, int32_t index) {
   if (index < 0 || index > 3) {
     CHAR8 str[80];
 #ifdef MOUSESYSTEM_DEBUGGING
@@ -919,7 +919,7 @@ INT32 MSYS_GetRegionUserData(struct MOUSE_REGION *region, INT32 index) {
 //	Assigns all mouse activity to a region, effectively blocking any other region from having
 //	control.
 //
-INT32 MSYS_GrabMouse(struct MOUSE_REGION *region) {
+int32_t MSYS_GrabMouse(struct MOUSE_REGION *region) {
   if (!MSYS_RegionInList(region)) return (MSYS_REGION_NOT_IN_LIST);
 
   if (MSYS_Mouse_Grabbed == TRUE) return (MSYS_ALREADY_GRABBED);
@@ -1053,20 +1053,21 @@ int16_t GetNumberOfLinesInHeight(STR16 pStringA) {
 //
 //
 void DisplayFastHelp(struct MOUSE_REGION *region) {
-  INT32 iX, iY, iW, iH;
+  int32_t iX, iY, iW, iH;
 
   if (region->uiFlags & MSYS_FASTHELP) {
-    iW = (INT32)GetWidthOfString(region->FastHelpText) + 10;
-    iH = (INT32)(GetNumberOfLinesInHeight(region->FastHelpText) * (GetFontHeight(FONT10ARIAL) + 1) +
-                 8);
+    iW = (int32_t)GetWidthOfString(region->FastHelpText) + 10;
+    iH = (int32_t)(GetNumberOfLinesInHeight(region->FastHelpText) *
+                       (GetFontHeight(FONT10ARIAL) + 1) +
+                   8);
 
-    iX = (INT32)region->RegionTopLeftX + 10;
+    iX = (int32_t)region->RegionTopLeftX + 10;
 
     if (iX < 0) iX = 0;
 
     if ((iX + iW) >= SCREEN_WIDTH) iX = (SCREEN_WIDTH - iW - 4);
 
-    iY = (INT32)region->RegionTopLeftY - (iH * 3 / 4);
+    iY = (int32_t)region->RegionTopLeftY - (iH * 3 / 4);
     if (iY < 0) iY = 0;
 
     if ((iY + iH) >= SCREEN_HEIGHT) iY = (SCREEN_HEIGHT - iH - 15);
@@ -1121,10 +1122,10 @@ int16_t GetWidthOfString(STR16 pStringA) {
 
 void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY) {
   STR16 pToken;
-  INT32 iCounter = 0, i;
+  int32_t iCounter = 0, i;
   uint32_t uiCursorXPos;
   CHAR16 pString[512];
-  INT32 iLength;
+  int32_t iLength;
 
   wcscpy(pString, pStringA);
 
@@ -1133,7 +1134,7 @@ void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY) {
   pToken = wcstok(pString, L"\n", &buffer);
 
   while (pToken != NULL) {
-    iLength = (INT32)wcslen(pToken);
+    iLength = (int32_t)wcslen(pToken);
     for (i = 0; i < iLength; i++) {
       uiCursorXPos = StringPixLengthArgFastHelp(FONT10ARIAL, FONT10ARIALBOLD, i, pToken);
       if (pToken[i] == '|') {
@@ -1153,8 +1154,8 @@ void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY) {
 }
 
 void RenderFastHelp() {
-  static INT32 iLastClock;
-  INT32 iTimeDifferential, iCurrentClock;
+  static int32_t iLastClock;
+  int32_t iTimeDifferential, iCurrentClock;
 
   if (!gfRenderHilights) return;
 

@@ -12,7 +12,7 @@ BOOLEAN gfRecordToDebugger = TRUE;
 
 // moved from header file: 24mar98:HJH
 uint32_t guiProfileStart, guiExecutions, guiProfileTime;
-INT32 giProfileCount;
+int32_t giProfileCount;
 
 // Had to move these outside the ifdef SGP_DEBUG below, because
 // they are required for the String() function, which is NOT a
@@ -116,7 +116,7 @@ uint16_t TOPIC_JA2AI = INVALID_TOPIC;
 // }
 
 BOOLEAN DbgInitialize(void) {
-  //   INT32 iX;
+  //   int32_t iX;
 
   //   for (iX = 0; iX < MAX_TOPICS_ALLOTED; iX++) {
   //     gpDbgTopicPtrs[iX] = NULL;

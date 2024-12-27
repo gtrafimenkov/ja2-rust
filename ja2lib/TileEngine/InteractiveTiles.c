@@ -86,7 +86,7 @@ uint16_t gusINTOldMousePosY = 0;
 BOOLEAN RefinePointCollisionOnStruct(int16_t sGridNo, int16_t sTestX, int16_t sTestY, int16_t sSrcX,
                                      int16_t sSrcY, struct LEVELNODE *pNode);
 BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
-                                               INT32 iTextX, INT32 iTestY);
+                                               int32_t iTextX, int32_t iTestY);
 BOOLEAN RefineLogicOnStruct(int16_t sGridNo, struct LEVELNODE *pNode);
 
 BOOLEAN InitInteractiveTileManagement() { return (TRUE); }
@@ -742,7 +742,7 @@ BOOLEAN RefinePointCollisionOnStruct(int16_t sGridNo, int16_t sTestX, int16_t sT
     // Check it!
     return (CheckVideoObjectScreenCoordinateInData(
         gpTileCache[pNode->pAniTile->sCachedTileID].pImagery->vo, pNode->pAniTile->sCurrentFrame,
-        (INT32)(sTestX - sSrcX), (INT32)(-1 * (sTestY - sSrcY))));
+        (int32_t)(sTestX - sSrcX), (int32_t)(-1 * (sTestY - sSrcY))));
 
   } else {
     TileElem = &(gTileDatabase[pNode->usIndex]);
@@ -760,22 +760,22 @@ BOOLEAN RefinePointCollisionOnStruct(int16_t sGridNo, int16_t sTestX, int16_t sT
 
     // Check it!
     return (CheckVideoObjectScreenCoordinateInData(TileElem->hTileSurface, TileElem->usRegionIndex,
-                                                   (INT32)(sTestX - sSrcX),
-                                                   (INT32)(-1 * (sTestY - sSrcY))));
+                                                   (int32_t)(sTestX - sSrcX),
+                                                   (int32_t)(-1 * (sTestY - sSrcY))));
   }
 }
 
 // This function will check the video object at SrcX and SrcY for the lack of transparency
 // will return true if data found, else false
 BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
-                                               INT32 iTestX, INT32 iTestY) {
+                                               int32_t iTestX, int32_t iTestY) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
   BOOLEAN fDataFound = FALSE;
-  INT32 iTestPos, iStartPos;
+  int32_t iTestPos, iStartPos;
 
   // Assertions
   Assert(hSrcVObject != NULL);

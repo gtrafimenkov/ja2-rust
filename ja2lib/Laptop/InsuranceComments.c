@@ -35,7 +35,7 @@ uint32_t guiInsCmntBulletImage;
 
 // link to the varios pages
 struct MOUSE_REGION gSelectedInsuranceCommentLinkRegion[3];
-void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 BOOLEAN DisplayComment(uint8_t ubCommentorsName, uint8_t ubComment, uint16_t usPosY);
 
@@ -154,7 +154,7 @@ void RenderInsuranceComments() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint32_t uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);

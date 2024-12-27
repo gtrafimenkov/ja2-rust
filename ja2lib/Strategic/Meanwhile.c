@@ -248,20 +248,20 @@ BOOLEAN GetMeanWhileFlag(uint8_t ubMeanwhileID) {
   }
 }
 
-INT32 GetFreeNPCSave(void) {
+int32_t GetFreeNPCSave(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumNPCSaves; uiCount++) {
-    if ((gNPCSaveData[uiCount].ubProfile == NO_PROFILE)) return ((INT32)uiCount);
+    if ((gNPCSaveData[uiCount].ubProfile == NO_PROFILE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumNPCSaves < MAX_MEANWHILE_PROFILES) return ((INT32)guiNumNPCSaves++);
+  if (guiNumNPCSaves < MAX_MEANWHILE_PROFILES) return ((int32_t)guiNumNPCSaves++);
 
   return (-1);
 }
 
 void RecountNPCSaves(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumNPCSaves - 1; (uiCount >= 0); uiCount--) {
     if ((gNPCSaveData[uiCount].ubProfile != NO_PROFILE)) {
@@ -299,7 +299,7 @@ void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, uint32_t uiTime
 }
 
 BOOLEAN BeginMeanwhile(uint8_t ubMeanwhileID) {
-  INT32 cnt;
+  int32_t cnt;
 
   // copy meanwhile data from array to structure for current
   memcpy(&gCurrentMeanwhileDef, &(gMeanwhileDef[ubMeanwhileID]), sizeof(MEANWHILE_DEFINITION));
@@ -376,7 +376,7 @@ void CheckForMeanwhileOKStart() {
 }
 
 void StartMeanwhile() {
-  INT32 iIndex;
+  int32_t iIndex;
 
   // OK, save old position...
   if (gfWorldLoaded) {

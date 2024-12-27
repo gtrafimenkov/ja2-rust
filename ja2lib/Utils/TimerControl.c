@@ -8,14 +8,14 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-INT32 giTimerDiag = 0;
+int32_t giTimerDiag = 0;
 
 uint32_t guiBaseJA2Clock = 0;
 uint32_t guiBaseJA2NoPauseClock = 0;
 
 BOOLEAN gfPauseClock = FALSE;
 
-INT32 giTimerIntervals[NUMTIMERS] = {
+int32_t giTimerIntervals[NUMTIMERS] = {
     5,     // Tactical Overhead
     20,    // NEXTSCROLL
     200,   // Start Scroll
@@ -45,13 +45,13 @@ INT32 giTimerIntervals[NUMTIMERS] = {
 };
 
 // TIMER COUNTERS
-INT32 giTimerCounters[NUMTIMERS];
+int32_t giTimerCounters[NUMTIMERS];
 
-INT32 giTimerAirRaidQuote = 0;
-INT32 giTimerAirRaidDiveStarted = 0;
-INT32 giTimerAirRaidUpdate = 0;
-INT32 giTimerCustomizable = 0;
-INT32 giTimerTeamTurnUpdate = 0;
+int32_t giTimerAirRaidQuote = 0;
+int32_t giTimerAirRaidDiveStarted = 0;
+int32_t giTimerAirRaidUpdate = 0;
+int32_t giTimerCustomizable = 0;
+int32_t giTimerTeamTurnUpdate = 0;
 
 CUSTOMIZABLE_TIMER_CALLBACK gpCustomizableTimerCallback = NULL;
 
@@ -64,18 +64,18 @@ uint32_t guiClockDiff = 0;
 uint32_t guiClockStart = 0;
 
 extern uint32_t guiCompressionStringBaseTime;
-extern INT32 giFlashHighlightedItemBaseTime;
-extern INT32 giCompatibleItemBaseTime;
-extern INT32 giAnimateRouteBaseTime;
-extern INT32 giPotHeliPathBaseTime;
-extern INT32 giClickHeliIconBaseTime;
-extern INT32 giExitToTactBaseTime;
+extern int32_t giFlashHighlightedItemBaseTime;
+extern int32_t giCompatibleItemBaseTime;
+extern int32_t giAnimateRouteBaseTime;
+extern int32_t giPotHeliPathBaseTime;
+extern int32_t giClickHeliIconBaseTime;
+extern int32_t giExitToTactBaseTime;
 extern uint32_t guiSectorLocatorBaseTime;
-extern INT32 giCommonGlowBaseTime;
-extern INT32 giFlashAssignBaseTime;
-extern INT32 giFlashContractBaseTime;
+extern int32_t giCommonGlowBaseTime;
+extern int32_t giFlashAssignBaseTime;
+extern int32_t giFlashContractBaseTime;
 extern uint32_t guiFlashCursorBaseTime;
-extern INT32 giPotCharPathBaseTime;
+extern int32_t giPotCharPathBaseTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // TIMER CALLBACK S

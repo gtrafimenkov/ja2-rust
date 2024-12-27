@@ -83,8 +83,8 @@ BOOLEAN gfTacticalDoHeliRun = FALSE;
 BOOLEAN gfPlayAttnAfterMapLoad = FALSE;
 
 // VIDEO OVERLAYS
-INT32 giFPSOverlay = 0;
-INT32 giCounterPeriodOverlay = 0;
+int32_t giFPSOverlay = 0;
+int32_t giCounterPeriodOverlay = 0;
 
 BOOLEAN gfExitToNewSector = FALSE;
 // uint8_t		gubNewSectorExitDirection;
@@ -330,7 +330,7 @@ void InternalLeaveTacticalScreen(uint32_t uiNewScreen) {
   FinishAnySkullPanelAnimations();
 }
 
-extern INT32 iInterfaceDialogueBox;
+extern int32_t iInterfaceDialogueBox;
 
 #ifdef JA2BETAVERSION
 extern BOOLEAN ValidateSoldierInitLinks(uint8_t ubCode);
@@ -618,7 +618,7 @@ uint32_t MainGameScreenHandle(void) {
 #endif
 
   if (gTacticalStatus.uiFlags & SHOW_ALL_MERCS) {
-    INT32 iSchedules;
+    int32_t iSchedules;
     SCHEDULENODE *curr;
 
     SetFont(MILITARYFONT1);
@@ -734,7 +734,7 @@ void DisableFPSOverlay(BOOLEAN fEnable) {
 }
 
 void TacticalScreenLocateToSoldier() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   int16_t bLastTeamID;
   BOOLEAN fPreferedGuyUsed = FALSE;
@@ -772,7 +772,7 @@ void EnterMapScreen() {
 }
 
 void UpdateTeamPanelAssignments() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   int16_t bLastTeamID;
 

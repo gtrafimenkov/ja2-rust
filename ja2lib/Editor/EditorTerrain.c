@@ -30,8 +30,8 @@ uint8_t ubTerrainTileButtonWeight[NUM_TERRAIN_TILE_REGIONS];
 uint16_t usTotalWeight;
 BOOLEAN fPrevShowTerrainTileButtons = TRUE;
 BOOLEAN fUseTerrainWeights = FALSE;
-INT32 TerrainTileSelected = 0, TerrainForegroundTile, TerrainBackgroundTile;
-INT32 TerrainTileDrawMode = TERRAIN_TILES_NODRAW;
+int32_t TerrainTileSelected = 0, TerrainForegroundTile, TerrainBackgroundTile;
+int32_t TerrainTileDrawMode = TERRAIN_TILES_NODRAW;
 
 void EntryInitEditorTerrainInfo() {
   // ResetTerrainTileWeights();
@@ -111,7 +111,7 @@ void RenderTerrainTileButtons() {
 
 // This callback is used for each of the terrain tile buttons.  The userData[0] field
 // contains the terrain button's index value.
-void TerrainTileButtonRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void TerrainTileButtonRegionCallback(struct MOUSE_REGION *reg, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderTaskbar = TRUE;
     TerrainTileSelected = MSYS_GetRegionUserData(reg, 0);
@@ -173,8 +173,8 @@ void ChooseWeightedTerrainTile() {
 uint32_t guiSearchType;
 static uint32_t count, maxCount = 0, calls = 0;
 
-void Fill(INT32 x, INT32 y) {
-  INT32 iMapIndex;
+void Fill(int32_t x, int32_t y) {
+  int32_t iMapIndex;
   uint32_t uiCheckType;
 
   count++;

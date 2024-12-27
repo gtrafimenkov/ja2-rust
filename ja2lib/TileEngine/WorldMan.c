@@ -1324,7 +1324,7 @@ BOOLEAN ReplaceStructIndex(uint32_t iMapIndex, uint16_t usOldIndex, uint16_t usN
 
 // When adding, put in order such that it's drawn before any walls of a
 // lesser orientation value
-BOOLEAN AddWallToStructLayer(INT32 iMapIndex, uint16_t usIndex, BOOLEAN fReplace) {
+BOOLEAN AddWallToStructLayer(int32_t iMapIndex, uint16_t usIndex, BOOLEAN fReplace) {
   struct LEVELNODE *pStruct = NULL;
   uint16_t usCheckWallOrient;
   uint16_t usWallOrientation;

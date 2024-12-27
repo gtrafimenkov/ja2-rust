@@ -325,7 +325,7 @@ uint32_t UndergroundTacticalTraversalTime(
 void BeginLoadScreen() {
   SGPRect SrcRect, DstRect;
   uint32_t uiStartTime, uiCurrTime;
-  INT32 iPercentage, iFactor;
+  int32_t iPercentage, iFactor;
   uint32_t uiTimeRange;
   uint8_t ubLoadScreenID;
 
@@ -541,10 +541,10 @@ i8 GetTownIdForStrategicMapIndex(i32 index) { return StrategicMap[index].townID;
 // return number of sectors this town takes up
 uint8_t GetTownSectorSize(TownID bTownId) {
   uint8_t ubSectorSize = 0;
-  INT32 iCounterA = 0, iCounterB = 0;
+  int32_t iCounterA = 0, iCounterB = 0;
 
-  for (iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
+  for (iCounterA = 0; iCounterA < (int32_t)(MAP_WORLD_X - 1); iCounterA++) {
+    for (iCounterB = 0; iCounterB < (int32_t)(MAP_WORLD_Y - 1); iCounterB++) {
       if (StrategicMap[GetSectorID16(iCounterA, iCounterB)].townID == bTownId) {
         ubSectorSize++;
       }
@@ -557,11 +557,11 @@ uint8_t GetTownSectorSize(TownID bTownId) {
 // return number of sectors under player control for this town
 uint8_t GetTownSectorsUnderControl(TownID bTownId) {
   int8_t ubSectorsControlled = 0;
-  INT32 iCounterA = 0, iCounterB = 0;
+  int32_t iCounterA = 0, iCounterB = 0;
   uint16_t usSector = 0;
 
-  for (iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
+  for (iCounterA = 0; iCounterA < (int32_t)(MAP_WORLD_X - 1); iCounterA++) {
+    for (iCounterB = 0; iCounterB < (int32_t)(MAP_WORLD_Y - 1); iCounterB++) {
       usSector = (uint16_t)GetSectorID16(iCounterA, iCounterB);
 
       if ((StrategicMap[usSector].townID == bTownId) &&
@@ -955,7 +955,7 @@ BOOLEAN MapExists(CHAR8 *szFilename) {
 }
 
 void RemoveMercsInSector() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // IF IT'S THE SELECTED GUY, MAKE ANOTHER SELECTED!
@@ -1257,7 +1257,7 @@ void HandleQuestCodeOnSectorExit(int16_t sOldSectorX, int16_t sOldSectorY, int8_
 }
 
 BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  INT32 i;
+  int32_t i;
   UNDERGROUND_SECTORINFO *pNode = NULL;
   CHAR8 bFilename[50];
 
@@ -1364,7 +1364,7 @@ BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
 }
 
 void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fPOWSquadSet = FALSE;
   uint8_t ubPOWSquad = 0;
@@ -1992,7 +1992,7 @@ uint8_t GetStrategicInsertionDataFromAdjacentMoveDirection(uint8_t ubTacticalDir
 
 void JumpIntoAdjacentSector(uint8_t ubTacticalDirection, uint8_t ubJumpCode,
                             int16_t sAdditionalData) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pValidSoldier = NULL;
   struct GROUP *pGroup;
@@ -2322,7 +2322,7 @@ void AllMercsWalkedToExitGrid() {
 void SetupTacticalTraversalInformation() {
   struct SOLDIERTYPE *pSoldier;
   PLAYERGROUP *pPlayer;
-  INT32 sWorldX, sWorldY;
+  int32_t sWorldX, sWorldY;
   int16_t sScreenX, sScreenY, sNewGridNo;
 
   Assert(gpAdjacentGroup);
@@ -2659,7 +2659,7 @@ BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, int8_t bExitDirecti
 // are...
 BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,
                         uint32_t *puiTraverseTimeInMinutes) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fAtLeastOneMercControllable = FALSE;
   BOOLEAN fOnlySelectedGuy = FALSE;
@@ -2909,7 +2909,7 @@ int8_t GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
 }
 
 BOOLEAN CanGoToTacticalInSector(int16_t sX, int16_t sY, uint8_t ubZ) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // if not a valid sector
@@ -2937,8 +2937,8 @@ BOOLEAN CanGoToTacticalInSector(int16_t sX, int16_t sY, uint8_t ubZ) {
   return (FALSE);
 }
 
-INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
-  INT32 iNumber = 0, iCounter = 0;
+int32_t GetNumberOfSAMSitesUnderPlayerControl(void) {
+  int32_t iNumber = 0, iCounter = 0;
 
   // if the sam site is under player control, up the number
   for (iCounter = 0; iCounter < NUMBER_OF_SAMS; iCounter++) {
@@ -2950,7 +2950,7 @@ INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
   return (iNumber);
 }
 
-INT32 SAMSitesUnderPlayerControl(int16_t sX, int16_t sY) {
+int32_t SAMSitesUnderPlayerControl(int16_t sX, int16_t sY) {
   BOOLEAN fSamSiteUnderControl = FALSE;
 
   // is this sector a SAM sector?
@@ -2966,13 +2966,13 @@ INT32 SAMSitesUnderPlayerControl(int16_t sX, int16_t sY) {
 }
 
 void UpdateAirspaceControl(void) {
-  INT32 iCounterA = 0, iCounterB = 0;
+  int32_t iCounterA = 0, iCounterB = 0;
   uint8_t ubControllingSAM;
   StrategicMapElement *pSAMStrategicMap = NULL;
   BOOLEAN fEnemyControlsAir;
 
-  for (iCounterA = 1; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 1; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
+  for (iCounterA = 1; iCounterA < (int32_t)(MAP_WORLD_X - 1); iCounterA++) {
+    for (iCounterB = 1; iCounterB < (int32_t)(MAP_WORLD_Y - 1); iCounterB++) {
       // IMPORTANT: B and A are reverse here, since the table is stored transposed
       ubControllingSAM = ubSAMControlledSectors[iCounterB][iCounterA];
 
@@ -3373,7 +3373,7 @@ int16_t PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, uint8_t ubTacticalDi
 void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, int16_t sEndGridNo,
                                   uint8_t ubTacticalDirection) {
   int16_t sNewGridNo, sTempGridNo;
-  INT32 iLoop;
+  int32_t iLoop;
 
   // will this path segment actually take us to our desired destination in the first place?
   if (pSoldier->usPathDataSize + 2 > MAX_PATH_LIST_SIZE) {
@@ -3772,7 +3772,7 @@ void HandleSlayDailyEvent(void) {
   // ATE: This function is used to check for the ultimate last day SLAY can stay for
   // he may decide to leave randomly while asleep...
   // if the user hasnt renewed yet, and is still leaving today
-  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
+  if ((pSoldier->iEndofContractTime / 1440) <= (int32_t)GetWorldDay()) {
     pSoldier->ubLeaveHistoryCode = HISTORY_SLAY_MYSTERIOUSLY_LEFT;
     TacticalCharacterDialogueWithSpecialEvent(
         pSoldier, 0, DIALOGUE_SPECIAL_EVENT_CONTRACT_ENDING_NO_ASK_EQUIP, 0, 0);
@@ -3790,7 +3790,7 @@ BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY) {
 }
 
 BOOLEAN HandleDefiniteUnloadingOfWorld(uint8_t ubUnloadCode) {
-  INT32 i;
+  int32_t i;
 
   // clear tactical queue
   ClearEventQueue();
@@ -3856,7 +3856,7 @@ BOOLEAN HandleDefiniteUnloadingOfWorld(uint8_t ubUnloadCode) {
 }
 
 BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle() {
-  INT32 i;
+  int32_t i;
 
   // We don't have mercs in the sector.  Now, we check to see if there are BOTH enemies and militia.
   // If both co-exist in the sector, then make them fight for control of the sector via autoresolve.
@@ -3900,7 +3900,7 @@ BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle() {
 }
 
 BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
-  INT32 i;
+  int32_t i;
   int16_t sBattleSectorX, sBattleSectorY, sBattleSectorZ;
 
   // Don't bother checking this if we don't have a world loaded.

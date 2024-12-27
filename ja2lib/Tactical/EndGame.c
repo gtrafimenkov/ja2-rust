@@ -49,7 +49,7 @@ int8_t gbLevel;
 
 // This function checks if our statue exists in the current sector at given gridno
 BOOLEAN DoesO3SectorStatueExistHere(int16_t sGridNo) {
-  INT32 cnt;
+  int32_t cnt;
   EXITGRID ExitGrid;
 
   // First check current sector......
@@ -136,7 +136,7 @@ void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGrid
 
 void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
   int16_t sDistVisible = FALSE;
   uint8_t ubKillerSoldierID = NOBODY;
 
@@ -199,7 +199,7 @@ void DoneFadeInKilledQueen(void) {
 }
 
 void DoneFadeOutKilledQueen(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
 
   // For one, loop through our current squad and move them over
@@ -297,7 +297,7 @@ void HandleDoneLastKilledQueenQuote() {
 }
 
 void EndQueenDeathEndgameBeginEndCimenatic() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // Start end cimimatic....
@@ -357,7 +357,7 @@ void QueenBitchTimerCallback(void) { HandleQueenBitchDeath(gpKillerSoldier, gsGr
 void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo,
                                 int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   gpKillerSoldier = pKillerSoldier;
   gsGridNo = sGridNo;
@@ -397,7 +397,7 @@ void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGri
 
 void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
   int16_t sDistVisible = FALSE;
   uint8_t ubKillerSoldierID = NOBODY;
 

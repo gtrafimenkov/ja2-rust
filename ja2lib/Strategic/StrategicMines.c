@@ -42,22 +42,22 @@
 // PRIVATE PROTOTYPES
 
 // mine this mine
-INT32 MineAMine(int8_t bMineIndex);
+int32_t MineAMine(int8_t bMineIndex);
 
 // remove actual ore from mine
 uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount);
 
 // get available workforce for the mine
-INT32 GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex);
+int32_t GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex);
 
 // get workforce conscripted by enemy for mine
-INT32 GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex);
+int32_t GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex);
 
 // how fast is the mine's workforce working for you?
-INT32 GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex);
+int32_t GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex);
 
 // how fast is workforce working for the enemy
-INT32 GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex);
+int32_t GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex);
 
 // DATA TABLES
 
@@ -269,7 +269,7 @@ void HourlyMinesUpdate(void) {
   }
 }
 
-INT32 GetTotalLeftInMine(int8_t bMineIndex) {
+int32_t GetTotalLeftInMine(int8_t bMineIndex) {
   // returns the value of the mine
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -405,9 +405,9 @@ uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
   return (uiAmountExtracted);
 }
 
-INT32 GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex) {
+int32_t GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex) {
   // look for available workforce in the town associated with the mine
-  INT32 iWorkForceSize = 0;
+  int32_t iWorkForceSize = 0;
   TownID bTownId = 0;
 
   // return the loyalty of the town associated with the mine
@@ -444,9 +444,9 @@ INT32 GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex) {
   return (iWorkForceSize);
 }
 
-INT32 GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex) {
+int32_t GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex) {
   // look for available workforce in the town associated with the mine
-  INT32 iWorkForceSize = 0;
+  int32_t iWorkForceSize = 0;
   TownID bTownId = 0;
 
   // return the loyalty of the town associated with the mine
@@ -480,8 +480,8 @@ INT32 GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex) {
   return (iWorkForceSize);
 }
 
-INT32 GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex) {
-  INT32 iWorkRate = 0;
+int32_t GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex) {
+  int32_t iWorkRate = 0;
 
   // multiply maximum possible removal rate by the percentage of workforce currently working
   iWorkRate = (gMineStatus[bMineIndex].uiMaxRemovalRate *
@@ -491,8 +491,8 @@ INT32 GetCurrentWorkRateOfMineForPlayer(int8_t bMineIndex) {
   return (iWorkRate);
 }
 
-INT32 GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex) {
-  INT32 iWorkRate = 0;
+int32_t GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex) {
+  int32_t iWorkRate = 0;
 
   // multiply maximum possible removal rate by the percentage of workforce currently working
   iWorkRate = (gMineStatus[bMineIndex].uiMaxRemovalRate *
@@ -502,9 +502,9 @@ INT32 GetCurrentWorkRateOfMineForEnemy(int8_t bMineIndex) {
   return (iWorkRate);
 }
 
-INT32 MineAMine(int8_t bMineIndex) {
+int32_t MineAMine(int8_t bMineIndex) {
   // will extract ore based on available workforce, and increment players income based on amount
-  INT32 iAmtExtracted = 0;
+  int32_t iAmtExtracted = 0;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
@@ -564,7 +564,7 @@ void PostEventsForMineProduction(void) {
 }
 
 void HandleIncomeFromMines(void) {
-  INT32 iIncome = 0;
+  int32_t iIncome = 0;
   int8_t bCounter = 0;
 
   // mine each mine, check if we own it and such
@@ -598,8 +598,8 @@ uint32_t PredictDailyIncomeFromAMine(int8_t bMineIndex) {
   return (uiAmtExtracted);
 }
 
-INT32 PredictIncomeFromPlayerMines(void) {
-  INT32 iTotal = 0;
+int32_t PredictIncomeFromPlayerMines(void) {
+  int32_t iTotal = 0;
   int8_t bCounter = 0;
 
   for (bCounter = 0; bCounter < MAX_NUMBER_OF_MINES; bCounter++) {
@@ -610,8 +610,8 @@ INT32 PredictIncomeFromPlayerMines(void) {
   return (iTotal);
 }
 
-INT32 CalcMaxPlayerIncomeFromMines(void) {
-  INT32 iTotal = 0;
+int32_t CalcMaxPlayerIncomeFromMines(void) {
+  int32_t iTotal = 0;
   int8_t bCounter = 0;
 
   // calculate how much player could make daily if he owned all mines with 100% control and 100%

@@ -189,7 +189,7 @@ STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
 BOOLEAN LoadAmbientControlFile(uint8_t ubAmbientID) {
   char zFilename[200];
   HWFILE hFile;
-  INT32 cnt;
+  int32_t cnt;
 
   // BUILD FILENAME
   sprintf(zFilename, "AMBIENT\\%d.bad", ubAmbientID);
@@ -280,7 +280,7 @@ uint32_t StartSteadyStateAmbient(uint32_t ubVolume, uint32_t ubLoops) {
 
 BOOLEAN SetSteadyStateAmbience(uint8_t ubAmbience) {
   BOOLEAN fInNight = FALSE;
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubNumSounds = 0;
   uint8_t ubChosenSound;
 

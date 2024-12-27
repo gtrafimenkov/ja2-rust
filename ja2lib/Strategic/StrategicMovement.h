@@ -199,10 +199,10 @@ void SetEnemyGroupSector(struct GROUP *pGroup, uint8_t ubSectorID);
 void SetGroupNextSectorValue(u8 sSectorX, u8 sSectorY, uint8_t ubGroupID);
 
 // calculate the eta time in world total mins of this group
-INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup);
-INT32 CalculateTravelTimeOfGroupId(uint8_t ubId);
+int32_t CalculateTravelTimeOfGroup(struct GROUP *pGroup);
+int32_t CalculateTravelTimeOfGroupId(uint8_t ubId);
 
-INT32 GetSectorMvtTimeForGroup(uint8_t ubSector, uint8_t ubDirection, struct GROUP *pGroup);
+int32_t GetSectorMvtTimeForGroup(uint8_t ubSector, uint8_t ubDirection, struct GROUP *pGroup);
 
 uint8_t PlayerMercsInSector(uint8_t ubSectorX, uint8_t ubSectorY, uint8_t ubSectorZ);
 uint8_t PlayerGroupsInSector(uint8_t ubSectorX, uint8_t ubSectorY, uint8_t ubSectorZ);
@@ -214,14 +214,14 @@ BOOLEAN PlayerIDGroupInMotion(uint8_t ubID);
 BOOLEAN PlayerGroupInMotion(struct GROUP *pGroup);
 
 // find if a path exists?
-INT32 GetTravelTimeForFootTeam(uint8_t ubSector, uint8_t ubDirection);
+int32_t GetTravelTimeForFootTeam(uint8_t ubSector, uint8_t ubDirection);
 
 // get travel time for this group?
-INT32 GetTravelTimeForGroup(uint8_t ubSector, uint8_t ubDirection, uint8_t ubGroup);
+int32_t GetTravelTimeForGroup(uint8_t ubSector, uint8_t ubDirection, uint8_t ubGroup);
 
 // get number of mercs between sectors
-BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, INT32 *iCountEnter,
-                                   INT32 *iCountExit, BOOLEAN *fAboutToArriveEnter);
+BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, int32_t *iCountEnter,
+                                   int32_t *iCountExit, BOOLEAN *fAboutToArriveEnter);
 
 // set this groups waypoints as cancelled
 void SetWayPointsAsCanceled(uint8_t ubGroupID);
@@ -266,7 +266,7 @@ struct GROUP *FindMovementGroupInSector(uint8_t ubSectorX, uint8_t ubSectorY, BO
 BOOLEAN GroupAtFinalDestination(struct GROUP *pGroup);
 
 // find the travel time between waypts for this group
-INT32 FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct GROUP *pGroup);
+int32_t FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct GROUP *pGroup);
 
 BOOLEAN GroupReversingDirectionsBetweenSectors(struct GROUP *pGroup, uint8_t ubSectorX,
                                                uint8_t ubSectorY, BOOLEAN fBuildingWaypoints);
@@ -290,7 +290,7 @@ int16_t CalculateFuelCostBetweenSectors(uint8_t ubSectorID1, uint8_t ubSectorID2
 BOOLEAN VehicleHasFuel(struct SOLDIERTYPE *pSoldier);
 int16_t VehicleFuelRemaining(struct SOLDIERTYPE *pSoldier);
 BOOLEAN SpendVehicleFuel(struct SOLDIERTYPE *pSoldier, int16_t sFuelSpent);
-void ReportVehicleOutOfGas(INT32 iVehicleID, uint8_t ubSectorX, uint8_t ubSectorY);
+void ReportVehicleOutOfGas(int32_t iVehicleID, uint8_t ubSectorX, uint8_t ubSectorY);
 
 void RandomizePatrolGroupLocation(struct GROUP *pGroup);
 

@@ -287,7 +287,7 @@ void BuildDayLightLevels() {
 }
 
 void BuildDayAmbientSounds() {
-  INT32 cnt;
+  int32_t cnt;
 
   // Add events!
   for (cnt = 0; cnt < gsNumAmbData; cnt++) {
@@ -410,7 +410,7 @@ void EnvEndRainStorm() {
 }
 
 void TurnOnNightLights() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < MAX_LIGHT_SPRITES; i++) {
     if (LightSprites[i].uiFlags & LIGHT_SPR_ACTIVE && LightSprites[i].uiFlags & LIGHT_NIGHTTIME &&
         !(LightSprites[i].uiFlags & (LIGHT_SPR_ON | MERC_LIGHT))) {
@@ -420,7 +420,7 @@ void TurnOnNightLights() {
 }
 
 void TurnOffNightLights() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < MAX_LIGHT_SPRITES; i++) {
     if (LightSprites[i].uiFlags & LIGHT_SPR_ACTIVE && LightSprites[i].uiFlags & LIGHT_NIGHTTIME &&
         LightSprites[i].uiFlags & LIGHT_SPR_ON && !(LightSprites[i].uiFlags & MERC_LIGHT)) {
@@ -430,7 +430,7 @@ void TurnOffNightLights() {
 }
 
 void TurnOnPrimeLights() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < MAX_LIGHT_SPRITES; i++) {
     if (LightSprites[i].uiFlags & LIGHT_SPR_ACTIVE && LightSprites[i].uiFlags & LIGHT_PRIMETIME &&
         !(LightSprites[i].uiFlags & (LIGHT_SPR_ON | MERC_LIGHT))) {
@@ -440,7 +440,7 @@ void TurnOnPrimeLights() {
 }
 
 void TurnOffPrimeLights() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < MAX_LIGHT_SPRITES; i++) {
     if (LightSprites[i].uiFlags & LIGHT_SPR_ACTIVE && LightSprites[i].uiFlags & LIGHT_PRIMETIME &&
         LightSprites[i].uiFlags & LIGHT_SPR_ON && !(LightSprites[i].uiFlags & MERC_LIGHT)) {

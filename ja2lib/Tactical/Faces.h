@@ -64,7 +64,7 @@ typedef struct {
 
 typedef struct {
   uint32_t uiFlags;  // Basic flags
-  INT32 iID;
+  int32_t iID;
   BOOLEAN fAllocated;  // Allocated or not
   BOOLEAN fTalking;    // Set to true if face is talking ( can be sitting for user input to esc )
   BOOLEAN fAnimatingTalking;  // Set if the face is animating right now
@@ -79,7 +79,7 @@ typedef struct {
 
   BOOLEAN fFinishTalking;  // A flag to indicate we want to delay after speech done
 
-  INT32 iVideoOverlay;  // Value for video overlay ( not used too much )
+  int32_t iVideoOverlay;  // Value for video overlay ( not used too much )
 
   uint32_t uiSoundID;      // Sound ID if one being played
   uint8_t ubSoldierID;     // SoldierID if one specified
@@ -159,7 +159,7 @@ extern FACETYPE gFacesData[NUM_FACE_SLOTS];
 // FACE HANDLING
 //
 // Faces are done like this: Call
-INT32 InitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags);
+int32_t InitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags);
 // The first parameter is the profile ID and the second is the soldier ID ( which for most cases
 // will be NOBODY if the face is not created from a struct SOLDIERTYPE )
 // This function allocates a slot in the table for the face, loads it's STI file, sets some
@@ -167,15 +167,15 @@ INT32 InitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlag
 // like that
 
 // INternal init face, called if you don;t want to give a profile ID ( send NO_PROFILE ) for ID
-INT32 InternalInitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags,
-                       INT32 iFaceFileID, uint32_t uiBlinkFrequency,
-                       uint32_t uiExpressionFrequency);
+int32_t InternalInitFace(uint8_t usMercProfileID, uint8_t ubSoldierID, uint32_t uiInitFlags,
+                         int32_t iFaceFileID, uint32_t uiBlinkFrequency,
+                         uint32_t uiExpressionFrequency);
 
 // Removes the face from the internal table, deletes any memory allocated if any.
-void DeleteFace(INT32 iFaceIndex);
+void DeleteFace(int32_t iFaceIndex);
 
 // IF you want to setup the face for automatic eye blinking, mouth movement, you need to call
-void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32 iFaceIndex,
+void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, int32_t iFaceIndex,
                        uint16_t usFaceX, uint16_t usFaceY);
 // The first paramter is the display buffer you wish the face to be rendered on. The second is the
 // Internal savebuffer which is used to facilitate the rendering of only things which have changed
@@ -185,12 +185,13 @@ void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32
 
 // Same as above, yet used mostly internally. Is compatible with the fact that a soldier profile ID
 // is not required...
-void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32 iFaceIndex,
-                               uint16_t usFaceX, uint16_t usFaceY, uint16_t usEyesX,
-                               uint16_t usEyesY, uint16_t usMouthX, uint16_t usMouthY);
+void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
+                               int32_t iFaceIndex, uint16_t usFaceX, uint16_t usFaceY,
+                               uint16_t usEyesX, uint16_t usEyesY, uint16_t usMouthX,
+                               uint16_t usMouthY);
 
 // To begin rendering of the face sprite, call this function once:
-BOOLEAN RenderAutoFace(INT32 iFaceIndex);
+BOOLEAN RenderAutoFace(int32_t iFaceIndex);
 // This will draw the face into it's saved buffer and then display it on the display buffer. If the
 // display buffer given is FRAME_BUFFER, the regions will automatically be dirtied, so no calls to
 // InvalidateRegion() should be nessesary.
@@ -198,14 +199,14 @@ BOOLEAN RenderAutoFace(INT32 iFaceIndex);
 // If you want to setup the face to talking, ( most times this call is done in JA2 by other
 // functions, not
 // directly), you call
-BOOLEAN SetFaceTalking(INT32 iFaceIndex, CHAR8 *zSoundFile, STR16 zTextString, uint32_t usRate,
+BOOLEAN SetFaceTalking(int32_t iFaceIndex, CHAR8 *zSoundFile, STR16 zTextString, uint32_t usRate,
                        uint32_t ubVolume, uint32_t ubLoops, uint32_t uiPan);
 // This function will setup appropriate face data and begin the speech process. It can fail if the
 // sound
 // cannot be played for any reason.
 
 // Set some face talking flags without need to play sound
-BOOLEAN ExternSetFaceTalking(INT32 iFaceIndex, uint32_t uiSoundID);
+BOOLEAN ExternSetFaceTalking(int32_t iFaceIndex, uint32_t uiSoundID);
 
 // Once this is done, this function must be called overy gameloop that you want to handle the
 // sprite:
@@ -215,30 +216,30 @@ void HandleAutoFaces();
 // the display buffer.
 
 // If you need to shutoff the face from talking, use the function
-void ShutupaYoFace(INT32 iFaceIndex);
-void InternalShutupaYoFace(INT32 iFaceIndex, BOOLEAN fForce);
+void ShutupaYoFace(int32_t iFaceIndex);
+void InternalShutupaYoFace(int32_t iFaceIndex, BOOLEAN fForce);
 
 // This can be used to times when you need process the user hitting <ESC> to cancel the speech, etc.
 // It will shutoff any playing sound sample
 
 // If you still want the face in moemory but want to stop if from being displayed, or handled call
-void SetAutoFaceInActive(INT32 iFaceIndex);
+void SetAutoFaceInActive(int32_t iFaceIndex);
 
 // To set all currently allocated faces to either active or incactive, call these
 void SetAllAutoFacesInactive();
 
 // To render an allocated face but one that is indipendent of it's active status, ant does not
 // require eye blinking or mouth movements, call
-BOOLEAN ExternRenderFace(uint32_t uiBuffer, INT32 iFaceIndex, int16_t sX, int16_t sY);
+BOOLEAN ExternRenderFace(uint32_t uiBuffer, int32_t iFaceIndex, int16_t sX, int16_t sY);
 
 // FUnctions usually not needed for most uses, but give a finer control over rendering if needed
-void BlinkAutoFace(INT32 iFaceIndex);
-void MouthAutoFace(INT32 iFaceIndex);
-void HandleTalkingAutoFace(INT32 iFaceIndex);
+void BlinkAutoFace(int32_t iFaceIndex);
+void MouthAutoFace(int32_t iFaceIndex);
+void HandleTalkingAutoFace(int32_t iFaceIndex);
 void HandleTalkingAutoFaces();
 
 // Same Functions but taking soldier ID first to get profile ID
-INT32 InitSoldierFace(struct SOLDIERTYPE *pSoldier);
+int32_t InitSoldierFace(struct SOLDIERTYPE *pSoldier);
 void DeleteSoldierFace(struct SOLDIERTYPE *pSoldier);
 void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
                                   uint8_t ubSoldierID, uint16_t usFaceX, uint16_t usFaceY);

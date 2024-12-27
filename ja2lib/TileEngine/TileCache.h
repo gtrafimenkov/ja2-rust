@@ -30,13 +30,13 @@ extern TILE_CACHE_ELEMENT *gpTileCache;
 BOOLEAN InitTileCache();
 void DeleteTileCache();
 
-INT32 GetCachedTile(STR cFilename);
-BOOLEAN RemoveCachedTile(INT32 iCachedTile);
+int32_t GetCachedTile(STR cFilename);
+BOOLEAN RemoveCachedTile(int32_t iCachedTile);
 
 struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename);
 
-struct VObject *GetCachedTileVideoObject(INT32 iIndex);
-struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex);
+struct VObject *GetCachedTileVideoObject(int32_t iIndex);
+struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(int32_t iIndex);
 void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, int16_t sGridNo, uint16_t usIndex,
                                        uint16_t usSubIndex);
 void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIndex);

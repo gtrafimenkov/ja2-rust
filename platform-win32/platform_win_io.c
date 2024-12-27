@@ -545,7 +545,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t
 BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) {
   HANDLE hRealFile;
   LONG lDistanceToMove;
-  INT32 iDistance = 0;
+  int32_t iDistance = 0;
 
   int16_t sLibraryID;
   uint32_t uiFileNum;
@@ -557,7 +557,7 @@ BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) {
     // Get the handle to the real file
     hRealFile = gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].hRealFileHandle;
 
-    iDistance = (INT32)uiDistance;
+    iDistance = (int32_t)uiDistance;
 
     if (uiHow == FILE_SEEK_FROM_END) {
       if (iDistance > 0) iDistance = -(iDistance);
@@ -586,7 +586,7 @@ BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) {
 //
 // Return Value :
 //
-//		INT32		-> current offset in file if successful
+//		int32_t		-> current offset in file if successful
 //					-> -1 if not
 //
 // Modification history :
@@ -597,7 +597,7 @@ BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) {
 //
 //**************************************************************************
 
-INT32 FileMan_GetPos(HWFILE hFile) {
+int32_t FileMan_GetPos(HWFILE hFile) {
   HANDLE hRealFile;
   uint32_t uiPositionInFile = 0;
 
@@ -643,7 +643,7 @@ INT32 FileMan_GetPos(HWFILE hFile) {
 //
 // Return Value :
 //
-//		INT32		-> file size in file if successful
+//		int32_t		-> file size in file if successful
 //					-> 0 if not
 //
 // Modification history :
@@ -837,7 +837,7 @@ BOOLEAN Plat_EraseDirectory(const char *pcDirectory) {
 }
 
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
-  INT32 x, iWhich = 0;
+  int32_t x, iWhich = 0;
   BOOLEAN fFound;
 
   CHECKF(pSpec != NULL);
@@ -971,7 +971,7 @@ BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
     uiEndOfFilePtrLoc = Plat_SetFilePointer(hRealFile, 0, FILE_SEEK_FROM_END);
 
     // reset back to the original location
-    temp = Plat_SetFilePointer(hRealFile, -((INT32)(uiEndOfFilePtrLoc - uiOldFilePtrLoc)),
+    temp = Plat_SetFilePointer(hRealFile, -((int32_t)(uiEndOfFilePtrLoc - uiOldFilePtrLoc)),
                                FILE_SEEK_FROM_END);
 
     // if the 2 pointers are the same, we are at the end of a file

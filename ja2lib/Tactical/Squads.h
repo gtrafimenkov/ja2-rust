@@ -42,7 +42,7 @@ enum {
 // squads
 extern struct SOLDIERTYPE *Squad[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 
-extern INT32 iCurrentTacticalSquad;
+extern int32_t iCurrentTacticalSquad;
 
 // will initialize the squad lists for game initalization
 void InitSquads(void);
@@ -90,7 +90,7 @@ BOOLEAN CopyPathOfSquadToCharacter(struct SOLDIERTYPE *pCharacter, int8_t bSquad
 BOOLEAN CopyPathOfCharacterToSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue);
 
 // what is the id of the current squad?
-INT32 CurrentSquad(void);
+int32_t CurrentSquad(void);
 
 // add character to unique squad (returns the squad #, -1 if failed)
 int8_t AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter);
@@ -99,16 +99,16 @@ int8_t AddCharacterToUniqueSquad(struct SOLDIERTYPE *pCharacter);
 BOOLEAN SquadIsEmpty(int8_t bSquadValue);
 
 // is this squad in the current tactical sector?
-BOOLEAN IsSquadOnCurrentTacticalMap(INT32 iCurrentSquad);
+BOOLEAN IsSquadOnCurrentTacticalMap(int32_t iCurrentSquad);
 
 // set this squad as the current tatcical squad
-BOOLEAN SetCurrentSquad(INT32 iCurrentSquad, BOOLEAN fForce);
+BOOLEAN SetCurrentSquad(int32_t iCurrentSquad, BOOLEAN fForce);
 
 // set default squad in sector
 void SetDefaultSquadOnSectorEntry(BOOLEAN fForce);
 
 // get last squad that has active mercs
-INT32 GetLastSquadActive(void);
+int32_t GetLastSquadActive(void);
 
 // set squads between sector position
 void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX,
@@ -147,7 +147,7 @@ BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue,
 BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadValue);
 
 // now reset the table for these mercs
-BOOLEAN ResetDeadSquadMemberList(INT32 iSquadValue);
+BOOLEAN ResetDeadSquadMemberList(int32_t iSquadValue);
 
 // this passed  soldier on the current squad int he tactical map
 BOOLEAN IsMercOnCurrentSquad(struct SOLDIERTYPE *pSoldier);

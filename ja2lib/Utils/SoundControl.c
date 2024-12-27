@@ -723,8 +723,8 @@ void DelayedSoundTimerCallback(void) {
 typedef struct {
   uint32_t uiFlags;
   int16_t sGridNo;
-  INT32 iSoundSampleID;
-  INT32 iSoundToPlay;
+  int32_t iSoundSampleID;
+  int32_t iSoundToPlay;
   void *uiData;
   BOOLEAN fAllocated;
   BOOLEAN fInActive;
@@ -735,23 +735,23 @@ POSITIONSND gPositionSndData[NUM_POSITION_SOUND_EFFECT_SLOTS];
 uint32_t guiNumPositionSnds = 0;
 BOOLEAN gfPositionSoundsActive = FALSE;
 
-INT32 GetFreePositionSnd(void);
+int32_t GetFreePositionSnd(void);
 void RecountPositionSnds(void);
 
-INT32 GetFreePositionSnd(void) {
+int32_t GetFreePositionSnd(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumPositionSnds; uiCount++) {
-    if ((gPositionSndData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gPositionSndData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumPositionSnds < NUM_POSITION_SOUND_EFFECT_SLOTS) return ((INT32)guiNumPositionSnds++);
+  if (guiNumPositionSnds < NUM_POSITION_SOUND_EFFECT_SLOTS) return ((int32_t)guiNumPositionSnds++);
 
   return (-1);
 }
 
 void RecountPositionSnds(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumPositionSnds - 1; (uiCount >= 0); uiCount--) {
     if ((gPositionSndData[uiCount].fAllocated)) {
@@ -761,9 +761,9 @@ void RecountPositionSnds(void) {
   }
 }
 
-INT32 NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay) {
+int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay) {
   POSITIONSND *pPositionSnd;
-  INT32 iPositionSndIndex;
+  int32_t iPositionSndIndex;
 
   if ((iPositionSndIndex = GetFreePositionSnd()) == (-1)) return (-1);
 
@@ -790,7 +790,7 @@ INT32 NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t i
   return (iPositionSndIndex);
 }
 
-void DeletePositionSnd(INT32 iPositionSndIndex) {
+void DeletePositionSnd(int32_t iPositionSndIndex) {
   POSITIONSND *pPositionSnd;
 
   pPositionSnd = &gPositionSndData[iPositionSndIndex];
@@ -810,7 +810,7 @@ void DeletePositionSnd(INT32 iPositionSndIndex) {
   }
 }
 
-void SetPositionSndGridNo(INT32 iPositionSndIndex, int16_t sGridNo) {
+void SetPositionSndGridNo(int32_t iPositionSndIndex, int16_t sGridNo) {
   POSITIONSND *pPositionSnd;
 
   pPositionSnd = &gPositionSndData[iPositionSndIndex];

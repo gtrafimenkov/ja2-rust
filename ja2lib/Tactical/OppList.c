@@ -832,7 +832,7 @@ fprintf(OpplistFile,"OtherTeamsLookForMan (HandleSight/Look) for %d\n",ptr->guyn
 }
 
 void OurTeamRadiosRandomlyAbout(uint8_t ubAbout) {
-  INT32 iLoop;
+  int32_t iLoop;
   int8_t radioCnt = 0, radioMan[20];
   struct SOLDIERTYPE *pSoldier;
 
@@ -2362,7 +2362,7 @@ void RemoveManAsTarget(struct SOLDIERTYPE *pSoldier) {
 
 void UpdatePublic(uint8_t ubTeam, uint8_t ubID, int8_t bNewOpplist, int16_t sGridno,
                   int8_t bLevel) {
-  INT32 cnt;
+  int32_t cnt;
   int8_t *pbPublOL;
   uint8_t ubTeamMustLookAgain = FALSE;
   struct SOLDIERTYPE *pSoldier;
@@ -2552,7 +2552,7 @@ HandleSight(pSoldier,SIGHT_LOOK);
 */
 
 void InitOpponentKnowledgeSystem(void) {
-  INT32 iTeam, cnt, cnt2;
+  int32_t iTeam, cnt, cnt2;
 
   memset(gbSeenOpponents, 0, sizeof(gbSeenOpponents));
   memset(gbPublicOpplist, NOT_HEARD_OR_SEEN, sizeof(gbPublicOpplist));
@@ -2590,7 +2590,7 @@ void InitSoldierOppList(struct SOLDIERTYPE *pSoldier) {
 }
 
 void BetweenTurnsVisibilityAdjustments(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // make all soldiers on other teams that are no longer seen not visible
@@ -2780,7 +2780,7 @@ void OurTeamSeesSomeone(struct SOLDIERTYPE *pSoldier, int8_t bNumReRevealed,
 
 void RadioSightings(struct SOLDIERTYPE *pSoldier, uint8_t ubAbout, uint8_t ubTeamToRadioTo) {
   struct SOLDIERTYPE *pOpponent;
-  INT32 iLoop;
+  int32_t iLoop;
   uint8_t start, end, revealedEnemies = 0, unknownEnemies = 0;
   int8_t *pPersOL, *pbPublOL;  //,dayQuote;
   BOOLEAN fContactSeen;
@@ -3747,7 +3747,7 @@ void AppendAttachmentCode(uint16_t usItem, CHAR16 *str) {
   }
 }
 
-void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, INT32 yp) {
+void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, int32_t yp) {
   CHAR16 szAttach[30];
   BOOLEAN fAttachments;
   // 100%  Qty: 2  Attach:
@@ -4098,7 +4098,7 @@ void DebugSoldierPage4() {
 #define MAX_MOVEMENT_NOISE 9
 
 uint8_t MovementNoise(struct SOLDIERTYPE *pSoldier) {
-  INT32 iStealthSkill, iRoll;
+  int32_t iStealthSkill, iRoll;
   uint8_t ubMaxVolume, ubVolume, ubBandaged, ubEffLife;
   int8_t bInWater = FALSE;
 
@@ -4182,11 +4182,11 @@ uint8_t MovementNoise(struct SOLDIERTYPE *pSoldier) {
     }
   } else  // in STEALTH mode
   {
-    iRoll = (INT32)PreRandom(100);  // roll them bones!
+    iRoll = (int32_t)PreRandom(100);  // roll them bones!
 
     if (iRoll >= iStealthSkill)  // v1.13 modification: give a second chance!
     {
-      iRoll = (INT32)PreRandom(100);
+      iRoll = (int32_t)PreRandom(100);
     }
 
     if (iRoll < iStealthSkill) {
@@ -4816,7 +4816,7 @@ void ProcessNoise(uint8_t ubNoiseMaker, int16_t sGridNo, int8_t bLevel, uint8_t 
 uint8_t CalcEffVolume(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
                       uint8_t ubNoiseType, uint8_t ubBaseVolume, uint8_t bCheckTerrain,
                       uint8_t ubTerrType1, uint8_t ubTerrType2) {
-  INT32 iEffVolume, iDistance;
+  int32_t iEffVolume, iDistance;
 
   if (pSoldier->inv[HEAD1POS].usItem == WALKMAN || pSoldier->inv[HEAD2POS].usItem == WALKMAN) {
     return (0);
@@ -4833,14 +4833,14 @@ uint8_t CalcEffVolume(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLev
   // %d",pSoldier->name,gridno,baseVolume); PopMessage(tempstr);
 
   // adjust default noise volume by listener's hearing capability
-  iEffVolume = (INT32)ubBaseVolume + (INT32)DecideHearing(pSoldier);
+  iEffVolume = (int32_t)ubBaseVolume + (int32_t)DecideHearing(pSoldier);
 
   // effective volume reduced by listener's number of opponents in sight
   iEffVolume -= pSoldier->bOppCnt;
 
   // calculate the distance (in adjusted pixels) between the source of the
   // noise (gridno) and the location of the would-be listener (pSoldier->gridno)
-  iDistance = (INT32)PythSpacesAway(pSoldier->sGridNo, sGridNo);
+  iDistance = (int32_t)PythSpacesAway(pSoldier->sGridNo, sGridNo);
   /*
   distance = AdjPixelsAway(pSoldier->x,pSoldier->y,CenterX(sGridNo),CenterY(sGridNo));
 
@@ -6090,7 +6090,7 @@ void DecayWatchedLocs(int8_t bTeam) {
 }
 
 void MakeBloodcatsHostile(void) {
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pSoldier;
 
   iLoop = gTacticalStatus.Team[CREATURE_TEAM].bFirstID;

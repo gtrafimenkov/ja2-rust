@@ -24,8 +24,8 @@ STR16 szClipboard;
 BOOLEAN gfNoScroll = FALSE;
 
 // The internal callback functions assigned to each text field.
-void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
-void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
+void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, int32_t reason);
+void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, int32_t reason);
 
 // Internal string manipulation functions.
 void AddChar(uint32_t uiKey);
@@ -411,10 +411,10 @@ void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize) {
 
 // Converts the field's string into a number, then returns that number
 // returns -1 if blank or invalid.  Only works for positive numbers.
-INT32 GetNumericStrictValueFromField(uint8_t ubField) {
+int32_t GetNumericStrictValueFromField(uint8_t ubField) {
   STR16 ptr;
   CHAR16 str[20];
-  INT32 total;
+  int32_t total;
   Get16BitStringFromField(ubField, str, ARR_SIZE(str));
   // Blank string, so return -1
   if (str[0] == '\0') return -1;
@@ -436,7 +436,7 @@ INT32 GetNumericStrictValueFromField(uint8_t ubField) {
 
 // Converts a number to a numeric strict value.  If the number is negative, the
 // field will be blank.
-void SetInputFieldStringWithNumericStrictValue(uint8_t ubField, INT32 iNumber) {
+void SetInputFieldStringWithNumericStrictValue(uint8_t ubField, int32_t iNumber) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {
@@ -446,7 +446,7 @@ void SetInputFieldStringWithNumericStrictValue(uint8_t ubField, INT32 iNumber) {
       if (iNumber < 0)  // negative number converts to blank string
         swprintf(curr->szString, curr->szStringBufSize, L"");
       else {
-        INT32 iMax = (INT32)pow(10.0, curr->ubMaxChars);
+        int32_t iMax = (int32_t)pow(10.0, curr->ubMaxChars);
         if (iNumber > iMax)  // set string to max value based on number of chars.
           swprintf(curr->szString, curr->szStringBufSize, L"%d", iMax - 1);
         else  // set string to the number given
@@ -932,12 +932,12 @@ void RemoveChar(uint8_t ubArrayIndex) {
 }
 
 // Internally used to continue highlighting text
-void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, int32_t reason) {
   TEXTINPUTNODE *curr;
   if (gfLeftButtonState) {
     if (reason & MSYS_CALLBACK_REASON_MOVE || reason & MSYS_CALLBACK_REASON_LOST_MOUSE ||
         reason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
-      INT32 iClickX, iCurrCharPos, iNextCharPos;
+      int32_t iClickX, iCurrCharPos, iNextCharPos;
       uint8_t ubNewID;
       ubNewID = (uint8_t)MSYS_GetRegionUserData(reg, 0);
       if (ubNewID != gpActive->ubID) {  // deselect the current text edit region if applicable, then
@@ -982,10 +982,10 @@ void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
 }
 
 // Internally used to calculate where to place the cursor.
-void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, int32_t reason) {
   TEXTINPUTNODE *curr;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
-    INT32 iClickX, iCurrCharPos, iNextCharPos;
+    int32_t iClickX, iCurrCharPos, iNextCharPos;
     uint8_t ubNewID;
     ubNewID = (uint8_t)MSYS_GetRegionUserData(reg, 0);
     if (ubNewID != gpActive->ubID) {  // deselect the current text edit region if applicable, then
@@ -1459,7 +1459,7 @@ void SetExclusive24HourTimeValue(uint8_t ubField, uint16_t usTime) {
 }
 
 void DoublePercentileCharacterFromStringIntoString(STR16 pSrcString, STR16 pDstString) {
-  INT32 iSrcIndex = 0, iDstIndex = 0;
+  int32_t iSrcIndex = 0, iDstIndex = 0;
   while (pSrcString[iSrcIndex] != 0) {
     if (pSrcString[iSrcIndex] == '%') {
       pDstString[iDstIndex] = '%';

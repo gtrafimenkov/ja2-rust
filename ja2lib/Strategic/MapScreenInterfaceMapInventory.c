@@ -89,7 +89,7 @@ extern BOOLEAN SaveWorldItemsToTempItemFile(int16_t sMapX, int16_t sMapY, int8_t
 #define MAP_INVEN_SLOT_IMAGE_HEIGHT 24
 
 // the current highlighted item
-INT32 iCurrentlyHighLightedItem = -1;
+int32_t iCurrentlyHighLightedItem = -1;
 BOOLEAN fFlashHighLightInventoryItemOnradarMap = FALSE;
 
 // whether we are showing the inventory pool graphic
@@ -102,11 +102,11 @@ uint32_t guiMapInventoryPoolBackground;
 WORLDITEM *pInventoryPoolList = NULL;
 
 // current page of inventory
-INT32 iCurrentInventoryPoolPage = 0;
-INT32 iLastInventoryPoolPage = 0;
+int32_t iCurrentInventoryPoolPage = 0;
+int32_t iLastInventoryPoolPage = 0;
 
 // total number of slots allocated
-INT32 iTotalNumberOfSlots = 0;
+int32_t iTotalNumberOfSlots = 0;
 
 int16_t sObjectSourceGridNo = 0;
 
@@ -125,8 +125,8 @@ WORLDITEM *pUnSeenItems = NULL;
 // save list to write to temp file
 WORLDITEM *pSaveList = NULL;
 
-INT32 giFlashHighlightedItemBaseTime = 0;
-INT32 giCompatibleItemBaseTime = 0;
+int32_t giFlashHighlightedItemBaseTime = 0;
+int32_t giCompatibleItemBaseTime = 0;
 
 // the buttons and images
 uint32_t guiMapInvenButtonImage[3];
@@ -145,13 +145,13 @@ extern uint16_t gusExternVoSubIndex;
 extern struct MOUSE_REGION gMPanelRegion;
 
 // map inventory callback
-void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason);
-void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, int32_t iReason);
+void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, int32_t iReason);
 void CreateMapInventoryPoolSlots(void);
 void DestroyMapInventoryPoolSlots(void);
 void CreateMapInventoryButtons(void);
 void DestroyMapInventoryButtons(void);
-void ReSizeStashListByThisAmount(INT32 iNumberOfItems);
+void ReSizeStashListByThisAmount(int32_t iNumberOfItems);
 void DestroyStash(void);
 void BuildStashForSelectedSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ);
 BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
@@ -160,30 +160,30 @@ BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJE
 void BeginInventoryPoolPtr(struct OBJECTTYPE *pInventorySlot);
 BOOLEAN PlaceObjectInInventoryStash(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr);
 void RenderItemsForCurrentPageOfInventoryPool(void);
-BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage);
+BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage);
 void UpdateHelpTextForInvnentoryStashSlots(void);
-void MapInventoryPoolPrevBtn(GUI_BUTTON *btn, INT32 reason);
-void MapInventoryPoolNextBtn(GUI_BUTTON *btn, INT32 reason);
+void MapInventoryPoolPrevBtn(GUI_BUTTON *btn, int32_t reason);
+void MapInventoryPoolNextBtn(GUI_BUTTON *btn, int32_t reason);
 void DisplayPagesForMapInventoryPool(void);
 void DrawNumberOfIventoryPoolItems(void);
 void CreateMapInventoryPoolDoneButton(void);
 void DestroyInventoryPoolDoneButton(void);
-void MapInventoryPoolDoneBtn(GUI_BUTTON *btn, INT32 reason);
+void MapInventoryPoolDoneBtn(GUI_BUTTON *btn, int32_t reason);
 void DisplayCurrentSector(void);
 void CheckAndUnDateSlotAllocation(void);
 void ClearUpTempUnSeenList(void);
 void SaveSeenAndUnseenItems(void);
 void DrawTextOnMapInventoryBackground(void);
 void DrawTextOnSectorInventory(void);
-INT32 GetTotalNumberOfItemsInSectorStash(void);
+int32_t GetTotalNumberOfItemsInSectorStash(void);
 void HandleMapSectorInventory(void);
 void ResetMapSectorInventoryPoolHighLights(void);
-void ReBuildWorldItemStashForLoadedSector(INT32 iNumberSeenItems, INT32 iNumberUnSeenItems,
+void ReBuildWorldItemStashForLoadedSector(int32_t iNumberSeenItems, int32_t iNumberUnSeenItems,
                                           WORLDITEM *pSeenItemsList, WORLDITEM *pUnSeenItemsList);
 BOOLEAN IsMapScreenWorldItemVisibleInMapInventory(WORLDITEM *pWorldItem);
 BOOLEAN IsMapScreenWorldItemInvisibleInMapInventory(WORLDITEM *pWorldItem);
 void CheckGridNoOfItemsInMapScreenMapInventory();
-INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2);
+int32_t MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2);
 void SortSectorInventory(WORLDITEM *pInventory, uint32_t uiSizeOfArray);
 BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier);
 
@@ -258,7 +258,7 @@ void BlitInventoryPoolGraphic(void) {
 }
 
 void RenderItemsForCurrentPageOfInventoryPool(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // go through list of items on this page and place graphics to screen
   for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
@@ -268,7 +268,7 @@ void RenderItemsForCurrentPageOfInventoryPool(void) {
   return;
 }
 
-BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
+BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
   // render item in this slot of the list
   int16_t sX, sY;
   struct VObject *hHandle;
@@ -383,8 +383,8 @@ BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
 
 void UpdateHelpTextForInvnentoryStashSlots(void) {
   CHAR16 pStr[512];
-  INT32 iCounter = 0;
-  INT32 iFirstSlotOnPage = (iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT);
+  int32_t iCounter = 0;
+  int32_t iFirstSlotOnPage = (iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT);
 
   // run through list of items in slots and update help text for mouse regions
   for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
@@ -513,9 +513,9 @@ void ClearUpTempUnSeenList(void) {
 
 void SaveSeenAndUnseenItems(void) {
   WORLDITEM *pSeenItemsList = NULL;
-  INT32 iCounter = 0;
-  INT32 iItemCount = 0;
-  INT32 iTotalNumberItems = 0;
+  int32_t iCounter = 0;
+  int32_t iItemCount = 0;
+  int32_t iTotalNumberItems = 0;
 
   // allocate space
   iTotalNumberItems = GetTotalNumberOfItems();
@@ -593,7 +593,7 @@ void SaveSeenAndUnseenItems(void) {
 }
 
 // the screen mask bttn callaback...to disable the inventory and lock out the map itself
-void MapInvenPoolScreenMaskCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MapInvenPoolScreenMaskCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if ((iReason & MSYS_CALLBACK_REASON_RBUTTON_UP)) {
     fShowMapInventoryPool = FALSE;
   }
@@ -602,7 +602,7 @@ void MapInvenPoolScreenMaskCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
 }
 
 void CreateMapInventoryPoolSlots(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   int16_t sX = 0, sY = 0;
   int16_t sXA = 0, sYA = 0;
   int16_t sULX = 0, sULY = 0;
@@ -636,7 +636,7 @@ void CreateMapInventoryPoolSlots(void) {
 }
 
 void DestroyMapInventoryPoolSlots(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
     MSYS_RemoveRegion(&MapInventoryPoolSlots[iCounter]);
@@ -646,8 +646,8 @@ void DestroyMapInventoryPoolSlots(void) {
   MSYS_RemoveRegion(&MapInventoryPoolMask);
 }
 
-void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iCounter = 0;
+void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iCounter = 0;
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -665,10 +665,10 @@ void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // btn callback handler for assignment screen mask region
-  INT32 iCounter = 0;
-  INT32 iOldNumberOfObjects = 0;
+  int32_t iCounter = 0;
+  int32_t iOldNumberOfObjects = 0;
   CHAR16 sString[128];
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
@@ -857,11 +857,11 @@ void DestroyMapInventoryButtons(void) {
 }
 
 void BuildStashForSelectedSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ) {
-  INT32 iSize = 0;
+  int32_t iSize = 0;
   uint32_t uiItemCount = 0;
   uint32_t uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   uint32_t uiTotalNumberOfSeenItems = 0;
 
   //	#ifdef _DEBUG
@@ -1019,12 +1019,12 @@ void BuildStashForSelectedSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ) {
   SortSectorInventory(pInventoryPoolList, uiTotalNumberOfSeenItems);
 }
 
-void ReBuildWorldItemStashForLoadedSector(INT32 iNumberSeenItems, INT32 iNumberUnSeenItems,
+void ReBuildWorldItemStashForLoadedSector(int32_t iNumberSeenItems, int32_t iNumberUnSeenItems,
                                           WORLDITEM *pSeenItemsList, WORLDITEM *pUnSeenItemsList) {
-  INT32 iTotalNumberOfItems = 0;
-  INT32 iCurrentItem = 0;
-  INT32 iCounter = 0;
-  INT32 iRemainder = 0;
+  int32_t iTotalNumberOfItems = 0;
+  int32_t iCurrentItem = 0;
+  int32_t iCounter = 0;
+  int32_t iRemainder = 0;
   uint32_t uiTotalNumberOfVisibleItems = 0;
   WORLDITEM *pTotalList = NULL;
 
@@ -1081,8 +1081,8 @@ void ReBuildWorldItemStashForLoadedSector(INT32 iNumberSeenItems, INT32 iNumberU
   return;
 }
 
-void ReSizeStashListByThisAmount(INT32 iNumberOfItems) {
-  INT32 iSizeOfList = iTotalNumberOfSlots;
+void ReSizeStashListByThisAmount(int32_t iNumberOfItems) {
+  int32_t iSizeOfList = iTotalNumberOfSlots;
   WORLDITEM *pOldList;
 
   // no items added, leave
@@ -1118,13 +1118,13 @@ void DestroyStash(void) {
   MemFree(pInventoryPoolList);
 }
 
-INT32 GetSizeOfStashInSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ,
-                             BOOLEAN fCountStacksAsOne) {
+int32_t GetSizeOfStashInSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ,
+                               BOOLEAN fCountStacksAsOne) {
   // get # of items in sector that are visible to the player
   uint32_t uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;
   uint32_t uiItemCount = 0;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   BOOLEAN fReturn = TRUE;
 
   if ((sMapX == gWorldSectorX) && (sMapY == gWorldSectorY) && (sMapZ == gbWorldSectorZ)) {
@@ -1377,7 +1377,7 @@ BOOLEAN AutoPlaceObjectInInventoryStash(struct OBJECTTYPE *pItemPtr) {
   return (TRUE);
 }
 
-void MapInventoryPoolNextBtn(GUI_BUTTON *btn, INT32 reason) {
+void MapInventoryPoolNextBtn(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1393,7 +1393,7 @@ void MapInventoryPoolNextBtn(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MapInventoryPoolPrevBtn(GUI_BUTTON *btn, INT32 reason) {
+void MapInventoryPoolPrevBtn(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1409,7 +1409,7 @@ void MapInventoryPoolPrevBtn(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MapInventoryPoolDoneBtn(GUI_BUTTON *btn, INT32 reason) {
+void MapInventoryPoolDoneBtn(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1448,8 +1448,8 @@ void DisplayPagesForMapInventoryPool(void) {
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
 }
 
-INT32 GetTotalNumberOfItemsInSectorStash(void) {
-  INT32 iCounter, iCount = 0;
+int32_t GetTotalNumberOfItemsInSectorStash(void) {
+  int32_t iCounter, iCount = 0;
 
   // run through list of items and find out how many are there
   for (iCounter = 0; iCounter < iTotalNumberOfSlots; iCounter++) {
@@ -1461,8 +1461,8 @@ INT32 GetTotalNumberOfItemsInSectorStash(void) {
   return iCount;
 }
 
-INT32 GetTotalNumberOfItems(void) {
-  INT32 iCounter, iCount = 0;
+int32_t GetTotalNumberOfItems(void) {
+  int32_t iCounter, iCount = 0;
 
   // run through list of items and find out how many are there
   for (iCounter = 0; iCounter < iTotalNumberOfSlots; iCounter++) {
@@ -1475,7 +1475,7 @@ INT32 GetTotalNumberOfItems(void) {
 }
 
 void DrawNumberOfIventoryPoolItems(void) {
-  INT32 iNumberOfItems = 0;
+  int32_t iNumberOfItems = 0;
   CHAR16 sString[32];
   int16_t sX, sY;
 
@@ -1551,7 +1551,7 @@ void DisplayCurrentSector(void) {
 
 void CheckAndUnDateSlotAllocation(void) {
   // will check number of available slots, if less than half a page, allocate a new page
-  INT32 iNumberOfTakenSlots = 0;
+  int32_t iNumberOfTakenSlots = 0;
 
   // get number of taken slots
   iNumberOfTakenSlots = GetTotalNumberOfItems();
@@ -1650,8 +1650,8 @@ void DrawTextOnSectorInventory(void) {
 }
 
 void HandleFlashForHighLightedItem(void) {
-  INT32 iCurrentTime = 0;
-  INT32 iDifference = 0;
+  int32_t iCurrentTime = 0;
+  int32_t iDifference = 0;
 
   // if there is an invalid item, reset
   if (iCurrentlyHighLightedItem == -1) {
@@ -1681,7 +1681,7 @@ void HandleFlashForHighLightedItem(void) {
   }
 }
 
-void HandleMouseInCompatableItemForMapSectorInventory(INT32 iCurrentSlot) {
+void HandleMouseInCompatableItemForMapSectorInventory(int32_t iCurrentSlot) {
   struct SOLDIERTYPE *pSoldier = NULL;
   static BOOLEAN fItemWasHighLighted = FALSE;
 
@@ -1759,7 +1759,7 @@ void HandleMouseInCompatableItemForMapSectorInventory(INT32 iCurrentSlot) {
 }
 
 void ResetMapSectorInventoryPoolHighLights(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // now reset the highlight list for the map sector inventory
   for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
@@ -1799,9 +1799,9 @@ BOOLEAN IsMapScreenWorldItemInvisibleInMapInventory(WORLDITEM *pWorldItem) {
 // Check to see if any of the items in the list have a gridno of NOWHERE and the entry point flag
 // NOT set
 void CheckGridNoOfItemsInMapScreenMapInventory() {
-  INT32 iCnt;
+  int32_t iCnt;
   uint32_t uiNumFlagsNotSet = 0;
-  INT32 iTotalNumberItems = GetTotalNumberOfItems();
+  int32_t iTotalNumberItems = GetTotalNumberOfItems();
 
   for (iCnt = 0; iCnt < iTotalNumberItems; iCnt++) {
     if (pInventoryPoolList[iCnt].sGridNo == NOWHERE &&
@@ -1815,7 +1815,7 @@ void CheckGridNoOfItemsInMapScreenMapInventory() {
   }
 
   // loop through all the UNSEEN items
-  for (iCnt = 0; iCnt < (INT32)uiNumberOfUnSeenItems; iCnt++) {
+  for (iCnt = 0; iCnt < (int32_t)uiNumberOfUnSeenItems; iCnt++) {
     if (pUnSeenItems[iCnt].sGridNo == NOWHERE &&
         !(pUnSeenItems[iCnt].usFlags & WORLD_ITEM_GRIDNO_NOT_SET_USE_ENTRY_POINT)) {
       // set the flag
@@ -1838,7 +1838,7 @@ void SortSectorInventory(WORLDITEM *pInventory, uint32_t uiSizeOfArray) {
   qsort(pInventory, (size_t)uiSizeOfArray, sizeof(WORLDITEM), MapScreenSectorInventoryCompare);
 }
 
-INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
+int32_t MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
   WORLDITEM *pFirst = (WORLDITEM *)pNum1;
   WORLDITEM *pSecond = (WORLDITEM *)pNum2;
   uint16_t usItem1Index;

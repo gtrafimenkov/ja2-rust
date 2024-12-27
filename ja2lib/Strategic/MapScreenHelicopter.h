@@ -72,7 +72,7 @@ extern uint8_t ubRefuelList[NUMBER_OF_REFUEL_SITES][2];
 extern BOOLEAN fHelicopterAvailable;
 
 // helicopter vehicle id value
-extern INT32 iHelicopterVehicleId;
+extern int32_t iHelicopterVehicleId;
 
 // heli is hovering
 extern BOOLEAN fHoveringHelicopter;
@@ -90,10 +90,10 @@ extern BOOLEAN fHeliReturnStraightToBase;
 extern BOOLEAN fHelicopterIsAirBorne;
 
 // total distance travelled
-// extern INT32 iTotalHeliDistanceSinceRefuel;
+// extern int32_t iTotalHeliDistanceSinceRefuel;
 
 // total owed to player
-// extern INT32 iTotalAccumlatedCostByPlayer;
+// extern int32_t iTotalAccumlatedCostByPlayer;
 
 // whether or not skyrider is alive and well? and on our side yet?
 extern BOOLEAN fSkyRiderAvailable;
@@ -113,7 +113,7 @@ extern BOOLEAN fShowOtherSAMHighLight;
 extern BOOLEAN fShowDrassenSAMHighLight;
 extern BOOLEAN fShowCambriaHospitalHighLight;
 
-extern INT32 iTotalAccumulatedCostByPlayer;
+extern int32_t iTotalAccumulatedCostByPlayer;
 extern uint32_t guiTimeOfLastSkyriderMonologue;
 extern BOOLEAN fSkyRiderSetUp;
 extern BOOLEAN fRefuelingSiteAvailable[NUMBER_OF_REFUEL_SITES];
@@ -135,13 +135,13 @@ extern BOOLEAN fSAMSitesDisabledFromAttackingPlayer;
 void AddSectorToHelicopterDistanceTravelled( void );
 
 // total distance travelled since last refuel
-INT32 HowFarHelicopterhasTravelledSinceRefueling( void );
+int32_t HowFarHelicopterhasTravelledSinceRefueling( void );
 
 // get the total the heli can go
-INT32 GetTotalDistanceHelicopterCanTravel( void );
+int32_t GetTotalDistanceHelicopterCanTravel( void );
 
 // how far can helicopter can travel before refuel
-INT32 HowFurtherCanHelicopterTravel( void );
+int32_t HowFurtherCanHelicopterTravel( void );
 
 // check if this sector is out of the way
 BOOLEAN IsSectorOutOfTheWay( int16_t sX, int16_t sY );
@@ -149,16 +149,16 @@ BOOLEAN IsSectorOutOfTheWay( int16_t sX, int16_t sY );
 */
 
 // how far to nearest refuel point from this sector?
-INT32 DistanceToNearestRefuelPoint(int16_t sX, int16_t sY);
+int32_t DistanceToNearestRefuelPoint(int16_t sX, int16_t sY);
 
 // location of closest
-INT32 LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
+int32_t LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
 
 // refuel helicopter
 void ReFuelHelicopter(void);
 
 // how much will it cost for helicopter to travel through this sector?
-INT32 GetCostOfPassageForHelicopter(int16_t sX, int16_t sY);
+int32_t GetCostOfPassageForHelicopter(int16_t sX, int16_t sY);
 
 // helicopter shot down, kill all on board
 void SkyriderDestroyed(void);
@@ -188,7 +188,7 @@ void UpdateRefuelSiteAvailability(void);
 void SetUpHelicopterForPlayer(int16_t sX, int16_t sY);
 
 // the intended path of the helicopter
-INT32 DistanceOfIntendedHelicopterPath(void);
+int32_t DistanceOfIntendedHelicopterPath(void);
 
 // handle a little wait for hover
 void HandleHeliHoverLong(void);
@@ -212,7 +212,7 @@ BOOLEAN CheckForArrivalAtRefuelPoint(void);
 void SetUpHelicopterForMovement(void);
 
 // number of passengers in helicopter
-INT32 GetNumberOfPassengersInHelicopter(void);
+int32_t GetNumberOfPassengersInHelicopter(void);
 
 // skyrider talking to player
 void SkyRiderTalk(uint16_t usQuoteNum);
@@ -230,7 +230,7 @@ void CheckAndHandleSkyriderMonologues(void);
 int16_t LastSectorInHelicoptersPath(void);
 
 // total cost of helicopter trip
-// INT32 GetTotalCostOfHelicopterTrip( void );
+// int32_t GetTotalCostOfHelicopterTrip( void );
 
 void HandleHelicopterOnGroundGraphic(void);
 

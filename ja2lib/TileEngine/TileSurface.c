@@ -137,7 +137,7 @@ void DeleteTileSurface(struct TILE_IMAGERY *pTileSurf) {
 }
 
 void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf) {
-  INT32 cnt = 0;
+  int32_t cnt = 0;
   CHAR8 cRootFile[128];
   CHAR8 ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",
                                      "miniweed", "sblast", "sweeds", "twigs",  "wing",    "1"};

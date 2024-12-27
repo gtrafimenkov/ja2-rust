@@ -4165,7 +4165,7 @@ AnimationStructureType gAnimStructureDatabase[TOTALBODYTYPES][NUM_STRUCT_IDS] = 
 };
 
 BOOLEAN InitAnimationSystem() {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
   CHAR8 sFilename[50];
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
@@ -4196,7 +4196,7 @@ BOOLEAN InitAnimationSystem() {
 }
 
 BOOLEAN DeInitAnimationSystem() {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   for (cnt1 = 0; cnt1 < NUMANIMATIONSURFACETYPES; cnt1++) {
     if (gAnimSurfaceDatabase[cnt1].hVideoObject != NULL) {
@@ -4420,7 +4420,7 @@ void ClearAnimationSurfacesUsageHistory(uint16_t usSoldierID) {
 BOOLEAN LoadAnimationProfiles() {
   //	FILE *			pInput;
   HWFILE pInput;
-  INT32 iProfileCount, iDirectionCount, iTileCount;
+  int32_t iProfileCount, iDirectionCount, iTileCount;
   struct ANIM_PROF_DIR *pProfileDirs;
   uint32_t uiBytesRead;
 
@@ -4492,7 +4492,7 @@ BOOLEAN LoadAnimationProfiles() {
 }
 
 void DeleteAnimationProfiles() {
-  INT32 iProfileCount, iDirectionCount;
+  int32_t iProfileCount, iDirectionCount;
   struct ANIM_PROF_DIR *pProfileDir;
 
   // Loop profiles
@@ -4512,7 +4512,7 @@ void DeleteAnimationProfiles() {
 }
 
 void ZeroAnimSurfaceCounts() {
-  INT32 cnt;
+  int32_t cnt;
 
   for (cnt = 0; cnt < NUMANIMATIONSURFACETYPES; cnt++) {
     gAnimSurfaceDatabase[cnt].bUsageCount = 0;

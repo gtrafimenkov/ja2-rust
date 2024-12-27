@@ -53,7 +53,7 @@ typedef struct _VIDEO_OVERLAY {
   BOOLEAN fDisabled;
   BOOLEAN fActivelySaving;
   BOOLEAN fDeletionPending;
-  INT32 uiBackground;
+  int32_t uiBackground;
   BACKGROUND_SAVE *pBackground;
   uint16_t *pSaveArea;
   uint32_t uiUserData[5];
@@ -95,18 +95,18 @@ extern SGPRect gDirtyClipRect;
 // DIRTY QUEUE
 BOOLEAN InitializeBaseDirtyRectQueue();
 void ShutdownBaseDirtyRectQueue();
-void AddBaseDirtyRect(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom);
+void AddBaseDirtyRect(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom);
 BOOLEAN ExecuteBaseDirtyRectQueue();
 BOOLEAN EmptyDirtyRectQueue();
 
 // BACKGROUND RECT BUFFERING STUFF
-void DisableBackgroundRect(INT32 iIndex, BOOLEAN fDisabled);
+void DisableBackgroundRect(int32_t iIndex, BOOLEAN fDisabled);
 BOOLEAN InitializeBackgroundRects(void);
 BOOLEAN ShutdownBackgroundRects(void);
-INT32 RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
-                             int16_t sRight, int16_t sBottom);
-BOOLEAN FreeBackgroundRect(INT32 iIndex);
-BOOLEAN FreeBackgroundRectPending(INT32 iIndex);
+int32_t RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
+                               int16_t sRight, int16_t sBottom);
+BOOLEAN FreeBackgroundRect(int32_t iIndex);
+BOOLEAN FreeBackgroundRectPending(int32_t iIndex);
 BOOLEAN FreeBackgroundRectType(uint32_t uiFlags);
 BOOLEAN RestoreBackgroundRects(void);
 BOOLEAN SaveBackgroundRects(void);
@@ -122,9 +122,9 @@ uint16_t gprintfinvalidate(int16_t x, int16_t y, STR16 pFontString, ...);
 uint16_t gprintfRestore(int16_t x, int16_t y, STR16 pFontString, ...);
 
 // VIDEO OVERLAY STUFF
-INT32 GetFreeVideoOverlay(void);
+int32_t GetFreeVideoOverlay(void);
 void RecountVideoOverlays(void);
-INT32 RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc);
+int32_t RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc);
 void ExecuteVideoOverlays();
 BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, uint32_t iBlitterIndex,
                            BOOLEAN fForceAll);
@@ -132,10 +132,10 @@ void SaveVideoOverlaysArea(uint32_t uiSrcBuffer);
 void DeleteVideoOverlaysArea();
 void AllocateVideoOverlaysArea();
 void ExecuteVideoOverlaysToAlternateBuffer(uint32_t uiNewDestBuffer);
-void RemoveVideoOverlay(INT32 iVideoOverlay);
+void RemoveVideoOverlay(int32_t iVideoOverlay);
 BOOLEAN RestoreShiftedVideoOverlays(int16_t sShiftX, int16_t sShiftY);
-BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, uint8_t ubNum, uint32_t uiData);
-void EnableVideoOverlay(BOOLEAN fEnable, INT32 iOverlayIndex);
+BOOLEAN SetOverlayUserData(int32_t iVideoOverlay, uint8_t ubNum, uint32_t uiData);
+void EnableVideoOverlay(BOOLEAN fEnable, int32_t iOverlayIndex);
 
 void BlitMFont(VIDEO_OVERLAY *pBlitter);
 

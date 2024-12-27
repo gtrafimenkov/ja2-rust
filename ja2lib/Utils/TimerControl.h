@@ -3,7 +3,7 @@
 
 #include "SGP/Types.h"
 
-typedef INT32 TIMECOUNTER;
+typedef int32_t TIMECOUNTER;
 
 typedef void (*CUSTOMIZABLE_TIMER_CALLBACK)(void);
 
@@ -42,13 +42,13 @@ enum {
 #define BASETIMESLICE 10
 
 // TIMER INTERVALS
-extern INT32 giTimerIntervals[NUMTIMERS];
+extern int32_t giTimerIntervals[NUMTIMERS];
 // TIMER COUNTERS
-extern INT32 giTimerCounters[NUMTIMERS];
+extern int32_t giTimerCounters[NUMTIMERS];
 
-extern INT32 giTimerDiag;
+extern int32_t giTimerDiag;
 
-extern INT32 giTimerTeamTurnUpdate;
+extern int32_t giTimerTeamTurnUpdate;
 
 BOOLEAN InitializeJA2Clock(void);
 void ShutdownJA2Clock(void);
@@ -58,7 +58,7 @@ void SetJA2Clock(uint32_t time);
 
 void PauseTime(BOOLEAN fPaused);
 
-void SetCustomizableTimerCallbackAndDelay(INT32 iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
+void SetCustomizableTimerCallbackAndDelay(int32_t iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
                                           BOOLEAN fReplace);
 void CheckCustomizableTimer(void);
 

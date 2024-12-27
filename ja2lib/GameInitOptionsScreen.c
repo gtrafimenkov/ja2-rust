@@ -142,47 +142,47 @@ uint32_t gubGIOExitScreen = GAME_INIT_OPTIONS_SCREEN;
 
 uint32_t guiGIOMainBackGroundImage;
 
-INT32 giGioMessageBox = -1;
+int32_t giGioMessageBox = -1;
 // BOOLEAN		gfExitGioDueToMessageBox=FALSE;
 
 // uint8_t			gubDifficultySettings[ NUM_DIFF_SETTINGS ];
 // uint8_t			gubGameSettings[ NUM_GAME_STYLES ];
 // uint8_t			gubGunSettings[ NUM_GUN_OPTIONS ];
 
-// extern	INT32						gp16PointArial;
+// extern	int32_t						gp16PointArial;
 
 // Done Button
-void BtnGIODoneCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGIODoneCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiGIODoneButton;
-INT32 giGIODoneBtnImage;
+int32_t giGIODoneBtnImage;
 
 // Cancel Button
-void BtnGIOCancelCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGIOCancelCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiGIOCancelButton;
-INT32 giGIOCancelBtnImage;
+int32_t giGIOCancelBtnImage;
 
 // checkbox to toggle the Diff level
 uint32_t guiDifficultySettingsToggles[NUM_DIFF_SETTINGS];
-void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, int32_t reason);
 
 // checkbox to toggle Game style
 uint32_t guiGameStyleToggles[NUM_GAME_STYLES];
-void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, int32_t reason);
 
 // checkbox to toggle Gun options
 uint32_t guiGunOptionToggles[NUM_GUN_OPTIONS];
-void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, int32_t reason);
 
 // JA2Gold: no more timed turns setting
 /*
 //checkbox to toggle Timed turn option on or off
 uint32_t	guiTimedTurnToggles[ GIO_NUM_TIMED_TURN_OPTIONS ];
-void BtnTimedTurnsTogglesCallback(GUI_BUTTON *btn,INT32 reason);
+void BtnTimedTurnsTogglesCallback(GUI_BUTTON *btn,int32_t reason);
 */
 
 // checkbox to toggle Save style
 uint32_t guiGameSaveToggles[NUM_SAVE_OPTIONS];
-void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, int32_t reason);
 
 ////////////////////////////////////////////
 //
@@ -671,7 +671,7 @@ void GetGIOScreenUserInput() {
   }
 }
 
-void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       uint8_t cnt;
@@ -698,7 +698,7 @@ void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       uint8_t cnt;
@@ -725,7 +725,7 @@ void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     //		uint8_t	ubButton = (uint8_t)MSYS_GetBtnUserData( btn, 0 );
 
@@ -754,7 +754,7 @@ void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       uint8_t cnt;
@@ -783,7 +783,7 @@ void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 
 // JA2Gold: no more timed turns setting
 /*
-void BtnTimedTurnsTogglesCallback( GUI_BUTTON *btn, INT32 reason )
+void BtnTimedTurnsTogglesCallback( GUI_BUTTON *btn, int32_t reason )
 {
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
         {
@@ -824,7 +824,7 @@ BUTTON_CLICKED_ON )
 }
 */
 
-void BtnGIODoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGIODoneCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -844,7 +844,7 @@ void BtnGIODoneCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnGIOCancelCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGIOCancelCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

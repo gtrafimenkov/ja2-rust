@@ -462,7 +462,7 @@ struct SOLDIERTYPE {
   int8_t bMechanical;
   int8_t bLifeMax;  // maximum life for this merc
 
-  INT32 iFaceIndex;
+  int32_t iFaceIndex;
 
   // PALETTE MANAGEMENT STUFF
   PaletteRepID HeadPal;   // 30
@@ -524,8 +524,8 @@ struct SOLDIERTYPE {
   uint8_t ubStrategicInsertionCode;
   uint16_t usStrategicInsertionData;
 
-  INT32 iLight;
-  INT32 iMuzFlash;
+  int32_t iLight;
+  int32_t iMuzFlash;
   int8_t bMuzFlashCount;
 
   int16_t sX;
@@ -679,27 +679,27 @@ struct SOLDIERTYPE {
   int16_t sForcastGridno;
   int16_t sZLevelOverride;
   int8_t bMovedPriorToInterrupt;
-  INT32 iEndofContractTime;  // time, in global time(resolution, minutes) that merc will leave, or
-                             // if its a M.E.R.C. merc it will be set to -1.  -2 for NPC and player
-                             // generated
-  INT32 iStartContractTime;
-  INT32 iTotalContractLength;    // total time of AIM mercs contract	or the time since last paid
-                                 // for a M.E.R.C. merc
-  INT32 iNextActionSpecialData;  // AI special action data record for the next action
-  uint8_t ubWhatKindOfMercAmI;   // Set to the type of character it is
-  int8_t bAssignment;            // soldiers current assignment
-  int8_t bOldAssignment;         // old assignment, for autosleep purposes
-  BOOLEAN fForcedToStayAwake;    // forced by player to stay awake, reset to false, the moment they
-                                 // are set to rest or sleep
-  int8_t bTrainStat;             // current stat soldier is training
-  int16_t sSectorX;              // X position on the Stategic Map
-  int16_t sSectorY;              // Y position on the Stategic Map
-  int8_t bSectorZ;               // Z sector location
-  INT32 iVehicleId;              // the id of the vehicle the char is in
-  struct path *pMercPath;        // Path Structure
-  uint8_t fHitByGasFlags;        // flags
-  uint16_t usMedicalDeposit;     // is there a medical deposit on merc
-  uint16_t usLifeInsurance;      // is there life insurance taken out on merc
+  int32_t iEndofContractTime;  // time, in global time(resolution, minutes) that merc will leave, or
+                               // if its a M.E.R.C. merc it will be set to -1.  -2 for NPC and
+                               // player generated
+  int32_t iStartContractTime;
+  int32_t iTotalContractLength;    // total time of AIM mercs contract	or the time since last paid
+                                   // for a M.E.R.C. merc
+  int32_t iNextActionSpecialData;  // AI special action data record for the next action
+  uint8_t ubWhatKindOfMercAmI;     // Set to the type of character it is
+  int8_t bAssignment;              // soldiers current assignment
+  int8_t bOldAssignment;           // old assignment, for autosleep purposes
+  BOOLEAN fForcedToStayAwake;  // forced by player to stay awake, reset to false, the moment they
+                               // are set to rest or sleep
+  int8_t bTrainStat;           // current stat soldier is training
+  int16_t sSectorX;            // X position on the Stategic Map
+  int16_t sSectorY;            // Y position on the Stategic Map
+  int8_t bSectorZ;             // Z sector location
+  int32_t iVehicleId;          // the id of the vehicle the char is in
+  struct path *pMercPath;      // Path Structure
+  uint8_t fHitByGasFlags;      // flags
+  uint16_t usMedicalDeposit;   // is there a medical deposit on merc
+  uint16_t usLifeInsurance;    // is there life insurance taken out on merc
 
   // DEF:  Used for the communications
   uint32_t uiStartMovementTime;    // the time since the merc first started moving
@@ -714,9 +714,9 @@ struct SOLDIERTYPE {
   BYTE ubSoldierUpdateType;
   // END
 
-  INT32 iStartOfInsuranceContract;
+  int32_t iStartOfInsuranceContract;
   uint32_t uiLastAssignmentChangeMin;  // timestamp of last assignment change in minutes
-  INT32 iTotalLengthOfInsuranceContract;
+  int32_t iTotalLengthOfInsuranceContract;
 
   uint8_t ubSoldierClass;  // admin, elite, troop (creature types?)
   uint8_t ubAPsLostToSuppression;
@@ -782,7 +782,7 @@ struct SOLDIERTYPE {
   int8_t bOldBattleSnd;
   BOOLEAN fReactingFromBeingShot;
   BOOLEAN fContractPriceHasIncreased;
-  INT32 iBurstSoundID;
+  int32_t iBurstSoundID;
   BOOLEAN fFixingSAMSite;
   BOOLEAN fFixingRobot;
   int8_t bSlotItemTakenFrom;
@@ -873,7 +873,7 @@ struct SOLDIERTYPE {
   BOOLEAN fUseLandingZoneForArrival;
   BOOLEAN fFallClockwise;
   int8_t bVehicleUnderRepairID;
-  INT32 iTimeCanSignElsewhere;
+  int32_t iTimeCanSignElsewhere;
   int8_t bHospitalPriceModifier;
   int8_t bFillerBytes[3];
   uint32_t uiStartTimeOfInsuranceContract;
@@ -881,13 +881,13 @@ struct SOLDIERTYPE {
   BOOLEAN fDoingExternalDeath;
   int8_t bCorpseQuoteTolerance;
   int8_t bYetAnotherPaddingSpace;
-  INT32 iPositionSndID;
-  INT32 iTuringSoundID;
+  int32_t iPositionSndID;
+  int32_t iTuringSoundID;
   uint8_t ubLastDamageReason;
   BOOLEAN fComplainedThatTired;
   int16_t sLastTwoLocations[2];
   int16_t bFillerDude;
-  INT32 uiTimeSinceLastBleedGrunt;
+  int32_t uiTimeSinceLastBleedGrunt;
   uint8_t ubNextToPreviousAttackerID;
 
   uint8_t bFiller[39];
@@ -995,7 +995,7 @@ BOOLEAN ReCreateSelectedSoldierLight();
 BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, uint16_t usAniFrame);
 void TurnSoldier(struct SOLDIERTYPE *pSold);
 void EVENT_BeginMercTurn(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromRealTime,
-                         INT32 iRealTimeCounter);
+                         int32_t iRealTimeCounter);
 void ChangeSoldierStance(struct SOLDIERTYPE *pSoldier, uint8_t ubDesiredStance);
 void ModifySoldierAniSpeed(struct SOLDIERTYPE *pSoldier);
 void StopSoldier(struct SOLDIERTYPE *pSoldier);

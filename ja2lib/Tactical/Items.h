@@ -75,7 +75,7 @@ void SetMoneyInSoldierProfile(uint8_t ubProfile, uint32_t uiMoney);
 
 void DamageObj(struct OBJECTTYPE *pObj, int8_t bAmount);
 
-void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage);
+void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, int32_t iDamage);
 BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, int8_t bSetting);
 
 // NOTE TO ANDREW:
@@ -176,7 +176,7 @@ uint16_t FindReplacementMagazineIfNecessary(uint16_t usOldGun, uint16_t usOldAmm
                                             uint16_t usNewGun);
 
 BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel,
-                           INT32 iDamage, uint8_t ubOwner);
+                           int32_t iDamage, uint8_t ubOwner);
 
 BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);
 BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);
@@ -185,7 +185,7 @@ BOOLEAN CompatibleFaceItem(uint16_t usItem1, uint16_t usItem2);
 
 uint32_t MoneySlotLimit(int8_t bSlot);
 
-void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage);
+void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, int32_t iDamage);
 
 // Range of Xray device
 #define XRAY_RANGE 40

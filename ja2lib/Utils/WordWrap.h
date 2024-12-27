@@ -57,18 +57,19 @@ uint16_t IanWrappedStringHeight(uint16_t usPosX, uint16_t usPosY, uint16_t usWid
                                 uint32_t uiFont, uint8_t ubColor, STR16 pString,
                                 uint8_t ubBackGroundColor, BOOLEAN fDirty, uint32_t uiFlags);
 
-BOOLEAN WillThisStringGetCutOff(INT32 iCurrentYPosition, INT32 iBottomOfPage, INT32 iWrapWidth,
-                                uint32_t uiFont, STR16 pString, INT32 iGap, INT32 iPage);
-BOOLEAN IsThisStringBeforeTheCurrentPage(INT32 iTotalYPosition, INT32 iPageSize, INT32 iCurrentPage,
-                                         INT32 iWrapWidth, uint32_t uiFont, STR16 pString,
-                                         INT32 iGap);
-INT32 GetNewTotalYPositionOfThisString(INT32 iTotalYPosition, INT32 iPageSize, INT32 iCurrentPage,
-                                       INT32 iWrapWidth, uint32_t uiFont, STR16 pString,
-                                       INT32 iGap);
+BOOLEAN WillThisStringGetCutOff(int32_t iCurrentYPosition, int32_t iBottomOfPage,
+                                int32_t iWrapWidth, uint32_t uiFont, STR16 pString, int32_t iGap,
+                                int32_t iPage);
+BOOLEAN IsThisStringBeforeTheCurrentPage(int32_t iTotalYPosition, int32_t iPageSize,
+                                         int32_t iCurrentPage, int32_t iWrapWidth, uint32_t uiFont,
+                                         STR16 pString, int32_t iGap);
+int32_t GetNewTotalYPositionOfThisString(int32_t iTotalYPosition, int32_t iPageSize,
+                                         int32_t iCurrentPage, int32_t iWrapWidth, uint32_t uiFont,
+                                         STR16 pString, int32_t iGap);
 RecordPtr GetFirstRecordOnThisPage(RecordPtr RecordList, uint32_t uiFont, uint16_t usWidth,
-                                   uint8_t ubGap, INT32 iPage, INT32 iPageSize);
+                                   uint8_t ubGap, int32_t iPage, int32_t iPageSize);
 FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, uint32_t uiFont, uint16_t usWidth,
-                                       uint8_t ubGap, INT32 iPage, INT32 iPageSize,
+                                       uint8_t ubGap, int32_t iPage, int32_t iPageSize,
                                        FileRecordWidthPtr iWidthArray);
 
 // Places a shadow the width an height of the string, to PosX, posY

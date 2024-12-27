@@ -42,10 +42,10 @@ typedef struct {
 
 FontManager *pFManager;
 struct VObject *FontObjs[MAX_FONTS];
-INT32 FontsLoaded = 0;
+int32_t FontsLoaded = 0;
 
 // Destination printing parameters
-INT32 FontDefault = (-1);
+int32_t FontDefault = (-1);
 uint32_t FontDestBuffer = BACKBUFFER;
 uint32_t FontDestPitch = 640 * 2;
 uint32_t FontDestBPP = 16;
@@ -58,7 +58,7 @@ uint8_t FontForeground8 = 0;
 uint8_t FontBackground8 = 0;
 
 // Temp, for saving printing parameters
-INT32 SaveFontDefault = (-1);
+int32_t SaveFontDefault = (-1);
 uint32_t SaveFontDestBuffer = BACKBUFFER;
 uint32_t SaveFontDestPitch = 640 * 2;
 uint32_t SaveFontDestBPP = 16;
@@ -184,7 +184,7 @@ void SetRGBFontShadow(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue) {
 // the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
-BOOLEAN ResetFontObjectPalette(INT32 iFont) {
+BOOLEAN ResetFontObjectPalette(int32_t iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -201,7 +201,7 @@ BOOLEAN ResetFontObjectPalette(INT32 iFont) {
 // the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
-uint16_t *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
+uint16_t *SetFontObjectPalette8BPP(int32_t iFont, struct SGPPaletteEntry *pPal8) {
   uint16_t *pPal16;
 
   Assert(iFont >= 0);
@@ -222,7 +222,7 @@ uint16_t *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
 //	Sets the palette of a font, using a 16 bit palette.
 //
 //*****************************************************************************
-uint16_t *SetFontObjectPalette16BPP(INT32 iFont, uint16_t *pPal16) {
+uint16_t *SetFontObjectPalette16BPP(int32_t iFont, uint16_t *pPal16) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -239,7 +239,7 @@ uint16_t *SetFontObjectPalette16BPP(INT32 iFont, uint16_t *pPal16) {
 //	Sets the palette of a font, using a 16 bit palette.
 //
 //*****************************************************************************
-uint16_t *GetFontObjectPalette16BPP(INT32 iFont) {
+uint16_t *GetFontObjectPalette16BPP(int32_t iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -253,7 +253,7 @@ uint16_t *GetFontObjectPalette16BPP(INT32 iFont) {
 //	Returns the VOBJECT pointer of a font.
 //
 //*****************************************************************************
-struct VObject *GetFontObject(INT32 iFont) {
+struct VObject *GetFontObject(int32_t iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -267,7 +267,7 @@ struct VObject *GetFontObject(INT32 iFont) {
 //	Locates an empty slot in the font table.
 //
 //*****************************************************************************
-INT32 FindFreeFont(void) {
+int32_t FindFreeFont(void) {
   int count;
 
   for (count = 0; count < MAX_FONTS; count++)
@@ -283,7 +283,7 @@ INT32 FindFreeFont(void) {
 //  This function returns (-1) if it fails, and debug msgs for a reason.
 //  Otherwise the font number is returned.
 //*****************************************************************************
-INT32 LoadFontFile(STR8 filename) {
+int32_t LoadFontFile(STR8 filename) {
   VOBJECT_DESC vo_desc;
   uint32_t LoadIndex;
 
@@ -351,7 +351,7 @@ uint32_t GetWidth(struct VObject *hSrcVObject, int16_t ssIndex) {
 // evaluate to is 512.
 //    'uiCharCount' specifies how many characters of the string are counted.
 //*****************************************************************************
-int16_t StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, STR16 pFontString, ...) {
+int16_t StringPixLengthArg(int32_t usUseFont, uint32_t uiCharCount, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
 
@@ -385,7 +385,7 @@ int16_t StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, STR16 pFontStr
 // 'uiCharCount' specifies how many characters of the string are counted.
 // YOU HAVE TO PREBUILD THE FAST HELP STRING!
 //*****************************************************************************
-int16_t StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiCharCount,
+int16_t StringPixLengthArgFastHelp(int32_t usUseFont, int32_t usBoldFont, uint32_t uiCharCount,
                                    STR16 pFontString) {
   wchar_t string[512];
   uint32_t i, index;
@@ -437,7 +437,7 @@ int16_t StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t u
 //  Created on:     12/1/99
 //
 //*****************************************************************************************
-int16_t StringNPixLength(STR16 string, uint32_t uiMaxCount, INT32 UseFont) {
+int16_t StringNPixLength(STR16 string, uint32_t uiMaxCount, int32_t UseFont) {
   uint32_t Cur, uiCharCount;
   STR16 curletter;
   int16_t transletter;
@@ -461,7 +461,7 @@ int16_t StringNPixLength(STR16 string, uint32_t uiMaxCount, INT32 UseFont) {
 //	Returns the length of a string in pixels, depending on the font given.
 //
 //*****************************************************************************
-int16_t StringPixLength(STR16 string, INT32 UseFont) {
+int16_t StringPixLength(STR16 string, int32_t UseFont) {
   uint32_t Cur;
   STR16 curletter;
   int16_t transletter;
@@ -546,7 +546,7 @@ uint32_t GetHeight(struct VObject *hSrcVObject, int16_t ssIndex) {
 //	Returns the height of the first character in a font.
 //
 //*****************************************************************************
-uint16_t GetFontHeight(INT32 FontNum) {
+uint16_t GetFontHeight(int32_t FontNum) {
   Assert(FontNum >= 0);
   Assert(FontNum <= MAX_FONTS);
   Assert(FontObjs[FontNum] != NULL);
@@ -590,7 +590,7 @@ int16_t GetIndex(uint16_t siChar) {
 //	Sets the current font number.
 //
 //*****************************************************************************
-BOOLEAN SetFont(INT32 iFontIndex) {
+BOOLEAN SetFont(int32_t iFontIndex) {
   Assert(iFontIndex >= 0);
   Assert(iFontIndex <= MAX_FONTS);
   Assert(FontObjs[iFontIndex] != NULL);
@@ -606,7 +606,7 @@ BOOLEAN SetFont(INT32 iFontIndex) {
 // sets the line wrap on/off. DestBuffer is a VOBJECT handle, not a pointer.
 //
 //*****************************************************************************
-BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
+BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, int32_t x1, int32_t y1, int32_t x2, int32_t y2,
                           BOOLEAN wrap) {
   Assert(x2 > x1);
   Assert(y2 > y1);
@@ -630,8 +630,8 @@ BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, INT32 x1, INT32 y1, INT32 x2, INT
 // the parameters are identical to printf. The resulting string may be no longer
 // than 512 word-characters. Uses monochrome font color settings
 //*****************************************************************************
-uint32_t mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+uint32_t mprintf(int32_t x, int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -677,7 +677,7 @@ uint32_t mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
 }
 
 void VarFindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                                 INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY,
+                                 int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY,
                                  STR16 pFontString, ...) {
   wchar_t string[512];
   va_list argptr;
@@ -691,7 +691,7 @@ void VarFindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, in
 }
 
 void VarFindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                                  INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY,
+                                  int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY,
                                   STR16 pFontString, ...) {
   wchar_t string[512];
   va_list argptr;
@@ -705,7 +705,7 @@ void VarFindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, i
 }
 
 void FindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                              STR16 pStr, INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY) {
+                              STR16 pStr, int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY) {
   int16_t xp, yp;
 
   // Compute the coordinates to right justify the text
@@ -717,7 +717,7 @@ void FindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16
 }
 
 void FindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                               STR16 pStr, INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY) {
+                               STR16 pStr, int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY) {
   int16_t xp, yp;
 
   // Compute the coordinates to center the text
@@ -736,8 +736,8 @@ void FindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int1
 // the parameters are identical to printf. The resulting string may be no longer
 // than 512 word-characters.
 //*****************************************************************************
-uint32_t gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+uint32_t gprintf(int32_t x, int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -782,8 +782,8 @@ uint32_t gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   return (0);
 }
 
-uint32_t gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+uint32_t gprintfDirty(int32_t x, int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -837,9 +837,9 @@ uint32_t gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
 // the parameters are identical to printf. The resulting string may be no longer
 // than 512 word-characters.
 //*****************************************************************************
-uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, INT32 x,
-                        INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, int32_t x,
+                        int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -877,9 +877,9 @@ uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t F
   return (0);
 }
 
-uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, INT32 x,
-                        INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, int32_t x,
+                        int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -917,8 +917,8 @@ uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t F
 }
 
 uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType,
-                              INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+                              int32_t x, int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -967,8 +967,8 @@ uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint
   return (0);
 }
 
-uint32_t mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
+uint32_t mprintf_coded(int32_t x, int32_t y, STR16 pFontString, ...) {
+  int32_t destx, desty;
   STR16 curletter;
   int16_t transletter;
   va_list argptr;
@@ -1046,8 +1046,8 @@ BOOLEAN InitializeFontManager(uint16_t usDefaultPixelDepth, FontTranslationTable
   GetCurrentVideoSettings(&uiRight, &uiBottom, &uiPixelDepth);
   FontDestRegion.iLeft = 0;
   FontDestRegion.iTop = 0;
-  FontDestRegion.iRight = (INT32)uiRight;
-  FontDestRegion.iBottom = (INT32)uiBottom;
+  FontDestRegion.iRight = (int32_t)uiRight;
+  FontDestRegion.iBottom = (int32_t)uiBottom;
   FontDestBPP = (uint32_t)uiPixelDepth;
 
   FontDestWrap = FALSE;
@@ -1083,7 +1083,7 @@ BOOLEAN InitializeFontManager(uint16_t usDefaultPixelDepth, FontTranslationTable
 //	Shuts down, and deallocates all fonts.
 //*****************************************************************************
 void ShutdownFontManager(void) {
-  INT32 count;
+  int32_t count;
 
   UnRegisterDebugTopic(TOPIC_FONT_HANDLER, "Font Manager");
   if (pFManager) MemFree(pFManager);

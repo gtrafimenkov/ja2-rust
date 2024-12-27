@@ -170,7 +170,7 @@ uint8_t gubBobbyRPages[] = {LAPTOP_MODE_BOBBY_R_USED, LAPTOP_MODE_BOBBY_R_MISC,
 
 // Bobby's Sign menu mouse regions
 struct MOUSE_REGION gSelectedBobbiesSignMenuRegion[BOBBIES_NUMBER_SIGNS];
-void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 BOOLEAN InitBobbiesMouseRegion(uint8_t ubNumerRegions, uint16_t *usMouseRegionPosArray,
                                struct MOUSE_REGION *MouseRegion);
@@ -461,7 +461,7 @@ BOOLEAN RemoveBobbiesMouseRegion(uint8_t ubNumberRegions, struct MOUSE_REGION *M
   return (TRUE);
 }
 
-void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint8_t ubNewPage = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);

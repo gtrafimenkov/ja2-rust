@@ -231,16 +231,16 @@ extern void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, int16_t sDam
                       int16_t sBreathLoss, uint16_t usDirection, int16_t sXPos, int16_t sYPos,
                       int16_t sZPos, int16_t sRange, uint8_t ubAttackerID, BOOLEAN fHit,
                       uint8_t ubSpecial, uint8_t ubHitLocation);
-extern void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
+extern void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
                          uint8_t ubAttackerID, uint16_t sXPos, int16_t sYPos, int16_t sZPos,
-                         uint16_t usStructureID, INT32 iImpact, BOOLEAN fStopped);
+                         uint16_t usStructureID, int32_t iImpact, BOOLEAN fStopped);
 extern void WindowHit(int16_t sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
                       BOOLEAN fLargeForce);
-extern INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
-                          uint8_t ubHitLocation, INT32 iImpact, int16_t sHitBy,
-                          uint8_t *pubSpecial);
+extern int32_t BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
+                            uint8_t ubHitLocation, int32_t iImpact, int16_t sHitBy,
+                            uint8_t *pubSpecial);
 extern BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, int16_t sGridNo);
-extern void ShotMiss(uint8_t ubAttackerID, INT32 iBullet);
+extern void ShotMiss(uint8_t ubAttackerID, int32_t iBullet);
 extern uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
                                    uint8_t ubAimTime, uint8_t ubAimPos);
 extern uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
@@ -253,9 +253,9 @@ uint32_t CalcChanceToSteal(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pD
                            uint8_t ubAimTime);
 extern void ReloadWeapon(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos);
 extern BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos, BOOLEAN fNotify);
-extern INT32 CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation);
-extern INT32 TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
-                                   uint8_t ubHitLocation, INT32 iImpact, uint8_t ubAmmoType);
+extern int32_t CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation);
+extern int32_t TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
+                                     uint8_t ubHitLocation, int32_t iImpact, uint8_t ubAmmoType);
 extern int8_t ArmourPercent(struct SOLDIERTYPE *pSoldier);
 
 extern void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo,
@@ -264,7 +264,7 @@ extern void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, int16_t sTarge
 extern BOOLEAN OKFireWeapon(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN CheckForGunJam(struct SOLDIERTYPE *pSoldier);
 
-extern INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fArmed);
+extern int32_t CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fArmed);
 extern uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                       uint8_t ubAimTime, uint8_t ubAimPos);
 
@@ -275,8 +275,8 @@ extern BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo
 
 void DishoutQueenSwipeDamage(struct SOLDIERTYPE *pQueenSoldier);
 
-INT32 HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, INT32 iHitBy,
-                BOOLEAN fBladeAttack);
+int32_t HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, int32_t iHitBy,
+                  BOOLEAN fBladeAttack);
 
 uint16_t GunRange(struct OBJECTTYPE *pObj);
 

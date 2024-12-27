@@ -218,12 +218,12 @@ enum {
   DRAW_MODE_ERASE = 1000
 };
 
-extern INT32 iEditorButton[NUMBER_EDITOR_BUTTONS];
-extern INT32 iEditorToolbarState;
-extern INT32 iDrawMode;
-extern INT32 iCurrentAction;
-extern INT32 iActionParam;
-extern INT32 iEditAction;
+extern int32_t iEditorButton[NUMBER_EDITOR_BUTTONS];
+extern int32_t iEditorToolbarState;
+extern int32_t iDrawMode;
+extern int32_t iCurrentAction;
+extern int32_t iActionParam;
+extern int32_t iEditAction;
 
 extern uint16_t gusLightLevel;
 extern uint16_t gusLightLevelPercentage;

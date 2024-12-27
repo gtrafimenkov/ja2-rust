@@ -44,7 +44,7 @@ void PostEventsForSpreadOfTownOpinion(void) {
   /* ARM - Do nothing, this system has been scrapped because it is so marginal and it's too late to
      bother with it now
 
-          INT32 iCounter = 0;
+          int32_t iCounter = 0;
           // called every day at 3am to set up daily events to handle spreading of town opinion
      about mercs for( iCounter = 0; iCounter < TOWN_OPINION_NUMBER_OF_PERIODS; iCounter++ )
           {
@@ -119,7 +119,7 @@ void HandleSpreadOfAllTownsOpinion(void) {
 
 void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId) {
   // handle opinion spread for this grunt
-  INT32 iDistanceBetweenTowns;
+  int32_t iDistanceBetweenTowns;
   int8_t iCounterA, iCounterB;
   int8_t bOpinionOfTownA, bOpinionOfTownB;
 
@@ -141,7 +141,7 @@ void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId) {
   }
 }
 
-void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, INT32 iDistanceBetweenThem,
+void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, int32_t iDistanceBetweenThem,
                                       uint8_t ubProfile) {
   // ARM: System has been scrapped
 }
@@ -162,7 +162,7 @@ void HandleSpreadOfTownOpinionForMercForSoldier( struct SOLDIERTYPE *pSoldier )
 
 void HandleSpreadOfTownsOpinionForCurrentMercs( void )
 {
-        INT32 iCounter = 0, iNumberOnPlayersTeam = 0;
+        int32_t iCounter = 0, iNumberOnPlayersTeam = 0;
 
         // get the number on players team
         iNumberOnPlayersTeam = gTacticalStatus.Team[ OUR_TEAM ].bLastID;

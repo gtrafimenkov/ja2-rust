@@ -7,7 +7,7 @@
 struct MOUSE_REGION;
 
 typedef void (*MOUSE_CALLBACK)(struct MOUSE_REGION *,
-                               INT32);           // Define MOUSE_CALLBACK type as pointer to void
+                               int32_t);         // Define MOUSE_CALLBACK type as pointer to void
 typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback
 
 struct MOUSE_REGION {
@@ -27,13 +27,13 @@ struct MOUSE_REGION {
   MOUSE_CALLBACK
   MovementCallback;  // Pointer to callback function if movement occured in this region
   MOUSE_CALLBACK
-  ButtonCallback;     // Pointer to callback function if button action occured in this region
-  INT32 UserData[4];  // User Data, can be set to anything!
+  ButtonCallback;       // Pointer to callback function if button action occured in this region
+  int32_t UserData[4];  // User Data, can be set to anything!
 
   // Fast help vars.
   int16_t FastHelpTimer;  // Countdown timer for FastHelp text
   STR16 FastHelpText;     // Text string for the FastHelp (describes buttons if left there a while)
-  INT32 FastHelpRect;
+  int32_t FastHelpRect;
   MOUSE_HELPTEXT_DONE_CALLBACK HelpDoneCallback;
 
   struct MOUSE_REGION *next;  // List maintenance, do NOT touch these entries
@@ -63,7 +63,7 @@ struct MOUSE_REGION {
 
 // Mouse region IDs
 #define MSYS_ID_BASE 1
-#define MSYS_ID_MAX 0xfffffff  // ( INT32 max )
+#define MSYS_ID_MAX 0xfffffff  // ( int32_t max )
 #define MSYS_ID_SYSTEM 0
 
 // Mouse region priorities
@@ -132,30 +132,30 @@ struct MOUSE_REGION {
 //		The prototype for MSYS_SGP_Mouse_Handler_Hook() is defined in mousesystem_macros.h
 
 // Internal Functions
-INT32 MSYS_GetNewID(void);
+int32_t MSYS_GetNewID(void);
 void MSYS_TrashRegList(void);
 void MSYS_AddRegionToList(struct MOUSE_REGION *region);
-INT32 MSYS_RegionInList(struct MOUSE_REGION *region);
+int32_t MSYS_RegionInList(struct MOUSE_REGION *region);
 void MSYS_DeleteRegionFromList(struct MOUSE_REGION *region);
 void MSYS_UpdateMouseRegion(void);
 void MSYS_SetCurrentCursor(uint16_t Cursor);
 
 // External
-INT32 MSYS_Init(void);
+int32_t MSYS_Init(void);
 void MSYS_Shutdown(void);
 void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
                        uint16_t bry, int8_t priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback);
 void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, uint16_t crsr);
-INT32 MSYS_AddRegion(struct MOUSE_REGION *region);
+int32_t MSYS_AddRegion(struct MOUSE_REGION *region);
 void MSYS_RemoveRegion(struct MOUSE_REGION *region);
 void MSYS_EnableRegion(struct MOUSE_REGION *region);
 void MSYS_DisableRegion(struct MOUSE_REGION *region);
 void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, int8_t priority);
-void MSYS_SetRegionUserData(struct MOUSE_REGION *region, INT32 index, INT32 userdata);
-INT32 MSYS_GetRegionUserData(struct MOUSE_REGION *region, INT32 index);
+void MSYS_SetRegionUserData(struct MOUSE_REGION *region, int32_t index, int32_t userdata);
+int32_t MSYS_GetRegionUserData(struct MOUSE_REGION *region, int32_t index);
 
-INT32 MSYS_GrabMouse(struct MOUSE_REGION *region);
+int32_t MSYS_GrabMouse(struct MOUSE_REGION *region);
 void MSYS_ReleaseMouse(struct MOUSE_REGION *region);
 void MSYS_MoveMouseRegionBy(struct MOUSE_REGION *region, int16_t sDeltaX, int16_t sDeltaY);
 void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, int16_t sX, int16_t sY);

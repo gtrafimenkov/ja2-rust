@@ -16,7 +16,7 @@ extern BOOLEAN gfItemEditingMode;
 // Set if we need to update the panel.
 extern BOOLEAN gfRenderItemStatsPanel;
 
-void SpecifyItemToEdit(struct OBJECTTYPE *pItem, INT32 iMapIndex);
+void SpecifyItemToEdit(struct OBJECTTYPE *pItem, int32_t iMapIndex);
 
 void ShowItemStatsPanel();
 void HideItemStatsPanel();

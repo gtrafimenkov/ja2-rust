@@ -351,7 +351,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(int16_t sMapX, int16_t sMapY, int8_t bMap
 
 #ifdef JA2TESTVERSION
 void ClearMapControlledFlags(void) {
-  INT32 iCounterA = 0, iCounterB = 0;
+  int32_t iCounterA = 0, iCounterB = 0;
   uint16_t usMapSector = 0;
 
   for (iCounterA = 1; iCounterA < MAP_WORLD_X - 1; iCounterA++) {

@@ -38,7 +38,7 @@ BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
   int16_t sXPos, sYPos;
   int16_t sAPCost = 0;
   int8_t bDirection;
-  INT32 iLoop;
+  int32_t iLoop;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   uint8_t ubNewIndex;
 

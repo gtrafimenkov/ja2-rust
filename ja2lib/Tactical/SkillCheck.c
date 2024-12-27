@@ -15,7 +15,7 @@
 
 int8_t EffectiveStrength(struct SOLDIERTYPE *pSoldier) {
   int8_t bBandaged;
-  INT32 iEffStrength;
+  int32_t iEffStrength;
 
   // Effective strength is:
   // 1/2 full strength
@@ -32,7 +32,7 @@ int8_t EffectiveStrength(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveWisdom(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffWisdom;
+  int32_t iEffWisdom;
 
   iEffWisdom = pSoldier->bWisdom;
 
@@ -42,7 +42,7 @@ int8_t EffectiveWisdom(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveAgility(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffAgility;
+  int32_t iEffAgility;
 
   iEffAgility = pSoldier->bAgility;
 
@@ -56,7 +56,7 @@ int8_t EffectiveAgility(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveMechanical(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffMechanical;
+  int32_t iEffMechanical;
 
   iEffMechanical = pSoldier->bMechanical;
 
@@ -66,7 +66,7 @@ int8_t EffectiveMechanical(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveExplosive(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffExplosive;
+  int32_t iEffExplosive;
 
   iEffExplosive = pSoldier->bExplosive;
 
@@ -76,7 +76,7 @@ int8_t EffectiveExplosive(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveMedical(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffMedical;
+  int32_t iEffMedical;
 
   iEffMedical = pSoldier->bMedical;
 
@@ -86,7 +86,7 @@ int8_t EffectiveMedical(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveLeadership(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffLeadership;
+  int32_t iEffLeadership;
   int8_t bDrunkLevel;
 
   iEffLeadership = pSoldier->bLeadership;
@@ -102,9 +102,9 @@ int8_t EffectiveLeadership(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveExpLevel(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffExpLevel;
+  int32_t iEffExpLevel;
   int8_t bDrunkLevel;
-  INT32 iExpModifier[] = {
+  int32_t iExpModifier[] = {
       0,   // SOBER
       0,   // Feeling good
       -1,  // Borderline
@@ -135,7 +135,7 @@ int8_t EffectiveExpLevel(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveMarksmanship(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffMarksmanship;
+  int32_t iEffMarksmanship;
 
   iEffMarksmanship = pSoldier->bMarksmanship;
 
@@ -145,7 +145,7 @@ int8_t EffectiveMarksmanship(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t EffectiveDexterity(struct SOLDIERTYPE *pSoldier) {
-  INT32 iEffDexterity;
+  int32_t iEffDexterity;
 
   iEffDexterity = pSoldier->bDexterity;
 
@@ -179,17 +179,17 @@ void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, uint16_t *pusPoints) {
   *pusPoints -= (*pusPoints * GetPenaltyForFatigue(pSoldier)) / 100;
 }
 
-INT32 GetSkillCheckPenaltyForFatigue(struct SOLDIERTYPE *pSoldier, INT32 iSkill) {
+int32_t GetSkillCheckPenaltyForFatigue(struct SOLDIERTYPE *pSoldier, int32_t iSkill) {
   // use only half the full effect of fatigue for skill checks
   return (((iSkill * GetPenaltyForFatigue(pSoldier)) / 100) / 2);
 }
 
-INT32 SkillCheck(struct SOLDIERTYPE *pSoldier, int8_t bReason, int8_t bChanceMod) {
-  INT32 iSkill;
-  INT32 iChance;
-  INT32 iRoll, iMadeItBy;
+int32_t SkillCheck(struct SOLDIERTYPE *pSoldier, int8_t bReason, int8_t bChanceMod) {
+  int32_t iSkill;
+  int32_t iChance;
+  int32_t iRoll, iMadeItBy;
   int8_t bSlot;
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pTeamSoldier;
   int8_t bBuddyIndex;
   BOOLEAN fForceDamnSound = FALSE;

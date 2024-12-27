@@ -572,7 +572,7 @@ void QueryRTLeftButton(uint32_t *puiNewEvent) {
                                               {
 #if 0
 																										struct SOLDIERTYPE *		pTeamSoldier;
-																										INT32						cnt;
+																										int32_t						cnt;
 																										struct SOLDIERTYPE			*pFirstSoldier = NULL;
 
 																										// OK, loop through all guys who are 'multi-selected' and

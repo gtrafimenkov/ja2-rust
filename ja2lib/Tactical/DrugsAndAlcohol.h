@@ -31,7 +31,7 @@ void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, int16_t *psPoints);
 int8_t GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
 int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
 int8_t GetDrunkLevel(struct SOLDIERTYPE *pSoldier);
-INT32 EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, INT32 iStat);
+int32_t EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, int32_t iStat);
 BOOLEAN MercUnderTheInfluence(struct SOLDIERTYPE *pSoldier);
 
 #endif

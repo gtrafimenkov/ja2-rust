@@ -30,7 +30,7 @@ typedef struct {
   uint16_t usScreenWidth;
   uint16_t usScreenHeight;
 
-  INT32 iLastMouseClickY;  // last position the mouse was clicked ( if != -1 )
+  int32_t iLastMouseClickY;  // last position the mouse was clicked ( if != -1 )
 
   int8_t bCurrentHelpScreenActiveSubPage;  // used to keep track of the current page being displayed
 
@@ -49,7 +49,7 @@ typedef struct {
 
   // scroll variables
   uint16_t usTotalNumberOfPixelsInBuffer;
-  INT32 iLineAtTopOfTextBuffer;
+  int32_t iLineAtTopOfTextBuffer;
   uint16_t usTotalNumberOfLinesInBuffer;
   BOOLEAN fForceHelpScreenToComeUp;
 

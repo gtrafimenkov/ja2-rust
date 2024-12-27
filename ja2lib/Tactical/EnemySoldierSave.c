@@ -73,8 +73,8 @@ void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
 BOOLEAN LoadEnemySoldiersFromTempFile() {
   SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
+  int32_t i;
+  int32_t slots = 0;
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   HWFILE hfile;
@@ -387,9 +387,9 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                     BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
-  INT32 slots = 0;
-  INT32 iSlotsAlreadyInUse = 0;
+  int32_t i;
+  int32_t slots = 0;
+  int32_t iSlotsAlreadyInUse = 0;
   uint32_t uiNumBytesWritten;
   uint32_t uiTimeStamp;
   HWFILE hfile;
@@ -670,8 +670,8 @@ FAIL_SAVE:
 BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
+  int32_t i;
+  int32_t slots = 0;
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   HWFILE hfile;
@@ -1037,8 +1037,8 @@ FAIL_LOAD:
 BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   SOLDIERINITNODE *curr, *temp;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
+  int32_t i;
+  int32_t slots = 0;
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   uint32_t uiTimeSinceLastLoaded;
@@ -1240,7 +1240,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 
             if (curr->pDetailedPlacement->bLife <
                 curr->pDetailedPlacement->bLifeMax) {  // Add 4 life for every hour that passes.
-              INT32 iNewLife;
+              int32_t iNewLife;
               iNewLife = curr->pDetailedPlacement->bLife + uiTimeSinceLastLoaded / 15;
               iNewLife = min(curr->pDetailedPlacement->bLifeMax, iNewLife);
               curr->pDetailedPlacement->bLife = (int8_t)iNewLife;
@@ -1321,8 +1321,8 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, int8_
                                                  BOOLEAN fEnemy, BOOLEAN fValidateOnly) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
-  INT32 slots = 0;
+  int32_t i;
+  int32_t slots = 0;
   uint32_t uiNumBytesWritten;
   uint32_t uiTimeStamp;
   HWFILE hfile;
@@ -1595,8 +1595,8 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
     uint8_t *pubNumCreatures) {
   //	SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
+  int32_t i;
+  int32_t slots = 0;
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   HWFILE hfile;

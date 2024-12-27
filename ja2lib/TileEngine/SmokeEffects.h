@@ -40,11 +40,11 @@ void DecaySmokeEffects(uint32_t uiTime);
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )
-void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, int16_t sGridNo, int8_t bLevel);
+void AddSmokeEffectToTile(int32_t iSmokeEffectID, int8_t bType, int16_t sGridNo, int8_t bLevel);
 
 void RemoveSmokeEffectFromTile(int16_t sGridNo, int8_t bLevel);
 
-INT32 NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner);
+int32_t NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner);
 
 BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile);

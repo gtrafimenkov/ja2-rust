@@ -5,8 +5,8 @@
 #include "Editor/LoadScreenPub.h"
 #include "SGP/Types.h"
 
-extern INT32 iFDlgState;
-extern INT32 iFDlgSelectedSlot;
+extern int32_t iFDlgState;
+extern int32_t iFDlgSelectedSlot;
 
 extern BOOLEAN gfAskForName;
 extern BOOLEAN gfCreatedFDlg;

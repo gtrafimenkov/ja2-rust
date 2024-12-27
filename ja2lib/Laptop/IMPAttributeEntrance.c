@@ -23,7 +23,7 @@ void DestroyIMPAttributeEntranceButtons(void);
 void CreateIMPAttributeEntranceButtons(void);
 
 // callbacks
-void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPAttributeEntrance(void) {
   CreateIMPAttributeEntranceButtons();
@@ -79,7 +79,7 @@ void DestroyIMPAttributeEntranceButtons(void) {
   return;
 }
 
-void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

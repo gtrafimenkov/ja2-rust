@@ -25,8 +25,8 @@ extern BOOLEAN DoWindowSelection(void);
 extern void RemoveTempMouseCursorObject(void);
 extern BOOLEAN DrawTempMouseCursorObject(void);
 extern void ShowCurrentDrawingMode(void);
-extern void ShowCurrentSlotImage(struct VObject* hVObj, INT32 iWindow);
-extern void ShowCurrentSlotSurface(uint32_t hSurface, INT32 iWindow);
+extern void ShowCurrentSlotImage(struct VObject* hVObj, int32_t iWindow);
+extern void ShowCurrentSlotSurface(uint32_t hSurface, int32_t iWindow);
 
 void CreateNewMap();
 
@@ -45,8 +45,8 @@ BOOLEAN PlaceLight(int16_t sRadius, int16_t iMapX, int16_t iMapY, int16_t sType)
 BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY);
 extern BOOLEAN gfMercResetUponEditorEntry;
 
-void ShowEditorToolbar(INT32 iNewTaskMode);
-void HideEditorToolbar(INT32 iOldTaskMode);
+void ShowEditorToolbar(int32_t iNewTaskMode);
+void HideEditorToolbar(int32_t iOldTaskMode);
 
 void ProcessSelectionArea();
 
@@ -59,9 +59,9 @@ extern uint16_t gusEditorTaskbarColor;
 extern uint16_t gusEditorTaskbarHiColor;
 extern uint16_t gusEditorTaskbarLoColor;
 
-extern INT32 iOldTaskMode;
-extern INT32 iCurrentTaskbar;
-extern INT32 iTaskMode;
+extern int32_t iOldTaskMode;
+extern int32_t iCurrentTaskbar;
+extern int32_t iTaskMode;
 
 void ProcessAreaSelection(BOOLEAN fWithLeftButton);
 

@@ -16,8 +16,8 @@ void GoIntoOverheadMap();
 void HandleOverheadUI();
 void KillOverheadMap();
 
-void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
-void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
+void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason);
+void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason);
 
 void CalculateRestrictedMapCoords(int8_t bDirection, int16_t *psX1, int16_t *psY1, int16_t *psX2,
                                   int16_t *psY2, int16_t sEndXS, int16_t sEndYS);

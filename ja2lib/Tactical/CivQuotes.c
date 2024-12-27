@@ -61,8 +61,8 @@ uint8_t gubNumEntries[NUM_CIV_QUOTES] = {15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 typedef struct {
   BOOLEAN bActive;
   struct MOUSE_REGION MouseRegion;
-  INT32 iVideoOverlay;
-  INT32 iDialogueBox;
+  int32_t iVideoOverlay;
+  int32_t iDialogueBox;
   uint32_t uiTimeOfCreation;
   uint32_t uiDelayTime;
   struct SOLDIERTYPE *pCiv;
@@ -75,7 +75,7 @@ uint16_t gusCivQuoteBoxWidth;
 uint16_t gusCivQuoteBoxHeight;
 
 void CopyNumEntriesIntoQuoteStruct() {
-  INT32 cnt;
+  int32_t cnt;
 
   for (cnt = 0; cnt < NUM_CIV_QUOTES; cnt++) {
     gCivQuotes[cnt].ubNumEntries = gubNumEntries[cnt];
@@ -111,7 +111,7 @@ BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, CHAR16 *zQuote)
 
 void SurrenderMessageBoxCallBack(uint8_t ubExitValue) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     // CJC Dec 1 2002: fix multiple captures
@@ -249,7 +249,7 @@ void RenderCivQuoteBoxOverlay(VIDEO_OVERLAY *pBlitter) {
   }
 }
 
-void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {

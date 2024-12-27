@@ -46,7 +46,7 @@ BOOLEAN InitializeBaseDirtyRectQueue() { return (TRUE); }
 
 void ShutdownBaseDirtyRectQueue() {}
 
-void AddBaseDirtyRect(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
+void AddBaseDirtyRect(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom) {
   SGPRect aRect;
 
   if (iLeft < 0) {
@@ -110,15 +110,15 @@ BOOLEAN ExecuteBaseDirtyRectQueue() {
 
 BOOLEAN EmptyDirtyRectQueue() { return (TRUE); }
 
-INT32 GetFreeBackgroundBuffer(void) {
+int32_t GetFreeBackgroundBuffer(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if ((gBackSaves[uiCount].fAllocated == FALSE) && (gBackSaves[uiCount].fFilled == FALSE))
-      return ((INT32)uiCount);
+      return ((int32_t)uiCount);
   }
 
-  if (guiNumBackSaves < BACKGROUND_BUFFERS) return ((INT32)guiNumBackSaves++);
+  if (guiNumBackSaves < BACKGROUND_BUFFERS) return ((int32_t)guiNumBackSaves++);
 #ifdef JA2BETAVERSION
   else {
     // else display an error message
@@ -133,7 +133,7 @@ INT32 GetFreeBackgroundBuffer(void) {
 }
 
 void RecountBackgrounds(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumBackSaves - 1; (uiCount >= 0); uiCount--) {
     if ((gBackSaves[uiCount].fAllocated) || (gBackSaves[uiCount].fFilled)) {
@@ -143,14 +143,14 @@ void RecountBackgrounds(void) {
   }
 }
 
-INT32 RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
-                             int16_t sRight, int16_t sBottom) {
+int32_t RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
+                               int16_t sRight, int16_t sBottom) {
   uint32_t uiBufSize;
-  INT32 iBackIndex;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
-  INT32 uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
+  int32_t iBackIndex;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
   uint32_t usHeight, usWidth;
-  INT32 iTempX, iTempY;
+  int32_t iTempX, iTempY;
 
   // Don't register if we are rendering and we are below the viewport
   // if ( sTop >= gsVIEWPORT_WINDOW_END_Y )
@@ -172,16 +172,16 @@ INT32 RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft
   iTempY = sTop;
 
   // Clip to rect
-  uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  uiRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  uiBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  uiRightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  uiBottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   // check if whole thing is clipped
-  if ((uiLeftSkip >= (INT32)usWidth) || (uiRightSkip >= (INT32)usWidth)) return (-1);
+  if ((uiLeftSkip >= (int32_t)usWidth) || (uiRightSkip >= (int32_t)usWidth)) return (-1);
 
   // check if whole thing is clipped
-  if ((uiTopSkip >= (INT32)usHeight) || (uiBottomSkip >= (INT32)usHeight)) return (-1);
+  if ((uiTopSkip >= (int32_t)usHeight) || (uiBottomSkip >= (int32_t)usHeight)) return (-1);
 
   // Set re-set values given based on clipping
   sLeft = sLeft + (int16_t)uiLeftSkip;
@@ -368,7 +368,7 @@ BOOLEAN SaveBackgroundRects(void) {
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRect(INT32 iIndex) {
+BOOLEAN FreeBackgroundRect(int32_t iIndex) {
   if (iIndex != -1) {
     gBackSaves[iIndex].fAllocated = FALSE;
 
@@ -378,13 +378,13 @@ BOOLEAN FreeBackgroundRect(INT32 iIndex) {
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRectPending(INT32 iIndex) {
+BOOLEAN FreeBackgroundRectPending(int32_t iIndex) {
   gBackSaves[iIndex].fPendingDelete = TRUE;
 
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRectNow(INT32 uiCount) {
+BOOLEAN FreeBackgroundRectNow(int32_t uiCount) {
   if (gBackSaves[uiCount].fFreeMemory == TRUE) {
     // MemFree(gBackSaves[uiCount].pSaveArea);
     if (gBackSaves[uiCount].fZBuffer) MemFree(gBackSaves[uiCount].pZSaveArea);
@@ -440,13 +440,13 @@ BOOLEAN ShutdownBackgroundRects(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
-    if (gBackSaves[uiCount].fAllocated) FreeBackgroundRectNow((INT32)uiCount);
+    if (gBackSaves[uiCount].fAllocated) FreeBackgroundRectNow((int32_t)uiCount);
   }
 
   return (TRUE);
 }
 
-void DisableBackgroundRect(INT32 iIndex, BOOLEAN fDisabled) {
+void DisableBackgroundRect(int32_t iIndex, BOOLEAN fDisabled) {
   gBackSaves[iIndex].fDisabled = fDisabled;
 }
 
@@ -492,7 +492,7 @@ BOOLEAN RestoreExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth,
   return (TRUE);
 }
 
-BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
+BOOLEAN RestoreExternBackgroundRectGivenID(int32_t iBack) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   int16_t sLeft, sTop, sWidth, sHeight;
   uint8_t *pDestBuf, *pSrcBuf;
@@ -552,7 +552,7 @@ uint16_t gprintfdirty(int16_t x, int16_t y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
-  INT32 iBack;
+  int32_t iBack;
 
   Assert(pFontString != NULL);
 
@@ -625,20 +625,20 @@ uint16_t gprintfRestore(int16_t x, int16_t y, STR16 pFontString, ...) {
 }
 
 // OVERLAY STUFF
-INT32 GetFreeVideoOverlay(void) {
+int32_t GetFreeVideoOverlay(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
-    if ((gVideoOverlays[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gVideoOverlays[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumVideoOverlays < BACKGROUND_BUFFERS) return ((INT32)guiNumVideoOverlays++);
+  if (guiNumVideoOverlays < BACKGROUND_BUFFERS) return ((int32_t)guiNumVideoOverlays++);
 
   return (-1);
 }
 
 void RecountVideoOverlays(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumVideoOverlays - 1; (uiCount >= 0); uiCount--) {
     if ((gVideoOverlays[uiCount].fAllocated)) {
@@ -648,7 +648,7 @@ void RecountVideoOverlays(void) {
   }
 }
 
-INT32 RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
+int32_t RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
   uint32_t iBlitterIndex;
   uint32_t iBackIndex;
   uint16_t uiStringLength, uiStringHeight;
@@ -709,13 +709,13 @@ INT32 RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
   return (iBlitterIndex);
 }
 
-void SetVideoOverlayPendingDelete(INT32 iVideoOverlay) {
+void SetVideoOverlayPendingDelete(int32_t iVideoOverlay) {
   if (iVideoOverlay != -1) {
     gVideoOverlays[iVideoOverlay].fDeletionPending = TRUE;
   }
 }
 
-void RemoveVideoOverlay(INT32 iVideoOverlay) {
+void RemoveVideoOverlay(int32_t iVideoOverlay) {
   if (iVideoOverlay != -1 && gVideoOverlays[iVideoOverlay].fAllocated) {
     // Check if we are actively scrolling
     if (gVideoOverlays[iVideoOverlay].fActivelySaving) {
@@ -991,10 +991,10 @@ BOOLEAN RestoreShiftedVideoOverlays(int16_t sShiftX, int16_t sShiftY) {
   uint8_t *pDestBuf;
   uint32_t iBackIndex;
 
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
-  INT32 uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
   uint32_t usHeight, usWidth;
-  INT32 iTempX, iTempY;
+  int32_t iTempX, iTempY;
   int16_t sLeft, sTop, sRight, sBottom;
 
   ClipX1 = 0;
@@ -1022,16 +1022,16 @@ BOOLEAN RestoreShiftedVideoOverlays(int16_t sShiftX, int16_t sShiftY) {
         iTempY = sTop + sShiftY;
 
         // Clip to rect
-        uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-        uiRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-        uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-        uiBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+        uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+        uiRightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+        uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+        uiBottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
         // check if whole thing is clipped
-        if ((uiLeftSkip >= (INT32)usWidth) || (uiRightSkip >= (INT32)usWidth)) continue;
+        if ((uiLeftSkip >= (int32_t)usWidth) || (uiRightSkip >= (int32_t)usWidth)) continue;
 
         // check if whole thing is clipped
-        if ((uiTopSkip >= (INT32)usHeight) || (uiBottomSkip >= (INT32)usHeight)) continue;
+        if ((uiTopSkip >= (int32_t)usHeight) || (uiBottomSkip >= (int32_t)usHeight)) continue;
 
         // Set re-set values given based on clipping
         sLeft = iTempX + (int16_t)uiLeftSkip;
@@ -1060,7 +1060,7 @@ BOOLEAN RestoreShiftedVideoOverlays(int16_t sShiftX, int16_t sShiftY) {
   return (TRUE);
 }
 
-BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, uint8_t ubNum, uint32_t uiData) {
+BOOLEAN SetOverlayUserData(int32_t iVideoOverlay, uint8_t ubNum, uint32_t uiData) {
   if (!gVideoOverlays[iVideoOverlay].fAllocated) {
     return (FALSE);
   }
@@ -1109,7 +1109,7 @@ BOOLEAN BlitBufferToBuffer(uint32_t uiSrcBuffer, uint32_t uiDestBuffer, uint16_t
   return (fRetVal);
 }
 
-void EnableVideoOverlay(BOOLEAN fEnable, INT32 iOverlayIndex) {
+void EnableVideoOverlay(BOOLEAN fEnable, int32_t iOverlayIndex) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   memset(&VideoOverlayDesc, 0, sizeof(VideoOverlayDesc));

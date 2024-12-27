@@ -15,7 +15,7 @@ typedef struct {
   struct MOUSE_REGION BackRegion;
   uint16_t usWidth;
   uint16_t usHeight;
-  INT32 iButtonImages;
+  int32_t iButtonImages;
   union {
     struct {
       uint32_t uiOKButton;
@@ -29,7 +29,7 @@ typedef struct {
   };
   BOOLEAN fRenderBox;
   int8_t bHandled;
-  INT32 iBoxId;
+  int32_t iBoxId;
 
 } MESSAGE_BOX_STRUCT;
 
@@ -59,9 +59,9 @@ void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, uint16_t usFlags,
 BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                          uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect);
-INT32 DoMapMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                              uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
-                              const SGPRect *pCenteringRect);
+int32_t DoMapMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+                                uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                const SGPRect *pCenteringRect);
 BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect);

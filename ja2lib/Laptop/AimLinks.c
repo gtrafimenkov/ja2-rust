@@ -49,7 +49,7 @@ uint8_t gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK}
 
 // Clicking on guys Face
 struct MOUSE_REGION gSelectedLinkRegion[AIM_LINK_NUM_LINKS];
-void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 void GameInitAimLinks() {}
 
@@ -142,7 +142,7 @@ void RenderAimLinks() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

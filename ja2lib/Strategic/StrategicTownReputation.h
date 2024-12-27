@@ -27,7 +27,7 @@ void HandleSpreadOfAllTownsOpinion(void);
 // handles the spread of town opinion for one merc
 void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId);
 // handles the opinion spread between these two towns about this merc at the distance between them
-void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, INT32 iDistanceBetweenThem,
+void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, int32_t iDistanceBetweenThem,
                                       uint8_t ubProfile);
 
 /*

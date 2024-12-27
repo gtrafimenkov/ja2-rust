@@ -49,7 +49,7 @@ typedef struct {
 } INVENTORY_IN_SLOT;
 
 extern INVENTORY_IN_SLOT PlayersOfferArea[SKI_NUM_TRADING_INV_SLOTS];
-extern INT32 giShopKeepDialogueEventinProgress;
+extern int32_t giShopKeepDialogueEventinProgress;
 
 // extern	BOOLEAN		gfRedrawSkiScreen;
 

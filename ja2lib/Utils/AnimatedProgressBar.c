@@ -216,7 +216,7 @@ void RenderProgressBar(uint8_t ubID, uint32_t uiPercentage) {
   double rActual;
   PROGRESSBAR *pCurr = NULL;
   // uint32_t r, g;
-  INT32 end;
+  int32_t end;
 
   Assert(ubID < MAX_PROGRESSBARS);
   pCurr = pBar[ubID];
@@ -230,9 +230,9 @@ void RenderProgressBar(uint8_t ubID, uint32_t uiPercentage) {
       return;
     }
 
-    pCurr->rLastActual = (DOUBLE)((INT32)(rActual * 100) * 0.01);
+    pCurr->rLastActual = (DOUBLE)((int32_t)(rActual * 100) * 0.01);
 
-    end = (INT32)(pCurr->usBarLeft + 2.0 + rActual * (pCurr->usBarRight - pCurr->usBarLeft - 4));
+    end = (int32_t)(pCurr->usBarLeft + 2.0 + rActual * (pCurr->usBarRight - pCurr->usBarLeft - 4));
     if (end < pCurr->usBarLeft + 2 || end > pCurr->usBarRight - 2) {
       return;
     }

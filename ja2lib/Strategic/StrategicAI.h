@@ -53,7 +53,7 @@ void RepollSAIGroup(struct GROUP *pGroup);
 // group isn't allowed to be filled for several days.
 void TagSAIGroupWithGracePeriod(struct GROUP *pGroup);
 
-BOOLEAN PermittedToFillPatrolGroup(INT32 iPatrolID);
+BOOLEAN PermittedToFillPatrolGroup(int32_t iPatrolID);
 
 extern BOOLEAN gfDisplayStrategicAILogs;
 extern BOOLEAN gfFirstBattleMeanwhileScenePending;
@@ -94,7 +94,7 @@ enum {
 };
 
 typedef struct ARMY_COMPOSITION {
-  INT32 iReadability;  // contains the enumeration which is useless, but helps readability.
+  int32_t iReadability;  // contains the enumeration which is useless, but helps readability.
   int8_t bPriority;
   int8_t bElitePercentage;
   int8_t bTroopPercentage;

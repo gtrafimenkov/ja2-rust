@@ -13,11 +13,11 @@
 extern uint32_t guiBaseJA2Clock;
 extern uint32_t guiBaseJA2NoPauseClock;
 extern BOOLEAN gfPauseClock;
-extern INT32 giTimerAirRaidQuote;
-extern INT32 giTimerAirRaidDiveStarted;
-extern INT32 giTimerAirRaidUpdate;
-extern INT32 giTimerCustomizable;
-extern INT32 giTimerTeamTurnUpdate;
+extern int32_t giTimerAirRaidQuote;
+extern int32_t giTimerAirRaidDiveStarted;
+extern int32_t giTimerAirRaidUpdate;
+extern int32_t giTimerCustomizable;
+extern int32_t giTimerTeamTurnUpdate;
 extern uint32_t gCNT;
 extern struct SOLDIERTYPE *gPSOLDIER;
 
@@ -86,7 +86,7 @@ void CALLBACK TimeProc(UINT uID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2) 
 BOOLEAN InitializeJA2Clock(void) {
   MMRESULT mmResult;
   TIMECAPS tc;
-  INT32 cnt;
+  int32_t cnt;
 
   // Init timer delays
   for (cnt = 0; cnt < NUMTIMERS; cnt++) {
@@ -119,7 +119,7 @@ void ShutdownJA2Clock(void) { timeKillEvent(gTimerID); }
 
 void PauseTime(BOOLEAN fPaused) { gfPauseClock = fPaused; }
 
-void SetCustomizableTimerCallbackAndDelay(INT32 iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
+void SetCustomizableTimerCallbackAndDelay(int32_t iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
                                           BOOLEAN fReplace) {
   if (gpCustomizableTimerCallback) {
     if (!fReplace) {

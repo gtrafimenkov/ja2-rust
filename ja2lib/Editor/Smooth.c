@@ -342,10 +342,10 @@ void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, uint8_t ubRad
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
-  INT32 iNewIndex;
+  int32_t iNewIndex;
   uint16_t NewTile;
   uint16_t usIndex;
-  INT32 leftmost;
+  int32_t leftmost;
   // Don't bother to smooth floors, they don't need them
   if (uiCheckType >= FIRSTFLOOR && uiCheckType <= LASTFLOOR) return;
   // Determine start end end indicies and num rows
@@ -377,10 +377,10 @@ void SmoothAllTerrainTypeRadius(uint32_t iMapIndex, uint8_t ubRadius, BOOLEAN fF
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, cnt3;
-  INT32 iNewIndex;
+  int32_t iNewIndex;
   uint16_t NewTile;
   uint16_t usIndex;
-  INT32 leftmost;
+  int32_t leftmost;
   // Determine start end end indicies and num rows
   sTop = ubRadius;
   sBottom = -ubRadius;

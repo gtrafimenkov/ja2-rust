@@ -269,7 +269,7 @@ BOOLEAN AttemptToLockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
   int8_t bStress, bSlot;
 
   bSlot = FindUsableObj(pSoldier, CROWBAR);
@@ -348,7 +348,7 @@ BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
 
   LOCK *pLock;
 
@@ -417,7 +417,7 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
   int8_t bReason;
   LOCK *pLock;
 
@@ -468,7 +468,7 @@ BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToUntrapDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
 
   // See if we measure up to the task.
   if (pDoor->ubTrapID == EXPLOSION) {
@@ -613,7 +613,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
   int8_t bSlot = NO_SLOT;
 
   bSlot = FindObj(pSoldier, SHAPED_CHARGE);
@@ -690,7 +690,7 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 // File I/O for loading the door information from the map.  This automatically allocates
 // the exact number of slots when loading.
 void LoadDoorTableFromMap(int8_t **hBuffer) {
-  INT32 cnt;
+  int32_t cnt;
 
   TrashDoorTable();
   LOADDATA(&gubNumDoors, *hBuffer, 1);
@@ -711,7 +711,7 @@ void LoadDoorTableFromMap(int8_t **hBuffer) {
 // door still exists.  Otherwise, it'll ignore it.  It is possible in the editor to delete doors in
 // many different ways, so I opted to put it in the saving routine.
 void SaveDoorTableToMap(HWFILE fp) {
-  INT32 i = 0;
+  int32_t i = 0;
   uint32_t uiBytesWritten;
 
   while (i < gubNumDoors) {
@@ -727,7 +727,7 @@ void SaveDoorTableToMap(HWFILE fp) {
 // The editor adds locks to the world.  If the gridno already exists, then the currently existing
 // door information is overwritten.
 void AddDoorInfoToTable(DOOR *pDoor) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < gubNumDoors; i++) {
     if (DoorTable[i].sGridNo == pDoor->sGridNo) {
       memcpy(&DoorTable[i], pDoor, sizeof(DOOR));
@@ -758,9 +758,9 @@ void AddDoorInfoToTable(DOOR *pDoor) {
 // When the editor removes a door from the world, this function looks for and removes accompanying
 // door information.  If the entry is not the last entry, the last entry is move to it's current
 // slot, to keep everything contiguous.
-void RemoveDoorInfoFromTable(INT32 iMapIndex) {
-  INT32 i;
-  INT32 iNumDoorsToCopy;
+void RemoveDoorInfoFromTable(int32_t iMapIndex) {
+  int32_t i;
+  int32_t iNumDoorsToCopy;
   for (i = 0; i < gubNumDoors; i++) {
     if (DoorTable[i].sGridNo == iMapIndex) {
       iNumDoorsToCopy = gubNumDoors - i - 1;
@@ -774,8 +774,8 @@ void RemoveDoorInfoFromTable(INT32 iMapIndex) {
 }
 
 // This is the link to see if a door exists at a gridno.
-DOOR *FindDoorInfoAtGridNo(INT32 iMapIndex) {
-  INT32 i;
+DOOR *FindDoorInfoAtGridNo(int32_t iMapIndex) {
+  int32_t i;
   for (i = 0; i < gubNumDoors; i++) {
     if (DoorTable[i].sGridNo == iMapIndex) return &DoorTable[i];
   }
@@ -1104,7 +1104,7 @@ DOOR_STATUS *GetDoorStatus(int16_t sGridNo) {
 }
 
 BOOLEAN AllMercsLookForDoor(int16_t sGridNo, BOOLEAN fUpdateValue) {
-  INT32 cnt, cnt2;
+  int32_t cnt, cnt2;
   int8_t bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
   struct SOLDIERTYPE *pSoldier;
   int16_t sDistVisible;
@@ -1170,7 +1170,7 @@ BOOLEAN AllMercsLookForDoor(int16_t sGridNo, BOOLEAN fUpdateValue) {
 }
 
 BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
-  INT32 cnt, cnt2;
+  int32_t cnt, cnt2;
   int16_t sDistVisible;
   int16_t sGridNo;
   DOOR_STATUS *pDoorStatus;
@@ -1285,7 +1285,7 @@ void SyncronizeDoorStatusToStructureData(DOOR_STATUS *pDoorStatus) {
 }
 
 void UpdateDoorGraphicsFromStatus(BOOLEAN fUsePerceivedStatus, BOOLEAN fDirty) {
-  INT32 cnt;
+  int32_t cnt;
   DOOR_STATUS *pDoorStatus;
 
   for (cnt = 0; cnt < gubNumDoorStatus; cnt++) {
@@ -1301,7 +1301,7 @@ void UpdateDoorGraphicsFromStatus(BOOLEAN fUsePerceivedStatus, BOOLEAN fDirty) {
 void InternalUpdateDoorGraphicFromStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fUsePerceivedStatus,
                                          BOOLEAN fDirty) {
   struct STRUCTURE *pStructure, *pBaseStructure;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fOpenedGraphic = FALSE;
   struct LEVELNODE *pNode;
   BOOLEAN fWantToBeOpen = FALSE;
@@ -1686,7 +1686,7 @@ BOOLEAN LoadKeyTableFromSaveedGameFile(HWFILE hFile) {
 }
 
 void ExamineDoorsOnEnteringSector() {
-  INT32 cnt;
+  int32_t cnt;
   DOOR_STATUS *pDoorStatus;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
@@ -1734,11 +1734,11 @@ void ExamineDoorsOnEnteringSector() {
 }
 
 void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
-  INT32 cnt;
+  int32_t cnt;
   DOOR_STATUS *pDoorStatus;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
-  INT32 iNumNewMercs = 0;
+  int32_t iNumNewMercs = 0;
   TownID bTownId;
 
   // OK, only do this if conditions are met....
@@ -1805,7 +1805,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
 }
 
 void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
-                       int8_t bVisible, BOOLEAN fAddToDropList, INT32 iDropListSlot,
+                       int8_t bVisible, BOOLEAN fAddToDropList, int32_t iDropListSlot,
                        BOOLEAN fUseUnLoaded) {
   uint8_t ubLoop;
   uint8_t ubItem;

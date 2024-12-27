@@ -91,7 +91,7 @@ void ClearIntList(void) {
 }
 
 BOOLEAN BloodcatsPresent(void) {
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.Team[CREATURE_TEAM].bTeamActive == FALSE) {
@@ -210,7 +210,7 @@ void FreezeInterfaceForEnemyTurn(void) {
 
 void EndTurn(uint8_t ubNextTeam) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Check for enemy pooling (add enemies if there happens to be more than the max in the
   // current battle.  If one or more slots have freed up, we can add them now.
@@ -252,7 +252,7 @@ void EndTurn(uint8_t ubNextTeam) {
 
 void EndAITurn(void) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Remove any deadlock message
   EndDeadlockMsg();
@@ -278,7 +278,7 @@ void EndAITurn(void) {
 void EndAllAITurns(void) {
   // warp turn to the player's turn
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Remove any deadlock message
   EndDeadlockMsg();
@@ -321,7 +321,7 @@ void EndTurnEvents(void) {
 }
 
 void BeginTeamTurn(uint8_t ubTeam) {
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
@@ -505,7 +505,7 @@ void StartInterrupt(void) {
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pTempSoldier;
   uint8_t ubInterrupter;
-  INT32 cnt;
+  int32_t cnt;
 
   ubFirstInterrupter = LATEST_INTERRUPT_GUY;
   pSoldier = MercPtrs[ubFirstInterrupter];
@@ -535,7 +535,7 @@ void StartInterrupt(void) {
     // start interrupts for everyone on our side at once
     CHAR16 sTemp[255];
     uint8_t ubInterrupters = 0;
-    INT32 iSquad, iCounter;
+    int32_t iSquad, iCounter;
 
     // build string for display of who gets interrupt
     while (1) {
@@ -703,7 +703,7 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
   uint8_t ubInterruptedSoldier;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pTempSoldier;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fFound;
   uint8_t ubMinAPsToAttack;
 

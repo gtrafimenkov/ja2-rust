@@ -102,9 +102,9 @@ uint16_t gusRetreatButtonLeft, gusRetreatButtonTop, gusRetreatButtonRight, gusRe
 
 struct GROUP *gpBattleGroup = NULL;
 
-void AutoResolveBattleCallback(GUI_BUTTON *btn, INT32 reason);
-void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason);
-void RetreatMercsCallback(GUI_BUTTON *btn, INT32 reason);
+void AutoResolveBattleCallback(GUI_BUTTON *btn, int32_t reason);
+void GoToSectorCallback(GUI_BUTTON *btn, int32_t reason);
+void RetreatMercsCallback(GUI_BUTTON *btn, int32_t reason);
 
 void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
                              uint8_t *pubHPPercent, uint8_t *pubBPPercent);
@@ -115,13 +115,13 @@ void PutNonSquadMercsInBattleSectorOnSquads(BOOLEAN fExitVehicles);
 void PutNonSquadMercsInPlayerGroupOnSquads(struct GROUP *pGroup, BOOLEAN fExitVehicles);
 
 /*
-void InvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason );
-void InvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason );
-void UninvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason );
-void UninvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason );
+void InvolvedMoveCallback( struct MOUSE_REGION *reg, int32_t reason );
+void InvolvedClickCallback( struct MOUSE_REGION *reg, int32_t reason );
+void UninvolvedMoveCallback( struct MOUSE_REGION *reg, int32_t reason );
+void UninvolvedClickCallback( struct MOUSE_REGION *reg, int32_t reason );
 
-struct SOLDIERTYPE* InvolvedSoldier( INT32 index );
-struct SOLDIERTYPE* UninvolvedSoldier( INT32 index );
+struct SOLDIERTYPE* InvolvedSoldier( int32_t index );
+struct SOLDIERTYPE* UninvolvedSoldier( int32_t index );
 */
 
 struct MOUSE_REGION PBInterfaceBlanket;
@@ -141,8 +141,8 @@ BOOLEAN gfBlinkHeader;
 extern struct MOUSE_REGION gMapStatusBarsRegion;
 extern struct MOUSE_REGION gCharInfoHandRegion;
 
-extern INT32 giMapContractButton;
-extern INT32 giCharInfoButton[2];
+extern int32_t giMapContractButton;
+extern int32_t giCharInfoButton[2];
 extern void CreateDestroyMapCharacterScrollButtons(void);
 extern void UpdateTheStateOfTheNextPrevMapScreenCharacterButtons(void);
 
@@ -183,7 +183,7 @@ BOOLEAN gfCantRetreatInPBI = FALSE;
 
 BOOLEAN gfUsePersistantPBI;
 
-INT32 giHilitedInvolved, giHilitedUninvolved;
+int32_t giHilitedInvolved, giHilitedUninvolved;
 
 extern void CalculateGroupRetreatSector(struct GROUP *pGroup);
 
@@ -252,7 +252,7 @@ void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
 
 void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) {
   VOBJECT_DESC VObjectDesc;
-  INT32 i;
+  int32_t i;
   uint8_t ubGroupID = 0;
   uint8_t ubNumStationaryEnemies = 0;
   uint8_t ubNumMobileEnemies = 0;
@@ -521,7 +521,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
                                   5) {  // if the enemy outnumbers the players, then there is a
                                         // small chance of the enemies ambushing the group
             if (ubNumMobileEnemies > ubNumMercs) {
-              INT32 iChance;
+              int32_t iChance;
               pSector = &SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)];
               if (!(pSector->uiFlags & SF_ALREADY_VISITED)) {
                 iChance = (uint8_t)(4 - bBestExpLevel + 2 * gGameOptions.ubDifficultyLevel +
@@ -532,7 +532,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
                 if (gfCantRetreatInPBI) {
                   iChance += 20;
                 }
-                if ((INT32)PreRandom(100) < iChance) {
+                if ((int32_t)PreRandom(100) < iChance) {
                   gubEnemyEncounterCode = ENEMY_AMBUSH_CODE;
                 }
               }
@@ -686,10 +686,10 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
 void DoTransitionFromMapscreenToPreBattleInterface() {
   SGPRect DstRect, PBIRect;
   uint32_t uiStartTime, uiCurrTime;
-  INT32 iPercentage, iFactor;
+  int32_t iPercentage, iFactor;
   uint32_t uiTimeRange;
   int16_t sStartLeft, sEndLeft, sStartTop, sEndTop;
-  INT32 iLeft, iTop, iWidth, iHeight;
+  int32_t iLeft, iTop, iWidth, iHeight;
   BOOLEAN fEnterAutoResolveMode = FALSE;
 
   if (!gfExtraBuffer) return;
@@ -831,9 +831,9 @@ void KillPreBattleInterface() {
   }
 }
 
-void RenderPBHeader(INT32 *piX, INT32 *piWidth) {
+void RenderPBHeader(int32_t *piX, int32_t *piWidth) {
   CHAR16 str[100];
-  INT32 x, width;
+  int32_t x, width;
   SetFont(FONT10ARIALBOLD);
   if (gfBlinkHeader) {
     if (GetJA2Clock() % 1000 < 667) {
@@ -884,7 +884,7 @@ void RenderPBHeader(INT32 *piX, INT32 *piWidth) {
 
 void RenderPreBattleInterface() {
   struct VObject *hVObject;
-  INT32 i, x, y, line, width;
+  int32_t i, x, y, line, width;
   CHAR16 str[100];
   CHAR16 pSectorName[128];
   uint8_t ubHPPercent, ubBPPercent;
@@ -985,12 +985,12 @@ void RenderPreBattleInterface() {
     mprintf(224 - width, 38, str);
 
     // Draw the bottom columns
-    for (i = 0; i < (INT32)max(guiNumUninvolved, 1); i++) {
+    for (i = 0; i < (int32_t)max(guiNumUninvolved, 1); i++) {
       y = BOTTOM_Y - ROW_HEIGHT * (i + 1) + 1;
       BltVideoObject(guiSAVEBUFFER, hVObject, BOTTOM_COLUMN, 161, y, VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
-    for (i = 0; i < (INT32)(21 - max(guiNumUninvolved, 1)); i++) {
+    for (i = 0; i < (int32_t)(21 - max(guiNumUninvolved, 1)); i++) {
       y = TOP_Y + ROW_HEIGHT * i;
       BltVideoObject(guiSAVEBUFFER, hVObject, TOP_COLUMN, 186, y, VO_BLT_SRCTRANSPARENCY, NULL);
     }
@@ -1146,7 +1146,7 @@ void RenderPreBattleInterface() {
   gfIgnoreAllInput = FALSE;
 }
 
-void AutoResolveBattleCallback(GUI_BUTTON *btn, INT32 reason) {
+void AutoResolveBattleCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!gfIgnoreAllInput) {
     if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
 #ifdef JA2TESTVERSION
@@ -1179,7 +1179,7 @@ void AutoResolveBattleCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason) {
+void GoToSectorCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!gfIgnoreAllInput) {
     if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
 #ifdef JA2TESTVERSION
@@ -1244,7 +1244,7 @@ void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void RetreatMercsCallback(GUI_BUTTON *btn, INT32 reason) {
+void RetreatMercsCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!gfIgnoreAllInput) {
     if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
       // get them outta here!
@@ -1321,7 +1321,7 @@ void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, 
 }
 
 /*
-void InvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason )
+void InvolvedMoveCallback( struct MOUSE_REGION *reg, int32_t reason )
 {
         gfRenderPBInterface = TRUE;
         if( reason & MSYS_CALLBACK_REASON_LOST_MOUSE )
@@ -1333,7 +1333,7 @@ void InvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason )
         giHilitedUninvolved = -1;
 }
 
-void InvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
+void InvolvedClickCallback( struct MOUSE_REGION *reg, int32_t reason )
 {
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
@@ -1351,7 +1351,7 @@ void InvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
         }
 }
 
-void UninvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason )
+void UninvolvedMoveCallback( struct MOUSE_REGION *reg, int32_t reason )
 {
         gfRenderPBInterface = TRUE;
         if( reason & MSYS_CALLBACK_REASON_LOST_MOUSE )
@@ -1363,7 +1363,7 @@ void UninvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason )
         giHilitedInvolved = -1;
 }
 
-void UninvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
+void UninvolvedClickCallback( struct MOUSE_REGION *reg, int32_t reason )
 {
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
@@ -1391,7 +1391,7 @@ void UninvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
         }
 }
 
-struct SOLDIERTYPE* InvolvedSoldier( INT32 index )
+struct SOLDIERTYPE* InvolvedSoldier( int32_t index )
 {
         struct GROUP *pGroup;
         PLAYERGROUP *pPlayer=NULL;
@@ -1422,7 +1422,7 @@ struct SOLDIERTYPE* InvolvedSoldier( INT32 index )
         return pPlayer->pSoldier;
 }
 
-struct SOLDIERTYPE* UninvolvedSoldier( INT32 index )
+struct SOLDIERTYPE* UninvolvedSoldier( int32_t index )
 {
         struct GROUP *pGroup;
         PLAYERGROUP *pPlayer=NULL;
@@ -1621,7 +1621,7 @@ void PutNonSquadMercsInPlayerGroupOnSquads(struct GROUP *pGroup, BOOLEAN fExitVe
 }
 
 void WakeUpAllMercsInSectorUnderAttack(void) {
-  INT32 iCounter = 0, iNumberOfMercsOnTeam = 0;
+  int32_t iCounter = 0, iNumberOfMercsOnTeam = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // get number of possible grunts on team
@@ -1732,7 +1732,7 @@ BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
 }
 
 void CheckForRobotAndIfItsControlled(void) {
-  INT32 i;
+  int32_t i;
 
   // search for the robot on player's team
   for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;

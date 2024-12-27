@@ -22,7 +22,7 @@ BOOLEAN gfShowPits = FALSE;
 
 BOOLEAN gfLoadPitsWithoutArming = FALSE;
 
-void Add3X3Pit(INT32 iMapIndex) {
+void Add3X3Pit(int32_t iMapIndex) {
   EXITGRID ExitGrid;
   if (!gfEditMode) ApplyMapChangesToMapTempFile(TRUE);
   AddObjectToTail(iMapIndex + 159, REGWATERTEXTURE1);
@@ -55,7 +55,7 @@ void Add3X3Pit(INT32 iMapIndex) {
   if (!gfEditMode) ApplyMapChangesToMapTempFile(FALSE);
 }
 
-void Add5X5Pit(INT32 iMapIndex) {
+void Add5X5Pit(int32_t iMapIndex) {
   EXITGRID ExitGrid;
   if (!gfEditMode) ApplyMapChangesToMapTempFile(TRUE);
   AddObjectToTail(iMapIndex + 318, REGWATERTEXTURE10);
@@ -119,7 +119,7 @@ void Add5X5Pit(INT32 iMapIndex) {
   if (!gfEditMode) ApplyMapChangesToMapTempFile(FALSE);
 }
 
-void Remove3X3Pit(INT32 iMapIndex) {
+void Remove3X3Pit(int32_t iMapIndex) {
   RemoveAllObjectsOfTypeRange(iMapIndex + 159, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex - 1, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex - 161, REGWATERTEXTURE, REGWATERTEXTURE);
@@ -132,7 +132,7 @@ void Remove3X3Pit(INT32 iMapIndex) {
   MarkWorldDirty();
 }
 
-void Remove5X5Pit(INT32 iMapIndex) {
+void Remove5X5Pit(int32_t iMapIndex) {
   RemoveAllObjectsOfTypeRange(iMapIndex + 318, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex + 158, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex - 2, REGWATERTEXTURE, REGWATERTEXTURE);

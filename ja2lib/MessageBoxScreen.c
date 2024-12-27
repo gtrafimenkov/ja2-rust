@@ -52,15 +52,15 @@ BOOLEAN gfInMsgBox = FALSE;
 extern BOOLEAN fInMapMode;
 extern BOOLEAN gfOverheadMapDirty;
 
-void OKMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void YESMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void ContractMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void OKMsgBoxCallback(GUI_BUTTON *btn, int32_t reason);
+void YESMsgBoxCallback(GUI_BUTTON *btn, int32_t reason);
+void ContractMsgBoxCallback(GUI_BUTTON *btn, int32_t reason);
+void LieMsgBoxCallback(GUI_BUTTON *btn, int32_t reason);
+void NOMsgBoxCallback(GUI_BUTTON *btn, int32_t reason);
+void NumberedMsgBoxCallback(GUI_BUTTON *btn, int32_t reason);
+void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 uint32_t ExitMsgBox(int8_t ubExitCode);
-uint16_t GetMSgBoxButtonWidth(INT32 iButtonImage);
+uint16_t GetMSgBoxButtonWidth(int32_t iButtonImage);
 
 SGPRect gOldCursorLimitRectangle;
 
@@ -77,8 +77,8 @@ extern STR16 pUpdatePanelButtons[];
 CHAR16 gzUserDefinedButton1[128];
 CHAR16 gzUserDefinedButton2[128];
 
-INT32 DoMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
-                   MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
+int32_t DoMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+                     MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
   VSURFACE_DESC vs_desc;
   uint16_t usTextBoxWidth;
   uint16_t usTextBoxHeight;
@@ -90,7 +90,7 @@ INT32 DoMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint
           ubMercBoxBorder = BASIC_MERC_POPUP_BORDER;
   uint8_t ubFontColor, ubFontShadowColor;
   uint16_t usCursor;
-  INT32 iId = -1;
+  int32_t iId = -1;
 
   GetMousePos(&pOldMousePosition);
 
@@ -599,7 +599,7 @@ INT32 DoMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint
   return (iId);
 }
 
-void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   /// if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP)
   //{
   //	gMsgBox.bHandled = MSG_BOX_RETURN_NO;
@@ -607,7 +607,7 @@ void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   //
 }
 
-void OKMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
+void OKMsgBoxCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -623,7 +623,7 @@ void OKMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void YESMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
+void YESMsgBoxCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -639,7 +639,7 @@ void YESMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
+void NOMsgBoxCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -655,7 +655,7 @@ void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ContractMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
+void ContractMsgBoxCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -671,7 +671,7 @@ void ContractMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
+void LieMsgBoxCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -687,7 +687,7 @@ void LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason) {
+void NumberedMsgBoxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1099,6 +1099,6 @@ void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, uint16_t usFlags,
   }
 }
 
-uint16_t GetMSgBoxButtonWidth(INT32 iButtonImage) {
+uint16_t GetMSgBoxButtonWidth(int32_t iButtonImage) {
   return (GetWidthOfButtonPic((uint16_t)iButtonImage, ButtonPictures[iButtonImage].OnNormal));
 }

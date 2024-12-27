@@ -499,7 +499,7 @@ uint32_t GetMercArrivalTimeOfDay() {
 }
 
 void UpdateAnyInTransitMercsWithGlobalArrivalSector() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -541,9 +541,9 @@ void CheckForValidArrivalSector() {
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, sGoodX, sGoodY;
   uint8_t ubRadius = 4;
-  INT32 leftmost;
+  int32_t leftmost;
   int16_t sSectorGridNo, sSectorGridNo2;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   BOOLEAN fFound = FALSE;
   CHAR16 sString[1024];
   CHAR16 zShortTownIDString1[50];

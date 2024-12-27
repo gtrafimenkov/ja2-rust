@@ -36,7 +36,7 @@ void InitEditorMercsToolbar() {
   CHAR16 TempString[30];
   CHAR16 *FaceDirs[8] = {L"north", L"northeast", L"east", L"southeast",
                          L"south", L"southwest", L"west", L"northwest"};
-  INT32 x;
+  int32_t x;
 
   iEditorButton[MERCS_PLAYERTOGGLE] = CreateCheckBoxButton(
       4, 362, "EDITOR//SmCheckbox.sti", MSYS_PRIORITY_NORMAL, MercsTogglePlayers);

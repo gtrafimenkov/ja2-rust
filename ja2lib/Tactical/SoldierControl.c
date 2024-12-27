@@ -240,7 +240,7 @@ uint16_t *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint
                                           uint32_t gscale, BOOLEAN fAdjustGreen);
 
 void SoldierBleed(struct SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed);
-INT32 CheckBleeding(struct SOLDIERTYPE *pSoldier);
+int32_t CheckBleeding(struct SOLDIERTYPE *pSoldier);
 
 void EVENT_InternalSetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection,
                                               BOOLEAN fInitalMove, uint16_t usAnimState);
@@ -547,7 +547,7 @@ void DoNinjaAttack(struct SOLDIERTYPE *pSoldier) {
   if (GetSolProfile(pSoldier) == 33) {
     uint32_t uiSoundID;
     SOUNDPARMS spParms;
-    INT32 iFaceIndex;
+    int32_t iFaceIndex;
 
     // Play sound!
     memset(&spParms, 0xff, sizeof(SOUNDPARMS));
@@ -592,7 +592,7 @@ void DoNinjaAttack(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN CreateSoldierCommon(uint8_t ubBodyType, struct SOLDIERTYPE *pSoldier, uint16_t usSoldierID,
                             uint16_t usState) {
   BOOLEAN fSuccess = FALSE;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // if we are loading a saved game, we DO NOT want to reset the opplist, look for enemies, or say a
   // dying commnet
@@ -697,7 +697,7 @@ BOOLEAN CreateSoldierCommon(uint8_t ubBodyType, struct SOLDIERTYPE *pSoldier, ui
 
 BOOLEAN DeleteSoldier(struct SOLDIERTYPE *pSoldier) {
   uint32_t cnt;
-  INT32 iGridNo;
+  int32_t iGridNo;
   int8_t bDir;
   BOOLEAN fRet;
 
@@ -900,7 +900,7 @@ BOOLEAN ChangeSoldierState(struct SOLDIERTYPE *pSoldier, uint16_t usNewState,
 
 // This function reevaluates the stance if the guy sees us!
 BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState) {
-  INT32 cnt, iClosestEnemy = NOBODY;
+  int32_t cnt, iClosestEnemy = NOBODY;
   int16_t sTargetXPos, sTargetYPos;
   BOOLEAN fReturnVal = FALSE;
   int16_t sDist, sClosestDist = 10000;
@@ -1869,7 +1869,7 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, uint16_t usNewSta
 
 void InternalRemoveSoldierFromGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN fForce) {
   int8_t bDir;
-  INT32 iGridNo;
+  int32_t iGridNo;
 
   if ((pSoldier->sGridNo != NO_MAP_POS)) {
     if (pSoldier->bInSector || fForce) {
@@ -2016,7 +2016,7 @@ void SetSoldierHeight(struct SOLDIERTYPE *pSoldier, FLOAT dNewHeight) {
 void SetSoldierGridNo(struct SOLDIERTYPE *pSoldier, int16_t sNewGridNo, BOOLEAN fForceRemove) {
   BOOLEAN fInWaterValue;
   int8_t bDir;
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pEnemy;
 
   // int16_t	sX, sY, sWorldX, sZLevel;
@@ -3460,7 +3460,7 @@ void SoldierGotHitPunch(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, in
 BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, uint16_t sDestGridNo,
                                         uint16_t usMovementAnim, BOOLEAN fFromUI,
                                         BOOLEAN fForceRestartAnim) {
-  INT32 iDest;
+  int32_t iDest;
   BOOLEAN fContinue;
   uint32_t uiDist;
   uint16_t usAnimState;
@@ -3957,10 +3957,10 @@ void EVENT_SetSoldierDirection(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirec
 }
 
 void EVENT_BeginMercTurn(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromRealTime,
-                         INT32 iRealTimeCounter) {
+                         int32_t iRealTimeCounter) {
   // NB realtimecounter is not used, always passed in as 0 now!
 
-  INT32 iBlood;
+  int32_t iBlood;
 
   if (pSoldier->bUnderFire) {
     // UnderFire now starts at 2 for "under fire this turn",
@@ -4218,7 +4218,7 @@ BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, uint16_t usAniFra
 void TurnSoldier(struct SOLDIERTYPE *pSoldier) {
   int16_t sDirection;
   BOOLEAN fDoDirectionChange = TRUE;
-  INT32 cnt;
+  int32_t cnt;
 
   // If we are a vehicle... DON'T TURN!
   if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
@@ -4555,8 +4555,8 @@ uint8_t gOrangeGlowG[] = {
 BOOLEAN CreateSoldierPalettes(struct SOLDIERTYPE *pSoldier) {
   uint16_t usAnimSurface, usPaletteAnimSurface;
   CHAR8 zColFilename[100];
-  INT32 iWhich;
-  INT32 cnt;
+  int32_t iWhich;
+  int32_t cnt;
   int8_t bBodyTypePalette;
   struct SGPPaletteEntry Temp8BPPPalette[256];
 
@@ -5683,7 +5683,7 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, uint8_t ubBattle
   uint32_t uiSoundID;
   uint32_t iFaceIndex;
   BOOLEAN fDoSub = FALSE;
-  INT32 uiSubSoundID = 0;
+  int32_t uiSubSoundID = 0;
 
   // DOUBLECHECK RANGE
   CHECKF(ubBattleSoundID < NUM_MERC_BATTLE_SOUNDS);
@@ -6385,7 +6385,7 @@ void CheckForFullStructures(struct SOLDIERTYPE *pSoldier) {
   // a small obscuring peice
   int16_t sGridNo;
   uint16_t usFullTileIndex;
-  INT32 cnt;
+  int32_t cnt;
 
   // Check in all 'Above' directions
   for (cnt = 0; cnt < MAX_FULLTILE_DIRECTIONS; cnt++) {
@@ -6453,7 +6453,7 @@ BOOLEAN FullStructAlone(int16_t sGridNo, uint8_t ubRadius) {
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t iNewIndex;
-  INT32 leftmost;
+  int32_t leftmost;
 
   // Determine start end end indicies and num rows
   sTop = ubRadius;
@@ -6597,7 +6597,7 @@ void SendBeginFireWeaponEvent(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridN
 
 // This function just encapolates the check for turnbased and having an attacker in the first place
 void ReleaseSoldiersAttacker(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubNumToFree;
 
   // if ( gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT) )
@@ -6647,7 +6647,7 @@ BOOLEAN MercInWater(struct SOLDIERTYPE *pSoldier) {
 }
 
 void RevivePlayerTeam() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // End the turn of player charactors
@@ -7404,7 +7404,7 @@ uint32_t SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVi
 
 void InternalReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEAN fPlayEndAnim) {
   struct SOLDIERTYPE *pTSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   if (pSoldier->ubServiceCount > 0) {
     // Loop through guys who have us as servicing
@@ -8065,9 +8065,9 @@ BOOLEAN SoldierCarriesTwoHandedWeapon(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT32 CheckBleeding(struct SOLDIERTYPE *pSoldier) {
+int32_t CheckBleeding(struct SOLDIERTYPE *pSoldier) {
   int8_t bBandaged;  //,savedOurTurn;
-  INT32 iBlood = NOBLOOD;
+  int32_t iBlood = NOBLOOD;
 
   if (pSoldier->bLife != 0) {
     // if merc is hurt beyond the minimum required to bleed, or he's dying
@@ -8402,7 +8402,7 @@ void SetCheckSoldierLightFlag(struct SOLDIERTYPE *pSoldier) {
   // pSoldier->uiStatusFlags |= SOLDIER_RECHECKLIGHT;
 }
 
-void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, int16_t sGridNo,
+void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, int32_t iItemIndex, int16_t sGridNo,
                          int8_t bZLevel) {
   int8_t bDirection;
   struct STRUCTURE *pStructure;
@@ -9021,7 +9021,7 @@ struct SOLDIERTYPE *GetRobotController(struct SOLDIERTYPE *pSoldier) {
 
 void UpdateRobotControllerGivenRobot(struct SOLDIERTYPE *pRobot) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   // Loop through guys and look for a controller!
 
@@ -9044,7 +9044,7 @@ void UpdateRobotControllerGivenRobot(struct SOLDIERTYPE *pRobot) {
 
 void UpdateRobotControllerGivenController(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   // First see if are still controlling the robot
   if (!ControllingRobot(pSoldier)) {
@@ -9307,7 +9307,7 @@ void BeginTyingToFall(struct SOLDIERTYPE *pSoldier) {
 
 void SetSoldierAsUnderAiControl(struct SOLDIERTYPE *pSoldierToSet) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 cnt;
+  int32_t cnt;
 
   if (pSoldierToSet == NULL) {
     return;
@@ -9339,7 +9339,7 @@ void HandlePlayerTogglingLightEffects(BOOLEAN fToggleValue) {
 
 void EnableDisableSoldierLightEffects(BOOLEAN fEnableLights) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 cnt;
+  int32_t cnt;
 
   // Loop through player teams...
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;

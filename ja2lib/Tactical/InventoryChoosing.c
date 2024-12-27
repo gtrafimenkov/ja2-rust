@@ -172,7 +172,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass,
   BOOLEAN fMortar = FALSE;
   BOOLEAN fGrenadeLauncher = FALSE;
   BOOLEAN fLAW = FALSE;
-  INT32 i;
+  int32_t i;
   int8_t bEquipmentModifier;
   uint8_t ubMaxSpecialWeaponRoll;
 
@@ -1093,7 +1093,7 @@ void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t
 }
 
 void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
-  INT32 i;
+  int32_t i;
   int8_t bDifficultyRating = CalcDifficultyModifier(pp->ubSoldierClass);
 
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
@@ -1213,20 +1213,20 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bMisc
   struct OBJECTTYPE Object;
 
   // not all of these are IC_MISC, some are IC_PUNCH (not covered anywhere else)
-  INT32 iMiscItemsList[] = {CANTEEN,
-                            CANTEEN,
-                            CANTEEN,
-                            CANTEEN,
-                            ALCOHOL,
-                            ALCOHOL,
-                            ADRENALINE_BOOSTER,
-                            ADRENALINE_BOOSTER,
-                            REGEN_BOOSTER,
-                            BRASS_KNUCKLES,
-                            CHEWING_GUM,
-                            CIGARS,
-                            GOLDWATCH,
-                            -1};
+  int32_t iMiscItemsList[] = {CANTEEN,
+                              CANTEEN,
+                              CANTEEN,
+                              CANTEEN,
+                              ALCOHOL,
+                              ALCOHOL,
+                              ADRENALINE_BOOSTER,
+                              ADRENALINE_BOOSTER,
+                              REGEN_BOOSTER,
+                              BRASS_KNUCKLES,
+                              CHEWING_GUM,
+                              CIGARS,
+                              GOLDWATCH,
+                              -1};
 
   // count how many are eligible
   i = 0;
@@ -1349,7 +1349,7 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECT
 }
 
 void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass) {
-  INT32 i;
+  int32_t i;
   //	uint16_t usRandomNum;
   uint32_t uiItemClass;
   uint8_t ubNumMatches = 0;

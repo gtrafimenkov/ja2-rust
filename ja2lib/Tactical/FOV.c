@@ -187,20 +187,20 @@ typedef struct {
 SLANT_ROOF_FOV_TYPE gSlantRoofData[NUM_SLANT_ROOF_SLOTS];
 uint32_t guiNumSlantRoofs = 0;
 
-INT32 GetFreeSlantRoof(void) {
+int32_t GetFreeSlantRoof(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumSlantRoofs; uiCount++) {
-    if ((gSlantRoofData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gSlantRoofData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumSlantRoofs < NUM_SLANT_ROOF_SLOTS) return ((INT32)guiNumSlantRoofs++);
+  if (guiNumSlantRoofs < NUM_SLANT_ROOF_SLOTS) return ((int32_t)guiNumSlantRoofs++);
 
   return (-1);
 }
 
 void RecountSlantRoofs(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumSlantRoofs - 1; (uiCount >= 0); uiCount--) {
     if ((gSlantRoofData[uiCount].fAllocated)) {
@@ -237,7 +237,7 @@ BOOLEAN FindSlantRoofSlot(int16_t sGridNo) {
 }
 
 void AddSlantRoofFOVSlot(int16_t sGridNo) {
-  INT32 iSlantRoofSlot;
+  int32_t iSlantRoofSlot;
   SLANT_ROOF_FOV_TYPE *pSlantRoof;
 
   // Check if this is a duplicate!
@@ -285,7 +285,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
   BOOLEAN fRevealItems = TRUE;
   BOOLEAN fStopRevealingItemsAfterThisTile = FALSE;
   int8_t bTallestStructureHeight;
-  INT32 iDoorGridNo;
+  int32_t iDoorGridNo;
   struct STRUCTURE *pStructure, *pDummy;
   int8_t bStructHeight;
   int8_t bThroughWindowDirection;

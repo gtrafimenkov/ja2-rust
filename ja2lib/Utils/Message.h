@@ -7,7 +7,7 @@
 
 struct stringstruct {
   STR16 pString16;
-  INT32 iVideoOverlay;
+  int32_t iVideoOverlay;
   uint32_t uiFont;
   uint16_t usColor;
   uint32_t uiFlags;
@@ -87,7 +87,7 @@ void ScrollToHereInMapScreenMessageList( uint8_t ubPosition );
 BOOLEAN IsThereAnEmptySlotInTheMapScreenMessageList( void );
 uint8_t GetFirstEmptySlotInTheMapScreenMessageList( void );
 void RemoveMapScreenMessageListString( ScrollStringStPtr pStringSt );
-BOOLEAN AreThereASetOfStringsAfterThisIndex( uint8_t ubMsgIndex, INT32 iNumberOfStrings );
+BOOLEAN AreThereASetOfStringsAfterThisIndex( uint8_t ubMsgIndex, int32_t iNumberOfStrings );
 uint8_t GetCurrentMessageValue( void );
 uint8_t GetCurrentTempMessageValue( void );
 uint8_t GetNewMessageValueGivenPosition( uint8_t ubPosition );

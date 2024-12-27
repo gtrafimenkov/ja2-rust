@@ -106,7 +106,7 @@ void InitializeMines(void);
 void HourlyMinesUpdate(void);
 
 // get total left in this mine
-INT32 GetTotalLeftInMine(int8_t bMineIndex);
+int32_t GetTotalLeftInMine(int8_t bMineIndex);
 
 // get max rates for this mine (per period, per day)
 uint32_t GetMaxPeriodicRemovalFromMine(int8_t bMineIndex);
@@ -125,13 +125,13 @@ void PostEventsForMineProduction(void);
 void HandleIncomeFromMines(void);
 
 // predict income from mines
-INT32 PredictIncomeFromPlayerMines(void);
+int32_t PredictIncomeFromPlayerMines(void);
 
 // predict income from a mine
 uint32_t PredictDailyIncomeFromAMine(int8_t bMineIndex);
 
 // calculate maximum possible daily income from all mines
-INT32 CalcMaxPlayerIncomeFromMines(void);
+int32_t CalcMaxPlayerIncomeFromMines(void);
 
 // get index value of this mine in the mine list
 int8_t GetMineIndexForSector(int16_t sX, int16_t sY);

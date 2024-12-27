@@ -100,10 +100,10 @@ enum { URGENCY_LOW = 0, URGENCY_MED, URGENCY_HIGH, NUM_URGENCY_STATES };
 typedef struct {
   struct SOLDIERTYPE *pOpponent;
   int16_t sGridNo;
-  INT32 iValue;
-  INT32 iAPs;
-  INT32 iCertainty;
-  INT32 iOrigRange;
+  int32_t iValue;
+  int32_t iAPs;
+  int32_t iCertainty;
+  int32_t iOrigRange;
 } THREATTYPE;
 
 // define for bAimTime for bursting
@@ -114,7 +114,7 @@ typedef struct {
   uint8_t ubOpponent;           // which soldier is the victim?
   uint8_t ubAimTime;            // how many extra APs to spend on aiming
   uint8_t ubChanceToReallyHit;  // chance to hit * chance to get through cover
-  INT32 iAttackValue;           // relative worthiness of this type of attack
+  int32_t iAttackValue;         // relative worthiness of this type of attack
   int16_t sTarget;              // target gridno of this attack
   int8_t bTargetLevel;          // target level of this attack
   uint8_t ubAPCost;             // how many APs the attack will use up
@@ -143,8 +143,8 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow);
 void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab);
 
 int16_t CalcSpreadBurst(struct SOLDIERTYPE *pSoldier, int16_t sFirstTarget, int8_t bTargetLevel);
-INT32 CalcManThreatValue(struct SOLDIERTYPE *pSoldier, int16_t sMyGrid, uint8_t ubReduceForCover,
-                         struct SOLDIERTYPE *pMe);
+int32_t CalcManThreatValue(struct SOLDIERTYPE *pSoldier, int16_t sMyGrid, uint8_t ubReduceForCover,
+                           struct SOLDIERTYPE *pMe);
 int8_t CanNPCAttack(struct SOLDIERTYPE *pSoldier);
 void CheckIfTossPossible(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow);
 BOOLEAN ClimbingNecessary(struct SOLDIERTYPE *pSoldier, int16_t sDestGridNo, int8_t bDestLevel);
@@ -161,12 +161,12 @@ void DecideAlertStatus(struct SOLDIERTYPE *pSoldier);
 int8_t DecideAutoBandage(struct SOLDIERTYPE *pSoldier);
 uint16_t DetermineMovementMode(struct SOLDIERTYPE *pSoldier, int8_t bAction);
 
-INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         uint8_t ubChanceToHit);
-INT32 EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         uint8_t ubChanceToHit, BOOLEAN fBladeAttack);
-INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
-                          struct SOLDIERTYPE *pOpponent, int16_t sGridno);
+int32_t EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                           uint8_t ubChanceToHit);
+int32_t EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                           uint8_t ubChanceToHit, BOOLEAN fBladeAttack);
+int32_t EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
+                            struct SOLDIERTYPE *pOpponent, int16_t sGridno);
 int16_t EstimatePathCostToLocation(struct SOLDIERTYPE *pSoldier, int16_t sDestGridNo,
                                    int8_t bDestLevel, BOOLEAN fAddCostAfterClimbingUp,
                                    BOOLEAN *pfClimbingNecessary, int16_t *psClimbGridNo);
@@ -195,7 +195,7 @@ int16_t InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, int16_t s
 int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, int16_t sGridno, uint8_t ubPathMode,
                         uint8_t ubWaterOK, uint8_t fFlags);
 void LoadWeaponIfNeeded(struct SOLDIERTYPE *pSoldier);
-int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
+int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, int32_t *piRetValue,
                                 BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable);
 int16_t NPCConsiderInitiatingConv(struct SOLDIERTYPE *pNPC, uint8_t *pubDesiredMerc);
 void NPCDoesAct(struct SOLDIERTYPE *pSoldier);
@@ -205,7 +205,7 @@ BOOLEAN NeedToRadioAboutPanicTrigger(void);
 int8_t PointPatrolAI(struct SOLDIERTYPE *pSoldier);
 void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier);
 int8_t RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier);
-INT32 RangeChangeDesire(struct SOLDIERTYPE *pSoldier);
+int32_t RangeChangeDesire(struct SOLDIERTYPE *pSoldier);
 uint16_t RealtimeDelay(struct SOLDIERTYPE *pSoldier);
 void RearrangePocket(struct SOLDIERTYPE *pSoldier, int8_t bPocket1, int8_t bPocket2,
                      uint8_t bPermanent);

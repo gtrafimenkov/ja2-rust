@@ -9,5 +9,5 @@ void ExitIMPVoices(void);
 void HandleIMPVoices(void);
 uint32_t PlayVoice(void);
 
-extern INT32 iVoiceId;
+extern int32_t iVoiceId;
 #endif

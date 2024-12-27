@@ -8,7 +8,7 @@
 extern uint32_t guiDropDownBorder;
 extern struct MOUSE_REGION pScreenMask;
 
-INT32 EnterLaptop();
+int32_t EnterLaptop();
 void ExitLaptop();
 void RenderLaptop();
 uint32_t ExitLaptopMode(uint32_t uiMode);
@@ -18,17 +18,17 @@ uint32_t DrawLapTopText();
 void ReDrawHighLight();
 void DrawButtonText();
 void InitBookMarkList();
-void SetBookMark(INT32 iBookId);
-void RemoveBookmark(INT32 iBookId);
+void SetBookMark(int32_t iBookId);
+void RemoveBookmark(int32_t iBookId);
 BOOLEAN LeaveLapTopScreen();
 void SetLaptopExitScreen(uint32_t uiExitScreen);
 void SetLaptopNewGameFlag();
 uint32_t DrawLapTopIcons();
-void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 void HandleRightButtonUpEvent(void);
 BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                            MSGBOX_CALLBACK ReturnCallback);
-void GoToWebPage(INT32 iPageId);
+void GoToWebPage(int32_t iPageId);
 BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t usHeight,
                               uint32_t uiBackGround);
 void BlitTitleBarIcons(void);
@@ -37,7 +37,7 @@ BOOLEAN RenderWWWProgramTitleBar(void);
 void DisplayProgramBoundingBox(BOOLEAN fMarkButtons);
 BOOLEAN DoLapTopSystemMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
                                  uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
-BOOLEAN RemoveBookMark(INT32 iBookId);
+BOOLEAN RemoveBookMark(int32_t iBookId);
 void CreateFileAndNewEmailIconFastHelpText(uint32_t uiHelpTextID, BOOLEAN fClearHelpText);
 BOOLEAN InitLaptopAndLaptopScreens();
 
@@ -48,7 +48,7 @@ void HaventMadeImpMercEmailCallBack();
 
 extern uint32_t guiCurrentLaptopMode;
 extern uint32_t guiPreviousLaptopMode;
-extern INT32 giCurrentSubPage;
+extern int32_t giCurrentSubPage;
 extern uint32_t guiCurrentLapTopCursor;
 extern uint32_t guiPreviousLapTopCursor;
 extern BOOLEAN fMarkButtonsDirtyFlag;

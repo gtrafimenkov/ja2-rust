@@ -322,7 +322,7 @@ typedef struct {
   int8_t bRecruitDefaultResponseUsedRecently;
   int8_t bThreatenDefaultResponseUsedRecently;
   int8_t bNPCData;  // NPC specific
-  INT32 iBalance;
+  int32_t iBalance;
   int16_t sTrueSalary;  // for use when the person is working for us for free but has a positive
                         // salary value
   uint8_t ubCivilianGroup;
@@ -344,8 +344,8 @@ typedef struct {
   uint8_t ubTimeTillNextHatedComplaint;
   uint8_t ubSuspiciousDeath;
 
-  INT32 iMercMercContractLength;  // Used for MERC mercs, specifies how many days the merc has gone
-                                  // since last page
+  int32_t iMercMercContractLength;  // Used for MERC mercs, specifies how many days the merc has
+                                    // gone since last page
 
   uint32_t uiTotalCostToDate;  // The total amount of money that has been paid to the merc for their
                                // salary

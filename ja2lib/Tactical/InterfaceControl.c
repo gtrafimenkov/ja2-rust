@@ -348,9 +348,9 @@ void RenderRubberBanding() {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   int16_t iLeft, iRight, iTop, iBottom;
-  INT32 iBack = -1;
-  static INT32 iFlashColor = 0;
-  static INT32 uiTimeOfLastUpdate = 0;
+  int32_t iBack = -1;
+  static int32_t iFlashColor = 0;
+  static int32_t uiTimeOfLastUpdate = 0;
 
   if (!gRubberBandActive) return;
 

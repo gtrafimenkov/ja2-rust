@@ -54,7 +54,7 @@ void SelectNextItemOfType(uint16_t usItem);
 void SelectNextPressureAction();
 void SelectNextKeyOfType(uint8_t ubKeyID);
 
-INT32 giDefaultExistChance = 100;
+int32_t giDefaultExistChance = 100;
 
 typedef struct IPListNode {
   int16_t sGridNo;
@@ -110,7 +110,7 @@ EditorItemsInfo eInfo;
 // Does some precalculations regarding the number of each item type, so that it
 // isn't calculated every time a player changes categories.
 void EntryInitEditorItemsInfo() {
-  INT32 i;
+  int32_t i;
   INVTYPE *item;
   eInfo.uiBuffer = 0;
   eInfo.fKill = 0;
@@ -193,7 +193,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
   CHAR16 pItemName[SIZE_ITEM_NAME];
   uint8_t ubBitDepth;
   BOOLEAN fTypeMatch;
-  INT32 iEquipCount = 0;
+  int32_t iEquipCount = 0;
 
   // Check to make sure that there isn't already a valid eInfo
   if (eInfo.fActive) {
@@ -670,7 +670,7 @@ void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, int8_t bEvent) {
   }
 }
 
-void ShowItemCursor(INT32 iMapIndex) {
+void ShowItemCursor(int32_t iMapIndex) {
   struct LEVELNODE *pNode;
   pNode = gpWorldLevelData[iMapIndex].pTopmostHead;
   while (pNode) {
@@ -680,7 +680,7 @@ void ShowItemCursor(INT32 iMapIndex) {
   AddTopmostToTail(iMapIndex, SELRING1);
 }
 
-void HideItemCursor(INT32 iMapIndex) { RemoveTopmost(iMapIndex, SELRING1); }
+void HideItemCursor(int32_t iMapIndex) { RemoveTopmost(iMapIndex, SELRING1); }
 
 BOOLEAN TriggerAtGridNo(int16_t sGridNo) {
   struct ITEM_POOL *pItemPool;
@@ -701,7 +701,7 @@ void AddSelectedItemToWorld(int16_t sGridNo) {
   struct OBJECTTYPE *pObject;
   INVTYPE *pItem;
   struct ITEM_POOL *pItemPool;
-  INT32 iItemIndex;
+  int32_t iItemIndex;
   int8_t bVisibility = INVISIBLE;
   BOOLEAN fFound = FALSE;
   IPListNode *pIPCurr, *pIPPrev;

@@ -17,7 +17,7 @@ typedef struct {
   int8_t bAge;         // the number of turns light has been around
   BOOLEAN fAllocated;
   int8_t bType;
-  INT32 iLight;
+  int32_t iLight;
   uint32_t uiTimeOfLastUpdate;
 
 } LIGHTEFFECT;
@@ -31,7 +31,7 @@ void AddLightEffectToTile(int8_t bType, int16_t sGridNo);
 
 void RemoveLightEffectFromTile(int16_t sGridNo);
 
-INT32 NewLightEffect(int16_t sGridNo, int8_t bType);
+int32_t NewLightEffect(int16_t sGridNo, int8_t bType);
 
 BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile);

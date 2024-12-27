@@ -1495,7 +1495,7 @@ BOOLEAN ItemHasAttachments(struct OBJECTTYPE *pObj) {
 // Determine if it is possible to add this attachment to the CLASS of this item
 // (i.e. to any item in the class)
 BOOLEAN ValidAttachmentClass(uint16_t usAttachment, uint16_t usItem) {
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
   while (1) {
     // see comment for AttachmentInfo array for why we skip IC_NONE
     if (AttachmentInfo[iLoop].uiItemClass != IC_NONE) {
@@ -1515,7 +1515,7 @@ BOOLEAN ValidAttachmentClass(uint16_t usAttachment, uint16_t usItem) {
 }
 
 int8_t GetAttachmentInfoIndex(uint16_t usItem) {
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   while (1) {
     if (AttachmentInfo[iLoop].usItem == usItem) {
@@ -1532,7 +1532,7 @@ int8_t GetAttachmentInfoIndex(uint16_t usItem) {
 
 // Determine if it is possible to add this attachment to the item.
 BOOLEAN ValidAttachment(uint16_t usAttachment, uint16_t usItem) {
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this attachment...
   while (1) {
@@ -1675,7 +1675,7 @@ BOOLEAN ValidAmmoType(uint16_t usItem, uint16_t usAmmoType) {
 }
 
 BOOLEAN CompatibleFaceItem(uint16_t usItem1, uint16_t usItem2) {
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this attachment...
   while (1) {
@@ -1711,7 +1711,7 @@ BOOLEAN TwoHandedItem(uint16_t usItem) {
 }
 
 BOOLEAN ValidLaunchable(uint16_t usLaunchable, uint16_t usItem) {
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this launchable item...
   while (1) {
@@ -1750,7 +1750,7 @@ BOOLEAN ValidItemLaunchable(struct OBJECTTYPE *pObj, uint16_t usAttachment) {
 }
 
 uint16_t GetLauncherFromLaunchable(uint16_t usLaunchable) {
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this launchable item...
   while (1) {
@@ -1771,7 +1771,7 @@ BOOLEAN EvaluateValidMerge(uint16_t usMerge, uint16_t usItem, uint16_t *pusResul
                            uint8_t *pubType) {
   // NB "usMerge" is the object being merged with (e.g. compound 18)
   // "usItem" is the item being merged "onto" (e.g. kevlar vest)
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   if (usMerge == usItem && Item[usItem].usItemClass == IC_AMMO) {
     *pusResult = usItem;
@@ -1812,7 +1812,7 @@ BOOLEAN ValidMerge(uint16_t usMerge, uint16_t usItem) {
 }
 
 uint8_t CalculateObjectWeight(struct OBJECTTYPE *pObject) {
-  INT32 cnt;
+  int32_t cnt;
   uint16_t usWeight;
   INVTYPE *pItem;
 
@@ -2510,7 +2510,7 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
   uint16_t usResult;
   int8_t bLoop;
   uint8_t ubType, ubLimit;
-  INT32 iCheckResult;
+  int32_t iCheckResult;
   int8_t bAttachInfoIndex = -1, bAttachComboMerge;
   BOOLEAN fValidLaunchable = FALSE;
 
@@ -4117,7 +4117,7 @@ void RemoveInvObject(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
   }
 }
 
-int8_t CheckItemForDamage(uint16_t usItem, INT32 iMaxDamage) {
+int8_t CheckItemForDamage(uint16_t usItem, int32_t iMaxDamage) {
   int8_t bDamage = 0;
 
   // if the item is protective armour, reduce the amount of damage
@@ -4138,7 +4138,7 @@ int8_t CheckItemForDamage(uint16_t usItem, INT32 iMaxDamage) {
 }
 
 BOOLEAN CheckForChainReaction(uint16_t usItem, int8_t bStatus, int8_t bDamage, BOOLEAN fOnGround) {
-  INT32 iChance;
+  int32_t iChance;
 
   iChance = Explosive[Item[usItem].ubClassIndex].ubVolatility;
   if (iChance > 0) {
@@ -4151,14 +4151,14 @@ BOOLEAN CheckForChainReaction(uint16_t usItem, int8_t bStatus, int8_t bDamage, B
     }
 
     iChance = iChance * (100 + ((100 - bStatus) + bDamage) / 2) / 100;
-    if ((INT32)PreRandom(100) < iChance) {
+    if ((int32_t)PreRandom(100) < iChance) {
       return (TRUE);
     }
   }
   return (FALSE);
 }
 
-BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround) {
+BOOLEAN DamageItem(struct OBJECTTYPE *pObject, int32_t iDamage, BOOLEAN fOnGround) {
   int8_t bLoop;
   int8_t bDamage;
 
@@ -4227,7 +4227,7 @@ BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround)
   return (FALSE);
 }
 
-void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
+void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, int32_t iDamage) {
   int8_t bSlot;
   BOOLEAN fBlowsUp;
   uint8_t ubNumberOfObjects;
@@ -4260,7 +4260,7 @@ void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
   }
 }
 
-void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
+void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, int32_t iDamage) {
   // glass jars etc can be damaged by falling over
   int8_t bSlot;
   uint8_t ubNumberOfObjects;
@@ -4289,7 +4289,7 @@ void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDam
 }
 
 BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel,
-                           INT32 iDamage, uint8_t ubOwner) {
+                           int32_t iDamage, uint8_t ubOwner) {
   BOOLEAN fBlowsUp;
 
   fBlowsUp = DamageItem(pObject, iDamage, TRUE);

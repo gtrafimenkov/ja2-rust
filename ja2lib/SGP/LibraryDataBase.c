@@ -43,7 +43,7 @@ void AddSlashToPath(STR pName);
 HWFILE CreateLibraryFileHandle(int16_t sLibraryID, uint32_t uiFileNum);
 BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, int16_t sLibraryID);
 
-INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2);
+int32_t CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2);
 
 //************************************************************************
 //
@@ -176,7 +176,7 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
   }
 
   // place the file pointer at the begining of the file headers ( they are at the end of the file )
-  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)),
+  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (int32_t)sizeof(DIRENTRY)),
                       FILE_SEEK_FROM_END);
 
   // loop through the library and determine the number of files that are FILE_OK
@@ -197,7 +197,7 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
 #endif
 
   // place the file pointer at the begining of the file headers ( they are at the end of the file )
-  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)),
+  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (int32_t)sizeof(DIRENTRY)),
                       FILE_SEEK_FROM_END);
 
   // loop through all the entries
@@ -573,7 +573,7 @@ HWFILE CreateLibraryFileHandle(int16_t sLibraryID, uint32_t uiFileNum) {
 
 HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
   HWFILE hLibFile;
-  INT32 iLoop1;
+  int32_t iLoop1;
   uint32_t uiFileNum = 0;
   uint32_t uiSize;
 
@@ -824,7 +824,7 @@ BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, int16_t sLibraryID) {
 //
 //************************************************************************
 
-INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2) {
+int32_t CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2) {
   CHAR8 sSearchKey[FILENAME_SIZE];
   CHAR8 sFileNameWithPath[FILENAME_SIZE];
 

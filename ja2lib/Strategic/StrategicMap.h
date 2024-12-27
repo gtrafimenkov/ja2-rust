@@ -126,7 +126,7 @@ void HandleSoldierLeavingSectorByThemSelf(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CheckAndHandleUnloadingOfCurrentWorld();
 
 // number of SAM sites under player control
-INT32 GetNumberOfSAMSitesUnderPlayerControl(void);
+int32_t GetNumberOfSAMSitesUnderPlayerControl(void);
 
 // is there a FUNCTIONAL SAM site in this sector?
 BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
@@ -134,7 +134,7 @@ BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, int8_t bSect
 BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
 
 // sam site under players control?
-INT32 SAMSitesUnderPlayerControl(int16_t sX, int16_t sY);
+int32_t SAMSitesUnderPlayerControl(int16_t sX, int16_t sY);
 
 int8_t GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 

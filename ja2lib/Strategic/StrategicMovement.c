@@ -434,7 +434,7 @@ BOOLEAN GroupReversingDirectionsBetweenSectors(struct GROUP *pGroup, uint8_t ubS
 
 BOOLEAN GroupBetweenSectorsAndSectorXYIsInDifferentDirection(struct GROUP *pGroup,
                                                              uint8_t ubSectorX, uint8_t ubSectorY) {
-  INT32 currDX, currDY, newDX, newDY;
+  int32_t currDX, currDY, newDX, newDY;
   uint8_t ubNumUnalignedAxes = 0;
 
   if (!pGroup->fBetweenSectors) return (FALSE);
@@ -1088,7 +1088,7 @@ void DeployGroupToSector(struct GROUP *pGroup) {
 // This will get called after a battle is auto-resolved or automatically after arriving
 // at the next sector during a move and the area is clear.
 void CalculateNextMoveIntention(struct GROUP *pGroup) {
-  INT32 i;
+  int32_t i;
   WAYPOINT *wp;
 
   Assert(pGroup);
@@ -1270,7 +1270,7 @@ void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
 // aren't at the final destination, they will move to the next sector.
 void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNeverLeft) {
   struct GROUP *pGroup;
-  INT32 iVehId = -1;
+  int32_t iVehId = -1;
   PLAYERGROUP *curr;
   uint8_t ubInsertionDirection, ubStrategicInsertionCode;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -1385,7 +1385,7 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
       AwardExperienceForTravelling(pGroup);
     } else if (!IsGroupTheHelicopterGroup(pGroup)) {
       struct SOLDIERTYPE *pSoldier;
-      INT32 iVehicleID;
+      int32_t iVehicleID;
       iVehicleID = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);
       AssertMsg(iVehicleID != -1, "GroupArrival for vehicle group.  Invalid iVehicleID. ");
 
@@ -1728,7 +1728,7 @@ void PrepareGroupsForSimultaneousArrival() {
   struct GROUP *pGroup;
   uint32_t uiLatestArrivalTime = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iVehId = 0;
+  int32_t iVehId = 0;
 
   pGroup = gpGroupList;
   while (pGroup) {  // For all of the groups that haven't arrived yet, determine which one is going
@@ -1918,12 +1918,12 @@ void DelayEnemyGroupsIfPathsCross(struct GROUP *pPlayerGroup) {
 }
 
 void InitiateGroupMovementToNextSector(struct GROUP *pGroup) {
-  INT32 dx, dy;
-  INT32 i;
+  int32_t dx, dy;
+  int32_t i;
   uint8_t ubDirection;
   uint8_t ubSector;
   WAYPOINT *wp;
-  INT32 iVehId = -1;
+  int32_t iVehId = -1;
   struct SOLDIERTYPE *pSoldier = NULL;
   uint32_t uiSleepMinutes = 0;
 
@@ -2275,7 +2275,7 @@ void SetGroupNextSectorValue(u8 sSectorX, u8 sSectorY, uint8_t ubGroupID) {
 }
 
 // get eta of the group with this id
-INT32 CalculateTravelTimeOfGroupId(uint8_t ubId) {
+int32_t CalculateTravelTimeOfGroupId(uint8_t ubId) {
   struct GROUP *pGroup;
 
   // get the group
@@ -2288,8 +2288,8 @@ INT32 CalculateTravelTimeOfGroupId(uint8_t ubId) {
   return (CalculateTravelTimeOfGroup(pGroup));
 }
 
-INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
-  INT32 iDelta;
+int32_t CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
+  int32_t iDelta;
   uint32_t uiEtaTime = 0;
   WAYPOINT *pNode = NULL;
   WAYPOINT pCurrent, pDest;
@@ -2304,8 +2304,8 @@ INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
   pNode = pGroup->pWaypoints;
 
   // now get the delta in current sector and next sector
-  iDelta = (INT32)(GetSectorID8(pGroup->ubSectorX, pGroup->ubSectorY) -
-                   GetSectorID8(pGroup->ubNextX, pGroup->ubNextY));
+  iDelta = (int32_t)(GetSectorID8(pGroup->ubSectorX, pGroup->ubSectorY) -
+                     GetSectorID8(pGroup->ubNextX, pGroup->ubNextY));
 
   if (iDelta == 0) {
     // not going anywhere...return current time
@@ -2346,13 +2346,13 @@ INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
   return (uiEtaTime);
 }
 
-INT32 FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct GROUP *pGroup) {
+int32_t FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct GROUP *pGroup) {
   uint8_t ubStart = 0, ubEnd = 0;
-  INT32 iDelta = 0;
-  INT32 iCurrentCostInTime = 0;
+  int32_t iDelta = 0;
+  int32_t iCurrentCostInTime = 0;
   uint8_t ubCurrentSector = 0;
   uint8_t ubDirection;
-  INT32 iThisCostInTime;
+  int32_t iThisCostInTime;
 
   // find travel time between waypoints
   if (!pSource || !pDest) {
@@ -2370,7 +2370,7 @@ INT32 FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct 
     return (iCurrentCostInTime);
   }
 
-  iDelta = (INT32)(ubEnd - ubStart);
+  iDelta = (int32_t)(ubEnd - ubStart);
 
   // which direction are we moving?
   if (iDelta > 0) {
@@ -2416,10 +2416,10 @@ INT32 FindTravelTimeBetweenWaypoints(WAYPOINT *pSource, WAYPOINT *pDest, struct 
 #define AIR_TRAVEL_TIME 10
 
 // CHANGES:  ubDirection contains the strategic move value, not the delta value.
-INT32 GetSectorMvtTimeForGroup(uint8_t ubSector, uint8_t ubDirection, struct GROUP *pGroup) {
-  INT32 iTraverseTime;
-  INT32 iBestTraverseTime = 1000000;
-  INT32 iEncumbrance, iHighestEncumbrance = 0;
+int32_t GetSectorMvtTimeForGroup(uint8_t ubSector, uint8_t ubDirection, struct GROUP *pGroup) {
+  int32_t iTraverseTime;
+  int32_t iBestTraverseTime = 1000000;
+  int32_t iEncumbrance, iHighestEncumbrance = 0;
   struct SOLDIERTYPE *pSoldier;
   PLAYERGROUP *curr;
   BOOLEAN fFoot, fCar, fTruck, fTracked, fAir;
@@ -2658,7 +2658,7 @@ BOOLEAN PlayerIDGroupInMotion(uint8_t ubID) {
 BOOLEAN PlayerGroupInMotion(struct GROUP *pGroup) { return (pGroup->fBetweenSectors); }
 
 // get travel time for this group
-INT32 GetTravelTimeForGroup(uint8_t ubSector, uint8_t ubDirection, uint8_t ubGroup) {
+int32_t GetTravelTimeForGroup(uint8_t ubSector, uint8_t ubDirection, uint8_t ubGroup) {
   struct GROUP *pGroup;
 
   // get the group
@@ -2670,7 +2670,7 @@ INT32 GetTravelTimeForGroup(uint8_t ubSector, uint8_t ubDirection, uint8_t ubGro
   return (GetSectorMvtTimeForGroup(ubSector, ubDirection, pGroup));
 }
 
-INT32 GetTravelTimeForFootTeam(uint8_t ubSector, uint8_t ubDirection) {
+int32_t GetTravelTimeForFootTeam(uint8_t ubSector, uint8_t ubDirection) {
   struct GROUP Group;
 
   // group going on foot
@@ -2686,8 +2686,8 @@ INT32 GetTravelTimeForFootTeam(uint8_t ubSector, uint8_t ubDirection) {
 void HandleArrivalOfReinforcements(struct GROUP *pGroup) {
   struct SOLDIERTYPE *pSoldier;
   SECTORINFO *pSector;
-  INT32 iNumEnemiesInSector;
-  INT32 cnt;
+  int32_t iNumEnemiesInSector;
+  int32_t cnt;
 
   if (pGroup->fPlayer) {  // We don't have to worry about filling up the player slots, because it is
                           // impossible
@@ -2744,8 +2744,8 @@ void HandleArrivalOfReinforcements(struct GROUP *pGroup) {
   }
 }
 
-BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, INT32 *iCountEnter,
-                                   INT32 *iCountExit, BOOLEAN *fAboutToArriveEnter) {
+BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, int32_t *iCountEnter,
+                                   int32_t *iCountExit, BOOLEAN *fAboutToArriveEnter) {
   struct GROUP *curr = gpGroupList;
   int16_t sBattleSector = -1;
   BOOLEAN fMayRetreatFromBattle = FALSE;
@@ -3428,7 +3428,7 @@ void CalculateGroupRetreatSector(struct GROUP *pGroup) {
 // blindly determines where to move the group.
 void RetreatGroupToPreviousSector(struct GROUP *pGroup) {
   uint8_t ubSector, ubDirection = 255;
-  INT32 iVehId, dx, dy;
+  int32_t iVehId, dx, dy;
   Assert(pGroup);
   AssertMsg(!pGroup->fBetweenSectors, "Can't retreat a group when between sectors!");
 
@@ -3625,7 +3625,7 @@ void ResetMovementForEnemyGroup(struct GROUP *pGroup) {
 void UpdatePersistantGroupsFromOldSave(uint32_t uiSavedGameVersion) {
   struct GROUP *pGroup = NULL;
   BOOLEAN fDone = FALSE;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fDoChange = FALSE;
 
   // ATE: If saved game is < 61, we need to do something better!
@@ -3685,7 +3685,7 @@ void UpdatePersistantGroupsFromOldSave(uint32_t uiSavedGameVersion) {
 // IN the sector, or just left the sector, it will return FALSE.
 BOOLEAN GroupWillMoveThroughSector(struct GROUP *pGroup, uint8_t ubSectorX, uint8_t ubSectorY) {
   WAYPOINT *wp;
-  INT32 i, dx, dy;
+  int32_t i, dx, dy;
   uint8_t ubOrigX, ubOrigY;
 
   Assert(pGroup);
@@ -3826,7 +3826,7 @@ void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle
   }
 }
 
-void ReportVehicleOutOfGas(INT32 iVehicleID, uint8_t ubSectorX, uint8_t ubSectorY) {
+void ReportVehicleOutOfGas(int32_t iVehicleID, uint8_t ubSectorX, uint8_t ubSectorY) {
   CHAR16 str[255];
   // Report that the vehicle that just arrived is out of gas.
   swprintf(str, ARR_SIZE(str), gzLateLocalizedString[5],
@@ -3854,7 +3854,7 @@ void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, u8 sSectorX, u8
 
   // if it's a vehicle
   if (pGroup->fVehicle) {
-    INT32 iVehicleId = -1;
+    int32_t iVehicleId = -1;
     VEHICLETYPE *pVehicle = NULL;
 
     iVehicleId = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);
@@ -3952,7 +3952,7 @@ void RandomizePatrolGroupLocation(
 // roll the dice to see if this will become an ambush random encounter.
 BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
   SECTORINFO *pSector;
-  INT32 iHoursElapsed;
+  int32_t iHoursElapsed;
   uint8_t ubSectorID;
   uint8_t ubChance;
   int8_t bDifficultyMaxCats;
@@ -3980,7 +3980,7 @@ BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
                        ->bBloodCatPlacements) {  // Slowly have them recuperate if we haven't been
                                                  // here for a long time.  The population will
       // come back up to the maximum if left long enough.
-      INT32 iBloodCatDiff;
+      int32_t iBloodCatDiff;
       iBloodCatDiff = pSector->bBloodCatPlacements - pSector->bBloodCats;
       pSector->bBloodCats += (int8_t)min(iHoursElapsed / 18, iBloodCatDiff);
     }
@@ -4366,7 +4366,7 @@ BOOLEAN GroupHasInTransitDeadOrPOWMercs(struct GROUP *pGroup) {
 }
 
 uint8_t NumberMercsInVehicleGroup(struct GROUP *pGroup) {
-  INT32 iVehicleID;
+  int32_t iVehicleID;
   iVehicleID = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);
   Assert(iVehicleID != -1);
   if (iVehicleID != -1) {

@@ -2078,7 +2078,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // Battle cry
           {
-            INT32 iSoundID = 0;
+            int32_t iSoundID = 0;
             BOOLEAN fDoCry = FALSE;
 
             // if ( SoldierOnScreen( GetSolID(pSoldier) ) )
@@ -2692,7 +2692,7 @@ void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, int16_t 
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
   int16_t sDistVisible = FALSE;
   uint16_t usQuoteNum;
 
@@ -2791,7 +2791,7 @@ void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, int16_t 
 void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *pKillerSoldier,
                        int16_t sGridNo, int8_t bLevel) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubMercsInSector[20] = {0};
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;

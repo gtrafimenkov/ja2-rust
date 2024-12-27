@@ -155,7 +155,7 @@ void MakeClosestEnemyChosenOne() {
 }
 
 void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
-  INT32 iAPCost, iPathCost;
+  int32_t iAPCost, iPathCost;
   // int8_t		bOldKeys;
   int8_t bPanicTrigger;
   int16_t sPanicTriggerGridNo;
@@ -214,7 +214,7 @@ void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
 int8_t PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove) {
   BOOLEAN fFoundRoute = FALSE;
   int8_t bSlot;
-  INT32 iPathCost;
+  int32_t iPathCost;
   int8_t bPanicTrigger;
   int16_t sPanicTriggerGridNo;
 

@@ -229,7 +229,7 @@ uint32_t guiPackageWeightImage;
 
 BOOLEAN gfReDrawBobbyOrder = FALSE;
 
-INT32 giGrandTotal;
+int32_t giGrandTotal;
 uint32_t guiShippingCost;
 uint32_t guiSubTotal;
 
@@ -247,77 +247,77 @@ uint8_t gubCityAtTopOfList;
 BOOLEAN gfRemoveItemsFromStock = FALSE;
 
 NewBobbyRayOrderStruct *gpNewBobbyrShipments;
-INT32 giNumberOfNewBobbyRShipment;
+int32_t giNumberOfNewBobbyRShipment;
 
 //
 // Buttons
 //
 
 // Clear Order Button
-void BtnBobbyRClearOrderCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRClearOrderCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRClearOrder;
-INT32 guiBobbyRClearOrderImage;
+int32_t guiBobbyRClearOrderImage;
 
 // Accept Order Button
-void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRAcceptOrder;
-INT32 guiBobbyRAcceptOrderImage;
+int32_t guiBobbyRAcceptOrderImage;
 
 // Back Button
-void BtnBobbyRBackCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRBackCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRBack;
-INT32 guiBobbyRBackImage;
+int32_t guiBobbyRBackImage;
 
 // Home Button
-void BtnBobbyRHomeCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRHomeCallback(GUI_BUTTON *btn, int32_t reason);
 extern uint32_t guiBobbyRHome;
-extern INT32 guiBobbyRHomeImage;
+extern int32_t guiBobbyRHomeImage;
 
 // Goto Shipment Page Button
-void BtnBobbyRGotoShipmentPageCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRGotoShipmentPageCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRGotoShipmentPage;
-INT32 giBobbyRGotoShipmentPageImage;
+int32_t giBobbyRGotoShipmentPageImage;
 
 // mouse region for the shipping speed selection area
 struct MOUSE_REGION gSelectedShippingSpeedRegion[3];
-void SelectShippingSpeedRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectShippingSpeedRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region for the confirm area
 struct MOUSE_REGION gSelectedConfirmOrderRegion;
-void SelectConfirmOrderRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectConfirmOrderRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region for the drop down city location area
 struct MOUSE_REGION gSelectedDropDownRegion[BOBBYR_ORDER_NUM_SHIPPING_CITIES];
-void SelectDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectDropDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectDropDownMovementCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region for scroll area for the drop down city location area
 struct MOUSE_REGION gSelectedScrollAreaDropDownRegion[BOBBYR_ORDER_NUM_SHIPPING_CITIES];
-void SelectScrollAreaDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectScrollAreaDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectScrollAreaDropDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectScrollAreaDropDownMovementCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region to activate the shipping location drop down
 struct MOUSE_REGION gSelectedActivateCityDroDownRegion;
-void SelectActivateCityDroDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectActivateCityDroDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region to close the drop down menu
 struct MOUSE_REGION gSelectedCloseDropDownRegion;
-void SelectCloseDroDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectCloseDroDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region to click on the title to go to the home page
 struct MOUSE_REGION gSelectedTitleLinkRegion;
-void SelectTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mouse region to click on the up or down arrow on the scroll area
 struct MOUSE_REGION gSelectedUpDownArrowOnScrollAreaRegion[2];
-void SelectUpDownArrowOnScrollAreaRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectUpDownArrowOnScrollAreaRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 BOOLEAN DrawShippingSpeedLights(uint8_t ubSelectedLight);
 BOOLEAN CreateDestroyBobbyRDropDown(uint8_t ubDropDownAction);
 void DrawSelectedCity(uint8_t ubNumber);
 void DisplayShippingLocationCity();
-void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, uint16_t usGridX,
-                          uint16_t usGridY, INT32 iOrderNum);
+void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, int32_t iSubTotal, uint16_t usGridX,
+                          uint16_t usGridY, int32_t iOrderNum);
 void RemovePurchasedItemsFromBobbyRayInventory();
 BOOLEAN IsAnythingPurchasedFromBobbyRayPage();
 void DrawGoldRectangle(int8_t bCityNum);
@@ -730,7 +730,7 @@ void RenderBobbyRMailOrder() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnBobbyRClearOrderCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRClearOrderCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -761,7 +761,7 @@ void BtnBobbyRClearOrderCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -805,7 +805,7 @@ void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint16_t usGridY,
                            BobbyRayPurchaseStruct *pBobbyRayPurchase, BOOLEAN fJustDisplayTitles,
-                           INT32 iOrderNum) {
+                           int32_t iOrderNum) {
   uint16_t i, j;
   wchar_t sText[400];
   wchar_t sBack[400];
@@ -816,7 +816,7 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint1
   uint16_t usStringLength;
   uint16_t usPixLength;
   wchar_t OneChar[2];
-  INT32 iSubTotal;
+  int32_t iSubTotal;
 
   // Output the qty
   DrawTextToScreen(BobbyROrderFormText[BOBBYR_QTY],
@@ -984,12 +984,12 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint1
   DisplayShippingCosts(fCalledFromOrderPage, iSubTotal, usGridX, usGridY, iOrderNum);
 }
 
-void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, uint16_t usGridX,
-                          uint16_t usGridY, INT32 iOrderNum) {
+void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, int32_t iSubTotal, uint16_t usGridX,
+                          uint16_t usGridY, int32_t iOrderNum) {
   wchar_t sTemp[20];
   struct VObject *hPixHandle;
-  INT32 iShippingCost = 0;
-  //	INT32 iTotal;
+  int32_t iShippingCost = 0;
+  //	int32_t iTotal;
 
   if (fCalledFromOrderPage) {
     iSubTotal = guiSubTotal;
@@ -1025,8 +1025,8 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, uint16_
     }
 
     iShippingCost =
-        (INT32)((gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (FLOAT)10) * usStandardCost +
-                .5);
+        (int32_t)((gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (FLOAT)10) * usStandardCost +
+                  .5);
   }
 
   // erase the old area
@@ -1074,7 +1074,7 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, uint16_
   InvalidateRegion(333, 326, 374, 400);
 }
 
-void BtnBobbyRBackCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRBackCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1093,7 +1093,7 @@ void BtnBobbyRBackCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBobbyRHomeCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRHomeCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1112,7 +1112,7 @@ void BtnBobbyRHomeCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SelectShippingSpeedRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectShippingSpeedRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gubSelectedLight = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
@@ -1159,7 +1159,7 @@ BOOLEAN DrawShippingSpeedLights(uint8_t ubSelected) {
   return (TRUE);
 }
 
-void SelectConfirmOrderRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectConfirmOrderRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // Remove the items for Boby Rqys Inventory
@@ -1447,7 +1447,7 @@ BOOLEAN CreateDestroyBobbyRDropDown(uint8_t ubDropDownAction) {
   return (TRUE);
 }
 
-void SelectDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDropDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint8_t ubSelected = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
@@ -1459,14 +1459,14 @@ void SelectDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectActivateCityDroDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectActivateCityDroDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gubDropDownAction = BR_DROP_DOWN_CREATE;
   }
 }
 
-void SelectDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
+void SelectDropDownMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
     InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX,
@@ -1569,8 +1569,8 @@ void DisplayShippingLocationCity() {
 
   if (gbSelectedCity != -1) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%d",
-             (INT32)(BobbyROrderLocations[gbSelectedCity].usOverNightExpress /
-                     GetWeightBasedOnMetricOption(1)));
+             (int32_t)(BobbyROrderLocations[gbSelectedCity].usOverNightExpress /
+                       GetWeightBasedOnMetricOption(1)));
     InsertCommasForDollarFigure(sTemp);
     InsertDollarSignInToString(sTemp);
   }
@@ -1582,8 +1582,8 @@ void DisplayShippingLocationCity() {
 
   if (gbSelectedCity != -1) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%d",
-             (INT32)(BobbyROrderLocations[gbSelectedCity].us2DaysService /
-                     GetWeightBasedOnMetricOption(1)));
+             (int32_t)(BobbyROrderLocations[gbSelectedCity].us2DaysService /
+                       GetWeightBasedOnMetricOption(1)));
     InsertCommasForDollarFigure(sTemp);
     InsertDollarSignInToString(sTemp);
   }
@@ -1595,8 +1595,8 @@ void DisplayShippingLocationCity() {
 
   if (gbSelectedCity != -1) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%d",
-             (INT32)(BobbyROrderLocations[gbSelectedCity].usStandardService /
-                     GetWeightBasedOnMetricOption(1)));
+             (int32_t)(BobbyROrderLocations[gbSelectedCity].usStandardService /
+                       GetWeightBasedOnMetricOption(1)));
     InsertCommasForDollarFigure(sTemp);
     InsertDollarSignInToString(sTemp);
   }
@@ -1606,7 +1606,7 @@ void DisplayShippingLocationCity() {
                    BOBBYR_ORDER_DYNAMIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 }
 
-void SelectCloseDroDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectCloseDroDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gubDropDownAction = BR_DROP_DOWN_DESTROY;
@@ -1660,14 +1660,14 @@ BOOLEAN IsAnythingPurchasedFromBobbyRayPage() {
   return (fReturnType);
 }
 
-void SelectTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_BOBBY_R;
   }
 }
 
-void SelectScrollAreaDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectScrollAreaDropDownRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint8_t ubCityNum = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
@@ -1707,7 +1707,7 @@ void SelectScrollAreaDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
   }
 }
 
-void SelectScrollAreaDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
+void SelectScrollAreaDropDownMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
     InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX,
@@ -1737,7 +1737,7 @@ void SelectScrollAreaDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT3
   }
 }
 
-void SelectUpDownArrowOnScrollAreaRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectUpDownArrowOnScrollAreaRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP ||
              iReason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT) {
@@ -2117,7 +2117,7 @@ void DisplayPackageWeight() {
                    BOBBYR_ORDER_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 }
 
-void BtnBobbyRGotoShipmentPageCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRGotoShipmentPageCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -2172,8 +2172,8 @@ void DrawBobbyROrderTitle() {
 BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ubDeliveryLoc,
                              uint8_t ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,
                              uint32_t uiPackageWeight) {
-  INT32 iCnt;
-  INT32 iFoundSpot = -1;
+  int32_t iCnt;
+  int32_t iFoundSpot = -1;
   uint8_t ubItemCount = 0;
   uint8_t i;
   int8_t bDaysAhead = 0;
@@ -2253,7 +2253,7 @@ BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ub
 
 uint16_t CountNumberOfBobbyPurchasesThatAreInTransit() {
   uint16_t usItemCount = 0;
-  INT32 iCnt;
+  int32_t iCnt;
 
   for (iCnt = 0; iCnt < giNumberOfNewBobbyRShipment; iCnt++) {
     if (gpNewBobbyrShipments[iCnt].fActive) {
@@ -2265,12 +2265,12 @@ uint16_t CountNumberOfBobbyPurchasesThatAreInTransit() {
 }
 
 BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
-  INT32 iCnt;
+  int32_t iCnt;
   uint32_t uiNumBytesWritten;
 
   // Write the number of orders
-  FileMan_Write(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) {
+  FileMan_Write(hFile, &giNumberOfNewBobbyRShipment, sizeof(int32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(int32_t)) {
     FileMan_Close(hFile);
     return (FALSE);
   }
@@ -2290,15 +2290,15 @@ BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
-  INT32 iCnt;
+  int32_t iCnt;
   uint32_t uiNumBytesRead;
 
   // clear out the old list
   ShutDownBobbyRNewMailOrders();
 
   // Read the number of orders
-  FileMan_Read(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT32)) {
+  FileMan_Read(hFile, &giNumberOfNewBobbyRShipment, sizeof(int32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(int32_t)) {
     FileMan_Close(hFile);
     return (FALSE);
   }

@@ -23,7 +23,7 @@ void InsuranceContractPayLifeInsuranceForDeadMerc(uint8_t ubPayoutID);
 void StartInsuranceInvestigation(uint8_t ubPayoutID);
 void EndInsuranceInvestigation(uint8_t ubPayoutID);
 
-INT32 CalculateInsuranceContractCost(INT32 iLength, uint8_t ubMercID);
+int32_t CalculateInsuranceContractCost(int32_t iLength, uint8_t ubMercID);
 
 void InsuranceContractEndGameShutDown();
 

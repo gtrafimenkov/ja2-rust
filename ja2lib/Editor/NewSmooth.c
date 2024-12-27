@@ -15,11 +15,11 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
-BOOLEAN CaveAtGridNo(INT32 iMapIndex);
+BOOLEAN CaveAtGridNo(int32_t iMapIndex);
 uint16_t GetCaveTileIndexFromPerimeterValue(uint8_t ubTotal);
-uint8_t CalcNewCavePerimeterValue(INT32 iMapIndex);
+uint8_t CalcNewCavePerimeterValue(int32_t iMapIndex);
 
-BOOLEAN CaveAtGridNo(INT32 iMapIndex) {
+BOOLEAN CaveAtGridNo(int32_t iMapIndex) {
   struct STRUCTURE *pStruct;
   struct LEVELNODE *pLevel;
   if (iMapIndex < 0 || iMapIndex >= NOWHERE) return TRUE;
@@ -419,7 +419,7 @@ uint16_t GetCaveTileIndexFromPerimeterValue(uint8_t ubTotal) {
 // which piece to use for all of these combinations.  In many cases,
 // up to 16 combinations can share the same graphic image, as corners
 // may not effect the look of the piece.
-uint8_t CalcNewCavePerimeterValue(INT32 iMapIndex) {
+uint8_t CalcNewCavePerimeterValue(int32_t iMapIndex) {
   uint8_t ubTotal = 0;
   if (CaveAtGridNo(iMapIndex - WORLD_COLS)) ubTotal += 0x01;      // north
   if (CaveAtGridNo(iMapIndex + 1)) ubTotal += 0x02;               // east
@@ -432,7 +432,7 @@ uint8_t CalcNewCavePerimeterValue(INT32 iMapIndex) {
   return ubTotal;
 }
 
-void AddCave(INT32 iMapIndex, uint16_t usIndex) {
+void AddCave(int32_t iMapIndex, uint16_t usIndex) {
   struct LEVELNODE *pStruct;
 
   if (iMapIndex < 0 || iMapIndex >= NOWHERE) return;
@@ -504,8 +504,8 @@ int8_t gbWallTileLUT[NUM_WALL_TYPES][7] = {
 // These construction functions do all the smoothing.
 // NOTE:  passing null for wall/roof type will force the function to search for the nearest
 //  existing respective type.
-void BuildSlantRoof(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, uint16_t usWallType,
-                    uint16_t usRoofType, BOOLEAN fVertical);
+void BuildSlantRoof(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                    uint16_t usWallType, uint16_t usRoofType, BOOLEAN fVertical);
 
 void BulldozeNature(uint32_t iMapIndex);
 void EraseRoof(uint32_t iMapIndex);
@@ -518,11 +518,11 @@ void ConsiderEffectsOfNewWallPiece(uint32_t iMapIndex, uint8_t usWallOrientation
 // BEGIN IMPLEMENTATION OF PRIVATE FUNCTIONS
 //----------------------------------------------------------------------------------------------------
 
-void BuildSlantRoof(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, uint16_t usWallType,
-                    uint16_t usRoofType, BOOLEAN fVertical) {
-  INT32 i;
+void BuildSlantRoof(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                    uint16_t usWallType, uint16_t usRoofType, BOOLEAN fVertical) {
+  int32_t i;
   uint16_t usTileIndex;
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   if (fVertical) {
     iMapIndex = iBottom * WORLD_COLS + iLeft;
     // This happens to be the only mapindex that needs to be backed up.  The rest have already been
@@ -758,7 +758,7 @@ void BuildWallPiece(uint32_t iMapIndex, uint8_t ubWallPiece, uint16_t usWallType
   AddWallToStructLayer(iMapIndex, usTileIndex, FALSE);
 }
 
-void RebuildRoofUsingFloorInfo(INT32 iMapIndex, uint16_t usRoofType) {
+void RebuildRoofUsingFloorInfo(int32_t iMapIndex, uint16_t usRoofType) {
   uint16_t usRoofIndex, usTileIndex;
   BOOLEAN fTop = FALSE, fBottom = FALSE, fLeft = FALSE, fRight = FALSE;
   if (!usRoofType) {
@@ -940,10 +940,10 @@ void EraseFloorOwnedBuildingPieces(uint32_t iMapIndex) {
 }
 
 /*
-BOOLEAN CaveAtGridNo( INT32 iMapIndex );
+BOOLEAN CaveAtGridNo( int32_t iMapIndex );
 uint16_t GetCaveTileIndexFromPerimeterValue( uint8_t ubTotal );
-uint8_t CalcNewCavePerimeterValue( INT32 iMapIndex );
-void AddCave( INT32 iMapIndex, uint16_t usIndex );
+uint8_t CalcNewCavePerimeterValue( int32_t iMapIndex );
+void AddCave( int32_t iMapIndex, uint16_t usIndex );
 */
 
 void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
@@ -980,7 +980,7 @@ void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
 }
 
 void AddCaveSectionToWorld(SGPRect *pSelectRegion) {
-  INT32 top, left, right, bottom, x, y;
+  int32_t top, left, right, bottom, x, y;
   uint32_t uiMapIndex;
   uint16_t usIndex;
   uint8_t ubPerimeterValue;
@@ -1099,7 +1099,7 @@ void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
 }
 
 void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
-  INT32 top, left, right, bottom, x, y;
+  int32_t top, left, right, bottom, x, y;
   uint32_t iMapIndex;
   uint16_t usFloorType, usWallType, usRoofType;
   uint16_t usTileIndex;
@@ -1267,7 +1267,7 @@ void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
 void AnalyseCaveMapForStructureInfo() {
   struct LEVELNODE *pStruct;
   uint32_t uiTileType;
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   for (iMapIndex = 0; iMapIndex < WORLD_MAX; iMapIndex++) {
     pStruct = gpWorldLevelData[iMapIndex].pStructHead;
     while (pStruct) {

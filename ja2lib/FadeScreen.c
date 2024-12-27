@@ -26,7 +26,7 @@ uint32_t guiFadeDelay;
 BOOLEAN gfFirstTimeInFade = FALSE;
 int16_t gsFadeCount;
 int8_t gbFadeType;
-INT32 giX1, giX2, giY1, giY2;
+int32_t giX1, giX2, giY1, giY2;
 int16_t gsFadeRealCount;
 BOOLEAN gfFadeInVideo;
 
@@ -47,8 +47,8 @@ void FadeInBackBufferVersionOne();
 void FadeInBackBufferSquare();
 void FadeInFrameBufferRealFade();
 
-extern BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(uint32_t uiDestVSurface, INT32 X1,
-                                                          INT32 Y1, INT32 X2, INT32 Y2);
+extern BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(uint32_t uiDestVSurface, int32_t X1,
+                                                          int32_t Y1, int32_t X2, int32_t Y2);
 BOOLEAN UpdateSaveBufferWithBackbuffer(void);
 
 BOOLEAN gfFadeIn = FALSE;
@@ -291,7 +291,7 @@ uint32_t FadeScreenHandle() {
 uint32_t FadeScreenShutdown() { return (FALSE); }
 
 void FadeFrameBufferVersionOne() {
-  INT32 cX, cY;
+  int32_t cX, cY;
   uint32_t uiDestPitchBYTES;
   uint16_t *pBuf;
   int16_t bR, bG, bB;
@@ -330,7 +330,7 @@ void FadeFrameBufferVersionOne() {
 }
 
 void FadeInBackBufferVersionOne() {
-  INT32 cX, cY;
+  int32_t cX, cY;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint16_t *pSrcBuf, *pDestBuf;
   int16_t bR, bG, bB;
@@ -372,7 +372,7 @@ void FadeInBackBufferVersionOne() {
 }
 
 void FadeFrameBufferVersionFaster(int8_t bFadeValue) {
-  INT32 cX, cY, iStartX, iStartY;
+  int32_t cX, cY, iStartX, iStartY;
   uint32_t uiDestPitchBYTES;
   uint16_t *pBuf;
   int16_t bR, bG, bB;
@@ -420,7 +420,7 @@ void FadeFrameBufferVersionFaster(int8_t bFadeValue) {
 }
 
 void FadeFrameBufferSide() {
-  INT32 iX1, iX2;
+  int32_t iX1, iX2;
   int16_t sFadeMove;
 
   sFadeMove = gsFadeCount * 4;
@@ -437,7 +437,7 @@ void FadeFrameBufferSide() {
 }
 
 void FadeFrameBufferSquare() {
-  INT32 iX1, iX2, iY1, iY2;
+  int32_t iX1, iX2, iY1, iY2;
   int16_t sFadeXMove, sFadeYMove;
 
   sFadeXMove = SQUARE_STEP;
@@ -466,7 +466,7 @@ void FadeFrameBufferSquare() {
 }
 
 void FadeInBackBufferSquare() {
-  INT32 iX1, iX2, iY1, iY2;
+  int32_t iX1, iX2, iY1, iY2;
   int16_t sFadeXMove, sFadeYMove;
   blt_vs_fx BltFx;
 
@@ -548,7 +548,7 @@ void FadeFrameBufferRealFade() {
 }
 
 void FadeInFrameBufferRealFade() {
-  INT32 cnt;
+  int32_t cnt;
 
   if (gsFadeRealCount != gsFadeCount) {
     for (cnt = 0; cnt < (gsFadeLimit - gsFadeCount); cnt++) {

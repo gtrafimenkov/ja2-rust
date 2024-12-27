@@ -370,7 +370,7 @@ void HandleFirstHeliDropOfGame();
 void ResetHeliSeats() { gbNumHeliSeatsOccupied = 0; }
 
 void AddMercToHeli(uint8_t ubID) {
-  INT32 cnt;
+  int32_t cnt;
 
   if (gbNumHeliSeatsOccupied < MAX_MERC_IN_HELI) {
     // Check if it already exists!
@@ -428,8 +428,8 @@ void HandleHeliDrop() {
   uint8_t ubScriptCode;
   uint32_t uiClock;
   // int16_t sWorldX, sWorldY;
-  INT32 iVol;
-  INT32 cnt;
+  int32_t iVol;
+  int32_t cnt;
   ANITILE_PARAMS AniParams;
 
   if (gfHandleHeli) {

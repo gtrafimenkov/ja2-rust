@@ -126,7 +126,7 @@ void CreatureCall(struct SOLDIERTYPE *pCaller) {
 }
 
 int8_t CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
-  INT32 iChance, iSneaky = 10;
+  int32_t iChance, iSneaky = 10;
   // int8_t		bInWater;
   int8_t bInGas;
 
@@ -415,8 +415,8 @@ int8_t CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   // monster AI - heard something
   uint8_t ubNoiseDir;
   int16_t sNoiseGridNo;
-  INT32 iNoiseValue;
-  INT32 iChance, iSneaky;
+  int32_t iNoiseValue;
+  int32_t iChance, iSneaky;
   BOOLEAN fClimb;
   BOOLEAN fReachable;
   //	int16_t sClosestFriend;
@@ -1343,7 +1343,7 @@ int8_t CreatureDecideAction(struct SOLDIERTYPE *pSoldier) {
 
 void CreatureDecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
   int8_t bOldStatus;
-  INT32 iDummy;
+  int32_t iDummy;
   BOOLEAN fClimbDummy, fReachableDummy;
 
   // THE FOUR (4) POSSIBLE ALERT STATUSES ARE:

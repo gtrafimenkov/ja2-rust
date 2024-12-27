@@ -82,7 +82,7 @@ void RemoveProfileBackGround(void) {
 
 void RenderProfileBackGround(void) {
   struct VObject* hHandle;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // this procedure will render the generic backgound to the screen
 
@@ -574,7 +574,7 @@ void DeleteAttributeFrame(void) {
 
 void RenderAttributeFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   int16_t sCurrentY = 0;
 
   // get the video object
@@ -603,7 +603,7 @@ void RenderAttributeFrame(int16_t sX, int16_t sY) {
   return;
 }
 
-void RenderAttributeFrameForIndex(int16_t sX, int16_t sY, INT32 iIndex) {
+void RenderAttributeFrameForIndex(int16_t sX, int16_t sY, int32_t iIndex) {
   int16_t sCurrentY = 0;
   struct VObject* hHandle;
 

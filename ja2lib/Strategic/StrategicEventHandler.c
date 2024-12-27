@@ -184,7 +184,7 @@ void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
 
           if (usStandardMapPos == LOST_SHIPMENT_GRIDNO) {
             // damage the item a random amount!
-            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
+            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (int32_t)Object.bStatus[0]) / 100);
             // make damn sure it can't hit 0
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
@@ -210,7 +210,7 @@ void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
 
           if (usStandardMapPos == LOST_SHIPMENT_GRIDNO) {
             // damage the item a random amount!
-            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
+            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (int32_t)Object.bStatus[0]) / 100);
             // make damn sure it can't hit 0
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
@@ -505,7 +505,7 @@ void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
                                1);
 
     // the sector is unloaded NOW so set Kingpin's balance and remove the cash
-    gMercProfiles[KINGPIN].iBalance = -(30000 - (INT32)uiTotalCash);
+    gMercProfiles[KINGPIN].iBalance = -(30000 - (int32_t)uiTotalCash);
     // remove all money from map
     for (uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++) {
       // loop through all items, look for ownership

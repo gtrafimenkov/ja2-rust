@@ -145,7 +145,7 @@ void DeleteSchedule(uint8_t ubScheduleID) {
 void ProcessTacticalSchedule(uint8_t ubScheduleID) {
   SCHEDULENODE *pSchedule;
   struct SOLDIERTYPE *pSoldier;
-  INT32 iScheduleIndex = 0;
+  int32_t iScheduleIndex = 0;
   BOOLEAN fAutoProcess;
 
   // Attempt to locate the schedule.
@@ -304,7 +304,7 @@ void PrepareSchedulesForEditorEntry() {
       gubScheduleID--;
     } else {
       if (curr->usFlags & SCHEDULE_FLAGS_SLEEP_CONVERTED) {  // uncovert it!
-        INT32 i;
+        int32_t i;
         for (i = 0; i < MAX_SCHEDULE_ACTIONS; i++) {
           // if( i
         }
@@ -456,7 +456,7 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
   SCHEDULENODE *curr;
   uint32_t uiBytesWritten;
   uint8_t ubNum, ubNumFucker;
-  INT32 iNum;
+  int32_t iNum;
   // Now, count the number of schedules in the list
   iNum = 0;
   curr = gpScheduleList;
@@ -496,7 +496,7 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
 // Each schedule has upto four parts to it, so sort them chronologically.
 // Happily, the fields with no times actually are the highest.
 BOOLEAN SortSchedule(SCHEDULENODE *pSchedule) {
-  INT32 index, i, iBestIndex;
+  int32_t index, i, iBestIndex;
   uint16_t usTime;
   uint16_t usData1;
   uint16_t usData2;
@@ -572,7 +572,7 @@ BOOLEAN BumpAnyExistingMerc(int16_t sGridNo) {
   return (TRUE);
 }
 
-void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
+void AutoProcessSchedule(SCHEDULENODE *pSchedule, int32_t index) {
   int16_t sCellX, sCellY, sGridNo;
   int8_t bDirection;
   struct SOLDIERTYPE *pSoldier;
@@ -685,7 +685,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
 
 void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiStartTime, uiEndTime;
-  INT32 i;
+  int32_t i;
   int8_t bEmpty;
   SCHEDULENODE *pSchedule;
   uint8_t ubTempAction;
@@ -790,7 +790,7 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
 
 void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, uint32_t uiStartTime,
                                       uint32_t uiEndTime) {
-  INT32 i;
+  int32_t i;
   BOOLEAN fPostedNextEvent = FALSE;
 
   if (uiStartTime > uiEndTime) {  // The start time is later in the day than the end time, which
@@ -845,7 +845,7 @@ void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, uint32_t uiStartT
 // Leave at night, come back in the morning.  The time variances are a couple hours, so
 // the town doesn't turn into a ghost town in 5 minutes.
 void PostDefaultSchedule(struct SOLDIERTYPE *pSoldier) {
-  INT32 i;
+  int32_t i;
   SCHEDULENODE *curr;
 
   if (gbWorldSectorZ) {  // People in underground sectors don't get schedules.
@@ -955,7 +955,7 @@ void PerformActionOnDoorAdjacentToGridNo(uint8_t ubScheduleAction, uint16_t usGr
 // the schedule, and looks for the next schedule action that would get processed and posts it.
 void PostNextSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
-  INT32 i, iBestIndex;
+  int32_t i, iBestIndex;
   uint16_t usTime, usBestTime;
   pSchedule = GetSchedule(pSoldier->ubScheduleID);
   if (!pSchedule) {  // post default?
@@ -986,7 +986,7 @@ void PostNextSchedule(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiEntryTime,
                                         uint32_t *puiExitTime) {
-  INT32 iLoop;
+  int32_t iLoop;
   BOOLEAN fFoundEntryTime = FALSE, fFoundExitTime = FALSE;
   SCHEDULENODE *pSchedule;
 
@@ -1021,7 +1021,7 @@ BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, uint32_t *
 // This is for determining shopkeeper's opening/closing hours
 BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiOpeningTime,
                                              uint32_t *puiClosingTime) {
-  INT32 iLoop;
+  int32_t iLoop;
   BOOLEAN fFoundOpeningTime = FALSE, fFoundClosingTime = FALSE;
   SCHEDULENODE *pSchedule;
 
@@ -1054,7 +1054,7 @@ BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, uint3
 }
 
 BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime) {
-  INT32 iLoop;
+  int32_t iLoop;
 
   *puiTime = 100000;
 

@@ -25,18 +25,18 @@ int16_t EstimatePlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t 
                          int8_t bReverse, int16_t sAPBudget);
 
 void ErasePath(char bEraseOldOne);
-INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
-                   int16_t usMovementMode, int8_t bCopy, uint8_t fFlags);
+int32_t FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
+                     int16_t usMovementMode, int8_t bCopy, uint8_t fFlags);
 void GlobalReachableTest(int16_t sStartGridNo);
 void GlobalItemsReachableTest(int16_t sStartGridNo1, int16_t sStartGridNo2);
 void RoofReachableTest(int16_t sStartGridNo, uint8_t ubBuildingID);
 void LocalReachableTest(int16_t sStartGridNo, int8_t bRadius);
 
-uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
-                       BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo);
-uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
-                               BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
-                               BOOLEAN fReturnDoorCost);
+uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo, uint8_t ubMovementCost,
+                       BOOLEAN fReturnPerceivedValue, int32_t *piDoorGridNo);
+uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo,
+                               uint8_t ubMovementCost, BOOLEAN fReturnPerceivedValue,
+                               int32_t *piDoorGridNo, BOOLEAN fReturnDoorCost);
 
 int16_t RecalculatePathCost(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
 

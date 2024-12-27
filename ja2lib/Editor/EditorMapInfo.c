@@ -156,7 +156,7 @@ void UpdateMapInfoFields() {
 
 void ExtractAndUpdateMapInfo() {
   CHAR16 str[10];
-  INT32 temp;
+  int32_t temp;
   BOOLEAN fUpdateLight1 = FALSE;
   // extract light1 colors
   temp = min(GetNumericStrictValueFromField(1), 255);

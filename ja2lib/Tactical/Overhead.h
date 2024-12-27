@@ -195,9 +195,9 @@ int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOL
                          int8_t bLevel);
 
 // Simple check to see if a (one-tiled) soldier can occupy a given location on the ground or roof.
-extern BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof);
-extern BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof);
-extern BOOLEAN FlatRoofAboveGridNo(INT32 iMapIndex);
+extern BOOLEAN IsLocationSittable(int32_t iMapIndex, BOOLEAN fOnRoof);
+extern BOOLEAN IsLocationSittableExcludingPeople(int32_t iMapIndex, BOOLEAN fOnRoof);
+extern BOOLEAN FlatRoofAboveGridNo(int32_t iMapIndex);
 
 BOOLEAN ExecuteOverhead();
 BOOLEAN ResetAllAnimationCache();
@@ -241,19 +241,19 @@ int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                  BOOLEAN fForceToPerson, BOOLEAN fDoor);
 
 void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier);
-BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, INT32 iRange);
+BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, int32_t iRange);
 BOOLEAN IsValidTargetMerc(uint8_t ubSoldierID);
 
 // FUNCTIONS FOR MANIPULATING MERC SLOTS - A LIST OF ALL ACTIVE MERCS
-INT32 GetFreeMercSlot(void);
+int32_t GetFreeMercSlot(void);
 void RecountMercSlots(void);
-INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier);
+int32_t AddMercSlot(struct SOLDIERTYPE *pSoldier);
 BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier);
 
-INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier);
+int32_t AddAwaySlot(struct SOLDIERTYPE *pSoldier);
 BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier);
-INT32 MoveSoldierFromMercToAwaySlot(struct SOLDIERTYPE *pSoldier);
-INT32 MoveSoldierFromAwayToMercSlot(struct SOLDIERTYPE *pSoldier);
+int32_t MoveSoldierFromMercToAwaySlot(struct SOLDIERTYPE *pSoldier);
+int32_t MoveSoldierFromAwayToMercSlot(struct SOLDIERTYPE *pSoldier);
 
 void EnterCombatMode(uint8_t ubStartingTeam);
 void ExitCombatMode();

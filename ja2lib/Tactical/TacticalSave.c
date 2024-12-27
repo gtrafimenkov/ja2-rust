@@ -87,7 +87,7 @@ extern uint8_t gubEncryptionArray2[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTAT
 extern uint8_t gubEncryptionArray3[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE];
 extern uint8_t gubEncryptionArray4[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE];
 
-INT32 giErrorMessageBox = 0;
+int32_t giErrorMessageBox = 0;
 
 ///////////////////////////////////////////////////////////////
 //
@@ -128,7 +128,7 @@ uint32_t GetLastTimePlayerWasInSector();
 void SetLastTimePlayerWasInSector();
 
 extern void InitLoadedWorld();
-extern void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot);
+extern void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, int32_t iInvSlot);
 
 extern void StripEnemyDetailedPlacementsIfSectorWasPlayerLiberated();
 
@@ -1270,7 +1270,7 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(int16_t sMapX, int16_t sMapY, int8_t 
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
   uint32_t uiNumberOfCorpses = 0;
-  INT32 iCount;
+  int32_t iCount;
 
   /*
           //Convert the current sector location into a file name
@@ -2626,7 +2626,7 @@ void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems(int16_t sMapX, in
   uint32_t uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;
   uint32_t uiItemCount = 0;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   BOOLEAN fReturn;
 
   // get total number, visable and invisible

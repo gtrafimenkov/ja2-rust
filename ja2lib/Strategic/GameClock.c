@@ -38,12 +38,12 @@ extern BOOLEAN gfFadeOut;
 // These functions shouldn't be used anywhere else...
 extern BOOLEAN GameEventsPending(uint32_t uiAdjustment);
 extern void ProcessPendingGameEvents(uint32_t uiAdjustment, uint8_t ubWarpCode);
-void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, INT32 iReason);
-void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, int32_t iReason);
+void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 void CreateDestroyScreenMaskForPauseGame(void);
 
-void SetClockResolutionToCompressMode(INT32 iCompressMode);
+void SetClockResolutionToCompressMode(int32_t iCompressMode);
 
 // is the clock pause region created currently?
 BOOLEAN fClockMouseRegionCreated = FALSE;
@@ -74,7 +74,7 @@ extern BOOLEAN fMapScreenBottomDirty;
 
 // These contain all of the information about the game time, rate of time, etc.
 // All of these get saved and loaded.
-INT32 giTimeCompressMode = TIME_COMPRESS_X0;
+int32_t giTimeCompressMode = TIME_COMPRESS_X0;
 uint8_t gubClockResolution = 1;
 BOOLEAN gfGamePaused = TRUE;
 BOOLEAN gfTimeInterrupt = FALSE;
@@ -84,12 +84,12 @@ uint32_t guiGameClock = STARTING_TIME;
 uint32_t guiPreviousGameClock = 0;  // used only for error-checking purposes
 uint32_t guiGameSecondsPerRealSecond;
 uint32_t guiTimesThisSecondProcessed = 0;
-INT32 iPausedPopUpBox = -1;
+int32_t iPausedPopUpBox = -1;
 uint32_t guiDay;
 uint32_t guiHour;
 uint32_t guiMin;
 CHAR16 gswzWorldTimeStr[20];
-INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS] = {0, 1, 5 * 60, 30 * 60, 60 * 60};
+int32_t giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS] = {0, 1, 5 * 60, 30 * 60, 60 * 60};
 uint16_t usPausedActualWidth;
 uint16_t usPausedActualHeight;
 uint32_t guiTimeOfLastEventQuery = 0;
@@ -214,7 +214,7 @@ void AdvanceClock(uint8_t ubWarpCode) {
 }
 
 void AdvanceToNextDay() {
-  INT32 uiDiff;
+  int32_t uiDiff;
   uint32_t uiTomorrowTimeInSec;
 
   uiTomorrowTimeInSec = (guiDay + 1) * NUM_SEC_IN_DAY + 8 * NUM_SEC_IN_HOUR + 15 * NUM_SEC_IN_MIN;
@@ -435,7 +435,7 @@ void SetGameTimeCompressionLevel(uint32_t uiCompressionRate) {
   SetClockResolutionToCompressMode(giTimeCompressMode);
 }
 
-void SetClockResolutionToCompressMode(INT32 iCompressMode) {
+void SetClockResolutionToCompressMode(int32_t iCompressMode) {
   guiGameSecondsPerRealSecond = giTimeCompressSpeeds[iCompressMode] * SECONDS_PER_COMPRESSION;
 
   // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
@@ -674,8 +674,8 @@ void UpdateClock() {
 BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState) {
   uint32_t uiNumBytesWritten = 0;
 
-  FileMan_Write(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) return (FALSE);
+  FileMan_Write(hFile, &giTimeCompressMode, sizeof(int32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(int32_t)) return (FALSE);
 
   FileMan_Write(hFile, &gubClockResolution, sizeof(uint8_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint8_t)) return (FALSE);
@@ -736,8 +736,8 @@ BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
 BOOLEAN LoadGameClock(HWFILE hFile) {
   uint32_t uiNumBytesRead;
 
-  FileMan_Read(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT32)) return (FALSE);
+  FileMan_Read(hFile, &giTimeCompressMode, sizeof(int32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(int32_t)) return (FALSE);
 
   FileMan_Read(hFile, &gubClockResolution, sizeof(uint8_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(uint8_t)) return (FALSE);
@@ -833,7 +833,7 @@ void RemoveMouseRegionForPauseOfClock(void) {
   }
 }
 
-void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     HandlePlayerPauseUnPauseOfGame();
   }
@@ -916,7 +916,7 @@ void CreateDestroyScreenMaskForPauseGame(void) {
   }
 }
 
-void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // unpause the game
     HandlePlayerPauseUnPauseOfGame();

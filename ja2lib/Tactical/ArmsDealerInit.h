@@ -133,8 +133,9 @@ typedef struct {
 
   uint8_t ubShopKeeperID;      // Merc Id for the dealer
   uint8_t ubTypeOfArmsDealer;  // Whether he buys/sells, sells, buys, or repairs
-  INT32 iInitialCash;  // How much cash dealer starts with (we now reset to this amount once / day)
-  uint32_t uiFlags;    // various flags which control the dealer's operations
+  int32_t
+      iInitialCash;  // How much cash dealer starts with (we now reset to this amount once / day)
+  uint32_t uiFlags;  // various flags which control the dealer's operations
 } ARMS_DEALER_INFO;
 
 // THIS struct STRUCTURE GETS SAVED/RESTORED/RESET

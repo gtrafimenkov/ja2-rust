@@ -57,9 +57,9 @@ uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGri
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
@@ -153,9 +153,9 @@ uint16_t FindGridNoFromSweetSpotThroughPeople(struct SOLDIERTYPE *pSoldier, int1
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
@@ -246,9 +246,9 @@ uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uin
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, cnt3;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
@@ -389,9 +389,9 @@ uint16_t FindGridNoFromSweetSpotWithStructDataUsingGivenDirectionFirst(
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, cnt3;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
@@ -545,9 +545,9 @@ uint16_t FindGridNoFromSweetSpotWithStructDataFromSoldier(struct SOLDIERTYPE *pS
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, cnt3;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   uint8_t ubSaveNPCAPBudget;
   uint8_t ubSaveNPCDistLimit;
@@ -684,9 +684,9 @@ uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
 
   sTop = ubRadius;
@@ -742,9 +742,9 @@ uint16_t FindGridNoFromSweetSpotExcludingSweetSpotInQuardent(struct SOLDIERTYPE 
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = -1;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
 
   sTop = ubRadius;
@@ -799,7 +799,7 @@ uint16_t FindGridNoFromSweetSpotExcludingSweetSpotInQuardent(struct SOLDIERTYPE 
 
 BOOLEAN CanSoldierReachGridNoInGivenTileLimit(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                               int16_t sMaxTiles, int8_t bLevel) {
-  INT32 iNumTiles;
+  int32_t iNumTiles;
   int16_t sActionGridNo;
   uint8_t ubDirection;
 
@@ -831,7 +831,7 @@ uint16_t FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSw
                                        int8_t ubRadius, uint8_t *pubDirection) {
   int16_t sX, sY;
   int16_t sGridNo;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   uint32_t cnt = 0;
   struct SOLDIERTYPE soldier;
@@ -926,7 +926,7 @@ uint16_t FindRandomGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSo
                                                          uint8_t *pubDirection) {
   int16_t sX, sY;
   int16_t sGridNo;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   uint32_t cnt = 0;
 

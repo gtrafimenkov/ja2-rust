@@ -19,8 +19,8 @@ BOOLEAN ExitGridAtGridNo(uint16_t usMapIndex);
 BOOLEAN GetExitGridLevelNode(uint16_t usMapIndex, struct LEVELNODE **ppLevelNode);
 BOOLEAN GetExitGrid(uint16_t usMapIndex, EXITGRID *pExitGrid);
 
-void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid);
-void RemoveExitGridFromWorld(INT32 iMapIndex);
+void AddExitGridToWorld(int32_t iMapIndex, EXITGRID *pExitGrid);
+void RemoveExitGridFromWorld(int32_t iMapIndex);
 
 void SaveExitGrids(HWFILE fp, uint16_t usNumExitGrids);
 void LoadExitGrids(int8_t **hBuffer);

@@ -45,10 +45,10 @@ int8_t gbCurrentlySelectedCard;
 
 // link to the card gallery
 struct MOUSE_REGION gSelectedFloristCardsRegion[9];
-void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-INT32 guiFlowerCardsButtonImage;
-void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
+int32_t guiFlowerCardsButtonImage;
+void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiFlowerCardsBackButton;
 
 void GameInitFloristCards() {}
@@ -166,7 +166,7 @@ void RenderFloristCards() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gbCurrentlySelectedCard = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
@@ -176,7 +176,7 @@ void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
   }
 }
 
-void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

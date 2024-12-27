@@ -57,7 +57,7 @@ extern void BuildUndergroundSectorInfoList();
 extern void EndCreatureQuest();
 
 extern GARRISON_GROUP *gGarrisonGroup;
-extern INT32 giGarrisonArraySize;
+extern int32_t giGarrisonArraySize;
 
 #ifdef JA2TESTVERSION
 extern BOOLEAN gfOverrideSector;
@@ -68,9 +68,9 @@ int16_t gsInterrogationGridNo[3] = {7756, 7757, 7758};
 void ValidateEnemiesHaveWeapons() {
 #ifdef JA2BETAVERSION
   SGPRect CenteringRect = {0, 0, 639, 479};
-  INT32 i, iErrorDialog;
+  int32_t i, iErrorDialog;
   struct SOLDIERTYPE *pSoldier;
-  INT32 iNumInvalid = 0;
+  int32_t iNumInvalid = 0;
 
   for (i = gTacticalStatus.Team[ENEMY_TEAM].bFirstID; i <= gTacticalStatus.Team[ENEMY_TEAM].bLastID;
        i++) {
@@ -292,7 +292,7 @@ void GetNumberOfEnemiesInSector(u8 sSectorX, u8 sSectorY, uint8_t *pubNumAdmins,
 
 void EndTacticalBattleForEnemy() {
   struct GROUP *pGroup;
-  INT32 i;
+  int32_t i;
 
   // Clear enemies in battle for all stationary groups in the sector.
   if (gbWorldSectorZ > 0) {
@@ -352,7 +352,7 @@ void EndTacticalBattleForEnemy() {
 
 uint8_t NumFreeEnemySlots() {
   uint8_t ubNumFreeSlots = 0;
-  INT32 i;
+  int32_t i;
   struct SOLDIERTYPE *pSoldier;
   // Count the number of free enemy slots.  It is possible to have multiple groups exceed the
   // maximum.
@@ -374,7 +374,7 @@ BOOLEAN PrepareEnemyForSectorBattle() {
   uint8_t ubNumAdmins, ubNumTroops, ubNumElites;
   uint8_t ubTotalAdmins, ubTotalElites, ubTotalTroops;
   uint8_t ubStationaryEnemies;
-  INT32 i, num;
+  int32_t i, num;
   int16_t sNumSlots;
 
   gfPendingEnemies = FALSE;
@@ -650,7 +650,7 @@ BOOLEAN PrepareEnemyForUndergroundBattle() {
 
 // The queen AI layer must process the event by subtracting forces, etc.
 void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
-  INT32 iNumEnemiesInSector;
+  int32_t iNumEnemiesInSector;
   SECTORINFO *pSector;
   EvaluateDeathEffectsToSoldierInitList(pSoldier);
 
@@ -1132,7 +1132,7 @@ void AddPossiblePendingEnemiesToBattle() {
 }
 
 void NotifyPlayersOfNewEnemies() {
-  INT32 iSoldiers, iChosenSoldier, i;
+  int32_t iSoldiers, iChosenSoldier, i;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fIgnoreBreath = FALSE;
 
@@ -1447,10 +1447,10 @@ void EndCaptureSequence() {
 }
 
 void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
-  INT32 i;
+  int32_t i;
   WORLDITEM WorldItem;
   BOOLEAN fMadeCorpse;
-  INT32 iNumEnemiesInSector;
+  int32_t iNumEnemiesInSector;
 
   static int16_t sAlmaCaptureGridNos[] = {9208, 9688, 9215};
   static int16_t sAlmaCaptureItemsGridNo[] = {12246, 12406, 13046};
@@ -1602,7 +1602,7 @@ void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
-  INT32 i;
+  int32_t i;
   BOOLEAN fMadeCorpse;
   int8_t bKilledEnemies = 0, bKilledCreatures = 0, bKilledRebels = 0, bKilledCivilians = 0;
   return;
@@ -1691,7 +1691,7 @@ BOOLEAN PlayerSectorDefended(uint8_t ubSectorID) {
 // Assumes gTacticalStatus.fEnemyInSector
 BOOLEAN OnlyHostileCivsInSector() {
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
+  int32_t i;
   BOOLEAN fHostileCivs = FALSE;
 
   // Look for any hostile civs.

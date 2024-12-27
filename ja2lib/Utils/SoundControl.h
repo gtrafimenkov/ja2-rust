@@ -433,11 +433,11 @@ void PlayDelayedJA2Sample(uint32_t uiDelay, uint32_t usNum, uint32_t usRate, uin
 
 #define POSITION_SOUND_FROM_SOLDIER 0x00000001
 
-INT32 NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay);
-void DeletePositionSnd(INT32 iPositionSndIndex);
+int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay);
+void DeletePositionSnd(int32_t iPositionSndIndex);
 void SetPositionSndsActive();
 void SetPositionSndsInActive();
 void SetPositionSndsVolumeAndPanning();
-void SetPositionSndGridNo(INT32 iPositionSndIndex, int16_t sGridNo);
+void SetPositionSndGridNo(int32_t iPositionSndIndex, int16_t sGridNo);
 
 #endif

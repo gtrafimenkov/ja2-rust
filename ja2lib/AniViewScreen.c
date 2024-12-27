@@ -45,7 +45,7 @@ static uint16_t *pusStates = NULL;
 static int8_t ubCurLoadedState = 0;
 
 void CycleAnimations() {
-  INT32 cnt;
+  int32_t cnt;
 
   // FInd the next animation with start height the same...
   for (cnt = usStartAnim + 1; cnt < NUMANIMATIONSTATES; cnt++) {
@@ -259,7 +259,7 @@ uint32_t AniEditScreenHandle(void) {
 }
 
 uint16_t GetAnimStateFromName(STR8 zName) {
-  INT32 cnt;
+  int32_t cnt;
 
   // FInd the next animation with start height the same...
   for (cnt = 0; cnt < NUMANIMATIONSTATES; cnt++) {

@@ -41,7 +41,7 @@ void DrawBobbyROrderTitle();
 
 void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint16_t usGridY,
                            BobbyRayPurchaseStruct *pBobbyRayPurchase, BOOLEAN fJustDisplayTitles,
-                           INT32 iOrderNum);
+                           int32_t iOrderNum);
 
 typedef struct {
   BOOLEAN fActive;
@@ -59,7 +59,7 @@ typedef struct {
 } NewBobbyRayOrderStruct;
 
 extern NewBobbyRayOrderStruct *gpNewBobbyrShipments;
-extern INT32 giNumberOfNewBobbyRShipment;
+extern int32_t giNumberOfNewBobbyRShipment;
 
 BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ubDeliveryLoc,
                              uint8_t ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,

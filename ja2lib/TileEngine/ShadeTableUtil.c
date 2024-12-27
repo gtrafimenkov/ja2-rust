@@ -112,7 +112,7 @@ void DetermineRGBDistributionSettings() {
 
 BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   HWFILE hfile;
-  INT32 i;
+  int32_t i;
   uint32_t uiNumBytesRead;
   CHAR8 ShadeFileName[100];
   STR8 ptr;
@@ -152,7 +152,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
 
 BOOLEAN SaveShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   HWFILE hfile;
-  INT32 i;
+  int32_t i;
   uint32_t uiNumBytesWritten;
   CHAR8 ShadeFileName[100];
   STR8 ptr;

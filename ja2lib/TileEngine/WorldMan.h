@@ -85,7 +85,7 @@ struct LEVELNODE *ForceStructToTail(uint32_t iMapIndex, uint16_t usIndex);
 BOOLEAN AddStructToHead(uint32_t iMapIndex, uint16_t usIndex);
 BOOLEAN TypeExistsInStructLayer(uint32_t iMapIndex, uint32_t fType, uint16_t *pusStructIndex);
 BOOLEAN RemoveAllStructsOfTypeRange(uint32_t iMapIndex, uint32_t fStartType, uint32_t fEndType);
-BOOLEAN AddWallToStructLayer(INT32 iMapIndex, uint16_t usIndex, BOOLEAN fReplace);
+BOOLEAN AddWallToStructLayer(int32_t iMapIndex, uint16_t usIndex, BOOLEAN fReplace);
 BOOLEAN ReplaceStructIndex(uint32_t iMapIndex, uint16_t usOldIndex, uint16_t usNewIndex);
 BOOLEAN HideStructOfGivenType(uint32_t iMapIndex, uint32_t fType, BOOLEAN fHide);
 BOOLEAN InsertStructIndex(uint32_t iMapIndex, uint16_t usIndex, uint8_t ubLevel);
@@ -154,7 +154,7 @@ void WorldHideTrees();
 void WorldShowTrees();
 
 BOOLEAN IsTileRedundent(uint16_t *pZBuffer, uint16_t usZValue, struct VObject *hSrcVObject,
-                        INT32 iX, INT32 iY, uint16_t usIndex);
+                        int32_t iX, int32_t iY, uint16_t usIndex);
 
 // this is found in editscreen.c
 // Andrew, you had worldman.c checked out at the time, so I stuck it here.

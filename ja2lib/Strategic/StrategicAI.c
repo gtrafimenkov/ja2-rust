@@ -154,11 +154,12 @@ BOOLEAN gfAutoAIAware = FALSE;
 // Saved vars
 int8_t gbPadding2[3] = {0, 0, 0};  // NOT USED
 BOOLEAN gfExtraElites = 0;         // Set when queen compositions are augmented with bonus elites.
-INT32 giGarrisonArraySize = 0;
-INT32 giPatrolArraySize = 0;
-INT32 giForcePercentage = 0;     // Modifies the starting group sizes relative by percentage
-INT32 giArmyAlertness = 0;       // The chance the group will spot an adjacent player/militia
-INT32 giArmyAlertnessDecay = 0;  // How much the spotting chance decreases when spot check succeeds
+int32_t giGarrisonArraySize = 0;
+int32_t giPatrolArraySize = 0;
+int32_t giForcePercentage = 0;  // Modifies the starting group sizes relative by percentage
+int32_t giArmyAlertness = 0;    // The chance the group will spot an adjacent player/militia
+int32_t giArmyAlertnessDecay =
+    0;  // How much the spotting chance decreases when spot check succeeds
 uint8_t gubNumAwareBattles =
     0;  // When non-zero, this means the queen is very aware and searching for players.  Every time
         // there is an enemy initiated battle, this counter decrements until zero.  Until that
@@ -169,10 +170,10 @@ BOOLEAN gfQueenAIAwake =
             //@@@Alex, this flag is ONLY set by the first meanwhile scene which calls an action.  If
             // this action isn't called, the AI will never turn on.  It is completely dependant on
             // this action.  It can be toggled at will in the AIViewer for testing purposes.
-INT32 giReinforcementPool = 0;  // How many troops the queen has in reserve in noman's land.  These
-                                // guys are spawned as needed in P3.
-INT32 giReinforcementPoints = 0;      // the entire army's capacity to provide reinforcements.
-INT32 giRequestPoints = 0;            // the entire army's need for reinforcements.
+int32_t giReinforcementPool = 0;  // How many troops the queen has in reserve in noman's land. These
+                                  // guys are spawned as needed in P3.
+int32_t giReinforcementPoints = 0;    // the entire army's capacity to provide reinforcements.
+int32_t giRequestPoints = 0;          // the entire army's need for reinforcements.
 uint8_t gubSAIVersion = SAI_VERSION;  // Used for adding new features to be saved.
 uint8_t gubQueenPriorityPhase =
     0;  // Defines how far into defence the queen is -- abstractly related
@@ -217,7 +218,7 @@ uint8_t *gubPatrolReinforcementsDenied = NULL;
 BOOLEAN gfDisplayStrategicAILogs = FALSE;
 
 void ValidatePendingGroups();
-void ValidateWeights(INT32 iID);
+void ValidateWeights(int32_t iID);
 void ValidateGroup(struct GROUP *pGroup);
 void ValidateLargeGroup(struct GROUP *pGroup);
 
@@ -1397,11 +1398,11 @@ BOOLEAN PlayerForceTooStrong(uint8_t ubSectorID, uint16_t usOffensePoints,
                              uint16_t *pusDefencePoints);
 void RequestAttackOnSector(uint8_t ubSectorID, uint16_t usDefencePoints);
 void RequestHighPriorityStagingGroupReinforcements(struct GROUP *pGroup);
-void RequestHighPriorityGarrisonReinforcements(INT32 iGarrisonID, uint8_t ubSoldiersRequested);
+void RequestHighPriorityGarrisonReinforcements(int32_t iGarrisonID, uint8_t ubSoldiersRequested);
 
-BOOLEAN GarrisonCanProvideMinimumReinforcements(INT32 iGarrisonID);
-BOOLEAN GarrisonRequestingMinimumReinforcements(INT32 iGarrisonID);
-BOOLEAN PatrolRequestingMinimumReinforcements(INT32 iPatrolID);
+BOOLEAN GarrisonCanProvideMinimumReinforcements(int32_t iGarrisonID);
+BOOLEAN GarrisonRequestingMinimumReinforcements(int32_t iGarrisonID);
+BOOLEAN PatrolRequestingMinimumReinforcements(int32_t iPatrolID);
 
 // These are the chance functions that the AI uses to see player's/militia in adjacent sectors.
 BOOLEAN AttemptToNoticeAdjacentGroupSucceeds();
@@ -1422,23 +1423,23 @@ void ClearStrategicLog();
 // Recalculates a group's weight based on any changes.
 //@@@Alex, this is possibly missing in some areas.  It is hard to ensure it is
 // everywhere with all the changes I've made.  I'm sure you could probably find some missing calls.
-void RecalculatePatrolWeight(INT32 iPatrolID);
-void RecalculateGarrisonWeight(INT32 iGarrisonID);
+void RecalculatePatrolWeight(int32_t iPatrolID);
+void RecalculateGarrisonWeight(int32_t iGarrisonID);
 
-INT32 GarrisonReinforcementsRequested(INT32 iGarrisonID, uint8_t *pubExtraReinforcements);
-INT32 PatrolReinforcementsRequested(INT32 iPatrolID);
-INT32 ReinforcementsAvailable(INT32 iGarrisonID);
-BOOLEAN ReinforcementsApproved(INT32 iGarrisonID, uint16_t *pusDefencePoints);
-void SendReinforcementsForGarrison(INT32 iDstGarrisonID, uint16_t usDefencePoints,
+int32_t GarrisonReinforcementsRequested(int32_t iGarrisonID, uint8_t *pubExtraReinforcements);
+int32_t PatrolReinforcementsRequested(int32_t iPatrolID);
+int32_t ReinforcementsAvailable(int32_t iGarrisonID);
+BOOLEAN ReinforcementsApproved(int32_t iGarrisonID, uint16_t *pusDefencePoints);
+void SendReinforcementsForGarrison(int32_t iDstGarrisonID, uint16_t usDefencePoints,
                                    struct GROUP **pOptionalGroup);
-void SendReinforcementsForPatrol(INT32 iPatrolID, struct GROUP **pOptionalGroup);
+void SendReinforcementsForPatrol(int32_t iPatrolID, struct GROUP **pOptionalGroup);
 
 void ClearPreviousAIGroupAssignment(struct GROUP *pGroup);
 
 void CalcNumTroopsBasedOnComposition(uint8_t *pubNumTroops, uint8_t *pubNumElites, uint8_t ubTotal,
-                                     INT32 iCompositionID);
-void ConvertGroupTroopsToComposition(struct GROUP *pGroup, INT32 iCompositionID);
-void RemoveSoldiersFromGarrisonBasedOnComposition(INT32 iGarrisonID, uint8_t ubSize);
+                                     int32_t iCompositionID);
+void ConvertGroupTroopsToComposition(struct GROUP *pGroup, int32_t iCompositionID);
+void RemoveSoldiersFromGarrisonBasedOnComposition(int32_t iGarrisonID, uint8_t ubSize);
 
 // If there are any enemy groups that will be moving through this sector due, they will have to
 // repath which will cause them to avoid the sector.  Returns the number of redirected groups.
@@ -1480,9 +1481,9 @@ void MoveSAIGroupToSector(struct GROUP **pGroup, uint8_t ubSectorID, uint32_t ui
 
 // returns the number of reinforcements permitted to be sent.  Will increased if the denied counter
 // is non-zero.
-INT32 GarrisonReinforcementsRequested(INT32 iGarrisonID, uint8_t *pubExtraReinforcements) {
-  INT32 iReinforcementsRequested;
-  INT32 iExistingForces;
+int32_t GarrisonReinforcementsRequested(int32_t iGarrisonID, uint8_t *pubExtraReinforcements) {
+  int32_t iReinforcementsRequested;
+  int32_t iExistingForces;
   SECTORINFO *pSector;
 
   pSector = &SectorInfo[gGarrisonGroup[iGarrisonID].ubSectorID];
@@ -1497,8 +1498,8 @@ INT32 GarrisonReinforcementsRequested(INT32 iGarrisonID, uint8_t *pubExtraReinfo
   // Make sure the number of extra reinforcements don't bump the force size past the max of
   // MAX_STRATEGIC_TEAM_SIZE.
   *pubExtraReinforcements = (uint8_t)min(
-      (INT32)*pubExtraReinforcements,
-      min((INT32)(*pubExtraReinforcements), MAX_STRATEGIC_TEAM_SIZE - iReinforcementsRequested));
+      (int32_t)*pubExtraReinforcements,
+      min((int32_t)(*pubExtraReinforcements), MAX_STRATEGIC_TEAM_SIZE - iReinforcementsRequested));
 
   iReinforcementsRequested = min(MAX_STRATEGIC_TEAM_SIZE, iReinforcementsRequested);
 
@@ -1510,7 +1511,7 @@ INT32 GarrisonReinforcementsRequested(INT32 iGarrisonID, uint8_t *pubExtraReinfo
   return iReinforcementsRequested;
 }
 
-INT32 PatrolReinforcementsRequested(INT32 iPatrolID) {
+int32_t PatrolReinforcementsRequested(int32_t iPatrolID) {
   struct GROUP *pGroup;
   pGroup = GetGroup(gPatrolGroup[iPatrolID].ubGroupID);
   if (!pGroup) {
@@ -1520,9 +1521,9 @@ INT32 PatrolReinforcementsRequested(INT32 iPatrolID) {
   }
 }
 
-INT32 ReinforcementsAvailable(INT32 iGarrisonID) {
+int32_t ReinforcementsAvailable(int32_t iGarrisonID) {
   SECTORINFO *pSector;
-  INT32 iReinforcementsAvailable;
+  int32_t iReinforcementsAvailable;
 
   pSector = &SectorInfo[gGarrisonGroup[iGarrisonID].ubSectorID];
   iReinforcementsAvailable = pSector->ubNumTroops + pSector->ubNumElites + pSector->ubNumAdmins;
@@ -1563,7 +1564,7 @@ BOOLEAN PlayerForceTooStrong(uint8_t ubSectorID, uint16_t usOffensePoints,
 }
 
 void RequestAttackOnSector(uint8_t ubSectorID, uint16_t usDefencePoints) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < giGarrisonArraySize; i++) {
     if (gGarrisonGroup[i].ubSectorID == ubSectorID && !gGarrisonGroup[i].ubPendingGroupID) {
 #ifdef JA2BETAVERSION
@@ -1603,7 +1604,7 @@ BOOLEAN AdjacentSectorIsImportantAndUndefended(uint8_t ubSectorID) {
 void ValidatePendingGroups() {
 #ifdef JA2BETAVERSION
   struct GROUP *pGroup;
-  INT32 i, iErrorsForInvalidPendingGroup = 0;
+  int32_t i, iErrorsForInvalidPendingGroup = 0;
   uint8_t ubGroupID;
   for (i = 0; i < giPatrolArraySize; i++) {
     ubGroupID = gPatrolGroup[i].ubPendingGroupID;
@@ -1638,11 +1639,11 @@ void ValidatePendingGroups() {
 #endif
 }
 
-void ValidateWeights(INT32 iID) {
+void ValidateWeights(int32_t iID) {
 #ifdef JA2BETAVERSION
-  INT32 i;
-  INT32 iSumRequestPoints = 0;
-  INT32 iSumReinforcementPoints = 0;
+  int32_t i;
+  int32_t iSumRequestPoints = 0;
+  int32_t iSumReinforcementPoints = 0;
   for (i = 0; i < giPatrolArraySize; i++) {
     iSumRequestPoints += gPatrolGroup[i].bWeight;
   }
@@ -1764,10 +1765,10 @@ void RemovePlayersFromAllMismatchGroups(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef JA2BETAVERSION
 void ValidatePlayersAreInOneGroupOnly() {
-  INT32 i;
-  INT32 iGroups;
-  INT32 iMismatches;
-  INT32 iNumErrors;
+  int32_t i;
+  int32_t iGroups;
+  int32_t iMismatches;
+  int32_t iNumErrors;
   struct GROUP *pGroup, *pOtherGroup;
   PLAYERGROUP *pPlayer;
   struct SOLDIERTYPE *pSoldier;
@@ -1990,10 +1991,10 @@ void SAIReportError(STR16 wErrorString) {
 #endif
 
 void InitStrategicAI() {
-  INT32 i, cnt, iRandom;
-  INT32 iEliteChance, iTroopChance, iAdminChance;
-  INT32 iWeight;
-  INT32 iStartPop, iDesiredPop, iPriority;
+  int32_t i, cnt, iRandom;
+  int32_t iEliteChance, iTroopChance, iAdminChance;
+  int32_t iWeight;
+  int32_t iStartPop, iDesiredPop, iPriority;
   SECTORINFO *pSector = NULL;
   struct GROUP *pGroup;
   uint8_t ubNumTroops;
@@ -2446,7 +2447,7 @@ BOOLEAN HandlePlayerGroupNoticedByPatrolGroup(struct GROUP *pPlayerGroup,
 void HandlePlayerGroupNoticedByGarrison(struct GROUP *pPlayerGroup, uint8_t ubSectorID) {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  INT32 iReinforcementsApproved;
+  int32_t iReinforcementsApproved;
   uint16_t usOffensePoints, usDefencePoints;
   uint8_t ubEnemies;
   pSector = &SectorInfo[ubSectorID];
@@ -2658,7 +2659,7 @@ void HandleEmptySectorNoticedByGarrison(uint8_t ubGarrisonSectorID, uint8_t ubEm
   }
 }
 
-BOOLEAN ReinforcementsApproved(INT32 iGarrisonID, uint16_t *pusDefencePoints) {
+BOOLEAN ReinforcementsApproved(int32_t iGarrisonID, uint16_t *pusDefencePoints) {
   uint16_t usOffensePoints;
   uint8_t ubSectorX, ubSectorY;
 
@@ -2705,7 +2706,7 @@ BOOLEAN ReinforcementsApproved(INT32 iGarrisonID, uint16_t *pusDefencePoints) {
 BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
   SECTORINFO *pSector;
   struct GROUP *pPatrolGroup;
-  INT32 i;
+  int32_t i;
 
   ValidateWeights(2);
 
@@ -3186,7 +3187,7 @@ void CheckEnemyControlledSector(uint8_t ubSectorID) {
 }
 
 void RemoveGroupFromStrategicAILists(uint8_t ubGroupID) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < giPatrolArraySize; i++) {
     if (gPatrolGroup[i].ubGroupID == ubGroupID) {  // Patrol group was destroyed.
       gPatrolGroup[i].ubGroupID = 0;
@@ -3206,10 +3207,10 @@ void RemoveGroupFromStrategicAILists(uint8_t ubGroupID) {
   }
 }
 
-void RecalculatePatrolWeight(INT32 iPatrolID) {
+void RecalculatePatrolWeight(int32_t iPatrolID) {
   struct GROUP *pGroup;
-  INT32 iWeight, iPrevWeight;
-  INT32 iNeedPopulation;
+  int32_t iWeight, iPrevWeight;
+  int32_t iNeedPopulation;
 
   ValidateWeights(4);
 
@@ -3236,10 +3237,10 @@ void RecalculatePatrolWeight(INT32 iPatrolID) {
   ValidateWeights(5);
 }
 
-void RecalculateGarrisonWeight(INT32 iGarrisonID) {
+void RecalculateGarrisonWeight(int32_t iGarrisonID) {
   SECTORINFO *pSector;
-  INT32 iWeight, iPrevWeight;
-  INT32 iDesiredPop, iCurrentPop, iPriority;
+  int32_t iWeight, iPrevWeight;
+  int32_t iDesiredPop, iCurrentPop, iPriority;
 
   ValidateWeights(6);
 
@@ -3278,7 +3279,7 @@ void RecalculateGarrisonWeight(INT32 iGarrisonID) {
 }
 
 void RecalculateSectorWeight(uint8_t ubSectorID) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < giGarrisonArraySize; i++) {
     if (gGarrisonGroup[i].ubSectorID == ubSectorID) {
       RecalculateGarrisonWeight(i);
@@ -3288,7 +3289,7 @@ void RecalculateSectorWeight(uint8_t ubSectorID) {
 }
 
 void RecalculateGroupWeight(struct GROUP *pGroup) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < giPatrolArraySize; i++) {
     if (gPatrolGroup[i].ubGroupID == pGroup->ubGroupID) {
       if (!pGroup->ubGroupSize) {
@@ -3301,11 +3302,11 @@ void RecalculateGroupWeight(struct GROUP *pGroup) {
   }
 }
 
-INT32 ChooseSuitableGarrisonToProvideReinforcements(INT32 iDstGarrisonID,
-                                                    INT32 iReinforcementsRequested) {
-  INT32 iSrcGarrisonID, iBestGarrisonID = NO_GARRISON;
-  INT32 iReinforcementsAvailable;
-  INT32 i, iRandom, iWeight;
+int32_t ChooseSuitableGarrisonToProvideReinforcements(int32_t iDstGarrisonID,
+                                                      int32_t iReinforcementsRequested) {
+  int32_t iSrcGarrisonID, iBestGarrisonID = NO_GARRISON;
+  int32_t iReinforcementsAvailable;
+  int32_t i, iRandom, iWeight;
   int8_t bBestWeight;
   uint8_t ubSectorID;
 
@@ -3409,10 +3410,10 @@ INT32 ChooseSuitableGarrisonToProvideReinforcements(INT32 iDstGarrisonID,
   return -1;
 }
 
-void SendReinforcementsForGarrison(INT32 iDstGarrisonID, uint16_t usDefencePoints,
+void SendReinforcementsForGarrison(int32_t iDstGarrisonID, uint16_t usDefencePoints,
                                    struct GROUP **pOptionalGroup) {
-  INT32 iChance, iRandom, iSrcGarrisonID;
-  INT32 iMaxReinforcementsAllowed, iReinforcementsAvailable, iReinforcementsRequested,
+  int32_t iChance, iRandom, iSrcGarrisonID;
+  int32_t iMaxReinforcementsAllowed, iReinforcementsAvailable, iReinforcementsRequested,
       iReinforcementsApproved;
   struct GROUP *pGroup;
   uint8_t ubSrcSectorX, ubSrcSectorY, ubDstSectorX, ubDstSectorY;
@@ -3603,10 +3604,10 @@ void SendReinforcementsForGarrison(INT32 iDstGarrisonID, uint16_t usDefencePoint
   ValidateWeights(20);
 }
 
-void SendReinforcementsForPatrol(INT32 iPatrolID, struct GROUP **pOptionalGroup) {
+void SendReinforcementsForPatrol(int32_t iPatrolID, struct GROUP **pOptionalGroup) {
   struct GROUP *pGroup;
-  INT32 iRandom, iSrcGarrisonID, iWeight;
-  INT32 iReinforcementsAvailable, iReinforcementsRequested, iReinforcementsApproved;
+  int32_t iRandom, iSrcGarrisonID, iWeight;
+  int32_t iReinforcementsAvailable, iReinforcementsRequested, iReinforcementsApproved;
   uint8_t ubSrcSectorX, ubSrcSectorY, ubDstSectorX, ubDstSectorY;
 
   ValidateWeights(21);
@@ -3712,11 +3713,11 @@ void SendReinforcementsForPatrol(INT32 iPatrolID, struct GROUP **pOptionalGroup)
 // Periodically does a general poll and check on each of the groups and garrisons, determines
 // reinforcements, new patrol groups, planned assaults, etc.
 void EvaluateQueenSituation() {
-  INT32 i, iRandom;
-  INT32 iWeight;
+  int32_t i, iRandom;
+  int32_t iWeight;
   uint32_t uiOffset;
   uint16_t usDefencePoints;
-  INT32 iSumOfAllWeights = 0;
+  int32_t iSumOfAllWeights = 0;
 
   ValidateWeights(26);
 
@@ -3826,7 +3827,7 @@ BOOLEAN SaveStrategicAI(HWFILE hFile) {
   PATROL_GROUP gTempPatrolGroup;
   ARMY_COMPOSITION gTempArmyComp;
   uint32_t uiNumBytesWritten;
-  INT32 i;
+  int32_t i;
 
   memset(&gTempPatrolGroup, 0, sizeof(PATROL_GROUP));
   memset(&gTempArmyComp, 0, sizeof(ARMY_COMPOSITION));
@@ -3924,7 +3925,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   PATROL_GROUP gTempPatrolGroup;
   ARMY_COMPOSITION gTempArmyComp;
   uint32_t uiNumBytesRead;
-  INT32 i;
+  int32_t i;
   uint8_t ubSAIVersion;
 
   FileMan_Read(hFile, gbPadding2, 3, &uiNumBytesRead);
@@ -4081,8 +4082,8 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
 }
 
 void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
-  INT32 i, index, num, iFactor;
-  INT32 iChange, iNew, iNumSoldiers, iNumPromotions;
+  int32_t i, index, num, iFactor;
+  int32_t iChange, iNew, iNumSoldiers, iNumPromotions;
   SECTORINFO *pSector;
   uint8_t ubOwned[NUM_ARMY_COMPOSITIONS];
   uint8_t ubTotal[NUM_ARMY_COMPOSITIONS];
@@ -4474,7 +4475,7 @@ void ClearStrategicLog() {
 
 void InvestigateSector(uint8_t ubSectorID) {
   /*
-          INT32 i;
+          int32_t i;
           SECTORINFO *pSector;
           int16_t sSectorX, sSectorY;
           uint8_t ubAdmins[4], ubTroops[4], ubElites[4], ubNumToSend, ubTotal;
@@ -4753,8 +4754,8 @@ uint8_t SectorDistance(uint8_t ubSectorID1, uint8_t ubSectorID2) {
   return ubDist;
 }
 
-void RequestHighPriorityGarrisonReinforcements(INT32 iGarrisonID, uint8_t ubSoldiersRequested) {
-  INT32 i, iBestIndex;
+void RequestHighPriorityGarrisonReinforcements(int32_t iGarrisonID, uint8_t ubSoldiersRequested) {
+  int32_t i, iBestIndex;
   struct GROUP *pGroup;
   uint8_t ubBestDist, ubDist;
   uint8_t ubDstSectorX, ubDstSectorY;
@@ -4853,7 +4854,7 @@ void RequestHighPriorityGarrisonReinforcements(INT32 iGarrisonID, uint8_t ubSold
     pGroup->pEnemyGroup->ubIntention = REINFORCEMENTS;
     gGarrisonGroup[iGarrisonID].ubPendingGroupID = pGroup->ubGroupID;
     pGroup->ubOriginalSector = (uint8_t)GetSectorID8(ubDstSectorX, ubDstSectorY);
-    giReinforcementPool -= (INT32)ubSoldiersRequested;
+    giReinforcementPool -= (int32_t)ubSoldiersRequested;
 
     MoveSAIGroupToSector(&pGroup, gGarrisonGroup[iGarrisonID].ubSectorID, EVASIVE, REINFORCEMENTS);
     ValidateGroup(pGroup);
@@ -4869,7 +4870,7 @@ void WakeUpQueen() {
 }
 
 void MassFortifyTowns() {
-  INT32 i;
+  int32_t i;
   SECTORINFO *pSector;
   struct GROUP *pGroup;
   uint8_t ubNumTroops, ubDesiredTroops;
@@ -4898,9 +4899,9 @@ void MassFortifyTowns() {
   }
 }
 
-void RenderAIViewerGarrisonInfo(INT32 x, INT32 y, SECTORINFO *pSector) {
+void RenderAIViewerGarrisonInfo(int32_t x, int32_t y, SECTORINFO *pSector) {
   if (pSector->ubGarrisonID != NO_GARRISON) {
-    INT32 iDesired, iSurplus;
+    int32_t iDesired, iSurplus;
     iDesired = gArmyComp[gGarrisonGroup[pSector->ubGarrisonID].ubComposition].bDesiredPopulation;
     iSurplus = pSector->ubNumTroops + pSector->ubNumAdmins + pSector->ubNumElites - iDesired;
     SetFontForeground(FONT_WHITE);
@@ -4950,9 +4951,9 @@ void StrategicHandleMineThatRanOut(uint8_t ubSectorID) {
   }
 }
 
-BOOLEAN GarrisonCanProvideMinimumReinforcements(INT32 iGarrisonID) {
-  INT32 iAvailable;
-  INT32 iDesired;
+BOOLEAN GarrisonCanProvideMinimumReinforcements(int32_t iGarrisonID) {
+  int32_t iAvailable;
+  int32_t iDesired;
   SECTORINFO *pSector;
   uint8_t ubSectorX, ubSectorY;
 
@@ -4975,9 +4976,9 @@ BOOLEAN GarrisonCanProvideMinimumReinforcements(INT32 iGarrisonID) {
   return FALSE;
 }
 
-BOOLEAN GarrisonRequestingMinimumReinforcements(INT32 iGarrisonID) {
-  INT32 iAvailable;
-  INT32 iDesired;
+BOOLEAN GarrisonRequestingMinimumReinforcements(int32_t iGarrisonID) {
+  int32_t iAvailable;
+  int32_t iDesired;
   SECTORINFO *pSector;
 
   if (gGarrisonGroup[iGarrisonID].ubPendingGroupID) {
@@ -4994,7 +4995,7 @@ BOOLEAN GarrisonRequestingMinimumReinforcements(INT32 iGarrisonID) {
   return FALSE;
 }
 
-BOOLEAN PatrolRequestingMinimumReinforcements(INT32 iPatrolID) {
+BOOLEAN PatrolRequestingMinimumReinforcements(int32_t iPatrolID) {
   struct GROUP *pGroup;
 
   if (gPatrolGroup[iPatrolID].ubPendingGroupID) {
@@ -5015,7 +5016,7 @@ BOOLEAN PatrolRequestingMinimumReinforcements(INT32 iPatrolID) {
 }
 
 void EliminateSurplusTroopsForGarrison(struct GROUP *pGroup, SECTORINFO *pSector) {
-  INT32 iTotal;
+  int32_t iTotal;
   iTotal = pGroup->pEnemyGroup->ubNumTroops + pGroup->pEnemyGroup->ubNumElites +
            pGroup->pEnemyGroup->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites +
            pSector->ubNumAdmins;
@@ -5080,7 +5081,7 @@ void EliminateSurplusTroopsForGarrison(struct GROUP *pGroup, SECTORINFO *pSector
 // to keep player from fighting many more admins once they are no longer any challenge for him.
 // Eventually all admins will vanish off map.
 void UpgradeAdminsToTroops() {
-  INT32 i;
+  int32_t i;
   SECTORINFO *pSector;
   int8_t bPriority;
   uint8_t ubAdminsToCheck;
@@ -5232,10 +5233,10 @@ void SendGroupToPool(struct GROUP **pGroup) {
 }
 
 void ReassignAIGroup(struct GROUP **pGroup) {
-  INT32 i, iRandom;
-  INT32 iWeight;
+  int32_t i, iRandom;
+  int32_t iWeight;
   uint16_t usDefencePoints;
-  INT32 iReloopLastIndex = -1;
+  int32_t iReloopLastIndex = -1;
   uint8_t ubSectorID;
 
   ubSectorID = (uint8_t)GetSectorID8((*pGroup)->ubSectorX, (*pGroup)->ubSectorY);
@@ -5350,7 +5351,7 @@ void ReassignAIGroup(struct GROUP **pGroup) {
 // When an enemy AI group is eliminated by the player, apply a grace period in which the
 // group isn't allowed to be filled for several days.
 void TagSAIGroupWithGracePeriod(struct GROUP *pGroup) {
-  INT32 iPatrolID;
+  int32_t iPatrolID;
   if (pGroup) {
     iPatrolID = FindPatrolGroupIndexForGroupID(pGroup->ubGroupID);
     if (iPatrolID != -1) {
@@ -5372,16 +5373,16 @@ void TagSAIGroupWithGracePeriod(struct GROUP *pGroup) {
   }
 }
 
-BOOLEAN PermittedToFillPatrolGroup(INT32 iPatrolID) {
-  INT32 iDay;
-  INT32 iDayAllowed;
+BOOLEAN PermittedToFillPatrolGroup(int32_t iPatrolID) {
+  int32_t iDay;
+  int32_t iDayAllowed;
   iDay = GetWorldDay();
   iDayAllowed = gPatrolGroup[iPatrolID].bFillPermittedAfterDayMod100 + (iDay / 100) * 100;
   return iDay >= iDayAllowed;
 }
 
 void RepollSAIGroup(struct GROUP *pGroup) {
-  INT32 i;
+  int32_t i;
   Assert(!pGroup->fPlayer);
   if (GroupAtFinalDestination(pGroup)) {
     EvaluateGroupSituation(pGroup);
@@ -5408,7 +5409,7 @@ void RepollSAIGroup(struct GROUP *pGroup) {
 }
 
 void ClearPreviousAIGroupAssignment(struct GROUP *pGroup) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < giPatrolArraySize; i++) {
     if (gPatrolGroup[i].ubGroupID == pGroup->ubGroupID) {
       gPatrolGroup[i].ubGroupID = 0;
@@ -5430,7 +5431,7 @@ void ClearPreviousAIGroupAssignment(struct GROUP *pGroup) {
 }
 
 void CalcNumTroopsBasedOnComposition(uint8_t *pubNumTroops, uint8_t *pubNumElites, uint8_t ubTotal,
-                                     INT32 iCompositionID) {
+                                     int32_t iCompositionID) {
   *pubNumTroops = gArmyComp[iCompositionID].bTroopPercentage * ubTotal / 100;
   *pubNumElites = gArmyComp[iCompositionID].bElitePercentage * ubTotal / 100;
 
@@ -5445,7 +5446,7 @@ void CalcNumTroopsBasedOnComposition(uint8_t *pubNumTroops, uint8_t *pubNumElite
   Assert(*pubNumTroops + *pubNumElites == ubTotal);
 }
 
-void ConvertGroupTroopsToComposition(struct GROUP *pGroup, INT32 iCompositionID) {
+void ConvertGroupTroopsToComposition(struct GROUP *pGroup, int32_t iCompositionID) {
   Assert(pGroup);
   Assert(!pGroup->fPlayer);
   CalcNumTroopsBasedOnComposition(&pGroup->pEnemyGroup->ubNumTroops,
@@ -5456,9 +5457,9 @@ void ConvertGroupTroopsToComposition(struct GROUP *pGroup, INT32 iCompositionID)
   ValidateLargeGroup(pGroup);
 }
 
-void RemoveSoldiersFromGarrisonBasedOnComposition(INT32 iGarrisonID, uint8_t ubSize) {
+void RemoveSoldiersFromGarrisonBasedOnComposition(int32_t iGarrisonID, uint8_t ubSize) {
   SECTORINFO *pSector;
-  INT32 iCompositionID;
+  int32_t iCompositionID;
   uint8_t ubNumTroops, ubNumElites;
 
   iCompositionID = gGarrisonGroup[iGarrisonID].ubComposition;
@@ -5596,7 +5597,7 @@ void ReinitializeUnvisitedGarrisons() {
   SECTORINFO *pSector;
   ARMY_COMPOSITION *pArmyComp;
   struct GROUP *pGroup;
-  INT32 i, cnt, iEliteChance, iAdminChance;
+  int32_t i, cnt, iEliteChance, iAdminChance;
 
   // Recreate the compositions
   memcpy(gArmyComp, gOrigArmyComp, NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION));

@@ -811,7 +811,7 @@ BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
 BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure, BOOLEAN fNoAnimations) {
   struct LEVELNODE *pNode;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fOpenedGraphic = FALSE;
   ANITILE_PARAMS AniParams;
   BOOLEAN fDoAnimation = TRUE;

@@ -73,7 +73,7 @@ extern uint8_t gubCurScrollSpeedID;
 extern BOOLEAN gfRenderScroll;
 extern int16_t gsScrollXIncrement;
 extern int16_t gsScrollYIncrement;
-extern INT32 guiScrollDirection;
+extern int32_t guiScrollDirection;
 extern BOOLEAN gfScrollStart;
 extern int16_t gsRenderHeight;
 
@@ -160,7 +160,7 @@ BOOLEAN ApplyScrolling(int16_t sTempRenderCenterX, int16_t sTempRenderCenterY, B
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                               uint16_t *pZBuffer, uint16_t usZValue,
-                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, int32_t iX, int32_t iY,
                                               uint16_t usIndex, SGPRect *clipregion);
 
 void RenderStaticWorldRect(int16_t, int16_t, int16_t, int16_t, BOOLEAN);

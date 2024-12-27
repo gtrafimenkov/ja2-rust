@@ -34,10 +34,10 @@ typedef struct {
 extern WORLDITEM *gWorldItems;
 extern uint32_t guiNumWorldItems;
 
-INT32 AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
-                     int8_t bRenderZHeightAboveLevel, int8_t bVisible);
-void RemoveItemFromWorld(INT32 iItemIndex);
-INT32 FindWorldItem(uint16_t usItem);
+int32_t AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel,
+                       uint16_t usFlags, int8_t bRenderZHeightAboveLevel, int8_t bVisible);
+void RemoveItemFromWorld(int32_t iItemIndex);
+int32_t FindWorldItem(uint16_t usItem);
 
 void LoadWorldItemsFromMap(int8_t **hBuffer);
 void SaveWorldItemsToMap(HWFILE fp);
@@ -46,16 +46,16 @@ void TrashWorldItems();
 
 typedef struct {
   BOOLEAN fExists;
-  INT32 iItemIndex;
+  int32_t iItemIndex;
 } WORLDBOMB;
 
 extern WORLDBOMB *gWorldBombs;
 extern uint32_t guiNumWorldBombs;
 
-extern INT32 AddBombToWorld(INT32 iItemIndex);
+extern int32_t AddBombToWorld(int32_t iItemIndex);
 extern void FindPanicBombsAndTriggers(void);
-extern INT32 FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel);
+extern int32_t FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel);
 
-void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems);
+void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, int32_t iNumberOfItems);
 
 #endif

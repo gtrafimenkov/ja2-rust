@@ -32,7 +32,8 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
 void DisplayPathArrows(uint16_t usCharNum, struct VObject *hMapHandle);
 
 // restore backgrounds for arrows
-void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY, BOOLEAN fZoom);
+void RestoreArrowBackgroundsForTrace(int32_t iArrow, int32_t iArrowX, int32_t iArrowY,
+                                     BOOLEAN fZoom);
 
 // build path for character
 void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, int16_t sX, int16_t sY,
@@ -181,8 +182,8 @@ enum {
 #define MIN_WAIT_TIME_FOR_TEMP_PATH 200
 
 // zoom UL coords
-extern INT32 iZoomX;
-extern INT32 iZoomY;
+extern int32_t iZoomX;
+extern int32_t iZoomY;
 
 // the number of militia on the cursor
 extern int16_t sGreensOnCursor;

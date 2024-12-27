@@ -72,8 +72,8 @@ void EntryInitEditorMercsInfo();
 void UpdateMercsInfo();
 
 void ProcessMercEditing();
-void AddMercToWorld(INT32 iMapIndex);
-void HandleRightClickOnMerc(INT32 iMapIndex);
+void AddMercToWorld(int32_t iMapIndex);
+void HandleRightClickOnMerc(int32_t iMapIndex);
 void SetMercEditingMode(uint8_t ubNewMode);
 
 void ResetAllMercPositions();
@@ -96,7 +96,7 @@ void DeleteSelectedMerc();
 
 void CreateEditMercWindow(void);
 void DisplayEditMercWindow(void);
-INT32 IsMercHere(INT32 iMapIndex);
+int32_t IsMercHere(int32_t iMapIndex);
 
 void ExtractCurrentMercModeInfo(BOOLEAN fKillTextInputMode);
 
@@ -134,7 +134,7 @@ void UpdateScheduleAction(uint8_t ubNewAction);
 void FindScheduleGridNo(uint8_t ubScheduleData);
 void ClearCurrentSchedule();
 void CancelCurrentScheduleAction();
-void RegisterCurrentScheduleAction(INT32 iMapIndex);
+void RegisterCurrentScheduleAction(int32_t iMapIndex);
 void StartScheduleAction();
 
 void InitDetailedPlacementForMerc();

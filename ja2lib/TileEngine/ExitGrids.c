@@ -29,8 +29,8 @@ EXITGRID gExitGrid = {0, 1, 1, 0};
 
 BOOLEAN gfOverrideInsertionWithExitGrid = FALSE;
 
-INT32 ConvertExitGridToINT32(EXITGRID *pExitGrid) {
-  INT32 iExitGridInfo;
+int32_t ConvertExitGridToINT32(EXITGRID *pExitGrid) {
+  int32_t iExitGridInfo;
   iExitGridInfo = (pExitGrid->ubGotoSectorX - 1) << 28;
   iExitGridInfo += (pExitGrid->ubGotoSectorY - 1) << 24;
   iExitGridInfo += pExitGrid->ubGotoSectorZ << 20;
@@ -38,7 +38,7 @@ INT32 ConvertExitGridToINT32(EXITGRID *pExitGrid) {
   return iExitGridInfo;
 }
 
-void ConvertINT32ToExitGrid(INT32 iExitGridInfo, EXITGRID *pExitGrid) {
+void ConvertINT32ToExitGrid(int32_t iExitGridInfo, EXITGRID *pExitGrid) {
   // convert the int into 4 unsigned bytes.
   pExitGrid->ubGotoSectorX = (uint8_t)(((iExitGridInfo & 0xf0000000) >> 28) + 1);
   pExitGrid->ubGotoSectorY = (uint8_t)(((iExitGridInfo & 0x0f000000) >> 24) + 1);
@@ -91,7 +91,7 @@ BOOLEAN GetExitGridLevelNode(uint16_t usMapIndex, struct LEVELNODE **ppLevelNode
   return FALSE;
 }
 
-void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
+void AddExitGridToWorld(int32_t iMapIndex, EXITGRID *pExitGrid) {
   struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[iMapIndex].pShadowHead;
 
@@ -122,7 +122,7 @@ void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
   }
 }
 
-void RemoveExitGridFromWorld(INT32 iMapIndex) {
+void RemoveExitGridFromWorld(int32_t iMapIndex) {
   uint16_t usDummy;
   if (TypeExistsInShadowLayer(iMapIndex, MOCKFLOOR, &usDummy)) {
     RemoveAllShadowsOfTypeRange(iMapIndex, MOCKFLOOR, MOCKFLOOR);
@@ -207,9 +207,9 @@ uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, in
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = 0;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
@@ -316,9 +316,9 @@ uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSrcGridNo, i
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = 0;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   EXITGRID ExitGrid;
 

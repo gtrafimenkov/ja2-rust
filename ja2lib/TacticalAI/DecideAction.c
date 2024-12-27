@@ -55,7 +55,7 @@ void DoneScheduleAction(struct SOLDIERTYPE *pSoldier) {
 
 int8_t DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
-  INT32 iScheduleIndex;
+  int32_t iScheduleIndex;
   uint8_t ubScheduleAction;
   uint16_t usGridNo1, usGridNo2;
   int16_t sX, sY;
@@ -559,7 +559,7 @@ int8_t DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
-  INT32 iChance, iSneaky = 10;
+  int32_t iChance, iSneaky = 10;
   int8_t bInWater, bInGas;
 
   BOOLEAN fCivilian =
@@ -995,11 +995,11 @@ int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
-  INT32 iDummy;
+  int32_t iDummy;
   uint8_t ubNoiseDir;
   int16_t sNoiseGridNo;
-  INT32 iNoiseValue;
-  INT32 iChance, iSneaky;
+  int32_t iNoiseValue;
+  int32_t iChance, iSneaky;
   int16_t sClosestFriend;
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
@@ -1507,7 +1507,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
 
 int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
   int8_t bActionReturned;
-  INT32 iDummy;
+  int32_t iDummy;
   int16_t iChance, sClosestOpponent, sClosestFriend;
   int16_t sClosestDisturbance, sDistVisible, sCheckGridNo;
   uint8_t ubCanMove, ubOpponentDir;
@@ -2610,7 +2610,7 @@ int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
 }
 
 int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCoverPercentBetter, iOffense, iDefense, iChance;
+  int32_t iCoverPercentBetter, iOffense, iDefense, iChance;
   int16_t sClosestOpponent, sBestCover = NOWHERE;
   int16_t sClosestDisturbance;
   uint8_t ubMinAPCost, ubCanMove;
@@ -3316,7 +3316,7 @@ int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
           }
         }
 
-        if ((INT32)PreRandom(100) < iChance ||
+        if ((int32_t)PreRandom(100) < iChance ||
             GetRangeInCellCoordsFromGridNoDiff(pSoldier->sGridNo, BestAttack.sTarget) <=
                 MIN_PRONE_RANGE) {
           // first get the direction, as we will need to pass that in to ShootingStanceChange
@@ -3411,7 +3411,7 @@ int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
             }
           }
 
-          if ((INT32)PreRandom(100) < iChance) {
+          if ((int32_t)PreRandom(100) < iChance) {
             BestAttack.ubAimTime = BURSTING;
             BestAttack.ubAPCost =
                 BestAttack.ubAPCost - BestAttack.ubAimTime +
@@ -3924,7 +3924,7 @@ int8_t DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
 
 void DecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
   int8_t bOldStatus;
-  INT32 iDummy;
+  int32_t iDummy;
   BOOLEAN fClimbDummy, fReachableDummy;
 
   // THE FOUR (4) POSSIBLE ALERT STATUSES ARE:

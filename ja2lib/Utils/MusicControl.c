@@ -52,7 +52,7 @@ extern void HandleEndDemoInCreatureLevel();
 
 BOOLEAN NoEnemiesInSight() {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Loop through our guys
   // End the turn of player charactors
@@ -121,7 +121,7 @@ BOOLEAN MusicPlay(uint32_t uiNum) {
 //
 //********************************************************************************
 BOOLEAN MusicSetVolume(uint32_t uiVolume) {
-  INT32 uiOldMusicVolume = uiMusicVolume;
+  int32_t uiOldMusicVolume = uiMusicVolume;
 
 #ifndef WINDOWED_MODE
 
@@ -231,7 +231,7 @@ BOOLEAN MusicFadeIn(void) {
 //********************************************************************************
 BOOLEAN MusicPoll(BOOLEAN fForce) {
 #ifndef WINDOWED_MODE
-  INT32 iVol;
+  int32_t iVol;
 
   SoundServiceStreams();
   SoundServiceRandom();
@@ -244,9 +244,9 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
     if (fMusicFadingIn) {
       if (uiMusicHandle != NO_SAMPLE) {
         iVol = SoundGetVolume(uiMusicHandle);
-        iVol = min((INT32)uiMusicVolume, iVol + gbFadeSpeed);
+        iVol = min((int32_t)uiMusicVolume, iVol + gbFadeSpeed);
         SoundSetVolume(uiMusicHandle, iVol);
-        if (iVol == (INT32)uiMusicVolume) {
+        if (iVol == (int32_t)uiMusicVolume) {
           fMusicFadingIn = FALSE;
           gbFadeSpeed = 1;
         }
@@ -256,7 +256,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
         iVol = SoundGetVolume(uiMusicHandle);
         iVol = (iVol >= 1) ? iVol - gbFadeSpeed : 0;
 
-        iVol = max((INT32)iVol, 0);
+        iVol = max((int32_t)iVol, 0);
 
         SoundSetVolume(uiMusicHandle, iVol);
         if (iVol == 0) {

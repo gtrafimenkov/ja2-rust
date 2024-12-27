@@ -18,16 +18,16 @@
 
 BOOLEAN fInitialized = FALSE;
 
-INT32 iIMPTextRecordLengths[300];
+int32_t iIMPTextRecordLengths[300];
 
 // the length of persona questions
-INT32 iIMPQuestionLengths[25] = {
+int32_t iIMPQuestionLengths[25] = {
     7, 5, 5, 6, 5, 6, 5, 5, 5, 5, 6, 9, 5, 5, 5, 5, 5, 5, 5, 5, 7, 10, 6, 5, 5,
 };
 
 // function headers
 void PrintIMPPersonalityQuizQuestionAndAnsers(void);
-void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset);
+void OffSetQuestionForFemaleSpecificQuestions(int32_t *iCurrentOffset);
 
 #define QTN_FIRST_COLUMN_X 80
 #define QTN_SECOND_COLUMN_X 320
@@ -352,8 +352,8 @@ void PrintImpTextPostButtonRender(void) {
 }
 
 void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
-  INT32 iCounter = 0;
-  INT32 iOffset = 0;
+  int32_t iCounter = 0;
+  int32_t iOffset = 0;
 
   if (giCurrentPersonalityQuizQuestion < 0) {
     return;
@@ -494,8 +494,8 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
   return;
 }
 
-void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset) {
-  INT32 iExtraOffSet = 0;
+void OffSetQuestionForFemaleSpecificQuestions(int32_t *iCurrentOffset) {
+  int32_t iExtraOffSet = 0;
   BOOLEAN fOffSet = TRUE;
 
   // find the extra

@@ -37,13 +37,13 @@ typedef struct {
   real CollisionElasticity;
 
   int16_t sGridNo;
-  INT32 iID;
+  int32_t iID;
   struct LEVELNODE *pNode;
   struct LEVELNODE *pShadow;
 
   int16_t sConsecutiveCollisions;
   int16_t sConsecutiveZeroVelocityCollisions;
-  INT32 iOldCollisionCode;
+  int32_t iOldCollisionCode;
 
   FLOAT dLifeLength;
   FLOAT dLifeSpan;
@@ -64,7 +64,7 @@ typedef struct {
   BOOLEAN fHaveHitGround;
   BOOLEAN fPotentialForDebug;
   int16_t sLevelNodeGridNo;
-  INT32 iSoundID;
+  int32_t iSoundID;
   uint8_t ubLastTargetTakenDamage;
   uint8_t ubPadding[1];
 
@@ -75,10 +75,10 @@ typedef struct {
 extern REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
 
 // OBJECT LIST STUFF
-INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
-                           real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
-                           uint8_t ubActionCode, uint32_t uiActionData);
-BOOLEAN RemoveObjectSlot(INT32 iObject);
+int32_t CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
+                             real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
+                             uint8_t ubActionCode, uint32_t uiActionData);
+BOOLEAN RemoveObjectSlot(int32_t iObject);
 void RemoveAllPhysicsObjects();
 
 FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubHeight,

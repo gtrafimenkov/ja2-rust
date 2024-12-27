@@ -73,8 +73,8 @@ uint32_t uiNickNameCharacterPosition = 0;
 int8_t bGenderFlag = -1;
 
 // IMP begin page buttons
-INT32 giIMPBeginScreenButton[1];
-INT32 giIMPBeginScreenButtonImage[1];
+int32_t giIMPBeginScreenButton[1];
+int32_t giIMPBeginScreenButtonImage[1];
 
 // current mode of entering text we are in, ie FULL or Nick name?
 uint8_t ubTextEnterMode = 0;
@@ -92,7 +92,7 @@ struct MOUSE_REGION gIMPBeginScreenMouseRegions[4];
 // function definitions
 void CreateIMPBeginScreenButtons(void);
 void RemoveIMPBeginScreenButtons(void);
-void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, int32_t reason);
 void GetPlayerKeyBoardInputForIMPBeginScreen(void);
 void HandleBeginScreenTextEvent(uint32_t uiKey);
 void DisplayFullNameStringCursor(void);
@@ -113,12 +113,12 @@ void Print8CharacterOnlyString(void);
 BOOLEAN CheckCharacterInputForEgg(void);
 
 // mouse region callbacks
-void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void MvtOnMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void MvtOnMaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void EnterIMPBeginScreen(void) {
   // reset all variables
@@ -297,7 +297,7 @@ void RemoveIMPBeginScreenButtons(void) {
   return;
 }
 
-void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, int32_t reason) {
   // easter egg check
   BOOLEAN fEggOnYouFace = FALSE;
 
@@ -919,7 +919,7 @@ void DestroyIMPBeginScreenMouseRegions(void) {
   return;
 }
 
-void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set current mode to full name type in mode
@@ -929,7 +929,7 @@ void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set mode to nick name type in
@@ -939,7 +939,7 @@ void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set mode to nick name type in
@@ -949,7 +949,7 @@ void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set mode to nick name type in
@@ -959,7 +959,7 @@ void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     // fNewCharInString = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
@@ -968,7 +968,7 @@ void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MvtOnMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MvtOnMaleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     // fNewCharInString = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {

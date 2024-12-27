@@ -43,9 +43,9 @@ void CreatePersonalityFinishOkButton(void);
 void DestroyPersonalityFinishOkButton(void);
 
 // callbacks
-void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPPersonalityFinish(void) {
   // reset states
@@ -189,7 +189,7 @@ void DestroyIMPersonalityFinishButtons(void) {
   return;
 }
 
-void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -223,7 +223,7 @@ void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -276,7 +276,7 @@ void DestroyPersonalityFinishOkButton(void) {
   UnloadButtonImage(giIMPPersonalityFinishButtonImage[0]);
 }
 
-void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

@@ -140,14 +140,14 @@ void CarmenLeavesSectorCallback(void);
 #define CHANCE_FOR_DOCTOR_TO_SAY_RANDOM_QUOTE 20
 
 // NPC talk panel UI stuff
-void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TextRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TextRegionClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-void TalkPanelBaseRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TalkPanelNameRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TalkPanelNameRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void DoneTalkingButtonClickCallback(GUI_BUTTON *btn, INT32 reason);
+void TalkPanelBaseRegionClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TalkPanelNameRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TalkPanelNameRegionClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void DoneTalkingButtonClickCallback(GUI_BUTTON *btn, int32_t reason);
 
 void CalculatePopupTextPosition(int16_t sWidth, int16_t sHeight);
 void CalculatePopupTextOrientation(int16_t sWidth, int16_t sHeight);
@@ -183,7 +183,7 @@ uint8_t gubTargetApproach;
 BOOLEAN gfShowDialogueMenu;
 BOOLEAN gfWaitingForTriggerTimer;
 uint32_t guiWaitingForTriggerTime;
-INT32 iInterfaceDialogueBox = -1;
+int32_t iInterfaceDialogueBox = -1;
 uint8_t ubRecordThatTriggeredLiePrompt;
 BOOLEAN gfConversationPending = FALSE;
 struct SOLDIERTYPE *gpPendingDestSoldier;
@@ -192,8 +192,9 @@ int8_t gbPendingApproach;
 uintptr_t guiPendingApproachData;
 extern BOOLEAN fMapPanelDirty;
 
-INT32 giHospitalTempBalance;  // stores amount of money for current doctoring
-INT32 giHospitalRefund;  // stores amount of money given to hospital for doctoring that wasn't used
+int32_t giHospitalTempBalance;  // stores amount of money for current doctoring
+int32_t
+    giHospitalRefund;  // stores amount of money given to hospital for doctoring that wasn't used
 int8_t gbHospitalPriceModifier;  // stores discount being offered
 
 enum {
@@ -340,7 +341,7 @@ BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, int16_t sGridNo) {
 }
 
 BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, int16_t sX, int16_t sY) {
-  INT32 iFaceIndex, cnt;
+  int32_t iFaceIndex, cnt;
   VSURFACE_DESC vs_desc;
   FACETYPE *pFace;
   uint16_t usWidth;
@@ -506,7 +507,7 @@ BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, int16_t sX, int16_t sY) 
   return (TRUE);
 }
 
-void DoneTalkingButtonClickCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoneTalkingButtonClickCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -520,7 +521,7 @@ void DoneTalkingButtonClickCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void DeleteTalkingMenu() {
-  INT32 cnt;
+  int32_t cnt;
 
   if (!gfInTalkPanel) return;
 
@@ -624,7 +625,7 @@ void DeleteTalkingMenu() {
 }
 
 void RenderTalkingMenu() {
-  INT32 cnt;
+  int32_t cnt;
   FACETYPE *pFace;
   int16_t sFontX, sFontY, sX, sY;
   uint8_t ubCharacterNum = gTalkPanel.ubCharNum;
@@ -848,7 +849,7 @@ void RenderTalkingMenu() {
   gTalkPanel.fDirtyLevel = 0;
 }
 
-void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint32_t uiItemPos;
 
   uiItemPos = MSYS_GetRegionUserData(pRegion, 0);
@@ -863,7 +864,7 @@ void TalkPanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint32_t uiItemPos;
   BOOLEAN fDoConverse = TRUE;
   uiItemPos = MSYS_GetRegionUserData(pRegion, 0);
@@ -926,7 +927,7 @@ void TalkPanelClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void TalkPanelBaseRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TalkPanelBaseRegionClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -946,7 +947,7 @@ void TalkPanelBaseRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReaso
   }
 }
 
-void TalkPanelNameRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TalkPanelNameRegionClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // Donot do this if we are talking already
     if (!gFacesData[gTalkPanel.iFaceIndex].fTalking) {
@@ -957,7 +958,7 @@ void TalkPanelNameRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReaso
   }
 }
 
-void TalkPanelNameRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TalkPanelNameRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // Donot do this if we are talking already
   if (gFacesData[gTalkPanel.iFaceIndex].fTalking) {
     return;
@@ -1516,14 +1517,14 @@ void HandleFactForNPCUnescorted(uint8_t ubNPC) {
 }
 
 void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuoteNum) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier, *pSoldier2;
   int8_t bNumDone = 0;
   int16_t sGridNo = NOWHERE, sAdjustedGridNo;
   int8_t bItemIn;
   uint8_t ubDesiredMercDir;
   EXITGRID ExitGrid;
-  INT32 iRandom = 0;
+  int32_t iRandom = 0;
   uint8_t ubMineIndex;
 
   pSoldier2 = NULL;
@@ -2089,7 +2090,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         {
           struct OBJECTTYPE Object;
           int16_t sGridNo = 14952;
-          INT32 iWorldItem;
+          int32_t iWorldItem;
 
           pSoldier = FindSoldierByProfileID(ubTargetNPC, FALSE);
           if (pSoldier) {
@@ -2942,7 +2943,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         if (pSoldier) {
           uint8_t ubTargetID;
           struct SOLDIERTYPE *pTarget;
-          INT32 cnt;
+          int32_t cnt;
           BOOLEAN fGoodTarget = FALSE;
 
           for (cnt = 0; cnt < 3; cnt++) {
@@ -3798,7 +3799,7 @@ uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier) {
 }
 
 uint32_t CalcMedicalCost(uint8_t ubId) {
-  INT32 cnt;
+  int32_t cnt;
   uint32_t uiCostSoFar;
   int16_t sGridNo = 0;
   struct SOLDIERTYPE *pSoldier, *pNPC;
@@ -3855,7 +3856,7 @@ BOOLEAN PlayerTeamHasTwoSpotsLeft() {
 }
 
 void StartDialogueMessageBox(uint8_t ubProfileID, uint16_t usMessageBoxType) {
-  INT32 iTemp;
+  int32_t iTemp;
   CHAR16 zTemp[256], zTemp2[256];
 
   gusDialogueMessageBoxType = usMessageBoxType;
@@ -3904,7 +3905,7 @@ void StartDialogueMessageBox(uint8_t ubProfileID, uint16_t usMessageBoxType) {
                    DialogueMessageBoxCallBack, NULL);
       break;
     case NPC_ACTION_MEDICAL_REQUESTOR:
-      iTemp = (INT32)CalcMedicalCost(ubProfileID);
+      iTemp = (int32_t)CalcMedicalCost(ubProfileID);
       if (giHospitalRefund > iTemp) {
         iTemp = 10;
       } else {
@@ -4173,7 +4174,7 @@ void DoneFadeOutActionSex() { SetPendingNewScreen(SEX_SCREEN); }
 void DoneFadeInActionBasement() {
   // Start conversation, etc
   struct SOLDIERTYPE *pSoldier, *pNPCSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Look for someone to talk to
   // look for all mercs on the same team,
@@ -4286,7 +4287,7 @@ BOOLEAN NPCOpenThing(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor) {
   return (TRUE);
 }
 
-void TextRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TextRegionClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {

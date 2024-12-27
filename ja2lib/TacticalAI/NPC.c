@@ -423,9 +423,9 @@ void SetQuoteRecordAsUsed(uint8_t ubNPC, uint8_t ubRecord) {
   }
 }
 
-INT32 CalcThreateningEffectiveness(uint8_t ubMerc) {
+int32_t CalcThreateningEffectiveness(uint8_t ubMerc) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 iStrength, iDeadliness;
+  int32_t iStrength, iDeadliness;
 
   // effective threat is 1/3 strength, 1/3 weapon deadliness, 1/3 leadership
 
@@ -452,9 +452,9 @@ INT32 CalcThreateningEffectiveness(uint8_t ubMerc) {
 }
 
 uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach) {
-  INT32 iWillingness;
-  INT32 iPersonalVal, iTownVal, iApproachVal;
-  INT32 iEffectiveLeadership;
+  int32_t iWillingness;
+  int32_t iPersonalVal, iTownVal, iApproachVal;
+  int32_t iEffectiveLeadership;
   MERCPROFILESTRUCT *pNPCProfile;
   MERCPROFILESTRUCT *pMercProfile;
 
@@ -480,7 +480,7 @@ uint8_t CalcDesireToTalk(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach) {
     iApproachVal = pNPCProfile->ubApproachVal[bApproach - 1] * iEffectiveLeadership / 50;
   } else {
     iEffectiveLeadership =
-        ((INT32)pMercProfile->bLeadership) * pMercProfile->usApproachFactor[bApproach - 1] / 100;
+        ((int32_t)pMercProfile->bLeadership) * pMercProfile->usApproachFactor[bApproach - 1] / 100;
     iApproachVal = pNPCProfile->ubApproachVal[bApproach - 1] * iEffectiveLeadership / 50;
   }
   // NB if town attachment is less than 100% then we should make personal value proportionately more
@@ -890,7 +890,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
                     gMercProfiles[ubNPC].iBalance < 0 &&
                     pNPCQuoteInfo->sActionData != NPC_ACTION_DONT_ACCEPT_ITEM) {
                   // increment balance
-                  gMercProfiles[ubNPC].iBalance += (INT32)pObj->uiMoneyAmount;
+                  gMercProfiles[ubNPC].iBalance += (int32_t)pObj->uiMoneyAmount;
                   gMercProfiles[ubNPC].uiTotalCostToDate += pObj->uiMoneyAmount;
                   if (gMercProfiles[ubNPC].iBalance > 0) {
                     gMercProfiles[ubNPC].iBalance = 0;
@@ -933,7 +933,7 @@ uint8_t NPCConsiderReceivingItemFromMerc(uint8_t ubNPC, uint8_t ubMerc, struct O
               if (gMercProfiles[ubNPC].iBalance < 0 &&
                   pNPCQuoteInfo->sActionData != NPC_ACTION_DONT_ACCEPT_ITEM) {
                 // increment balance
-                gMercProfiles[ubNPC].iBalance += (INT32)pObj->uiMoneyAmount;
+                gMercProfiles[ubNPC].iBalance += (int32_t)pObj->uiMoneyAmount;
                 gMercProfiles[ubNPC].uiTotalCostToDate += pObj->uiMoneyAmount;
                 if (gMercProfiles[ubNPC].iBalance > 0) {
                   gMercProfiles[ubNPC].iBalance = 0;
@@ -963,12 +963,12 @@ BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPC, uint32_t uiMoneyAmount,
     // handle for STEVE and VINCE
     case STEVE:
     case VINCE: {
-      INT32 iCost;
+      int32_t iCost;
 
-      iCost = (INT32)CalcMedicalCost(ubNPC);
+      iCost = (int32_t)CalcMedicalCost(ubNPC);
 
       // check amount of money
-      if ((INT32)uiMoneyAmount + giHospitalTempBalance + giHospitalRefund >= iCost) {
+      if ((int32_t)uiMoneyAmount + giHospitalTempBalance + giHospitalRefund >= iCost) {
         // enough cash, check how much help is needed
         if (CheckFact(FACT_WOUNDED_MERCS_NEARBY, ubNPC)) {
           *pQuoteValue = 26;
@@ -995,12 +995,12 @@ BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPC, uint32_t uiMoneyAmount,
       }
     } break;
     case KINGPIN:
-      if ((INT32)uiMoneyAmount < -gMercProfiles[KINGPIN].iBalance) {
+      if ((int32_t)uiMoneyAmount < -gMercProfiles[KINGPIN].iBalance) {
         *pQuoteValue = 9;
       } else {
         *pQuoteValue = 10;
       }
-      gMercProfiles[KINGPIN].iBalance += (INT32)uiMoneyAmount;
+      gMercProfiles[KINGPIN].iBalance += (int32_t)uiMoneyAmount;
       break;
     case WALTER:
       if (gMercProfiles[WALTER].iBalance == 0) {
@@ -2112,7 +2112,7 @@ void TriggerClosestMercWhoCanSeeNPC(uint8_t ubNPC, NPCQuoteInfo *pQuotePtr) {
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // First get pointer to NPC
   pSoldier = FindSoldierByProfileID(ubNPC, FALSE);
@@ -2597,7 +2597,7 @@ void TriggerFriendWithHostileQuote(uint8_t ubNPC) {
   uint8_t ubNumMercsAvailable = 0, ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
   int8_t bTeam;
 
   // First get pointer to NPC

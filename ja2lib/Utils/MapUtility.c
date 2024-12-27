@@ -73,12 +73,12 @@ uint32_t MapUtilScreenHandle() {
 
   uint32_t bR, bG, bB, bAvR, bAvG, bAvB;
   int16_t s16BPPSrc, sDest16BPPColor;
-  INT32 cnt;
+  int32_t cnt;
 
   int16_t sX1, sX2, sY1, sY2, sTop, sBottom, sLeft, sRight;
 
   FLOAT dX, dY, dStartX, dStartY;
-  INT32 iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
+  int32_t iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
   struct SGPPaletteEntry pPalette[256];
 
   sDest16BPPColor = -1;
@@ -185,13 +185,13 @@ uint32_t MapUtilScreenHandle() {
 
     for (iY = 0; iY < 44; iY++) {
       // OK, AVERAGE PIXELS
-      iSubX1 = (INT32)dX - WINDOW_SIZE;
+      iSubX1 = (int32_t)dX - WINDOW_SIZE;
 
-      iSubX2 = (INT32)dX + WINDOW_SIZE;
+      iSubX2 = (int32_t)dX + WINDOW_SIZE;
 
-      iSubY1 = (INT32)dY - WINDOW_SIZE;
+      iSubY1 = (int32_t)dY - WINDOW_SIZE;
 
-      iSubY2 = (INT32)dY + WINDOW_SIZE;
+      iSubY2 = (int32_t)dY + WINDOW_SIZE;
 
       iCount = 0;
       bR = bG = bB = 0;
@@ -252,8 +252,8 @@ uint32_t MapUtilScreenHandle() {
 
   // Write palette!
   {
-    INT32 cnt;
-    INT32 sX = 0, sY = 420;
+    int32_t cnt;
+    int32_t sX = 0, sY = 420;
     uint16_t usLineColor;
 
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);

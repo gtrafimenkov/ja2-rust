@@ -78,7 +78,7 @@ uint16_t RealtimeDelay(struct SOLDIERTYPE *pSoldier) {
 
 void RTHandleAI(struct SOLDIERTYPE *pSoldier) {
 #ifdef AI_PROFILING
-  INT32 iLoop;
+  int32_t iLoop;
 #endif
 
   if ((pSoldier->bAction != AI_ACTION_NONE) && pSoldier->bActionInProgress) {

@@ -33,7 +33,7 @@ extern BOOLEAN gfBeginBurstSpreadTracking;
 void ResetBurstLocations() { gbNumBurstLocations = 0; }
 
 void AccumulateBurstLocation(int16_t sGridNo) {
-  INT32 cnt;
+  int32_t cnt;
 
   if (gbNumBurstLocations < MAX_BURST_LOCATIONS) {
     // Check if it already exists!
@@ -57,7 +57,7 @@ void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubShotsPerBurst;
   FLOAT dAccululator = 0;
   FLOAT dStep = 0;
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubLocationNum;
 
   // OK, using the # of locations, spread them evenly between our current weapon shots per burst
@@ -89,7 +89,7 @@ void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, int8_t bTargets,
   uint8_t ubShotsPerBurst;
   FLOAT dAccululator = 0;
   FLOAT dStep = 0;
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubLocationNum;
 
   // OK, using the # of locations, spread them evenly between our current weapon shots per burst
@@ -121,7 +121,7 @@ void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, int8_t bTargets,
 extern struct VObject *GetCursorFileVideoObject(uint32_t uiCursorFile);
 
 void RenderAccumulatedBurstLocations() {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sGridNo;
   struct VObject *hVObject;
 
@@ -146,7 +146,7 @@ void RenderAccumulatedBurstLocations() {
       FLOAT dOffsetX, dOffsetY;
       FLOAT dTempX_S, dTempY_S;
       int16_t sXPos, sYPos;
-      INT32 iBack;
+      int32_t iBack;
 
       dOffsetX = (FLOAT)(gsBurstLocations[cnt].sX - gsRenderCenterX);
       dOffsetY = (FLOAT)(gsBurstLocations[cnt].sY - gsRenderCenterY);

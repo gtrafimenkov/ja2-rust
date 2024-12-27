@@ -39,13 +39,13 @@ void DeleteWorldItemsBelongingToQueenIfThere(void);
 
 extern uint16_t StandardGunListAmmoReplacement(uint16_t usAmmo);
 
-INT32 GetFreeWorldBombIndex(void) {
+int32_t GetFreeWorldBombIndex(void) {
   uint32_t uiCount;
   WORLDBOMB *newWorldBombs;
   uint32_t uiOldNumWorldBombs;
 
   for (uiCount = 0; uiCount < guiNumWorldBombs; uiCount++) {
-    if (gWorldBombs[uiCount].fExists == FALSE) return ((INT32)uiCount);
+    if (gWorldBombs[uiCount].fExists == FALSE) return ((int32_t)uiCount);
   }
 
   uiOldNumWorldBombs = guiNumWorldBombs;
@@ -82,7 +82,7 @@ uint32_t GetNumUsedWorldBombs(void) {
   return (uiNumItems);
 }
 
-INT32 AddBombToWorld(INT32 iItemIndex) {
+int32_t AddBombToWorld(int32_t iItemIndex) {
   uint32_t iBombIndex;
 
   iBombIndex = GetFreeWorldBombIndex();
@@ -94,12 +94,12 @@ INT32 AddBombToWorld(INT32 iItemIndex) {
   return (iBombIndex);
 }
 
-void RemoveBombFromWorld(INT32 iBombIndex) {
+void RemoveBombFromWorld(int32_t iBombIndex) {
   // Remove the world bomb from the table.
   gWorldBombs[iBombIndex].fExists = FALSE;
 }
 
-void RemoveBombFromWorldByItemIndex(INT32 iItemIndex) {
+void RemoveBombFromWorldByItemIndex(int32_t iItemIndex) {
   // Find the world bomb which corresponds with a particular world item, then
   // remove the world bomb from the table.
   uint32_t uiBombIndex;
@@ -112,7 +112,7 @@ void RemoveBombFromWorldByItemIndex(INT32 iItemIndex) {
   }
 }
 
-INT32 FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel) {
+int32_t FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel) {
   uint32_t uiBombIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
@@ -193,13 +193,13 @@ void FindPanicBombsAndTriggers(void) {
   }
 }
 
-INT32 GetFreeWorldItemIndex(void) {
+int32_t GetFreeWorldItemIndex(void) {
   uint32_t uiCount;
   WORLDITEM *newWorldItems;
   uint32_t uiOldNumWorldItems;
 
   for (uiCount = 0; uiCount < guiNumWorldItems; uiCount++) {
-    if (gWorldItems[uiCount].fExists == FALSE) return ((INT32)uiCount);
+    if (gWorldItems[uiCount].fExists == FALSE) return ((int32_t)uiCount);
   }
 
   uiOldNumWorldItems = guiNumWorldItems;
@@ -236,10 +236,10 @@ uint32_t GetNumUsedWorldItems(void) {
   return (uiNumItems);
 }
 
-INT32 AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
-                     int8_t bRenderZHeightAboveLevel, int8_t bVisible) {
+int32_t AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel,
+                       uint16_t usFlags, int8_t bRenderZHeightAboveLevel, int8_t bVisible) {
   uint32_t iItemIndex;
-  INT32 iReturn;
+  int32_t iReturn;
 
   // ATE: Check if the gridno is OK
   if ((sGridNo) == NOWHERE) {
@@ -275,7 +275,7 @@ INT32 AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLeve
   return (iItemIndex);
 }
 
-void RemoveItemFromWorld(INT32 iItemIndex) {
+void RemoveItemFromWorld(int32_t iItemIndex) {
   // Ensure the item still exists, then if it's a bomb,
   // remove the appropriate entry from the bomb table
   if (gWorldItems[iItemIndex].fExists) {
@@ -324,7 +324,7 @@ void LoadWorldItemsFromMap(int8_t **hBuffer) {
 
   uint32_t i;
   WORLDITEM dummyItem;
-  INT32 iItemIndex;
+  int32_t iItemIndex;
   uint32_t uiNumWorldItems;
 
   // If any world items exist, we must delete them now.
@@ -522,8 +522,8 @@ void DeleteWorldItemsBelongingToQueenIfThere(void) {
 }
 
 // Refresh item pools
-void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems) {
-  INT32 i;
+void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, int32_t iNumberOfItems) {
+  int32_t i;
   WORLDITEM dummyItem;
 
   for (i = 0; i < iNumberOfItems; i++) {

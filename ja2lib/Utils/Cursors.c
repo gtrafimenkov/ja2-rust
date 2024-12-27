@@ -4917,7 +4917,7 @@ void SyncPairedCursorFrames(uint32_t uiSrcIndex, uint32_t uiDestIndex) {
 	CursorData		*pSrcCurData, *pDestCurData;
 	CursorImage		*pSrcCurImage, *pDestCurImage;
 	uint32_t				cnt;
-	INT32				iCurFrame = -1;
+	int32_t				iCurFrame = -1;
 
 	if ( uiSrcIndex == VIDEO_NO_CURSOR || uiDestIndex == VIDEO_NO_CURSOR )
 	{

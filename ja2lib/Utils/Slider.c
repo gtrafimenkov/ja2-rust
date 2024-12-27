@@ -78,8 +78,8 @@ uint32_t guiSliderBoxImage = 0;
 // ggg
 
 // Mouse regions for the currently selected save game
-void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
+void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason);
 
 ///////////////////////////////////////////////////
 //
@@ -138,9 +138,9 @@ void ShutDownSlider() {
   DeleteVideoObjectFromIndex(guiSliderBoxImage);
 }
 
-INT32 AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
-                uint16_t usWidth, uint16_t usNumberOfIncrements, int8_t sPriority,
-                SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags) {
+int32_t AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
+                  uint16_t usWidth, uint16_t usNumberOfIncrements, int8_t sPriority,
+                  SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags) {
   SLIDER *pTemp = NULL;
   SLIDER *pNewSlider = NULL;
 
@@ -396,7 +396,7 @@ void RemoveSliderBar(uint32_t uiSliderID) {
   pNodeToRemove = NULL;
 }
 
-void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
   uint32_t uiSelectedSlider;
   SLIDER *pSlider = NULL;
 
@@ -461,7 +461,7 @@ void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) 
   }
 }
 
-void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint32_t uiSelectedSlider;
   SLIDER *pSlider = NULL;
 

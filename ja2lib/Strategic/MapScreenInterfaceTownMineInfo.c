@@ -36,7 +36,7 @@
 // flag to say if we are showing town/mine box at all
 BOOLEAN fShowTownInfo = FALSE;
 
-INT32 ghTownMineBox = -1;
+int32_t ghTownMineBox = -1;
 SGPPoint TownMinePosition = {300, 150};
 SGPRect TownMineDimensions = {0, 0, 240, 60};
 
@@ -84,8 +84,8 @@ void AddInventoryButtonForMapPopUpBox(void);
 void RemoveInventoryButtonForMapPopUpBox(void);
 
 // callback to turn on sector invneotry list
-void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason);
+void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason);
+void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason);
 void MinWidthOfTownMineInfoBox(void);
 
 void DisplayTownInfo(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
@@ -765,7 +765,7 @@ void RemoveInventoryButtonForMapPopUpBox(void) {
   return;
 }
 
-void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -788,7 +788,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

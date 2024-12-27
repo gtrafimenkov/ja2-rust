@@ -51,12 +51,12 @@ uint8_t ubFromMapDirToInsertionCode[] = {
 
 // Globals
 struct path_s {
-  int16_t nextLink;  // 2
-  int16_t prevLink;  // 2
-  int16_t location;  // 2
-  INT32 costSoFar;   // 4
-  INT32 costToGo;    // 4
-  int16_t pathNdx;   // 2
+  int16_t nextLink;   // 2
+  int16_t prevLink;   // 2
+  int16_t location;   // 2
+  int32_t costSoFar;  // 4
+  int32_t costToGo;   // 4
+  int16_t pathNdx;    // 2
 };
 
 typedef struct path_s path_t;
@@ -151,13 +151,13 @@ short trailStratTreedxB = 0;
 
 #define QUESEARCH(ndx, NDX)                                                               \
   {                                                                                       \
-    INT32 k = TOTALCOST(ndx);                                                             \
+    int32_t k = TOTALCOST(ndx);                                                           \
     NDX = pathQB[QHEADNDX].nextLink;                                                      \
     while (NDX && (k > TOTALCOST(NDX))) NDX = pathQB[NDX].nextLink;                       \
     while (NDX && (k == TOTALCOST(NDX)) && FARTHER(ndx, NDX)) NDX = pathQB[NDX].nextLink; \
   }
 
-INT32 queRequests;
+int32_t queRequests;
 
 int16_t diStratDelta[8] = {
     -MAP_WIDTH,     // N
@@ -174,10 +174,10 @@ extern uint8_t GetTraversability(int16_t sStartSector, int16_t sEndSector);
 
 // this will find if a shortest strategic path
 
-INT32 FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumber,
-                    BOOLEAN fTacticalTraversal) {
-  INT32 iCnt, ndx, insertNdx, qNewNdx;
-  INT32 iDestX, iDestY, locX, locY, dx, dy;
+int32_t FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumber,
+                      BOOLEAN fTacticalTraversal) {
+  int32_t iCnt, ndx, insertNdx, qNewNdx;
+  int32_t iDestX, iDestY, locX, locY, dx, dy;
   int16_t sSectorX, sSectorY;
   uint16_t newLoc, curLoc;
   TRAILCELLTYPE curCost, newTotCost, nextCost;
@@ -420,10 +420,10 @@ INT32 FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumbe
 struct path* BuildAStrategicPath(struct path* pPath, int16_t iStartSectorNum, int16_t iEndSectorNum,
                                  int16_t sMvtGroupNumber,
                                  BOOLEAN fTacticalTraversal /*, BOOLEAN fTempPath */) {
-  INT32 iCurrentSectorNum;
-  INT32 iDelta = 0;
-  INT32 iPathLength;
-  INT32 iCount = 0;
+  int32_t iCurrentSectorNum;
+  int32_t iDelta = 0;
+  int32_t iPathLength;
+  int32_t iCount = 0;
   struct path* pNode = NULL;
   struct path* pDeleteNode = NULL;
   struct path* pHeadOfPathList = pPath;
@@ -442,8 +442,8 @@ struct path* BuildAStrategicPath(struct path* pPath, int16_t iStartSectorNum, in
 
   if (iEndSectorNum < MAP_WORLD_X - 1) return NULL;
 
-  iPathLength = ((INT32)FindStratPath(((int16_t)iStartSectorNum), ((int16_t)iEndSectorNum),
-                                      sMvtGroupNumber, fTacticalTraversal));
+  iPathLength = ((int32_t)FindStratPath(((int16_t)iStartSectorNum), ((int16_t)iEndSectorNum),
+                                        sMvtGroupNumber, fTacticalTraversal));
   while (iPathLength > iCount) {
     switch (gusMapPathingData[iCount]) {
       case (NORTH):
@@ -1016,7 +1016,7 @@ int16_t GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter) {
 }
 
 // get id of last sector in vehicle path list
-int16_t GetLastSectorIdInVehiclePath(INT32 iId) {
+int16_t GetLastSectorIdInVehiclePath(int32_t iId) {
   int16_t sLastSector = -1;
   struct path* pNode = NULL;
 
@@ -1093,15 +1093,15 @@ struct path* CopyPaths(struct path* pSourcePath, struct path* pDestPath) {
   return (pDestNode);
 }
 
-INT32 GetStrategicMvtSpeed(struct SOLDIERTYPE* pCharacter) {
+int32_t GetStrategicMvtSpeed(struct SOLDIERTYPE* pCharacter) {
   // will return the strategic speed of the character
-  INT32 iSpeed;
+  int32_t iSpeed;
 
   // avg of strength and agility * percentage health..very simple..replace later
 
-  iSpeed = (INT32)((pCharacter->bAgility + pCharacter->bStrength) / 2);
-  iSpeed *= (INT32)((pCharacter->bLife));
-  iSpeed /= (INT32)pCharacter->bLifeMax;
+  iSpeed = (int32_t)((pCharacter->bAgility + pCharacter->bStrength) / 2);
+  iSpeed *= (int32_t)((pCharacter->bLife));
+  iSpeed /= (int32_t)pCharacter->bLifeMax;
 
   return (iSpeed);
 }
@@ -1111,7 +1111,7 @@ void CalculateEtaForCharacterPath( struct SOLDIERTYPE *pCharacter )
 {
         struct path* pNode = NULL;
         uint32_t uiDeltaEta =0;
-        INT32 iMveDelta = 0;
+        int32_t iMveDelta = 0;
         BOOLEAN fInVehicle;
 
         // valid character
@@ -1269,7 +1269,7 @@ void MoveTeamOnFoot( void )
 {
         // run through list of characters on player team, if on foot, move them
         struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
-  INT32 cnt=0;
+  int32_t cnt=0;
 
         // set psoldier as first in merc ptrs
         pSoldier = MercPtrs[0];
@@ -1348,8 +1348,8 @@ void VerifyAllMercsInGroupAreOnSameSquad(struct GROUP* pGroup) {
 #endif
 
 void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, int16_t sMvtGroup) {
-  INT32 iDelta = 0;
-  INT32 iOldDelta = 0;
+  int32_t iDelta = 0;
+  int32_t iOldDelta = 0;
   BOOLEAN fFirstNode = TRUE;
   struct path* pNode = pHeadOfPath;
   struct GROUP* pGroup = NULL;
@@ -1614,8 +1614,8 @@ ubDestY );
 }
 */
 
-INT32 GetLengthOfPath(struct path* pHeadPath) {
-  INT32 iLength = 0;
+int32_t GetLengthOfPath(struct path* pHeadPath) {
+  int32_t iLength = 0;
   struct path* pNode = pHeadPath;
 
   while (pNode) {
@@ -1626,9 +1626,9 @@ INT32 GetLengthOfPath(struct path* pHeadPath) {
   return (iLength);
 }
 
-INT32 GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier) {
+int32_t GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier) {
   struct path* pNode = NULL;
-  INT32 iLength = 0;
+  int32_t iLength = 0;
 
   pNode = GetSoldierMercPathPtr(pSoldier);
   iLength = GetLengthOfPath(pNode);
@@ -1671,7 +1671,7 @@ struct path* GetSoldierMercPathPtr(struct SOLDIERTYPE* pSoldier) {
 
 struct path* GetGroupMercPathPtr(struct GROUP* pGroup) {
   struct path* pMercPath = NULL;
-  INT32 iVehicledId = -1;
+  int32_t iVehicledId = -1;
 
   Assert(pGroup);
 
@@ -1730,7 +1730,7 @@ void ClearMercPathsAndWaypointsForAllInGroup(struct GROUP* pGroup) {
 
   // if it's a vehicle
   if (pGroup->fVehicle) {
-    INT32 iVehicleId = -1;
+    int32_t iVehicleId = -1;
     VEHICLETYPE* pVehicle = NULL;
 
     iVehicleId = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);
@@ -1790,7 +1790,7 @@ void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, uint8
 
   // if it's a vehicle
   if (pGroup->fVehicle) {
-    INT32 iVehicleId = -1;
+    int32_t iVehicleId = -1;
     VEHICLETYPE* pVehicle = NULL;
 
     iVehicleId = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);

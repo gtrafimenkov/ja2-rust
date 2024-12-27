@@ -65,17 +65,17 @@
 uint32_t guiMercOrderGrid;
 uint32_t guiAccountNumberGrid;
 
-INT32 giMercTotalContractCharge;
+int32_t giMercTotalContractCharge;
 
 BOOLEAN gfMercPlayerDoesntHaveEnoughMoney_DisplayWarning = FALSE;
 
 // The Authorize button
-void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiMercAuthorizeBoxButton;
-INT32 guiMercAuthorizeButtonImage;
+int32_t guiMercAuthorizeButtonImage;
 
 // The Back button
-void BtnMercBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnMercBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiMercBackBoxButton;
 
 void DisplayHiredMercs();
@@ -200,7 +200,7 @@ void RenderMercsAccount() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -236,7 +236,7 @@ void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnMercBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -328,8 +328,8 @@ void SettleMercAccounts() {
   //	struct SOLDIERTYPE *pSoldier;
   int16_t i;
   uint8_t ubMercID;
-  INT32 iPartialPayment = 0;
-  INT32 iContractCharge = 0;
+  int32_t iPartialPayment = 0;
+  int32_t iContractCharge = 0;
 
   // loop through all the MERC mercs the player has on the team
   for (i = 0; i < NUMBER_OF_MERCS; i++) {

@@ -27,10 +27,10 @@
 #define MAIN_PAGE_BUTTON_TEXT_WIDTH 95
 
 // main page buttons
-INT32 giIMPMainPageButton[6];
-INT32 giIMPMainPageButtonImage[6];
+int32_t giIMPMainPageButton[6];
+int32_t giIMPMainPageButtonImage[6];
 
-extern INT32 iCurrentVoices;
+extern int32_t iCurrentVoices;
 
 // mouse regions for not entablable warning
 struct MOUSE_REGION pIMPMainPageMouseRegions[4];
@@ -40,19 +40,19 @@ uint32_t guiCHARACTERPORTRAITFORMAINPAGE;
 // function definitions
 void CreateIMPMainPageButtons(void);
 void DeleteIMPMainPageButtons(void);
-void BtnIMPMainPageBackCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPMainPageAttributesCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPMainPageBackCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPMainPageAttributesCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, int32_t reason);
 void ShadeUnSelectableButtons(void);
 void UpDateIMPMainPageButtons(void);
 void BeginMessageBoxCallBack(uint8_t bExitValue);
 void DestoryMouseRegionsForIMPMainPageBasedOnCharGenStatus(void);
 void CreateMouseRegionsForIMPMainPageBasedOnCharGenStatus(void);
-void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 BOOLEAN LoadCharacterPortraitForMainPage(void);
 
 BOOLEAN CheckIfFinishedCharacterGeneration(void);
@@ -66,7 +66,7 @@ BOOLEAN CheckIfFinishedCharacterGeneration(void);
         4 - Voice
         5 - Done
         */
-INT32 iCurrentProfileMode = 0;
+int32_t iCurrentProfileMode = 0;
 
 void EnterIMPMainPage(void) {
   // turn off review mode
@@ -279,7 +279,7 @@ void DeleteIMPMainPageButtons(void) {
   return;
 }
 
-void BtnIMPMainPageBackCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPMainPageBackCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -297,7 +297,7 @@ void BtnIMPMainPageBackCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -334,7 +334,7 @@ void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -356,7 +356,7 @@ void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPMainPageAttributesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPMainPageAttributesCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -377,7 +377,7 @@ void BtnIMPMainPageAttributesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -398,7 +398,7 @@ void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -442,7 +442,7 @@ BOOLEAN CheckIfFinishedCharacterGeneration(void) {
 }
 
 void ShadeUnSelectableButtons(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   // this function looks at the status ofiCurrentProfileMode and decides which buttons
   // should be shaded ( unselectable )
 
@@ -458,7 +458,7 @@ void ShadeUnSelectableButtons(void) {
 
 void UpDateIMPMainPageButtons(void) {
   // update mainpage button states
-  INT32 iCount = 0;
+  int32_t iCount = 0;
 
   // disable all
   for (iCount = 2; iCount < 6; iCount++) {
@@ -565,7 +565,7 @@ void DestoryMouseRegionsForIMPMainPageBasedOnCharGenStatus(void) {
   return;
 }
 
-void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
   }

@@ -88,7 +88,7 @@ typedef struct {
   int16_t iX, iY;
   int16_t iOldX, iOldY;
   int16_t iAnimSpeed;
-  INT32 iTemplate;
+  int32_t iTemplate;
   uint32_t uiFlags;
   uint32_t uiLightType;
 } LIGHT_SPRITE;
@@ -112,19 +112,19 @@ BOOLEAN LightAddBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Subtracts a light value from all tiles
 BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Creates an omni (circular) light
-INT32 LightCreateOmni(uint8_t ubIntensity, int16_t iRadius);
+int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius);
 // Creates an oval-shaped light (two separate radii)
-INT32 LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
+int32_t LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
 // Creates a square light
-INT32 LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
+int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
 // Draws a light into the scene at X,Y
-BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
+BOOLEAN LightDraw(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Reverts the tiles a light has affected back to normal
-BOOLEAN LightErase(uint32_t uiLightType, INT32 iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
+BOOLEAN LightErase(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Save a light list into a file
-BOOLEAN LightSave(INT32 uiLight, STR pFilename);
+BOOLEAN LightSave(int32_t uiLight, STR pFilename);
 // Load a light list from a file
-INT32 LightLoad(STR pFilename);
+int32_t LightLoad(STR pFilename);
 
 // Sets the RGB values and number of light colors (1/2)
 BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, uint8_t ubNumColors);
@@ -134,21 +134,21 @@ uint8_t LightGetColors(struct SGPPaletteEntry *pPal);
 // High-Level Sprite Interface
 
 // Creates a new light sprite from a given filename/predefined symbol
-INT32 LightSpriteCreate(STR pName, uint32_t uiLightType);
+int32_t LightSpriteCreate(STR pName, uint32_t uiLightType);
 // Destroys the instance of that light
-BOOLEAN LightSpriteDestroy(INT32 iSprite);
+BOOLEAN LightSpriteDestroy(int32_t iSprite);
 // Sets the tile position of the light instance
-BOOLEAN LightSpritePosition(INT32 iSprite, int16_t iX, int16_t iY);
+BOOLEAN LightSpritePosition(int32_t iSprite, int16_t iX, int16_t iY);
 // Makes a light "fake"
-BOOLEAN LightSpriteFake(INT32 iSprite);
+BOOLEAN LightSpriteFake(int32_t iSprite);
 // Updates any change in position in lights
 BOOLEAN LightSpriteRender();
 // Renders all lights
 BOOLEAN LightSpriteRenderAll(void);
 // Turns on/off power to a light
-BOOLEAN LightSpritePower(INT32 iSprite, BOOLEAN fOn);
+BOOLEAN LightSpritePower(int32_t iSprite, BOOLEAN fOn);
 // Moves light to/from roof position
-BOOLEAN LightSpriteRoofStatus(INT32 iSprite, BOOLEAN fOnRoof);
+BOOLEAN LightSpriteRoofStatus(int32_t iSprite, BOOLEAN fOnRoof);
 
 // Reveals translucent walls
 BOOLEAN CalcTranslucentWalls(int16_t iX, int16_t iY);

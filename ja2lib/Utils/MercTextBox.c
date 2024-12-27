@@ -34,10 +34,10 @@
 #define MAX_NUMBER_OF_POPUP_BOXES 10
 
 // attempt to add box to pop up box list
-INT32 AddPopUpBoxToList(MercPopUpBox *pPopUpTextBox);
+int32_t AddPopUpBoxToList(MercPopUpBox *pPopUpTextBox);
 
 // grab box with this id value
-MercPopUpBox *GetPopUpBoxIndex(INT32 iId);
+MercPopUpBox *GetPopUpBoxIndex(int32_t iId);
 
 // both of the below are index by the enum for thier types - background and border in
 // MercTextBox.h
@@ -107,7 +107,7 @@ BOOLEAN ResetOverrideMercPopupBox() {
 }
 
 BOOLEAN InitMercPopupBox() {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   VOBJECT_DESC VObjectDesc;
 
   // init the pop up box list
@@ -132,7 +132,7 @@ BOOLEAN InitMercPopupBox() {
 }
 
 BOOLEAN ShutDownPopUpBoxes() {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   for (iCounter = 0; iCounter < MAX_NUMBER_OF_POPUP_BOXES; iCounter++) {
     // now attempt to remove this box
     RemoveMercPopupBoxFromIndex(iCounter);
@@ -189,7 +189,7 @@ void RemoveTextMercPopupImages() {
   return;
 }
 
-BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, int16_t sDestX, int16_t sDestY,
+BOOLEAN RenderMercPopUpBoxFromIndex(int32_t iBoxId, int16_t sDestX, int16_t sDestY,
                                     uint32_t uiBuffer) {
   // set the current box
   if (SetCurrentPopUpBox(iBoxId) == FALSE) {
@@ -247,8 +247,8 @@ BOOLEAN RenderMercPopupBox(int16_t sDestX, int16_t sDestY, uint32_t uiBuffer) {
   return fReturnValue;
 }
 
-INT32 AddPopUpBoxToList(MercPopUpBox *pPopUpTextBox) {
-  INT32 iCounter = 0;
+int32_t AddPopUpBoxToList(MercPopUpBox *pPopUpTextBox) {
+  int32_t iCounter = 0;
 
   // make sure is a valid box
   if (pPopUpTextBox == NULL) {
@@ -274,12 +274,12 @@ INT32 AddPopUpBoxToList(MercPopUpBox *pPopUpTextBox) {
 }
 
 // get box with this id
-MercPopUpBox *GetPopUpBoxIndex(INT32 iId) { return (gpPopUpBoxList[iId]); }
+MercPopUpBox *GetPopUpBoxIndex(int32_t iId) { return (gpPopUpBoxList[iId]); }
 
-INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBorderIndex,
-                          STR16 pString, uint16_t usWidth, uint16_t usMarginX,
-                          uint16_t usMarginTopY, uint16_t usMarginBottomY, uint16_t *pActualWidth,
-                          uint16_t *pActualHeight) {
+int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBorderIndex,
+                            STR16 pString, uint16_t usWidth, uint16_t usMarginX,
+                            uint16_t usMarginTopY, uint16_t usMarginBottomY, uint16_t *pActualWidth,
+                            uint16_t *pActualHeight) {
   uint16_t usNumberVerticalPixels;
   uint16_t usTextWidth, usHeight;
   uint16_t i;
@@ -545,7 +545,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBor
 
 // Deletes the surface thats contains the border, background and the text.
 BOOLEAN RemoveMercPopupBox() {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // make sure the current box does in fact exist
   if (gPopUpTextBox == NULL) {

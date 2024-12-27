@@ -106,7 +106,7 @@ void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct) {
 
 struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, uint8_t *pubID) {
   struct SOLDIERTYPE Soldier;
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
   BOOLEAN fGuyAvail = FALSE;
   uint8_t bLastTeamID;
@@ -336,7 +336,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, u
     // For inventory, look for any face class items that may be located in the big pockets and if
     // found, move that item to a face slot and clear the pocket!
     if (Soldier.bTeam != OUR_TEAM) {
-      INT32 i;
+      int32_t i;
       BOOLEAN fSecondFaceItem = FALSE;
       for (i = BIGPOCK1POS; i <= BIGPOCK4POS; i++) {
         if (Item[Soldier.inv[i].usItem].usItemClass & IC_FACE) {
@@ -614,9 +614,9 @@ enum {
   NUMHEADS
 };
 
-INT32 ChooseHairColor(struct SOLDIERTYPE *pSoldier, INT32 skin) {
-  INT32 iRandom;
-  INT32 hair = 0;
+int32_t ChooseHairColor(struct SOLDIERTYPE *pSoldier, int32_t skin) {
+  int32_t iRandom;
+  int32_t hair = 0;
   iRandom = Random(100);
   switch (skin) {
     case PINKSKIN:
@@ -678,7 +678,7 @@ INT32 ChooseHairColor(struct SOLDIERTYPE *pSoldier, INT32 skin) {
 }
 
 void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubSoldierClass) {
-  INT32 skin, hair;
+  int32_t skin, hair;
   BOOLEAN fMercClothingScheme;
   hair = -1;
 
@@ -929,7 +929,7 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
   // Assign nightops traits to enemies/militia
   if (pSoldier->ubSoldierClass == SOLDIER_CLASS_ELITE ||
       pSoldier->ubSoldierClass == SOLDIER_CLASS_ELITE_MILITIA) {
-    INT32 iChance;
+    int32_t iChance;
     uint8_t ubProgress;
 
     ubProgress = HighestPlayerProgressPercentage();
@@ -950,7 +950,7 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
     }
   } else if (pSoldier->ubSoldierClass == SOLDIER_CLASS_ARMY ||
              pSoldier->ubSoldierClass == SOLDIER_CLASS_REG_MILITIA) {
-    INT32 iChance;
+    int32_t iChance;
     uint8_t ubProgress;
 
     ubProgress = HighestPlayerProgressPercentage();
@@ -1293,7 +1293,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
               break;
           }
         } else {
-          INT32 iRandom;
+          int32_t iRandom;
           iRandom = Random(100);
           if (iRandom < 8) {  // 8% chance FATCIV
             pp->bBodyType = FATCIV;
@@ -1497,7 +1497,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 // placement.
 void CreateStaticDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *spp,
                                                           BASIC_SOLDIERCREATE_STRUCT *bp) {
-  INT32 i;
+  int32_t i;
   if (!spp || !bp) return;
   memset(spp, 0, sizeof(SOLDIERCREATE_STRUCT));
   spp->fStatic = TRUE;
@@ -1566,7 +1566,7 @@ void CreateStaticDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *
 // preserved.
 void CreateDetailedPlacementGivenStaticDetailedPlacementAndBasicPlacementInfo(
     SOLDIERCREATE_STRUCT *pp, SOLDIERCREATE_STRUCT *spp, BASIC_SOLDIERCREATE_STRUCT *bp) {
-  INT32 i;
+  int32_t i;
 
   memset(pp, 0, sizeof(SOLDIERCREATE_STRUCT));
   pp->fOnRoof = spp->fOnRoof = bp->fOnRoof;
@@ -1810,7 +1810,7 @@ void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, uint8_t ubProfileID) {
 #define CENTRAL_RADIUS 30
 
 struct SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(uint8_t ubSoldierClass) {
-  INT32 i, iStart, iEnd;
+  int32_t i, iStart, iEnd;
   struct SOLDIERTYPE *pSoldier;
   // This code looks for a soldier of specified type that currently exists in tactical and
   // returns the pointer to that soldier.  This is used when copying the exact status of
@@ -2252,7 +2252,7 @@ void OkayToUpgradeEliteToSpecialProfiledEnemy(SOLDIERCREATE_STRUCT *pp) {
 }
 
 void TrashAllSoldiers() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = 0;

@@ -160,9 +160,9 @@ extern void AddDoorInfoToTable(DOOR *pDoor);
 // When the editor removes a door from the world, this function looks for and removes accompanying
 // door information.  If the entry is not the last entry, the last entry is move to it's current
 // slot, to keep everything contiguous.
-extern void RemoveDoorInfoFromTable(INT32 iMapIndex);
+extern void RemoveDoorInfoFromTable(int32_t iMapIndex);
 // This is the link to see if a door exists at a gridno.
-DOOR *FindDoorInfoAtGridNo(INT32 iMapIndex);
+DOOR *FindDoorInfoAtGridNo(int32_t iMapIndex);
 // Upon world deallocation, the door table needs to be deallocated.
 extern void TrashDoorTable();
 
@@ -240,7 +240,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded();
 void AttachStringToDoor(int16_t sGridNo);
 
 void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
-                       int8_t bVisible, BOOLEAN fAddToDropList, INT32 iDropListSlot,
+                       int8_t bVisible, BOOLEAN fAddToDropList, int32_t iDropListSlot,
                        BOOLEAN fUseUnLoaded);
 
 #endif

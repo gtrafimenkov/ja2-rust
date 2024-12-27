@@ -334,28 +334,28 @@ int8_t gDecapitatedCorpse[NUM_CORPSES] = {
 };
 
 ROTTING_CORPSE gRottingCorpse[MAX_ROTTING_CORPSES];
-INT32 giNumRottingCorpse = 0;
+int32_t giNumRottingCorpse = 0;
 
 BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse);
 BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, uint32_t uiBase,
                                   struct SGPPaletteEntry *pShadePal);
 
-void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot);
+void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, int32_t iInvSlot);
 
-INT32 GetFreeRottingCorpse(void) {
-  INT32 iCount;
+int32_t GetFreeRottingCorpse(void) {
+  int32_t iCount;
 
   for (iCount = 0; iCount < giNumRottingCorpse; iCount++) {
-    if ((gRottingCorpse[iCount].fActivated == FALSE)) return ((INT32)iCount);
+    if ((gRottingCorpse[iCount].fActivated == FALSE)) return ((int32_t)iCount);
   }
 
-  if (giNumRottingCorpse < MAX_ROTTING_CORPSES) return ((INT32)giNumRottingCorpse++);
+  if (giNumRottingCorpse < MAX_ROTTING_CORPSES) return ((int32_t)giNumRottingCorpse++);
 
   return (-1);
 }
 
 void RecountRottingCorpses(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   if (giNumRottingCorpse > 0) {
     for (uiCount = giNumRottingCorpse - 1; (uiCount >= 0); uiCount--) {
@@ -417,8 +417,8 @@ uint16_t GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fFo
   return (bDirection);
 }
 
-INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
-  INT32 iIndex;
+int32_t AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
+  int32_t iIndex;
   ROTTING_CORPSE *pCorpse;
   ANITILE_PARAMS AniParams;
   uint8_t ubLevelID;
@@ -591,7 +591,7 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
 }
 
 void FreeCorpsePalettes(ROTTING_CORPSE *pCorpse) {
-  INT32 cnt;
+  int32_t cnt;
 
   // Free palettes
   MemFree(pCorpse->p8BPPPalette);
@@ -606,7 +606,7 @@ void FreeCorpsePalettes(ROTTING_CORPSE *pCorpse) {
 }
 
 void RemoveCorpses() {
-  INT32 iCount;
+  int32_t iCount;
 
   for (iCount = 0; iCount < giNumRottingCorpse; iCount++) {
     if ((gRottingCorpse[iCount].fActivated)) {
@@ -617,7 +617,7 @@ void RemoveCorpses() {
   giNumRottingCorpse = 0;
 }
 
-void RemoveCorpse(INT32 iCorpseID) {
+void RemoveCorpse(int32_t iCorpseID) {
   // Remove!
   gRottingCorpse[iCorpseID].fActivated = FALSE;
 
@@ -684,9 +684,9 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
                               BOOLEAN fCheckForLOS) {
   ROTTING_CORPSE_DEFINITION Corpse;
   uint8_t ubType;
-  INT32 cnt;
+  int32_t cnt;
   uint16_t usItemFlags = 0;  // WORLD_ITEM_DONTRENDER;
-  INT32 iCorpseID;
+  int32_t iCorpseID;
   int8_t bVisible = -1;
   struct OBJECTTYPE *pObj;
   uint8_t ubNumGoo;
@@ -842,9 +842,9 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
 }
 
 int16_t FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier) {
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = NOWHERE;
-  INT32 cnt;
+  int32_t cnt;
   ROTTING_CORPSE *pCorpse;
 
   // OK, loop through our current listing of bodies
@@ -1035,7 +1035,7 @@ void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse) {
 }
 
 void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, int8_t bTeam) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   int16_t sDistVisible;
   int16_t sGridNo;
@@ -1077,7 +1077,7 @@ void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, int8_t bTeam) {
 }
 
 void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt;
+  int32_t cnt;
   int16_t sDistVisible;
   int16_t sGridNo;
   ROTTING_CORPSE *pCorpse;
@@ -1140,7 +1140,7 @@ void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
 }
 
 void RebuildAllCorpseShadeTables() {
-  INT32 cnt;
+  int32_t cnt;
   ROTTING_CORPSE *pCorpse;
 
   // Loop through all corpses....
@@ -1334,9 +1334,9 @@ int16_t FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, int
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, cnt3;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
+  int32_t uiRange, uiLowestRange = 999999;
   int16_t sLowestGridNo = 0;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
@@ -1578,7 +1578,7 @@ void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot) {
+void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, int32_t iInvSlot) {
   struct OBJECTTYPE *pObj;
 
   Assert(pSoldier);
@@ -1602,7 +1602,7 @@ void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, int16_t sG
                                         uint8_t ubLevel) {
   ROTTING_CORPSE *pCorpse;
   int8_t bToleranceThreshold = 0;
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
   if (QuoteExp_HeadShotOnly[GetSolProfile(pSoldier)] == 1) {
@@ -1653,7 +1653,7 @@ void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, int16_t sG
 }
 
 int16_t GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID) {
-  INT32 cnt;
+  int32_t cnt;
   ROTTING_CORPSE *pCorpse;
 
   // Loop through all corpses....
@@ -1671,7 +1671,7 @@ int16_t GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID) {
 }
 
 void DecayRottingCorpseAIWarnings(void) {
-  INT32 cnt;
+  int32_t cnt;
   ROTTING_CORPSE *pCorpse;
 
   for (cnt = 0; cnt < giNumRottingCorpse; cnt++) {
@@ -1684,7 +1684,7 @@ void DecayRottingCorpseAIWarnings(void) {
 }
 
 uint8_t GetNearestRottingCorpseAIWarning(int16_t sGridNo) {
-  INT32 cnt;
+  int32_t cnt;
   ROTTING_CORPSE *pCorpse;
   uint8_t ubHighestWarning = 0;
 

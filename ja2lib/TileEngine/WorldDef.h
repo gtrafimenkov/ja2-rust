@@ -113,9 +113,9 @@ struct LEVELNODE {
   union {
     struct LEVELNODE *pPrevNode;       // FOR LAND, GOING BACKWARDS POINTER
     struct STRUCTURE *pStructureData;  // struct STRUCTURE DATA
-    INT32 iPhysicsObjectID;            // ID FOR PHYSICS ITEM
-    INT32 uiAPCost;                    // FOR AP DISPLAY
-    INT32 iExitGridInfo;
+    int32_t iPhysicsObjectID;          // ID FOR PHYSICS ITEM
+    int32_t uiAPCost;                  // FOR AP DISPLAY
+    int32_t iExitGridInfo;
   };  // ( 4 byte union )
 
   union {
@@ -137,7 +137,7 @@ struct LEVELNODE {
 
     // Some can contains index values into dead corpses
     struct {
-      INT32 iCorpseID;  // Index into corpse ID
+      int32_t iCorpseID;  // Index into corpse ID
     };
 
     struct {
@@ -217,7 +217,7 @@ extern MAP_ELEMENT *gpWorldLevelData;
 extern uint8_t gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 
 extern uint8_t gubCurrentLevel;
-extern INT32 giCurrentTilesetID;
+extern int32_t giCurrentTilesetID;
 
 extern struct VObject *hRenderVObject;
 extern uint32_t gSurfaceMemUsage;
@@ -245,8 +245,8 @@ void CompileWorldMovementCosts();
 void RecompileLocalMovementCosts(int16_t sCentreGridNo);
 void RecompileLocalMovementCostsFromRadius(int16_t sCentreGridNo, int8_t bRadius);
 
-BOOLEAN LoadMapTileset(INT32 iTilesetID);
-BOOLEAN SaveMapTileset(INT32 iTilesetID);
+BOOLEAN LoadMapTileset(int32_t iTilesetID);
+BOOLEAN SaveMapTileset(int32_t iTilesetID);
 
 void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadName);
 

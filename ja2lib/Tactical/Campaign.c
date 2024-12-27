@@ -839,7 +839,7 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
 }
 
 void HandleAnyStatChangesAfterAttack(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // must check everyone on player's team, not just the shooter
@@ -996,7 +996,7 @@ void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile) {
 }
 
 // handles possible death of mercs not currently working for the player
-void HandleUnhiredMercDeaths(INT32 iProfileID) {
+void HandleUnhiredMercDeaths(int32_t iProfileID) {
   uint8_t ubMaxDeaths;
   int16_t sChance;
   MERCPROFILESTRUCT *pProfile = &(gMercProfiles[iProfileID]);

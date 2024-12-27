@@ -59,7 +59,7 @@ uint16_t gusNextAvailableStructureID = FIRST_AVAILABLE_STRUCTURE_ID;
 
 struct STRUCTURE_FILE_REF *gpStructureFileRefs;
 
-INT32 guiMaterialHitSound[NUM_MATERIAL_TYPES] = {
+int32_t guiMaterialHitSound[NUM_MATERIAL_TYPES] = {
     -1,
     S_WOOD_IMPACT1,
     S_WOOD_IMPACT2,

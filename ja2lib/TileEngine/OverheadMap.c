@@ -89,8 +89,8 @@ BOOLEAN gfOverItemPool = FALSE;
 int16_t gsOveritemPoolGridNo;
 
 void HandleOverheadUI();
-void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
-void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
+void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason);
+void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason);
 void DeleteOverheadDB();
 BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(int16_t *psGridNo);
 
@@ -201,7 +201,7 @@ void InitNewOverheadDB(uint8_t ubTilesetID) {
 }
 
 void DeleteOverheadDB() {
-  INT32 cnt;
+  int32_t cnt;
 
   for (cnt = 0; cnt < NUMBEROFTILETYPES; cnt++) {
     DeleteVideoObject(gSmTileSurf[cnt].vo);
@@ -214,8 +214,8 @@ BOOLEAN GetClosestItemPool(int16_t sSweetGridNo, struct ITEM_POOL **ppReturnedIt
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
-  INT32 leftmost;
+  int32_t uiRange, uiLowestRange = 999999;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct ITEM_POOL *pItemPool;
 
@@ -259,8 +259,8 @@ BOOLEAN GetClosestMercInOverheadMap(int16_t sSweetGridNo, struct SOLDIERTYPE **p
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
   int16_t sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
-  INT32 leftmost;
+  int32_t uiRange, uiLowestRange = 999999;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
 
   // create dummy soldier, and use the pathing to determine which nearby slots are
@@ -571,7 +571,7 @@ void KillOverheadMap() {
   DisableTacticalTeamPanelButtons(FALSE);
 }
 
-int16_t GetOffsetLandHeight(INT32 sGridNo) {
+int16_t GetOffsetLandHeight(int32_t sGridNo) {
   int16_t sTileHeight;
 
   sTileHeight = gpWorldLevelData[sGridNo].sHeight;
@@ -579,7 +579,7 @@ int16_t GetOffsetLandHeight(INT32 sGridNo) {
   return (sTileHeight);
 }
 
-int16_t GetModifiedOffsetLandHeight(INT32 sGridNo) {
+int16_t GetModifiedOffsetLandHeight(int32_t sGridNo) {
   int16_t sTileHeight;
   int16_t sModifiedTileHeight;
 
@@ -1310,12 +1310,12 @@ NULL, (int16_t)(sX-2), (int16_t)(sY-2), (int16_t)(sX + 5), (int16_t)(sY + 11));
 }
 */
 
-void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason) {
   // Calculate the cursor...
 }
 
-void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  INT32 uiCellX, uiCellY;
+void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason) {
+  int32_t uiCellX, uiCellY;
   int16_t sWorldScreenX, sWorldScreenY;
 
   if (gfTacticalPlacementGUIActive) {
@@ -1344,7 +1344,7 @@ void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {}
+void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, int32_t reason) {}
 
 void GetOverheadScreenXYFromGridNo(int16_t sGridNo, int16_t *psScreenX, int16_t *psScreenY) {
   GetWorldXYAbsoluteScreenXY((int16_t)(CenterX(sGridNo) / CELL_X_SIZE),
@@ -1360,7 +1360,7 @@ void GetOverheadScreenXYFromGridNo(int16_t sGridNo, int16_t *psScreenX, int16_t 
 }
 
 BOOLEAN GetOverheadMouseGridNo(int16_t *psGridNo) {
-  INT32 uiCellX, uiCellY;
+  int32_t uiCellX, uiCellY;
   int16_t sWorldScreenX, sWorldScreenY;
 
   if ((OverheadRegion.uiFlags & MSYS_MOUSE_IN_AREA)) {
@@ -1389,7 +1389,7 @@ BOOLEAN GetOverheadMouseGridNo(int16_t *psGridNo) {
 }
 
 BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(int16_t *psGridNo) {
-  INT32 uiCellX, uiCellY;
+  int32_t uiCellX, uiCellY;
   int16_t sWorldScreenX, sWorldScreenY;
 
   if ((OverheadRegion.uiFlags & MSYS_MOUSE_IN_AREA)) {

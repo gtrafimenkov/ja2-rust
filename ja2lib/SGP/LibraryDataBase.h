@@ -66,8 +66,8 @@ typedef struct {
       uiIdOfOtherFileAlreadyOpenedLibrary;  // this variable is set when a file is opened from
                                             // the library and reset when the file is close.  No
                                             // 2 files can have access to the library at 1 time.
-  INT32 iNumFilesOpen;
-  INT32 iSizeOfOpenFileArray;
+  int32_t iNumFilesOpen;
+  int32_t iSizeOfOpenFileArray;
   FileHeaderStruct *pFileHeader;
   FileOpenStruct *pOpenFiles;
 
@@ -81,8 +81,8 @@ typedef struct {
 } LibraryHeaderStruct;
 
 typedef struct {
-  INT32 iNumFilesOpen;
-  INT32 iSizeOfOpenFileArray;
+  int32_t iNumFilesOpen;
+  int32_t iSizeOfOpenFileArray;
   RealFileOpenStruct *pRealFilesOpen;
 
 } RealFileHeaderStruct;
@@ -109,12 +109,12 @@ typedef struct {
 typedef struct {
   CHAR8 sLibName[FILENAME_SIZE];
   CHAR8 sPathToLibrary[FILENAME_SIZE];
-  INT32 iEntries;
-  INT32 iUsed;
+  int32_t iEntries;
+  int32_t iUsed;
   uint16_t iSort;
   uint16_t iVersion;
   BOOLEAN fContainsSubDirectories;
-  INT32 iReserved;
+  int32_t iReserved;
 } LIBHEADER;
 
 // The FileDatabaseHeader

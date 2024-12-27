@@ -11,16 +11,16 @@
 #include "Utils/FontControl.h"
 
 // internal variables.
-INT32 iMsgBoxNum;
-INT32 iMsgBoxOkImg, iMsgBoxCancelImg;
-INT32 iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
+int32_t iMsgBoxNum;
+int32_t iMsgBoxOkImg, iMsgBoxCancelImg;
+int32_t iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
 SGPRect MsgBoxRect;
 
 BOOLEAN gfMessageBoxResult = FALSE;
 uint8_t gubMessageBoxStatus = MESSAGEBOX_NONE;
 
-void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason);
-void MsgBoxCnclClkCallback(GUI_BUTTON *butn, INT32 reason);
+void MsgBoxOkClkCallback(GUI_BUTTON *butn, int32_t reason);
+void MsgBoxCnclClkCallback(GUI_BUTTON *butn, int32_t reason);
 
 void CreateMessageBox(CHAR16 *wzString) {
   int16_t sPixLen;
@@ -110,7 +110,7 @@ void RemoveMessageBox() {
 //	Quick Message Box button callback functions.
 //----------------------------------------------------------------------------------------------
 
-void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason) {
+void MsgBoxOkClkCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     butn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -119,7 +119,7 @@ void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason) {
   }
 }
 
-void MsgBoxCnclClkCallback(GUI_BUTTON *butn, INT32 reason) {
+void MsgBoxCnclClkCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     butn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

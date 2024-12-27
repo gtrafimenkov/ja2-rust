@@ -79,7 +79,7 @@ Returns 0 if nothing in menu was selected, else
 returns the menu entry number starting from 1.
 */
 
-void InitPopupMenu(INT32 iButtonID, uint8_t ubPopupMenuID, uint8_t ubDirection) {
+void InitPopupMenu(int32_t iButtonID, uint8_t ubPopupMenuID, uint8_t ubDirection) {
   uint16_t usX, usY;
   uint16_t usMenuHeight;
   uint16_t usMenuWidth = 0;

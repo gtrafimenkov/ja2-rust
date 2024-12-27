@@ -139,7 +139,7 @@ BOOLEAN LoadAboutUsIndentFrame(void);
 void DeleteAboutUsIndentFrame(void);
 void RenderAboutUsIndentFrame(int16_t sX, int16_t sY);
 
-void RenderAttributeFrameForIndex(int16_t sX, int16_t sY, INT32 iIndex);
+void RenderAttributeFrameForIndex(int16_t sX, int16_t sY, int32_t iIndex);
 
 // graphical handles
 

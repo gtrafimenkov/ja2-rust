@@ -75,7 +75,7 @@ enum {
   SMKINTRO_LAST_END_GAME,
 };
 
-INT32 giCurrentIntroBeingPlayed = SMKINTRO_NO_VIDEO;
+int32_t giCurrentIntroBeingPlayed = SMKINTRO_NO_VIDEO;
 
 char *gpzSmackerFileNames[] = {
     // begining of the game
@@ -105,8 +105,8 @@ void RenderIntroScreen();
 void ExitIntroScreen();
 void HandleIntroScreen();
 void PrepareToExitIntroScreen();
-INT32 GetNextIntroVideo(uint32_t uiCurrentVideo);
-void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay);
+int32_t GetNextIntroVideo(uint32_t uiCurrentVideo);
+void StartPlayingIntroFlic(int32_t iIndexOfFlicToPlay);
 void DisplaySirtechSplashScreen();
 
 // ppp
@@ -148,7 +148,7 @@ uint32_t IntroScreenHandle(void) {
 }
 
 BOOLEAN EnterIntroScreen() {
-  INT32 iFirstVideoID = -1;
+  int32_t iFirstVideoID = -1;
 
   ClearMainMenu();
 
@@ -208,7 +208,7 @@ void HandleIntroScreen() {
 
   // if the flic is not playing
   if (!fFlicStillPlaying) {
-    INT32 iNextVideoToPlay = -1;
+    int32_t iNextVideoToPlay = -1;
 
     iNextVideoToPlay = GetNextIntroVideo(giCurrentIntroBeingPlayed);
 
@@ -308,8 +308,8 @@ void PrepareToExitIntroScreen() {
   gfIntroScreenExit = TRUE;
 }
 
-INT32 GetNextIntroVideo(uint32_t uiCurrentVideo) {
-  INT32 iStringToUse = -1;
+int32_t GetNextIntroVideo(uint32_t uiCurrentVideo) {
+  int32_t iStringToUse = -1;
 
   // switch on whether it is the beginging or the end game video
   switch (gbIntroScreenMode) {
@@ -378,7 +378,7 @@ INT32 GetNextIntroVideo(uint32_t uiCurrentVideo) {
   return (iStringToUse);
 }
 
-void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay) {
+void StartPlayingIntroFlic(int32_t iIndexOfFlicToPlay) {
   if (iIndexOfFlicToPlay != -1) {
     // start playing a flic
     gpSmackFlic = SmkPlayFlic(gpzSmackerFileNames[iIndexOfFlicToPlay], 0, 0, TRUE);

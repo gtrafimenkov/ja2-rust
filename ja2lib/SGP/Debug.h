@@ -13,7 +13,7 @@ extern void DebugPrint(const char *message);
 extern BOOLEAN gfRecordToFile;
 extern BOOLEAN gfRecordToDebugger;
 extern uint32_t guiProfileStart, guiExecutions, guiProfileTime;
-extern INT32 giProfileCount;
+extern int32_t giProfileCount;
 
 #define PROFILE(x)                       \
   guiProfileStart = Plat_GetTickCount(); \

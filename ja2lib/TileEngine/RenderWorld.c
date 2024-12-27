@@ -357,7 +357,7 @@ BOOLEAN gfRenderScroll = FALSE;
 BOOLEAN gfScrollStart = FALSE;
 int16_t gsScrollXIncrement;
 int16_t gsScrollYIncrement;
-INT32 guiScrollDirection;
+int32_t guiScrollDirection;
 
 // Rendering flags (full, partial, etc.)
 uint32_t gRenderFlags = 0;
@@ -451,29 +451,29 @@ void CalcRenderParameters(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t s
 void ResetRenderParameters();
 
 BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, int32_t iX, int32_t iY,
                                              uint16_t usIndex);
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                           uint16_t *pZBuffer, uint16_t usZValue,
-                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                          struct VObject *hSrcVObject, int32_t iX, int32_t iY,
                                           uint16_t usIndex);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, SGPRect *clipregion,
     int16_t sZIndex, uint16_t *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                      uint16_t *pZBuffer, uint16_t usZValue,
-                                                     struct VObject *hSrcVObject, INT32 iX,
-                                                     INT32 iY, uint16_t usIndex,
+                                                     struct VObject *hSrcVObject, int32_t iX,
+                                                     int32_t iY, uint16_t usIndex,
                                                      SGPRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, SGPRect *clipregion,
     int16_t sZIndex, uint16_t *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion);
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, SGPRect *clipregion);
 
 void RenderRoomInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
                     int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS);
@@ -625,9 +625,9 @@ void RenderSetShadows(BOOLEAN fShadows) {
     gRenderFlags &= (~RENDER_FLAG_SHADOWS);
 }
 
-void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT32 iStartPointX_S,
-                 INT32 iStartPointY_S, INT32 iEndXS, INT32 iEndYS, uint8_t ubNumLevels,
-                 uint32_t *puiLevels, uint16_t *psLevelIDs) {
+void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_M,
+                 int32_t iStartPointX_S, int32_t iStartPointY_S, int32_t iEndXS, int32_t iEndYS,
+                 uint8_t ubNumLevels, uint32_t *puiLevels, uint16_t *psLevelIDs) {
   // #if 0
 
   struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
@@ -639,10 +639,10 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   uint8_t *pDestBuf = NULL;
   uint16_t usAnimSurface;
   int8_t bXOddFlag = 0;
-  INT32 iAnchorPosX_M, iAnchorPosY_M;
-  INT32 iAnchorPosX_S, iAnchorPosY_S;
-  INT32 iTempPosX_M, iTempPosY_M;
-  INT32 iTempPosX_S, iTempPosY_S;
+  int32_t iAnchorPosX_M, iAnchorPosY_M;
+  int32_t iAnchorPosX_S, iAnchorPosY_S;
+  int32_t iTempPosX_M, iTempPosY_M;
+  int32_t iTempPosX_S, iTempPosY_S;
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
   uint32_t uiTileIndex;
@@ -676,7 +676,7 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   BOOLEAN bItemOutline;
   uint16_t usOutlineColor = 0;
 
-  static INT32 iTileMapPos[500];
+  static int32_t iTileMapPos[500];
   uint32_t uiMapPosIndex;
   uint8_t bBlitClipVal;
   int8_t bItemCount, bVisibleItemCount;
@@ -3476,7 +3476,7 @@ void InvalidateWorldRedundency() {
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                               uint16_t *pZBuffer, uint16_t usZValue,
-                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, int32_t iX, int32_t iY,
                                               uint16_t usIndex, SGPRect *clipregion) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
@@ -3484,8 +3484,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDest
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
   int8_t *pZArray;
   ZStripInfo *pZInfo;
@@ -3517,20 +3517,20 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDest
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   // calculate the remaining rows and columns to blit
-  BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
-  BlitHeight = ((INT32)usHeight - TopSkip - BottomSkip);
+  BlitLength = ((int32_t)usWidth - LeftSkip - RightSkip);
+  BlitHeight = ((int32_t)usHeight - TopSkip - BottomSkip);
 
   // check if whole thing is clipped
-  if ((LeftSkip >= (INT32)usWidth) || (RightSkip >= (INT32)usWidth)) return (TRUE);
+  if ((LeftSkip >= (int32_t)usWidth) || (RightSkip >= (int32_t)usWidth)) return (TRUE);
 
   // check if whole thing is clipped
-  if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
+  if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
   DestPtr =
@@ -3866,15 +3866,15 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion) {
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, SGPRect *clipregion) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
   int8_t *pZArray;
   ZStripInfo *pZInfo;
@@ -3906,20 +3906,20 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   // calculate the remaining rows and columns to blit
-  BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
-  BlitHeight = ((INT32)usHeight - TopSkip - BottomSkip);
+  BlitLength = ((int32_t)usWidth - LeftSkip - RightSkip);
+  BlitHeight = ((int32_t)usHeight - TopSkip - BottomSkip);
 
   // check if whole thing is clipped
-  if ((LeftSkip >= (INT32)usWidth) || (RightSkip >= (INT32)usWidth)) return (TRUE);
+  if ((LeftSkip >= (int32_t)usWidth) || (RightSkip >= (int32_t)usWidth)) return (TRUE);
 
   // check if whole thing is clipped
-  if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
+  if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
   DestPtr =
@@ -4258,8 +4258,8 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                      uint16_t *pZBuffer, uint16_t usZValue,
-                                                     struct VObject *hSrcVObject, INT32 iX,
-                                                     INT32 iY, uint16_t usIndex,
+                                                     struct VObject *hSrcVObject, int32_t iX,
+                                                     int32_t iY, uint16_t usIndex,
                                                      SGPRect *clipregion) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset, uiLineFlag;
@@ -4267,8 +4267,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
   int8_t *pZArray;
   ZStripInfo *pZInfo;
@@ -4300,22 +4300,22 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   uiLineFlag = (iTempY & 1);
 
   // calculate the remaining rows and columns to blit
-  BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
-  BlitHeight = ((INT32)usHeight - TopSkip - BottomSkip);
+  BlitLength = ((int32_t)usWidth - LeftSkip - RightSkip);
+  BlitHeight = ((int32_t)usHeight - TopSkip - BottomSkip);
 
   // check if whole thing is clipped
-  if ((LeftSkip >= (INT32)usWidth) || (RightSkip >= (INT32)usWidth)) return (TRUE);
+  if ((LeftSkip >= (int32_t)usWidth) || (RightSkip >= (int32_t)usWidth)) return (TRUE);
 
   // check if whole thing is clipped
-  if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
+  if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
   DestPtr =
@@ -4667,15 +4667,15 @@ BlitDone:
 //
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, SGPRect *clipregion,
     int16_t sZIndex, uint16_t *p16BPPPalette) {
   uint32_t uiOffset, uiLineFlag;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
   int8_t *pZArray;
   ZStripInfo *pZInfo;
@@ -4707,22 +4707,22 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   uiLineFlag = (iTempY & 1);
 
   // calculate the remaining rows and columns to blit
-  BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
-  BlitHeight = ((INT32)usHeight - TopSkip - BottomSkip);
+  BlitLength = ((int32_t)usWidth - LeftSkip - RightSkip);
+  BlitHeight = ((int32_t)usHeight - TopSkip - BottomSkip);
 
   // check if whole thing is clipped
-  if ((LeftSkip >= (INT32)usWidth) || (RightSkip >= (INT32)usWidth)) return (TRUE);
+  if ((LeftSkip >= (int32_t)usWidth) || (RightSkip >= (int32_t)usWidth)) return (TRUE);
 
   // check if whole thing is clipped
-  if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
+  if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
   DestPtr =
@@ -5117,15 +5117,15 @@ void CorrectRenderCenter(int16_t sRenderX, int16_t sRenderY, int16_t *pSNewX, in
 //
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
+    struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex, SGPRect *clipregion,
     int16_t sZIndex, uint16_t *p16BPPPalette) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
   int8_t *pZArray;
   ZStripInfo *pZInfo;
@@ -5157,20 +5157,20 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   // calculate the remaining rows and columns to blit
-  BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
-  BlitHeight = ((INT32)usHeight - TopSkip - BottomSkip);
+  BlitLength = ((int32_t)usWidth - LeftSkip - RightSkip);
+  BlitHeight = ((int32_t)usHeight - TopSkip - BottomSkip);
 
   // check if whole thing is clipped
-  if ((LeftSkip >= (INT32)usWidth) || (RightSkip >= (INT32)usWidth)) return (TRUE);
+  if ((LeftSkip >= (int32_t)usWidth) || (RightSkip >= (int32_t)usWidth)) return (TRUE);
 
   // check if whole thing is clipped
-  if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
+  if ((TopSkip >= (int32_t)usHeight) || (BottomSkip >= (int32_t)usHeight)) return (TRUE);
 
   SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
   DestPtr =
@@ -6099,14 +6099,14 @@ void ResetRenderParameters() {
 }
 
 BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, int32_t iX, int32_t iY,
                                              uint16_t usIndex) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *DestPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY;
+  int32_t iTempX, iTempY;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -6222,7 +6222,7 @@ BlitDone:
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                           uint16_t *pZBuffer, uint16_t usZValue,
-                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                          struct VObject *hSrcVObject, int32_t iX, int32_t iY,
                                           uint16_t usIndex) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
@@ -6230,7 +6230,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(uint16_t *pBuffer, uint32_t uiDestPitc
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY;
+  int32_t iTempX, iTempY;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -6333,14 +6333,14 @@ BlitDone:
 }
 
 BOOLEAN IsTileRedundent(uint16_t *pZBuffer, uint16_t usZValue, struct VObject *hSrcVObject,
-                        INT32 iX, INT32 iY, uint16_t usIndex) {
+                        int32_t iX, int32_t iY, uint16_t usIndex) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *ZPtr;
   uint32_t LineSkip;
   ETRLEObject *pTrav;
-  INT32 iTempX, iTempY;
+  int32_t iTempX, iTempY;
   BOOLEAN fHidden = TRUE;
 
   // Assertions

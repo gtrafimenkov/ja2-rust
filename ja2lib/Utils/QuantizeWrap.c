@@ -228,7 +228,7 @@ BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHe
 
 void MapPalette(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight, int16_t sNumColors,
                 struct SGPPaletteEntry* pTable) {
-  INT32 cX, cY, cnt, bBest;
+  int32_t cX, cY, cnt, bBest;
   real dLowestDist;
   real dCubeDist;
   vector_3 vTableVal, vSrcVal, vDiffVal;

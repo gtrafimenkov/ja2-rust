@@ -34,7 +34,7 @@ struct VObject;
 
 // Kris:  Added the last two bottom corner orientation values.  This won't effect
 // current code, but there is new code that makes use of this.  A function called
-// uint8_t CalculateWallOrientationsAtGridNo( INT32 iMapIndex ) that will look at all
+// uint8_t CalculateWallOrientationsAtGridNo( int32_t iMapIndex ) that will look at all
 // of the walls and return the last two wall orientations for tiles with two proper
 // wall pieces.
 enum WallOrientationDefines {
@@ -119,7 +119,7 @@ typedef struct {
 } TILE_ELEMENT, *PTILE_ELEMENT;
 
 typedef struct {
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   uint8_t ubNumLayers;
   uint16_t *pIndexValues;
 
@@ -141,14 +141,14 @@ extern uint8_t gTileTypeMovementCost[NUM_TERRAIN_TYPES];
 void CreateTileDatabase();
 
 // Land level manipulation functions
-BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType);
+BOOLEAN GetLandHeadType(int32_t iMapIndex, uint32_t *puiType);
 
-BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete);
+BOOLEAN SetLandIndex(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete);
 
 BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, uint8_t *pubLevel);
 uint8_t GetLandLevelDepth(uint32_t iMapIndex);
 
-BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType,
+BOOLEAN SetLandIndexWithRadius(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType,
                                uint8_t ubRadius, BOOLEAN fReplace);
 
 BOOLEAN LandTypeHeigher(uint32_t uiDestType, uint32_t uiSrcType);
@@ -169,9 +169,9 @@ BOOLEAN GetTileTypeLogicalHeight(uint32_t fType, uint8_t *pubLogHeight);
 BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, uint8_t *pubLastLevel);
 BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, uint8_t *pubLastLevel);
 BOOLEAN GetWallOrientation(uint16_t usIndex, uint16_t *pusWallOrientation);
-BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
+BOOLEAN ContainsWallOrientation(int32_t iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
                                 uint8_t *pubLevel);
-uint8_t CalculateWallOrientationsAtGridNo(INT32 iMapIndex);
+uint8_t CalculateWallOrientationsAtGridNo(int32_t iMapIndex);
 
 void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT *TileElement,
                                BOOLEAN fUseRaisedObjectType);

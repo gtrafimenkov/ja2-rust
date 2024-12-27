@@ -23,7 +23,7 @@
 void HourlyQuestUpdate(void);
 void HourlyLarryUpdate(void);
 
-extern INT32 GetCurrentBalance(void);
+extern int32_t GetCurrentBalance(void);
 extern void PayOffSkyriderDebtIfAny();
 void HourlyCheckIfSlayAloneSoHeCanLeave();
 

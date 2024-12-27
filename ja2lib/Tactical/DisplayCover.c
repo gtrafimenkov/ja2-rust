@@ -363,17 +363,17 @@ void CalculateCoverInRadiusAroundGridno(int16_t sTargetGridNo, int8_t bSearchRan
 
 int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier,
                                                  int16_t sTargetGridNo, int8_t bStance) {
-  INT32 iTotalCoverPoints = 0;
+  int32_t iTotalCoverPoints = 0;
   int8_t bNumEnemies = 0;
   int8_t bPercentCoverForGridno = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pOpponent;
   int8_t *pbPersOL;
   int8_t *pbPublOL;
-  INT32 iGetThrough = 0;
-  INT32 iBulletGetThrough = 0;
-  INT32 iHighestValue = 0;
-  INT32 iCover = 0;
+  int32_t iGetThrough = 0;
+  int32_t iBulletGetThrough = 0;
+  int32_t iHighestValue = 0;
+  int32_t iCover = 0;
   uint16_t usMaxRange;
   uint16_t usRange;
   uint16_t usSightLimit;
@@ -427,7 +427,7 @@ int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier,
     }
 
     iBulletGetThrough =
-        min(max((INT32)(((((usMaxRange - usRange) / (FLOAT)(usMaxRange)) + .3) * 100)), 0), 100);
+        min(max((int32_t)(((((usMaxRange - usRange) / (FLOAT)(usMaxRange)) + .3) * 100)), 0), 100);
 
     if (iBulletGetThrough > 5 && iGetThrough > 0) {
       iCover = (iGetThrough * iBulletGetThrough / 100);
@@ -442,7 +442,7 @@ int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier,
   if (bNumEnemies == 0) {
     bPercentCoverForGridno = 100;
   } else {
-    INT32 iTemp;
+    int32_t iTemp;
 
     bPercentCoverForGridno = (iTotalCoverPoints / bNumEnemies);
 
@@ -811,7 +811,7 @@ void RemoveVisibleGridNoAtSelectedGridNo() {
 int8_t CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo,
                                  BOOLEAN fRoof) {
   int8_t bRetVal = 0;
-  INT32 iLosForGridNo = 0;
+  int32_t iLosForGridNo = 0;
   uint16_t usSightLimit = 0;
   int8_t *pPersOL, *pbPublOL;
   uint8_t ubID;
@@ -901,7 +901,7 @@ void DisplayLosAndDisplayCoverUsageScreenMsg()
 */
 #endif
 
-void ChangeSizeOfDisplayCover(INT32 iNewSize) {
+void ChangeSizeOfDisplayCover(int32_t iNewSize) {
   // if the new size is smaller or greater, scale it
   if (iNewSize < DC__MIN_SIZE) {
     iNewSize = DC__MIN_SIZE;
@@ -917,7 +917,7 @@ void ChangeSizeOfDisplayCover(INT32 iNewSize) {
   DisplayCoverOfSelectedGridNo();
 }
 
-void ChangeSizeOfLOS(INT32 iNewSize) {
+void ChangeSizeOfLOS(int32_t iNewSize) {
   // if the new size is smaller or greater, scale it
   if (iNewSize < DC__MIN_SIZE) {
     iNewSize = DC__MIN_SIZE;

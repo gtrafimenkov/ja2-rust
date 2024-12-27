@@ -90,16 +90,16 @@ enum {
 
 // sizeof one record
 #define RECORD_SIZE \
-  (sizeof(uint32_t) + sizeof(INT32) + sizeof(INT32) + sizeof(uint8_t) + sizeof(uint8_t))
+  (sizeof(uint32_t) + sizeof(int32_t) + sizeof(int32_t) + sizeof(uint8_t) + sizeof(uint8_t))
 
 // the financial record list
 FinanceUnitPtr pFinanceListHead = NULL;
 
 // current players balance
-// INT32 iCurrentBalance=0;
+// int32_t iCurrentBalance=0;
 
 // current page displayed
-INT32 iCurrentPage = 0;
+int32_t iCurrentPage = 0;
 
 // current financial record (the one at the top of the current page)
 FinanceUnitPtr pCurrentFinance = NULL;
@@ -122,12 +122,12 @@ uint32_t guiLastPageLoaded = 0;
 uint32_t guiLastPageInRecordsList = 0;
 
 // finance screen buttons
-INT32 giFinanceButton[4];
-INT32 giFinanceButtonImage[4];
+int32_t giFinanceButton[4];
+int32_t giFinanceButtonImage[4];
 
 // internal functions
-uint32_t ProcessAndEnterAFinacialRecord(uint8_t ubCode, uint32_t uiDate, INT32 iAmount,
-                                        uint8_t ubSecondCode, INT32 iBalanceToDate);
+uint32_t ProcessAndEnterAFinacialRecord(uint8_t ubCode, uint32_t uiDate, int32_t iAmount,
+                                        uint8_t ubSecondCode, int32_t iBalanceToDate);
 void RenderBackGround(void);
 BOOLEAN LoadFinances();
 void DrawSummary(void);
@@ -136,16 +136,16 @@ void DrawFinanceTitleText(void);
 void InvalidateLapTopScreen(void);
 void RemoveFinances(void);
 void DrawSummaryText(void);
-INT32 GetCurrentBalance(void);
+int32_t GetCurrentBalance(void);
 void ClearFinanceList(void);
 void OpenAndReadFinancesFile(void);
 void DrawAPageOfRecords(void);
 void DrawRecordsBackGround(void);
 void DrawRecordsText(void);
 void DrawRecordsColumnHeadersText(void);
-void BtnFinanceDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason);
-void BtnFinanceFirstLastPageCallBack(GUI_BUTTON *btn, INT32 reason);
-void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason);
+void BtnFinanceDisplayNextPageCallBack(GUI_BUTTON *btn, int32_t reason);
+void BtnFinanceFirstLastPageCallBack(GUI_BUTTON *btn, int32_t reason);
+void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason);
 void CreateFinanceButtons(void);
 void DestroyFinanceButtons(void);
 void IncrementCurrentPageFinancialDisplay(void);
@@ -160,18 +160,18 @@ BOOLEAN LoadInRecords(uint32_t uiPage);
 BOOLEAN LoadPreviousPage(void);
 BOOLEAN LoadNextPage(void);
 
-INT32 GetPreviousBalanceToDate(void);
-INT32 GetPreviousDaysIncome(void);
-INT32 GetPreviousDaysBalance(void);
+int32_t GetPreviousBalanceToDate(void);
+int32_t GetPreviousDaysIncome(void);
+int32_t GetPreviousDaysBalance(void);
 
 void SetFinanceButtonStates(void);
-INT32 GetTodaysBalance(void);
-INT32 GetTodaysDebits(void);
-INT32 GetYesterdaysOtherDeposits(void);
-INT32 GetTodaysOtherDeposits(void);
-INT32 GetYesterdaysDebits(void);
+int32_t GetTodaysBalance(void);
+int32_t GetTodaysDebits(void);
+int32_t GetYesterdaysOtherDeposits(void);
+int32_t GetTodaysOtherDeposits(void);
+int32_t GetYesterdaysDebits(void);
 
-uint32_t AddTransactionToPlayersBook(uint8_t ubCode, uint8_t ubSecondCode, INT32 iAmount) {
+uint32_t AddTransactionToPlayersBook(uint8_t ubCode, uint8_t ubSecondCode, int32_t iAmount) {
   // adds transaction to player's book(Financial List), returns unique id number of it
   // outside of the financial system(the code in this .c file), this is the only function you'll
   // ever need
@@ -316,13 +316,13 @@ uint32_t GetDayDebits(uint32_t usDayNumber) {
   return uiDebits;
 }
 
-INT32 GetTotalToDay(INT32 sTimeInMins) {
+int32_t GetTotalToDay(int32_t sTimeInMins) {
   // gets the total amount to this day
   uint32_t uiTotal = 0;
   FinanceUnitPtr pFinance = pFinanceListHead;
 
   while (pFinance) {
-    if (((INT32)(pFinance->uiDate / (60 * 24)) <= sTimeInMins / (24 * 60)))
+    if (((int32_t)(pFinance->uiDate / (60 * 24)) <= sTimeInMins / (24 * 60)))
       uiTotal += ((uint32_t)(pFinance->iAmount));
 
     // next finance record
@@ -331,25 +331,25 @@ INT32 GetTotalToDay(INT32 sTimeInMins) {
 
   return uiTotal;
 }
-INT32 GetYesterdaysIncome(void) {
+int32_t GetYesterdaysIncome(void) {
   // get income for yesterday
   return (GetDayDebits(((GetWorldTotalMin() - (24 * 60)) / (24 * 60))) +
           GetDayCredits(((uint32_t)(GetWorldTotalMin() - (24 * 60)) / (24 * 60))));
 }
 
-INT32 GetCurrentBalance(void) {
+int32_t GetCurrentBalance(void) {
   // get balance to this minute
   return (MoneyGetBalance());
 
   // return(GetTotalDebits((GetWorldTotalMin()))+GetTotalCredits((GetWorldTotalMin())));
 }
 
-INT32 GetTodaysIncome(void) {
+int32_t GetTodaysIncome(void) {
   // get income
   return (GetCurrentBalance() - GetTotalToDay(GetWorldTotalMin() - (24 * 60)));
 }
 
-INT32 GetProjectedTotalDailyIncome(void) {
+int32_t GetProjectedTotalDailyIncome(void) {
   // return total  projected income, including what is earned today already
 
   // CJC: I DON'T THINK SO!
@@ -369,12 +369,12 @@ if (GetWorldMinutesInDay() <= 0)
   return (PredictIncomeFromPlayerMines());
 }
 
-INT32 GetProjectedBalance(void) {
+int32_t GetProjectedBalance(void) {
   // return the projected balance for tommorow - total for today plus the total income, projected.
   return (GetProjectedTotalDailyIncome() + GetCurrentBalance());
 }
 
-INT32 GetConfidenceValue() {
+int32_t GetConfidenceValue() {
   // return confidence that the projected income is infact correct
   return (((GetWorldMinutesInDay() * 100) / (60 * 24)));
 }
@@ -584,7 +584,7 @@ void DrawAPageOfRecords(void) {
 
 void DrawRecordsBackGround(void) {
   // proceudre will draw the background for the list of financial records
-  INT32 iCounter = 6;
+  int32_t iCounter = 6;
   struct VObject *hHandle;
 
   // render the generic background
@@ -660,7 +660,7 @@ void DrawRecordsText(void) {
   FinanceUnitPtr pTempFinance = pFinanceListHead;
   wchar_t sString[512];
   int16_t usX, usY;
-  INT32 iBalance = 0;
+  int32_t iBalance = 0;
 
   // setup the font stuff
   SetFont(FINANCE_TEXT_FONT);
@@ -794,7 +794,7 @@ void InvalidateLapTopScreen(void) {
 void DrawSummaryText(void) {
   int16_t usX, usY;
   wchar_t pString[100];
-  INT32 iBalance = 0;
+  int32_t iBalance = 0;
 
   // setup the font stuff
   SetFont(FINANCE_TEXT_FONT);
@@ -975,8 +975,8 @@ void OpenAndReadFinancesFile(void) {
   HWFILE hFileHandle;
   uint8_t ubCode, ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   uint32_t iBytesRead = 0;
   uint32_t uiByteCount = 0;
 
@@ -1005,8 +1005,8 @@ void OpenAndReadFinancesFile(void) {
 
   // read in balance
   // write balance to disk first
-  FileMan_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), &iBytesRead);
-  uiByteCount += sizeof(INT32);
+  FileMan_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(int32_t), &iBytesRead);
+  uiByteCount += sizeof(int32_t);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1016,8 +1016,8 @@ void OpenAndReadFinancesFile(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1026,7 +1026,7 @@ void OpenAndReadFinancesFile(void) {
 
     // increment byte counter
     uiByteCount +=
-        sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(INT32);
+        sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t);
   }
 
   // close file
@@ -1056,8 +1056,8 @@ void ClearFinanceList(void) {
   return;
 }
 
-uint32_t ProcessAndEnterAFinacialRecord(uint8_t ubCode, uint32_t uiDate, INT32 iAmount,
-                                        uint8_t ubSecondCode, INT32 iBalanceToDate) {
+uint32_t ProcessAndEnterAFinacialRecord(uint8_t ubCode, uint32_t uiDate, int32_t iAmount,
+                                        uint8_t ubSecondCode, int32_t iBalanceToDate) {
   uint32_t uiId = 0;
   FinanceUnitPtr pFinance = pFinanceListHead;
 
@@ -1150,7 +1150,7 @@ void DestroyFinanceButtons(void) {
     UnloadButtonImage(giFinanceButtonImage[uiCnt]);
   }
 }
-void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason) {
+void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags &= ~(BUTTON_CLICKED_ON);
 
@@ -1164,7 +1164,7 @@ void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnFinanceDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason) {
+void BtnFinanceDisplayNextPageCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags &= ~(BUTTON_CLICKED_ON);
     // increment currentPage
@@ -1180,7 +1180,7 @@ void BtnFinanceDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnFinanceFirstLastPageCallBack(GUI_BUTTON *btn, INT32 reason) {
+void BtnFinanceFirstLastPageCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint32_t uiButton = MSYS_GetBtnUserData(btn, 0);
 
@@ -1212,7 +1212,7 @@ void IncrementCurrentPageFinancialDisplay(void) {
   // run through list, from pCurrentFinance, to NUM_RECORDS_PER_PAGE +1 FinancialUnits
   FinanceUnitPtr pTempFinance = pCurrentFinance;
   BOOLEAN fOkToIncrementPage = FALSE;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // on the overview page, simply set iCurrent to head of list, and page to 1
   if (iCurrentPage == 0) {
@@ -1386,7 +1386,7 @@ void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFin
 void DisplayFinancePageNumberAndDateRange(void) {
   // this function will go through the list of 'histories' starting at current until end or
   // MAX_PER_PAGE...it will get the date range and the page number
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   FinanceUnitPtr pTempFinance = pFinanceListHead;
   wchar_t sString[50];
 
@@ -1430,7 +1430,7 @@ BOOLEAN WriteBalanceToDisk(void) {
   hFileHandle = FileMan_Open(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 
   // write balance to disk
-  FileMan_Write(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), NULL);
+  FileMan_Write(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(int32_t), NULL);
 
   // close file
   FileMan_Close(hFileHandle);
@@ -1460,7 +1460,7 @@ void GetBalanceFromDisk(void) {
   FileMan_Seek(hFileHandle, 0, FILE_SEEK_FROM_START);
 
   // get balance from disk first
-  FileMan_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), &iBytesRead);
+  FileMan_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(int32_t), &iBytesRead);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1498,8 +1498,8 @@ BOOLEAN AppendFinanceToEndOfFile(FinanceUnitPtr pFinance) {
   FileMan_Write(hFileHandle, &(pFinanceList->ubCode), sizeof(uint8_t), NULL);
   FileMan_Write(hFileHandle, &(pFinanceList->ubSecondCode), sizeof(uint8_t), NULL);
   FileMan_Write(hFileHandle, &(pFinanceList->uiDate), sizeof(uint32_t), NULL);
-  FileMan_Write(hFileHandle, &(pFinanceList->iAmount), sizeof(INT32), NULL);
-  FileMan_Write(hFileHandle, &(pFinanceList->iBalanceToDate), sizeof(INT32), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->iAmount), sizeof(int32_t), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->iBalanceToDate), sizeof(int32_t), NULL);
 
   // close file
   FileMan_Close(hFileHandle);
@@ -1511,7 +1511,7 @@ uint32_t ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
   // this function will read in the last unit in the finance list, to grab it's id number
 
   HWFILE hFileHandle;
-  INT32 iFileSize = 0;
+  int32_t iFileSize = 0;
 
   // no file, return
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
@@ -1529,7 +1529,7 @@ uint32_t ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
 
   // make sure file is more than balance size + length of 1 record - 1 byte
   if (FileMan_GetSize(hFileHandle) <
-      sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(INT32)) {
+      sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t)) {
     FileMan_Close(hFileHandle);
     return 0;
   }
@@ -1541,8 +1541,8 @@ uint32_t ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
   FileMan_Close(hFileHandle);
 
   // file size -1 / sizeof record in bytes is id
-  return ((iFileSize - 1) /
-          (sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(INT32)));
+  return ((iFileSize - 1) / (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                             sizeof(uint8_t) + sizeof(int32_t)));
 }
 
 void SetLastPageInRecords(void) {
@@ -1616,12 +1616,12 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
   // loads in records belogning, to page uiPage
   // no file, return
   BOOLEAN fOkToContinue = TRUE;
-  INT32 iCount = 0;
+  int32_t iCount = 0;
   HWFILE hFileHandle;
   uint8_t ubCode, ubSecondCode;
-  INT32 iBalanceToDate;
+  int32_t iBalanceToDate;
   uint32_t uiDate;
-  INT32 iAmount;
+  int32_t iAmount;
   uint32_t iBytesRead = 0;
   uint32_t uiByteCount = 0;
 
@@ -1650,9 +1650,9 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
   }
 
   // is the file long enough?
-  if ((FileMan_GetSize(hFileHandle) - sizeof(INT32) - 1) /
-              (NUM_RECORDS_PER_PAGE * (sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) +
-                                       sizeof(uint8_t) + sizeof(INT32))) +
+  if ((FileMan_GetSize(hFileHandle) - sizeof(int32_t) - 1) /
+              (NUM_RECORDS_PER_PAGE * (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                                       sizeof(uint8_t) + sizeof(int32_t))) +
           1 <
       uiPage) {
     // nope
@@ -1661,14 +1661,14 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
   }
 
   FileMan_Seek(hFileHandle,
-               sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
-                                   (sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) +
-                                    sizeof(uint8_t) + sizeof(INT32)),
+               sizeof(int32_t) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
+                                     (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                                      sizeof(uint8_t) + sizeof(int32_t)),
                FILE_SEEK_FROM_START);
 
-  uiByteCount = sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
-                                    (sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) +
-                                     sizeof(uint8_t) + sizeof(INT32));
+  uiByteCount = sizeof(int32_t) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
+                                      (sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) +
+                                       sizeof(uint8_t) + sizeof(int32_t));
   // file exists, read in data, continue until end of page
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue) &&
          (uiByteCount < FileMan_GetSize(hFileHandle))) {
@@ -1676,8 +1676,8 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1686,7 +1686,7 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
 
     // increment byte counter
     uiByteCount +=
-        sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(INT32);
+        sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t);
 
     // we've overextended our welcome, and bypassed end of file, get out
     if (uiByteCount >= FileMan_GetSize(hFileHandle)) {
@@ -1771,7 +1771,7 @@ void InsertDollarSignInToString(STR16 pString) {
   // run to end of string, copy everything in string 2 places right, insert a space at pString[ 1 ]
   // and a L'$' at pString[ 0 ]
 
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // run to end of string
   while (pString[iCounter] != 0) {
@@ -1789,12 +1789,12 @@ void InsertDollarSignInToString(STR16 pString) {
   return;
 }
 
-INT32 GetPreviousBalanceToDate(void) {
+int32_t GetPreviousBalanceToDate(void) {
   // will grab balance to date of previous record
   // grabs the size of the file and interprets number of pages it will take up
   HWFILE hFileHandle;
   uint32_t iBytesRead = 0;
-  INT32 iBalanceToDate = 0;
+  int32_t iBalanceToDate = 0;
 
   // no file, return
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
@@ -1811,34 +1811,34 @@ INT32 GetPreviousBalanceToDate(void) {
   }
 
   if (FileMan_GetSize(hFileHandle) <
-      sizeof(INT32) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(INT32)) {
+      sizeof(int32_t) + sizeof(uint32_t) + sizeof(uint8_t) + sizeof(uint8_t) + sizeof(int32_t)) {
     FileMan_Close(hFileHandle);
     return 0;
   }
 
-  FileMan_Seek(hFileHandle, (sizeof(INT32)), FILE_SEEK_FROM_END);
+  FileMan_Seek(hFileHandle, (sizeof(int32_t)), FILE_SEEK_FROM_END);
 
   // get balnce to date
-  FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+  FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
   FileMan_Close(hFileHandle);
 
   return iBalanceToDate;
 }
 
-INT32 GetPreviousDaysBalance(void) {
+int32_t GetPreviousDaysBalance(void) {
   // find out what today is, then go back 2 days, get balance for that day
   HWFILE hFileHandle;
   uint32_t iBytesRead = 0;
   uint32_t iDateInMinutes = 0;
   BOOLEAN fOkToContinue = FALSE;
   uint32_t iByteCount = 0;
-  INT32 iCounter = 1;
+  int32_t iCounter = 1;
   uint8_t ubCode;
   uint8_t ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
 
   // what day is it?
@@ -1861,7 +1861,7 @@ INT32 GetPreviousDaysBalance(void) {
 
   // start at the end, move back until Date / 24 * 60 on the record is =  ( iDateInMinutes /  ( 24 *
   // 60 ) ) - 2
-  iByteCount += sizeof(INT32);
+  iByteCount += sizeof(int32_t);
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
   while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
@@ -1873,8 +1873,8 @@ INT32 GetPreviousDaysBalance(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     // check to see if we are far enough
     if ((uiDate / (24 * 60)) == (iDateInMinutes / (24 * 60)) - 2) {
@@ -1905,19 +1905,19 @@ INT32 GetPreviousDaysBalance(void) {
   return iBalanceToDate;
 }
 
-INT32 GetTodaysBalance(void) {
+int32_t GetTodaysBalance(void) {
   // find out what today is, then go back 2 days, get balance for that day
   HWFILE hFileHandle;
   uint32_t iBytesRead = 0;
   uint32_t iDateInMinutes = 0;
   BOOLEAN fOkToContinue = FALSE;
   uint32_t iByteCount = 0;
-  INT32 iCounter = 1;
+  int32_t iCounter = 1;
   uint8_t ubCode;
   uint8_t ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
 
   // what day is it?
@@ -1940,7 +1940,7 @@ INT32 GetTodaysBalance(void) {
 
   // start at the end, move back until Date / 24 * 60 on the record is =  ( iDateInMinutes /  ( 24 *
   // 60 ) ) - 2
-  iByteCount += sizeof(INT32);
+  iByteCount += sizeof(int32_t);
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
@@ -1953,8 +1953,8 @@ INT32 GetTodaysBalance(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -1976,7 +1976,7 @@ INT32 GetTodaysBalance(void) {
   return iBalanceToDate;
 }
 
-INT32 GetPreviousDaysIncome(void) {
+int32_t GetPreviousDaysIncome(void) {
   // will return the income from the previous day
   // which is todays starting balance - yesterdays starting balance
   HWFILE hFileHandle;
@@ -1985,14 +1985,14 @@ INT32 GetPreviousDaysIncome(void) {
   BOOLEAN fOkToContinue = FALSE;
   BOOLEAN fOkToIncrement = FALSE;
   uint32_t iByteCount = 0;
-  INT32 iCounter = 1;
+  int32_t iCounter = 1;
   uint8_t ubCode;
   uint8_t ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
-  INT32 iTotalPreviousIncome = 0;
+  int32_t iTotalPreviousIncome = 0;
 
   // what day is it?
   iDateInMinutes = GetWorldTotalMin();
@@ -2014,7 +2014,7 @@ INT32 GetPreviousDaysIncome(void) {
 
   // start at the end, move back until Date / 24 * 60 on the record is =  ( iDateInMinutes /  ( 24 *
   // 60 ) ) - 2
-  iByteCount += sizeof(INT32);
+  iByteCount += sizeof(int32_t);
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
@@ -2031,8 +2031,8 @@ INT32 GetPreviousDaysIncome(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2067,7 +2067,7 @@ INT32 GetPreviousDaysIncome(void) {
   return (iTotalPreviousIncome);
 }
 
-INT32 GetTodaysDaysIncome(void) {
+int32_t GetTodaysDaysIncome(void) {
   // will return the income from the previous day
   // which is todays starting balance - yesterdays starting balance
   HWFILE hFileHandle;
@@ -2076,14 +2076,14 @@ INT32 GetTodaysDaysIncome(void) {
   BOOLEAN fOkToContinue = FALSE;
   BOOLEAN fOkToIncrement = FALSE;
   uint32_t iByteCount = 0;
-  INT32 iCounter = 1;
+  int32_t iCounter = 1;
   uint8_t ubCode;
   uint8_t ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
-  INT32 iTotalIncome = 0;
+  int32_t iTotalIncome = 0;
 
   // what day is it?
   iDateInMinutes = GetWorldTotalMin();
@@ -2105,7 +2105,7 @@ INT32 GetTodaysDaysIncome(void) {
 
   // start at the end, move back until Date / 24 * 60 on the record is =  ( iDateInMinutes /  ( 24 *
   // 60 ) ) - 2
-  iByteCount += sizeof(INT32);
+  iByteCount += sizeof(int32_t);
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
@@ -2118,8 +2118,8 @@ INT32 GetTodaysDaysIncome(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2183,7 +2183,7 @@ void SetFinanceButtonStates(void) {
   }
 }
 
-INT32 GetTodaysOtherDeposits(void) {
+int32_t GetTodaysOtherDeposits(void) {
   // grab todays other deposits
 
   HWFILE hFileHandle;
@@ -2192,14 +2192,14 @@ INT32 GetTodaysOtherDeposits(void) {
   BOOLEAN fOkToContinue = FALSE;
   BOOLEAN fOkToIncrement = FALSE;
   uint32_t iByteCount = 0;
-  INT32 iCounter = 1;
+  int32_t iCounter = 1;
   uint8_t ubCode;
   uint8_t ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
-  INT32 iTotalIncome = 0;
+  int32_t iTotalIncome = 0;
 
   // what day is it?
   iDateInMinutes = GetWorldTotalMin();
@@ -2221,7 +2221,7 @@ INT32 GetTodaysOtherDeposits(void) {
 
   // start at the end, move back until Date / 24 * 60 on the record is =  ( iDateInMinutes /  ( 24 *
   // 60 ) ) - 2
-  iByteCount += sizeof(INT32);
+  iByteCount += sizeof(int32_t);
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
@@ -2234,8 +2234,8 @@ INT32 GetTodaysOtherDeposits(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2274,21 +2274,21 @@ INT32 GetTodaysOtherDeposits(void) {
   return (iTotalIncome);
 }
 
-INT32 GetYesterdaysOtherDeposits(void) {
+int32_t GetYesterdaysOtherDeposits(void) {
   HWFILE hFileHandle;
   uint32_t iBytesRead = 0;
   uint32_t iDateInMinutes = 0;
   BOOLEAN fOkToContinue = FALSE;
   BOOLEAN fOkToIncrement = FALSE;
   uint32_t iByteCount = 0;
-  INT32 iCounter = 1;
+  int32_t iCounter = 1;
   uint8_t ubCode;
   uint8_t ubSecondCode;
   uint32_t uiDate;
-  INT32 iAmount;
-  INT32 iBalanceToDate;
+  int32_t iAmount;
+  int32_t iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
-  INT32 iTotalPreviousIncome = 0;
+  int32_t iTotalPreviousIncome = 0;
 
   // what day is it?
   iDateInMinutes = GetWorldTotalMin();
@@ -2310,7 +2310,7 @@ INT32 GetYesterdaysOtherDeposits(void) {
 
   // start at the end, move back until Date / 24 * 60 on the record is =  ( iDateInMinutes /  ( 24 *
   // 60 ) ) - 2
-  iByteCount += sizeof(INT32);
+  iByteCount += sizeof(int32_t);
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
@@ -2323,8 +2323,8 @@ INT32 GetYesterdaysOtherDeposits(void) {
     FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(uint8_t), &iBytesRead);
     FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
-    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(int32_t), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(int32_t), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2359,7 +2359,7 @@ INT32 GetYesterdaysOtherDeposits(void) {
   return (iTotalPreviousIncome);
 }
 
-INT32 GetTodaysDebits(void) {
+int32_t GetTodaysDebits(void) {
   // return the expenses for today
 
   // currentbalance - todays balance - Todays income - other deposits
@@ -2368,7 +2368,7 @@ INT32 GetTodaysDebits(void) {
           GetTodaysOtherDeposits());
 }
 
-INT32 GetYesterdaysDebits(void) {
+int32_t GetYesterdaysDebits(void) {
   // return the expenses for yesterday
 
   return (GetTodaysBalance() - GetPreviousDaysBalance() - GetPreviousDaysIncome() -
@@ -2402,7 +2402,7 @@ void LoadCurrentBalance(void) {
   }
 
   FileMan_Seek(hFileHandle, 0, FILE_SEEK_FROM_START);
-  FileMan_Read(hFileHandle, &LaptopSaveInfo.iCurrentBalance, sizeof(INT32), &iBytesRead);
+  FileMan_Read(hFileHandle, &LaptopSaveInfo.iCurrentBalance, sizeof(int32_t), &iBytesRead);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
   // close file

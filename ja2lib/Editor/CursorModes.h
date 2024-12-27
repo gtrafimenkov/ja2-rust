@@ -24,7 +24,7 @@ extern uint16_t gusSavedSelectionType;
 extern uint16_t gusSavedBuildingSelectionType;
 
 BOOLEAN PerformDensityTest();
-void SetDrawingMode(INT32 iMode);
+void SetDrawingMode(int32_t iMode);
 void UpdateCursorAreas();
 void IncreaseSelectionDensity();
 void DecreaseSelectionDensity();

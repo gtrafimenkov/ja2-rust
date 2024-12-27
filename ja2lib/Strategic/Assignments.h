@@ -200,17 +200,17 @@ void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(struct SOLDIERTYPE
 // Handle assignment done
 void AssignmentDone(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo);
 
-extern INT32 ghAssignmentBox;
-extern INT32 ghEpcBox;
-extern INT32 ghSquadBox;
-extern INT32 ghVehicleBox;
-extern INT32 ghRepairBox;
-extern INT32 ghTrainingBox;
-extern INT32 ghAttributeBox;
-extern INT32 ghRemoveMercAssignBox;
-extern INT32 ghContractBox;
-extern INT32 ghMoveBox;
-// extern INT32 ghUpdateBox;
+extern int32_t ghAssignmentBox;
+extern int32_t ghEpcBox;
+extern int32_t ghSquadBox;
+extern int32_t ghVehicleBox;
+extern int32_t ghRepairBox;
+extern int32_t ghTrainingBox;
+extern int32_t ghAttributeBox;
+extern int32_t ghRemoveMercAssignBox;
+extern int32_t ghContractBox;
+extern int32_t ghMoveBox;
+// extern int32_t ghUpdateBox;
 
 extern BOOLEAN fShownContractMenu;
 extern BOOLEAN fShownAssignmentMenu;
@@ -226,40 +226,40 @@ extern BOOLEAN gfReEvaluateEveryonesNothingToDo;
 
 // pop up menu mouse regions
 void CreateDestroyMouseRegionsForAssignmentMenu(void);
-void AssignmentMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void AssignmentMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void AssignmentMenuMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void AssignmentMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void CreateDestroyMouseRegionsForTrainingMenu(void);
-void TrainingMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void TrainingMenuMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void CreateDestroyMouseRegionsForAttributeMenu(void);
-void AttributeMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void AttributesMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void AttributeMenuMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void AttributesMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void CreateDestroyMouseRegionsForSquadMenu(BOOLEAN fPositionBox);
-void SquadMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SquadMenuMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // vehicle menu
 void CreateDestroyMouseRegionForVehicleMenu(void);
-void VehicleMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void VehicleMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void VehicleMenuMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void VehicleMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // repair menu
 void CreateDestroyMouseRegionForRepairMenu(void);
-void RepairMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void RepairMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void RepairMenuMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void RepairMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // contract menu
 void CreateDestroyMouseRegionsForContractMenu(void);
-void ContractMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void ContractMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void ContractMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void ContractMenuMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void RebuildContractBoxForMerc(struct SOLDIERTYPE *pCharacter);
 
 // remove merc from team menu callback
-void RemoveMercMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void RemoveMercMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void RemoveMercMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void RemoveMercMenuMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 void CreateDestroyMouseRegionsForRemoveMenu(void);
 
 // misc assignment GUI functions
@@ -268,8 +268,8 @@ BOOLEAN IsCharacterAliveAndConscious(struct SOLDIERTYPE *pCharacter);
 void CreateDestroyScreenMaskForAssignmentAndContractMenus(void);
 
 BOOLEAN CreateDestroyAssignmentPopUpBoxes(void);
-void SetSoldierAssignment(struct SOLDIERTYPE *pSoldier, int8_t bAssignment, INT32 iParam1,
-                          INT32 iParam2, INT32 iParam3);
+void SetSoldierAssignment(struct SOLDIERTYPE *pSoldier, int8_t bAssignment, int32_t iParam1,
+                          int32_t iParam2, int32_t iParam3);
 
 // set merc asleep and awake under the new sleep system implemented June 29, 1998
 // if give warning is false, the function can be used as an internal function

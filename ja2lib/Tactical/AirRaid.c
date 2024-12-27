@@ -50,9 +50,9 @@
 #define BOMB_DIST 150
 
 // BEGIN SERALIZATION
-extern INT32 giTimerAirRaidQuote;
-extern INT32 giTimerAirRaidDiveStarted;
-extern INT32 giTimerAirRaidUpdate;
+extern int32_t giTimerAirRaidQuote;
+extern int32_t giTimerAirRaidDiveStarted;
+extern int32_t giTimerAirRaidUpdate;
 
 BOOLEAN gfInAirRaid = FALSE;
 BOOLEAN gfAirRaidScheduled = FALSE;
@@ -69,9 +69,9 @@ int16_t gsDiveY;
 int16_t gsDiveTargetLocation;
 uint8_t gubDiveDirection;
 int16_t gsNumGridNosMoved;
-INT32 giNumTurnsSinceLastDive;
-INT32 giNumTurnsSinceDiveStarted;
-INT32 giNumGridNosMovedThisTurn;
+int32_t giNumTurnsSinceLastDive;
+int32_t giNumTurnsSinceDiveStarted;
+int32_t giNumGridNosMovedThisTurn;
 BOOLEAN gfAirRaidHasHadTurn = FALSE;
 uint8_t gubBeginTeamTurn = 0;
 BOOLEAN gfHaveTBBatton = FALSE;
@@ -95,9 +95,9 @@ typedef struct {
   int16_t sDiveTargetLocation;
   uint8_t ubDiveDirection;
   int16_t sNumGridNosMoved;
-  INT32 iNumTurnsSinceLastDive;
-  INT32 iNumTurnsSinceDiveStarted;
-  INT32 iNumGridNosMovedThisTurn;
+  int32_t iNumTurnsSinceLastDive;
+  int32_t iNumTurnsSinceDiveStarted;
+  int32_t iNumGridNosMovedThisTurn;
   BOOLEAN fAirRaidHasHadTurn;
   uint8_t ubBeginTeamTurn;
   BOOLEAN fHaveTBBatton;
@@ -105,7 +105,7 @@ typedef struct {
   int16_t sRaidSoldierID;
 
   int16_t sNotLocatedYet;
-  INT32 iNumFrames;
+  int32_t iNumFrames;
 
   int8_t bLevel;
   int8_t bTeam;
@@ -158,7 +158,7 @@ void ScheduleAirRaid(AIR_RAID_DEFINITION *pAirRaidDef) {
 }
 
 BOOLEAN BeginAirRaid() {
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fOK = FALSE;
   struct SOLDIERTYPE *pSoldier;
 
@@ -249,7 +249,7 @@ int16_t PickLocationNearAnyMercInSector() {
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Loop through all our guys and randomly say one from someone in our sector
 
@@ -831,7 +831,7 @@ void DoBombing() {
 }
 
 void HandleAirRaid() {
-  INT32 iVol;
+  int32_t iVol;
   uint32_t uiClock;
 
   // OK,
@@ -1163,7 +1163,7 @@ void EndAirRaid() {
     if (!gTacticalStatus.Team[ENEMY_TEAM].bTeamActive &&
         !gTacticalStatus.Team[CREATURE_TEAM].bTeamActive) {
       struct SOLDIERTYPE *pTeamSoldier;
-      INT32 cnt;
+      int32_t cnt;
 
       // Loop through all militia and restore them to peaceful status
       cnt = gTacticalStatus.Team[MILITIA_TEAM].bFirstID;

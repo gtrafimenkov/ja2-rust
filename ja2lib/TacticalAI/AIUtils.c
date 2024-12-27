@@ -101,7 +101,7 @@ int8_t OKToAttack(struct SOLDIERTYPE *pSoldier, int target) {
 BOOLEAN ConsiderProne(struct SOLDIERTYPE *pSoldier) {
   int16_t sOpponentGridNo;
   int8_t bOpponentLevel;
-  INT32 iRange;
+  int32_t iRange;
 
   if (pSoldier->bAIMorale >= MORALE_NORMAL) {
     return (FALSE);
@@ -150,7 +150,7 @@ uint8_t ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
   int8_t bLoop, bStanceNum, bStanceDiff, bAPsAfterAttack;
   uint32_t uiChanceOfDamage, uiBestChanceOfDamage, uiCurrChanceOfDamage;
   uint32_t uiStanceBonus, uiMinimumStanceBonusPerChange = 20 - 3 * pAttack->ubAimTime;
-  INT32 iRange;
+  int32_t iRange;
 
   bStanceNum = 0;
   uiCurrChanceOfDamage = 0;
@@ -729,7 +729,7 @@ int16_t ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, uint8_t ubUnco
   int16_t sGridNo = -1;
   int8_t bLevel, bClosestLevel;
   BOOLEAN fClimbingNecessary, fClosestClimbingNecessary = FALSE;
-  INT32 iPathCost;
+  int32_t iPathCost;
   int16_t sClosestDisturbance = NOWHERE;
   uint32_t uiLoop;
   int8_t *pbNoiseLevel;
@@ -897,7 +897,7 @@ int16_t ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, uint8_t ubUnco
 int16_t ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, int16_t *psGridNo, int8_t *pbLevel) {
   int16_t sGridNo, sClosestOpponent = NOWHERE;
   uint32_t uiLoop;
-  INT32 iRange, iClosestRange = 1500;
+  int32_t iRange, iClosestRange = 1500;
   int8_t *pbPersOL, *pbPublOL;
   int8_t bLevel, bClosestLevel;
   struct SOLDIERTYPE *pOpp;
@@ -989,7 +989,7 @@ int16_t ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, int16_t *psGridNo, in
 int16_t ClosestSeenOpponent(struct SOLDIERTYPE *pSoldier, int16_t *psGridNo, int8_t *pbLevel) {
   int16_t sGridNo, sClosestOpponent = NOWHERE;
   uint32_t uiLoop;
-  INT32 iRange, iClosestRange = 1500;
+  int32_t iRange, iClosestRange = 1500;
   int8_t *pbPersOL;
   int8_t bLevel, bClosestLevel;
   struct SOLDIERTYPE *pOpp;
@@ -1531,9 +1531,9 @@ BOOLEAN InLightAtNight(int16_t sGridNo, int8_t bLevel) {
 
 int8_t CalcMorale(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoop, uiLoop2;
-  INT32 iOurTotalThreat = 0, iTheirTotalThreat = 0;
+  int32_t iOurTotalThreat = 0, iTheirTotalThreat = 0;
   int16_t sOppThreatValue, sFrndThreatValue, sMorale;
-  INT32 iPercent;
+  int32_t iPercent;
   int8_t bMostRecentOpplistValue;
   int8_t bMoraleCategory;
   int8_t *pSeenOpp;  //,*friendOlPtr;
@@ -1763,9 +1763,9 @@ int8_t CalcMorale(struct SOLDIERTYPE *pSoldier) {
   return (bMoraleCategory);
 }
 
-INT32 CalcManThreatValue(struct SOLDIERTYPE *pEnemy, int16_t sMyGrid, uint8_t ubReduceForCover,
-                         struct SOLDIERTYPE *pMe) {
-  INT32 iThreatValue = 0;
+int32_t CalcManThreatValue(struct SOLDIERTYPE *pEnemy, int16_t sMyGrid, uint8_t ubReduceForCover,
+                           struct SOLDIERTYPE *pMe) {
+  int32_t iThreatValue = 0;
   BOOLEAN fForCreature = CREATURE_OR_BLOODCAT(pMe);
 
   // If man is inactive, at base, on assignment, dead, unconscious
@@ -2088,8 +2088,8 @@ BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, int8_t bNewDirection) {
   return (TRUE);
 }
 
-INT32 RangeChangeDesire(struct SOLDIERTYPE *pSoldier) {
-  INT32 iRangeFactorMultiplier;
+int32_t RangeChangeDesire(struct SOLDIERTYPE *pSoldier) {
+  int32_t iRangeFactorMultiplier;
 
   iRangeFactorMultiplier = pSoldier->bAIMorale - 1;
   switch (pSoldier->bAttitude) {
@@ -2120,7 +2120,7 @@ INT32 RangeChangeDesire(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN ArmySeesOpponents(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   for (cnt = gTacticalStatus.Team[ENEMY_TEAM].bFirstID;

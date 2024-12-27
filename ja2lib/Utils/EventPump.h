@@ -158,8 +158,8 @@ typedef struct {
   int8_t bWeaponStatus;
   uint8_t ubAttackerID;
   uint16_t usStructureID;
-  INT32 iImpact;
-  INT32 iBullet;
+  int32_t iImpact;
+  int32_t iBullet;
 
 } EV_S_STRUCTUREHIT;
 

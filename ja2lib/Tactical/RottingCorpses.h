@@ -120,18 +120,18 @@ typedef struct {
   uint16_t *p16BPPPalette;
   uint16_t *pShades[NUM_CORPSE_SHADES];
   int16_t sGraphicNum;
-  INT32 iCachedTileID;
+  int32_t iCachedTileID;
   FLOAT dXPos;
   FLOAT dYPos;
 
   BOOLEAN fAttractCrowsOnlyWhenOnScreen;
-  INT32 iID;
+  int32_t iID;
 
 } ROTTING_CORPSE;
 
-INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef);
+int32_t AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef);
 
-void RemoveCorpse(INT32 iCorpseID);
+void RemoveCorpse(int32_t iCorpseID);
 void RemoveCorpses();
 
 BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
@@ -160,7 +160,7 @@ void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier);
 #define MAX_ROTTING_CORPSES 100
 
 extern ROTTING_CORPSE gRottingCorpse[MAX_ROTTING_CORPSES];
-extern INT32 giNumRottingCorpse;
+extern int32_t giNumRottingCorpse;
 extern uint8_t gb4DirectionsFrom8[8];
 
 ROTTING_CORPSE *GetCorpseAtGridNo(int16_t sGridNo, int8_t bLevel);

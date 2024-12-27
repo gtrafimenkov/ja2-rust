@@ -2367,7 +2367,7 @@ void InitStrategicMovementCosts() {
   InitStrategicRowP();
 #ifdef JA2TESTVERSION
   {  // Simply make sure all shared borders between sectors match.
-    INT32 x, y;
+    int32_t x, y;
     DebugPrint(
         "STRATEGIC MOVE COSTS:  Testing validity of data (okay if no following debug msgs)...\n");
     for (y = 1; y <= 16; y++)

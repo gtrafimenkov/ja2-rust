@@ -36,7 +36,7 @@ typedef struct {
   int16_t sSectorY;
   int8_t bSectorZ;
   uint8_t ubNumOfMercsOnPlayersTeam;
-  INT32 iCurrentBalance;
+  int32_t iCurrentBalance;
 
   uint32_t uiCurrentScreen;
 

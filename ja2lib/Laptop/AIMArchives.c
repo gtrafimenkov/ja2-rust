@@ -123,16 +123,16 @@ BOOLEAN AimArchivesSubPagesVisitedFlag[3] = {0, 0, 0};
 
 // Face regions
 struct MOUSE_REGION gMercAlumniFaceMouseRegions[MAX_NUMBER_OLD_MERCS_ON_PAGE];
-void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Done region
 struct MOUSE_REGION gDoneRegion;
-void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Previous Button
-void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiAlumniPageButton[3];
-INT32 guiAlumniPageButtonImage;
+int32_t guiAlumniPageButtonImage;
 
 void ResetAimArchiveButtons();
 void DisableAimArchiveButton();
@@ -362,7 +362,7 @@ void RenderAimArchives() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfDrawPopUpBox = TRUE;
@@ -373,7 +373,7 @@ void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   uint8_t ubRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
@@ -620,7 +620,7 @@ void CreateDestroyDoneMouseRegion(uint16_t usPosY) {
   }
 }
 
-void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfDestroyPopUpBox = TRUE;

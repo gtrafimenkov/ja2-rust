@@ -45,7 +45,7 @@ extern void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam
 
 // Prototype Declarations
 
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam);
+int32_t FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam);
 
 int PASCAL HandledWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandLine,
                           int sCommandShow);
@@ -71,7 +71,7 @@ CHAR8 gzCommandLine[100];  // Command line given
 
 BOOLEAN gfIgnoreMessages = FALSE;
 
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam) {
+int32_t FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam) {
   static BOOLEAN fRestore = FALSE;
 
   if (gfIgnoreMessages) return (DefWindowProc(hWindow, Message, wParam, lParam));

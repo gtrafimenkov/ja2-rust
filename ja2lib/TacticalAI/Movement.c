@@ -744,11 +744,11 @@ int16_t TrackScent(struct SOLDIERTYPE *pSoldier) {
   // This function returns the best gridno to go to based on the scent being followed,
   // and the soldier (creature/animal)'s current direction (which is used to resolve
   // ties.
-  INT32 iXDiff, iYDiff, iXIncr;
-  INT32 iStart, iXStart, iYStart;
-  INT32 iGridNo;
+  int32_t iXDiff, iYDiff, iXIncr;
+  int32_t iStart, iXStart, iYStart;
+  int32_t iGridNo;
   int8_t bDir;
-  INT32 iBestGridNo = NOWHERE;
+  int32_t iBestGridNo = NOWHERE;
   uint8_t ubBestDirDiff = 5, ubBestStrength = 0;
   uint8_t ubDirDiff, ubStrength;
   uint8_t ubSoughtSmell;

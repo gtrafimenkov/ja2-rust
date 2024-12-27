@@ -50,13 +50,13 @@ void SelectPrevItemInPool();
 void KillItemPoolList();
 void BuildItemPoolList();
 
-void HideItemCursor(INT32 iMapIndex);
-void ShowItemCursor(INT32 iMapIndex);
+void HideItemCursor(int32_t iMapIndex);
+void ShowItemCursor(int32_t iMapIndex);
 
 void SetEditorItemsTaskbarMode(uint16_t usNewMode);
 
 void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, int8_t bEvent);
 
-extern INT32 giDefaultExistChance;
+extern int32_t giDefaultExistChance;
 
 #endif

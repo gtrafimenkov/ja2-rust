@@ -6,12 +6,12 @@
 void InitWinFonts();
 void ShutdownWinFonts();
 
-void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor);
+void SetWinFontForeColor(int32_t iFont, COLORVAL *pColor);
 
-void PrintWinFont(uint32_t uiDestBuf, INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...);
+void PrintWinFont(uint32_t uiDestBuf, int32_t iFont, int32_t x, int32_t y, STR16 pFontString, ...);
 
-int16_t WinFontStringPixLength(STR16 string, INT32 iFont);
-int16_t GetWinFontHeight(STR16 string, INT32 iFont);
-uint32_t WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...);
+int16_t WinFontStringPixLength(STR16 string, int32_t iFont);
+int16_t GetWinFontHeight(STR16 string, int32_t iFont);
+uint32_t WinFont_mprintf(int32_t iFont, int32_t x, int32_t y, STR16 pFontString, ...);
 
 #endif

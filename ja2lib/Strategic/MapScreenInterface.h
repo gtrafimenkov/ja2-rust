@@ -10,9 +10,9 @@ typedef struct FASTHELPREGION {
   CHAR16 FastHelpText[256];
 
   // the x and y position values
-  INT32 iX;
-  INT32 iY;
-  INT32 iW;
+  int32_t iX;
+  int32_t iY;
+  int32_t iW;
 
 } FASTHELPREGION;
 
@@ -209,11 +209,11 @@ extern BOOLEAN fShowMapScreenHelpText;
 extern BOOLEAN fMapInventoryPoolInited;
 
 // highlighted lines
-extern INT32 giHighLine;
-extern INT32 giAssignHighLine;
-extern INT32 giDestHighLine;
-extern INT32 giContractHighLine;
-extern INT32 giSleepHighLine;
+extern int32_t giHighLine;
+extern int32_t giAssignHighLine;
+extern int32_t giDestHighLine;
+extern int32_t giContractHighLine;
+extern int32_t giSleepHighLine;
 
 extern uint32_t guiUpdatePanel;
 extern uint32_t guiUpdatePanelTactical;
@@ -248,10 +248,10 @@ extern BOOLEAN fDisableDueToBattleRoster;
 extern BOOLEAN gfAtLeastOneMercWasHired;
 
 // curtrent map sector z that is being displayed in the mapscreen
-extern INT32 iCurrentMapSectorZ;
+extern int32_t iCurrentMapSectorZ;
 
 // y position of the pop up box
-extern INT32 giBoxY;
+extern int32_t giBoxY;
 
 // pop up box textures
 extern uint32_t guiPOPUPTEX;
@@ -325,7 +325,7 @@ void GoUpOneLevelInMap(void);
 void GoDownOneLevelInMap(void);
 
 // jump to this level on the map
-void JumpToLevel(INT32 iLevel);
+void JumpToLevel(int32_t iLevel);
 
 // check to see if we need to update the screen
 void CheckAndUpdateBasedOnContractTimes(void);
@@ -364,10 +364,10 @@ BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, uint32_t uiIndex);
 void FreeLeaveListSlot(uint32_t uiSlotIndex);
 
 // first free slot in equip leave list
-INT32 FindFreeSlotInLeaveList(void);
+int32_t FindFreeSlotInLeaveList(void);
 
 // set up drop list
-INT32 SetUpDropItemListForMerc(uint32_t uiMercId);
+int32_t SetUpDropItemListForMerc(uint32_t uiMercId);
 // store owner's profile id for the items added to this leave slot index
 void SetUpMercAboutToLeaveEquipment(uint32_t ubProfileId, uint32_t uiSlotIndex);
 
@@ -398,7 +398,7 @@ void RenderMapRegionBackground(void);
 void UpdateMapScreenAssignmentPositions(void);
 
 // get the umber of valid mercs in the mapscreen character list
-INT32 GetNumberOfPeopleInCharacterList(void);
+int32_t GetNumberOfPeopleInCharacterList(void);
 
 // the next and previous people in the mapscreen
 void GoToPrevCharacterInList(void);
@@ -409,7 +409,7 @@ void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, int16_t sQ
                       BOOLEAN fForceMapscreen);
 
 // set up the event of animating a mine sector
-void SetUpAnimationOfMineSectors(INT32 iEvent);
+void SetUpAnimationOfMineSectors(int32_t iEvent);
 
 // display map screen
 void DisplayMapScreenFastHelpList(void);
@@ -453,21 +453,21 @@ void StopShowingInterfaceFastHelpText(void);
 BOOLEAN IsTheInterfaceFastHelpTextActive(void);
 
 // set up the tactical lists
-BOOLEAN SetUpFastHelpListRegions(INT32 iXPosition[], INT32 iYPosition[], INT32 iWidth[],
-                                 STR16 sString[], INT32 iSize);
+BOOLEAN SetUpFastHelpListRegions(int32_t iXPosition[], int32_t iYPosition[], int32_t iWidth[],
+                                 STR16 sString[], int32_t iSize);
 
 // the alternate mapscreen movement system
 void InitializeMovingLists(void);
 
 // the sector move box
-void DeselectSquadForMovement(INT32 iSquadNumber);
-void SelectedSquadForMovement(INT32 iSquadNumber);
+void DeselectSquadForMovement(int32_t iSquadNumber);
+void SelectedSquadForMovement(int32_t iSquadNumber);
 void DeselectSoldierForMovement(struct SOLDIERTYPE *pSoldier);
 void SelectSoldierForMovement(struct SOLDIERTYPE *pSoldier);
-void SelectVehicleForMovement(INT32 iVehicleId, BOOLEAN fAndAllOnBoard);
-void DeselectVehicleForMovement(INT32 iVehicleId);
-void AddVehicleToMovingLists(INT32 iVehicleId);
-void AddSquadToMovingLists(INT32 iSquadNumber);
+void SelectVehicleForMovement(int32_t iVehicleId, BOOLEAN fAndAllOnBoard);
+void DeselectVehicleForMovement(int32_t iVehicleId);
+void AddVehicleToMovingLists(int32_t iVehicleId);
+void AddSquadToMovingLists(int32_t iSquadNumber);
 void AddSoldierToMovingLists(struct SOLDIERTYPE *pSoldier);
 void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
 void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
@@ -477,7 +477,7 @@ BOOLEAN IsCharacterSelectedForSleep(int16_t sCharNumber);
 
 // the update box
 void CreateDestroyTheUpdateBox(void);
-void SetSoldierUpdateBoxReason(INT32 iReason);
+void SetSoldierUpdateBoxReason(int32_t iReason);
 void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier);
 void ResetSoldierUpdateBox(void);
 void DisplaySoldierUpdateBox();
@@ -527,7 +527,7 @@ void ShowUpdateBox(void);
 
 // add special events
 void AddSoldierToWaitingListQueue(struct SOLDIERTYPE *pSoldier);
-void AddReasonToWaitingListQueue(INT32 iReason);
+void AddReasonToWaitingListQueue(int32_t iReason);
 void AddDisplayBoxToWaitingQueue(void);
 
 // can this group move it out
@@ -552,6 +552,6 @@ BOOLEAN CheckIfSalaryIncreasedAndSayQuote(struct SOLDIERTYPE *pSoldier,
 void EndUpdateBox(BOOLEAN fContinueTimeCompression);
 
 extern BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber);
-extern BOOLEAN MapscreenCanPassItemToCharNum(INT32 iNewCharSlot);
+extern BOOLEAN MapscreenCanPassItemToCharNum(int32_t iNewCharSlot);
 
 #endif

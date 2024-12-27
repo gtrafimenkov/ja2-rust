@@ -8,7 +8,7 @@ struct VSurface;
 
 #define VIDEO_NO_CURSOR 0xFFFF
 
-extern INT32 giNumFrames;
+extern int32_t giNumFrames;
 
 extern struct VSurface *ghFrameBuffer;
 
@@ -19,7 +19,7 @@ extern void ShutdownVideoManager(void);
 extern void SuspendVideoManager(void);
 extern BOOLEAN RestoreVideoManager(void);
 extern void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, uint8_t *ubBitDepth);
-extern void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom);
+extern void InvalidateRegion(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom);
 extern void InvalidateScreen(void);
 extern PTR LockPrimarySurface(uint32_t *uiPitch);
 extern void UnlockPrimarySurface(void);
@@ -46,7 +46,8 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);
 
 void VideoCaptureToggle(void);
 
-void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, uint32_t uiFlags);
+void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                        uint32_t uiFlags);
 
 void RefreshScreen(void *DummyVariable);
 

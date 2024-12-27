@@ -90,11 +90,11 @@ BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime);
 BOOLEAN PhysicsComputeForces(REAL_OBJECT *pObject);
 BOOLEAN PhysicsIntegrate(REAL_OBJECT *pObject, real DeltaTime);
 BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject);
-BOOLEAN PhysicsCheckForCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID);
+BOOLEAN PhysicsCheckForCollisions(REAL_OBJECT *pObject, int32_t *piCollisionID);
 void PhysicsResolveCollision(REAL_OBJECT *pObject, vector_3 *pVelocity, vector_3 *pNormal,
                              real CoefficientOfRestitution);
 void PhysicsDeleteObject(REAL_OBJECT *pObject);
-BOOLEAN PhysicsHandleCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID, real DeltaTime);
+BOOLEAN PhysicsHandleCollisions(REAL_OBJECT *pObject, int32_t *piCollisionID, real DeltaTime);
 FLOAT CalculateForceFromRange(int16_t sRange, FLOAT dDegrees);
 
 uint16_t RandomGridFromRadius(int16_t sSweetGridNo, int8_t ubMinRadius, int8_t ubMaxRadius);
@@ -107,9 +107,10 @@ FLOAT CalculateObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem, vect
 vector_3 FindBestForceForTrajectory(int16_t sSrcGridNo, int16_t sGridNo, int16_t sStartZ,
                                     int16_t sEndZ, real dzDegrees, struct OBJECTTYPE *pItem,
                                     int16_t *psGridNo, FLOAT *pzMagForce);
-INT32 ChanceToGetThroughObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem,
-                                         vector_3 *vPosition, vector_3 *vForce,
-                                         int16_t *psFinalGridNo, int8_t *pbLevel, BOOLEAN fFromUI);
+int32_t ChanceToGetThroughObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem,
+                                           vector_3 *vPosition, vector_3 *vForce,
+                                           int16_t *psFinalGridNo, int8_t *pbLevel,
+                                           BOOLEAN fFromUI);
 FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
                                struct OBJECTTYPE *pObject, BOOLEAN fArmed);
 BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject);
@@ -118,20 +119,20 @@ BOOLEAN DoCatchObject(REAL_OBJECT *pObject);
 BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, uint16_t usStructureID);
 
 /// OBJECT POOL FUNCTIONS
-INT32 GetFreeObjectSlot(void) {
+int32_t GetFreeObjectSlot(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumObjectSlots; uiCount++) {
-    if ((ObjectSlots[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((ObjectSlots[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumObjectSlots < NUM_OBJECT_SLOTS) return ((INT32)guiNumObjectSlots++);
+  if (guiNumObjectSlots < NUM_OBJECT_SLOTS) return ((int32_t)guiNumObjectSlots++);
 
   return (-1);
 }
 
 void RecountObjectSlots(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumObjectSlots - 1; (uiCount >= 0); uiCount--) {
     if ((ObjectSlots[uiCount].fAllocated)) {
@@ -143,10 +144,10 @@ void RecountObjectSlots(void) {
   guiNumObjectSlots = 0;
 }
 
-INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
-                           real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
-                           uint8_t ubActionCode, uint32_t uiActionData) {
-  INT32 iObjectIndex;
+int32_t CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
+                             real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
+                             uint8_t ubActionCode, uint32_t uiActionData) {
+  int32_t iObjectIndex;
   FLOAT mass;
   REAL_OBJECT *pObject;
 
@@ -219,7 +220,7 @@ INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real x
   return (iObjectIndex);
 }
 
-BOOLEAN RemoveObjectSlot(INT32 iObject) {
+BOOLEAN RemoveObjectSlot(int32_t iObject) {
   CHECKF(iObject < NUM_OBJECT_SLOTS);
 
   ObjectSlots[iObject].fAllocated = FALSE;
@@ -263,7 +264,7 @@ void SimulateObject(REAL_OBJECT *pObject, real deltaT) {
   real DeltaTime = 0;
   real CurrentTime = 0;
   real TargetTime = DeltaTime;
-  INT32 iCollisionID;
+  int32_t iCollisionID;
   BOOLEAN fEndThisObject = FALSE;
 
   if (!PhysicsUpdateLife(pObject, (float)deltaT)) {
@@ -483,7 +484,7 @@ BOOLEAN PhysicsIntegrate(REAL_OBJECT *pObject, real DeltaTime) {
   return (TRUE);
 }
 
-BOOLEAN PhysicsHandleCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID, real DeltaTime) {
+BOOLEAN PhysicsHandleCollisions(REAL_OBJECT *pObject, int32_t *piCollisionID, real DeltaTime) {
   FLOAT dDeltaX, dDeltaY, dDeltaZ;
 
   if (PhysicsCheckForCollisions(pObject, piCollisionID)) {
@@ -577,10 +578,10 @@ void PhysicsDeleteObject(REAL_OBJECT *pObject) {
   }
 }
 
-BOOLEAN PhysicsCheckForCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID) {
+BOOLEAN PhysicsCheckForCollisions(REAL_OBJECT *pObject, int32_t *piCollisionID) {
   vector_3 vTemp;
   FLOAT dDeltaX, dDeltaY, dDeltaZ, dX, dY, dZ;
-  INT32 iCollisionCode = COLLISION_NONE;
+  int32_t iCollisionCode = COLLISION_NONE;
   BOOLEAN fDoCollision = FALSE;
   FLOAT dElasity = 1;
   uint16_t usStructureID;
@@ -1132,7 +1133,7 @@ vector_3 FindBestForceForTrajectory(int16_t sSrcGridNo, int16_t sGridNo, int16_t
   real dRange;
   real dPercentDiff = 0;
   real dTestRange, dTestDiff;
-  INT32 iNumChecks = 0;
+  int32_t iNumChecks = 0;
 
   // Get XY from gridno
   ConvertGridNoToCenterCellXY(sGridNo, &sDestX, &sDestY);
@@ -1255,7 +1256,7 @@ real FindBestAngleForTrajectory(int16_t sSrcGridNo, int16_t sGridNo, int16_t sSt
   real dzDegrees = ((float)PI / 8);
   real dPercentDiff = 0;
   real dTestRange, dTestDiff;
-  INT32 iNumChecks = 0;
+  int32_t iNumChecks = 0;
 
   // Get XY from gridno
   ConvertGridNoToCenterCellXY(sGridNo, &sDestX, &sDestY);
@@ -1377,7 +1378,7 @@ void FindTrajectory(int16_t sSrcGridNo, int16_t sGridNo, int16_t sStartZ, int16_
 
 FLOAT CalculateObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem, vector_3 *vPosition,
                                 vector_3 *vForce, int16_t *psFinalGridNo) {
-  INT32 iID;
+  int32_t iID;
   REAL_OBJECT *pObject;
   FLOAT dDiffX, dDiffY;
   int16_t sGridNo;
@@ -1424,10 +1425,10 @@ FLOAT CalculateObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem, vect
   return ((FLOAT)sqrt((dDiffX * dDiffX) + (dDiffY * dDiffY)));
 }
 
-INT32 ChanceToGetThroughObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem,
-                                         vector_3 *vPosition, vector_3 *vForce,
-                                         int16_t *psNewGridNo, int8_t *pbLevel, BOOLEAN fFromUI) {
-  INT32 iID;
+int32_t ChanceToGetThroughObjectTrajectory(int16_t sTargetZ, struct OBJECTTYPE *pItem,
+                                           vector_3 *vPosition, vector_3 *vForce,
+                                           int16_t *psNewGridNo, int8_t *pbLevel, BOOLEAN fFromUI) {
+  int32_t iID;
   REAL_OBJECT *pObject;
 
   // OK, create a physics object....
@@ -1723,7 +1724,7 @@ FLOAT CalculateForceFromRange(int16_t sRange, FLOAT dDegrees) {
 
 FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
                                struct OBJECTTYPE *pItem, BOOLEAN fArmed) {
-  INT32 uiMaxRange;
+  int32_t uiMaxRange;
   FLOAT dMagForce;
 
   dDegrees = (FLOAT)(PI / 4);
@@ -2028,7 +2029,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   BOOLEAN fDoImpact = FALSE;
   BOOLEAN fCheckForDuds = FALSE;
   struct OBJECTTYPE *pObj;
-  INT32 iTrapped = 0;
+  int32_t iTrapped = 0;
   uint16_t usFlags = 0;
   int8_t bLevel = 0;
 
@@ -2205,7 +2206,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
 uint16_t RandomGridFromRadius(int16_t sSweetGridNo, int8_t ubMinRadius, int8_t ubMaxRadius) {
   int16_t sX, sY;
   int16_t sGridNo;
-  INT32 leftmost;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   uint32_t cnt = 0;
 

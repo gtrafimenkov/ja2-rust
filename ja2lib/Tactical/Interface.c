@@ -72,7 +72,7 @@
 
 struct MOUSE_REGION gBottomPanalRegion;
 BOOLEAN gfInMovementMenu = FALSE;
-INT32 giMenuAnchorX, giMenuAnchorY;
+int32_t giMenuAnchorX, giMenuAnchorY;
 
 #define PROG_BAR_START_X 5
 #define PROG_BAR_START_Y 2
@@ -107,16 +107,16 @@ struct MOUSE_REGION gMenuOverlayRegion;
 uint16_t gusOldSelectedSoldier = NO_SOLDIER;
 
 // OVerlay ID
-INT32 giPopupSlideMessageOverlay = -1;
+int32_t giPopupSlideMessageOverlay = -1;
 uint16_t gusOverlayPopupBoxWidth, gusOverlayPopupBoxHeight;
 MercPopUpBox gpOverrideMercBox;
 
-INT32 giUIMessageOverlay = -1;
+int32_t giUIMessageOverlay = -1;
 uint16_t gusUIMessageWidth, gusUIMessageHeight;
 MercPopUpBox gpUIMessageOverrideMercBox;
 uint32_t guiUIMessageTime = 0;
-INT32 iOverlayMessageBox = -1;
-INT32 iUIMessageBox = -1;
+int32_t iOverlayMessageBox = -1;
+int32_t iUIMessageBox = -1;
 uint32_t guiUIMessageTimeDelay = 0;
 BOOLEAN gfUseSkullIconMessage = FALSE;
 
@@ -162,7 +162,7 @@ enum {
   NUM_ICON_IMAGES
 };
 
-INT32 iIconImages[NUM_ICON_IMAGES];
+int32_t iIconImages[NUM_ICON_IMAGES];
 
 enum {
   WALK_ICON,
@@ -188,7 +188,7 @@ enum {
   NUM_ICONS
 };
 
-INT32 iActionIcons[NUM_ICONS];
+int32_t iActionIcons[NUM_ICONS];
 
 // GLOBAL INTERFACE SURFACES
 uint32_t guiINTEXT;
@@ -232,11 +232,11 @@ int16_t gsCurrentSoldierGridNo = 0;
 int16_t gsCurInterfacePanel = TEAM_PANEL;
 
 // LOCAL FUCTIONS
-void BtnPositionCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnMovementCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason);
-void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void BtnPositionCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnMovementCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnDoorMenuCallback(GUI_BUTTON *btn, int32_t reason);
+void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 uint32_t CalcUIMessageDuration(STR16 wString);
 
@@ -550,11 +550,11 @@ void PopupPositionMenu(UI_EVENT *pUIEvent) {}
 
 void PopDownPositionMenu() {}
 
-void BtnPositionCallback(GUI_BUTTON *btn, INT32 reason) {}
+void BtnPositionCallback(GUI_BUTTON *btn, int32_t reason) {}
 
 void PopupMovementMenu(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iMenuAnchorX, iMenuAnchorY;
+  int32_t iMenuAnchorX, iMenuAnchorY;
   uint32_t uiActionImages;
   CHAR16 zActionString[50];
   BOOLEAN fDisableAction = FALSE;
@@ -877,8 +877,8 @@ void CancelMovementMenu() {
   guiPendingOverrideEvent = A_CHANGE_TO_MOVE;
 }
 
-void BtnMovementCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 uiBtnID;
+void BtnMovementCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t uiBtnID;
   UI_EVENT *pUIEvent;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1266,7 +1266,7 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
   struct SOLDIERTYPE *pSoldier;
   int16_t sXPos, sYPos;
   int16_t sX, sY;
-  INT32 iBack;
+  int32_t iBack;
   TILE_ELEMENT TileElem;
   CHAR16 *pStr;
   CHAR16 NameStr[50];
@@ -1627,7 +1627,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
     dPercentage = (FLOAT)(pSoldier->bBleeding + pSoldier->bLife + bBandage) / (FLOAT)100;
     dWidth = dPercentage * sWidth;
     usLineColor = Get16BPPColor(FROMRGB(240, 240, 20));
-    RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (INT32)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
+    RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (int32_t)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
                   pDestBuf);
   }
 
@@ -1635,26 +1635,26 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
     dPercentage = (FLOAT)(pSoldier->bLife + bBandage) / (FLOAT)100;
     dWidth = dPercentage * sWidth;
     usLineColor = Get16BPPColor(FROMRGB(222, 132, 132));
-    RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (INT32)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
+    RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (int32_t)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
                   pDestBuf);
   }
 
   dPercentage = (FLOAT)pSoldier->bLife / (FLOAT)100;
   dWidth = dPercentage * sWidth;
   usLineColor = Get16BPPColor(FROMRGB(200, 0, 0));
-  RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (INT32)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
+  RectangleDraw(TRUE, sXPos + 3, sYPos + 1, (int32_t)(sXPos + dWidth + 3), sYPos + 1, usLineColor,
                 pDestBuf);
 
   dPercentage = (FLOAT)(pSoldier->bBreathMax) / (FLOAT)100;
   dWidth = dPercentage * sWidth;
   usLineColor = Get16BPPColor(FROMRGB(20, 20, 150));
-  RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (INT32)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
+  RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (int32_t)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
                 pDestBuf);
 
   dPercentage = (FLOAT)(pSoldier->bBreath) / (FLOAT)100;
   dWidth = dPercentage * sWidth;
   usLineColor = Get16BPPColor(FROMRGB(100, 100, 220));
-  RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (INT32)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
+  RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (int32_t)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
                 pDestBuf);
 
   UnLockVideoSurface(FRAME_BUFFER);
@@ -1829,7 +1829,7 @@ BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStruct
 }
 
 void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
-  INT32 iMenuAnchorX, iMenuAnchorY;
+  int32_t iMenuAnchorX, iMenuAnchorY;
   CHAR16 zDisp[100];
 
   iMenuAnchorX = gOpenDoorMenu.sX;
@@ -2133,8 +2133,8 @@ void CancelOpenDoorMenu() {
   gOpenDoorMenu.fMenuHandled = 2;
 }
 
-void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 uiBtnID;
+void BtnDoorMenuCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t uiBtnID;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
@@ -2478,7 +2478,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
   uint32_t uiBAR, uiPLAYERBAR, uiINTBAR;
   VOBJECT_DESC VObjectDesc;
   int16_t sX, sY;
-  INT32 cnt2;
+  int32_t cnt2;
   int16_t sBarX = 0;
   uint32_t uiBarToUseInUpDate = 0;
   BOOLEAN fDoLimitBar = FALSE;
@@ -2552,7 +2552,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
 #if 0
 	if ( ubType == COMPUTER_TURN_MESSAGE )
 	{
-		INT32		cnt1, iLength;
+		int32_t		cnt1, iLength;
 		int16_t		usNumStepsPerEnemy;
 
 		if ( gfProgBarActive )
@@ -2932,7 +2932,7 @@ void UpdateEnemyUIBar() {
 
 void InitPlayerUIBar(BOOLEAN fInterrupt) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
   int8_t bNumOK = 0, bNumNotOK = 0;
 
   if (!gGameOptions.fTurnTimeLimit) {
@@ -2987,20 +2987,20 @@ void InitPlayerUIBar(BOOLEAN fInterrupt) {
   }
 }
 
-void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     CancelMovementMenu();
   }
 }
 
-void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     CancelOpenDoorMenu();
   }
 }
 
 CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt, cntStart;
+  int32_t cnt, cntStart;
   if (pSoldier->bLife == pSoldier->bLifeMax) {
     cntStart = 4;
   } else {
@@ -3166,9 +3166,9 @@ void ResetAimCubeAI() {
 
 void RenderAimCubeUI() {
   int16_t sScreenX, sScreenY;
-  INT32 cnt;
+  int32_t cnt;
   int16_t sBarHeight;
-  INT32 iBack;
+  int32_t iBack;
   int8_t bGraphicNum;
 
   if (gfInAimCubeUI) {
@@ -3343,7 +3343,7 @@ void RenderTopmostMultiPurposeLocator() {
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
   int16_t sX, sY, sXPos, sYPos;
-  INT32 iBack;
+  int32_t iBack;
 
   if (!gfMultipurposeLocatorOn) {
     return;

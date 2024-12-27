@@ -151,14 +151,14 @@ struct email {
   uint16_t usLength;
   uint8_t ubSender;
   uint32_t iDate;
-  INT32 iId;
-  INT32 iFirstData;
+  int32_t iId;
+  int32_t iFirstData;
   uint32_t uiSecondData;
   BOOLEAN fRead;
   BOOLEAN fNew;
 
-  INT32 iThirdData;
-  INT32 iFourthData;
+  int32_t iThirdData;
+  int32_t iFourthData;
   uint32_t uiFifthData;
   uint32_t uiSixData;
 
@@ -175,12 +175,12 @@ typedef struct {
   uint16_t usLength;
   uint8_t ubSender;
   uint32_t iDate;
-  INT32 iId;
-  INT32 iFirstData;
+  int32_t iId;
+  int32_t iFirstData;
   uint32_t uiSecondData;
 
-  INT32 iThirdData;
-  INT32 iFourthData;
+  int32_t iThirdData;
+  int32_t iFourthData;
   uint32_t uiFifthData;
   uint32_t uiSixData;
 
@@ -189,8 +189,8 @@ typedef struct {
 } SavedEmailStruct;
 
 struct pagemessages {
-  INT32 iIds[MAX_MESSAGES_PAGE];
-  INT32 iPageId;
+  int32_t iIds[MAX_MESSAGES_PAGE];
+  int32_t iPageId;
   struct pagemessages *Next;
   struct pagemessages *Prev;
 };
@@ -210,7 +210,7 @@ typedef Record *RecordPtr;
 typedef struct {
   RecordPtr pFirstRecord;
   RecordPtr pLastRecord;
-  INT32 iPageNumber;
+  int32_t iPageNumber;
 } EmailPageInfoStruct;
 
 enum {
@@ -263,25 +263,26 @@ void RenderEmail();
 #define MAIL_STRING_SIZE 640
 
 // message manipulation
-void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject, INT32 iDate,
-                     uint8_t ubSender, BOOLEAN fAlreadyRead, INT32 uiFirstData,
+void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, STR16 pSubject, int32_t iDate,
+                     uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t uiFirstData,
                      uint32_t uiSecondData);
-void RemoveEmailMessage(INT32 iId);
-EmailPtr GetEmailMessage(INT32 iId);
+void RemoveEmailMessage(int32_t iId);
+EmailPtr GetEmailMessage(int32_t iId);
 void LookForUnread();
-void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender, INT32 iDate);
-void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender, INT32 iDate);
+void AddEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender, int32_t iDate);
+void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender,
+                     int32_t iDate);
 BOOLEAN DisplayNewMailBox();
 void CreateDestroyNewMailButton();
 void CreateDestroyDeleteNoticeMailButton();
-void AddDeleteRegionsToMessageRegion(INT32 iViewerY);
+void AddDeleteRegionsToMessageRegion(int32_t iViewerY);
 void DisplayEmailHeaders(void);
 void ReDrawNewMailBox(void);
 void ReDisplayBoxes(void);
 void ShutDownEmailList();
-void AddMessageToPages(INT32 iMessageId);
-void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, uint8_t ubSender,
-                             INT32 iDate, INT32 iFirstData, uint32_t uiSecondData);
+void AddMessageToPages(int32_t iMessageId);
+void AddEmailWithSpecialData(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender,
+                             int32_t iDate, int32_t iFirstData, uint32_t uiSecondData);
 
 #ifdef JA2BETAVERSION
 void AddAllEmails();

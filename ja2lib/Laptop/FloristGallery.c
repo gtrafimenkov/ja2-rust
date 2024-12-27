@@ -70,13 +70,13 @@ BOOLEAN gfRedrawFloristGallery = FALSE;
 BOOLEAN FloristGallerySubPagesVisitedFlag[4];
 
 // Floral buttons
-void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiGalleryButtons[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
 
 // Next Previous buttons
-INT32 guiFloralGalleryButtonImage;
-void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
+int32_t guiFloralGalleryButtonImage;
+void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiFloralGalleryButton[2];
 
 BOOLEAN InitFlowerButtons();
@@ -161,7 +161,7 @@ void RenderFloristGallery() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -188,7 +188,7 @@ void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -222,7 +222,7 @@ void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

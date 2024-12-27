@@ -57,7 +57,7 @@ BOOLEAN Plat_FileEntityExists(const char *path);
 BOOLEAN Plat_DeleteFile(const char *filename);
 
 struct GetFile {
-  INT32 iFindHandle;
+  int32_t iFindHandle;
   CHAR8 zFileName[260];  // changed from uint16_t, Alex Meduna, Mar-20'98
   uint32_t uiFileSize;
   uint32_t uiFileAttribs;

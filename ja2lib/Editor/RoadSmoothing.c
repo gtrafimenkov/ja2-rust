@@ -386,8 +386,8 @@ void InitializeRoadMacros() {
 // Road macros vary in size from 3 gridnos to 18 gridnos.  Using the anchor gridno based off of the
 // original road system, this function will place the new macro (consisting of multiple road pieces
 // in multiple gridnos).
-void PlaceRoadMacroAtGridNo(INT32 iMapIndex, INT32 iMacroID) {
-  INT32 i;
+void PlaceRoadMacroAtGridNo(int32_t iMapIndex, int32_t iMacroID) {
+  int32_t i;
   uint16_t usTileIndex;
   i = gsRoadMacroStartIndex[iMacroID];
   while (gRoadMacros[i].sMacroID == iMacroID) {
@@ -405,8 +405,8 @@ void PlaceRoadMacroAtGridNo(INT32 iMapIndex, INT32 iMacroID) {
 // the world, and replaces any locations containing the original road tile information, delete it,
 // and replace it by inserting it's equivalent macro.
 void ReplaceObsoleteRoads() {
-  INT32 i;
-  INT32 iMacro;
+  int32_t i;
+  int32_t iMacro;
   struct LEVELNODE *pObject;
   BOOLEAN fRoadExistsAtGridNo;
   for (i = 0; i < WORLD_MAX; i++) {

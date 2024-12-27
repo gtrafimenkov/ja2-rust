@@ -92,11 +92,11 @@ uint32_t guiRightColumn;
 
 // Clicking on Funeral link
 struct MOUSE_REGION gSelectedFuneralLinkRegion[FUNERAL_NUMBER_OF_LINKS];
-void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 // Clicking on rip sign to make it disappear
 struct MOUSE_REGION gSelectedRipSignRegion;
-void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 void DisplayFuneralRipTombStone();
 
@@ -305,7 +305,7 @@ void DisplayFuneralRipTombStone() {
   MSYS_EnableRegion(&gSelectedRipSignRegion);
 }
 
-void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint32_t uiUserData;
@@ -323,7 +323,7 @@ void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason
   }
 }
 
-void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     MSYS_DisableRegion(&gSelectedRipSignRegion);

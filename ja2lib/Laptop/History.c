@@ -76,12 +76,12 @@ enum {
 };
 
 // the page flipping buttons
-INT32 giHistoryButton[2];
-INT32 giHistoryButtonImage[2];
+int32_t giHistoryButton[2];
+int32_t giHistoryButtonImage[2];
 BOOLEAN fInHistoryMode = FALSE;
 
 // current page displayed
-INT32 iCurrentHistoryPage = 1;
+int32_t iCurrentHistoryPage = 1;
 
 // the History record list
 HistoryUnitPtr pHistoryListHead = NULL;
@@ -121,15 +121,15 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory);
 BOOLEAN WriteOutHistoryRecords(uint32_t uiPage);
 void GetQuestStartedString(uint8_t ubQuestValue, STR16 sQuestString);
 void GetQuestEndedString(uint8_t ubQuestValue, STR16 sQuestString);
-INT32 GetNumberOfHistoryPages();
+int32_t GetNumberOfHistoryPages();
 
 #ifdef JA2TESTVERSION
 void PerformCheckOnHistoryRecord(uint32_t uiErrorCode, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 #endif
 
 // callbacks
-void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason);
-void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason);
+void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, int32_t reason);
+void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason);
 
 uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, int16_t sSectorX,
                         int16_t sSectorY) {
@@ -411,7 +411,7 @@ void DestroyHistoryButtons(void) {
   return;
 }
 
-void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason) {
+void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason) {
   // force redraw
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     fReDrawScreenFlag = TRUE;
@@ -434,7 +434,7 @@ void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason) {
+void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     fReDrawScreenFlag = TRUE;
   }
@@ -703,7 +703,7 @@ void DisplayHistoryListHeaders(void) {
 void DisplayHistoryListBackground(void) {
   // this function will display the History list display background
   struct VObject *hHandle;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // get shaded line object
   GetVideoObject(&hHandle, guiSHADELINE);
@@ -828,8 +828,8 @@ void DrawAPageofHistoryRecords(void) {
 void DisplayPageNumberAndDateRange(void) {
   // this function will go through the list of 'histories' starting at current until end or
   // MAX_PER_PAGE...it will get the date range and the page number
-  INT32 iLastPage = 0;
-  INT32 iCounter = 0;
+  int32_t iLastPage = 0;
+  int32_t iCounter = 0;
   uint32_t uiLastDate;
   HistoryUnitPtr pTempHistory = pHistoryListHead;
   wchar_t sString[50];
@@ -1105,7 +1105,7 @@ BOOLEAN LoadInHistoryRecords(uint32_t uiPage) {
   // loads in records belogning, to page uiPage
   // no file, return
   BOOLEAN fOkToContinue = TRUE;
-  INT32 iCount = 0;
+  int32_t iCount = 0;
   HWFILE hFileHandle;
   uint8_t ubCode, ubSecondCode;
   int16_t sSectorX, sSectorY;
@@ -1200,7 +1200,7 @@ BOOLEAN WriteOutHistoryRecords(uint32_t uiPage) {
   // loads in records belogning, to page uiPage
   // no file, return
   BOOLEAN fOkToContinue = TRUE;
-  INT32 iCount = 0;
+  int32_t iCount = 0;
   HWFILE hFileHandle;
   HistoryUnitPtr pList;
 
@@ -1241,7 +1241,7 @@ BOOLEAN WriteOutHistoryRecords(uint32_t uiPage) {
   }
 
   FileMan_Seek(hFileHandle,
-               sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE * SIZE_OF_HISTORY_FILE_RECORD,
+               sizeof(int32_t) + (uiPage - 1) * NUM_RECORDS_PER_PAGE * SIZE_OF_HISTORY_FILE_RECORD,
                FILE_SEEK_FROM_START);
 
   // file exists, read in data, continue until end of page
@@ -1347,7 +1347,7 @@ uint32_t ReadInLastElementOfHistoryListAndReturnIdNumber(void) {
   // this function will read in the last unit in the history list, to grab it's id number
 
   HWFILE hFileHandle;
-  INT32 iFileSize = 0;
+  int32_t iFileSize = 0;
 
   // no file, return
   if (!(FileMan_Exists(HISTORY_DATA_FILE))) return 0;
@@ -1522,11 +1522,11 @@ void PerformCheckOnHistoryRecord(uint32_t uiErrorCode, u8 sSectorX, u8 sSectorY,
 }
 #endif
 
-INT32 GetNumberOfHistoryPages() {
+int32_t GetNumberOfHistoryPages() {
   HWFILE hFileHandle;
   uint32_t uiFileSize = 0;
   uint32_t uiSizeOfRecordsOnEachPage = 0;
-  INT32 iNumberOfHistoryPages = 0;
+  int32_t iNumberOfHistoryPages = 0;
 
   if (!(FileMan_Exists(HISTORY_DATA_FILE))) return (0);
 
@@ -1549,7 +1549,7 @@ INT32 GetNumberOfHistoryPages() {
       (NUM_RECORDS_PER_PAGE * (sizeof(uint8_t) + sizeof(uint32_t) + 3 * sizeof(uint8_t) +
                                sizeof(int16_t) + sizeof(int16_t)));
 
-  iNumberOfHistoryPages = (INT32)(uiFileSize / uiSizeOfRecordsOnEachPage);
+  iNumberOfHistoryPages = (int32_t)(uiFileSize / uiSizeOfRecordsOnEachPage);
 
   FileMan_Close(hFileHandle);
 

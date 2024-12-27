@@ -511,35 +511,35 @@ uint8_t gubMAP_HandInvDispText[NUM_INV_SLOTS];
 int8_t bSelectedInfoChar = -1;
 
 // map sort button images
-INT32 giMapSortButtonImage[MAX_SORT_METHODS] = {-1, -1, -1, -1, -1, -1};
-INT32 giMapSortButton[MAX_SORT_METHODS] = {-1, -1, -1, -1, -1, -1};
+int32_t giMapSortButtonImage[MAX_SORT_METHODS] = {-1, -1, -1, -1, -1, -1};
+int32_t giMapSortButton[MAX_SORT_METHODS] = {-1, -1, -1, -1, -1, -1};
 
-INT32 giCharInfoButtonImage[2];
-INT32 giCharInfoButton[2] = {-1, -1};
+int32_t giCharInfoButtonImage[2];
+int32_t giCharInfoButton[2] = {-1, -1};
 
-INT32 giMapInvButtonDoneImage;
-INT32 giMapInvDoneButton = -1;
+int32_t giMapInvButtonDoneImage;
+int32_t giMapInvDoneButton = -1;
 
-INT32 giMapContractButton = -1;
-INT32 giMapContractButtonImage;
+int32_t giMapContractButton = -1;
+int32_t giMapContractButtonImage;
 
-// INT32 giMapInvButton = -1;
-// INT32 giMapInvButtonImage;
+// int32_t giMapInvButton = -1;
+// int32_t giMapInvButtonImage;
 
-INT32 giSortStateForMapScreenList = 0;
+int32_t giSortStateForMapScreenList = 0;
 
-INT32 giCommonGlowBaseTime = 0;
-INT32 giFlashAssignBaseTime = 0;
-INT32 giFlashContractBaseTime = 0;
+int32_t giCommonGlowBaseTime = 0;
+int32_t giFlashAssignBaseTime = 0;
+int32_t giFlashContractBaseTime = 0;
 uint32_t guiFlashCursorBaseTime = 0;
-INT32 giPotCharPathBaseTime = 0;
+int32_t giPotCharPathBaseTime = 0;
 
 /*
 // next and prev
-INT32 giMapInvPrev;
-INT32 giMapInvNext;
-INT32 giMapInvPrevImage;
-INT32 giMapInvNextImage;
+int32_t giMapInvPrev;
+int32_t giMapInvNext;
+int32_t giMapInvPrevImage;
+int32_t giMapInvNextImage;
 */
 extern uint32_t guiVObjectSize;
 extern uint32_t guiVSurfaceSize;
@@ -593,15 +593,15 @@ extern BOOLEAN gfUsePersistantPBI;
 
 extern BOOLEAN gfOneFramePauseOnExit;
 
-extern INT32 iDialogueBox;
-extern INT32 giMapInvDescButton;
+extern int32_t iDialogueBox;
+extern int32_t giMapInvDescButton;
 
 extern uint32_t guiBrownBackgroundForTeamPanel;
 
 // the town mine info box
-extern INT32 ghTownMineBox;
+extern int32_t ghTownMineBox;
 // border and bottom buttons
-extern INT32 giMapBorderButtons[];
+extern int32_t giMapBorderButtons[];
 extern uint32_t guiMapButtonInventory[];
 
 // the mine icon
@@ -709,11 +709,11 @@ void GlowFace(void);
 void ResetMapButtons();
 
 // Drawing Strings
-void DrawName(STR16 pName, int16_t sRowIndex, INT32 iFont);
-void DrawAssignment(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont);
-void DrawLocation(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont);
-void DrawDestination(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont);
-void DrawTimeRemaining(int16_t sCharNumber, INT32 iFont, uint8_t ubFontColor);
+void DrawName(STR16 pName, int16_t sRowIndex, int32_t iFont);
+void DrawAssignment(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont);
+void DrawLocation(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont);
+void DrawDestination(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont);
+void DrawTimeRemaining(int16_t sCharNumber, int32_t iFont, uint8_t ubFontColor);
 
 void HandleAssignmentsDoneAndAwaitingFurtherOrders(void);
 void HandleCommonGlowTimer(void);
@@ -769,8 +769,8 @@ void CreateMercRemoveAssignBox(void);
 void DetermineWhichAssignmentMenusCanBeShown(void);
 
 void DetermineIfContractMenuCanBeShown(void);
-void ContractRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void ContractRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void ContractRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void ContractRegionMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void HandleShadingOfLinesForContractMenu(void);
 
 void UpdateStatusOfMapSortButtons(void);
@@ -802,36 +802,36 @@ void HandleContractTimeFlashForMercThatIsAboutLeave(void);
 // Mouse Region Callbacks
 
 // team list
-void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListInfoRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListAssignmentRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListDestinationRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListContractRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListSleepRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListInfoRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListAssignmentRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListDestinationRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListContractRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListSleepRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-void FaceRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void FaceRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void FaceRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void FaceRegionMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-void ItemRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void ItemRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void ItemRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void ItemRegionMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // mapscreen mouse region screen mask btn callback
-void MapScreenMarkRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MapScreenMarkRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // inventory mvt and click callbacks
-void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void MAPInvClickCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void MAPInvMoveCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void MAPInvClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void MAPInvClickCamoCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void MAPInvMoveCamoCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-void InvmaskRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void TrashCanBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void InvmaskRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void TrashCanBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-extern void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+extern void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // handle talking
 void HandleSpontanousTalking(void);
@@ -856,7 +856,7 @@ void UpdateTheStateOfTheNextPrevMapScreenCharacterButtons(void);
 
 // inventory
 void CreateDestroyTrashCanRegion(void);
-void DoneInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason);
+void DoneInventoryMapBtnCallback(GUI_BUTTON *btn, int32_t reason);
 
 // handle cursor for invenetory mode..update to object selected, if needed
 void HandleMapInventoryCursor();
@@ -865,13 +865,13 @@ void MAPBeginItemPointer(struct SOLDIERTYPE *pSoldier, uint8_t ubHandPos);
 
 // create/destroy inventory button as needed
 void CreateDestroyMapInvButton();
-void PrevInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason);
-void NextInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason);
+void PrevInventoryMapBtnCallback(GUI_BUTTON *btn, int32_t reason);
+void NextInventoryMapBtnCallback(GUI_BUTTON *btn, int32_t reason);
 
 // check if cursor needs to be set to checkmark or to the walking guy?
 void UpdateCursorIfInLastSector(void);
 
-void ContractButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void ContractButtonCallback(GUI_BUTTON *btn, int32_t reason);
 void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
 
 // blt inventory panel
@@ -883,7 +883,7 @@ void DisplayCharacterInfo(void);
 void UpDateStatusOfContractBox(void);
 
 // get which index in the mapscreen character list is this guy
-INT32 GetIndexForThisSoldier(struct SOLDIERTYPE *pSoldier);
+int32_t GetIndexForThisSoldier(struct SOLDIERTYPE *pSoldier);
 
 void CheckForAndRenderNewMailOverlay();
 
@@ -895,12 +895,12 @@ void CancelOrShortenPlottedPath(void);
 
 BOOLEAN HandleCtrlOrShiftInTeamPanel(int8_t bCharNumber);
 
-INT32 GetContractExpiryTime(struct SOLDIERTYPE *pSoldier);
+int32_t GetContractExpiryTime(struct SOLDIERTYPE *pSoldier);
 
 void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, size_t bufSize);
-INT32 GetGroundTravelTimeOfCharacter(int8_t bCharNumber);
+int32_t GetGroundTravelTimeOfCharacter(int8_t bCharNumber);
 
-int16_t CalcLocationValueForChar(INT32 iCounter);
+int16_t CalcLocationValueForChar(int32_t iCounter);
 
 void CancelChangeArrivalSectorMode();
 
@@ -908,7 +908,7 @@ void MakeMapModesSuitableForDestPlotting(int8_t bCharNumber);
 
 BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
-void SwapCharactersInList(INT32 iCharA, INT32 iCharB);
+void SwapCharactersInList(int32_t iCharA, int32_t iCharB);
 
 BOOLEAN CanChangeDestinationForCharSlot(int8_t bCharNumber, BOOLEAN fShowErrorMessage);
 
@@ -950,14 +950,14 @@ void RestoreMapSectorCursor(int16_t sMapX, int16_t sMapY);
 void RequestToggleMercInventoryPanel(void);
 
 void RequestContractMenu(void);
-void ChangeCharacterListSortMethod(INT32 iValue);
+void ChangeCharacterListSortMethod(int32_t iValue);
 
 void MapscreenMarkButtonsDirty();
 
 extern BOOLEAN CanRedistributeMilitiaInSector(int16_t sClickedSectorX, int16_t sClickedSectorY,
                                               int8_t bClickedTownId);
 
-extern INT32 GetNumberOfMercsInUpdateList(void);
+extern int32_t GetNumberOfMercsInUpdateList(void);
 
 #ifdef JA2TESTVERSION
 void TestDumpStatChanges(void);
@@ -1007,7 +1007,7 @@ void DisplayDestinationOfCurrentDestMerc(void) {
 
 void ContractBoxGlow(void) {
   /* Why not?
-   static INT32 iColorNum=10;
+   static int32_t iColorNum=10;
    static BOOLEAN fDelta=FALSE;
    static BOOLEAN fOldContractGlow = FALSE;
    uint16_t usColor;
@@ -1071,7 +1071,7 @@ void ContractBoxGlow(void) {
 }
 
 void ContractListRegionBoxGlow(uint16_t usCount) {
-  static INT32 iColorNum = 10;
+  static int32_t iColorNum = 10;
   static BOOLEAN fDelta = FALSE;
   uint16_t usColor;
   uint32_t uiDestPitchBYTES;
@@ -1129,7 +1129,7 @@ void ContractListRegionBoxGlow(uint16_t usCount) {
 }
 
 void GlowFace(void) {
-  static INT32 iColorNum = 10;
+  static int32_t iColorNum = 10;
   static BOOLEAN fDelta = FALSE;
   static BOOLEAN fOldFaceGlow = FALSE;
   uint16_t usColor;
@@ -1180,7 +1180,7 @@ void GlowFace(void) {
 }
 
 void GlowItem(void) {
-  static INT32 iColorNum = 10;
+  static int32_t iColorNum = 10;
   static BOOLEAN fDelta = FALSE;
   static BOOLEAN fOldItemGlow = FALSE;
   uint16_t usColor;
@@ -1233,7 +1233,7 @@ void GlowItem(void) {
 }
 
 void GlowTrashCan(void) {
-  static INT32 iColorNum = 10;
+  static int32_t iColorNum = 10;
   static BOOLEAN fOldTrashCanGlow = FALSE;
   uint16_t usColor;
   uint32_t uiDestPitchBYTES;
@@ -1375,7 +1375,7 @@ void RenderIconsForUpperLeftCornerPiece(int8_t bCharNumber) {
 
 void DrawPay(int16_t sCharNumber) {
   // will draw the pay
-  INT32 uiSalary;
+  int32_t uiSalary;
   wchar_t sString[7];
   int16_t usX, usY;
   int16_t usMercProfileID;
@@ -1727,8 +1727,8 @@ void DrawCharacterInfo(int16_t sCharNumber) {
   wchar_t sString[80];
   int16_t usX, usY;
   int16_t usMercProfileID;
-  INT32 iTimeRemaining = 0;
-  INT32 iDailyCost = 0;
+  int32_t iTimeRemaining = 0;
+  int32_t iDailyCost = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   uint32_t uiArrivalTime;
 
@@ -1877,7 +1877,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
     // if the merc is in transit
     if (GetSolAssignment(pSoldier) == IN_TRANSIT) {
       // and if the ttime left on the cotract is greater then the contract time
-      if (iTimeRemaining > (INT32)(pSoldier->iTotalContractLength * NUM_MIN_IN_DAY)) {
+      if (iTimeRemaining > (int32_t)(pSoldier->iTotalContractLength * NUM_MIN_IN_DAY)) {
         iTimeRemaining = (pSoldier->iTotalContractLength * NUM_MIN_IN_DAY);
       }
     }
@@ -1918,7 +1918,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
                gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
     }
   } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
-    INT32 iBeenHiredFor = (GetWorldTotalMin() / NUM_MIN_IN_DAY) - pSoldier->iStartContractTime;
+    int32_t iBeenHiredFor = (GetWorldTotalMin() / NUM_MIN_IN_DAY) - pSoldier->iStartContractTime;
 
     swprintf(sString, ARR_SIZE(sString), L"%d%s/%d%s",
              gMercProfiles[GetSolProfile(pSoldier)].iMercMercContractLength,
@@ -2054,8 +2054,8 @@ void DisplayCharacterInfo(void) {
   MarkAllBoxesAsAltered();
 }
 
-INT32 GetPathTravelTimeDuringPlotting(struct path *pPath) {
-  INT32 iTravelTime = 0;
+int32_t GetPathTravelTimeDuringPlotting(struct path *pPath) {
+  int32_t iTravelTime = 0;
   WAYPOINT pCurrent;
   WAYPOINT pNext;
   struct GROUP *pGroup;
@@ -2187,9 +2187,9 @@ void HighLightAssignLine() {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usColor;
-  static INT32 iColorNum = STARTING_COLOR_NUM;
+  static int32_t iColorNum = STARTING_COLOR_NUM;
   static BOOLEAN fDelta = FALSE;
-  static INT32 uiOldHighlight = MAX_CHARACTER_COUNT + 1;
+  static int32_t uiOldHighlight = MAX_CHARACTER_COUNT + 1;
   int16_t usCount = 0;
   uint16_t usX;
   uint16_t usY;
@@ -2270,9 +2270,9 @@ void HighLightDestLine() {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usColor;
-  static INT32 iColorNum = STARTING_COLOR_NUM;
+  static int32_t iColorNum = STARTING_COLOR_NUM;
   static BOOLEAN fDelta = FALSE;
-  static INT32 uiOldHighlight = MAX_CHARACTER_COUNT + 1;
+  static int32_t uiOldHighlight = MAX_CHARACTER_COUNT + 1;
   uint16_t usCount = 0;
   uint16_t usX;
   uint16_t usY;
@@ -2348,9 +2348,9 @@ void HighLightSleepLine() {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usColor;
-  static INT32 iColorNum = STARTING_COLOR_NUM;
+  static int32_t iColorNum = STARTING_COLOR_NUM;
   static BOOLEAN fDelta = FALSE;
-  static INT32 uiOldHighlight = MAX_CHARACTER_COUNT + 1;
+  static int32_t uiOldHighlight = MAX_CHARACTER_COUNT + 1;
   uint16_t usCount = 0;
   uint16_t usX, usX2;
   uint16_t usY;
@@ -2499,7 +2499,7 @@ void RemoveCharacter(uint16_t uiCharPosition)
 void LoadCharacters(void) {
   uint16_t uiCount = 0;
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   pSoldier = MercPtrs[0];
 
@@ -2642,7 +2642,7 @@ uint32_t MapScreenHandle(void) {
   VSURFACE_DESC vs_desc;
   VOBJECT_DESC VObjectDesc;
   //	static BOOLEAN fSecondFrame = FALSE;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
   // This determines if the help screen should be active
@@ -3662,7 +3662,7 @@ void SetClockMin(STR16 pStringA, ...) {
   mprintf(CLOCK_MIN_X_START - 5, CLOCK_Y_START, String);
 }
 
-void DrawName(STR16 pName, int16_t sRowIndex, INT32 iFont) {
+void DrawName(STR16 pName, int16_t sRowIndex, int32_t iFont) {
   int16_t usX = 0;
   int16_t usY = 0;
 
@@ -3679,7 +3679,7 @@ void DrawName(STR16 pName, int16_t sRowIndex, INT32 iFont) {
   DrawString(pName, (uint16_t)usX, ((uint16_t)(usY + (Y_OFFSET * sRowIndex + 1))), iFont);
 }
 
-void DrawAssignment(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont) {
+void DrawAssignment(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont) {
   int16_t usX = 0;
   int16_t usY = 0;
   wchar_t sString[32];
@@ -3705,7 +3705,7 @@ void DrawAssignment(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont) {
   DrawString(sString, (uint16_t)usX, ((uint16_t)(usY + (Y_OFFSET * sRowIndex + 1))), iFont);
 }
 
-void DrawLocation(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont) {
+void DrawLocation(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont) {
   int16_t usX = 0;
   int16_t usY = 0;
   wchar_t sString[32];
@@ -3730,7 +3730,7 @@ void DrawLocation(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont) {
              ((uint32_t)iFont));
 }
 
-void DrawDestination(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont) {
+void DrawDestination(int16_t sCharNumber, int16_t sRowIndex, int32_t iFont) {
   int16_t usX = 0;
   int16_t usY = 0;
   wchar_t sString[32];
@@ -3759,7 +3759,7 @@ void DrawDestination(int16_t sCharNumber, int16_t sRowIndex, INT32 iFont) {
              ((uint32_t)iFont));
 }
 
-void DrawTimeRemaining(int16_t sCharNumber, INT32 iFont, uint8_t ubFontColor) {
+void DrawTimeRemaining(int16_t sCharNumber, int32_t iFont, uint8_t ubFontColor) {
   int16_t usX = 0;
   int16_t usY = 0;
   wchar_t sString[32];
@@ -5600,7 +5600,7 @@ void PopupText(CHAR16 *pFontString, ...) {
 }
 
 /*
-void BtnINVCallback(GUI_BUTTON *btn,INT32 reason)
+void BtnINVCallback(GUI_BUTTON *btn,int32_t reason)
 {
         if (!(btn->uiFlags & BUTTON_ENABLED))
                 return;
@@ -5709,7 +5709,7 @@ void BltCharInvPanel() {
   CreateDestroyMapInvButton();
 
   if (gbCheckForMouseOverItemPos != -1) {
-    if (HandleCompatibleAmmoUIForMapScreen(pSoldier, (INT32)gbCheckForMouseOverItemPos, TRUE,
+    if (HandleCompatibleAmmoUIForMapScreen(pSoldier, (int32_t)gbCheckForMouseOverItemPos, TRUE,
                                            TRUE) == TRUE) {
       MarkForRedrawalStrategicMap();
     }
@@ -5719,8 +5719,8 @@ void BltCharInvPanel() {
     if (iCurrentlyHighLightedItem != -1) {
       HandleCompatibleAmmoUIForMapScreen(
           pSoldier,
-          (INT32)(iCurrentlyHighLightedItem +
-                  (iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT)),
+          (int32_t)(iCurrentlyHighLightedItem +
+                    (iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT)),
           TRUE, FALSE);
     }
   }
@@ -5804,12 +5804,12 @@ void HandleCursorOverRifleAmmo() {
   }
 }
 
-void MAPInvClickCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {}
+void MAPInvClickCamoCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {}
 
-void MAPInvMoveCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {}
+void MAPInvMoveCamoCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {}
 
 // this is Map Screen's version of SMInvMoveCallback()
-void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MAPInvMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiHandPos;
 
@@ -5864,7 +5864,7 @@ BOOLEAN MAPInternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, uint8_t ub
 }
 
 // this is Map Screen's version of SMInvClickCallback()
-void MAPInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MAPInvClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiHandPos;
   uint16_t usOldItemIndex, usNewItemIndex;
@@ -6132,7 +6132,7 @@ void HandleMapInventoryCursor() {
 
 // will place down the upper left hand corner attribute strings
 void RenderAttributeStringsForUpperLeftHandCorner(uint32_t uiBufferToRenderTo) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((bSelectedInfoChar != -1) && (gCharactersList[bSelectedInfoChar].fValid)) {
@@ -6180,7 +6180,7 @@ void DisplayThePotentialPathForCurrentDestinationCharacterForMapScreenInterface(
   // simply check if we want to refresh the screen to display path
   static int8_t bOldDestChar = -1;
   static int16_t sPrevMapX, sPrevMapY;
-  INT32 iDifference = 0;
+  int32_t iDifference = 0;
 
   if (bOldDestChar != bSelectedDestChar) {
     bOldDestChar = bSelectedDestChar;
@@ -6437,7 +6437,7 @@ void CreateMouseRegionsForTeamList(void) {
 
 void DestroyMouseRegionsForTeamList(void) {
   // will destroy mouse regions overlaying the team list area
-  INT32 sCounter = 0;
+  int32_t sCounter = 0;
 
   for (sCounter = 0; sCounter < MAX_CHARACTER_COUNT; sCounter++) {
     MSYS_RemoveRegion(&gTeamListNameRegion[sCounter]);
@@ -6450,7 +6450,7 @@ void DestroyMouseRegionsForTeamList(void) {
 }
 
 // mask for mapscreen region
-void MapScreenMarkRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MapScreenMarkRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // reset selected characters
     ResetAllSelectedCharacterModes();
@@ -6461,7 +6461,7 @@ void MapScreenMarkRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void ContractButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void ContractButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if ((iDialogueBox != -1)) {
     return;
   }
@@ -6505,8 +6505,8 @@ void ContractButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
@@ -6609,8 +6609,8 @@ void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
   }
 }
 
-void TeamListInfoRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListInfoRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
     return;
@@ -6629,8 +6629,8 @@ void TeamListInfoRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
   }
 }
 
-void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
@@ -6714,8 +6714,8 @@ void TeamListAssignmentRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
   }
 }
 
-void TeamListAssignmentRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListAssignmentRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
     return;
@@ -6755,8 +6755,8 @@ void TeamListAssignmentRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
   }
 }
 
-void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive || fShowMapInventoryPool) {
     return;
@@ -6860,8 +6860,8 @@ void TeamListDestinationRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iR
   }
 }
 
-void TeamListDestinationRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = -1;
+void TeamListDestinationRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = -1;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
     return;
@@ -6895,8 +6895,8 @@ void TeamListDestinationRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iR
   }
 }
 
-void TeamListSleepRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListSleepRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
@@ -6960,8 +6960,8 @@ void TeamListSleepRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = -1;
+void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = -1;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
     return;
@@ -6997,8 +6997,8 @@ void TeamListSleepRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void TeamListContractRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = 0;
+void TeamListContractRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = 0;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
     return;
@@ -7030,8 +7030,8 @@ void TeamListContractRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
   }
 }
 
-void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iValue = -1;
+void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iValue = -1;
 
   if (fLockOutMapScreenInterface || gfPreBattleInterfaceActive) {
     return;
@@ -7071,10 +7071,10 @@ void TeamListContractRegionMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
   }
 }
 
-INT32 GetIndexForThisSoldier(struct SOLDIERTYPE *pSoldier) {
-  INT32 iLastGuy;
-  INT32 iIndex = 0;
-  INT32 iCounter = 0;
+int32_t GetIndexForThisSoldier(struct SOLDIERTYPE *pSoldier) {
+  int32_t iLastGuy;
+  int32_t iIndex = 0;
+  int32_t iCounter = 0;
 
   // get the index into the characters list for this soldier type
   iLastGuy = gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -7389,7 +7389,7 @@ void CheckIfPlottingForCharacterWhileAirCraft(void) {
   }
 }
 
-void ContractRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void ContractRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // btn callback handler for contract region
@@ -7439,7 +7439,7 @@ void ContractRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void ContractRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void ContractRegionMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // mvt callback handler for contract region
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     if (fGlowContractRegion == TRUE) {
@@ -7505,14 +7505,14 @@ void HandleShadingOfLinesForContractMenu(void) {
     }
 
     // one week
-    if ((INT32)(pProfile->uiWeeklySalary) > MoneyGetBalance()) {
+    if ((int32_t)(pProfile->uiWeeklySalary) > MoneyGetBalance()) {
       ShadeStringInBox(ghContractBox, CONTRACT_MENU_WEEK);
     } else {
       UnShadeStringInBox(ghContractBox, CONTRACT_MENU_WEEK);
     }
 
     // two weeks
-    if ((INT32)(pProfile->uiBiWeeklySalary) > MoneyGetBalance()) {
+    if ((int32_t)(pProfile->uiBiWeeklySalary) > MoneyGetBalance()) {
       ShadeStringInBox(ghContractBox, CONTRACT_MENU_TWO_WEEKS);
     } else {
       UnShadeStringInBox(ghContractBox, CONTRACT_MENU_TWO_WEEKS);
@@ -7603,7 +7603,7 @@ void RebuildContractBoxForMerc(struct SOLDIERTYPE *pCharacter) {
 }
 
 void TestMessageSystem(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 300; iCounter++) {
     MapScreenMessage(FONT_MCOLOR_DKRED, MSG_INTERFACE, L"%d", iCounter);
@@ -7792,7 +7792,7 @@ void HandleSpontanousTalking() {
 BOOLEAN CheckIfClickOnLastSectorInPath(int16_t sX, int16_t sY) {
   struct path **ppMovePath = NULL;
   BOOLEAN fLastSectorInPath = FALSE;
-  INT32 iVehicleId = -1;
+  int32_t iVehicleId = -1;
   struct path *pPreviousMercPath = NULL;
 
   // see if we have clicked on the last sector in the characters path
@@ -7885,10 +7885,10 @@ BOOLEAN CheckIfClickOnLastSectorInPath(int16_t sX, int16_t sY) {
 
 void RebuildWayPointsForAllSelectedCharsGroups(void) {
   // rebuild the waypoints for everyone in the selected character list
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   BOOLEAN fGroupIDRebuilt[256];
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iVehicleId;
+  int32_t iVehicleId;
   struct path **ppMovePath = NULL;
   uint8_t ubGroupId;
 
@@ -7977,7 +7977,7 @@ void UpdateCursorIfInLastSector(void) {
   return;
 }
 
-void FaceRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void FaceRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // error checking, make sure someone is there
   if (bSelectedInfoChar == -1) {
     return;
@@ -8005,7 +8005,7 @@ void FaceRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void FaceRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void FaceRegionMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (bSelectedInfoChar == -1) {
     fShowFaceHightLight = FALSE;
     return;
@@ -8021,14 +8021,14 @@ void FaceRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void ItemRegionBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void ItemRegionBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // left AND right button are handled the same way
   if (iReason & (MSYS_CALLBACK_REASON_RBUTTON_UP | MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     RequestToggleMercInventoryPanel();
   }
 }
 
-void ItemRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void ItemRegionMvtCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (!CanToggleSelectedCharInventory()) {
     fShowItemHighLight = FALSE;
     return;
@@ -8042,7 +8042,7 @@ void ItemRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void HandleChangeOfHighLightedLine(void) {
-  static INT32 iOldHighLine;
+  static int32_t iOldHighLine;
 
   if (fShowInventoryFlag) {
     return;
@@ -8127,7 +8127,7 @@ void TrashItemMessageBoxCallBack(uint8_t bExitValue) {
   }
 }
 
-void TrashCanBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TrashCanBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (IsMapScreenHelpTextUp()) {
       // stop mapscreen text
@@ -8149,7 +8149,7 @@ void TrashCanBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void TrashCanMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void TrashCanMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
     if (gMPanelRegion.Cursor == EXTERN_CURSOR) {
       fShowTrashCanHighLight = TRUE;
@@ -8162,7 +8162,7 @@ void TrashCanMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 void MapInvDoneButtonfastHelpCall() { SetPendingNewScreen(LAPTOP_SCREEN); }
 
 void UpdateStatusOfMapSortButtons(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   static BOOLEAN fShownLastTime = FALSE;
 
   if ((gfPreBattleInterfaceActive) || fShowInventoryFlag) {
@@ -8402,11 +8402,11 @@ void CreateDestroyTrashCanRegion(void) {
   }
 }
 
-void InvmaskRegionBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void InvmaskRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // CJC, December 15 1998: do NOTHING for clicks here
 }
 
-void DoneInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoneInventoryMapBtnCallback(GUI_BUTTON *btn, int32_t reason) {
   // prevent inventory from being closed while stack popup up!
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
@@ -8498,7 +8498,7 @@ void InterruptTimeForMenus(void) {
 }
 
 void HandleContractTimeFlashForMercThatIsAboutLeave(void) {
-  INT32 iCurrentTime;
+  int32_t iCurrentTime;
 
   // grab the current time
   iCurrentTime = GetJA2Clock();
@@ -8825,7 +8825,7 @@ void UpdateTheStateOfTheNextPrevMapScreenCharacterButtons(void) {
   }
 }
 
-void PrevInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason) {
+void PrevInventoryMapBtnCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -8837,7 +8837,7 @@ void PrevInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void NextInventoryMapBtnCallback(GUI_BUTTON *btn, INT32 reason) {
+void NextInventoryMapBtnCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -8966,8 +8966,8 @@ void MapScreenDefaultOkBoxCallback(uint8_t bExitValue) {
   return;
 }
 
-void MapSortBtnCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iValue = 0;
+void MapSortBtnCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iValue = 0;
 
   // grab the button index value for the sort buttons
   iValue = MSYS_GetBtnUserData(btn, 0);
@@ -8990,9 +8990,9 @@ void MapSortBtnCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void AddTeamPanelSortButtonsForMapScreen(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   SGPFILENAME filename;
-  INT32 iImageIndex[MAX_SORT_METHODS] = {0, 1, 5, 2, 3, 4};  // sleep image is out or order (last)
+  int32_t iImageIndex[MAX_SORT_METHODS] = {0, 1, 5, 2, 3, 4};  // sleep image is out or order (last)
 
   GetMLGFilename(filename, MLG_GOLDPIECEBUTTONS);
 
@@ -9014,9 +9014,9 @@ void AddTeamPanelSortButtonsForMapScreen(void) {
 }
 
 void SortListOfMercsInTeamPanel(BOOLEAN fRetainSelectedMercs) {
-  INT32 iCounter = 0, iCounterA = 0;
+  int32_t iCounter = 0, iCounterA = 0;
   int16_t sEndSectorA, sEndSectorB;
-  INT32 iExpiryTime, iExpiryTimeA;
+  int32_t iExpiryTime, iExpiryTimeA;
   struct SOLDIERTYPE *pSelectedSoldier[MAX_CHARACTER_COUNT];
   struct SOLDIERTYPE *pCurrentSoldier = NULL;
   struct SOLDIERTYPE *pPreviousSelectedInfoChar = NULL;
@@ -9233,7 +9233,7 @@ void SortListOfMercsInTeamPanel(BOOLEAN fRetainSelectedMercs) {
   fCharacterInfoPanelDirty = TRUE;
 }
 
-void SwapCharactersInList(INT32 iCharA, INT32 iCharB) {
+void SwapCharactersInList(int32_t iCharA, int32_t iCharB) {
   uint16_t usTempSoldID;
 
   // swap
@@ -9243,7 +9243,7 @@ void SwapCharactersInList(INT32 iCharA, INT32 iCharB) {
 }
 
 void RemoveTeamPanelSortButtonsForMapScreen(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < MAX_SORT_METHODS; iCounter++) {
     UnloadButtonImage(giMapSortButtonImage[iCounter]);
@@ -9256,7 +9256,7 @@ void RemoveTeamPanelSortButtonsForMapScreen(void) {
 }
 
 void HandleCommonGlowTimer() {
-  INT32 iCurrentTime = 0;
+  int32_t iCurrentTime = 0;
 
   // grab the current time
   iCurrentTime = GetJA2Clock();
@@ -9275,7 +9275,7 @@ void HandleCommonGlowTimer() {
 
 void HandleAssignmentsDoneAndAwaitingFurtherOrders(void) {
   // run through list of grunts and handle awating further orders
-  INT32 iCounter = 0, iCurrentTime = 0;
+  int32_t iCounter = 0, iCurrentTime = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // update "nothing to do" flags if necessary
@@ -9313,7 +9313,7 @@ void HandleAssignmentsDoneAndAwaitingFurtherOrders(void) {
 void DisplayIconsForMercsAsleep(void) {
   // run throught he list of grunts to see who is asleep and who isn't
   struct VObject *hHandle;
-  INT32 iCounter;
+  int32_t iCounter;
   struct SOLDIERTYPE *pSoldier;
 
   // if we are in inventory
@@ -9684,7 +9684,7 @@ BOOLEAN HandleCtrlOrShiftInTeamPanel(int8_t bCharNumber) {
   return (FALSE);
 }
 
-INT32 GetContractExpiryTime(struct SOLDIERTYPE *pSoldier) {
+int32_t GetContractExpiryTime(struct SOLDIERTYPE *pSoldier) {
   if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) || (GetSolProfile(pSoldier) == SLAY)) {
     return (pSoldier->iEndofContractTime);
   } else {
@@ -9749,7 +9749,7 @@ void ChangeSelectedInfoChar(int8_t bCharNumber, BOOLEAN fResetSelectedList) {
 }
 
 void CopyPathToAllSelectedCharacters(struct path *pPath) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // run through list and copy paths for each selected character
@@ -9828,8 +9828,8 @@ void ConvertMinTimeToETADayHourMinString(uint32_t uiTimeInMin, STR16 sString, si
   swprintf(sString, bufSize, L"%s %02d:%02d", pEtaString[0], uiHour, uiMin);
 }
 
-INT32 GetGroundTravelTimeOfCharacter(int8_t bCharNumber) {
-  INT32 iTravelTime = 0;
+int32_t GetGroundTravelTimeOfCharacter(int8_t bCharNumber) {
+  int32_t iTravelTime = 0;
 
   if (bCharNumber == -1) return (0);
 
@@ -9846,7 +9846,7 @@ INT32 GetGroundTravelTimeOfCharacter(int8_t bCharNumber) {
   return (iTravelTime);
 }
 
-int16_t CalcLocationValueForChar(INT32 iCounter) {
+int16_t CalcLocationValueForChar(int32_t iCounter) {
   struct SOLDIERTYPE *pSoldier = NULL;
   int16_t sLocValue = 0;
 
@@ -9907,8 +9907,8 @@ void MakeMapModesSuitableForDestPlotting(int8_t bCharNumber) {
 }
 
 BOOLEAN AnyMovableCharsInOrBetweenThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  INT32 iFirstId = 0, iLastId = 0;
-  INT32 iCounter = 0;
+  int32_t iFirstId = 0, iLastId = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // to speed it up a little?
@@ -10088,7 +10088,7 @@ void HandleNewDestConfirmation(int16_t sMapX, int16_t sMapY) {
 
 void RandomAwakeSelectedMercConfirmsStrategicMove(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iCounter;
+  int32_t iCounter;
   uint8_t ubSelectedMercID[20];
   uint8_t ubSelectedMercIndex[20];
   uint8_t ubNumMercs = 0;
@@ -10264,7 +10264,7 @@ void BullsEyeOrChopperSelectionPopupCallback(uint8_t ubExitValue) {
 // wake up anybody who needs to be awake to travel
 void WakeUpAnySleepingSelectedMercsOnFootOrDriving(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iCounter;
+  int32_t iCounter;
   BOOLEAN fSuccess = FALSE;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -10355,7 +10355,7 @@ void GetMapscreenMercLocationString(struct SOLDIERTYPE *pSoldier, wchar_t sStrin
 
 void GetMapscreenMercDestinationString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                        int sStringSize) {
-  INT32 iSectorX, iSectorY;
+  int32_t iSectorX, iSectorY;
   int16_t sSector = 0;
   struct GROUP *pGroup = NULL;
 
@@ -10401,9 +10401,9 @@ void GetMapscreenMercDestinationString(struct SOLDIERTYPE *pSoldier, wchar_t sSt
 
 void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                      int sStringSize, uint8_t *pubFontColor) {
-  INT32 iMinsRemaining = 0;
-  INT32 iDaysRemaining = 0;
-  INT32 iHoursRemaining = 0;
+  int32_t iMinsRemaining = 0;
+  int32_t iDaysRemaining = 0;
+  int32_t iHoursRemaining = 0;
 
   if ((pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC && GetSolProfile(pSoldier) != SLAY) ||
       pSoldier->bLife == 0) {
@@ -10414,7 +10414,7 @@ void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sStri
     // if the merc is in transit
     if (GetSolAssignment(pSoldier) == IN_TRANSIT) {
       // and if the time left on the cotract is greater then the contract time
-      if (iMinsRemaining > (INT32)(pSoldier->iTotalContractLength * NUM_MIN_IN_DAY)) {
+      if (iMinsRemaining > (int32_t)(pSoldier->iTotalContractLength * NUM_MIN_IN_DAY)) {
         iMinsRemaining = (pSoldier->iTotalContractLength * NUM_MIN_IN_DAY);
       }
     }
@@ -10449,7 +10449,7 @@ void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sStri
 }
 
 void InitPreviousPaths(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // init character previous paths
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -10461,7 +10461,7 @@ void InitPreviousPaths(void) {
 }
 
 void RememberPreviousPathForAllSelectedChars(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if (IsCharSelected(iCounter)) {
       // remember his previous path by copying it to his slot in the array kept for that purpose
@@ -10473,7 +10473,7 @@ void RememberPreviousPathForAllSelectedChars(void) {
 }
 
 void RestorePreviousPaths(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   struct path **ppMovePath = NULL;
   uint8_t ubGroupId = 0;
@@ -10572,7 +10572,7 @@ void RestorePreviousPaths(void) {
 }
 
 void ClearPreviousPaths(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if (IsCharSelected(iCounter)) {
@@ -10731,7 +10731,7 @@ void RequestContractMenu(void) {
   }
 }
 
-void ChangeCharacterListSortMethod(INT32 iValue) {
+void ChangeCharacterListSortMethod(int32_t iValue) {
   Assert(iValue >= 0);
   Assert(iValue < MAX_SORT_METHODS);
 

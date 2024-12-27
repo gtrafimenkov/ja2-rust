@@ -32,7 +32,7 @@ CHAR16 wszSelType[6][16] = {L"Small", L"Medium", L"Large", L"XLarge", L"Width: x
 BOOLEAN gfAllowRightButtonSelections = FALSE;
 BOOLEAN gfCurrentSelectionWithRightButton = FALSE;
 
-void DrawBuildingLayout(INT32 iMapIndex);
+void DrawBuildingLayout(int32_t iMapIndex);
 void RemoveBuildingLayout();
 
 void ValidateSelectionRegionBoundaries();
@@ -76,7 +76,7 @@ void DecreaseSelectionDensity() {
 }
 
 void RemoveCursors() {
-  INT32 x, y, iMapIndex;
+  int32_t x, y, iMapIndex;
   if (gpBuildingLayoutList) {
     RemoveBuildingLayout();
   }
@@ -116,7 +116,7 @@ void RemoveBadMarker() {
 }
 
 void UpdateCursorAreas() {
-  INT32 x, y, iMapIndex;
+  int32_t x, y, iMapIndex;
 
   RemoveCursors();
 
@@ -343,9 +343,9 @@ void EnsureSelectionType() {
   }
 }
 
-void DrawBuildingLayout(INT32 iMapIndex) {
+void DrawBuildingLayout(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
+  int32_t iOffset;
   struct LEVELNODE *pNode;
   BOOLEAN fAdd;
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
@@ -370,8 +370,8 @@ void DrawBuildingLayout(INT32 iMapIndex) {
 
 void RemoveBuildingLayout() {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
-  INT32 iMapIndex;
+  int32_t iOffset;
+  int32_t iMapIndex;
   iMapIndex = gSelectRegion.iLeft + gSelectRegion.iTop * WORLD_COLS;
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
   curr = gpBuildingLayoutList;

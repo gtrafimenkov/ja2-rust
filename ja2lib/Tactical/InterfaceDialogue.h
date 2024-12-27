@@ -8,7 +8,7 @@ extern uint8_t gubSrcSoldierProfile;
 
 // Structure used in Tactical display of NPC dialogue
 typedef struct {
-  INT32 iFaceIndex;
+  int32_t iFaceIndex;
   int16_t sX;
   int16_t sY;
   int16_t sPopupX;
@@ -16,7 +16,7 @@ typedef struct {
   uint8_t ubPopupOrientation;
   uint8_t ubCharNum;
   uint32_t uiPanelVO;
-  INT32 iButtonImages;
+  int32_t iButtonImages;
   uint32_t uiCancelButton;
   int8_t bCurSelect;
   int8_t bOldCurSelect;
@@ -352,8 +352,8 @@ enum {
 
 #define HOSPITAL_PATIENT_DISTANCE 9
 
-extern INT32 giHospitalTempBalance;
-extern INT32 giHospitalRefund;
+extern int32_t giHospitalTempBalance;
+extern int32_t giHospitalRefund;
 extern int8_t gbHospitalPriceModifier;
 
 extern uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier);

@@ -282,14 +282,14 @@ BOOLEAN gfUserHasRequestedToLeave = FALSE;
 BOOLEAN gfRenderScreenOnNextLoop = FALSE;
 
 uint8_t gubSkiDirtyLevel = SKI_DIRTY_LEVEL0;
-INT32 giSKIMessageBox = -1;
+int32_t giSKIMessageBox = -1;
 
 int8_t gbSelectedArmsDealerID =
     -1;  // Contains the enum value for the currently selected arms dealer
 
 // the quote that is in progress, in certain circumstances, we don't want queuing of related but
 // different quotes
-INT32 giShopKeepDialogueEventinProgress = -1;
+int32_t giShopKeepDialogueEventinProgress = -1;
 
 // struct OBJECTTYPE				gpSkiItemPointer;
 INVENTORY_IN_SLOT gMoveingItem;
@@ -325,10 +325,10 @@ BOOLEAN gfAlreadySaidTooMuchToRepair = FALSE;
 uint32_t guiRandomQuoteDelayTime = SKI_DEALERS_RANDOM_QUOTE_DELAY;
 
 // Index for the shopkeepers face
-INT32 giShopKeeperFaceIndex;
+int32_t giShopKeeperFaceIndex;
 
 // Id for the popup box
-INT32 giPopUpBoxId = -1;
+int32_t giPopUpBoxId = -1;
 
 BOOLEAN gfIsTheShopKeeperTalking;
 
@@ -374,10 +374,10 @@ extern BOOLEAN gfSMDisableForItems;
 extern struct OBJECTTYPE *gpItemDescObject;
 extern void HandleShortCutExitState(void);
 extern uint8_t gubSelectSMPanelToMerc;
-extern INT32 giItemDescAmmoButton;
+extern int32_t giItemDescAmmoButton;
 
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  uint32_t fBltFlags, INT32 iDestX, INT32 iDestY,
+                                  uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
                                   struct Rect *SrcRect);
 
 extern uint8_t gubLastSpecialItemAddedAtElement;
@@ -422,39 +422,39 @@ typedef struct {
 ITEM_TO_ADD_AFTER_SKI_OPEN gItemToAdd;
 
 // Page up buttons for the merchants
-void BtnSKI_InvPageUpButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSKI_InvPageUpButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSKI_InvPageUpButton;
-INT32 guiSKI_InvPageUpButtonImage;
+int32_t guiSKI_InvPageUpButtonImage;
 
 // Page down buttons for the merchants
-void BtnSKI_InvPageDownButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSKI_InvPageDownButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSKI_InvPageDownButton;
-INT32 guiSKI_InvPageDownButtonImage;
+int32_t guiSKI_InvPageDownButtonImage;
 
 /*
 //Evaluate:
 //Evaluate buttons
-void		BtnSKI_EvaluateButtonCallback(GUI_BUTTON *btn,INT32 reason);
+void		BtnSKI_EvaluateButtonCallback(GUI_BUTTON *btn,int32_t reason);
 uint32_t	guiSKI_EvaluateButton;
-INT32		guiSKI_EvaluateButtonImage;
+int32_t		guiSKI_EvaluateButtonImage;
 */
 
 // Transaction buttons
-void BtnSKI_TransactionButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSKI_TransactionButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSKI_TransactionButton;
-INT32 guiSKI_TransactionButtonImage;
+int32_t guiSKI_TransactionButtonImage;
 
 // Done buttons
-void BtnSKI_DoneButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSKI_DoneButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSKI_DoneButton;
-INT32 guiSKI_DoneButtonImage;
+int32_t guiSKI_DoneButtonImage;
 
 // Atm buttons
-void BtnSKI_AtmButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSKI_AtmButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSKI_AtmButton[NUM_SKI_ATM_BUTTONS];
-INT32 guiSKI_AtmNumButtonImage;
-INT32 guiSKI_AtmOkButtonImage;
-INT32 guiSKI_AtmSideMenuButtonImage;
+int32_t guiSKI_AtmNumButtonImage;
+int32_t guiSKI_AtmOkButtonImage;
+int32_t guiSKI_AtmSideMenuButtonImage;
 
 uint32_t guiItemCrossOut;
 
@@ -465,38 +465,39 @@ struct MOUSE_REGION gSKI_EntireScreenMouseRegions;
 
 struct MOUSE_REGION gDealersInventoryMouseRegions[SKI_NUM_ARMS_DEALERS_INV_SLOTS];
 struct MOUSE_REGION gRepairmanInventorySmallFaceMouseRegions[SKI_NUM_ARMS_DEALERS_INV_SLOTS];
-void SelectDealersInventoryRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectDealersInventoryMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectDealersInventoryRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectDealersInventoryMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 struct MOUSE_REGION gDealersOfferSlotsMouseRegions[SKI_NUM_TRADING_INV_SLOTS];
-void SelectDealersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectDealersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectDealersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectDealersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 struct MOUSE_REGION gPlayersOfferSlotsMouseRegions[SKI_NUM_TRADING_INV_SLOTS];
-void SelectPlayersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectPlayersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectPlayersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectPlayersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 struct MOUSE_REGION gDealersOfferSlotsSmallFaceMouseRegions[SKI_NUM_TRADING_INV_SLOTS];
 struct MOUSE_REGION gPlayersOfferSlotsSmallFaceMouseRegions[SKI_NUM_TRADING_INV_SLOTS];
 
 struct MOUSE_REGION gSkiInventoryMovementAreaMouseRegions;
-// void SelectSkiInventoryMovementAreaRegionCallBack(struct MOUSE_REGION * pRegion, INT32 iReason );
+// void SelectSkiInventoryMovementAreaRegionCallBack(struct MOUSE_REGION * pRegion, int32_t iReason
+// );
 
 // Mouse region for the subtitles region when the merc is talking
 struct MOUSE_REGION gShopKeeperSubTitleMouseRegion;
-void ShopKeeperSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void ShopKeeperSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // ATM:
 // struct MOUSE_REGION		gShopKeeperCoverTacticalButtonMouseRegion;
 
 struct MOUSE_REGION gArmsDealersFaceMouseRegions;
-void SelectArmsDealersFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectArmsDealersFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Region to allow the user to drop items to the ground
 struct MOUSE_REGION gArmsDealersDropItemToGroundMouseRegions;
-void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 void SelectArmsDealersDropItemToGroundMovementRegionCallBack(struct MOUSE_REGION *pRegion,
-                                                             INT32 iReason);
+                                                             int32_t iReason);
 
 ////////////////////////////////////////////
 //
@@ -582,8 +583,8 @@ void MovePlayersItemsToBeRepairedToArmsDealersInventory();
 BOOLEAN RemoveRepairItemFromDealersOfferArea(int8_t bSlot);
 
 int8_t GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier);
-void ClearPlayersOfferSlot(INT32 ubSlotToClear);
-void ClearArmsDealerOfferSlot(INT32 ubSlotToClear);
+void ClearPlayersOfferSlot(int32_t ubSlotToClear);
+void ClearArmsDealerOfferSlot(int32_t ubSlotToClear);
 void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
 BOOLEAN DoSkiMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
@@ -1182,7 +1183,7 @@ BOOLEAN ExitShopKeeperInterface() {
 void HandleShopKeeperInterface() {
   uint8_t ubStatusOfSkiRenderDirtyFlag = gubSkiDirtyLevel;
 
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // if we are in the item desc panel, disable the buttons
   if (InItemDescriptionBox() && pShopKeeperItemDescObject != NULL) {
@@ -1488,7 +1489,7 @@ void DisplayAllDealersCash() {
 }
 #endif
 
-void BtnSKI_InvPageUpButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSKI_InvPageUpButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1508,7 +1509,7 @@ void BtnSKI_InvPageUpButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnSKI_InvPageDownButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSKI_InvPageDownButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1530,7 +1531,7 @@ void BtnSKI_InvPageDownButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
 /*
 //Evaluate:
-void BtnSKI_EvaluateButtonCallback(GUI_BUTTON *btn,INT32 reason)
+void BtnSKI_EvaluateButtonCallback(GUI_BUTTON *btn,int32_t reason)
 {
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
@@ -1550,7 +1551,7 @@ btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
         }
 }
 */
-void BtnSKI_TransactionButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSKI_TransactionButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1573,7 +1574,7 @@ void BtnSKI_TransactionButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnSKI_DoneButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSKI_DoneButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   }
@@ -1732,7 +1733,7 @@ void DestroySkiInventorySlotMouseRegions() {
 }
 
 // Mouse Call back for the Arms traders inventory slot
-void SelectDealersInventoryRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDealersInventoryRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
@@ -1851,7 +1852,7 @@ void SelectDealersInventoryRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iR
   }
 }
 
-void SelectDealersInventoryMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDealersInventoryMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
   ubSelectedInvSlot += gSelectArmsDealerInfo.ubFirstItemIndexOnPage;
 
@@ -1877,7 +1878,7 @@ void SelectDealersInventoryMovementRegionCallBack(struct MOUSE_REGION *pRegion, 
   }
 }
 
-void SelectDealersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDealersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -1897,7 +1898,7 @@ void SelectDealersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion,
   }
 }
 
-void SelectPlayersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPlayersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -1918,7 +1919,7 @@ void SelectPlayersOfferSlotsMovementRegionCallBack(struct MOUSE_REGION *pRegion,
 }
 
 // Mouse Call back for the dealer's OFFER slot
-void SelectDealersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDealersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -2025,7 +2026,7 @@ void SelectDealersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 i
 }
 
 // Mouse Call back for the Players OFFER slot
-void SelectPlayersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPlayersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   uint8_t ubSelectedInvSlot = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
   int8_t bAddedToSlotID = -1;
 
@@ -2126,7 +2127,7 @@ void SelectPlayersOfferSlotsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 i
   }
 }
 
-void SelectSkiInventoryMovementAreaRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectSkiInventoryMovementAreaRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
   }
@@ -2373,9 +2374,10 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
   usHeight = (uint32_t)pTrav->usHeight;
   usWidth = (uint32_t)pTrav->usWidth;
 
-  sCenX =
-      usPosX + 7 + (int16_t)(abs((INT32)SKI_INV_WIDTH - 3 - (INT32)usWidth) / 2) - pTrav->sOffsetX;
-  sCenY = usPosY + (int16_t)(abs((INT32)SKI_INV_HEIGHT - (INT32)usHeight) / 2) - pTrav->sOffsetY;
+  sCenX = usPosX + 7 + (int16_t)(abs((int32_t)SKI_INV_WIDTH - 3 - (int32_t)usWidth) / 2) -
+          pTrav->sOffsetX;
+  sCenY =
+      usPosY + (int16_t)(abs((int32_t)SKI_INV_HEIGHT - (int32_t)usHeight) / 2) - pTrav->sOffsetY;
 
   // Restore the background region
   RestoreExternBackgroundRect(usPosX, usPosY, SKI_INV_SLOT_WIDTH, SKI_INV_HEIGHT);
@@ -3371,7 +3373,7 @@ void PerformTransaction(uint32_t uiMoneyFromPlayersAccount) {
   uint32_t uiPlayersTotalMoneyValue = CalculateTotalPlayersValue() + uiMoneyFromPlayersAccount;
   uint32_t uiArmsDealersItemsCost = CalculateTotalArmsDealerCost();
   uint32_t uiMoneyInPlayersOfferArea = CalculateHowMuchMoneyIsInPlayersOfferArea();
-  INT32 iChangeToGiveToPlayer = 0;
+  int32_t iChangeToGiveToPlayer = 0;
   uint32_t uiAvailablePlayerOfferSlots;
 
   // if the player has already requested to leave, get out
@@ -3505,7 +3507,7 @@ void PerformTransaction(uint32_t uiMoneyFromPlayersAccount) {
           (ArmsDealerInfo[gbSelectedArmsDealerID].ubTypeOfArmsDealer == ARMS_DEALER_BUYS_SELLS)) {
         // but the dealer can't afford this transaction
         if (iChangeToGiveToPlayer >
-            (INT32)gArmsDealerStatus[gbSelectedArmsDealerID].uiArmsDealersCash) {
+            (int32_t)gArmsDealerStatus[gbSelectedArmsDealerID].uiArmsDealersCash) {
           // HACK HACK HACK: We forgot to write/record quote 27 for Jake, so he ALWAYS must have
           // enough money!
           if (gbSelectedArmsDealerID != ARMS_DEALER_JAKE) {
@@ -4336,7 +4338,7 @@ BOOLEAN AreThereItemsInThePlayersOfferArea() {
 }
 
 // Mouse Call back for the Arms traders inventory slot
-void ShopKeeperSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void ShopKeeperSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP ||
              iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
@@ -4345,7 +4347,7 @@ void ShopKeeperSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 }
 
 // Mouse Call back for the Arms delaers face
-void SelectArmsDealersFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectArmsDealersFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP ||
              iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
@@ -4525,7 +4527,7 @@ void RemoveSkiAtmButtons() {
   }
 }
 
-void BtnSKI_AtmButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSKI_AtmButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -4596,7 +4598,7 @@ void HandleSkiAtmPanelInput(uint8_t ubButtonPress) {
 }
 
 void HandleAtmOK() {
-  INT32 iAmountToTransfer;
+  int32_t iAmountToTransfer;
   BOOLEAN fOkToClear = FALSE;
 
   // Get the amount to transfer
@@ -5157,7 +5159,7 @@ int8_t GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier) {
   return (-1);
 }
 
-void ClearArmsDealerOfferSlot(INT32 ubSlotToClear) {
+void ClearArmsDealerOfferSlot(int32_t ubSlotToClear) {
   // Clear the contents
   memset(&ArmsDealerOfferArea[ubSlotToClear], 0, sizeof(INVENTORY_IN_SLOT));
 
@@ -5170,7 +5172,7 @@ void ClearArmsDealerOfferSlot(INT32 ubSlotToClear) {
   }
 }
 
-void ClearPlayersOfferSlot(INT32 ubSlotToClear) {
+void ClearPlayersOfferSlot(int32_t ubSlotToClear) {
   // Clear the contents
   memset(&PlayersOfferArea[ubSlotToClear], 0, sizeof(INVENTORY_IN_SLOT));
 
@@ -5431,7 +5433,7 @@ void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue
   if (bExitValue == MSG_BOX_RETURN_YES) {
     uint32_t uiPlayersOfferAreaValue = CalculateTotalPlayersValue();
     uint32_t uiArmsDealersItemsCost = CalculateTotalArmsDealerCost();
-    INT32 iMoneyToDeduct = (INT32)(uiArmsDealersItemsCost - uiPlayersOfferAreaValue);
+    int32_t iMoneyToDeduct = (int32_t)(uiArmsDealersItemsCost - uiPlayersOfferAreaValue);
 
     // Perform the transaction with the extra money from the players account
     PerformTransaction(iMoneyToDeduct);
@@ -5466,7 +5468,7 @@ BOOLEAN WillShopKeeperRejectObjectsFromPlayer(int8_t bDealerId, int8_t bSlotId) 
 }
 
 void CheckAndHandleClearingOfPlayerOfferArea(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   BOOLEAN fActiveSlot = FALSE;
 
   // find out if all the player trade slots/offer area is empty
@@ -5547,7 +5549,7 @@ void CrossOutUnwantedItems(void) {
 
 int16_t GetNumberOfItemsInPlayerOfferArea(void) {
   int16_t sCounter = 0;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // find number of active slot in player offer area
   for (iCounter = 0; iCounter < SKI_NUM_TRADING_INV_SLOTS; iCounter++) {
@@ -5560,8 +5562,8 @@ int16_t GetNumberOfItemsInPlayerOfferArea(void) {
 }
 
 void HandleCheckIfEnoughOnTheTable(void) {
-  static INT32 iLastTime = 0;
-  INT32 iDifference = 0, iRand = 0;
+  static int32_t iLastTime = 0;
+  int32_t iDifference = 0, iRand = 0;
   uint32_t uiPlayersOfferAreaValue = CalculateTotalPlayersValue();
   uint32_t uiArmsDealersItemsCost = CalculateTotalArmsDealerCost();
 
@@ -5661,7 +5663,7 @@ void InitShopKeeperItemDescBox(struct OBJECTTYPE *pObject, uint8_t ubPocket,
 }
 
 void StartSKIDescriptionBox(void) {
-  INT32 iCnt;
+  int32_t iCnt;
 
   // shadow the entire screen
   //	ShadowVideoSurfaceRect( FRAME_BUFFER, 0, 0, 640, 480 );
@@ -5710,7 +5712,7 @@ void StartSKIDescriptionBox(void) {
 }
 
 void DeleteShopKeeperItemDescBox() {
-  INT32 iCnt;
+  int32_t iCnt;
 
   pShopKeeperItemDescObject = NULL;
   gubSkiDirtyLevel = SKI_DIRTY_LEVEL2;
@@ -6608,7 +6610,8 @@ void DelayRepairsInProgressBy(uint32_t uiMinutesDelayed) {
 }
 
 // Mouse Call back for the Arms delaers face
-void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegion,
+                                                     int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct SOLDIERTYPE *pDropSoldier;
@@ -6636,7 +6639,7 @@ void SelectArmsDealersDropItemToGroundRegionCallBack(struct MOUSE_REGION *pRegio
 }
 
 void SelectArmsDealersDropItemToGroundMovementRegionCallBack(struct MOUSE_REGION *pRegion,
-                                                             INT32 iReason) {
+                                                             int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gfSkiDisplayDropItemToGroundText = FALSE;
     gubSkiDirtyLevel = SKI_DIRTY_LEVEL2;
@@ -6830,7 +6833,7 @@ void BuildItemHelpTextString(wchar_t *sString, size_t bufSize, INVENTORY_IN_SLOT
 }
 
 void DisableAllDealersInventorySlots(void) {
-  INT32 iCnt;
+  int32_t iCnt;
 
   for (iCnt = 0; iCnt < SKI_NUM_ARMS_DEALERS_INV_SLOTS; iCnt++) {
     MSYS_DisableRegion(&gDealersInventoryMouseRegions[iCnt]);
@@ -6843,7 +6846,7 @@ void DisableAllDealersInventorySlots(void) {
 }
 
 void EnableAllDealersInventorySlots(void) {
-  INT32 iCnt;
+  int32_t iCnt;
 
   for (iCnt = 0; iCnt < SKI_NUM_ARMS_DEALERS_INV_SLOTS; iCnt++) {
     MSYS_EnableRegion(&gDealersInventoryMouseRegions[iCnt]);
@@ -6856,7 +6859,7 @@ void EnableAllDealersInventorySlots(void) {
 }
 
 void DisableAllDealersOfferSlots(void) {
-  INT32 iCnt;
+  int32_t iCnt;
 
   for (iCnt = 0; iCnt < SKI_NUM_TRADING_INV_SLOTS; iCnt++) {
     MSYS_DisableRegion(&gDealersOfferSlotsMouseRegions[iCnt]);
@@ -6869,7 +6872,7 @@ void DisableAllDealersOfferSlots(void) {
 }
 
 void EnableAllDealersOfferSlots(void) {
-  INT32 iCnt;
+  int32_t iCnt;
 
   for (iCnt = 0; iCnt < SKI_NUM_TRADING_INV_SLOTS; iCnt++) {
     MSYS_EnableRegion(&gDealersOfferSlotsMouseRegions[iCnt]);

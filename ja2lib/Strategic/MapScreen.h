@@ -38,7 +38,7 @@ void MAPEndItemPointer();
 void CopyPathToAllSelectedCharacters(struct path* pPath);
 void CancelPathsOfAllSelectedCharacters();
 
-INT32 GetPathTravelTimeDuringPlotting(struct path* pPath);
+int32_t GetPathTravelTimeDuringPlotting(struct path* pPath);
 
 void AbortMovementPlottingMode(void);
 

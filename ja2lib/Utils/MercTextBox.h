@@ -11,10 +11,10 @@
 BOOLEAN InitMercPopupBox();
 
 // create a pop up box if needed, return id of box..a -1 means couldn't be added
-INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBorderIndex,
-                          STR16 pString, uint16_t usWidth, uint16_t usMarginX,
-                          uint16_t usMarginTopY, uint16_t usMarginBottomY, uint16_t *pActualWidth,
-                          uint16_t *pActualHeight);
+int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBorderIndex,
+                            STR16 pString, uint16_t usWidth, uint16_t usMarginX,
+                            uint16_t usMarginTopY, uint16_t usMarginBottomY, uint16_t *pActualWidth,
+                            uint16_t *pActualHeight);
 
 // remove the current box
 BOOLEAN RemoveMercPopupBox();
@@ -26,7 +26,7 @@ BOOLEAN RemoveMercPopupBoxFromIndex(uint32_t uiId);
 BOOLEAN RenderMercPopupBox(int16_t sDestX, int16_t sDestY, uint32_t uiBuffer);
 
 // render pop up box with this index value
-BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, int16_t sDestX, int16_t sDestY,
+BOOLEAN RenderMercPopUpBoxFromIndex(int32_t iBoxId, int16_t sDestX, int16_t sDestY,
                                     uint32_t uiBuffer);
 
 void RemoveTextMercPopupImages();

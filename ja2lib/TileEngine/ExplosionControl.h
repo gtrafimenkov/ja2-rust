@@ -31,8 +31,8 @@ typedef struct {
   EXPLOSION_PARAMS Params;
   BOOLEAN fAllocated;
   int16_t sCurrentFrame;
-  INT32 iID;
-  INT32 iLightID;
+  int32_t iID;
+  int32_t iLightID;
   uint8_t ubUnsed[2];
 
 } EXPLOSIONTYPE;
@@ -76,7 +76,7 @@ void InternalIgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ
 void GenerateExplosion(EXPLOSION_PARAMS *pExpParams);
 
 void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ubOwner,
-                  BOOLEAN fSubsequent, int8_t bLevel, INT32 iSmokeEffectNum);
+                  BOOLEAN fSubsequent, int8_t bLevel, int32_t iSmokeEffectNum);
 
 void AddBombToQueue(uint32_t uiWorldBombIndex, uint32_t uiTimeStamp);
 
@@ -86,8 +86,8 @@ BOOLEAN SetOffBombsInGridNo(uint8_t ubID, int16_t sGridNo, BOOLEAN fAllBombs, in
 void ActivateSwitchInGridNo(uint8_t ubID, int16_t sGridNo);
 void SetOffPanicBombs(uint8_t ubID, int8_t bPanicTrigger);
 
-void UpdateExplosionFrame(INT32 iIndex, int16_t sCurrentFrame);
-void RemoveExplosionData(INT32 iIndex);
+void UpdateExplosionFrame(int32_t iIndex, int16_t sCurrentFrame);
+void RemoveExplosionData(int32_t iIndex);
 
 void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, int16_t sGridNo,
                                uint8_t ubDamage);
@@ -97,7 +97,7 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile);
 
 BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile);
 
-INT32 FindActiveTimedBomb(void);
+int32_t FindActiveTimedBomb(void);
 BOOLEAN ActiveTimedBombExists(void);
 void RemoveAllActiveTimedBombs(void);
 

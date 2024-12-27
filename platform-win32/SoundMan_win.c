@@ -514,7 +514,7 @@ BOOLEAN SoundIsPlaying(uint32_t uiSoundID) {
 // Created:  2/24/00 Derek Beland
 //*****************************************************************************************
 BOOLEAN SoundIndexIsPlaying(uint32_t uiSound) {
-  INT32 iStatus = SMP_DONE;
+  int32_t iStatus = SMP_DONE;
 
   if (fSoundSystemInit) {
     if (pSoundList[uiSound].hMSS != NULL) iStatus = AIL_sample_status(pSoundList[uiSound].hMSS);
@@ -1871,7 +1871,7 @@ BOOLEAN Sound3DInitProvider(CHAR8 *pProviderName) {
   HPROVIDER hProvider = 0;
   BOOLEAN fDone = FALSE;
   CHAR8 *pName;
-  INT32 iResult;
+  int32_t iResult;
 
   // 3D sound providers depend on the 2D sound system being initialized first
   if (!fSoundSystemInit || !pProviderName) return (FALSE);
@@ -1954,11 +1954,11 @@ void Sound3DSetListener(FLOAT flX, FLOAT flY, FLOAT flZ) {
 //
 // Returns the number of active sounds.
 //
-// Returns INT32              - Number of 3D sounds playing
+// Returns int32_t              - Number of 3D sounds playing
 //
 // Created:  8/17/99 Derek Beland
 //*****************************************************************************************
-INT32 Sound3DActiveSounds(void) { return ((INT32)AIL_active_3D_sample_count(gh3DProvider)); }
+int32_t Sound3DActiveSounds(void) { return ((int32_t)AIL_active_3D_sample_count(gh3DProvider)); }
 
 //*****************************************************************************************
 // Sound3DStopAll

@@ -55,7 +55,7 @@ extern BOOLEAN fZoomFlag;
 // extern BOOLEAN fDisabledMapBorder;
 
 // scroll animation
-extern INT32 giScrollButtonState;
+extern int32_t giScrollButtonState;
 
 BOOLEAN LoadMapBorderGraphics(void);
 void DeleteMapBorderGraphics(void);

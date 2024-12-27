@@ -420,7 +420,7 @@ void CreateTileDatabase() {
 }
 
 void DeallocateTileDatabase() {
-  INT32 cnt;
+  int32_t cnt;
 
   for (cnt = 0; cnt < NUMBEROFTILES; cnt++) {
     // Check if an existing set of animated tiles are in place, remove if found
@@ -434,7 +434,7 @@ void DeallocateTileDatabase() {
   gusNumAnimatedTiles = 0;
 }
 
-BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType) {
+BOOLEAN GetLandHeadType(int32_t iMapIndex, uint32_t *puiType) {
   uint16_t usIndex;
 
   Assert(puiType != NULL);
@@ -448,7 +448,7 @@ BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType) {
   return (TRUE);
 }
 
-BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete) {
+BOOLEAN SetLandIndex(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete) {
   uint16_t usTempIndex;
   uint8_t ubLastHighLevel = 0;
 
@@ -478,15 +478,15 @@ BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOL
   }
 }
 
-BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType,
+BOOLEAN SetLandIndexWithRadius(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType,
                                uint8_t ubRadius, BOOLEAN fReplace) {
   uint16_t usTempIndex;
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
-  INT32 iNewIndex;
+  int32_t iNewIndex;
   BOOLEAN fDoPaste = FALSE;
-  INT32 leftmost;
+  int32_t leftmost;
   // BOOLEAN				fNewCommand;
   uint16_t Dummy;
 
@@ -755,7 +755,7 @@ BOOLEAN GetWallOrientation(uint16_t usIndex, uint16_t *pusWallOrientation) {
   return (TRUE);
 }
 
-BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
+BOOLEAN ContainsWallOrientation(int32_t iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
                                 uint8_t *pubLevel) {
   struct LEVELNODE *pStruct = NULL;
   uint8_t level = 0;
@@ -787,7 +787,7 @@ BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, uint16_t usWal
 // sharing the same tile.  This case only happens with the exterior and
 // interior bottom corners.  Otherwise, it returns the orientation of the
 // first wall encountered -- not that there should be duplicate walls...
-uint8_t CalculateWallOrientationsAtGridNo(INT32 iMapIndex) {
+uint8_t CalculateWallOrientationsAtGridNo(int32_t iMapIndex) {
   uint16_t usCheckWallOrientation = 0;
   struct LEVELNODE *pStruct = NULL;
   uint8_t ubFinalWallOrientation = NO_ORIENTATION;

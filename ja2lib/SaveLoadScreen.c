@@ -148,7 +148,7 @@ BOOLEAN gfSaveLoadScreenExit = FALSE;
 BOOLEAN gfRedrawSaveLoadScreen = TRUE;
 
 BOOLEAN gfExitAfterMessageBox = FALSE;
-INT32 giSaveLoadMessageBox = -1;  // SaveLoad pop up messages index value
+int32_t giSaveLoadMessageBox = -1;  // SaveLoad pop up messages index value
 
 uint32_t guiSaveLoadExitScreen = SAVE_LOAD_SCREEN;
 
@@ -202,24 +202,24 @@ extern BOOLEAN gfDisplaySaveGamesNowInvalidatedMsg;
 //
 // Buttons
 //
-INT32 guiSlgButtonImage;
+int32_t guiSlgButtonImage;
 
 // Cancel Button
-void BtnSlgCancelCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSlgCancelCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSlgCancelBtn;
 
 // Save game Button
-void BtnSlgSaveLoadCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnSlgSaveLoadCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiSlgSaveLoadBtn;
-INT32 guiSaveLoadImage;
+int32_t guiSaveLoadImage;
 
 // Mouse regions for the currently selected save game
 struct MOUSE_REGION gSelectedSaveRegion[NUM_SAVE_GAMES];
-void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
+void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason);
 
 struct MOUSE_REGION gSLSEntireScreenRegion;
-void SelectedSLSEntireRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectedSLSEntireRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 //////////////////////////////////////////////////////
 //
@@ -1355,7 +1355,7 @@ BOOLEAN LoadSavedGameHeader(int8_t bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
   return (TRUE);
 }
 
-void BtnSlgCancelCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSlgCancelCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1384,7 +1384,7 @@ void BtnSlgCancelCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnSlgSaveLoadCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnSlgSaveLoadCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1406,7 +1406,7 @@ void BtnSlgSaveLoadCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 /*
-void BtnSlgLoadCallback(GUI_BUTTON *btn,INT32 reason)
+void BtnSlgLoadCallback(GUI_BUTTON *btn,int32_t reason)
 {
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
@@ -1432,7 +1432,7 @@ btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 }
 */
 
-void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   int8_t bActiveTextField;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -1440,7 +1440,7 @@ void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
     uint8_t bSelected = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
     static uint32_t uiLastTime = 0;
     uint32_t uiCurTime = GetJA2Clock();
-    INT32 i;
+    int32_t i;
 
     /*
                     //If we are saving and this is the quick save slot
@@ -1572,7 +1572,7 @@ void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     int8_t bTemp;
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1949,7 +1949,7 @@ void DoneFadeInForSaveLoadScreen(void) {
   }
 }
 
-void SelectedSLSEntireRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedSLSEntireRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     DisableSelectedSlot();
@@ -2138,7 +2138,7 @@ void NotEnoughHardDriveSpaceForNormalSaveMessageBoxCallBack(uint8_t bExitValue) 
 void RedrawSaveLoadScreenAfterMessageBox(uint8_t bExitValue) { gfRedrawSaveLoadScreen = TRUE; }
 
 void MoveSelectionUpOrDown(BOOLEAN fUp) {
-  INT32 i;
+  int32_t i;
 
   // if we are saving, any slot otgher then the quick save slot is valid
   if (gfSaveGame) {
@@ -2193,7 +2193,7 @@ void MoveSelectionUpOrDown(BOOLEAN fUp) {
 }
 
 void ClearSelectedSaveSlot() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < NUM_SAVE_GAMES; i++)
     gbSaveGameSelectedLocation[i] = SLG_UNSELECTED_SLOT_GRAPHICS_NUMBER;
 

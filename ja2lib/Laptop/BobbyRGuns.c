@@ -171,35 +171,35 @@ BOOLEAN gfOnUsedPage;
 uint16_t gusOldItemNumOnTopOfPage = 65535;
 
 // The menu bar at the bottom that changes to different pages
-void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRPageMenu[NUM_CATALOGUE_BUTTONS];
-INT32 guiBobbyRPageMenuImage;
+int32_t guiBobbyRPageMenuImage;
 
 // The next and previous buttons
-void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRPreviousPage;
-INT32 guiBobbyRPreviousPageImage;
+int32_t guiBobbyRPreviousPageImage;
 
 uint32_t guiBobbyRNextPage;
-INT32 guiBobbyRNextPageImage;
+int32_t guiBobbyRNextPageImage;
 
 // Big Image Mouse region
 struct MOUSE_REGION gSelectedBigImageRegion[BOBBYR_NUM_WEAPONS_ON_PAGE];
-void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // The order form button
-void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyROrderForm;
-INT32 guiBobbyROrderFormImage;
+int32_t guiBobbyROrderFormImage;
 
 // The Home button
-void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiBobbyRHome;
-INT32 guiBobbyRHomeImage;
+int32_t guiBobbyRHomeImage;
 
 // Link from the title
 struct MOUSE_REGION gSelectedTitleImageLinkRegion;
-void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 uint32_t guiTempCurrentMode;
 
@@ -384,7 +384,7 @@ BOOLEAN DeleteBobbyBrTitle() {
   return (TRUE);
 }
 
-void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_BOBBY_R;
@@ -482,7 +482,7 @@ BOOLEAN DeleteBobbyMenuBar() {
   return (TRUE);
 }
 
-void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, int32_t reason) {
   uint32_t bNewValue;
   bNewValue = MSYS_GetBtnUserData(btn, 0);
 
@@ -511,7 +511,7 @@ void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, int32_t reason) {
   uint32_t bNewValue;
 
   bNewValue = MSYS_GetBtnUserData(btn, 0);
@@ -823,7 +823,7 @@ BOOLEAN DisplayBigItemImage(uint16_t usIndex, uint16_t PosY) {
   usWidth = (uint32_t)pTrav->usWidth;
   //	sCenX = PosX + ( abs( BOBBYR_GRID_PIC_WIDTH - usWidth ) / 2 );
   //	sCenY = PosY + 8;
-  sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+  sCenX = PosX + (abs((int32_t)((int32_t)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
   sCenY = PosY + 8;
 
   // blt the shadow of the item
@@ -1285,7 +1285,7 @@ void DeleteMouseRegionForBigImage() {
   gubNumItemsOnScreen = 0;
 }
 
-void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     uint16_t usItemNum = (uint16_t)MSYS_GetRegionUserData(pRegion, 0);
@@ -1444,7 +1444,7 @@ void UnPurchaseBobbyRayItem(uint16_t usItemNumber) {
   }
 }
 
-void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1463,7 +1463,7 @@ void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

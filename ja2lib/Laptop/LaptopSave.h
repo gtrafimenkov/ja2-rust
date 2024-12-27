@@ -16,13 +16,13 @@ typedef struct {
   BOOLEAN fActive;
   uint8_t ubSoldierID;
   uint8_t ubMercID;
-  INT32 iPayOutPrice;
+  int32_t iPayOutPrice;
 } LIFE_INSURANCE_PAYOUT;
 
 typedef struct {
   BOOLEAN fHaveDisplayedPopUpInLaptop;  // Is set when the popup gets displayed, reset when entering
                                         // laptop again.
-  INT32 iIdOfMerc;
+  int32_t iIdOfMerc;
   uint32_t uiArrivalTime;
 } LAST_HIRED_MERC_STRUCT;
 
@@ -52,9 +52,9 @@ typedef struct {
   // General Laptop Info
   BOOLEAN gfNewGameLaptop;              // Is it the firs time in Laptop
   BOOLEAN fVisitedBookmarkAlready[20];  // have we visitied this site already?
-  INT32 iBookMarkList[MAX_BOOKMARKS];
+  int32_t iBookMarkList[MAX_BOOKMARKS];
 
-  INT32 iCurrentBalance;  // current players balance
+  int32_t iCurrentBalance;  // current players balance
 
   // IMP Information
   BOOLEAN fIMPCompletedFlag;       // Has the player Completed the IMP process
@@ -110,7 +110,7 @@ typedef struct {
 
   uint16_t usInventoryListLength[BOBBY_RAY_LISTS];
 
-  INT32 iVoiceId;
+  int32_t iVoiceId;
 
   uint8_t ubHaveBeenToBobbyRaysAtLeastOnceWhileUnderConstruction;
 
@@ -120,9 +120,9 @@ typedef struct {
 
   LAST_HIRED_MERC_STRUCT sLastHiredMerc;
 
-  INT32 iCurrentHistoryPage;
-  INT32 iCurrentFinancesPage;
-  INT32 iCurrentEmailPage;
+  int32_t iCurrentHistoryPage;
+  int32_t iCurrentFinancesPage;
+  int32_t iCurrentEmailPage;
 
   uint32_t uiSpeckQuoteFlags;
 

@@ -34,23 +34,23 @@ uint8_t FromSmokeTypeToWorldFlags(int8_t bType);
 SMOKEEFFECT gSmokeEffectData[NUM_SMOKE_EFFECT_SLOTS];
 uint32_t guiNumSmokeEffects = 0;
 
-INT32 GetFreeSmokeEffect(void);
+int32_t GetFreeSmokeEffect(void);
 void RecountSmokeEffects(void);
 
-INT32 GetFreeSmokeEffect(void) {
+int32_t GetFreeSmokeEffect(void) {
   uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumSmokeEffects; uiCount++) {
-    if ((gSmokeEffectData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gSmokeEffectData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumSmokeEffects < NUM_SMOKE_EFFECT_SLOTS) return ((INT32)guiNumSmokeEffects++);
+  if (guiNumSmokeEffects < NUM_SMOKE_EFFECT_SLOTS) return ((int32_t)guiNumSmokeEffects++);
 
   return (-1);
 }
 
 void RecountSmokeEffects(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumSmokeEffects - 1; (uiCount >= 0); uiCount--) {
     if ((gSmokeEffectData[uiCount].fAllocated)) {
@@ -117,9 +117,9 @@ uint8_t FromSmokeTypeToWorldFlags(int8_t bType) {
   }
 }
 
-INT32 NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner) {
+int32_t NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner) {
   SMOKEEFFECT *pSmoke;
-  INT32 iSmokeIndex;
+  int32_t iSmokeIndex;
   int8_t bSmokeEffectType = 0;
   uint8_t ubDuration = 0;
   uint8_t ubStartRadius = 0;
@@ -214,7 +214,7 @@ INT32 NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ub
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )
-void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, int16_t sGridNo, int8_t bLevel) {
+void AddSmokeEffectToTile(int32_t iSmokeEffectID, int8_t bType, int16_t sGridNo, int8_t bLevel) {
   ANITILE_PARAMS AniParams;
   SMOKEEFFECT *pSmoke;
   BOOLEAN fDissipating = FALSE;

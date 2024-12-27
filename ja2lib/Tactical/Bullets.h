@@ -17,7 +17,7 @@ struct SOLDIERTYPE;
 #define BULLET_FLAG_FLAME 0x0080
 
 typedef struct {
-  INT32 iBullet;
+  int32_t iBullet;
   uint8_t ubFirerID;
   uint8_t ubTargetID;
   int8_t bStartCubesAboveLevelZ;
@@ -32,13 +32,13 @@ typedef struct {
   FIXEDPT qIncrY;
   FIXEDPT qIncrZ;
   DOUBLE ddHorizAngle;
-  INT32 iCurrTileX;
-  INT32 iCurrTileY;
+  int32_t iCurrTileX;
+  int32_t iCurrTileY;
   int8_t bLOSIndexX;
   int8_t bLOSIndexY;
   BOOLEAN fCheckForRoof;
-  INT32 iCurrCubesZ;
-  INT32 iLoop;
+  int32_t iCurrCubesZ;
+  int32_t iLoop;
   BOOLEAN fAllocated;
   BOOLEAN fToDelete;
   BOOLEAN fLocated;
@@ -50,10 +50,10 @@ typedef struct {
   struct SOLDIERTYPE *pFirer;
   uint32_t sTargetGridNo;
   int16_t sHitBy;
-  INT32 iImpact;
-  INT32 iImpactReduction;
-  INT32 iRange;
-  INT32 iDistanceLimit;
+  int32_t iImpact;
+  int32_t iImpactReduction;
+  int32_t iRange;
+  int32_t iDistanceLimit;
   uint16_t usFlags;
   ANITILE *pAniTile;
   ANITILE *pShadowAniTile;
@@ -63,17 +63,17 @@ typedef struct {
 
 extern uint32_t guiNumBullets;
 
-INT32 CreateBullet(uint8_t ubFirer, BOOLEAN fFake, uint16_t usFlags);
-void RemoveBullet(INT32 iBullet);
-void StopBullet(INT32 iBullet);
+int32_t CreateBullet(uint8_t ubFirer, BOOLEAN fFake, uint16_t usFlags);
+void RemoveBullet(int32_t iBullet);
+void StopBullet(int32_t iBullet);
 void UpdateBullets();
-BULLET *GetBulletPtr(INT32 iBullet);
+BULLET *GetBulletPtr(int32_t iBullet);
 
 void DeleteAllBullets();
 
-void LocateBullet(INT32 iBulletIndex);
+void LocateBullet(int32_t iBulletIndex);
 
-void HandleBulletSpecialFlags(INT32 iBulletIndex);
+void HandleBulletSpecialFlags(int32_t iBulletIndex);
 
 void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qCurrZ);
 

@@ -163,7 +163,7 @@ void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...);
 void BeginMapUIMessage(uint8_t fPosition, CHAR16 *pFontString, ...);
 
 extern uint16_t gusUIOldSelectedSoldier;
-extern INT32 giUIMessageOverlay;
+extern int32_t giUIMessageOverlay;
 extern uint32_t guiUIMessageTime;
 
 typedef enum {

@@ -65,15 +65,15 @@ enum {
 
 typedef void (*MSGBOX_CALLBACK)(uint8_t bExitValue);
 
-INT32 DoMapMessageBox(uint8_t ubStyle, CHAR16* zString, uint32_t uiExitScreen, uint16_t usFlags,
-                      MSGBOX_CALLBACK ReturnCallback);
+int32_t DoMapMessageBox(uint8_t ubStyle, CHAR16* zString, uint32_t uiExitScreen, uint16_t usFlags,
+                        MSGBOX_CALLBACK ReturnCallback);
 
 void DoScreenIndependantMessageBox(CHAR16* zString, uint16_t usFlags,
                                    MSGBOX_CALLBACK ReturnCallback);
 void DoLowerScreenIndependantMessageBox(CHAR16* zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback);
-INT32 DoMessageBox(uint8_t ubStyle, CHAR16* zString, uint32_t uiExitScreen, uint16_t usFlags,
-                   MSGBOX_CALLBACK ReturnCallback, const SGPRect* pCenteringRect);
+int32_t DoMessageBox(uint8_t ubStyle, CHAR16* zString, uint32_t uiExitScreen, uint16_t usFlags,
+                     MSGBOX_CALLBACK ReturnCallback, const SGPRect* pCenteringRect);
 
 ///////////////////////////////////////////////////////////////////
 //

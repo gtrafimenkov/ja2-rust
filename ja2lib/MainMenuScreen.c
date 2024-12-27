@@ -61,8 +61,8 @@ enum {
 #define MAINMENU_Y 277  // 200
 #define MAINMENU_Y_SPACE 37
 
-INT32 iMenuImages[NUM_MENU_ITEMS];
-INT32 iMenuButtons[NUM_MENU_ITEMS];
+int32_t iMenuImages[NUM_MENU_ITEMS];
+int32_t iMenuButtons[NUM_MENU_ITEMS];
 
 uint16_t gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 
@@ -82,13 +82,13 @@ uint32_t guiMainMenuExitScreen = MAINMENU_SCREEN;
 extern BOOLEAN gfLoadGameUponEntry;
 
 void ExitMainMenu();
-void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void MenuButtonCallback(GUI_BUTTON *btn, int32_t reason);
 void HandleMainMenuInput();
 void HandleMainMenuScreen();
 void DisplayAssignmentText();
 void ClearMainMenu();
 void HandleHelpScreenInput();
-void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 void SetMainMenuExitScreen(uint32_t uiNewScreen);
 void CreateDestroyBackGroundMouseMask(BOOLEAN fCreate);
 BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate);
@@ -300,7 +300,7 @@ void ExitMainMenu() {
   */
 }
 
-void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void MenuButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   int8_t bID;
 
   bID = (uint8_t)((uintptr_t)btn->UserData[0]);
@@ -326,7 +326,7 @@ void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MenuButtonMoveCallback(GUI_BUTTON *btn, INT32 reason) {
+void MenuButtonMoveCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     //		btn->uiFlags &= (~BUTTON_CLICKED_ON );
     RenderMainMenu();
@@ -412,7 +412,7 @@ void ClearMainMenu() {
   InvalidateScreen();
 }
 
-void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     //		if( gfDoHelpScreen )
@@ -463,10 +463,10 @@ void CreateDestroyBackGroundMouseMask(BOOLEAN fCreate) {
 
 BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
   static BOOLEAN fButtonsCreated = FALSE;
-  INT32 cnt;
+  int32_t cnt;
   SGPFILENAME filename;
   int16_t sSlot;
-  INT32 iStartLoc = 0;
+  int32_t iStartLoc = 0;
 #ifndef _DEBUG
   CHAR16 zText[512];
 #endif

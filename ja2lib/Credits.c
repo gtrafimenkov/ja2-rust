@@ -262,8 +262,8 @@ loading screens too!)",	// Joey \"Joeker\" Whelan",
 // Global Variables
 
 struct MOUSE_REGION gCrdtMouseRegions[NUM_PEOPLE_IN_CREDITS];
-void SelectCreditFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectCreditFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 uint32_t guiCreditBackGroundImage;
 uint32_t guiCreditFaces;
@@ -279,7 +279,7 @@ CRDT_NODE *gCrdtLastAddedNode = NULL;
 BOOLEAN gfCrdtHaveRenderedFirstFrameToSaveBuffer;  // need to render background image to save buffer
                                                    // once
 
-INT32 giCurrentlySelectedFace = -1;
+int32_t giCurrentlySelectedFace = -1;
 
 //
 // VAriables needed for processing of the nodes:
@@ -1184,14 +1184,14 @@ void HandleCreditFlags(uint32_t uiFlags) {
   }
 }
 
-void SelectCreditFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectCreditFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
   }
 }
 
-void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     giCurrentlySelectedFace = -1;
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {

@@ -86,7 +86,7 @@ extern CurrentPopupMenuInformation gPopup;
 extern uint16_t *popupMenuStrings[5];
 
 // These are the two main functions that outside users would call.
-void InitPopupMenu(INT32 iButtonID, uint8_t ubPopupMenuID, uint8_t ubDirection);
+void InitPopupMenu(int32_t iButtonID, uint8_t ubPopupMenuID, uint8_t ubDirection);
 BOOLEAN ProcessPopupMenuIfActive();
 
 // Internal functions that handled by ProcessPopupMenuIfActive

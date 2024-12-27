@@ -29,16 +29,16 @@ extern BUILDINGLAYOUTNODE *gpBuildingLayoutList;
 extern int16_t gsBuildingLayoutAnchorGridNo;
 
 // The first step is copying a building.  After that, it either must be pasted or moved.
-void CopyBuilding(INT32 iMapIndex);
-void MoveBuilding(INT32 iMapIndex);
-void PasteBuilding(INT32 iMapIndex);
+void CopyBuilding(int32_t iMapIndex);
+void MoveBuilding(int32_t iMapIndex);
+void PasteBuilding(int32_t iMapIndex);
 void DeleteBuildingLayout();
 
-void ReplaceBuildingWithNewRoof(INT32 iMapIndex);
+void ReplaceBuildingWithNewRoof(int32_t iMapIndex);
 void UpdateWallsView();
 void UpdateRoofsView();
 
-void InitDoorEditing(INT32 iMapIndex);
+void InitDoorEditing(int32_t iMapIndex);
 void ExtractAndUpdateDoorInfo();
 void KillDoorEditing();
 void RenderDoorEditingWindow();

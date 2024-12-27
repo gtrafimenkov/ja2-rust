@@ -123,7 +123,7 @@ enum {
   NUM_MATERIAL_TYPES
 };
 
-extern INT32 guiMaterialHitSound[NUM_MATERIAL_TYPES];
+extern int32_t guiMaterialHitSound[NUM_MATERIAL_TYPES];
 
 struct STRUCTURE *FindStructureBySavedInfo(int16_t sGridNo, uint8_t ubType,
                                            uint8_t ubWallOrientation, int8_t bLevel);

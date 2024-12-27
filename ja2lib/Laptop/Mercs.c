@@ -162,7 +162,7 @@ uint32_t guiMercVideoPopupBackground;
 uint8_t gubMercArray[NUMBER_OF_MERCS];
 uint8_t gubCurMercIndex;
 
-INT32 iMercPopUpBox = -1;
+int32_t iMercPopUpBox = -1;
 
 uint16_t gusPositionOfSpecksDialogBox_X;
 wchar_t gsSpeckDialogueTextPopUp[900];
@@ -181,7 +181,7 @@ enum {
 
 uint8_t gubCurrentMercVideoMode;
 BOOLEAN gfMercVideoIsBeingDisplayed;
-INT32 giVideoSpeckFaceIndex;
+int32_t giVideoSpeckFaceIndex;
 uint16_t gusMercVideoSpeckSpeech;
 
 BOOLEAN gfDisplaySpeckTextBox = FALSE;
@@ -228,22 +228,22 @@ NUMBER_TIMES_QUOTE_SAID gNumberOfTimesQuoteSaid[MERC_NUMBER_OF_RANDOM_QUOTES] = 
 //
 
 // The Account Box button
-void BtnAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnAccountBoxButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiAccountBoxButton;
-INT32 guiAccountBoxButtonImage;
+int32_t guiAccountBoxButtonImage;
 
 // File Box
 uint32_t guiFileBoxButton;
-void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnFileBoxButtonCallback(GUI_BUTTON *btn, int32_t reason);
 
 // The 'X' to close the video conf window button
-void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiXToCloseMercVideoButton;
-INT32 guiXToCloseMercVideoButtonImage;
+int32_t guiXToCloseMercVideoButtonImage;
 
 // Mouse region for the subtitles region when the merc is talking
 struct MOUSE_REGION gMercSiteSubTitleMouseRegion;
-void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 //*******************************
 //
@@ -620,7 +620,7 @@ BOOLEAN RemoveMercBackGround() {
   return (TRUE);
 }
 
-void BtnAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnAccountBoxButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -653,7 +653,7 @@ void BtnAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFileBoxButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -680,7 +680,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
   struct SOLDIERTYPE *pSoldier;
   int16_t sSoldierID, i;
   uint8_t ubMercID;
-  INT32 iNumDays;
+  int32_t iNumDays;
 
   // if its the first day, leave
   if (usDate == 1) return;
@@ -1242,7 +1242,7 @@ BOOLEAN InitDestroyXToCloseVideoWindow(BOOLEAN fCreate) {
   return (TRUE);
 }
 
-void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1396,7 +1396,7 @@ void HandleTalkingSpeck() {
 
 void DisplayTextForSpeckVideoPopUp(STR16 pString) {
   uint16_t usActualHeight;
-  INT32 iOldMercPopUpBoxId = iMercPopUpBox;
+  int32_t iOldMercPopUpBoxId = iMercPopUpBox;
 
   // If the user has selected no subtitles
   if (!gGameSettings.fOptions[TOPTION_SUBTITLES]) return;
@@ -1778,7 +1778,7 @@ uint8_t CountNumberOfMercMercsWhoAreDead() {
 }
 
 // Mouse Call back for the pop up text box
-void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP ||
              iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {

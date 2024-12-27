@@ -70,7 +70,7 @@
 // town loyalty table
 TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
 
-INT32 iTownDistances[NUM_TOWNS][NUM_TOWNS];
+int32_t iTownDistances[NUM_TOWNS][NUM_TOWNS];
 
 #define BASIC_COST_FOR_CIV_MURDER (10 * GAIN_PTS_PER_LOYALTY_PT)
 
@@ -148,7 +148,7 @@ void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
 /* ARM: Civilian theft of items was removed
 // handle theft by civi in a town sector
-void HandleTheftByCiviliansInSector( int16_t sX, int16_t sY, INT32 iLoyalty );
+void HandleTheftByCiviliansInSector( int16_t sX, int16_t sY, int32_t iLoyalty );
 
 // handle theft in all towns
 void HandleTownTheft( void );
@@ -349,9 +349,9 @@ void HandleTownLoyalty(void) { return; }
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) {
   // handle the impact on loyalty of the murder of a civilian
   TownID bTownId = 0;
-  INT32 iLoyaltyChange = 0;
+  int32_t iLoyaltyChange = 0;
   int8_t bSeenState = 0;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pCivSoldier = NULL;
   uint32_t uiChanceFalseAccusal = 0;
   int8_t bKillerTeam = 0;
@@ -736,7 +736,7 @@ void CalcDistancesBetweenTowns(void) {
   uint8_t ubTownA, ubTownB;
   uint32_t uiCounterA, uiCounterB;
   uint8_t ubTempGroupId = 0;
-  INT32 iDistance = 0;
+  int32_t iDistance = 0;
 
   // this is a little bit tricky, since towns can have multiple sectors, we have to measure all
   // possible combinations
@@ -800,7 +800,7 @@ void WriteOutDistancesBetweenTowns(void) {
   hFileHandle =
       FileMan_Open("BinaryData\\TownDistances.dat", FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
 
-  FileMan_Write(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
+  FileMan_Write(hFileHandle, &(iTownDistances), (sizeof(int32_t) * NUM_TOWNS * NUM_TOWNS), NULL);
 
   // close file
   FileMan_Close(hFileHandle);
@@ -857,7 +857,7 @@ void ReadInDistancesBetweenTowns(void) {
 
   hFileHandle = FileMan_Open("BinaryData\\TownDistances.dat", FILE_ACCESS_READ, FALSE);
 
-  FileMan_Read(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
+  FileMan_Read(hFileHandle, &(iTownDistances), (sizeof(int32_t) * NUM_TOWNS * NUM_TOWNS), NULL);
 
   // close file
   FileMan_Close(hFileHandle);
@@ -865,7 +865,7 @@ void ReadInDistancesBetweenTowns(void) {
   return;
 }
 
-INT32 GetTownDistances(uint8_t ubTown, uint8_t ubTownA) {
+int32_t GetTownDistances(uint8_t ubTown, uint8_t ubTownA) {
   return (iTownDistances[ubTown][ubTownA]);
 }
 
@@ -914,8 +914,8 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
   }
 }
 
-INT32 GetNumberOfWholeTownsUnderControl(void) {
-  INT32 iNumber = 0;
+int32_t GetNumberOfWholeTownsUnderControl(void) {
+  int32_t iNumber = 0;
   TownID bTownId = 0;
 
   // run through the list of towns..if the entire town is under player control, then increment the
@@ -931,8 +931,8 @@ INT32 GetNumberOfWholeTownsUnderControl(void) {
   return (iNumber);
 }
 
-INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude) {
-  INT32 iNumber = 0;
+int32_t GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude) {
+  int32_t iNumber = 0;
   TownID bTownId = 0;
 
   // run through the list of towns..if the entire town is under player control, then increment the
@@ -948,7 +948,7 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude) {
 }
 
 // is the ENTIRE town under player control?
-INT32 IsTownUnderCompleteControlByPlayer(TownID bTownId) {
+int32_t IsTownUnderCompleteControlByPlayer(TownID bTownId) {
   if (GetTownSectorSize(bTownId) == GetTownSectorsUnderControl(bTownId)) {
     return (TRUE);
   }
@@ -957,7 +957,7 @@ INT32 IsTownUnderCompleteControlByPlayer(TownID bTownId) {
 }
 
 // is the ENTIRE town under enemy control?
-INT32 IsTownUnderCompleteControlByEnemy(TownID bTownId) {
+int32_t IsTownUnderCompleteControlByEnemy(TownID bTownId) {
   if (GetTownSectorsUnderControl(bTownId) == 0) {
     return (TRUE);
   }
@@ -1008,7 +1008,7 @@ void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease) {
 }
 // this applies the change to every town differently, depending on the distance from the event
 void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  INT32 iLoyaltyChange;
+  int32_t iLoyaltyChange;
   TownID bTownId = 0;
 
   if (bSectorZ == 0) {
@@ -1078,16 +1078,16 @@ void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int
   AffectAllTownsLoyaltyByDistanceFrom(iLoyaltyChange, sSectorX, sSectorY, bSectorZ);
 }
 
-void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
+void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          int8_t bSectorZ) {
   int16_t sEventSector;
   uint8_t ubTempGroupId;
   TownID bTownId;
   uint32_t uiIndex;
-  INT32 iThisDistance;
-  INT32 iShortestDistance[NUM_TOWNS];
-  INT32 iPercentAdjustment;
-  INT32 iDistanceAdjustedLoyalty;
+  int32_t iThisDistance;
+  int32_t iShortestDistance[NUM_TOWNS];
+  int32_t iPercentAdjustment;
+  int32_t iDistanceAdjustedLoyalty;
 
   // preset shortest distances to high values prior to searching for a minimum
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {

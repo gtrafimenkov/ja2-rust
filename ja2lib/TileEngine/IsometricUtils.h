@@ -48,10 +48,10 @@ void ConvertGridNoToCenterCellXY(int16_t sGridNo, int16_t *sXPos, int16_t *sYPos
 // GRID NO MANIPULATION FUNCTIONS
 int16_t NewGridNo(int16_t sGridno, int16_t sDirInc);
 int16_t DirectionInc(int16_t sDirection);
-INT32 OutOfBounds(int16_t sGridno, int16_t sProposedGridno);
+int32_t OutOfBounds(int16_t sGridno, int16_t sProposedGridno);
 
 // Functions
-BOOLEAN GetMouseCell(INT32 *piMouseMapPos);
+BOOLEAN GetMouseCell(int32_t *piMouseMapPos);
 BOOLEAN GetMouseXY(int16_t *psMouseX, int16_t *psMouseY);
 BOOLEAN GetMouseWorldCoords(int16_t *psMouseX, int16_t *psMouseY);
 BOOLEAN GetMouseMapPos(int16_t *psMapPos);
@@ -64,10 +64,10 @@ void GetScreenXYWorldCoords(int16_t sScreenX, int16_t sScreenY, int16_t *pWorldX
 void GetScreenXYWorldCell(int16_t sScreenX, int16_t sScreenY, int16_t *psWorldCellX,
                           int16_t *psWorldCellY);
 void GetScreenXYGridNo(int16_t sScreenX, int16_t sScreenY, int16_t *psMapPos);
-void GetWorldXYAbsoluteScreenXY(INT32 sWorldCellX, INT32 sWorldCellY, int16_t *psWorldScreenX,
+void GetWorldXYAbsoluteScreenXY(int32_t sWorldCellX, int32_t sWorldCellY, int16_t *psWorldScreenX,
                                 int16_t *psWorldScreenY);
-void GetFromAbsoluteScreenXYWorldXY(INT32 *psWorldCellX, INT32 *psWorldCellY, int16_t sWorldScreenX,
-                                    int16_t sWorldScreenY);
+void GetFromAbsoluteScreenXYWorldXY(int32_t *psWorldCellX, int32_t *psWorldCellY,
+                                    int16_t sWorldScreenX, int16_t sWorldScreenY);
 
 void FromCellToScreenCoordinates(int16_t sCellX, int16_t sCellY, int16_t *psScreenX,
                                  int16_t *psScreenY);
@@ -88,8 +88,8 @@ BOOLEAN ConvertMapPosToWorldTileCenter(uint16_t usMapPos, int16_t *psXPos, int16
 
 BOOLEAN CellXYToScreenXY(int16_t sCellX, int16_t sCellY, int16_t *sScreenX, int16_t *sScreenY);
 
-INT32 GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
-INT32 GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
+int32_t GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
+int32_t GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
 
 BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, SGPRect *pRect);
 BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, SGPRect *pRect,

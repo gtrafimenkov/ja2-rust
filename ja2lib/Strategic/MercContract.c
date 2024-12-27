@@ -49,7 +49,7 @@ void HandleSoldierLeavingForAnotherContract(struct SOLDIERTYPE *pSoldier);
 // BOOLEAN SoldierWantsToDelayRenewalOfContract( struct SOLDIERTYPE *pSoldier );
 void HandleNotifyPlayerCantAffordInsurance(void);
 void HandleNotifyPlayerCanAffordInsurance(struct SOLDIERTYPE *pSoldier, uint8_t ubLength,
-                                          INT32 iCost);
+                                          int32_t iCost);
 void ExtendMercInsuranceContractCallBack(uint8_t bExitValue);
 void HandleUniqueEventWhenPlayerLeavesTeam(struct SOLDIERTYPE *pSoldier);
 
@@ -118,7 +118,7 @@ BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile) {
 }
 
 void BeginContractRenewalSequence() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fFoundAtLeastOne = FALSE;
 
@@ -280,11 +280,11 @@ void HandleMercIsNotWillingToRenew(uint8_t ubID) {
 
 // This is used only to EXTEND the contract of an AIM merc already on the team
 BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, uint8_t ubDesiredAction) {
-  INT32 iContractCharge = 0;
-  INT32 iContractLength = 0;
+  int32_t iContractCharge = 0;
+  int32_t iContractLength = 0;
   uint8_t ubHistoryContractType = 0;
   uint8_t ubFinancesContractType = 0;
-  INT32 iCostOfInsurance = 0;
+  int32_t iCostOfInsurance = 0;
 
   // determins what kind of merc the contract is being extended for (only aim mercs can extend
   // contract)
@@ -642,7 +642,7 @@ BOOLEAN SoldierWantsToDelayRenewalOfContract( struct SOLDIERTYPE *pSoldier )
 {
 
         int8_t bTypeOfCurrentContract = 0; // what kind of contract the merc has..1 day, week or 2
-week INT32 iLeftTimeOnContract = 0; // how much time til contract expires..in minutes INT32
+week int32_t iLeftTimeOnContract = 0; // how much time til contract expires..in minutes int32_t
 iToleranceLevelForContract = 0; // how much time before contract ends before merc actually speaks
 thier mind
 
@@ -685,7 +685,7 @@ player if( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC ) return( FALSE 
 // this is called once a day (daily update) for every merc working for the player
 void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiFullDaysRemaining = 0;
-  INT32 iChance = 0;
+  int32_t iChance = 0;
 
   // aim merc?
   if (pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC) return;
@@ -720,7 +720,7 @@ void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
     // multiply by experience level
     iChance *= pSoldier->bExpLevel;
 
-    if ((INT32)Random(100) < iChance) {
+    if ((int32_t)Random(100) < iChance) {
       // B'bye!
       pSoldier->fSignedAnotherContract = TRUE;
     }
@@ -852,7 +852,7 @@ BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
-  INT32 iRefundAmount = 0;
+  int32_t iRefundAmount = 0;
 
   // if the merc didnt have any medical deposit, exit
   if (!gMercProfiles[GetSolProfile(pSoldier)].bMedicalDeposit) return;
@@ -881,7 +881,7 @@ void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
   else {
     // use the medical deposit in pSoldier, not in profile, which goes up with leveling
     iRefundAmount =
-        (INT32)((pSoldier->bLife / (FLOAT)pSoldier->bLifeMax) * pSoldier->usMedicalDeposit + 0.5);
+        (int32_t)((pSoldier->bLife / (FLOAT)pSoldier->bLifeMax) * pSoldier->usMedicalDeposit + 0.5);
 
     // add an entry in the finacial page for a PARTIAL refund of the medical deposit
     AddTransactionToPlayersBook(PARTIAL_MEDICAL_REFUND, GetSolProfile(pSoldier), iRefundAmount);
@@ -1133,7 +1133,7 @@ void HandleExtendMercsContract(struct SOLDIERTYPE *pSoldier) {
 void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void) {
   // find out is something was said
   struct SOLDIERTYPE *pSoldier = NULL, *pSoldierWhoWillQuit = NULL;
-  INT32 iCounter = 0, iNumberOnTeam = 0;
+  int32_t iCounter = 0, iNumberOnTeam = 0;
   uint8_t ubPotentialMercs[20] = {0};
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
@@ -1223,7 +1223,7 @@ void HandleNotifyPlayerCantAffordInsurance(void) {
 }
 
 void HandleNotifyPlayerCanAffordInsurance(struct SOLDIERTYPE *pSoldier, uint8_t ubLength,
-                                          INT32 iCost) {
+                                          int32_t iCost) {
   CHAR16 sString[128];
   CHAR16 sStringA[32];
 
@@ -1290,7 +1290,7 @@ BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiCheckHour;
 
   // First at least make sure same day....
-  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
+  if ((pSoldier->iEndofContractTime / 1440) <= (int32_t)GetWorldDay()) {
     uiCheckHour = GetHourWhenContractDone(pSoldier);
 
     // See if the hour we are on is the same....
@@ -1308,7 +1308,7 @@ BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiCheckHour;
 
   // First at least make sure same day....
-  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
+  if ((pSoldier->iEndofContractTime / 1440) <= (int32_t)GetWorldDay()) {
     uiCheckHour = GetHourWhenContractDone(pSoldier);
 
     // If we are <= 2 hours from expiry.

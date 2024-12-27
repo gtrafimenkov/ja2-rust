@@ -64,10 +64,10 @@ uint8_t CalcDeathRate(void) {
 }
 
 void ModifyPlayerReputation(int8_t bRepChange) {
-  INT32 iNewBadRep;
+  int32_t iNewBadRep;
 
   // subtract, so that a negative reputation change results in an increase in bad reputation
-  iNewBadRep = (INT32)gStrategicStatus.ubBadReputation - bRepChange;
+  iNewBadRep = (int32_t)gStrategicStatus.ubBadReputation - bRepChange;
 
   // keep within a 0-100 range (0 = Saint, 100 = Satan)
   iNewBadRep = max(0, iNewBadRep);

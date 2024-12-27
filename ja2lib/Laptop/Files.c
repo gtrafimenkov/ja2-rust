@@ -56,7 +56,7 @@
 #define FILES_COUNTER_3_WIDTH 45
 
 // the highlighted line
-INT32 iHighLightFileLine = -1;
+int32_t iHighLightFileLine = -1;
 
 // the files record list
 FilesUnitPtr pFilesListHead = NULL;
@@ -81,7 +81,7 @@ uint32_t guiTOP;
 uint32_t guiHIGHLIGHT;
 
 // currewnt page of multipage files we are on
-INT32 giFilesPage = 0;
+int32_t giFilesPage = 0;
 // strings
 
 #define SLAY_LENGTH 12
@@ -155,19 +155,19 @@ void CheckForUnreadFiles(void);
 void ClearFileStringList(void);
 void AddStringToFilesList(STR16 pString);
 BOOLEAN HandleSpecialFiles(uint8_t ubFormat);
-BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName);
+BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, STR sPictureName);
 
 // callbacks
-void FilesBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void BtnPreviousFilePageCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnNextFilePageCallback(GUI_BUTTON *btn, INT32 reason);
+void FilesBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void BtnPreviousFilePageCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnNextFilePageCallback(GUI_BUTTON *btn, int32_t reason);
 
 // file width manipulation
 void ClearOutWidthRecordsList(FileRecordWidthPtr pFileRecordWidthList);
 FileRecordWidthPtr CreateWidthRecordsForAruloIntelFile(void);
 FileRecordWidthPtr CreateWidthRecordsForTerroristFile(void);
-FileRecordWidthPtr CreateRecordWidth(INT32 iRecordNumber, INT32 iRecordWidth,
-                                     INT32 iRecordHeightAdjustment, uint8_t ubFlags);
+FileRecordWidthPtr CreateRecordWidth(int32_t iRecordNumber, int32_t iRecordWidth,
+                                     int32_t iRecordHeightAdjustment, uint8_t ubFlags);
 
 uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, STR8 pFirstPicFile,
                               STR8 pSecondPicFile) {
@@ -572,7 +572,7 @@ void DrawFilesListBackGround(void) { return; }
 void DisplayFilesList(void) {
   // this function will run through the list of files of files and display the 'sender'
   FilesUnitPtr pFilesList = pFilesListHead;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct VObject *hHandle;
 
   // font stuff
@@ -619,7 +619,7 @@ void DisplayFileMessage(void) {
 }
 
 void InitializeFilesMouseRegions(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   // init mouseregions
   for (iCounter = 0; iCounter < MAX_FILES_PAGE; iCounter++) {
     MSYS_DefineRegion(&pFilesRegions[iCounter], FILES_LIST_X,
@@ -635,15 +635,15 @@ void InitializeFilesMouseRegions(void) {
 }
 
 void RemoveFilesMouseRegions(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   for (iCounter = 0; iCounter < MAX_FILES_PAGE; iCounter++) {
     MSYS_RemoveRegion(&pFilesRegions[iCounter]);
   }
 }
 
-void FilesBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iFileId = -1;
-  INT32 iCounter = 0;
+void FilesBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iFileId = -1;
+  int32_t iCounter = 0;
   FilesUnitPtr pFilesList = pFilesListHead;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -689,11 +689,11 @@ BOOLEAN DisplayFormattedText(void) {
   uint16_t usFirstHeight = 0;
   uint16_t usSecondWidth;
   uint16_t usSecondHeight;
-  INT32 iCounter = 0;
-  INT32 iLength = 0;
-  INT32 iHeight = 0;
-  INT32 iOffSet = 0;
-  INT32 iMessageCode;
+  int32_t iCounter = 0;
+  int32_t iLength = 0;
+  int32_t iHeight = 0;
+  int32_t iOffSet = 0;
+  int32_t iMessageCode;
   wchar_t sString[2048];
   struct VObject *hHandle;
   uint32_t uiFirstTempPicture;
@@ -888,13 +888,13 @@ BOOLEAN DisplayFormattedText(void) {
 }
 
 BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   wchar_t sString[2048];
   FileStringPtr pTempString = NULL;
   FileStringPtr pLocatorString = NULL;
-  INT32 iYPositionOnPage = 0;
-  INT32 iFileLineWidth = 0;
-  INT32 iFileStartX = 0;
+  int32_t iYPositionOnPage = 0;
+  int32_t iFileLineWidth = 0;
+  int32_t iFileStartX = 0;
   uint32_t uiFlags = 0;
   uint32_t uiFont = 0;
   BOOLEAN fGoingOffCurrentPage = FALSE;
@@ -1002,7 +1002,7 @@ BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
                                                        uiFont, 0, sString, 0, 0, 0)) <
             MAX_FILE_MESSAGE_PAGE_SIZE) {
           // now print it
-          iYPositionOnPage += (INT32)IanDisplayWrappedString(
+          iYPositionOnPage += (int32_t)IanDisplayWrappedString(
               (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
               (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE,
               uiFlags);
@@ -1162,7 +1162,7 @@ void DeleteButtonsForFilesPage(void) {
 }
 
 // callbacks
-void BtnPreviousFilePageCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnPreviousFilePageCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1194,7 +1194,7 @@ void BtnPreviousFilePageCallback(GUI_BUTTON *btn, INT32 reason) {
   return;
 }
 
-void BtnNextFilePageCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnNextFilePageCallback(GUI_BUTTON *btn, int32_t reason) {
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -1259,8 +1259,8 @@ void HandleFileViewerButtonStates(void) {
   return;
 }
 
-FileRecordWidthPtr CreateRecordWidth(INT32 iRecordNumber, INT32 iRecordWidth,
-                                     INT32 iRecordHeightAdjustment, uint8_t ubFlags) {
+FileRecordWidthPtr CreateRecordWidth(int32_t iRecordNumber, int32_t iRecordWidth,
+                                     int32_t iRecordHeightAdjustment, uint8_t ubFlags) {
   FileRecordWidthPtr pTempRecord = NULL;
 
   // allocs and inits a width info record for the multipage file viewer...this will tell the
@@ -1356,7 +1356,7 @@ void ClearOutWidthRecordsList(FileRecordWidthPtr pFileRecordWidthList) {
 
 void OpenFirstUnreadFile(void) {
   // open the first unread file in the list
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   FilesUnitPtr pFilesList = pFilesListHead;
 
   // make sure is a valid
@@ -1400,19 +1400,19 @@ void CheckForUnreadFiles(void) {
   }
 }
 
-BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
-  INT32 iCounter = 0;
+BOOLEAN HandleSpecialTerroristFile(int32_t iFileNumber, STR sPictureName) {
+  int32_t iCounter = 0;
   wchar_t sString[2048];
   FileStringPtr pTempString = NULL;
   FileStringPtr pLocatorString = NULL;
-  INT32 iYPositionOnPage = 0;
-  INT32 iFileLineWidth = 0;
-  INT32 iFileStartX = 0;
+  int32_t iYPositionOnPage = 0;
+  int32_t iFileLineWidth = 0;
+  int32_t iFileStartX = 0;
   uint32_t uiFlags = 0;
   uint32_t uiFont = 0;
   BOOLEAN fGoingOffCurrentPage = FALSE;
   FileRecordWidthPtr WidthList = NULL;
-  INT32 iOffset = 0;
+  int32_t iOffset = 0;
   uint32_t uiPicture;
   struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
@@ -1481,7 +1481,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
                                                    0, sString, 0, 0, 0)) <
         MAX_FILE_MESSAGE_PAGE_SIZE) {
       // now print it
-      iYPositionOnPage += (INT32)IanDisplayWrappedString(
+      iYPositionOnPage += (int32_t)IanDisplayWrappedString(
           (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
           (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
 
@@ -1553,8 +1553,8 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
 }
 
 // add a file about this terrorist
-BOOLEAN AddFileAboutTerrorist(INT32 iProfileId) {
-  INT32 iCounter = 0;
+BOOLEAN AddFileAboutTerrorist(int32_t iProfileId) {
+  int32_t iCounter = 0;
 
   for (iCounter = 1; iCounter < 7; iCounter++) {
     if (usProfileIdsForTerroristFiles[iCounter] == iProfileId) {

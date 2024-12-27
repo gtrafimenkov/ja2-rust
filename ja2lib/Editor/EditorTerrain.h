@@ -15,8 +15,8 @@
 extern uint16_t usTotalWeight;
 extern BOOLEAN fPrevShowTerrainTileButtons;
 extern BOOLEAN fUseTerrainWeights;
-extern INT32 TerrainTileSelected, TerrainForegroundTile, TerrainBackgroundTile;
-extern INT32 TerrainTileDrawMode;
+extern int32_t TerrainTileSelected, TerrainForegroundTile, TerrainBackgroundTile;
+extern int32_t TerrainTileDrawMode;
 
 void EntryInitEditorTerrainInfo();
 void InitEditorTerrainToolbar();

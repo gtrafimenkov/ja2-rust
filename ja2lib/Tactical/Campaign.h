@@ -71,7 +71,7 @@ uint32_t RoundOffSalary(uint32_t uiSalary);
 uint16_t SubpointsPerPoint(uint8_t ubStat, int8_t bExpLevel);
 
 void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile);
-void HandleUnhiredMercDeaths(INT32 iProfileID);
+void HandleUnhiredMercDeaths(int32_t iProfileID);
 
 uint8_t CurrentPlayerProgressPercentage(void);
 uint8_t HighestPlayerProgressPercentage(void);

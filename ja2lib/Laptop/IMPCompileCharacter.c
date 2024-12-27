@@ -31,15 +31,15 @@
 
 #define HOW_MANY_ROLLS_FOR_SAME_SKILL_CHECK 20
 
-INT32 AttitudeList[ATTITUDE_LIST_SIZE];
-INT32 iLastElementInAttitudeList = 0;
+int32_t AttitudeList[ATTITUDE_LIST_SIZE];
+int32_t iLastElementInAttitudeList = 0;
 
-INT32 SkillsList[ATTITUDE_LIST_SIZE];
-INT32 BackupSkillsList[ATTITUDE_LIST_SIZE];
-INT32 iLastElementInSkillsList = 0;
+int32_t SkillsList[ATTITUDE_LIST_SIZE];
+int32_t BackupSkillsList[ATTITUDE_LIST_SIZE];
+int32_t iLastElementInSkillsList = 0;
 
-INT32 PersonalityList[ATTITUDE_LIST_SIZE];
-INT32 iLastElementInPersonalityList = 0;
+int32_t PersonalityList[ATTITUDE_LIST_SIZE];
+int32_t iLastElementInPersonalityList = 0;
 
 extern BOOLEAN fLoadingCharacterForPreviousImpProfile;
 
@@ -165,12 +165,12 @@ if( iPersonality != NO_PERSONALITYTRAIT )
 
 void CreatePlayerAttitude(void) {
   // this function will 'roll a die' and decide if any attitude does exists
-  INT32 iDiceValue = 0;
-  INT32 iCounter = 0, iCounter2 = 0;
+  int32_t iDiceValue = 0;
+  int32_t iCounter = 0, iCounter2 = 0;
 
-  INT32 iAttitudeHits[NUM_ATTITUDES] = {0};
-  INT32 iHighestHits = 0;
-  INT32 iNumAttitudesWithHighestHits = 0;
+  int32_t iAttitudeHits[NUM_ATTITUDES] = {0};
+  int32_t iHighestHits = 0;
+  int32_t iNumAttitudesWithHighestHits = 0;
 
   iAttitude = ATT_NORMAL;
 
@@ -241,7 +241,7 @@ void AddAnAttitudeToAttitudeList(int8_t bAttitude) {
 
   if (iLastElementInAttitudeList < ATTITUDE_LIST_SIZE) {
     // add element
-    AttitudeList[iLastElementInAttitudeList] = (INT32)bAttitude;
+    AttitudeList[iLastElementInAttitudeList] = (int32_t)bAttitude;
 
     // increment attitude list counter
     iLastElementInAttitudeList++;
@@ -255,7 +255,7 @@ void AddSkillToSkillList(int8_t bSkill) {
 
   if (iLastElementInSkillsList < ATTITUDE_LIST_SIZE) {
     // add element
-    SkillsList[iLastElementInSkillsList] = (INT32)bSkill;
+    SkillsList[iLastElementInSkillsList] = (int32_t)bSkill;
 
     // increment attitude list counter
     iLastElementInSkillsList++;
@@ -264,12 +264,12 @@ void AddSkillToSkillList(int8_t bSkill) {
   return;
 }
 
-void RemoveSkillFromSkillsList(INT32 iIndex) {
-  INT32 iLoop;
+void RemoveSkillFromSkillsList(int32_t iIndex) {
+  int32_t iLoop;
 
   // remove a skill from the index given and shorten the list
   if (iIndex < iLastElementInSkillsList) {
-    memset(BackupSkillsList, 0, ATTITUDE_LIST_SIZE * sizeof(INT32));
+    memset(BackupSkillsList, 0, ATTITUDE_LIST_SIZE * sizeof(int32_t));
 
     // use the backup array to create a version of the array without
     // this index
@@ -280,15 +280,15 @@ void RemoveSkillFromSkillsList(INT32 iIndex) {
       BackupSkillsList[iLoop - 1] = SkillsList[iLoop];
     }
     // now copy this over to the skills list
-    memcpy(SkillsList, BackupSkillsList, ATTITUDE_LIST_SIZE * sizeof(INT32));
+    memcpy(SkillsList, BackupSkillsList, ATTITUDE_LIST_SIZE * sizeof(int32_t));
 
     // reduce recorded size by 1
     iLastElementInSkillsList--;
   }
 }
 
-INT32 FindSkillInSkillsList(INT32 iSkill) {
-  INT32 iLoop;
+int32_t FindSkillInSkillsList(int32_t iSkill) {
+  int32_t iLoop;
 
   for (iLoop = 0; iLoop < iLastElementInSkillsList; iLoop++) {
     if (SkillsList[iLoop] == iSkill) {
@@ -300,7 +300,7 @@ INT32 FindSkillInSkillsList(INT32 iSkill) {
 }
 
 void ValidateSkillsList(void) {
-  INT32 iIndex, iValue;
+  int32_t iIndex, iValue;
   MERCPROFILESTRUCT* pProfile;
 
   // remove from the generated traits list any traits that don't match
@@ -349,7 +349,7 @@ void ValidateSkillsList(void) {
 
 void CreatePlayerSkills(void) {
   // this function will 'roll a die' and decide if any attitude does exists
-  INT32 iDiceValue = 0;
+  int32_t iDiceValue = 0;
 
   ValidateSkillsList();
 
@@ -417,7 +417,7 @@ void AddAPersonalityToPersonalityList(int8_t bPersonlity) {
   // will add a persoanlity to persoanlity list
   if (iLastElementInPersonalityList < ATTITUDE_LIST_SIZE) {
     // add element
-    PersonalityList[iLastElementInPersonalityList] = (INT32)bPersonlity;
+    PersonalityList[iLastElementInPersonalityList] = (int32_t)bPersonlity;
 
     // increment attitude list counter
     iLastElementInPersonalityList++;
@@ -437,9 +437,9 @@ void CreatePlayerPersonality(void) {
 
   /*
     // this function will 'roll a die' and decide if any Personality does exists
-    INT32 iDiceValue = 0;
-    INT32 iCounter = 0;
-          INT32 iSecondAttempt = -1;
+    int32_t iDiceValue = 0;
+    int32_t iCounter = 0;
+          int32_t iSecondAttempt = -1;
 
           // roll dice
           iDiceValue = Random( iLastElementInPersonalityList + 1 );

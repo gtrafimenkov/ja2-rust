@@ -239,7 +239,7 @@ void DecayStrategicMoraleModifiers(void) {
 }
 
 void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
-  INT32 iActualMorale;
+  int32_t iActualMorale;
 
   if (pSoldier->fMercAsleep) {
     // delay this till later!
@@ -247,9 +247,9 @@ void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
   }
 
   // CJC, April 19, 1999: added up to 20% morale boost according to progress
-  iActualMorale = DEFAULT_MORALE + (INT32)pSoldier->bTeamMoraleMod +
-                  (INT32)pSoldier->bTacticalMoraleMod + (INT32)pSoldier->bStrategicMoraleMod +
-                  (INT32)(CurrentPlayerProgressPercentage() / 5);
+  iActualMorale = DEFAULT_MORALE + (int32_t)pSoldier->bTeamMoraleMod +
+                  (int32_t)pSoldier->bTacticalMoraleMod + (int32_t)pSoldier->bStrategicMoraleMod +
+                  (int32_t)(CurrentPlayerProgressPercentage() / 5);
 
   // ATE: Modify morale based on drugs....
   iActualMorale += ((pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE] * DRUG_EFFECT_MORALE_MOD) / 100);
@@ -265,7 +265,7 @@ void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
 
 void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, int8_t bMoraleMod) {
   MERCPROFILESTRUCT *pProfile;
-  INT32 iMoraleModTotal;
+  int32_t iMoraleModTotal;
 
   if (!IsSolActive(pSoldier) || (pSoldier->bLife < CONSCIOUSNESS) ||
       (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || AM_A_ROBOT(pSoldier) || AM_AN_EPC(pSoldier)) {
@@ -325,19 +325,19 @@ void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, int8_t bM
   }
   // apply change!
   if (ubType == TACTICAL_MORALE_EVENT) {
-    iMoraleModTotal = (INT32)pSoldier->bTacticalMoraleMod + (INT32)bMoraleMod;
+    iMoraleModTotal = (int32_t)pSoldier->bTacticalMoraleMod + (int32_t)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
     pSoldier->bTacticalMoraleMod = (int8_t)iMoraleModTotal;
   } else if (gTacticalStatus.fEnemyInSector && !pSoldier->bInSector)  // delayed strategic
   {
-    iMoraleModTotal = (INT32)pSoldier->bDelayedStrategicMoraleMod + (INT32)bMoraleMod;
+    iMoraleModTotal = (int32_t)pSoldier->bDelayedStrategicMoraleMod + (int32_t)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
     pSoldier->bDelayedStrategicMoraleMod = (int8_t)iMoraleModTotal;
   } else  // strategic
   {
-    iMoraleModTotal = (INT32)pSoldier->bStrategicMoraleMod + (INT32)bMoraleMod;
+    iMoraleModTotal = (int32_t)pSoldier->bStrategicMoraleMod + (int32_t)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
     pSoldier->bStrategicMoraleMod = (int8_t)iMoraleModTotal;
@@ -649,7 +649,7 @@ void HourlyMoraleUpdate(void) {
   int8_t bActualTeamOpinion;
   int8_t bTeamMoraleModChange, bTeamMoraleModDiff;
   int8_t bOpinion = -1;
-  INT32 iTotalOpinions;
+  int32_t iTotalOpinions;
   int8_t bNumTeamMembers;
   int8_t bHighestTeamLeadership = 0;
   int8_t bLastTeamID;
@@ -729,7 +729,7 @@ void HourlyMoraleUpdate(void) {
               // scale according to how close to we are to snapping
               // KM : Divide by 0 error found.  Wrapped into an if statement.
               if (pProfile->bHatedTime[bHated]) {
-                bOpinion = ((INT32)bOpinion) *
+                bOpinion = ((int32_t)bOpinion) *
                            (pProfile->bHatedTime[bHated] - pProfile->bHatedCount[bHated]) /
                            pProfile->bHatedTime[bHated];
               }

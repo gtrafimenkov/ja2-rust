@@ -19,7 +19,7 @@ uint8_t ubDrugEffect[] = {15, 8};
 uint8_t ubDrugSideEffect[] = {20, 10};
 uint8_t ubDrugSideEffectRate[] = {2, 1};
 
-INT32 giDrunkModifier[] = {
+int32_t giDrunkModifier[] = {
     100,  // Sober
     75,   // Feeling good,
     65,   // Bporderline
@@ -179,8 +179,8 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
 }
 
 void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt, cnt2;
-  INT32 iNumLoops;
+  int32_t cnt, cnt2;
+  int32_t iNumLoops;
   //	int8_t bBandaged;
 
   for (cnt = 0; cnt < NUM_COMPLEX_DRUGS; cnt++) {
@@ -357,7 +357,7 @@ int8_t GetDrunkLevel(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT32 EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, INT32 iStat) {
+int32_t EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, int32_t iStat) {
   return ((iStat * giDrunkModifier[GetDrunkLevel(pSoldier)] / 100));
 }
 

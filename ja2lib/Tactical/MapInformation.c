@@ -79,7 +79,7 @@ initialize the original padding to -1.
 BOOLEAN ValidateEntryPointGridNo(int16_t *sGridNo) {
   int16_t sXMapPos, sYMapPos;
   int16_t sWorldX, sWorldY;
-  INT32 iNewMapX, iNewMapY;
+  int32_t iNewMapX, iNewMapY;
   int16_t sTopLimit, sBottomLimit;
 
   if (*sGridNo < 0) return FALSE;  // entry point is non-existant
@@ -170,7 +170,7 @@ void UpdateOldVersionMap() {
     curr = gSoldierInitHead;
     while (curr) {
       if (curr->pDetailedPlacement) {
-        INT32 i;
+        int32_t i;
         for (i = 0; i < NUM_INV_SLOTS; i++) {
           if (!curr->pDetailedPlacement->Inv[i].usItem) {
             if (curr->pDetailedPlacement->Inv[i].fFlags & OBJECT_UNDROPPABLE) {
@@ -214,7 +214,7 @@ void UpdateOldVersionMap() {
 
 void AutoCalculateItemNoOverwriteStatus() {
   SOLDIERINITNODE *curr;
-  INT32 i;
+  int32_t i;
   struct OBJECTTYPE *pItem;
 
   // Recalculate the "no overwrite" status flag on all items.  There are two different cases:

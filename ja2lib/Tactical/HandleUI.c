@@ -1263,7 +1263,7 @@ extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge,
                                   BOOLEAN fForceReselect, BOOLEAN fFromUI);
 
 uint32_t UIHandleSelectMerc(UI_EVENT *pUIEvent) {
-  INT32 iCurrentSquad;
+  int32_t iCurrentSquad;
 
   // Get merc index at mouse and set current selection
   if (gfUIFullTargetFound) {
@@ -1905,7 +1905,7 @@ uint32_t UIHandleCOnTerrain(UI_EVENT *pUIEvent) { return (GAME_SCREEN); }
 
 uint32_t UIHandleMAdjustStanceMode(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 iPosDiff;
+  int32_t iPosDiff;
   static uint16_t gusAnchorMouseY;
   static uint16_t usOldMouseY;
   static BOOLEAN ubNearHeigherLevel;
@@ -1991,7 +1991,7 @@ uint32_t UIHandleMAdjustStanceMode(UI_EVENT *pUIEvent) {
   }
 
   // Check if delta X has changed alot since last time
-  iPosDiff = abs((INT32)(usOldMouseY - gusMouseYPos));
+  iPosDiff = abs((int32_t)(usOldMouseY - gusMouseYPos));
 
   // guiShowUPDownArrows = ARROWS_SHOW_DOWN_BESIDE | ARROWS_SHOW_UP_BESIDE;
   guiShowUPDownArrows = uiOldShowUPDownArrows;
@@ -2113,7 +2113,7 @@ uint32_t UIHandleCAOnTerrain(UI_EVENT *pUIEvent) {
 
 void UIHandleMercAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
                         uint16_t usMapPos) {
-  INT32 iHandleReturn;
+  int32_t iHandleReturn;
   int16_t sTargetGridNo;
   int8_t bTargetLevel;
   struct LEVELNODE *pIntNode;
@@ -2442,7 +2442,7 @@ void HandleObjectHighlighting() {
 }
 
 void AdjustSoldierCreationStartValues() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -3327,7 +3327,7 @@ int8_t DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint3
 
     // Check if we are on a target
     if (gfUIFullTargetFound) {
-      INT32 cnt;
+      int32_t cnt;
       int16_t sSpot;
       uint8_t ubGuyThere;
 
@@ -3878,7 +3878,7 @@ BOOLEAN MakeSoldierTurn(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYP
 uint32_t UIHandleLCLook(UI_EVENT *pUIEvent) {
   int16_t sXPos, sYPos;
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   if (!GetMouseXY(&sXPos, &sYPos)) {
     return (GAME_SCREEN);
@@ -4136,7 +4136,7 @@ void GetGridNoScreenXY(int16_t sGridNo, int16_t *pScreenX, int16_t *pScreenY) {
 
 void EndMultiSoldierSelection(BOOLEAN fAcknowledge) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pFirstSoldier = NULL;
   BOOLEAN fSelectedSoldierInBatch = FALSE;
 
@@ -4178,7 +4178,7 @@ void EndMultiSoldierSelection(BOOLEAN fAcknowledge) {
 
 void StopRubberBandedMercFromMoving() {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   if (!gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     return;
@@ -4213,7 +4213,7 @@ void EndRubberBanding() {
 
 BOOLEAN HandleMultiSelectionMove(int16_t sDestGridNo) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fAtLeastOneMultiSelect = FALSE;
   BOOLEAN fMoveFast = FALSE;
 
@@ -4282,7 +4282,7 @@ BOOLEAN HandleMultiSelectionMove(int16_t sDestGridNo) {
 
 void ResetMultiSelection() {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // OK, loop through all guys who are 'multi-selected' and
   // Make them move....
@@ -4302,9 +4302,9 @@ void ResetMultiSelection() {
 
 uint32_t UIHandleRubberBandOnTerrain(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
   int16_t sScreenX, sScreenY;
-  INT32 iTemp;
+  int32_t iTemp;
   SGPRect aRect;
   BOOLEAN fAtLeastOne = FALSE;
 
@@ -5239,10 +5239,10 @@ BOOLEAN ValidQuickExchangePosition() {
 BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fCheckForPath) {
   int16_t sSpot, sIntSpot;
   int16_t sDirs[4] = {NORTH, EAST, SOUTH, WEST};
-  INT32 cnt;
+  int32_t cnt;
   uint8_t ubGuyThere;
   uint8_t ubMovementCost;
-  INT32 iDoorGridNo;
+  int32_t iDoorGridNo;
 
   // First check that action point cost is zero so far
   // ie: NO PATH!

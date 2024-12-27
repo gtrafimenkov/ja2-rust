@@ -12,8 +12,8 @@ struct VObject;
 #define DOWN_ICON 2
 #define OK_ICON 3
 
-extern INT32 iButtonIcons[4];
-extern INT32 iSelectWin, iCancelWin, iScrollUp, iScrollDown;
+extern int32_t iButtonIcons[4];
+extern int32_t iSelectWin, iCancelWin, iScrollUp, iScrollDown;
 
 extern BOOLEAN fAllDone;
 
@@ -24,11 +24,11 @@ extern void RemoveJA2SelectionWindow(void);
 extern void RenderSelectionWindow(void);
 extern void DrawSelections(void);
 
-extern void SelWinClkCallback(GUI_BUTTON *button, INT32 reason);
-extern void CnclClkCallback(GUI_BUTTON *button, INT32 reason);
-extern void UpClkCallback(GUI_BUTTON *button, INT32 reason);
-extern void DwnClkCallback(GUI_BUTTON *button, INT32 reason);
-extern void OkClkCallback(GUI_BUTTON *button, INT32 reason);
+extern void SelWinClkCallback(GUI_BUTTON *button, int32_t reason);
+extern void CnclClkCallback(GUI_BUTTON *button, int32_t reason);
+extern void UpClkCallback(GUI_BUTTON *button, int32_t reason);
+extern void DwnClkCallback(GUI_BUTTON *button, int32_t reason);
+extern void OkClkCallback(GUI_BUTTON *button, int32_t reason);
 
 extern void ScrollSelWinUp(void);
 extern void ScrollSelWinDown(void);
@@ -100,9 +100,9 @@ typedef struct _Selections {
   int16_t sCount;
 } Selections;
 
-INT32 FindInSelectionList(DisplayList *pNode);
+int32_t FindInSelectionList(DisplayList *pNode);
 BOOLEAN IsInSelectionList(DisplayList *pNode);
-INT32 GetRandomSelection(void);
+int32_t GetRandomSelection(void);
 BOOLEAN RemoveFromSelectionList(DisplayList *pNode);
 void AddToSelectionList(DisplayList *pNode);
 void RestoreSelectionList(void);
@@ -111,9 +111,9 @@ BOOLEAN ClearSelectionList(void);
 
 void DisplaySelectionWindowGraphicalInformation();
 
-extern INT32 iCurBank;
+extern int32_t iCurBank;
 extern Selections *pSelList;
-extern INT32 *pNumSelList;
+extern int32_t *pNumSelList;
 
 extern Selections SelOStructs[MAX_SELECTIONS];
 extern Selections SelOStructs1[MAX_SELECTIONS];
@@ -135,25 +135,25 @@ extern Selections SelSingleToilet[MAX_SELECTIONS];
 
 extern Selections SelRoom[MAX_SELECTIONS];
 
-extern INT32 iNumOStructsSelected;
-extern INT32 iNumOStructs1Selected;
-extern INT32 iNumOStructs2Selected;
-extern INT32 iNumBanksSelected;
-extern INT32 iNumRoadsSelected;
-extern INT32 iNumDebrisSelected;
-extern INT32 iNumWallsSelected;
-extern INT32 iNumDoorsSelected;
-extern INT32 iNumWindowsSelected;
-extern INT32 iNumDecorSelected;
-extern INT32 iNumDecalsSelected;
-extern INT32 iNumBrokenWallsSelected;
-extern INT32 iNumFloorsSelected;
-extern INT32 iNumToiletsSelected;
-extern INT32 iNumRoofsSelected;
-extern INT32 iNumNewRoofsSelected;
-extern INT32 iNumRoomsSelected;
+extern int32_t iNumOStructsSelected;
+extern int32_t iNumOStructs1Selected;
+extern int32_t iNumOStructs2Selected;
+extern int32_t iNumBanksSelected;
+extern int32_t iNumRoadsSelected;
+extern int32_t iNumDebrisSelected;
+extern int32_t iNumWallsSelected;
+extern int32_t iNumDoorsSelected;
+extern int32_t iNumWindowsSelected;
+extern int32_t iNumDecorSelected;
+extern int32_t iNumDecalsSelected;
+extern int32_t iNumBrokenWallsSelected;
+extern int32_t iNumFloorsSelected;
+extern int32_t iNumToiletsSelected;
+extern int32_t iNumRoofsSelected;
+extern int32_t iNumNewRoofsSelected;
+extern int32_t iNumRoomsSelected;
 
-extern INT32 iDrawMode;
+extern int32_t iDrawMode;
 extern DisplayList *TrashList(DisplayList *pNode);
 
 extern BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,

@@ -81,7 +81,7 @@ BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleSoldierDeadComments(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt = 0;
+  int32_t cnt = 0;
   struct SOLDIERTYPE *pTeamSoldier;
   int8_t bBuddyIndex;
 

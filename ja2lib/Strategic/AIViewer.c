@@ -135,35 +135,35 @@ enum {
 void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void HandleViewerInput();
 void RenderViewer();
-void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
-void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason);
-void ViewerExitCallback(GUI_BUTTON *btn, INT32 reason);
-void Compression0Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression5Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression15Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression60Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression6HCallback(GUI_BUTTON *btn, INT32 reason);
-void EasyCallback(GUI_BUTTON *btn, INT32 reason);
-void NormalCallback(GUI_BUTTON *btn, INT32 reason);
-void HardCallback(GUI_BUTTON *btn, INT32 reason);
-void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason);
-void StartCreatureQuestCallback(GUI_BUTTON *btn, INT32 reason);
-void SpreadCreaturesCallback(GUI_BUTTON *btn, INT32 reason);
-void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason);
-void B1Callback(GUI_BUTTON *btn, INT32 reason);
-void B2Callback(GUI_BUTTON *btn, INT32 reason);
-void B3Callback(GUI_BUTTON *btn, INT32 reason);
-void ReloadSectorCallback(GUI_BUTTON *btn, INT32 reason);
-void ToggleQueenAwake(GUI_BUTTON *btn, INT32 reason);
-void ViewEnemiesCallback(GUI_BUTTON *btn, INT32 reason);
-void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason);
+void ViewerMapMoveCallback(struct MOUSE_REGION *reg, int32_t reason);
+void ViewerMapClickCallback(struct MOUSE_REGION *reg, int32_t reason);
+void ViewerExitCallback(GUI_BUTTON *btn, int32_t reason);
+void Compression0Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression5Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression15Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression60Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression6HCallback(GUI_BUTTON *btn, int32_t reason);
+void EasyCallback(GUI_BUTTON *btn, int32_t reason);
+void NormalCallback(GUI_BUTTON *btn, int32_t reason);
+void HardCallback(GUI_BUTTON *btn, int32_t reason);
+void TestIncoming4SidesCallback(GUI_BUTTON *btn, int32_t reason);
+void StartCreatureQuestCallback(GUI_BUTTON *btn, int32_t reason);
+void SpreadCreaturesCallback(GUI_BUTTON *btn, int32_t reason);
+void CreatureAttackCallback(GUI_BUTTON *btn, int32_t reason);
+void B1Callback(GUI_BUTTON *btn, int32_t reason);
+void B2Callback(GUI_BUTTON *btn, int32_t reason);
+void B3Callback(GUI_BUTTON *btn, int32_t reason);
+void ReloadSectorCallback(GUI_BUTTON *btn, int32_t reason);
+void ToggleQueenAwake(GUI_BUTTON *btn, int32_t reason);
+void ViewEnemiesCallback(GUI_BUTTON *btn, int32_t reason);
+void ViewCreaturesCallback(GUI_BUTTON *btn, int32_t reason);
 void ExtractAndUpdatePopulations();
 void PrintEnemyPopTable();
 void PrintEnemiesKilledTable();
 uint8_t ChooseEnemyIconColor(uint8_t ubAdmins, uint8_t ubTroops, uint8_t ubElites);
 void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject);
-void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, uint8_t ubSectorX,
+void PrintDetailedEnemiesInSectorInfo(int32_t iScreenX, int32_t iScreenY, uint8_t ubSectorX,
                                       uint8_t ubSectorY);
 
 struct MOUSE_REGION ViewerRegion;
@@ -192,27 +192,27 @@ BOOLEAN gfOverrideSector = FALSE;
 
 uint32_t guiLastTime;
 
-INT32 giSaveTCMode;  // time compression mode;
+int32_t giSaveTCMode;  // time compression mode;
 
 // The sector coordinates of the mouse position (yellow)
 extern int16_t gsHiSectorX, gsHiSectorY;
 // The sector coordinates of the selected sector (red)
 extern int16_t gsSelSectorX, gsSelSectorY;
 
-INT32 iViewerButton[NUM_VIEWER_BUTTONS];
+int32_t iViewerButton[NUM_VIEWER_BUTTONS];
 
 extern BOOLEAN gfQueenAIAwake;
-extern INT32 giReinforcementPool;
+extern int32_t giReinforcementPool;
 extern uint32_t guiEventListCurrNodes, guiEventListPeekNodes;
-extern INT32 giReinforcementPoints, giRequestPoints;
+extern int32_t giReinforcementPoints, giRequestPoints;
 extern ARMY_COMPOSITION gArmyComp[NUM_ARMY_COMPOSITIONS];
 extern GARRISON_GROUP *gGarrisonGroup;
-extern INT32 giGarrisonArraySize;
+extern int32_t giGarrisonArraySize;
 
 CHAR16 gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING", L"PATROL",
                                                       L"REINFORCE"};
 
-void StringFromValue(STR16 str, INT32 iValue, uint32_t uiMax) {
+void StringFromValue(STR16 str, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
@@ -372,7 +372,7 @@ BOOLEAN CreateAIViewer() {
 }
 
 void DestroyAIViewer() {
-  INT32 i;
+  int32_t i;
   gfExitViewer = FALSE;
   gfViewerEntry = TRUE;
   for (i = 0; i < NUM_VIEWER_BUTTONS; i++) {
@@ -408,9 +408,9 @@ void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBot
 
 void RenderStationaryGroups() {
   struct VObject *hVObject;
-  INT32 x, y, xp, yp;
+  int32_t x, y, xp, yp;
   CHAR16 str[20];
-  INT32 iSector = 0;
+  int32_t iSector = 0;
   uint8_t ubIconColor;
   uint8_t ubGroupSize = 0;
 
@@ -477,11 +477,11 @@ void RenderStationaryGroups() {
 void RenderMovingGroupsAndMercs() {
   struct GROUP *pGroup;
   struct VObject *hVObject;
-  INT32 x, y;
+  int32_t x, y;
   uint8_t ubNumTroops, ubNumAdmins, ubNumElites;
   float ratio;
-  INT32 minX, maxX, minY, maxY;
-  INT32 iSector = 0;
+  int32_t minX, maxX, minY, maxY;
+  int32_t iSector = 0;
   uint8_t ubIconType;
   uint8_t ubIconColor;
   uint8_t ubFontColor;
@@ -594,7 +594,7 @@ void RenderMovingGroupsAndMercs() {
 void RenderInfoInSector() {
   uint8_t ubSectorX, ubSectorY;
   uint8_t ubMercs = 0, ubActive = 0, ubUnconcious = 0, ubCollapsed = 0;
-  INT32 i, yp;
+  int32_t i, yp;
 
   if (gfViewEnemies && !gbViewLevel) {
     RenderStationaryGroups();
@@ -741,7 +741,7 @@ void RenderViewer() {
   uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
-  INT32 i, x, y, xp, yp;
+  int32_t i, x, y, xp, yp;
   if (gfRenderViewer) {
     ClearViewerRegion(VIEWER_LEFT, VIEWER_TOP, VIEWER_RIGHT, VIEWER_BOTTOM);
 
@@ -837,7 +837,7 @@ void RenderViewer() {
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void ViewerExitCallback(GUI_BUTTON *btn, INT32 reason) {
+void ViewerExitCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfExitViewer = TRUE;
   }
@@ -919,7 +919,7 @@ void HandleViewerInput() {
   }
 }
 
-void EasyCallback(GUI_BUTTON *btn, INT32 reason) {
+void EasyCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[RESET_EASY]]->uiFlags |= BUTTON_CLICKED_ON;
     ButtonList[iViewerButton[RESET_NORMAL]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -935,7 +935,7 @@ void EasyCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void NormalCallback(GUI_BUTTON *btn, INT32 reason) {
+void NormalCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[RESET_EASY]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[RESET_NORMAL]]->uiFlags |= BUTTON_CLICKED_ON;
@@ -951,7 +951,7 @@ void NormalCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void HardCallback(GUI_BUTTON *btn, INT32 reason) {
+void HardCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[RESET_EASY]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[RESET_NORMAL]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -967,7 +967,7 @@ void HardCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void ViewerMapMoveCallback(struct MOUSE_REGION *reg, int32_t reason) {
   static int16_t gsPrevX = 0, gsPrevY = 0;
   // calc current sector highlighted.
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
@@ -985,7 +985,7 @@ void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void ViewerMapClickCallback(struct MOUSE_REGION *reg, int32_t reason) {
   static int16_t sLastX = -1, sLastY = -1;
   // calc current sector selected.
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1047,7 +1047,7 @@ uint32_t AIViewerScreenHandle() {
 
 uint32_t AIViewerScreenShutdown() { return TRUE; }
 
-void Compression0Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression0Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags |= BUTTON_CLICKED_ON;
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1058,7 +1058,7 @@ void Compression0Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression5Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression5Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags |= BUTTON_CLICKED_ON;
@@ -1070,7 +1070,7 @@ void Compression5Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression15Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression15Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1082,7 +1082,7 @@ void Compression15Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression60Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression60Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1094,7 +1094,7 @@ void Compression60Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression6HCallback(GUI_BUTTON *btn, INT32 reason) {
+void Compression6HCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1106,7 +1106,7 @@ void Compression6HCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
+void TestIncoming4SidesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct GROUP *pGroup;
     uint8_t ubSector;
@@ -1164,7 +1164,7 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void StartCreatureQuestCallback(GUI_BUTTON *btn, INT32 reason) {
+void StartCreatureQuestCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gGameOptions.fSciFi = TRUE;
     gfRenderMap = TRUE;
@@ -1173,11 +1173,11 @@ void StartCreatureQuestCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SpreadCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
+void SpreadCreaturesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     if (_KeyDown(ALT)) {
-      INT32 i;
+      int32_t i;
       // spread 10 times
       for (i = 0; i < 10; i++) {
         SpreadCreatures();
@@ -1187,7 +1187,7 @@ void SpreadCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason) {
+void CreatureAttackCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if ((gsSelSectorX != 0) && (gsSelSectorX != 0)) {
       if (_KeyDown(ALT)) {
@@ -1200,7 +1200,7 @@ void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ViewEnemiesCallback(GUI_BUTTON *btn, INT32 reason) {
+void ViewEnemiesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfViewEnemies = TRUE;
     gfRenderMap = TRUE;
@@ -1212,7 +1212,7 @@ void ViewEnemiesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
+void ViewCreaturesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfViewEnemies = FALSE;
     gfRenderMap = TRUE;
@@ -1226,7 +1226,7 @@ void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void B1Callback(GUI_BUTTON *btn, INT32 reason) {
+void B1Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     gbViewLevel = 1;
@@ -1235,7 +1235,7 @@ void B1Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void B2Callback(GUI_BUTTON *btn, INT32 reason) {
+void B2Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     gbViewLevel = 2;
@@ -1244,7 +1244,7 @@ void B2Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void B3Callback(GUI_BUTTON *btn, INT32 reason) {
+void B3Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     gbViewLevel = 3;
@@ -1253,7 +1253,7 @@ void B3Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ReloadSectorCallback(GUI_BUTTON *btn, INT32 reason) {
+void ReloadSectorCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfOverrideSector = TRUE;
     ExtractAndUpdatePopulations();
@@ -1277,7 +1277,7 @@ void ExtractAndUpdatePopulations() {
   SetInputFieldStringWithNumericStrictValue(3, gsAINumCreatures);
 }
 
-void ToggleQueenAwake(GUI_BUTTON *btn, INT32 reason) {
+void ToggleQueenAwake(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       WakeUpQueen();
@@ -1631,11 +1631,11 @@ void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32
   BltVideoObject(FRAME_BUFFER, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
-void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, uint8_t ubSectorX,
+void PrintDetailedEnemiesInSectorInfo(int32_t iScreenX, int32_t iScreenY, uint8_t ubSectorX,
                                       uint8_t ubSectorY) {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  INT32 iDesired, iSurplus;
+  int32_t iDesired, iSurplus;
   uint8_t ubGroupCnt = 0;
   uint8_t ubSectorID;
   CHAR16 wString[120];

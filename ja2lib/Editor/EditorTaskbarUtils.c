@@ -49,12 +49,12 @@ void RenderEditorInfo();
 extern struct ITEM_POOL *gpItemPool;
 
 // editor icon storage vars
-INT32 giEditMercDirectionIcons[2];
+int32_t giEditMercDirectionIcons[2];
 uint32_t guiMercInventoryPanel;
 uint32_t guiOmertaMap;
 uint32_t guiMercInvPanelBuffers[9];
 uint32_t guiMercTempBuffer;
-INT32 giEditMercImage[2];
+int32_t giEditMercImage[2];
 uint32_t guiExclamation;
 uint32_t guiKeyImage;
 
@@ -108,7 +108,7 @@ void DisableEditorRegion(int8_t bRegionID) {
 }
 
 void RemoveEditorRegions() {
-  INT32 x;
+  int32_t x;
   MSYS_RemoveRegion(&EditorRegion);
   for (x = BASE_TERRAIN_TILE_REGION_ID; x < NUM_TERRAIN_TILE_REGIONS; x++) {
     MSYS_RemoveRegion(&TerrainTileButtonRegion[x]);
@@ -118,7 +118,7 @@ void RemoveEditorRegions() {
 }
 
 void InitEditorRegions() {
-  INT32 x;
+  int32_t x;
 
   // By doing this, all of the buttons underneath are blanketed and can't be used anymore.
   // Any new buttons will cover this up as well.  Think of it as a barrier between the editor
@@ -188,7 +188,7 @@ void DeleteEditorImages() {
 }
 
 void CreateEditorBuffers() {
-  INT32 i;
+  int32_t i;
   VSURFACE_DESC vs_desc;
   uint16_t usUselessWidth, usUselessHeight;
   uint8_t ubBitDepth;
@@ -214,14 +214,14 @@ void CreateEditorBuffers() {
 }
 
 void DeleteEditorBuffers() {
-  INT32 i;
+  int32_t i;
   DeleteVideoSurfaceFromIndex(guiMercTempBuffer);
   for (i = 0; i < 9; i++) {
     DeleteVideoSurfaceFromIndex(guiMercInvPanelBuffers[i]);
   }
 }
 
-void ShowEditorToolbar(INT32 iNewTaskMode) {
+void ShowEditorToolbar(int32_t iNewTaskMode) {
   switch (iNewTaskMode) {
     case TASK_TERRAIN:
       ShowEditorButtons(FIRST_TERRAIN_BUTTON, LAST_TERRAIN_BUTTON);
@@ -246,8 +246,8 @@ void ShowEditorToolbar(INT32 iNewTaskMode) {
   }
 }
 
-void HideEditorToolbar(INT32 iOldTaskMode) {
-  INT32 i, iStart, iEnd;
+void HideEditorToolbar(int32_t iOldTaskMode) {
+  int32_t i, iStart, iEnd;
   switch (iOldTaskMode) {
     case TASK_TERRAIN:
       iStart = FIRST_TERRAIN_BUTTON;
@@ -291,7 +291,7 @@ void CreateEditorTaskbar() {
 }
 
 void DeleteEditorTaskbar() {
-  INT32 x;
+  int32_t x;
 
   iOldTaskMode = iCurrentTaskbar;
 
@@ -409,12 +409,12 @@ void DoTaskbar(void) {
 
 // Disables the task bar, but leaves it on screen. Used when a selection window is up.
 void DisableEditorTaskbar(void) {
-  INT32 x;
+  int32_t x;
   for (x = 0; x < NUMBER_EDITOR_BUTTONS; x++) DisableButton(iEditorButton[x]);
 }
 
 void EnableEditorTaskbar(void) {
-  INT32 x;
+  int32_t x;
 
   for (x = 0; x < NUMBER_EDITOR_BUTTONS; x++) EnableButton(iEditorButton[x]);
   // Keep permanent buttons disabled.
@@ -504,7 +504,7 @@ void DrawEditorInfoBox(STR16 str, uint32_t uiFont, uint16_t x, uint16_t y, uint1
   InvalidateRegion(x, y, x2, y2);
 }
 
-void ClickEditorButton(INT32 iEditorButtonID) {
+void ClickEditorButton(int32_t iEditorButtonID) {
   GUI_BUTTON *butn;
   if (iEditorButtonID < 0 || iEditorButtonID >= NUMBER_EDITOR_BUTTONS) return;
   if (iEditorButton[iEditorButtonID] != -1) {
@@ -513,7 +513,7 @@ void ClickEditorButton(INT32 iEditorButtonID) {
   }
 }
 
-void UnclickEditorButton(INT32 iEditorButtonID) {
+void UnclickEditorButton(int32_t iEditorButtonID) {
   GUI_BUTTON *butn;
   if (iEditorButtonID < 0 || iEditorButtonID >= NUMBER_EDITOR_BUTTONS) return;
   if (iEditorButton[iEditorButtonID] != -1) {
@@ -522,16 +522,16 @@ void UnclickEditorButton(INT32 iEditorButtonID) {
   }
 }
 
-void HideEditorButton(INT32 iEditorButtonID) { HideButton(iEditorButton[iEditorButtonID]); }
+void HideEditorButton(int32_t iEditorButtonID) { HideButton(iEditorButton[iEditorButtonID]); }
 
-void ShowEditorButton(INT32 iEditorButtonID) { ShowButton(iEditorButton[iEditorButtonID]); }
+void ShowEditorButton(int32_t iEditorButtonID) { ShowButton(iEditorButton[iEditorButtonID]); }
 
-void DisableEditorButton(INT32 iEditorButtonID) { DisableButton(iEditorButton[iEditorButtonID]); }
+void DisableEditorButton(int32_t iEditorButtonID) { DisableButton(iEditorButton[iEditorButtonID]); }
 
-void EnableEditorButton(INT32 iEditorButtonID) { EnableButton(iEditorButton[iEditorButtonID]); }
+void EnableEditorButton(int32_t iEditorButtonID) { EnableButton(iEditorButton[iEditorButtonID]); }
 
-void ClickEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
-  INT32 i;
+void ClickEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID) {
+  int32_t i;
   GUI_BUTTON *b;
   for (i = iFirstEditorButtonID; i <= iLastEditorButtonID; i++) {
     Assert(iEditorButton[i] != -1);
@@ -541,8 +541,8 @@ void ClickEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
   }
 }
 
-void UnclickEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
-  INT32 i;
+void UnclickEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID) {
+  int32_t i;
   GUI_BUTTON *b;
   for (i = iFirstEditorButtonID; i <= iLastEditorButtonID; i++) {
     Assert(iEditorButton[i] != -1);
@@ -552,30 +552,30 @@ void UnclickEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID)
   }
 }
 
-void HideEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
-  INT32 i;
+void HideEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID) {
+  int32_t i;
   for (i = iFirstEditorButtonID; i <= iLastEditorButtonID; i++) HideButton(iEditorButton[i]);
 }
 
-void ShowEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
-  INT32 i;
+void ShowEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID) {
+  int32_t i;
   for (i = iFirstEditorButtonID; i <= iLastEditorButtonID; i++) ShowButton(iEditorButton[i]);
 }
 
-void DisableEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
-  INT32 i;
+void DisableEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID) {
+  int32_t i;
   for (i = iFirstEditorButtonID; i <= iLastEditorButtonID; i++) DisableButton(iEditorButton[i]);
 }
 
-void EnableEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) {
-  INT32 i;
+void EnableEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID) {
+  int32_t i;
   for (i = iFirstEditorButtonID; i <= iLastEditorButtonID; i++) EnableButton(iEditorButton[i]);
 }
 
 void RenderMapEntryPointsAndLights() {
   int16_t sGridNo;
   int16_t sScreenX, sScreenY;
-  INT32 i;
+  int32_t i;
   if (gfSummaryWindowActive) return;
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_YELLOW);
@@ -724,7 +724,7 @@ void RenderSelectedItemBlownUp() {
   int16_t sScreenX, sScreenY, xp, yp;
   struct ITEM_POOL *pItemPool;
   CHAR16 szItemName[SIZE_ITEM_NAME];
-  INT32 i;
+  int32_t i;
   int16_t sWidth, sHeight, sOffsetX, sOffsetY;
 
   GetGridNoScreenPos(gsItemGridNo, 0, &sScreenX, &sScreenY);

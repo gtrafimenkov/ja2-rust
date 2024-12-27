@@ -67,13 +67,13 @@ BOOLEAN gfHomePageActive =
 // Buttons
 
 // Graphic for button
-INT32 guiGalleryButtonImage;
-void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason);
+int32_t guiGalleryButtonImage;
+void BtnGalleryButtonCallback(GUI_BUTTON *btn, int32_t reason);
 uint32_t guiGalleryButton;
 
 // link to the flower home page by clicking on the flower title
 struct MOUSE_REGION gSelectedFloristTitleHomeLinkRegion;
-void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void GameInitFlorist() {}
 
@@ -250,7 +250,7 @@ void RemoveFloristDefaults() {
   }
 }
 
-void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGalleryButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -273,7 +273,7 @@ void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST;

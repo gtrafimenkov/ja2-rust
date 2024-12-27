@@ -15,7 +15,7 @@
 
 // HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
 
-typedef int32_t INT32;
+typedef int32_t int32_t;
 
 // integers
 typedef unsigned char uint8_t;
@@ -67,21 +67,21 @@ typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
 #endif
 
 typedef struct {
-  INT32 iLeft;
-  INT32 iTop;
-  INT32 iRight;
-  INT32 iBottom;
+  int32_t iLeft;
+  int32_t iTop;
+  int32_t iRight;
+  int32_t iBottom;
 } SGPRect;
 
 typedef struct {
-  INT32 iX;
-  INT32 iY;
+  int32_t iX;
+  int32_t iY;
 
 } SGPPoint;
 
 typedef struct {
-  INT32 Min;
-  INT32 Max;
+  int32_t Min;
+  int32_t Max;
 
 } SGPRange;
 
@@ -89,9 +89,9 @@ typedef FLOAT VECTOR2[2];  // 2d vector (2x1 matrix)
 typedef FLOAT VECTOR3[3];  // 3d vector (3x1 matrix)
 typedef FLOAT VECTOR4[4];  // 4d vector (4x1 matrix)
 
-typedef INT32 IVECTOR2[2];  // 2d vector (2x1 matrix)
-typedef INT32 IVECTOR3[3];  // 3d vector (3x1 matrix)
-typedef INT32 IVECTOR4[4];  // 4d vector (4x1 matrix)
+typedef int32_t IVECTOR2[2];  // 2d vector (2x1 matrix)
+typedef int32_t IVECTOR3[3];  // 3d vector (3x1 matrix)
+typedef int32_t IVECTOR4[4];  // 4d vector (4x1 matrix)
 
 typedef VECTOR3 MATRIX3[3];  // 3x3 matrix
 typedef VECTOR4 MATRIX4[4];  // 4x4 matrix

@@ -17,8 +17,8 @@ void DisplayGridNoVisibleToSoldierGrid();
 void DisplayLosAndDisplayCoverUsageScreenMsg();
 #endif
 
-void ChangeSizeOfDisplayCover(INT32 iNewSize);
+void ChangeSizeOfDisplayCover(int32_t iNewSize);
 
-void ChangeSizeOfLOS(INT32 iNewSize);
+void ChangeSizeOfLOS(int32_t iNewSize);
 
 #endif

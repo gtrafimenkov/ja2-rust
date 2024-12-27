@@ -34,7 +34,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   ANITILE *pAniNode;
   ANITILE *pNewAniNode;
   struct LEVELNODE *pNode;
-  INT32 iCachedTile = -1;
+  int32_t iCachedTile = -1;
   int16_t sGridNo;
   uint8_t ubLevel;
   int16_t usTileType;

@@ -3377,7 +3377,7 @@ ANIMSUBTYPE gNothingInjuredSub[] = {
 ANIMSUBTYPE gDoubleHandledSub = {STANDING, RGMDBLBREATH, BGMDBLBREATH, RGMDBLBREATH, RGFDBLBREATH};
 
 void InitAnimationSurfacesPerBodytype() {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   // Should be set to a non-init values
   for (cnt1 = 0; cnt1 < TOTALBODYTYPES; cnt1++) {
@@ -5558,7 +5558,7 @@ uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t
   uint16_t usAltAnimSurface;
   uint16_t usItem;
   uint8_t ubWaterHandIndex = 1;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fAdjustedForItem = FALSE;
   uint16_t usNewAnimState;
 

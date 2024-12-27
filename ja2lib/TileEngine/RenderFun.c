@@ -40,7 +40,7 @@ void SetTileRoomNum(int16_t sGridNo, uint8_t ubRoomNum) {
 }
 
 void SetTileRangeRoomNum(SGPRect *pSelectRegion, uint8_t ubRoomNum) {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
@@ -258,7 +258,7 @@ void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSol
 }
 
 BOOLEAN AddSpecialTileRange(SGPRect *pSelectRegion) {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
@@ -270,7 +270,7 @@ BOOLEAN AddSpecialTileRange(SGPRect *pSelectRegion) {
 }
 
 BOOLEAN RemoveSpecialTileRange(SGPRect *pSelectRegion) {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {

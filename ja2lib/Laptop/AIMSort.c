@@ -105,44 +105,44 @@ uint8_t gubOldListMode;
 // Mouse stuff
 // Clicking on To Mugshot
 struct MOUSE_REGION gSelectedToMugShotRegion;
-void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Clicking on ToStats
 struct MOUSE_REGION gSelectedToStatsRegion;
-void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Clicking on ToStats
 struct MOUSE_REGION gSelectedToArchiveRegion;
-void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Clicking on Price Check Box
 struct MOUSE_REGION gSelectedPriceBoxRegion;
-void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Explosive Check Box
 struct MOUSE_REGION gSelectedExpBoxRegion;
-void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Markmanship Check Box
 struct MOUSE_REGION gSelectedMarkBoxRegion;
-void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Medical Check box
 struct MOUSE_REGION gSelectedMedicalBoxRegion;
-void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Explosive Check Box
 struct MOUSE_REGION gSelectedExplosiveBoxRegion;
-void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Mechanical Check Box
 struct MOUSE_REGION gSelectedMechanicalBoxRegion;
-void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Ascending Check Box
 struct MOUSE_REGION gSelectedAscendBoxRegion;
-void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 // Clicking on Descending Check Box
 struct MOUSE_REGION gSelectedDescendBoxRegion;
-void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void DrawSelectLight(uint8_t ubMode, uint8_t ubImage);
-INT32 QsortCompare(const void *pNum1, const void *pNum2);
-INT32 CompareValue(const INT32 Num1, const INT32 Num2);
+int32_t QsortCompare(const void *pNum1, const void *pNum2);
+int32_t CompareValue(const int32_t Num1, const int32_t Num2);
 BOOLEAN SortMercArray(void);
 
 uint32_t guiSortByBox;
@@ -440,7 +440,7 @@ void RenderAimSort() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX;
@@ -448,7 +448,7 @@ void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
   }
 }
 
-void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS;
@@ -456,7 +456,7 @@ void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_ARCHIVES;
@@ -464,7 +464,7 @@ void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
   }
 }
 
-void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 0) {
@@ -477,7 +477,7 @@ void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 1) {
@@ -490,7 +490,7 @@ void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 2) {
@@ -503,7 +503,7 @@ void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 3) {
@@ -516,7 +516,7 @@ void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 4) {
@@ -529,7 +529,7 @@ void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
   }
 }
 
-void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 5) {
@@ -542,7 +542,7 @@ void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
   }
 }
 
-void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentListMode != AIM_ASCEND) {
@@ -555,7 +555,7 @@ void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) 
   }
 }
 
-void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentListMode != AIM_DESCEND) {
@@ -590,40 +590,40 @@ BOOLEAN SortMercArray(void) {
   return (TRUE);
 }
 
-INT32 QsortCompare(const void *pNum1, const void *pNum2) {
+int32_t QsortCompare(const void *pNum1, const void *pNum2) {
   uint8_t Num1 = *(uint8_t *)pNum1;
   uint8_t Num2 = *(uint8_t *)pNum2;
 
   switch (gubCurrentSortMode) {
     // Price						int16_t	uiWeeklySalary
     case 0:
-      return (CompareValue((INT32)gMercProfiles[Num1].uiWeeklySalary,
-                           (INT32)gMercProfiles[Num2].uiWeeklySalary));
+      return (CompareValue((int32_t)gMercProfiles[Num1].uiWeeklySalary,
+                           (int32_t)gMercProfiles[Num2].uiWeeklySalary));
       break;
     // Experience			int16_t	bExpLevel
     case 1:
-      return (
-          CompareValue((INT32)gMercProfiles[Num1].bExpLevel, (INT32)gMercProfiles[Num2].bExpLevel));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bExpLevel,
+                           (int32_t)gMercProfiles[Num2].bExpLevel));
       break;
     // Marksmanship		int16_t	bMarksmanship
     case 2:
-      return (CompareValue((INT32)gMercProfiles[Num1].bMarksmanship,
-                           (INT32)gMercProfiles[Num2].bMarksmanship));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bMarksmanship,
+                           (int32_t)gMercProfiles[Num2].bMarksmanship));
       break;
     // Medical					int16_t	bMedical
     case 3:
-      return (
-          CompareValue((INT32)gMercProfiles[Num1].bMedical, (INT32)gMercProfiles[Num2].bMedical));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bMedical,
+                           (int32_t)gMercProfiles[Num2].bMedical));
       break;
     // Explosives			int16_t	bExplosive
     case 4:
-      return (CompareValue((INT32)gMercProfiles[Num1].bExplosive,
-                           (INT32)gMercProfiles[Num2].bExplosive));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bExplosive,
+                           (int32_t)gMercProfiles[Num2].bExplosive));
       break;
     // Mechanical			int16_t	bMechanical
     case 5:
-      return (CompareValue((INT32)gMercProfiles[Num1].bMechanical,
-                           (INT32)gMercProfiles[Num2].bMechanical));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bMechanical,
+                           (int32_t)gMercProfiles[Num2].bMechanical));
       break;
 
     default:
@@ -633,7 +633,7 @@ INT32 QsortCompare(const void *pNum1, const void *pNum2) {
   }
 }
 
-INT32 CompareValue(const INT32 Num1, const INT32 Num2) {
+int32_t CompareValue(const int32_t Num1, const int32_t Num2) {
   // Ascending
   if (gubCurrentListMode == AIM_ASCEND) {
     if (Num1 < Num2)

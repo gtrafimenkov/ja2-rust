@@ -26,10 +26,10 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
-BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius);
+BOOLEAN PasteHigherTextureFromRadius(int32_t iMapIndex, uint32_t uiNewType, uint8_t ubRadius);
 BOOLEAN PasteExistingTexture(uint32_t iMapIndex, uint16_t usIndex);
-BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, uint8_t ubRadius);
-BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius,
+BOOLEAN PasteExistingTextureFromRadius(int32_t iMapIndex, uint16_t usIndex, uint8_t ubRadius);
+BOOLEAN SetLowerLandIndexWithRadius(int32_t iMapIndex, uint32_t uiNewType, uint8_t ubRadius,
                                     BOOLEAN fReplace);
 
 void PasteTextureEx(int16_t sGridNo, uint16_t usType);
@@ -90,7 +90,7 @@ void DeleteStuffFromMapTile(uint32_t iMapIndex) {
 // mode
 //
 void EraseMapTile(uint32_t iMapIndex) {
-  INT32 iEraseMode;
+  int32_t iEraseMode;
   uint32_t uiCheckType;
   if (iMapIndex >= 0x8000) return;
 
@@ -208,7 +208,7 @@ void EraseMapTile(uint32_t iMapIndex) {
 void PasteDebris(uint32_t iMapIndex) {
   uint16_t usUseIndex;
   uint16_t usUseObjIndex;
-  INT32 iRandSelIndex;
+  int32_t iRandSelIndex;
 
   // Get selection list for debris
   pSelList = SelDebris;
@@ -490,7 +490,7 @@ void PasteStructureCommon(uint32_t iMapIndex) {
   uint32_t fHeadType;
   uint16_t usUseIndex;
   uint16_t usUseObjIndex;
-  INT32 iRandSelIndex;
+  int32_t iRandSelIndex;
   BOOLEAN fOkayToAdd;
 
   if (iMapIndex < 0x8000) {
@@ -712,12 +712,12 @@ void PasteHigherTexture(uint32_t iMapIndex, uint32_t fNewType) {
 //
 //	Like above function except it performs it's operation on a redial area.
 //
-BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius) {
+BOOLEAN PasteHigherTextureFromRadius(int32_t iMapIndex, uint32_t uiNewType, uint8_t ubRadius) {
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
-  INT32 iNewIndex;
-  INT32 iXPos, iYPos;
+  int32_t iNewIndex;
+  int32_t iXPos, iYPos;
 
   // Determine start and end indicies and num rows
   sTop = ubRadius;
@@ -728,13 +728,13 @@ BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_
   iXPos = (iMapIndex % WORLD_COLS);
   iYPos = (iMapIndex - iXPos) / WORLD_COLS;
 
-  if ((iXPos + (INT32)sLeft) < 0) sLeft = (int16_t)(-iXPos);
+  if ((iXPos + (int32_t)sLeft) < 0) sLeft = (int16_t)(-iXPos);
 
-  if ((iXPos + (INT32)sRight) >= WORLD_COLS) sRight = (int16_t)(WORLD_COLS - iXPos - 1);
+  if ((iXPos + (int32_t)sRight) >= WORLD_COLS) sRight = (int16_t)(WORLD_COLS - iXPos - 1);
 
-  if ((iYPos + (INT32)sTop) >= WORLD_ROWS) sTop = (int16_t)(WORLD_ROWS - iYPos - 1);
+  if ((iYPos + (int32_t)sTop) >= WORLD_ROWS) sTop = (int16_t)(WORLD_ROWS - iYPos - 1);
 
-  if ((iYPos + (INT32)sBottom) < 0) sBottom = (int16_t)(-iYPos);
+  if ((iYPos + (int32_t)sBottom) < 0) sBottom = (int16_t)(-iYPos);
 
   if (iMapIndex >= 0x8000) return (FALSE);
 
@@ -796,12 +796,12 @@ BOOLEAN PasteExistingTexture(uint32_t iMapIndex, uint16_t usIndex) {
 //
 //	As above, but on a radial area
 //
-BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, uint8_t ubRadius) {
+BOOLEAN PasteExistingTextureFromRadius(int32_t iMapIndex, uint16_t usIndex, uint8_t ubRadius) {
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
-  INT32 iNewIndex;
-  INT32 leftmost;
+  int32_t iNewIndex;
+  int32_t leftmost;
 
   // Determine start end end indicies and num rows
   sTop = ubRadius;
@@ -833,15 +833,15 @@ BOOLEAN PasteExistingTextureFromRadius(INT32 iMapIndex, uint16_t usIndex, uint8_
 //
 //	Puts a land index "under" an existing ground texture. Affects a radial area.
 //
-BOOLEAN SetLowerLandIndexWithRadius(INT32 iMapIndex, uint32_t uiNewType, uint8_t ubRadius,
+BOOLEAN SetLowerLandIndexWithRadius(int32_t iMapIndex, uint32_t uiNewType, uint8_t ubRadius,
                                     BOOLEAN fReplace) {
   uint16_t usTempIndex;
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
-  INT32 iNewIndex;
+  int32_t iNewIndex;
   BOOLEAN fDoPaste = FALSE;
-  INT32 leftmost;
+  int32_t leftmost;
   uint8_t ubLastHighLevel;
   uint32_t *puiSmoothTiles = NULL;
   int16_t sNumSmoothTiles = 0;
@@ -944,8 +944,8 @@ void PasteTextureFromRadiusEx(int16_t sGridNo, uint16_t usType, uint8_t ubRadius
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2;
-  INT32 iNewIndex;
-  INT32 leftmost;
+  int32_t iNewIndex;
+  int32_t leftmost;
 
   // Determine start end end indicies and num rows
   sTop = ubRadius;
@@ -978,7 +978,7 @@ void PasteTextureFromRadiusEx(int16_t sGridNo, uint16_t usType, uint8_t ubRadius
 #define LAND_DROP_4 FIRSTCLIFF15
 #define LAND_DROP_5 FIRSTCLIFF8
 void RaiseWorldLand() {
-  INT32 cnt;
+  int32_t cnt;
   uint32_t sTempGridNo;
   struct LEVELNODE *pStruct;
   TILE_ELEMENT *pTileElement;
@@ -986,8 +986,8 @@ void RaiseWorldLand() {
   BOOLEAN fSomethingRaised = FALSE;
   uint8_t ubLoop;
   uint16_t usIndex;
-  INT32 iStartNumberOfRaises = 0;
-  INT32 iNumberOfRaises = 0;
+  int32_t iStartNumberOfRaises = 0;
+  int32_t iNumberOfRaises = 0;
   BOOLEAN fAboutToRaise = FALSE;
 
   fRaiseSet = FALSE;
@@ -1196,7 +1196,7 @@ void RaiseWorldLand() {
 }
 
 void EliminateObjectLayerRedundancy() {
-  INT32 i, numRoads, numAnothers;
+  int32_t i, numRoads, numAnothers;
   uint32_t uiType;
   struct LEVELNODE *pObject, *pValidRoad, *pValidAnother;
   uint16_t usIndex;

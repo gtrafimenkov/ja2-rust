@@ -137,7 +137,8 @@ void ActionDone(struct SOLDIERTYPE *pSoldier);
 int16_t ActionInProgress(struct SOLDIERTYPE *pSoldier);
 
 int8_t CalcMorale(struct SOLDIERTYPE *pSoldier);
-INT32 CalcPercentBetter(INT32 iOldValue, INT32 iNewValue, INT32 iOldScale, INT32 iNewScale);
+int32_t CalcPercentBetter(int32_t iOldValue, int32_t iNewValue, int32_t iOldScale,
+                          int32_t iNewScale);
 void CallAvailableEnemiesTo(int16_t sGridno);
 void CallAvailableKingpinMenTo(int16_t sGridNo);
 void CallAvailableTeamEnemiesTo(int16_t sGridno, int8_t bTeam);
@@ -167,7 +168,7 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier);
 int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier);
 
 int16_t FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, int16_t sGridno);
-int16_t FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *pPercentBetter);
+int16_t FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, int32_t morale, int32_t *pPercentBetter);
 int16_t FindClosestDoor(struct SOLDIERTYPE *pSoldier);
 int16_t FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, int8_t *pbDirection);
 int16_t FindNearestEdgePoint(int16_t sGridNo);
@@ -231,9 +232,9 @@ BOOLEAN ValidCreatureTurn(struct SOLDIERTYPE *pCreature, int8_t bNewDirection);
 extern char tempstr[256];
 void AIPopMessage(STR str);
 
-void AINumMessage(const STR str, INT32 num);
+void AINumMessage(const STR str, int32_t num);
 
-void AINameMessage(struct SOLDIERTYPE *pSoldier, const STR str, INT32 num);
+void AINameMessage(struct SOLDIERTYPE *pSoldier, const STR str, int32_t num);
 
 #endif
 

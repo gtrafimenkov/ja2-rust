@@ -15,7 +15,7 @@ enum {
   NUM_SLIDER_STYLES,
 };
 
-typedef void (*SLIDER_CHANGE_CALLBACK)(INT32);
+typedef void (*SLIDER_CHANGE_CALLBACK)(int32_t);
 
 /*
 
@@ -26,12 +26,12 @@ usWidth
 usNumberOfIncrements
 sPriority
 SliderChangeCallback
-        void SliderChangeCallBack( INT32 iNewValue )
+        void SliderChangeCallBack( int32_t iNewValue )
 */
 
-INT32 AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
-                uint16_t usWidth, uint16_t usNumberOfIncrements, int8_t sPriority,
-                SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags);
+int32_t AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
+                  uint16_t usWidth, uint16_t usNumberOfIncrements, int8_t sPriority,
+                  SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags);
 
 BOOLEAN InitSlider();
 

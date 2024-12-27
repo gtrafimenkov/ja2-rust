@@ -7,7 +7,7 @@
 void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEAN fShowLocators,
                          uint8_t ubLevel, BOOLEAN fForce);
 
-INT32 GetFreeSlantRoof(void);
+int32_t GetFreeSlantRoof(void);
 void RecountSlantRoofs(void);
 void ClearSlantRoofs(void);
 BOOLEAN FindSlantRoofSlot(int16_t sGridNo);

@@ -154,13 +154,13 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
 // MercDailyUpdate() gets called every day at midnight.  If something is to happen to a merc that
 // day, add an event for it.
 void MercDailyUpdate() {
-  INT32 cnt;
+  int32_t cnt;
   int8_t bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
   // struct SOLDIERTYPE *pQuitList[ 21 ];
   MERCPROFILESTRUCT *pProfile;
   uint32_t uiChance;
-  INT32 iOffset = 0;
+  int32_t iOffset = 0;
 
   // if its the first day, leave
   if (GetWorldDay() == 1) return;
@@ -240,7 +240,7 @@ void MercDailyUpdate() {
       // if the character is an RPC
       if (GetSolProfile(pSoldier) >= FIRST_RPC && GetSolProfile(pSoldier) < FIRST_NPC) {
         int16_t sSalary = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
-        INT32 iMoneyOwedToMerc = 0;
+        int32_t iMoneyOwedToMerc = 0;
 
         // increment the number of days the mercs has been on the team
         pSoldier->iTotalContractLength++;
@@ -507,7 +507,7 @@ void RPCWhineAboutNoPay(uint8_t ubID) {
 
 // OK loop through and check!
 BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt;
+  int32_t cnt;
   uint16_t usItem;
   int8_t bBestArmour = -1;
   int8_t bBestGun = -1;
@@ -583,7 +583,7 @@ void MercComplainAboutEquipment(uint8_t ubProfile) {
 
 void UpdateBuddyAndHatedCounters(void) {
   int8_t bMercID;
-  INT32 iLoop;
+  int32_t iLoop;
   int8_t bOtherID;
   int8_t bLastTeamID;
   uint8_t ubOtherProfileID;
