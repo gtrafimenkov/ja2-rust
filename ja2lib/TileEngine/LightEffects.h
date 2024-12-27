@@ -6,6 +6,7 @@
 #define __LIGHT_EFFECTS
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 // Light effect types
 enum {

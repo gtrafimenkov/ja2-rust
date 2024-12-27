@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Town.h"
+#include "rust_fileman.h"
 
 // the mines
 enum {

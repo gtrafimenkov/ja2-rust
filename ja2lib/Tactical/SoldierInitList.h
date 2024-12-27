@@ -6,6 +6,7 @@
 #define __SOLDIER_INIT_LIST_H
 
 #include "Tactical/SoldierCreate.h"
+#include "rust_fileman.h"
 
 typedef struct SOLDIERINITNODE {
   uint8_t ubNodeID;

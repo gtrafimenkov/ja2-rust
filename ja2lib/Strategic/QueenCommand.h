@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
+#include "rust_fileman.h"
 
 struct GROUP;
 struct SOLDIERTYPE;

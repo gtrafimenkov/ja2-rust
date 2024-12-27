@@ -6,6 +6,7 @@
 #define _ARMS_DEALERS_INIT__H_
 
 #include "Laptop/StoreInventory.h"
+#include "rust_fileman.h"
 
 // enums for the various arms dealers
 enum {

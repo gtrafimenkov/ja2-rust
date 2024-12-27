@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Tactical/ItemTypes.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 

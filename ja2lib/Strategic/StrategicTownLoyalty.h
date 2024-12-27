@@ -8,6 +8,7 @@
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
 #include "Town.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 

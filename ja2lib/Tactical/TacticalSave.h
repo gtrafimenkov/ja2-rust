@@ -9,6 +9,7 @@
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierProfileType.h"
 #include "Tactical/WorldItems.h"
+#include "rust_fileman.h"
 
 #define MAPS_DIR "Temp"
 

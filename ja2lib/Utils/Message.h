@@ -8,6 +8,7 @@
 #include "SGP/Font.h"
 #include "SGP/Types.h"
 #include "Utils/FontControl.h"
+#include "rust_fileman.h"
 
 struct stringstruct {
   wchar_t* pString16;

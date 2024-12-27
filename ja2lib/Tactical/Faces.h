@@ -4,12 +4,14 @@
 
 #ifndef __TALKING_H_
 #define __TALKING_H_
+
+#include "SGP/Types.h"
+#include "rust_fileman.h"
+
 #define NO_EXPRESSION 0
 #define BLINKING 1
 #define ANGRY 2
 #define SURPRISED 3
-
-#include "SGP/Types.h"
 
 struct SOLDIERTYPE;
 

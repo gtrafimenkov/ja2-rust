@@ -100,7 +100,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
-#include "rust_clock.h"
+#include "rust_clock_ext.h"
 #include "rust_colors.h"
 #include "rust_fileman.h"
 #include "rust_militia.h"

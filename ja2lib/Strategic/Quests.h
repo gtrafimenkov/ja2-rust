@@ -6,6 +6,7 @@
 #define __QUESTS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 //  Quest.ubStatus values
 #define QUESTNOTSTARTED 0

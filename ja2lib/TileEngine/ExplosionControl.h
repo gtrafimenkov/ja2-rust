@@ -6,6 +6,7 @@
 #define _EXPLOSION_CONTROL_H
 
 #include "Tactical/Weapons.h"
+#include "rust_fileman.h"
 
 #define MAX_DISTANCE_EXPLOSIVE_CAN_DESTROY_STRUCTURES 2
 

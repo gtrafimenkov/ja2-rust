@@ -13,15 +13,13 @@
 #include "LeanTypes.h"
 
 // flags (individual bits used)
-typedef unsigned char FLAGS8;
+typedef uint8_t FLAGS8;
 typedef uint16_t FLAGS16;
-typedef unsigned long FLAGS32;
+typedef uint32_t FLAGS32;
 // other
-typedef unsigned char BOOLEAN;
+typedef uint8_t BOOLEAN;
 typedef uint16_t HNDL;
-typedef uint8_t uint8_t;
 typedef char STRING512[512];
-typedef uint32_t FileID;
 
 #define SGPFILENAME_LEN 100
 typedef char SGPFILENAME[SGPFILENAME_LEN];

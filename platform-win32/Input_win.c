@@ -51,7 +51,7 @@ uint32_t guiDoubleClkDelay;  // Current delay in milliseconds for a delay
 uint32_t guiSingleClickTimer;
 uint32_t guiRecordedWParam;
 uint32_t guiRecordedLParam;
-uint16_t gusRecordedKeyState;
+UINT16 gusRecordedKeyState;
 BOOLEAN gfRecordedLeftButtonUp;
 
 uint32_t guiLeftButtonRepeatTimer;
@@ -87,8 +87,8 @@ StringInput *gpCurrentStringDescriptor;
 
 // Local function headers
 
-void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam);
-void RedirectToString(uint16_t uiInputCharacter);
+void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam);
+void RedirectToString(UINT16 uiInputCharacter);
 void HandleSingleClicksAndButtonRepeats(void);
 void AdjustMouseForWindowOrigin(void);
 
@@ -235,9 +235,9 @@ void ShutdownInputManager(void) {
   UnhookWindowsHookEx(ghMouseHook);
 }
 
-void QueuePureEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam) {
+void QueuePureEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
   uint32_t uiTimer;
-  uint16_t usKeyState;
+  UINT16 usKeyState;
 
   uiTimer = Plat_GetTickCount();
   usKeyState = gfShiftState | gfCtrlState | gfAltState;
@@ -265,9 +265,9 @@ void QueuePureEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam) {
   }
 }
 
-void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam) {
+void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
   uint32_t uiTimer;
-  uint16_t usKeyState;
+  UINT16 usKeyState;
 
   uiTimer = Plat_GetTickCount();
   usKeyState = gfShiftState | gfCtrlState | gfAltState;
@@ -396,9 +396,9 @@ BOOLEAN DequeueEvent(InputAtom *Event) {
   }
 }
 
-void KeyChange(uint32_t usParam, uint32_t uiParam, uint8_t ufKeyState) {
+void KeyChange(uint32_t usParam, uint32_t uiParam, UINT8 ufKeyState) {
   uint32_t ubKey;
-  uint16_t ubChar;
+  UINT16 ubChar;
   uint32_t uiTmpLParam;
 
   if ((usParam >= 96) &&
@@ -787,7 +787,7 @@ void GetMousePos(SGPPoint *Point) {
   return;
 }
 
-BOOLEAN CharacterIsValid(uint16_t usCharacter, uint16_t *pFilter) {
+BOOLEAN CharacterIsValid(UINT16 usCharacter, UINT16 *pFilter) {
   uint32_t uiIndex, uiEndIndex;
 
   if (pFilter != NULL) {
@@ -1033,7 +1033,7 @@ void GetRestrictedClipCursor(struct GRect *pRectangle) { GetClipCursor((RECT *)p
 BOOLEAN IsCursorRestricted(void) { return (fCursorWasClipped); }
 
 void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {
-  float flNewXPos, flNewYPos;
+  FLOAT flNewXPos, flNewYPos;
 
   // Wizardry NOTE: This function currently doesn't quite work right for in any Windows resolution
   // other than 640x480. mouse_event() uses your current Windows resolution to calculate the

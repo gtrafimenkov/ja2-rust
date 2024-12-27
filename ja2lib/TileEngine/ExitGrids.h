@@ -6,6 +6,7 @@
 #define __EXIT_GRIDS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct LEVELNODE;
 struct SOLDIERTYPE;

@@ -6,6 +6,7 @@
 #define _SQUADS_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct SOLDIERTYPE;
 

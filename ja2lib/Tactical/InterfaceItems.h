@@ -8,6 +8,7 @@
 #include "SGP/MouseSystem.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/Items.h"
+#include "rust_fileman.h"
 
 struct VSurface;
 

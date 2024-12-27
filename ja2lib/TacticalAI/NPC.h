@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
+#include "rust_fileman.h"
 
 #define NUM_NPC_QUOTE_RECORDS 50
 

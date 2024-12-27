@@ -6,6 +6,7 @@
 #define __STRATEGIC_AI_H
 
 #include "Strategic/StrategicMovement.h"
+#include "rust_fileman.h"
 
 void InitStrategicAI();
 void KillStrategicAI();

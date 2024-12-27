@@ -6,6 +6,7 @@
 #define _KEYS_H_
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 struct OBJECTTYPE;
 struct SOLDIERTYPE;

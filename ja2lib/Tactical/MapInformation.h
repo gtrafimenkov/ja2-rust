@@ -6,6 +6,7 @@
 #define __MAP_INFORMATION_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 extern float gdMajorMapVersion;
 extern uint8_t gubMinorMapVersion;

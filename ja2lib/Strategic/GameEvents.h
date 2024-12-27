@@ -6,6 +6,7 @@
 #define __GAME_EVENTS_H
 
 #include "Strategic/GameEventHook.h"
+#include "rust_fileman.h"
 
 #define SEF_PREVENT_DELETION 0x01
 #define SEF_DELETION_PENDING 0x02

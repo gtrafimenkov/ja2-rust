@@ -6,6 +6,7 @@
 #define __CREATURE_SPREADING_H
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 void InitCreatureQuest();
 void SpreadCreatures();

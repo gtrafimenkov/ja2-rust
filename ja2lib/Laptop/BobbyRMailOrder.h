@@ -7,6 +7,7 @@
 
 #include "Laptop/LaptopSave.h"
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 // enums for the various destinations that are available in the bobbyR dest drop down box
 enum {

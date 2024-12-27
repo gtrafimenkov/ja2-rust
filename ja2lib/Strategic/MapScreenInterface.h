@@ -8,6 +8,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
+#include "rust_fileman.h"
 #include "rust_sam_sites.h"
 
 typedef struct FASTHELPREGION {

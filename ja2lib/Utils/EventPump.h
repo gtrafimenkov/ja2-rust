@@ -7,6 +7,7 @@
 
 #include "SGP/Types.h"
 #include "Utils/EventManager.h"
+#include "rust_fileman.h"
 
 #define NETWORK_PATH_DATA_SIZE 6
 // Enumerate all events for JA2

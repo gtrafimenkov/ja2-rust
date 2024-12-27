@@ -6,6 +6,7 @@
 #define __SMOKE_EFFECTS
 
 #include "SGP/Types.h"
+#include "rust_fileman.h"
 
 // Smoke effect types
 enum {
