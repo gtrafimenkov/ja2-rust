@@ -4280,7 +4280,7 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
     // Load into memory
     struct VObject *hVObject;
     struct Image *hImage;
-    char *sFilename[48];
+    char sFilename[48];
     struct STRUCTURE_FILE_REF *pStructureFileRef;
 
     AnimDebugMsg(String("Surface Database: Loading %d", usSurfaceIndex));
