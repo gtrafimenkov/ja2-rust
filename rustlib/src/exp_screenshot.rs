@@ -1,3 +1,7 @@
+// This is not free software.
+// This file may contain code derived from the code released under the terms
+// of Strategy First Inc. Source Code License Agreement. See SFI-SCLA.txt.
+
 use super::exp_debug::{debug_log_write, get_current_time};
 use crate::colors;
 
