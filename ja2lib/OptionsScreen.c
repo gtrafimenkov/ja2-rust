@@ -222,7 +222,7 @@ void SetOptionsExitScreen(uint32_t uiExitScreen);
 void SoundFXSliderChangeCallBack(int32_t iNewValue);
 void SpeechSliderChangeCallBack(int32_t iNewValue);
 void MusicSliderChangeCallBack(int32_t iNewValue);
-// BOOLEAN		DoOptionsMessageBox( uint8_t ubStyle, CHAR16 *zString, uint32_t
+// BOOLEAN		DoOptionsMessageBox( uint8_t ubStyle, wchar_t *zString, uint32_t
 // uiExitScreen, uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback );
 void ConfirmQuitToMainMenuMessageBoxCallBack(uint8_t bExitValue);
 void HandleSliderBarMovementSounds();
@@ -993,7 +993,7 @@ void SpeechSliderChangeCallBack(int32_t iNewValue) {
 
 void MusicSliderChangeCallBack(int32_t iNewValue) { MusicSetVolume(iNewValue); }
 
-BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect) {
   // reset exit mode
@@ -1008,7 +1008,7 @@ BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t u
   return ((giOptionsMessageBox != -1));
 }
 
-BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                             uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 

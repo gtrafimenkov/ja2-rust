@@ -9,7 +9,7 @@ enum { MESSAGEBOX_NONE, MESSAGEBOX_DONE, MESSAGEBOX_WAIT };
 extern uint8_t gubMessageBoxStatus;
 extern BOOLEAN gfMessageBoxResult;
 
-void CreateMessageBox(CHAR16 *wzString);
+void CreateMessageBox(wchar_t *wzString);
 BOOLEAN MessageBoxHandled();
 void RemoveMessageBox();
 

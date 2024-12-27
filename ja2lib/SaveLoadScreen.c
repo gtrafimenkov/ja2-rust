@@ -912,7 +912,7 @@ void GetSaveLoadScreenUserInput() {
 }
 
 void SaveLoadGameNumber(int8_t bSaveGameID) {
-  //	CHAR16	zTemp[128];
+  //	wchar_t	zTemp[128];
   uint8_t ubRetVal = 0;
 
   if (bSaveGameID >= NUM_SAVE_GAMES || bSaveGameID < 0) {
@@ -930,7 +930,7 @@ void SaveLoadGameNumber(int8_t bSaveGameID) {
 
     // if there is save game in the slot, ask for confirmation before overwriting
     if (gbSaveGameArray[bSaveGameID]) {
-      CHAR16 sText[512];
+      wchar_t sText[512];
 
       swprintf(sText, ARR_SIZE(sText), zSaveLoadText[SLG_CONFIRM_SAVE], bSaveGameID);
 
@@ -962,7 +962,7 @@ void SaveLoadGameNumber(int8_t bSaveGameID) {
     } else {
       /*
                               IF YOU UNCOMMENT THIS -- LOCALIZE IT!!!
-                              CHAR16	sText[512];
+                              wchar_t	sText[512];
 
                               swprintf( sText, L"%s%d?", zSaveLoadText[SLG_CONFIRM_LOAD],
          bSaveGameID );
@@ -976,7 +976,7 @@ void SaveLoadGameNumber(int8_t bSaveGameID) {
   }
 }
 
-BOOLEAN DoSaveLoadMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoSaveLoadMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                      uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                      const SGPRect *pCenteringRect) {
   // do message box and return
@@ -988,7 +988,7 @@ BOOLEAN DoSaveLoadMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t 
   return ((giSaveLoadMessageBox != -1));
 }
 
-BOOLEAN DoSaveLoadMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoSaveLoadMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                              uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
@@ -1039,10 +1039,10 @@ BOOLEAN DisplaySaveGameList() {
 
 BOOLEAN DisplaySaveGameEntry(int8_t bEntryID)  //, uint16_t usPosY )
 {
-  CHAR16 zDateString[128];
-  CHAR16 zLocationString[128];
-  CHAR16 zNumMercsString[128];
-  CHAR16 zBalanceString[128];
+  wchar_t zDateString[128];
+  wchar_t zLocationString[128];
+  wchar_t zNumMercsString[128];
+  wchar_t zBalanceString[128];
   SAVED_GAME_HEADER SaveGameHeader;
   struct VObject *hPixHandle;
   uint16_t usPosX = SLG_FIRST_SAVED_SPOT_X;
@@ -1160,8 +1160,8 @@ BOOLEAN DisplaySaveGameEntry(int8_t bEntryID)  //, uint16_t usPosY )
 
     // if the user is LOADING and holding down the CTRL key, display the additional info
     if (!gfSaveGame && gfKeyState[CTRL] && gbSelectedSaveLocation == bEntryID) {
-      CHAR16 zMouseHelpTextString[256];
-      CHAR16 zDifString[256];
+      wchar_t zMouseHelpTextString[256];
+      wchar_t zDifString[256];
 
       // Create a string for difficulty level
       swprintf(
@@ -1658,7 +1658,7 @@ void DestroySaveLoadTextInputBoxes() {
 }
 
 void SetSelection(uint8_t ubNewSelection) {
-  //	CHAR16		zMouseHelpTextString[256];
+  //	wchar_t		zMouseHelpTextString[256];
   //	SAVED_GAME_HEADER SaveGameHeader;
 
   // if we are loading and there is no entry, return
@@ -2030,10 +2030,10 @@ BOOLEAN DoQuickSave() {
           // Make sure the user has enough hard drive space
           if( !DoesUserHaveEnoughHardDriveSpace() )
           {
-                  CHAR16	zText[512];
-                  CHAR16	zSpaceOnDrive[512];
+                  wchar_t	zText[512];
+                  wchar_t	zSpaceOnDrive[512];
                   uint32_t	uiSpaceOnDrive;
-                  CHAR16	zSizeNeeded[512];
+                  wchar_t	zSizeNeeded[512];
 
                   swprintf( zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE );
                   InsertCommasForDollarFigure( zSizeNeeded );
@@ -2205,9 +2205,9 @@ void SaveGameToSlotNum() {
           // Make sure the user has enough hard drive space
           if( !DoesUserHaveEnoughHardDriveSpace() )
           {
-                  CHAR16	zText[512];
-                  CHAR16	zSizeNeeded[512];
-                  CHAR16	zSpaceOnDrive[512];
+                  wchar_t	zText[512];
+                  wchar_t	zSizeNeeded[512];
+                  wchar_t	zSpaceOnDrive[512];
                   uint32_t	uiSpaceOnDrive;
 
                   swprintf( zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE );

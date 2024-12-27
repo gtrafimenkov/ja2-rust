@@ -89,7 +89,7 @@ BOOLEAN gfFontsInit = FALSE;
 
 uint16_t CreateFontPaletteTables(struct VObject* pObj);
 
-extern CHAR16 gzFontName[32];
+extern wchar_t gzFontName[32];
 
 BOOLEAN InitializeFonts() {
   // Initialize fonts

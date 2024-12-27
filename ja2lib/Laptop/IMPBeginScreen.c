@@ -62,8 +62,8 @@ enum {
 };
 
 // beginning character stats
-CHAR16 pFullNameString[128];
-CHAR16 pNickNameString[128];
+wchar_t pFullNameString[128];
+wchar_t pNickNameString[128];
 
 // positions in name strings
 uint32_t uiFullNameCharacterPosition = 0;
@@ -469,13 +469,13 @@ void HandleBeginScreenTextEvent(uint32_t uiKey) {
                 uiFullNameCharacterPosition = 0;
               }
               // make sure we haven't moved too far
-              if ((uiFullNameCursorPosition + StringPixLength((CHAR16 *)&uiKey, FONT14ARIAL)) >
+              if ((uiFullNameCursorPosition + StringPixLength((wchar_t *)&uiKey, FONT14ARIAL)) >
                   FULL_NAME_REGION_WIDTH + 196 + LAPTOP_SCREEN_UL_X) {
                 // do nothing for now, when pop up is in place, display
                 break;
               }
-              // valid char, capture and convert to CHAR16
-              pFullNameString[uiFullNameCharacterPosition] = (CHAR16)uiKey;
+              // valid char, capture and convert to wchar_t
+              pFullNameString[uiFullNameCharacterPosition] = (wchar_t)uiKey;
 
               // null out next char position
               pFullNameString[uiFullNameCharacterPosition + 1] = 0;
@@ -500,14 +500,14 @@ void HandleBeginScreenTextEvent(uint32_t uiKey) {
               }
 
               // make sure we haven't moved too far
-              if ((uiNickNameCursorPosition + StringPixLength((CHAR16 *)&uiKey, FONT14ARIAL)) >
+              if ((uiNickNameCursorPosition + StringPixLength((wchar_t *)&uiKey, FONT14ARIAL)) >
                   NICK_NAME_REGION_WIDTH + 196 + LAPTOP_SCREEN_UL_X) {
                 // do nothing for now, when pop up is in place, display
                 break;
               }
 
-              // valid char, capture and convert to CHAR16
-              pNickNameString[uiNickNameCharacterPosition] = (CHAR16)uiKey;
+              // valid char, capture and convert to wchar_t
+              pNickNameString[uiNickNameCharacterPosition] = (wchar_t)uiKey;
 
               // null out next char position
               pNickNameString[uiNickNameCharacterPosition + 1] = 0;

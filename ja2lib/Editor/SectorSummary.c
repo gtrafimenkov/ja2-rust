@@ -43,7 +43,7 @@ extern BOOLEAN gfOverheadMapDirty;
 #define MAP_BOTTOM (MAP_TOP + MAP_SIZE)
 
 enum { PRE_ALPHA, ALPHA, DEMO, BETA, RELEASE };
-CHAR16 gszVersionType[5][10] = {L"Pre-Alpha", L"Alpha", L"Demo", L"Beta", L"Release"};
+wchar_t gszVersionType[5][10] = {L"Pre-Alpha", L"Alpha", L"Demo", L"Beta", L"Release"};
 #define GLOBAL_SUMMARY_STATE RELEASE
 
 // Regular masks
@@ -199,9 +199,9 @@ int16_t gsSelSectorX = 0, gsSelSectorY = 0;
 // summary is going to be persistant or not.
 uint32_t giInitTimer;
 
-CHAR16 gszFilename[40];
-CHAR16 gszTempFilename[21];
-CHAR16 gszDisplayName[21];
+wchar_t gszFilename[40];
+wchar_t gszTempFilename[21];
+wchar_t gszDisplayName[21];
 
 void CalculateOverrideStatus();
 
@@ -460,7 +460,7 @@ void DestroySummaryWindow() {
 }
 
 void RenderSectorInformation() {
-  // CHAR16 str[ 100 ];
+  // wchar_t str[ 100 ];
   MAPCREATE_STRUCT *m;
   SUMMARYFILE *s;
   uint8_t ePoints = 0;
@@ -638,7 +638,7 @@ void RenderItemDetails() {
   FLOAT dAvgExistChance, dAvgStatus;
   struct OBJECTTYPE *pItem;
   int32_t index, i;
-  CHAR16 str[100];
+  wchar_t str[100];
   uint32_t uiQuantity, uiExistChance, uiStatus;
   uint32_t uiTriggerQuantity[8], uiActionQuantity[8], uiTriggerExistChance[8],
       uiActionExistChance[8];
@@ -948,7 +948,7 @@ void RenderSummaryWindow() {
     SetFont(FONT10ARIAL);
     SetFontShadow(FONT_NEARBLACK);
     if (gfGlobalSummaryExists) {
-      CHAR16 str[100];
+      wchar_t str[100];
       BOOLEAN fSectorSummaryExists = FALSE;
       if (gusNumEntriesWithOutdatedOrNoSummaryInfo && !gfOutdatedDenied) {
         DisableButton(iSummaryButton[SUMMARY_LOAD]);
@@ -1294,7 +1294,7 @@ void RenderSummaryWindow() {
       mprintf(MAP_LEFT - 8, MAP_TOP + 4 + y * 13, L"%c", 65 + y);
     }
     for (x = 1; x <= 16; x++) {
-      CHAR16 str[3];
+      wchar_t str[3];
       swprintf(str, ARR_SIZE(str), L"%d", x);
       mprintf(MAP_LEFT + x * 13 - (13 + StringPixLength(str, SMALLCOMPFONT)) / 2, MAP_TOP - 8, str);
     }
@@ -1314,7 +1314,7 @@ void RenderSummaryWindow() {
     }
     if (gfRenderProgress) {
       uint8_t ubNumUndergroundLevels;
-      CHAR16 str[2];
+      wchar_t str[2];
       for (y = 0; y < 16; y++) {
         ClipRect.iTop = MAP_TOP + y * 13;
         ClipRect.iBottom = ClipRect.iTop + 12;
@@ -1423,9 +1423,9 @@ void RenderSummaryWindow() {
 }
 
 void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate) {
-  CHAR16 str[50];
+  wchar_t str[50];
   CHAR8 szCoord[40];
-  CHAR16 *ptr;
+  wchar_t *ptr;
   int16_t x, y;
 
   gfRenderSummary = TRUE;
@@ -1895,8 +1895,8 @@ void SummaryToggleLevelCallback(GUI_BUTTON *btn, int32_t reason) {
 
 void SummaryLoadMapCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    CHAR16 *ptr;
-    CHAR16 str[50];
+    wchar_t *ptr;
+    wchar_t str[50];
     gfRenderSummary = TRUE;
 
     SetFont(FONT10ARIAL);
@@ -2339,8 +2339,8 @@ void UpdateMasterProgress() {
 
 void ReportError(CHAR8 *pSector, uint8_t ubLevel) {
   static int32_t yp = 180;
-  CHAR16 str[40];
-  CHAR16 temp[10];
+  wchar_t str[40];
+  wchar_t temp[10];
 
   // Make sure the file exists... if not, then return false
   swprintf(str, ARR_SIZE(str), L"%S", pSector);
@@ -2444,7 +2444,7 @@ void SummaryUpdateCallback(GUI_BUTTON *btn, int32_t reason) {
 }
 
 void ExtractTempFilename() {
-  CHAR16 str[40];
+  wchar_t str[40];
   Get16BitStringFromField(1, str, ARR_SIZE(str));
   if (wcscmp(gszTempFilename, str)) {
     wcscpy(gszTempFilename, str);
@@ -2456,7 +2456,7 @@ void ExtractTempFilename() {
 
 void ApologizeOverrideAndForceUpdateEverything() {
   int32_t x, y;
-  CHAR16 str[50];
+  wchar_t str[50];
   CHAR8 name[50];
   SUMMARYFILE *pSF;
   // Create one huge assed button

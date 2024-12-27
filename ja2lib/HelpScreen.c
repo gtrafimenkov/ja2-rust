@@ -566,7 +566,7 @@ BOOLEAN EnterHelpScreen() {
   VOBJECT_DESC VObjectDesc;
   uint16_t usPosX, usPosY;  //, usWidth, usHeight;
                             //	int32_t	iStartLoc;
-                            //	CHAR16 zText[1024];
+                            //	wchar_t zText[1024];
 
   // Clear out all the save background rects
   EmptyBackgroundRects();
@@ -902,7 +902,7 @@ void SetSizeAndPropertiesOfHelpScreen() {
 
 void CreateHelpScreenButtons() {
   uint16_t usPosX, usPosY;
-  CHAR16 sText[1024];
+  wchar_t sText[1024];
   int32_t i;
 
   // if there are buttons to create
@@ -1199,7 +1199,7 @@ void GetHelpScreenTextPositions(uint16_t *pusPosX, uint16_t *pusPosY, uint16_t *
 
 void DisplayCurrentScreenTitleAndFooter() {
   int32_t iStartLoc = -1;
-  CHAR16 zText[1024];
+  wchar_t zText[1024];
   uint16_t usPosX = 0, usPosY = 0, usWidth = 0;
 
   // new screen:
@@ -1388,7 +1388,7 @@ void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText) {
 // returns the number of vertical pixels printed
 uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY,
                                      uint16_t usWidth) {
-  CHAR16 zText[1024];
+  wchar_t zText[1024];
   uint16_t usNumVertPixels = 0;
   uint32_t uiStartLoc;
 

@@ -573,7 +573,7 @@ void ChangeQuestState(int32_t iNumber);
 void ChangeFactState(int32_t iNumber);
 void DisplayCurrentGridNo();
 void EnableQDSButtons();
-BOOLEAN DoQDSMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
+BOOLEAN DoQDSMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 void IncrementActiveDropDownBox(int16_t sIncrementValue);
 int16_t IsMercInTheSector(uint16_t usMercID);
@@ -753,8 +753,8 @@ BOOLEAN EnterQuestDebugSystem() {
   wchar_t zName[128];
   //	uint16_t	usListBoxFontHeight = GetFontHeight( QUEST_DBS_FONT_LISTBOX_TEXT ) + 2;
 
-  //	CHAR16	zItemName[ SIZE_ITEM_NAME ];
-  //	CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
+  //	wchar_t	zItemName[ SIZE_ITEM_NAME ];
+  //	wchar_t	zItemDesc[ SIZE_ITEM_INFO ];
 
   uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
   VOBJECT_DESC VObjectDesc;
@@ -948,7 +948,7 @@ BOOLEAN EnterQuestDebugSystem() {
   DisableButton(guiQuestDebugNPCRefreshButtonButton);
 
   if (giHaveSelectedNPC != -1) {
-    CHAR16 zItemDesc[SIZE_ITEM_INFO];
+    wchar_t zItemDesc[SIZE_ITEM_INFO];
 
     if (gfUseLocalNPCs)
       swprintf(zItemDesc, ARR_SIZE(zItemDesc), L"%d - %s", gubCurrentNpcInSector[giHaveSelectedNPC],
@@ -964,8 +964,8 @@ BOOLEAN EnterQuestDebugSystem() {
   }
 
   if (giHaveSelectedItem != -1) {
-    CHAR16 zItemName[SIZE_ITEM_NAME];
-    CHAR16 zItemDesc[SIZE_ITEM_INFO];
+    wchar_t zItemName[SIZE_ITEM_NAME];
+    wchar_t zItemDesc[SIZE_ITEM_INFO];
 
     wcscpy(zItemName, ShortItemNames[giHaveSelectedItem]);
 
@@ -1035,7 +1035,7 @@ void ExitQuestDebugSystem() {
 }
 
 void HandleQuestDebugSystem() {
-  CHAR16 zTemp[512];
+  wchar_t zTemp[512];
 
   // hhh
 
@@ -1131,7 +1131,7 @@ void RenderQuestDebugSystem() {
 
 void DisplayCurrentGridNo() {
   if (gsQdsEnteringGridNo != 0) {
-    CHAR16 zTemp[512];
+    wchar_t zTemp[512];
 
     swprintf(zTemp, ARR_SIZE(zTemp), L"%s:  %d", QuestDebugText[QUEST_DBS_CURRENT_GRIDNO],
              gsQdsEnteringGridNo);
@@ -1244,7 +1244,7 @@ void GetUserInput() {
           break;
 
         case 'd': {
-          CHAR16 zTemp[512];
+          wchar_t zTemp[512];
 
           // toggle whether dropped items are damaged or not
           gfDropDamagedItems ^= 1;
@@ -1796,7 +1796,7 @@ void DisplaySelectedNPC() {
   uint16_t usPosX, usPosY;
   int16_t usLocationX = 0, usLocationY = 0;
   uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
-  CHAR16 sTempString[64];
+  wchar_t sTempString[64];
   wchar_t zButtonName[256];
 
   usPosX = gpActiveListBox->usScrollPosX;
@@ -1890,8 +1890,8 @@ void DisplaySelectedItem() {
   uint16_t i;
   uint16_t usPosX, usPosY;
   uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
-  CHAR16 zItemName[SIZE_ITEM_NAME];
-  //	CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
+  wchar_t zItemName[SIZE_ITEM_NAME];
+  //	wchar_t	zItemDesc[ SIZE_ITEM_INFO ];
 
   wchar_t zButtonName[256];
 
@@ -2168,7 +2168,7 @@ void BtnQuestDebugAddNpcToLocationButtonCallback(GUI_BUTTON *btn, int32_t reason
                      btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    CHAR16 zTemp[512];
+    wchar_t zTemp[512];
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
     swprintf(zTemp, ARR_SIZE(zTemp), L"%s where %s will be added.",
@@ -2193,9 +2193,9 @@ void BtnQuestDebugAddItemToLocationButtonCallback(GUI_BUTTON *btn, int32_t reaso
                      btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    CHAR16 zTemp[512];
-    CHAR16 zItemName[SIZE_ITEM_NAME];
-    //		CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
+    wchar_t zTemp[512];
+    wchar_t zItemName[SIZE_ITEM_NAME];
+    //		wchar_t	zItemDesc[ SIZE_ITEM_INFO ];
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
     //		if ( !LoadItemInfo( gItemListBox.sCurSelectedItem, zItemName, zItemDesc ) )
@@ -2263,7 +2263,7 @@ void BtnQuestDebugChangeDayButtonCallback(GUI_BUTTON *btn, int32_t reason) {
                      btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    CHAR16 zTemp[512];
+    wchar_t zTemp[512];
 
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
@@ -2365,7 +2365,7 @@ void BtnQuestDebugNPCRefreshButtonButtonCallback(GUI_BUTTON *btn, int32_t reason
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     BOOLEAN fRetVal = FALSE;
-    CHAR16 zTemp[128];
+    wchar_t zTemp[128];
     uint8_t ubMercID = 0;
 
     if (gfUseLocalNPCs) {
@@ -2770,8 +2770,8 @@ void CreateDestroyDisplayNPCInventoryPopup(uint8_t ubAction) {
       break;
 
     case QD_DROP_DOWN_DISPLAY: {
-      CHAR16 zItemName[SIZE_ITEM_NAME];
-      //			CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
+      wchar_t zItemName[SIZE_ITEM_NAME];
+      //			wchar_t	zItemDesc[ SIZE_ITEM_INFO ];
       uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
 
       // if the soldier is active
@@ -3162,7 +3162,7 @@ void EnableQDSButtons() {
   */
 }
 
-BOOLEAN DoQDSMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
+BOOLEAN DoQDSMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect pCenteringRect = {0, 0, 639, 479};
 
@@ -3273,7 +3273,7 @@ void RefreshAllNPCInventory() {
 }
 
 void StartMercTalkingFromQuoteNum(int32_t iQuoteToStartTalkingFrom) {
-  CHAR16 zTemp[512];
+  wchar_t zTemp[512];
   int32_t uiMaxNumberOfQuotes = GetMaxNumberOfQuotesToPlay();
 
   // make sure the current character is created
@@ -3432,7 +3432,7 @@ void SetQDSMercProfile() {
 }
 
 void DisplayQDSCurrentlyQuoteNum() {
-  CHAR16 zTemp[512];
+  wchar_t zTemp[512];
   uint16_t usPosY;
   uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_TEXT_ENTRY) + 2;
 

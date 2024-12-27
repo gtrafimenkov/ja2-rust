@@ -1362,7 +1362,7 @@ void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFin
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case (TRAIN_TOWN_MILITIA): {
-      CHAR16 str[128];
+      wchar_t str[128];
       uint8_t ubSectorX;
       uint8_t ubSectorY;
       ubSectorX = SectorID8_X(pFinance->ubSecondCode);

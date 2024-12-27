@@ -354,7 +354,7 @@ void DestroyPersonalityQuizButtons(void) {
 void AddIMPPersonalityQuizAnswerButtons(int32_t iNumberOfButtons) {
   // will add iNumberofbuttons to the answer button list
   int32_t iCounter = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
 
   for (iCounter = 0; iCounter < iNumberOfButtons; iCounter++) {
     switch (iCounter) {
@@ -1374,7 +1374,7 @@ void BltAnswerIndents(int32_t iNumberOfIndents) {
 void PrintQuizQuestionNumber(void) {
   // this function will print the number of the current question and the numebr of questions
 
-  CHAR16 sString[10];
+  wchar_t sString[10];
 
   // setup font
   SetFont(FONT12ARIAL);

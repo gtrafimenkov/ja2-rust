@@ -94,7 +94,7 @@ typedef struct {
   uint16_t usTactialTurnLimitCounter;
   BOOLEAN fInTopMessage;
   uint8_t ubTopMessageType;
-  CHAR16 zTopMessageString[20];
+  wchar_t zTopMessageString[20];
   uint16_t usTactialTurnLimitMax;
   uint32_t uiTactialTurnLimitClock;
   BOOLEAN fTactialTurnLimitStartedBeep;

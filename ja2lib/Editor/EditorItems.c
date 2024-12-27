@@ -189,8 +189,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
   int16_t sWidth, sOffset, sStart;
   int16_t i, x, y;
   uint16_t usCounter;
-  CHAR16 pStr[100];  //, pStr2[ 100 ];
-  CHAR16 pItemName[SIZE_ITEM_NAME];
+  wchar_t pStr[100];  //, pStr2[ 100 ];
+  wchar_t pItemName[SIZE_ITEM_NAME];
   uint8_t ubBitDepth;
   BOOLEAN fTypeMatch;
   int32_t iEquipCount = 0;
@@ -1351,7 +1351,7 @@ uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID) {
 void DisplayItemStatistics() {
   BOOLEAN fUseSelectedItem;
   int16_t usItemIndex;
-  CHAR16 pItemName[SIZE_ITEM_NAME];
+  wchar_t pItemName[SIZE_ITEM_NAME];
 
   if (!eInfo.fActive) {
     return;

@@ -1441,7 +1441,7 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
   int16_t usX, usY;
   wchar_t sString[9];
   uint32_t cnt;
-  static CHAR16 pStr[200], pMoraleStr[20];
+  static wchar_t pStr[200], pMoraleStr[20];
 
   if (gubSelectSMPanelToMerc != NOBODY) {
     // Give him the panel!
@@ -2925,7 +2925,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
   int16_t sFontX, sFontY;
   uint32_t cnt, posIndex;
   struct SOLDIERTYPE *pSoldier;
-  static CHAR16 pStr[200], pMoraleStr[20];
+  static wchar_t pStr[200], pMoraleStr[20];
 
   if (fDirty == DIRTYLEVEL2) {
     MarkAButtonDirty(iTEAMPanelButtons[TEAM_DONE_BUTTON]);
@@ -4063,7 +4063,7 @@ BOOLEAN RemovePlayerFromInterfaceTeamSlot(uint8_t ubPanelSlot) {
 }
 
 void RenderTownIDString() {
-  CHAR16 zTownIDString[80];
+  wchar_t zTownIDString[80];
   int16_t sFontX, sFontY;
 
   // Render town, position
@@ -4560,8 +4560,8 @@ void SMInvMoneyButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
     if (gpItemPointer != NULL) {
       // and the item is money
       if (Item[gpItemPointer->usItem].usItemClass == IC_MONEY) {
-        CHAR16 zText[512];
-        CHAR16 zMoney[64];
+        wchar_t zText[512];
+        wchar_t zMoney[64];
 
         // Make sure we go back to movement mode...
         guiPendingOverrideEvent = A_CHANGE_TO_MOVE;

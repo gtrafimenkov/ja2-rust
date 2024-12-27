@@ -86,7 +86,7 @@
 
 #ifdef JA2EDITOR
 extern BOOLEAN gfErrorCatch;
-extern CHAR16 gzErrorCatchString[256];
+extern wchar_t gzErrorCatchString[256];
 #endif
 
 // TEMP
@@ -1869,7 +1869,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel) {
   int32_t cnt;
   int32_t i;
   int32_t iTilesetID;
-  CHAR16 str[40];
+  wchar_t str[40];
   uint8_t bCounts[WORLD_MAX][8];
   uint8_t ubCombine;
   CHAR8 szDirFilename[50];

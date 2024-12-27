@@ -33,8 +33,8 @@ extern int32_t iMechanical;
 extern BOOLEAN fCharacterIsMale;
 
 // name?
-extern CHAR16 pFullName[];
-extern CHAR16 pNickName[];
+extern wchar_t pFullName[];
+extern wchar_t pNickName[];
 
 // skills
 extern int32_t iSkillA;

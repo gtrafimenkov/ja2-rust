@@ -84,9 +84,9 @@ enum {
   ACTIONITEM_PASSIVE_ENEMY_GLOBAL,
   NUM_ACTIONITEMS
 };
-extern CHAR16 gszActionItemDesc[NUM_ACTIONITEMS][30];
+extern wchar_t gszActionItemDesc[NUM_ACTIONITEMS][30];
 // Returns a pointer to one of the above string array.
-extern CHAR16 *GetActionItemName(struct OBJECTTYPE *pItem);
+extern wchar_t *GetActionItemName(struct OBJECTTYPE *pItem);
 // Called by the popup menu, when a selection is made.
 extern void UpdateActionItem(int8_t bActionItemIndex);
 // Changes an action item into the type specified by the ACTIONITEM enumeration.

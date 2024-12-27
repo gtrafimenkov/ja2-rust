@@ -651,7 +651,7 @@ struct GROUP *CreateNewEnemyGroupDepartingFromSector(uint32_t uiSector, uint8_t 
 
 #ifdef JA2BETAVERSION
   {
-    CHAR16 str[512];
+    wchar_t str[512];
     if (PlayerMercsInSector(pNew->ubSectorX, pNew->ubSectorY, 0) ||
         CountAllMilitiaInSector(pNew->ubSectorX, pNew->ubSectorY)) {
       swprintf(str, ARR_SIZE(str),
@@ -1047,8 +1047,8 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
         NotifyPlayerOfInvasionByEnemyForces(pGroup->ubSectorX, pGroup->ubSectorY, 0,
                                             TriggerPrebattleInterface);
       } else {
-        CHAR16 str[256];
-        CHAR16 pSectorStr[128];
+        wchar_t str[256];
+        wchar_t pSectorStr[128];
         GetSectorIDString(pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ, pSectorStr,
                           ARR_SIZE(pSectorStr), TRUE);
         swprintf(str, ARR_SIZE(str), gpStrategicString[STR_DIALOG_ENEMIES_ATTACK_UNCONCIOUSMERCS],
@@ -1836,8 +1836,8 @@ BOOLEAN PossibleToCoordinateSimultaneousGroupArrivals(struct GROUP *pFirstGroup)
   }
 
   if (ubNumNearbyGroups) {  // postpone the battle until the user answers the dialog.
-    CHAR16 str[255];
-    CHAR16 *pStr, *pEnemyType;
+    wchar_t str[255];
+    wchar_t *pStr, *pEnemyType;
     InterruptTime();
     PauseGame();
     LockPauseState(13);
@@ -3800,7 +3800,7 @@ void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle
   pItem = &pSoldier->inv[HANDPOS];
   if (pItem->usItem != GAS_CAN) {
 #ifdef JA2BETAVERSION
-    CHAR16 str[100];
+    wchar_t str[100];
     swprintf(str, ARR_SIZE(str), L"%s is supposed to have gas can in hand.  ATE:0", pSoldier->name);
     DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
 #endif
@@ -3827,7 +3827,7 @@ void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle
 }
 
 void ReportVehicleOutOfGas(int32_t iVehicleID, uint8_t ubSectorX, uint8_t ubSectorY) {
-  CHAR16 str[255];
+  wchar_t str[255];
   // Report that the vehicle that just arrived is out of gas.
   swprintf(str, ARR_SIZE(str), gzLateLocalizedString[5],
            pVehicleStrings[pVehicleList[iVehicleID].ubVehicleType], ubSectorY + 'A' - 1, ubSectorX);
@@ -4036,8 +4036,8 @@ BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
 }
 
 void NotifyPlayerOfBloodcatBattle(uint8_t ubSectorX, uint8_t ubSectorY) {
-  CHAR16 str[256];
-  CHAR16 zTempString[128];
+  wchar_t str[256];
+  wchar_t zTempString[128];
   if (gubEnemyEncounterCode == BLOODCAT_AMBUSH_CODE) {
     GetSectorIDString(ubSectorX, ubSectorY, 0, zTempString, ARR_SIZE(zTempString), TRUE);
     swprintf(str, ARR_SIZE(str), pMapErrorString[12], zTempString);
@@ -4173,8 +4173,8 @@ void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPC
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup) {
   int16_t sSectorX = 0, sSectorY = 0;
   int8_t bSectorZ = 0;
-  CHAR16 sString[128];
-  CHAR16 wSectorName[128];
+  wchar_t sString[128];
+  wchar_t wSectorName[128];
   int16_t sStrategicSector;
 
   Assert(pGroup);
@@ -4381,7 +4381,7 @@ void ValidateGroups(struct GROUP *pGroup) {
   ValidatePlayersAreInOneGroupOnly();
   if (!pGroup->fPlayer && !pGroup->ubGroupSize) {
     // report error
-    CHAR16 str[512];
+    wchar_t str[512];
     if (pGroup->ubSectorIDOfLastReassignment == 255) {
       swprintf(str, ARR_SIZE(str),
                L"Enemy group found with 0 troops in it.  This is illegal and group will be deleted."

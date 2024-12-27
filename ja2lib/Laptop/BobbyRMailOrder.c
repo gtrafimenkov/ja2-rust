@@ -587,7 +587,7 @@ void RenderBobbyRMailOrder() {
   uint16_t usPosY;
   struct VObject *hPixHandle;
   uint16_t usHeight;  // usWidth,
-  CHAR16 sTemp[128];
+  wchar_t sTemp[128];
 
   DrawBobbyRWoodBackground();
 
@@ -2098,7 +2098,7 @@ uint32_t CalcPackageTotalWeight() {
 }
 
 void DisplayPackageWeight() {
-  CHAR16 zTemp[32];
+  wchar_t zTemp[32];
   uint32_t uiTotalWeight = CalcPackageTotalWeight();
   //	FLOAT			fWeight = (FLOAT)(uiTotalWeight / 10.0);
 

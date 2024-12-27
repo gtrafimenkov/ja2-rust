@@ -5158,7 +5158,7 @@ struct HWINFONT *GetWinFont(int32_t iFont) {
   }
 }
 
-CHAR16 gzFontName[32];
+wchar_t gzFontName[32];
 
 void SetWinFontForeColor(int32_t iFont, COLORVAL *pColor) {
   struct HWINFONT *pWinFont;

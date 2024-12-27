@@ -277,7 +277,7 @@ void BuildListFile() {
   int numEntries = 0;
   int cnt;
   uint16_t usState;
-  CHAR16 zError[128];
+  wchar_t zError[128];
 
   // Verify the existance of the header text file.
   infoFile = fopen("ANITEST.DAT", "rb");

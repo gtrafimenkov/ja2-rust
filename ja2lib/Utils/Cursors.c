@@ -4700,7 +4700,7 @@ void BltJA2CursorData() {
 }
 
 void DrawMouseText() {
-  CHAR16 pStr[512];
+  wchar_t pStr[512];
   int16_t sX, sY;
   static BOOLEAN fShow = FALSE;
   static BOOLEAN fHoldInvalid = TRUE;

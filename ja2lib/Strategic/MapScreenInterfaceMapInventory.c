@@ -272,7 +272,7 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
   // render item in this slot of the list
   int16_t sX, sY;
   struct VObject *hHandle;
-  CHAR16 sString[64];
+  wchar_t sString[64];
   int16_t sWidth = 0, sHeight = 0;
   int16_t sOutLine = 0;
   BOOLEAN fOutLine = FALSE;
@@ -382,7 +382,7 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
 }
 
 void UpdateHelpTextForInvnentoryStashSlots(void) {
-  CHAR16 pStr[512];
+  wchar_t pStr[512];
   int32_t iCounter = 0;
   int32_t iFirstSlotOnPage = (iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT);
 
@@ -669,7 +669,7 @@ void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // btn callback handler for assignment screen mask region
   int32_t iCounter = 0;
   int32_t iOldNumberOfObjects = 0;
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -1424,7 +1424,7 @@ void MapInventoryPoolDoneBtn(GUI_BUTTON *btn, int32_t reason) {
 
 void DisplayPagesForMapInventoryPool(void) {
   // get the current and last pages and display them
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX, sY;
 
   SetFont(COMPFONT);
@@ -1476,7 +1476,7 @@ int32_t GetTotalNumberOfItems(void) {
 
 void DrawNumberOfIventoryPoolItems(void) {
   int32_t iNumberOfItems = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX, sY;
 
   iNumberOfItems = GetTotalNumberOfItemsInSectorStash();
@@ -1525,7 +1525,7 @@ void DestroyInventoryPoolDoneButton(void) {
 
 void DisplayCurrentSector(void) {
   // grab current sector being displayed
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX, sY;
 
   swprintf(sString, ARR_SIZE(sString), L"%s%s%s", pMapVertIndex[sSelMapY], pMapHortIndex[sSelMapX],
@@ -1568,7 +1568,7 @@ void CheckAndUnDateSlotAllocation(void) {
 }
 
 void DrawTextOnMapInventoryBackground(void) {
-  //	CHAR16 sString[ 64 ];
+  //	wchar_t sString[ 64 ];
   uint16_t usStringHeight;
 
   SetFont(MAP_IVEN_FONT);
@@ -1629,7 +1629,7 @@ void HandleButtonStatesWhileMapInventoryActive(void) {
 
 void DrawTextOnSectorInventory(void) {
   int16_t sX = 0, sY = 0;
-  CHAR16 sString[64];
+  wchar_t sString[64];
 
   // parse the string
   swprintf(sString, ARR_SIZE(sString), zMarksMapScreenText[11]);

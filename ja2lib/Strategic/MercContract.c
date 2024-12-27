@@ -64,8 +64,8 @@ uint8_t ubQuitType = 0;
 BOOLEAN gfFirstMercSayQuote = FALSE;
 extern BOOLEAN gfFirstMercSayingQuoteWillLeaveNoMatterWhat;
 
-extern CHAR16 gzUserDefinedButton1[128];
-extern CHAR16 gzUserDefinedButton2[128];
+extern wchar_t gzUserDefinedButton1[128];
+extern wchar_t gzUserDefinedButton2[128];
 
 struct SOLDIERTYPE *pContractReHireSoldier = NULL;
 
@@ -896,10 +896,10 @@ void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,
                                                             BOOLEAN fAddRehireButton) {
   // will tell player this character is leaving and ask where they want the equipment left
-  CHAR16 sString[1024];
+  wchar_t sString[1024];
   BOOLEAN fInSector = FALSE;
-  //	CHAR16					zTownIDString[50];
-  CHAR16 zShortTownIDString[50];
+  //	wchar_t					zTownIDString[50];
+  wchar_t zShortTownIDString[50];
 
   // use YES/NO Pop up box, settup for particular screen
   SGPRect pCenteringRect = {0, 0, 640, 480};
@@ -1224,8 +1224,8 @@ void HandleNotifyPlayerCantAffordInsurance(void) {
 
 void HandleNotifyPlayerCanAffordInsurance(struct SOLDIERTYPE *pSoldier, uint8_t ubLength,
                                           int32_t iCost) {
-  CHAR16 sString[128];
-  CHAR16 sStringA[32];
+  wchar_t sString[128];
+  wchar_t sStringA[32];
 
   // parse the cost
   swprintf(sStringA, ARR_SIZE(sStringA), L"%d", iCost);

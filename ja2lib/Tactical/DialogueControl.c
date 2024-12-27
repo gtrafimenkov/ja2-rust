@@ -141,7 +141,7 @@ uint16_t gusSubtitleBoxHeight;
 int32_t giTextBoxOverlay = -1;
 BOOLEAN gfFacePanelActive = FALSE;
 uint32_t guiScreenIDUsedWhenUICreated;
-CHAR16 gzQuoteStr[QUOTE_MESSAGE_SIZE];
+wchar_t gzQuoteStr[QUOTE_MESSAGE_SIZE];
 struct MOUSE_REGION gTextBoxMouseRegion;
 struct MOUSE_REGION gFacePopupMouseRegion;
 BOOLEAN gfUseAlternateDialogueFile = FALSE;
@@ -182,17 +182,17 @@ void TextOverlayClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void FaceOverlayClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Handler functions for tactical ui diaplay
-void HandleTacticalTextUI(int32_t iFaceIndex, struct SOLDIERTYPE *pSoldier, CHAR16 *zQuoteStr);
-void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, CHAR16 *zQuoteStr);
+void HandleTacticalTextUI(int32_t iFaceIndex, struct SOLDIERTYPE *pSoldier, wchar_t *zQuoteStr);
+void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, wchar_t *zQuoteStr);
 void HandleTacticalSpeechUI(uint8_t ubCharacterNum, int32_t iFaceIndex);
 void DisplayTextForExternalNPC(uint8_t ubCharacterNum, STR16 zQuoteStr);
 void CreateTalkingUI(int8_t bUIHandlerID, int32_t iFaceIndex, uint8_t ubCharacterNum,
-                     struct SOLDIERTYPE *pSoldier, CHAR16 *zQuoteStr);
+                     struct SOLDIERTYPE *pSoldier, wchar_t *zQuoteStr);
 
 void HandleExternNPCSpeechFace(int32_t iIndex);
 
 extern BOOLEAN ContinueDialogue(struct SOLDIERTYPE *pSoldier, BOOLEAN fDone);
-extern BOOLEAN DoSkiMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+extern BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback);
 
 void UnPauseGameDuringNextQuote(void) {
@@ -395,8 +395,8 @@ void HandleDialogue() {
   static BOOLEAN fOldEngagedInConvFlagOn = FALSE;
   BOOLEAN fDoneTalking = FALSE;
   struct SOLDIERTYPE *pSoldier = NULL;
-  CHAR16 zText[512];
-  CHAR16 zMoney[128];
+  wchar_t zText[512];
+  wchar_t zMoney[128];
 
   // we don't want to just delay action of some events, we want to pause the whole queue, regardless
   // of the event
@@ -886,7 +886,7 @@ void HandleDialogue() {
       pSoldier = FindSoldierByProfileID(QItem->ubCharacterNum, FALSE);
 
       if (pSoldier) {
-        CHAR16 wTempString[128];
+        wchar_t wTempString[128];
 
         // tell player about stat increase
         BuildStatChangeString(
@@ -1025,7 +1025,7 @@ void HandleDialogue() {
 }
 
 BOOLEAN GetDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, uint32_t iDataSize,
-                    CHAR16 *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
+                    wchar_t *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
                     CHAR8 *zSoundString);
 
 BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum) {
@@ -1412,7 +1412,7 @@ BOOLEAN ExecuteCharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, in
 }
 
 void CreateTalkingUI(int8_t bUIHandlerID, int32_t iFaceIndex, uint8_t ubCharacterNum,
-                     struct SOLDIERTYPE *pSoldier, CHAR16 *zQuoteStr) {
+                     struct SOLDIERTYPE *pSoldier, wchar_t *zQuoteStr) {
   // Show text, if on
   if (gGameSettings.fOptions[TOPTION_SUBTITLES] || !gFacesData[iFaceIndex].fValidSpeech) {
     switch (bUIHandlerID) {
@@ -1539,7 +1539,7 @@ BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuot
 }
 
 BOOLEAN GetDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, uint32_t iDataSize,
-                    CHAR16 *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
+                    wchar_t *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
                     CHAR8 *zSoundString) {
   CHAR8 *pFilename;
 
@@ -1582,8 +1582,8 @@ BOOLEAN GetDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, uint32_t iDataS
 }
 
 // Handlers for tactical UI stuff
-void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, CHAR16 *zQuoteStr) {
-  CHAR16 zText[QUOTE_MESSAGE_SIZE];
+void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, wchar_t *zQuoteStr) {
+  wchar_t zText[QUOTE_MESSAGE_SIZE];
 
   // Setup dialogue text box
   if (!IsMapScreen_2()) {
@@ -1604,7 +1604,7 @@ void HandleTacticalNPCTextUI(uint8_t ubCharacterNum, CHAR16 *zQuoteStr) {
 
 // Handlers for tactical UI stuff
 void DisplayTextForExternalNPC(uint8_t ubCharacterNum, STR16 zQuoteStr) {
-  CHAR16 zText[QUOTE_MESSAGE_SIZE];
+  wchar_t zText[QUOTE_MESSAGE_SIZE];
   int16_t sLeft;
 
   // Setup dialogue text box
@@ -1635,8 +1635,8 @@ void DisplayTextForExternalNPC(uint8_t ubCharacterNum, STR16 zQuoteStr) {
   return;
 }
 
-void HandleTacticalTextUI(int32_t iFaceIndex, struct SOLDIERTYPE *pSoldier, CHAR16 *zQuoteStr) {
-  CHAR16 zText[QUOTE_MESSAGE_SIZE];
+void HandleTacticalTextUI(int32_t iFaceIndex, struct SOLDIERTYPE *pSoldier, wchar_t *zQuoteStr) {
+  wchar_t zText[QUOTE_MESSAGE_SIZE];
   int16_t sLeft = 0;
 
   // BUild text
@@ -1949,7 +1949,7 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
   uint8_t *pDestBuf, *pSrcBuf;
   int16_t sFontX, sFontY;
   struct SOLDIERTYPE *pSoldier;
-  CHAR16 zTownIDString[50];
+  wchar_t zTownIDString[50];
 
   if (gpCurrentTalkingFace == NULL) {
     return;

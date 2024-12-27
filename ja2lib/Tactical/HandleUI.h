@@ -206,13 +206,13 @@ extern BOOLEAN gUITargetReady;
 extern BOOLEAN gUITargetShotWaiting;
 extern uint16_t gsUITargetShotGridNo;
 
-extern CHAR16 gzLocation[20];
+extern wchar_t gzLocation[20];
 extern BOOLEAN gfUIBodyHitLocation;
 
-extern CHAR16 gzIntTileLocation[20];
+extern wchar_t gzIntTileLocation[20];
 extern BOOLEAN gfUIIntTileLocation;
 
-extern CHAR16 gzIntTileLocation2[20];
+extern wchar_t gzIntTileLocation2[20];
 extern BOOLEAN gfUIIntTileLocation2;
 
 extern BOOLEAN gfUIWaitingForUserSpeechAdvance;

@@ -470,7 +470,7 @@ uint16_t IanDisplayWrappedString(uint16_t usPosX, uint16_t usPosY, uint16_t usWi
   uint8_t ubLocalColor = ubColor;
   BOOLEAN fBoldOn = FALSE;
 
-  CHAR16 zLineString[128] = L"", zWordString[64] = L"";
+  wchar_t zLineString[128] = L"", zWordString[64] = L"";
 
   do {
     // each character goes towards building a new word
@@ -959,7 +959,7 @@ int16_t IanDisplayWrappedStringToPages(uint16_t usPosX, uint16_t usPosY, uint16_
   uint16_t usJustification = LEFT_JUSTIFIED, usLocalPosX = usPosX;
   uint8_t ubLocalColor = ubColor;
   BOOLEAN fBoldOn = FALSE;
-  CHAR16 zLineString[640] = L"", zWordString[640] = L"";
+  wchar_t zLineString[640] = L"", zWordString[640] = L"";
 
   // identical to ianwordwrap, but this one lets the user to specify the page they want to display,
   // if the text takes more than one page multiple calls to this function will allow one to work out
@@ -1262,7 +1262,7 @@ uint16_t IanWrappedStringHeight(uint16_t usPosX, uint16_t usPosY, uint16_t usWid
   uint32_t uiLocalFont = uiFont;
   uint16_t usJustification = LEFT_JUSTIFIED, usLocalPosX = usPosX;
   BOOLEAN fBoldOn = FALSE;
-  CHAR16 zLineString[640] = L"", zWordString[640] = L"";
+  wchar_t zLineString[640] = L"", zWordString[640] = L"";
 
   // simply a cut and paste operation on Ian Display Wrapped, but will not write string to screen
   // since this all we want to do, everything IanWrapped will do but without displaying string
@@ -1694,7 +1694,7 @@ FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, uint32_t uiFont
 BOOLEAN ReduceStringLength(STR16 pString, size_t bufSize, uint32_t uiWidthToFitIn,
                            uint32_t uiFont) {
   wchar_t OneChar[2];
-  CHAR16 zTemp[1024];
+  wchar_t zTemp[1024];
   wchar_t zStrDots[16];
   uint32_t uiDotWidth;
   uint32_t uiTempStringPixWidth = 0;

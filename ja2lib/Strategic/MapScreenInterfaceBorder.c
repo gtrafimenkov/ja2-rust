@@ -1020,7 +1020,7 @@ void DisplayCurrentLevelMarker(void) {
 
 void CreateMouseRegionsForLevelMarkers(void) {
   int16_t sCounter = 0;
-  CHAR16 sString[64];
+  wchar_t sString[64];
 
   for (sCounter = 0; sCounter < 4; sCounter++) {
     MSYS_DefineRegion(&LevelMouseRegions[sCounter], MAP_LEVEL_MARKER_X,

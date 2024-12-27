@@ -642,8 +642,8 @@ extern BOOLEAN gfFadeOutDone;
 
 extern uint32_t guiPendingScreen;
 
-extern CHAR16 gzUserDefinedButton1[128];
-extern CHAR16 gzUserDefinedButton2[128];
+extern wchar_t gzUserDefinedButton1[128];
+extern wchar_t gzUserDefinedButton2[128];
 
 extern BOOLEAN gfMilitiaPopupCreated;
 
@@ -676,7 +676,7 @@ void MonitorMapUIMessage(void);
 
 void RenderMapHighlight(int16_t sMapX, int16_t sMapY, uint16_t usLineColor, BOOLEAN fStationary);
 void ShadeMapElem(int16_t sMapX, int16_t sMapY);
-void PopupText(CHAR16 *pFontString, ...);
+void PopupText(wchar_t *pFontString, ...);
 void DrawString(STR16 pString, uint16_t uiX, uint16_t uiY, uint32_t uiFont);
 
 // Clock
@@ -984,7 +984,7 @@ BOOLEAN SetInfoChar(uint8_t ubID) {
 
 void DisplayDestinationOfCurrentDestMerc(void) {
   // will display the dest of the current dest merc
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX, sY;
   int16_t sSector;
 
@@ -4065,7 +4065,7 @@ uint32_t HandleMapUI() {
               GROUNDBARRIER) {
             // if it's not enemy air controlled
             if (StrategicMap[GetSectorID16(sMapX, sMapY)].fEnemyAirControlled == FALSE) {
-              CHAR16 sMsgString[128], sMsgSubString[64];
+              wchar_t sMsgString[128], sMsgSubString[64];
 
               // move the landing zone over here
               gsMercArriveSectorX = sMapX;
@@ -5569,7 +5569,7 @@ void PollRightButtonInMapView(uint32_t *puiNewEvent) {
   }
 }
 
-void PopupText(CHAR16 *pFontString, ...) {
+void PopupText(wchar_t *pFontString, ...) {
   uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
   va_list argptr;
@@ -5691,7 +5691,7 @@ void BltCharInvPanel() {
   uint16_t *pDestBuf;
   struct VObject *hCharListHandle;
   struct SOLDIERTYPE *pSoldier;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t usX, usY;
 
   // make sure we're here legally
@@ -8937,8 +8937,8 @@ void TellPlayerWhyHeCantCompressTime(void) {
   // KM:  Except if we are in a creature lair and haven't loaded the sector yet (no battle yet)
   else if (gTacticalStatus.uiFlags & INCOMBAT || gTacticalStatus.fEnemyInSector) {
     if (OnlyHostileCivsInSector()) {
-      CHAR16 str[256];
-      CHAR16 pSectorString[128];
+      wchar_t str[256];
+      wchar_t pSectorString[128];
       GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, pSectorString,
                         ARR_SIZE(pSectorString), TRUE);
       swprintf(str, ARR_SIZE(str), gzLateLocalizedString[27], pSectorString);
@@ -10140,7 +10140,7 @@ void DestinationPlottingCompleted(void) {
 void HandleMilitiaRedistributionClick(void) {
   TownID bTownId;
   BOOLEAN fTownStillHidden;
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   // if on the surface
   if (iCurrentMapSectorZ == 0) {
@@ -10178,7 +10178,7 @@ void HandleMilitiaRedistributionClick(void) {
 #ifdef JA2TESTVERSION
 void DumpSectorDifficultyInfo(void) {
   // NOTE: This operates on the selected map sector!
-  CHAR16 wSectorName[128];
+  wchar_t wSectorName[128];
 
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Playing Difficulty: %s",
             gzGIOScreenText[GIO_DIF_LEVEL_TEXT + gGameOptions.ubDifficultyLevel]);
@@ -10314,7 +10314,7 @@ void HandlePostAutoresolveMessages() {
     MarkForRedrawalStrategicMap();
     gsEnemyGainedControlOfSectorID = -1;
   } else if (HasNewMilitiaPromotions()) {
-    CHAR16 str[512];
+    wchar_t str[512];
     BuildMilitiaPromotionsString(str, ARR_SIZE(str));
     DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback);
   }

@@ -981,7 +981,7 @@ BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPC, uint32_t uiMoneyAmount,
         }
         giHospitalTempBalance = 0;
       } else {
-        CHAR16 sTempString[100];
+        wchar_t sTempString[100];
 
         swprintf(sTempString, ARR_SIZE(sTempString), L"%ld",
                  iCost - uiMoneyAmount - giHospitalTempBalance);

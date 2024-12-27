@@ -1359,7 +1359,7 @@ BOOLEAN CanCharacterBeTrainedByOther(struct SOLDIERTYPE *pSoldier) {
 
 // can character sleep right now?
 BOOLEAN CanCharacterSleep(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   // dead or dying?
   if (pSoldier->bLife < OKLIFE) {
@@ -1449,7 +1449,7 @@ BOOLEAN CanCharacterSleep(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) 
 }
 
 BOOLEAN CanCharacterBeAwakened(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   // if dead tired
   if ((pSoldier->bBreathMax <= BREATHMAX_ABSOLUTE_MINIMUM) && !pSoldier->fMercCollapsedFlag) {
@@ -2100,7 +2100,7 @@ BOOLEAN IsSoldierCloseEnoughToADoctor( struct SOLDIERTYPE *pPatient )
         BOOLEAN fDoctorCloseEnough = FALSE;
         struct SOLDIERTYPE *pSoldier = NULL;
         int32_t iCounter = 0;
-        CHAR16 sString[ 128 ];
+        wchar_t sString[ 128 ];
 
         if( ( pPatient->sSectorX != gWorldSectorX ) || ( pPatient->sSectorY != gWorldSectorY ) || (
 pPatient->bSectorZ != gbWorldSectorZ ) )
@@ -6230,7 +6230,7 @@ void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // btn callback handler for assignment region
   int32_t iValue = -1;
   struct SOLDIERTYPE *pSoldier = NULL;
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int8_t bCanJoinSquad;
   /* ARM: Squad menu is now disabled for anyone between sectors
           uint8_t ubNextX, ubNextY, ubPrevX, ubPrevY;
@@ -6380,8 +6380,8 @@ void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   int32_t iValue = -1;
   struct SOLDIERTYPE *pSoldier = NULL;
   TownID bTownId;
-  CHAR16 sString[128];
-  CHAR16 sStringA[128];
+  wchar_t sString[128];
+  wchar_t sStringA[128];
 
   pSoldier = GetSelectedAssignSoldier(FALSE);
 
@@ -6607,7 +6607,7 @@ void AttributesMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
 void AssignmentMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // btn callback handler for assignment region
   int32_t iValue = -1;
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -6905,7 +6905,7 @@ void CreateSquadBox(void) {
   SGPRect pDimensions;
   uint32_t hStringHandle;
   uint32_t uiCounter;
-  CHAR16 sString[64];
+  wchar_t sString[64];
   uint32_t uiMaxSquad;
 
   // create basic box
@@ -7154,8 +7154,8 @@ void CreateRepairBox(void) {
 void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
   uint32_t hStringHandle;
   uint32_t uiCounter;
-  CHAR16 sString[50];
-  CHAR16 sDollarString[50];
+  wchar_t sString[50];
+  wchar_t sDollarString[50];
 
   ContractPosition.iX = OrigContractPosition.iX;
 
@@ -7388,7 +7388,7 @@ void CreateTrainingBox(void) {
 void CreateAssignmentsBox(void) {
   uint32_t hStringHandle;
   uint32_t uiCounter;
-  CHAR16 sString[128];
+  wchar_t sString[128];
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // will create attribute pop up menu for mapscreen assignments
@@ -9077,7 +9077,7 @@ BOOLEAN HandleSelectedMercsBeingPutAsleep(BOOLEAN fWakeUp, BOOLEAN fDisplayWarni
   int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   uint8_t ubNumberOfSelectedSoldiers = 0;
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     pSoldier = NULL;

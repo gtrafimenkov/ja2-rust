@@ -199,8 +199,8 @@ typedef struct pagemessages Page;
 typedef Page *PagePtr;
 
 struct messagerecord {
-  //  CHAR16 pRecord[ 320 ];
-  CHAR16 pRecord[640];
+  //  wchar_t pRecord[ 320 ];
+  wchar_t pRecord[640];
   struct messagerecord *Next;
 };
 

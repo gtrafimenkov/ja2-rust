@@ -632,7 +632,7 @@ void RenderTalkingMenu() {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint8_t *pDestBuf, *pSrcBuf;
   uint16_t usTextBoxWidth, usTextBoxHeight;
-  CHAR16 zTempString[128];
+  wchar_t zTempString[128];
 
   if (!gfInTalkPanel) {
     return;
@@ -3857,7 +3857,7 @@ BOOLEAN PlayerTeamHasTwoSpotsLeft() {
 
 void StartDialogueMessageBox(uint8_t ubProfileID, uint16_t usMessageBoxType) {
   int32_t iTemp;
-  CHAR16 zTemp[256], zTemp2[256];
+  wchar_t zTemp[256], zTemp2[256];
 
   gusDialogueMessageBoxType = usMessageBoxType;
   switch (gusDialogueMessageBoxType) {

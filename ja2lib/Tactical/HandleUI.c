@@ -505,13 +505,13 @@ uint32_t guiTimerCursorID = 0;
 uint32_t guiTimerLastUpdate = 0;
 uint32_t guiTimerCursorDelay = 0;
 
-CHAR16 gzLocation[20];
+wchar_t gzLocation[20];
 BOOLEAN gfLocation = FALSE;
 
-CHAR16 gzIntTileLocation[20];
+wchar_t gzIntTileLocation[20];
 BOOLEAN gfUIIntTileLocation;
 
-CHAR16 gzIntTileLocation2[20];
+wchar_t gzIntTileLocation2[20];
 BOOLEAN gfUIIntTileLocation2;
 
 struct MOUSE_REGION gDisableRegion;
@@ -2266,7 +2266,7 @@ uint32_t UIHandleCAMercShoot(UI_EVENT *pUIEvent) {
             pSoldier->inv[HANDPOS].usItem != GAS_CAN &&
             gTacticalStatus.ubLastRequesterTargetID != pTSoldier->ubProfile &&
             (pTSoldier->ubID != GetSolID(pSoldier))) {
-          CHAR16 zStr[200];
+          wchar_t zStr[200];
 
           gpRequesterMerc = pSoldier;
           gpRequesterTargetMerc = pTSoldier;

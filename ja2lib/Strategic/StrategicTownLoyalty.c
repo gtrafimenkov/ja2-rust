@@ -660,7 +660,7 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8
   uint32_t uiNumberOfItems = 0, iCounter = 0;
   WORLDITEM *pItemList;
   uint32_t uiNewTotal = 0;
-  CHAR16 wSectorName[128];
+  wchar_t wSectorName[128];
 
   // stealing should fail anyway 'cause there shouldn't be a temp file for unvisited sectors, but
   // let's check anyway
@@ -812,7 +812,7 @@ void DumpDistancesBetweenTowns(void) {
   CHAR8 zPrintFileName[60];
   FILE *FDump;
   uint8_t ubTownA, ubTownB;
-  CHAR16 wHeading[4];
+  wchar_t wHeading[4];
 
   // open output file
   strcpy(zPrintFileName, "TownDistances.txt");
@@ -968,8 +968,8 @@ int32_t IsTownUnderCompleteControlByEnemy(TownID bTownId) {
 void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, uint8_t ubHowMany) {
   TownID bTownId = 0;
   uint32_t uiLoyaltyChange = 0;
-  CHAR16 str[256];
-  CHAR16 pSectorString[128];
+  wchar_t str[256];
+  wchar_t pSectorString[128];
 
   // get town id
   bTownId = GetTownIdForSector(sSectorX, sSectorY);

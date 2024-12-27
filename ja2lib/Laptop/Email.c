@@ -311,7 +311,7 @@ int32_t GetNumberOfPagesToEmail();
 void PreProcessEmail(EmailPtr pMail);
 void ModifyInsuranceEmails(uint16_t usMessageId, int32_t *iResults, EmailPtr pMail,
                            uint8_t ubNumberOfRecords);
-BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr pMail);
+BOOLEAN ReplaceMercNameAndAmountWithProperData(wchar_t *pFinishedString, EmailPtr pMail);
 
 void InitializeMouseRegions() {
   int32_t iCounter = 0;
@@ -708,7 +708,7 @@ void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, STR16 pSubj
 
   // copy subject
   pTempEmail->pSubject = (STR16)MemAlloc(128 * 2);
-  memset(pTempEmail->pSubject, 0, sizeof(CHAR16) * 128);
+  memset(pTempEmail->pSubject, 0, sizeof(wchar_t) * 128);
   wcscpy(pTempEmail->pSubject, pSubject);
 
   // copy offset and length of the actual message in email.edt
@@ -951,8 +951,8 @@ void AddMessageToPages(int32_t iMessageId) {
 void SortMessages(int32_t iCriteria) {
   EmailPtr pA = pEmailList;
   EmailPtr pB = pEmailList;
-  CHAR16 pSubjectA[256];
-  CHAR16 pSubjectB[256];
+  wchar_t pSubjectA[256];
+  wchar_t pSubjectB[256];
 
   // no messages to sort?
   if ((pA == NULL) || (pB == NULL)) {
@@ -1056,7 +1056,7 @@ void SwapMessages(int32_t iIdA, int32_t iIdB) {
   EmailPtr pTemp = (EmailPtr)MemAlloc(sizeof(Email));
   pTemp->pSubject = (STR16)MemAlloc(128 * 2);
 
-  memset(pTemp->pSubject, 0, sizeof(CHAR16) * 128);
+  memset(pTemp->pSubject, 0, sizeof(wchar_t) * 128);
 
   if (!pA->Next) return;
   // find pA
@@ -4091,7 +4091,7 @@ void UpdateStatusOfNextPreviousButtons(void) {
 
 void DisplayWhichPageOfEmailProgramIsDisplayed(void) {
   // will draw the number of the email program we are viewing right now
-  CHAR16 sString[10];
+  wchar_t sString[10];
 
   // font stuff
   SetFont(MESSAGE_FONT);
@@ -4147,7 +4147,7 @@ BOOLEAN DisplayNumberOfPagesToThisEmail(int32_t iViewerY) {
   // of pages
 
   int16_t sX = 0, sY = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
 
   // get and blt the email list background
   // load, blt and delete graphics
@@ -4225,7 +4225,7 @@ void ShutDownEmailList() {
 
 void PreProcessEmail(EmailPtr pMail) {
   RecordPtr pTempRecord, pCurrentRecord, pLastRecord, pTempList;
-  CHAR16 pString[512];
+  wchar_t pString[512];
   int32_t iCounter = 0, iHeight = 0, iOffSet = 0;
   BOOLEAN fGoingOffCurrentPage = FALSE;
   int32_t iYPositionOnPage = 0;
@@ -4459,22 +4459,22 @@ void ModifyInsuranceEmails(uint16_t usMessageId, int32_t *iResults, EmailPtr pMa
   giPrevMessageId = giMessageId;
 }
 
-BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr pMail) {
+BOOLEAN ReplaceMercNameAndAmountWithProperData(wchar_t *pFinishedString, EmailPtr pMail) {
   //	wchar_t		pTempString[MAIL_STRING_SIZE/2 + 1];
   wchar_t pTempString[MAIL_STRING_SIZE];
   int32_t iLength = 0;
   int32_t iCurLocInSourceString = 0;
   int32_t iLengthOfSourceString = wcslen(pFinishedString);  // Get the length of the source string
-  CHAR16 *pMercNameString = NULL;
-  CHAR16 *pAmountString = NULL;
-  CHAR16 *pSubString = NULL;
+  wchar_t *pMercNameString = NULL;
+  wchar_t *pAmountString = NULL;
+  wchar_t *pSubString = NULL;
   BOOLEAN fReplacingMercName = TRUE;
 
-  CHAR16 sMercName[32] = L"$MERCNAME$";  // Doesnt need to be translated, inside Email.txt and will
-                                         // be replaced by the mercs name
-  CHAR16 sAmount[32] = L"$AMOUN$";  // Doesnt need to be translated, inside Email.txt and will be
-                                    // replaced by a dollar amount
-  CHAR16 sSearchString[32];
+  wchar_t sMercName[32] = L"$MERCNAME$";  // Doesnt need to be translated, inside Email.txt and will
+                                          // be replaced by the mercs name
+  wchar_t sAmount[32] = L"$AMOUN$";  // Doesnt need to be translated, inside Email.txt and will be
+                                     // replaced by a dollar amount
+  wchar_t sSearchString[32];
 
   // Copy the original string over to the temp string
   wcscpy(pTempString, pFinishedString);
@@ -4529,7 +4529,7 @@ BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr
         // add the mercs name to the string
         wcscat(pFinishedString, gMercProfiles[pMail->uiSecondData].zName);
       } else {
-        CHAR16 sDollarAmount[64];
+        wchar_t sDollarAmount[64];
 
         swprintf(sDollarAmount, ARR_SIZE(sDollarAmount), L"%d", pMail->iFirstData);
 

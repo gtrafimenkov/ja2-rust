@@ -106,8 +106,8 @@ void AutoResolveBattleCallback(GUI_BUTTON *btn, int32_t reason);
 void GoToSectorCallback(GUI_BUTTON *btn, int32_t reason);
 void RetreatMercsCallback(GUI_BUTTON *btn, int32_t reason);
 
-void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
-                             uint8_t *pubHPPercent, uint8_t *pubBPPercent);
+void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, wchar_t *szCondition,
+                             int szConditionSize, uint8_t *pubHPPercent, uint8_t *pubBPPercent);
 
 void CheckForRobotAndIfItsControlled(void);
 
@@ -227,7 +227,7 @@ void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
 
   if (ubInvalidGroups || pSector->ubAdminsInBattle || pSector->ubTroopsInBattle ||
       pSector->ubElitesInBattle || pSector->ubCreaturesInBattle) {
-    CHAR16 str[512];
+    wchar_t str[512];
     swprintf(
         str, ARR_SIZE(str),
         L"Strategic info warning:  Sector 'in battle' counters are not clear when they should be.  "
@@ -832,7 +832,7 @@ void KillPreBattleInterface() {
 }
 
 void RenderPBHeader(int32_t *piX, int32_t *piWidth) {
-  CHAR16 str[100];
+  wchar_t str[100];
   int32_t x, width;
   SetFont(FONT10ARIALBOLD);
   if (gfBlinkHeader) {
@@ -885,8 +885,8 @@ void RenderPBHeader(int32_t *piX, int32_t *piWidth) {
 void RenderPreBattleInterface() {
   struct VObject *hVObject;
   int32_t i, x, y, line, width;
-  CHAR16 str[100];
-  CHAR16 pSectorName[128];
+  wchar_t str[100];
+  wchar_t pSectorName[128];
   uint8_t ubHPPercent, ubBPPercent;
   BOOLEAN fMouseInRetreatButtonArea;
   uint8_t ubJunk;
@@ -1292,8 +1292,8 @@ enum {
   COND_DEAD
 };
 
-void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
-                             uint8_t *pubHPPercent, uint8_t *pubBPPercent) {
+void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, wchar_t *szCondition,
+                             int szConditionSize, uint8_t *pubHPPercent, uint8_t *pubBPPercent) {
   Assert(pSoldier);
   *pubHPPercent = (uint8_t)(pSoldier->bLife * 100 / pSoldier->bLifeMax);
   *pubBPPercent = pSoldier->bBreath;

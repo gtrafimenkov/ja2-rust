@@ -33,7 +33,7 @@
 extern BOOLEAN gfBasement;
 
 uint32_t guiLNCount[9];
-static CHAR16 gzLevelString[9][15] = {
+static wchar_t gzLevelString[9][15] = {
     L"",           L"Land    %d", L"Object  %d", L"Struct  %d", L"Shadow  %d",
     L"Merc    %d", L"Roof    %d", L"Onroof  %d", L"Topmost %d",
 };

@@ -98,7 +98,7 @@ typedef struct {
 TOP_MESSAGE gTopMessage;
 BOOLEAN gfTopMessageDirty = FALSE;
 
-void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString);
+void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, wchar_t *psString);
 extern uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
                                            uint16_t usAnimState);
 
@@ -556,7 +556,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier = NULL;
   int32_t iMenuAnchorX, iMenuAnchorY;
   uint32_t uiActionImages;
-  CHAR16 zActionString[50];
+  wchar_t zActionString[50];
   BOOLEAN fDisableAction = FALSE;
 
   // Erase other menus....
@@ -1268,8 +1268,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
   int16_t sX, sY;
   int32_t iBack;
   TILE_ELEMENT TileElem;
-  CHAR16 *pStr;
-  CHAR16 NameStr[50];
+  wchar_t *pStr;
+  wchar_t NameStr[50];
   uint16_t usGraphicToUse = THIRDPOINTERS1;
   BOOLEAN fRaiseName = FALSE;
   BOOLEAN fDoName = TRUE;
@@ -1555,7 +1555,7 @@ void RenderOverlayMessage(VIDEO_OVERLAY *pBlitter) {
                    pBlitter->sY + gusOverlayPopupBoxHeight);
 }
 
-void BeginOverlayMessage(uint32_t uiFont, CHAR16 *pFontString, ...) {
+void BeginOverlayMessage(uint32_t uiFont, wchar_t *pFontString, ...) {
   va_list argptr;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t SlideString[512];
@@ -1830,7 +1830,7 @@ BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStruct
 
 void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   int32_t iMenuAnchorX, iMenuAnchorY;
-  CHAR16 zDisp[100];
+  wchar_t zDisp[100];
 
   iMenuAnchorX = gOpenDoorMenu.sX;
   iMenuAnchorY = gOpenDoorMenu.sY;
@@ -2286,7 +2286,7 @@ void RenderUIMessage(VIDEO_OVERLAY *pBlitter) {
                    pBlitter->sY + gusUIMessageHeight);
 }
 
-void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...) {
+void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, wchar_t *pFontString, ...) {
   va_list argptr;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t MsgString[512];
@@ -2343,7 +2343,7 @@ void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...) {
   gfUseSkullIconMessage = fUseSkullIcon;
 }
 
-void BeginUIMessage(CHAR16 *pFontString, ...) {
+void BeginUIMessage(wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t MsgString[512];
 
@@ -2355,7 +2355,7 @@ void BeginUIMessage(CHAR16 *pFontString, ...) {
   InternalBeginUIMessage(FALSE, MsgString);
 }
 
-void BeginMapUIMessage(uint8_t ubPosition, CHAR16 *pFontString, ...) {
+void BeginMapUIMessage(uint8_t ubPosition, wchar_t *pFontString, ...) {
   va_list argptr;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t MsgString[512];
@@ -2439,7 +2439,7 @@ void EndUIMessage() {
 #define PLAYER_TEAM_TIMER_TIME_BETWEEN_BEEPS (500)
 #define PLAYER_TEAM_TIMER_TICKS_PER_ENEMY (2000 / PLAYER_TEAM_TIMER_SEC_PER_TICKS)
 
-BOOLEAN AddTopMessage(uint8_t ubType, CHAR16 *pzString) {
+BOOLEAN AddTopMessage(uint8_t ubType, wchar_t *pzString) {
   uint32_t cnt;
   BOOLEAN fFound = FALSE;
 
@@ -2474,7 +2474,7 @@ BOOLEAN AddTopMessage(uint8_t ubType, CHAR16 *pzString) {
   return (FALSE);
 }
 
-void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
+void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, wchar_t *psString) {
   uint32_t uiBAR, uiPLAYERBAR, uiINTBAR;
   VOBJECT_DESC VObjectDesc;
   int16_t sX, sY;
@@ -2999,7 +2999,7 @@ void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   }
 }
 
-CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier) {
+wchar_t *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier) {
   int32_t cnt, cntStart;
   if (pSoldier->bLife == pSoldier->bLifeMax) {
     cntStart = 4;

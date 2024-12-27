@@ -22,7 +22,7 @@ uint8_t gubMessageBoxStatus = MESSAGEBOX_NONE;
 void MsgBoxOkClkCallback(GUI_BUTTON *butn, int32_t reason);
 void MsgBoxCnclClkCallback(GUI_BUTTON *butn, int32_t reason);
 
-void CreateMessageBox(CHAR16 *wzString) {
+void CreateMessageBox(wchar_t *wzString) {
   int16_t sPixLen;
   int16_t sStartX, sStartY;
 

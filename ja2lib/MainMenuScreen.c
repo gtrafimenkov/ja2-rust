@@ -468,7 +468,7 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
   int16_t sSlot;
   int32_t iStartLoc = 0;
 #ifndef _DEBUG
-  CHAR16 zText[512];
+  wchar_t zText[512];
 #endif
 
   if (fCreate) {

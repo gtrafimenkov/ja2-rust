@@ -1627,7 +1627,7 @@ void ValidatePendingGroups() {
     }
   }
   if (iErrorsForInvalidPendingGroup) {
-    CHAR16 str[256];
+    wchar_t str[256];
     swprintf(str, ARR_SIZE(str),
              L"Strategic AI:  Internal error -- %d pending groups were discovered to be invalid.  "
              L"Please report error and send save."
@@ -1655,7 +1655,7 @@ void ValidateWeights(int32_t iID) {
     }
   }
   if (giReinforcementPoints != iSumReinforcementPoints || giRequestPoints != iSumRequestPoints) {
-    CHAR16 str[256];
+    wchar_t str[256];
     swprintf(str, ARR_SIZE(str),
              L"Strategic AI:  Internal error #%02d (total request/reinforcement points).  Please "
              L"report error including error#.  "
@@ -1676,7 +1676,7 @@ void ValidateGroup(struct GROUP *pGroup) {
     if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) {
 #ifdef JA2BETAVERSION
       {
-        CHAR16 str[256];
+        wchar_t str[256];
         swprintf(str, ARR_SIZE(str),
                  L"Strategic AI:  Internal error (invalid enemy group #%d location at %c%d, "
                  L"destination %c%d).  Please send PRIOR save file and Strategic Decisions.txt.",
@@ -1720,7 +1720,7 @@ void ValidateGroup(struct GROUP *pGroup) {
 void ValidateLargeGroup(struct GROUP *pGroup) {
 #ifdef JA2BETAVERSION
   if (pGroup->ubGroupSize > 25) {
-    CHAR16 str[512];
+    wchar_t str[512];
     swprintf(str, ARR_SIZE(str),
              L"Strategic AI warning:  Enemy group containing %d soldiers "
              L"(%d admins, %d troops, %d elites) in sector %c%d.  This message is a temporary test "
@@ -1772,7 +1772,7 @@ void ValidatePlayersAreInOneGroupOnly() {
   struct GROUP *pGroup, *pOtherGroup;
   PLAYERGROUP *pPlayer;
   struct SOLDIERTYPE *pSoldier;
-  CHAR16 str[1024];
+  wchar_t str[1024];
   uint8_t ubGroupID;
   // Go through each merc slot in the player team
   iNumErrors = 0;
@@ -1951,7 +1951,7 @@ void ValidatePlayersAreInOneGroupOnly() {
   if (iNumErrors) {  // The first error to be detected is the one responsible for building the
                      // strings.  We will simply append another string containing
     // the total number of detected errors.
-    CHAR16 tempstr[128];
+    wchar_t tempstr[128];
     swprintf(tempstr, ARR_SIZE(tempstr), L"  A total of %d related errors have been detected.",
              iNumErrors);
     wcscat(str, tempstr);
@@ -2813,7 +2813,7 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
           if (pPatrolGroup->ubGroupSize > MAX_STRATEGIC_TEAM_SIZE) {
             uint8_t ubCut;
 #ifdef JA2BETAVERSION
-            CHAR16 str[512];
+            wchar_t str[512];
             swprintf(str, ARR_SIZE(str),
                      L"Patrol group #%d in %c%d received too many reinforcements from group #%d "
                      L"that was created in %c%d.  Size truncated from %d to %d."

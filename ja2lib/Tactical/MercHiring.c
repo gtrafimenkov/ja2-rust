@@ -545,9 +545,9 @@ void CheckForValidArrivalSector() {
   int16_t sSectorGridNo, sSectorGridNo2;
   int32_t uiRange, uiLowestRange = 999999;
   BOOLEAN fFound = FALSE;
-  CHAR16 sString[1024];
-  CHAR16 zShortTownIDString1[50];
-  CHAR16 zShortTownIDString2[50];
+  wchar_t sString[1024];
+  wchar_t zShortTownIDString1[50];
+  wchar_t zShortTownIDString2[50];
 
   sSectorGridNo = gsMercArriveSectorX + (MAP_WORLD_X * gsMercArriveSectorY);
 

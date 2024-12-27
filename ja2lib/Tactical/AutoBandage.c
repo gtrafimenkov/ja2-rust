@@ -296,7 +296,7 @@ BOOLEAN CreateAutoBandageString(void) {
   }
 
   sAutoBandageString =
-      (STR16)MemRealloc(sAutoBandageString, uiDoctorNameStringLength * sizeof(CHAR16));
+      (STR16)MemRealloc(sAutoBandageString, uiDoctorNameStringLength * sizeof(wchar_t));
   if (!sAutoBandageString) {
     return (FALSE);
   }
@@ -306,7 +306,7 @@ BOOLEAN CreateAutoBandageString(void) {
              MercPtrs[ubDoctor[0]]->name);
   } else {
     // make a temporary string to hold most of the doctors names joined by commas
-    sTemp = (STR16)MemAlloc(uiDoctorNameStringLength * sizeof(CHAR16));
+    sTemp = (STR16)MemAlloc(uiDoctorNameStringLength * sizeof(wchar_t));
     //	sTemp = MemAlloc( 1000 );
     if (!sTemp) {
       return (FALSE);
@@ -527,7 +527,7 @@ void DisplayAutoBandageUpdatePanel(void) {
   int32_t iCounterA = 0, iCounterB = 0;
   int32_t iIndex = 0;
   int16_t sCurrentXPosition = 0, sCurrentYPosition = 0;
-  CHAR16 sString[64];
+  wchar_t sString[64];
   int16_t sX = 0, sY = 0;
 
   // are even in autobandage mode?

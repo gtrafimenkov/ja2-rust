@@ -208,10 +208,10 @@ void GameLoop(void) {
       } else {
         // Make sure the user has enough hard drive space
         if (!DoesUserHaveEnoughHardDriveSpace()) {
-          CHAR16 zText[512];
-          CHAR16 zSpaceOnDrive[512];
+          wchar_t zText[512];
+          wchar_t zSpaceOnDrive[512];
           uint32_t uiSpaceOnDrive;
-          CHAR16 zSizeNeeded[512];
+          wchar_t zSizeNeeded[512];
 
           swprintf(zSizeNeeded, ARR_SIZE(zSizeNeeded), L"%d",
                    REQUIRED_FREE_SPACE / BYTESINMEGABYTE);

@@ -51,7 +51,7 @@ int32_t giIMPHomePageButton[1];
 int32_t giIMPHomePageButtonImage[1];
 
 // the player activation string
-CHAR16 pPlayerActivationString[32];
+wchar_t pPlayerActivationString[32];
 
 // position within player activation string
 int32_t iStringPos = 0;
@@ -292,8 +292,8 @@ void HandleTextEvent(uint32_t uiKey) {
           if (iStringPos < 0) {
             iStringPos = 0;
           }
-          // valid char, capture and convert to CHAR16
-          pPlayerActivationString[iStringPos] = (CHAR16)uiKey;
+          // valid char, capture and convert to wchar_t
+          pPlayerActivationString[iStringPos] = (wchar_t)uiKey;
 
           // null out next char position
           pPlayerActivationString[iStringPos + 1] = 0;

@@ -19,7 +19,7 @@ typedef float FLOAT;
 typedef double DOUBLE;
 // strings
 typedef char CHAR8;
-typedef wchar_t CHAR16;
+typedef wchar_t wchar_t;
 typedef char* STR;
 typedef char* STR8;
 typedef wchar_t* STR16;

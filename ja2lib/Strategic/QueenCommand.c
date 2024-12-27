@@ -85,7 +85,7 @@ void ValidateEnemiesHaveWeapons() {
 
   // do message box and return
   if (iNumInvalid) {
-    CHAR16 str[100];
+    wchar_t str[100];
     swprintf(str, ARR_SIZE(str),
              L"%d enemies have been added without any weapons!  KM:0.  Please note sector.",
              iNumInvalid);
@@ -693,7 +693,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
     pGroup = GetGroup(pSoldier->ubGroupID);
     if (!pGroup) {
 #ifdef JA2BETAVERSION
-      CHAR16 str[256];
+      wchar_t str[256];
       swprintf(str, ARR_SIZE(str),
                L"Enemy soldier killed with ubGroupID of %d, and the group doesn't exist!",
                pSoldier->ubGroupID);
@@ -703,7 +703,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
     }
     if (pGroup->fPlayer) {
 #ifdef JA2BETAVERSION
-      CHAR16 str[256];
+      wchar_t str[256];
       swprintf(str, ARR_SIZE(str),
                L"Attempting to process player group thinking it's an enemy group in "
                L"ProcessQueenCmdImplicationsOfDeath(), %d",

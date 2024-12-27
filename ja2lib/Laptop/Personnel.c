@@ -238,7 +238,7 @@ uint8_t uiCurrentInventoryIndex = 0;
 uint32_t guiSliderPosition;
 
 // the transfer funds string
-CHAR16 sTransferString[32];
+wchar_t sTransferString[32];
 
 int32_t giPersonnelATMSideButton[NUMBER_ATM_BUTTONS];
 int32_t giPersonnelATMSideButtonImage[NUMBER_ATM_BUTTONS];
@@ -1151,8 +1151,8 @@ void DisplayCharName(int32_t iId, int32_t iSlot) {
   // get merc's nickName, assignment, and sector location info
   int16_t sX, sY;
   struct SOLDIERTYPE *pSoldier;
-  CHAR16 sString[64];
-  CHAR16 sTownName[256];
+  wchar_t sString[64];
+  wchar_t sTownName[256];
   TownID bTownId = -1;
   int32_t iHeightOfText;
 
@@ -2218,7 +2218,7 @@ void RenderInventoryForCharacter(int32_t iId, int32_t iSlot) {
   uint8_t ubItemCount = 0;
   uint8_t ubUpToCount = 0;
   int16_t sX, sY;
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int32_t cnt = 0;
   int32_t iTotalAmmo = 0;
 
@@ -2518,7 +2518,7 @@ void CreateDestroyPersonnelInventoryScrollButtons(void) {
 
 void DisplayNumberOnCurrentTeam(void) {
   // display number on team
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX = 0, sY = 0;
 
   // font stuff
@@ -2545,7 +2545,7 @@ void DisplayNumberOnCurrentTeam(void) {
 
 void DisplayNumberDeparted(void) {
   // display number departed from team
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX = 0, sY = 0;
 
   // font stuff
@@ -2710,7 +2710,7 @@ int32_t GetHighestDailyCostOfCurrentTeam(void) {
 
 void DisplayCostOfCurrentTeam(void) {
   // display number on team
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX, sY;
 
   // font stuff
@@ -3513,7 +3513,7 @@ void DisplayAverageStatValuesForCurrentTeam(void) {
   // will display the average values for stats for the current team
   int16_t sX, sY;
   int32_t iCounter = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
 
   // set up font
   SetFont(FONT10ARIAL);
@@ -3572,7 +3572,7 @@ void DisplayLowestStatValuesForCurrentTeam(void) {
   // will display the average values for stats for the current team
   int16_t sX, sY;
   int32_t iCounter = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int32_t iStat = 0;
   int32_t iDepartedId = 0;
   int32_t iId = 0;
@@ -3746,7 +3746,7 @@ void DisplayHighestStatValuesForCurrentTeam(void) {
   // will display the average values for stats for the current team
   int16_t sX, sY;
   int32_t iCounter = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int32_t iStat = 0;
   int32_t iId = 0;
 
@@ -4001,7 +4001,7 @@ int32_t GetNumberOfOtherOnPastTeam(void) {
 
 void DisplayStateOfPastTeamMembers(void) {
   int16_t sX, sY;
-  CHAR16 sString[32];
+  wchar_t sString[32];
 
   // font stuff
   SetFont(FONT10ARIAL);
@@ -4646,7 +4646,7 @@ void EnableDisableDeparturesButtons(void) {
 void DisplayDepartedCharName(int32_t iId, int32_t iSlot, int32_t iState) {
   // get merc's nickName, assignment, and sector location info
   int16_t sX, sY;
-  CHAR16 sString[32];
+  wchar_t sString[32];
 
   SetFont(CHAR_NAME_FONT);
   SetFontForeground(PERS_TEXT_FONT_COLOR);
@@ -5378,7 +5378,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, int32_t reason) {
 void ATMNumberButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   int32_t iValue = 0;
   int32_t iCounter = 0;
-  CHAR16 sZero[2] = L"0";
+  wchar_t sZero[2] = L"0";
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -5408,7 +5408,7 @@ void ATMNumberButtonCallback(GUI_BUTTON *btn, int32_t reason) {
 
 void DisplayATMAmount(void) {
   int16_t sX = 0, sY = 0;
-  CHAR16 sTempString[32];
+  wchar_t sTempString[32];
   int32_t iCounter = 0;
 
   if (fShowAtmPanel == FALSE) {
@@ -5696,7 +5696,7 @@ void DisplayAmountOnCurrentMerc(void) {
   int32_t iId;
   struct SOLDIERTYPE *pSoldier = NULL;
   int32_t iFunds;
-  CHAR16 sString[64];
+  wchar_t sString[64];
   int16_t sX, sY;
 
   iId = GetIdOfThisSlot(iCurrentPersonSelectedId);
@@ -5736,7 +5736,7 @@ void DisplayAmountOnCurrentMerc(void) {
 void HandlePersonnelKeyboard(void) {
   int32_t iCounter = 0;
   int32_t iValue = 0;
-  CHAR16 sZero[2] = L"0";
+  wchar_t sZero[2] = L"0";
 
   InputAtom InputEvent;
 
@@ -5767,7 +5767,7 @@ void RenderRectangleForPersonnelTransactionAmount(void) {
   int32_t iHeight = GetFontHeight(ATM_FONT);
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
-  CHAR16 sTempString[32];
+  wchar_t sTempString[32];
   int32_t iCounter = 0;
 
   wcscpy(sTempString, sTransferString);

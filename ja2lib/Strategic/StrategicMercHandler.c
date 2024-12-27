@@ -267,7 +267,7 @@ void MercDailyUpdate() {
               gMercProfiles[GetSolProfile(pSoldier)].iBalance = 0;
             }
           } else {
-            CHAR16 zMoney[128];
+            wchar_t zMoney[128];
 
             // create a string for the salary owed to the npc
             swprintf(zMoney, ARR_SIZE(zMoney), L"%d", sSalary);

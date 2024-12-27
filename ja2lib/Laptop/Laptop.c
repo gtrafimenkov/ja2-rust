@@ -3551,7 +3551,7 @@ void ShouldNewMailBeDisplayed() {
 
 void DisplayPlayersBalanceToDate(void) {
   // print players balance to date
-  CHAR16 sString[100];
+  wchar_t sString[100];
   int16_t sX, sY;
 
   // initialize string
@@ -3726,8 +3726,8 @@ void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   return;
 }
 
-BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
-                           MSGBOX_CALLBACK ReturnCallback) {
+BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+                           uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback) {
   SGPRect pCenteringRect = {LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y, LAPTOP_SCREEN_LR_X,
                             LAPTOP_SCREEN_LR_Y};
 
@@ -3743,7 +3743,7 @@ BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScre
   return ((iLaptopMessageBox != -1));
 }
 
-BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                          uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect) {
   // reset exit mode
@@ -3758,7 +3758,7 @@ BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint3
   return ((iLaptopMessageBox != -1));
 }
 
-BOOLEAN DoLapTopSystemMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+BOOLEAN DoLapTopSystemMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                  uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
@@ -4459,7 +4459,7 @@ void DeleteDesktopBackground(void) {
 }
 
 void PrintBalance(void) {
-  CHAR16 pString[32];
+  wchar_t pString[32];
   //	uint16_t usX, usY;
 
   SetFont(FONT10ARIAL);
@@ -4483,7 +4483,7 @@ void PrintBalance(void) {
 }
 
 void PrintNumberOnTeam(void) {
-  CHAR16 pString[32];
+  wchar_t pString[32];
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   int32_t cnt = 0;
   int32_t iCounter = 0;
@@ -4538,7 +4538,7 @@ void PrintDate(void) {
           def: removed 3/8/99.
    Now use the render clock function used every where else
 
-          CHAR16 pString[ 32 ];
+          wchar_t pString[ 32 ];
   //	uint16_t usX, usY;
 
           SetFont( FONT10ARIAL );
@@ -4772,7 +4772,7 @@ BOOLEAN RenderWWWProgramTitleBar(void) {
   struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   int32_t iIndex = 0;
-  CHAR16 sString[256];
+  wchar_t sString[256];
 
   // title bar - load
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;

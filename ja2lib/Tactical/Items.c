@@ -1591,7 +1591,7 @@ BOOLEAN ValidItemAttachment(struct OBJECTTYPE *pObj, uint16_t usAttachment,
     } else {
       if (fAttemptingAttachment && ValidAttachmentClass(usAttachment, pObj->usItem)) {
         // well, maybe the player thought he could
-        CHAR16 zTemp[100];
+        wchar_t zTemp[100];
 
         swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_ATTACH], ItemNames[usAttachment],
                  ItemNames[pObj->usItem]);
@@ -2831,7 +2831,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE
   // CanItemFitInPosition).
   if (bPos == HEAD1POS) {
     if (!CompatibleFaceItem(pObj->usItem, pSoldier->inv[HEAD2POS].usItem)) {
-      CHAR16 zTemp[150];
+      wchar_t zTemp[150];
 
       swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
                ItemNames[pSoldier->inv[HEAD2POS].usItem]);
@@ -2840,7 +2840,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE
     }
   } else if (bPos == HEAD2POS) {
     if (!CompatibleFaceItem(pObj->usItem, pSoldier->inv[HEAD1POS].usItem)) {
-      CHAR16 zTemp[150];
+      wchar_t zTemp[150];
 
       swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
                ItemNames[pSoldier->inv[HEAD1POS].usItem]);

@@ -129,7 +129,7 @@ BOOLEAN fLockOutMapScreenInterface = FALSE;
 extern uint32_t giMercPanelImage;
 extern BOOLEAN fInMapMode;
 
-CHAR16 gsCustomErrorString[128];
+wchar_t gsCustomErrorString[128];
 
 BOOLEAN fShowUpdateBox = FALSE;
 BOOLEAN fInterfaceFastHelpTextActive = FALSE;
@@ -853,7 +853,7 @@ void EnableTeamInfoPanels(void) {
   return;
 }
 
-int32_t DoMapMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+int32_t DoMapMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                 uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                 const SGPRect *pCenteringRect) {  // reset the highlighted line
   giHighLine = -1;
@@ -862,7 +862,7 @@ int32_t DoMapMessageBoxWithRect(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExi
                       pCenteringRect);
 }
 
-int32_t DoMapMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+int32_t DoMapMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint16_t usFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   // reset the highlighted line
   giHighLine = -1;
@@ -1177,7 +1177,7 @@ void HandleMercLeavingEquipmentInDrassen(uint32_t uiMercId) {
 
 void HandleEquipmentLeftInOmerta(uint32_t uiSlotIndex) {
   MERC_LEAVE_ITEM *pItem;
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   Assert(uiSlotIndex < NUM_LEAVE_LIST_SLOTS);
 
@@ -1213,7 +1213,7 @@ void HandleEquipmentLeftInOmerta(uint32_t uiSlotIndex) {
 
 void HandleEquipmentLeftInDrassen(uint32_t uiSlotIndex) {
   MERC_LEAVE_ITEM *pItem;
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   Assert(uiSlotIndex < NUM_LEAVE_LIST_SLOTS);
 
@@ -1560,8 +1560,8 @@ void RemoveMapStatusBarsRegion(void) {
 }
 
 void UpdateCharRegionHelpText(void) {
-  CHAR16 sString[128];
-  CHAR16 pMoraleStr[128];
+  wchar_t sString[128];
+  wchar_t pMoraleStr[128];
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((bSelectedInfoChar != -1) && (gCharactersList[bSelectedInfoChar].fValid == TRUE)) {
@@ -2805,7 +2805,7 @@ void CreatePopUpBoxForMovementBox(void) {
 
 void AddStringsToMoveBox(void) {
   int32_t iCount = 0, iCountB = 0;
-  CHAR16 sString[128], sStringB[128];
+  wchar_t sString[128], sStringB[128];
   uint32_t hStringHandle;
   BOOLEAN fFirstOne = TRUE;
 
@@ -3748,7 +3748,7 @@ void DisplaySoldierUpdateBox() {
   BOOLEAN fFourWideMode = FALSE;
   struct VObject *hBackGroundHandle;
   int32_t iCounter = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int32_t iUpperLimit = 0;
 
   if (fShowUpdateBox == FALSE) {
@@ -4294,7 +4294,7 @@ void CreateDestroyInsuranceMouseRegionForMercs(BOOLEAN fCreate) {
 /*
 void HandlePlayerEnteringMapScreenBeforeGoingToTactical( void )
 {
-        CHAR16 sString[ 256 ];
+        wchar_t sString[ 256 ];
 
         if( !( AnyMercsHired( ) ) )
         {
@@ -4420,7 +4420,7 @@ void HandleDisplayOfExitToTacticalMessageForFirstEntryToMapScreen(void) {
 
 BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY,
                                                            int8_t bSectorZ, BOOLEAN fContested) {
-  CHAR16 sString[128], sStringA[64], sStringB[256], sStringC[64];
+  wchar_t sString[128], sStringA[64], sStringB[256], sStringC[64];
   int32_t iValue = 0;
   TownID bTownId = 0;
   int16_t sSector = 0;
@@ -4504,7 +4504,7 @@ void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, int8_t bSecto
                                          MSGBOX_CALLBACK ReturnCallback) {
   int16_t sSector = 0;
   TownID bTownId = 0;
-  CHAR16 sString[128], sStringA[128];
+  wchar_t sString[128], sStringA[128];
 
   // check if below ground
   if (bSectorZ != 0) {

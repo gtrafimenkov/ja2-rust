@@ -566,7 +566,7 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, uint8
                                                     fChangeTypeIncrease, sPtsChanged, ubStat);
         TacticalCharacterDialogue(pSoldier, QUOTE_EXPERIENCE_GAIN);
       } else {
-        CHAR16 wTempString[128];
+        wchar_t wTempString[128];
 
         // tell player about it
         BuildStatChangeString(wTempString, ARR_SIZE(wTempString), pSoldier->name,

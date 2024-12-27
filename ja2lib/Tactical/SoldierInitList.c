@@ -1577,7 +1577,7 @@ void AddSoldierInitListBloodcats() {
     if (bBloodCatPlacements != pSector->bBloodCatPlacements && ubSectorID != SEC_I16 &&
         ubSectorID != SEC_N5) {
 #ifdef JA2BETAVERSION
-      CHAR16 str[200];
+      wchar_t str[200];
       swprintf(str, ARR_SIZE(str),
                L"Table specifies that there are %d bloodcat placements in sector %c%d, but the map "
                L"actually has %d bloodcat placements. Map value takes precedence. KM,LC:1",
@@ -1781,7 +1781,7 @@ extern void ErrorDetectedInSaveCallback(uint8_t bValue);
 BOOLEAN ValidateSoldierInitLinks(uint8_t ubCode) {
   SOLDIERINITNODE *curr;
   uint32_t uiNumInvalids = 0;
-  CHAR16 str[512];
+  wchar_t str[512];
   curr = gSoldierInitHead;
   while (curr) {
     if (curr->pSoldier) {

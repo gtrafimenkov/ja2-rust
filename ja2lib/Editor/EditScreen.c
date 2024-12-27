@@ -3258,7 +3258,7 @@ void ProcessAreaSelection(BOOLEAN fWithLeftButton) {
         gubCurrRoomNumber++;
         gubMaxRoomNumber++;
         if (iCurrentTaskbar == TASK_BUILDINGS && TextInputMode()) {
-          CHAR16 str[4];
+          wchar_t str[4];
           swprintf(str, ARR_SIZE(str), L"%d", gubCurrRoomNumber);
           SetInputFieldStringWith16BitString(1, str);
           SetActiveField(0);
@@ -3519,7 +3519,7 @@ void UpdateLastActionBeforeLeaving() {
 }
 
 void ReloadMap() {
-  CHAR16 szFilename[30];
+  wchar_t szFilename[30];
   swprintf(szFilename, ARR_SIZE(szFilename), L"%S", gubFilename);
   ExternalLoadMap(szFilename);
 }

@@ -502,7 +502,7 @@ void BtnOptionsFromMapScreenCallback(GUI_BUTTON *btn, int32_t reason) {
 }
 
 void DrawNameOfLoadedSector(void) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int16_t sFontX, sFontY;
 
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
@@ -753,7 +753,7 @@ void EnableDisableMessageScrollButtonsAndRegions(void) {
 
 void DisplayCompressMode(void) {
   int16_t sX, sY;
-  CHAR16 sString[128];
+  wchar_t sString[128];
   static uint8_t usColor = FONT_LTGREEN;
 
   // get compress speed
@@ -1127,7 +1127,7 @@ BOOLEAN AllowedToTimeCompress(void) {
 }
 
 void DisplayCurrentBalanceTitleForMapBottom(void) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int16_t sFontX, sFontY;
 
   // ste the font buffer
@@ -1160,7 +1160,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
 
 void DisplayCurrentBalanceForMapBottom(void) {
   // show the current balance for the player on the map panel bottom
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int16_t sFontX, sFontY;
 
   // ste the font buffer
@@ -1236,7 +1236,7 @@ void CompressMaskClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
 void DisplayProjectedDailyMineIncome(void) {
   int32_t iRate = 0;
   static int32_t iOldRate = -1;
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int16_t sFontX, sFontY;
 
   // grab the rate from the financial system

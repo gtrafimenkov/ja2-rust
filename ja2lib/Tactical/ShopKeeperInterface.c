@@ -352,7 +352,7 @@ wchar_t gsShopKeeperTalkingText[SKI_SUBTITLE_TEXT_SIZE];
 uint16_t gusPositionOfSubTitlesX = 0;
 
 // the transfer funds string
-CHAR16 gzSkiAtmTransferString[32];
+wchar_t gzSkiAtmTransferString[32];
 
 BOOLEAN gfExitSKIDueToMessageBox = FALSE;
 
@@ -586,7 +586,7 @@ int8_t GetInvSlotOfUnfullMoneyInMercInventory(struct SOLDIERTYPE *pSoldier);
 void ClearPlayersOfferSlot(int32_t ubSlotToClear);
 void ClearArmsDealerOfferSlot(int32_t ubSlotToClear);
 void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
-BOOLEAN DoSkiMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
+BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 BOOLEAN WillShopKeeperRejectObjectsFromPlayer(int8_t bDealerId, int8_t bSlotId);
 void CheckAndHandleClearingOfPlayerOfferArea(void);
@@ -1286,7 +1286,7 @@ void HandleShopKeeperInterface() {
 
 BOOLEAN RenderShopKeeperInterface() {
   struct VObject *hPixHandle;
-  CHAR16 zMoney[128];
+  wchar_t zMoney[128];
   struct VSurface *hDestVSurface, *hSrcVSurface;
   struct Rect SrcRect;
 
@@ -1465,7 +1465,7 @@ void GetShopKeeperInterfaceUserInput() {
 void DisplayAllDealersCash() {
   int8_t bArmsDealer;
   uint16_t usPosY = 0;
-  CHAR16 zTemp[512];
+  wchar_t zTemp[512];
   uint8_t ubForeColor;
 
   // loop through all the shopkeeper's and display their money
@@ -2220,7 +2220,7 @@ void CalculateFirstItemIndexOnPage() {
 }
 
 void DisplayArmsDealerCurrentInventoryPage() {
-  CHAR16 zTemp[32];
+  wchar_t zTemp[32];
   uint16_t uiFontHeight;
   uint16_t usCnt = 0;
   uint16_t usPosX, usPosY;
@@ -2346,7 +2346,7 @@ void DisplayArmsDealerCurrentInventoryPage() {
 
 uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX, uint16_t usPosY,
                         struct OBJECTTYPE *pItemObject, BOOLEAN fHatchedOut, uint8_t ubItemArea) {
-  CHAR16 zTemp[64];
+  wchar_t zTemp[64];
   struct VObject *hVObject;
   struct VObject *hPixHandle;
   INVTYPE *pItem;
@@ -2965,7 +2965,7 @@ FLOAT ItemConditionModifier(uint16_t usItemIndex, int8_t bStatus) {
 
 void DisplayArmsDealerOfferArea() {
   int16_t sCnt, sCount;
-  CHAR16 zTemp[32];
+  wchar_t zTemp[32];
   uint32_t uiTotalCost;
   uint16_t usPosX, usPosY;
   BOOLEAN fDisplayHatchOnItem;
@@ -3105,7 +3105,7 @@ BOOLEAN RemoveItemFromArmsDealerOfferArea(int8_t bSlotId, BOOLEAN fKeepItem) {
 
 void SetSkiRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pRegion,
                           uint8_t ubScreenArea) {
-  CHAR16 zHelpText[512];
+  wchar_t zHelpText[512];
 
   Assert(pRegion);
 
@@ -3117,8 +3117,8 @@ void SetSkiRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pRegion,
 
 void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pRegion,
                               uint8_t ubScreenArea) {
-  CHAR16 zTempText[512];
-  CHAR16 zHelpText[512];
+  wchar_t zTempText[512];
+  wchar_t zHelpText[512];
 
   Assert(pRegion);
 
@@ -3204,7 +3204,7 @@ BOOLEAN RemoveItemFromPlayersOfferArea(int8_t bSlot) {
 
 void DisplayPlayersOfferArea() {
   int16_t sCnt, sCount;
-  CHAR16 zTemp[32];
+  wchar_t zTemp[32];
   uint32_t uiTotalCost;
   uint16_t usPosX, usPosY;
   BOOLEAN fDisplayHatchOnItem = FALSE;
@@ -4669,7 +4669,7 @@ void HandleAtmOK() {
 }
 
 void AddNumberToSkiAtm(uint8_t ubNumber) {
-  CHAR16 zTemp[16];
+  wchar_t zTemp[16];
 
   // make sure to durt the panel
   gubSkiDirtyLevel = SKI_DIRTY_LEVEL2;
@@ -4702,7 +4702,7 @@ void AddNumberToSkiAtm(uint8_t ubNumber) {
 }
 
 void DisplaySkiAtmTransferString() {
-  CHAR16 zSkiAtmTransferString[32];
+  wchar_t zSkiAtmTransferString[32];
   uint32_t uiMoney;
 
   // Erase the background behind the string
@@ -4783,8 +4783,8 @@ void EnableDisableSkiAtmButtons() {
 }
 
 void HandleCurrentModeText(uint8_t ubMode) {
-  CHAR16 zTemp[128];
-  CHAR16 zMoney[128];
+  wchar_t zTemp[128];
+  wchar_t zMoney[128];
   static uint32_t uiLastTime = 0;
   uint32_t uiCurTime = GetJA2Clock();
   static uint8_t ubLastMode = 0;
@@ -5400,7 +5400,7 @@ void EvaluateItemAddedToPlayersOfferArea(int8_t bSlotID, BOOLEAN fFirstOne) {
   }
 }
 
-BOOLEAN DoSkiMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
+BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect pCenteringRect = {0, 0, 639, 339};
 
@@ -6810,8 +6810,8 @@ void BuildDoneWhenTimeString(wchar_t *sString, size_t bufSize, uint8_t ubArmsDea
 
 void BuildItemHelpTextString(wchar_t *sString, size_t bufSize, INVENTORY_IN_SLOT *pInv,
                              uint8_t ubScreenArea) {
-  CHAR16 zHelpText[512];
-  CHAR16 zRepairTime[64];
+  wchar_t zHelpText[512];
+  wchar_t zRepairTime[64];
 
   if (pInv != NULL) {
     GetHelpTextForItem(zHelpText, ARR_SIZE(zHelpText), &(pInv->ItemObject), NULL);

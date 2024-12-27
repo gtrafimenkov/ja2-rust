@@ -31,7 +31,7 @@ enum {
 typedef struct _CRDT_NODE {
   uint32_t uiType;  // the type of node
 
-  CHAR16 *pString;  // string for the node if the node contains a string
+  wchar_t *pString;  // string for the node if the node contains a string
 
   uint32_t uiFlags;  // various flags
 
@@ -930,9 +930,9 @@ BOOLEAN DisplayCreditNode(CRDT_NODE *pCurrent) {
 
 // return false from this function when there are no more items in the text file
 BOOLEAN GetNextCreditFromTextFile() {
-  CHAR16 zOriginalString[512];
-  CHAR16 zString[512];
-  CHAR16 zCodes[512];
+  wchar_t zOriginalString[512];
+  wchar_t zString[512];
+  wchar_t zCodes[512];
   STR16 pzNewCode = NULL;
   uint32_t uiNodeType = 0;
   uint32_t uiStartLoc = 0;

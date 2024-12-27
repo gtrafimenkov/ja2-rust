@@ -36,7 +36,7 @@ typedef struct {
   BOOLEAN fHandledCanDeleteVal;
   BOOLEAN fRenderSubTitlesNow;
   BOOLEAN fSetupSubTitles;
-  CHAR16 zQuoteStr[480];  // QIALOGUE_SIZE is in dialog control which includes this file...
+  wchar_t zQuoteStr[480];  // QIALOGUE_SIZE is in dialog control which includes this file...
 
 } NPC_DIALOGUE_TYPE;
 

@@ -109,7 +109,7 @@ void ExitIMPFinish(void) {
 void HandleIMPFinish(void) { return; }
 
 void CreateIMPFinishButtons(void) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   // this function will create the buttons needed for th IMP about us page
   // the start over button button
@@ -519,7 +519,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 }
 
 void RenderCharFullName(void) {
-  CHAR16 sString[64];
+  wchar_t sString[64];
   int16_t sX, sY;
 
   // render the characters full name

@@ -381,7 +381,7 @@ void InitCreatureQuest() {
     default:
 #ifdef JA2BETAVERSION
     {
-      CHAR16 str[512];
+      wchar_t str[512];
       swprintf(str, ARR_SIZE(str),
                L"Creature quest never chose a lair and won't infect any mines.  Infectible mines = "
                L"%d, iRandom = %d.  "

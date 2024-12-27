@@ -252,7 +252,7 @@ void CreateTownInfoBox(void) {
 // adds text to town info box
 void AddTextToTownBox(void) {
   uint32_t hStringHandle = 0;
-  CHAR16 wString[64];
+  wchar_t wString[64];
   uint8_t ubTownId = 0;
   uint16_t usTownSectorIndex;
   int16_t sMineSector = 0;
@@ -350,7 +350,7 @@ void AddTextToMineBox(void) {
   uint8_t ubMineIndex;
   uint8_t ubTown;
   uint32_t hStringHandle;
-  CHAR16 wString[64];
+  wchar_t wString[64];
 
   ubMineIndex = GetMineIndexForSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
 
@@ -504,8 +504,8 @@ void AddTextToBlankSectorBox(void) {
 }
 
 void AddSectorToBox(void) {
-  CHAR16 wString[64];
-  CHAR16 wString2[10];
+  wchar_t wString[64];
+  wchar_t wString2[10];
   uint32_t hStringHandle = 0;
 
   // sector
@@ -523,7 +523,7 @@ void AddSectorToBox(void) {
 }
 
 void AddCommonInfoToBox(void) {
-  CHAR16 wString[64];
+  wchar_t wString[64];
   uint32_t hStringHandle = 0;
   BOOLEAN fUnknownSAMSite = FALSE;
   uint8_t ubNumEnemies;
@@ -623,7 +623,7 @@ void AddCommonInfoToBox(void) {
 }
 
 void AddItemsInSectorToBox(void) {
-  CHAR16 wString[64];
+  wchar_t wString[64];
   uint32_t hStringHandle = 0;
 
   // items in sector (this works even for underground)

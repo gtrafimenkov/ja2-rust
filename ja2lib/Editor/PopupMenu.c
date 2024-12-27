@@ -38,11 +38,11 @@ struct MOUSE_REGION popupRegion;
 uint16_t gusEntryHeight;
 BOOLEAN fWaitingForLButtonRelease = FALSE;
 
-extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
+extern wchar_t gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
 
 // Finds the string for any popup menu in JA2 -- the strings are stored
 // in different ways in each instance.
-CHAR16 *GetPopupMenuString(uint8_t ubIndex) {
+wchar_t *GetPopupMenuString(uint8_t ubIndex) {
   switch (gPopup.ubPopupMenuID) {
     case CHANGETSET_POPUP:  // tile sets
       return gTilesets[ubIndex].zName;

@@ -9221,7 +9221,7 @@ void CrowsFlyAway(uint8_t ubTeam) {
 void DebugValidateSoldierData() {
   uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  CHAR16 sString[1024];
+  wchar_t sString[1024];
   BOOLEAN fProblemDetected = FALSE;
   static uint32_t uiFrameCount = 0;
 

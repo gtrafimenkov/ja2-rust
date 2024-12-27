@@ -280,7 +280,7 @@ void DisplayShipmentTitles() {
 
 void DisplayPreviousShipments() {
   uint32_t uiCnt;
-  CHAR16 zText[512];
+  wchar_t zText[512];
   uint16_t usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
   uint32_t uiNumItems = CountNumberValidShipmentForTheShipmentsPage();
   uint32_t uiNumberItemsInShipments = 0;

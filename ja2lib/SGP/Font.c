@@ -390,7 +390,7 @@ int16_t StringPixLengthArgFastHelp(int32_t usUseFont, int32_t usBoldFont, uint32
   wchar_t string[512];
   uint32_t i, index;
   int16_t sBoldDiff = 0;
-  CHAR16 str[2];
+  wchar_t str[2];
 
   Assert(pFontString != NULL);
 

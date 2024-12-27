@@ -70,7 +70,7 @@ typedef struct {
 
 QUOTE_SYSTEM_STRUCT gCivQuoteData;
 
-CHAR16 gzCivQuote[320];
+wchar_t gzCivQuote[320];
 uint16_t gusCivQuoteBoxWidth;
 uint16_t gusCivQuoteBoxHeight;
 
@@ -82,7 +82,7 @@ void CopyNumEntriesIntoQuoteStruct() {
   }
 }
 
-BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, CHAR16 *zQuote) {
+BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, wchar_t *zQuote) {
   CHAR8 zFileName[164];
 
   // Build filename....
@@ -267,7 +267,7 @@ void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
 void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, int16_t sX,
                    int16_t sY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
-  CHAR16 zQuote[320];
+  wchar_t zQuote[320];
 
   // OK, do we have another on?
   if (gCivQuoteData.bActive) {

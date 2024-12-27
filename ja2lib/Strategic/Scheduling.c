@@ -29,7 +29,7 @@
 #include "Utils/Message.h"
 
 #ifdef JA2EDITOR
-extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
+extern wchar_t gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
 #endif
 
 BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime);

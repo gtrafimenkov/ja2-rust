@@ -109,11 +109,11 @@ problems as SirTech uses the "@@@" notation.
 
 */
 
-CHAR16 ItemNames[MAXITEMS][80] = {
+wchar_t ItemNames[MAXITEMS][80] = {
     L"",
 };
 
-CHAR16 ShortItemNames[MAXITEMS][80] = {
+wchar_t ShortItemNames[MAXITEMS][80] = {
     L"",
 };
 
@@ -122,7 +122,7 @@ CHAR16 ShortItemNames[MAXITEMS][80] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-CHAR16 AmmoCaliber[][20] = {
+wchar_t AmmoCaliber[][20] = {
     L"0",         L"cal .38", L"9mm",    L"cal .45", L"cal .357",
     L"cal 12",    L"CAWS",    L"5.45mm", L"5.56mm",  L"7.62mm OTAN",
     L"7.62mm PV", L"4.7mm",   L"5.7mm",  L"Monster", L"Roquette",
@@ -138,26 +138,26 @@ CHAR16 AmmoCaliber[][20] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-CHAR16 BobbyRayAmmoCaliber[][20] = {
+wchar_t BobbyRayAmmoCaliber[][20] = {
     L"0",         L"cal .38", L"9mm",    L"cal .45", L"cal .357",
     L"cal 12",    L"CAWS",    L"5.45mm", L"5.56mm",  L"7.62mm O.",
     L"7.62mm PV", L"4.7mm",   L"5.7mm",  L"Monster", L"Roquette",
     L"",  // dart
 };
 
-CHAR16 WeaponType[][30] = {
+wchar_t WeaponType[][30] = {
     L"Divers",        L"Pistolet",           L"Pistolet-mitrailleur", L"Mitraillette",
     L"Fusil",         L"Fusil de précision", L"Fusil d'assaut",       L"Mitrailleuse légère",
     L"Fusil à pompe",
 };
 
-CHAR16 TeamTurnString[][STRING_LENGTH] = {
+wchar_t TeamTurnString[][STRING_LENGTH] = {
     L"Tour du joueur",  // player's turn
     L"Tour de l'adversaire", L"Tour des créatures", L"Tour de la milice", L"Tour des civils",
     // planning turn
 };
 
-CHAR16 Message[][STRING_LENGTH] = {
+wchar_t Message[][STRING_LENGTH] = {
     L"",
 
     // In the following 8 strings, the %s is the merc's name, and the %d (if any) is a number.
@@ -766,7 +766,7 @@ STR16 sKeyDescriptionStrings[2] = {
 
 // The headers used to describe various weapon statistics.
 
-CHAR16 gWeaponStatsDesc[][14] = {
+wchar_t gWeaponStatsDesc[][14] = {
     L"Poids (%s):",
     L"Etat :",
     L"Munitions :",  // Number of bullets left in a magazine
@@ -780,7 +780,7 @@ CHAR16 gWeaponStatsDesc[][14] = {
 
 // The headers used for the merc's money.
 
-CHAR16 gMoneyStatsDesc[][13] = {
+wchar_t gMoneyStatsDesc[][13] = {
     L"Montant",
     L"Restant :",  // this is the overall balance
     L"Montant",
@@ -796,7 +796,7 @@ CHAR16 gMoneyStatsDesc[][13] = {
 // The health of various creatures, enemies, characters in the game. The numbers following each are
 // for comment only, but represent the precentage of points remaining.
 
-CHAR16 zHealthStr[][13] = {
+wchar_t zHealthStr[][13] = {
     L"MOURANT",       //	>= 0
     L"CRITIQUE",      //	>= 15
     L"FAIBLE",        //	>= 30
@@ -811,16 +811,16 @@ STR16 gzMoneyAmounts[6] = {
 };
 
 // short words meaning "Advantages" for "Pros" and "Disadvantages" for "Cons."
-CHAR16 gzProsLabel[10] = {
+wchar_t gzProsLabel[10] = {
     L"Plus :",
 };
 
-CHAR16 gzConsLabel[10] = {
+wchar_t gzConsLabel[10] = {
     L"Moins :",
 };
 
 // Conversation options a player has when encountering an NPC
-CHAR16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
+wchar_t zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
     L"Pardon ?",  // meaning "Repeat yourself"
     L"Amical",    // approach in a friendly
     L"Direct",    // approach directly - let's get down to business
@@ -830,14 +830,14 @@ CHAR16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
 
 // Some NPCs buy, sell or repair items. These different options are available for those NPCs as
 // well.
-CHAR16 zDealerStrings[4][SMALL_STRING_LENGTH] = {
+wchar_t zDealerStrings[4][SMALL_STRING_LENGTH] = {
     L"Acheter/Vendre",
     L"Acheter",
     L"Vendre",
     L"Réparer",
 };
 
-CHAR16 zDialogActions[1][SMALL_STRING_LENGTH] = {
+wchar_t zDialogActions[1][SMALL_STRING_LENGTH] = {
     L"OK",
 };
 

@@ -14,7 +14,7 @@ extern BOOLEAN gfDestroyFDlg;
 
 uint32_t WaitForFileName(void);
 void RemoveFileDialog(void);
-void CreateFileDialog(CHAR16 *zTitle);
+void CreateFileDialog(wchar_t *zTitle);
 
 void SelectFileDialogYPos(uint16_t usRelativeYPos);
 
@@ -28,6 +28,6 @@ BOOLEAN ExternalLoadMap(STR16 szFilename);
 BOOLEAN ExternalSaveMap(STR16 szFilename);
 
 extern BOOLEAN gfErrorCatch;
-extern CHAR16 gzErrorCatchString[256];
+extern wchar_t gzErrorCatchString[256];
 
 #endif

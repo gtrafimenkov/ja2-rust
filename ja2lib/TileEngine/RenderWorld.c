@@ -2265,7 +2265,7 @@ void RenderWorld() {
     uint32_t uiDestPitchBYTES;
     uint16_t *pDestBuf;
     uint32_t cnt;
-    CHAR16 zVal;
+    wchar_t zVal;
 
     pDestBuf = (uint16_t *)LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 

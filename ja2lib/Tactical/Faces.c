@@ -1029,7 +1029,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
   uint32_t uiRenderBuffer;
   int16_t sPtsAvailable = 0;
   uint16_t usMaximumPts = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   uint16_t usTextWidth;
   BOOLEAN fAtGunRange = FALSE;
   BOOLEAN fShowNumber = FALSE;

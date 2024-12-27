@@ -675,7 +675,7 @@ void BuildTriggerName(struct OBJECTTYPE *pItem, STR16 szItemName, int bufSize) {
 void RenderDoorLockInfo() {
   int16_t i, xp, yp;
   int16_t sScreenX, sScreenY;
-  CHAR16 str[50];
+  wchar_t str[50];
   for (i = 0; i < gubNumDoors; i++) {
     GetGridNoScreenPos(DoorTable[i].sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY > 390) continue;
@@ -723,7 +723,7 @@ void RenderSelectedItemBlownUp() {
   struct VObject *hVObject;
   int16_t sScreenX, sScreenY, xp, yp;
   struct ITEM_POOL *pItemPool;
-  CHAR16 szItemName[SIZE_ITEM_NAME];
+  wchar_t szItemName[SIZE_ITEM_NAME];
   int32_t i;
   int16_t sWidth, sHeight, sOffsetX, sOffsetY;
 
@@ -763,7 +763,7 @@ void RenderSelectedItemBlownUp() {
   mprintf(xp, yp, szItemName);
 
   if (gpItem->usItem == ACTION_ITEM) {
-    CHAR16 *pStr;
+    wchar_t *pStr;
     pStr = GetActionItemName(gpItem);
     xp = sScreenX - (StringPixLength(pStr, FONT10ARIALBOLD) - 40) / 2;
     yp += 10;

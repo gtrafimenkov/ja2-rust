@@ -443,7 +443,7 @@ static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
 }
 
 void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
   int32_t iNumberOfSectors = 0;
 
   _st.trainer = pSoldier;
@@ -486,7 +486,7 @@ void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier
   return;
 }
 
-void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, CHAR16 *str, uint16_t usFlags,
+void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, wchar_t *str, uint16_t usFlags,
                                          MSGBOX_CALLBACK ReturnCallback) {
   if (mapX <= 10 && mapY >= 6 && mapY <= 11) {
     DoLowerScreenIndependantMessageBox(str, usFlags, ReturnCallback);
@@ -496,9 +496,9 @@ void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, CHAR16 *str, uint16_t
 }
 
 void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSoldier) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
   u8 mapX = 0, mapY = 0;
-  CHAR16 sStringB[128];
+  wchar_t sStringB[128];
   TownID bTownId;
 
   mapX = GetSolSectorX(pSoldier);
@@ -566,7 +566,7 @@ void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSol
 // IMPORTANT: This same callback is used both for initial training and for continue training prompt
 // use '_st.promptForContinue' flag to tell them apart
 static void PayMilitiaTrainingYesNoBoxCallback(uint8_t bExitValue) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   Assert(_st.totalCostOfTraining > 0);
 
@@ -1076,8 +1076,8 @@ void HandleMilitiaPromotions(u8 mapX, u8 mapY) {
   }
 }
 
-void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize) {
-  CHAR16 pStr[256];
+void BuildMilitiaPromotionsString(wchar_t *str, size_t bufSize) {
+  wchar_t pStr[256];
   BOOLEAN fAddSpace = FALSE;
   swprintf(str, bufSize, L"");
 

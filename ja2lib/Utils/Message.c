@@ -1016,7 +1016,7 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
   uint32_t uiCount;
   uint32_t uiSizeOfString;
   StringSaveStruct StringSave;
-  CHAR16 SavedString[512];
+  wchar_t SavedString[512];
 
   // clear tactical message queue
   ClearTacticalMessageQueue();
@@ -1511,7 +1511,7 @@ void DisplayLastMessage( void )
         BOOLEAN fNotDone = TRUE;
         BOOLEAN fFound = FALSE;
         BOOLEAN fSecondNewString = FALSE;
-        CHAR16 sString[ 256 ];
+        wchar_t sString[ 256 ];
 
         sString[ 0 ] = 0;
 

@@ -74,10 +74,10 @@ BOOLEAN gfDontOverRideSaveBuffer = TRUE;  // this variable can be unset if ur in
 extern void HandleTacticalUILoseCursorFromOtherScreen();
 extern STR16 pUpdatePanelButtons[];
 
-CHAR16 gzUserDefinedButton1[128];
-CHAR16 gzUserDefinedButton2[128];
+wchar_t gzUserDefinedButton1[128];
+wchar_t gzUserDefinedButton2[128];
 
-int32_t DoMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
+int32_t DoMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint16_t usFlags,
                      MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
   VSURFACE_DESC vs_desc;
   uint16_t usTextBoxWidth;
@@ -1030,26 +1030,26 @@ uint32_t MessageBoxScreenHandle() {
 uint32_t MessageBoxScreenShutdown() { return (FALSE); }
 
 // a basic box that don't care what screen we came from
-void DoScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
+void DoScreenIndependantMessageBox(wchar_t *zString, uint16_t usFlags,
                                    MSGBOX_CALLBACK ReturnCallback) {
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, GetMapCenteringRect());
 }
 
 // a basic box that don't care what screen we came from
-void DoUpperScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
+void DoUpperScreenIndependantMessageBox(wchar_t *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y / 2};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
 // a basic box that don't care what screen we came from
-void DoLowerScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
+void DoLowerScreenIndependantMessageBox(wchar_t *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
-void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, uint16_t usFlags,
+void DoScreenIndependantMessageBoxWithRect(wchar_t *zString, uint16_t usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
                                            const SGPRect *pCenteringRect) {
   /// which screen are we in?

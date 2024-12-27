@@ -2609,7 +2609,7 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, int16_t sGridNo, uint8_t b
                          int8_t bZLevel, int16_t sXPos, int16_t sYPos) {
   int16_t sY;
   struct ITEM_POOL *pTempItemPool;
-  CHAR16 pStr[100];
+  wchar_t pStr[100];
   int16_t cnt = 0, sHeight = 0;
   int16_t sLargeLineWidth = 0, sLineWidth;
   BOOLEAN fSelectionDone = FALSE;

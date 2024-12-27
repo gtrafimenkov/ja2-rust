@@ -361,7 +361,7 @@ void RenderTacticalPlacementGUI() {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiDestPitchBYTES;
   uint16_t usHatchColor;
-  CHAR16 str[128];
+  wchar_t str[128];
   uint8_t *pDestBuf;
   uint8_t ubColor;
   if (gfTacticalPlacementFirstTime) {

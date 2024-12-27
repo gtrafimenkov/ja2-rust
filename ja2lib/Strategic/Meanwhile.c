@@ -318,7 +318,7 @@ BOOLEAN BeginMeanwhile(uint8_t ubMeanwhileID) {
 }
 
 void BringupMeanwhileBox() {
-  CHAR16 zStr[256];
+  wchar_t zStr[256];
 
 #ifdef JA2TESTVERSION
   swprintf(

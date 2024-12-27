@@ -493,7 +493,7 @@ void UpdateSectorExitMenu() {
     MSYS_DisableRegion(&(gExitDialog.SingleRegion));
     if (gExitDialog.fSelectedMercIsEPC) {  // EPCs cannot leave the sector alone and must be
                                            // escorted
-      CHAR16 str[256];
+      wchar_t str[256];
       swprintf(str, ARR_SIZE(str),
                pExitingSectorHelpText[EXIT_GUI_ESCORTED_CHARACTERS_MUST_BE_ESCORTED_HELPTEXT],
                MercPtrs[gusSelectedSoldier]->name);
@@ -504,7 +504,7 @@ void UpdateSectorExitMenu() {
                       // squad, the selected merc
       // isn't an EPC, but the other merc is.  That means that this merc cannot leave the sector
       // alone as he would isolate the EPC.
-      CHAR16 str[256];
+      wchar_t str[256];
       if (!gExitDialog.fSquadHasMultipleEPCs) {
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male singular
           swprintf(str, ARR_SIZE(str),
@@ -532,7 +532,7 @@ void UpdateSectorExitMenu() {
       SetRegionFastHelpText(&gExitDialog.SingleRegion, str);
     }
   } else {
-    CHAR16 str[256];
+    wchar_t str[256];
     EnableButton(gExitDialog.uiSingleMoveButton);
     MSYS_EnableRegion(&(gExitDialog.SingleRegion));
     swprintf(str, ARR_SIZE(str),
@@ -646,7 +646,7 @@ BOOLEAN HandleSectorExitMenu() {
 }
 
 void RemoveSectorExitMenu(BOOLEAN fOk) {
-  CHAR16 Str[50];
+  wchar_t Str[50];
 
   if (gfInSectorExitMenu) {
     guiPendingOverrideEvent = A_CHANGE_TO_MOVE;

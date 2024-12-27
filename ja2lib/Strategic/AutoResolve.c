@@ -1390,7 +1390,7 @@ void RenderAutoResolve() {
   int32_t i;
   struct VSurface *hVSurface;
   int32_t xp, yp;
-  CHAR16 str[100];
+  wchar_t str[100];
   uint8_t ubGood, ubBad;
 
   if (gpAR->fExpanding) {  // animate the expansion of the window.
@@ -2761,7 +2761,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   int32_t cnt, cntStart;
   int32_t xp, yp;
   STR16 pStr;
-  CHAR16 str[20];
+  wchar_t str[20];
   uint8_t *pDestBuf, *pSrcBuf;
   uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   uint16_t usColor;

@@ -299,7 +299,7 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, int32_t reason) {
 }
 
 uint32_t PlayVoice(void) {
-  //	CHAR16 sString[ 64 ];
+  //	wchar_t sString[ 64 ];
 
   // gender?
 
@@ -374,7 +374,7 @@ void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReas
 }
 
 void RenderVoiceIndex(void) {
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sX, sY;
 
   // render the voice index value on the the blank portrait

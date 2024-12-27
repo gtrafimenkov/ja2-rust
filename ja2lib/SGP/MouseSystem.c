@@ -1012,7 +1012,7 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
   if (!szText || !wcslen(szText)) return;  // blank (or clear)
 
   // Allocate memory for the button's FastHelp text string...
-  region->FastHelpText = (STR16)MemAlloc((wcslen(szText) + 1) * sizeof(CHAR16));
+  region->FastHelpText = (STR16)MemAlloc((wcslen(szText) + 1) * sizeof(wchar_t));
   Assert(region->FastHelpText);
 
   wcscpy(region->FastHelpText, szText);
@@ -1032,7 +1032,7 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
 int16_t GetNumberOfLinesInHeight(STR16 pStringA) {
   STR16 pToken;
   int16_t sCounter = 0;
-  CHAR16 pString[512];
+  wchar_t pString[512];
 
   wcscpy(pString, pStringA);
 
@@ -1100,7 +1100,7 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
 }
 
 int16_t GetWidthOfString(STR16 pStringA) {
-  CHAR16 pString[512];
+  wchar_t pString[512];
   STR16 pToken;
   int16_t sWidth = 0;
   wcscpy(pString, pStringA);
@@ -1124,7 +1124,7 @@ void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY) {
   STR16 pToken;
   int32_t iCounter = 0, i;
   uint32_t uiCursorXPos;
-  CHAR16 pString[512];
+  wchar_t pString[512];
   int32_t iLength;
 
   wcscpy(pString, pStringA);

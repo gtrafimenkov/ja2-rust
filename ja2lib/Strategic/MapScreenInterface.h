@@ -7,7 +7,7 @@
 
 typedef struct FASTHELPREGION {
   // the string
-  CHAR16 FastHelpText[256];
+  wchar_t FastHelpText[256];
 
   // the x and y position values
   int32_t iX;

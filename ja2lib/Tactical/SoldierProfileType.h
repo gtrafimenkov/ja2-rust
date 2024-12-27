@@ -149,8 +149,8 @@ typedef enum {
 #define HATED_OPINION -25
 
 typedef struct {
-  CHAR16 zName[NAME_LENGTH];
-  CHAR16 zNickname[NICKNAME_LENGTH];
+  wchar_t zName[NAME_LENGTH];
+  wchar_t zNickname[NICKNAME_LENGTH];
   uint32_t uiAttnSound;
   uint32_t uiCurseSound;
   uint32_t uiDieSound;

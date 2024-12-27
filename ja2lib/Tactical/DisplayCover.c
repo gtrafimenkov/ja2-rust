@@ -116,7 +116,7 @@ void DisplayCoverOfSelectedGridNo() {
         // pop up a message to say we are in the display cover routine
 #ifdef JA2TESTVERSION
         {
-          CHAR16 zString[512];
+          wchar_t zString[512];
           swprintf(zString, ARR_SIZE(zString), L"%s, (%d)",
                    zNewTacticalMessages[TCTL_MSG__DISPLAY_COVER],
                    gGameSettings.ubSizeOfDisplayCover);
@@ -528,7 +528,7 @@ int8_t GetCurrentMercForDisplayCoverStance() {
 
 void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo) {
   uint16_t usRange = 0;
-  CHAR16 zOutputString[512];
+  wchar_t zOutputString[512];
 
   if (sTargetGridNo == NOWHERE || sTargetGridNo == 0) {
     return;
@@ -589,7 +589,7 @@ void DisplayGridNoVisibleToSoldierGrid() {
       } else {
 #ifdef JA2TESTVERSION
         {
-          CHAR16 zString[512];
+          wchar_t zString[512];
           swprintf(zString, ARR_SIZE(zString), L"%s, (%d)", zNewTacticalMessages[TCTL_MSG__LOS],
                    gGameSettings.ubSizeOfLOS);
           ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString);
@@ -887,7 +887,7 @@ BOOLEAN IsTheRoofVisible(int16_t sGridNo) {
 /*
 void DisplayLosAndDisplayCoverUsageScreenMsg()
 {
-        CHAR16	zString[512];
+        wchar_t	zString[512];
 
         swprintf( zString, L"Display Cover: %d", gJa25SaveStruct.uiDisplayCoverCounter );
         ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString );

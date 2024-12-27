@@ -1004,7 +1004,7 @@ uint16_t DisplayMagazine(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeigh
 }
 
 uint16_t DisplayCaliber(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
-  CHAR16 zTemp[128];
+  wchar_t zTemp[128];
   DrawTextToScreen(BobbyRText[BOBBYR_GUNS_CALIBRE], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
@@ -1236,7 +1236,7 @@ void SetFirstLastPagesForUsed() {
 
 void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, int16_t *pItemNumbers) {
   uint8_t i;
-  CHAR16 zItemName[SIZE_ITEM_NAME];
+  wchar_t zItemName[SIZE_ITEM_NAME];
   uint8_t ubItemCount = 0;
 
   if (gfBigImageMouseRegionCreated) return;

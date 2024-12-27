@@ -806,11 +806,11 @@ STR16 gzMoneyAmounts[6] = {
 };
 
 // short words meaning "Advantages" for "Pros" and "Disadvantages" for "Cons."
-CHAR16 gzProsLabel[10] = {
+wchar_t gzProsLabel[10] = {
     L"Pros:",
 };
 
-CHAR16 gzConsLabel[10] = {
+wchar_t gzConsLabel[10] = {
     L"Cons:",
 };
 

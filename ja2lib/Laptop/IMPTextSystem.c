@@ -38,7 +38,7 @@ void LoadAndDisplayIMPText(int16_t sStartX, int16_t sStartY, int16_t sLineLength
   // this procedure will load and display to the screen starting at postion X, Y relative to the
   // start of the laptop screen it will access record sIMPTextRecordNumber and go until all records
   // following it but before the next IMP record are displayed in font uiFont
-  CHAR16 sString[1024];
+  wchar_t sString[1024];
 
   if (fShadow == FALSE) {
     // don't want shadow, remove it

@@ -9,7 +9,7 @@
 
 extern const wchar_t* zBuildInfo;
 extern CHAR8 czVersionNumber[16];
-extern CHAR16 zTrackingNumber[16];
+extern wchar_t zTrackingNumber[16];
 
 // #define RUSSIANGOLD
 

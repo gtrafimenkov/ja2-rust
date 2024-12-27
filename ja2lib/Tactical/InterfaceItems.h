@@ -138,7 +138,7 @@ uint32_t GetInterfaceGraphicForItem(INVTYPE *pItem);
 uint16_t GetTileGraphicForItem(INVTYPE *pItem);
 BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo);
 
-void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
+void GetHelpTextForItem(wchar_t *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
                         struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, uint16_t usItemIndex);

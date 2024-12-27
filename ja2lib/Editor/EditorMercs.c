@@ -63,7 +63,7 @@ extern void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, int16_t *p
 //	SANMONA_ARMS_GROUP,
 //	ANGELS_GROUP,
 //	NUM_CIV_GROUPS
-CHAR16 gszCivGroupNames[NUM_CIV_GROUPS][20] = {
+wchar_t gszCivGroupNames[NUM_CIV_GROUPS][20] = {
     L"NONE",     L"REBEL",    L"KINGPIN",  L"SANMONA ARMS", L"ANGELS",
 
     L"BEGGARS",  L"TOURISTS", L"ALMA MIL", L"DOCTORS",      L"COUPLE1",
@@ -84,7 +84,7 @@ CHAR16 gszCivGroupNames[NUM_CIV_GROUPS][20] = {
 //	SCHEDULE_ACTION_ENTERSECTOR,
 //	SCHEDULE_ACTION_STAYINSECTOR,
 //  SCHEDULE_ACTION_SLEEP,
-CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20] = {
+wchar_t gszScheduleActions[NUM_SCHEDULE_ACTIONS][20] = {
     L"No action",      L"Lock door",      L"Unlock door",  L"Open door",
     L"Close door",     L"Move to gridno", L"Leave sector", L"Enter sector",
     L"Stay in sector", L"Sleep",          L"Ignore this!"};
@@ -227,20 +227,22 @@ BOOLEAN gfShowCivilians = TRUE;
 
 int16_t sCurBaseDiff = DEFAULT_DIFF;
 BOOLEAN fAskForBaseDifficulty = TRUE;
-CHAR16 *zDiffNames[NUM_DIFF_LVLS] = {L"Wimp", L"Easy", L"Average", L"Tough", L"Steroid Users Only"};
+wchar_t *zDiffNames[NUM_DIFF_LVLS] = {L"Wimp", L"Easy", L"Average", L"Tough",
+                                      L"Steroid Users Only"};
 int16_t sBaseStat[NUM_DIFF_LVLS] = {50, 60, 70, 80, 90};
 int16_t sBaseExpLvl[NUM_DIFF_LVLS] = {1, 3, 5, 7, 9};
 
-CHAR16 *EditMercStat[12] = {L"Max Health", L"Cur Health", L"Strength",   L"Agility",
-                            L"Dexterity",  L"Charisma",   L"Wisdom",     L"Marksmanship",
-                            L"Explosives", L"Medical",    L"Scientific", L"Exp Level"};
+wchar_t *EditMercStat[12] = {L"Max Health", L"Cur Health", L"Strength",   L"Agility",
+                             L"Dexterity",  L"Charisma",   L"Wisdom",     L"Marksmanship",
+                             L"Explosives", L"Medical",    L"Scientific", L"Exp Level"};
 
 #define NUM_MERC_ORDERS 8
-CHAR16 *EditMercOrders[8] = {L"Stationary",   L"On Guard", L"Close Patrol", L"Far Patrol",
-                             L"Point Patrol", L"On Call",  L"Seek Enemy",   L"Random Point Patrol"};
+wchar_t *EditMercOrders[8] = {L"Stationary", L"On Guard",           L"Close Patrol",
+                              L"Far Patrol", L"Point Patrol",       L"On Call",
+                              L"Seek Enemy", L"Random Point Patrol"};
 
-CHAR16 *EditMercAttitudes[6] = {L"Defensive",     L"Brave Loner",   L"Brave Buddy",
-                                L"Cunning Loner", L"Cunning Buddy", L"Aggressive"};
+wchar_t *EditMercAttitudes[6] = {L"Defensive",     L"Brave Loner",   L"Brave Buddy",
+                                 L"Cunning Loner", L"Cunning Buddy", L"Aggressive"};
 
 // information for bodytypes.
 #ifdef RANDOM
@@ -723,7 +725,7 @@ void DisplayEditMercWindow(void) {
   int32_t iXPos, iYPos, iHeight, iWidth;
   uint16_t usFillColorBack, usFillColorDark, usFillColorLight, usFillColorTextBk;
   int32_t x, iXOff;
-  CHAR16 TempString[30];
+  wchar_t TempString[30];
   struct SOLDIERTYPE *pSoldier;
   int8_t iEditStat[12];
 
@@ -1629,7 +1631,7 @@ void DeleteSelectedMerc() {
 }
 
 void SetupTextInputForMercProfile() {
-  CHAR16 str[4];
+  wchar_t str[4];
   int16_t sNum;
 
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
@@ -1643,7 +1645,7 @@ void SetupTextInputForMercProfile() {
 }
 
 void SetupTextInputForMercAttributes() {
-  CHAR16 str[4];
+  wchar_t str[4];
 
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
 
@@ -2235,7 +2237,7 @@ void SetMercEditingMode(uint8_t ubNewMode) {
 }
 
 void DisplayBodyTypeInfo() {
-  CHAR16 str[20];
+  wchar_t str[20];
   switch (gpSelected->pBasicPlacement->bBodyType) {
     case RANDOM:
       swprintf(str, ARR_SIZE(str), L"Random");
@@ -2429,7 +2431,7 @@ void UpdateMercsInfo() {
       SetFontForeground(FONT_YELLOW);
       SetFontShadow(FONT_NEARBLACK);
       {  // scope trick
-        CHAR16 tempStr[500];
+        wchar_t tempStr[500];
         swprintf(tempStr, ARR_SIZE(tempStr), L"%s%s%s%s%s%d.",
                  L"By specifying a profile index, all of the information will be extracted from "
                  L"the profile ",
@@ -2495,8 +2497,8 @@ void UpdateMercsInfo() {
       mprintf(172, 418, L"3)");
       mprintf(172, 439, L"4)");
       if (gubScheduleInstructions) {
-        CHAR16 str[255];
-        CHAR16 keyword[10] = L"";
+        wchar_t str[255];
+        wchar_t keyword[10] = L"";
         ColorFillVideoSurfaceArea(FRAME_BUFFER, 431, 388, 590, 450,
                                   Get16BPPColor(FROMRGB(32, 45, 72)));
         switch (gCurrSchedule.ubAction[gubCurrentScheduleActionIndex]) {
@@ -2577,7 +2579,7 @@ void RenderSelectedMercsInventory() {
   uint8_t *pSrc, *pDst;
   int32_t xp, yp;
   uint32_t uiSrcPitchBYTES, uiDstPitchBYTES;
-  CHAR16 pItemName[100];
+  wchar_t pItemName[100];
   uint8_t ubFontColor;
   if (gsSelectedMercID == -1) return;
   for (i = 0; i < 9; i++) {
@@ -2993,7 +2995,7 @@ void RenderMercStrings() {
   int16_t sX, sY;
   STR16 pStr;
   SOLDIERINITNODE *curr;
-  CHAR16 str[50];
+  wchar_t str[50];
 
   curr = gSoldierInitHead;
   while (curr) {
@@ -3163,7 +3165,7 @@ void CancelCurrentScheduleAction() {
 }
 
 void RegisterCurrentScheduleAction(int32_t iMapIndex) {
-  CHAR16 str[6];
+  wchar_t str[6];
   MarkWorldDirty();
   swprintf(str, ARR_SIZE(str), L"%d", iMapIndex);
   if (gfUseScheduleData2) {
@@ -3341,7 +3343,7 @@ void RenderCurrentSchedule() {
   int16_t sXMapPos, sYMapPos;
   int16_t sScreenX, sScreenY;
   int16_t sX, sY;
-  CHAR16 str[3];
+  wchar_t str[3];
   for (i = 0; i < 8; i++) {
     if (i % 2)
       iMapIndex = gCurrSchedule.usData2[i / 2];
@@ -3381,7 +3383,7 @@ void RenderCurrentSchedule() {
 void UpdateScheduleInfo() {
   int32_t i;
   SCHEDULENODE *pSchedule;
-  CHAR16 str[6];
+  wchar_t str[6];
   if (gpSelected->pSoldier->ubScheduleID) {
     pSchedule = GetSchedule(gpSelected->pSoldier->ubScheduleID);
     if (!pSchedule) {

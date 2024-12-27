@@ -33,9 +33,9 @@ void InitEditorItemStatsButtons() {
 }
 
 void InitEditorMercsToolbar() {
-  CHAR16 TempString[30];
-  CHAR16 *FaceDirs[8] = {L"north", L"northeast", L"east", L"southeast",
-                         L"south", L"southwest", L"west", L"northwest"};
+  wchar_t TempString[30];
+  wchar_t *FaceDirs[8] = {L"north", L"northeast", L"east", L"southeast",
+                          L"south", L"southwest", L"west", L"northwest"};
   int32_t x;
 
   iEditorButton[MERCS_PLAYERTOGGLE] = CreateCheckBoxButton(

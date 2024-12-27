@@ -264,13 +264,13 @@ BOOLEAN gfInItemDescBox = FALSE;
 uint32_t guiCurrentItemDescriptionScreen = 0;
 struct OBJECTTYPE *gpItemDescObject = NULL;
 BOOLEAN gfItemDescObjectIsAttachment = FALSE;
-CHAR16 gzItemName[SIZE_ITEM_NAME];
-CHAR16 gzItemDesc[SIZE_ITEM_INFO];
-CHAR16 gzItemPros[SIZE_ITEM_PROS];
-CHAR16 gzItemCons[SIZE_ITEM_CONS];
-CHAR16 gzFullItemPros[SIZE_ITEM_PROS];
-CHAR16 gzFullItemCons[SIZE_ITEM_PROS];
-CHAR16 gzFullItemTemp[SIZE_ITEM_PROS];  // necessary, unfortunately
+wchar_t gzItemName[SIZE_ITEM_NAME];
+wchar_t gzItemDesc[SIZE_ITEM_INFO];
+wchar_t gzItemPros[SIZE_ITEM_PROS];
+wchar_t gzItemCons[SIZE_ITEM_CONS];
+wchar_t gzFullItemPros[SIZE_ITEM_PROS];
+wchar_t gzFullItemCons[SIZE_ITEM_PROS];
+wchar_t gzFullItemTemp[SIZE_ITEM_PROS];  // necessary, unfortunately
 void ItemDescCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 int16_t gsInvDescX;
 int16_t gsInvDescY;
@@ -666,9 +666,9 @@ BOOLEAN AttemptToAddSubstring(STR16 zDest, STR16 zTemp, uint32_t *puiStringLengt
   }
 }
 
-void GenerateProsString(CHAR16 *zItemPros, struct OBJECTTYPE *pObject, uint32_t uiPixLimit) {
+void GenerateProsString(wchar_t *zItemPros, struct OBJECTTYPE *pObject, uint32_t uiPixLimit) {
   uint32_t uiStringLength = 0;
-  CHAR16 *zTemp;
+  wchar_t *zTemp;
   uint16_t usItem = pObject->usItem;
   uint8_t ubWeight;
 
@@ -752,9 +752,9 @@ void GenerateProsString(CHAR16 *zItemPros, struct OBJECTTYPE *pObject, uint32_t 
   }
 }
 
-void GenerateConsString(CHAR16 *zItemCons, struct OBJECTTYPE *pObject, uint32_t uiPixLimit) {
+void GenerateConsString(wchar_t *zItemCons, struct OBJECTTYPE *pObject, uint32_t uiPixLimit) {
   uint32_t uiStringLength = 0;
-  CHAR16 *zTemp;
+  wchar_t *zTemp;
   uint8_t ubWeight;
   uint16_t usItem = pObject->usItem;
 
@@ -993,7 +993,7 @@ void RenderInvBodyPanel(struct SOLDIERTYPE *pSoldier, int16_t sX, int16_t sY) {
 
 void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, uint8_t fDirtyLevel) {
   int32_t cnt;
-  static CHAR16 pStr[150];
+  static wchar_t pStr[150];
 
   if (InItemDescriptionBox() || InItemStackPopup() || InKeyRingPopup()) {
   } else {
@@ -1737,7 +1737,7 @@ void INVRenderItem(uint32_t uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJEC
   int16_t sFontX2, sFontY2;
   int16_t sFontX, sFontY;
 
-  static CHAR16 pStr[100], pStr2[100];
+  static wchar_t pStr[100], pStr2[100];
 
   if (pObject->usItem == NOTHING) {
     return;
@@ -2014,7 +2014,7 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, i
   VOBJECT_DESC VObjectDesc;
   CHAR8 ubString[48];
   int32_t cnt;
-  CHAR16 pStr[10];
+  wchar_t pStr[10];
   int16_t usX, usY;
   int16_t sForeColour;
   int16_t sProsConsIndent;
@@ -2399,7 +2399,7 @@ BOOLEAN ReloadItemDesc() {
 
 void ItemDescAmmoCallback(GUI_BUTTON *btn, int32_t reason) {
   static BOOLEAN fRightDown = FALSE;
-  CHAR16 pStr[10];
+  wchar_t pStr[10];
 
   /*	region gets disabled in SKI for shopkeeper boxes.  It now works normally for merc's
      inventory boxes!
@@ -2620,10 +2620,10 @@ void RenderItemDescriptionBox() {
   uint32_t usHeight, usWidth;
   int16_t sCenX, sCenY, sStrX;
   struct VObject *hVObject;
-  CHAR16 sTempString[128];
+  wchar_t sTempString[128];
 
   uint16_t uiStringLength, uiRightLength;
-  static CHAR16 pStr[100];
+  static wchar_t pStr[100];
   int32_t cnt;
   FLOAT fWeight;
   int16_t usX, usY;
@@ -5596,7 +5596,7 @@ void SetupPickupPage(int8_t bPage) {
   struct ITEM_POOL *pTempItemPool;
   int16_t sValue;
   struct OBJECTTYPE *pObject;
-  static CHAR16 pStr[200];
+  static wchar_t pStr[200];
 
   // Zero out page slots
   memset(gItemPickupMenu.ItemPoolSlots, 0, sizeof(gItemPickupMenu.ItemPoolSlots));
@@ -5730,7 +5730,7 @@ void RenderItemPickupMenu() {
   int16_t sX, sY, sCenX, sCenY, sFontX, sFontY, sNewX, sNewY;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
-  CHAR16 pStr[100];
+  wchar_t pStr[100];
   uint16_t usSubRegion, usHeight, usWidth;
   INVTYPE *pItem;
   struct OBJECTTYPE *pObject;
@@ -5883,7 +5883,7 @@ void RenderItemPickupMenu() {
 
         // If we are money...
         if (Item[pObject->usItem].usItemClass == IC_MONEY) {
-          CHAR16 pStr2[20];
+          wchar_t pStr2[20];
           swprintf(pStr2, ARR_SIZE(pStr2), L"%ld", pObject->uiMoneyAmount);
           InsertCommasForDollarFigure(pStr2);
           InsertDollarSignInToString(pStr2);
@@ -6380,9 +6380,9 @@ void RemoveMoney() {
 
 BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, uint16_t usItemIndex) { return (FALSE); }
 
-void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
+void GetHelpTextForItem(wchar_t *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
                         struct SOLDIERTYPE *pSoldier) {
-  CHAR16 pStr[250];
+  wchar_t pStr[250];
   uint16_t usItem = pObject->usItem;
   int32_t cnt = 0;
   int32_t iNumAttachments = 0;
@@ -6400,7 +6400,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObjec
     InsertCommasForDollarFigure(pStr);
     InsertDollarSignInToString(pStr);
   } else if (Item[usItem].usItemClass == IC_MONEY) {  // alternate money like silver or gold
-    CHAR16 pStr2[20];
+    wchar_t pStr2[20];
     swprintf(pStr2, ARR_SIZE(pStr2), L"%ld", pObject->uiMoneyAmount);
     InsertCommasForDollarFigure(pStr2);
     InsertDollarSignInToString(pStr2);
@@ -6417,7 +6417,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObjec
 
     if ((pObject->usItem == ROCKET_RIFLE || pObject->usItem == AUTO_ROCKET_RIFLE) &&
         pObject->ubImprintID < NO_PROFILE) {
-      CHAR16 pStr2[20];
+      wchar_t pStr2[20];
       swprintf(pStr2, ARR_SIZE(pStr2), L" [%s]", gMercProfiles[pObject->ubImprintID].zNickname);
       wcscat(pStr, pStr2);
     }

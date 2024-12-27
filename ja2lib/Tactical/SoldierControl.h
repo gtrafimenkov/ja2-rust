@@ -339,7 +339,7 @@ struct SOLDIERTYPE {
   int8_t bScientific;
   // traits
   int16_t sWeightCarriedAtTurnStart;
-  CHAR16 name[10];
+  wchar_t name[10];
 
   int8_t bVisible;  // to render or not to render...
 

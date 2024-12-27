@@ -2818,7 +2818,7 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
                 MercPtrs[gusSelectedSoldier]->name);
       gfLoneEPCAttemptingTraversal = FALSE;
     } else if (gubLoneMercAttemptingToAbandonEPCs) {
-      CHAR16 str[256];
+      wchar_t str[256];
       if (gubLoneMercAttemptingToAbandonEPCs == 1) {  // Use the singular version of the string
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male singular
           swprintf(str, ARR_SIZE(str),

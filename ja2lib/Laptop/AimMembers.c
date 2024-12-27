@@ -1243,9 +1243,9 @@ BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
   struct VObject *hVObject;
   uint32_t usHeight, usWidth;
   ETRLEObject *pTrav;
-  CHAR16 gzItemName[SIZE_ITEM_NAME];
+  wchar_t gzItemName[SIZE_ITEM_NAME];
   uint8_t ubItemCount = 0;
-  //	CHAR16			gzTempItemName[ SIZE_ITEM_INFO ];
+  //	wchar_t			gzTempItemName[ SIZE_ITEM_INFO ];
 
   // if the mercs inventory has already been purchased, dont display the inventory
   if (gMercProfiles[ubMercID].ubMiscFlags & PROFILE_MISC_FLAG_ALREADY_USED_ITEMS) return (TRUE);
@@ -4055,10 +4055,10 @@ void DemoHiringOfMercs() {
 #endif
 
 void DisplayPopUpBoxExplainingMercArrivalLocationAndTime() {
-  CHAR16 szLocAndTime[512];
+  wchar_t szLocAndTime[512];
   struct SOLDIERTYPE *pSoldier = NULL;
-  CHAR16 zTimeString[128];
-  CHAR16 zSectorIDString[512];
+  wchar_t zTimeString[128];
+  wchar_t zSectorIDString[512];
   uint32_t uiHour;
 
   // if the id of the merc is invalid, dont display the pop up

@@ -62,7 +62,7 @@ typedef struct _VIDEO_OVERLAY {
   int16_t sY;
   uint8_t ubFontBack;
   uint8_t ubFontFore;
-  CHAR16 zText[200];
+  wchar_t zText[200];
   uint32_t uiDestBuff;
   OVERLAY_CALLBACK BltCallback;
 
@@ -81,7 +81,7 @@ typedef struct {
   int16_t sY;
   uint8_t ubFontBack;
   uint8_t ubFontFore;
-  CHAR16 pzText[200];
+  wchar_t pzText[200];
   OVERLAY_CALLBACK BltCallback;
 
 } VIDEO_OVERLAY_DESC;

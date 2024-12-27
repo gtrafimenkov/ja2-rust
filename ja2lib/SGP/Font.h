@@ -109,23 +109,23 @@ extern int16_t GetIndex(uint16_t siChar);
 extern uint32_t GetWidth(struct VObject *hSrcVObject, int16_t ssIndex);
 
 extern int16_t StringPixLengthArgFastHelp(int32_t usUseFont, int32_t usBoldFont,
-                                          uint32_t uiCharCount, CHAR16 *pFontString);
-extern int16_t StringPixLengthArg(int32_t usUseFont, uint32_t uiCharCount, CHAR16 *pFontString,
+                                          uint32_t uiCharCount, wchar_t *pFontString);
+extern int16_t StringPixLengthArg(int32_t usUseFont, uint32_t uiCharCount, wchar_t *pFontString,
                                   ...);
-extern int16_t StringPixLength(CHAR16 *string, int32_t UseFont);
-extern int16_t StringNPixLength(CHAR16 *string, uint32_t uiMaxCount, int32_t UseFont);
+extern int16_t StringPixLength(wchar_t *string, int32_t UseFont);
+extern int16_t StringNPixLength(wchar_t *string, uint32_t uiMaxCount, int32_t UseFont);
 extern void SaveFontSettings(void);
 extern void RestoreFontSettings(void);
 
 void VarFindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
                                  int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY,
-                                 CHAR16 *pFontString, ...);
+                                 wchar_t *pFontString, ...);
 void VarFindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
                                   int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY,
-                                  CHAR16 *pFontString, ...);
+                                  wchar_t *pFontString, ...);
 void FindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                              CHAR16 *pStr, int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY);
+                              wchar_t *pStr, int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY);
 void FindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
-                               CHAR16 *pStr, int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY);
+                               wchar_t *pStr, int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY);
 
 #endif

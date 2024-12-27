@@ -209,8 +209,8 @@ extern ARMY_COMPOSITION gArmyComp[NUM_ARMY_COMPOSITIONS];
 extern GARRISON_GROUP *gGarrisonGroup;
 extern int32_t giGarrisonArraySize;
 
-CHAR16 gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING", L"PATROL",
-                                                      L"REINFORCE"};
+wchar_t gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING",
+                                                       L"PATROL", L"REINFORCE"};
 
 void StringFromValue(STR16 str, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
@@ -223,7 +223,7 @@ void StringFromValue(STR16 str, int32_t iValue, uint32_t uiMax) {
 
 BOOLEAN CreateAIViewer() {
   VOBJECT_DESC VObjectDesc;
-  CHAR16 str[6];
+  wchar_t str[6];
 
   // Check to see if data exists.
   if (!FileMan_Exists("DevTools\\arulco.sti") || !FileMan_Exists("DevTools\\icons.sti") ||
@@ -409,7 +409,7 @@ void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBot
 void RenderStationaryGroups() {
   struct VObject *hVObject;
   int32_t x, y, xp, yp;
-  CHAR16 str[20];
+  wchar_t str[20];
   int32_t iSector = 0;
   uint8_t ubIconColor;
   uint8_t ubGroupSize = 0;
@@ -781,7 +781,7 @@ void RenderViewer() {
       mprintf(VIEWER_LEFT - 10, VIEWER_TOP + 7 + y * 22, L"%c", 'A' + y);
     }
     for (x = 1; x <= 16; x++) {
-      CHAR16 str[3];
+      wchar_t str[3];
       if (x == gsSelSectorX)
         SetFontForeground(FONT_RED);
       else if (x == gsHiSectorX)
@@ -1289,7 +1289,7 @@ void ToggleQueenAwake(GUI_BUTTON *btn, int32_t reason) {
 
 enum { ENEMY_RANK_TOTAL = NUM_ENEMY_RANKS, ENEMY_RANK_PERCENT, TABLE_ENEMY_RANKS };
 
-CHAR16 EnemyRankString[TABLE_ENEMY_RANKS][10] = {
+wchar_t EnemyRankString[TABLE_ENEMY_RANKS][10] = {
     L"Adm", L"Trp", L"Elt", L"TOT", L"%%",
 };
 
@@ -1306,7 +1306,7 @@ enum {
   POP_TABLE_ENEMY_TYPES
 };
 
-CHAR16 EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
+wchar_t EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
     L"Pool", L"Garr", L"Ptrl", L"Rein", L"Aslt", L"Stag", L"Rtrt", L" TOT", L"   %%",
 };
 
@@ -1322,8 +1322,8 @@ void PrintEnemyPopTable() {
   uint8_t ubEnemyType;
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  CHAR16 wPrintSpec[10];
-  CHAR16 wTempString[10];
+  wchar_t wPrintSpec[10];
+  wchar_t wTempString[10];
 
   memset(&usEnemyPopTable, 0, sizeof(usEnemyPopTable));
 
@@ -1470,7 +1470,7 @@ enum {
   KILLED_TABLE_ROWS
 };
 
-CHAR16 EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
+wchar_t EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
     L"Tact",
     L"Auto",
     L" TOT",
@@ -1486,8 +1486,8 @@ void PrintEnemiesKilledTable() {
   uint16_t usEnemiesKilledTable[TABLE_ENEMY_RANKS][KILLED_TABLE_ROWS];
   uint8_t ubEnemyRank;
   uint8_t ubKillType;
-  CHAR16 wPrintSpec[10];
-  CHAR16 wTempString[10];
+  wchar_t wPrintSpec[10];
+  wchar_t wTempString[10];
 
   memset(&usEnemiesKilledTable, 0, sizeof(usEnemiesKilledTable));
 
@@ -1638,8 +1638,8 @@ void PrintDetailedEnemiesInSectorInfo(int32_t iScreenX, int32_t iScreenY, uint8_
   int32_t iDesired, iSurplus;
   uint8_t ubGroupCnt = 0;
   uint8_t ubSectorID;
-  CHAR16 wString[120];
-  CHAR16 wSubString[120];
+  wchar_t wString[120];
+  wchar_t wSubString[120];
   int16_t iGarrisonIndex;
   int16_t iPatrolIndex;
   WAYPOINT *pFinalWaypoint;

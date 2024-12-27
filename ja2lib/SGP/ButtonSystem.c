@@ -1464,7 +1464,7 @@ int32_t CreateTextButton(STR16 string, uint32_t uiFont, int16_t sForeColor, int1
   // Allocate memory for the button's text string...
   b->string = NULL;
   if (string && wcslen(string)) {
-    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(CHAR16));
+    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     AssertMsg(b->string, "Out of memory error:  Couldn't allocate string in CreateTextButton.");
     wcscpy(b->string, string);
   }
@@ -1882,7 +1882,7 @@ int32_t CreateIconAndTextButton(int32_t Image, STR16 string, uint32_t uiFont, in
   // Allocate memory for the button's text string...
   b->string = NULL;
   if (string) {
-    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(CHAR16));
+    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     AssertMsg(b->string,
               "Out of memory error:  Couldn't allocate string in CreateIconAndTextButton.");
     wcscpy(b->string, string);
@@ -1963,7 +1963,7 @@ void SpecifyButtonText(int32_t iButtonID, STR16 string) {
 
   if (string && wcslen(string)) {
     // allocate memory for the new string
-    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(CHAR16));
+    b->string = (STR16)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     Assert(b->string);
     // copy the string to the button
     wcscpy(b->string, string);

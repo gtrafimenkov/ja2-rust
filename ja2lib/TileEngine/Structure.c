@@ -1440,8 +1440,8 @@ void DebugStructurePage1(void) {
   uint8_t bHeight, bDens0, bDens1, bDens2, bDens3;
   int8_t bStructures;
 
-  static CHAR16 WallOrientationString[5][15] = {L"None", L"Inside left", L"Inside right",
-                                                L"Outside left", L"Outside right"};
+  static wchar_t WallOrientationString[5][15] = {L"None", L"Inside left", L"Inside right",
+                                                 L"Outside left", L"Outside right"};
 
   SetFont(LARGEFONT1);
   gprintf(0, 0, L"DEBUG STRUCTURES PAGE 1 OF 1");

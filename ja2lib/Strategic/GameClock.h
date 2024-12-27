@@ -114,7 +114,7 @@ void AdvanceToNextDay();
 // should be as well as how much to update the clock by.
 void UpdateClock();
 
-extern CHAR16 gswzWorldTimeStr[20];  // Day 99, 23:55
+extern wchar_t gswzWorldTimeStr[20];  // Day 99, 23:55
 
 extern uint32_t guiDay;
 extern uint32_t guiHour;

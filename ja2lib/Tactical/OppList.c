@@ -3730,7 +3730,7 @@ void DebugSoldierPage3() {
   }
 }
 
-void AppendAttachmentCode(uint16_t usItem, CHAR16 *str) {
+void AppendAttachmentCode(uint16_t usItem, wchar_t *str) {
   switch (usItem) {
     case SILENCER:
       wcscat(str, L" Sil");
@@ -3748,7 +3748,7 @@ void AppendAttachmentCode(uint16_t usItem, CHAR16 *str) {
 }
 
 void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, int32_t yp) {
-  CHAR16 szAttach[30];
+  wchar_t szAttach[30];
   BOOLEAN fAttachments;
   // 100%  Qty: 2  Attach:
   // 100%  Qty: 2
@@ -3770,8 +3770,8 @@ void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, int32_t yp) {
 
   if (Item[pObject->usItem].usItemClass == IC_AMMO) {  // ammo
     if (pObject->ubNumberOfObjects > 1) {
-      CHAR16 str[50];
-      CHAR16 temp[5];
+      wchar_t str[50];
+      wchar_t temp[5];
       uint8_t i;
       swprintf(str, ARR_SIZE(str), L"Clips:  %d  (%d", pObject->ubNumberOfObjects,
                pObject->bStatus[0]);
@@ -3800,8 +3800,8 @@ void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, int32_t yp) {
 void DebugSoldierPage4() {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiMercFlags;
-  CHAR16 szOrders[20];
-  CHAR16 szAttitude[20];
+  wchar_t szOrders[20];
+  wchar_t szAttitude[20];
   uint16_t usSoldierIndex;
   uint8_t ubLine;
 

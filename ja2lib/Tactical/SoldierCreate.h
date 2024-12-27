@@ -111,7 +111,7 @@ typedef struct {
 
   // Kris:  Additions November 16, 1997 (padding down to 129 from 150)
   BOOLEAN fVisible;
-  CHAR16 name[10];
+  wchar_t name[10];
 
   uint8_t ubSoldierClass;  // army, administrator, elite
 

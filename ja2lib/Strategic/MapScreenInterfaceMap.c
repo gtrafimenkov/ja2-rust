@@ -846,8 +846,8 @@ void GetScreenXYFromMapXYStationary(int16_t sMapX, int16_t sMapY, int16_t *psX, 
 }
 
 void ShowTownText(void) {
-  CHAR16 sString[32];
-  CHAR16 sStringA[32];
+  wchar_t sString[32];
+  wchar_t sStringA[32];
   int8_t bTown = 0;
   uint16_t usX, usY;
   BOOLEAN fLoyaltyTooLowToTrainMilitia;
@@ -3450,7 +3450,7 @@ void ShowPeopleInMotion(int16_t sX, int16_t sY) {
   int32_t iCounter = 0;
   struct VObject *hIconHandle;
   BOOLEAN fAboutToEnter = FALSE;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sTextXOffset = 0;
   int16_t sTextYOffset = 0;
   int16_t usX, usY;
@@ -3646,7 +3646,7 @@ void DisplayDistancesForHelicopter(void) {
   // display these on screen
   int16_t sDistanceToGo = 0;  //, sDistanceSoFar = 0, sTotalCanTravel = 0;
   int16_t sX = 0, sY = 0;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   struct VObject *hHandle;
   int16_t sTotalOfTrip = 0;
   int32_t iTime = 0;
@@ -3791,7 +3791,7 @@ void DisplayPositionOfHelicopter(void) {
   struct GROUP *pGroup;
   struct VObject *hHandle;
   int32_t iNumberOfPeopleInHelicopter = 0;
-  CHAR16 sString[4];
+  wchar_t sString[4];
 
   AssertMsg((sOldMapX >= 0) && (sOldMapX < 640),
             String("DisplayPositionOfHelicopter: Invalid sOldMapX = %d", sOldMapX));
@@ -4065,7 +4065,7 @@ void BlitMineIcon(int16_t sMapX, int16_t sMapY) {
 
 void BlitMineText(int16_t sMapX, int16_t sMapY) {
   int16_t sScreenX, sScreenY;
-  CHAR16 wString[32], wSubString[32];
+  wchar_t wString[32], wSubString[32];
   uint8_t ubMineIndex;
   uint8_t ubLineCnt = 0;
 
@@ -4342,7 +4342,7 @@ uint8_t NumFriendlyInSector( int16_t sX, int16_t sY, int8_t bZ )
 */
 
 void DisplayLevelString(void) {
-  CHAR16 sString[32];
+  wchar_t sString[32];
 
   // given the current level being displayed on the map, show a sub level message
 
@@ -4617,7 +4617,7 @@ void RenderIconsPerSectorForSelectedTown(void) {
   struct VObject *hVObject;
   int32_t iCurrentIcon = 0;
   int16_t sX, sY;
-  CHAR16 sString[32];
+  wchar_t sString[32];
   int16_t sSectorX = 0, sSectorY = 0;
 
   // get the sector value for the upper left corner
@@ -4880,7 +4880,7 @@ void CreateDestroyMilitiaSectorButtons(void) {
 
 void SetMilitiaMapButtonsText(void) {
   // now set the militia map button text
-  CHAR16 sString[64];
+  wchar_t sString[64];
   int32_t iNumberOfGreens = 0, iNumberOfRegulars = 0, iNumberOfElites = 0;
   int16_t sBaseSectorValue = 0, sGlobalMapSector = 0;
 
@@ -5014,7 +5014,7 @@ BOOLEAN IsThisMilitiaTownSectorAllowable(int16_t sSectorIndexValue) {
 }
 
 void DrawTownMilitiaName(void) {
-  CHAR16 sString[64];
+  wchar_t sString[64];
   int16_t sX, sY;
 
   // get the name for the current militia town
@@ -5742,7 +5742,7 @@ void ShowSAMSitesOnStrategicMap(void) {
   struct VObject *hHandle;
   int8_t ubVidObjIndex = 0;
   uint32_t uiDestPitchBYTES;
-  CHAR16 wString[40];
+  wchar_t wString[40];
 
   if (fShowAircraftFlag) {
     BlitSAMGridMarkers();
@@ -5923,7 +5923,7 @@ void ShowItemsOnMap(void) {
   int16_t sXCorner, sYCorner;
   int16_t usXPos, usYPos;
   uint32_t uiItemCnt;
-  CHAR16 sString[10];
+  wchar_t sString[10];
 
   // clip blits to mapscreen region
   ClipBlitsToMapViewRegion();

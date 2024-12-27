@@ -888,7 +888,7 @@ void DisplayPageNumberAndDateRange(void) {
 }
 
 void ProcessHistoryTransactionString(STR16 pString, size_t bufSize, HistoryUnitPtr pHistory) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   switch (pHistory->ubCode) {
     case HISTORY_ENTERED_HISTORY_MODE:

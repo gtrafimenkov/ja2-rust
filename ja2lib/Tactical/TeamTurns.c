@@ -533,7 +533,7 @@ void StartInterrupt(void) {
 
   if (pSoldier->bTeam == OUR_TEAM) {
     // start interrupts for everyone on our side at once
-    CHAR16 sTemp[255];
+    wchar_t sTemp[255];
     uint8_t ubInterrupters = 0;
     int32_t iSquad, iCounter;
 

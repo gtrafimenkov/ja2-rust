@@ -724,7 +724,7 @@ void RenderAttributeBoxes(void) {
   int32_t iCnt = STRENGTH_ATTRIBUTE;
   int16_t sX = 0;
   int16_t sY = 0;
-  CHAR16 sString[3];
+  wchar_t sString[3];
 
   // set last char to null
   sString[2] = 0;
@@ -1372,7 +1372,7 @@ void SetAttributes(void) {
 
 void DrawBonusPointsRemaining(void) {
   // draws the amount of points remaining player has
-  CHAR16 sString[64];
+  wchar_t sString[64];
 
   // just reviewing, don't blit stats
   if (fReviewStats == TRUE) {

@@ -27,7 +27,7 @@ uint16_t gusSavedBuildingSelectionType = AREASELECTION;
 int16_t sGridX, sGridY;
 int16_t sBadMarker = -1;
 
-CHAR16 wszSelType[6][16] = {L"Small", L"Medium", L"Large", L"XLarge", L"Width: xx", L"Area"};
+wchar_t wszSelType[6][16] = {L"Small", L"Medium", L"Large", L"XLarge", L"Width: xx", L"Area"};
 
 BOOLEAN gfAllowRightButtonSelections = FALSE;
 BOOLEAN gfCurrentSelectionWithRightButton = FALSE;

@@ -30,7 +30,7 @@ void IncreaseSelectionDensity();
 void DecreaseSelectionDensity();
 void RemoveCursors();
 
-extern CHAR16 wszSelType[6][16];
+extern wchar_t wszSelType[6][16];
 
 extern BOOLEAN gfCurrentSelectionWithRightButton;
 

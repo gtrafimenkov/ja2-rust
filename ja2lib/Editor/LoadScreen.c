@@ -52,7 +52,7 @@ struct FileDialogList;
 //===========================================================================
 
 BOOLEAN gfErrorCatch = FALSE;
-CHAR16 gzErrorCatchString[256] = L"";
+wchar_t gzErrorCatchString[256] = L"";
 int32_t giErrorCatchMessageBox = 0;
 
 extern void RemoveMercsInSector();
@@ -84,7 +84,7 @@ int32_t iCurrFileShown;
 int32_t iLastFileClicked;
 int32_t iLastClickTime;
 
-CHAR16 gzFilename[31];
+wchar_t gzFilename[31];
 
 struct FileDialogList *FileList = NULL;
 
@@ -99,7 +99,7 @@ BOOLEAN gfIllegalName;
 BOOLEAN gfDeleteFile;
 BOOLEAN gfNoFiles;
 
-CHAR16 zOrigName[60];
+wchar_t zOrigName[60];
 struct GetFile FileInfo;
 
 BOOLEAN fEnteringLoadSaveScreen = TRUE;
@@ -320,7 +320,7 @@ uint32_t LoadSaveScreenHandle(void) {
     case DIALOG_DELETE:
       snprintf(gszCurrFilename, ARR_SIZE(gszCurrFilename), "MAPS\\%ls", gzFilename);
       if (Plat_GetFileFirst(gszCurrFilename, &FileInfo)) {
-        CHAR16 str[40];
+        wchar_t str[40];
         if (Plat_GetFileIsReadonly(&FileInfo) || Plat_GetFileIsSystem(&FileInfo) ||
             Plat_GetFileIsHidden(&FileInfo)) {
           swprintf(str, ARR_SIZE(str), L" Delete READ-ONLY file %s? ", gzFilename);
@@ -380,7 +380,7 @@ uint32_t LoadSaveScreenHandle(void) {
   return LOADSAVE_SCREEN;
 }
 
-void CreateFileDialog(CHAR16 *zTitle) {
+void CreateFileDialog(wchar_t *zTitle) {
   iFDlgState = DIALOG_NONE;
 
   DisableEditorTaskbar();
@@ -953,7 +953,7 @@ BOOLEAN ValidCoordinate() {
 }
 
 BOOLEAN ValidFilename() {
-  CHAR16 *pDest;
+  wchar_t *pDest;
   if (gzFilename[0] != '\0')  ///;
   {
     pDest = wcsstr(gzFilename, L".dat");

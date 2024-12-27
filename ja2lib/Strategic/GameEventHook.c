@@ -392,7 +392,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
 
 #ifdef CRIPPLED_VERSION
 void CrippledVersionEndGameCheck() {
-  CHAR16 zString[512];
+  wchar_t zString[512];
 
   // Dont want this to appear before we arrive
   if (guiDay == 1) return;

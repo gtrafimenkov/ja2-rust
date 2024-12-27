@@ -7,16 +7,16 @@
 #define STRING_LENGTH 255
 #define MED_STRING_LENGTH 96  /// 80
 
-extern CHAR16 sRepairsDoneString[][MED_STRING_LENGTH];
+extern wchar_t sRepairsDoneString[][MED_STRING_LENGTH];
 
-extern CHAR16 ShortItemNames[MAXITEMS][80];
-extern CHAR16 ItemNames[MAXITEMS][80];
-extern CHAR16 AmmoCaliber[][20];
-extern CHAR16 BobbyRayAmmoCaliber[][20];
-extern CHAR16 WeaponType[][30];
+extern wchar_t ShortItemNames[MAXITEMS][80];
+extern wchar_t ItemNames[MAXITEMS][80];
+extern wchar_t AmmoCaliber[][20];
+extern wchar_t BobbyRayAmmoCaliber[][20];
+extern wchar_t WeaponType[][30];
 
-extern CHAR16 Message[][STRING_LENGTH];
-extern CHAR16 TeamTurnString[][STRING_LENGTH];
+extern wchar_t Message[][STRING_LENGTH];
+extern wchar_t TeamTurnString[][STRING_LENGTH];
 extern STR16 pAssignMenuStrings[];
 extern STR16 pTrainingStrings[];
 extern STR16 pTrainingMenuStrings[];
@@ -248,7 +248,7 @@ enum {
 };
 extern STR16 pMessageStrings[];
 
-extern CHAR16 ItemPickupHelpPopup[][40];
+extern wchar_t ItemPickupHelpPopup[][40];
 
 enum {
   STR_EMPTY,
@@ -319,19 +319,19 @@ enum {
 #define LARGE_STRING_LENGTH 200
 #define SMALL_STRING_LENGTH 20
 
-extern CHAR16 TacticalStr[][MED_STRING_LENGTH];
-extern CHAR16 LargeTacticalStr[][LARGE_STRING_LENGTH];
+extern wchar_t TacticalStr[][MED_STRING_LENGTH];
+extern wchar_t LargeTacticalStr[][LARGE_STRING_LENGTH];
 
-extern CHAR16 zDialogActions[][SMALL_STRING_LENGTH];
-extern CHAR16 zDealerStrings[][SMALL_STRING_LENGTH];
-extern CHAR16 zTalkMenuStrings[][SMALL_STRING_LENGTH];
+extern wchar_t zDialogActions[][SMALL_STRING_LENGTH];
+extern wchar_t zDealerStrings[][SMALL_STRING_LENGTH];
+extern wchar_t zTalkMenuStrings[][SMALL_STRING_LENGTH];
 extern STR16 gzMoneyAmounts[6];
-extern CHAR16 gzProsLabel[10];
-extern CHAR16 gzConsLabel[10];
-extern CHAR16 gMoneyStatsDesc[][13];
-extern CHAR16 gWeaponStatsDesc[][14];
+extern wchar_t gzProsLabel[10];
+extern wchar_t gzConsLabel[10];
+extern wchar_t gMoneyStatsDesc[][13];
+extern wchar_t gWeaponStatsDesc[][14];
 extern STR16 sKeyDescriptionStrings[2];
-extern CHAR16 zHealthStr[][13];
+extern wchar_t zHealthStr[][13];
 extern STR16 zVehicleName[6];
 
 enum {

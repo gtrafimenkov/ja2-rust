@@ -88,7 +88,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
 
 BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, uint16_t usWidth, int32_t uiFont) {
   uint32_t Cur, uiLet, uiNewLet, uiHyphenLet;
-  CHAR16 *curletter, transletter;
+  wchar_t *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;
   struct VObject *hFont;
 

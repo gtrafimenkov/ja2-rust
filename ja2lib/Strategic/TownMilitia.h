@@ -29,7 +29,7 @@ void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, uint8_t ubRank, uint8_t 
 uint8_t CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, uint8_t ubCurrentRank,
                                     uint8_t ubRecentKillPts);
 
-void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
+void BuildMilitiaPromotionsString(wchar_t *str, size_t bufSize);
 
 uint8_t CountAllMilitiaInSector(u8 mapX, u8 mapY);
 uint8_t CountAllMilitiaInSectorID8(SectorID8 sectorID);

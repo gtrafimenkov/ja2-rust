@@ -249,7 +249,7 @@ void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHei
   if (usInputType == INPUTTYPE_EXCLUSIVE_24HOURCLOCK) ubMaxChars = 6;
   // Allocate and copy the string.
   size_t bufSize = (ubMaxChars + 1);
-  pNode->szString = (STR16)MemAlloc(bufSize * sizeof(CHAR16));
+  pNode->szString = (STR16)MemAlloc(bufSize * sizeof(wchar_t));
   pNode->szStringBufSize = bufSize;
   Assert(pNode->szString);
   if (szInitText) {
@@ -413,7 +413,7 @@ void Get16BitStringFromField(uint8_t ubField, STR16 szString, size_t bufSize) {
 // returns -1 if blank or invalid.  Only works for positive numbers.
 int32_t GetNumericStrictValueFromField(uint8_t ubField) {
   STR16 ptr;
-  CHAR16 str[20];
+  wchar_t str[20];
   int32_t total;
   Get16BitStringFromField(ubField, str, ARR_SIZE(str));
   // Blank string, so return -1
@@ -1045,7 +1045,7 @@ void RenderBackgroundField(TEXTINPUTNODE *pNode) {
 void RenderActiveTextField() {
   uint32_t uiCursorXPos;
   uint16_t usOffset;
-  CHAR16 str[256];
+  wchar_t str[256];
   if (!gpActive || !gpActive->szString) return;
 
   SaveFontSettings();
@@ -1112,7 +1112,7 @@ void RenderActiveTextField() {
 void RenderInactiveTextField(uint8_t ubID) {
   uint16_t usOffset;
   TEXTINPUTNODE *pNode, *curr;
-  CHAR16 str[256];
+  wchar_t str[256];
   curr = gpTextInputHead;
   pNode = NULL;
   while (curr) {
@@ -1138,7 +1138,7 @@ void RenderInactiveTextField(uint8_t ubID) {
 
 void RenderInactiveTextFieldNode(TEXTINPUTNODE *pNode) {
   uint16_t usOffset;
-  CHAR16 str[256];
+  wchar_t str[256];
   if (!pNode || !pNode->szString) return;
   SaveFontSettings();
   SetFont(pColors->usFont);
@@ -1316,7 +1316,7 @@ void ExecuteCopyCommand() {
       ubEnd = gubStartHilite;
     }
     ubCount = (uint8_t)(ubEnd - ubStart);
-    szClipboard = (STR16)MemAlloc((ubCount + 1) * sizeof(CHAR16));
+    szClipboard = (STR16)MemAlloc((ubCount + 1) * sizeof(wchar_t));
     Assert(szClipboard);
     for (ubCount = ubStart; ubCount < ubEnd; ubCount++) {
       szClipboard[ubCount - ubStart] = gpActive->szString[ubCount];

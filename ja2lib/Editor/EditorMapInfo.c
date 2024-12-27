@@ -52,7 +52,7 @@ struct SGPPaletteEntry gEditorLightColor;
 BOOLEAN gfEditorForceShadeTableRebuild = FALSE;
 
 void SetupTextInputForMapInfo() {
-  CHAR16 str[10];
+  wchar_t str[10];
 
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
 
@@ -130,7 +130,7 @@ void UpdateMapInfo() {
 }
 
 void UpdateMapInfoFields() {
-  CHAR16 str[10];
+  wchar_t str[10];
   // Update the text fields to reflect the validated values.
   // light rgb fields
   swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peRed);
@@ -155,7 +155,7 @@ void UpdateMapInfoFields() {
 }
 
 void ExtractAndUpdateMapInfo() {
-  CHAR16 str[10];
+  wchar_t str[10];
   int32_t temp;
   BOOLEAN fUpdateLight1 = FALSE;
   // extract light1 colors
@@ -217,7 +217,7 @@ void ExtractAndUpdateMapInfo() {
 }
 
 BOOLEAN ApplyNewExitGridValuesToTextFields() {
-  CHAR16 str[10];
+  wchar_t str[10];
   // exit grid input fields
   if (iCurrentTaskbar != TASK_MAPINFO) return FALSE;
   swprintf(str, ARR_SIZE(str), L"%c%d", gExitGrid.ubGotoSectorY + 'A' - 1, gExitGrid.ubGotoSectorX);

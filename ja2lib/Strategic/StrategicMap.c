@@ -417,7 +417,7 @@ void EndLoadScreen() {
 #ifdef JA2TESTVERSION
   // Report the time it took to load the map.  This is temporary until we are satisfied with the
   // time it takes to load the map.
-  CHAR16 str[60];
+  wchar_t str[60];
   FILE *fp;
   uint32_t uiSeconds;
   uint32_t uiHundreths;
@@ -1600,8 +1600,8 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
                      // is likely
         // a missing part of the map or possible fault in strategic movement costs, traversal logic,
         // etc.
-        CHAR16 szEntry[10];
-        CHAR16 szSector[10];
+        wchar_t szEntry[10];
+        wchar_t szSector[10];
         int16_t sGridNo;
         GetLoadedSectorString(szSector, ARR_SIZE(szSector));
         if (gMapInformation.sNorthGridNo != -1) {
@@ -1703,7 +1703,7 @@ void InitializeStrategicMapSectorTownNames(void) {
 }
 
 // Get sector ID string makes a string like 'A9 - OMERTA', or just J11 if no town....
-void GetSectorIDString(u8 sSectorX, u8 sSectorY, int8_t bSectorZ, CHAR16 *zString, size_t bufSize,
+void GetSectorIDString(u8 sSectorX, u8 sSectorY, int8_t bSectorZ, wchar_t *zString, size_t bufSize,
                        BOOLEAN fDetailed) {
   SECTORINFO *pSector = NULL;
   UNDERGROUND_SECTORINFO *pUnderground;
@@ -3001,7 +3001,7 @@ void UpdateAirspaceControl(void) {
   if (StrategicMap[GetSectorID16(gsMercArriveSectorX, gsMercArriveSectorY)].fEnemyAirControlled ==
       TRUE) {
     // NOPE!
-    CHAR16 sMsgString[256], sMsgSubString1[64], sMsgSubString2[64];
+    wchar_t sMsgString[256], sMsgSubString1[64], sMsgSubString2[64];
 
     // get the name of the old sector
     GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString1,
@@ -4115,7 +4115,7 @@ void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup) {
 
 #ifdef CRIPPLED_VERSION
 void CrippledVersionFailureToLoadMapCheck() {
-  CHAR16 zString[512];
+  wchar_t zString[512];
 
   swprintf(zString,
            L"Error! Sorry, you must stay between sectors A and E in this limited press version.");
