@@ -6,7 +6,7 @@
 typedef struct {
   uint32_t TimeStamp;
   uint32_t uiFlags;
-  UINT16 usDelay;
+  uint16_t usDelay;
   uint32_t uiEvent;
   uint32_t uiDataSize;
   BYTE *pData;
@@ -23,7 +23,7 @@ typedef struct {
 BOOLEAN InitializeEventManager();
 BOOLEAN ShutdownEventManager();
 
-BOOLEAN AddEvent(uint32_t uiEvent, UINT16 usDelay, PTR pEventData, uint32_t uiDataSize,
+BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
                  UINT8 ubQueueID);
 BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID);
 BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, UINT8 ubQueueID);

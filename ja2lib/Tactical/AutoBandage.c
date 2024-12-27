@@ -43,8 +43,8 @@ extern FACETYPE *gpCurrentTalkingFace;
 
 STR16 sAutoBandageString = NULL;
 INT32 giBoxId = -1;
-UINT16 gusTextBoxWidth = 0;
-UINT16 gusTextBoxHeight = 0;
+uint16_t gusTextBoxWidth = 0;
+uint16_t gusTextBoxHeight = 0;
 BOOLEAN gfBeginningAutoBandage = FALSE;
 INT16 gsX = 0;
 INT16 gsY = 0;

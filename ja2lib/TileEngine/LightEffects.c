@@ -145,7 +145,7 @@ void DecayLightEffects(uint32_t uiTime) {
   LIGHTEFFECT *pLight;
   uint32_t cnt, cnt2;
   BOOLEAN fDelete = FALSE;
-  UINT16 usNumUpdates = 1;
+  uint16_t usNumUpdates = 1;
 
   // age all active tear gas clouds, deactivate those that are just dispersing
   for (cnt = 0; cnt < guiNumLightEffects; cnt++) {
@@ -156,7 +156,7 @@ void DecayLightEffects(uint32_t uiTime) {
     if (pLight->fAllocated) {
       // ATE: Do this every so ofte, to acheive the effect we want...
       if ((uiTime - pLight->uiTimeOfLastUpdate) > 350) {
-        usNumUpdates = (UINT16)((uiTime - pLight->uiTimeOfLastUpdate) / 350);
+        usNumUpdates = (uint16_t)((uiTime - pLight->uiTimeOfLastUpdate) / 350);
 
         pLight->uiTimeOfLastUpdate = uiTime;
 

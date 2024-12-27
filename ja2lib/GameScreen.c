@@ -74,7 +74,7 @@
 #define ARE_IN_FADE_IN() (gfFadeIn || gfFadeInitialized)
 
 BOOLEAN fDirtyRectangleMode = FALSE;
-UINT16 *gpFPSBuffer = NULL;
+uint16_t *gpFPSBuffer = NULL;
 // MarkNote
 // extern ScrollStringStPtr pStringS=NULL;
 uint32_t counter = 0;
@@ -120,7 +120,7 @@ BOOLEAN guiTacticalLeaveScreen = FALSE;
 
 void HandleModalTactical();
 extern void CheckForDisabledRegionRemove();
-extern void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce);
+extern void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce);
 
 uint32_t MainGameScreenInit(void) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;

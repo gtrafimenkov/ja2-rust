@@ -9,7 +9,7 @@ extern uint32_t GetCursorHandle(uint32_t uiCursorIndex);
 extern void UnloadCursorData(uint32_t uiCursorIndex);
 extern BOOLEAN LoadCursorData(uint32_t uiCursorIndex);
 extern void CursorDatabaseClear(void);
-extern UINT16 GetCursorSubIndex(uint32_t uiCursorIndex);
+extern uint16_t GetCursorSubIndex(uint32_t uiCursorIndex);
 extern BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex);
 
 #define ANIMATED_CURSOR 0x02
@@ -44,7 +44,7 @@ struct CursorFileData;
 
 typedef struct {
   uint32_t uiFileIndex;
-  UINT16 uiSubIndex;
+  uint16_t uiSubIndex;
   uint32_t uiCurrentFrame;
   INT16 usPosX;
   INT16 usPosY;
@@ -53,11 +53,11 @@ typedef struct {
 
 typedef struct {
   CursorImage Composites[MAX_COMPOSITES];
-  UINT16 usNumComposites;
+  uint16_t usNumComposites;
   INT16 sOffsetX;
   INT16 sOffsetY;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint16_t usHeight;
+  uint16_t usWidth;
   UINT8 bFlags;
   UINT8 bFlashIndex;
 
@@ -68,22 +68,22 @@ extern INT16 gsGlobalCursorYOffset;
 // Globals for cursor database offset values
 extern INT16 gsCurMouseOffsetX;
 extern INT16 gsCurMouseOffsetY;
-extern UINT16 gsCurMouseHeight;
-extern UINT16 gsCurMouseWidth;
+extern uint16_t gsCurMouseHeight;
+extern uint16_t gsCurMouseWidth;
 
 extern uint32_t guiExternVo;
-extern UINT16 gusExternVoSubIndex;
+extern uint16_t gusExternVoSubIndex;
 extern uint32_t guiExtern2Vo;
-extern UINT16 gusExtern2VoSubIndex;
+extern uint16_t gusExtern2VoSubIndex;
 extern BOOLEAN gfExternUse2nd;
 
 typedef void (*MOUSEBLT_HOOK)(void);
 
 void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCursorData,
-                        UINT16 suNumDataFiles);
+                        uint16_t suNumDataFiles);
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride);
 
-void SetExternVOData(uint32_t uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex);
+void SetExternVOData(uint32_t uiCursorIndex, struct VObject *hVObject, uint16_t usSubIndex);
 void RemoveExternVOData(uint32_t uiCursorIndex);
 
 #endif

@@ -159,7 +159,7 @@ void GameLoop(void) {
 
   struct Point MousePos = GetMousePoint();
   // Hook into mouse stuff for MOVEMENT MESSAGES
-  MouseSystemHook(MOUSE_POS, (UINT16)MousePos.x, (UINT16)MousePos.y, _LeftButtonDown,
+  MouseSystemHook(MOUSE_POS, (uint16_t)MousePos.x, (uint16_t)MousePos.y, _LeftButtonDown,
                   _RightButtonDown);
   MusicPoll(FALSE);
 

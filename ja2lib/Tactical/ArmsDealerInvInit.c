@@ -595,9 +595,9 @@ DEALER_POSSIBLE_INV gFredoInventory[] = {
 
 // prototypes
 
-INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, UINT16 usItemIndex);
+INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex);
 
-INT8 GetDealersMaxItemAmount(UINT8 ubDealerID, UINT16 usItemIndex) {
+INT8 GetDealersMaxItemAmount(UINT8 ubDealerID, uint16_t usItemIndex) {
   switch (ubDealerID) {
     case ARMS_DEALER_TONY:
       return (GetMaxItemAmount(gTonyInventory, usItemIndex));
@@ -682,8 +682,8 @@ INT8 GetDealersMaxItemAmount(UINT8 ubDealerID, UINT16 usItemIndex) {
   }
 }
 
-INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, UINT16 usItemIndex) {
-  UINT16 usCnt = 0;
+INT8 GetMaxItemAmount(DEALER_POSSIBLE_INV *pInv, uint16_t usItemIndex) {
+  uint16_t usCnt = 0;
 
   // loop through the array until a the LAST_DEALER_ITEM is hit
   while (pInv[usCnt].sItemIndex != LAST_DEALER_ITEM) {
@@ -780,7 +780,7 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(UINT8 ubArmsDealerID) 
   }
 }
 
-UINT8 GetCurrentSuitabilityForItem(INT8 bArmsDealer, UINT16 usItemIndex) {
+UINT8 GetCurrentSuitabilityForItem(INT8 bArmsDealer, uint16_t usItemIndex) {
   UINT8 ubItemCoolness;
   UINT8 ubMinCoolness, ubMaxCoolness;
 
@@ -886,7 +886,7 @@ UINT8 GetCurrentSuitabilityForItem(INT8 bArmsDealer, UINT16 usItemIndex) {
   return (ITEM_SUITABILITY_LOW);
 }
 
-UINT8 ChanceOfItemTransaction(INT8 bArmsDealer, UINT16 usItemIndex, BOOLEAN fDealerIsSelling,
+UINT8 ChanceOfItemTransaction(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
                               BOOLEAN fUsed) {
   UINT8 ubItemCoolness;
   UINT8 ubChance = 0;
@@ -961,7 +961,7 @@ UINT8 ChanceOfItemTransaction(INT8 bArmsDealer, UINT16 usItemIndex, BOOLEAN fDea
   return (ubChance);
 }
 
-BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, UINT16 usItemIndex, BOOLEAN fDealerIsSelling,
+BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
                               BOOLEAN fUsed) {
   UINT8 ubChance;
   INT16 sInventorySlot;
@@ -994,7 +994,7 @@ BOOLEAN ItemTransactionOccurs(INT8 bArmsDealer, UINT16 usItemIndex, BOOLEAN fDea
   }
 }
 
-UINT8 DetermineInitialInvItems(INT8 bArmsDealerID, UINT16 usItemIndex, UINT8 ubChances,
+UINT8 DetermineInitialInvItems(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubChances,
                                BOOLEAN fUsed) {
   UINT8 ubNumBought;
   UINT8 ubCnt;
@@ -1011,7 +1011,7 @@ UINT8 DetermineInitialInvItems(INT8 bArmsDealerID, UINT16 usItemIndex, UINT8 ubC
   return (ubNumBought);
 }
 
-UINT8 HowManyItemsAreSold(INT8 bArmsDealerID, UINT16 usItemIndex, UINT8 ubNumInStock,
+UINT8 HowManyItemsAreSold(INT8 bArmsDealerID, uint16_t usItemIndex, UINT8 ubNumInStock,
                           BOOLEAN fUsed) {
   UINT8 ubNumSold;
   UINT8 ubCnt;
@@ -1049,8 +1049,8 @@ UINT8 HowManyItemsToReorder(UINT8 ubWanted, UINT8 ubStillHave) {
 }
 
 int BobbyRayItemQsortCompare(const void *pArg1, const void *pArg2) {
-  UINT16 usItem1Index;
-  UINT16 usItem2Index;
+  uint16_t usItem1Index;
+  uint16_t usItem2Index;
   UINT8 ubItem1Quality;
   UINT8 ubItem2Quality;
 
@@ -1064,8 +1064,8 @@ int BobbyRayItemQsortCompare(const void *pArg1, const void *pArg2) {
 }
 
 int ArmsDealerItemQsortCompare(const void *pArg1, const void *pArg2) {
-  UINT16 usItem1Index;
-  UINT16 usItem2Index;
+  uint16_t usItem1Index;
+  uint16_t usItem2Index;
   UINT8 ubItem1Quality;
   UINT8 ubItem2Quality;
 
@@ -1107,12 +1107,12 @@ int RepairmanItemQsortCompare(const void *pArg1, const void *pArg2) {
   }
 }
 
-int CompareItemsForSorting(UINT16 usItem1Index, UINT16 usItem2Index, UINT8 ubItem1Quality,
+int CompareItemsForSorting(uint16_t usItem1Index, uint16_t usItem2Index, UINT8 ubItem1Quality,
                            UINT8 ubItem2Quality) {
   UINT8 ubItem1Category;
   UINT8 ubItem2Category;
-  UINT16 usItem1Price;
-  UINT16 usItem2Price;
+  uint16_t usItem1Price;
+  uint16_t usItem2Price;
   UINT8 ubItem1Coolness;
   UINT8 ubItem2Coolness;
 
@@ -1196,7 +1196,7 @@ int CompareItemsForSorting(UINT16 usItem1Index, UINT16 usItem2Index, UINT8 ubIte
   }
 }
 
-UINT8 GetDealerItemCategoryNumber(UINT16 usItemIndex) {
+UINT8 GetDealerItemCategoryNumber(uint16_t usItemIndex) {
   uint32_t uiItemClass;
   UINT8 ubWeaponClass;
   UINT8 ubCategory = 0;
@@ -1237,7 +1237,7 @@ UINT8 GetDealerItemCategoryNumber(UINT16 usItemIndex) {
   return (0);
 }
 
-BOOLEAN CanDealerItemBeSoldUsed(UINT16 usItemIndex) {
+BOOLEAN CanDealerItemBeSoldUsed(uint16_t usItemIndex) {
   if (!(Item[usItemIndex].fFlags & ITEM_DAMAGEABLE)) return (FALSE);
 
   // certain items, although they're damagable, shouldn't be sold in a used condition

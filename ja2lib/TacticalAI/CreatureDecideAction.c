@@ -52,7 +52,7 @@ void CreatureCall(struct SOLDIERTYPE *pCaller) {
   INT8 bFullPriority;
   INT8 bPriority;
   struct SOLDIERTYPE *pReceiver;
-  UINT16 usDistToCaller;
+  uint16_t usDistToCaller;
   // communicate call to all creatures on map through ultrasonics
 
   gTacticalStatus.Team[pCaller->bTeam].bAwareOfOpposition = TRUE;
@@ -157,7 +157,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         if (!gfTurnBasedAI) {
           // pause at the end of the walk!
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
         }
 
         return (AI_ACTION_POINT_PATROL);
@@ -169,7 +169,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         if (!gfTurnBasedAI) {
           // pause at the end of the walk!
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
         }
 
         return (AI_ACTION_POINT_PATROL);
@@ -281,7 +281,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         if (!gfTurnBasedAI) {
           // pause at the end of the walk!
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
           if (pSoldier->bMobility == CREATURE_CRAWLER) {
             pSoldier->usNextActionData *= 2;
           }
@@ -341,7 +341,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
                             {
                                     // pause at the end of the walk!
                                     pSoldier->bNextAction = AI_ACTION_WAIT;
-                                    pSoldier->usNextActionData = (UINT16)
+                                    pSoldier->usNextActionData = (uint16_t)
     REALTIME_CREATURE_AI_DELAY;
                             }
 
@@ -376,7 +376,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
               (pSoldier->bDirection != pSoldier->bDominantDir) && PreRandom(2)) {
             pSoldier->usActionData = pSoldier->bDominantDir;
           } else {
-            pSoldier->usActionData = (UINT16)PreRandom(8);
+            pSoldier->usActionData = (uint16_t)PreRandom(8);
           }
         } while (pSoldier->usActionData == pSoldier->bDirection);
 
@@ -392,7 +392,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
           if (!gfTurnBasedAI) {
             // pause at the end of the turn!
             pSoldier->bNextAction = AI_ACTION_WAIT;
-            pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+            pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
           }
 
           return (AI_ACTION_CHANGE_FACING);

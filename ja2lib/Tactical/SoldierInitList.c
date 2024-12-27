@@ -1383,8 +1383,8 @@ void AddSoldierInitListCreatures(BOOLEAN fQueen, UINT8 ubNumLarvae, UINT8 ubNumI
   }
 }
 
-SOLDIERINITNODE *FindSoldierInitNodeWithProfileID(UINT16 usProfile);
-SOLDIERINITNODE *FindSoldierInitNodeWithProfileID(UINT16 usProfile) {
+SOLDIERINITNODE *FindSoldierInitNodeWithProfileID(uint16_t usProfile);
+SOLDIERINITNODE *FindSoldierInitNodeWithProfileID(uint16_t usProfile) {
   SOLDIERINITNODE *curr;
   curr = gSoldierInitHead;
   while (curr) {
@@ -1394,7 +1394,7 @@ SOLDIERINITNODE *FindSoldierInitNodeWithProfileID(UINT16 usProfile) {
   return NULL;
 }
 
-SOLDIERINITNODE *FindSoldierInitNodeWithID(UINT16 usID) {
+SOLDIERINITNODE *FindSoldierInitNodeWithID(uint16_t usID) {
   SOLDIERINITNODE *curr;
   curr = gSoldierInitHead;
   while (curr) {

@@ -68,7 +68,7 @@ typedef struct {
 
 typedef struct {
   struct VObject *vo;
-  UINT16 usSubIndex;
+  uint16_t usSubIndex;
   uint32_t fType;
 
 } SMALL_TILE_DB;
@@ -167,7 +167,7 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
 
     for (cnt2 = 0; cnt2 < NumRegions; cnt2++) {
       gSmTileDB[dbSize].vo = s.vo;
-      gSmTileDB[dbSize].usSubIndex = (UINT16)cnt2;
+      gSmTileDB[dbSize].usSubIndex = (uint16_t)cnt2;
       gSmTileDB[dbSize].fType = cnt1;
 
       dbSize++;
@@ -425,7 +425,7 @@ void HandleOverheadMap() {
 
         if (AnyItemsVisibleOnLevel(pItemPool, bZLevel)) {
           DrawItemPoolList(pItemPool, usMapPos, ITEMLIST_DISPLAY, bZLevel, gusMouseXPos,
-                           (UINT16)(gusMouseYPos - 5));
+                           (uint16_t)(gusMouseYPos - 5));
 
           gfOverItemPool = TRUE;
           gsOveritemPoolGridNo = pItemPool->sGridNo;
@@ -666,8 +666,8 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
             // usTileIndex ].pLandHead->usIndex ], sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
             // BltVideoObjectFromIndex(  FRAME_BUFFER, SGR1, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL
             // );
-            Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, pTile->vo, sX,
-                                                sY, pTile->usSubIndex);
+            Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, pTile->vo,
+                                                sX, sY, pTile->usSubIndex);
 
             pNode = pNode->pPrevNode;
           }
@@ -745,8 +745,8 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
                     gSmTileSurf[pTile->fType].vo->pShades[pNode->ubShadeLevel];
 
                 // RENDER!
-                Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, pTile->vo,
-                                                    sX, sY, pTile->usSubIndex);
+                Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES,
+                                                    pTile->vo, sX, sY, pTile->usSubIndex);
               }
             }
 
@@ -765,7 +765,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
               pTile->vo->pShadeCurrent = gSmTileSurf[pTile->fType].vo->pShades[pNode->ubShadeLevel];
 
               // RENDER!
-              Blt8BPPDataTo16BPPBufferShadow((UINT16 *)pDestBuf, uiDestPitchBYTES, pTile->vo, sX,
+              Blt8BPPDataTo16BPPBufferShadow((uint16_t *)pDestBuf, uiDestPitchBYTES, pTile->vo, sX,
                                              sY, pTile->usSubIndex);
             }
 
@@ -795,8 +795,8 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
                     gSmTileSurf[pTile->fType].vo->pShades[pNode->ubShadeLevel];
 
                 // RENDER!
-                Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, pTile->vo,
-                                                    sX, sY, pTile->usSubIndex);
+                Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES,
+                                                    pTile->vo, sX, sY, pTile->usSubIndex);
               }
             }
 
@@ -873,7 +873,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
                       gSmTileSurf[pTile->fType].vo->pShades[pNode->ubShadeLevel];
 
                   // RENDER!
-                  Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES,
+                  Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                                       pTile->vo, sX, sY, pTile->usSubIndex);
                 }
               }
@@ -933,7 +933,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
     {
       uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
       UINT8 *pDestBuf, *pSrcBuf;
-      UINT16 usWidth, usHeight;
+      uint16_t usWidth, usHeight;
       UINT8 ubBitDepth;
 
       // Update saved buffer - do for the viewport size ony!
@@ -942,8 +942,8 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
       pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
 
-      Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
-                      0, 0, 0, usWidth, usHeight);
+      Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                      0, 0, 0, 0, usWidth, usHeight);
 
       UnLockVideoSurface(guiRENDERBUFFER);
       UnLockVideoSurface(guiSAVEBUFFER);
@@ -958,8 +958,8 @@ void RenderOverheadOverlays() {
   struct SOLDIERTYPE *pSoldier;
   struct VObject *hVObject;
   INT16 sX, sY;
-  UINT16 end;
-  UINT16 usLineColor = 0;
+  uint16_t end;
+  uint16_t usLineColor = 0;
   UINT8 *pDestBuf;
   UINT8 ubPassengers = 0;
 
@@ -1018,16 +1018,16 @@ void RenderOverheadOverlays() {
     if (gfEditMode && gpSelected &&
         gpSelected->pSoldier ==
             pSoldier) {  // editor:  show the selected edited merc as the yellow one.
-      Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
+      Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
                                           0);
     } else
 #endif
         if (!gfTacticalPlacementGUIActive) {  // normal
-      Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
+      Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
                                           pSoldier->bTeam);
       RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sX, sY, (INT16)(sX + 3), (INT16)(sY + 9));
     } else if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {  // vehicle
-      Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
+      Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
                                           9);
       RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, (INT16)(sX - 6), (INT16)(sY), (INT16)(sX + 9),
                              (INT16)(sY + 10));
@@ -1037,18 +1037,18 @@ void RenderOverheadOverlays() {
     //	ubPassengers++;
     //}
     else if (gpTacticalPlacementSelectedSoldier == pSoldier) {  // tactical placement selected merc
-      Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
+      Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
                                           7);
       RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, (INT16)(sX - 2), (INT16)(sY - 2),
                              (INT16)(sX + 5), (INT16)(sY + 11));
     } else if (gpTacticalPlacementHilightedSoldier == pSoldier &&
                pSoldier->uiStatusFlags) {  // tactical placement hilighted merc
-      Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
+      Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
                                           8);
       RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, (INT16)(sX - 2), (INT16)(sY - 2),
                              (INT16)(sX + 5), (INT16)(sY + 11));
     } else {  // normal
-      Blt8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
+      Blt8BPPDataTo16BPPBufferTransparent((uint16_t *)pDestBuf, uiDestPitchBYTES, hVObject, sX, sY,
                                           pSoldier->bTeam);
       RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sX, sY, (INT16)(sX + 3), (INT16)(sY + 9));
     }
@@ -1127,7 +1127,7 @@ sStartPointY_S, INT16 sEndXS, INT16 sEndYS )
         uint32_t			uiDestPitchBYTES;
         UINT8				*pDestBuf;
         struct LEVELNODE		*pNode;
-        UINT16			usLineColor;
+        uint16_t			usLineColor;
         INT16				sHeight;
         struct SOLDIERTYPE	*pSoldier;
         struct VObject* hVObject;
@@ -1246,24 +1246,24 @@ gusSelectedSoldier )
                                                         #ifdef JA2EDITOR
                                                         if( gfEditMode && gpSelected &&
 gpSelected->pSoldier == pSoldier ) { //editor:  show the selected edited merc as the yellow one.
-                                                                Blt8BPPDataTo16BPPBufferTransparent((UINT16*)pDestBuf,
+                                                                Blt8BPPDataTo16BPPBufferTransparent((uint16_t*)pDestBuf,
 uiDestPitchBYTES, hVObject, sX, sY, 0 );
                                                         }
                                                         else
                                                         #endif
                                                         if( gfTacticalPlacementGUIActive &&
 gpTacticalPlacementSelectedSoldier == pSoldier ) { //tactical placement selected merc
-                                                                Blt8BPPDataTo16BPPBufferTransparent((UINT16*)pDestBuf,
+                                                                Blt8BPPDataTo16BPPBufferTransparent((uint16_t*)pDestBuf,
 uiDestPitchBYTES, hVObject, sX, sY, 7 );
                                                         }
                                                         else if( gfTacticalPlacementGUIActive &&
 gpTacticalPlacementHilightedSoldier == pSoldier ) { //tactical placement selected merc
-                                                                Blt8BPPDataTo16BPPBufferTransparent((UINT16*)pDestBuf,
+                                                                Blt8BPPDataTo16BPPBufferTransparent((uint16_t*)pDestBuf,
 uiDestPitchBYTES, hVObject, sX, sY, 8 );
                                                         }
                                                         else
                                                         { //normal
-                                                                Blt8BPPDataTo16BPPBufferTransparent((UINT16*)pDestBuf,
+                                                                Blt8BPPDataTo16BPPBufferTransparent((uint16_t*)pDestBuf,
 uiDestPitchBYTES, hVObject, sX, sY, pSoldier->bTeam );
                                                         }
                                                         RegisterBackgroundRect(BGND_FLAG_SINGLE,

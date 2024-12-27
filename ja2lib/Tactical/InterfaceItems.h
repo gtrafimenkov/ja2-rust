@@ -120,8 +120,8 @@ void BeginKeyRingItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyRingPositi
 extern struct OBJECTTYPE *gpItemPointer;
 extern struct OBJECTTYPE gItemPointer;
 extern struct SOLDIERTYPE *gpItemPointerSoldier;
-extern UINT16 usItemSnapCursor;
-extern UINT16 us16BPPItemCyclePlacedItemColors[20];
+extern uint16_t usItemSnapCursor;
+extern uint16_t us16BPPItemCyclePlacedItemColors[20];
 extern BOOLEAN gfItemPointerDifferentThanDefault;
 
 void BeginItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos);
@@ -132,18 +132,18 @@ void DrawItemFreeCursor();
 void DrawItemTileCursor();
 void HideItemTileCursor();
 void InitItemInterface();
-BOOLEAN ItemCursorInLobRange(UINT16 usMapPos);
-BOOLEAN HandleItemPointerClick(UINT16 usMapPos);
+BOOLEAN ItemCursorInLobRange(uint16_t usMapPos);
+BOOLEAN HandleItemPointerClick(uint16_t usMapPos);
 uint32_t GetInterfaceGraphicForItem(INVTYPE *pItem);
-UINT16 GetTileGraphicForItem(INVTYPE *pItem);
+uint16_t GetTileGraphicForItem(INVTYPE *pItem);
 BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo);
 
 void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
                         struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, UINT16 usItemIndex);
+BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, uint16_t usItemIndex);
 
-UINT8 GetPrefferedItemSlotGraphicNum(UINT16 usItem);
+UINT8 GetPrefferedItemSlotGraphicNum(uint16_t usItem);
 
 void CancelItemPointer();
 

@@ -27,10 +27,10 @@ typedef struct {
 } LAST_HIRED_MERC_STRUCT;
 
 typedef struct {
-  UINT16 usItemIndex;
+  uint16_t usItemIndex;
   UINT8 ubNumberPurchased;
   INT8 bItemQuality;
-  UINT16 usBobbyItemIndex;  // Item number in the BobbyRayInventory structure
+  uint16_t usBobbyItemIndex;  // Item number in the BobbyRayInventory structure
   BOOLEAN fUsed;  // Indicates wether or not the item is from the used inventory or the regular
                   // inventory
 } BobbyRayPurchaseStruct;
@@ -108,7 +108,7 @@ typedef struct {
 
   uint32_t guiNumberOfMercPaymentsInDays;  // Keeps track of each day of payment the MERC site gets
 
-  UINT16 usInventoryListLength[BOBBY_RAY_LISTS];
+  uint16_t usInventoryListLength[BOBBY_RAY_LISTS];
 
   INT32 iVoiceId;
 

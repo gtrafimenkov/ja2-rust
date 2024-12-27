@@ -194,7 +194,7 @@ BOOLEAN DoesGridnoContainHiddenStruct(INT16 sGridNo, BOOLEAN *pfVisible) {
   return (FALSE);
 }
 
-BOOLEAN IsHiddenStructureVisible(INT16 sGridNo, UINT16 usIndex) {
+BOOLEAN IsHiddenStructureVisible(INT16 sGridNo, uint16_t usIndex) {
   // Check if it's a hidden struct and we have not revealed anything!
   if (gTileDatabase[usIndex].uiFlags & HIDDEN_TILE) {
     if (!(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) &&

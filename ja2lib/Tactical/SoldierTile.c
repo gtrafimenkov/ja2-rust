@@ -61,8 +61,8 @@ extern UINT8 gubWaitingForAllMercsToExitCode;
 void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   if ((gTacticalStatus.uiFlags & INCOMBAT) && (pSoldier->usPathDataSize > 0)) {
     uint32_t uiLoop;
-    UINT16 usTemp;
-    UINT16 usNewGridNo;
+    uint16_t usTemp;
+    uint16_t usNewGridNo;
 
     usNewGridNo = NewGridNo(pSoldier->sGridNo,
                             DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
@@ -233,7 +233,7 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
 
               // Is the next tile blocked too?
               sNewGridNo =
-                  NewGridNo((UINT16)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
+                  NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
 
               return (
                   TileIsClear(pSoldier, (UINT8)guiPathingData[0], sNewGridNo, pSoldier->bLevel));
@@ -303,7 +303,7 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
         gpWorldLevelData[sGridNo].uiFlags |= MAPELEMENT_REVEALED;
         gpWorldLevelData[sGridNo].uiFlags |= MAPELEMENT_REDRAW;
         SetRenderFlags(RENDER_FLAG_MARKED);
-        RecompileLocalMovementCosts((UINT16)sGridNo);
+        RecompileLocalMovementCosts((uint16_t)sGridNo);
       }
 
       // Unset flag for blocked by soldier...
@@ -537,7 +537,8 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
         // Can we get there
         if (sCost > 0) {
           // Is the next tile blocked too?
-          sNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
+          sNewGridNo =
+              NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
 
           bPathBlocked =
               TileIsClear(pSoldier, (UINT8)guiPathingData[0], sNewGridNo, pSoldier->bLevel);
@@ -558,7 +559,7 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
 
             // Is the next tile in this new path blocked too?
             sNewGridNo =
-                NewGridNo((UINT16)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
+                NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((UINT8)guiPathingData[0]));
 
             bPathBlocked =
                 TileIsClear(pSoldier, (UINT8)guiPathingData[0], sNewGridNo, pSoldier->bLevel);

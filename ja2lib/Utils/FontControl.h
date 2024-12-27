@@ -21,7 +21,7 @@ extern INT32 giCurWinFont;
 #define SET_WINFONT(fFont) (giCurWinFont = fFont);
 
 // ATE: A few winfont wrappers..
-UINT16 WFGetFontHeight(INT32 FontNum);
+uint16_t WFGetFontHeight(INT32 FontNum);
 INT16 WFStringPixLength(STR16 string, INT32 UseFont);
 
 // Global variables for video objects

@@ -21,7 +21,7 @@ struct OBJECTTYPE;
 #define REGEN_POINTS_PER_BOOSTER 4
 #define LIFE_GAIN_PER_REGEN_POINT 10
 
-UINT8 GetDrugType(UINT16 usItem);
+UINT8 GetDrugType(uint16_t usItem);
 BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject);
 
 void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier);

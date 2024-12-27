@@ -83,7 +83,7 @@ real Kdl = (float)(0.1 * TIME_MULTI);  // LINEAR DAMPENING ( WIND RESISTANCE )
 
 void SimulateObject(REAL_OBJECT *pObject, real deltaT);
 
-void CheckForObjectHittingMerc(REAL_OBJECT *pObject, UINT16 usStructureID);
+void CheckForObjectHittingMerc(REAL_OBJECT *pObject, uint16_t usStructureID);
 extern void DoGenericHit(struct SOLDIERTYPE *pSoldier, UINT8 ubSpecial, INT16 bDirection);
 
 BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime);
@@ -97,10 +97,10 @@ void PhysicsDeleteObject(REAL_OBJECT *pObject);
 BOOLEAN PhysicsHandleCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID, real DeltaTime);
 FLOAT CalculateForceFromRange(INT16 sRange, FLOAT dDegrees);
 
-UINT16 RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadius);
+uint16_t RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadius);
 
 void HandleArmedObjectImpact(REAL_OBJECT *pObject);
-void ObjectHitWindow(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth,
+void ObjectHitWindow(INT16 sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
                      BOOLEAN fLargeForce);
 FLOAT CalculateObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem, vector_3 *vPosition,
                                 vector_3 *vForce, INT16 *psFinalGridNo);
@@ -115,7 +115,7 @@ FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
 BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject);
 BOOLEAN CheckForCatchObject(REAL_OBJECT *pObject);
 BOOLEAN DoCatchObject(REAL_OBJECT *pObject);
-BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, UINT16 usStructureID);
+BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, uint16_t usStructureID);
 
 /// OBJECT POOL FUNCTIONS
 INT32 GetFreeObjectSlot(void) {
@@ -583,7 +583,7 @@ BOOLEAN PhysicsCheckForCollisions(REAL_OBJECT *pObject, INT32 *piCollisionID) {
   INT32 iCollisionCode = COLLISION_NONE;
   BOOLEAN fDoCollision = FALSE;
   FLOAT dElasity = 1;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   FLOAT dNormalX, dNormalY, dNormalZ;
   INT16 sGridNo;
 
@@ -1118,7 +1118,7 @@ BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
   return (TRUE);
 }
 
-void ObjectHitWindow(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth,
+void ObjectHitWindow(INT16 sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
                      BOOLEAN fLargeForce) {
   WindowHit(sGridNo, usStructureID, fBlowWindowSouth, fLargeForce);
 }
@@ -1501,7 +1501,7 @@ void CalculateLaunchItemBasicParams(struct SOLDIERTYPE *pSoldier, struct OBJECTT
   FLOAT dMagForce, dMaxForce, dMinForce;
   FLOAT dDegrees, dNewDegrees;
   BOOLEAN fThroughIntermediateGridNo = FALSE;
-  UINT16 usLauncher;
+  uint16_t usLauncher;
   BOOLEAN fIndoors = FALSE;
   BOOLEAN fLauncher = FALSE;
   BOOLEAN fMortar = FALSE;
@@ -1744,7 +1744,7 @@ void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGrid
   vector_3 vForce, vDirNormal;
   INT16 sFinalGridNo;
   BOOLEAN fArmed = FALSE;
-  UINT16 usLauncher;
+  uint16_t usLauncher;
   INT16 sStartZ;
   INT8 bMinMissRadius, bMaxMissRadius, bMaxRadius;
   FLOAT fScale;
@@ -1862,7 +1862,7 @@ void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGrid
   DirtyMercPanelInterface(pSoldier, DIRTYLEVEL2);
 }
 
-BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, UINT16 usStructureID) {
+BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, uint16_t usStructureID) {
   // Do we want to catch?
   if (pObject->fTestObject == NO_TEST_OBJECT) {
     if (pObject->ubActionCode == THROW_TARGET_MERC_CATCH) {
@@ -1881,7 +1881,7 @@ BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, UINT16 usStructureID) {
   return (FALSE);
 }
 
-void CheckForObjectHittingMerc(REAL_OBJECT *pObject, UINT16 usStructureID) {
+void CheckForObjectHittingMerc(REAL_OBJECT *pObject, uint16_t usStructureID) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sDamage, sBreath;
 
@@ -1971,7 +1971,7 @@ BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject) {
 BOOLEAN DoCatchObject(REAL_OBJECT *pObject) {
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fGoodCatch = FALSE;
-  UINT16 usItem;
+  uint16_t usItem;
 
   // Get intended target
   pSoldier = MercPtrs[pObject->uiActionData];
@@ -2025,7 +2025,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   BOOLEAN fCheckForDuds = FALSE;
   struct OBJECTTYPE *pObj;
   INT32 iTrapped = 0;
-  UINT16 usFlags = 0;
+  uint16_t usFlags = 0;
   INT8 bLevel = 0;
 
   // Calculate pixel position of z
@@ -2137,7 +2137,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
 
 BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten = 0;
-  UINT16 usCnt = 0;
+  uint16_t usCnt = 0;
   uint32_t usPhysicsCount = 0;
 
   for (usCnt = 0; usCnt < NUM_OBJECT_SLOTS; usCnt++) {
@@ -2171,7 +2171,7 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
 
 BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesRead = 0;
-  UINT16 usCnt = 0;
+  uint16_t usCnt = 0;
 
   // make sure the objects are not allocated
   memset(ObjectSlots, 0, NUM_OBJECT_SLOTS * sizeof(REAL_OBJECT));
@@ -2198,7 +2198,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-UINT16 RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadius) {
+uint16_t RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadius) {
   INT16 sX, sY;
   INT16 sGridNo;
   INT32 leftmost;
@@ -2210,8 +2210,8 @@ UINT16 RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadi
   }
 
   do {
-    sX = (UINT16)PreRandom(ubMaxRadius);
-    sY = (UINT16)PreRandom(ubMaxRadius);
+    sX = (uint16_t)PreRandom(ubMaxRadius);
+    sY = (uint16_t)PreRandom(ubMaxRadius);
 
     if ((sX < ubMinRadius || sY < ubMinRadius) && ubMaxRadius != ubMinRadius) {
       continue;

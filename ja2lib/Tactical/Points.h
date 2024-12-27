@@ -72,7 +72,7 @@ struct SOLDIERTYPE;
 #define AP_READY_RIFLE 2
 #define AP_READY_SAW 0
 // JA2Gold: reduced dual AP cost from 3 to 1
-//#define AP_READY_DUAL           3
+// #define AP_READY_DUAL           3
 #define AP_READY_DUAL 1
 
 #define AP_MIN_AIM_ATTACK 0  // minimum permitted extra aiming
@@ -273,9 +273,9 @@ UINT8 BaseAPsToShootOrStab(INT8 bAPs, INT8 bAimSkill, struct OBJECTTYPE *pObj);
 
 INT16 TerrainActionPoints(struct SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir, INT8 bLevel);
 INT16 ActionPointCost(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
-                      UINT16 usMovementMode);
+                      uint16_t usMovementMode);
 INT16 EstimateActionPointCost(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
-                              UINT16 usMovementMode, INT8 bPathIndex, INT8 bPathLength);
+                              uint16_t usMovementMode, INT8 bPathIndex, INT8 bPathLength);
 BOOLEAN SelectedMercCanAffordMove();
 
 BOOLEAN EnoughPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost,
@@ -284,29 +284,29 @@ void DeductPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost);
 INT16 AdjustBreathPts(struct SOLDIERTYPE *pSold, INT16 sBPCost);
 void UnusedAPsToBreath(struct SOLDIERTYPE *pSold);
 INT16 TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir,
-                          UINT16 usMovementMode);
+                          uint16_t usMovementMode);
 UINT8 MinAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost);
 INT8 MinPtsToMove(struct SOLDIERTYPE *pSoldier);
-INT8 MinAPsToStartMovement(struct SOLDIERTYPE *pSoldier, UINT16 usMovementMode);
+INT8 MinAPsToStartMovement(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
 INT8 PtsToMoveDirection(struct SOLDIERTYPE *pSoldier, INT8 bDirection);
 UINT8 MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost);
 BOOLEAN EnoughAmmo(struct SOLDIERTYPE *pSoldier, BOOLEAN fDisplay, INT8 bInvPos);
 void DeductAmmo(struct SOLDIERTYPE *pSoldier, INT8 bInvPos);
 
-UINT16 GetAPsToPickupItem(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos);
+uint16_t GetAPsToPickupItem(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos);
 UINT8 MinAPsToPunch(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost);
 UINT8 CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost,
                            INT8 bAimTime);
 UINT8 CalcAPsToBurst(INT8 bBaseActionPoints, struct OBJECTTYPE *pObj);
-UINT16 GetAPsToChangeStance(struct SOLDIERTYPE *pSoldier, INT8 bDesiredHeight);
-UINT16 GetBPsToChangeStance(struct SOLDIERTYPE *pSoldier, INT8 bDesiredHeight);
+uint16_t GetAPsToChangeStance(struct SOLDIERTYPE *pSoldier, INT8 bDesiredHeight);
+uint16_t GetBPsToChangeStance(struct SOLDIERTYPE *pSoldier, INT8 bDesiredHeight);
 
-UINT16 GetAPsToLook(struct SOLDIERTYPE *pSoldier);
-UINT16 GetAPsToGiveItem(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos);
+uint16_t GetAPsToLook(struct SOLDIERTYPE *pSoldier);
+uint16_t GetAPsToGiveItem(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos);
 
 BOOLEAN CheckForMercContMove(struct SOLDIERTYPE *pSoldier);
 
-INT16 GetAPsToReadyWeapon(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+INT16 GetAPsToReadyWeapon(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
 INT8 GetAPsToClimbRoof(struct SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown);
 INT16 GetBPsToClimbRoof(struct SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown);
@@ -321,9 +321,9 @@ INT8 GetAPsToRefuelVehicle(struct SOLDIERTYPE *pSoldier);
 
 INT16 MinAPsToThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost);
 
-UINT16 GetAPsToDropBomb(struct SOLDIERTYPE *pSoldier);
-UINT16 GetTotalAPsToDropBomb(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
-UINT16 GetAPsToUseRemote(struct SOLDIERTYPE *pSoldier);
+uint16_t GetAPsToDropBomb(struct SOLDIERTYPE *pSoldier);
+uint16_t GetTotalAPsToDropBomb(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
+uint16_t GetAPsToUseRemote(struct SOLDIERTYPE *pSoldier);
 
 INT8 GetAPsToStealItem(struct SOLDIERTYPE *pSoldier, INT16 usMapPos);
 INT8 GetBPsToStealItem(struct SOLDIERTYPE *pSoldier);
@@ -338,7 +338,7 @@ void GetAPChargeForShootOrStabWRTGunRaises(struct SOLDIERTYPE *pSoldier, INT16 s
                                            UINT8 ubAddTurningCost, BOOLEAN *pfChargeTurning,
                                            BOOLEAN *pfChargeRaise);
 
-UINT16 GetAPsToReloadRobot(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pRobot);
+uint16_t GetAPsToReloadRobot(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pRobot);
 INT8 GetAPsToReloadGunWithAmmo(struct OBJECTTYPE *pGun, struct OBJECTTYPE *pAmmo);
 INT8 GetAPsToAutoReload(struct SOLDIERTYPE *pSoldier);
 

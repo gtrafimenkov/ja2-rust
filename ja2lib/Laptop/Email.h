@@ -147,8 +147,8 @@ typedef EmailMessage *MessagePtr;
 
 struct email {
   STR16 pSubject;
-  UINT16 usOffset;
-  UINT16 usLength;
+  uint16_t usOffset;
+  uint16_t usLength;
   UINT8 ubSender;
   uint32_t iDate;
   INT32 iId;
@@ -171,8 +171,8 @@ typedef Email *EmailPtr;
 
 // This used when saving the emails to disk.
 typedef struct {
-  UINT16 usOffset;
-  UINT16 usLength;
+  uint16_t usOffset;
+  uint16_t usLength;
   UINT8 ubSender;
   uint32_t iDate;
   INT32 iId;

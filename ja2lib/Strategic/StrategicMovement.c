@@ -115,7 +115,7 @@ BOOLEAN LoadEnemyGroupStructFromSavedGame(HWFILE hFile, struct GROUP *pGroup);
 BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup);
 BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup);
 
-extern void RandomMercInGroupSaysQuote(struct GROUP *pGroup, UINT16 usQuoteNum);
+extern void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum);
 
 void SetLocationOfAllPlayerSoldiersInGroup(struct GROUP *pGroup, u8 sSectorX, u8 sSectorZ,
                                            INT8 bSectorZ);
@@ -1201,7 +1201,7 @@ void AwardExperienceForTravelling(struct GROUP *pGroup) {
         uiCarriedPercent = CalculateCarriedWeight(pSoldier);
         if (uiCarriedPercent > 50) {
           uiPoints = pGroup->uiTraverseTime / (450 / (100 - pSoldier->bStrength));
-          StatChange(pSoldier, STRAMT, (UINT16)(uiPoints * (uiCarriedPercent - 50) / 100), FALSE);
+          StatChange(pSoldier, STRAMT, (uint16_t)(uiPoints * (uiCarriedPercent - 50) / 100), FALSE);
         }
       }
     }

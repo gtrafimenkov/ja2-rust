@@ -35,7 +35,7 @@ void InitSoldierInitList();
 void KillSoldierInitList();
 SOLDIERINITNODE *AddBasicPlacementToSoldierInitList(BASIC_SOLDIERCREATE_STRUCT *pBasicPlacement);
 void RemoveSoldierNodeFromInitList(SOLDIERINITNODE *pNode);
-SOLDIERINITNODE *FindSoldierInitNodeWithID(UINT16 usID);
+SOLDIERINITNODE *FindSoldierInitNodeWithID(uint16_t usID);
 
 UINT8 AddSoldierInitListTeamToWorld(INT8 bTeam, UINT8 ubMaxNum);
 void AddSoldierInitListEnemyDefenceSoldiers(UINT8 ubTotalAdmin, UINT8 ubTotalTroops,

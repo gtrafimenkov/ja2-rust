@@ -407,7 +407,7 @@ uint32_t PlayJA2StreamingSampleFromFile(STR8 szFileName, uint32_t usRate, uint32
 uint32_t PlayJA2Ambient(uint32_t usNum, uint32_t ubVolume, uint32_t ubLoops);
 uint32_t PlayJA2AmbientRandom(uint32_t usNum, uint32_t uiTimeMin, uint32_t uiTimeMax);
 
-uint32_t PlaySoldierJA2Sample(UINT16 usID, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+uint32_t PlaySoldierJA2Sample(uint16_t usID, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
                               uint32_t ubLoops, uint32_t uiPan, BOOLEAN fCheck);
 
 uint32_t GetSoundEffectsVolume();

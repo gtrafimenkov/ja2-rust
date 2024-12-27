@@ -247,8 +247,8 @@ struct OBJECTTYPE gItemPointer;
 BOOLEAN gfItemPointerDifferentThanDefault = FALSE;
 struct SOLDIERTYPE *gpItemPointerSoldier;
 INT8 gbItemPointerSrcSlot;
-UINT16 gusItemPointer = 255;
-UINT16 usItemSnapCursor;
+uint16_t gusItemPointer = 255;
+uint16_t usItemSnapCursor;
 uint32_t guiNewlyPlacedItemTimer = 0;
 BOOLEAN gfBadThrowItemCTGH;
 BOOLEAN gfDontChargeAPsToPickup = FALSE;
@@ -288,14 +288,14 @@ uint32_t guiMoneyButtonBtn[MAX_ATTACHMENTS];
 INT32 guiMoneyButtonImage;
 INT32 guiMoneyDoneButtonImage;
 
-UINT16 gusOriginalAttachItem[MAX_ATTACHMENTS];
+uint16_t gusOriginalAttachItem[MAX_ATTACHMENTS];
 UINT8 gbOriginalAttachStatus[MAX_ATTACHMENTS];
 struct SOLDIERTYPE *gpAttachSoldier;
 extern BOOLEAN gfSMDisableForItems;
 
 typedef struct {
-  UINT16 x;
-  UINT16 y;
+  uint16_t x;
+  uint16_t y;
 } MoneyLoc;
 
 MoneyLoc gMoneyButtonLoc = {343, 351};
@@ -639,7 +639,7 @@ struct MOUSE_REGION gKeyRingPanel;
 struct MOUSE_REGION gSMInvCamoRegion;
 INT8 gbCompatibleAmmo[NUM_INV_SLOTS];
 INT8 gbInvalidPlacementSlot[NUM_INV_SLOTS];
-UINT16 us16BPPItemCyclePlacedItemColors[20];
+uint16_t us16BPPItemCyclePlacedItemColors[20];
 uint32_t guiBodyInvVO[4][2];
 uint32_t guiGoldKeyVO;
 INT8 gbCompatibleApplyItem = FALSE;
@@ -669,7 +669,7 @@ BOOLEAN AttemptToAddSubstring(STR16 zDest, STR16 zTemp, uint32_t *puiStringLengt
 void GenerateProsString(CHAR16 *zItemPros, struct OBJECTTYPE *pObject, uint32_t uiPixLimit) {
   uint32_t uiStringLength = 0;
   CHAR16 *zTemp;
-  UINT16 usItem = pObject->usItem;
+  uint16_t usItem = pObject->usItem;
   UINT8 ubWeight;
 
   zItemPros[0] = 0;
@@ -756,7 +756,7 @@ void GenerateConsString(CHAR16 *zItemCons, struct OBJECTTYPE *pObject, uint32_t 
   uint32_t uiStringLength = 0;
   CHAR16 *zTemp;
   UINT8 ubWeight;
-  UINT16 usItem = pObject->usItem;
+  uint16_t usItem = pObject->usItem;
 
   zItemCons[0] = 0;
 
@@ -1045,7 +1045,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
     /*	OLD VERSION OF GUN/AMMO MATCH HIGHLIGHTING
                     uint32_t	uiDestPitchBYTES;
                     UINT8		*pDestBuf;
-                    UINT16	usLineColor;
+                    uint16_t	usLineColor;
 
                     if ( ( Item [ pSoldier->inv[ HANDPOS ].usItem ].usItemClass & IC_GUN )  && (
        Item[ pObject->usItem ].usItemClass & IC_AMMO ) )
@@ -1134,8 +1134,8 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
   if (fHatchItOut) {
     uint32_t uiWhichBuffer =
         (guiCurrentItemDescriptionScreen == MAP_SCREEN) ? guiSAVEBUFFER : guiRENDERBUFFER;
-    DrawHatchOnInventory(uiWhichBuffer, sX, sY, (UINT16)(gSMInvData[sPocket].sWidth - 1),
-                         (UINT16)(gSMInvData[sPocket].sHeight - 1));
+    DrawHatchOnInventory(uiWhichBuffer, sX, sY, (uint16_t)(gSMInvData[sPocket].sWidth - 1),
+                         (uint16_t)(gSMInvData[sPocket].sHeight - 1));
   }
 
   // if there's an item in there
@@ -1172,7 +1172,7 @@ BOOLEAN CompatibleGunForAmmo(struct OBJECTTYPE *pTryObject, struct OBJECTTYPE *p
 }
 
 BOOLEAN CompatibleItemForApplyingOnMerc(struct OBJECTTYPE *pTestObject) {
-  UINT16 usItem = pTestObject->usItem;
+  uint16_t usItem = pTestObject->usItem;
 
   // ATE: If in mapscreen, return false always....
   if (IsMapScreen()) {
@@ -1727,7 +1727,7 @@ void INVRenderItem(uint32_t uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJEC
                    INT16 sX, INT16 sY, INT16 sWidth, INT16 sHeight, UINT8 fDirtyLevel,
                    UINT8 *pubHighlightCounter, UINT8 ubStatusIndex, BOOLEAN fOutline,
                    INT16 sOutlineColor) {
-  UINT16 uiStringLength;
+  uint16_t uiStringLength;
   INVTYPE *pItem;
   ETRLEObject *pTrav;
   uint32_t usHeight, usWidth;
@@ -1973,7 +1973,7 @@ void CycleItemDescriptionItem() {
     }
   }
 
-  CreateItem((UINT16)usOldItem, 100, &(gpItemDescSoldier->inv[HANDPOS]));
+  CreateItem((uint16_t)usOldItem, 100, &(gpItemDescSoldier->inv[HANDPOS]));
 
   InternalInitItemDescriptionBox(&(gpItemDescSoldier->inv[HANDPOS]), 214,
                                  (INT16)(INV_INTERFACE_START_Y + 1), gubItemDescStatusIndex,
@@ -2035,9 +2035,9 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
   if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
     // return( FALSE );
 
-    MSYS_DefineRegion(&gInvDesc, (UINT16)gsInvDescX, (UINT16)gsInvDescY,
-                      (UINT16)(gsInvDescX + MAP_ITEMDESC_WIDTH),
-                      (UINT16)(gsInvDescY + MAP_ITEMDESC_HEIGHT), MSYS_PRIORITY_HIGHEST - 2,
+    MSYS_DefineRegion(&gInvDesc, (uint16_t)gsInvDescX, (uint16_t)gsInvDescY,
+                      (uint16_t)(gsInvDescX + MAP_ITEMDESC_WIDTH),
+                      (uint16_t)(gsInvDescY + MAP_ITEMDESC_HEIGHT), MSYS_PRIORITY_HIGHEST - 2,
                       CURSOR_NORMAL, MSYS_NO_CALLBACK, ItemDescCallback);
     MSYS_AddRegion(&gInvDesc);
 
@@ -2046,15 +2046,16 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
 
     // create button
     giMapInvDescButton = QuickCreateButton(
-        giMapInvDescButtonImage, (UINT16)(gsInvDescX + 204), (UINT16)(gsInvDescY + 107),
+        giMapInvDescButtonImage, (uint16_t)(gsInvDescX + 204), (uint16_t)(gsInvDescY + 107),
         BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST, (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
         (GUI_CALLBACK)ItemDescDoneButtonCallback);
 
     fShowDescriptionFlag = TRUE;
   } else {
-    MSYS_DefineRegion(&gInvDesc, (UINT16)gsInvDescX, (UINT16)gsInvDescY,
-                      (UINT16)(gsInvDescX + ITEMDESC_WIDTH), (UINT16)(gsInvDescY + ITEMDESC_HEIGHT),
-                      MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, ItemDescCallback);
+    MSYS_DefineRegion(&gInvDesc, (uint16_t)gsInvDescX, (uint16_t)gsInvDescY,
+                      (uint16_t)(gsInvDescX + ITEMDESC_WIDTH),
+                      (uint16_t)(gsInvDescY + ITEMDESC_HEIGHT), MSYS_PRIORITY_HIGHEST,
+                      MSYS_NO_CURSOR, MSYS_NO_CALLBACK, ItemDescCallback);
     MSYS_AddRegion(&gInvDesc);
   }
   // Add region
@@ -2257,8 +2258,8 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
         guiMoneyButtonBtn[cnt] = CreateIconAndTextButton(
             guiMoneyButtonImage, gzMoneyAmounts[cnt], BLOCKFONT2, 5, DEFAULT_SHADOW, 5,
             DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-            (UINT16)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
-            (UINT16)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
+            (uint16_t)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
+            (uint16_t)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
             MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, BtnMoneyButtonCallback);
         MSYS_SetBtnUserData(guiMoneyButtonBtn[cnt], 0, cnt);
         if (cnt == M_1000 && gRemoveMoney.uiTotalAmount < 1000)
@@ -2273,8 +2274,8 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
       guiMoneyButtonBtn[cnt] = CreateIconAndTextButton(
           guiMoneyDoneButtonImage, gzMoneyAmounts[cnt], BLOCKFONT2, 5, DEFAULT_SHADOW, 5,
           DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-          (UINT16)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
-          (UINT16)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
+          (uint16_t)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
+          (uint16_t)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
           MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, BtnMoneyButtonCallback);
       MSYS_SetBtnUserData(guiMoneyButtonBtn[cnt], 0, cnt);
 
@@ -2284,8 +2285,8 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
         guiMoneyButtonBtn[cnt] = CreateIconAndTextButton(
             guiMoneyButtonImage, gzMoneyAmounts[cnt], BLOCKFONT2, 5, DEFAULT_SHADOW, 5,
             DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-            (UINT16)(gMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
-            (UINT16)(gMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
+            (uint16_t)(gMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
+            (uint16_t)(gMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
             MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, BtnMoneyButtonCallback);
         MSYS_SetBtnUserData(guiMoneyButtonBtn[cnt], 0, cnt);
         if (cnt == M_1000 && gRemoveMoney.uiTotalAmount < 1000)
@@ -2300,8 +2301,9 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
       guiMoneyDoneButtonImage = UseLoadedButtonImage(guiMoneyButtonImage, -1, 3, 6, 4, 5);
       guiMoneyButtonBtn[cnt] = CreateIconAndTextButton(
           guiMoneyDoneButtonImage, gzMoneyAmounts[cnt], BLOCKFONT2, 5, DEFAULT_SHADOW, 5,
-          DEFAULT_SHADOW, TEXT_CJUSTIFIED, (UINT16)(gMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
-          (UINT16)(gMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
+          DEFAULT_SHADOW, TEXT_CJUSTIFIED,
+          (uint16_t)(gMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
+          (uint16_t)(gMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), BUTTON_TOGGLE,
           MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, BtnMoneyButtonCallback);
       MSYS_SetBtnUserData(guiMoneyButtonBtn[cnt], 0, cnt);
     }
@@ -2619,7 +2621,7 @@ void RenderItemDescriptionBox() {
   struct VObject *hVObject;
   CHAR16 sTempString[128];
 
-  UINT16 uiStringLength, uiRightLength;
+  uint16_t uiStringLength, uiRightLength;
   static CHAR16 pStr[100];
   INT32 cnt;
   FLOAT fWeight;
@@ -2650,8 +2652,8 @@ void RenderItemDescriptionBox() {
     if (gpItemDescObject->usItem == MONEY) {
       // Render the money Boxes
       BltVideoObjectFromIndex(guiSAVEBUFFER, guiMoneyGraphicsForDescBox, 0,
-                              (UINT16)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[0].x),
-                              (UINT16)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[0].y),
+                              (uint16_t)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[0].x),
+                              (uint16_t)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[0].y),
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
@@ -3020,8 +3022,8 @@ void RenderItemDescriptionBox() {
       SetFontForeground(5);
 
       // Display the 'Seperate text'
-      mprintf((UINT16)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
-              (UINT16)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), gzMoneyAmounts[4]);
+      mprintf((uint16_t)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[cnt].x),
+              (uint16_t)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[cnt].y), gzMoneyAmounts[4]);
 
       // The Money Remaining
       swprintf(pStr, ARR_SIZE(pStr), L"%ld", gRemoveMoney.uiMoneyRemaining);
@@ -3161,8 +3163,8 @@ void RenderItemDescriptionBox() {
     if (gpItemDescObject->usItem == MONEY) {
       // Render the money Boxes
       BltVideoObjectFromIndex(guiSAVEBUFFER, guiMoneyGraphicsForDescBox, 0,
-                              (UINT16)(gsInvDescX + gItemDescAttachmentsXY[0].sX - 1),
-                              (UINT16)(gsInvDescY + gItemDescAttachmentsXY[0].sY - 2),
+                              (uint16_t)(gsInvDescX + gItemDescAttachmentsXY[0].sX - 1),
+                              (uint16_t)(gsInvDescY + gItemDescAttachmentsXY[0].sY - 2),
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
@@ -3459,11 +3461,11 @@ void RenderItemDescriptionBox() {
 
       // if the player is removing money from the players account
       if (gfAddingMoneyToMercFromPlayersAccount)
-        mprintf((UINT16)(gMoneyButtonLoc.x + gMoneyButtonOffsets[4].x),
-                (UINT16)(gMoneyButtonLoc.y + gMoneyButtonOffsets[4].y), gzMoneyAmounts[5]);
+        mprintf((uint16_t)(gMoneyButtonLoc.x + gMoneyButtonOffsets[4].x),
+                (uint16_t)(gMoneyButtonLoc.y + gMoneyButtonOffsets[4].y), gzMoneyAmounts[5]);
       else
-        mprintf((UINT16)(gMoneyButtonLoc.x + gMoneyButtonOffsets[4].x),
-                (UINT16)(gMoneyButtonLoc.y + gMoneyButtonOffsets[4].y), gzMoneyAmounts[4]);
+        mprintf((uint16_t)(gMoneyButtonLoc.x + gMoneyButtonOffsets[4].x),
+                (uint16_t)(gMoneyButtonLoc.y + gMoneyButtonOffsets[4].y), gzMoneyAmounts[4]);
 
       // if the player is taking money from their account
       if (gfAddingMoneyToMercFromPlayersAccount) {
@@ -3519,8 +3521,8 @@ void RenderItemDescriptionBox() {
       InsertDollarSignInToString(pStr);
       FindFontRightCoordinates((INT16)(gMoneyStats[1].sX + gsInvDescX + gMoneyStats[1].sValDx),
                                (INT16)(gMoneyStats[1].sY + gsInvDescY),
-                               (UINT16)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr, BLOCKFONT2,
-                               &usX, &usY);
+                               (uint16_t)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr,
+                               BLOCKFONT2, &usX, &usY);
       mprintf(usX, usY, pStr);
 
       // Display the total amount of money removing
@@ -3529,8 +3531,8 @@ void RenderItemDescriptionBox() {
       InsertDollarSignInToString(pStr);
       FindFontRightCoordinates((INT16)(gMoneyStats[3].sX + gsInvDescX + gMoneyStats[3].sValDx),
                                (INT16)(gMoneyStats[3].sY + gsInvDescY),
-                               (UINT16)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr, BLOCKFONT2,
-                               &usX, &usY);
+                               (uint16_t)(ITEM_STATS_WIDTH - 3), ITEM_STATS_HEIGHT, pStr,
+                               BLOCKFONT2, &usX, &usY);
       mprintf(usX, usY, pStr);
 
     } else if (Item[gpItemDescObject->usItem].usItemClass == IC_MONEY) {
@@ -3878,7 +3880,7 @@ void EndItemPointer() {
 
 void DrawItemFreeCursor() {
   // struct OBJECTTYPE		*gpItemPointer;
-  // UINT16				usItemSnapCursor;
+  // uint16_t				usItemSnapCursor;
 
   // Get usIndex and then graphic for item
   guiExternVo = GetInterfaceGraphicForItem(&(Item[gpItemPointer->usItem]));
@@ -3933,7 +3935,7 @@ BOOLEAN SoldierCanSeeCatchComing(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo)
 
 void DrawItemTileCursor() {
   INT16 usMapPos;
-  UINT16 usIndex;
+  uint16_t usIndex;
   UINT8 ubSoldierID;
   INT16 sAPCost;
   BOOLEAN fRecalc;
@@ -3945,7 +3947,7 @@ void DrawItemTileCursor() {
   INT16 sActionGridNo;
   UINT8 ubDirection;
   static uint32_t uiOldCursorId = 0;
-  static UINT16 usOldMousePos = 0;
+  static uint16_t usOldMousePos = 0;
   INT16 sEndZ = 0;
   INT16 sDist;
   INT8 bLevel;
@@ -4171,7 +4173,7 @@ void DrawItemTileCursor() {
       uiOldCursorId = uiCursorId;
     }
 
-    MSYS_ChangeRegionCursor(&gViewportRegion, (UINT16)uiCursorId);
+    MSYS_ChangeRegionCursor(&gViewportRegion, (uint16_t)uiCursorId);
   }
 }
 
@@ -4187,11 +4189,11 @@ BOOLEAN IsValidAmmoToReloadRobot(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE
   return (TRUE);
 }
 
-BOOLEAN HandleItemPointerClick(UINT16 usMapPos) {
+BOOLEAN HandleItemPointerClick(uint16_t usMapPos) {
   // Determine what to do
   UINT8 ubDirection;
   UINT8 ubSoldierID;
-  UINT16 usItem;
+  uint16_t usItem;
   INT16 sAPCost;
   struct SOLDIERTYPE *pSoldier = NULL;
   UINT8 ubThrowActionCode = 0;
@@ -4601,7 +4603,7 @@ BOOLEAN HandleItemPointerClick(UINT16 usMapPos) {
   return (TRUE);
 }
 
-BOOLEAN ItemCursorInLobRange(UINT16 usMapPos) {
+BOOLEAN ItemCursorInLobRange(uint16_t usMapPos) {
   // Draw item depending on distance from buddy
   if (GetRangeFromGridNoDiff(usMapPos, gpItemPointerSoldier->sGridNo) > MIN_LOB_RANGE) {
     return (FALSE);
@@ -4623,7 +4625,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16
   ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT32 cnt;
-  UINT16 usPopupWidth;
+  uint16_t usPopupWidth;
   INT16 sItemSlotWidth, sItemSlotHeight;
 
   // Set some globals
@@ -4826,7 +4828,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
   ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT32 cnt;
-  UINT16 usPopupWidth, usPopupHeight;
+  uint16_t usPopupWidth, usPopupHeight;
   INT16 sKeyRingItemWidth = 0;
   INT16 sOffSetY = 0, sOffSetX = 0;
 
@@ -4986,7 +4988,7 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
           FRAME_BUFFER, NULL, &pObject,
           (INT16)(gsKeyRingPopupInvX + sOffSetX + (cnt % sKeyRingItemWidth * usWidth) + 8),
           (INT16)(gsKeyRingPopupInvY + sOffSetY + (cnt / sKeyRingItemWidth * usHeight)),
-          (UINT16)(usWidth - 8), (UINT16)(usHeight - 2), DIRTYLEVEL2, NULL, 0, 0, 0);
+          (uint16_t)(usWidth - 8), (uint16_t)(usHeight - 2), DIRTYLEVEL2, NULL, 0, 0, 0);
     }
 
     // BltVideoObjectFromIndex( FRAME_BUFFER, guiItemPopupBoxes, 0, (INT16)(gsKeyRingPopupInvX + (
@@ -5042,8 +5044,8 @@ uint32_t GetInterfaceGraphicForItem(INVTYPE *pItem) {
   }
 }
 
-UINT16 GetTileGraphicForItem(INVTYPE *pItem) {
-  UINT16 usIndex;
+uint16_t GetTileGraphicForItem(INVTYPE *pItem) {
+  uint16_t usIndex;
 
   // CHECK SUBCLASS
   if (pItem->ubGraphicType == 0) {
@@ -5672,7 +5674,7 @@ void SetupPickupPage(INT8 bPage) {
 void CalculateItemPickupMenuDimensions() {
   INT32 cnt;
   INT16 sY;
-  UINT16 usSubRegion, usHeight, usWidth;
+  uint16_t usSubRegion, usHeight, usWidth;
 
   // Build background
   sY = 0;
@@ -5711,15 +5713,15 @@ void SetPickUpMenuDirtyLevel(BOOLEAN fDirtyLevel) {
 
 void RenderItemPickupMenu() {
   INT32 cnt;
-  UINT16 usItemTileIndex;
+  uint16_t usItemTileIndex;
   INT16 sX, sY, sCenX, sCenY, sFontX, sFontY, sNewX, sNewY;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   CHAR16 pStr[100];
-  UINT16 usSubRegion, usHeight, usWidth;
+  uint16_t usSubRegion, usHeight, usWidth;
   INVTYPE *pItem;
   struct OBJECTTYPE *pObject;
-  UINT16 uiStringLength;
+  uint16_t uiStringLength;
 
   if (!gfInItemPickupMenu) {
     return;
@@ -5793,7 +5795,7 @@ void RenderItemPickupMenu() {
           if (gItemPickupMenu.pfSelectedArray[cnt + gItemPickupMenu.ubScrollAnchor]) {
             // SetFontForeground( FONT_MCOLOR_LTYELLOW );
             // SetFontShadow( ITEMDESC_FONTSHADOW2 );
-            Blt8BPPDataTo16BPPBufferOutline((UINT16 *)pDestBuf, uiDestPitchBYTES,
+            Blt8BPPDataTo16BPPBufferOutline((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             gTileDatabase[usItemTileIndex].hTileSurface, sCenX,
                                             sCenY, gTileDatabase[usItemTileIndex].usRegionIndex,
                                             Get16BPPColor(FROMRGB(255, 255, 0)), TRUE);
@@ -5801,7 +5803,7 @@ void RenderItemPickupMenu() {
             // SetFontForeground( FONT_BLACK );
             // SetFontShadow( ITEMDESC_FONTSHADOW2 );
             Blt8BPPDataTo16BPPBufferOutline(
-                (UINT16 *)pDestBuf, uiDestPitchBYTES, gTileDatabase[usItemTileIndex].hTileSurface,
+                (uint16_t *)pDestBuf, uiDestPitchBYTES, gTileDatabase[usItemTileIndex].hTileSurface,
                 sCenX, sCenY, gTileDatabase[usItemTileIndex].usRegionIndex, 0, FALSE);
           }
         }
@@ -5851,10 +5853,10 @@ void RenderItemPickupMenu() {
           SetFontForeground(FONT_WHITE);
           SetFontShadow(DEFAULT_SHADOW);
           //}
-          // Blt8BPPDataTo16BPPBufferOutline( (UINT16*)pDestBuf, uiDestPitchBYTES, gTileDatabase[
+          // Blt8BPPDataTo16BPPBufferOutline( (uint16_t*)pDestBuf, uiDestPitchBYTES, gTileDatabase[
           // usItemTileIndex ].hTileSurface, sCenX, sCenY, gTileDatabase[ usItemTileIndex
           // ].usRegionIndex, Get16BPPColor( FROMRGB( 255, 0, 0 ) ), TRUE );
-          // Blt8BPPDataTo16BPPBufferOutline( (UINT16*)pDestBuf, uiDestPitchBYTES, gTileDatabase[
+          // Blt8BPPDataTo16BPPBufferOutline( (uint16_t*)pDestBuf, uiDestPitchBYTES, gTileDatabase[
           // usItemTileIndex ].hTileSurface, sCenX, sCenY, gTileDatabase[ usItemTileIndex
           // ].usRegionIndex, Get16BPPColor( FROMRGB( 255, 0, 0 ) ), TRUE );
         } else {
@@ -6363,12 +6365,12 @@ void RemoveMoney() {
   //		gfAddingMoneyToMercFromPlayersAccount = FALSE;
 }
 
-BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, UINT16 usItemIndex) { return (FALSE); }
+BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, uint16_t usItemIndex) { return (FALSE); }
 
 void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
                         struct SOLDIERTYPE *pSoldier) {
   CHAR16 pStr[250];
-  UINT16 usItem = pObject->usItem;
+  uint16_t usItem = pObject->usItem;
   INT32 cnt = 0;
   INT32 iNumAttachments = 0;
 
@@ -6433,7 +6435,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObjec
   swprintf(pzStr, bufSize, L"%s", pStr);
 }
 
-UINT8 GetPrefferedItemSlotGraphicNum(UINT16 usItem) {
+UINT8 GetPrefferedItemSlotGraphicNum(uint16_t usItem) {
   // Check for small item...
   if (Item[usItem].ubPerPocket >= 1) {
     // Small

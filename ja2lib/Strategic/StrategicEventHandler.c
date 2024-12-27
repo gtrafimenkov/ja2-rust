@@ -41,10 +41,10 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum);
 
 void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   UINT8 i, j;
-  UINT16 usItem;
+  uint16_t usItem;
   struct OBJECTTYPE Object;
-  UINT16 usMapPos, usStandardMapPos;
-  UINT16 usNumberOfItems;
+  uint16_t usMapPos, usStandardMapPos;
+  uint16_t usNumberOfItems;
   BOOLEAN fSectorLoaded = FALSE;
   uint32_t uiCount = 0, uiStolenCount = 0;
   static UINT8 ubShipmentsSinceNoBribes = 0;
@@ -545,7 +545,7 @@ void HandleNPCSystemEvent(uint32_t uiEvent) {
       case FACT_SHIPMENT_DELAYED_24_HOURS:
       case FACT_24_HOURS_SINCE_DOCTOR_TALKED_TO:
       case FACT_24_HOURS_SINCE_JOEY_RESCUED:
-        SetFactTrue((UINT16)uiEvent);
+        SetFactTrue((uint16_t)uiEvent);
         break;
 
       case FACT_KINGPIN_KNOWS_MONEY_GONE:
@@ -929,7 +929,7 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum) {
   struct OBJECTTYPE Object;
   uint32_t uiCount = 0;
   struct OBJECTTYPE *pObject = NULL;
-  UINT16 usNumberOfItems = 0, usItem;
+  uint16_t usNumberOfItems = 0, usItem;
   UINT8 ubItemsDelivered, ubTempNumItems;
   uint32_t i;
 

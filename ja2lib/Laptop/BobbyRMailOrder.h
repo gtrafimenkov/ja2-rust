@@ -39,7 +39,7 @@ BOOLEAN CreateBobbyRayOrderTitle();
 void DestroyBobbyROrderTitle();
 void DrawBobbyROrderTitle();
 
-void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, UINT16 usGridX, UINT16 usGridY,
+void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint16_t usGridY,
                            BobbyRayPurchaseStruct *pBobbyRayPurchase, BOOLEAN fJustDisplayTitles,
                            INT32 iOrderNum);
 
@@ -65,7 +65,7 @@ BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, UINT8 ubDe
                              UINT8 ubDeliveryMethod, BOOLEAN fPruchasedFromBobbyR,
                              uint32_t uiPackageWeight);
 
-UINT16 CountNumberOfBobbyPurchasesThatAreInTransit();
+uint16_t CountNumberOfBobbyPurchasesThatAreInTransit();
 
 BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile);
 BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile);

@@ -29,7 +29,7 @@ void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY);
 BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath);
 
 // show arrows for this char
-void DisplayPathArrows(UINT16 usCharNum, struct VObject *hMapHandle);
+void DisplayPathArrows(uint16_t usCharNum, struct VObject *hMapHandle);
 
 // restore backgrounds for arrows
 void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY, BOOLEAN fZoom);
@@ -246,8 +246,8 @@ extern uint32_t guiMapBorderHeliSectors;
 extern INT16 sSelectedMilitiaTown;
 
 // the selected sectors
-extern UINT16 sSelMapX;
-extern UINT16 sSelMapY;
+extern uint16_t sSelMapX;
+extern uint16_t sSelMapY;
 
 extern BOOLEAN fFoundTixa;
 

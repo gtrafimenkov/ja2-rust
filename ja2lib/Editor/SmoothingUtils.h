@@ -37,26 +37,26 @@ enum {
 // in newsmooth.c
 extern INT8 gbWallTileLUT[NUM_WALL_TYPES][7];
 extern void EraseWalls(uint32_t iMapIndex);
-extern void BuildWallPiece(uint32_t iMapIndex, UINT8 ubWallPiece, UINT16 usWallType);
+extern void BuildWallPiece(uint32_t iMapIndex, UINT8 ubWallPiece, uint16_t usWallType);
 // in Smoothing Utils
 void RestoreWalls(uint32_t iMapIndex);
-UINT16 SearchForRoofType(uint32_t iMapIndex);
-UINT16 SearchForWallType(uint32_t iMapIndex);
+uint16_t SearchForRoofType(uint32_t iMapIndex);
+uint16_t SearchForWallType(uint32_t iMapIndex);
 BOOLEAN RoofAtGridNo(uint32_t iMapIndex);
 BOOLEAN BuildingAtGridNo(uint32_t iMapIndex);
 struct LEVELNODE* GetHorizontalWall(uint32_t iMapIndex);
 struct LEVELNODE* GetVerticalWall(uint32_t iMapIndex);
 struct LEVELNODE* GetVerticalFence(uint32_t iMapIndex);
 struct LEVELNODE* GetHorizontalFence(uint32_t iMapIndex);
-UINT16 GetHorizontalWallType(uint32_t iMapIndex);
-UINT16 GetVerticalWallType(uint32_t iMapIndex);
+uint16_t GetHorizontalWallType(uint32_t iMapIndex);
+uint16_t GetVerticalWallType(uint32_t iMapIndex);
 void EraseHorizontalWall(uint32_t iMapIndex);
 void EraseVerticalWall(uint32_t iMapIndex);
-void ChangeHorizontalWall(uint32_t iMapIndex, UINT16 usNewPiece);
-void ChangeVerticalWall(uint32_t iMapIndex, UINT16 usNewPiece);
-UINT16 GetWallClass(struct LEVELNODE* pWall);
-UINT16 GetVerticalWallClass(UINT16 iMapIndex);
-UINT16 GetHorizontalWallClass(UINT16 iMapIndex);
+void ChangeHorizontalWall(uint32_t iMapIndex, uint16_t usNewPiece);
+void ChangeVerticalWall(uint32_t iMapIndex, uint16_t usNewPiece);
+uint16_t GetWallClass(struct LEVELNODE* pWall);
+uint16_t GetVerticalWallClass(uint16_t iMapIndex);
+uint16_t GetHorizontalWallClass(uint16_t iMapIndex);
 BOOLEAN ValidDecalPlacement(uint32_t iMapIndex);
 
 #endif

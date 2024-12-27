@@ -58,14 +58,14 @@ BOOLEAN gfWasInMeanwhile = FALSE;
 
 // This struct is used to save info from the NPCQuoteInfo struct that can change.
 typedef struct {
-  UINT16 usFlags;
+  uint16_t usFlags;
 
   union {
     INT16 sRequiredItem;    // item NPC must have to say quote
     INT16 sRequiredGridno;  // location for NPC req'd to say quote
   };
 
-  UINT16 usGoToGridno;
+  uint16_t usGoToGridno;
 
 } TempNPCQuoteInfoSave;
 
@@ -617,7 +617,7 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
 
 BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
                                  uint32_t uiNumberOfItemsToAdd, struct OBJECTTYPE *pObject,
-                                 UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
+                                 UINT8 ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel,
                                  INT8 bVisible, BOOLEAN fReplaceEntireFile) {
   uint32_t uiNumberOfItems = 0;
   WORLDITEM *pWorldItems;
@@ -1582,7 +1582,7 @@ void LoadNPCInformationFromProfileStruct() {
 
   /*
           INT16 sX, sY;
-          UINT16	cnt;
+          uint16_t	cnt;
           struct SOLDIERTYPE		*pSoldier;
           INT16			sSoldierID;
           INT16		sXPos, sYPos;
@@ -1762,7 +1762,7 @@ BOOLEAN DoesTempFileExistsForMap(uint32_t uiType, INT16 sMapX, INT16 sMapY, INT8
 }
 
 INT16 GetSoldierIDFromAnyMercID(UINT8 ubMercID) {
-  UINT16 cnt;
+  uint16_t cnt;
   UINT8 ubLastTeamID;
   struct SOLDIERTYPE *pTeamSoldier;
 
@@ -1788,7 +1788,7 @@ BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile() {
   UINT8 ubCnt;
   TempNPCQuoteInfoSave TempNpcQuote[NUM_NPC_QUOTE_RECORDS];
   uint32_t uiSizeOfTempArray = sizeof(TempNPCQuoteInfoSave) * NUM_NPC_QUOTE_RECORDS;
-  UINT16 usCnt1;
+  uint16_t usCnt1;
   HWFILE hFile;
 
   // Open the temp npc file
@@ -2092,7 +2092,7 @@ BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, uint32_t uiFlagToSe
       gStrategicStatus.ubNumNewSectorsVisitedToday++;
       if (gStrategicStatus.ubNumNewSectorsVisitedToday == NEW_SECTORS_EQUAL_TO_ACTIVITY) {
         // visited enough to count as an active day
-        UpdateLastDayOfPlayerActivity((UINT16)GetWorldDay());
+        UpdateLastDayOfPlayerActivity((uint16_t)GetWorldDay());
       }
     }
   }
@@ -2128,8 +2128,8 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
   WORLDITEM *pWorldItems = NULL;
   unsigned int i;
   UINT8 bCount = 0;
-  UINT16 uiFlagsForWorldItems = 0;
-  UINT16 usFlagsForRottingCorpse = 0;
+  uint16_t uiFlagsForWorldItems = 0;
+  uint16_t usFlagsForRottingCorpse = 0;
   ROTTING_CORPSE_DEFINITION Corpse;
   INT16 sXPos, sYPos;
   uint32_t uiDeathAnim;

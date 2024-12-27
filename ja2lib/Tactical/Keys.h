@@ -7,10 +7,10 @@ struct OBJECTTYPE;
 struct SOLDIERTYPE;
 
 typedef struct {
-  UINT16 usItem;         // index in item table for key
-  UINT8 fFlags;          // flags...
-  UINT16 usSectorFound;  // where and
-  UINT16 usDateFound;    // when the key was found
+  uint16_t usItem;         // index in item table for key
+  UINT8 fFlags;            // flags...
+  uint16_t usSectorFound;  // where and
+  uint16_t usDateFound;    // when the key was found
 } KEY;
 
 #define KEY_USED 0x01
@@ -40,7 +40,7 @@ this key INT8		bSmashSkillAdjustment;	// the strength of the lock (resistance to
 #define MAXLOCKDESCLENGTH 40
 typedef struct {
   UINT8 ubEditorName[MAXLOCKDESCLENGTH];  // name to display in editor
-  UINT16 usKeyItem;                       // key for this door uses which graphic (item #)?
+  uint16_t usKeyItem;                     // key for this door uses which graphic (item #)?
   UINT8 ubLockType;                       // regular, padlock, electronic, etc
   UINT8 ubPickDifficulty;                 // difficulty to pick such a lock
   UINT8 ubSmashDifficulty;                // difficulty to smash such a lock

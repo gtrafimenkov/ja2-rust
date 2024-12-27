@@ -293,12 +293,12 @@ uint32_t FadeScreenShutdown() { return (FALSE); }
 void FadeFrameBufferVersionOne() {
   INT32 cX, cY;
   uint32_t uiDestPitchBYTES;
-  UINT16 *pBuf;
+  uint16_t *pBuf;
   INT16 bR, bG, bB;
   uint32_t uiRGBColor;
-  UINT16 s16BPPSrc;
+  uint16_t s16BPPSrc;
 
-  pBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 
   // LOCK FRAME BUFFER
   for (cX = 0; cX < 640; cX++) {
@@ -332,14 +332,14 @@ void FadeFrameBufferVersionOne() {
 void FadeInBackBufferVersionOne() {
   INT32 cX, cY;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT16 *pSrcBuf, *pDestBuf;
+  uint16_t *pSrcBuf, *pDestBuf;
   INT16 bR, bG, bB;
   uint32_t uiRGBColor;
-  UINT16 s16BPPSrc;
+  uint16_t s16BPPSrc;
   INT16 bFadeVal = (gsFadeLimit - gsFadeCount) * gbFadeValue;
 
-  pDestBuf = (UINT16 *)LockVideoSurface(BACKBUFFER, &uiDestPitchBYTES);
-  pSrcBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(BACKBUFFER, &uiDestPitchBYTES);
+  pSrcBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
 
   // LOCK FRAME BUFFER
   for (cX = 0; cX < 640; cX++) {
@@ -374,12 +374,12 @@ void FadeInBackBufferVersionOne() {
 void FadeFrameBufferVersionFaster(INT8 bFadeValue) {
   INT32 cX, cY, iStartX, iStartY;
   uint32_t uiDestPitchBYTES;
-  UINT16 *pBuf;
+  uint16_t *pBuf;
   INT16 bR, bG, bB;
   uint32_t uiRGBColor;
-  UINT16 s16BPPSrc;
+  uint16_t s16BPPSrc;
 
-  pBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 
   iStartX = gsFadeCount % 2;
   iStartY = 0;
@@ -568,7 +568,7 @@ void FadeInFrameBufferRealFade() {
 BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
-  UINT16 usWidth, usHeight;
+  uint16_t usWidth, usHeight;
   UINT8 ubBitDepth;
 
   // Update saved buffer - do for the viewport size ony!
@@ -577,8 +577,8 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   pSrcBuf = LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
   pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0, 0,
-                  0, 640, 480);
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
+                  0, 0, 0, 640, 480);
 
   UnLockVideoSurface(FRAME_BUFFER);
   UnLockVideoSurface(guiSAVEBUFFER);

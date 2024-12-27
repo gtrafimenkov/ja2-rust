@@ -37,7 +37,7 @@ uint32_t guiNumWorldBombs = 0;
 void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void);
 void DeleteWorldItemsBelongingToQueenIfThere(void);
 
-extern UINT16 StandardGunListAmmoReplacement(UINT16 usAmmo);
+extern uint16_t StandardGunListAmmoReplacement(uint16_t usAmmo);
 
 INT32 GetFreeWorldBombIndex(void) {
   uint32_t uiCount;
@@ -236,7 +236,7 @@ uint32_t GetNumUsedWorldItems(void) {
   return (uiNumItems);
 }
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
+INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, uint16_t usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible) {
   uint32_t iItemIndex;
   INT32 iReturn;
@@ -357,7 +357,7 @@ void LoadWorldItemsFromMap(INT8 **hBuffer) {
           }
 
           if (!gGameOptions.fGunNut) {
-            UINT16 usReplacement;
+            uint16_t usReplacement;
 
             // do replacements?
             if (Item[dummyItem.o.usItem].usItemClass == IC_GUN) {

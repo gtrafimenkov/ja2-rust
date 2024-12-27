@@ -32,7 +32,7 @@ typedef struct {
   uint32_t uiTimeOfLastUpdate;
   uint32_t uiFlags;
   uint32_t uiPadding[3];
-  UINT16 usColor;
+  uint16_t usColor;
   BOOLEAN fBeginningOfNewString;
 
 } StringSaveStruct;
@@ -80,7 +80,7 @@ uint32_t uiStartOfPauseTime = 0;
 BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack);
 extern VIDEO_OVERLAY gVideoOverlays[];
 
-extern UINT16 gusSubtitleBoxWidth;
+extern uint16_t gusSubtitleBoxWidth;
 extern BOOLEAN gfFacePanelActive;
 
 // region created and due to last quote box
@@ -89,8 +89,8 @@ extern BOOLEAN fDialogueBoxDueToLastMessage;
 
 // prototypes
 
-BOOLEAN CreateStringVideoOverlay(ScrollStringStPtr pStringSt, UINT16 usX, UINT16 usY);
-void SetStringVideoOverlayPosition(ScrollStringStPtr pStringSt, UINT16 usX, UINT16 usY);
+BOOLEAN CreateStringVideoOverlay(ScrollStringStPtr pStringSt, uint16_t usX, uint16_t usY);
+void SetStringVideoOverlayPosition(ScrollStringStPtr pStringSt, uint16_t usX, uint16_t usY);
 
 void BlitString(VIDEO_OVERLAY *pBlitter);
 void RemoveStringVideoOverlay(ScrollStringStPtr pStringSt);
@@ -102,15 +102,15 @@ void AlignString(ScrollStringStPtr pPermStringSt);
 
 INT32 GetMessageQueueSize(void);
 
-ScrollStringStPtr AddString(STR16 string, UINT16 usColor, uint32_t uiFont,
+ScrollStringStPtr AddString(STR16 string, uint16_t usColor, uint32_t uiFont,
                             BOOLEAN fStartOfNewString, UINT8 ubPriority);
 void SetString(ScrollStringStPtr pStringSt, STR16 String);
 
-void SetStringPosition(ScrollStringStPtr pStringSt, UINT16 x, UINT16 y);
-void SetStringColor(ScrollStringStPtr pStringSt, UINT16 color);
+void SetStringPosition(ScrollStringStPtr pStringSt, uint16_t x, uint16_t y);
+void SetStringColor(ScrollStringStPtr pStringSt, uint16_t color);
 ScrollStringStPtr SetStringNext(ScrollStringStPtr pStringSt, ScrollStringStPtr pNext);
 ScrollStringStPtr SetStringPrev(ScrollStringStPtr pStringSt, ScrollStringStPtr pPrev);
-void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, uint32_t uiFont,
+void AddStringToMapScreenMessageList(STR16 pString, uint16_t usColor, uint32_t uiFont,
                                      BOOLEAN fStartOfNewString, UINT8 ubPriority);
 
 // clear up a linked list of wrapped strings
@@ -118,7 +118,7 @@ void ClearWrappedStrings(WRAPPED_STRING *pStringWrapperHead);
 void WriteMessageToFile(STR16 pString);
 
 // tactical screen message
-void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...);
+void TacticalScreenMsg(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...);
 
 // play bee when new message is added
 void PlayNewMessageSound(void);
@@ -131,7 +131,7 @@ void SetStringFont(ScrollStringStPtr pStringSt, uint32_t uiFont) { pStringSt->ui
 
 uint32_t GetStringFont(ScrollStringStPtr pStringSt) { return pStringSt->uiFont; }
 
-ScrollStringStPtr AddString(STR16 pString, UINT16 usColor, uint32_t uiFont,
+ScrollStringStPtr AddString(STR16 pString, uint16_t usColor, uint32_t uiFont,
                             BOOLEAN fStartOfNewString, UINT8 ubPriority) {
   // add a new string to the list of strings
   ScrollStringStPtr pStringSt = NULL;
@@ -160,11 +160,11 @@ void SetString(ScrollStringStPtr pStringSt, STR16 pString) {
   pStringSt->pString16[wcslen(pString)] = 0;
 }
 
-void SetStringPosition(ScrollStringStPtr pStringSt, UINT16 usX, UINT16 usY) {
+void SetStringPosition(ScrollStringStPtr pStringSt, uint16_t usX, uint16_t usY) {
   SetStringVideoOverlayPosition(pStringSt, usX, usY);
 }
 
-void SetStringColor(ScrollStringStPtr pStringSt, UINT16 usColor) { pStringSt->usColor = usColor; }
+void SetStringColor(ScrollStringStPtr pStringSt, uint16_t usColor) { pStringSt->usColor = usColor; }
 
 ScrollStringStPtr GetNextString(ScrollStringStPtr pStringSt) {
   // returns pointer to next string line
@@ -192,7 +192,7 @@ ScrollStringStPtr SetStringPrev(ScrollStringStPtr pStringSt, ScrollStringStPtr p
   return pStringSt;
 }
 
-BOOLEAN CreateStringVideoOverlay(ScrollStringStPtr pStringSt, UINT16 usX, UINT16 usY) {
+BOOLEAN CreateStringVideoOverlay(ScrollStringStPtr pStringSt, uint16_t usX, uint16_t usY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   // SET VIDEO OVERLAY
@@ -224,7 +224,7 @@ void RemoveStringVideoOverlay(ScrollStringStPtr pStringSt) {
   pStringSt->iVideoOverlay = -1;
 }
 
-void SetStringVideoOverlayPosition(ScrollStringStPtr pStringSt, UINT16 usX, UINT16 usY) {
+void SetStringVideoOverlayPosition(ScrollStringStPtr pStringSt, uint16_t usX, uint16_t usY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   memset(&VideoOverlayDesc, 0, sizeof(VideoOverlayDesc));
@@ -477,7 +477,7 @@ void UnHideMessagesDuringNPCDialogue(void) {
 }
 
 // new screen message
-void ScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
+void ScreenMsg(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   wchar_t DestString[512];
   va_list argptr;
 
@@ -568,7 +568,7 @@ void ClearWrappedStrings(WRAPPED_STRING *pStringWrapperHead) {
 }
 
 // new tactical and mapscreen message system
-void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
+void TacticalScreenMsg(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   // this function sets up the string into several single line structures
 
   ScrollStringStPtr pStringSt;
@@ -580,7 +580,7 @@ void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   WRAPPED_STRING *pStringWrapper = NULL;
   WRAPPED_STRING *pStringWrapperHead = NULL;
   BOOLEAN fNewString = FALSE;
-  UINT16 usLineWidthIfWordIsWiderThenWidth = 0;
+  uint16_t usLineWidthIfWordIsWiderThenWidth = 0;
 
   if (giTimeCompressMode > TIME_COMPRESS_X1) {
     return;
@@ -683,7 +683,7 @@ void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   return;
 }
 
-void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
+void MapScreenMessage(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   // this function sets up the string into several single line structures
 
   ScrollStringStPtr pStringSt;
@@ -693,7 +693,7 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   WRAPPED_STRING *pStringWrapper = NULL;
   WRAPPED_STRING *pStringWrapperHead = NULL;
   BOOLEAN fNewString = FALSE;
-  UINT16 usLineWidthIfWordIsWiderThenWidth;
+  uint16_t usLineWidthIfWordIsWiderThenWidth;
 
   if (fDisableJustForIan == TRUE) {
     if (ubPriority == MSG_BETAVERSION) {
@@ -830,7 +830,7 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
 }
 
 // add string to the map screen message list
-void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, uint32_t uiFont,
+void AddStringToMapScreenMessageList(STR16 pString, uint16_t usColor, uint32_t uiFont,
                                      BOOLEAN fStartOfNewString, UINT8 ubPriority) {
   ScrollStringStPtr pStringSt = NULL;
 
@@ -877,7 +877,7 @@ void DisplayStringsInMapScreenMessageList(void) {
   UINT8 ubCurrentStringIndex;
   UINT8 ubLinesPrinted;
   INT16 sY;
-  UINT16 usSpacing;
+  uint16_t usSpacing;
 
   SetFontDestBuffer(FRAME_BUFFER, 17, 360 + 6, 407, 360 + 101, FALSE);
 

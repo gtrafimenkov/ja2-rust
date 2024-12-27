@@ -155,7 +155,7 @@ void EnvironmentController(BOOLEAN fCheckForLights) {
       guiEnvTime = uiOldWorldHour;
     }
 
-    // ExecuteStrategicEventsUntilTimeStamp( (UINT16)GetWorldTotalMin( ) );
+    // ExecuteStrategicEventsUntilTimeStamp( (uint16_t)GetWorldTotalMin( ) );
 
     // Polled weather stuff...
     // ONly do indooors

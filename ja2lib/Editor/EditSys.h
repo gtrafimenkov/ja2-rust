@@ -20,10 +20,10 @@
 extern BOOLEAN gfWarning;
 
 extern BOOLEAN gfDoFill;
-extern UINT16 CurrentPaste;
-extern UINT16 gDebrisPaste;
-extern UINT16 gChangeElevation;
-extern UINT16 CurrentStruct;
+extern uint16_t CurrentPaste;
+extern uint16_t gDebrisPaste;
+extern uint16_t gChangeElevation;
+extern uint16_t CurrentStruct;
 extern uint32_t gDoBanks;
 extern uint32_t gDoCliffs;
 
@@ -51,14 +51,14 @@ void PasteRoomNumber(uint32_t iMapIndex, UINT8 ubRoomNumber);
 
 void PasteSingleWallCommon(uint32_t iMapIndex);
 
-UINT16 GetRandomIndexByRange(UINT16 usRangeStart, UINT16 usRangeEnd);
-UINT16 GetRandomTypeByRange(UINT16 usRangeStart, UINT16 usRangeEnd);
+uint16_t GetRandomIndexByRange(uint16_t usRangeStart, uint16_t usRangeEnd);
+uint16_t GetRandomTypeByRange(uint16_t usRangeStart, uint16_t usRangeEnd);
 
-void PasteFloor(uint32_t iMapIndex, UINT16 usFloorIndex, BOOLEAN fReplace);
+void PasteFloor(uint32_t iMapIndex, uint16_t usFloorIndex, BOOLEAN fReplace);
 
-void PasteBanks(uint32_t iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace);
+void PasteBanks(uint32_t iMapIndex, uint16_t usStructIndex, BOOLEAN fReplace);
 void PasteRoads(uint32_t iMapIndex);
-void PasteCliffs(uint32_t iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace);
+void PasteCliffs(uint32_t iMapIndex, uint16_t usStructIndex, BOOLEAN fReplace);
 
 void PasteTexture(uint32_t iMapIndex);
 void PasteTextureCommon(uint32_t iMapIndex);

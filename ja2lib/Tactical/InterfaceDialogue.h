@@ -20,8 +20,8 @@ typedef struct {
   uint32_t uiCancelButton;
   INT8 bCurSelect;
   INT8 bOldCurSelect;
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   struct MOUSE_REGION Regions[6];
   struct MOUSE_REGION BackRegion;
   struct MOUSE_REGION NameRegion;
@@ -50,7 +50,7 @@ BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYP
 BOOLEAN InitTalkingMenu(UINT8 ubCharacterNum, INT16 sGridNo);
 
 // Begins quote of NPC Dialogue
-BOOLEAN TalkingMenuDialogue(UINT16 usQuoteNum);
+BOOLEAN TalkingMenuDialogue(uint16_t usQuoteNum);
 
 // Removes memory allocated for structure, removes face...
 void DeleteTalkingMenu();
@@ -70,9 +70,9 @@ BOOLEAN TalkingMenuGiveItem(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPo
 BOOLEAN NPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, UINT8 ubTargetApproach,
                       BOOLEAN fShowDialogueMenu);
 // NPC goto gridno
-BOOLEAN NPCGotoGridNo(UINT8 ubTargetNPC, UINT16 usGridNo, UINT8 ubQuoteNum);
+BOOLEAN NPCGotoGridNo(UINT8 ubTargetNPC, uint16_t usGridNo, UINT8 ubQuoteNum);
 // NPC Do action
-BOOLEAN NPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum);
+BOOLEAN NPCDoAction(UINT8 ubTargetNPC, uint16_t usActionCode, UINT8 ubQuoteNum);
 
 BOOLEAN NPCClosePanel();
 
@@ -82,8 +82,8 @@ void HandleNPCClosePanel();
 void HandleNPCItemGiven(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
 void HandleNPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, BOOLEAN fShowDialogueMenu,
                          UINT8 ubTargetApproach);
-void HandleNPCGotoGridNo(UINT8 ubTargetNPC, UINT16 usGridNo, UINT8 ubRecordNum);
-void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum);
+void HandleNPCGotoGridNo(UINT8 ubTargetNPC, uint16_t usGridNo, UINT8 ubRecordNum);
+void HandleNPCDoAction(UINT8 ubTargetNPC, uint16_t usActionCode, UINT8 ubQuoteNum);
 
 BOOLEAN ProfileCurrentlyTalkingInDialoguePanel(UINT8 ubProfile);
 

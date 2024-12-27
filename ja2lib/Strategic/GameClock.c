@@ -90,8 +90,8 @@ uint32_t guiHour;
 uint32_t guiMin;
 CHAR16 gswzWorldTimeStr[20];
 INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS] = {0, 1, 5 * 60, 30 * 60, 60 * 60};
-UINT16 usPausedActualWidth;
-UINT16 usPausedActualHeight;
+uint16_t usPausedActualWidth;
+uint16_t usPausedActualHeight;
 uint32_t guiTimeOfLastEventQuery = 0;
 BOOLEAN gfLockPauseState = FALSE;
 BOOLEAN gfPauseDueToPlayerGamePause = FALSE;
@@ -810,8 +810,8 @@ BOOLEAN LoadGameClock(HWFILE hFile) {
 void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY) {
   if (fClockMouseRegionCreated == FALSE) {
     // create a mouse region for pausing of game clock
-    MSYS_DefineRegion(&gClockMouseRegion, (UINT16)(sX), (UINT16)(sY),
-                      (UINT16)(sX + CLOCK_REGION_WIDTH), (UINT16)(sY + CLOCK_REGION_HEIGHT),
+    MSYS_DefineRegion(&gClockMouseRegion, (uint16_t)(sX), (uint16_t)(sY),
+                      (uint16_t)(sX + CLOCK_REGION_WIDTH), (uint16_t)(sY + CLOCK_REGION_HEIGHT),
                       MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                       PauseOfClockBtnCallback);
 

@@ -20,7 +20,7 @@ double rActual;
 PROGRESSBAR *pBar[MAX_PROGRESSBARS];
 
 BOOLEAN gfUseLoadScreenProgressBar = FALSE;
-UINT16 gusLeftmostShaded = 0;
+uint16_t gusLeftmostShaded = 0;
 
 void CreateLoadingScreenProgressBar() {
   gusLeftmostShaded = 162;
@@ -36,8 +36,8 @@ void RemoveLoadingScreenProgressBar() {
 
 // This creates a single progress bar given the coordinates without a panel (containing a title and
 // background). A panel is automatically created if you specify a title using SetProgressBarTitle
-BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, UINT16 usLeft, UINT16 usTop, UINT16 usRight,
-                          UINT16 usBottom) {
+BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, uint16_t usLeft, uint16_t usTop, uint16_t usRight,
+                          uint16_t usBottom) {
   PROGRESSBAR *pNew;
   // Allocate new progress bar
   pNew = (PROGRESSBAR *)MemAlloc(sizeof(PROGRESSBAR));
@@ -56,7 +56,7 @@ BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, UINT16 usLeft, UINT16 usTop, UI
   pNew->usBarBottom = usBottom;
   // Init default data
   pNew->fPanel = FALSE;
-  pNew->usMsgFont = (UINT16)FONT12POINT1;
+  pNew->usMsgFont = (uint16_t)FONT12POINT1;
   pNew->ubMsgFontForeColor = FONT_BLACK;
   pNew->ubMsgFontShadowColor = 0;
   SetRelativeStartAndEndPercentage(pNew->ubProgressBarID, 0, 100, NULL);
@@ -74,8 +74,8 @@ BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, UINT16 usLeft, UINT16 usTop, UI
 
 // You may also define a panel to go in behind the progress bar.  You can now assign a title to go
 // with the panel.
-void DefineProgressBarPanel(uint32_t ubID, UINT8 r, UINT8 g, UINT8 b, UINT16 usLeft, UINT16 usTop,
-                            UINT16 usRight, UINT16 usBottom) {
+void DefineProgressBarPanel(uint32_t ubID, UINT8 r, UINT8 g, UINT8 b, uint16_t usLeft,
+                            uint16_t usTop, uint16_t usRight, uint16_t usBottom) {
   PROGRESSBAR *pCurr;
   Assert(ubID < MAX_PROGRESSBARS);
   pCurr = pBar[ubID];
@@ -88,9 +88,9 @@ void DefineProgressBarPanel(uint32_t ubID, UINT8 r, UINT8 g, UINT8 b, UINT16 usL
   pCurr->usPanelBottom = usBottom;
   pCurr->usColor = Get16BPPColor(FROMRGB(r, g, b));
   // Calculate the slightly lighter and darker versions of the same rgb color
-  pCurr->usLtColor = Get16BPPColor(FROMRGB((UINT8)min(255, (UINT16)(r * 1.33)),
-                                           (UINT8)min(255, (UINT16)(g * 1.33)),
-                                           (UINT8)min(255, (UINT16)(b * 1.33))));
+  pCurr->usLtColor = Get16BPPColor(FROMRGB((UINT8)min(255, (uint16_t)(r * 1.33)),
+                                           (UINT8)min(255, (uint16_t)(g * 1.33)),
+                                           (UINT8)min(255, (uint16_t)(b * 1.33))));
   pCurr->usDkColor =
       Get16BPPColor(FROMRGB((UINT8)(r * 0.75), (UINT8)(g * 0.75), (UINT8)(b * 0.75)));
 }
@@ -112,7 +112,7 @@ void SetProgressBarTitle(uint32_t ubID, STR16 pString, uint32_t usFont, UINT8 ub
     pCurr->swzTitle = (STR16)MemAlloc(sizeof(CHAR16) * bufSize);
     swprintf(pCurr->swzTitle, bufSize, pString);
   }
-  pCurr->usTitleFont = (UINT16)usFont;
+  pCurr->usTitleFont = (uint16_t)usFont;
   pCurr->ubTitleFontForeColor = ubForeColor;
   pCurr->ubTitleFontShadowColor = ubShadowColor;
 }
@@ -125,7 +125,7 @@ void SetProgressBarMsgAttributes(uint32_t ubID, uint32_t usFont, UINT8 ubForeCol
   Assert(ubID < MAX_PROGRESSBARS);
   pCurr = pBar[ubID];
   if (!pCurr) return;
-  pCurr->usMsgFont = (UINT16)usFont;
+  pCurr->usMsgFont = (uint16_t)usFont;
   pCurr->ubMsgFontForeColor = ubForeColor;
   pCurr->ubMsgFontShadowColor = ubShadowColor;
 }
@@ -152,7 +152,7 @@ void RemoveProgressBar(UINT8 ubID) {
 void SetRelativeStartAndEndPercentage(UINT8 ubID, uint32_t uiRelStartPerc, uint32_t uiRelEndPerc,
                                       STR16 str) {
   PROGRESSBAR *pCurr;
-  UINT16 usStartX, usStartY;
+  uint16_t usStartX, usStartY;
 
   Assert(ubID < MAX_PROGRESSBARS);
   pCurr = pBar[ubID];
@@ -191,7 +191,7 @@ void SetRelativeStartAndEndPercentage(UINT8 ubID, uint32_t uiRelStartPerc, uint3
     // Draw message
     if (str) {
       if (pCurr->fUseSaveBuffer) {
-        UINT16 usFontHeight = GetFontHeight(pCurr->usMsgFont);
+        uint16_t usFontHeight = GetFontHeight(pCurr->usMsgFont);
 
         RestoreExternBackgroundRect(pCurr->usBarLeft, pCurr->usBarBottom,
                                     (INT16)(pCurr->usBarRight - pCurr->usBarLeft),
@@ -244,7 +244,7 @@ void RenderProgressBar(UINT8 ubID, uint32_t uiPercentage) {
       // if( pCurr->usBarRight > gusLeftmostShaded )
       //{
       //	ShadowVideoSurfaceRect( FRAME_BUFFER, gusLeftmostShaded+1, pCurr->usBarTop, end,
-      // pCurr->usBarBottom ); 	gusLeftmostShaded = (UINT16)end;
+      // pCurr->usBarBottom ); 	gusLeftmostShaded = (uint16_t)end;
       //}
     } else {
       // Border edge of the progress bar itself in gray
@@ -299,10 +299,10 @@ void SetProgressBarTextDisplayFlag(UINT8 ubID, BOOLEAN fDisplayText, BOOLEAN fUs
 
   // if we are to use the save buffer, blit the portion of the screen to the save buffer
   if (fSaveScreenToFrameBuffer) {
-    UINT16 usFontHeight = GetFontHeight(pCurr->usMsgFont) + 3;
+    uint16_t usFontHeight = GetFontHeight(pCurr->usMsgFont) + 3;
 
     // blit everything to the save buffer ( cause the save buffer can bleed through )
     BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, pCurr->usBarLeft, pCurr->usBarBottom,
-                       (UINT16)(pCurr->usBarRight - pCurr->usBarLeft), usFontHeight);
+                       (uint16_t)(pCurr->usBarRight - pCurr->usBarLeft), usFontHeight);
   }
 }

@@ -97,13 +97,13 @@ BOOLEAN gfIgnoreUndoCmdsForLights = FALSE;
 // increase speed, and save memory.
 typedef struct MapIndexBinaryTree {
   struct MapIndexBinaryTree *left, *right;
-  UINT16 usMapIndex;
+  uint16_t usMapIndex;
 } MapIndexBinaryTree;
 
 MapIndexBinaryTree *top = NULL;
 void ClearUndoMapIndexTree();
-BOOLEAN AddMapIndexToTree(UINT16 usMapIndex);
-void CheckMapIndexForMultiTileStructures(UINT16 usMapIndex);
+BOOLEAN AddMapIndexToTree(uint16_t usMapIndex);
+void CheckMapIndexForMultiTileStructures(uint16_t usMapIndex);
 void CheckForMultiTilesInTreeAndAddToUndoList(MapIndexBinaryTree *node);
 
 // Recursively deletes all nodes below the node passed including itself.
@@ -119,7 +119,7 @@ void ClearUndoMapIndexTree() {
   if (top) DeleteTreeNode(&top);
 }
 
-BOOLEAN AddMapIndexToTree(UINT16 usMapIndex) {
+BOOLEAN AddMapIndexToTree(uint16_t usMapIndex) {
   MapIndexBinaryTree *curr, *parent;
   if (!top) {
     top = (MapIndexBinaryTree *)MemAlloc(sizeof(MapIndexBinaryTree));
@@ -364,7 +364,7 @@ BOOLEAN AddToUndoList(INT32 iMapIndex) {
   // Check to see if the tile in question is even on the visible map, then
   // if that is true, then check to make sure we don't already have the mapindex
   // saved in the new binary tree (which only holds unique mapindex values).
-  if (GridNoOnVisibleWorldTile((INT16)iMapIndex) && AddMapIndexToTree((UINT16)iMapIndex))
+  if (GridNoOnVisibleWorldTile((INT16)iMapIndex) && AddMapIndexToTree((uint16_t)iMapIndex))
 
   {
     if (AddToUndoListCmd(iMapIndex, ++iCount)) return TRUE;
@@ -454,7 +454,7 @@ BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
   return (TRUE);
 }
 
-void CheckMapIndexForMultiTileStructures(UINT16 usMapIndex) {
+void CheckMapIndexForMultiTileStructures(uint16_t usMapIndex) {
   struct STRUCTURE *pStructure;
   UINT8 ubLoop;
   INT32 iCoveredMapIndex;
@@ -528,7 +528,7 @@ BOOLEAN ExecuteUndoList(void) {
       gfIgnoreUndoCmdsForLights = FALSE;
     } else {  // We execute the undo command node by simply swapping the contents
       // of the undo's MAP_ELEMENT with the world's element.
-      fExitGrid = ExitGridAtGridNo((UINT16)iUndoMapIndex);
+      fExitGrid = ExitGridAtGridNo((uint16_t)iUndoMapIndex);
       SwapMapElementWithWorld(iUndoMapIndex, gpTileUndoStack->pData->pMapTile);
 
       // copy the room number information back
@@ -552,13 +552,13 @@ BOOLEAN ExecuteUndoList(void) {
     RemoveAllTopmostsOfTypeRange(iUndoMapIndex, FIRSTPOINTERS, FIRSTPOINTERS);
 
     if (fExitGrid &&
-        !ExitGridAtGridNo((UINT16)iUndoMapIndex)) {  // An exitgrid has been removed, so get rid of
-                                                     // the associated indicator.
-      RemoveTopmost((UINT16)iUndoMapIndex, FIRSTPOINTERS8);
+        !ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been removed, so get rid
+                                                       // of the associated indicator.
+      RemoveTopmost((uint16_t)iUndoMapIndex, FIRSTPOINTERS8);
     } else if (!fExitGrid &&
-               ExitGridAtGridNo((UINT16)iUndoMapIndex)) {  // An exitgrid has been added, so add the
-                                                           // associated indicator
-      AddTopmostToTail((UINT16)iUndoMapIndex, FIRSTPOINTERS8);
+               ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been added, so add
+                                                             // the associated indicator
+      AddTopmostToTail((uint16_t)iUndoMapIndex, FIRSTPOINTERS8);
     }
   }
 
@@ -674,7 +674,7 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
         {
                 struct
                 {
-                        UINT16
+                        uint16_t
    usIndex;							// TILE DATABASE INDEX INT16
    sCurrentFrame;				// Stuff for animated tiles for a given tile
    location ( doors, etc )

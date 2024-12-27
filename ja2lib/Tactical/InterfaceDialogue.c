@@ -94,9 +94,9 @@ void DoneFadeInActionLeaveBasement(void);
 
 BOOLEAN NPCOpenThing(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor);
 
-UINT16 gusDialogueMessageBoxType;
+uint16_t gusDialogueMessageBoxType;
 
-void StartDialogueMessageBox(UINT8 ubProfileID, UINT16 usMessageBoxType);
+void StartDialogueMessageBox(UINT8 ubProfileID, uint16_t usMessageBoxType);
 void DialogueMessageBoxCallBack(UINT8 ubExitValue);
 void CarmenLeavesSectorCallback(void);
 
@@ -343,8 +343,8 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   INT32 iFaceIndex, cnt;
   VSURFACE_DESC vs_desc;
   FACETYPE *pFace;
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   VOBJECT_DESC VObjectDesc;
   INT16 sCenterYVal, sCenterXVal;
   CHAR8 ubString[48];
@@ -630,7 +630,7 @@ void RenderTalkingMenu() {
   UINT8 ubCharacterNum = gTalkPanel.ubCharNum;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
-  UINT16 usTextBoxWidth, usTextBoxHeight;
+  uint16_t usTextBoxWidth, usTextBoxHeight;
   CHAR16 zTempString[128];
 
   if (!gfInTalkPanel) {
@@ -666,7 +666,7 @@ void RenderTalkingMenu() {
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     pSrcBuf = LockVideoSurface(gTalkPanel.uiSaveBuffer, &uiSrcPitchBYTES);
 
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
+    Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
                     (INT16)(gTalkPanel.sX + TALK_PANEL_FACE_X),
                     (INT16)(gTalkPanel.sY + TALK_PANEL_FACE_Y), 0, 0, pFace->usFaceWidth,
                     pFace->usFaceHeight);
@@ -986,7 +986,7 @@ BOOLEAN HandleTalkingMenu() {
   return (FALSE);
 }
 
-BOOLEAN TalkingMenuDialogue(UINT16 usQuoteNum) {
+BOOLEAN TalkingMenuDialogue(uint16_t usQuoteNum) {
   // Set back current select....
   gTalkPanel.bCurSelect = -1;
   gTalkPanel.fOnName = FALSE;
@@ -1186,7 +1186,7 @@ BOOLEAN NPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, UINT8 ubTargetApp
   return (TRUE);
 }
 
-BOOLEAN NPCGotoGridNo(UINT8 ubTargetNPC, UINT16 usGridNo, UINT8 ubRecordNum) {
+BOOLEAN NPCGotoGridNo(UINT8 ubTargetNPC, uint16_t usGridNo, UINT8 ubRecordNum) {
   CHECKF(SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_GOTO_GRIDNO, ubTargetNPC, usGridNo,
                                        ubRecordNum, gTalkPanel.iFaceIndex,
                                        DIALOGUE_NPC_UI) != FALSE);
@@ -1194,7 +1194,7 @@ BOOLEAN NPCGotoGridNo(UINT8 ubTargetNPC, UINT16 usGridNo, UINT8 ubRecordNum) {
   return (TRUE);
 }
 
-BOOLEAN NPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum) {
+BOOLEAN NPCDoAction(UINT8 ubTargetNPC, uint16_t usActionCode, UINT8 ubQuoteNum) {
   CHECKF(SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_DO_ACTION, ubTargetNPC, usActionCode,
                                        ubQuoteNum, gTalkPanel.iFaceIndex,
                                        DIALOGUE_NPC_UI) != FALSE);
@@ -1392,7 +1392,7 @@ void HandleWaitTimerForNPCTrigger() {
   }
 }
 
-void HandleNPCGotoGridNo(UINT8 ubTargetNPC, UINT16 usGridNo, UINT8 ubQuoteNum) {
+void HandleNPCGotoGridNo(UINT8 ubTargetNPC, uint16_t usGridNo, UINT8 ubQuoteNum) {
   struct SOLDIERTYPE *pSoldier;
   // OK, Move to gridNo!
 
@@ -1515,7 +1515,7 @@ void HandleFactForNPCUnescorted(UINT8 ubNPC) {
   */
 }
 
-void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum) {
+void HandleNPCDoAction(UINT8 ubTargetNPC, uint16_t usActionCode, UINT8 ubQuoteNum) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier, *pSoldier2;
   INT8 bNumDone = 0;
@@ -1684,7 +1684,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         }
 
         if (pSoldier->inv[HANDPOS].usItem != NOTHING) {
-          UINT16 usGun;
+          uint16_t usGun;
           INT8 bNewSlot, bOldSlot;
 
           usGun = pSoldier->inv[HANDPOS].usItem;
@@ -1767,7 +1767,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         if (pSoldier) {
           // screen NORTHEAST corresponds to in-game NORTH
           SendSoldierSetDesiredDirectionEvent(
-              pSoldier, (UINT16)(NORTH + (usActionCode - NPC_ACTION_FACE_NORTH_EAST)));
+              pSoldier, (uint16_t)(NORTH + (usActionCode - NPC_ACTION_FACE_NORTH_EAST)));
         }
         break;
 
@@ -2911,7 +2911,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
             pSoldier->bAimShotLocation = AIM_SHOT_HEAD;
 
             // Add gun to inventory.....
-            CreateItem((UINT16)(DESERTEAGLE), 100, &(pSoldier->inv[HANDPOS]));
+            CreateItem((uint16_t)(DESERTEAGLE), 100, &(pSoldier->inv[HANDPOS]));
 
             // Make shoot
             pSoldier->bNextAction = AI_ACTION_FIRE_GUN;
@@ -3854,7 +3854,7 @@ BOOLEAN PlayerTeamHasTwoSpotsLeft() {
   }
 }
 
-void StartDialogueMessageBox(UINT8 ubProfileID, UINT16 usMessageBoxType) {
+void StartDialogueMessageBox(UINT8 ubProfileID, uint16_t usMessageBoxType) {
   INT32 iTemp;
   CHAR16 zTemp[256], zTemp2[256];
 

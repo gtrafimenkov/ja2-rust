@@ -20,7 +20,7 @@ extern INT32 iEditorToolbar;
 
 extern BOOLEAN fDontUseRandom;
 
-extern UINT16 GenericButtonFillColors[40];
+extern uint16_t GenericButtonFillColors[40];
 
 BOOLEAN gfRenderSquareArea = FALSE;
 INT16 iStartClickX, iStartClickY;
@@ -78,7 +78,7 @@ SGPPoint SelWinSpacing, SelWinStartPoint, SelWinEndPoint;
 // in which we loaded a new tileset which had one less tree in it.  When we called
 // BuildSelectionWindow(), it would crash because it thought there was an extra tree which was now
 // invalid.
-UINT16 gusNumOStructs = 0;
+uint16_t gusNumOStructs = 0;
 
 // List of objects to display in the selection window
 DisplaySpec OStructs[OSTRUCTS_NUMELEMENTS];
@@ -156,8 +156,8 @@ DisplayList *pDispList;
 INT16 iTopWinCutOff, iBotWinCutOff;
 DisplayList Selection;
 
-UINT16 SelWinFillColor = 0x0000;         // Black
-UINT16 SelWinHilightFillColor = 0x000d;  // a kind of medium dark blue
+uint16_t SelWinFillColor = 0x0000;         // Black
+uint16_t SelWinHilightFillColor = 0x000d;  // a kind of medium dark blue
 
 //----------------------------------------------------------------------------------------------
 //	CreateJA2SelectionWindow
@@ -166,7 +166,7 @@ UINT16 SelWinHilightFillColor = 0x000d;  // a kind of medium dark blue
 //
 void CreateJA2SelectionWindow(INT16 sWhat) {
   DisplaySpec *pDSpec;
-  UINT16 usNSpecs;
+  uint16_t usNSpecs;
 
   fAllDone = FALSE;
 
@@ -340,7 +340,7 @@ void InitJA2SelectionWindow(void) {
   INT32 iCount2;
   INT32 iCount3;
 
-  UINT16 usETRLEObjects;
+  uint16_t usETRLEObjects;
   struct VObject *hVObject;
 
   pDispList = NULL;
@@ -355,8 +355,8 @@ void InitJA2SelectionWindow(void) {
     for (iCount2 = 0; iCount2 < usETRLEObjects; iCount2 += 3, iCount3++) {
       OStructs[iCount3].ubType = DISPLAY_GRAPHIC;
       OStructs[iCount3].hVObject = hVObject;
-      OStructs[iCount3].usStart = (UINT16)iCount2;
-      OStructs[iCount3].usEnd = (UINT16)iCount2;
+      OStructs[iCount3].usStart = (uint16_t)iCount2;
+      OStructs[iCount3].usEnd = (uint16_t)iCount2;
       OStructs[iCount3].uiObjIndx = (FIRSTFULLSTRUCT + iCount);
     }
   }
@@ -367,7 +367,7 @@ void InitJA2SelectionWindow(void) {
   OStructs[iCount3].usEnd = 0;
   OStructs[iCount3].uiObjIndx = SIXTHOSTRUCT;
 
-  gusNumOStructs = (UINT16)iCount3 + 1;
+  gusNumOStructs = (uint16_t)iCount3 + 1;
 
   // Rocks & barrels! (the "1" button in the "terrain" toolbar)
   OStructs1[0].ubType = DISPLAY_GRAPHIC;
@@ -804,7 +804,7 @@ DisplayList *TrashList(DisplayList *pNode) {
 void RenderSelectionWindow(void) {
   GUI_BUTTON *button;
   INT32 iSX, iSY, iEX, iEY;
-  UINT16 usFillColor;
+  uint16_t usFillColor;
   static UINT8 usFillGreen = 0;
   static UINT8 usDir = 5;
 
@@ -962,13 +962,13 @@ void SelWinClkCallback(GUI_BUTTON *button, INT32 reason) {
 void DisplaySelectionWindowGraphicalInformation() {
   DisplayList *pNode;
   BOOLEAN fDone;
-  // UINT16 usObjIndex, usIndex;
-  UINT16 y;
+  // uint16_t usObjIndex, usIndex;
+  uint16_t y;
   // Determine if there is a valid picture at cursor position.
   // iRelX = gusMouseXPos;
   // iRelY = gusMouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY;
 
-  y = gusMouseYPos + iTopWinCutOff - (UINT16)SelWinStartPoint.iY;
+  y = gusMouseYPos + iTopWinCutOff - (uint16_t)SelWinStartPoint.iY;
   pNode = pDispList;
   fDone = FALSE;
   while ((pNode != NULL) && !fDone) {
@@ -985,7 +985,7 @@ void DisplaySelectionWindowGraphicalInformation() {
   SetFont(FONT12POINT1);
   SetFontForeground(FONT_WHITE);
   if (pNode) {
-    // usObjIndex = (UINT16)pNode->uiObjIndx;
+    // usObjIndex = (uint16_t)pNode->uiObjIndx;
     // usIndex = pNode->uiIndex;
     if (!gTilesets[giCurrentTilesetID].TileSurfaceFilenames[pNode->uiObjIndx][0]) {
       mprintf(2, 2, L"%S[%d] is from default tileset %s (%S)",
@@ -1342,16 +1342,16 @@ void DrawSelections(void) {
 //	Creates a display list from a display specification list. It also sets variables up for
 //	properly scrolling the window etc.
 //
-BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
+BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,
                            DisplayList **pDisplayList, SGPPoint *pUpperLeft, SGPPoint *pBottomRight,
-                           SGPPoint *pSpacing, UINT16 fFlags) {
+                           SGPPoint *pSpacing, uint16_t fFlags) {
   INT32 iCurrX = pUpperLeft->iX;
   INT32 iCurrY = pUpperLeft->iY;
-  UINT16 usGreatestHeightInRow = 0;
-  UINT16 usSpecLoop;
-  UINT16 usETRLELoop;
-  UINT16 usETRLEStart;
-  UINT16 usETRLEEnd;
+  uint16_t usGreatestHeightInRow = 0;
+  uint16_t usSpecLoop;
+  uint16_t usETRLELoop;
+  uint16_t usETRLEStart;
+  uint16_t usETRLEEnd;
   DisplaySpec *pDisplaySpec;
   ETRLEObject *pETRLEObject;
   DisplayList *pCurNode;
@@ -1424,13 +1424,13 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
 //	left corner of the image.
 //
 BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCutOff,
-                          SGPPoint *pUpperLeft, UINT16 fFlags) {
+                          SGPPoint *pUpperLeft, uint16_t fFlags) {
   INT16 iCurrY;
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
   BOOLEAN fReturnVal;
   ETRLEObject *pETRLEObject;
-  UINT16 usFillColor;
+  uint16_t usFillColor;
   INT16 sCount;
 
   if (pNode == NULL) return (TRUE);
@@ -1465,8 +1465,8 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
     if (pNode->fChosen) sCount = pSelList[FindInSelectionList(pNode)].sCount;
 
     SetObjectShade(pNode->hObj, DEFAULT_SHADE_LEVEL);
-    fReturnVal = BltVideoObject(FRAME_BUFFER, pNode->hObj, pNode->uiIndex, (UINT16)pNode->iX,
-                                (UINT16)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
+    fReturnVal = BltVideoObject(FRAME_BUFFER, pNode->hObj, pNode->uiIndex, (uint16_t)pNode->iX,
+                                (uint16_t)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
 
     if (sCount != 0) {
       gprintf(pNode->iX, iCurrY, L"%d", sCount);

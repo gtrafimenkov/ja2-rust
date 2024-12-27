@@ -55,10 +55,10 @@ enum {
   NUM_EXP_BONUS_TYPES,
 };
 
-void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances, UINT8 ubReason);
-void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
+void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, uint16_t usNumChances, UINT8 ubReason);
+void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, uint16_t usNumChances,
                        UINT8 ubReason);
-void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
+void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, uint16_t usNumChances,
                        UINT8 ubReason);
 
 void UpdateStats(struct SOLDIERTYPE *pSoldier);
@@ -67,7 +67,7 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
 
 uint32_t CalcNewSalary(uint32_t uiOldSalary, BOOLEAN fIncrease, uint32_t uiMaxLimit);
 uint32_t RoundOffSalary(uint32_t uiSalary);
-UINT16 SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel);
+uint16_t SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel);
 
 void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile);
 void HandleUnhiredMercDeaths(INT32 iProfileID);

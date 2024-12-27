@@ -207,7 +207,7 @@ BOOLEAN InitAI(void);
 void MakeClosestEnemyChosenOne();
 void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier);
 
-void NewDest(struct SOLDIERTYPE *pSoldier, UINT16 sGridno);
+void NewDest(struct SOLDIERTYPE *pSoldier, uint16_t sGridno);
 INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier);
 
 INT8 PanicAI(struct SOLDIERTYPE *pSoldier, UINT8 ubCanMove);
@@ -215,7 +215,7 @@ void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier);
 
 INT16 RandDestWithinRange(struct SOLDIERTYPE *pSoldier);
 INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier);
-INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, UINT16 *pFromGridno);
+INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, uint16_t *pFromGridno);
 
 void SetCivilianDestination(UINT8 ubWho, INT16 sGridno);
 void SetNewSituation(struct SOLDIERTYPE *pSoldier);

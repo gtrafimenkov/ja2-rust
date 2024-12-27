@@ -81,19 +81,19 @@ typedef struct STRATEGIC_STATUS {
   UINT8 ubBadReputation;  // how bad a reputation player has earned through his actions,
                           // performance, etc. (0-100)
 
-  UINT16 usEnricoEmailFlags;  // bit flags that control progress-related E-mails from Enrico
+  uint16_t usEnricoEmailFlags;  // bit flags that control progress-related E-mails from Enrico
 
   UINT8 ubInsuranceInvestigationsCnt;  // how many times merc has been investigated for possible
                                        // insurance fraud
 
   UINT8 ubUnhiredMercDeaths;  // how many mercs have died while NOT working for the player
 
-  UINT16 usPlayerKills;  // kills achieved by all mercs controlled by player together.  *Excludes*
-                         // militia kills!
+  uint16_t usPlayerKills;  // kills achieved by all mercs controlled by player together.  *Excludes*
+                           // militia kills!
 
-  UINT16 usEnemiesKilled[NUM_WAYS_ENEMIES_KILLED]
-                        [NUM_ENEMY_RANKS];  // admin/troop/elite.  Includes kills by militia, too
-  UINT16 usLastDayOfPlayerActivity;
+  uint16_t usEnemiesKilled[NUM_WAYS_ENEMIES_KILLED]
+                          [NUM_ENEMY_RANKS];  // admin/troop/elite.  Includes kills by militia, too
+  uint16_t usLastDayOfPlayerActivity;
   UINT8 ubNumNewSectorsVisitedToday;
   UINT8 ubNumberOfDaysOfInactivity;
 
@@ -124,6 +124,6 @@ void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass);
 INT8 SoldierClassToRankIndex(UINT8 ubSoldierClass);
 UINT8 RankIndexToSoldierClass(UINT8 ubRankIndex);
 
-void UpdateLastDayOfPlayerActivity(UINT16 usDay);
+void UpdateLastDayOfPlayerActivity(uint16_t usDay);
 
 #endif

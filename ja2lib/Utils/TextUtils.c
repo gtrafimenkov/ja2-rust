@@ -3,10 +3,10 @@
 #include "SGP/FileMan.h"
 #include "Utils/Text.h"
 
-BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
+BOOLEAN LoadItemInfo(uint16_t ubIndex, STR16 pNameString, STR16 pInfoString) {
   HWFILE hFile;
   uint32_t uiBytesRead;
-  UINT16 i;
+  uint16_t i;
   uint32_t uiStartSeekAmount;
 
   hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
@@ -182,11 +182,11 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   return (TRUE);
 }
 
-BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
+BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, STR16 pNameString) {
   HWFILE hFile;
   //  wchar_t		DestString[ SIZE_MERC_BIO_INFO ];
   uint32_t uiBytesRead;
-  UINT16 i;
+  uint16_t i;
   uint32_t uiStartSeekAmount;
 
   hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
@@ -277,7 +277,7 @@ BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
 }
 
 void LoadAllItemNames(void) {
-  UINT16 usLoop;
+  uint16_t usLoop;
 
   for (usLoop = 0; usLoop < MAXITEMS; usLoop++) {
     LoadItemInfo(usLoop, ItemNames[usLoop], NULL);

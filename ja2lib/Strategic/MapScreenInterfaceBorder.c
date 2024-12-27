@@ -515,8 +515,8 @@ void BtnItemCallback(GUI_BUTTON *btn, INT32 reason) {
 /*
 void BtnZoomCallback(GUI_BUTTON *btn,INT32 reason)
 {
-        UINT16 sTempXOff=0;
-        UINT16 sTempYOff=0;
+        uint16_t sTempXOff=0;
+        uint16_t sTempYOff=0;
 
 
         if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )

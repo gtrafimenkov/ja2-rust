@@ -219,7 +219,7 @@ void RenderAimHistory() {
 
 BOOLEAN InitAimHistoryMenuBar(void) {
   VOBJECT_DESC VObjectDesc;
-  UINT16 i, usPosX;
+  uint16_t i, usPosX;
 
   // load the Bottom Buttons graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -311,8 +311,8 @@ void SelectHistoryMenuButtonsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
 BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs) {
   wchar_t sText[400];
   uint32_t uiStartLoc = 0;
-  UINT16 usPosY = 0;
-  UINT16 usNumPixels = 0;
+  uint16_t usPosY = 0;
+  uint16_t usNumPixels = 0;
 
   // title
   uiStartLoc = AIM_HISTORY_LINE_SIZE * ubPageNum;
@@ -356,7 +356,7 @@ BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs) {
 }
 
 BOOLEAN InitTocMenu() {
-  UINT16 i, usPosY;
+  uint16_t i, usPosY;
   uint32_t uiStartLoc = 0;
   wchar_t sText[400];
   UINT8 ubLocInFile[] = {IN_THE_BEGINNING, THE_ISLAND_METAVIRA, GUS_TARBALLS, WORD_FROM_FOUNDER,
@@ -375,16 +375,16 @@ BOOLEAN InitTocMenu() {
     if (!gfInToc) {
       // Mouse region for the history toc buttons
       MSYS_DefineRegion(&gSelectedHistoryTocMenuRegion[i], AIM_HISTORY_TOC_X, usPosY,
-                        (UINT16)(AIM_HISTORY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
-                        (UINT16)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
-                        MSYS_NO_CALLBACK, SelectHistoryTocMenuRegionCallBack);
+                        (uint16_t)(AIM_HISTORY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
+                        (uint16_t)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH,
+                        CURSOR_WWW, MSYS_NO_CALLBACK, SelectHistoryTocMenuRegionCallBack);
       MSYS_AddRegion(&gSelectedHistoryTocMenuRegion[i]);
       MSYS_SetRegionUserData(&gSelectedHistoryTocMenuRegion[i], 0, i + 1);
     }
 
     BltVideoObject(FRAME_BUFFER, hContentButtonHandle, 0, AIM_HISTORY_TOC_X, usPosY,
                    VO_BLT_SRCTRANSPARENCY, NULL);
-    DrawTextToScreen(sText, AIM_HISTORY_TOC_X, (UINT16)(usPosY + AIM_HISTORY_TOC_Y),
+    DrawTextToScreen(sText, AIM_HISTORY_TOC_X, (uint16_t)(usPosY + AIM_HISTORY_TOC_Y),
                      AIM_CONTENTBUTTON_WIDTH, AIM_HISTORY_TOC_TEXT_FONT, AIM_HISTORY_TOC_TEXT_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
@@ -395,7 +395,7 @@ BOOLEAN InitTocMenu() {
 }
 
 BOOLEAN ExitTocMenu() {
-  UINT16 i;
+  uint16_t i;
 
   if (gfInToc) {
     gfInToc = FALSE;

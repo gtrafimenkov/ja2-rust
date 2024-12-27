@@ -1416,7 +1416,7 @@ void HandleIMPQuizKeyBoard(void) {
       if( (InputEvent.usEvent == KEY_DOWN ) && ( InputEvent.usParam >= '1' ) && ( InputEvent.usParam
       <= '9') )
       {
-              if( ( UINT16 )( iNumberOfPersonaButtons ) >= InputEvent.usParam - '0' )
+              if( ( uint16_t )( iNumberOfPersonaButtons ) >= InputEvent.usParam - '0' )
               {
                       // reset buttons
                       ResetQuizAnswerButtons( );

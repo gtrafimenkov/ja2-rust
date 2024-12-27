@@ -26,7 +26,7 @@ void CreateMessageBox(CHAR16 *wzString) {
   INT16 sPixLen;
   INT16 sStartX, sStartY;
 
-  sPixLen = StringPixLength(wzString, (UINT16)gpLargeFontType1) + 10;
+  sPixLen = StringPixLength(wzString, (uint16_t)gpLargeFontType1) + 10;
   if (sPixLen > 600) sPixLen = 600;
 
   sStartX = (640 - sPixLen) / 2;
@@ -36,7 +36,7 @@ void CreateMessageBox(CHAR16 *wzString) {
 
   // Fake button for background w/ text
   iMsgBoxBgrnd =
-      CreateTextButton(wzString, (UINT16)gpLargeFontType1, FONT_LTKHAKI, FONT_DKKHAKI,
+      CreateTextButton(wzString, (uint16_t)gpLargeFontType1, FONT_LTKHAKI, FONT_DKKHAKI,
                        BUTTON_USE_DEFAULT, sStartX, sStartY, sPixLen, 96, BUTTON_NO_TOGGLE,
                        MSYS_PRIORITY_HIGHEST - 2, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK);
   DisableButton(iMsgBoxBgrnd);

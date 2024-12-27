@@ -52,10 +52,10 @@
 
 #define ALWAYS_CONSIDER_HIT (STRUCTURE_WALLSTUFF | STRUCTURE_CAVEWALL | STRUCTURE_FENCE)
 
-UINT16 gusLOSStartGridNo = 0;
-UINT16 gusLOSEndGridNo = 0;
-UINT16 gusLOSStartSoldier = NOBODY;
-UINT16 gusLOSEndSoldier = NOBODY;
+uint16_t gusLOSStartGridNo = 0;
+uint16_t gusLOSEndGridNo = 0;
+uint16_t gusLOSStartSoldier = NOBODY;
+uint16_t gusLOSEndSoldier = NOBODY;
 extern uint32_t guiSoldierFlags;
 extern INT16 DirIncrementer[8];
 
@@ -150,7 +150,7 @@ static UINT8 gubTreeSightReduction[ANIM_STAND + 1] = {
 
 #define MAX_CHANCE_OF_HITTING_STRUCTURE 90
 
-static UINT16 guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STRUCTURE + 1] = {
+static uint16_t guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STRUCTURE + 1] = {
     0,  // 0 tiles
     0,  0,  2,  4,
     7,  // 5 tiles
@@ -2065,7 +2065,7 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIn
   return (fStopped);
 }
 
-void BulletHitStructure(BULLET *pBullet, UINT16 usStructureID, INT32 iImpact,
+void BulletHitStructure(BULLET *pBullet, uint16_t usStructureID, INT32 iImpact,
                         struct SOLDIERTYPE *pFirer, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qCurrZ,
                         BOOLEAN fStopped) {
   EV_S_STRUCTUREHIT SStructureHit;
@@ -2086,7 +2086,7 @@ void BulletHitStructure(BULLET *pBullet, UINT16 usStructureID, INT32 iImpact,
                SStructureHit.sZPos, SStructureHit.usStructureID, SStructureHit.iImpact, fStopped);
 }
 
-void BulletHitWindow(BULLET *pBullet, INT16 sGridNo, UINT16 usStructureID,
+void BulletHitWindow(BULLET *pBullet, INT16 sGridNo, uint16_t usStructureID,
                      BOOLEAN fBlowWindowSouth) {
   WindowHit(sGridNo, usStructureID, fBlowWindowSouth, FALSE);
 }
@@ -2811,7 +2811,7 @@ UINT8 AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
   FLOAT dEndZPos;
   BOOLEAN fOk;
   UINT8 ubChance;
-  UINT16 usTrueState;
+  uint16_t usTrueState;
 
   if (pStartSoldier == pEndSoldier) {
     return (0);
@@ -2843,7 +2843,7 @@ UINT8 AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, I
   INT8 bStructHeight;
   struct SOLDIERTYPE *pEndSoldier;
 
-  UINT16 usTrueState;
+  uint16_t usTrueState;
   UINT8 ubChance;
 
   if (pStartSoldier->sGridNo == sGridNo) {
@@ -3034,7 +3034,7 @@ DOUBLE CalculateVerticalAngle( struct SOLDIERTYPE * pFirer, struct SOLDIERTYPE *
 */
 
 INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ,
-                           UINT16 usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake) {
+                           uint16_t usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake) {
   // fFake indicates that we should set things up for a call to ChanceToGetThrough
   FLOAT dStartZ;
 
@@ -3065,7 +3065,7 @@ INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY,
   UINT8 ubImpact;
   INT8 bCTGT;
   UINT8 ubSpreadIndex = 0;
-  UINT16 usBulletFlags = 0;
+  uint16_t usBulletFlags = 0;
 
   CalculateSoldierZPos(pFirer, FIRING_POS, &dStartZ);
 
@@ -3990,7 +3990,7 @@ void MoveBullet(INT32 iBullet) {
 }
 
 INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDeltaY, FLOAT dDeltaZ,
-                        UINT16 *pusStructureID, FLOAT *pdNormalX, FLOAT *pdNormalY,
+                        uint16_t *pusStructureID, FLOAT *pdNormalX, FLOAT *pdNormalY,
                         FLOAT *pdNormalZ) {
   INT32 iLandHeight;
   INT32 iCurrAboveLevelZ;

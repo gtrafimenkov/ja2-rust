@@ -149,7 +149,7 @@ struct SOLDIERTYPE SoldierSkyRider;
 struct SOLDIERTYPE *pSkyRider;
 
 // helicopter char dialogue
-BOOLEAN HeliCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
+BOOLEAN HeliCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum);
 
 // does skyrider notice bad guys in sector?
 BOOLEAN DoesSkyriderNoticeEnemiesInSector(UINT8 ubNumEnemies);
@@ -695,7 +695,7 @@ void SetUpHelicopterForMovement(void) {
   }
 }
 
-BOOLEAN HeliCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
+BOOLEAN HeliCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum) {
   // ARM: we could just return, but since various flags are often being set it's safer to honk so it
   // gets fixed right!
   Assert(fSkyRiderAvailable);
@@ -796,7 +796,7 @@ UINT8 MoveAllInHelicopterToFootMovementGroup(void) {
   BOOLEAN fSuccess;
   UINT8 ubInsertionCode;
   BOOLEAN fInsertionCodeSet = FALSE;
-  UINT16 usInsertionData;
+  uint16_t usInsertionData;
 
   // put these guys on their own squad (we need to return their group ID, and can only return one,
   // so they need a unique one
@@ -845,7 +845,7 @@ UINT8 MoveAllInHelicopterToFootMovementGroup(void) {
   return (ubGroupId);
 }
 
-void SkyRiderTalk(UINT16 usQuoteNum) {
+void SkyRiderTalk(uint16_t usQuoteNum) {
   // have skyrider talk to player
   HeliCharacterDialogue(pSkyRider, usQuoteNum);
 
@@ -1418,8 +1418,8 @@ BOOLEAN CanHelicopterTakeOff(void) {
   return (FALSE);
 }
 
-void AddHeliPeice(INT16 sGridNo, UINT16 sOStruct) {
-  UINT16 usDummy;
+void AddHeliPeice(INT16 sGridNo, uint16_t sOStruct) {
+  uint16_t usDummy;
 
   // ATE: Check first if already exists....
   if (!TypeExistsInStructLayer(sGridNo, sOStruct, &usDummy)) {
@@ -1447,11 +1447,11 @@ void AddHelicopterToMaps(BOOLEAN fAdd, UINT8 ubSite) {
   // are we adding or taking away
   if (fAdd) {
     AddHeliPeice(sGridNo, sOStruct);
-    AddHeliPeice(sGridNo, (UINT16)(sOStruct + 1));
-    AddHeliPeice((INT16)(sGridNo - 800), (UINT16)(sOStruct + 2));
-    AddHeliPeice(sGridNo, (UINT16)(sOStruct + 3));
-    AddHeliPeice(sGridNo, (UINT16)(sOStruct + 4));
-    AddHeliPeice((INT16)(sGridNo - 800), (UINT16)(sOStruct + 5));
+    AddHeliPeice(sGridNo, (uint16_t)(sOStruct + 1));
+    AddHeliPeice((INT16)(sGridNo - 800), (uint16_t)(sOStruct + 2));
+    AddHeliPeice(sGridNo, (uint16_t)(sOStruct + 3));
+    AddHeliPeice(sGridNo, (uint16_t)(sOStruct + 4));
+    AddHeliPeice((INT16)(sGridNo - 800), (uint16_t)(sOStruct + 5));
 
     InvalidateWorldRedundency();
     SetRenderFlags(RENDER_FLAG_FULL);
@@ -1468,12 +1468,12 @@ void AddHelicopterToMaps(BOOLEAN fAdd, UINT8 ubSite) {
     }
   } else {
     // remove from the world
-    RemoveStruct(sRefuelStartGridNo[ubSite], (UINT16)(sOStruct));
-    RemoveStruct(sRefuelStartGridNo[ubSite], (UINT16)(sOStruct + 1));
-    RemoveStruct(sRefuelStartGridNo[ubSite] - 800, (UINT16)(sOStruct + 2));
-    RemoveStruct(sRefuelStartGridNo[ubSite], (UINT16)(sOStruct + 3));
-    RemoveStruct(sRefuelStartGridNo[ubSite], (UINT16)(sOStruct + 4));
-    RemoveStruct(sRefuelStartGridNo[ubSite] - 800, (UINT16)(sOStruct + 5));
+    RemoveStruct(sRefuelStartGridNo[ubSite], (uint16_t)(sOStruct));
+    RemoveStruct(sRefuelStartGridNo[ubSite], (uint16_t)(sOStruct + 1));
+    RemoveStruct(sRefuelStartGridNo[ubSite] - 800, (uint16_t)(sOStruct + 2));
+    RemoveStruct(sRefuelStartGridNo[ubSite], (uint16_t)(sOStruct + 3));
+    RemoveStruct(sRefuelStartGridNo[ubSite], (uint16_t)(sOStruct + 4));
+    RemoveStruct(sRefuelStartGridNo[ubSite] - 800, (uint16_t)(sOStruct + 5));
 
     InvalidateWorldRedundency();
     SetRenderFlags(RENDER_FLAG_FULL);

@@ -54,7 +54,7 @@ struct SectorInfo {
   // town militia per experience class, 0/1/2 is GREEN/REGULAR/ELITE
   UINT8 _only_savedgame_ubNumberOfCivsAtLevel[3 /*MAX_MILITIA_LEVELS*/];
 
-  UINT16 usUNUSEDMilitiaLevels;            // unused (ARM)
+  uint16_t usUNUSEDMilitiaLevels;          // unused (ARM)
   UINT8 ubUNUSEDNumberOfJoeBlowCivilians;  // unused (ARM)
   uint32_t
       uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector

@@ -281,7 +281,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
   BOOLEAN fGoneThroughDoor = FALSE;
   BOOLEAN fThroughWindow = FALSE;
   BOOLEAN fItemsQuoteSaid = FALSE;
-  UINT16 usIndex;
+  uint16_t usIndex;
   BOOLEAN fRevealItems = TRUE;
   BOOLEAN fStopRevealingItemsAfterThisTile = FALSE;
   INT8 bTallestStructureHeight;
@@ -626,7 +626,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
                         // Display quote!
                         if (!AM_AN_EPC(pSoldier)) {
                           TacticalCharacterDialogueWithSpecialEvent(
-                              pSoldier, (UINT16)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)),
+                              pSoldier, (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)),
                               DIALOGUE_SPECIAL_EVENT_SIGNAL_ITEM_LOCATOR_START, (INT16)(marker), 0);
                         } else {
                           // Turn off item lock for locators...
@@ -654,11 +654,11 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
           // CHECK FOR HIDDEN STRUCTS
           // IF we had a hidden struct here that is not visible ( which will still be true because
           // we set it revealed below...
-          if (DoesGridnoContainHiddenStruct((UINT16)marker, &fHiddenStructVisible)) {
+          if (DoesGridnoContainHiddenStruct((uint16_t)marker, &fHiddenStructVisible)) {
             if (!fHiddenStructVisible) {
               gpWorldLevelData[marker].uiFlags |= MAPELEMENT_REDRAW;
               SetRenderFlags(RENDER_FLAG_MARKED);
-              RecompileLocalMovementCosts((UINT16)marker);
+              RecompileLocalMovementCosts((uint16_t)marker);
             }
           }
 

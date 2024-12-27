@@ -281,7 +281,7 @@ void DisplayShipmentTitles() {
 void DisplayPreviousShipments() {
   uint32_t uiCnt;
   CHAR16 zText[512];
-  UINT16 usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
+  uint16_t usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
   uint32_t uiNumItems = CountNumberValidShipmentForTheShipmentsPage();
   uint32_t uiNumberItemsInShipments = 0;
   uint32_t uiItemCnt;
@@ -327,16 +327,16 @@ void DisplayPreviousShipments() {
 
 void CreatePreviousShipmentsMouseRegions() {
   uint32_t uiCnt;
-  UINT16 usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
-  UINT16 usWidth = BOBBYR_SHIPMENT_DELIVERY_GRID_WIDTH;
-  UINT16 usHeight = GetFontHeight(BOBBYR_SHIPMENT_STATIC_TEXT_FONT);
+  uint16_t usPosY = BOBBYR_SHIPMENT_ORDER_NUM_START_Y;
+  uint16_t usWidth = BOBBYR_SHIPMENT_DELIVERY_GRID_WIDTH;
+  uint16_t usHeight = GetFontHeight(BOBBYR_SHIPMENT_STATIC_TEXT_FONT);
   uint32_t uiNumItems = CountNumberOfBobbyPurchasesThatAreInTransit();
 
   for (uiCnt = 0; uiCnt < uiNumItems; uiCnt++) {
     MSYS_DefineRegion(&gSelectedPreviousShipmentsRegion[uiCnt], BOBBYR_SHIPMENT_ORDER_NUM_X, usPosY,
-                      (UINT16)(BOBBYR_SHIPMENT_ORDER_NUM_X + usWidth), (UINT16)(usPosY + usHeight),
-                      MSYS_PRIORITY_HIGH, CURSOR_WWW, MSYS_NO_CALLBACK,
-                      SelectPreviousShipmentsRegionCallBack);
+                      (uint16_t)(BOBBYR_SHIPMENT_ORDER_NUM_X + usWidth),
+                      (uint16_t)(usPosY + usHeight), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      MSYS_NO_CALLBACK, SelectPreviousShipmentsRegionCallBack);
     MSYS_AddRegion(&gSelectedPreviousShipmentsRegion[uiCnt]);
     MSYS_SetRegionUserData(&gSelectedPreviousShipmentsRegion[uiCnt], 0, uiCnt);
 

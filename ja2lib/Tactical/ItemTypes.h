@@ -61,15 +61,15 @@ typedef enum { BOMB_TIMED = 1, BOMB_REMOTE, BOMB_PRESSURE, BOMB_SWITCH } Detonat
 #define OBJECT_NO_OVERWRITE 0x80
 
 struct OBJECTTYPE {
-  UINT16 usItem;
+  uint16_t usItem;
   UINT8 ubNumberOfObjects;
   union {
     struct {
-      INT8 bGunStatus;       // status % of gun
-      UINT8 ubGunAmmoType;   // ammo type, as per weapons.h
-      UINT8 ubGunShotsLeft;  // duh, amount of ammo left
-      UINT16 usGunAmmoItem;  // the item # for the item table
-      INT8 bGunAmmoStatus;   // only for "attached ammo" - grenades, mortar shells
+      INT8 bGunStatus;         // status % of gun
+      UINT8 ubGunAmmoType;     // ammo type, as per weapons.h
+      UINT8 ubGunShotsLeft;    // duh, amount of ammo left
+      uint16_t usGunAmmoItem;  // the item # for the item table
+      INT8 bGunAmmoStatus;     // only for "attached ammo" - grenades, mortar shells
       UINT8 ubGunUnused[MAX_OBJECTS_PER_SLOT - 6];
     };
     struct {
@@ -86,7 +86,7 @@ struct OBJECTTYPE {
     struct {                // this is used by placed bombs, switches, and the action item
       INT8 bBombStatus;     // % status
       INT8 bDetonatorType;  // timed, remote, or pressure-activated
-      UINT16 usBombItem;    // the usItem of the bomb.
+      uint16_t usBombItem;  // the usItem of the bomb.
       union {
         struct {
           INT8 bDelay;  // >=0 values used only
@@ -118,7 +118,7 @@ struct OBJECTTYPE {
     };
   };
   // attached objects
-  UINT16 usAttachItem[MAX_ATTACHMENTS];
+  uint16_t usAttachItem[MAX_ATTACHMENTS];
   INT8 bAttachStatus[MAX_ATTACHMENTS];
 
   INT8 fFlags;
@@ -147,7 +147,7 @@ typedef struct
         UINT8		ubMetal;
         UINT8		ubSinkable;
 
-        UINT16	ubPrice;
+        uint16_t	ubPrice;
         UINT8		ubMission;
         UINT8		ubCoolness;
 } INVTYPE;
@@ -247,11 +247,11 @@ typedef struct {
   UINT8 ubGraphicNum;
   UINT8 ubWeight;  // 2 units per kilogram; roughly 1 unit per pound
   UINT8 ubPerPocket;
-  UINT16 usPrice;
+  uint16_t usPrice;
   UINT8 ubCoolness;
   INT8 bReliability;
   INT8 bRepairEase;
-  UINT16 fFlags;
+  uint16_t fFlags;
 } INVTYPE;
 
 #define FIRST_WEAPON 1

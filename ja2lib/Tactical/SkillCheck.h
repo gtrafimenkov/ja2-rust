@@ -5,7 +5,7 @@
 
 struct SOLDIERTYPE;
 
-extern void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, UINT16 *pusPoints);
+extern void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, uint16_t *pusPoints);
 extern INT32 GetSkillCheckPenaltyForFatigue(struct SOLDIERTYPE *pSoldier, INT32 iSkill);
 extern INT32 SkillCheck(struct SOLDIERTYPE *pSoldier, INT8 bReason, INT8 bDifficulty);
 extern INT8 CalcTrapDetectLevel(struct SOLDIERTYPE *pSoldier, BOOLEAN fExamining);

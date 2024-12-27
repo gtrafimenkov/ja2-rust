@@ -1070,7 +1070,7 @@ void InitSoldierStruct(struct SOLDIERTYPE *pSoldier) {
   pSoldier->bVehicleUnderRepairID = -1;
 }
 
-BOOLEAN InternalTacticalRemoveSoldier(UINT16 usSoldierIndex, BOOLEAN fRemoveVehicle) {
+BOOLEAN InternalTacticalRemoveSoldier(uint16_t usSoldierIndex, BOOLEAN fRemoveVehicle) {
   struct SOLDIERTYPE *pSoldier;
 
   // Check range of index given
@@ -1149,7 +1149,7 @@ BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemo
   return (TRUE);
 }
 
-BOOLEAN TacticalRemoveSoldier(UINT16 usSoldierIndex) {
+BOOLEAN TacticalRemoveSoldier(uint16_t usSoldierIndex) {
   return (InternalTacticalRemoveSoldier(usSoldierIndex, TRUE));
 }
 
@@ -2086,7 +2086,7 @@ void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
   INT16 sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
   UINT8 ubID;
-  UINT16 usMapPos;
+  uint16_t usMapPos;
 
   if (GetMouseXY(&sGridX, &sGridY)) {
     usMapPos = MAPROWCOLTOPOS(sGridY, sGridX);
@@ -2260,7 +2260,7 @@ void TrashAllSoldiers() {
   for (pSoldier = MercPtrs[cnt]; cnt < MAX_NUM_SOLDIERS; pSoldier++, cnt++) {
     if (IsSolActive(pSoldier)) {
       // Delete from world
-      TacticalRemoveSoldier((UINT16)cnt);
+      TacticalRemoveSoldier((uint16_t)cnt);
     }
   }
 }

@@ -35,13 +35,13 @@
 void BuildListFile();
 
 BOOLEAN gfAniEditMode = FALSE;
-static UINT16 usStartAnim = 0;
+static uint16_t usStartAnim = 0;
 static UINT8 ubStartHeight = 0;
 static struct SOLDIERTYPE *pSoldier;
 
 static BOOLEAN fOKFiles = FALSE;
 static UINT8 ubNumStates = 0;
-static UINT16 *pusStates = NULL;
+static uint16_t *pusStates = NULL;
 static INT8 ubCurLoadedState = 0;
 
 void CycleAnimations() {
@@ -70,7 +70,7 @@ uint32_t AniEditScreenShutdown(void) { return TRUE; }
 uint32_t AniEditScreenHandle(void) {
   InputAtom InputEvent;
   static BOOLEAN fFirstTime = TRUE;
-  static UINT16 usOldState;
+  static uint16_t usOldState;
   static BOOLEAN fToggle = FALSE;
   static BOOLEAN fToggle2 = FALSE;
 
@@ -174,7 +174,7 @@ uint32_t AniEditScreenHandle(void) {
 
     if ((InputEvent.usEvent == KEY_UP) && (InputEvent.usParam == 's')) {
       if (!fToggle) {
-        UINT16 usAnim = 0;
+        uint16_t usAnim = 0;
         usOldState = usStartAnim;
 
         switch (ubStartHeight) {
@@ -258,13 +258,13 @@ uint32_t AniEditScreenHandle(void) {
   return (ANIEDIT_SCREEN);
 }
 
-UINT16 GetAnimStateFromName(STR8 zName) {
+uint16_t GetAnimStateFromName(STR8 zName) {
   INT32 cnt;
 
   // FInd the next animation with start height the same...
   for (cnt = 0; cnt < NUMANIMATIONSTATES; cnt++) {
     if (strcasecmp(gAnimControl[cnt].zAnimStr, zName) == 0) {
-      return ((UINT16)cnt);
+      return ((uint16_t)cnt);
     }
   }
 
@@ -276,7 +276,7 @@ void BuildListFile() {
   char currFilename[128];
   int numEntries = 0;
   int cnt;
-  UINT16 usState;
+  uint16_t usState;
   CHAR16 zError[128];
 
   // Verify the existance of the header text file.
@@ -294,7 +294,7 @@ void BuildListFile() {
   fseek(infoFile, 0, SEEK_SET);  // reset header file
 
   // Allocate array
-  pusStates = (UINT16 *)MemAlloc(sizeof(UINT16) * numEntries);
+  pusStates = (uint16_t *)MemAlloc(sizeof(uint16_t) * numEntries);
 
   fOKFiles = TRUE;
 

@@ -296,7 +296,7 @@ void ClearOutEmailMessageRecordsList(void);
 void AddEmailRecordToList(STR16 pString);
 void UpDateMessageRecordList(void);
 void HandleAnySpecialEmailMessageEvents(INT32 iMessageId);
-BOOLEAN HandleMailSpecialMessages(UINT16 usMessageId, INT32 *iResults, EmailPtr pMail);
+BOOLEAN HandleMailSpecialMessages(uint16_t usMessageId, INT32 *iResults, EmailPtr pMail);
 void HandleIMPCharProfileResultsMessage(void);
 void HandleEmailViewerButtonStates(void);
 void SetUpIconForButton(void);
@@ -309,7 +309,7 @@ void OpenMostRecentUnreadEmail(void);
 BOOLEAN DisplayNumberOfPagesToThisEmail(INT32 iViewerY);
 INT32 GetNumberOfPagesToEmail();
 void PreProcessEmail(EmailPtr pMail);
-void ModifyInsuranceEmails(UINT16 usMessageId, INT32 *iResults, EmailPtr pMail,
+void ModifyInsuranceEmails(uint16_t usMessageId, INT32 *iResults, EmailPtr pMail,
                            UINT8 ubNumberOfRecords);
 BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr pMail);
 
@@ -711,8 +711,8 @@ void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject,
   wcscpy(pTempEmail->pSubject, pSubject);
 
   // copy offset and length of the actual message in email.edt
-  pTempEmail->usOffset = (UINT16)iMessageOffset;
-  pTempEmail->usLength = (UINT16)iMessageLength;
+  pTempEmail->usOffset = (uint16_t)iMessageOffset;
+  pTempEmail->usLength = (uint16_t)iMessageLength;
 
   // null out last byte of subject
   pTempEmail->pSubject[wcslen(pSubject) + 1] = 0;
@@ -1167,9 +1167,9 @@ void DrawSubject(INT32 iCounter, STR16 pSubject, BOOLEAN fRead) {
   // draw subject line of mail being viewed in viewer
 
   // lock buffer to prevent overwrite
-  SetFontDestBuffer(FRAME_BUFFER, SUBJECT_X, ((UINT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
+  SetFontDestBuffer(FRAME_BUFFER, SUBJECT_X, ((uint16_t)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
                     SUBJECT_X + SUBJECT_WIDTH,
-                    ((UINT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)) + MIDDLE_WIDTH, FALSE);
+                    ((uint16_t)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)) + MIDDLE_WIDTH, FALSE);
   SetFontShadow(NO_SHADOW);
   SetFontForeground(FONT_BLACK);
   SetFontBackground(FONT_BLACK);
@@ -1183,7 +1183,7 @@ void DrawSubject(INT32 iCounter, STR16 pSubject, BOOLEAN fRead) {
     }
 
     // display string subject
-    IanDisplayWrappedString(SUBJECT_X, ((UINT16)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
+    IanDisplayWrappedString(SUBJECT_X, ((uint16_t)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
                             SUBJECT_WIDTH, MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR, pTempSubject,
                             0, FALSE, LEFT_JUSTIFIED);
   } else {
@@ -1193,7 +1193,7 @@ void DrawSubject(INT32 iCounter, STR16 pSubject, BOOLEAN fRead) {
     }
 
     // display string subject
-    IanDisplayWrappedString(SUBJECT_X, ((UINT16)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
+    IanDisplayWrappedString(SUBJECT_X, ((uint16_t)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
                             SUBJECT_WIDTH, MESSAGE_GAP, FONT10ARIALBOLD, MESSAGE_COLOR,
                             pTempSubject, 0, FALSE, LEFT_JUSTIFIED);
   }
@@ -1218,7 +1218,8 @@ void DrawSender(INT32 iCounter, UINT8 ubSender, BOOLEAN fRead) {
     SetFont(FONT10ARIALBOLD);
   }
 
-  mprintf(SENDER_X, ((UINT16)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)), pSenderNameList[ubSender]);
+  mprintf(SENDER_X, ((uint16_t)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
+          pSenderNameList[ubSender]);
 
   SetFont(MESSAGE_FONT);
   SetFontShadow(DEFAULT_SHADOW);
@@ -1239,7 +1240,7 @@ void DrawDate(INT32 iCounter, INT32 iDate, BOOLEAN fRead) {
   }
   // draw date of message being displayed in mail viewer
   swprintf(sString, ARR_SIZE(sString), L"%s %d", pDayStrings[0], iDate / (24 * 60));
-  mprintf(DATE_X, ((UINT16)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)), sString);
+  mprintf(DATE_X, ((uint16_t)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)), sString);
 
   SetFont(MESSAGE_FONT);
   SetFontShadow(DEFAULT_SHADOW);
@@ -1484,7 +1485,7 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
   // is there any special event meant for this mail?..if so, handle it
   HandleAnySpecialEmailMessageEvents(iOffSet);
 
-  HandleMailSpecialMessages((UINT16)(iOffSet), &iViewerPositionY, pMail);
+  HandleMailSpecialMessages((uint16_t)(iOffSet), &iViewerPositionY, pMail);
 
   PreProcessEmail(pMail);
 
@@ -1576,7 +1577,7 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
       // get the height of the string, ONLY!...must redisplay ON TOP OF background graphic
       iHeight += IanDisplayWrappedString(
           VIEWER_X + MESSAGE_X + 4,
-          (UINT16)(VIEWER_MESSAGE_BODY_START_Y + iHeight + iViewerPositionY), MESSAGE_WIDTH,
+          (uint16_t)(VIEWER_MESSAGE_BODY_START_Y + iHeight + iViewerPositionY), MESSAGE_WIDTH,
           MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR, pString, 0, FALSE, IAN_WRAP_NO_SHADOW);
 
       // increment email record ptr
@@ -1601,7 +1602,7 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
             wcscpy( pString, pTempRecord -> pRecord );
 
       // get the height of the string, ONLY!...must redisplay ON TOP OF background graphic
-      iHeight += IanDisplayWrappedString(VIEWER_X + MESSAGE_X + 4, ( UINT16 )(
+      iHeight += IanDisplayWrappedString(VIEWER_X + MESSAGE_X + 4, ( uint16_t )(
 VIEWER_MESSAGE_BODY_START_Y + iHeight + iViewerPositionY), MESSAGE_WIDTH, MESSAGE_GAP, MESSAGE_FONT,
 MESSAGE_COLOR,pString,0,FALSE, IAN_WRAP_NO_SHADOW);
 
@@ -1634,7 +1635,7 @@ MESSAGE_GAP, giMessagePage, MAX_EMAIL_MESSAGE_PAGE_SIZE ); while( pTempRecord )
                                                                                                                    0, 0, 0 ) )  <= MAX_EMAIL_MESSAGE_PAGE_SIZE  )
                   {
     // now print it
-              iYPositionOnPage += IanDisplayWrappedString(VIEWER_X + MESSAGE_X + 4, ( UINT16 )(
+              iYPositionOnPage += IanDisplayWrappedString(VIEWER_X + MESSAGE_X + 4, ( uint16_t )(
 VIEWER_MESSAGE_BODY_START_Y + 10 +iYPositionOnPage + iViewerPositionY), MESSAGE_WIDTH, MESSAGE_GAP,
 MESSAGE_FONT, MESSAGE_COLOR,pString,0,FALSE, IAN_WRAP_NO_SHADOW); fGoingOffCurrentPage = FALSE;
                   }
@@ -2285,7 +2286,7 @@ void FromCallback(GUI_BUTTON *btn, INT32 iReason) {
 
     SortMessages(SENDER);
 
-    // SpecifyButtonIcon( giSortButton[1] , giArrowsForEmail, UINT16 usVideoObjectIndex,  INT8
+    // SpecifyButtonIcon( giSortButton[1] , giArrowsForEmail, uint16_t usVideoObjectIndex,  INT8
     // bXOffset, INT8 bYOffset, TRUE );
 
     fJustStartedEmail = FALSE;
@@ -2494,32 +2495,32 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, INT32 iViewerY) {
                            MESSAGE_HEADER_WIDTH,
                            (INT16)(MESSAGE_FROM_Y + GetFontHeight(MESSAGE_FONT)), pEmailHeaders[0],
                            MESSAGE_FONT, &usX, &usY);
-  mprintf(usX, MESSAGE_FROM_Y + (UINT16)iViewerY, pEmailHeaders[0]);
+  mprintf(usX, MESSAGE_FROM_Y + (uint16_t)iViewerY, pEmailHeaders[0]);
 
   // the actual from info
   mprintf(MESSAGE_HEADER_X + MESSAGE_HEADER_WIDTH - 13, MESSAGE_FROM_Y + iViewerY,
           pSenderNameList[pMail->ubSender]);
 
   // print date
-  FindFontRightCoordinates(MESSAGE_HEADER_X + 168, (INT16)(MESSAGE_DATE_Y + (UINT16)iViewerY),
+  FindFontRightCoordinates(MESSAGE_HEADER_X + 168, (INT16)(MESSAGE_DATE_Y + (uint16_t)iViewerY),
                            MESSAGE_HEADER_WIDTH,
                            (INT16)(MESSAGE_DATE_Y + GetFontHeight(MESSAGE_FONT)), pEmailHeaders[2],
                            MESSAGE_FONT, &usX, &usY);
-  mprintf(usX, MESSAGE_DATE_Y + (UINT16)iViewerY, pEmailHeaders[2]);
+  mprintf(usX, MESSAGE_DATE_Y + (uint16_t)iViewerY, pEmailHeaders[2]);
 
   // the actual date info
   swprintf(sString, ARR_SIZE(sString), L"%d", ((pMail->iDate) / (24 * 60)));
-  mprintf(MESSAGE_HEADER_X + 235, MESSAGE_DATE_Y + (UINT16)iViewerY, sString);
+  mprintf(MESSAGE_HEADER_X + 235, MESSAGE_DATE_Y + (uint16_t)iViewerY, sString);
 
   // print subject
   FindFontRightCoordinates(MESSAGE_HEADER_X - 20, MESSAGE_SUBJECT_Y, MESSAGE_HEADER_WIDTH,
                            (INT16)(MESSAGE_SUBJECT_Y + GetFontHeight(MESSAGE_FONT)),
                            pEmailHeaders[1], MESSAGE_FONT, &usX, &usY);
-  mprintf(usX, MESSAGE_SUBJECT_Y + (UINT16)iViewerY, pEmailHeaders[1]);
+  mprintf(usX, MESSAGE_SUBJECT_Y + (uint16_t)iViewerY, pEmailHeaders[1]);
 
   // the actual subject info
   // mprintf( , MESSAGE_SUBJECT_Y, pMail->pSubject);
-  IanDisplayWrappedString(SUBJECT_LINE_X + 2, (INT16)(SUBJECT_LINE_Y + 2 + (UINT16)iViewerY),
+  IanDisplayWrappedString(SUBJECT_LINE_X + 2, (INT16)(SUBJECT_LINE_Y + 2 + (uint16_t)iViewerY),
                           SUBJECT_LINE_WIDTH, MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR,
                           pMail->pSubject, 0, FALSE, 0);
 
@@ -2537,7 +2538,7 @@ void DrawEmailMessageDisplayTitleText(INT32 iViewerY) {
   SetFontBackground(FONT_BLACK);
 
   // dsiplay mail viewer title on message viewer
-  mprintf(VIEWER_X + 30, VIEWER_Y + 8 + (UINT16)iViewerY, pEmailTitleText[0]);
+  mprintf(VIEWER_X + 30, VIEWER_Y + 8 + (uint16_t)iViewerY, pEmailTitleText[0]);
 
   return;
 }
@@ -2661,7 +2662,7 @@ void ReDisplayBoxes(void) {
   }
 }
 
-BOOLEAN HandleMailSpecialMessages(UINT16 usMessageId, INT32 *iResults, EmailPtr pMail) {
+BOOLEAN HandleMailSpecialMessages(uint16_t usMessageId, INT32 *iResults, EmailPtr pMail) {
   BOOLEAN fSpecialCase = FALSE;
 
   // this procedure will handle special cases of email messages that are not stored in email.edt, or
@@ -4271,7 +4272,7 @@ void PreProcessEmail(EmailPtr pMail) {
     // get the height of the string, ONLY!...must redisplay ON TOP OF background graphic
     iHeight += IanWrappedStringHeight(
         VIEWER_X + MESSAGE_X + 4,
-        (UINT16)(VIEWER_MESSAGE_BODY_START_Y + iHeight + GetFontHeight(MESSAGE_FONT)),
+        (uint16_t)(VIEWER_MESSAGE_BODY_START_Y + iHeight + GetFontHeight(MESSAGE_FONT)),
         MESSAGE_WIDTH, MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR, pString, 0, FALSE, 0);
 
     // next message record string
@@ -4388,7 +4389,7 @@ void PreProcessEmail(EmailPtr pMail) {
           // now print it
           iYPositionOnPage += IanWrappedStringHeight(
               VIEWER_X + MESSAGE_X + 4,
-              (UINT16)(VIEWER_MESSAGE_BODY_START_Y + 10 + iYPositionOnPage + iViewerPositionY),
+              (uint16_t)(VIEWER_MESSAGE_BODY_START_Y + 10 + iYPositionOnPage + iViewerPositionY),
               MESSAGE_WIDTH, MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR, pString, 0, FALSE,
               IAN_WRAP_NO_SHADOW);
           fGoingOffCurrentPage = FALSE;
@@ -4424,7 +4425,7 @@ void PreProcessEmail(EmailPtr pMail) {
   }
 }
 
-void ModifyInsuranceEmails(UINT16 usMessageId, INT32 *iResults, EmailPtr pMail,
+void ModifyInsuranceEmails(uint16_t usMessageId, INT32 *iResults, EmailPtr pMail,
                            UINT8 ubNumberOfRecords) {
   INT32 iHeight = 0;
   //	wchar_t pString[MAIL_STRING_SIZE/2 + 1];

@@ -97,8 +97,8 @@ BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY);
 // BOOLEAN IsThereAnyOneInThisTown( UINT8 ubTownId );
 
 BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
-                               UINT16 usAdditionalData);
-BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
+                               uint16_t usAdditionalData);
+BOOLEAN OKForSectorExit(INT8 bExitDirection, uint16_t usAdditionalData,
                         uint32_t *puiTraverseTimeInMinutes);
 void SetupNewStrategicGame();
 

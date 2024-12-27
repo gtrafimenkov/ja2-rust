@@ -41,36 +41,36 @@ UINT8 gubStringIndex = 0;
 // //
 // //**************************************************************************
 
-UINT16 TOPIC_MEMORY_MANAGER = INVALID_TOPIC;
-UINT16 TOPIC_FILE_MANAGER = INVALID_TOPIC;
-UINT16 TOPIC_DATABASE_MANAGER = INVALID_TOPIC;
-UINT16 TOPIC_GAME = INVALID_TOPIC;
-UINT16 TOPIC_SGP = INVALID_TOPIC;
-UINT16 TOPIC_VIDEO = INVALID_TOPIC;
-UINT16 TOPIC_INPUT = INVALID_TOPIC;
-UINT16 TOPIC_STACK_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_LIST_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_QUEUE_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_PRILIST_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_HIMAGE = INVALID_TOPIC;
-UINT16 TOPIC_ORDLIST_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_3DENGINE = INVALID_TOPIC;
-UINT16 TOPIC_VIDEOOBJECT = INVALID_TOPIC;
-UINT16 TOPIC_FONT_HANDLER = INVALID_TOPIC;
-UINT16 TOPIC_VIDEOSURFACE = INVALID_TOPIC;
-UINT16 TOPIC_MOUSE_SYSTEM = INVALID_TOPIC;
-UINT16 TOPIC_BUTTON_HANDLER = INVALID_TOPIC;
-UINT16 TOPIC_MUTEX = INVALID_TOPIC;
-UINT16 TOPIC_JA2 = INVALID_TOPIC;
-UINT16 TOPIC_BLIT_QUEUE = INVALID_TOPIC;
-UINT16 TOPIC_JA2OPPLIST = INVALID_TOPIC;
-UINT16 TOPIC_JA2AI = INVALID_TOPIC;
+uint16_t TOPIC_MEMORY_MANAGER = INVALID_TOPIC;
+uint16_t TOPIC_FILE_MANAGER = INVALID_TOPIC;
+uint16_t TOPIC_DATABASE_MANAGER = INVALID_TOPIC;
+uint16_t TOPIC_GAME = INVALID_TOPIC;
+uint16_t TOPIC_SGP = INVALID_TOPIC;
+uint16_t TOPIC_VIDEO = INVALID_TOPIC;
+uint16_t TOPIC_INPUT = INVALID_TOPIC;
+uint16_t TOPIC_STACK_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_LIST_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_QUEUE_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_PRILIST_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_HIMAGE = INVALID_TOPIC;
+uint16_t TOPIC_ORDLIST_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_3DENGINE = INVALID_TOPIC;
+uint16_t TOPIC_VIDEOOBJECT = INVALID_TOPIC;
+uint16_t TOPIC_FONT_HANDLER = INVALID_TOPIC;
+uint16_t TOPIC_VIDEOSURFACE = INVALID_TOPIC;
+uint16_t TOPIC_MOUSE_SYSTEM = INVALID_TOPIC;
+uint16_t TOPIC_BUTTON_HANDLER = INVALID_TOPIC;
+uint16_t TOPIC_MUTEX = INVALID_TOPIC;
+uint16_t TOPIC_JA2 = INVALID_TOPIC;
+uint16_t TOPIC_BLIT_QUEUE = INVALID_TOPIC;
+uint16_t TOPIC_JA2OPPLIST = INVALID_TOPIC;
+uint16_t TOPIC_JA2AI = INVALID_TOPIC;
 
 // uint32_t guiTimerID = 0;
 // UINT8 guiDebugLevels[NUM_TOPIC_IDS];  // don't change this, Luis!!!!
 
 // BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
-// UINT16 *gpDbgTopicPtrs[MAX_TOPICS_ALLOTED];
+// uint16_t *gpDbgTopicPtrs[MAX_TOPICS_ALLOTED];
 
 // // remove debug .txt file
 // void RemoveDebugText(void);
@@ -139,14 +139,14 @@ BOOLEAN DbgInitialize(void) {
   return (TRUE);
 }
 
-void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage);
+void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage);
 
-void DbgShutdown(void) { DbgMessageReal((UINT16)(-1), CLIENT_SHUTDOWN, 0, "SGP Going Down"); }
+void DbgShutdown(void) { DbgMessageReal((uint16_t)(-1), CLIENT_SHUTDOWN, 0, "SGP Going Down"); }
 
 #ifdef SGP_DEBUG
 
-void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage) {
-  //   UINT16 usIndex, usUse;
+void DbgTopicRegistration(UINT8 ubCmd, uint16_t *usTopicID, char *zMessage) {
+  //   uint16_t usIndex, usUse;
   //   BOOLEAN fFound;
 
   //   if (usTopicID == NULL) return;
@@ -203,7 +203,7 @@ void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage) {
 // //**************************************************************************
 
 void DbgClearAllTopics(void) {
-  //   UINT16 usIndex;
+  //   uint16_t usIndex;
 
   //   for (usIndex = 0; usIndex < MAX_TOPICS_ALLOTED; usIndex++) {
   //     gfDebugTopics[usIndex] = FALSE;
@@ -214,11 +214,11 @@ void DbgClearAllTopics(void) {
   //   }
 }
 
-void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
+void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
   printf("%4d / %4d / %4d / %s\n", uiTopicId, uiCommand, uiDebugLevel, strMessage);
 }
 
-// void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
+// void DbgMessageReal(uint16_t uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
 // #ifndef _NO_DEBUG_TXT
 //   FILE *OutFile;
 // #endif
@@ -253,7 +253,7 @@ void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char 
 // //
 // //**************************************************************************
 
-// BOOLEAN DbgSetDebugLevel(UINT16 uiTopicId, UINT8 uiDebugLevel) { return (TRUE); }
+// BOOLEAN DbgSetDebugLevel(uint16_t uiTopicId, UINT8 uiDebugLevel) { return (TRUE); }
 
 // //**************************************************************************
 // //

@@ -175,7 +175,7 @@ UINT8 GetPenaltyForFatigue(struct SOLDIERTYPE *pSoldier) {
   return (ubPercentPenalty);
 }
 
-void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, UINT16 *pusPoints) {
+void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, uint16_t *pusPoints) {
   *pusPoints -= (*pusPoints * GetPenaltyForFatigue(pSoldier)) / 100;
 }
 

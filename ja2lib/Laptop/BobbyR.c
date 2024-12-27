@@ -141,24 +141,24 @@ uint32_t guiWoodBackground;
 uint32_t guiUnderConstructionImage;
 
 /*
-UINT16	gusFirstGunIndex;
-UINT16	gusLastGunIndex;
+uint16_t	gusFirstGunIndex;
+uint16_t	gusLastGunIndex;
 UINT8		gubNumGunPages;
 
-UINT16	gusFirstAmmoIndex;
-UINT16	gusLastAmmoIndex;
+uint16_t	gusFirstAmmoIndex;
+uint16_t	gusLastAmmoIndex;
 UINT8		gubNumAmmoPages;
 
-UINT16	gusFirstMiscIndex;
-UINT16	gusLastMiscIndex;
+uint16_t	gusFirstMiscIndex;
+uint16_t	gusLastMiscIndex;
 UINT8		gubNumMiscPages;
 
-UINT16  gusFirstArmourIndex;
-UINT16  gusLastArmourIndex;
+uint16_t  gusFirstArmourIndex;
+uint16_t  gusLastArmourIndex;
 UINT8		gubNumArmourPages;
 
-UINT16  gusFirstUsedIndex;
-UINT16  gusLastUsedIndex;
+uint16_t  gusFirstUsedIndex;
+uint16_t  gusLastUsedIndex;
 UINT8		gubNumUsedPages;
 */
 
@@ -172,7 +172,7 @@ UINT8 gubBobbyRPages[] = {LAPTOP_MODE_BOBBY_R_USED, LAPTOP_MODE_BOBBY_R_MISC,
 struct MOUSE_REGION gSelectedBobbiesSignMenuRegion[BOBBIES_NUMBER_SIGNS];
 void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, UINT16 *usMouseRegionPosArray,
+BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, uint16_t *usMouseRegionPosArray,
                                struct MOUSE_REGION *MouseRegion);
 BOOLEAN RemoveBobbiesMouseRegion(UINT8 ubNumberRegions, struct MOUSE_REGION *Mouse_Region);
 void HandleBobbyRUnderConstructionAni(BOOLEAN fReset);
@@ -186,26 +186,26 @@ BOOLEAN EnterBobbyR() {
   UINT8 i;
 
   // an array of mouse regions for the bobbies signs.  Top Left corner, bottom right corner
-  UINT16 usMouseRegionPosArray[] = {BOBBIES_USED_SIGN_X,
-                                    BOBBIES_USED_SIGN_Y,
-                                    BOBBIES_USED_SIGN_X + BOBBIES_USED_SIGN_WIDTH,
-                                    BOBBIES_USED_SIGN_Y + BOBBIES_USED_SIGN_HEIGHT,
-                                    BOBBIES_MISC_SIGN_X,
-                                    BOBBIES_MISC_SIGN_Y,
-                                    BOBBIES_MISC_SIGN_X + BOBBIES_MISC_SIGN_WIDTH,
-                                    BOBBIES_MISC_SIGN_Y + BOBBIES_MISC_SIGN_HEIGHT,
-                                    BOBBIES_GUNS_SIGN_X,
-                                    BOBBIES_GUNS_SIGN_Y,
-                                    BOBBIES_GUNS_SIGN_X + BOBBIES_GUNS_SIGN_WIDTH,
-                                    BOBBIES_GUNS_SIGN_Y + BOBBIES_GUNS_SIGN_HEIGHT,
-                                    BOBBIES_AMMO_SIGN_X,
-                                    BOBBIES_AMMO_SIGN_Y,
-                                    BOBBIES_AMMO_SIGN_X + BOBBIES_AMMO_SIGN_WIDTH,
-                                    BOBBIES_AMMO_SIGN_Y + BOBBIES_AMMO_SIGN_HEIGHT,
-                                    BOBBIES_ARMOUR_SIGN_X,
-                                    BOBBIES_ARMOUR_SIGN_Y,
-                                    BOBBIES_ARMOUR_SIGN_X + BOBBIES_ARMOUR_SIGN_WIDTH,
-                                    BOBBIES_ARMOUR_SIGN_Y + BOBBIES_ARMOUR_SIGN_HEIGHT};
+  uint16_t usMouseRegionPosArray[] = {BOBBIES_USED_SIGN_X,
+                                      BOBBIES_USED_SIGN_Y,
+                                      BOBBIES_USED_SIGN_X + BOBBIES_USED_SIGN_WIDTH,
+                                      BOBBIES_USED_SIGN_Y + BOBBIES_USED_SIGN_HEIGHT,
+                                      BOBBIES_MISC_SIGN_X,
+                                      BOBBIES_MISC_SIGN_Y,
+                                      BOBBIES_MISC_SIGN_X + BOBBIES_MISC_SIGN_WIDTH,
+                                      BOBBIES_MISC_SIGN_Y + BOBBIES_MISC_SIGN_HEIGHT,
+                                      BOBBIES_GUNS_SIGN_X,
+                                      BOBBIES_GUNS_SIGN_Y,
+                                      BOBBIES_GUNS_SIGN_X + BOBBIES_GUNS_SIGN_WIDTH,
+                                      BOBBIES_GUNS_SIGN_Y + BOBBIES_GUNS_SIGN_HEIGHT,
+                                      BOBBIES_AMMO_SIGN_X,
+                                      BOBBIES_AMMO_SIGN_Y,
+                                      BOBBIES_AMMO_SIGN_X + BOBBIES_AMMO_SIGN_WIDTH,
+                                      BOBBIES_AMMO_SIGN_Y + BOBBIES_AMMO_SIGN_HEIGHT,
+                                      BOBBIES_ARMOUR_SIGN_X,
+                                      BOBBIES_ARMOUR_SIGN_Y,
+                                      BOBBIES_ARMOUR_SIGN_X + BOBBIES_ARMOUR_SIGN_WIDTH,
+                                      BOBBIES_ARMOUR_SIGN_Y + BOBBIES_ARMOUR_SIGN_HEIGHT};
 
   InitBobbyRWoodBackground();
 
@@ -415,7 +415,7 @@ BOOLEAN DeleteBobbyRWoodBackground() {
 
 BOOLEAN DrawBobbyRWoodBackground() {
   struct VObject *hWoodBackGroundHandle;
-  UINT16 x, y, uiPosX, uiPosY;
+  uint16_t x, y, uiPosX, uiPosY;
 
   // Blt the Wood background
   GetVideoObject(&hWoodBackGroundHandle, guiWoodBackground);
@@ -434,7 +434,7 @@ BOOLEAN DrawBobbyRWoodBackground() {
   return (TRUE);
 }
 
-BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, UINT16 *usMouseRegionPosArray,
+BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, uint16_t *usMouseRegionPosArray,
                                struct MOUSE_REGION *MouseRegion) {
   UINT8 i, ubCount = 0;
 
@@ -473,11 +473,11 @@ void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
 }
 
 /*
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, uint32_t
-uiBackground)
+BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, uint16_t usWidth, uint16_t usHeight,
+uint32_t uiBackground)
 {
   struct VObject* hBackGroundHandle;
-        UINT16	x,y, uiPosX, uiPosY;
+        uint16_t	x,y, uiPosX, uiPosY;
 
         // Blt the Wood background
         GetVideoObject(&hBackGroundHandle, uiBackground);
@@ -500,7 +500,7 @@ VO_BLT_SRCTRANSPARENCY,NULL); uiPosX += usWidth;
 void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
   struct VObject *hPixHandle;
   static uint32_t uiLastTime = 1;
-  static UINT16 usCount = 0;
+  static uint16_t usCount = 0;
   uint32_t uiCurTime = GetJA2Clock();
 
   if (LaptopSaveInfo.fBobbyRSiteCanBeAccessed) return;
@@ -555,8 +555,8 @@ void InitBobbyRayInventory() {
 }
 
 BOOLEAN InitBobbyRayNewInventory() {
-  UINT16 i;
-  UINT16 usBobbyrIndex = 0;
+  uint16_t i;
+  uint16_t usBobbyrIndex = 0;
 
   memset(LaptopSaveInfo.BobbyRayInventory, 0, sizeof(STORE_INVENTORY) * MAXITEMS);
 
@@ -587,8 +587,8 @@ BOOLEAN InitBobbyRayNewInventory() {
 }
 
 BOOLEAN InitBobbyRayUsedInventory() {
-  UINT16 i;
-  UINT16 usBobbyrIndex = 0;
+  uint16_t i;
+  uint16_t usBobbyrIndex = 0;
 
   memset(LaptopSaveInfo.BobbyRayUsedInventory, 0, sizeof(STORE_INVENTORY) * MAXITEMS);
 
@@ -626,7 +626,7 @@ BOOLEAN InitBobbyRayUsedInventory() {
 
 void DailyUpdateOfBobbyRaysNewInventory() {
   INT16 i;
-  UINT16 usItemIndex;
+  uint16_t usItemIndex;
   BOOLEAN fPrevElig;
 
   // simulate other buyers by reducing the current quantity on hand
@@ -682,7 +682,7 @@ void DailyUpdateOfBobbyRaysNewInventory() {
 
 void DailyUpdateOfBobbyRaysUsedInventory() {
   INT16 i;
-  UINT16 usItemIndex;
+  uint16_t usItemIndex;
   BOOLEAN fPrevElig;
 
   // simulate other buyers by reducing the current quantity on hand
@@ -727,7 +727,8 @@ void DailyUpdateOfBobbyRaysUsedInventory() {
 }
 
 // returns the number of items to order
-UINT8 HowManyBRItemsToOrder(UINT16 usItemIndex, UINT8 ubCurrentlyOnHand, UINT8 ubBobbyRayNewUsed) {
+UINT8 HowManyBRItemsToOrder(uint16_t usItemIndex, UINT8 ubCurrentlyOnHand,
+                            UINT8 ubBobbyRayNewUsed) {
   UINT8 ubItemsOrdered = 0;
 
   Assert(usItemIndex < MAXITEMS);
@@ -752,7 +753,7 @@ UINT8 HowManyBRItemsToOrder(UINT16 usItemIndex, UINT8 ubCurrentlyOnHand, UINT8 u
   return (ubItemsOrdered);
 }
 
-void OrderBobbyRItem(UINT16 usItemIndex) {
+void OrderBobbyRItem(uint16_t usItemIndex) {
   uint32_t uiArrivalTime;
 
   // add the new item to the queue.  The new item will arrive in 'uiArrivalTime' minutes.
@@ -761,7 +762,7 @@ void OrderBobbyRItem(UINT16 usItemIndex) {
   AddStrategicEvent(EVENT_UPDATE_BOBBY_RAY_INVENTORY, uiArrivalTime, usItemIndex);
 }
 
-void AddFreshBobbyRayInventory(UINT16 usItemIndex) {
+void AddFreshBobbyRayInventory(uint16_t usItemIndex) {
   INT16 sInventorySlot;
   STORE_INVENTORY *pInventoryArray;
   BOOLEAN fUsed;
@@ -799,7 +800,8 @@ void AddFreshBobbyRayInventory(UINT16 usItemIndex) {
   pInventoryArray[sInventorySlot].ubQtyOnOrder = 0;
 }
 
-INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, UINT16 usItemIndex, BOOLEAN fUsed) {
+INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
+                              BOOLEAN fUsed) {
   INT16 i;
 
   for (i = 0; i < LaptopSaveInfo.usInventoryListLength[fUsed]; i++) {

@@ -38,7 +38,7 @@ void Add3X3Pit(INT32 iMapIndex) {
     ExitGrid.ubGotoSectorX = (UINT8)gWorldSectorX;
     ExitGrid.ubGotoSectorY = (UINT8)gWorldSectorY;
     ExitGrid.ubGotoSectorZ = (UINT8)(gbWorldSectorZ + 1);
-    ExitGrid.usGridNo = (UINT16)iMapIndex;
+    ExitGrid.usGridNo = (uint16_t)iMapIndex;
     AddExitGridToWorld(iMapIndex + 159, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 1, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 161, &ExitGrid);
@@ -87,7 +87,7 @@ void Add5X5Pit(INT32 iMapIndex) {
     ExitGrid.ubGotoSectorX = (UINT8)gWorldSectorX;
     ExitGrid.ubGotoSectorY = (UINT8)gWorldSectorY;
     ExitGrid.ubGotoSectorZ = (UINT8)(gbWorldSectorZ + 1);
-    ExitGrid.usGridNo = (UINT16)iMapIndex;
+    ExitGrid.usGridNo = (uint16_t)iMapIndex;
     AddExitGridToWorld(iMapIndex + 318, &ExitGrid);
     AddExitGridToWorld(iMapIndex + 158, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 2, &ExitGrid);

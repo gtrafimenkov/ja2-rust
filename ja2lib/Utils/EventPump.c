@@ -275,10 +275,10 @@ EV_S_SENDPATHTONETWORK SUpdateNetworkSoldier;
 
 extern BOOLEAN gfAmINetworked;
 
-BOOLEAN AddGameEventToQueue(uint32_t uiEvent, UINT16 usDelay, PTR pEventData, UINT8 ubQueueID);
+BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, UINT8 ubQueueID);
 BOOLEAN ExecuteGameEvent(EVENT *pEvent);
 
-BOOLEAN AddGameEvent(uint32_t uiEvent, UINT16 usDelay, PTR pEventData) {
+BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData) {
   if (usDelay == DEMAND_EVENT_DELAY) {
 // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("AddGameEvent: Sending Local and network #%d",
 // uiEvent));
@@ -308,11 +308,11 @@ BOOLEAN AddGameEvent(uint32_t uiEvent, UINT16 usDelay, PTR pEventData) {
     return (FALSE);
 }
 
-BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, UINT16 usDelay, PTR pEventData) {
+BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, PTR pEventData) {
   return (AddGameEventToQueue(uiEvent, usDelay, pEventData, PRIMARY_EVENT_QUEUE));
 }
 
-BOOLEAN AddGameEventToQueue(uint32_t uiEvent, UINT16 usDelay, PTR pEventData, UINT8 ubQueueID) {
+BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, UINT8 ubQueueID) {
   uint32_t uiDataSize;
 
   // Check range of Event ui

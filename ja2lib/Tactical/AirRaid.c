@@ -111,7 +111,7 @@ typedef struct {
   INT8 bTeam;
   INT8 bSide;
   UINT8 ubAttackerID;
-  UINT16 usAttackingWeapon;
+  uint16_t usAttackingWeapon;
   FLOAT dXPos;
   FLOAT dYPos;
   INT16 sX;
@@ -707,7 +707,7 @@ void DoBombing() {
   INT16 sGridNo, sOldGridNo, sBombGridNo;
 
   INT16 sTargetX, sTargetY;
-  UINT16 usItem;
+  uint16_t usItem;
   INT16 sStrafeX, sStrafeY;
   FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
   BOOLEAN fLocate = FALSE;

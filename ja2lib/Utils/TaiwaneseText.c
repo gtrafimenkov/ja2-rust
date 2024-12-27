@@ -108,11 +108,11 @@ problems as SirTech uses the "@@@" notation.
 
 */
 
-UINT16 ItemNames[MAXITEMS][80] = {
+uint16_t ItemNames[MAXITEMS][80] = {
     L"",
 };
 
-UINT16 ShortItemNames[MAXITEMS][80] = {
+uint16_t ShortItemNames[MAXITEMS][80] = {
     L"",
 };
 
@@ -121,7 +121,7 @@ UINT16 ShortItemNames[MAXITEMS][80] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-UINT16 AmmoCaliber[][20] = {
+uint16_t AmmoCaliber[][20] = {
     L"0",         L".38 cal", L"9mm",    L".45 cal", L".357 cal",
     L"12 gauge",  L"CAWS",    L"5.45mm", L"5.56mm",  L"7.62mm NATO",
     L"7.62mm WP", L"4.7mm",   L"5.7mm",  L"Monster", L"Rocket",
@@ -137,25 +137,25 @@ UINT16 AmmoCaliber[][20] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-UINT16 BobbyRayAmmoCaliber[][20] = {
+uint16_t BobbyRayAmmoCaliber[][20] = {
     L"0",         L".38 cal", L"9mm",    L".45 cal", L".357 cal",
     L"12 gauge",  L"CAWS",    L"5.45mm", L"5.56mm",  L"7.62mm N.",
     L"7.62mm WP", L"4.7mm",   L"5.7mm",  L"Monster", L"Rocket",
     L"",  // dart
 };
 
-UINT16 WeaponType[][30] = {
+uint16_t WeaponType[][30] = {
     L"Other",        L"Pistol",        L"Machine pistol",    L"Submachine gun", L"Rifle",
     L"Sniper rifle", L"Assault rifle", L"Light machine gun", L"Shotgun",
 };
 
-UINT16 TeamTurnString[][STRING_LENGTH] = {
+uint16_t TeamTurnString[][STRING_LENGTH] = {
     L"Player's Turn",  // player's turn
     L"Opponents' Turn", L"Creatures' Turn", L"Militia's Turn", L"Civilians' Turn",
     // planning turn
 };
 
-UINT16 Message[][STRING_LENGTH] = {
+uint16_t Message[][STRING_LENGTH] = {
     L"",
 
     // In the following 8 strings, the %s is the merc's name, and the %d (if any) is a number.
@@ -791,7 +791,7 @@ INT16 gMoneyStatsDesc[][13] = {
 // The health of various creatures, enemies, characters in the game. The numbers following each are
 // for comment only, but represent the precentage of points remaining.
 
-UINT16 zHealthStr[][13] = {
+uint16_t zHealthStr[][13] = {
     L"DYING",      //	>= 0
     L"CRITICAL",   //	>= 15
     L"POOR",       //	>= 30
@@ -815,7 +815,7 @@ CHAR16 gzConsLabel[10] = {
 };
 
 // Conversation options a player has when encountering an NPC
-UINT16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
+uint16_t zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
     L"Come Again?",  // meaning "Repeat yourself"
     L"Friendly",     // approach in a friendly
     L"Direct",       // approach directly - let's get down to business
@@ -825,14 +825,14 @@ UINT16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
 
 // Some NPCs buy, sell or repair items. These different options are available for those NPCs as
 // well.
-UINT16 zDealerStrings[4][SMALL_STRING_LENGTH] = {
+uint16_t zDealerStrings[4][SMALL_STRING_LENGTH] = {
     L"Buy/Sell",
     L"Buy",
     L"Sell",
     L"Repair",
 };
 
-UINT16 zDialogActions[1][SMALL_STRING_LENGTH] = {
+uint16_t zDialogActions[1][SMALL_STRING_LENGTH] = {
     L"Done",
 };
 
@@ -861,7 +861,7 @@ STR16 zVehicleName[] = {
 
 // These are messages Used in the Tactical Screen
 
-UINT16 TacticalStr[][MED_STRING_LENGTH] = {
+uint16_t TacticalStr[][MED_STRING_LENGTH] = {
     L"Air Raid", L"Apply first aid automatically?",
 
     // CAMFIELD NUKE THIS and add quote #66.
@@ -1938,7 +1938,7 @@ STR16 pUpdatePanelButtons[] = {
 
 // Text which appears when everyone on your team is incapacitated and incapable of battle
 
-UINT16 LargeTacticalStr[][LARGE_STRING_LENGTH] = {
+uint16_t LargeTacticalStr[][LARGE_STRING_LENGTH] = {
     L"You have been defeated in this sector!",
     L"The enemy, having no mercy for the team's soul, devours each and every one of you!",
     L"Your unconscious team members have been captured!",
@@ -2973,7 +2973,7 @@ STR16 pMessageStrings[] = {
 #endif
 };
 
-UINT16 ItemPickupHelpPopup[][40] = {
+uint16_t ItemPickupHelpPopup[][40] = {
     L"OK", L"Scroll Up", L"Select All", L"Scroll Down", L"Cancel",
 };
 

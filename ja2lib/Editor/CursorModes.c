@@ -19,11 +19,11 @@
 BOOLEAN fValidCursor = FALSE;
 BOOLEAN fAnchored = FALSE;
 BOOLEAN gfBrushEnabled = TRUE;
-UINT16 gusSelectionWidth = 1, gusPreserveSelectionWidth = 1;
-UINT16 gusSelectionType = SMALLSELECTION;
-UINT16 gusSelectionDensity = 2;
-UINT16 gusSavedSelectionType = SMALLSELECTION;
-UINT16 gusSavedBuildingSelectionType = AREASELECTION;
+uint16_t gusSelectionWidth = 1, gusPreserveSelectionWidth = 1;
+uint16_t gusSelectionType = SMALLSELECTION;
+uint16_t gusSelectionDensity = 2;
+uint16_t gusSavedSelectionType = SMALLSELECTION;
+uint16_t gusSavedBuildingSelectionType = AREASELECTION;
 INT16 sGridX, sGridY;
 INT16 sBadMarker = -1;
 
@@ -197,7 +197,7 @@ void UpdateCursorAreas() {
 }
 
 void ForceAreaSelectionWidth() {
-  UINT16 gusDecSelWidth;
+  uint16_t gusDecSelWidth;
 
   // If the anchor isn't set, we don't want to force the size yet.
   if (!fAnchored) return;

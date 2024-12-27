@@ -771,7 +771,7 @@ BOOLEAN IsMineShutDown(INT8 bMineIndex) {
 
 UINT8 GetHeadMinerIndexForMine(INT8 bMineIndex) {
   UINT8 ubMinerIndex = 0;
-  UINT16 usProfileId = 0;
+  uint16_t usProfileId = 0;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
@@ -790,13 +790,13 @@ UINT8 GetHeadMinerIndexForMine(INT8 bMineIndex) {
   return (0);
 }
 
-UINT16 GetHeadMinerProfileIdForMine(INT8 bMineIndex) {
+uint16_t GetHeadMinerProfileIdForMine(INT8 bMineIndex) {
   return (gHeadMinerData[GetHeadMinerIndexForMine(bMineIndex)].usProfileId);
 }
 
 void IssueHeadMinerQuote(INT8 bMineIndex, UINT8 ubQuoteType) {
   UINT8 ubHeadMinerIndex = 0;
-  UINT16 usHeadMinerProfileId = 0;
+  uint16_t usHeadMinerProfileId = 0;
   INT8 bQuoteNum = 0;
   BOOLEAN fForceMapscreen = FALSE;
   INT16 sXPos, sYPos;

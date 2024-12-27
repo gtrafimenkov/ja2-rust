@@ -39,18 +39,18 @@
 extern struct ITEM_POOL *gpEditingItemPool;
 
 // Simply counts the number of items in the world.  This is used for display purposes.
-UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex,
-                                            UINT16 *pusQuantity);  // wrapper for the next three
-UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity);
-UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency);
-UINT16 CountNumberOfPressureActionsInWorld();
-UINT16 CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID);
+uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex,
+                                              uint16_t *pusQuantity);  // wrapper for the next three
+uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity);
+uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, INT8 bFrequency);
+uint16_t CountNumberOfPressureActionsInWorld();
+uint16_t CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID);
 
 // Finds and selects the next item when right clicking on an item type.  Only works if the
 // item actually exists in the world.
 void FindNextItemOfSelectedType();  // wrapper for the next four
-void SelectNextTriggerWithFrequency(UINT16 usItem, INT8 bFrequency);
-void SelectNextItemOfType(UINT16 usItem);
+void SelectNextTriggerWithFrequency(uint16_t usItem, INT8 bFrequency);
+void SelectNextItemOfType(uint16_t usItem);
 void SelectNextPressureAction();
 void SelectNextKeyOfType(UINT8 ubKeyID);
 
@@ -69,7 +69,7 @@ struct ITEM_POOL *gpItemPool = NULL;
 void BuildItemPoolList() {
   struct ITEM_POOL *temp;
   IPListNode *tail;
-  UINT16 i;
+  uint16_t i;
   KillItemPoolList();
   for (i = 0; i < WORLD_MAX; i++) {
     if (GetItemPool(i, &temp, 0)) {
@@ -185,10 +185,10 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
   SGPRect SaveRect, NewRect;
   struct VObject *hVObject;
   uint32_t uiVideoObjectIndex;
-  UINT16 usUselessWidth, usUselessHeight;
+  uint16_t usUselessWidth, usUselessHeight;
   INT16 sWidth, sOffset, sStart;
   INT16 i, x, y;
-  UINT16 usCounter;
+  uint16_t usCounter;
   CHAR16 pStr[100];  //, pStr2[ 100 ];
   CHAR16 pItemName[SIZE_ITEM_NAME];
   UINT8 ubBitDepth;
@@ -263,7 +263,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
       return;
   }
   // Allocate memory to store all the item pointers.
-  eInfo.pusItemIndex = (UINT16 *)MemAlloc(sizeof(UINT16) * eInfo.sNumItems);
+  eInfo.pusItemIndex = (uint16_t *)MemAlloc(sizeof(uint16_t) * eInfo.sNumItems);
 
   // Disable the appropriate scroll buttons based on the saved scroll index if applicable
   // Left most scroll position
@@ -292,8 +292,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
 
   // copy a blank chunk of the editor interface to the new buffer.
   for (i = 0; i < eInfo.sWidth; i += 60) {
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0 + i,
-                    0, 100, 360, 60, 80);
+    Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                    0 + i, 0, 100, 360, 60, 80);
   }
 
   UnLockVideoSurface(eInfo.uiBuffer);
@@ -323,8 +323,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
       SetFontDestBuffer(eInfo.uiBuffer, 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
       swprintf(pStr, ARR_SIZE(pStr), L"%S", LockTable[i].ubEditorName);
-      DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr, FONT_BLACK,
-                           TRUE, CENTER_JUSTIFIED);
+      DisplayWrappedString(x, (uint16_t)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,
+                           FONT_BLACK, TRUE, CENTER_JUSTIFIED);
 
       // Calculate the center position of the graphic in a 60 pixel wide area.
       sWidth = hVObject->pETRLEObject[item->ubGraphicNum].usWidth;
@@ -437,7 +437,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
                 swprintf(pStr, ARR_SIZE(pStr), L"Action%d", (i - 4) / 2);
             }
           }
-          DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,
+          DisplayWrappedString(x, (uint16_t)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,
                                FONT_BLACK, TRUE, CENTER_JUSTIFIED);
 
           // Calculate the center position of the graphic in a 60 pixel wide area.
@@ -488,8 +488,8 @@ void RenderEditorItemsInfo() {
   INT16 i;
   INT16 minIndex, maxIndex;
   INT16 sWidth, sOffset, sStart, x, y;
-  UINT16 usNumItems;
-  UINT16 usQuantity;
+  uint16_t usNumItems;
+  uint16_t usQuantity;
 
   if (!eInfo.fActive) {
     return;
@@ -503,7 +503,7 @@ void RenderEditorItemsInfo() {
   pSrcBuf = LockVideoSurface(eInfo.uiBuffer, &uiSrcPitchBYTES);
 
   // copy the items buffer to the editor bar
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 110,
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 110,
                   360, 60 * eInfo.sScrollIndex, 0, 360, 80);
 
   UnLockVideoSurface(eInfo.uiBuffer);
@@ -622,9 +622,9 @@ void ClearEditorItemsInfo() {
   }
 }
 
-void HandleItemsPanel(UINT16 usScreenX, UINT16 usScreenY, INT8 bEvent) {
+void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, INT8 bEvent) {
   INT16 sIndex;
-  UINT16 usQuantity;
+  uint16_t usQuantity;
   // Calc base index from scrolling index
   sIndex = eInfo.sScrollIndex * 2;
   // Determine if the index is in the first row or second row from mouse YPos.
@@ -705,7 +705,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
   INT8 bVisibility = INVISIBLE;
   BOOLEAN fFound = FALSE;
   IPListNode *pIPCurr, *pIPPrev;
-  UINT16 usFlags;
+  uint16_t usFlags;
 
   // Extract the currently selected item.
   SpecifyItemToEdit(NULL, -1);
@@ -1007,7 +1007,7 @@ void SelectPrevItemInPool() {
 }
 
 void FindNextItemOfSelectedType() {
-  UINT16 usItem;
+  uint16_t usItem;
   usItem = eInfo.pusItemIndex[eInfo.sSelItemIndex];
   if (usItem == ACTION_ITEM || usItem == SWITCH) {
     if (eInfo.sSelItemIndex < PRESSURE_ACTION_ID) {
@@ -1031,7 +1031,7 @@ void FindNextItemOfSelectedType() {
   }
 }
 
-void SelectNextItemOfType(UINT16 usItem) {
+void SelectNextItemOfType(uint16_t usItem) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1135,7 +1135,7 @@ void SelectNextKeyOfType(UINT8 ubKeyID) {
   }
 }
 
-void SelectNextTriggerWithFrequency(UINT16 usItem, INT8 bFrequency) {
+void SelectNextTriggerWithFrequency(uint16_t usItem, INT8 bFrequency) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1239,7 +1239,7 @@ void SelectNextPressureAction() {
   }
 }
 
-UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity) {
+uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   INT16 num = 0;
@@ -1259,10 +1259,10 @@ UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity) {
   return num;
 }
 
-UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency) {
+uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, INT8 bFrequency) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  UINT16 num = 0;
+  uint16_t num = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
     GetItemPool(pIPCurr->sGridNo, &pItemPool, 0);
@@ -1278,10 +1278,10 @@ UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency) {
   return num;
 }
 
-UINT16 CountNumberOfPressureActionsInWorld() {
+uint16_t CountNumberOfPressureActionsInWorld() {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  UINT16 num = 0;
+  uint16_t num = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
     GetItemPool(pIPCurr->sGridNo, &pItemPool, 0);
@@ -1297,8 +1297,8 @@ UINT16 CountNumberOfPressureActionsInWorld() {
   return num;
 }
 
-UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuantity) {
-  UINT16 usNumPlacements;
+uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *pusQuantity) {
+  uint16_t usNumPlacements;
   if (eInfo.uiItemType == TBAR_MODE_ITEM_TRIGGERS) {  // find identical items with same frequency
     INT8 bFrequency;
     if (usEInfoIndex < PRESSURE_ACTION_ID) {
@@ -1327,7 +1327,7 @@ UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuan
   return usNumPlacements;
 }
 
-UINT16 CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID) {
+uint16_t CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   INT16 num = 0;

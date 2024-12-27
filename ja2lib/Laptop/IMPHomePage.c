@@ -55,7 +55,7 @@ CHAR16 pPlayerActivationString[32];
 
 // position within player activation string
 INT32 iStringPos = 0;
-UINT16 uiCursorPosition = IMP_PLAYER_ACTIVATION_STRING_X;
+uint16_t uiCursorPosition = IMP_PLAYER_ACTIVATION_STRING_X;
 
 // has a new char been added or deleted?
 BOOLEAN fNewCharInActivationString = FALSE;
@@ -195,7 +195,7 @@ void DisplayActivationStringCursor(void) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // draw line in current state
-  LineDraw(TRUE, (UINT16)uiCursorPosition, CURSOR_Y, (UINT16)uiCursorPosition,
+  LineDraw(TRUE, (uint16_t)uiCursorPosition, CURSOR_Y, (uint16_t)uiCursorPosition,
            CURSOR_Y + CURSOR_HEIGHT,
            Get16BPPColor(FROMRGB(GlowColorsList[iCurrentState][0], GlowColorsList[iCurrentState][1],
                                  GlowColorsList[iCurrentState][2])),
@@ -204,7 +204,7 @@ void DisplayActivationStringCursor(void) {
   // unlock frame buffer
   UnLockVideoSurface(FRAME_BUFFER);
 
-  InvalidateRegion((UINT16)uiCursorPosition, CURSOR_Y, (UINT16)uiCursorPosition + 1,
+  InvalidateRegion((uint16_t)uiCursorPosition, CURSOR_Y, (uint16_t)uiCursorPosition + 1,
                    CURSOR_Y + CURSOR_HEIGHT + 1);
 
   return;

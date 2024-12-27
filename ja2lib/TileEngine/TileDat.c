@@ -201,7 +201,7 @@ STR gTileSurfaceName[NUMBEROFTILETYPES] = {
     "BADMARKER", "GRING", "ROTATINGKEY", "SELRING", "SPECIAL", "BULLET", "MISS1", "MISS2", "MISS3",
     "WIREFRAME"};
 
-UINT16 gNumTilesPerType[NUMBEROFTILETYPES] = {
+uint16_t gNumTilesPerType[NUMBEROFTILETYPES] = {
     FIRSTTEXTURE35 - FIRSTTEXTURE1 + 1, SECONDTEXTURE35 - SECONDTEXTURE1 + 1,
     THIRDTEXTURE35 - THIRDTEXTURE1 + 1, FOURTHTEXTURE35 - FOURTHTEXTURE1 + 1,
     FIFTHTEXTURE35 - FIFTHTEXTURE1 + 1, SIXTHTEXTURE37 - SIXTHTEXTURE1 + 1,
@@ -331,7 +331,7 @@ UINT8 gTileTypeLogicalHeight[NUMBEROFTILETYPES] = {
     10   // Second water
 };
 
-void SetSpecificDatabaseValues(UINT16 usType, UINT16 uiDatabaseElem, TILE_ELEMENT *TileElement,
+void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT *TileElement,
                                BOOLEAN fUseRaisedObjectType) {
   UINT8 ubLoop;
   INT16 sIndexDiff;

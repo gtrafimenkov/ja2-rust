@@ -180,9 +180,9 @@ extern BOOLEAN gfRenderMap;
 BOOLEAN gfViewEnemies = TRUE;
 INT8 gbViewLevel = 0;
 
-UINT16 gusBlue;
-UINT16 gusLtBlue;
-UINT16 gusDkBlue;
+uint16_t gusBlue;
+uint16_t gusLtBlue;
+uint16_t gusDkBlue;
 
 INT16 gsAINumAdmins = -1;
 INT16 gsAINumTroops = -1;
@@ -810,8 +810,8 @@ void RenderViewer() {
             pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
             ClipRect.iLeft = VIEWER_LEFT + x * VIEWER_CELLW;
             ClipRect.iRight = ClipRect.iLeft + VIEWER_CELLW - 1;
-            Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-            Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+            Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+            Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
             UnLockVideoSurface(FRAME_BUFFER);
           }
         }
@@ -1315,8 +1315,8 @@ CHAR16 EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
 #define POP_TABLE_Y_GAP 10
 
 void PrintEnemyPopTable() {
-  UINT16 usX, usY;
-  UINT16 usEnemyPopTable[TABLE_ENEMY_RANKS][POP_TABLE_ENEMY_TYPES];
+  uint16_t usX, usY;
+  uint16_t usEnemyPopTable[TABLE_ENEMY_RANKS][POP_TABLE_ENEMY_TYPES];
   uint32_t uiSector = 0;
   UINT8 ubEnemyRank;
   UINT8 ubEnemyType;
@@ -1330,7 +1330,7 @@ void PrintEnemyPopTable() {
   // count how many enemies of each type & rank there are
 
   // this is quite inaccurate, since elites can also come from the pool
-  usEnemyPopTable[ENEMY_RANK_TROOP][ENEMY_TYPE_POOL] += (UINT16)giReinforcementPool;
+  usEnemyPopTable[ENEMY_RANK_TROOP][ENEMY_TYPE_POOL] += (uint16_t)giReinforcementPool;
 
   // count stationary enemies (garrisons)
   for (uiSector = 0; uiSector < 256; uiSector++) {
@@ -1424,14 +1424,14 @@ void PrintEnemyPopTable() {
   // print horizontal labels
   for (ubEnemyRank = 0; ubEnemyRank < TABLE_ENEMY_RANKS; ubEnemyRank++) {
     DrawTextToScreen(EnemyRankString[ubEnemyRank],
-                     (UINT16)(usX + POP_TABLE_X_OFFSET + (POP_TABLE_X_GAP * ubEnemyRank)), usY,
+                     (uint16_t)(usX + POP_TABLE_X_OFFSET + (POP_TABLE_X_GAP * ubEnemyRank)), usY,
                      POP_TABLE_X_GAP, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
   // print vertical labels
   for (ubEnemyType = 0; ubEnemyType < POP_TABLE_ENEMY_TYPES; ubEnemyType++) {
     DrawTextToScreen(EnemyTypeString[ubEnemyType], usX,
-                     (UINT16)(usY + POP_TABLE_Y_GAP + (POP_TABLE_Y_GAP * ubEnemyType)),
+                     (uint16_t)(usY + POP_TABLE_Y_GAP + (POP_TABLE_Y_GAP * ubEnemyType)),
                      POP_TABLE_X_OFFSET, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
@@ -1455,8 +1455,8 @@ void PrintEnemyPopTable() {
 
       swprintf(wTempString, ARR_SIZE(wTempString), wPrintSpec,
                usEnemyPopTable[ubEnemyRank][ubEnemyType]);
-      DrawTextToScreen(wTempString, (UINT16)(usX + (POP_TABLE_X_GAP * ubEnemyRank)),
-                       (UINT16)(usY + (POP_TABLE_Y_GAP * ubEnemyType)), POP_TABLE_X_GAP,
+      DrawTextToScreen(wTempString, (uint16_t)(usX + (POP_TABLE_X_GAP * ubEnemyRank)),
+                       (uint16_t)(usY + (POP_TABLE_Y_GAP * ubEnemyType)), POP_TABLE_X_GAP,
                        FONT10ARIAL, FONT_YELLOW, 0, FALSE, RIGHT_JUSTIFIED);
     }
   }
@@ -1482,8 +1482,8 @@ CHAR16 EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
 #define KILLED_TABLE_Y_GAP 10
 
 void PrintEnemiesKilledTable() {
-  UINT16 usX, usY;
-  UINT16 usEnemiesKilledTable[TABLE_ENEMY_RANKS][KILLED_TABLE_ROWS];
+  uint16_t usX, usY;
+  uint16_t usEnemiesKilledTable[TABLE_ENEMY_RANKS][KILLED_TABLE_ROWS];
   UINT8 ubEnemyRank;
   UINT8 ubKillType;
   CHAR16 wPrintSpec[10];
@@ -1549,14 +1549,14 @@ void PrintEnemiesKilledTable() {
   // print horizontal labels
   for (ubEnemyRank = 0; ubEnemyRank < TABLE_ENEMY_RANKS; ubEnemyRank++) {
     DrawTextToScreen(EnemyRankString[ubEnemyRank],
-                     (UINT16)(usX + KILLED_TABLE_X_OFFSET + (KILLED_TABLE_X_GAP * ubEnemyRank)),
+                     (uint16_t)(usX + KILLED_TABLE_X_OFFSET + (KILLED_TABLE_X_GAP * ubEnemyRank)),
                      usY, KILLED_TABLE_X_GAP, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
   // print vertical labels
   for (ubKillType = 0; ubKillType < KILLED_TABLE_ROWS; ubKillType++) {
     DrawTextToScreen(EnemiesKilledString[ubKillType], usX,
-                     (UINT16)(usY + KILLED_TABLE_Y_GAP + (KILLED_TABLE_Y_GAP * ubKillType)),
+                     (uint16_t)(usY + KILLED_TABLE_Y_GAP + (KILLED_TABLE_Y_GAP * ubKillType)),
                      KILLED_TABLE_X_OFFSET, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
@@ -1580,8 +1580,8 @@ void PrintEnemiesKilledTable() {
 
       swprintf(wTempString, ARR_SIZE(wTempString), wPrintSpec,
                usEnemiesKilledTable[ubEnemyRank][ubKillType]);
-      DrawTextToScreen(wTempString, (UINT16)(usX + (KILLED_TABLE_X_GAP * ubEnemyRank)),
-                       (UINT16)(usY + (KILLED_TABLE_Y_GAP * ubKillType)), KILLED_TABLE_X_GAP,
+      DrawTextToScreen(wTempString, (uint16_t)(usX + (KILLED_TABLE_X_GAP * ubEnemyRank)),
+                       (uint16_t)(usY + (KILLED_TABLE_Y_GAP * ubKillType)), KILLED_TABLE_X_GAP,
                        FONT10ARIAL, FONT_YELLOW, 0, FALSE, RIGHT_JUSTIFIED);
     }
   }

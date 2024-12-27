@@ -572,14 +572,14 @@ void DisplayFullNameStringCursor(void) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // draw line in current state
-  LineDraw(TRUE, (UINT16)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y - 3,
-           (UINT16)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y + CURSOR_HEIGHT - 2,
+  LineDraw(TRUE, (uint16_t)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y - 3,
+           (uint16_t)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y + CURSOR_HEIGHT - 2,
            Get16BPPColor(FROMRGB(GlowColorsList[iCurrentState][0], GlowColorsList[iCurrentState][1],
                                  GlowColorsList[iCurrentState][2])),
            pDestBuf);
 
-  InvalidateRegion((UINT16)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y - 3,
-                   (UINT16)uiFullNameCursorPosition + 1,
+  InvalidateRegion((uint16_t)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y - 3,
+                   (uint16_t)uiFullNameCursorPosition + 1,
                    FULL_NAME_CURSOR_Y + CURSOR_HEIGHT + 1 - 2);
 
   // unlock frame buffer
@@ -628,14 +628,14 @@ void DisplayNickNameStringCursor(void) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // draw line in current state
-  LineDraw(TRUE, (UINT16)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y,
-           (UINT16)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y + CURSOR_HEIGHT,
+  LineDraw(TRUE, (uint16_t)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y,
+           (uint16_t)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y + CURSOR_HEIGHT,
            Get16BPPColor(FROMRGB(GlowColorsList[iCurrentState][0], GlowColorsList[iCurrentState][1],
                                  GlowColorsList[iCurrentState][2])),
            pDestBuf);
 
-  InvalidateRegion((UINT16)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y,
-                   (UINT16)uiNickNameCursorPosition + 1, NICK_NAME_CURSOR_Y + CURSOR_HEIGHT + 1);
+  InvalidateRegion((uint16_t)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y,
+                   (uint16_t)uiNickNameCursorPosition + 1, NICK_NAME_CURSOR_Y + CURSOR_HEIGHT + 1);
 
   // unlock frame buffer
   UnLockVideoSurface(FRAME_BUFFER);
@@ -739,7 +739,7 @@ void DisplayMaleGlowCursor(void) {
                             GlowColorsList[iCurrentState][2])),
       pDestBuf);
 
-  InvalidateRegion((UINT16)MALE_BOX_X, MALE_BOX_Y, MALE_BOX_X + MALE_BOX_WIDTH + 1,
+  InvalidateRegion((uint16_t)MALE_BOX_X, MALE_BOX_Y, MALE_BOX_X + MALE_BOX_WIDTH + 1,
                    MALE_BOX_Y + MALE_BOX_HEIGHT + 1);
 
   // unlock frame buffer
@@ -794,7 +794,7 @@ void DisplayFemaleGlowCursor(void) {
                             GlowColorsList[iCurrentState][2])),
       pDestBuf);
 
-  InvalidateRegion((UINT16)FEMALE_BOX_X, MALE_BOX_Y, FEMALE_BOX_X + MALE_BOX_WIDTH + 1,
+  InvalidateRegion((uint16_t)FEMALE_BOX_X, MALE_BOX_Y, FEMALE_BOX_X + MALE_BOX_WIDTH + 1,
                    MALE_BOX_Y + MALE_BOX_HEIGHT + 1);
 
   // unlock frame buffer

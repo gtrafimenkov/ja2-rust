@@ -19,8 +19,8 @@
 
 BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette);
 BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
-                               struct SGPPaletteEntry *pDestPalette, UINT16 usRed, UINT16 usGreen,
-                               UINT16 usBlue, BOOLEAN fMono);
+                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
+                               uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono);
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
                   UINT8 *pTable);
 void FindMaskIndecies(UINT8 *, UINT8 *, UINT8 *);
@@ -28,9 +28,9 @@ void FindMaskIndecies(UINT8 *, UINT8 *, UINT8 *);
 struct SGPPaletteEntry Shaded8BPPPalettes[HVOBJECT_SHADE_TABLES + 3][256];
 UINT8 ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
 
-UINT16 IntensityTable[65536];
-UINT16 ShadeTable[65536];
-UINT16 White16BPPPalette[256];
+uint16_t IntensityTable[65536];
+uint16_t ShadeTable[65536];
+uint16_t White16BPPPalette[256];
 FLOAT guiShadePercent = (FLOAT)0.48;
 FLOAT guiBrightPercent = (FLOAT)1.1;
 
@@ -79,8 +79,8 @@ BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette) {
 }
 
 BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
-                               struct SGPPaletteEntry *pDestPalette, UINT16 usRed, UINT16 usGreen,
-                               UINT16 usBlue, BOOLEAN fMono) {
+                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
+                               uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono) {
   uint32_t cnt, lumin;
   uint32_t rmod, gmod, bmod;
 
@@ -110,7 +110,7 @@ BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
 
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
                   UINT8 *pTable) {
-  UINT16 usCurIndex, usCurDelta, usCurCount;
+  uint16_t usCurIndex, usCurDelta, usCurCount;
   uint32_t *pSavedPtr;
 
 #ifdef _WINDOWS
@@ -207,8 +207,8 @@ NotThisCol:
 
 **********************************************************************************************/
 void BuildShadeTable(void) {
-  UINT16 red, green, blue;
-  UINT16 index;
+  uint16_t red, green, blue;
+  uint16_t index;
 
   for (red = 0; red < 256; red += 4)
     for (green = 0; green < 256; green += 4)
@@ -233,8 +233,8 @@ void BuildShadeTable(void) {
 
 **********************************************************************************************/
 void BuildIntensityTable(void) {
-  UINT16 red, green, blue;
-  UINT16 index;
+  uint16_t red, green, blue;
+  uint16_t index;
   FLOAT dShadedPercent = (FLOAT)0.80;
 
 #if 0

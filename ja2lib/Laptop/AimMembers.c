@@ -414,7 +414,7 @@ BOOLEAN gfIsAnsweringMachineActive;
 BOOLEAN gfRenderTopLevel;
 BOOLEAN gfStopMercFromTalking;
 
-UINT16 usAimMercSpeechDuration = 0;
+uint16_t usAimMercSpeechDuration = 0;
 
 BOOLEAN gfIsNewMailFlagSet = FALSE;
 
@@ -512,9 +512,9 @@ BOOLEAN DisplayVideoConferencingDisplay();
 BOOLEAN DisplayMercsVideoFace();
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown);
 uint32_t DisplayMercChargeAmount();
-BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, UINT16 usPosX,
-                                    UINT16 usPosY, UINT8 ubData);
-BOOLEAN InitVideoFaceTalking(UINT8 ubMercID, UINT16 usQuoteNum);
+BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, uint16_t usPosX,
+                                    uint16_t usPosY, UINT8 ubData);
+BOOLEAN InitVideoFaceTalking(UINT8 ubMercID, uint16_t usQuoteNum);
 BOOLEAN InitVideoFace(UINT8 ubMercID);
 BOOLEAN DisplaySnowBackground();
 UINT8 WillMercAcceptCall();
@@ -538,9 +538,9 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons(BOOLEAN fEnable);
 BOOLEAN CanMercBeHired();
 BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit);
 BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops);
-void DisplayDots(UINT16 usNameX, UINT16 usNameY, UINT16 usStatX, STR16 pString);
+void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, STR16 pString);
 
-void DelayMercSpeech(UINT8 ubMercID, UINT16 usQuoteNum, UINT16 usDelay, BOOLEAN fNewQuote,
+void DelayMercSpeech(UINT8 ubMercID, uint16_t usQuoteNum, uint16_t usDelay, BOOLEAN fNewQuote,
                      BOOLEAN fReset);
 void DisplayPopUpBoxExplainingMercArrivalLocationAndTimeCallBack(UINT8 bExitValue);
 void DisplayAimMemberClickOnFaceHelpText();
@@ -859,7 +859,7 @@ BOOLEAN RenderAIMMembers() {
   struct VObject *hStatsHandle;
   struct VObject *hPriceHandle;
   struct VObject *hWeaponBoxHandle;
-  UINT16 x, uiPosX;
+  uint16_t x, uiPosX;
   wchar_t wTemp[50];
 
   DrawAimDefaults();
@@ -958,7 +958,7 @@ BOOLEAN RenderAIMMembers() {
   return (TRUE);
 }
 
-BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLocY,
+BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
                              uint32_t ulFont, UINT8 ubColor) {
   wchar_t sStr[10];
 
@@ -970,8 +970,8 @@ BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 u
   return (TRUE);
 }
 
-BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLocY, uint32_t ulFont,
-                          UINT8 ubColor) {
+BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, uint16_t usLocX, uint16_t usLocY,
+                          uint32_t ulFont, UINT8 ubColor) {
   wchar_t sStr[10];
 
   swprintf(sStr, ARR_SIZE(sStr), L"%d", iNumber);
@@ -1041,7 +1041,7 @@ BOOLEAN UpdateMercInfo(void) {
                               CENTER_JUSTIFIED | DONT_DISPLAY_TEXT) /
          GetFontHeight(AIM_FONT12ARIAL)) > 2) {
       DisplayWrappedString(AIM_MEDICAL_DEPOSIT_X,
-                           (UINT16)(AIM_MEDICAL_DEPOSIT_Y - GetFontHeight(AIM_FONT12ARIAL)),
+                           (uint16_t)(AIM_MEDICAL_DEPOSIT_Y - GetFontHeight(AIM_FONT12ARIAL)),
                            AIM_MEDICAL_DEPOSIT_WIDTH, 2, AIM_FONT12ARIAL, AIM_M_COLOR_DYNAMIC_TEXT,
                            sMedicalString, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
     } else
@@ -1071,7 +1071,7 @@ BOOLEAN UpdateMercInfo(void) {
 BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   HWFILE hFile;
   uint32_t uiBytesRead;
-  UINT16 i;
+  uint16_t i;
   uint32_t uiStartSeekAmount;
 
   hFile = FileMan_Open(MERCBIOSFILENAME, FILE_ACCESS_READ, FALSE);
@@ -1238,7 +1238,7 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
 BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
   UINT8 i;
   INT16 PosX, PosY, sCenX, sCenY;
-  UINT16 usItem;
+  uint16_t usItem;
   INVTYPE *pItem;
   struct VObject *hVObject;
   uint32_t usHeight, usWidth;
@@ -1281,11 +1281,11 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       // if there are more then 1 piece of equipment in the current slot, display how many there are
       if (gMercProfiles[ubMercID].bInvNumber[i] > 1) {
         wchar_t zTempStr[32];
-        //				UINT16	usWidthOfNumber;
+        //				uint16_t	usWidthOfNumber;
 
         swprintf(zTempStr, ARR_SIZE(zTempStr), L"x%d", gMercProfiles[ubMercID].bInvNumber[i]);
 
-        DrawTextToScreen(zTempStr, (UINT16)(PosX - 1), (UINT16)(PosY + 20),
+        DrawTextToScreen(zTempStr, (uint16_t)(PosX - 1), (uint16_t)(PosY + 20),
                          AIM_MEMBER_WEAPON_NAME_WIDTH, AIM_M_FONT_DYNAMIC_TEXT,
                          AIM_M_WEAPON_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
       } else {
@@ -1294,18 +1294,18 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       wcscpy(gzItemName, ShortItemNames[usItem]);
 
       // if this will only be a single line, center it in the box
-      if ((DisplayWrappedString((UINT16)(PosX - 1), AIM_MEMBER_WEAPON_NAME_Y,
+      if ((DisplayWrappedString((uint16_t)(PosX - 1), AIM_MEMBER_WEAPON_NAME_Y,
                                 AIM_MEMBER_WEAPON_NAME_WIDTH, 2, AIM_M_WEAPON_TEXT_FONT,
                                 AIM_M_WEAPON_TEXT_COLOR, gzItemName, FONT_MCOLOR_BLACK, FALSE,
                                 CENTER_JUSTIFIED | DONT_DISPLAY_TEXT) /
            GetFontHeight(AIM_M_WEAPON_TEXT_FONT)) == 1)
         DisplayWrappedString(
-            (UINT16)(PosX - 1),
-            (UINT16)(AIM_MEMBER_WEAPON_NAME_Y + GetFontHeight(AIM_M_WEAPON_TEXT_FONT) / 2),
+            (uint16_t)(PosX - 1),
+            (uint16_t)(AIM_MEMBER_WEAPON_NAME_Y + GetFontHeight(AIM_M_WEAPON_TEXT_FONT) / 2),
             AIM_MEMBER_WEAPON_NAME_WIDTH, 2, AIM_M_WEAPON_TEXT_FONT, AIM_M_WEAPON_TEXT_COLOR,
             gzItemName, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
       else
-        DisplayWrappedString((UINT16)(PosX - 1), AIM_MEMBER_WEAPON_NAME_Y,
+        DisplayWrappedString((uint16_t)(PosX - 1), AIM_MEMBER_WEAPON_NAME_Y,
                              AIM_MEMBER_WEAPON_NAME_WIDTH, 2, AIM_M_WEAPON_TEXT_FONT,
                              AIM_M_WEAPON_TEXT_COLOR, gzItemName, FONT_MCOLOR_BLACK, FALSE,
                              CENTER_JUSTIFIED);
@@ -1622,14 +1622,14 @@ UINT8 GetStatColor(INT8 bStat) {
 }
 
 // displays the dots between the stats and the stat name
-void DisplayDots(UINT16 usNameX, UINT16 usNameY, UINT16 usStatX, STR16 pString) {
-  UINT16 usStringLength = StringPixLength(pString, AIM_M_FONT_STATIC_TEXT);
+void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, STR16 pString) {
+  uint16_t usStringLength = StringPixLength(pString, AIM_M_FONT_STATIC_TEXT);
   INT16 i;
-  UINT16 usPosX;
+  uint16_t usPosX;
 
   usPosX = usStatX;
   for (i = usNameX + usStringLength; i <= usPosX; usPosX -= 7) {
-    DrawTextToScreen(L".", (UINT16)usPosX, usNameY, 0, AIM_M_FONT_STATIC_TEXT,
+    DrawTextToScreen(L".", (uint16_t)usPosX, usNameY, 0, AIM_M_FONT_STATIC_TEXT,
                      AIM_M_COLOR_STATIC_TEXT, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   }
 }
@@ -1892,9 +1892,9 @@ BOOLEAN DisplayVideoConferencingDisplay() {
 
   //	if( gfMercIsTalking && !gfIsAnsweringMachineActive)
   if (gfMercIsTalking && gGameSettings.fOptions[TOPTION_SUBTITLES]) {
-    UINT16 usActualWidth;
-    UINT16 usActualHeight;
-    UINT16 usPosX;
+    uint16_t usActualWidth;
+    uint16_t usActualHeight;
+    uint16_t usPosX;
 
     SET_USE_WINFONTS(TRUE);
     SET_WINFONT(giSubTitleWinFont);
@@ -1935,7 +1935,7 @@ BOOLEAN DisplayMercsVideoFace() {
 }
 
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
-  UINT16 i, usPosY, usPosX;
+  uint16_t i, usPosY, usPosX;
 
   // First draw the select light for the contract length buttons
   usPosY = AIM_MEMBER_BUY_CONTRACT_LENGTH_Y;
@@ -2048,11 +2048,11 @@ uint32_t DisplayMercChargeAmount() {
   return (giContractAmount);
 }
 
-BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, UINT16 usPosX,
-                                    UINT16 usPosY, UINT8 ubData) {
+BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, uint16_t usPosX,
+                                    uint16_t usPosY, UINT8 ubData) {
   VOBJECT_DESC VObjectDesc;
   struct VObject *hPopupBoxHandle;
-  static UINT16 usPopUpBoxPosX, usPopUpBoxPosY;
+  static uint16_t usPopUpBoxPosX, usPopUpBoxPosY;
   static wchar_t sPopUpString1[400], sPopUpString2[400];
   static BOOLEAN fPopUpBoxActive = FALSE;
   ;
@@ -2091,8 +2091,8 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
       guiPopUpOkButton = CreateIconAndTextButton(
           guiPopUpImage, VideoConfercingText[AIM_MEMBER_OK], FONT14ARIAL, AIM_POPUP_BOX_COLOR,
           AIM_M_VIDEO_NAME_SHADOWCOLOR, AIM_POPUP_BOX_COLOR, AIM_M_VIDEO_NAME_SHADOWCOLOR,
-          TEXT_CJUSTIFIED, (UINT16)(usPosX + AIM_POPUP_BOX_BUTTON_OFFSET_X),
-          (UINT16)(usPosY + AIM_POPUP_BOX_BUTTON_OFFSET_Y), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH + 5,
+          TEXT_CJUSTIFIED, (uint16_t)(usPosX + AIM_POPUP_BOX_BUTTON_OFFSET_X),
+          (uint16_t)(usPosY + AIM_POPUP_BOX_BUTTON_OFFSET_Y), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH + 5,
           DEFAULT_MOVE_CALLBACK, BtnPopUpOkButtonCallback);
       SetButtonCursor(guiPopUpOkButton, CURSOR_LAPTOP_SCREEN);
       MSYS_SetBtnUserData(guiPopUpOkButton, 0, ubData);
@@ -2115,7 +2115,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
 
     case AIM_POPUP_DISPLAY: {
       struct VObject *hPopupBoxHandle;
-      UINT16 usTempPosY = usPopUpBoxPosY;
+      uint16_t usTempPosY = usPopUpBoxPosY;
 
       if (gubPopUpBoxAction != AIM_POPUP_DISPLAY) return (FALSE);
 
@@ -2132,7 +2132,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
                                            AIM_POPUP_BOX_FONT, AIM_POPUP_BOX_COLOR, sPopUpString1,
                                            FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
       if (sPopUpString2[0] != L'\0')
-        DisplayWrappedString(usPopUpBoxPosX, (UINT16)(usTempPosY + 4), AIM_POPUP_BOX_WIDTH, 2,
+        DisplayWrappedString(usPopUpBoxPosX, (uint16_t)(usTempPosY + 4), AIM_POPUP_BOX_WIDTH, 2,
                              AIM_POPUP_BOX_FONT, AIM_POPUP_BOX_COLOR, sPopUpString2,
                              FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
@@ -2328,7 +2328,7 @@ BOOLEAN InitVideoFace(UINT8 ubMercID) {
 }
 
 // InitVideoFaceTalking() is called to start a merc speaking a particular message
-BOOLEAN InitVideoFaceTalking(UINT8 ubMercID, UINT16 usQuoteNum) {
+BOOLEAN InitVideoFaceTalking(UINT8 ubMercID, uint16_t usQuoteNum) {
   // Starts the merc talking
   if (!CharacterDialogue(ubMercID, usQuoteNum, giMercFaceIndex, DIALOGUE_CONTACTPAGE_UI, FALSE,
                          FALSE)) {
@@ -2431,7 +2431,7 @@ void DisplayTextForMercFaceVideoPopUp(STR16 pString) {
 #endif
 
   // Set the minimum time for the dialogue text to be present
-  usAimMercSpeechDuration = (UINT16)(wcslen(gsTalkingMercText) * AIM_TEXT_SPEECH_MODIFIER);
+  usAimMercSpeechDuration = (uint16_t)(wcslen(gsTalkingMercText) * AIM_TEXT_SPEECH_MODIFIER);
 
   if (usAimMercSpeechDuration < MINIMUM_TALKING_TIME_FOR_MERC)
     usAimMercSpeechDuration = MINIMUM_TALKING_TIME_FOR_MERC;
@@ -2962,7 +2962,7 @@ void BtnXToCloseVideoConfButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 BOOLEAN InitDeleteVideoConferencePopUp() {
   static BOOLEAN fXRegionActive = FALSE;
   UINT8 i;
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
   VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
@@ -3292,7 +3292,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
 }
 
 BOOLEAN DeleteVideoConfPopUp() {
-  UINT16 i;
+  uint16_t i;
 
   // reset ( in case merc was going to say something
   DelayMercSpeech(0, 0, 0, FALSE, TRUE);
@@ -3636,7 +3636,7 @@ BOOLEAN DisableNewMailMessage() {
 
 BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
   static UINT8 ubCount;
-  UINT16 usPosX, usPosY, usPosRightX, usPosBottomY, usWidth, usHeight;
+  uint16_t usPosX, usPosY, usPosRightX, usPosBottomY, usWidth, usHeight;
   SGPRect SrcRect;
   SGPRect DestRect;
   static SGPRect LastRect;
@@ -3646,26 +3646,26 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (fInit) ubCount = 1;
 
     usTemp = (331 - 125) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
-    usPosX = (UINT16)(331 - usTemp * ubCount);
+    usPosX = (uint16_t)(331 - usTemp * ubCount);
 
     usTemp = (490 - 405) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
-    usPosRightX = (UINT16)(405 + usTemp * ubCount);
+    usPosRightX = (uint16_t)(405 + usTemp * ubCount);
 
     usTemp = (AIM_MEMBER_VIDEO_TITLE_START_Y - 96) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
-    usPosY = (UINT16)(AIM_MEMBER_VIDEO_TITLE_START_Y - usTemp * ubCount);
+    usPosY = (uint16_t)(AIM_MEMBER_VIDEO_TITLE_START_Y - usTemp * ubCount);
 
     usPosBottomY = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
   } else {
     if (fInit) ubCount = AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1;
 
     usTemp = (331 - 125) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
-    usPosX = (UINT16)(331 - usTemp * ubCount);
+    usPosX = (uint16_t)(331 - usTemp * ubCount);
 
     usTemp = (490 - 405) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
-    usPosRightX = (UINT16)(405 + usTemp * ubCount);
+    usPosRightX = (uint16_t)(405 + usTemp * ubCount);
 
     usTemp = (AIM_MEMBER_VIDEO_TITLE_START_Y - 96) / (FLOAT)AIM_MEMBER_VIDEO_TITLE_ITERATIONS;
-    usPosY = (UINT16)(AIM_MEMBER_VIDEO_TITLE_START_Y - usTemp * ubCount);
+    usPosY = (uint16_t)(AIM_MEMBER_VIDEO_TITLE_START_Y - usTemp * ubCount);
 
     usPosBottomY = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
   }
@@ -3683,34 +3683,34 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
   if (fForward) {
     // Restore the old rect
     if (ubCount > 2) {
-      usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
-      usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, usWidth, usHeight);
+      usWidth = (uint16_t)(LastRect.iRight - LastRect.iLeft);
+      usHeight = (uint16_t)(LastRect.iBottom - LastRect.iTop);
+      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (uint16_t)LastRect.iLeft,
+                         (uint16_t)LastRect.iTop, usWidth, usHeight);
     }
 
     // Save rectangle
     if (ubCount > 1) {
-      usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
-      usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, usWidth, usHeight);
+      usWidth = (uint16_t)(DestRect.iRight - DestRect.iLeft);
+      usHeight = (uint16_t)(DestRect.iBottom - DestRect.iTop);
+      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (uint16_t)DestRect.iLeft,
+                         (uint16_t)DestRect.iTop, usWidth, usHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 2) {
-      usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
-      usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, usWidth, usHeight);
+      usWidth = (uint16_t)(LastRect.iRight - LastRect.iLeft);
+      usHeight = (uint16_t)(LastRect.iBottom - LastRect.iTop);
+      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (uint16_t)LastRect.iLeft,
+                         (uint16_t)LastRect.iTop, usWidth, usHeight);
     }
 
     // Save rectangle
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1) {
-      usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
-      usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, usWidth, usHeight);
+      usWidth = (uint16_t)(DestRect.iRight - DestRect.iLeft);
+      usHeight = (uint16_t)(DestRect.iBottom - DestRect.iTop);
+      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (uint16_t)DestRect.iLeft,
+                         (uint16_t)DestRect.iTop, usWidth, usHeight);
     }
   }
 
@@ -3808,12 +3808,12 @@ void TempHiringOfMercs(UINT8 ubNumberOfMercs, BOOLEAN fReset) {
 
 #endif
 
-void DelayMercSpeech(UINT8 ubMercID, UINT16 usQuoteNum, UINT16 usDelay, BOOLEAN fNewQuote,
+void DelayMercSpeech(UINT8 ubMercID, uint16_t usQuoteNum, uint16_t usDelay, BOOLEAN fNewQuote,
                      BOOLEAN fReset) {
   static uint32_t uiLastTime = 0;
   uint32_t uiCurTime;
-  static UINT16 usCurQuoteNum;
-  static UINT16 usCurDelay;
+  static uint16_t usCurQuoteNum;
+  static uint16_t usCurDelay;
   static BOOLEAN fQuoteWaiting = FALSE;  // a quote is waiting to be said
   static UINT8 ubCurMercID;
   static BOOLEAN fHangUpAfter = FALSE;
@@ -3967,7 +3967,7 @@ void WaitForMercToFinishTalkingOrUserToClick() {
 }
 
 /*
-BOOLEAN DisplayShadedStretchedMercFace( UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY )
+BOOLEAN DisplayShadedStretchedMercFace( UINT8 ubMercID, uint16_t usPosX, uint16_t usPosY )
 {
         SGPRect		SrcRect;
         SGPRect		DestRect;

@@ -104,7 +104,7 @@ void SetMercEditability(BOOLEAN fEditable);
 
 void HandleMercInventoryPanel(INT16 sX, INT16 sY, INT8 bEvent);
 
-extern UINT16 gusMercsNewItemIndex;
+extern uint16_t gusMercsNewItemIndex;
 extern BOOLEAN gfRenderMercInfo;
 
 void ChangeCivGroup(UINT8 ubNewCivGroup);

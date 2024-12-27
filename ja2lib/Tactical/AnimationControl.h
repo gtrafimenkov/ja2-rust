@@ -519,7 +519,7 @@ typedef enum {
 
 } AnimationStates;
 
-extern UINT16 gusAnimInst[MAX_ANIMATIONS][MAX_FRAMES_PER_ANIM];
+extern uint16_t gusAnimInst[MAX_ANIMATIONS][MAX_FRAMES_PER_ANIM];
 extern ANIMCONTROLTYPE gAnimControl[];
 
 extern ANI_SPEED_DEF gubAnimWalkSpeeds[TOTALBODYTYPES];
@@ -533,23 +533,23 @@ extern UINT8 gubMaxActionPoints[TOTALBODYTYPES];
 extern RANDOM_ANI_DEF gRandomAnimDefs[TOTALBODYTYPES][MAX_RANDOM_ANIMS_PER_BODYTYPE];
 
 // Corpse Defines
-extern UINT16 gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
+extern uint16_t gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
 
 // FUNCTIONS
 BOOLEAN LoadAnimationStateInstructions();
 void InitAnimationSurfacesPerBodytype();
-BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, UINT16 usNewState);
-BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, UINT16 usTestState,
-                                    UINT16 *pusSubState);
+BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNewState);
+BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
+                                    uint16_t *pusSubState);
 INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, UINT8 ubBodyType,
                                         CHAR8 *zColFilename);
 
-BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
-UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
-UINT16 LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
+uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
+uint16_t LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
 // This function could be wrapped in a debug marco, since it only returns pSoldier->ubAnimSurface
 // but Also does some debug checking
-UINT16 GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+uint16_t GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
 #endif

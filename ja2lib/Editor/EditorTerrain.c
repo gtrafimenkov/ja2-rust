@@ -27,7 +27,7 @@
 
 BOOLEAN gfShowTerrainTileButtons;
 UINT8 ubTerrainTileButtonWeight[NUM_TERRAIN_TILE_REGIONS];
-UINT16 usTotalWeight;
+uint16_t usTotalWeight;
 BOOLEAN fPrevShowTerrainTileButtons = TRUE;
 BOOLEAN fUseTerrainWeights = FALSE;
 INT32 TerrainTileSelected = 0, TerrainForegroundTile, TerrainBackgroundTile;
@@ -73,8 +73,8 @@ void ShowTerrainTileButtons() {
 void RenderTerrainTileButtons() {
   // If needed, display the ground tile images
   if (gfShowTerrainTileButtons) {
-    UINT16 usFillColorDark, usFillColorLight, usFillColorRed;
-    UINT16 x, usX, usX2, usY, usY2;
+    uint16_t usFillColorDark, usFillColorLight, usFillColorRed;
+    uint16_t x, usX, usX2, usY, usY2;
 
     usFillColorDark = Get16BPPColor(FROMRGB(24, 61, 81));
     usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
@@ -117,7 +117,7 @@ void TerrainTileButtonRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
     TerrainTileSelected = MSYS_GetRegionUserData(reg, 0);
     if (TerrainTileDrawMode == TERRAIN_TILES_FOREGROUND) {
       TerrainForegroundTile = TerrainTileSelected;
-      CurrentPaste = (UINT16)TerrainForegroundTile;
+      CurrentPaste = (uint16_t)TerrainForegroundTile;
       // iEditorToolbarState = TBAR_MODE_DRAW;
       if (_KeyDown(SHIFT)) {
         fUseTerrainWeights = TRUE;
@@ -152,7 +152,7 @@ void TerrainTileButtonRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
 }
 
 void ChooseWeightedTerrainTile() {
-  UINT16 x, usWeight;
+  uint16_t x, usWeight;
   INT16 sRandomNum;
   if (!usTotalWeight) {  // Not in the weighted mode.  CurrentPaste will already contain the
                          // selected tile.

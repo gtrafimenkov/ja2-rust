@@ -2,11 +2,11 @@
 
 #include "SGP/VideoInternal.h"
 
-UINT16 gusScreenWidth;
-UINT16 gusScreenHeight;
+uint16_t gusScreenWidth;
+uint16_t gusScreenHeight;
 
-void GetCurrentVideoSettings(UINT16 *usWidth, UINT16 *usHeight, UINT8 *ubBitDepth) {
-  *usWidth = (UINT16)gusScreenWidth;
-  *usHeight = (UINT16)gusScreenHeight;
+void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, UINT8 *ubBitDepth) {
+  *usWidth = (uint16_t)gusScreenWidth;
+  *usHeight = (uint16_t)gusScreenHeight;
   *ubBitDepth = 16;
 }

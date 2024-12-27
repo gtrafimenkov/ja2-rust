@@ -15,7 +15,7 @@ struct VObject;
 
 // TEMP VALUES FOR NAMES
 #define MAXCIVLASTNAMES 30
-extern UINT16 CivLastNames[MAXCIVLASTNAMES][10];
+extern uint16_t CivLastNames[MAXCIVLASTNAMES][10];
 
 // ANDREW: these are defines for OKDestanation usage - please move to approprite file
 #define IGNOREPEOPLE 0
@@ -377,9 +377,9 @@ struct SOLDIERTYPE {
   // 50 bytes so far
 
   UINT8 ubDesiredHeight;
-  UINT16 usPendingAnimation;
+  uint16_t usPendingAnimation;
   UINT8 ubPendingStanceChange;
-  UINT16 usAnimState;
+  uint16_t usAnimState;
   BOOLEAN fNoAPToFinishMove;
   BOOLEAN fPausedMove;
   BOOLEAN fUIdeadMerc;        // UI Flags for removing a newly dead merc
@@ -423,8 +423,8 @@ struct SOLDIERTYPE {
   INT8 bNewOppCnt;
   INT8 bService;  // first aid, or other time consuming process
 
-  UINT16 usAniCode;
-  UINT16 usAniFrame;
+  uint16_t usAniCode;
+  uint16_t usAniFrame;
   INT16 sAniDelay;
 
   // MOVEMENT TO NEXT TILE HANDLING STUFF
@@ -448,7 +448,7 @@ struct SOLDIERTYPE {
   BOOLEAN fDyingComment;
 
   UINT8 ubTilesMovedPerRTBreathUpdate;
-  UINT16 usLastMovementAnimPerRTBreathUpdate;
+  uint16_t usLastMovementAnimPerRTBreathUpdate;
 
   BOOLEAN fTurningToShoot;
   BOOLEAN fTurningToFall;
@@ -472,14 +472,14 @@ struct SOLDIERTYPE {
   PaletteRepID MiscPal;   // 30
 
   // FULL 3-d TILE STUFF ( keep records of three tiles infront )
-  UINT16 usFrontArcFullTileList[MAX_FULLTILE_DIRECTIONS];
+  uint16_t usFrontArcFullTileList[MAX_FULLTILE_DIRECTIONS];
   INT16 usFrontArcFullTileGridNos[MAX_FULLTILE_DIRECTIONS];
 
   struct SGPPaletteEntry *p8BPPPalette;  // 4
-  UINT16 *p16BPPPalette;
-  UINT16 *pShades[NUM_SOLDIER_SHADES];  // Shading tables
-  UINT16 *pGlowShades[20];              //
-  UINT16 *pCurrentShade;
+  uint16_t *p16BPPPalette;
+  uint16_t *pShades[NUM_SOLDIER_SHADES];  // Shading tables
+  uint16_t *pGlowShades[20];              //
+  uint16_t *pCurrentShade;
   INT8 bMedical;
   BOOLEAN fBeginFade;
   UINT8 ubFadeLevel;
@@ -506,9 +506,9 @@ struct SOLDIERTYPE {
   INT8 bNeedToLook;
 
   // PATH STUFF
-  UINT16 usPathingData[MAX_PATH_LIST_SIZE];
-  UINT16 usPathDataSize;
-  UINT16 usPathIndex;
+  uint16_t usPathingData[MAX_PATH_LIST_SIZE];
+  uint16_t usPathDataSize;
+  uint16_t usPathIndex;
   INT16 sBlackList;
   INT8 bAimTime;
   INT8 bShownAimTime;
@@ -516,13 +516,13 @@ struct SOLDIERTYPE {
   INT8 bHasKeys;     // allows AI controlled dudes to open locked doors
 
   // UNBLIT BACKGROUND
-  UINT16 *pBackGround;
-  UINT16 *pZBackground;
-  UINT16 usUnblitX, usUnblitY;
-  UINT16 usUnblitWidth, usUnblitHeight;
+  uint16_t *pBackGround;
+  uint16_t *pZBackground;
+  uint16_t usUnblitX, usUnblitY;
+  uint16_t usUnblitWidth, usUnblitHeight;
 
   UINT8 ubStrategicInsertionCode;
-  UINT16 usStrategicInsertionData;
+  uint16_t usStrategicInsertionData;
 
   INT32 iLight;
   INT32 iMuzFlash;
@@ -531,7 +531,7 @@ struct SOLDIERTYPE {
   INT16 sX;
   INT16 sY;
 
-  UINT16 usOldAniState;
+  uint16_t usOldAniState;
   INT16 sOldAniCode;
 
   INT8 bBulletsLeft;
@@ -545,9 +545,9 @@ struct SOLDIERTYPE {
   INT8 bOppList[MAX_NUM_SOLDIERS];  // AI knowledge database
   INT8 bLastAction;
   INT8 bAction;
-  UINT16 usActionData;
+  uint16_t usActionData;
   INT8 bNextAction;
-  UINT16 usNextActionData;
+  uint16_t usNextActionData;
   INT8 bActionInProgress;
   INT8 bAlertStatus;
   INT8 bOppCnt;
@@ -600,8 +600,8 @@ struct SOLDIERTYPE {
   INT8 fAIFlags;
 
   BOOLEAN fDontChargeReadyAPs;
-  UINT16 usAnimSurface;
-  UINT16 sZLevel;
+  uint16_t usAnimSurface;
+  uint16_t sZLevel;
   BOOLEAN fPrevInWater;
   BOOLEAN fGoBackToAimAfterHit;
 
@@ -616,7 +616,7 @@ struct SOLDIERTYPE {
   BOOLEAN fStopPendingNextTile;
 
   BOOLEAN fForceShade;
-  UINT16 *pForcedShade;
+  uint16_t *pForcedShade;
 
   INT8 bDisplayDamageCount;
   INT8 fDisplayDamage;
@@ -650,7 +650,7 @@ struct SOLDIERTYPE {
 
   // QUOTE STUFF
   INT8 bNumHitsThisTurn;
-  UINT16 usQuoteSaidFlags;
+  uint16_t usQuoteSaidFlags;
   INT8 fCloseCall;
   INT8 bLastSkillCheck;
   INT8 ubSkillCheckAttempts;
@@ -666,7 +666,7 @@ struct SOLDIERTYPE {
   UINT8 bAimShotLocation;
   UINT8 ubHitLocation;
 
-  UINT16 *pEffectShades[NUM_SOLDIER_EFFECTSHADES];  // Shading tables for effects
+  uint16_t *pEffectShades[NUM_SOLDIER_EFFECTSHADES];  // Shading tables for effects
 
   UINT8 ubPlannedUIAPCost;
   INT16 sPlannedTargetX;
@@ -698,14 +698,14 @@ struct SOLDIERTYPE {
   INT32 iVehicleId;              // the id of the vehicle the char is in
   struct path *pMercPath;        // Path Structure
   UINT8 fHitByGasFlags;          // flags
-  UINT16 usMedicalDeposit;       // is there a medical deposit on merc
-  UINT16 usLifeInsurance;        // is there life insurance taken out on merc
+  uint16_t usMedicalDeposit;     // is there a medical deposit on merc
+  uint16_t usLifeInsurance;      // is there life insurance taken out on merc
 
   // DEF:  Used for the communications
   uint32_t uiStartMovementTime;    // the time since the merc first started moving
   uint32_t uiOptimumMovementTime;  // everytime in ececute overhead the time for the current ani
                                    // will be added to this total
-  uint32_t usLastUpdateTime;  // The last time the soldier was in ExecuteOverhead
+  uint32_t usLastUpdateTime;       // The last time the soldier was in ExecuteOverhead
 
   BOOLEAN fIsSoldierMoving;   // ie.  Record time is on
   BOOLEAN fIsSoldierDelayed;  // Is the soldier delayed Soldier
@@ -727,7 +727,7 @@ struct SOLDIERTYPE {
   UINT8 ubDesiredSquadAssignment;
   UINT8 ubNumTraversalsAllowedToMerge;
 
-  UINT16 usPendingAnimation2;
+  uint16_t usPendingAnimation2;
   UINT8 ubCivilianGroup;
 
   // time changes...when a stat was changed according to GetJA2Clock();
@@ -757,7 +757,7 @@ struct SOLDIERTYPE {
   TIMECOUNTER NextTileCounter;
   BOOLEAN fBlockedByAnotherMerc;
   INT8 bBlockedByAnotherMercDirection;
-  UINT16 usAttackingWeapon;
+  uint16_t usAttackingWeapon;
   INT8 bWeaponMode;
   UINT8 ubTargetID;
   INT8 bAIScheduleProgress;
@@ -773,7 +773,7 @@ struct SOLDIERTYPE {
   INT8 fPastYDest;
   INT8 bMovementDirection;
   INT16 sOldGridNo;
-  UINT16 usDontUpdateNewGridNoOnMoveAnimChange;
+  uint16_t usDontUpdateNewGridNoOnMoveAnimChange;
   INT16 sBoundingBoxWidth;
   INT16 sBoundingBoxHeight;
   INT16 sBoundingBoxOffsetX;
@@ -815,9 +815,9 @@ struct SOLDIERTYPE {
   ubMercJustFired;  // the merc was just fired..there may be dialogue events occuring, this flag
                     // will prevent any interaction with contracts until after the merc leaves
   UINT8 ubTurnsUntilCanSayHeardNoise;
-  UINT16 usQuoteSaidExtFlags;
+  uint16_t usQuoteSaidExtFlags;
 
-  UINT16 sContPathLocation;
+  uint16_t sContPathLocation;
   INT8 bGoodContPath;
   UINT8 ubPendingActionInterrupted;
   INT8 bNoiseLevel;
@@ -834,7 +834,7 @@ struct SOLDIERTYPE {
 
   BOOLEAN fSoldierWasMoving;
   BOOLEAN fSayAmmoQuotePending;
-  UINT16 usValueGoneUp;
+  uint16_t usValueGoneUp;
 
   UINT8 ubNumLocateCycles;
   UINT8 ubDelayedMovementFlags;
@@ -911,7 +911,7 @@ typedef enum { WM_NORMAL = 0, WM_BURST, WM_ATTACHED, NUM_WEAPON_MODES } WeaponMo
 
 // TYPEDEFS FOR ANIMATION PROFILES
 struct ANIM_PROF_TILE {
-  UINT16 usTileFlags;
+  uint16_t usTileFlags;
   INT8 bTileX;
   INT8 bTileY;
 };
@@ -945,30 +945,30 @@ BOOLEAN DeleteSoldier(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CreateSoldierLight(struct SOLDIERTYPE *pSoldier);
 BOOLEAN DeleteSoldierLight(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN CreateSoldierCommon(UINT8 ubBodyType, struct SOLDIERTYPE *pSoldier, UINT16 usSoldierID,
-                            UINT16 usState);
+BOOLEAN CreateSoldierCommon(UINT8 ubBodyType, struct SOLDIERTYPE *pSoldier, uint16_t usSoldierID,
+                            uint16_t usState);
 
 // Soldier Management functions, called by Event Pump.c
-BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState,
-                                 UINT16 usStartingAniCode, BOOLEAN fForce);
+BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, uint16_t usNewState,
+                                 uint16_t usStartingAniCode, BOOLEAN fForce);
 
-BOOLEAN ChangeSoldierState(struct SOLDIERTYPE *pSoldier, UINT16 usNewState,
-                           UINT16 usStartingAniCode, BOOLEAN fForce);
+BOOLEAN ChangeSoldierState(struct SOLDIERTYPE *pSoldier, uint16_t usNewState,
+                           uint16_t usStartingAniCode, BOOLEAN fForce);
 void EVENT_SetSoldierPosition(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos);
-void EVENT_SetSoldierDestination(struct SOLDIERTYPE *pSoldier, UINT16 usNewDirection);
-void EVENT_GetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDestGridNo,
-                             UINT16 usMovementAnim);
-BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDestGridNo,
-                                        UINT16 usMovementAnim, BOOLEAN fFromUI,
+void EVENT_SetSoldierDestination(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection);
+void EVENT_GetNewSoldierPath(struct SOLDIERTYPE *pSoldier, uint16_t sDestGridNo,
+                             uint16_t usMovementAnim);
+BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, uint16_t sDestGridNo,
+                                        uint16_t usMovementAnim, BOOLEAN fFromUI,
                                         BOOLEAN fForceRestart);
 
-void EVENT_SetSoldierDirection(struct SOLDIERTYPE *pSoldier, UINT16 usNewDirection);
-void EVENT_SetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, UINT16 usNewDirection);
+void EVENT_SetSoldierDirection(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection);
+void EVENT_SetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection);
 void EVENT_FireSoldierWeapon(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
-void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT16 ubDamage,
-                         INT16 sBreathLoss, UINT16 bDirection, UINT16 sRange, UINT8 ubAttackerID,
-                         UINT8 ubSpecial, UINT8 ubHitLocation, INT16 sSubsequent,
-                         INT16 sLocationGridNo);
+void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, uint16_t usWeaponIndex, INT16 ubDamage,
+                         INT16 sBreathLoss, uint16_t bDirection, uint16_t sRange,
+                         UINT8 ubAttackerID, UINT8 ubSpecial, UINT8 ubHitLocation,
+                         INT16 sSubsequent, INT16 sLocationGridNo);
 void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection);
 void EVENT_SoldierBeginPunchAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection);
 void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection);
@@ -990,7 +990,7 @@ void BeginSoldierGetup(struct SOLDIERTYPE *pSoldier);
 BOOLEAN ReCreateSelectedSoldierLight();
 
 // Soldier Management functions called by Overhead.c
-BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, UINT16 usAniFrame);
+BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, uint16_t usAniFrame);
 void TurnSoldier(struct SOLDIERTYPE *pSold);
 void EVENT_BeginMercTurn(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromRealTime,
                          INT32 iRealTimeCounter);
@@ -1023,8 +1023,8 @@ BOOLEAN IsActionInterruptable(struct SOLDIERTYPE *pSoldier);
 INT16 GetDirectionToGridNoFromGridNo(INT16 sGridNoDest, INT16 sGridNoSrc);
 void ReleaseSoldiersAttacker(struct SOLDIERTYPE *pSoldier);
 BOOLEAN MercInWater(struct SOLDIERTYPE *pSoldier);
-UINT16 GetNewSoldierStateFromNewStance(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredStance);
-UINT16 GetMoveStateBasedOnStance(struct SOLDIERTYPE *pSoldier, UINT8 ubStanceHeight);
+uint16_t GetNewSoldierStateFromNewStance(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredStance);
+uint16_t GetMoveStateBasedOnStance(struct SOLDIERTYPE *pSoldier, UINT8 ubStanceHeight);
 void SoldierGotoStationaryStance(struct SOLDIERTYPE *pSoldier);
 BOOLEAN ReCreateSoldierLight(struct SOLDIERTYPE *pSoldier);
 
@@ -1041,21 +1041,21 @@ void InternalGivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEAN f
 
 // WRAPPERS FOR SOLDIER EVENTS
 void SendSoldierPositionEvent(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos);
-void SendSoldierDestinationEvent(struct SOLDIERTYPE *pSoldier, UINT16 usNewDestination);
-void SendGetNewSoldierPathEvent(struct SOLDIERTYPE *pSoldier, UINT16 sDestGridNo,
-                                UINT16 usMovementAnim);
-void SendSoldierSetDirectionEvent(struct SOLDIERTYPE *pSoldier, UINT16 usNewDirection);
-void SendSoldierSetDesiredDirectionEvent(struct SOLDIERTYPE *pSoldier, UINT16 usDesiredDirection);
+void SendSoldierDestinationEvent(struct SOLDIERTYPE *pSoldier, uint16_t usNewDestination);
+void SendGetNewSoldierPathEvent(struct SOLDIERTYPE *pSoldier, uint16_t sDestGridNo,
+                                uint16_t usMovementAnim);
+void SendSoldierSetDirectionEvent(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection);
+void SendSoldierSetDesiredDirectionEvent(struct SOLDIERTYPE *pSoldier, uint16_t usDesiredDirection);
 void SendChangeSoldierStanceEvent(struct SOLDIERTYPE *pSoldier, UINT8 ubNewStance);
 void SendBeginFireWeaponEvent(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
 
-void HandleAnimationProfile(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState, BOOLEAN fRemove);
-BOOLEAN GetProfileFlagsFromGridno(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState,
-                                  UINT16 sTestGridNo, UINT16 *usFlags);
+void HandleAnimationProfile(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState, BOOLEAN fRemove);
+BOOLEAN GetProfileFlagsFromGridno(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState,
+                                  uint16_t sTestGridNo, uint16_t *usFlags);
 
 void HaultSoldierFromSighting(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromSightingEnemy);
-void ReLoadSoldierAnimationDueToHandItemChange(struct SOLDIERTYPE *pSoldier, UINT16 usOldItem,
-                                               UINT16 usNewItem);
+void ReLoadSoldierAnimationDueToHandItemChange(struct SOLDIERTYPE *pSoldier, uint16_t usOldItem,
+                                               uint16_t usNewItem);
 
 BOOLEAN CheckForBreathCollapse(struct SOLDIERTYPE *pSoldier);
 
@@ -1080,8 +1080,8 @@ void PositionSoldierLight(struct SOLDIERTYPE *pSoldier);
 
 void SetCheckSoldierLightFlag(struct SOLDIERTYPE *pSoldier);
 
-void EVENT_InternalSetSoldierDestination(struct SOLDIERTYPE *pSoldier, UINT16 usNewDirection,
-                                         BOOLEAN fFromMove, UINT16 usAnimState);
+void EVENT_InternalSetSoldierDestination(struct SOLDIERTYPE *pSoldier, uint16_t usNewDirection,
+                                         BOOLEAN fFromMove, uint16_t usAnimState);
 
 void ChangeToFlybackAnimation(struct SOLDIERTYPE *pSoldier, INT8 bDirection);
 void ChangeToFallbackAnimation(struct SOLDIERTYPE *pSoldier, INT8 bDirection);

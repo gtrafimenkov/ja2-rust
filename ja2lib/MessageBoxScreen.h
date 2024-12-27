@@ -6,15 +6,15 @@
 #include "UI.h"
 
 typedef struct {
-  UINT16 usFlags;
+  uint16_t usFlags;
   uint32_t uiExitScreen;
   MSGBOX_CALLBACK ExitCallback;
   INT16 sX;
   INT16 sY;
   uint32_t uiSaveBuffer;
   struct MOUSE_REGION BackRegion;
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   INT32 iButtonImages;
   union {
     struct {
@@ -49,23 +49,24 @@ extern BOOLEAN gfDontOverRideSaveBuffer;
 // pCenteringRect	Rect to send if MSG_BOX_FLAG_USE_CENTERING_RECT set. Can be NULL
 ////////////////////////////////
 
-void DoUpperScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
+void DoUpperScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback);
-void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
+void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, uint16_t usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
                                            const SGPRect *pCenteringRect);
 
 // wrappers for other screens
 BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                         UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                         uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect);
-INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
-                              MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect);
+INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+                              uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
+                              const SGPRect *pCenteringRect);
 BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                    UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                    uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect);
 BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                      const SGPRect *pCenteringRect);
 
 #endif

@@ -91,11 +91,11 @@ typedef struct {
   UINT8 ubAttackBusyCount;
   INT8 bNumEnemiesFoughtInBattleUnused;
   UINT8 ubEngagedInConvFromActionMercID;
-  UINT16 usTactialTurnLimitCounter;
+  uint16_t usTactialTurnLimitCounter;
   BOOLEAN fInTopMessage;
   UINT8 ubTopMessageType;
   CHAR16 zTopMessageString[20];
-  UINT16 usTactialTurnLimitMax;
+  uint16_t usTactialTurnLimitMax;
   uint32_t uiTactialTurnLimitClock;
   BOOLEAN fTactialTurnLimitStartedBeep;
   INT8 bBoxingState;
@@ -111,12 +111,12 @@ typedef struct {
   BOOLEAN fKilledEnemyOnAttack;
   UINT8 ubEnemyKilledOnAttack;
   INT8 bEnemyKilledOnAttackLevel;
-  UINT16 ubEnemyKilledOnAttackLocation;
+  uint16_t ubEnemyKilledOnAttackLocation;
   BOOLEAN fItemsSeenOnAttack;
   BOOLEAN ubItemsSeenOnAttackSoldier;
   BOOLEAN fBeenInCombatOnce;
   BOOLEAN fSaidCreatureSmellQuote;
-  UINT16 usItemsSeenOnAttackGridNo;
+  uint16_t usItemsSeenOnAttackGridNo;
   BOOLEAN fLockItemLocators;
   UINT8 ubLastQuoteSaid;
   UINT8 ubLastQuoteProfileNUm;
@@ -151,7 +151,7 @@ typedef struct {
   BOOLEAN fHasEnteredCombatModeSinceEntering;
   BOOLEAN fDontAddNewCrows;
   UINT8 ubMorePadding;
-  UINT16 sCreatureTenseQuoteDelay;
+  uint16_t sCreatureTenseQuoteDelay;
   uint32_t uiCreatureTenseQuoteLastUpdate;
 
   // PADDING GONE!!!!!
@@ -161,8 +161,8 @@ typedef struct {
 extern UINT8 gbPlayerNum;
 extern INT8 gbShowEnemies;
 
-extern UINT16 gusSelectedSoldier;
-extern UINT16 gusOldSelectedSoldier;
+extern uint16_t gusSelectedSoldier;
+extern uint16_t gusOldSelectedSoldier;
 
 extern CHAR8 gzAlertStr[][30];
 extern CHAR8 gzActionStr[][30];
@@ -189,7 +189,7 @@ void ShutdownTacticalEngine();
 
 BOOLEAN InitOverhead();
 BOOLEAN ShutdownOverhead();
-BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, UINT16 usSoldierIndex);
+BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, uint16_t usSoldierIndex);
 
 INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo,
                        INT8 bLevel);
@@ -206,14 +206,14 @@ void EndTurn(UINT8 ubNextTeam);
 void StartPlayerTeamTurn(BOOLEAN fDoBattleSnd, BOOLEAN fEnteringCombatMode);
 void EndTacticalDemo();
 
-void SelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect);
+void SelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect);
 
-void LocateGridNo(UINT16 sGridNo);
-void LocateSoldier(UINT16 usID, BOOLEAN fSetLocator);
+void LocateGridNo(uint16_t sGridNo);
+void LocateSoldier(uint16_t usID, BOOLEAN fSetLocator);
 
 void BeginTeamTurn(UINT8 ubTeam);
-void SlideTo(INT16 sGridno, UINT16 usSoldierID, UINT16 usReasonID, BOOLEAN fSetLocator);
-void SlideToLocation(UINT16 usReasonID, INT16 sDestGridNo);
+void SlideTo(INT16 sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN fSetLocator);
+void SlideToLocation(uint16_t usReasonID, INT16 sDestGridNo);
 
 void RebuildAllSoldierShadeTables();
 void HandlePlayerTeamMemberDeath(struct SOLDIERTYPE *pSoldier);
@@ -232,7 +232,7 @@ void StopMercAnimation(BOOLEAN fStop);
 
 uint32_t EnterTacticalDemoMode();
 
-BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos);
+BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos);
 
 INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
                          INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
@@ -276,7 +276,7 @@ void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiti
 void ResetAllMercSpeeds();
 
 BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
-                            BOOLEAN fInitialMove, UINT16 usAnimState);
+                            BOOLEAN fInitialMove, uint16_t usAnimState);
 
 struct SOLDIERTYPE *ReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByAttacker);
 

@@ -72,8 +72,8 @@ uint32_t ShopKeeperScreenShutdown(void);
 
 void EnterShopKeeperInterfaceScreen(UINT8 ubArmsDealer);
 
-void DrawHatchOnInventory(uint32_t uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
-                          UINT16 usHeight);
+void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                          uint16_t usHeight);
 BOOLEAN ShouldSoldierDisplayHatchOnItem(UINT8 ubProfileID, INT16 sSlotNum);
 INT8 AddItemToPlayersOfferArea(UINT8 ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
                                INT8 bSlotIdInOtherLocation);
@@ -81,7 +81,7 @@ void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(UINT8 bExitValue);
 void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(UINT8 bExitValue);
 
 void SkiHelpTextDoneCallBack(void);
-void SetSkiCursor(UINT16 usCursor);
+void SetSkiCursor(uint16_t usCursor);
 
 void InitShopKeeperSubTitledText(STR16 pString);
 

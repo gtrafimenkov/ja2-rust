@@ -77,7 +77,8 @@ void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   }
 }
 
-UINT16 GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor, UINT16 usAnimState) {
+uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
+                                    uint16_t usAnimState) {
   switch (usAnimState) {
     case OPEN_DOOR:
 
@@ -911,7 +912,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
         memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -923,7 +924,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
         memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -1035,7 +1036,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
       if (fOpenedGraphic) {
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -1048,7 +1049,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
       } else {
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;

@@ -9,7 +9,7 @@ struct stringstruct {
   STR16 pString16;
   INT32 iVideoOverlay;
   uint32_t uiFont;
-  UINT16 usColor;
+  uint16_t usColor;
   uint32_t uiFlags;
   BOOLEAN fBeginningOfNewString;
   uint32_t uiTimeOfLastUpdate;
@@ -47,10 +47,10 @@ extern BOOLEAN fDisableJustForIan;
 // are we allowed to beep on message scroll in tactical
 extern BOOLEAN fOkToBeepNewMessage;
 
-void ScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...);
+void ScreenMsg(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...);
 
 // same as screen message, but only display to mapscreen message system, not tactical
-void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...);
+void MapScreenMessage(uint16_t usColor, UINT8 ubPriority, STR16 pStringA, ...);
 
 void ScrollString(void);
 void DisplayStringsInMapScreenMessageList(void);

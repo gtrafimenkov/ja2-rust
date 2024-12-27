@@ -497,9 +497,9 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
 // Happily, the fields with no times actually are the highest.
 BOOLEAN SortSchedule(SCHEDULENODE *pSchedule) {
   INT32 index, i, iBestIndex;
-  UINT16 usTime;
-  UINT16 usData1;
-  UINT16 usData2;
+  uint16_t usTime;
+  uint16_t usData1;
+  uint16_t usData2;
   UINT8 ubAction;
   BOOLEAN fSorted = FALSE;
 
@@ -689,7 +689,7 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   INT8 bEmpty;
   SCHEDULENODE *pSchedule;
   UINT8 ubTempAction;
-  UINT16 usTemp;
+  uint16_t usTemp;
 
   if ((pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) &&
       (gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] ||
@@ -718,7 +718,7 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
       SecureSleepSpot(pSoldier, pSchedule->usData1[i]);
 
       if (pSchedule->usTime[i] == 0xffff) {
-        pSchedule->usTime[i] = (UINT16)((21 * 60) + Random((3 * 60)));  // 9PM - 11:59PM
+        pSchedule->usTime[i] = (uint16_t)((21 * 60) + Random((3 * 60)));  // 9PM - 11:59PM
 
         if (ScheduleHasMorningNonSleepEntries(pSchedule)) {
           // this guy will sleep until the next non-sleep event
@@ -871,11 +871,11 @@ void PostDefaultSchedule(struct SOLDIERTYPE *pSoldier) {
   }
   // Have the default schedule enter between 7AM and 8AM
   gpScheduleList->ubAction[0] = SCHEDULE_ACTION_ENTERSECTOR;
-  gpScheduleList->usTime[0] = (UINT16)(420 + Random(61));
+  gpScheduleList->usTime[0] = (uint16_t)(420 + Random(61));
   gpScheduleList->usData1[0] = pSoldier->sInitialGridNo;
   // Have the default schedule leave between 6PM and 8PM
   gpScheduleList->ubAction[1] = SCHEDULE_ACTION_LEAVESECTOR;
-  gpScheduleList->usTime[1] = (UINT16)(1080 + Random(121));
+  gpScheduleList->usTime[1] = (uint16_t)(1080 + Random(121));
   gpScheduleList->usFlags |= SCHEDULE_FLAGS_TEMPORARY;
 
   if (gubScheduleID == 255) {  // Too much fragmentation, clean it up...
@@ -920,7 +920,7 @@ void PostSchedules() {
   }
 }
 
-void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, UINT16 usGridNo) {
+void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, uint16_t usGridNo) {
   INT16 sDoorGridNo;
   DOOR *pDoor;
 
@@ -956,12 +956,12 @@ void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, UINT16 usGridNo
 void PostNextSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
   INT32 i, iBestIndex;
-  UINT16 usTime, usBestTime;
+  uint16_t usTime, usBestTime;
   pSchedule = GetSchedule(pSoldier->ubScheduleID);
   if (!pSchedule) {  // post default?
     return;
   }
-  usTime = (UINT16)GetWorldMinutesInDay();
+  usTime = (uint16_t)GetWorldMinutesInDay();
   usBestTime = 0xffff;
   iBestIndex = -1;
   for (i = 0; i < MAX_SCHEDULE_ACTIONS; i++) {
@@ -1126,7 +1126,7 @@ CIV_TEAM ].bLastID; uiLoop++ )
 }
 */
 
-UINT16 FindSleepSpot(SCHEDULENODE *pSchedule) {
+uint16_t FindSleepSpot(SCHEDULENODE *pSchedule) {
   INT8 bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
@@ -1137,7 +1137,7 @@ UINT16 FindSleepSpot(SCHEDULENODE *pSchedule) {
   return (NOWHERE);
 }
 
-void ReplaceSleepSpot(SCHEDULENODE *pSchedule, UINT16 usNewSpot) {
+void ReplaceSleepSpot(SCHEDULENODE *pSchedule, uint16_t usNewSpot) {
   INT8 bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
@@ -1148,9 +1148,9 @@ void ReplaceSleepSpot(SCHEDULENODE *pSchedule, UINT16 usNewSpot) {
   }
 }
 
-void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, UINT16 usSleepSpot) {
+void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, uint16_t usSleepSpot) {
   struct SOLDIERTYPE *pSoldier2;
-  UINT16 usSleepSpot2, usNewSleepSpot;
+  uint16_t usSleepSpot2, usNewSleepSpot;
   uint32_t uiLoop;
   SCHEDULENODE *pSchedule;
   UINT8 ubDirection;
@@ -1186,7 +1186,7 @@ void SecureSleepSpots( void )
         uint32_t						uiLoop;
         struct SOLDIERTYPE *			pSoldier;
         SCHEDULENODE *		pSchedule;
-        UINT16						usSleepSpot;
+        uint16_t						usSleepSpot;
 
         for ( uiLoop = gTacticalStatus.Team[ CIV_TEAM ].bFirstID; uiLoop <= gTacticalStatus.Team[
 CIV_TEAM ].bLastID; uiLoop++ )

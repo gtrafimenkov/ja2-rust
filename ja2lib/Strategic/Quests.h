@@ -537,9 +537,9 @@ typedef enum {
 extern UINT8 gubQuest[MAX_QUESTS];
 extern UINT8 gubFact[NUM_FACTS];
 
-extern void SetFactTrue(UINT16 usFact);
-extern void SetFactFalse(UINT16 usFact);
-extern BOOLEAN CheckFact(UINT16 usFact, UINT8 ubProfileID);
+extern void SetFactTrue(uint16_t usFact);
+extern void SetFactFalse(uint16_t usFact);
+extern BOOLEAN CheckFact(uint16_t usFact, UINT8 ubProfileID);
 
 extern void StartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);
 extern void EndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);

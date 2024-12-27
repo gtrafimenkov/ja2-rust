@@ -866,7 +866,7 @@ STR16 zVehicleName[] = {
 
 // These are messages Used in the Tactical Screen
 
-UINT16 TacticalStr[][MED_STRING_LENGTH] = {
+uint16_t TacticalStr[][MED_STRING_LENGTH] = {
     L"Raid aérien", L"Appliquer les premiers soins ?",
 
     // CAMFIELD NUKE THIS and add quote #66.
@@ -1961,7 +1961,7 @@ STR16 pUpdatePanelButtons[] = {
 
 // Text which appears when everyone on your team is incapacitated and incapable of battle
 
-UINT16 LargeTacticalStr[][LARGE_STRING_LENGTH] = {
+uint16_t LargeTacticalStr[][LARGE_STRING_LENGTH] = {
     L"Vous avez été vaincu dans ce secteur !",
     L"L'ennemi, sans aucune compassion, ne fait pas de quartier !",
     L"Vos mercenaires inconscients ont été capturés !",
@@ -3008,7 +3008,7 @@ STR16 pMessageStrings[] = {
 #endif
 };
 
-UINT16 ItemPickupHelpPopup[][40] = {
+uint16_t ItemPickupHelpPopup[][40] = {
     L"OK", L"Défilement haut", L"Tout sélectionner", L"Défilement bas", L"Annuler",
 };
 

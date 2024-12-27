@@ -92,7 +92,7 @@ INT16 ManLooksForMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent
 void HandleSight(struct SOLDIERTYPE *pSoldier, UINT8 ubSightFlags);
 void AllTeamsLookForAll(UINT8 ubAllowInterrupts);
 void GloballyDecideWhoSeesWho(void);
-UINT16 GetClosestMerc(UINT16 usSoldierIndex);
+uint16_t GetClosestMerc(uint16_t usSoldierIndex);
 void ManLooksForOtherTeams(struct SOLDIERTYPE *pSoldier);
 void OtherTeamsLookForMan(struct SOLDIERTYPE *pOpponent);
 void ManSeesMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent, INT16 sOppGridno,

@@ -5,7 +5,7 @@
 #include "Tactical/Items.h"
 
 typedef struct {
-  UINT16 usItemIndex;  // Index into the item table
+  uint16_t usItemIndex;  // Index into the item table
   UINT8 ubQtyOnHand;
   UINT8 ubQtyOnOrder;           // The number of items on order
   UINT8 ubItemQuality;          // the % damaged listed from 0 to 100

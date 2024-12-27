@@ -56,7 +56,7 @@ struct ITEM_POOL {
   uint32_t uiTimerID;
   INT16 sGridNo;
   UINT8 ubLevel;
-  UINT16 usFlags;
+  uint16_t usFlags;
   INT8 bRenderZHeightAboveLevel;
   struct LEVELNODE *pLevelNode;
 };
@@ -73,7 +73,7 @@ typedef struct {
 
 } ITEM_POOL_LOCATOR;
 
-INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usHandItem,
+INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, uint16_t usHandItem,
                  BOOLEAN fFromUI);
 void SoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo, INT8 bZLevel);
 void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
@@ -95,16 +95,16 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
                              INT8 bZLevel, BOOLEAN *pfSelectionList);
 
 struct OBJECTTYPE *AddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                 UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel);
+                                 UINT8 ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel);
 struct OBJECTTYPE *AddItemToPoolAndGetIndex(INT16 sGridNo, struct OBJECTTYPE *pObject,
-                                            INT8 bVisible, UINT8 ubLevel, UINT16 usFlags,
+                                            INT8 bVisible, UINT8 ubLevel, uint16_t usFlags,
                                             INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex);
 struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                         UINT8 ubLevel, UINT16 usFlags,
+                                         UINT8 ubLevel, uint16_t usFlags,
                                          INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex);
 
 INT16 AdjustGridNoForItemPlacement(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
-BOOLEAN GetItemPool(UINT16 usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLevel);
+BOOLEAN GetItemPool(uint16_t usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLevel);
 BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bCommand, INT8 bZLevel,
                          INT16 sXPos, INT16 sYPos);
 BOOLEAN RemoveItemFromPool(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel);
@@ -147,7 +147,7 @@ INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, UINT8 ubLevel, struct STRU
 INT8 GetLargestZLevelOfItemPool(struct ITEM_POOL *pItemPool);
 
 BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
-                               BOOLEAN fCheckAroundGridno, UINT16 *psProblemGridNo);
+                               BOOLEAN fCheckAroundGridno, uint16_t *psProblemGridNo);
 void MineSpottedDialogueCallBack(void);
 
 extern INT16 gsBoobyTrapGridNo;
@@ -165,7 +165,7 @@ void RefreshItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems);
 
 BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, INT8 bSlot);
 
-BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, INT32 *piItemIndex);
+BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, uint16_t usItem, UINT8 ubLevel, INT32 *piItemIndex);
 
 INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius);
 

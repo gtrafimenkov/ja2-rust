@@ -4,15 +4,15 @@
 #include "BuildDefines.h"
 #include "SGP/Types.h"
 
-void CalcSmartWallDefault(UINT16 *pusObjIndex, UINT16 *pusUseIndex);
-void CalcSmartDoorDefault(UINT16 *pusObjIndex, UINT16 *pusUseIndex);
-void CalcSmartWindowDefault(UINT16 *pusObjIndex, UINT16 *pusUseIndex);
-void CalcSmartBrokenWallDefault(UINT16 *pusObjIndex, UINT16 *pusUseIndex);
+void CalcSmartWallDefault(uint16_t *pusObjIndex, uint16_t *pusUseIndex);
+void CalcSmartDoorDefault(uint16_t *pusObjIndex, uint16_t *pusUseIndex);
+void CalcSmartWindowDefault(uint16_t *pusObjIndex, uint16_t *pusUseIndex);
+void CalcSmartBrokenWallDefault(uint16_t *pusObjIndex, uint16_t *pusUseIndex);
 
-UINT16 CalcSmartWindowIndex(UINT16 usWallOrientation);
-UINT16 CalcSmartDoorIndex(UINT16 usWallOrientation);
-UINT16 CalcSmartBrokenWallIndex(UINT16 usWallOrientation);
-UINT16 CalcSmartDoorType();
+uint16_t CalcSmartWindowIndex(uint16_t usWallOrientation);
+uint16_t CalcSmartDoorIndex(uint16_t usWallOrientation);
+uint16_t CalcSmartBrokenWallIndex(uint16_t usWallOrientation);
+uint16_t CalcSmartDoorType();
 
 void IncSmartWallUIValue();
 void DecSmartWallUIValue();
@@ -23,11 +23,12 @@ void DecSmartWindowUIValue();
 void IncSmartBrokenWallUIValue();
 void DecSmartBrokenWallUIValue();
 
-BOOLEAN CalcWallInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
-BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusDoorType, UINT16 *pusIndex);
-BOOLEAN CalcWindowInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex);
-BOOLEAN CalcBrokenWallInfoUsingSmartMethod(uint32_t iMapIndex, UINT16 *pusWallType,
-                                           UINT16 *pusIndex);
+BOOLEAN CalcWallInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType, uint16_t *pusIndex);
+BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusDoorType, uint16_t *pusIndex);
+BOOLEAN CalcWindowInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType,
+                                       uint16_t *pusIndex);
+BOOLEAN CalcBrokenWallInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType,
+                                           uint16_t *pusIndex);
 
 void PasteSmartWall(uint32_t iMapIndex);
 void PasteSmartDoor(uint32_t iMapIndex);

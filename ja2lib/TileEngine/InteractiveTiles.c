@@ -59,7 +59,7 @@ typedef struct {
   BOOLEAN fFound;
   struct LEVELNODE *pFoundNode;
   INT16 sFoundGridNo;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   BOOLEAN fStructure;
 
 } CUR_INTERACTIVE_TILE;
@@ -80,12 +80,12 @@ BOOLEAN gfOverIntTile = FALSE;
 // Values to determine if we should check or not
 INT16 gsINTOldRenderCenterX = 0;
 INT16 gsINTOldRenderCenterY = 0;
-UINT16 gusINTOldMousePosX = 0;
-UINT16 gusINTOldMousePosY = 0;
+uint16_t gusINTOldMousePosX = 0;
+uint16_t gusINTOldMousePosY = 0;
 
 BOOLEAN RefinePointCollisionOnStruct(INT16 sGridNo, INT16 sTestX, INT16 sTestY, INT16 sSrcX,
                                      INT16 sSrcY, struct LEVELNODE *pNode);
-BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT16 usIndex,
+BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
                                                INT32 iTextX, INT32 iTestY);
 BOOLEAN RefineLogicOnStruct(INT16 sGridNo, struct LEVELNODE *pNode);
 
@@ -94,11 +94,11 @@ BOOLEAN InitInteractiveTileManagement() { return (TRUE); }
 void ShutdownInteractiveTileManagement() {}
 
 BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, uint32_t uiFlags,
-                           UINT16 usType) {
+                           uint16_t usType) {
   return (TRUE);
 }
 
-BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, struct SOLDIERTYPE *pSoldier,
+BOOLEAN StartInteractiveObject(INT16 sGridNo, uint16_t usStructureID, struct SOLDIERTYPE *pSoldier,
                                UINT8 ubDirection) {
   struct STRUCTURE *pStructure;
 
@@ -178,11 +178,11 @@ BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUC
 
 BOOLEAN SoldierHandleInteractiveObject(struct SOLDIERTYPE *pSoldier) {
   struct STRUCTURE *pStructure;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   INT16 sGridNo;
 
   sGridNo = pSoldier->sPendingActionData2;
-  usStructureID = (UINT16)pSoldier->uiPendingActionData1;
+  usStructureID = (uint16_t)pSoldier->uiPendingActionData1;
 
   // HANDLE SOLDIER ACTIONS
   pStructure = FindStructureByID(sGridNo, usStructureID);
@@ -262,8 +262,8 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
         SetItemPoolVisibilityOn(pItemPool, ANY_VISIBILITY_VALUE, fDoLocators);
 
         // Display quote!
-        // TacticalCharacterDialogue( pSoldier, (UINT16)( QUOTE_SPOTTED_SOMETHING_ONE + Random( 2 )
-        // ) );
+        // TacticalCharacterDialogue( pSoldier, (uint16_t)( QUOTE_SPOTTED_SOMETHING_ONE + Random( 2
+        // ) ) );
 
         // ATE: Check now many things in pool.....
         if (!fDidMissingQuote) {
@@ -477,7 +477,7 @@ void LogMouseOverInteractiveTile(INT16 sGridNo) {
 
               // Determine if it's the best one
               if (aRect.iBottom > gCurIntTile.sHeighestScreenY) {
-                gCurIntTile.sMaxScreenY = (UINT16)aRect.iBottom;
+                gCurIntTile.sMaxScreenY = (uint16_t)aRect.iBottom;
                 gCurIntTile.sHeighestScreenY = gCurIntTile.sMaxScreenY;
 
                 // Set it!
@@ -767,7 +767,7 @@ BOOLEAN RefinePointCollisionOnStruct(INT16 sGridNo, INT16 sTestX, INT16 sTestY, 
 
 // This function will check the video object at SrcX and SrcY for the lack of transparency
 // will return true if data found, else false
-BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT16 usIndex,
+BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
                                                INT32 iTestX, INT32 iTestY) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -930,7 +930,7 @@ BOOLEAN ShouldCheckForMouseDetections() {
   return (fOK);
 }
 
-void CycleIntTileFindStack(UINT16 usMapPos) {
+void CycleIntTileFindStack(uint16_t usMapPos) {
   gfCycleIntTile = TRUE;
 
   // Cycle around!

@@ -64,7 +64,7 @@ enum {
 INT32 iMenuImages[NUM_MENU_ITEMS];
 INT32 iMenuButtons[NUM_MENU_ITEMS];
 
-UINT16 gusMainMenuButtonWidths[NUM_MENU_ITEMS];
+uint16_t gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 
 uint32_t guiMainMenuBackGroundImage;
 uint32_t guiJa2LogoImage;
@@ -491,19 +491,19 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
     for (cnt = 0; cnt < NUM_MENU_ITEMS; cnt++) {
       switch (cnt) {
         case NEW_GAME:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], sSlot);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], sSlot);
           break;
         case LOAD_GAME:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 3);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 3);
           break;
         case PREFERENCES:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 7);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 7);
           break;
         case CREDITS:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 10);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 10);
           break;
         case QUIT:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 15);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 15);
           break;
       }
 #ifdef TESTFOREIGNFONTS
@@ -639,14 +639,14 @@ void RenderMainMenu() {
 void RestoreButtonBackGrounds() {
   UINT8 cnt;
 
-  //	RestoreExternBackgroundRect( (UINT16)(320 - gusMainMenuButtonWidths[TITLE]/2),
+  //	RestoreExternBackgroundRect( (uint16_t)(320 - gusMainMenuButtonWidths[TITLE]/2),
   // MAINMENU_TITLE_Y, gusMainMenuButtonWidths[TITLE], 23 );
 
 #ifndef TESTFOREIGNFONTS
   for (cnt = 0; cnt < NUM_MENU_ITEMS; cnt++) {
-    RestoreExternBackgroundRect((UINT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
+    RestoreExternBackgroundRect((uint16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
                                 (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE) - 1),
-                                (UINT16)(gusMainMenuButtonWidths[cnt] + 1), 23);
+                                (uint16_t)(gusMainMenuButtonWidths[cnt] + 1), 23);
   }
 #endif
 }

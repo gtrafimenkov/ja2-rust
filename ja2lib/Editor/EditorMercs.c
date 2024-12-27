@@ -119,8 +119,8 @@ void RenderMercInventoryPanel();
 void SetDroppableCheckboxesBasedOnMercsInventory();
 
 extern BOOLEAN InternalAddSoldierToSector(UINT8 ubID, BOOLEAN fCalculateDirection,
-                                          BOOLEAN fUseAnimation, UINT16 usAnimState,
-                                          UINT16 usAnimCode);
+                                          BOOLEAN fUseAnimation, uint16_t usAnimState,
+                                          uint16_t usAnimCode);
 
 // array which keeps track of which item is in which slot.  This is dependant on the selected merc,
 // so these temp values must be updated when different mercs are selected, and reset when a merc
@@ -194,7 +194,7 @@ BOOLEAN gfMercGetItem = FALSE;
 // As soon as an item is selected, the items index is stored here, so the item can be copied into
 // the slot for editing and rendering purposes.  This is a temp store value only when leaving the
 // editor items mode.
-UINT16 gusMercsNewItemIndex = 0xffff;
+uint16_t gusMercsNewItemIndex = 0xffff;
 
 // old and probably obsolete
 // BOOLEAN	fMercEdUseLeftSide = FALSE;
@@ -477,7 +477,7 @@ void AddMercToWorld(INT32 iMapIndex) {
     // Set up some general information.
     gTempBasicPlacement.fDetailedPlacement = FALSE;
     gTempBasicPlacement.fPriorityExistance = FALSE;
-    gTempBasicPlacement.usStartingGridNo = (UINT16)iMapIndex;
+    gTempBasicPlacement.usStartingGridNo = (uint16_t)iMapIndex;
     gTempBasicPlacement.bOrders = gbDefaultOrders;
     gTempBasicPlacement.bAttitude = gbDefaultAttitude;
     gTempBasicPlacement.bRelativeAttributeLevel = gbDefaultRelativeAttributeLevel;
@@ -612,7 +612,7 @@ void AddMercWaypoint(uint32_t iMapIndex) {
       gpSelected->pBasicPlacement->sPatrolGrid[iNum] = (INT16)iMapIndex;
       if (gpSelected->pDetailedPlacement)
         gpSelected->pDetailedPlacement->sPatrolGrid[iNum] = (INT16)iMapIndex;
-      gpSelected->pSoldier->usPatrolGrid[iNum] = (UINT16)iMapIndex;
+      gpSelected->pSoldier->usPatrolGrid[iNum] = (uint16_t)iMapIndex;
     }
 
     gpSelected->pBasicPlacement->bPatrolCnt = (INT8)iActionParam;
@@ -625,7 +625,7 @@ void AddMercWaypoint(uint32_t iMapIndex) {
     gpSelected->pBasicPlacement->sPatrolGrid[iActionParam] = (INT16)iMapIndex;
     if (gpSelected->pDetailedPlacement)
       gpSelected->pDetailedPlacement->sPatrolGrid[iActionParam] = (INT16)iMapIndex;
-    gpSelected->pSoldier->usPatrolGrid[iActionParam] = (UINT16)iMapIndex;
+    gpSelected->pSoldier->usPatrolGrid[iActionParam] = (uint16_t)iMapIndex;
   }
   gfRenderWorld = TRUE;
 }
@@ -668,7 +668,7 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier == NULL) return;
 
   pSoldier->bLifeMax = (UINT8)(sBaseStat[sCurBaseDiff] +
-                               (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                               (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bLife = pSoldier->bLifeMax;
 
   pSoldier->bBleeding = 0;
@@ -676,26 +676,29 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
 
   pSoldier->bMarksmanship =
       (UINT8)(sBaseStat[sCurBaseDiff] +
-              (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bMedical = (UINT8)(sBaseStat[sCurBaseDiff] +
-                               (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bMechanical = (UINT8)(sBaseStat[sCurBaseDiff] +
-                                  (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                               (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bMechanical =
+      (UINT8)(sBaseStat[sCurBaseDiff] +
+              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bExplosive = (UINT8)(sBaseStat[sCurBaseDiff] +
-                                 (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                                 (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bAgility = (UINT8)(sBaseStat[sCurBaseDiff] +
-                               (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                               (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bDexterity = (UINT8)(sBaseStat[sCurBaseDiff] +
-                                 (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                                 (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
 
   pSoldier->bStrength = (UINT8)(sBaseStat[sCurBaseDiff] +
-                                (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bLeadership = (UINT8)(sBaseStat[sCurBaseDiff] +
-                                  (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                                (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bLeadership =
+      (UINT8)(sBaseStat[sCurBaseDiff] +
+              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bWisdom = (UINT8)(sBaseStat[sCurBaseDiff] +
-                              (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
-  pSoldier->bScientific = (UINT8)(sBaseStat[sCurBaseDiff] +
-                                  (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+                              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bScientific =
+      (UINT8)(sBaseStat[sCurBaseDiff] +
+              (uint16_t)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
 
   pSoldier->bExpLevel = (UINT8)sBaseExpLvl[sCurBaseDiff];
   pSoldier->bGunType = (INT8)Random(BASE_GUNTYPE_DEVIATION);
@@ -711,7 +714,7 @@ void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
 //
 void DisplayEditMercWindow(void) {
   INT32 iXPos, iYPos, iHeight, iWidth;
-  UINT16 usFillColorBack, usFillColorDark, usFillColorLight, usFillColorTextBk;
+  uint16_t usFillColorBack, usFillColorDark, usFillColorLight, usFillColorTextBk;
   INT32 x, iXOff;
   CHAR16 TempString[30];
   struct SOLDIERTYPE *pSoldier;
@@ -1105,7 +1108,7 @@ void ShowEditMercPalettes(struct SOLDIERTYPE *pSoldier) {
 //	Displays a single palette set. (used by ShowEditMercPalettes)
 //
 void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
-  UINT16 us16BPPColor, usFillColorDark, usFillColorLight;
+  uint16_t us16BPPColor, usFillColorDark, usFillColorLight;
   UINT8 cnt1;
   UINT8 ubSize;
   INT16 sUnitSize;
@@ -1171,7 +1174,7 @@ void DisplayWayPoints(void) {
       gsSelectedMercID >= MAXMERCS)
     return;
 
-  GetSoldier(&pSoldier, (UINT16)gsSelectedMercID);
+  GetSoldier(&pSoldier, (uint16_t)gsSelectedMercID);
   if (pSoldier == NULL || !IsSolActive(pSoldier)) return;
 
   // point 0 is not used!
@@ -1243,8 +1246,8 @@ void CreateEditMercWindow(void) {
                                   DEFAULT_MOVE_CALLBACK, EditMercDoneEditCallback);
 
   // Disable color editing for PC Mercs
-  if ((UINT16)gsSelectedMercID >= gTacticalStatus.Team[OUR_TEAM].bFirstID &&
-      (UINT16)gsSelectedMercID <= gTacticalStatus.Team[OUR_TEAM].bLastID)
+  if ((uint16_t)gsSelectedMercID >= gTacticalStatus.Team[OUR_TEAM].bFirstID &&
+      (uint16_t)gsSelectedMercID <= gTacticalStatus.Team[OUR_TEAM].bLastID)
     DisableButton(iEditMercColorPage);
 
   iEditorButton[8] = QuickCreateButton(giEditMercImage[0], (INT16)(iXPos + 98), (INT16)(iYPos + 51),
@@ -2015,12 +2018,12 @@ void SpecifyEntryPoint(uint32_t iMapIndex) {
       AddToUndoList(*psEntryGridNo);
       RemoveAllTopmostsOfTypeRange(*psEntryGridNo, FIRSTPOINTERS, FIRSTPOINTERS);
     }
-    *psEntryGridNo = (UINT16)iMapIndex;
+    *psEntryGridNo = (uint16_t)iMapIndex;
     ValidateEntryPointGridNo(psEntryGridNo);
     AddToUndoList(*psEntryGridNo);
     AddTopmostToTail(*psEntryGridNo, FIRSTPOINTERS2);
   } else {
-    UINT16 usDummy;
+    uint16_t usDummy;
     if (TypeExistsInTopmostLayer(iMapIndex, FIRSTPOINTERS, &usDummy)) {
       AddToUndoList(iMapIndex);
       RemoveAllTopmostsOfTypeRange(iMapIndex, FIRSTPOINTERS, FIRSTPOINTERS);
@@ -2574,8 +2577,8 @@ void RenderSelectedMercsInventory() {
       yp = mercRects[i].iTop + MERCPANEL_Y;
       pDst = LockVideoSurface(FRAME_BUFFER, &uiDstPitchBYTES);
       pSrc = LockVideoSurface(guiMercInvPanelBuffers[i], &uiSrcPitchBYTES);
-      Blt16BPPTo16BPPTrans((UINT16 *)pDst, uiDstPitchBYTES, (UINT16 *)pSrc, uiSrcPitchBYTES, xp, yp,
-                           0, 0, i < 3 ? 22 : 44, 15, 0);
+      Blt16BPPTo16BPPTrans((uint16_t *)pDst, uiDstPitchBYTES, (uint16_t *)pSrc, uiSrcPitchBYTES, xp,
+                           yp, 0, 0, i < 3 ? 22 : 44, 15, 0);
       UnLockVideoSurface(FRAME_BUFFER);
       UnLockVideoSurface(guiMercInvPanelBuffers[i]);
       LoadItemInfo(gpMercSlotItem[i]->usItem, pItemName, NULL);
@@ -2608,8 +2611,8 @@ void RenderSelectedMercsInventory() {
         ubFontColor = FONT_YELLOW;
       else
         ubFontColor = FONT_WHITE;
-      DisplayWrappedString((UINT16)xp, (UINT16)yp, 60, 2, SMALLCOMPFONT, ubFontColor, pItemName, 0,
-                           FALSE, LEFT_JUSTIFIED);
+      DisplayWrappedString((uint16_t)xp, (uint16_t)yp, 60, 2, SMALLCOMPFONT, ubFontColor, pItemName,
+                           0, FALSE, LEFT_JUSTIFIED);
     }
   }
 }
@@ -3157,7 +3160,7 @@ void RegisterCurrentScheduleAction(INT32 iMapIndex) {
   if (gfUseScheduleData2) {
     if (gfSingleAction) return;
     iDrawMode = DRAW_MODE_PLAYER + gpSelected->pBasicPlacement->bTeam;
-    gCurrSchedule.usData2[gubCurrentScheduleActionIndex] = (UINT16)iMapIndex;
+    gCurrSchedule.usData2[gubCurrentScheduleActionIndex] = (uint16_t)iMapIndex;
     SpecifyButtonText(iEditorButton[MERCS_SCHEDULE_DATA1B + gubCurrentScheduleActionIndex], str);
     DetermineScheduleEditability();
     gubScheduleInstructions = SCHEDULE_INSTRUCTIONS_NONE;
@@ -3196,7 +3199,7 @@ void RegisterCurrentScheduleAction(INT32 iMapIndex) {
       case SCHEDULE_ACTION_NONE:
         break;
     }
-    gCurrSchedule.usData1[gubCurrentScheduleActionIndex] = (UINT16)iMapIndex;
+    gCurrSchedule.usData1[gubCurrentScheduleActionIndex] = (uint16_t)iMapIndex;
     SpecifyButtonText(iEditorButton[MERCS_SCHEDULE_DATA1A + gubCurrentScheduleActionIndex], str);
   }
 }
@@ -3473,7 +3476,7 @@ void PasteMercPlacement(INT32 iMapIndex) {
 
     // Set up some general information.
     // gTempBasicPlacement.fDetailedPlacement = TRUE;
-    gTempBasicPlacement.usStartingGridNo = (UINT16)iMapIndex;
+    gTempBasicPlacement.usStartingGridNo = (uint16_t)iMapIndex;
 
     // Generate detailed placement information given the temp placement information.
     if (gTempBasicPlacement.fDetailedPlacement) {

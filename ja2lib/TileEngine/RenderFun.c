@@ -49,7 +49,7 @@ void SetTileRangeRoomNum(SGPRect *pSelectRegion, UINT8 ubRoomNum) {
   }
 }
 
-BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
+BOOLEAN InARoom(uint16_t sGridNo, UINT8 *pubRoomNo) {
   if (gubWorldRoomInfo[sGridNo] != NO_ROOM) {
     if (pubRoomNo) {
       *pubRoomNo = gubWorldRoomInfo[sGridNo];
@@ -60,7 +60,7 @@ BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
   return (FALSE);
 }
 
-BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
+BOOLEAN InAHiddenRoom(uint16_t sGridNo, UINT8 *pubRoomNo) {
   if (gubWorldRoomInfo[sGridNo] != NO_ROOM) {
     if ((gubWorldRoomHidden[gubWorldRoomInfo[sGridNo]])) {
       *pubRoomNo = gubWorldRoomInfo[sGridNo];
@@ -85,7 +85,7 @@ void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
   }
 }
 
-void SetGridNoRevealedFlag(UINT16 sGridNo) {
+void SetGridNoRevealedFlag(uint16_t sGridNo) {
   //	uint32_t cnt;
   //  struct ITEM_POOL					*pItemPool;
   //	INT16							sX, sY;
@@ -147,13 +147,13 @@ void SetGridNoRevealedFlag(UINT16 sGridNo) {
   gubWorldRoomHidden[gubWorldRoomInfo[sGridNo]] = FALSE;
 }
 
-void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
+void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo) {
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure, *pBase;
   UINT8 ubLoop;
   DB_STRUCTURE_TILE **ppTile;
   INT16 sGridNo;
-  UINT16 usIndex;
+  uint16_t usIndex;
   BOOLEAN fChanged = FALSE;
 
   // CHECK FOR A SLANTED ROOF HERE....
@@ -205,7 +205,7 @@ void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
   }
 }
 
-void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier) {
+void RemoveRoomRoof(uint16_t sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier) {
   uint32_t cnt;
   struct ITEM_POOL *pItemPool;
   INT16 sX, sY;
@@ -216,7 +216,7 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
   // LOOP THORUGH WORLD AND CHECK ROOM INFO
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (gubWorldRoomInfo[cnt] == bRoomNum) {
-      SetGridNoRevealedFlag((UINT16)cnt);
+      SetGridNoRevealedFlag((uint16_t)cnt);
 
       RemoveRoofIndexFlagsFromTypeRange(cnt, FIRSTROOF, SECONDSLANTROOF, LEVELNODE_REVEAL);
 
@@ -229,7 +229,7 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
 
             if (pSoldier != NULL) {
               TacticalCharacterDialogue(pSoldier,
-                                        (UINT16)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
+                                        (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
             }
           }
         }
@@ -246,7 +246,7 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
   //{
   //	if ( gubWorldRoomInfo[ cnt ] == bRoomNum )
   //	{
-  //		ExamineGridNoForSlantRoofExtraGraphic( (UINT16)cnt );
+  //		ExamineGridNoForSlantRoofExtraGraphic( (uint16_t)cnt );
   //	}
   //}
 

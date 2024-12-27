@@ -30,7 +30,7 @@ typedef struct {
   BOOLEAN fCopyProfileItemsOver;
   uint32_t uiTimeTillMercArrives;
   UINT8 ubInsertionCode;
-  UINT16 usInsertionData;
+  uint16_t usInsertionData;
   BOOLEAN fUseLandingZoneForArrival;
 
 } MERC_HIRE_STRUCT;

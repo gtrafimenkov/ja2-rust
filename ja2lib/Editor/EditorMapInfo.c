@@ -185,7 +185,7 @@ void ExtractAndUpdateMapInfo() {
   if (temp != -1) gsLightRadius = (INT16)temp;
   temp = max(min(GetNumericStrictValueFromField(5), 15), 1);
   if (temp != -1 && temp != gusLightLevel) {
-    gusLightLevel = (UINT16)temp;
+    gusLightLevel = (uint16_t)temp;
     gfRenderWorld = TRUE;
     ubAmbientLightLevel = (UINT8)(EDITOR_LIGHT_MAX - gusLightLevel);
     LightSetBaseLevel(ubAmbientLightLevel);
@@ -211,7 +211,7 @@ void ExtractAndUpdateMapInfo() {
     gExitGrid.ubGotoSectorY = (UINT8)max(min(gExitGrid.ubGotoSectorY, 16), 1);
   }
   gExitGrid.ubGotoSectorZ = (UINT8)max(min(GetNumericStrictValueFromField(8), 3), 0);
-  gExitGrid.usGridNo = (UINT16)max(min(GetNumericStrictValueFromField(9), 25600), 0);
+  gExitGrid.usGridNo = (uint16_t)max(min(GetNumericStrictValueFromField(9), 25600), 0);
 
   UpdateMapInfoFields();
 }
@@ -230,10 +230,10 @@ BOOLEAN ApplyNewExitGridValuesToTextFields() {
   return TRUE;
 }
 
-UINT16 usCurrentExitGridNo = 0;
+uint16_t usCurrentExitGridNo = 0;
 void LocateNextExitGrid() {
   EXITGRID ExitGrid;
-  UINT16 i;
+  uint16_t i;
   for (i = usCurrentExitGridNo + 1; i < WORLD_MAX; i++) {
     if (GetExitGrid(i, &ExitGrid)) {
       usCurrentExitGridNo = i;

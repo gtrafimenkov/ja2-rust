@@ -49,7 +49,7 @@ BOOLEAN DeleteStructureFromWorld(struct STRUCTURE *pStructure);
 //
 struct STRUCTURE *FindStructure(INT16 sGridNo, uint32_t fFlags);
 struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, uint32_t fFlags);
-struct STRUCTURE *FindStructureByID(INT16 sGridNo, UINT16 usStructureID);
+struct STRUCTURE *FindStructureByID(INT16 sGridNo, uint16_t usStructureID);
 struct STRUCTURE *FindBaseStructure(struct STRUCTURE *pStructure);
 struct STRUCTURE *FindNonBaseStructure(INT16 sGridNo, struct STRUCTURE *pStructure);
 

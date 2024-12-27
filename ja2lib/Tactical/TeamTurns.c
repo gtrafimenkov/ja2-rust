@@ -67,7 +67,7 @@ BOOLEAN InterruptsAllowed = TRUE;
 BOOLEAN gfHiddenInterrupt = FALSE;
 UINT8 gubLastInterruptedGuy = 0;
 
-extern UINT16 gsWhoThrewRock;
+extern uint16_t gsWhoThrewRock;
 extern UINT8 gubSightFlags;
 
 typedef struct {
@@ -140,7 +140,7 @@ void StartPlayerTeamTurn(BOOLEAN fDoBattleSnd, BOOLEAN fEnteringCombatMode) {
     //{
     //	if ( IsSolActive(pSoldier) && pSoldier->bLife > 0 )
     //	{
-    //		SBeginTurn.usSoldierID		= (UINT16)cnt;
+    //		SBeginTurn.usSoldierID		= (uint16_t)cnt;
     //		AddGameEvent( S_BEGINTURN, 0, &SBeginTurn );
     //	}
     //}

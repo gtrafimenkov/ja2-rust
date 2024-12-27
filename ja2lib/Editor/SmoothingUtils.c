@@ -14,18 +14,18 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"  //for RemoveXXXX()
 
-extern UINT16 PickAWallPiece(UINT16 usWallPieceType);
+extern uint16_t PickAWallPiece(uint16_t usWallPieceType);
 
 // This method isn't foolproof, but because erasing large areas of buildings could result in
 // multiple wall types for each building.  When processing the region, it is necessary to
 // calculate the roof type by searching for the nearest roof tile.
-UINT16 SearchForWallType(uint32_t iMapIndex) {
+uint16_t SearchForWallType(uint32_t iMapIndex) {
   uint32_t uiTileType;
   struct LEVELNODE *pWall;
   INT16 sOffset;
   INT16 x, y, sRadius = 0;
   if (gfBasement) {
-    UINT16 usWallType;
+    uint16_t usWallType;
     usWallType = GetRandomIndexByRange(FIRSTWALL, LASTWALL);
     if (usWallType == 0xffff) usWallType = FIRSTWALL;
     return usWallType;
@@ -46,11 +46,11 @@ UINT16 SearchForWallType(uint32_t iMapIndex) {
             GetTileType(pWall->usIndex, &uiTileType);
             if (uiTileType >= FIRSTWALL &&
                 uiTileType <= LASTWALL) {  // found a roof, so return its type.
-              return (UINT16)uiTileType;
+              return (uint16_t)uiTileType;
             }
             // if( uiTileType >= FIRSTWINDOW && uiTileType <= LASTWINDOW )
             //{	//Window types can be converted to a wall type.
-            //	return (UINT16)(FIRSTWALL + uiTileType - FIRSTWINDOW );
+            //	return (uint16_t)(FIRSTWALL + uiTileType - FIRSTWINDOW );
             //}
             pWall = pWall->pNext;
           }
@@ -64,7 +64,7 @@ UINT16 SearchForWallType(uint32_t iMapIndex) {
 // This method isn't foolproof, but because erasing large areas of buildings could result in
 // multiple roof types for each building.  When processing the region, it is necessary to
 // calculate the roof type by searching for the nearest roof tile.
-UINT16 SearchForRoofType(uint32_t iMapIndex) {
+uint16_t SearchForRoofType(uint32_t iMapIndex) {
   uint32_t uiTileType;
   struct LEVELNODE *pRoof;
   INT16 x, y, sRadius = 0;
@@ -82,7 +82,7 @@ UINT16 SearchForRoofType(uint32_t iMapIndex) {
             GetTileType(pRoof->usIndex, &uiTileType);
             if (uiTileType >= FIRSTROOF &&
                 uiTileType <= LASTROOF) {  // found a roof, so return its type.
-              return (UINT16)uiTileType;
+              return (uint16_t)uiTileType;
             }
             pRoof = pRoof->pNext;
           }
@@ -124,7 +124,7 @@ BOOLEAN ValidDecalPlacement(uint32_t iMapIndex) {
 struct LEVELNODE *GetVerticalWall(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
   uint32_t uiTileType;
-  UINT16 usWallOrientation;
+  uint16_t usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
     if (pStruct->usIndex != NO_TILE) {
@@ -145,7 +145,7 @@ struct LEVELNODE *GetVerticalWall(uint32_t iMapIndex) {
 struct LEVELNODE *GetHorizontalWall(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
   uint32_t uiTileType;
-  UINT16 usWallOrientation;
+  uint16_t usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
     if (pStruct->usIndex != NO_TILE) {
@@ -163,7 +163,7 @@ struct LEVELNODE *GetHorizontalWall(uint32_t iMapIndex) {
   return NULL;
 }
 
-UINT16 GetVerticalWallType(uint32_t iMapIndex) {
+uint16_t GetVerticalWallType(uint32_t iMapIndex) {
   struct LEVELNODE *pWall;
   uint32_t uiTileType;
   pWall = GetVerticalWall(iMapIndex);
@@ -171,12 +171,12 @@ UINT16 GetVerticalWallType(uint32_t iMapIndex) {
     GetTileType(pWall->usIndex, &uiTileType);
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       uiTileType = SearchForWallType(iMapIndex);
-    return (UINT16)uiTileType;
+    return (uint16_t)uiTileType;
   }
   return 0;
 }
 
-UINT16 GetHorizontalWallType(uint32_t iMapIndex) {
+uint16_t GetHorizontalWallType(uint32_t iMapIndex) {
   struct LEVELNODE *pWall;
   uint32_t uiTileType;
   pWall = GetHorizontalWall(iMapIndex);
@@ -184,7 +184,7 @@ UINT16 GetHorizontalWallType(uint32_t iMapIndex) {
     GetTileType(pWall->usIndex, &uiTileType);
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       uiTileType = SearchForWallType(iMapIndex);
-    return (UINT16)uiTileType;
+    return (uint16_t)uiTileType;
   }
   return 0;
 }
@@ -192,7 +192,7 @@ UINT16 GetHorizontalWallType(uint32_t iMapIndex) {
 struct LEVELNODE *GetVerticalFence(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
   uint32_t uiTileType;
-  UINT16 usWallOrientation;
+  uint16_t usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
     if (pStruct->usIndex != NO_TILE) {
@@ -212,7 +212,7 @@ struct LEVELNODE *GetVerticalFence(uint32_t iMapIndex) {
 struct LEVELNODE *GetHorizontalFence(uint32_t iMapIndex) {
   struct LEVELNODE *pStruct;
   uint32_t uiTileType;
-  UINT16 usWallOrientation;
+  uint16_t usWallOrientation;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   while (pStruct) {
     if (pStruct->usIndex != NO_TILE) {
@@ -249,10 +249,10 @@ void EraseVerticalWall(uint32_t iMapIndex) {
   }
 }
 
-void ChangeHorizontalWall(uint32_t iMapIndex, UINT16 usNewPiece) {
+void ChangeHorizontalWall(uint32_t iMapIndex, uint16_t usNewPiece) {
   struct LEVELNODE *pWall;
   uint32_t uiTileType;
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
   INT16 sIndex;
   pWall = GetHorizontalWall(iMapIndex);
   if (pWall) {
@@ -267,10 +267,10 @@ void ChangeHorizontalWall(uint32_t iMapIndex, UINT16 usNewPiece) {
   }
 }
 
-void ChangeVerticalWall(uint32_t iMapIndex, UINT16 usNewPiece) {
+void ChangeVerticalWall(uint32_t iMapIndex, uint16_t usNewPiece) {
   struct LEVELNODE *pWall;
   uint32_t uiTileType;
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
   INT16 sIndex;
   pWall = GetVerticalWall(iMapIndex);
   if (pWall) {
@@ -288,15 +288,15 @@ void ChangeVerticalWall(uint32_t iMapIndex, UINT16 usNewPiece) {
 void RestoreWalls(uint32_t iMapIndex) {
   struct LEVELNODE *pWall = NULL;
   uint32_t uiTileType;
-  UINT16 usWallType;
-  UINT16 usWallOrientation;
+  uint16_t usWallType;
+  uint16_t usWallOrientation;
   UINT8 ubSaveWallUIValue;
   BOOLEAN fDone = FALSE;
 
   pWall = GetHorizontalWall(iMapIndex);
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);
-    usWallType = (UINT16)uiTileType;
+    usWallType = (uint16_t)uiTileType;
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       usWallType = SearchForWallType(iMapIndex);
     GetWallOrientation(pWall->usIndex, &usWallOrientation);
@@ -316,7 +316,7 @@ void RestoreWalls(uint32_t iMapIndex) {
   pWall = GetVerticalWall(iMapIndex);
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);
-    usWallType = (UINT16)uiTileType;
+    usWallType = (uint16_t)uiTileType;
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       usWallType = SearchForWallType(iMapIndex);
     GetWallOrientation(pWall->usIndex, &usWallOrientation);
@@ -348,7 +348,7 @@ void RestoreWalls(uint32_t iMapIndex) {
   // found a wall.  Let's back up the current wall value, and restore it after pasting a smart wall.
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);
-    usWallType = (UINT16)uiTileType;
+    usWallType = (uint16_t)uiTileType;
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       usWallType = SearchForWallType(iMapIndex);
     if (usWallType != 0xffff) {
@@ -360,9 +360,9 @@ void RestoreWalls(uint32_t iMapIndex) {
   }
 }
 
-UINT16 GetWallClass(struct LEVELNODE *pWall) {
-  UINT16 row, col, rowVariants;
-  UINT16 usWallIndex;
+uint16_t GetWallClass(struct LEVELNODE *pWall) {
+  uint16_t row, col, rowVariants;
+  uint16_t usWallIndex;
   if (!pWall) return 0xffff;
   GetSubIndexFromTileIndex(pWall->usIndex, &usWallIndex);
   for (row = 0; row < NUM_WALL_TYPES; row++) {
@@ -376,13 +376,13 @@ UINT16 GetWallClass(struct LEVELNODE *pWall) {
   return 0xffff;
 }
 
-UINT16 GetVerticalWallClass(UINT16 iMapIndex) {
+uint16_t GetVerticalWallClass(uint16_t iMapIndex) {
   struct LEVELNODE *pWall;
   if ((pWall = GetVerticalWall(iMapIndex))) return GetWallClass(pWall);
   return 0xffff;
 }
 
-UINT16 GetHorizontalWallClass(UINT16 iMapIndex) {
+uint16_t GetHorizontalWallClass(uint16_t iMapIndex) {
   struct LEVELNODE *pWall;
   if ((pWall = GetVerticalWall(iMapIndex))) return GetWallClass(pWall);
   return 0xffff;

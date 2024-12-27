@@ -44,19 +44,19 @@ typedef struct TAG_anitile {
   INT16 sCurrentFrame;
   INT16 sStartFrame;
   INT16 sDelay;
-  UINT16 usTileType;
-  UINT16 usNumFrames;
+  uint16_t usTileType;
+  uint16_t usNumFrames;
 
-  UINT16 usMissAnimationPlayed;
-  UINT16 ubAttackerMissed;
+  uint16_t usMissAnimationPlayed;
+  uint16_t ubAttackerMissed;
   INT16 sRelativeX;
   INT16 sRelativeY;
   INT16 sRelativeZ;
   INT16 sGridNo;
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
 
-  UINT16 usCachedTileSubIndex;  // sub Index
-  INT16 sCachedTileID;          // Index into cached tile ID
+  uint16_t usCachedTileSubIndex;  // sub Index
+  INT16 sCachedTileID;            // Index into cached tile ID
 
   UINT8 ubOwner;
   UINT8 ubKeyFrame1;
@@ -73,16 +73,16 @@ typedef struct TAG_anitile {
 } ANITILE;
 
 typedef struct TAG_anitile_params {
-  uint32_t uiFlags;    // flags struct
-  UINT8 ubLevelID;     // Level ID for rendering layer
-  INT16 sStartFrame;   // Start frame
-  INT16 sDelay;        // Delay time
-  UINT16 usTileType;   // Tile databse type ( optional )
-  UINT16 usTileIndex;  // Tile database index ( optional )
-  INT16 sX;            // World X ( optional )
-  INT16 sY;            // World Y ( optional )
-  INT16 sZ;            // World Z ( optional )
-  INT16 sGridNo;       // World GridNo
+  uint32_t uiFlags;      // flags struct
+  UINT8 ubLevelID;       // Level ID for rendering layer
+  INT16 sStartFrame;     // Start frame
+  INT16 sDelay;          // Delay time
+  uint16_t usTileType;   // Tile databse type ( optional )
+  uint16_t usTileIndex;  // Tile database index ( optional )
+  INT16 sX;              // World X ( optional )
+  INT16 sY;              // World Y ( optional )
+  INT16 sZ;              // World Z ( optional )
+  INT16 sGridNo;         // World GridNo
 
   struct LEVELNODE *pGivenLevelNode;  // Levelnode for existing tile ( optional )
   CHAR8 zCachedFile[100];             // Filename for cached tile name ( optional )

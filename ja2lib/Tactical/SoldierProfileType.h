@@ -191,16 +191,16 @@ typedef struct {
   UINT8 ubBodyType;
   INT8 bMedical;
 
-  UINT16 usEyesX;
-  UINT16 usEyesY;
-  UINT16 usMouthX;
-  UINT16 usMouthY;
+  uint16_t usEyesX;
+  uint16_t usEyesY;
+  uint16_t usMouthX;
+  uint16_t usMouthY;
   uint32_t uiEyeDelay;
   uint32_t uiMouthDelay;
   uint32_t uiBlinkFrequency;
   uint32_t uiExpressionFrequency;
-  UINT16 sSectorX;
-  UINT16 sSectorY;
+  uint16_t sSectorX;
+  uint16_t sSectorY;
 
   uint32_t uiDayBecomesAvailable;  // day the merc will be available.  used with the bMercStatus
 
@@ -218,13 +218,13 @@ typedef struct {
   INT8 bExplosivesDelta;
   INT8 bStrengthDelta;
   INT8 bLeadershipDelta;
-  UINT16 usKills;
-  UINT16 usAssists;
-  UINT16 usShotsFired;
-  UINT16 usShotsHit;
-  UINT16 usBattlesFought;
-  UINT16 usTimesWounded;
-  UINT16 usTotalDaysServed;
+  uint16_t usKills;
+  uint16_t usAssists;
+  uint16_t usShotsFired;
+  uint16_t usShotsHit;
+  uint16_t usBattlesFought;
+  uint16_t usTimesWounded;
+  uint16_t usTotalDaysServed;
 
   INT16 sLeadershipGain;
   INT16 sStrengthGain;
@@ -255,7 +255,7 @@ typedef struct {
 
   UINT8 bInvStatus[19];
   UINT8 bInvNumber[19];
-  UINT16 usApproachFactor[4];
+  uint16_t usApproachFactor[4];
 
   INT8 bMainGunAttractiveness;
   INT8 bAgility;  // agility (speed) value
@@ -267,11 +267,11 @@ typedef struct {
 
   UINT8 ubInvUndroppable;
   UINT8 ubRoomRangeStart[2];
-  UINT16 inv[19];
+  uint16_t inv[19];
   INT8 bMercTownReputation[20];
 
-  UINT16 usStatChangeChances[12];    // used strictly for balancing, never shown!
-  UINT16 usStatChangeSuccesses[12];  // used strictly for balancing, never shown!
+  uint16_t usStatChangeChances[12];    // used strictly for balancing, never shown!
+  uint16_t usStatChangeSuccesses[12];  // used strictly for balancing, never shown!
 
   UINT8 ubStrategicInsertionCode;
 
@@ -295,14 +295,14 @@ typedef struct {
   INT8 bMedicalDeposit;
   INT8 bAttitude;
   INT8 bBaseMorale;
-  UINT16 sMedicalDepositAmount;
+  uint16_t sMedicalDepositAmount;
 
   INT8 bLearnToLike;
   UINT8 ubApproachVal[4];
   UINT8 ubApproachMod[3][4];
   INT8 bTown;
   INT8 bTownAttachment;
-  UINT16 usOptionalGearCost;
+  uint16_t usOptionalGearCost;
   INT8 bMercOpinion[75];
   INT8 bApproached;
   INT8 bMercStatus;  // The status of the merc.  If negative, see flags at the top of this file.
@@ -317,7 +317,7 @@ typedef struct {
   UINT8 ubLastDateSpokenTo;
   UINT8 bLastQuoteSaidWasSpecial;
   INT8 bSectorZ;
-  UINT16 usStrategicInsertionData;
+  uint16_t usStrategicInsertionData;
   INT8 bFriendlyOrDirectDefaultResponseUsedRecently;
   INT8 bRecruitDefaultResponseUsedRecently;
   INT8 bThreatenDefaultResponseUsedRecently;

@@ -410,7 +410,7 @@ void DropBlood(struct SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible) {
 void UpdateBloodGraphics(INT16 sGridNo, INT8 bLevel) {
   MAP_ELEMENT* pMapElement;
   INT8 bValue;
-  UINT16 usIndex, usNewIndex;
+  uint16_t usIndex, usNewIndex;
 
   // OK, based on level, type, display graphics for blood
   pMapElement = &(gpWorldLevelData[sGridNo]);
@@ -443,12 +443,12 @@ void UpdateBloodGraphics(INT16 sGridNo, INT8 bLevel) {
       // OK, pick new one. based on strength and randomness
 
       if (bValue > 0) {
-        usIndex = (UINT16)((Random(4) * 4) + ubBloodGraphicLUT[bValue]);
+        usIndex = (uint16_t)((Random(4) * 4) + ubBloodGraphicLUT[bValue]);
 
         if (BLOOD_FLOOR_TYPE(pMapElement->ubSmellInfo) == 0) {
-          GetTileIndexFromTypeSubIndex(HUMANBLOOD, (UINT16)(usIndex + 1), &usNewIndex);
+          GetTileIndexFromTypeSubIndex(HUMANBLOOD, (uint16_t)(usIndex + 1), &usNewIndex);
         } else {
-          GetTileIndexFromTypeSubIndex(CREATUREBLOOD, (UINT16)(usIndex + 1), &usNewIndex);
+          GetTileIndexFromTypeSubIndex(CREATUREBLOOD, (uint16_t)(usIndex + 1), &usNewIndex);
         }
 
         // This has been removed and it is handled by the ubBloodInfo level when restoring a saved

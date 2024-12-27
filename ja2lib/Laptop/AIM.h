@@ -96,7 +96,7 @@ BOOLEAN DrawAimDefaults();
 BOOLEAN DisplayAimSlogan();
 BOOLEAN DisplayAimCopyright();
 
-void ResetAimButtons(uint32_t *Buttons, UINT16 uNumberOfButtons);
+void ResetAimButtons(uint32_t *Buttons, uint16_t uNumberOfButtons);
 void DisableAimButton();
 
 #endif

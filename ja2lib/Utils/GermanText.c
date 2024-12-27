@@ -109,11 +109,11 @@ address problems as SirTech uses the "@@@" notation.
 
 */
 
-UINT16 ItemNames[MAXITEMS][80] = {
+uint16_t ItemNames[MAXITEMS][80] = {
     L"",
 };
 
-UINT16 ShortItemNames[MAXITEMS][80] = {
+uint16_t ShortItemNames[MAXITEMS][80] = {
     L"",
 };
 
@@ -122,7 +122,7 @@ UINT16 ShortItemNames[MAXITEMS][80] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-UINT16 AmmoCaliber[][20] = {
+uint16_t AmmoCaliber[][20] = {
     L"0",         L".38 Kal", L"9mm",    L".45 Kal", L".357 Kal",
     L"12 Kal",    L"CAWS",    L"5.45mm", L"5.56mm",  L"7.62mm NATO",
     L"7.62mm WP", L"4.7mm",   L"5.7mm",  L"Monster", L"Rakete",
@@ -137,14 +137,14 @@ UINT16 AmmoCaliber[][20] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-UINT16 BobbyRayAmmoCaliber[][20] = {
+uint16_t BobbyRayAmmoCaliber[][20] = {
     L"0",         L".38 Kal", L"9mm",    L".45 Kal", L".357 Kal",
     L"12 Kal",    L"CAWS",    L"5.45mm", L"5.56mm",  L"7.62mm N.",
     L"7.62mm WP", L"4.7mm",   L"5.7mm",  L"Monster", L"Rakete",
     L"",  // dart
 };
 
-UINT16 WeaponType[][30] = {
+uint16_t WeaponType[][30] = {
     L"Andere",           L"Pistole",
     L"Maschinenpistole", L"Schwere Maschinenpistole",
     L"Gewehr",           L"Scharfschützengewehr",
@@ -152,13 +152,13 @@ UINT16 WeaponType[][30] = {
     L"Schrotflinte",
 };
 
-UINT16 TeamTurnString[][STRING_LENGTH] = {
+uint16_t TeamTurnString[][STRING_LENGTH] = {
     L"Spielzug Spieler", L"Spielzug Gegner",     L"Spielzug Monster",
     L"Spielzug Miliz",   L"Spielzug Zivilisten",
     // planning turn
 };
 
-UINT16 Message[][STRING_LENGTH] = {
+uint16_t Message[][STRING_LENGTH] = {
     L"",
 
     // In the following 8 strings, the %s is the merc's name, and the %d (if any) is a number.
@@ -799,7 +799,7 @@ INT16 gMoneyStatsDesc[][13] = {
 
 // The health of various creatures, enemies, characters in the game. The numbers following each are
 // for comment only, but represent the precentage of points remaining.
-UINT16 zHealthStr[][13] =  // used to be 10
+uint16_t zHealthStr[][13] =  // used to be 10
     {
         L"STIRBT",     //	>= 0
         L"KRITISCH",   //	>= 15
@@ -824,7 +824,7 @@ INT16 gzConsLabel[10] = {
 };
 
 // Conversation options a player has when encountering an NPC
-UINT16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
+uint16_t zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
     L"Wie bitte?",  // meaning "Repeat yourself"
     L"Freundlich",  // approach in a friendly
     L"Direkt",      // approach directly - let's get down to business
@@ -834,14 +834,14 @@ UINT16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
 
 // Some NPCs buy, sell or repair items. These different options are available for those NPCs as
 // well.
-UINT16 zDealerStrings[4][SMALL_STRING_LENGTH] = {
+uint16_t zDealerStrings[4][SMALL_STRING_LENGTH] = {
     L"Handeln",
     L"Kaufen",
     L"Verkaufen",
     L"Reparieren",
 };
 
-UINT16 zDialogActions[1][SMALL_STRING_LENGTH] = {
+uint16_t zDialogActions[1][SMALL_STRING_LENGTH] = {
     L"Fertig",
 };
 
@@ -867,7 +867,7 @@ STR16 zVehicleName[] = {
 };
 
 // These are messages Used in the Tactical Screen
-UINT16 TacticalStr[][MED_STRING_LENGTH] = {
+uint16_t TacticalStr[][MED_STRING_LENGTH] = {
     L"Luftangriff", L"Automatisch Erste Hilfe leisten?",
 
     // CAMFIELD NUKE THIS and add quote #66.
@@ -1902,7 +1902,7 @@ STR16 pUpdatePanelButtons[] = {
 };
 
 // Text which appears when everyone on your team is incapacitated and incapable of battle
-UINT16 LargeTacticalStr[][LARGE_STRING_LENGTH] = {
+uint16_t LargeTacticalStr[][LARGE_STRING_LENGTH] = {
     L"Sie sind in diesem Sektor geschlagen worden!",
     L"Der Feind hat kein Erbarmen mit den Seelen Ihrer Teammitglieder und verschlingt jeden "
     L"einzelnen.",
@@ -2914,7 +2914,7 @@ STR16 pMessageStrings[] = {
 #endif
 };
 
-UINT16 ItemPickupHelpPopup[][40] = {
+uint16_t ItemPickupHelpPopup[][40] = {
     L"OK", L"Hochscrollen", L"Alle auswählen", L"Runterscrollen", L"Abbrechen",
 };
 

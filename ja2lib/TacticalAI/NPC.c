@@ -645,7 +645,7 @@ UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTT
   NPCQuoteInfo *pNPCQuoteInfo;
   UINT8 ubTalkDesire, ubLoop;
   UINT8 ubFirstQuoteRecord, ubLastQuoteRecord;
-  UINT16 usItemToConsider;
+  uint16_t usItemToConsider;
 
   (*ppResultQuoteInfo) = NULL;
   (*pubQuoteNum) = 0;
@@ -1578,7 +1578,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
             pSoldier->bNextAction = AI_ACTION_NONE;
             pSoldier->usNextActionData = 0;
           }
-          NPCDoAction(ubNPC, (UINT16) - (pQuotePtr->sActionData), ubRecordNum);
+          NPCDoAction(ubNPC, (uint16_t) - (pQuotePtr->sActionData), ubRecordNum);
         }
         if (pQuotePtr->ubQuoteNum != NO_QUOTE) {
           // say quote and following consecutive quotes
@@ -1719,7 +1719,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
             pSoldier->bNextAction = AI_ACTION_NONE;
             pSoldier->usNextActionData = 0;
           }
-          NPCDoAction(ubNPC, (UINT16) - (pQuotePtr->sActionData), ubRecordNum);
+          NPCDoAction(ubNPC, (uint16_t) - (pQuotePtr->sActionData), ubRecordNum);
         } else if (pQuotePtr->usGoToGridno == NO_MOVE && pQuotePtr->sActionData > 0) {
           pSoldier = FindSoldierByProfileID(ubNPC, FALSE);
           ZEROTIMECOUNTER(pSoldier->AICounter);
@@ -1727,7 +1727,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
             pSoldier->bNextAction = AI_ACTION_NONE;
             pSoldier->usNextActionData = 0;
           }
-          NPCDoAction(ubNPC, (UINT16)(pQuotePtr->sActionData), ubRecordNum);
+          NPCDoAction(ubNPC, (uint16_t)(pQuotePtr->sActionData), ubRecordNum);
         }
 
         // Movement?
@@ -1898,7 +1898,7 @@ UINT8 NPCTryToInitiateConv(
 }
 
 /*
-BOOLEAN NPCOkToGiveItem( UINT8 ubNPC, UINT8 ubMerc, UINT16 usItem )
+BOOLEAN NPCOkToGiveItem( UINT8 ubNPC, UINT8 ubMerc, uint16_t usItem )
 {
         // This function seems to be unused...
 
@@ -1966,7 +1966,7 @@ void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere) {
   if (pNPC->sGridNo == pQuotePtr->usGoToGridno) {
     // check for an after-move action
     if (pQuotePtr->sActionData > 0) {
-      NPCDoAction(ubNPC, (UINT16)pQuotePtr->sActionData, ubQuoteRecord);
+      NPCDoAction(ubNPC, (uint16_t)pQuotePtr->sActionData, ubQuoteRecord);
     }
   }
 
@@ -2253,7 +2253,7 @@ BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pOb
   return (FALSE);
 }
 
-BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, UINT16 *pusQuoteNum, UINT16 *pusFactToSetTrue) {
+BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, uint16_t *pusQuoteNum, uint16_t *pusFactToSetTrue) {
   // Check if we have a quote that could be used
   NPCQuoteInfo *pNPCQuoteInfoArray;
   UINT8 ubLoop;

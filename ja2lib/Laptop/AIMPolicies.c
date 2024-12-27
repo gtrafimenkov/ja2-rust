@@ -177,9 +177,9 @@ void DisableAimPolicyButton();
 void ResetAimPolicyButtons();
 void ChangingAimPoliciesSubPage(UINT8 ubSubPageNumber);
 
-BOOLEAN DisplayAimPolicyTitle(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber);
-UINT16 DisplayAimPolicyParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber);
-UINT16 DisplayAimPolicySubParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber);
+BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, UINT8 ubPageNum, FLOAT fNumber);
+uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, UINT8 ubPageNum, FLOAT fNumber);
+uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, UINT8 ubPageNum, FLOAT fNumber);
 
 void GameInitAimPolicies() {}
 
@@ -246,7 +246,7 @@ void HandleAimPolicies() {
 }
 
 void RenderAimPolicies() {
-  UINT16 usNumPixles;
+  uint16_t usNumPixles;
 
   DrawAimDefaults();
 
@@ -408,7 +408,7 @@ void RenderAimPolicies() {
 }
 
 BOOLEAN InitAimPolicyMenuBar(void) {
-  UINT16 i, usPosX;
+  uint16_t i, usPosX;
 
   if (gfAimPolicyMenuBarLoaded) return (TRUE);
 
@@ -454,7 +454,7 @@ BOOLEAN ExitAimPolicyMenuBar(void) {
 }
 
 BOOLEAN DrawAimPolicyMenu() {
-  UINT16 i, usPosY;
+  uint16_t i, usPosY;
   uint32_t uiStartLoc = 0;
   wchar_t sText[400];
   struct VObject *hContentButtonHandle;
@@ -473,7 +473,7 @@ BOOLEAN DrawAimPolicyMenu() {
     uiStartLoc = AIM_POLICY_LINE_SIZE * ubLocInFile[i];
     LoadEncryptedDataFromFile(AIMPOLICYFILE, sText, uiStartLoc, AIM_HISTORY_LINE_SIZE);
     DrawTextToScreen(sText, AIM_POLICY_TOC_X + AIM_POLICY_TOC_TEXT_OFFSET_X,
-                     (UINT16)(usPosY + AIM_POLICY_TOC_TEXT_OFFSET_Y), AIM_CONTENTBUTTON_WIDTH,
+                     (uint16_t)(usPosY + AIM_POLICY_TOC_TEXT_OFFSET_Y), AIM_CONTENTBUTTON_WIDTH,
                      AIM_POLICY_TOC_FONT, AIM_POLICY_TOC_COLOR, FONT_MCOLOR_BLACK, FALSE,
                      LEFT_JUSTIFIED);
 
@@ -485,7 +485,7 @@ BOOLEAN DrawAimPolicyMenu() {
 }
 
 BOOLEAN InitAimPolicyTocMenu(void) {
-  UINT16 i, usPosY;
+  uint16_t i, usPosY;
 
   if (gfInPolicyToc) return (TRUE);
 
@@ -493,8 +493,8 @@ BOOLEAN InitAimPolicyTocMenu(void) {
   for (i = 0; i < NUM_AIM_POLICY_TOC_BUTTONS; i++) {
     // Mouse region for the toc buttons
     MSYS_DefineRegion(&gSelectedPolicyTocMenuRegion[i], AIM_POLICY_TOC_X, usPosY,
-                      (UINT16)(AIM_POLICY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
-                      (UINT16)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      (uint16_t)(AIM_POLICY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
+                      (uint16_t)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                       MSYS_NO_CALLBACK, SelectPolicyTocMenuRegionCallBack);
     MSYS_AddRegion(&gSelectedPolicyTocMenuRegion[i]);
     MSYS_SetRegionUserData(&gSelectedPolicyTocMenuRegion[i], 0, i + 2);
@@ -507,7 +507,7 @@ BOOLEAN InitAimPolicyTocMenu(void) {
 }
 
 BOOLEAN ExitAimPolicyTocMenu() {
-  UINT16 i;
+  uint16_t i;
 
   gfInPolicyToc = FALSE;
   for (i = 0; i < NUM_AIM_POLICY_TOC_BUTTONS; i++)
@@ -555,7 +555,7 @@ BOOLEAN DisplayAimPolicyTitleText(void) {
 BOOLEAN DisplayAimPolicyStatement(void) {
   wchar_t sText[400];
   uint32_t uiStartLoc = 0;
-  UINT16 usNumPixels;
+  uint16_t usNumPixels;
 
   // load and display the statment of policies
   uiStartLoc = AIM_POLICY_LINE_SIZE * AIM_STATEMENT_OF_POLICY_1;
@@ -569,7 +569,7 @@ BOOLEAN DisplayAimPolicyStatement(void) {
   uiStartLoc = AIM_POLICY_LINE_SIZE * AIM_STATEMENT_OF_POLICY_2;
   LoadEncryptedDataFromFile(AIMPOLICYFILE, sText, uiStartLoc, AIM_POLICY_LINE_SIZE);
   DisplayWrappedString(AIM_POLICY_TITLE_STATEMENT_X,
-                       (UINT16)(AIM_POLICY_TITLE_STATEMENT_Y + usNumPixels + 15),
+                       (uint16_t)(AIM_POLICY_TITLE_STATEMENT_Y + usNumPixels + 15),
                        AIM_POLICY_TITLE_STATEMENT_WIDTH, 2, AIM_POLICY_TEXT_FONT,
                        AIM_POLICY_TEXT_COLOR, sText, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -577,7 +577,7 @@ BOOLEAN DisplayAimPolicyStatement(void) {
 }
 
 BOOLEAN InitAgreementRegion(void) {
-  UINT16 usPosX, i;
+  uint16_t usPosX, i;
 
   gfExitingPolicesAgreeButton = FALSE;
 
@@ -620,7 +620,7 @@ BOOLEAN ExitAgreementButton(void) {
   return (TRUE);
 }
 
-BOOLEAN DisplayAimPolicyTitle(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
+BOOLEAN DisplayAimPolicyTitle(uint16_t usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   wchar_t sText[400];
   uint32_t uiStartLoc = 0;
 
@@ -633,11 +633,11 @@ BOOLEAN DisplayAimPolicyTitle(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   return (TRUE);
 }
 
-UINT16 DisplayAimPolicyParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
+uint16_t DisplayAimPolicyParagraph(uint16_t usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   wchar_t sText[400];
   wchar_t sTemp[20];
   uint32_t uiStartLoc = 0;
-  UINT16 usNumPixels;
+  uint16_t usNumPixels;
 
   uiStartLoc = AIM_POLICY_LINE_SIZE * ubPageNum;
   LoadEncryptedDataFromFile(AIMPOLICYFILE, sText, uiStartLoc, AIM_POLICY_LINE_SIZE);
@@ -657,11 +657,11 @@ UINT16 DisplayAimPolicyParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) 
   return (usNumPixels);
 }
 
-UINT16 DisplayAimPolicySubParagraph(UINT16 usPosY, UINT8 ubPageNum, FLOAT fNumber) {
+uint16_t DisplayAimPolicySubParagraph(uint16_t usPosY, UINT8 ubPageNum, FLOAT fNumber) {
   wchar_t sText[400];
   wchar_t sTemp[20];
   uint32_t uiStartLoc = 0;
-  UINT16 usNumPixels;
+  uint16_t usNumPixels;
 
   uiStartLoc = AIM_POLICY_LINE_SIZE * ubPageNum;
   LoadEncryptedDataFromFile(AIMPOLICYFILE, sText, uiStartLoc, AIM_POLICY_LINE_SIZE);

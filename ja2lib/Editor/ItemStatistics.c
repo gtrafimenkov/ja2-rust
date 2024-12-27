@@ -1163,7 +1163,7 @@ void RemoveTriggersGUI() {
 void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     INT32 i;
-    UINT16 usAttachment;
+    uint16_t usAttachment;
     struct OBJECTTYPE temp;
     for (i = 0; i < NUM_ATTACHMENT_BUTTONS;
          i++) {  // Loop through and find the button that was just modified
@@ -1408,7 +1408,7 @@ void UpdateActionItem(INT8 bActionItemIndex) {
 
 void ReEvaluateAttachmentStatii() {
   INT32 i;
-  UINT16 usAttachment;
+  uint16_t usAttachment;
   for (i = 0; i < NUM_ATTACHMENT_BUTTONS; i++) {
     if (guiAttachmentButton[i] != -1 &&
         !(ButtonList[guiAttachmentButton[i]]->uiFlags &

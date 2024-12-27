@@ -15,12 +15,13 @@
 BOOLEAN InitPathAI(void);
 void ShutDownPathAI(void);
 INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
-               INT8 bStayOn, UINT16 usMovementMode, INT8 bStealth, INT8 bReverse, INT16 sAPBudget);
+               INT8 bStayOn, uint16_t usMovementMode, INT8 bStealth, INT8 bReverse,
+               INT16 sAPBudget);
 INT16 UIPlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
-                 INT8 bStayOn, UINT16 usMovementMode, INT8 bStealth, INT8 bReverse,
+                 INT8 bStayOn, uint16_t usMovementMode, INT8 bStealth, INT8 bReverse,
                  INT16 sAPBudget);
 INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
-                       INT8 bStayOn, UINT16 usMovementMode, INT8 bStealth, INT8 bReverse,
+                       INT8 bStayOn, uint16_t usMovementMode, INT8 bStealth, INT8 bReverse,
                        INT16 sAPBudget);
 
 void ErasePath(char bEraseOldOne);
@@ -37,12 +38,12 @@ UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 
                              BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
                              BOOLEAN fReturnDoorCost);
 
-INT16 RecalculatePathCost(struct SOLDIERTYPE *pSoldier, UINT16 usMovementMode);
+INT16 RecalculatePathCost(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
 
 // Exporting these global variables
 extern uint32_t guiPathingData[256];
 extern UINT8 gubNPCAPBudget;
-extern UINT16 gusNPCMovementMode;
+extern uint16_t gusNPCMovementMode;
 extern UINT8 gubNPCDistLimit;
 extern UINT8 gubNPCPathCount;
 extern BOOLEAN gfPlotPathToExitGrid;

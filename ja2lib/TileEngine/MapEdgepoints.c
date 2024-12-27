@@ -25,17 +25,17 @@ INT16 *gps1stEastEdgepointArray = NULL;
 INT16 *gps1stSouthEdgepointArray = NULL;
 INT16 *gps1stWestEdgepointArray = NULL;
 // contains the size for each array
-UINT16 gus1stNorthEdgepointArraySize = 0;
-UINT16 gus1stEastEdgepointArraySize = 0;
-UINT16 gus1stSouthEdgepointArraySize = 0;
-UINT16 gus1stWestEdgepointArraySize = 0;
+uint16_t gus1stNorthEdgepointArraySize = 0;
+uint16_t gus1stEastEdgepointArraySize = 0;
+uint16_t gus1stSouthEdgepointArraySize = 0;
+uint16_t gus1stWestEdgepointArraySize = 0;
 // contains the index value for the first array index of the second row of each edgepoint array.
 // Because each edgepoint side has two rows, the outside most row is calculated first, then the
 // inside row. For purposes of AI, it may become necessary to avoid this.
-UINT16 gus1stNorthEdgepointMiddleIndex = 0;
-UINT16 gus1stEastEdgepointMiddleIndex = 0;
-UINT16 gus1stSouthEdgepointMiddleIndex = 0;
-UINT16 gus1stWestEdgepointMiddleIndex = 0;
+uint16_t gus1stNorthEdgepointMiddleIndex = 0;
+uint16_t gus1stEastEdgepointMiddleIndex = 0;
+uint16_t gus1stSouthEdgepointMiddleIndex = 0;
+uint16_t gus1stWestEdgepointMiddleIndex = 0;
 
 // dynamic arrays that contain the valid gridno's for each edge
 INT16 *gps2ndNorthEdgepointArray = NULL;
@@ -43,17 +43,17 @@ INT16 *gps2ndEastEdgepointArray = NULL;
 INT16 *gps2ndSouthEdgepointArray = NULL;
 INT16 *gps2ndWestEdgepointArray = NULL;
 // contains the size for each array
-UINT16 gus2ndNorthEdgepointArraySize = 0;
-UINT16 gus2ndEastEdgepointArraySize = 0;
-UINT16 gus2ndSouthEdgepointArraySize = 0;
-UINT16 gus2ndWestEdgepointArraySize = 0;
+uint16_t gus2ndNorthEdgepointArraySize = 0;
+uint16_t gus2ndEastEdgepointArraySize = 0;
+uint16_t gus2ndSouthEdgepointArraySize = 0;
+uint16_t gus2ndWestEdgepointArraySize = 0;
 // contains the index value for the first array index of the second row of each edgepoint array.
 // Because each edgepoint side has two rows, the outside most row is calculated first, then the
 // inside row. For purposes of AI, it may become necessary to avoid this.
-UINT16 gus2ndNorthEdgepointMiddleIndex = 0;
-UINT16 gus2ndEastEdgepointMiddleIndex = 0;
-UINT16 gus2ndSouthEdgepointMiddleIndex = 0;
-UINT16 gus2ndWestEdgepointMiddleIndex = 0;
+uint16_t gus2ndNorthEdgepointMiddleIndex = 0;
+uint16_t gus2ndEastEdgepointMiddleIndex = 0;
+uint16_t gus2ndSouthEdgepointMiddleIndex = 0;
+uint16_t gus2ndWestEdgepointMiddleIndex = 0;
 
 BOOLEAN gfEdgepointsExist = FALSE;
 BOOLEAN gfGeneratingMapEdgepoints = FALSE;
@@ -110,7 +110,7 @@ void TrashMapEdgepoints() {
 // access to the edge of the map.
 void ValidateEdgepoints() {
   INT32 i;
-  UINT16 usValidEdgepoints;
+  uint16_t usValidEdgepoints;
   struct SOLDIERTYPE Soldier;
 
   memset(&Soldier, 0, sizeof(struct SOLDIERTYPE));
@@ -239,9 +239,9 @@ void ValidateEdgepoints() {
   gus2ndWestEdgepointArraySize = usValidEdgepoints;
 }
 
-void CompactEdgepointArray(INT16 **psArray, UINT16 *pusMiddleIndex, UINT16 *pusArraySize) {
+void CompactEdgepointArray(INT16 **psArray, uint16_t *pusMiddleIndex, uint16_t *pusArraySize) {
   INT32 i;
-  UINT16 usArraySize, usValidIndex = 0;
+  uint16_t usArraySize, usValidIndex = 0;
 
   usArraySize = *pusArraySize;
 
@@ -263,10 +263,11 @@ void CompactEdgepointArray(INT16 **psArray, UINT16 *pusMiddleIndex, UINT16 *pusA
 }
 
 void InternallyClassifyEdgepoints(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT16 **psArray1,
-                                  UINT16 *pusMiddleIndex1, UINT16 *pusArraySize1, INT16 **psArray2,
-                                  UINT16 *pusMiddleIndex2, UINT16 *pusArraySize2) {
+                                  uint16_t *pusMiddleIndex1, uint16_t *pusArraySize1,
+                                  INT16 **psArray2, uint16_t *pusMiddleIndex2,
+                                  uint16_t *pusArraySize2) {
   INT32 i;
-  UINT16 us1stBenchmarkID, us2ndBenchmarkID;
+  uint16_t us1stBenchmarkID, us2ndBenchmarkID;
   us1stBenchmarkID = us2ndBenchmarkID = 0xffff;
   if (!(*psArray2)) {
     *psArray2 = (INT16 *)MemAlloc(sizeof(INT16) * 400);
@@ -274,20 +275,20 @@ void InternallyClassifyEdgepoints(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, I
   for (i = 0; i < *pusArraySize1; i++) {
     if (sGridNo == (*psArray1)[i]) {
       if (i < *pusMiddleIndex1) {  // in the first half of the array
-        us1stBenchmarkID = (UINT16)i;
+        us1stBenchmarkID = (uint16_t)i;
         // find the second benchmark
         for (i = *pusMiddleIndex1; i < *pusArraySize1; i++) {
           if (EdgepointsClose(pSoldier, (*psArray1)[us1stBenchmarkID], (*psArray1)[i])) {
-            us2ndBenchmarkID = (UINT16)i;
+            us2ndBenchmarkID = (uint16_t)i;
             break;
           }
         }
       } else {  // in the second half of the array
-        us2ndBenchmarkID = (UINT16)i;
+        us2ndBenchmarkID = (uint16_t)i;
         // find the first benchmark
         for (i = 0; i < *pusMiddleIndex1; i++) {
           if (EdgepointsClose(pSoldier, (*psArray1)[us2ndBenchmarkID], (*psArray1)[i])) {
-            us1stBenchmarkID = (UINT16)i;
+            us1stBenchmarkID = (uint16_t)i;
             break;
           }
         }
@@ -928,9 +929,9 @@ BOOLEAN LoadMapEdgepoints(INT8 **hBuffer) {
   return TRUE;
 }
 
-UINT16 ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode) {
+uint16_t ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode) {
   INT16 *psArray = NULL;
-  UINT16 usArraySize = 0;
+  uint16_t usArraySize = 0;
 
   // First validate and get access to the correct array based on strategic direction.
   // We will use the selected array to choose insertion gridno's.
@@ -964,9 +965,9 @@ UINT16 ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode) {
 void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategicInsertionCode,
                          UINT8 ubNumDesiredPoints) {
   INT16 *psArray = NULL;
-  UINT16 usArraySize = 0;
+  uint16_t usArraySize = 0;
   INT32 i = -1;
-  UINT16 usSlots, usCurrSlot;
+  uint16_t usSlots, usCurrSlot;
   INT16 *psTempArray = NULL;
 
   AssertMsg(
@@ -1131,7 +1132,7 @@ INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode) 
   INT32 i, iDirectionLoop;
   INT16 *psArray = NULL;
   INT16 sRadius, sDistance, sDirection, sOriginalGridNo;
-  UINT16 usArraySize = 0;
+  uint16_t usArraySize = 0;
   BOOLEAN fReserved;
 
   if (gsReservedIndex >= 20) {  // Everything is reserved.
@@ -1250,7 +1251,7 @@ INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode
   INT32 i, iDirectionLoop;
   INT16 *psArray = NULL;
   INT16 sRadius, sDistance, sDirection, sOriginalGridNo;
-  UINT16 usArraySize = 0;
+  uint16_t usArraySize = 0;
   BOOLEAN fReserved;
 
   if (gsReservedIndex >= 20) {  // Everything is reserved.

@@ -57,14 +57,14 @@ void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 struct MOUSE_REGION gScreenMouseRegions;
 void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage);
+BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, uint16_t usPosX, uint16_t usPosY, UINT8 ubImage);
 
 void GameInitAimFacialIndex() {}
 
 BOOLEAN EnterAimFacialIndex() {
   VOBJECT_DESC VObjectDesc;
   UINT8 i;
-  UINT16 usPosX, usPosY, x, y;
+  uint16_t usPosX, usPosY, x, y;
   STR sFaceLoc = "FACES\\";
   char sTemp[100];
 
@@ -134,7 +134,7 @@ void HandleAimFacialIndex() {
 }
 
 BOOLEAN RenderAimFacialIndex() {
-  UINT16 usPosX, usPosY, x, y;
+  uint16_t usPosX, usPosY, x, y;
   wchar_t sString[150];
   UINT8 i;
 
@@ -161,8 +161,8 @@ BOOLEAN RenderAimFacialIndex() {
     for (x = 0; x < AIM_FI_NUM_MUHSHOTS_X; x++) {
       DrawMercsFaceToScreen(i, usPosX, usPosY, 1);
       DrawTextToScreen(
-          gMercProfiles[AimMercArray[i]].zNickname, (UINT16)(usPosX - AIM_FI_NNAME_OFFSET_X),
-          (UINT16)(usPosY + AIM_FI_NNAME_OFFSET_Y), AIM_FI_NNAME_WIDTH, AIM_FONT12ARIAL,
+          gMercProfiles[AimMercArray[i]].zNickname, (uint16_t)(usPosX - AIM_FI_NNAME_OFFSET_X),
+          (uint16_t)(usPosY + AIM_FI_NNAME_OFFSET_Y), AIM_FI_NNAME_WIDTH, AIM_FONT12ARIAL,
           AIM_FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
       usPosX += AIM_FI_PORTRAIT_WIDTH + AIM_FI_MUGSHOT_GAP_X;
@@ -219,7 +219,7 @@ void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   UINT8 ubMercNum;
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
 
   ubMercNum = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
@@ -244,7 +244,7 @@ void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason
   }
 }
 
-BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage) {
+BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, uint16_t usPosX, uint16_t usPosY, UINT8 ubImage) {
   struct VObject *hMugShotBorderHandle;
   struct VObject *hFaceHandle;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -278,8 +278,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
     BltVideoObject(FRAME_BUFFER, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET,
                    usPosY + AIM_FI_FACE_OFFSET, VO_BLT_SRCTRANSPARENCY, NULL);
 
-    DrawTextToScreen(AimFiText[AIM_FI_DEAD], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+    DrawTextToScreen(AimFiText[AIM_FI_DEAD], (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
@@ -288,8 +288,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
            (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
-    DrawTextToScreen(pPOWStrings[0], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+    DrawTextToScreen(pPOWStrings[0], (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
@@ -298,8 +298,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
     DrawTextToScreen(MercInfo[MERC_FILES_ALREADY_HIRED],
-                     (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+                     (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
@@ -307,8 +307,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
   else if (!IsMercHireable(AimMercArray[ubMercID])) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
-    DrawTextToScreen(AimFiText[AIM_FI_DEAD + 1], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+    DrawTextToScreen(AimFiText[AIM_FI_DEAD + 1], (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
     // if not enough room use this..
     // AimFiText[AIM_FI_AWAY]

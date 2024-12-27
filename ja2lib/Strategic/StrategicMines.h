@@ -85,8 +85,8 @@ typedef struct MINE_STATUS_TYPE {
                                       // produced from it
   BOOLEAN fAttackedHeadMiner;         // player has attacked the head miner, shutting down mine &
                                       // decreasing loyalty
-  UINT16 usValidDayCreaturesCanInfest;  // Creatures will be permitted to spread if the game day is
-                                        // greater than this value.
+  uint16_t usValidDayCreaturesCanInfest;  // Creatures will be permitted to spread if the game day
+                                          // is greater than this value.
   uint32_t uiTimePlayerProductionStarted;  // time in minutes when 'fMineHasProducedForPlayer' was
                                            // first set
 
@@ -95,7 +95,7 @@ typedef struct MINE_STATUS_TYPE {
 } MINE_STATUS_TYPE;
 
 typedef struct HEAD_MINER_TYPE {
-  UINT16 usProfileId;
+  uint16_t usProfileId;
   INT8 bQuoteNum[NUM_HEAD_MINER_STRATEGIC_QUOTES];
   UINT8 ubExternalFace;
 } HEAD_MINER_TYPE;
@@ -161,7 +161,7 @@ void MineShutdownIsPermanent(INT8 bMineIndex);
 BOOLEAN IsMineShutDown(INT8 bMineIndex);
 
 UINT8 GetHeadMinerIndexForMine(INT8 bMineIndex);
-UINT16 GetHeadMinerProfileIdForMine(INT8 bMineIndex);
+uint16_t GetHeadMinerProfileIdForMine(INT8 bMineIndex);
 
 // Find the sector location of a mine
 void GetMineSector(UINT8 ubMineIndex, INT16* psX, INT16* psY);

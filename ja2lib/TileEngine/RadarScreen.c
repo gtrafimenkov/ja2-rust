@@ -165,8 +165,8 @@ void MoveRadarScreen() {
   }
 
   // Add region for radar
-  MSYS_DefineRegion(&gRadarRegion, RADAR_WINDOW_X, (UINT16)(gsRadarY),
-                    RADAR_WINDOW_X + RADAR_WINDOW_WIDTH, (UINT16)(gsRadarY + RADAR_WINDOW_HEIGHT),
+  MSYS_DefineRegion(&gRadarRegion, RADAR_WINDOW_X, (uint16_t)(gsRadarY),
+                    RADAR_WINDOW_X + RADAR_WINDOW_WIDTH, (uint16_t)(gsRadarY + RADAR_WINDOW_HEIGHT),
                     MSYS_PRIORITY_HIGHEST, 0, RadarRegionMoveCallback, RadarRegionButtonCallback);
 
   // Add region
@@ -239,7 +239,7 @@ void RenderRadarScreen() {
 
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   uint32_t cnt;
   INT16 sHeight, sWidth, sX;
   INT32 iCounter = 0;

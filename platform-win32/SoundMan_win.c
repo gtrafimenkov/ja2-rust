@@ -105,15 +105,15 @@ typedef struct {
 
 typedef struct {
   // FMT chunk
-  CHAR8 cFormat[4];      // "FMT "
-  uint32_t uiChunkSize;  // Chunk length
-  UINT16 uiStereo;       // 1 if stereo, 0 if mono (Not reliable, use channels instead)
-  UINT16 uiChannels;     // number of channels used 1=mono, 2=stereo, etc.
-  uint32_t uiSpeed;      // Sampling Rate (speed)
-  uint32_t uiBytesSec;   // Number of bytes per sec
-  UINT16 uiBytesSample;  // Number of bytes per sample (1 = 8 bit mono,
-                         // 2 = 8 bit stereo or 16 bit mono, 4 = 16 bit stereo
-  UINT16 uiBitsSample;   // bits per sample
+  CHAR8 cFormat[4];        // "FMT "
+  uint32_t uiChunkSize;    // Chunk length
+  uint16_t uiStereo;       // 1 if stereo, 0 if mono (Not reliable, use channels instead)
+  uint16_t uiChannels;     // number of channels used 1=mono, 2=stereo, etc.
+  uint32_t uiSpeed;        // Sampling Rate (speed)
+  uint32_t uiBytesSec;     // Number of bytes per sec
+  uint16_t uiBytesSample;  // Number of bytes per sample (1 = 8 bit mono,
+                           // 2 = 8 bit stereo or 16 bit mono, 4 = 16 bit stereo
+  uint16_t uiBitsSample;   // bits per sample
 } WAVFMT;
 
 typedef struct {
@@ -185,7 +185,7 @@ uint32_t SoundGetEmptySample(void);
 BOOLEAN SoundProcessWAVHeader(uint32_t uiSample);
 uint32_t SoundFreeSampleIndex(uint32_t uiSample);
 uint32_t SoundGetIndexByID(uint32_t uiSoundID);
-static HDIGDRIVER SoundInitDriver(uint32_t uiRate, UINT16 uiBits, UINT16 uiChans);
+static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiChans);
 BOOLEAN SoundInitHardware(void);
 BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, CHAR8 *cBuf);
 BOOLEAN SoundShutdownHardware(void);
@@ -1424,7 +1424,7 @@ BOOLEAN SoundShutdownHardware(void) {
 //	Returns:	Pointer to the driver if successful, NULL otherwise.
 //
 //*******************************************************************************
-static HDIGDRIVER SoundInitDriver(uint32_t uiRate, UINT16 uiBits, UINT16 uiChans) {
+static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiChans) {
   static PCMWAVEFORMAT sPCMWF;
   HDIGDRIVER DIG;
   CHAR8 cBuf[128];

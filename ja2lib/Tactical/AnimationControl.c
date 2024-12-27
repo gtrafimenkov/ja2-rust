@@ -30,13 +30,13 @@
 #define NUM_INJURED_SUBS 1
 
 typedef struct {
-  UINT16 usAnimState;
-  UINT16 usAnimationSurfaces[4];
+  uint16_t usAnimState;
+  uint16_t usAnimationSurfaces[4];
 
 } ANIMSUBTYPE;
 
 // Block for anim file
-UINT16 gusAnimInst[MAX_ANIMATIONS][MAX_FRAMES_PER_ANIM];
+uint16_t gusAnimInst[MAX_ANIMATIONS][MAX_FRAMES_PER_ANIM];
 
 // OK, this array contains definitions for random animations based on bodytype, total # allowed, and
 // what is in their hand....
@@ -3354,17 +3354,17 @@ ANI_SPEED_DEF gubAnimCrawlSpeeds[TOTALBODYTYPES] = {
     -10, (FLOAT)0.8,  // REGFEMALE
 };
 
-UINT16 gusNothingBreath[] = {
+uint16_t gusNothingBreath[] = {
     RGMNOTHING_STD,
     BGMNOTHING_STD,
     RGMNOTHING_STD,
     RGFNOTHING_STD,
 };
 
-UINT16 gubAnimSurfaceIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
-UINT16 gubAnimSurfaceMidWaterSubIndex[TOTALBODYTYPES][NUMANIMATIONSTATES][2];
-UINT16 gubAnimSurfaceItemSubIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
-UINT16 gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
+uint16_t gubAnimSurfaceIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
+uint16_t gubAnimSurfaceMidWaterSubIndex[TOTALBODYTYPES][NUMANIMATIONSTATES][2];
+uint16_t gubAnimSurfaceItemSubIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
+uint16_t gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
 
 ANIMSUBTYPE gRifleInjuredSub[] = {
     WALKING, RGMHURTWALKINGR, BGMHURTWALKINGR, RGMHURTWALKINGR, RGFHURTWALKINGR,
@@ -5304,8 +5304,8 @@ BOOLEAN LoadAnimationStateInstructions() {
   return (TRUE);
 }
 
-BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, UINT16 usNewState) {
-  UINT16 usAnimSurface;
+BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNewState) {
+  uint16_t usAnimSurface;
 
   // From animation control, get surface
 
@@ -5319,8 +5319,8 @@ BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, UINT16 usNewSt
   return (TRUE);
 }
 
-BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, UINT16 usTestState,
-                                    UINT16 *pusSubState) {
+BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
+                                    uint16_t *pusSubState) {
   BOOLEAN fSubFound = FALSE;
 
   *pusSubState = usTestState;
@@ -5500,8 +5500,8 @@ INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, UINT8 ubBo
   return (-1);
 }
 
-BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
-  UINT16 usAnimSurface;
+BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState) {
+  uint16_t usAnimSurface;
 
   // Delete any structure info!
   if (pSoldier->pLevelNode != NULL) {
@@ -5526,8 +5526,8 @@ BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimSt
   return (TRUE);
 }
 
-UINT16 LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
-  UINT16 usAnimSurface;
+uint16_t LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState) {
+  uint16_t usAnimSurface;
 
   usAnimSurface = DetermineSoldierAnimationSurface(pSoldier, usAnimState);
 
@@ -5542,7 +5542,7 @@ UINT16 LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimSt
   return (usAnimSurface);
 }
 
-UINT16 gusQueenMonsterSpitAnimPerDir[] = {
+uint16_t gusQueenMonsterSpitAnimPerDir[] = {
     QUEENMONSTERSPIT_NE,  // NORTH
     QUEENMONSTERSPIT_E,
     QUEENMONSTERSPIT_SE,  // EAST
@@ -5553,14 +5553,14 @@ UINT16 gusQueenMonsterSpitAnimPerDir[] = {
     QUEENMONSTERSPIT_NE,
 };
 
-UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
-  UINT16 usAnimSurface;
-  UINT16 usAltAnimSurface;
-  UINT16 usItem;
+uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState) {
+  uint16_t usAnimSurface;
+  uint16_t usAltAnimSurface;
+  uint16_t usItem;
   UINT8 ubWaterHandIndex = 1;
   INT32 cnt;
   BOOLEAN fAdjustedForItem = FALSE;
-  UINT16 usNewAnimState;
+  uint16_t usNewAnimState;
 
   if (SubstituteBodyTypeAnimation(pSoldier, usAnimState, &usNewAnimState)) {
     usAnimState = usNewAnimState;
@@ -5731,8 +5731,8 @@ UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usA
   return (usAnimSurface);
 }
 
-UINT16 GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
-  UINT16 usAnimSurface;
+uint16_t GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState) {
+  uint16_t usAnimSurface;
 
   usAnimSurface = pSoldier->usAnimSurface;
 

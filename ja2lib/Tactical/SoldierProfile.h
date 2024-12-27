@@ -160,8 +160,8 @@ typedef enum {
 BOOLEAN LoadMercProfiles(void);
 
 // This function will overload the default for the face index ( which is the ubCharNum )
-void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, UINT16 usEyesX, UINT16 usEyesY,
-                        UINT16 usMouthX, UINT16 usMouthY);
+void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, uint16_t usEyesX, uint16_t usEyesY,
+                        uint16_t usMouthX, uint16_t usMouthY);
 struct SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMercsOnly);
 
 BOOLEAN RecruitRPC(UINT8 ubCharNum);

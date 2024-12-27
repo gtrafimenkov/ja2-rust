@@ -504,7 +504,7 @@ void LoadAndDisplayMercBio(UINT8 ubMercID) {
 }
 
 void DisplayMercsStats(UINT8 ubMercID) {
-  UINT16 usPosY, usPosX;
+  uint16_t usPosY, usPosX;
   wchar_t sString[128];
 
   usPosY = MERC_HEALTH_Y;

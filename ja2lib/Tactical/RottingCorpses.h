@@ -96,7 +96,7 @@ typedef struct {
   INT8 bDirection;
   uint32_t uiTimeOfDeath;
 
-  UINT16 usFlags;
+  uint16_t usFlags;
 
   INT8 bLevel;
 
@@ -117,8 +117,8 @@ typedef struct {
   ANITILE *pAniTile;
 
   struct SGPPaletteEntry *p8BPPPalette;
-  UINT16 *p16BPPPalette;
-  UINT16 *pShades[NUM_CORPSE_SHADES];
+  uint16_t *p16BPPPalette;
+  uint16_t *pShades[NUM_CORPSE_SHADES];
   INT16 sGraphicNum;
   INT32 iCachedTileID;
   FLOAT dXPos;
@@ -143,15 +143,15 @@ void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam);
 void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier);
 void RebuildAllCorpseShadeTables();
 
-UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse);
+uint16_t CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse);
 
 INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef, INT8 ubRadius);
 
 void HandleRottingCorpses();
 void AddCrowToCorpse(ROTTING_CORPSE *pCorpse);
 
-void VaporizeCorpse(INT16 sGridNo, UINT16 usStructureID);
-void CorpseHit(INT16 sGridNo, UINT16 usStructureID);
+void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID);
+void CorpseHit(INT16 sGridNo, uint16_t usStructureID);
 
 void HandleCrowLeave(struct SOLDIERTYPE *pSoldier);
 
@@ -169,7 +169,7 @@ void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel);
 
 void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier);
 
-UINT16 GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage);
+uint16_t GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage);
 
 void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel);
 

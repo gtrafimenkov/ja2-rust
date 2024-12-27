@@ -53,7 +53,7 @@ void RenderMercs();
 BOOLEAN InitMercBackGround();
 BOOLEAN DrawMecBackGround();
 BOOLEAN RemoveMercBackGround();
-void DailyUpdateOfMercSite(UINT16 usDate);
+void DailyUpdateOfMercSite(uint16_t usDate);
 UINT8 GetMercIDFromMERCArray(UINT8 ubMercID);
 void DisplayTextForSpeckVideoPopUp(STR16 pString);
 
@@ -66,7 +66,7 @@ void GetMercSiteBackOnline();
 
 void DisableMercSiteButton();
 
-extern UINT16 gusMercVideoSpeckSpeech;
+extern uint16_t gusMercVideoSpeckSpeech;
 
 extern UINT8 gubArrivedFromMercSubSite;
 

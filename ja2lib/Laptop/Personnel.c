@@ -838,7 +838,7 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
     INT32 iHeightOfText;
 
     iHeightOfText = DisplayWrappedString(
-        IMAGE_BOX_X, (UINT16)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH, 1,
+        IMAGE_BOX_X, (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH, 1,
         PERS_FONT, PERS_FONT_COLOR, gMercProfiles[iId].zName, 0, FALSE,
         CENTER_JUSTIFIED | DONT_DISPLAY_TEXT);
 
@@ -846,12 +846,13 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
     if ((iHeightOfText - 2) > GetFontHeight(PERS_FONT)) {
       // raise where we display it, and rap it
       DisplayWrappedString(
-          IMAGE_BOX_X, (UINT16)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y - GetFontHeight(PERS_FONT)),
+          IMAGE_BOX_X,
+          (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y - GetFontHeight(PERS_FONT)),
           IMAGE_NAME_WIDTH, 1, PERS_FONT, PERS_FONT_COLOR, gMercProfiles[iId].zName, 0, FALSE,
           CENTER_JUSTIFIED);
     } else {
       DrawTextToScreen(gMercProfiles[iId].zName, IMAGE_BOX_X,
-                       (UINT16)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH,
+                       (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH,
                        PERS_FONT, PERS_FONT_COLOR, 0, FALSE, CENTER_JUSTIFIED);
     }
     //		DrawTextToScreen(gMercProfiles[ iId  ].zName, ( INT16 ) (
@@ -1216,21 +1217,21 @@ void DisplayCharName(INT32 iId, INT32 iSlot) {
 
   // first get height of text to be displayed
   iHeightOfText = DisplayWrappedString(
-      IMAGE_BOX_X, (UINT16)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH, 1, PERS_FONT,
-      PERS_FONT_COLOR, gMercProfiles[Menptr[iId].ubProfile].zName, 0, FALSE,
+      IMAGE_BOX_X, (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH, 1,
+      PERS_FONT, PERS_FONT_COLOR, gMercProfiles[Menptr[iId].ubProfile].zName, 0, FALSE,
       CENTER_JUSTIFIED | DONT_DISPLAY_TEXT);
 
   // if the string will rap
   if ((iHeightOfText - 2) > GetFontHeight(PERS_FONT)) {
     // raise where we display it, and rap it
     DisplayWrappedString(
-        IMAGE_BOX_X, (UINT16)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y - GetFontHeight(PERS_FONT)),
+        IMAGE_BOX_X, (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y - GetFontHeight(PERS_FONT)),
         IMAGE_NAME_WIDTH, 1, PERS_FONT, PERS_FONT_COLOR, gMercProfiles[Menptr[iId].ubProfile].zName,
         0, FALSE, CENTER_JUSTIFIED);
   } else {
     DrawTextToScreen(gMercProfiles[Menptr[iId].ubProfile].zName, IMAGE_BOX_X,
-                     (UINT16)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH, PERS_FONT,
-                     PERS_FONT_COLOR, 0, FALSE, CENTER_JUSTIFIED);
+                     (uint16_t)(IMAGE_BOX_Y + IMAGE_FULL_NAME_OFFSET_Y), IMAGE_NAME_WIDTH,
+                     PERS_FONT, PERS_FONT_COLOR, 0, FALSE, CENTER_JUSTIFIED);
   }
 
   /*
@@ -5388,7 +5389,7 @@ void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
       // find position in value string, append character at end
       for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++);
-      sTransferString[iCounter] = (sZero[0] + (UINT16)iValue);
+      sTransferString[iCounter] = (sZero[0] + (uint16_t)iValue);
       sTransferString[iCounter + 1] = 0;
       fReDrawScreenFlag = TRUE;
 
@@ -5741,7 +5742,7 @@ void HandlePersonnelKeyboard(void) {
         iValue = (INT32)(InputEvent.usParam - '0');
 
         for (iCounter = 0; iCounter < (INT32)wcslen(sTransferString); iCounter++);
-        sTransferString[iCounter] = (sZero[0] + (UINT16)iValue);
+        sTransferString[iCounter] = (sZero[0] + (uint16_t)iValue);
         sTransferString[iCounter + 1] = 0;
         fPausedReDrawScreenFlag = TRUE;
 

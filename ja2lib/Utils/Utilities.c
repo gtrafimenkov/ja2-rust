@@ -55,7 +55,7 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
 
 BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos,
                           uint32_t uiDestSurface) {
-  UINT16 us16BPPColor;
+  uint16_t us16BPPColor;
   uint32_t cnt1;
   UINT8 ubSize;
   INT16 sTLX, sTLY, sBRX, sBRY;
@@ -69,8 +69,8 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos,
   ubSize = gpPalRep[ubPaletteRep].ubPaletteSize;
 
   for (cnt1 = 0; cnt1 < ubSize; cnt1++) {
-    sTLX = ubXPos + (UINT16)((cnt1 % 16) * 20);
-    sTLY = ubYPos + (UINT16)((cnt1 / 16) * 20);
+    sTLX = ubXPos + (uint16_t)((cnt1 % 16) * 20);
+    sTLY = ubYPos + (uint16_t)((cnt1 / 16) * 20);
     sBRX = sTLX + 20;
     sBRY = sTLY + 20;
 
@@ -86,7 +86,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos,
   return (TRUE);
 }
 
-BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, UINT16 usWidth, INT32 uiFont) {
+BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, uint16_t usWidth, INT32 uiFont) {
   uint32_t Cur, uiLet, uiNewLet, uiHyphenLet;
   CHAR16 *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;

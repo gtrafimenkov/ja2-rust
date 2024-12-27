@@ -111,7 +111,7 @@ typedef struct _GUI_BUTTON {
   INT8 bDisabledStyle;
   // For buttons with text
   STR16 string;         // the string
-  UINT16 usFont;        // font for text
+  uint16_t usFont;      // font for text
   BOOLEAN fMultiColor;  // font is a multi-color font
   INT16 sForeColor;     // text colors if there is text
   INT16 sShadowColor;
@@ -314,7 +314,7 @@ void RemoveIconFromButton(INT32 iButtonID);
 // Note:  Text is always on top
 // If fShiftImage is true, then the image will shift down one pixel and right one pixel
 // just like the text does.
-BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, UINT16 usVideoObjectIndex,
+BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, uint16_t usVideoObjectIndex,
                           INT8 bXOffset, INT8 bYOffset, BOOLEAN fShiftImage);
 
 void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y);
@@ -323,7 +323,7 @@ void ResizeButton(INT32 iButtonID, INT16 w, INT16 h);
 void QuickButtonCallbackMMove(struct MOUSE_REGION *reg, INT32 reason);
 void QuickButtonCallbackMButn(struct MOUSE_REGION *reg, INT32 reason);
 
-BOOLEAN SetButtonCursor(INT32 iBtnId, UINT16 crsr);
+BOOLEAN SetButtonCursor(INT32 iBtnId, uint16_t crsr);
 void MSYS_SetBtnUserData(INT32 iButtonNum, INT32 index, INT32 userdata);
 INT32 MSYS_GetBtnUserData(GUI_BUTTON *b, INT32 index);
 void MarkAButtonDirty(INT32 iButtonNum);  // will mark only selected button dirty
@@ -352,6 +352,6 @@ void DrawCheckBoxButtonOn(INT32 iButtonID);
 
 void DrawCheckBoxButtonOff(INT32 iButtonID);
 
-extern UINT16 GetWidthOfButtonPic(UINT16 usButtonPicID, INT32 iSlot);
+extern uint16_t GetWidthOfButtonPic(uint16_t usButtonPicID, INT32 iSlot);
 
 #endif

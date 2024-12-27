@@ -139,7 +139,7 @@ void HourlyQuestUpdate(void) {
 
 #define BAR_TEMPTATION 4
 #define NUM_LARRY_ITEMS 6
-UINT16 LarryItems[NUM_LARRY_ITEMS][3] = {
+uint16_t LarryItems[NUM_LARRY_ITEMS][3] = {
     // item, temptation, points to use
     {ADRENALINE_BOOSTER, 5, 100},
     {ALCOHOL, BAR_TEMPTATION, 25},
@@ -155,8 +155,8 @@ void HourlyLarryUpdate(void) {
   struct SOLDIERTYPE *pSoldier;
   INT8 bSlot, bBoozeSlot;
   INT8 bLarryItemLoop;
-  UINT16 usTemptation = 0;
-  UINT16 usCashAmount;
+  uint16_t usTemptation = 0;
+  uint16_t usCashAmount;
   BOOLEAN fBar = FALSE;
 
   pSoldier = FindSoldierByProfileID(LARRY_NORMAL, TRUE);

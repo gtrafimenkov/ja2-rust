@@ -739,7 +739,7 @@ void DisplayTopwareGermanyAddress() {
   ClipRect.iTop = 390;
   ClipRect.iBottom = 475;
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-  Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+  Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
   UnLockVideoSurface(FRAME_BUFFER);
 
   // Draw the anti-aliased address now.

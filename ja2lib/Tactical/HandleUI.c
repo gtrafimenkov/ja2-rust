@@ -220,14 +220,14 @@ BOOLEAN SoldierCanAffordNewStance(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredS
 void SetMovementModeCursor(struct SOLDIERTYPE *pSoldier);
 void SetConfirmMovementModeCursor(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromMove);
 void SetUIbasedOnStance(struct SOLDIERTYPE *pSoldier, INT8 bNewStance);
-INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t uiFlags);
+INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiFlags);
 INT8 UIHandleInteractiveTilesAndItemsOnTerrain(struct SOLDIERTYPE *pSoldier, INT16 usMapPos,
                                                BOOLEAN fUseOKCursor,
                                                BOOLEAN fItemsOnlyIfOnIntTiles);
 
 extern void EVENT_InternalSetSoldierDesiredDirection(struct SOLDIERTYPE *pSoldier,
-                                                     UINT16 usNewDirection, BOOLEAN fInitalMove,
-                                                     UINT16 usAnimState);
+                                                     uint16_t usNewDirection, BOOLEAN fInitalMove,
+                                                     uint16_t usAnimState);
 
 extern BOOLEAN gfExitDebugScreen;
 extern INT8 gCurDebugPage;
@@ -248,7 +248,7 @@ struct LEVELNODE *gpInvTileThatCausedMoveConfirm = NULL;
 BOOLEAN gfResetUIMovementOptimization = FALSE;
 BOOLEAN gfResetUIItemCursorOptimization = FALSE;
 BOOLEAN gfBeginVehicleCursor = FALSE;
-UINT16 gsOutOfRangeGridNo = NOWHERE;
+uint16_t gsOutOfRangeGridNo = NOWHERE;
 UINT8 gubOutOfRangeMerc = NOBODY;
 BOOLEAN gfOKForExchangeCursor = FALSE;
 uint32_t guiUIInterfaceSwapCursorsTime = 0;
@@ -495,8 +495,8 @@ uint32_t guiOldEvent = I_DO_NOTHING;
 uint32_t guiCurrentUICursor = NO_UICURSOR;
 uint32_t guiNewUICursor = NORMAL_SNAPUICURSOR;
 uint32_t guiPendingOverrideEvent = I_DO_NOTHING;
-UINT16 gusSavedMouseX;
-UINT16 gusSavedMouseY;
+uint16_t gusSavedMouseX;
+uint16_t gusSavedMouseY;
 UIKEYBOARD_HOOK gUIKeyboardHook = NULL;
 BOOLEAN gUIActionModeChangeDueToMouseOver = FALSE;
 
@@ -527,7 +527,7 @@ BOOLEAN fIgnoreLeftUp = FALSE;
 
 BOOLEAN gUITargetReady = FALSE;
 BOOLEAN gUITargetShotWaiting = FALSE;
-UINT16 gsUITargetShotGridNo = NOWHERE;
+uint16_t gsUITargetShotGridNo = NOWHERE;
 BOOLEAN gUIUseReverse = FALSE;
 
 SGPRect gRubberBandRect = {0, 0, 0, 0};
@@ -540,7 +540,7 @@ INT16 guiCreateGuyIndex = 0;
 INT16 guiCreateBadGuyIndex = 8;
 
 uint32_t guiUIFullTargetFlags;
-UINT16 gusUISelectiveTargetID;
+uint16_t gusUISelectiveTargetID;
 BOOLEAN gfUISelectiveTargetFound;
 uint32_t guiUISelectiveTargetFlags;
 BOOLEAN gfUIBodyHitLocation;
@@ -560,7 +560,7 @@ BOOLEAN gfUIHandleSelectionAboveGuy = FALSE;
 BOOLEAN gfUIInDeadlock = FALSE;
 UINT8 gUIDeadlockedSoldier = NOBODY;
 BOOLEAN gfUIHandleShowMoveGrid = FALSE;
-UINT16 gsUIHandleShowMoveGridLocation = NOWHERE;
+uint16_t gsUIHandleShowMoveGridLocation = NOWHERE;
 BOOLEAN gfUIOverItemPool = FALSE;
 INT16 gfUIOverItemPoolGridNo = 0;
 BOOLEAN gfUIHandlePhysicsTrajectory = FALSE;
@@ -584,7 +584,7 @@ INT16 gsSelectedGuy = NO_SOLDIER;
 
 BOOLEAN gfUIDisplayDamage = FALSE;
 INT8 gbDamage = 0;
-UINT16 gsDamageGridNo = 0;
+uint16_t gsDamageGridNo = 0;
 
 BOOLEAN gfUIRefreshArrows = FALSE;
 
@@ -606,7 +606,7 @@ BOOLEAN gfUINewStateForIntTile = FALSE;
 BOOLEAN gfUIForceReExamineCursorData = FALSE;
 
 BOOLEAN gfUIFullTargetFound;
-UINT16 gusUIFullTargetID;
+uint16_t gusUIFullTargetID;
 
 void SetUIMouseCursor();
 void ClearEvent(UI_EVENT *pUIEvent);
@@ -1104,7 +1104,7 @@ uint32_t UIHandleNewMerc(UI_EVENT *pUIEvent) {
 uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier;
   INT16 usMapPos;
-  UINT16 usRandom;
+  uint16_t usRandom;
 
   // Get map postion and place the enemy there.
   if (GetMouseMapPos(&usMapPos)) {
@@ -1113,7 +1113,7 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
       return (GAME_SCREEN);
     }
 
-    usRandom = (UINT16)Random(10);
+    usRandom = (uint16_t)Random(10);
     if (usRandom < 4)
       pSoldier = TacticalCreateAdministrator();
     else if (usRandom < 8)
@@ -1259,8 +1259,8 @@ uint32_t UIHandleChangeLevel(UI_EVENT *pUIEvent) {
   return (GAME_SCREEN);
 }
 
-extern void InternalSelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect,
-                                  BOOLEAN fFromUI);
+extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge,
+                                  BOOLEAN fForceReselect, BOOLEAN fFromUI);
 
 uint32_t UIHandleSelectMerc(UI_EVENT *pUIEvent) {
   INT32 iCurrentSquad;
@@ -1905,8 +1905,8 @@ uint32_t UIHandleCOnTerrain(UI_EVENT *pUIEvent) { return (GAME_SCREEN); }
 uint32_t UIHandleMAdjustStanceMode(UI_EVENT *pUIEvent) {
   struct SOLDIERTYPE *pSoldier;
   INT32 iPosDiff;
-  static UINT16 gusAnchorMouseY;
-  static UINT16 usOldMouseY;
+  static uint16_t gusAnchorMouseY;
+  static uint16_t usOldMouseY;
   static BOOLEAN ubNearHeigherLevel;
   static BOOLEAN ubNearLowerLevel;
   static UINT8 ubUpHeight, ubDownDepth;
@@ -2111,7 +2111,7 @@ uint32_t UIHandleCAOnTerrain(UI_EVENT *pUIEvent) {
 }
 
 void UIHandleMercAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                        UINT16 usMapPos) {
+                        uint16_t usMapPos) {
   INT32 iHandleReturn;
   INT16 sTargetGridNo;
   INT8 bTargetLevel;
@@ -2527,7 +2527,7 @@ BOOLEAN SelectedMercCanAffordAttack() {
 
 BOOLEAN SelectedMercCanAffordMove() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 sAPCost = 0;
+  uint16_t sAPCost = 0;
   INT16 usMapPos;
   struct LEVELNODE *pIntTile;
 
@@ -2684,7 +2684,7 @@ void ToggleLookCursorMode(uint32_t *puiNewEvent) {
 
 BOOLEAN UIHandleOnMerc(BOOLEAN fMovementMode) {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   uint32_t uiMercFlags;
   INT16 usMapPos;
   BOOLEAN fFoundMerc = FALSE;
@@ -2963,9 +2963,9 @@ void GetCursorMovementFlags(uint32_t *puiCursorFlags) {
   INT16 sXPos, sYPos;
 
   static BOOLEAN fStationary = FALSE;
-  static UINT16 usOldMouseXPos = 32000;
-  static UINT16 usOldMouseYPos = 32000;
-  static UINT16 usOldMapPos = 32000;
+  static uint16_t usOldMouseXPos = 32000;
+  static uint16_t usOldMouseYPos = 32000;
+  static uint16_t usOldMapPos = 32000;
 
   static uint32_t uiSameFrameCursorFlags;
   static uint32_t uiOldFrameNumber = 99999;
@@ -3006,9 +3006,9 @@ void GetCursorMovementFlags(uint32_t *puiCursorFlags) {
 }
 
 BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags,
-                               UINT16 usMapPos, uint32_t uiFlags) {
+                               uint16_t usMapPos, uint32_t uiFlags) {
   BOOLEAN fSetCursor = FALSE;
-  static UINT16 usTargetID = NOBODY;
+  static uint16_t usTargetID = NOBODY;
   static BOOLEAN fTargetFound = FALSE;
   BOOLEAN fTargetFoundAndLookingForOne = FALSE;
 
@@ -3151,7 +3151,7 @@ BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFl
   return (fSetCursor);
 }
 
-INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t uiFlags) {
+INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiFlags) {
   INT16 sAPCost, sBPCost;
   INT16 sActionGridNo;
   struct STRUCTURE *pStructure;
@@ -3189,9 +3189,9 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
       }
       CalcInteractiveObjectAPs(sIntTileGridNo, pStructure, &sAPCost, &sBPCost);
       // sAPCost += UIPlotPath( pSoldier, sActionGridNo, NO_COPYROUTE, PLOT, TEMPORARY,
-      // (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
+      // (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
       sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
 
       if (sActionGridNo != pSoldier->sGridNo) {
@@ -3203,7 +3203,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
       sAPCost += GetAPsToChangeStance(pSoldier, ANIM_STAND);
     } else {
       sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
     }
   } else if (uiFlags == MOVEUI_TARGET_WIREFENCE) {
@@ -3214,7 +3214,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
       sAPCost = GetAPsToCutFence(pSoldier);
 
       sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
 
       if (sActionGridNo != pSoldier->sGridNo) {
@@ -3231,7 +3231,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
     sAPCost = GetAPsToUseJar(pSoldier, sActionGridNo);
 
     sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
     if (sActionGridNo != pSoldier->sGridNo) {
@@ -3248,7 +3248,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
       if (sActionGridNo != -1) {
         sAPCost = AP_ATTACH_CAN;
         sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                              (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                              (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                               pSoldier->bActionPoints);
 
         if (sActionGridNo != pSoldier->sGridNo) {
@@ -3258,7 +3258,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
       }
     } else {
       sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
     }
 
@@ -3284,7 +3284,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
     sAPCost = GetAPsToBeginRepair(pSoldier);
 
     sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
     if (sActionGridNo != pSoldier->sGridNo) {
@@ -3313,7 +3313,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
     sAPCost = GetAPsToRefuelVehicle(pSoldier);
 
     sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
     if (sActionGridNo != pSoldier->sGridNo) {
@@ -3371,7 +3371,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
     if (sGotLocation != NOWHERE) {
       sAPCost += MinAPsToAttack(pSoldier, sAdjustedGridNo, TRUE);
       sAPCost += UIPlotPath(pSoldier, sGotLocation, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
 
       if (sGotLocation != pSoldier->sGridNo && fGotAdjacent) {
@@ -3393,7 +3393,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
         sAPCost += GetAPsToChangeStance(pSoldier, ANIM_STAND);
       }
       sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
 
       if (sActionGridNo != pSoldier->sGridNo) {
@@ -3404,7 +3404,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
   } else if (uiFlags == MOVEUI_TARGET_BOMB) {
     sAPCost += GetAPsToDropBomb(pSoldier);
     sAPCost += UIPlotPath(pSoldier, usMapPos, NO_COPYROUTE, fPlot, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
     gfUIHandleShowMoveGrid = TRUE;
@@ -3425,7 +3425,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
       }
       sAPCost += GetAPsToBeginFirstAid(pSoldier);
       sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
       if (sActionGridNo != pSoldier->sGridNo) {
         gfUIHandleShowMoveGrid = TRUE;
@@ -3441,7 +3441,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
 
         if (pSoldier->sGridNo != sActionGridNo) {
           sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                                (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                                (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                                 pSoldier->bActionPoints);
           if (sAPCost != 0) {
             sAPCost += AP_PICKUP_ITEM;
@@ -3458,7 +3458,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
     }
   } else {
     sAPCost += UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
   }
 
@@ -3472,7 +3472,7 @@ INT8 DrawUIMovementPath(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, uint32_t 
 }
 
 BOOLEAN UIMouseOnValidAttackLocation(struct SOLDIERTYPE *pSoldier) {
-  UINT16 usInHand;
+  uint16_t usInHand;
   BOOLEAN fGuyHere = FALSE;
   struct SOLDIERTYPE *pTSoldier;
   UINT8 ubItemCursor;
@@ -4738,7 +4738,7 @@ BOOLEAN HandleTalkInit() {
         }
 
         if (UIPlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                       (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                       (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                        pSoldier->bActionPoints) == 0) {
           ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, TacticalStr[NO_PATH]);
           return (FALSE);
@@ -4754,7 +4754,7 @@ BOOLEAN HandleTalkInit() {
         // First calculate APs and validate...
         sAPCost = AP_TALK;
         // sAPCost += UIPlotPath( pSoldier, sGoodGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-        // (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints );
+        // (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints );
 
         // Check AP cost...
         if (!EnoughPoints(pSoldier, sAPCost, 0, TRUE)) {

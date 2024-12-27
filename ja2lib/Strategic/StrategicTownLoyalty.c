@@ -1185,9 +1185,9 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY)
     // even taking over non-trainable "towns" like Orta/Tixa for the first time should count as
     // "player activity"
     if (gGameOptions.ubDifficultyLevel >= DIF_LEVEL_HARD) {
-      UpdateLastDayOfPlayerActivity((UINT16)(GetWorldDay() + 4));
+      UpdateLastDayOfPlayerActivity((uint16_t)(GetWorldDay() + 4));
     } else {
-      UpdateLastDayOfPlayerActivity((UINT16)(GetWorldDay() + 2));
+      UpdateLastDayOfPlayerActivity((uint16_t)(GetWorldDay() + 2));
     }
 
     // set flag even for towns where you can't train militia, useful for knowing Orta/Tixa were

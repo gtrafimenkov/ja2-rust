@@ -7,7 +7,7 @@
 BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, uint32_t uiSeekFrom,
                                   uint32_t uiSeekAmount) {
   HWFILE hFile;
-  UINT16 i;
+  uint16_t i;
   uint32_t uiBytesRead;
 
   hFile = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);

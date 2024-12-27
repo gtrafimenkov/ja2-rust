@@ -113,7 +113,7 @@ GUI_BUTTON *ButtonList[MAX_BUTTONS];
 
 INT32 ButtonsInList = 0;
 
-UINT16 GetWidthOfButtonPic(UINT16 usButtonPicID, INT32 iSlot) {
+uint16_t GetWidthOfButtonPic(uint16_t usButtonPicID, INT32 iSlot) {
   return ButtonPictures[usButtonPicID].vobj->pETRLEObject[iSlot].usWidth;
 }
 
@@ -123,8 +123,8 @@ struct VObject *GenericButtonOffHilite[MAX_GENERIC_PICS];
 struct VObject *GenericButtonOnNormal[MAX_GENERIC_PICS];
 struct VObject *GenericButtonOnHilite[MAX_GENERIC_PICS];
 struct VObject *GenericButtonBackground[MAX_GENERIC_PICS];
-UINT16 GenericButtonFillColors[MAX_GENERIC_PICS];
-UINT16 GenericButtonBackgroundIndex[MAX_GENERIC_PICS];
+uint16_t GenericButtonFillColors[MAX_GENERIC_PICS];
+uint16_t GenericButtonBackgroundIndex[MAX_GENERIC_PICS];
 INT16 GenericButtonOffsetX[MAX_GENERIC_PICS];
 INT16 GenericButtonOffsetY[MAX_GENERIC_PICS];
 
@@ -1195,10 +1195,10 @@ void ResizeButton(INT32 iButtonID, INT16 w, INT16 h) {
   yloc = b->YLoc;
 
   // Set the new struct MOUSE_REGION area values to reflect change in size.
-  b->Area.RegionTopLeftX = (UINT16)xloc;
-  b->Area.RegionTopLeftY = (UINT16)yloc;
-  b->Area.RegionBottomRightX = (UINT16)(xloc + w);
-  b->Area.RegionBottomRightY = (UINT16)(yloc + h);
+  b->Area.RegionTopLeftX = (uint16_t)xloc;
+  b->Area.RegionTopLeftY = (uint16_t)yloc;
+  b->Area.RegionBottomRightX = (uint16_t)(xloc + w);
+  b->Area.RegionBottomRightY = (uint16_t)(yloc + h);
   b->uiFlags |= BUTTON_DIRTY;
 
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
@@ -1242,10 +1242,10 @@ void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
   b->XLoc = x;
   b->YLoc = y;
   // Set the buttons struct MOUSE_REGION to appropriate area
-  b->Area.RegionTopLeftX = (UINT16)xloc;
-  b->Area.RegionTopLeftY = (UINT16)yloc;
-  b->Area.RegionBottomRightX = (UINT16)(xloc + w);
-  b->Area.RegionBottomRightY = (UINT16)(yloc + h);
+  b->Area.RegionTopLeftX = (uint16_t)xloc;
+  b->Area.RegionTopLeftY = (uint16_t)yloc;
+  b->Area.RegionBottomRightX = (uint16_t)(xloc + w);
+  b->Area.RegionBottomRightY = (uint16_t)(yloc + h);
   b->uiFlags |= BUTTON_DIRTY;
 
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
@@ -1397,8 +1397,8 @@ INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, IN
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
   // Define a mouse region for this button
-  MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc, (UINT16)(xloc + w), (UINT16)(yloc + h),
-                    (INT8)Priority, MSYS_STARTING_CURSORVAL,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w),
+                    (uint16_t)(yloc + h), (INT8)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1484,7 +1484,7 @@ INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sS
   b->bDefaultStatus = DEFAULT_STATUS_NONE;
   b->bDisabledStyle = DISABLED_STYLE_DEFAULT;
   // Init string
-  b->usFont = (UINT16)uiFont;
+  b->usFont = (uint16_t)uiFont;
   b->fMultiColor = FALSE;
   b->sForeColor = sForeColor;
   b->sWrappedWidth = -1;
@@ -1521,8 +1521,8 @@ INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sS
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
   // Define a struct MOUSE_REGION for this button
-  MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc, (UINT16)(xloc + w), (UINT16)(yloc + h),
-                    (INT8)Priority, MSYS_STARTING_CURSORVAL,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w),
+                    (uint16_t)(yloc + h), (INT8)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1607,8 +1607,8 @@ INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Pri
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
   // define a struct MOUSE_REGION for this hotspot
-  MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc, (UINT16)(xloc + Width),
-                    (UINT16)(yloc + Height), (INT8)Priority, MSYS_STARTING_CURSORVAL,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + Width),
+                    (uint16_t)(yloc + Height), (INT8)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1636,7 +1636,7 @@ INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Pri
 // Addition Oct15/97, Carter
 // SetButtonCursor
 // will simply set the cursor for the mouse region the button occupies
-BOOLEAN SetButtonCursor(INT32 iBtnId, UINT16 crsr) {
+BOOLEAN SetButtonCursor(INT32 iBtnId, uint16_t crsr) {
   GUI_BUTTON *b;
   b = ButtonList[iBtnId];
   if (!b) return FALSE;
@@ -1751,9 +1751,9 @@ INT32 QuickCreateButton(uint32_t Image, INT16 xloc, INT16 yloc, INT32 Type, INT1
 
   memset(&b->Area, 0, sizeof(struct MOUSE_REGION));
   // Define a struct MOUSE_REGION for this QuickButton
-  MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc,
-                    (UINT16)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
-                    (UINT16)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc,
+                    (uint16_t)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
+                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1886,7 +1886,7 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 
   }
 
   b->bJustification = bJustification;
-  b->usFont = (UINT16)uiFont;
+  b->usFont = (uint16_t)uiFont;
   b->fMultiColor = FALSE;
   b->sForeColor = sForeColor;
   b->sWrappedWidth = -1;
@@ -1919,9 +1919,9 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
   // Define a struct MOUSE_REGION for this QuickButton
-  MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc,
-                    (UINT16)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
-                    (UINT16)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc,
+                    (uint16_t)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
+                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1984,7 +1984,7 @@ void SpecifyButtonFont(INT32 iButtonID, uint32_t uiFont) {
   Assert(iButtonID < MAX_BUTTONS);
   b = ButtonList[iButtonID];
   Assert(b);
-  b->usFont = (UINT16)uiFont;
+  b->usFont = (uint16_t)uiFont;
   b->uiFlags |= BUTTON_DIRTY;
 }
 
@@ -2045,7 +2045,7 @@ void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont
   Assert(b);
   // Copy over information
   SpecifyButtonText(iButtonID, string);
-  b->usFont = (UINT16)uiFont;
+  b->usFont = (uint16_t)uiFont;
   b->sForeColor = sForeColor;
   b->sShadowColor = sShadowColor;
   b->sForeColorDown = sForeColorDown;
@@ -2066,7 +2066,7 @@ void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiF
   Assert(b);
   // Copy over information
   SpecifyButtonText(iButtonID, string);
-  b->usFont = (UINT16)uiFont;
+  b->usFont = (uint16_t)uiFont;
   b->sForeColor = sForeColor;
   b->sShadowColor = sShadowColor;
   b->uiFlags |= BUTTON_DIRTY;
@@ -2123,7 +2123,7 @@ void SpecifyDisabledButtonStyle(INT32 iButtonID, INT8 bStyle) {
 // Note:  Text is always on top
 // If fShiftImage is true, then the image will shift down one pixel and right one pixel
 // just like the text does.
-BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, UINT16 usVideoObjectIndex,
+BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, uint16_t usVideoObjectIndex,
                           INT8 bXOffset, INT8 bYOffset, BOOLEAN fShiftImage) {
   GUI_BUTTON *b;
 
@@ -2678,7 +2678,7 @@ void DrawQuickButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc,
+  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (uint16_t)UseImage, b->XLoc,
                  b->YLoc, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
@@ -2691,7 +2691,7 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
   pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
-  Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+  Blt16BPPBufferHatchRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
   UnLockVideoSurface(ButtonDestBuffer);
 }
 
@@ -2704,7 +2704,7 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
   pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
-  Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+  Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
   UnLockVideoSurface(ButtonDestBuffer);
 }
 
@@ -2817,7 +2817,7 @@ void DrawCheckBoxButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc,
+  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (uint16_t)UseImage, b->XLoc,
                  b->YLoc, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
@@ -3057,7 +3057,7 @@ void DrawTextOnButton(GUI_BUTTON *b) {
       }
       yp += b->bTextYSubOffSet;
       xp += b->bTextXSubOffSet;
-      DisplayWrappedString((UINT16)xp, (UINT16)yp, b->sWrappedWidth, 1, b->usFont,
+      DisplayWrappedString((uint16_t)xp, (uint16_t)yp, b->sWrappedWidth, 1, b->usFont,
                            (UINT8)sForeColor, b->string, FONT_MCOLOR_BLACK, FALSE, bJustified);
     } else {
       yp += b->bTextYSubOffSet;
@@ -3165,24 +3165,24 @@ void DrawGenericButton(GUI_BUTTON *b) {
     else
       ImgNum = 1;
 
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES, BPic,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic,
                                             (INT32)(b->XLoc + (q * iBorderWidth)), (INT32)b->YLoc,
-                                            (UINT16)ImgNum, &ClipRect);
+                                            (uint16_t)ImgNum, &ClipRect);
 
     if (q == 0)
       ImgNum = 5;
     else
       ImgNum = 6;
 
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES, BPic,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic,
                                             (INT32)(b->XLoc + (q * iBorderWidth)), cy,
-                                            (UINT16)ImgNum, &ClipRect);
+                                            (uint16_t)ImgNum, &ClipRect);
   }
   // Blit the right side corners
-  Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES, BPic, cx,
+  Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic, cx,
                                           (INT32)b->YLoc, 2, &ClipRect);
 
-  Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES, BPic, cx, cy, 7,
+  Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic, cx, cy, 7,
                                           &ClipRect);
   // Draw the vertical members of the button's borders
   NumChunksHigh--;
@@ -3190,18 +3190,18 @@ void DrawGenericButton(GUI_BUTTON *b) {
   if (hremain != 0) {
     q = NumChunksHigh;
     Blt8BPPDataTo16BPPBufferTransparentClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, BPic, (INT32)b->XLoc,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, BPic, (INT32)b->XLoc,
         (INT32)(b->YLoc + (q * iBorderHeight) - (iBorderHeight - hremain)), 3, &ClipRect);
     Blt8BPPDataTo16BPPBufferTransparentClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, BPic, cx,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, BPic, cx,
         (INT32)(b->YLoc + (q * iBorderHeight) - (iBorderHeight - hremain)), 4, &ClipRect);
   }
 
   for (q = 1; q < NumChunksHigh; q++) {
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES, BPic,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic,
                                             (INT32)b->XLoc, (INT32)(b->YLoc + (q * iBorderHeight)),
                                             3, &ClipRect);
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES, BPic, cx,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic, cx,
                                             (INT32)(b->YLoc + (q * iBorderHeight)), 4, &ClipRect);
   }
 
@@ -3234,9 +3234,9 @@ typedef struct _CreateDlgInfo {
   INT32 iAreaOffsetX;  // only)
   INT32 iAreaOffsetY;
 
-  UINT16 *zDlgText;   // Text to be displayed (if any)
-  INT32 iTextFont;    // Font to be used for text (if any)
-  UINT16 usTextCols;  // Font colors (for mono fonts only)
+  uint16_t *zDlgText;   // Text to be displayed (if any)
+  INT32 iTextFont;      // Font to be used for text (if any)
+  uint16_t usTextCols;  // Font colors (for mono fonts only)
 
   INT32 iTextAreaX;  // Area in dialog box where text is to be
   INT32 iTextAreaY;  // put (for non-auto placed text)

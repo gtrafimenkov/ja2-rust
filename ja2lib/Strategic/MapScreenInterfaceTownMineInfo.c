@@ -48,7 +48,7 @@ INT8 bCurrentTownMineSectorZ = 0;
 uint32_t guiMapButtonInventoryImage[2];
 uint32_t guiMapButtonInventory[2];
 
-UINT16 sTotalButtonWidth = 0;
+uint16_t sTotalButtonWidth = 0;
 
 extern MINE_LOCATION_TYPE gMineLocation[];
 extern MINE_STATUS_TYPE gMineStatus[];
@@ -254,7 +254,7 @@ void AddTextToTownBox(void) {
   uint32_t hStringHandle = 0;
   CHAR16 wString[64];
   UINT8 ubTownId = 0;
-  UINT16 usTownSectorIndex;
+  uint16_t usTownSectorIndex;
   INT16 sMineSector = 0;
 
   // remember town id
@@ -464,7 +464,7 @@ void AddTextToMineBox(void) {
 
 void AddTextToBlankSectorBox(void) {
   uint32_t hStringHandle;
-  UINT16 usSectorValue = 0;
+  uint16_t usSectorValue = 0;
 
   // get the sector value
   usSectorValue = GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY);

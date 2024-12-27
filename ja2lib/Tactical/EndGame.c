@@ -71,7 +71,7 @@ BOOLEAN DoesO3SectorStatueExistHere(INT16 sGridNo) {
 // This function changes the graphic of the statue and adds the exit grid...
 void ChangeO3SectorStatue(BOOLEAN fFromExplosion) {
   EXITGRID ExitGrid;
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
   INT16 sX, sY;
 
   // Remove old graphic

@@ -98,7 +98,7 @@ enum  // GraphicIDs for the panel
 #define ROW_HEIGHT 10
 
 BOOLEAN gfDisplayPotentialRetreatPaths = FALSE;
-UINT16 gusRetreatButtonLeft, gusRetreatButtonTop, gusRetreatButtonRight, gusRetreatButtonBottom;
+uint16_t gusRetreatButtonLeft, gusRetreatButtonTop, gusRetreatButtonRight, gusRetreatButtonBottom;
 
 struct GROUP *gpBattleGroup = NULL;
 
@@ -773,9 +773,9 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     RefreshScreen(NULL);
 
     // Restore the previous rect.
-    BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
-                       (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
-                       (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
+    BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (uint16_t)DstRect.iLeft,
+                       (uint16_t)DstRect.iTop, (uint16_t)(DstRect.iRight - DstRect.iLeft + 1),
+                       (uint16_t)(DstRect.iBottom - DstRect.iTop + 1));
   }
   BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
 }

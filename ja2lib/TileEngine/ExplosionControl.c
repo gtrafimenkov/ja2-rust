@@ -65,7 +65,7 @@
 // MODULE FOR EXPLOSIONS
 
 // Spreads the effects of explosions...
-BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, UINT16 usItem, UINT8 ubOwner,
+BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, uint16_t usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID);
 
 extern INT8 gbSAMGraphicList[NUMBER_OF_SAMS];
@@ -153,7 +153,7 @@ void RecountExplosions(void) {
 
 // GENERATE EXPLOSION
 void InternalIgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo,
-                             UINT16 usItem, BOOLEAN fLocate, INT8 bLevel) {
+                             uint16_t usItem, BOOLEAN fLocate, INT8 bLevel) {
   EXPLOSION_PARAMS ExpParams;
 
   // Double check that we are using an explosive!
@@ -190,7 +190,7 @@ void InternalIgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 
   GenerateExplosion(&ExpParams);
 }
 
-void IgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo, UINT16 usItem,
+void IgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo, uint16_t usItem,
                      INT8 bLevel) {
   InternalIgniteExplosion(ubOwner, sX, sY, sZ, sGridNo, usItem, TRUE, bLevel);
 }
@@ -238,7 +238,7 @@ void GenerateExplosionFromExplosionPointer(EXPLOSIONTYPE *pExplosion) {
   INT16 sY;
   INT16 sZ;
   INT16 sGridNo;
-  UINT16 usItem;
+  uint16_t usItem;
   UINT8 ubTerrainType;
   INT8 bLevel;
   uint32_t uiSoundID;
@@ -351,7 +351,7 @@ void HandleFencePartnerCheck(INT16 sStructGridNo) {
   struct LEVELNODE *pFenceNode;
   INT8 bFenceDestructionPartner = -1;
   uint32_t uiFenceType;
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
 
   pFenceStructure = FindStructure(sStructGridNo, STRUCTURE_FENCE);
 
@@ -380,7 +380,7 @@ void HandleFencePartnerCheck(INT16 sStructGridNo) {
       RemoveStructFromLevelNode(pFenceBaseStructure->sGridNo, pFenceNode);
 
       // Add it!
-      AddStructToHead(pFenceBaseStructure->sGridNo, (UINT16)(usTileIndex));
+      AddStructToHead(pFenceBaseStructure->sGridNo, (uint16_t)(usTileIndex));
 
       ApplyMapChangesToMapTempFile(FALSE);
     }
@@ -397,8 +397,8 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
   struct STRUCTURE *pBase, *pWallStruct, *pAttached, *pAttachedBase;
   struct LEVELNODE *pNode = NULL, *pNewNode = NULL, *pAttachedNode;
   INT16 sNewGridNo, sStructGridNo;
-  UINT16 sNewIndex, sSubIndex;
-  UINT16 usObjectIndex, usTileIndex;
+  uint16_t sNewIndex, sSubIndex;
+  uint16_t usObjectIndex, usTileIndex;
   UINT8 ubNumberOfTiles, ubLoop;
   DB_STRUCTURE_TILE **ppTile;
   INT8 bDestructionPartner = -1;
@@ -523,7 +523,7 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
                 // file
                 ApplyMapChangesToMapTempFile(TRUE);
 
-                AddObjectToHead(sStructGridNo, (UINT16)(usTileIndex + Random(3)));
+                AddObjectToHead(sStructGridNo, (uint16_t)(usTileIndex + Random(3)));
 
                 ApplyMapChangesToMapTempFile(FALSE);
               }
@@ -543,7 +543,7 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
                   // file
                   ApplyMapChangesToMapTempFile(TRUE);
 
-                  AddObjectToHead(sStructGridNo, (UINT16)(usTileIndex + Random(3)));
+                  AddObjectToHead(sStructGridNo, (uint16_t)(usTileIndex + Random(3)));
 
                   ApplyMapChangesToMapTempFile(FALSE);
                 }
@@ -559,7 +559,7 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(struct STRUCTURE *pCurrent,
                   // file
                   ApplyMapChangesToMapTempFile(TRUE);
 
-                  AddObjectToHead(sStructGridNo, (UINT16)(usTileIndex + Random(3)));
+                  AddObjectToHead(sStructGridNo, (uint16_t)(usTileIndex + Random(3)));
 
                   ApplyMapChangesToMapTempFile(FALSE);
                 }
@@ -1099,7 +1099,7 @@ void ExplosiveDamageGridNo(INT16 sGridNo, INT16 sWoundAmt, uint32_t uiDist,
 }
 
 BOOLEAN DamageSoldierFromBlast(UINT8 ubPerson, UINT8 ubOwner, INT16 sBombGridNo, INT16 sWoundAmt,
-                               INT16 sBreathAmt, uint32_t uiDist, UINT16 usItem,
+                               INT16 sBreathAmt, uint32_t uiDist, uint16_t usItem,
                                INT16 sSubsequent) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sNewWoundAmt = 0;
@@ -1252,7 +1252,7 @@ BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive
   return (fRecompileMovementCosts);
 }
 
-BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, UINT16 usItem, UINT8 ubOwner,
+BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, uint16_t usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID) {
   INT16 sWoundAmt = 0, sBreathAmt = 0, sStructDmgAmt;
   UINT8 ubPerson;
@@ -1385,7 +1385,7 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, uint32_t uiDist, UINT16 usIt
       // if ( !TypeRangeExistsInObjectLayer( sGridNo, FIRSTEXPLDEBRIS, SECONDEXPLDEBRIS,
       // &usObjectIndex ) )
       //{
-      //	GetTileIndexFromTypeSubIndex( SECONDEXPLDEBRIS, (UINT16)( Random( 10 ) + 1 ),
+      //	GetTileIndexFromTypeSubIndex( SECONDEXPLDEBRIS, (uint16_t)( Random( 10 ) + 1 ),
       //&usTileIndex ); 	AddObjectToHead( sGridNo, usTileIndex );
 
       //	SetRenderFlags(RENDER_FLAG_FULL);
@@ -1785,8 +1785,8 @@ void GetRayStopInfo(uint32_t uiNewSpot, UINT8 ubDir, INT8 bLevel, BOOLEAN fSmoke
   }
 }
 
-void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, UINT16 usItem, UINT8 ubOwner, BOOLEAN fSubsequent,
-                  INT8 bLevel, INT32 iSmokeEffectID) {
+void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, uint16_t usItem, UINT8 ubOwner,
+                  BOOLEAN fSubsequent, INT8 bLevel, INT32 iSmokeEffectID) {
   INT32 uiNewSpot, uiTempSpot, uiBranchSpot, cnt, branchCnt;
   INT32 uiTempRange, ubBranchRange;
   UINT8 ubDir, ubBranchDir, ubKeepGoing;
@@ -2884,7 +2884,7 @@ void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   INT32 cnt;
   INT16 sSectorNo;
   BOOLEAN fInSector = FALSE;
-  UINT16 usGoodGraphic, usDamagedGraphic;
+  uint16_t usGoodGraphic, usDamagedGraphic;
 
   // ATE: If we are below, return right away...
   if (sSectorZ != 0) {
@@ -2901,7 +2901,7 @@ void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
     // Are we i nthe same sector...
     if (pSamList[cnt] == sSectorNo) {
       // get graphic.......
-      GetTileIndexFromTypeSubIndex(EIGHTISTRUCT, (UINT16)(gbSAMGraphicList[cnt]), &usGoodGraphic);
+      GetTileIndexFromTypeSubIndex(EIGHTISTRUCT, (uint16_t)(gbSAMGraphicList[cnt]), &usGoodGraphic);
 
       // Damaged one ( current ) is 2 less...
       usDamagedGraphic = usGoodGraphic - 2;

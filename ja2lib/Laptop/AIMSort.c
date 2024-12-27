@@ -89,7 +89,7 @@
 
 #define AIM_SORT_FIRST_SORT_CLOUMN_GAP 22
 
-UINT16 AimSortCheckBoxLoc[] = {
+uint16_t AimSortCheckBoxLoc[] = {
     (AIM_SORT_SORT_BY_X + 9),   (AIM_SORT_SORT_BY_Y + 34),  (AIM_SORT_SORT_BY_X + 9),
     (AIM_SORT_SORT_BY_Y + 47),  (AIM_SORT_SORT_BY_X + 9),   (AIM_SORT_SORT_BY_Y + 60),
     (AIM_SORT_SORT_BY_X + 111), (AIM_SORT_SORT_BY_Y + 34),  (AIM_SORT_SORT_BY_X + 111),
@@ -161,7 +161,7 @@ void GameInitAimSort() {
 BOOLEAN EnterAimSort() {
   VOBJECT_DESC VObjectDesc;
   UINT8 ubCurNumber = 0;
-  UINT16 ubWidth;
+  uint16_t ubWidth;
   UINT8 i;
 
   // Everytime into Aim Sort, reset array.
@@ -226,8 +226,8 @@ BOOLEAN EnterAimSort() {
             AimSortCheckBoxLoc[ubCurNumber] +
             (AIM_SORT_PRICE_TEXT_X - AimSortCheckBoxLoc[ubCurNumber]) - 3;
   MSYS_DefineRegion(&gSelectedPriceBoxRegion, AimSortCheckBoxLoc[ubCurNumber],
-                    AimSortCheckBoxLoc[ubCurNumber + 1], (UINT16)ubWidth,
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+                    AimSortCheckBoxLoc[ubCurNumber + 1], (uint16_t)ubWidth,
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
                     MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                     SelectPriceBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedPriceBoxRegion);
@@ -239,7 +239,7 @@ BOOLEAN EnterAimSort() {
   // Mouse region for the Experience Check Box
   MSYS_DefineRegion(
       &gSelectedExpBoxRegion, AimSortCheckBoxLoc[ubCurNumber], AimSortCheckBoxLoc[ubCurNumber + 1],
-      (UINT16)ubWidth, (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+      (uint16_t)ubWidth, (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
       MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, SelectExpBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedExpBoxRegion);
 
@@ -250,7 +250,7 @@ BOOLEAN EnterAimSort() {
   // Mouse region for the Markmanship Check Box
   MSYS_DefineRegion(
       &gSelectedMarkBoxRegion, AimSortCheckBoxLoc[ubCurNumber], AimSortCheckBoxLoc[ubCurNumber + 1],
-      (UINT16)ubWidth, (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+      (uint16_t)ubWidth, (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
       MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, SelectMarkBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedMarkBoxRegion);
 
@@ -260,8 +260,8 @@ BOOLEAN EnterAimSort() {
             (AIM_SORT_MEDICAL_X - AimSortCheckBoxLoc[ubCurNumber]) - 3;
   // Mouse region for the Medical  Check Box
   MSYS_DefineRegion(&gSelectedMedicalBoxRegion, AimSortCheckBoxLoc[ubCurNumber],
-                    AimSortCheckBoxLoc[ubCurNumber + 1], (UINT16)ubWidth,
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+                    AimSortCheckBoxLoc[ubCurNumber + 1], (uint16_t)ubWidth,
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
                     MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                     SelectMedicalBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedMedicalBoxRegion);
@@ -272,8 +272,8 @@ BOOLEAN EnterAimSort() {
             (AIM_SORT_MEDICAL_X - AimSortCheckBoxLoc[ubCurNumber]) - 3;
   // Mouse region for the Explosive  Check Box
   MSYS_DefineRegion(&gSelectedExplosiveBoxRegion, AimSortCheckBoxLoc[ubCurNumber],
-                    AimSortCheckBoxLoc[ubCurNumber + 1], (UINT16)ubWidth,
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+                    AimSortCheckBoxLoc[ubCurNumber + 1], (uint16_t)ubWidth,
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
                     MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                     SelectExplosiveBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedExplosiveBoxRegion);
@@ -284,8 +284,8 @@ BOOLEAN EnterAimSort() {
             (AIM_SORT_MEDICAL_X - AimSortCheckBoxLoc[ubCurNumber]) - 3;
   // Mouse region for the Mechanical Check Box
   MSYS_DefineRegion(&gSelectedMechanicalBoxRegion, AimSortCheckBoxLoc[ubCurNumber],
-                    AimSortCheckBoxLoc[ubCurNumber + 1], (UINT16)ubWidth,
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+                    AimSortCheckBoxLoc[ubCurNumber + 1], (uint16_t)ubWidth,
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
                     MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                     SelectMechanicalBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedMechanicalBoxRegion);
@@ -296,8 +296,8 @@ BOOLEAN EnterAimSort() {
             StringPixLength(AimSortText[ASCENDING], AIM_SORT_FONT_SORT_TEXT) - 6;
   // Mouse region for the Ascend Check Box
   MSYS_DefineRegion(&gSelectedAscendBoxRegion, ubWidth, AimSortCheckBoxLoc[ubCurNumber + 1],
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber] + AIM_SORT_CHECKBOX_SIZE),
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber] + AIM_SORT_CHECKBOX_SIZE),
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
                     MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                     SelectAscendBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedAscendBoxRegion);
@@ -308,8 +308,8 @@ BOOLEAN EnterAimSort() {
 
   // Mouse region for the Descend Check Box
   MSYS_DefineRegion(&gSelectedDescendBoxRegion, ubWidth, AimSortCheckBoxLoc[ubCurNumber + 1],
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber] + AIM_SORT_CHECKBOX_SIZE),
-                    (UINT16)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber] + AIM_SORT_CHECKBOX_SIZE),
+                    (uint16_t)(AimSortCheckBoxLoc[ubCurNumber + 1] + AIM_SORT_CHECKBOX_SIZE),
                     MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                     SelectDescendBoxRegionCallBack);
   MSYS_AddRegion(&gSelectedDescendBoxRegion);

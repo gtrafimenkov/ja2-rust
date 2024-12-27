@@ -66,8 +66,8 @@ typedef struct {
   uint32_t uiCancelButton;
   INT32 iBoxId;
   INT32 iButtonImages;
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   INT16 sX;
   INT16 sY;
   INT16 sAdditionalData;
@@ -116,8 +116,8 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
   SGPRect aRect;
-  UINT16 usTextBoxWidth, usTextBoxHeight;
-  UINT16 usMapPos = 0;
+  uint16_t usTextBoxWidth, usTextBoxHeight;
+  uint16_t usMapPos = 0;
   INT8 bExitCode = -1;
   BOOLEAN OkExitCode;
 

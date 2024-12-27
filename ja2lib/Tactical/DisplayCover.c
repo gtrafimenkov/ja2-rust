@@ -73,8 +73,8 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT
                                                INT8 bStance);
 void CalculateCoverInRadiusAroundGridno(INT16 sTargetGridNo, INT8 bSearchRange);
 void AddCoverTileToEachGridNo();
-void AddCoverObjectToWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof);
-void RemoveCoverObjectFromWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof);
+void AddCoverObjectToWorld(INT16 sGridNo, uint16_t usGraphic, BOOLEAN fRoof);
+void RemoveCoverObjectFromWorld(INT16 sGridNo, uint16_t usGraphic, BOOLEAN fRoof);
 INT8 GetCurrentMercForDisplayCoverStance();
 struct SOLDIERTYPE *GetCurrentMercForDisplayCover();
 
@@ -373,9 +373,9 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT
   INT32 iBulletGetThrough = 0;
   INT32 iHighestValue = 0;
   INT32 iCover = 0;
-  UINT16 usMaxRange;
-  UINT16 usRange;
-  UINT16 usSightLimit;
+  uint16_t usMaxRange;
+  uint16_t usRange;
+  uint16_t usSightLimit;
 
   // loop through all the enemies and determine the cover
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -400,7 +400,7 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT
       continue;  // next merc
     }
 
-    usRange = (UINT16)GetRangeInCellCoordsFromGridNoDiff(pOpponent->sGridNo, sTargetGridNo);
+    usRange = (uint16_t)GetRangeInCellCoordsFromGridNoDiff(pOpponent->sGridNo, sTargetGridNo);
     usSightLimit = DistanceVisible(pOpponent, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT,
                                    sTargetGridNo, pSoldier->bLevel);
 
@@ -455,7 +455,7 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT
   return (bPercentCoverForGridno);
 }
 
-void AddCoverObjectToWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof) {
+void AddCoverObjectToWorld(INT16 sGridNo, uint16_t usGraphic, BOOLEAN fRoof) {
   struct LEVELNODE *pNode;
 
   if (fRoof) {
@@ -474,7 +474,7 @@ void AddCoverObjectToWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof) {
   }
 }
 
-void RemoveCoverObjectFromWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof) {
+void RemoveCoverObjectFromWorld(INT16 sGridNo, uint16_t usGraphic, BOOLEAN fRoof) {
   if (fRoof) {
     RemoveOnRoof(sGridNo, usGraphic);
   } else {
@@ -526,7 +526,7 @@ INT8 GetCurrentMercForDisplayCoverStance() {
 }
 
 void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
-  UINT16 usRange = 0;
+  uint16_t usRange = 0;
   CHAR16 zOutputString[512];
 
   if (sTargetGridNo == NOWHERE || sTargetGridNo == 0) {
@@ -810,7 +810,7 @@ void RemoveVisibleGridNoAtSelectedGridNo() {
 INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fRoof) {
   INT8 bRetVal = 0;
   INT32 iLosForGridNo = 0;
-  UINT16 usSightLimit = 0;
+  uint16_t usSightLimit = 0;
   INT8 *pPersOL, *pbPublOL;
   UINT8 ubID;
   BOOLEAN bAware = FALSE;

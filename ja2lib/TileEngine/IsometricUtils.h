@@ -79,7 +79,7 @@ BOOLEAN GridNoOnVisibleWorldTile(INT16 sGridNo);
 BOOLEAN GridNoOnVisibleWorldTileGivenYLimits(INT16 sGridNo);
 BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, INT8 *pbDirection);
 
-BOOLEAN ConvertMapPosToWorldTileCenter(UINT16 usMapPos, INT16 *psXPos, INT16 *psYPos);
+BOOLEAN ConvertMapPosToWorldTileCenter(uint16_t usMapPos, INT16 *psXPos, INT16 *psYPos);
 
 BOOLEAN CellXYToScreenXY(INT16 sCellX, INT16 sCellY, INT16 *sScreenX, INT16 *sScreenY);
 

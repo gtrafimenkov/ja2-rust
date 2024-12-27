@@ -853,23 +853,23 @@ void EnableTeamInfoPanels(void) {
   return;
 }
 
-INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
-                              MSGBOX_CALLBACK ReturnCallback,
+INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+                              uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                               const SGPRect *pCenteringRect) {  // reset the highlighted line
   giHighLine = -1;
   return DoMessageBox(ubStyle, zString, uiExitScreen,
-                      (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
+                      (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
                       pCenteringRect);
 }
 
-INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
+INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                       MSGBOX_CALLBACK ReturnCallback) {
   // reset the highlighted line
   giHighLine = -1;
 
   // do message box and return
   return DoMessageBox(ubStyle, zString, uiExitScreen,
-                      (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
+                      (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
                       GetMapCenteringRect());
 }
 
@@ -1365,7 +1365,7 @@ INT32 SetUpDropItemListForMerc(uint32_t uiMercId) {
   // zero out profiles
   memset((gMercProfiles[Menptr[uiMercId].ubProfile].bInvStatus), 0, sizeof(UINT8) * 19);
   memset((gMercProfiles[Menptr[uiMercId].ubProfile].bInvNumber), 0, sizeof(UINT8) * 19);
-  memset((gMercProfiles[Menptr[uiMercId].ubProfile].inv), 0, sizeof(UINT16) * 19);
+  memset((gMercProfiles[Menptr[uiMercId].ubProfile].inv), 0, sizeof(uint16_t) * 19);
 
   return (iSlotIndex);
 }
@@ -1732,7 +1732,7 @@ void UpdateMapScreenAssignmentPositions(void) {
   return;
 }
 
-void RandomMercInGroupSaysQuote(struct GROUP *pGroup, UINT16 usQuoteNum) {
+void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum) {
   PLAYERGROUP *pPlayer;
   struct SOLDIERTYPE *pSoldier;
   UINT8 ubMercsInGroup[20];
@@ -2121,7 +2121,7 @@ void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
   iY = pRegion->iY;
   // get the width and height of the string
   iW = (INT32)(pRegion->iW) + 14;
-  iH = IanWrappedStringHeight((UINT16)iX, (UINT16)iY, (UINT16)(pRegion->iW), 0, FONT10ARIAL,
+  iH = IanWrappedStringHeight((uint16_t)iX, (uint16_t)iY, (uint16_t)(pRegion->iW), 0, FONT10ARIAL,
                               FONT_BLACK, pRegion->FastHelpText, FONT_BLACK, TRUE, 0);
 
   // tack on the outer border
@@ -3891,7 +3891,7 @@ void DisplaySoldierUpdateBox() {
 
       // display the mercs name
       swprintf(sString, ARR_SIZE(sString), L"%s", pUpdateSoldierBox[iCounter]->name);
-      DrawTextToScreen(sString, (UINT16)(iFaceX - 5), (UINT16)(iFaceY + 31), 57, TINYFONT1,
+      DrawTextToScreen(sString, (uint16_t)(iFaceX - 5), (uint16_t)(iFaceY + 31), 57, TINYFONT1,
                        FONT_LTRED, FONT_BLACK, 0, CENTER_JUSTIFIED);
     }
   }
@@ -3905,10 +3905,10 @@ void DisplaySoldierUpdateBox() {
         VO_BLT_SRCTRANSPARENCY, NULL);
 
     // ATE: Display string for time compression
-    DisplayWrappedString((UINT16)(iX),
-                         (UINT16)(iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + 5 +
-                                  REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3),
-                         (UINT16)(iUpdatePanelWidth), 0, MAP_SCREEN_FONT, FONT_WHITE,
+    DisplayWrappedString((uint16_t)(iX),
+                         (uint16_t)(iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + 5 +
+                                    REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3),
+                         (uint16_t)(iUpdatePanelWidth), 0, MAP_SCREEN_FONT, FONT_WHITE,
                          gzLateLocalizedString[49], FONT_BLACK, 0, CENTER_JUSTIFIED);
   } else {
     // def: 3/1/99 WAS SUBINDEX 6,
@@ -3918,10 +3918,10 @@ void DisplaySoldierUpdateBox() {
         VO_BLT_SRCTRANSPARENCY, NULL);
 
     // ATE: Display string for time compression
-    DisplayWrappedString((UINT16)(iX),
-                         (UINT16)(iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + 5 +
-                                  REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3),
-                         (UINT16)(iUpdatePanelWidth), 0, MAP_SCREEN_FONT, FONT_WHITE,
+    DisplayWrappedString((uint16_t)(iX),
+                         (uint16_t)(iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + 5 +
+                                    REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3),
+                         (uint16_t)(iUpdatePanelWidth), 0, MAP_SCREEN_FONT, FONT_WHITE,
                          gzLateLocalizedString[49], FONT_BLACK, 0, CENTER_JUSTIFIED);
   }
 

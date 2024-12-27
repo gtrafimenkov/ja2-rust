@@ -21,11 +21,11 @@
 
 // GLobals
 TILE_ELEMENT gTileDatabase[NUMBEROFTILES];
-UINT16 gTileDatabaseSize;
-UINT16 gusNumAnimatedTiles = 0;
-UINT16 gusAnimatedTiles[MAX_ANIMATED_TILES];
+uint16_t gTileDatabaseSize;
+uint16_t gusNumAnimatedTiles = 0;
+uint16_t gusAnimatedTiles[MAX_ANIMATED_TILES];
 
-UINT16 gTileTypeStartIndex[NUMBEROFTILETYPES];
+uint16_t gTileTypeStartIndex[NUMBEROFTILETYPES];
 
 UINT8 gubEncryptionArray2[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
     {81,  168, 102, 49,  61,  70,  172, 127, 7,   148, 115, 179, 10,  117, 253, 35, 30,
@@ -286,7 +286,7 @@ void CreateTileDatabase() {
 
     if (TileSurf != NULL) {
       // Build start index list
-      gTileTypeStartIndex[cnt1] = (UINT16)gTileDatabaseSize;
+      gTileTypeStartIndex[cnt1] = (uint16_t)gTileDatabaseSize;
 
       NumRegions = TileSurf->vo->usNumberOfObjects;
 
@@ -307,7 +307,7 @@ void CreateTileDatabase() {
 
       for (cnt2 = 0; cnt2 < NumRegions; cnt2++) {
         memset(&TileElement, 0, sizeof(TileElement));
-        TileElement.usRegionIndex = (UINT16)cnt2;
+        TileElement.usRegionIndex = (uint16_t)cnt2;
         TileElement.hTileSurface = TileSurf->vo;
         TileElement.sBuddyNum = -1;
 
@@ -334,7 +334,7 @@ void CreateTileDatabase() {
           }
         }
 
-        TileElement.fType = (UINT16)TileSurf->fType;
+        TileElement.fType = (uint16_t)TileSurf->fType;
         TileElement.ubTerrainID = TileSurf->ubTerrainID;
         TileElement.usWallOrientation = NO_ORIENTATION;
 
@@ -386,7 +386,7 @@ void CreateTileDatabase() {
           }
         }
 
-        SetSpecificDatabaseValues((UINT16)cnt1, gTileDatabaseSize, &TileElement,
+        SetSpecificDatabaseValues((uint16_t)cnt1, gTileDatabaseSize, &TileElement,
                                   TileSurf->bRaisedObjectType);
 
         gTileDatabase[gTileDatabaseSize] = TileElement;
@@ -405,7 +405,7 @@ void CreateTileDatabase() {
           memset(&TileElement, 0, sizeof(TileElement));
           TileElement.usRegionIndex = 0;
           TileElement.hTileSurface = TileSurf->vo;
-          TileElement.fType = (UINT16)TileSurf->fType;
+          TileElement.fType = (uint16_t)TileSurf->fType;
           TileElement.ubFullTile = FALSE;
           TileElement.sOffsetHeight = 0;
           TileElement.ubFullTile = 0;
@@ -435,7 +435,7 @@ void DeallocateTileDatabase() {
 }
 
 BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType) {
-  UINT16 usIndex;
+  uint16_t usIndex;
 
   Assert(puiType != NULL);
 
@@ -448,8 +448,8 @@ BOOLEAN GetLandHeadType(INT32 iMapIndex, uint32_t *puiType) {
   return (TRUE);
 }
 
-BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, BOOLEAN fDelete) {
-  UINT16 usTempIndex;
+BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete) {
+  uint16_t usTempIndex;
   UINT8 ubLastHighLevel = 0;
 
   if (fDelete) {
@@ -478,9 +478,9 @@ BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, BOOLEA
   }
 }
 
-BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewType, UINT8 ubRadius,
-                               BOOLEAN fReplace) {
-  UINT16 usTempIndex;
+BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType,
+                               UINT8 ubRadius, BOOLEAN fReplace) {
+  uint16_t usTempIndex;
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -488,7 +488,7 @@ BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, uint32_t uiNewTy
   BOOLEAN fDoPaste = FALSE;
   INT32 leftmost;
   // BOOLEAN				fNewCommand;
-  UINT16 Dummy;
+  uint16_t Dummy;
 
   // Determine start end end indicies and num rows
   sTop = ubRadius;
@@ -564,7 +564,7 @@ UINT8 GetLandLevelDepth(uint32_t iMapIndex) {
   return (level);
 }
 
-BOOLEAN GetSubIndexFromTileIndex(UINT16 usTileIndex, UINT16 *pusSubIndex) {
+BOOLEAN GetSubIndexFromTileIndex(uint16_t usTileIndex, uint16_t *pusSubIndex) {
   uint32_t uiType = 0;
   if (GetTileType(usTileIndex, &uiType)) {
     *pusSubIndex = usTileIndex - gTileTypeStartIndex[uiType] + 1;
@@ -573,7 +573,8 @@ BOOLEAN GetSubIndexFromTileIndex(UINT16 usTileIndex, UINT16 *pusSubIndex) {
   return FALSE;
 }
 
-BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, UINT16 usIndex, UINT16 *pusSubIndex) {
+BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, uint16_t usIndex,
+                                     uint16_t *pusSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
@@ -583,7 +584,8 @@ BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, UINT16 usIndex, UINT1
   return (TRUE);
 }
 
-BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, UINT16 usIndex, UINT8 *pubSubIndex) {
+BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, uint16_t usIndex,
+                                         UINT8 *pubSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
@@ -593,8 +595,8 @@ BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, UINT16 usIndex, U
   return (TRUE);
 }
 
-BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, UINT16 usSubIndex,
-                                     UINT16 *pusTileIndex) {
+BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, uint16_t usSubIndex,
+                                     uint16_t *pusTileIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   CHECKF(uiCheckType < NUMBEROFTILETYPES);
@@ -604,7 +606,7 @@ BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, UINT16 usSubIndex,
   return (TRUE);
 }
 
-BOOLEAN MoveLandIndexToTop(uint32_t iMapIndex, UINT16 usIndex) {
+BOOLEAN MoveLandIndexToTop(uint32_t iMapIndex, uint16_t usIndex) {
   // Remove, then add again
   RemoveLand(iMapIndex, usIndex);
 
@@ -614,7 +616,7 @@ BOOLEAN MoveLandIndexToTop(uint32_t iMapIndex, UINT16 usIndex) {
 }
 
 // Database access functions
-BOOLEAN GetTileType(UINT16 usIndex, uint32_t *puiType) {
+BOOLEAN GetTileType(uint16_t usIndex, uint32_t *puiType) {
   TILE_ELEMENT TileElem;
 
   CHECKF(usIndex != NO_TILE);
@@ -627,7 +629,7 @@ BOOLEAN GetTileType(UINT16 usIndex, uint32_t *puiType) {
   return (TRUE);
 }
 
-BOOLEAN GetTileFlags(UINT16 usIndex, uint32_t *puiFlags) {
+BOOLEAN GetTileFlags(uint16_t usIndex, uint32_t *puiFlags) {
   TILE_ELEMENT TileElem;
 
   CHECKF(usIndex != NO_TILE);
@@ -740,7 +742,7 @@ BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, UINT8 *pubLastLevel
   return (FALSE);
 }
 
-BOOLEAN GetWallOrientation(UINT16 usIndex, UINT16 *pusWallOrientation) {
+BOOLEAN GetWallOrientation(uint16_t usIndex, uint16_t *pusWallOrientation) {
   TILE_ELEMENT TileElem;
 
   CHECKF(usIndex != NO_TILE);
@@ -753,11 +755,11 @@ BOOLEAN GetWallOrientation(UINT16 usIndex, UINT16 *pusWallOrientation) {
   return (TRUE);
 }
 
-BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, UINT16 usWallOrientation,
+BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
                                 UINT8 *pubLevel) {
   struct LEVELNODE *pStruct = NULL;
   UINT8 level = 0;
-  UINT16 usCheckWallOrient = 0;
+  uint16_t usCheckWallOrient = 0;
 
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
 
@@ -786,7 +788,7 @@ BOOLEAN ContainsWallOrientation(INT32 iMapIndex, uint32_t uiType, UINT16 usWallO
 // interior bottom corners.  Otherwise, it returns the orientation of the
 // first wall encountered -- not that there should be duplicate walls...
 UINT8 CalculateWallOrientationsAtGridNo(INT32 iMapIndex) {
-  UINT16 usCheckWallOrientation = 0;
+  uint16_t usCheckWallOrientation = 0;
   struct LEVELNODE *pStruct = NULL;
   UINT8 ubFinalWallOrientation = NO_ORIENTATION;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
@@ -824,7 +826,7 @@ BOOLEAN AllocateAnimTileData(TILE_ELEMENT *pTileElem, UINT8 ubNumFrames) {
 
   CHECKF(pTileElem->pAnimData != NULL);
 
-  pTileElem->pAnimData->pusFrames = (UINT16 *)MemAlloc(sizeof(UINT16) * ubNumFrames);
+  pTileElem->pAnimData->pusFrames = (uint16_t *)MemAlloc(sizeof(uint16_t) * ubNumFrames);
 
   CHECKF(pTileElem->pAnimData->pusFrames != NULL);
 

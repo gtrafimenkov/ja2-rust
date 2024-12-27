@@ -331,8 +331,8 @@ void ConfirmationToDepositMoneyToPlayersAccount(UINT8 ubExitValue);
 void MergeMessageBoxCallBack(UINT8 ubExitValue);
 
 UINT8 gubHandPos;
-UINT16 gusOldItemIndex;
-UINT16 gusNewItemIndex;
+uint16_t gusOldItemIndex;
+uint16_t gusNewItemIndex;
 BOOLEAN gfDeductPoints;
 
 // ARRAY FOR INV PANEL INTERFACE ITEM POSITIONS
@@ -431,7 +431,7 @@ BOOLEAN gfSM_HandInvDispText[NUM_INV_SLOTS];
 void HelpTextDoneCallback(void);
 
 // Globals - for one - the current merc here
-UINT16 gusSMCurrentMerc = 0;
+uint16_t gusSMCurrentMerc = 0;
 struct SOLDIERTYPE *gpSMCurrentMerc = NULL;
 extern struct SOLDIERTYPE *gpItemPopupSoldier;
 INT8 gbSMCurStanceObj;
@@ -493,7 +493,7 @@ void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY, UINT
 // keyring stuff
 void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-void UpdateSelectedSoldier(UINT16 usSoldierID, BOOLEAN fSelect);
+void UpdateSelectedSoldier(uint16_t usSoldierID, BOOLEAN fSelect);
 
 void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, INT16 sPanelX, INT16 sPanelY);
 void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY);
@@ -1067,7 +1067,7 @@ void EnableSMPanelButtons(BOOLEAN fEnable, BOOLEAN fFromItemPickup) {
   }
 }
 
-UINT16 GetSMPanelCurrentMerc() { return (gusSMCurrentMerc); }
+uint16_t GetSMPanelCurrentMerc() { return (gusSMCurrentMerc); }
 
 BOOLEAN InitializeSMPanel() {
   VOBJECT_DESC VObjectDesc;
@@ -1776,7 +1776,7 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
     ClipRect.iTop = INV_INTERFACE_START_Y;
     ClipRect.iBottom = 480;
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-    Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+    Blt16BPPBufferHatchRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
     UnLockVideoSurface(FRAME_BUFFER);
   }
 }
@@ -1946,7 +1946,7 @@ void SMInvClickCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, uint32_t uiHandPos,
-                              UINT16 usReplaceItem) {
+                              uint16_t usReplaceItem) {
   BOOLEAN fRefuse = FALSE;
 
   // OK are we nails?
@@ -1980,7 +1980,7 @@ BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, uint32_t uiHandPos,
   return (FALSE);
 }
 
-BOOLEAN UIHandleItemPlacement(UINT8 ubHandPos, UINT16 usOldItemIndex, UINT16 usNewItemIndex,
+BOOLEAN UIHandleItemPlacement(UINT8 ubHandPos, uint16_t usOldItemIndex, uint16_t usNewItemIndex,
                               BOOLEAN fDeductPoints) {
   if (_KeyDown(CTRL)) {
     CleanUpStack(&(gpSMCurrentMerc->inv[ubHandPos]), gpItemPointer);
@@ -2038,8 +2038,8 @@ BOOLEAN UIHandleItemPlacement(UINT8 ubHandPos, UINT16 usOldItemIndex, UINT16 usN
 void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   uint32_t uiHandPos;
   // Copyies of values
-  UINT16 usOldItemIndex, usNewItemIndex;
-  UINT16 usItemPrevInItemPointer;
+  uint16_t usOldItemIndex, usNewItemIndex;
+  uint16_t usItemPrevInItemPointer;
   BOOLEAN fNewItem = FALSE;
   static BOOLEAN fRightDown = FALSE;
 
@@ -2350,8 +2350,8 @@ void HandleMouseOverSoldierFaceForContMove(struct SOLDIERTYPE *pSoldier, BOOLEAN
       }
 
       // While our mouse is here, draw a path!
-      PlotPath(pSoldier, sGridNo, NO_COPYROUTE, PLOT, TEMPORARY, (UINT16)pSoldier->usUIMovementMode,
-               NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
+      PlotPath(pSoldier, sGridNo, NO_COPYROUTE, PLOT, TEMPORARY,
+               (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
     }
   } else {
     // Remove 'cont' on face....
@@ -3346,7 +3346,7 @@ void HandleMouseOverTeamFaceForContMove(BOOLEAN fOn) {
 
       // While our mouse is here, draw a path!
       PlotPath(gpSMCurrentMerc, gpSMCurrentMerc->sFinalDestination, NO_COPYROUTE, PLOT, TEMPORARY,
-               (UINT16)gpSMCurrentMerc->usUIMovementMode, NOT_STEALTH, FORWARD,
+               (uint16_t)gpSMCurrentMerc->usUIMovementMode, NOT_STEALTH, FORWARD,
                gpSMCurrentMerc->bActionPoints);
     }
   } else {
@@ -3504,8 +3504,8 @@ void MercFacePanelCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-extern void InternalSelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect,
-                                  BOOLEAN fFromUI);
+extern void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge,
+                                  BOOLEAN fForceReselect, BOOLEAN fFromUI);
 
 void HandleLocateSelectMerc(UINT8 ubID, INT8 bFlag) {
   BOOLEAN fSelect = FALSE;
@@ -3866,7 +3866,7 @@ void TMFirstHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 void TMClickFirstHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT8 ubID, ubSoldierID;
-  UINT16 usOldHandItem;
+  uint16_t usOldHandItem;
 
   ubID = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
@@ -3896,7 +3896,7 @@ void TMClickFirstHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
 void TMClickSecondHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT8 ubID, ubSoldierID;
-  UINT16 usOldHandItem;
+  uint16_t usOldHandItem;
 
   ubID = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
@@ -4274,7 +4274,7 @@ void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
 void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   uint32_t uiKeyRing;
   // Copyies of values
-  UINT16 usOldItemIndex;
+  uint16_t usOldItemIndex;
   static BOOLEAN fRightDown = FALSE;
   INT32 iNumberOfKeysTaken = 0;
 
@@ -4319,7 +4319,7 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         }
       }
 
-      usOldItemIndex = (UINT16)uiKeyRing;
+      usOldItemIndex = (uint16_t)uiKeyRing;
 
       BeginKeyRingItemPointer(gpItemPopupSoldier, (UINT8)usOldItemIndex);
       // BeginItemPointer( gpSMCurrentMerc, (UINT8)uiHandPos );
@@ -4655,7 +4655,7 @@ void GoToMapScreenFromTactical(void) {
 }
 
 void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, uint32_t uiInvPos,
-                                            UINT16 usOldItem, UINT16 usNewItem) {
+                                            uint16_t usOldItem, uint16_t usNewItem) {
   // if in attached weapon mode and don't have weapon with GL attached in hand, reset weapon mode
   if (pSoldier->bWeaponMode == WM_ATTACHED &&
       FindAttachment(&(pSoldier->inv[HANDPOS]), UNDER_GLAUNCHER) == NO_SLOT) {

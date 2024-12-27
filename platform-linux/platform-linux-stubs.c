@@ -95,8 +95,8 @@ uint32_t FileMan_Size(STR strFilename) { return 0; }
 BOOLEAN gfKeyState[256];
 BOOLEAN gfLeftButtonState;
 BOOLEAN gfRightButtonState;
-UINT16 gusMouseXPos;
-UINT16 gusMouseYPos;
+uint16_t gusMouseXPos;
+uint16_t gusMouseYPos;
 
 BOOLEAN gfSGPInputReceived = FALSE;
 
@@ -106,7 +106,7 @@ BOOLEAN DequeueEvent(InputAtom *Event) { return FALSE; }
 
 void GetMousePos(SGPPoint *Point) {}
 
-void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {}
+void RestrictMouseToXYXY(uint16_t usX1, uint16_t usY1, uint16_t usX2, uint16_t usY2) {}
 
 void RestrictMouseCursor(SGPRect *pRectangle) {}
 
@@ -200,14 +200,14 @@ BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitM
 
 BOOLEAN EraseMouseCursor() { return FALSE; }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                 UINT16 usCursorWidth) {
+BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, uint16_t usCursorHeight,
+                                 uint16_t usCursorWidth) {
   return FALSE;
 }
 
 void DirtyCursor() {}
 
-BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
+BOOLEAN SetCurrentCursor(uint16_t usVideoObjectSubIndex, uint16_t usOffsetX, uint16_t usOffsetY) {
   return FALSE;
 }
 
@@ -231,19 +231,19 @@ BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor) { ret
 
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex) { return FALSE; }
 
-BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, UINT16 usRegionIndex,
+BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, uint16_t usRegionIndex,
                         INT32 iDestX, INT32 iDestY, uint32_t fBltFlags, blt_vs_fx *pBltFx) {
   return FALSE;
 }
 
 BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP) {
+                                  INT32 iDestX2, INT32 iDestY2, uint16_t Color16BPP) {
   return FALSE;
 }
 
 BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  UINT16 Index, INT16 Ox, INT16 Oy) {
+                                  uint16_t Index, INT16 Ox, INT16 Oy) {
   return FALSE;
 }
 
@@ -262,7 +262,7 @@ BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex) { return FALSE; }
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
+                                      uint16_t usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
                                       blt_vs_fx *pBltFx) {
   return FALSE;
 }

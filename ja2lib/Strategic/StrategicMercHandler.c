@@ -508,7 +508,7 @@ void RPCWhineAboutNoPay(UINT8 ubID) {
 // OK loop through and check!
 BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt;
-  UINT16 usItem;
+  uint16_t usItem;
   INT8 bBestArmour = -1;
   INT8 bBestGun = -1;
 

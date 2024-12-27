@@ -261,7 +261,7 @@ void BtnMercBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void DisplayHiredMercs() {
-  UINT16 usPosY;
+  uint16_t usPosY;
   uint32_t uiContractCharge;
   wchar_t sTemp[20];
   UINT8 i, usMercID;
@@ -405,7 +405,7 @@ void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue) {
 uint32_t CalculateHowMuchPlayerOwesSpeck() {
   UINT8 i = 0;
   uint32_t uiContractCharge = 0;
-  UINT16 usMercID;
+  uint16_t usMercID;
 
   for (i = 0; i < 10; i++) {
     // if it larry Roach burn advance.  ( cause larry is in twice, a sober larry and a stoned larry

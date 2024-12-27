@@ -1024,11 +1024,11 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   struct VSurface *hSrcVSurface;
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
+  uint16_t *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
-  UINT16 usTopX, usTopY;
-  UINT16 usWidth, usHeight;
+  uint16_t usTopX, usTopY;
+  uint16_t usWidth, usHeight;
 
   if ((uiCounter < 0) || (uiCounter >= MAX_POPUP_BOX_COUNT)) return (FALSE);
 
@@ -1046,12 +1046,12 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
     ResizeBoxToText(uiCounter);
   }
 
-  usTopX = (UINT16)PopUpBoxList[uiCounter]->Position.iX;
-  usTopY = (UINT16)PopUpBoxList[uiCounter]->Position.iY;
-  usWidth = ((UINT16)(PopUpBoxList[uiCounter]->Dimensions.iRight -
-                      PopUpBoxList[uiCounter]->Dimensions.iLeft));
-  usHeight = ((UINT16)(PopUpBoxList[uiCounter]->Dimensions.iBottom -
-                       PopUpBoxList[uiCounter]->Dimensions.iTop));
+  usTopX = (uint16_t)PopUpBoxList[uiCounter]->Position.iX;
+  usTopY = (uint16_t)PopUpBoxList[uiCounter]->Position.iY;
+  usWidth = ((uint16_t)(PopUpBoxList[uiCounter]->Dimensions.iRight -
+                        PopUpBoxList[uiCounter]->Dimensions.iLeft));
+  usHeight = ((uint16_t)(PopUpBoxList[uiCounter]->Dimensions.iBottom -
+                         PopUpBoxList[uiCounter]->Dimensions.iTop));
 
   // check if we have a min width, if so then update box for such
   if ((PopUpBoxList[uiCounter]->uiBoxMinWidth) &&
@@ -1074,7 +1074,7 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
 
   // blit in texture first, then borders
   // blit in surface
-  pDestBuf = (UINT16 *)LockVideoSurface(PopUpBoxList[uiCounter]->uiBuffer, &uiDestPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(PopUpBoxList[uiCounter]->uiBuffer, &uiDestPitchBYTES);
   CHECKF(GetVideoSurface(&hSrcVSurface, PopUpBoxList[uiCounter]->iBackGroundSurface));
   pSrcBuf = LockVideoSurface(PopUpBoxList[uiCounter]->iBackGroundSurface, &uiSrcPitchBYTES);
   Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,

@@ -42,13 +42,13 @@ enum {
 
 typedef struct SCHEDULENODE {
   struct SCHEDULENODE *next;
-  UINT16 usTime[MAX_SCHEDULE_ACTIONS];   // converted to minutes 12:30PM would be 12*60 + 30 = 750
-  UINT16 usData1[MAX_SCHEDULE_ACTIONS];  // typically the gridno, but depends on the action
-  UINT16 usData2[MAX_SCHEDULE_ACTIONS];  // secondary information, not used by most actions
+  uint16_t usTime[MAX_SCHEDULE_ACTIONS];   // converted to minutes 12:30PM would be 12*60 + 30 = 750
+  uint16_t usData1[MAX_SCHEDULE_ACTIONS];  // typically the gridno, but depends on the action
+  uint16_t usData2[MAX_SCHEDULE_ACTIONS];  // secondary information, not used by most actions
   UINT8 ubAction[MAX_SCHEDULE_ACTIONS];
   UINT8 ubScheduleID;
   UINT8 ubSoldierID;
-  UINT16 usFlags;
+  uint16_t usFlags;
 } SCHEDULENODE;
 
 extern UINT8 gubScheduleID;
@@ -90,7 +90,7 @@ void PrepareSchedulesForEditorExit();
 // before saving the map, as this forces the IDs to align with the SOLDIERINITNODE->ubScheduleID's.
 void OptimizeSchedules();
 
-void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, UINT16 usMapIndex);
+void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, uint16_t usMapIndex);
 
 BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiEntryTime,
                                         uint32_t *puiExitTime);
@@ -99,7 +99,7 @@ BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, uint3
 
 void ReconnectSchedules(void);
 
-void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, UINT16 usSleepSpot);
+void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, uint16_t usSleepSpot);
 
 BOOLEAN BumpAnyExistingMerc(INT16 sGridNo);
 

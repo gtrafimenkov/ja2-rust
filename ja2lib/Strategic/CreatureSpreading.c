@@ -534,7 +534,7 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
 }
 
 void SpreadCreatures() {
-  UINT16 usNewCreatures = 0;
+  uint16_t usNewCreatures = 0;
 
   if (giLairID == -1) {
     DecayCreatures();
@@ -545,15 +545,15 @@ void SpreadCreatures() {
   switch (gGameOptions.ubDifficultyLevel) {
     case DIF_LEVEL_EASY:
       usNewCreatures =
-          (UINT16)(EASY_QUEEN_REPRODUCTION_BASE + Random(1 + EASY_QUEEN_REPRODUCTION_BONUS));
+          (uint16_t)(EASY_QUEEN_REPRODUCTION_BASE + Random(1 + EASY_QUEEN_REPRODUCTION_BONUS));
       break;
     case DIF_LEVEL_MEDIUM:
       usNewCreatures =
-          (UINT16)(NORMAL_QUEEN_REPRODUCTION_BASE + Random(1 + NORMAL_QUEEN_REPRODUCTION_BONUS));
+          (uint16_t)(NORMAL_QUEEN_REPRODUCTION_BASE + Random(1 + NORMAL_QUEEN_REPRODUCTION_BONUS));
       break;
     case DIF_LEVEL_HARD:
       usNewCreatures =
-          (UINT16)(HARD_QUEEN_REPRODUCTION_BASE + Random(1 + HARD_QUEEN_REPRODUCTION_BONUS));
+          (uint16_t)(HARD_QUEEN_REPRODUCTION_BASE + Random(1 + HARD_QUEEN_REPRODUCTION_BONUS));
       break;
   }
 
@@ -1388,7 +1388,7 @@ BOOLEAN LoadCreatureDirectives(HWFILE hFile, uint32_t uiSavedGameVersion) {
 }
 
 void ForceCreaturesToAvoidMineTemporarily(UINT8 ubMineIndex) {
-  gMineStatus[MINE_GRUMM].usValidDayCreaturesCanInfest = (UINT16)(GetWorldDay() + 2);
+  gMineStatus[MINE_GRUMM].usValidDayCreaturesCanInfest = (uint16_t)(GetWorldDay() + 2);
 }
 
 BOOLEAN PlayerGroupIsInACreatureInfestedMine() {

@@ -52,7 +52,7 @@ void UpdateTEAMPanel();
 
 void SetSMPanelCurrentMerc(UINT8 ubNewID);
 void SetTEAMPanelCurrentMerc(UINT8 ubNewID);
-UINT16 GetSMPanelCurrentMerc();
+uint16_t GetSMPanelCurrentMerc();
 void UpdateSMPanel();
 
 BOOLEAN InitTEAMSlots();
@@ -105,7 +105,7 @@ void HandlePanelFaceAnimations(struct SOLDIERTYPE *pSoldier);
 void GoToMapScreenFromTactical(void);
 
 void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, uint32_t uiInvPos,
-                                            UINT16 usOldItem, UINT16 usNewItem);
+                                            uint16_t usOldItem, uint16_t usNewItem);
 
 void FinishAnySkullPanelAnimations();
 

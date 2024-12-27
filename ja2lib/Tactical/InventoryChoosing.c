@@ -109,7 +109,7 @@ void InitArmyGunTypes(void) {
   MarkAllWeaponsOfSameGunClassAsDropped(SW38);
 }
 
-INT8 GetWeaponClass(UINT16 usGun) {
+INT8 GetWeaponClass(uint16_t usGun) {
   uint32_t uiGunLevel, uiLoop;
 
   // always use the extended list since it contains all guns...
@@ -123,7 +123,7 @@ INT8 GetWeaponClass(UINT16 usGun) {
   return (-1);
 }
 
-void MarkAllWeaponsOfSameGunClassAsDropped(UINT16 usWeapon) {
+void MarkAllWeaponsOfSameGunClassAsDropped(uint16_t usWeapon) {
   INT8 bGunClass;
   uint32_t uiLoop;
 
@@ -512,12 +512,12 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
                                         INT8 bAmmoClips, INT8 bAttachClass, BOOLEAN fAttachment) {
   INVTYPE *pItem;
   struct OBJECTTYPE Object;
-  UINT16 i;
-  UINT16 usRandom;
-  UINT16 usNumMatches = 0;
-  UINT16 usGunIndex = 0;
-  UINT16 usAmmoIndex = 0;
-  UINT16 usAttachIndex = 0;
+  uint16_t i;
+  uint16_t usRandom;
+  uint16_t usNumMatches = 0;
+  uint16_t usGunIndex = 0;
+  uint16_t usAmmoIndex = 0;
+  uint16_t usAttachIndex = 0;
   UINT8 ubChanceStandardAmmo;
   INT8 bStatus;
 
@@ -594,7 +594,7 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
       }
     }
     if (usNumMatches) {
-      usRandom = (UINT16)Random(usNumMatches);
+      usRandom = (uint16_t)Random(usNumMatches);
       for (i = 0; i < MAXITEMS; i++) {
         pItem = &Item[i];
         if (pItem->usItemClass == IC_MISC && pItem->ubCoolness == bAttachClass &&
@@ -664,7 +664,7 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
                                           INT8 bGrenadeClass, BOOLEAN fGrenadeLauncher) {
   struct OBJECTTYPE Object;
   INT16 sNumPoints;
-  UINT16 usItem;
+  uint16_t usItem;
   UINT8 ubBaseQuality;
   UINT8 ubQualityVariation;
   // numbers of each type the player will get!
@@ -887,10 +887,10 @@ void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenad
 
 void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetClass,
                                         INT8 bVestClass, INT8 bLeggingsClass) {
-  UINT16 i;
+  uint16_t i;
   INVTYPE *pItem;
-  UINT16 usRandom;
-  UINT16 usNumMatches;
+  uint16_t usRandom;
+  uint16_t usNumMatches;
   INT8 bOrigVestClass = bVestClass;
   struct OBJECTTYPE Object;
 
@@ -911,7 +911,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
       if (!usNumMatches) bHelmetClass--;
     }
     if (usNumMatches) {  // There is a helmet that we can choose.
-      usRandom = (UINT16)Random(usNumMatches);
+      usRandom = (uint16_t)Random(usNumMatches);
       for (i = 0; i < MAXITEMS; i++) {
         pItem = &Item[i];
         if (pItem->usItemClass == IC_ARMOUR && pItem->ubCoolness == bHelmetClass) {
@@ -950,7 +950,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
       if (!usNumMatches) bVestClass--;
     }
     if (usNumMatches) {  // There is an armour that we can choose.
-      usRandom = (UINT16)Random(usNumMatches);
+      usRandom = (uint16_t)Random(usNumMatches);
       for (i = 0; i < MAXITEMS; i++) {
         // these 3 have a non-zero coolness, and would otherwise be selected, so skip them
         if ((i == TSHIRT) || (i == LEATHER_JACKET) || (i == TSHIRT_DEIDRANNA)) continue;
@@ -999,7 +999,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
       if (!usNumMatches) bLeggingsClass--;
     }
     if (usNumMatches) {  // There is a legging that we can choose.
-      usRandom = (UINT16)Random(usNumMatches);
+      usRandom = (uint16_t)Random(usNumMatches);
       for (i = 0; i < MAXITEMS; i++) {
         pItem = &Item[i];
         if (pItem->usItemClass == IC_ARMOUR && pItem->ubCoolness == bLeggingsClass) {
@@ -1023,11 +1023,11 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
 void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKnifeClass,
                                                 BOOLEAN fGrenadeLauncher, BOOLEAN fLAW,
                                                 BOOLEAN fMortar) {
-  UINT16 i;
+  uint16_t i;
   INVTYPE *pItem;
-  UINT16 usRandom;
-  UINT16 usNumMatches = 0;
-  UINT16 usKnifeIndex = 0;
+  uint16_t usRandom;
+  uint16_t usNumMatches = 0;
+  uint16_t usKnifeIndex = 0;
   struct OBJECTTYPE Object;
 
   // Choose knife
@@ -1044,7 +1044,7 @@ void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 b
     if (!usNumMatches) bKnifeClass--;
   }
   if (usNumMatches) {  // There is a knife that we can choose.
-    usRandom = (UINT16)Random(usNumMatches);
+    usRandom = (uint16_t)Random(usNumMatches);
     for (i = 0; i < MAXITEMS; i++) {
       pItem = &Item[i];
       if ((pItem->usItemClass == IC_BLADE || pItem->usItemClass == IC_THROWING_KNIFE) &&
@@ -1153,12 +1153,12 @@ void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
 }
 
 void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass) {
-  UINT16 i;
+  uint16_t i;
   INVTYPE *pItem;
-  UINT16 usRandom;
-  UINT16 usNumMatches = 0;
+  uint16_t usRandom;
+  uint16_t usNumMatches = 0;
   struct OBJECTTYPE Object;
-  UINT16 usKitItem = 0;
+  uint16_t usKitItem = 0;
 
   // we want these mostly to be first aid and medical kits, and for those kit class doesn't matter,
   // they're always useful
@@ -1179,7 +1179,7 @@ void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass) 
 
     // if any are eligible, pick one of them at random
     if (usNumMatches) {
-      usRandom = (UINT16)Random(usNumMatches);
+      usRandom = (uint16_t)Random(usNumMatches);
       for (i = 0; i < MAXITEMS; i++) {
         pItem = &Item[i];
         // skip toolkits
@@ -1204,10 +1204,10 @@ void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass) 
 }
 
 void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscClass) {
-  UINT16 i;
+  uint16_t i;
   INVTYPE *pItem;
-  UINT16 usRandom;
-  UINT16 usNumMatches = 0;
+  uint16_t usRandom;
+  uint16_t usNumMatches = 0;
   struct OBJECTTYPE Object;
 
   // not all of these are IC_MISC, some are IC_PUNCH (not covered anywhere else)
@@ -1242,7 +1242,7 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscCl
 
   // if any are eligible, pick one of them at random
   if (usNumMatches) {
-    usRandom = (UINT16)Random(usNumMatches);
+    usRandom = (uint16_t)Random(usNumMatches);
 
     i = 0;
     while (iMiscItemsList[i] != -1) {
@@ -1253,7 +1253,7 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscCl
           if (usRandom)
             usRandom--;
           else {
-            CreateItem((UINT16)iMiscItemsList[i], (INT8)(80 + Random(21)), &Object);
+            CreateItem((uint16_t)iMiscItemsList[i], (INT8)(80 + Random(21)), &Object);
             Object.fFlags |= OBJECT_UNDROPPABLE;
             PlaceObjectInSoldierCreateStruct(pp, &Object);
             break;
@@ -1267,10 +1267,10 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscCl
 }
 
 void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass) {
-  UINT16 i;
+  uint16_t i;
   INVTYPE *pItem;
-  UINT16 usRandom;
-  UINT16 usNumMatches = 0;
+  uint16_t usRandom;
+  uint16_t usNumMatches = 0;
   struct OBJECTTYPE Object;
 
   // count how many are eligible
@@ -1284,7 +1284,7 @@ void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass
 
   // if any are eligible, pick one of them at random
   if (usNumMatches) {
-    usRandom = (UINT16)Random(usNumMatches);
+    usRandom = (uint16_t)Random(usNumMatches);
     for (i = 0; i < MAXITEMS; i++) {
       pItem = &Item[i];
       if ((pItem->usItemClass == IC_BOMB) && (pItem->ubCoolness > 0) &&
@@ -1348,10 +1348,10 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECT
 
 void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
   INT32 i;
-  //	UINT16 usRandomNum;
+  //	uint16_t usRandomNum;
   uint32_t uiItemClass;
   UINT8 ubNumMatches = 0;
-  UINT16 usItem;
+  uint16_t usItem;
   UINT8 ubAmmoDropRate;
   UINT8 ubGrenadeDropRate;
   UINT8 ubOtherDropRate;
@@ -1366,7 +1366,7 @@ void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldie
 
   /*
           //40% of soldiers will have droppable items.
-          usRandomNum = (UINT16)Random( 1000 );
+          usRandomNum = (uint16_t)Random( 1000 );
           if( usRandomNum >= 400 )
                   return;
           //so now the number is 0-399.  This is kind of like a D&D die roll where
@@ -1741,13 +1741,13 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
 
   // decide if the creature will drop any REAL bodyparts
   if (Random(100) < uiChanceToDrop) {
-    CreateItem((UINT16)(fBloodcat ? BLOODCAT_CLAWS : CREATURE_PART_CLAWS), (INT8)(80 + Random(21)),
-               &(pSoldier->inv[BIGPOCK1POS]));
+    CreateItem((uint16_t)(fBloodcat ? BLOODCAT_CLAWS : CREATURE_PART_CLAWS),
+               (INT8)(80 + Random(21)), &(pSoldier->inv[BIGPOCK1POS]));
   }
 
   if (Random(100) < uiChanceToDrop) {
-    CreateItem((UINT16)(fBloodcat ? BLOODCAT_TEETH : CREATURE_PART_FLESH), (INT8)(80 + Random(21)),
-               &(pSoldier->inv[BIGPOCK2POS]));
+    CreateItem((uint16_t)(fBloodcat ? BLOODCAT_TEETH : CREATURE_PART_FLESH),
+               (INT8)(80 + Random(21)), &(pSoldier->inv[BIGPOCK2POS]));
   }
 
   // as requested by ATE, males are more likely to drop their "organs" (he actually suggested this,
@@ -1758,7 +1758,7 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (Random(100) < uiChanceToDrop) {
-    CreateItem((UINT16)(fBloodcat ? BLOODCAT_PELT : CREATURE_PART_ORGAN), (INT8)(80 + Random(21)),
+    CreateItem((uint16_t)(fBloodcat ? BLOODCAT_PELT : CREATURE_PART_ORGAN), (INT8)(80 + Random(21)),
                &(pSoldier->inv[BIGPOCK3POS]));
   }
 }
@@ -1767,7 +1767,7 @@ void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
   uint32_t uiLoop, uiLoop2, uiAttachDestIndex;
   INT8 bWeaponClass;
   struct OBJECTTYPE OldObj;
-  UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
+  uint16_t usItem, usNewGun, usAmmo, usNewAmmo;
 
   for (uiLoop = 0; uiLoop < NUM_INV_SLOTS; uiLoop++) {
     usItem = pp->Inv[uiLoop].usItem;
@@ -1819,10 +1819,10 @@ void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
   }
 }
 
-UINT16 SelectStandardArmyGun(UINT8 uiGunLevel) {
+uint16_t SelectStandardArmyGun(UINT8 uiGunLevel) {
   ARMY_GUN_CHOICE_TYPE *pGunChoiceTable;
   uint32_t uiChoice;
-  UINT16 usGunIndex;
+  uint16_t usGunIndex;
 
   // pick the standard army gun for this weapon class from table
   //	usGunIndex = gStrategicStatus.ubStandardArmyGunIndex[uiGunLevel];

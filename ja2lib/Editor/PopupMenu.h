@@ -74,16 +74,16 @@ typedef struct currentPopupMenuInformation {
   UINT8 ubMaxEntriesPerColumn;
   UINT8 ubColumnWidth[MAX_COLUMNS];
   UINT8 ubActiveType;
-  UINT16 usFont;
+  uint16_t usFont;
   BOOLEAN fActive;
   BOOLEAN fUseKeyboardInfoUntilMouseMoves;
-  UINT16 usLeft, usTop, usRight, usBottom;  // popup region coords.
-  UINT16 usLastMouseX, usLastMouseY;
+  uint16_t usLeft, usTop, usRight, usBottom;  // popup region coords.
+  uint16_t usLastMouseX, usLastMouseY;
 } CurrentPopupMenuInformation;
 
 // A global var that keeps the popup menu information.
 extern CurrentPopupMenuInformation gPopup;
-extern UINT16 *popupMenuStrings[5];
+extern uint16_t *popupMenuStrings[5];
 
 // These are the two main functions that outside users would call.
 void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection);

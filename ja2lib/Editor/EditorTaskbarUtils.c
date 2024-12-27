@@ -190,7 +190,7 @@ void DeleteEditorImages() {
 void CreateEditorBuffers() {
   INT32 i;
   VSURFACE_DESC vs_desc;
-  UINT16 usUselessWidth, usUselessHeight;
+  uint16_t usUselessWidth, usUselessHeight;
   UINT8 ubBitDepth;
 
   // create buffer for the transition slot for merc items.  This slot contains the newly
@@ -433,7 +433,7 @@ void EnableEditorTaskbar(void) {
 void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
-  UINT16 uiStringLength, uiStringHeight;
+  uint16_t uiStringLength, uiStringHeight;
 
   Assert(pFontString != NULL);
 
@@ -472,10 +472,10 @@ void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
 // This is a new function which duplicates the older "yellow info boxes" that
 // are common throughout the editor.  This draws the yellow box with the indentation
 // look.
-void DrawEditorInfoBox(STR16 str, uint32_t uiFont, UINT16 x, UINT16 y, UINT16 w, UINT16 h) {
-  UINT16 usFillColorDark, usFillColorLight, usFillColorBack;
-  UINT16 x2, y2;
-  UINT16 usStrWidth;
+void DrawEditorInfoBox(STR16 str, uint32_t uiFont, uint16_t x, uint16_t y, uint16_t w, uint16_t h) {
+  uint16_t usFillColorDark, usFillColorLight, usFillColorBack;
+  uint16_t x2, y2;
+  uint16_t usStrWidth;
 
   x2 = x + w;
   y2 = y + h;
@@ -498,8 +498,8 @@ void DrawEditorInfoBox(STR16 str, uint32_t uiFont, UINT16 x, UINT16 y, UINT16 w,
   SetFont(uiFont);
   SetFontForeground(FONT_BLACK);
   SetFontShadow(FONT_BLACK);
-  x += (w - (UINT16)StringPixLength(str, uiFont)) / 2;
-  y += (h - (UINT16)GetFontHeight(uiFont)) / 2;
+  x += (w - (uint16_t)StringPixLength(str, uiFont)) / 2;
+  y += (h - (uint16_t)GetFontHeight(uiFont)) / 2;
   mprintf(x, y, L"%s", str);
   InvalidateRegion(x, y, x2, y2);
 }
@@ -810,7 +810,7 @@ void RenderEditorInfo() {
     swprintf(FPSText, ARR_SIZE(FPSText), L"   (%d)   ", iMapIndex);
   else
     swprintf(FPSText, ARR_SIZE(FPSText), L"          ");
-  mprintfEditor((UINT16)(50 - StringPixLength(FPSText, FONT12POINT1) / 2), 463, FPSText);
+  mprintfEditor((uint16_t)(50 - StringPixLength(FPSText, FONT12POINT1) / 2), 463, FPSText);
 
   switch (iCurrentTaskbar) {
     case TASK_OPTIONS:

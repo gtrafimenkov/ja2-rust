@@ -156,7 +156,7 @@ extern INT32 giSMStealthButton;
 struct SOLDIERTYPE *gpExchangeSoldier1;
 struct SOLDIERTYPE *gpExchangeSoldier2;
 
-BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos);
+BOOLEAN ConfirmActionCancel(uint16_t usMapPos, uint16_t usOldMapPos);
 
 BOOLEAN gfNextFireJam = FALSE;
 
@@ -807,7 +807,7 @@ extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
 void GetTBMousePositionInput(uint32_t *puiNewEvent) {
   INT16 usMapPos;
-  static UINT16 usOldMapPos = 0;
+  static uint16_t usOldMapPos = 0;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN bHandleCode;
   static BOOLEAN fOnValidGuy = FALSE;
@@ -1396,7 +1396,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
         if (CHEATER_CHEAT_LEVEL()) {
           static BOOLEAN fShowRoofs = TRUE;
           INT32 x;
-          UINT16 usType;
+          uint16_t usType;
 
           // Toggle removal of roofs...
           fShowRoofs = !fShowRoofs;
@@ -2289,7 +2289,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
         case 'n':
 
           if (fAlt) {
-            static UINT16 gQuoteNum = 0;
+            static uint16_t gQuoteNum = 0;
 
             if (INFORMATION_CHEAT_LEVEL()) {
               if (gfUIFullTargetFound) {
@@ -2586,7 +2586,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
             }
 
             // Create object and set
-            CreateItem((UINT16)G41, 100, &Object);
+            CreateItem((uint16_t)G41, 100, &Object);
 
             pSoldier = FindSoldierByProfileID(ROBOT, FALSE);
 
@@ -2933,7 +2933,7 @@ void CreateRandomItem() {
   struct OBJECTTYPE Object;
   INT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
-    CreateItem((UINT16)(Random(35) + 1), 100, &Object);
+    CreateItem((uint16_t)(Random(35) + 1), 100, &Object);
     AddItemToPool(usMapPos, &Object, -1, 0, 0, 0);
   }
 }
@@ -2944,7 +2944,7 @@ void MakeSelectedSoldierTired() {
   struct OBJECTTYPE Object;
   INT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
-    CreateItem((UINT16)TNT, 100, &Object);
+    CreateItem((uint16_t)TNT, 100, &Object);
     AddItemToPool(usMapPos, &Object, -1, 0, 0, 0);
   }
 
@@ -3026,7 +3026,7 @@ void TestExplosion() {
 }
 
 void CycleSelectedMercsItem() {
-  UINT16 usOldItem;
+  uint16_t usOldItem;
   struct SOLDIERTYPE *pSoldier;
   // Cycle selected guy's item...
   if (gfUIFullTargetFound) {
@@ -3041,7 +3041,7 @@ void CycleSelectedMercsItem() {
       usOldItem = 0;
     }
 
-    CreateItem((UINT16)usOldItem, 100, &(pSoldier->inv[HANDPOS]));
+    CreateItem((uint16_t)usOldItem, 100, &(pSoldier->inv[HANDPOS]));
 
     DirtyMercPanelInterface(pSoldier, DIRTYLEVEL2);
   }
@@ -3441,7 +3441,7 @@ void CreatePlayerControlledMonster() {
   }
 }
 
-INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
+INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
                                                     BOOLEAN fMovementMode) {
   // Look for an item pool
   INT16 sActionGridNo;
@@ -3463,7 +3463,7 @@ INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier
           // Calculate AP costs...
           // sAPCost = GetAPsToBeginFirstAid( pSoldier );
           sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                              (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                              (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                               pSoldier->bActionPoints);
 
           if (EnoughPoints(pSoldier, sAPCost, 0, TRUE)) {
@@ -3498,7 +3498,7 @@ INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier
   return (0);
 }
 
-void HandleHandCursorClick(UINT16 usMapPos, uint32_t *puiNewEvent) {
+void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
   struct LEVELNODE *pIntTile;
   INT16 sIntTileGridNo;
@@ -3629,7 +3629,7 @@ void ExchangeMessageBoxCallBack(UINT8 bExitValue) {
   }
 }
 
-INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, uint32_t *puiNewEvent) {
+INT8 HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
   // Look for an item pool
   struct ITEM_POOL *pItemPool;
   BOOLEAN fContinue = TRUE;
@@ -3772,7 +3772,7 @@ BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos) {
+BOOLEAN ConfirmActionCancel(uint16_t usMapPos, uint16_t usOldMapPos) {
   // OK, most times we want to leave confirm mode if our
   // gridno is different... but if we are in the grenade throw
   // confirm UI, we want a bigger radius...

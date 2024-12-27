@@ -194,17 +194,17 @@ extern UINT8 gubUIValidCatcherID;
 extern BOOLEAN gUIUseReverse;
 
 extern BOOLEAN gfUIHandleShowMoveGrid;
-extern UINT16 gsUIHandleShowMoveGridLocation;
+extern uint16_t gsUIHandleShowMoveGridLocation;
 
 extern BOOLEAN gfUIDisplayDamage;
 extern INT8 gbDamage;
-extern UINT16 gsDamageGridNo;
+extern uint16_t gsDamageGridNo;
 
 extern BOOLEAN gfFontPopupDo;
 
 extern BOOLEAN gUITargetReady;
 extern BOOLEAN gUITargetShotWaiting;
-extern UINT16 gsUITargetShotGridNo;
+extern uint16_t gsUITargetShotGridNo;
 
 extern CHAR16 gzLocation[20];
 extern BOOLEAN gfUIBodyHitLocation;
@@ -227,11 +227,11 @@ extern BOOLEAN gfUIHandlePhysicsTrajectory;
 
 // GLOBALS FOR FAST LOOKUP FOR FINDING MERCS FROM THE MOUSE
 extern BOOLEAN gfUISelectiveTargetFound;
-extern UINT16 gusUISelectiveTargetID;
+extern uint16_t gusUISelectiveTargetID;
 extern uint32_t guiUISelectiveTargetFlags;
 
 extern BOOLEAN gfUIFullTargetFound;
-extern UINT16 gusUIFullTargetID;
+extern uint16_t gusUIFullTargetID;
 extern uint32_t guiUIFullTargetFlags;
 
 extern BOOLEAN gfUIConfirmExitArrows;
@@ -284,7 +284,7 @@ void UIHandleSoldierStanceChange(UINT8 ubSoldierID, INT8 bNewStance);
 void GetCursorMovementFlags(uint32_t *puiCursorFlags);
 
 BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags,
-                               UINT16 usMapPos, uint32_t uiFlags);
+                               uint16_t usMapPos, uint32_t uiFlags);
 BOOLEAN UIMouseOnValidAttackLocation(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
@@ -305,8 +305,8 @@ uint32_t UIHandleLUIEndLock(UI_EVENT *pUIEvent);
 
 void BeginDisplayTimedCursor(uint32_t uiCursorID, uint32_t uiDelay);
 
-void HandleHandCursorClick(UINT16 usMapPos, uint32_t *puiNewEvent);
-INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, uint32_t *puiNewEvent);
+void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent);
+INT8 HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent);
 
 BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 

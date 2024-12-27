@@ -85,10 +85,10 @@ typedef struct {
   UINT8 ubSoldierID;     // SoldierID if one specified
   UINT8 ubCharacterNum;  // Profile ID num
 
-  UINT16 usFaceX;  // X location to render face
-  UINT16 usFaceY;  // Y location to render face
-  UINT16 usFaceWidth;
-  UINT16 usFaceHeight;
+  uint16_t usFaceX;  // X location to render face
+  uint16_t usFaceY;  // Y location to render face
+  uint16_t usFaceWidth;
+  uint16_t usFaceHeight;
   uint32_t uiAutoDisplayBuffer;  // Display buffer for face
   uint32_t uiAutoRestoreBuffer;  // Restore buffer
   BOOLEAN fAutoRestoreBuffer;    // Flag to indicate our own restorebuffer or not
@@ -98,22 +98,22 @@ typedef struct {
   BOOLEAN fCanHandleInactiveNow;
   CHAR16 zDisplayText[30];  // String of text that can be displayed
 
-  UINT16 usEyesX;
-  UINT16 usEyesY;
-  UINT16 usEyesOffsetX;
-  UINT16 usEyesOffsetY;
+  uint16_t usEyesX;
+  uint16_t usEyesY;
+  uint16_t usEyesOffsetX;
+  uint16_t usEyesOffsetY;
 
-  UINT16 usEyesWidth;
-  UINT16 usEyesHeight;
+  uint16_t usEyesWidth;
+  uint16_t usEyesHeight;
 
-  UINT16 usMouthX;
-  UINT16 usMouthY;
-  UINT16 usMouthOffsetX;
-  UINT16 usMouthOffsetY;
-  UINT16 usMouthWidth;
-  UINT16 usMouthHeight;
+  uint16_t usMouthX;
+  uint16_t usMouthY;
+  uint16_t usMouthOffsetX;
+  uint16_t usMouthOffsetY;
+  uint16_t usMouthWidth;
+  uint16_t usMouthHeight;
 
-  UINT16 sEyeFrame;
+  uint16_t sEyeFrame;
   INT8 ubEyeWait;
   uint32_t uiEyelast;
   uint32_t uiEyeDelay;
@@ -132,7 +132,7 @@ typedef struct {
   UINT8 ubOldServicePartner;
   BOOLEAN fOldShowMoveHilight;
 
-  UINT16 sMouthFrame;
+  uint16_t sMouthFrame;
   uint32_t uiMouthlast;
   uint32_t uiMouthDelay;
 
@@ -176,7 +176,7 @@ void DeleteFace(INT32 iFaceIndex);
 
 // IF you want to setup the face for automatic eye blinking, mouth movement, you need to call
 void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32 iFaceIndex,
-                       UINT16 usFaceX, UINT16 usFaceY);
+                       uint16_t usFaceX, uint16_t usFaceY);
 // The first paramter is the display buffer you wish the face to be rendered on. The second is the
 // Internal savebuffer which is used to facilitate the rendering of only things which have changed
 // when blinking. IF the value of FACE_AUTO_RESTORE_BUFFER is given, the system will allocate it's
@@ -186,8 +186,8 @@ void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32
 // Same as above, yet used mostly internally. Is compatible with the fact that a soldier profile ID
 // is not required...
 void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32 iFaceIndex,
-                               UINT16 usFaceX, UINT16 usFaceY, UINT16 usEyesX, UINT16 usEyesY,
-                               UINT16 usMouthX, UINT16 usMouthY);
+                               uint16_t usFaceX, uint16_t usFaceY, uint16_t usEyesX,
+                               uint16_t usEyesY, uint16_t usMouthX, uint16_t usMouthY);
 
 // To begin rendering of the face sprite, call this function once:
 BOOLEAN RenderAutoFace(INT32 iFaceIndex);
@@ -241,7 +241,7 @@ void HandleTalkingAutoFaces();
 INT32 InitSoldierFace(struct SOLDIERTYPE *pSoldier);
 void DeleteSoldierFace(struct SOLDIERTYPE *pSoldier);
 void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
-                                  UINT8 ubSoldierID, UINT16 usFaceX, UINT16 usFaceY);
+                                  UINT8 ubSoldierID, uint16_t usFaceX, uint16_t usFaceY);
 void SetAutoFaceInActiveFromSoldier(UINT8 ubSoldierID);
 BOOLEAN RenderAutoFaceFromSoldier(UINT8 ubSoldierID);
 BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, UINT8 ubSoldierID, INT16 sX, INT16 sY);

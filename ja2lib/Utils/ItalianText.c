@@ -104,11 +104,11 @@ problems as SirTech uses the "@@@" notation.
 
 */
 
-UINT16 ItemNames[MAXITEMS][80] = {
+uint16_t ItemNames[MAXITEMS][80] = {
     L"",
 };
 
-UINT16 ShortItemNames[MAXITEMS][80] = {
+uint16_t ShortItemNames[MAXITEMS][80] = {
     L"",
 };
 
@@ -117,7 +117,7 @@ UINT16 ShortItemNames[MAXITEMS][80] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-UINT16 AmmoCaliber[][20] = {
+uint16_t AmmoCaliber[][20] = {
     L"0",      L"cal .38", L"9 mm",    L"cal .45",      L"cal .357",   L"cal fisso 12",
     L"CAW",    L"5.45 mm", L"5.56 mm", L"7.62 mm NATO", L"7.62 mm WP", L"4.7 mm",
     L"5.7 mm", L"Mostro",  L"Missile",
@@ -133,14 +133,14 @@ UINT16 AmmoCaliber[][20] = {
 // NATO is the North Atlantic Treaty Organization
 // WP is Warsaw Pact
 // cal is an abbreviation for calibre
-UINT16 BobbyRayAmmoCaliber[][20] = {
+uint16_t BobbyRayAmmoCaliber[][20] = {
     L"0",      L"cal .38", L"9 mm",    L"cal .45",    L"cal .357",   L"cal fisso 12",
     L"CAWS",   L"5.45 mm", L"5.56 mm", L"7.62 mm N.", L"7.62 mm WP", L"4.7 mm",
     L"5.7 mm", L"Mostro",  L"Missile",
     L"",  // dart
 };
 
-UINT16 WeaponType[][30] = {
+uint16_t WeaponType[][30] = {
     L"Altro",
     L"Arma",
     L"Mitragliatrice",
@@ -152,13 +152,13 @@ UINT16 WeaponType[][30] = {
     L"Fucile a canne mozze",
 };
 
-UINT16 TeamTurnString[][STRING_LENGTH] = {
+uint16_t TeamTurnString[][STRING_LENGTH] = {
     L"Turno del giocatore",  // player's turn
     L"Turno degli avversari", L"Turno delle creature", L"Turno dell'esercito", L"Turno dei civili",
     // planning turn
 };
 
-UINT16 Message[][STRING_LENGTH] = {
+uint16_t Message[][STRING_LENGTH] = {
     L"",
 
     // In the following 8 strings, the %s is the merc's name, and the %d (if any) is a number.
@@ -835,7 +835,7 @@ INT16 gMoneyStatsDesc[][13] = {
 // The health of various creatures, enemies, characters in the game. The numbers following each are
 // for comment only, but represent the precentage of points remaining.
 
-UINT16 zHealthStr[][13] = {
+uint16_t zHealthStr[][13] = {
     L"MORENTE",     //	>= 0
     L"CRITICO",     //	>= 15
     L"DEBOLE",      //	>= 30
@@ -859,7 +859,7 @@ INT16 gzConsLabel[10] = {
 };
 
 // Conversation options a player has when encountering an NPC
-UINT16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
+uint16_t zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
     L"Vuoi ripetere?",  // meaning "Repeat yourself"
     L"Amichevole",      // approach in a friendly
     L"Diretto",         // approach directly - let's get down to business
@@ -870,14 +870,14 @@ UINT16 zTalkMenuStrings[6][SMALL_STRING_LENGTH] = {
 
 // Some NPCs buy, sell or repair items. These different options are available for those NPCs as
 // well.
-UINT16 zDealerStrings[4][SMALL_STRING_LENGTH] = {
+uint16_t zDealerStrings[4][SMALL_STRING_LENGTH] = {
     L"Compra/Vendi",
     L"Compra",
     L"Vendi",
     L"Ripara",
 };
 
-UINT16 zDialogActions[1][SMALL_STRING_LENGTH] = {
+uint16_t zDialogActions[1][SMALL_STRING_LENGTH] = {
     L"Fine",
 };
 
@@ -906,7 +906,7 @@ STR16 zVehicleName[] = {
 
 // These are messages Used in the Tactical Screen
 
-UINT16 TacticalStr[][MED_STRING_LENGTH] = {
+uint16_t TacticalStr[][MED_STRING_LENGTH] = {
     L"Attacco aereo", L"Ricorrete al pronto soccorso automaticamente?",
 
     // CAMFIELD NUKE THIS and add quote #66.
@@ -2029,7 +2029,7 @@ STR16 pUpdatePanelButtons[] = {
 
 // Text which appears when everyone on your team is incapacitated and incapable of battle
 
-UINT16 LargeTacticalStr[][LARGE_STRING_LENGTH] = {
+uint16_t LargeTacticalStr[][LARGE_STRING_LENGTH] = {
     L"Siete stati sconfitti in questo settore!",
     L"Il nemico, non avendo alcuna pietà delle anime della squadra, divorerà ognuno di voi!",
     L"I membri inconscenti della vostra squadra sono stati catturati!",
@@ -3084,7 +3084,7 @@ STR16 pMessageStrings[] = {
 #endif
 };
 
-UINT16 ItemPickupHelpPopup[][40] = {
+uint16_t ItemPickupHelpPopup[][40] = {
     L"OK", L"Scorrimento su", L"Seleziona tutto", L"Scorrimento giù", L"Annulla",
 };
 

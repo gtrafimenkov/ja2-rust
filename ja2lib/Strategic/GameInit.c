@@ -468,25 +468,25 @@ BOOLEAN AnyMercsHired() {
 
 void QuickStartGame() {
   INT32 cnt;
-  UINT16 usVal;
+  uint16_t usVal;
   UINT8 ub1 = 0, ub2 = 0;
 
   for (cnt = 0; cnt < 3; cnt++) {
     if (cnt == 0) {
-      usVal = (UINT16)Random(40);
+      usVal = (uint16_t)Random(40);
 
       QuickSetupOfMercProfileItems(cnt, (UINT8)usVal);
       QuickGameMemberHireMerc((UINT8)usVal);
     } else if (cnt == 1) {
       do {
-        usVal = (UINT16)Random(40);
+        usVal = (uint16_t)Random(40);
       } while (usVal != ub1);
 
       QuickSetupOfMercProfileItems(cnt, (UINT8)usVal);
       QuickGameMemberHireMerc((UINT8)usVal);
     } else if (cnt == 2) {
       do {
-        usVal = (UINT16)Random(40);
+        usVal = (uint16_t)Random(40);
       } while (usVal != ub1 && usVal != ub2);
 
       QuickSetupOfMercProfileItems(cnt, (UINT8)usVal);
@@ -642,7 +642,7 @@ BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier) {
 // This function is called when the game is REstarted.  Things that need to be reinited are placed
 // in here
 void ReStartingGame() {
-  UINT16 cnt;
+  uint16_t cnt;
 
   // Pause the game
   gfGamePaused = TRUE;

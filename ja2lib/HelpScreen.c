@@ -398,19 +398,20 @@ BOOLEAN DrawHelpScreenBackGround();
 void PrepareToExitHelpScreen();
 void SpecialHandlerCode();
 
-UINT16 RenderSpecificHelpScreen();
+uint16_t RenderSpecificHelpScreen();
 
-UINT16 RenderLaptopHelpScreen();
-UINT16 RenderTacticalHelpScreen();
-UINT16 RenderMapScreenHelpScreen();
-UINT16 RenderMapScreenNoOneHiredYetHelpScreen();
-UINT16 RenderMapScreenNotYetInArulcoHelpScreen();
-UINT16 RenderMapScreenSectorInventoryHelpScreen();
+uint16_t RenderLaptopHelpScreen();
+uint16_t RenderTacticalHelpScreen();
+uint16_t RenderMapScreenHelpScreen();
+uint16_t RenderMapScreenNoOneHiredYetHelpScreen();
+uint16_t RenderMapScreenNotYetInArulcoHelpScreen();
+uint16_t RenderMapScreenSectorInventoryHelpScreen();
 
-void GetHelpScreenTextPositions(UINT16 *pusPosX, UINT16 *pusPosY, UINT16 *pusWidth);
+void GetHelpScreenTextPositions(uint16_t *pusPosX, uint16_t *pusPosY, uint16_t *pusWidth);
 void DisplayCurrentScreenTitleAndFooter();
 void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText);
-UINT16 GetAndDisplayHelpScreenText(uint32_t uiRecord, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth);
+uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY,
+                                     uint16_t usWidth);
 void CreateHelpScreenButtons();
 void RefreshAllHelpScreenButtons();
 
@@ -563,9 +564,9 @@ void HelpScreenHandler() {
 
 BOOLEAN EnterHelpScreen() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosX, usPosY;  //, usWidth, usHeight;
-                          //	INT32	iStartLoc;
-                          //	CHAR16 zText[1024];
+  uint16_t usPosX, usPosY;  //, usWidth, usHeight;
+                            //	INT32	iStartLoc;
+                            //	CHAR16 zText[1024];
 
   // Clear out all the save background rects
   EmptyBackgroundRects();
@@ -620,7 +621,7 @@ BOOLEAN EnterHelpScreen() {
 
   if (!gHelpScreen.fForceHelpScreenToComeUp) {
     gHelpScreenDontShowHelpAgainToggle =
-        CreateCheckBoxButton(usPosX, (UINT16)(usPosY - 3), "INTERFACE\\OptionsCheckBoxes.sti",
+        CreateCheckBoxButton(usPosX, (uint16_t)(usPosY - 3), "INTERFACE\\OptionsCheckBoxes.sti",
                              MSYS_PRIORITY_HIGHEST, BtnHelpScreenDontShowHelpAgainCallback);
 
     SetButtonCursor(gHelpScreenDontShowHelpAgainToggle, gHelpScreen.usCursor);
@@ -721,8 +722,8 @@ void RenderHelpScreen() {
     // blit everything to the save buffer ( cause the save buffer can bleed through )
     BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, gHelpScreen.usScreenLocX,
                        gHelpScreen.usScreenLocY,
-                       (UINT16)(gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth),
-                       (UINT16)(gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight));
+                       (uint16_t)(gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth),
+                       (uint16_t)(gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight));
 
     UnmarkButtonsDirty();
   }
@@ -795,7 +796,7 @@ void ExitHelpScreen() {
 
 BOOLEAN DrawHelpScreenBackGround() {
   struct VObject *hPixHandle;
-  UINT16 usPosX;
+  uint16_t usPosX;
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiHelpScreenBackGround);
@@ -900,7 +901,7 @@ void SetSizeAndPropertiesOfHelpScreen() {
 }
 
 void CreateHelpScreenButtons() {
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
   CHAR16 sText[1024];
   INT32 i;
 
@@ -1133,8 +1134,8 @@ void SpecialHandlerCode() {
   }
 }
 
-UINT16 RenderSpecificHelpScreen() {
-  UINT16 usNumVerticalPixelsDisplayed = 0;
+uint16_t RenderSpecificHelpScreen() {
+  uint16_t usNumVerticalPixelsDisplayed = 0;
   // new screen:
 
   // set the buffer for the text to go to
@@ -1186,7 +1187,7 @@ UINT16 RenderSpecificHelpScreen() {
   return (usNumVerticalPixelsDisplayed);
 }
 
-void GetHelpScreenTextPositions(UINT16 *pusPosX, UINT16 *pusPosY, UINT16 *pusWidth) {
+void GetHelpScreenTextPositions(uint16_t *pusPosX, uint16_t *pusPosY, uint16_t *pusWidth) {
   // if there are buttons
   if (pusPosX != NULL) *pusPosX = 0;
 
@@ -1199,7 +1200,7 @@ void GetHelpScreenTextPositions(UINT16 *pusPosX, UINT16 *pusPosY, UINT16 *pusWid
 void DisplayCurrentScreenTitleAndFooter() {
   INT32 iStartLoc = -1;
   CHAR16 zText[1024];
-  UINT16 usPosX = 0, usPosY = 0, usWidth = 0;
+  uint16_t usPosX = 0, usPosY = 0, usWidth = 0;
 
   // new screen:
 
@@ -1254,15 +1255,15 @@ void DisplayCurrentScreenTitleAndFooter() {
     usPosX = gHelpScreen.usLeftMarginPosX;
 
     //		DrawTextToScreen( zText, usPosX,
-    //(UINT16)(gHelpScreen.usScreenLocY+HELP_SCREEN_TITLE_OFFSET_Y), usWidth,
+    //(uint16_t)(gHelpScreen.usScreenLocY+HELP_SCREEN_TITLE_OFFSET_Y), usWidth,
     //									 HELP_SCREEN_TITLE_BODY_FONT,
     // HELP_SCREEN_TITLE_BODY_COLOR, HELP_SCREEN_TEXT_BACKGROUND, FALSE, CENTER_JUSTIFIED );
 
     // Display the Title
-    IanDisplayWrappedString(usPosX, (UINT16)(gHelpScreen.usScreenLocY + HELP_SCREEN_TITLE_OFFSET_Y),
-                            usWidth, HELP_SCREEN_GAP_BTN_LINES, HELP_SCREEN_TITLE_BODY_FONT,
-                            HELP_SCREEN_TITLE_BODY_COLOR, zText, HELP_SCREEN_TEXT_BACKGROUND, FALSE,
-                            0);
+    IanDisplayWrappedString(
+        usPosX, (uint16_t)(gHelpScreen.usScreenLocY + HELP_SCREEN_TITLE_OFFSET_Y), usWidth,
+        HELP_SCREEN_GAP_BTN_LINES, HELP_SCREEN_TITLE_BODY_FONT, HELP_SCREEN_TITLE_BODY_COLOR, zText,
+        HELP_SCREEN_TEXT_BACKGROUND, FALSE, 0);
   }
 
   // Display the '( press H to get help... )'
@@ -1385,10 +1386,10 @@ void GetHelpScreenText(uint32_t uiRecordToGet, STR16 pText) {
 }
 
 // returns the number of vertical pixels printed
-UINT16 GetAndDisplayHelpScreenText(uint32_t uiRecord, UINT16 usPosX, UINT16 usPosY,
-                                   UINT16 usWidth) {
+uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY,
+                                     uint16_t usWidth) {
   CHAR16 zText[1024];
-  UINT16 usNumVertPixels = 0;
+  uint16_t usNumVertPixels = 0;
   uint32_t uiStartLoc;
 
   SetFontShadow(NO_SHADOW);
@@ -1485,11 +1486,11 @@ void BtnHelpScreenExitCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-UINT16 RenderLaptopHelpScreen() {
-  UINT16 usPosX, usPosY, usWidth, usNumVertPixels;
+uint16_t RenderLaptopHelpScreen() {
+  uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
   UINT8 ubCnt;
-  UINT16 usTotalNumberOfVerticalPixels = 0;
-  UINT16 usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
+  uint16_t usTotalNumberOfVerticalPixels = 0;
+  uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
   if (gHelpScreen.bCurrentHelpScreenActiveSubPage == -1) {
     return (0);
@@ -1598,11 +1599,11 @@ UINT16 RenderLaptopHelpScreen() {
   return (usTotalNumberOfVerticalPixels);
 }
 
-UINT16 RenderMapScreenNoOneHiredYetHelpScreen() {
-  UINT16 usPosX, usPosY, usWidth, usNumVertPixels;
+uint16_t RenderMapScreenNoOneHiredYetHelpScreen() {
+  uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
   UINT8 ubCnt;
-  UINT16 usTotalNumberOfVerticalPixels = 0;
-  UINT16 usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
+  uint16_t usTotalNumberOfVerticalPixels = 0;
+  uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
   if (gHelpScreen.bCurrentHelpScreenActiveSubPage == -1) {
     return (0);
@@ -1633,11 +1634,11 @@ UINT16 RenderMapScreenNoOneHiredYetHelpScreen() {
   return (usTotalNumberOfVerticalPixels);
 }
 
-UINT16 RenderMapScreenNotYetInArulcoHelpScreen() {
-  UINT16 usPosX, usPosY, usWidth, usNumVertPixels;
+uint16_t RenderMapScreenNotYetInArulcoHelpScreen() {
+  uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
   UINT8 ubCnt;
-  UINT16 usTotalNumberOfVerticalPixels = 0;
-  UINT16 usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
+  uint16_t usTotalNumberOfVerticalPixels = 0;
+  uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
   if (gHelpScreen.bCurrentHelpScreenActiveSubPage == -1) {
     return (0);
@@ -1667,11 +1668,11 @@ UINT16 RenderMapScreenNotYetInArulcoHelpScreen() {
   return (usTotalNumberOfVerticalPixels);
 }
 
-UINT16 RenderMapScreenSectorInventoryHelpScreen() {
-  UINT16 usPosX, usPosY, usWidth, usNumVertPixels;
+uint16_t RenderMapScreenSectorInventoryHelpScreen() {
+  uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
   UINT8 ubCnt;
-  UINT16 usTotalNumberOfVerticalPixels = 0;
-  UINT16 usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
+  uint16_t usTotalNumberOfVerticalPixels = 0;
+  uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
   if (gHelpScreen.bCurrentHelpScreenActiveSubPage == -1) {
     return (0);
@@ -1702,11 +1703,11 @@ UINT16 RenderMapScreenSectorInventoryHelpScreen() {
   return (usTotalNumberOfVerticalPixels);
 }
 
-UINT16 RenderTacticalHelpScreen() {
-  UINT16 usPosX, usPosY, usWidth, usNumVertPixels;
+uint16_t RenderTacticalHelpScreen() {
+  uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
   UINT8 ubCnt;
-  UINT16 usTotalNumberOfVerticalPixels = 0;
-  UINT16 usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
+  uint16_t usTotalNumberOfVerticalPixels = 0;
+  uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
   if (gHelpScreen.bCurrentHelpScreenActiveSubPage == -1) {
     return (0);
@@ -1809,11 +1810,11 @@ UINT16 RenderTacticalHelpScreen() {
   return (usTotalNumberOfVerticalPixels);
 }
 
-UINT16 RenderMapScreenHelpScreen() {
-  UINT16 usPosX, usPosY, usWidth, usNumVertPixels;
+uint16_t RenderMapScreenHelpScreen() {
+  uint16_t usPosX, usPosY, usWidth, usNumVertPixels;
   UINT8 ubCnt;
-  UINT16 usTotalNumberOfVerticalPixels = 0;
-  UINT16 usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
+  uint16_t usTotalNumberOfVerticalPixels = 0;
+  uint16_t usFontHeight = GetFontHeight(HELP_SCREEN_TEXT_BODY_FONT);
 
   if (gHelpScreen.bCurrentHelpScreenActiveSubPage == -1) {
     return (0);
@@ -2102,7 +2103,7 @@ void DisplayHelpScreenTextBufferScrollBox() {
   INT32 iTopPosScrollBox = 0;
   UINT8 *pDestBuf;
   uint32_t uiDestPitchBYTES;
-  UINT16 usPosX;
+  uint16_t usPosX;
 
   if (gHelpScreen.bNumberOfButtons != 0) {
     usPosX = gHelpScreen.usScreenLocX + HLP_SCRN__SCROLL_POSX + HELP_SCREEN_BUTTON_BORDER_WIDTH;
@@ -2151,7 +2152,7 @@ void DisplayHelpScreenTextBufferScrollBox() {
 }
 
 void CreateScrollAreaButtons() {
-  UINT16 usPosX, usWidth, usPosY;
+  uint16_t usPosX, usWidth, usPosY;
   INT32 iPosY, iHeight;
 
   if (gHelpScreen.bNumberOfButtons != 0) {
@@ -2166,8 +2167,8 @@ void CreateScrollAreaButtons() {
   CalculateHeightAndPositionForHelpScreenScrollBox(&iHeight, &iPosY);
 
   // Create a mouse region 'mask' the entrire screen
-  MSYS_DefineRegion(&gHelpScreenScrollArea, usPosX, (UINT16)iPosY, (UINT16)(usPosX + usWidth),
-                    (UINT16)(iPosY + HLP_SCRN__HEIGHT_OF_SCROLL_AREA), MSYS_PRIORITY_HIGHEST,
+  MSYS_DefineRegion(&gHelpScreenScrollArea, usPosX, (uint16_t)iPosY, (uint16_t)(usPosX + usWidth),
+                    (uint16_t)(iPosY + HLP_SCRN__HEIGHT_OF_SCROLL_AREA), MSYS_PRIORITY_HIGHEST,
                     gHelpScreen.usCursor, SelectHelpScrollAreaMovementCallBack,
                     SelectHelpScrollAreaCallBack);
   MSYS_AddRegion(&gHelpScreenScrollArea);
@@ -2283,11 +2284,11 @@ void HelpScreenMouseMoveScrollBox(INT32 usMousePosY) {
     if (gHelpScreen.iLastMouseClickY == -1) gHelpScreen.iLastMouseClickY = usMousePosY;
 
     if (usMousePosY < gHelpScreen.iLastMouseClickY) {
-      //			iNewPosition = iPosY - ( UINT16)( dSizeOfIncrement + .5);
+      //			iNewPosition = iPosY - ( uint16_t)( dSizeOfIncrement + .5);
       iNewPosition = iPosY - (gHelpScreen.iLastMouseClickY - usMousePosY);
 
     } else if (usMousePosY > gHelpScreen.iLastMouseClickY) {
-      //			iNewPosition = iPosY + ( UINT16)( dSizeOfIncrement + .5);
+      //			iNewPosition = iPosY + ( uint16_t)( dSizeOfIncrement + .5);
       iNewPosition = iPosY + usMousePosY - gHelpScreen.iLastMouseClickY;
     } else {
       return;

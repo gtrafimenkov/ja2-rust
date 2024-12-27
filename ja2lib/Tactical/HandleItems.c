@@ -176,10 +176,10 @@ BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
   return (TRUE);
 }
 
-INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usHandItem,
+INT32 HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, INT8 bLevel, uint16_t usHandItem,
                  BOOLEAN fFromUI) {
   struct SOLDIERTYPE *pTargetSoldier = NULL;
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   INT16 sTargetGridNo;
   INT16 sAPCost;
   INT16 sActionGridNo;
@@ -573,9 +573,9 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
 
     // Calculate AP costs...
     sAPCost = GetAPsToBeginFirstAid(pSoldier);
-    sAPCost +=
-        PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                 (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
+    sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
+                        (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                        pSoldier->bActionPoints);
 
     if (EnoughPoints(pSoldier, sAPCost, 0, fFromUI)) {
       // OK, set UI
@@ -623,7 +623,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
       // Calculate AP costs...
       sAPCost = GetAPsToCutFence(pSoldier);
       sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
       if (EnoughPoints(pSoldier, sAPCost, 0, fFromUI)) {
@@ -688,7 +688,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
       // Calculate AP costs...
       sAPCost = GetAPsToBeginRepair(pSoldier);
       sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
       if (EnoughPoints(pSoldier, sAPCost, 0, fFromUI)) {
@@ -755,7 +755,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
       // Calculate AP costs...
       sAPCost = GetAPsToRefuelVehicle(pSoldier);
       sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
       if (EnoughPoints(pSoldier, sAPCost, 0, fFromUI)) {
@@ -800,7 +800,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
       // Calculate AP costs...
       sAPCost = GetAPsToUseJar(pSoldier, sActionGridNo);
       sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                          (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                          (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                           pSoldier->bActionPoints);
 
       if (EnoughPoints(pSoldier, sAPCost, 0, fFromUI)) {
@@ -851,7 +851,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
         // Calculate AP costs...
         sAPCost = AP_ATTACH_CAN;
         sAPCost += PlotPath(pSoldier, sActionGridNo, NO_COPYROUTE, FALSE, TEMPORARY,
-                            (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                            (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                             pSoldier->bActionPoints);
 
         if (EnoughPoints(pSoldier, sAPCost, 0, fFromUI)) {
@@ -1054,7 +1054,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
       ubDirection = (UINT8)GetDirectionFromGridNo(sTargetGridNo, pSoldier);
 
       // Get new gridno!
-      sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo, (UINT16)DirectionInc(ubDirection));
+      sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(ubDirection));
 
       if (!OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel, ubDirection,
                            pSoldier->usAnimState)) {
@@ -1543,7 +1543,7 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
     StatChange(pSoldier, WISDOMAMT, 5, FALSE);
 
     // We've found something!
-    TacticalCharacterDialogue(pSoldier, (UINT16)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
+    TacticalCharacterDialogue(pSoldier, (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
   }
 
   gpTempSoldier = pSoldier;
@@ -1554,7 +1554,7 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
 void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
                              INT8 bZLevel) {
   struct ITEM_POOL *pItemPool;
-  UINT16 usNum;
+  uint16_t usNum;
 
   // Draw menu if more than one item!
   if (GetItemPool(sGridNo, &pItemPool, pSoldier->bLevel)) {
@@ -1595,7 +1595,8 @@ void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
             StatChange(pSoldier, WISDOMAMT, 5, FALSE);
 
             // We've found something!
-            TacticalCharacterDialogue(pSoldier, (UINT16)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
+            TacticalCharacterDialogue(pSoldier,
+                                      (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
           } else {
             // Say NOTHING quote...
             DoMercBattleSound(pSoldier, BATTLE_SOUND_NOTHING);
@@ -1630,7 +1631,7 @@ void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
 }
 
 struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel) {
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
   struct LEVELNODE *pNode;
 
   usTileIndex = GetTileGraphicForItem(pItem);
@@ -1697,20 +1698,20 @@ void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
 
 // INVENTORY POOL STUFF
 struct OBJECTTYPE *AddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                 UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel) {
+                                 UINT8 ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel) {
   return InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                bRenderZHeightAboveLevel, NULL);
 }
 
 struct OBJECTTYPE *AddItemToPoolAndGetIndex(INT16 sGridNo, struct OBJECTTYPE *pObject,
-                                            INT8 bVisible, UINT8 ubLevel, UINT16 usFlags,
+                                            INT8 bVisible, UINT8 ubLevel, uint16_t usFlags,
                                             INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   return (InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                 bRenderZHeightAboveLevel, piItemIndex));
 }
 
 struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
-                                         UINT8 ubLevel, UINT16 usFlags,
+                                         UINT8 ubLevel, uint16_t usFlags,
                                          INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
@@ -1972,7 +1973,8 @@ BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
   return (FALSE);
 }
 
-BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, INT32 *piItemIndex) {
+BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, uint16_t usItem, UINT8 ubLevel,
+                                 INT32 *piItemIndex) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
 
@@ -2468,7 +2470,7 @@ BOOLEAN MoveItemPools(INT16 sStartPos, INT16 sEndPos) {
   return (TRUE);
 }
 
-BOOLEAN GetItemPool(UINT16 usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLevel) {
+BOOLEAN GetItemPool(uint16_t usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLevel) {
   struct LEVELNODE *pObject;
 
   if (ubLevel == 0) {
@@ -2536,7 +2538,7 @@ INT16 GetNumOkForDisplayItemsInPool(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
     pItemPool = pItemPool->pNext;
   }
 
-  return ((UINT16)cnt);
+  return ((uint16_t)cnt);
 }
 
 BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
@@ -3070,7 +3072,7 @@ void RenderTopmostFlashingItems() {
 
 BOOLEAN VerifyGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTargetSoldier) {
   struct SOLDIERTYPE *pTSoldier;
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   INT16 sGridNo;
   UINT8 ubTargetMercID;
 
@@ -3125,7 +3127,7 @@ void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
   INT8 bInvPos;
   struct OBJECTTYPE TempObject;
   UINT8 ubProfile;
-  UINT16 usItemNum;
+  uint16_t usItemNum;
   BOOLEAN fToTargetPlayer = FALSE;
 
   // Get items from pending data
@@ -3604,9 +3606,9 @@ void BoobyTrapMessageBoxCallBack(UINT8 ubExitValue) {
   if (gfJustFoundBoobyTrap) {
     // NOW award for finding boobytrap
     // WISDOM GAIN:  Detected a booby-trap
-    StatChange(gpBoobyTrapSoldier, WISDOMAMT, (UINT16)(3 * gbTrapDifficulty), FALSE);
+    StatChange(gpBoobyTrapSoldier, WISDOMAMT, (uint16_t)(3 * gbTrapDifficulty), FALSE);
     // EXPLOSIVES GAIN:  Detected a booby-trap
-    StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (UINT16)(3 * gbTrapDifficulty), FALSE);
+    StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (uint16_t)(3 * gbTrapDifficulty), FALSE);
     gfJustFoundBoobyTrap = FALSE;
   }
 
@@ -3629,7 +3631,7 @@ void BoobyTrapMessageBoxCallBack(UINT8 ubExitValue) {
         // our own bomb! no exp
       } else {
         // disarmed a boobytrap!
-        StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (UINT16)(6 * gbTrapDifficulty), FALSE);
+        StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (uint16_t)(6 * gbTrapDifficulty), FALSE);
         // have merc say this is good
         DoMercBattleSound(gpBoobyTrapSoldier, BATTLE_SOUND_COOL1);
       }
@@ -3693,9 +3695,9 @@ void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue) {
     // NOW award for finding boobytrap
 
     // WISDOM GAIN:  Detected a booby-trap
-    StatChange(gpBoobyTrapSoldier, WISDOMAMT, (UINT16)(3 * gbTrapDifficulty), FALSE);
+    StatChange(gpBoobyTrapSoldier, WISDOMAMT, (uint16_t)(3 * gbTrapDifficulty), FALSE);
     // EXPLOSIVES GAIN:  Detected a booby-trap
-    StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (UINT16)(3 * gbTrapDifficulty), FALSE);
+    StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (uint16_t)(3 * gbTrapDifficulty), FALSE);
     gfJustFoundBoobyTrap = FALSE;
   }
 
@@ -3707,7 +3709,7 @@ void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue) {
 
     if (iCheckResult >= 0) {
       // disarmed a boobytrap!
-      StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (UINT16)(6 * gbTrapDifficulty), FALSE);
+      StatChange(gpBoobyTrapSoldier, EXPLODEAMT, (uint16_t)(6 * gbTrapDifficulty), FALSE);
 
       // have merc say this is good
       DoMercBattleSound(gpBoobyTrapSoldier, BATTLE_SOUND_COOL1);
@@ -3770,7 +3772,7 @@ void SwitchMessageBoxCallBack(UINT8 ubExitValue) {
 }
 
 BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
-                               BOOLEAN fCheckAroundGridno, UINT16 *psProblemGridNo) {
+                               BOOLEAN fCheckAroundGridno, uint16_t *psProblemGridNo) {
   INT16 sNextGridNo;
   // BOOLEAN fWorthChecking = FALSE, fProblemExists = FALSE, fDetectedProblem = FALSE;
   UINT8 ubDetectLevel, ubDirection;
@@ -3860,7 +3862,7 @@ BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
           } else if (ubDetectLevel >= pObj->bTrap) {
             if (pSoldier->uiStatusFlags & SOLDIER_PC) {
               // detected exposives buried nearby...
-              StatChange(pSoldier, EXPLODEAMT, (UINT16)(pObj->bTrap), FALSE);
+              StatChange(pSoldier, EXPLODEAMT, (uint16_t)(pObj->bTrap), FALSE);
 
               // set item as known
               pObj->fFlags |= OBJECT_KNOWN_TO_BE_TRAPPED;

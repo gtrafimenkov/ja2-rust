@@ -14,7 +14,7 @@ FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
 FLOAT CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier);
 void SoldierCollapse(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
 void HandlePlacingRoofMarker(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fSet,
                              BOOLEAN fForce);

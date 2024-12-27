@@ -35,7 +35,7 @@ CurrentPopupMenuInformation gPopup;
 
 struct MOUSE_REGION popupRegion;
 
-UINT16 gusEntryHeight;
+uint16_t gusEntryHeight;
 BOOLEAN fWaitingForLButtonRelease = FALSE;
 
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
@@ -80,17 +80,17 @@ returns the menu entry number starting from 1.
 */
 
 void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
-  UINT16 usX, usY;
-  UINT16 usMenuHeight;
-  UINT16 usMenuWidth = 0;
-  UINT16 usCurrStrWidth;
+  uint16_t usX, usY;
+  uint16_t usMenuHeight;
+  uint16_t usMenuWidth = 0;
+  uint16_t usCurrStrWidth;
   UINT8 ubColumn, ubEntry;
   UINT8 ubCounter;
   GUI_BUTTON *button;
   // calculate the location of the menu based on the button position.
   // This also calculates the menu's direction based on position.
 
-  gPopup.usFont = (UINT16)SMALLFONT1;
+  gPopup.usFont = (uint16_t)SMALLFONT1;
   gusEntryHeight = GetFontHeight(gPopup.usFont);
 
   button = ButtonList[iButtonID];
@@ -134,7 +134,7 @@ void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
       return;
   }
 
-  gPopup.usFont = (UINT16)SMALLFONT1;
+  gPopup.usFont = (uint16_t)SMALLFONT1;
   gusEntryHeight = GetFontHeight(gPopup.usFont);
 
   button = ButtonList[iButtonID];
@@ -220,13 +220,13 @@ void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
 }
 
 void RenderPopupMenu() {
-  UINT16 usX, usY;
+  uint16_t usX, usY;
   UINT8 ubColumn, ubEntry, ubCounter;
   UINT8 *pDestBuf;
   uint32_t uiDestPitchBYTES;
-  UINT16 usLineColor;
-  UINT16 usStringWidth;
-  UINT16 usStart;
+  uint16_t usLineColor;
+  uint16_t usStringWidth;
+  uint16_t usStart;
 
   // Draw the menu
   ColorFillVideoSurfaceArea(FRAME_BUFFER, gPopup.usLeft, gPopup.usTop, gPopup.usRight,
@@ -241,7 +241,7 @@ void RenderPopupMenu() {
     for (ubColumn = 1; ubColumn < gPopup.ubColumns; ubColumn++) {
       LineDraw(TRUE, usStart, gPopup.usTop, usStart, gPopup.usBottom, usLineColor, pDestBuf);
     }
-    usStart += (UINT16)gPopup.ubColumnWidth[ubColumn];
+    usStart += (uint16_t)gPopup.ubColumnWidth[ubColumn];
   }
   UnLockVideoSurface(FRAME_BUFFER);
 
@@ -281,7 +281,7 @@ void RenderPopupMenu() {
 // mouse is out of the menu region.
 UINT8 GetPopupIndexFromMousePosition() {
   UINT8 ubNumEntriesDown;
-  UINT16 usRelX;
+  uint16_t usRelX;
   UINT8 ubCount;
   if (gusMouseXPos >= gPopup.usLeft && gusMouseXPos <= gPopup.usRight &&
       gusMouseYPos > gPopup.usTop             // one pixel gap on top ignored

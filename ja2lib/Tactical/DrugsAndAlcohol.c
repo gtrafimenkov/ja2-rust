@@ -30,7 +30,7 @@ INT32 giDrunkModifier[] = {
 #define HANGOVER_AP_REDUCE 5
 #define HANGOVER_BP_REDUCE 200
 
-UINT8 GetDrugType(UINT16 usItem) {
+UINT8 GetDrugType(uint16_t usItem) {
   if (usItem == ADRENALINE_BOOSTER) {
     return (DRUG_TYPE_ADRENALINE);
   }
@@ -50,7 +50,7 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
   UINT8 ubDrugType;
   UINT8 ubKitPoints;
   INT8 bRegenPointsGained;
-  UINT16 usItem;
+  uint16_t usItem;
 
   usItem = pObject->usItem;
 

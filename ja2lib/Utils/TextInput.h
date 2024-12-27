@@ -60,7 +60,7 @@ enum {
 // gfTextInputMode flag is set else process your regular input handler.  Note that this doesn't mean
 // you are necessarily typing, just that there are text fields in your screen and may be inactive.
 // The TAB key cycles through your text fields, and special fields can be defined which will call a
-// void functionName( UINT16 usFieldNum )
+// void functionName( uint16_t usFieldNum )
 void InitTextInputMode();
 
 // A hybrid version of InitTextInput() which uses a specific scheme.  JA2's editor uses scheme 1, so
@@ -82,15 +82,15 @@ void KillAllTextInputModes();
 void SaveAndRemoveCurrentTextInputMode();
 void RestoreSavedTextInputMode();
 
-void SetTextInputCursor(UINT16 usNewCursor);
-UINT16 GetTextInputCursor();
+void SetTextInputCursor(uint16_t usNewCursor);
+uint16_t GetTextInputCursor();
 
 // After calling InitTextInputMode, you want to define one or more text input fields.  The order
 // of calls to this function dictate the TAB order from traversing from one field to the next.  This
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
 void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, INT8 bPriority,
-                       STR16 szInitText, UINT8 ubMaxChars, UINT16 usInputType);
+                       STR16 szInitText, UINT8 ubMaxChars, uint16_t usInputType);
 
 // This allows you to insert special processing functions and modes that can't be determined here.
 // An example would be a file dialog where there would be a file list.  This file list would be
@@ -122,8 +122,8 @@ void SetInputFieldStringWith8BitString(CHAR8 ubField, STR8 szNewText);
 void Get16BitStringFromField(UINT8 ubField, STR16 szString, size_t bufSize);
 
 // Utility functions for the INPUTTYPE_EXCLUSIVE_24HOURCLOCK input type.
-UINT16 GetExclusive24HourTimeValueFromField(UINT8 ubField);
-void SetExclusive24HourTimeValue(UINT8 ubField, UINT16 usTime);
+uint16_t GetExclusive24HourTimeValueFromField(UINT8 ubField);
+void SetExclusive24HourTimeValue(UINT8 ubField, uint16_t usTime);
 
 // Converts the field's string into a number, then returns that number
 // returns -1 if blank or invalid.  Only works for positive numbers.
@@ -145,14 +145,14 @@ INT16 GetActiveFieldID();
 // that under no circumstances would a user want a different color for each field.  It follows the
 // Win95 convention that all text input boxes are exactly the same color scheme.  However, these
 // colors can be set at anytime, but will effect all of the colors.
-void SetTextInputFont(UINT16 usFont);
-void Set16BPPTextFieldColor(UINT16 usTextFieldColor);
+void SetTextInputFont(uint16_t usFont);
+void Set16BPPTextFieldColor(uint16_t usTextFieldColor);
 void SetTextInputRegularColors(UINT8 ubForeColor, UINT8 ubShadowColor);
 void SetTextInputHilitedColors(UINT8 ubForeColor, UINT8 ubShadowColor, UINT8 ubBackColor);
 // optional color setups
-void SetDisabledTextFieldColors(UINT8 ubForeColor, UINT8 ubShadowColor, UINT16 usTextFieldColor);
-void SetBevelColors(UINT16 usBrighterColor, UINT16 usDarkerColor);
-void SetCursorColor(UINT16 usCursorColor);
+void SetDisabledTextFieldColors(UINT8 ubForeColor, UINT8 ubShadowColor, uint16_t usTextFieldColor);
+void SetBevelColors(uint16_t usBrighterColor, uint16_t usDarkerColor);
+void SetCursorColor(uint16_t usCursorColor);
 
 // All CTRL and ALT keys combinations, F1-F12 keys, ENTER and ESC are ignored allowing
 // processing to be done with your own input handler.  Otherwise, the keyboard event

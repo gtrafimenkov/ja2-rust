@@ -36,7 +36,7 @@ struct VObject;
 // what is used to define these values.
 typedef struct {
   BOOLEAN fDetailedPlacement;  // Specialized information.  Has a counterpart containing all info.
-  UINT16 usStartingGridNo;     // Where the placement position is.
+  uint16_t usStartingGridNo;   // Where the placement position is.
   INT8 bTeam;                  // The team this individual is part of.
   INT8 bRelativeAttributeLevel;
   INT8 bRelativeEquipmentLevel;
@@ -135,7 +135,7 @@ typedef struct {
 } SOLDIERCREATE_STRUCT;
 
 // Original functions currently used throughout the game.
-BOOLEAN TacticalRemoveSoldier(UINT16 usSoldierIndex);
+BOOLEAN TacticalRemoveSoldier(uint16_t usSoldierIndex);
 BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle);
 
 INT8 CalcDifficultyModifier(UINT8 ubSoldierClass);
@@ -233,7 +233,7 @@ void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubSoldierClas
 
 void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID);
 
-BOOLEAN InternalTacticalRemoveSoldier(UINT16 usSoldierIndex, BOOLEAN fRemoveVehicle);
+BOOLEAN InternalTacticalRemoveSoldier(uint16_t usSoldierIndex, BOOLEAN fRemoveVehicle);
 
 // SPECIAL!  Certain events in the game can cause profiled NPCs to become enemies.  The two cases
 // are adding Mike and Iggy.  We will only add one NPC in any given combat and the conditions for

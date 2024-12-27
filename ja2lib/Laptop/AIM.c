@@ -178,7 +178,7 @@ BOOLEAN DrawWarningBox(BOOLEAN fInit, BOOLEAN fRedraw);
 BOOLEAN DisplayFlowerAd(BOOLEAN fInit, BOOLEAN fRedraw);
 void HandleAdAndWarningArea(BOOLEAN fInit, BOOLEAN fRedraw);
 void LaptopInitAim();
-BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumberOfSubImages,
+BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, uint16_t usDelay, uint16_t usNumberOfSubImages,
                   uint32_t uiAdImageIdentifier);
 void HandleTextOnAimAdd(UINT8 ubCurSubImage);
 BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw);
@@ -328,7 +328,7 @@ void RenderAIM() {
   struct VObject *hPoliciesHandle;
   struct VObject *hLinksHandle;
   struct VObject *hHistoryHandle;
-  //	UINT16	x,y, uiPosX, uiPosY;
+  //	uint16_t	x,y, uiPosX, uiPosY;
 
   DrawAimDefaults();
 
@@ -443,7 +443,7 @@ BOOLEAN RemoveAimDefaults() {
 BOOLEAN DrawAimDefaults() {
   struct VObject *hRustBackGroundHandle;
   struct VObject *hAimSymbolHandle;
-  UINT16 x, y, uiPosX, uiPosY;
+  uint16_t x, y, uiPosX, uiPosY;
 
   // Blt the rust background
   GetVideoObject(&hRustBackGroundHandle, guiRustBackGround);
@@ -516,7 +516,7 @@ BOOLEAN DisplayAimCopyright() {
 // Buttons
 BOOLEAN InitAimMenuBar(void) {
   UINT8 i;
-  UINT16 usPosX;
+  uint16_t usPosX;
 
   guiBottomButtonImage = LoadButtonImage("LAPTOP\\BottomButtons2.sti", -1, 0, -1, 1, -1);
 
@@ -574,7 +574,7 @@ void BtnAimBottomButtonsCallback(GUI_BUTTON *btn, INT32 reason) {
   DisableAimButton();
 }
 
-void ResetAimButtons(uint32_t *Buttons, UINT16 uNumberOfButtons) {
+void ResetAimButtons(uint32_t *Buttons, uint16_t uNumberOfButtons) {
   uint32_t cnt;
 
   for (cnt = 0; cnt < uNumberOfButtons; cnt++) {
@@ -816,7 +816,7 @@ void SelectBannerRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumberOfSubImages,
+BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, uint16_t usDelay, uint16_t usNumberOfSubImages,
                   uint32_t uiAdImageIdentifier) {
   static uint32_t uiLastTime;
   static UINT8 ubSubImage = 0;
@@ -961,7 +961,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
   static UINT8 ubCount = 0;
   uint32_t uiCurTime = GetJA2Clock();
   UINT8 ubRetVal = 0;
-  UINT16 usDelay = AIM_AD_BOBBYR_AD_DELAY;
+  uint16_t usDelay = AIM_AD_BOBBYR_AD_DELAY;
 
   if (fInit) {
     ubDuckCount = 0;
@@ -1043,7 +1043,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
                   {
                           if( ubDuckImage >= AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES )
                                   BltVideoObject(FRAME_BUFFER, hAdHandle,
-     (UINT16)(ubDuckImage-AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES), WARNING_X, WARNING_Y,
+     (uint16_t)(ubDuckImage-AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES), WARNING_X, WARNING_Y,
      VO_BLT_SRCTRANSPARENCY,NULL); else BltVideoObject(FRAME_BUFFER, hAdHandle,
      ubDuckImage,WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 

@@ -56,7 +56,7 @@ SGPRect gOldClippingRect, gOldDirtyClippingRect;
 
 uint32_t guiTacticalInterfaceFlags;
 
-UINT16 gusUICurIntTileEffectIndex;
+uint16_t gusUICurIntTileEffectIndex;
 INT16 gsUICurIntTileEffectGridNo;
 UINT8 gsUICurIntTileOldShade;
 
@@ -344,7 +344,7 @@ uint32_t guiColors[12] = {FROMRGB(198, 163, 0), FROMRGB(185, 150, 0), FROMRGB(17
                           FROMRGB(159, 123, 0), FROMRGB(172, 136, 0), FROMRGB(185, 150, 0)};
 
 void RenderRubberBanding() {
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
   INT16 iLeft, iRight, iTop, iBottom;
@@ -565,7 +565,7 @@ void RenderTopmostTacticalInterface() {
     if (pSoldier != NULL) {
       if (pSoldier->ubID == gsSelectedGuy && gfUIHandleSelectionAboveGuy) {
       } else {
-        DrawSelectedUIAboveGuy((UINT16)pSoldier->ubID);
+        DrawSelectedUIAboveGuy((uint16_t)pSoldier->ubID);
       }
 
       if (pSoldier->fDisplayDamage) {
@@ -612,7 +612,7 @@ void RenderTopmostTacticalInterface() {
   }
 
   if (gfUIHandleSelectionAboveGuy && gsSelectedGuy != NOBODY) {
-    DrawSelectedUIAboveGuy((UINT16)gsSelectedGuy);
+    DrawSelectedUIAboveGuy((uint16_t)gsSelectedGuy);
   }
 
   // FOR THE MOST PART, DISABLE INTERFACE STUFF WHEN IT'S ENEMY'S TURN

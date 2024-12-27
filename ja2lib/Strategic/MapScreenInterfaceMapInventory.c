@@ -140,7 +140,7 @@ extern BOOLEAN fMapScreenBottomDirty;
 
 // outside vidieo objects for cursor
 extern uint32_t guiExternVo;
-extern UINT16 gusExternVoSubIndex;
+extern uint16_t gusExternVoSubIndex;
 
 extern struct MOUSE_REGION gMPanelRegion;
 
@@ -1568,7 +1568,7 @@ void CheckAndUnDateSlotAllocation(void) {
 
 void DrawTextOnMapInventoryBackground(void) {
   //	CHAR16 sString[ 64 ];
-  UINT16 usStringHeight;
+  uint16_t usStringHeight;
 
   SetFont(MAP_IVEN_FONT);
   SetFontBackground(FONT_BLACK);
@@ -1581,15 +1581,15 @@ void DrawTextOnMapInventoryBackground(void) {
   usStringHeight =
       DisplayWrappedString(268, 342, 53, 1, MAP_IVEN_FONT, FONT_BEIGE, pMapInventoryStrings[0],
                            FONT_BLACK, FALSE, RIGHT_JUSTIFIED | DONT_DISPLAY_TEXT);
-  DisplayWrappedString(268, (UINT16)(342 - (usStringHeight / 2)), 53, 1, MAP_IVEN_FONT, FONT_BEIGE,
-                       pMapInventoryStrings[0], FONT_BLACK, FALSE, RIGHT_JUSTIFIED);
+  DisplayWrappedString(268, (uint16_t)(342 - (usStringHeight / 2)), 53, 1, MAP_IVEN_FONT,
+                       FONT_BEIGE, pMapInventoryStrings[0], FONT_BLACK, FALSE, RIGHT_JUSTIFIED);
 
   // Calculate the height of the string, as it needs to be vertically centered.
   usStringHeight =
       DisplayWrappedString(369, 342, 65, 1, MAP_IVEN_FONT, FONT_BEIGE, pMapInventoryStrings[1],
                            FONT_BLACK, FALSE, RIGHT_JUSTIFIED | DONT_DISPLAY_TEXT);
-  DisplayWrappedString(369, (UINT16)(342 - (usStringHeight / 2)), 65, 1, MAP_IVEN_FONT, FONT_BEIGE,
-                       pMapInventoryStrings[1], FONT_BLACK, FALSE, RIGHT_JUSTIFIED);
+  DisplayWrappedString(369, (uint16_t)(342 - (usStringHeight / 2)), 65, 1, MAP_IVEN_FONT,
+                       FONT_BEIGE, pMapInventoryStrings[1], FONT_BLACK, FALSE, RIGHT_JUSTIFIED);
 
   DrawTextOnSectorInventory();
 
@@ -1840,8 +1840,8 @@ void SortSectorInventory(WORLDITEM *pInventory, uint32_t uiSizeOfArray) {
 INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
   WORLDITEM *pFirst = (WORLDITEM *)pNum1;
   WORLDITEM *pSecond = (WORLDITEM *)pNum2;
-  UINT16 usItem1Index;
-  UINT16 usItem2Index;
+  uint16_t usItem1Index;
+  uint16_t usItem2Index;
   UINT8 ubItem1Quality;
   UINT8 ubItem2Quality;
 

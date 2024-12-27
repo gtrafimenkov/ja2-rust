@@ -144,7 +144,7 @@ struct DB_STRUCTURE {
   UINT8 ubDensity;
   UINT8 ubNumberOfTiles;
   uint32_t fFlags;
-  UINT16 usStructureNumber;
+  uint16_t usStructureNumber;
   UINT8 ubWallOrientation;
   INT8 bDestructionPartner;  // >0 = debris number (bDP - 1), <0 = partner graphic
   INT8 bPartnerDelta;        // opened/closed version, etc... 0 for unused
@@ -162,7 +162,7 @@ struct STRUCTURE {
   struct STRUCTURE* pPrev;
   struct STRUCTURE* pNext;
   INT16 sGridNo;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   struct DB_STRUCTURE_REF* pDBStructureRef;
   union {
     struct {
@@ -190,8 +190,8 @@ struct STRUCTURE_FILE_REF {
   struct RelTileLoc* pTileLocData;
   UINT8* pubStructureData;
   struct DB_STRUCTURE_REF* pDBStructureRef;  // dynamic array
-  UINT16 usNumberOfStructures;
-  UINT16 usNumberOfStructuresStored;
+  uint16_t usNumberOfStructures;
+  uint16_t usNumberOfStructuresStored;
 };  // 24 bytes
 
 // IMPORTANT THING TO REMEMBER
@@ -209,17 +209,17 @@ typedef struct TAG_STRUCTURE_FILE_HEADER {
   CHAR8 szId[4];
   union {
     struct {
-      UINT16 usNumberOfStructures;
+      uint16_t usNumberOfStructures;
     };
     struct {
-      UINT16 usNumberOfImages;
+      uint16_t usNumberOfImages;
     };
   };
-  UINT16 usNumberOfStructuresStored;
-  UINT16 usStructureDataSize;
+  uint16_t usNumberOfStructuresStored;
+  uint16_t usStructureDataSize;
   UINT8 fFlags;
   UINT8 bUnused[3];
-  UINT16 usNumberOfImageTileLocsStored;
+  uint16_t usNumberOfImageTileLocsStored;
 } STRUCTURE_FILE_HEADER;  // 16 bytes
 
 // "J2SD" = Jagged 2 Structure Data

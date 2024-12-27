@@ -49,6 +49,6 @@ void FindNextLockedDoor();
 
 extern BOOLEAN gfEditingDoor;
 
-extern UINT16 usCurrentMode;
+extern uint16_t usCurrentMode;
 
 #endif

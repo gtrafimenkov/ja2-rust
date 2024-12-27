@@ -58,21 +58,21 @@ INT8 RTDecideAction(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-UINT16 RealtimeDelay(struct SOLDIERTYPE *pSoldier) {
+uint16_t RealtimeDelay(struct SOLDIERTYPE *pSoldier) {
   if (PTR_CIV_OR_MILITIA && !(pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP)) {
-    return ((UINT16)REALTIME_CIV_AI_DELAY);
+    return ((uint16_t)REALTIME_CIV_AI_DELAY);
   } else if (CREATURE_OR_BLOODCAT(pSoldier) && !(pSoldier->bHunting)) {
-    return ((UINT16)REALTIME_CREATURE_AI_DELAY);
+    return ((uint16_t)REALTIME_CREATURE_AI_DELAY);
   } else {
     if (pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) {
       UINT8 ubRoom;
 
       if (InARoom(pSoldier->sGridNo, &ubRoom) && IN_BROTHEL(ubRoom)) {
-        return ((UINT16)(REALTIME_AI_DELAY / 3));
+        return ((uint16_t)(REALTIME_AI_DELAY / 3));
       }
     }
 
-    return ((UINT16)REALTIME_AI_DELAY);
+    return ((uint16_t)REALTIME_AI_DELAY);
   }
 }
 
@@ -181,11 +181,11 @@ void RTHandleAI(struct SOLDIERTYPE *pSoldier) {
       pSoldier->bAction = AI_ACTION_WAIT;
       // if (PTR_CIVILIAN && pSoldier->bAlertStatus != STATUS_BLACK)
       if (PTR_CIV_OR_MILITIA && !(pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP)) {
-        pSoldier->usActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+        pSoldier->usActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
       } else if (CREATURE_OR_BLOODCAT(pSoldier) && !(pSoldier->bHunting)) {
-        pSoldier->usActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+        pSoldier->usActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
       } else {
-        pSoldier->usActionData = (UINT16)REALTIME_AI_DELAY;
+        pSoldier->usActionData = (uint16_t)REALTIME_AI_DELAY;
         if (pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) {
           UINT8 ubRoom;
 

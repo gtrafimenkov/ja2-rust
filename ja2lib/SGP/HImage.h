@@ -52,7 +52,7 @@ struct SGPPaletteEntry {
 struct AuxObjectData {
   UINT8 ubWallOrientation;
   UINT8 ubNumberOfTiles;
-  UINT16 usTileLocIndex;
+  uint16_t usTileLocIndex;
   UINT8 ubUnused1[3];
   UINT8 ubCurrentFrame;
   UINT8 ubNumberOfFrames;
@@ -72,27 +72,27 @@ typedef struct tagETRLEObject {
   uint32_t uiDataLength;
   INT16 sOffsetX;
   INT16 sOffsetY;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint16_t usHeight;
+  uint16_t usWidth;
 } ETRLEObject;
 
 typedef struct tagETRLEData {
   PTR pPixData;
   uint32_t uiSizePixData;
   ETRLEObject *pETRLEObject;
-  UINT16 usNumberOfObjects;
+  uint16_t usNumberOfObjects;
 } ETRLEData;
 
 // Image header structure
 typedef struct {
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   UINT8 ubBitDepth;
-  UINT16 fFlags;
+  uint16_t fFlags;
   SGPFILENAME ImageFile;
   uint32_t iFileLoader;
   struct SGPPaletteEntry *pPalette;
-  UINT16 *pui16BPPPalette;
+  uint16_t *pui16BPPPalette;
   UINT8 *pAppData;
   uint32_t uiAppDataSize;
   // This union is used to describe each data type and is flexible to include the
@@ -108,13 +108,13 @@ typedef struct {
       UINT8 *p8BPPData;
     };
     struct {
-      UINT16 *p16BPPData;
+      uint16_t *p16BPPData;
     };
     struct {
       UINT8 *pPixData8;
       uint32_t uiSizePixData;
       ETRLEObject *pETRLEObject;
-      UINT16 usNumberOfObjects;
+      uint16_t usNumberOfObjects;
     };
   };
 
@@ -122,11 +122,11 @@ typedef struct {
 
 #define SGPGetRValue(rgb) ((BYTE)(rgb))
 #define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
-#define SGPGetGValue(rgb) ((BYTE)(((UINT16)(rgb)) >> 8))
+#define SGPGetGValue(rgb) ((BYTE)(((uint16_t)(rgb)) >> 8))
 
 // This function will return NULL if it fails, and call SetLastError() to set
 // error information
-HIMAGE CreateImage(const char *ImageFile, UINT16 fContents);
+HIMAGE CreateImage(const char *ImageFile, uint16_t fContents);
 
 // This function destroys the HIMAGE structure as well as its contents
 BOOLEAN DestroyImage(HIMAGE hImage);
@@ -134,24 +134,27 @@ BOOLEAN DestroyImage(HIMAGE hImage);
 // This function releases data allocated to various parts of the image based
 // on the contents flags passed as a parameter.  If a contents flag is given
 // and the image does not contain that data, no error is raised
-BOOLEAN ReleaseImageData(HIMAGE hImage, UINT16 fContents);
+BOOLEAN ReleaseImageData(HIMAGE hImage, uint16_t fContents);
 
 // This function will attept to Load data from an existing image object's filename
 // In this way, dynamic loading of image data can be done
-BOOLEAN LoadImageData(HIMAGE hImage, UINT16 fContents);
+BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents);
 
 // This function will run the appropriate copy function based on the type of HIMAGE object
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, UINT16 usDestWidth,
-                          UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, BYTE *pDestBuf, uint16_t usDestWidth,
+                          uint16_t usDestHeight, uint16_t usX, uint16_t usY, SGPRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
-BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
-BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                  uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                  SGPRect *srcRect);
+BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                   SGPRect *srcRect);
+BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                    SGPRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
 BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
@@ -159,25 +162,25 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
 // UTILITY FUNCTIONS
 
 // Used to create a 16BPP Palette from an 8 bit palette, found in himage.c
-UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
-                                 uint32_t bscale, BOOLEAN mono);
-UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
-UINT16 Get16BPPColor(uint32_t RGBValue);
-uint32_t GetRGBColor(UINT16 Value16BPP);
+uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                   uint32_t gscale, uint32_t bscale, BOOLEAN mono);
+uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
+uint16_t Get16BPPColor(uint32_t RGBValue);
+uint32_t GetRGBColor(uint16_t Value16BPP);
 struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
-extern UINT16 gusAlphaMask;
-extern UINT16 gusRedMask;
-extern UINT16 gusGreenMask;
-extern UINT16 gusBlueMask;
+extern uint16_t gusAlphaMask;
+extern uint16_t gusRedMask;
+extern uint16_t gusGreenMask;
+extern uint16_t gusBlueMask;
 extern INT16 gusRedShift;
 extern INT16 gusBlueShift;
 extern INT16 gusGreenShift;
 
 // used to convert 565 RGB data into different bit-formats
-void ConvertRGBDistribution565To555(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
-void ConvertRGBDistribution565To655(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
-void ConvertRGBDistribution565To556(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
-void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To555(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To655(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To556(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565ToAny(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
 
 #endif

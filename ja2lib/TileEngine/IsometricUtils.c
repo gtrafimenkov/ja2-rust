@@ -298,7 +298,7 @@ BOOLEAN GetMouseMapPos(INT16 *psMapPos) {
   }
 }
 
-BOOLEAN ConvertMapPosToWorldTileCenter(UINT16 usMapPos, INT16 *psXPos, INT16 *psYPos) {
+BOOLEAN ConvertMapPosToWorldTileCenter(uint16_t usMapPos, INT16 *psXPos, INT16 *psYPos) {
   INT16 sWorldX, sWorldY;
   INT16 sCellX, sCellY;
 
@@ -628,7 +628,7 @@ BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStar
 
   // LOOP THROUGH ALL 8 DIRECTIONS
   for (cnt = 0; cnt < 8; cnt += 2) {
-    sNewGridNo = NewGridNo((UINT16)sGridNo, (UINT16)DirectionInc((UINT8)cnt));
+    sNewGridNo = NewGridNo((uint16_t)sGridNo, (uint16_t)DirectionInc((UINT8)cnt));
 
     if (NewOKDestination(pSoldier, sNewGridNo, TRUE, 1)) {
       // Check if this tile has a higher level
@@ -665,7 +665,7 @@ BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStarti
 
   // LOOP THROUGH ALL 8 DIRECTIONS
   for (cnt = 0; cnt < 8; cnt += 2) {
-    sNewGridNo = NewGridNo((UINT16)sGridNo, (UINT16)DirectionInc((UINT8)cnt));
+    sNewGridNo = NewGridNo((uint16_t)sGridNo, (uint16_t)DirectionInc((UINT8)cnt));
 
     // Make sure there is NOT a roof here...
     // Check OK destination
@@ -852,8 +852,8 @@ BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8
   // LOOP THROUGH ALL 8 DIRECTIONS
   for (cnt = 0; cnt < 8; cnt += 2) {
     // go out *2* tiles
-    sNewGridNo = NewGridNo((UINT16)sGridNo, (UINT16)DirectionInc((UINT8)cnt));
-    sOtherSideOfFence = NewGridNo((UINT16)sNewGridNo, (UINT16)DirectionInc((UINT8)cnt));
+    sNewGridNo = NewGridNo((uint16_t)sGridNo, (uint16_t)DirectionInc((UINT8)cnt));
+    sOtherSideOfFence = NewGridNo((uint16_t)sNewGridNo, (uint16_t)DirectionInc((UINT8)cnt));
 
     if (NewOKDestination(pSoldier, sOtherSideOfFence, TRUE, 0)) {
       // ATE: Check if there is somebody waiting here.....

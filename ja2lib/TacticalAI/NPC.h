@@ -40,20 +40,20 @@ typedef struct {
   UINT8 ubIdentifier[4];
 #endif
 
-  UINT16 fFlags;
+  uint16_t fFlags;
 
   // conditions
   union {
     INT16 sRequiredItem;    // item NPC must have to say quote
     INT16 sRequiredGridno;  // location for NPC req'd to say quote
   };
-  UINT16 usFactMustBeTrue;   // ...before saying quote
-  UINT16 usFactMustBeFalse;  // ...before saying quote
-  UINT8 ubQuest;             // quest must be current to say quote
-  UINT8 ubFirstDay;          // first day quote can be said
-  UINT8 ubLastDay;           // last day quote can be said
-  UINT8 ubApproachRequired;  // must use this approach to generate quote
-  UINT8 ubOpinionRequired;   // opinion needed for this quote     13 bytes
+  uint16_t usFactMustBeTrue;   // ...before saying quote
+  uint16_t usFactMustBeFalse;  // ...before saying quote
+  UINT8 ubQuest;               // quest must be current to say quote
+  UINT8 ubFirstDay;            // first day quote can be said
+  UINT8 ubLastDay;             // last day quote can be said
+  UINT8 ubApproachRequired;    // must use this approach to generate quote
+  UINT8 ubOpinionRequired;     // opinion needed for this quote     13 bytes
 
   // quote to say (if any)
   UINT8 ubQuoteNum;   // this is the quote to say
@@ -65,9 +65,9 @@ typedef struct {
   UINT8 ubTriggerNPC;
   UINT8 ubTriggerNPCRec;
   UINT8 ubFiller;  //                                       20 bytes
-  UINT16 usSetFactTrue;
-  UINT16 usGiftItem;  // item NPC gives to merc after saying quote
-  UINT16 usGoToGridno;
+  uint16_t usSetFactTrue;
+  uint16_t usGiftItem;  // item NPC gives to merc after saying quote
+  uint16_t usGoToGridno;
   INT16 sActionData;  // special action value
 
 #if !defined(CRIPPLED_VERSION) && !defined(RUSSIAN)
@@ -144,7 +144,7 @@ extern void SetQuoteRecordAsUsed(UINT8 ubNPC, UINT8 ubRecord);
 extern UINT8 CalcDesireToTalk(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach);
 extern void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachData);
 
-extern BOOLEAN NPCOkToGiveItem(UINT8 ubNPC, UINT8 ubMerc, UINT16 usItem);
+extern BOOLEAN NPCOkToGiveItem(UINT8 ubNPC, UINT8 ubMerc, uint16_t usItem);
 extern void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere);
 extern void PCsNearNPC(UINT8 ubNPC);
 extern BOOLEAN PCDoesFirstAidOnNPC(UINT8 ubNPC);
@@ -196,7 +196,7 @@ void UpdateDarrelScriptToGoTo(struct SOLDIERTYPE *pSoldier);
 
 #define WALTER_BRIBE_AMOUNT 20000
 
-BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, UINT16 *pusQuoteNum, UINT16 *pusFactToSetTrue);
+BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, uint16_t *pusQuoteNum, uint16_t *pusFactToSetTrue);
 
 BOOLEAN RecordHasDialogue(UINT8 ubNPC, UINT8 ubRecord);
 

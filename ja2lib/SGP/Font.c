@@ -36,7 +36,7 @@
 //*******************************************************
 
 typedef struct {
-  UINT16 usDefaultPixelDepth;
+  uint16_t usDefaultPixelDepth;
   FontTranslationTable *pTranslationTable;
 } FontManager;
 
@@ -51,9 +51,9 @@ uint32_t FontDestPitch = 640 * 2;
 uint32_t FontDestBPP = 16;
 SGPRect FontDestRegion = {0, 0, 640, 480};
 BOOLEAN FontDestWrap = FALSE;
-UINT16 FontForeground16 = 0;
-UINT16 FontBackground16 = 0;
-UINT16 FontShadow16 = DEFAULT_SHADOW;
+uint16_t FontForeground16 = 0;
+uint16_t FontBackground16 = 0;
+uint16_t FontShadow16 = DEFAULT_SHADOW;
 UINT8 FontForeground8 = 0;
 UINT8 FontBackground8 = 0;
 
@@ -64,9 +64,9 @@ uint32_t SaveFontDestPitch = 640 * 2;
 uint32_t SaveFontDestBPP = 16;
 SGPRect SaveFontDestRegion = {0, 0, 640, 480};
 BOOLEAN SaveFontDestWrap = FALSE;
-UINT16 SaveFontForeground16 = 0;
-UINT16 SaveFontShadow16 = 0;
-UINT16 SaveFontBackground16 = 0;
+uint16_t SaveFontForeground16 = 0;
+uint16_t SaveFontShadow16 = 0;
+uint16_t SaveFontBackground16 = 0;
 UINT8 SaveFontForeground8 = 0;
 UINT8 SaveFontBackground8 = 0;
 
@@ -78,7 +78,7 @@ UINT8 SaveFontBackground8 = 0;
 // is the foreground.
 //
 //*****************************************************************************
-void SetFontColors(UINT16 usColors) {
+void SetFontColors(uint16_t usColors) {
   UINT8 ubForeground, ubBackground;
 
   ubForeground = (UINT8)(usColors & 0xff);
@@ -201,8 +201,8 @@ BOOLEAN ResetFontObjectPalette(INT32 iFont) {
 // the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
-UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
-  UINT16 *pPal16;
+uint16_t *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
+  uint16_t *pPal16;
 
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
@@ -222,7 +222,7 @@ UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
 //	Sets the palette of a font, using a 16 bit palette.
 //
 //*****************************************************************************
-UINT16 *SetFontObjectPalette16BPP(INT32 iFont, UINT16 *pPal16) {
+uint16_t *SetFontObjectPalette16BPP(INT32 iFont, uint16_t *pPal16) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -239,7 +239,7 @@ UINT16 *SetFontObjectPalette16BPP(INT32 iFont, UINT16 *pPal16) {
 //	Sets the palette of a font, using a 16 bit palette.
 //
 //*****************************************************************************
-UINT16 *GetFontObjectPalette16BPP(INT32 iFont) {
+uint16_t *GetFontObjectPalette16BPP(INT32 iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -546,12 +546,12 @@ uint32_t GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
 //	Returns the height of the first character in a font.
 //
 //*****************************************************************************
-UINT16 GetFontHeight(INT32 FontNum) {
+uint16_t GetFontHeight(INT32 FontNum) {
   Assert(FontNum >= 0);
   Assert(FontNum <= MAX_FONTS);
   Assert(FontObjs[FontNum] != NULL);
 
-  return ((UINT16)GetHeight(FontObjs[FontNum], 0));
+  return ((uint16_t)GetHeight(FontObjs[FontNum], 0));
 }
 
 //*****************************************************************************
@@ -562,10 +562,10 @@ UINT16 GetFontHeight(INT32 FontNum) {
 //	CreateEnglishTransTable()
 //
 //*****************************************************************************
-INT16 GetIndex(UINT16 siChar) {
-  UINT16 *pTrav;
-  UINT16 ssCount = 0;
-  UINT16 usNumberOfSymbols = pFManager->pTranslationTable->usNumberOfSymbols;
+INT16 GetIndex(uint16_t siChar) {
+  uint16_t *pTrav;
+  uint16_t ssCount = 0;
+  uint16_t usNumberOfSymbols = pFManager->pTranslationTable->usNumberOfSymbols;
 
   // search the Translation Table and return the index for the font
   pTrav = pFManager->pTranslationTable->DynamicArrayOf16BitValues;
@@ -665,7 +665,7 @@ uint32_t mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -770,7 +770,7 @@ uint32_t gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             FontObjs[FontDefault], destx, desty, transletter,
                                             &FontDestRegion);
     destx += GetWidth(FontObjs[FontDefault], transletter);
@@ -816,7 +816,7 @@ uint32_t gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             FontObjs[FontDefault], destx, desty, transletter,
                                             &FontDestRegion);
     destx += GetWidth(FontObjs[FontDefault], transletter);
@@ -867,7 +867,7 @@ uint32_t gprintf_buffer(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t Fon
     }
 
     // Blit directly
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             FontObjs[FontDefault], destx, desty, transletter,
                                             &FontDestRegion);
 
@@ -908,7 +908,7 @@ uint32_t mprintf_buffer(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t Fon
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -923,7 +923,7 @@ uint32_t mprintf_buffer_coded(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32
   INT16 transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT16 usOldForeColor;
+  uint16_t usOldForeColor;
 
   Assert(pFontString != NULL);
 
@@ -959,7 +959,7 @@ uint32_t mprintf_buffer_coded(UINT8 *pDestBuf, uint32_t uiDestPitchBYTES, uint32
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -973,7 +973,7 @@ uint32_t mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
   INT16 transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT16 usOldForeColor;
+  uint16_t usOldForeColor;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 
@@ -1014,7 +1014,7 @@ uint32_t mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -1031,10 +1031,10 @@ uint32_t mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
 //	Starts up the font manager system with the appropriate translation table.
 //
 //*****************************************************************************
-BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *pTransTable) {
+BOOLEAN InitializeFontManager(uint16_t usDefaultPixelDepth, FontTranslationTable *pTransTable) {
   FontTranslationTable *pTransTab;
   int count;
-  UINT16 uiRight, uiBottom;
+  uint16_t uiRight, uiBottom;
   UINT8 uiPixelDepth;
 
   FontDefault = (-1);
@@ -1119,11 +1119,11 @@ void DestroyEnglishTransTable(void) {
 //*****************************************************************************
 FontTranslationTable *CreateEnglishTransTable() {
   FontTranslationTable *pTable = NULL;
-  UINT16 *temp;
+  uint16_t *temp;
 
   pTable = (FontTranslationTable *)MemAlloc(sizeof(FontTranslationTable));
   pTable->usNumberOfSymbols = 172;
-  pTable->DynamicArrayOf16BitValues = (UINT16 *)MemAlloc(pTable->usNumberOfSymbols * 2);
+  pTable->DynamicArrayOf16BitValues = (uint16_t *)MemAlloc(pTable->usNumberOfSymbols * 2);
   temp = pTable->DynamicArrayOf16BitValues;
 
   *temp = 'A';
@@ -1652,11 +1652,11 @@ FALSE)
 //
 //*****************************************************************************
 
-/*UINT16 GetMaxFontWidth(FontBase *pFontBase)
+/*uint16_t GetMaxFontWidth(FontBase *pFontBase)
 {
         FontObject *pWidth;
         uint32_t siBiggest = 0;
-        UINT16 siCount;
+        uint16_t siCount;
 
   Assert(pFontBase != NULL);
         pWidth = pFontBase->pFontObject;
@@ -1670,7 +1670,7 @@ FALSE)
                 pWidth++;
         }
         // return the max width
-        return (UINT16)siBiggest;
+        return (uint16_t)siBiggest;
 } */
 
 //*****************************************************************************
@@ -1689,7 +1689,7 @@ FALSE)
 /*
 struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette)
 {
-        UINT16 Index;
+        uint16_t Index;
   struct SGPPaletteEntry *pPalEntry;
         struct SGPPaletteEntry *pInitEntry;
 
@@ -1723,7 +1723,8 @@ struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 
 //
 //*****************************************************************************
 
-/*BOOLEAN SetFontPalette(FontBase *pFontBase, UINT16 siPixelDepth, struct SGPPaletteEntry *pPalData)
+/*BOOLEAN SetFontPalette(FontBase *pFontBase, uint16_t siPixelDepth, struct SGPPaletteEntry
+*pPalData)
 {
         Assert(pFontBase != NULL);
         Assert(pPalData != NULL);
@@ -1749,7 +1750,7 @@ struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 
 //
 //*****************************************************************************
 
-/*BOOLEAN SetFont16BitData(FontBase *pFontBase, UINT16 *pData16)
+/*BOOLEAN SetFont16BitData(FontBase *pFontBase, uint16_t *pData16)
 {
         Assert(pFontBase != NULL);
         Assert(pData16 != NULL);
@@ -1778,28 +1779,29 @@ struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 
 //
 //*****************************************************************************
 
-/*BOOLEAN Blt8Imageto16Dest(uint32_t uiOffStart, uint32_t uiOffEnd, UINT16 siX, UINT16 siY, uint32_t
-uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 siHeightEach)
+/*BOOLEAN Blt8Imageto16Dest(uint32_t uiOffStart, uint32_t uiOffEnd, uint16_t siX, uint16_t siY,
+uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, uint16_t siDestPitch, uint16_t
+siHeightEach)
 {
         UINT8  *pTrav;
-        UINT16 *pFrameTrav;
-        UINT16 *p16BPPPalette;
-        UINT16  usEffectiveWidth;
+        uint16_t *pFrameTrav;
+        uint16_t *p16BPPPalette;
+        uint16_t  usEffectiveWidth;
         uint32_t  uiFrameCount;
         UINT8   amount;
         uint32_t  row, count;
-    UINT16  modamount, divamount;
+    uint16_t  modamount, divamount;
         uint32_t trace,modtrace;
         UINT8 sub=0;
 
 
         pTrav = pFontBase->pPixData8;
-        pFrameTrav = (UINT16 *)pFrameBuffer;
+        pFrameTrav = (uint16_t *)pFrameBuffer;
         p16BPPPalette = pFontBase->pPalet16;
     trace = 0;
         modtrace = 0;
         // effective width is pitch/2 as 16 bits per pixel
-        usEffectiveWidth = (UINT16)(siDestPitch / 2);
+        usEffectiveWidth = (uint16_t)(siDestPitch / 2);
         uiFrameCount = siY*usEffectiveWidth + siX;
         trace += uiFrameCount;
         modtrace = trace % 640;
@@ -1819,7 +1821,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
                   amount = *pTrav;
                   modamount = (UINT8)(amount) % (UINT8) uiWidth;
                   divamount = (UINT8)(amount) / (UINT8) uiWidth;
-      if ((divamount == 0) && ((row+amount) < (UINT16)uiWidth))
+      if ((divamount == 0) && ((row+amount) < (uint16_t)uiWidth))
                   {
                           pFrameTrav += amount;
                           trace += amount;
@@ -1829,12 +1831,12 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
                   }
                   else
                   {
-        if (((row+amount) >= (UINT16)uiWidth) && (divamount ==0))
+        if (((row+amount) >= (uint16_t)uiWidth) && (divamount ==0))
                     {
                 pFrameTrav -= row;
                                 trace -= row;
                     modtrace = trace % 640;
-                            row = amount-((UINT16)uiWidth-row);
+                            row = amount-((uint16_t)uiWidth-row);
                             pFrameTrav += usEffectiveWidth+row;
                                 trace += usEffectiveWidth+row;
                                 modtrace = trace % 640;
@@ -1913,15 +1915,16 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
 //
 //*****************************************************************************
 
-/*BOOLEAN Blt8Imageto8Dest(uint32_t uiOffStart, uint32_t uiOffEnd, UINT16 siX, UINT16 siY, uint32_t
-uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 siHeightEach)
+/*BOOLEAN Blt8Imageto8Dest(uint32_t uiOffStart, uint32_t uiOffEnd, uint16_t siX, uint16_t siY,
+uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, uint16_t siDestPitch, uint16_t
+siHeightEach)
 {
         UINT8  *pTrav;
         uint32_t  uiFrameCount;
         UINT8  *pFrameTrav;
         UINT8   amount;
         uint32_t  row,count;
-  UINT16  modamount,divamount;
+  uint16_t  modamount,divamount;
 
         DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Blitting 8 to 8");
   Assert(pFontBase != NULL);
@@ -1949,7 +1952,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
                   amount = *pTrav;
                   modamount = amount % (UINT8) uiWidth;
                   divamount = amount / (UINT8) uiWidth;
-      if ((divamount == 0) && ((row+amount) < (UINT16)uiWidth))
+      if ((divamount == 0) && ((row+amount) < (uint16_t)uiWidth))
                   {
                           pFrameTrav += amount;
                           row += amount;
@@ -1957,10 +1960,10 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
                   }
                   else
                   {
-        if (((row+amount) >= (UINT16)uiWidth) && (divamount ==0))
+        if (((row+amount) >= (uint16_t)uiWidth) && (divamount ==0))
                     {
           pFrameTrav -= row;
-                            row = amount-((UINT16)uiWidth-row);
+                            row = amount-((uint16_t)uiWidth-row);
                             pFrameTrav += siDestPitch+row;
                             row++;
                     }
@@ -2013,16 +2016,17 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-/*BOOLEAN Blt16Imageto16Dest(uint32_t uiOffStart, uint32_t uiOffEnd, UINT16 siX, UINT16 siY,
-uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 siHeightEach)
+/*BOOLEAN Blt16Imageto16Dest(uint32_t uiOffStart, uint32_t uiOffEnd, uint16_t siX, uint16_t siY,
+uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, uint16_t siDestPitch, uint16_t
+siHeightEach)
 {
-        UINT16 *pTrav;
+        uint16_t *pTrav;
         uint32_t  uiFrameCount;
-        UINT16 *pFrameTrav;
-        UINT16  amount;
+        uint16_t *pFrameTrav;
+        uint16_t  amount;
         uint32_t  row,count;
-  UINT16  modamount,divamount;
-        UINT16  usEffectiveWidth;
+  uint16_t  modamount,divamount;
+        uint16_t  usEffectiveWidth;
 
         DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Blitting 16 to 16");
   Assert(pFontBase != NULL);
@@ -2030,10 +2034,10 @@ uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, 
 
         //get the pointers
         pTrav = pFontBase->pPixData16;
-        pFrameTrav = (UINT16 *)pFrameBuffer;
+        pFrameTrav = (uint16_t *)pFrameBuffer;
 
         // effective width is pitch/2 as 16 bits per pixel
-        usEffectiveWidth = (UINT16)(siDestPitch / 2);
+        usEffectiveWidth = (uint16_t)(siDestPitch / 2);
         uiFrameCount = siY*usEffectiveWidth + siX;
         pFrameTrav +=uiFrameCount;
         pTrav += uiOffStart;
@@ -2051,7 +2055,7 @@ uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, 
                   amount = *pTrav;
                   modamount = amount % (UINT8) uiWidth;
                   divamount = amount / (UINT8) uiWidth;
-      if ((divamount == 0) && ((row+amount) < (UINT16)uiWidth))
+      if ((divamount == 0) && ((row+amount) < (uint16_t)uiWidth))
                   {
                           pFrameTrav += amount;
                           row += amount;
@@ -2059,10 +2063,10 @@ uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, 
                   }
                   else
                   {
-        if (((row+amount) >= (UINT16)uiWidth) && (divamount ==0))
+        if (((row+amount) >= (uint16_t)uiWidth) && (divamount ==0))
                     {
           pFrameTrav -= row;
-                            row = amount-((UINT16)uiWidth-row);
+                            row = amount-((uint16_t)uiWidth-row);
                             pFrameTrav += usEffectiveWidth+row;
                             row++;
                     }
@@ -2112,7 +2116,7 @@ uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, 
 /*uint32_t GetOffset(FontBase *pFontBase, INT16 ssIndex)
 {
   FontObject *pTrav;
-  UINT16 siCount=0;
+  uint16_t siCount=0;
 
   Assert(pFontBase != NULL);
   // gets the offset based on the index
@@ -2147,7 +2151,7 @@ uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, 
 /*uint32_t GetOffLen(FontBase *pFontBase, INT16 ssIndex)
 {
   FontObject *pTrav;
-  UINT16 siCount=0;
+  uint16_t siCount=0;
 
   Assert(pFontBase != NULL);
   // gets the offset based on the index
@@ -2183,18 +2187,18 @@ uint32_t uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, 
 //
 //*****************************************************************************
 
-/*BOOLEAN PrintFontString(STR16 pFontString, UINT8 *pDestBuffer, UINT16 siDestWidth, UINT16
-siDestPixelDepth, UINT16 siDestPitch, UINT16 siDestHeight, UINT16 siX, UINT16 siY, UINT16
-siTotalWidth, UINT16 siTotalHeight, BOOLEAN fMultiLine, FontBase *pFontBase)
+/*BOOLEAN PrintFontString(STR16 pFontString, UINT8 *pDestBuffer, uint16_t siDestWidth, uint16_t
+siDestPixelDepth, uint16_t siDestPitch, uint16_t siDestHeight, uint16_t siX, uint16_t siY, uint16_t
+siTotalWidth, uint16_t siTotalHeight, BOOLEAN fMultiLine, FontBase *pFontBase)
 {
-  UINT16  siScreenHt;
-        UINT16  siScreenWt;
-        UINT16  siChar, siHeightEach;
+  uint16_t  siScreenHt;
+        uint16_t  siScreenWt;
+        uint16_t  siChar, siHeightEach;
         INT16   ssIndex;
         uint32_t  uiWidth, uiOffsetSt, uiOffsetEnd, uiOldoffst;
-        UINT16 *pTempFStr;
-        UINT16  siNewX, siNewY;
-        UINT16  siInitX, siInitY;
+        uint16_t *pTempFStr;
+        uint16_t  siNewX, siNewY;
+        uint16_t  siInitX, siInitY;
         uint32_t  uiLen;
 
         // check for NULL pointers passed in
@@ -2292,7 +2296,7 @@ pFontBase, pDestBuffer, siDestPitch, siHeightEach);
 surface depth"); return FALSE;
                       }
         }
-              siNewX += (UINT16)uiWidth;
+              siNewX += (uint16_t)uiWidth;
       }
           } else
           { // if it isnt end of boundary copy at current location
@@ -2321,7 +2325,7 @@ pDestBuffer, siDestPitch, siHeightEach);
 surface depth"); return FALSE;
                       }
               }
-                  siNewX += (UINT16)uiWidth;
+                  siNewX += (uint16_t)uiWidth;
             }
     }
     // increment string pointer
@@ -2332,7 +2336,7 @@ surface depth"); return FALSE;
 
 */
 
-/*BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *pTransTable)
+/*BOOLEAN InitializeFontManager(uint16_t usDefaultPixelDepth, FontTranslationTable *pTransTable)
 {
 FontTranslationTable *pTransTab;
 

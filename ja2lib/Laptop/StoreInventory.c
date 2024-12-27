@@ -524,8 +524,8 @@ INT16 WeaponROF[MAX_WEAPONS] = {
 
 // SetupStoreInventory sets up the initial quantity on hand for all of Bobby Ray's inventory items
 void SetupStoreInventory(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
-  UINT16 i;
-  UINT16 usItemIndex;
+  uint16_t i;
+  uint16_t usItemIndex;
   UINT8 ubNumBought;
 
   // loop through all items BR can stock to init a starting quantity on hand
@@ -555,7 +555,7 @@ void SetupStoreInventory(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
 }
 
 BOOLEAN DoesGunOfSameClassExistInInventory(UINT8 ubItemIndex, UINT8 ubDealerID) {
-  UINT16 i;
+  uint16_t i;
 
   STORE_INVENTORY *pInventoryArray;
 
@@ -601,7 +601,7 @@ STORE_INVENTORY *GetPtrToStoreInventory(UINT8 ubDealerID) {
 /*
 INT16	CountNumberOfItemsInStoreInventory( UINT8 ubArmsDealerID )
 {
-        UINT16	cnt;
+        uint16_t	cnt;
         INT16		ubNumItems=0;
 
         STORE_INVENTORY *pInventoryArray;

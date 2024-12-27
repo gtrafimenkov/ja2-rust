@@ -141,7 +141,7 @@ void ClearRenderFlags(uint32_t uiFlags);
 
 void RenderSetShadows(BOOLEAN fShadows);
 
-extern UINT16 *gpZBuffer;
+extern uint16_t *gpZBuffer;
 extern uint32_t gRenderFlags;
 extern BOOLEAN gfIgnoreScrolling;
 
@@ -158,10 +158,10 @@ void ConcealAllWalls(void);
 BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLEAN fForceAdjust,
                        BOOLEAN fCheckOnly);
 
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
-                                              UINT16 *pZBuffer, UINT16 usZValue,
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+                                              uint16_t *pZBuffer, uint16_t usZValue,
                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                              UINT16 usIndex, SGPRect *clipregion);
+                                              uint16_t usIndex, SGPRect *clipregion);
 
 void RenderStaticWorldRect(INT16, INT16, INT16, INT16, BOOLEAN);
 void RenderMarkedWorld(void);

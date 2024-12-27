@@ -59,11 +59,11 @@ uint32_t MapUtilScreenHandle() {
   static struct FileDialogList *FileList = NULL;
   CHAR8 zFilename[260], zFilename2[260];
   VSURFACE_DESC vs_desc;
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   UINT8 ubBitDepth;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT16 *pDestBuf, *pSrcBuf;
+  uint16_t *pDestBuf, *pSrcBuf;
   UINT8 *pDataPtr;
 
   static UINT8 *p24BitDest = NULL;
@@ -177,8 +177,8 @@ uint32_t MapUtilScreenHandle() {
   dX = dStartX;
   dY = dStartY;
 
-  pDestBuf = (UINT16 *)LockVideoSurface(giMiniMap, &uiDestPitchBYTES);
-  pSrcBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(giMiniMap, &uiDestPitchBYTES);
+  pSrcBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
 
   for (iX = 0; iX < 88; iX++) {
     dY = dStartY;
@@ -244,7 +244,7 @@ uint32_t MapUtilScreenHandle() {
 
   // QUantize!
   pDataPtr = (UINT8 *)LockVideoSurface(gi8BitMiniMap, &uiSrcPitchBYTES);
-  pDestBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   QuantizeImage(pDataPtr, p24BitDest, MINIMAP_X_SIZE, MINIMAP_Y_SIZE, pPalette);
   SetVideoSurfacePalette(ghvSurface, pPalette);
   // Blit!
@@ -254,7 +254,7 @@ uint32_t MapUtilScreenHandle() {
   {
     INT32 cnt;
     INT32 sX = 0, sY = 420;
-    UINT16 usLineColor;
+    uint16_t usLineColor;
 
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 

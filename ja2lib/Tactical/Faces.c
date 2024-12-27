@@ -58,8 +58,8 @@ void NewMouth(FACETYPE *pFace);
 INT32 GetFreeFace(void);
 void RecountFaces(void);
 void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEAN fUseExternBuffer,
-                                 uint32_t uiBuffer, INT16 sFaceX, INT16 sFaceY, UINT16 usEyesX,
-                                 UINT16 usEyesY);
+                                 uint32_t uiBuffer, INT16 sFaceX, INT16 sFaceY, uint16_t usEyesX,
+                                 uint16_t usEyesY);
 
 extern BOOLEAN gfInItemPickupMenu;
 
@@ -119,7 +119,7 @@ UINT8 ubRPCNumSmallFaceValues = 28;
 
 extern BOOLEAN gfSMDisableForItems;
 extern INT16 gsCurInterfacePanel;
-extern UINT16 gusSMCurrentMerc;
+extern uint16_t gusSMCurrentMerc;
 extern BOOLEAN gfRerenderInterfaceFromHelpText;
 extern BOOLEAN gfInItemPickupMenu;
 
@@ -383,7 +383,7 @@ void DeleteFace(INT32 iFaceIndex) {
 }
 
 void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer,
-                                  UINT8 ubSoldierID, UINT16 usFaceX, UINT16 usFaceY) {
+                                  UINT8 ubSoldierID, uint16_t usFaceX, uint16_t usFaceY) {
   if (ubSoldierID == NOBODY) {
     return;
   }
@@ -392,13 +392,13 @@ void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBu
                     usFaceY);
 }
 
-void GetFaceRelativeCoordinates(FACETYPE *pFace, UINT16 *pusEyesX, UINT16 *pusEyesY,
-                                UINT16 *pusMouthX, UINT16 *pusMouthY) {
-  UINT16 usMercProfileID;
-  UINT16 usEyesX;
-  UINT16 usEyesY;
-  UINT16 usMouthX;
-  UINT16 usMouthY;
+void GetFaceRelativeCoordinates(FACETYPE *pFace, uint16_t *pusEyesX, uint16_t *pusEyesY,
+                                uint16_t *pusMouthX, uint16_t *pusMouthY) {
+  uint16_t usMercProfileID;
+  uint16_t usEyesX;
+  uint16_t usEyesY;
+  uint16_t usMouthX;
+  uint16_t usMouthY;
   INT32 cnt;
 
   usMercProfileID = pFace->ubCharacterNum;
@@ -435,11 +435,11 @@ void GetFaceRelativeCoordinates(FACETYPE *pFace, UINT16 *pusEyesX, UINT16 *pusEy
 }
 
 void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32 iFaceIndex,
-                       UINT16 usFaceX, UINT16 usFaceY) {
-  UINT16 usEyesX;
-  UINT16 usEyesY;
-  UINT16 usMouthX;
-  UINT16 usMouthY;
+                       uint16_t usFaceX, uint16_t usFaceY) {
+  uint16_t usEyesX;
+  uint16_t usEyesY;
+  uint16_t usMouthX;
+  uint16_t usMouthY;
   FACETYPE *pFace;
 
   // Check face index
@@ -454,12 +454,12 @@ void SetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32
 }
 
 void InternalSetAutoFaceActive(uint32_t uiDisplayBuffer, uint32_t uiRestoreBuffer, INT32 iFaceIndex,
-                               UINT16 usFaceX, UINT16 usFaceY, UINT16 usEyesX, UINT16 usEyesY,
-                               UINT16 usMouthX, UINT16 usMouthY) {
+                               uint16_t usFaceX, uint16_t usFaceY, uint16_t usEyesX,
+                               uint16_t usEyesY, uint16_t usMouthX, uint16_t usMouthY) {
   FACETYPE *pFace;
   VSURFACE_DESC vs_desc;
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
   UINT8 ubBitDepth;
 
   // Check face index
@@ -714,7 +714,7 @@ void BlinkAutoFace(INT32 iFaceIndex) {
 void HandleFaceHilights(FACETYPE *pFace, uint32_t uiBuffer, INT16 sFaceX, INT16 sFaceY) {
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   INT32 iFaceIndex;
 
   iFaceIndex = pFace->iID;
@@ -967,10 +967,10 @@ BOOLEAN RenderAutoFaceFromSoldier(UINT8 ubSoldierID) {
   return (RenderAutoFace(MercPtrs[ubSoldierID]->iFaceIndex));
 }
 
-void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 sFaceY, INT16 *psX,
-                           INT16 *psY) {
+void GetXYForIconPlacement(FACETYPE *pFace, uint16_t ubIndex, INT16 sFaceX, INT16 sFaceY,
+                           INT16 *psX, INT16 *psY) {
   INT16 sX, sY;
-  UINT16 usWidth, usHeight;
+  uint16_t usWidth, usHeight;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
 
@@ -987,10 +987,10 @@ void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 
   *psY = sY;
 }
 
-void GetXYForRightIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 sFaceY,
+void GetXYForRightIconPlacement(FACETYPE *pFace, uint16_t ubIndex, INT16 sFaceX, INT16 sFaceY,
                                 INT16 *psX, INT16 *psY, INT8 bNumIcons) {
   INT16 sX, sY;
-  UINT16 usWidth, usHeight;
+  uint16_t usWidth, usHeight;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
 
@@ -1018,16 +1018,16 @@ void DoRightIcon(uint32_t uiRenderBuffer, FACETYPE *pFace, INT16 sFaceX, INT16 s
 }
 
 void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEAN fUseExternBuffer,
-                                 uint32_t uiBuffer, INT16 sFaceX, INT16 sFaceY, UINT16 usEyesX,
-                                 UINT16 usEyesY) {
+                                 uint32_t uiBuffer, INT16 sFaceX, INT16 sFaceY, uint16_t usEyesX,
+                                 uint16_t usEyesY) {
   INT16 sIconX, sIconY;
   INT16 sIconIndex = -1;
   BOOLEAN fDoIcon = FALSE;
   uint32_t uiRenderBuffer;
   INT16 sPtsAvailable = 0;
-  UINT16 usMaximumPts = 0;
+  uint16_t usMaximumPts = 0;
   CHAR16 sString[32];
-  UINT16 usTextWidth;
+  uint16_t usTextWidth;
   BOOLEAN fAtGunRange = FALSE;
   BOOLEAN fShowNumber = FALSE;
   BOOLEAN fShowMaximum = FALSE;
@@ -1036,7 +1036,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
   INT16 sX1, sY1, sY2, sX2;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   INT8 bNumRightIcons = 0;
 
   // If we are using an extern buffer...
@@ -1392,10 +1392,10 @@ BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, UINT8 ubSoldierID, INT16 
 }
 
 BOOLEAN ExternRenderFace(uint32_t uiBuffer, INT32 iFaceIndex, INT16 sX, INT16 sY) {
-  UINT16 usEyesX;
-  UINT16 usEyesY;
-  UINT16 usMouthX;
-  UINT16 usMouthY;
+  uint16_t usEyesX;
+  uint16_t usEyesY;
+  uint16_t usMouthX;
+  uint16_t usMouthY;
   FACETYPE *pFace;
 
   // Check face index
@@ -1418,8 +1418,8 @@ BOOLEAN ExternRenderFace(uint32_t uiBuffer, INT32 iFaceIndex, INT16 sX, INT16 sY
 
   GetFaceRelativeCoordinates(pFace, &usEyesX, &usEyesY, &usMouthX, &usMouthY);
 
-  HandleRenderFaceAdjustments(pFace, FALSE, TRUE, uiBuffer, sX, sY, (UINT16)(sX + usEyesX),
-                              (UINT16)(sY + usEyesY));
+  HandleRenderFaceAdjustments(pFace, FALSE, TRUE, uiBuffer, sX, sY, (uint16_t)(sX + usEyesX),
+                              (uint16_t)(sY + usEyesY));
 
   // Restore extern rect
   if (uiBuffer == guiSAVEBUFFER) {
@@ -1514,7 +1514,7 @@ void NewEye(FACETYPE *pFace) {
 
 void NewMouth(FACETYPE *pFace) {
   BOOLEAN OK = FALSE;
-  UINT16 sOld = pFace->sMouthFrame;
+  uint16_t sOld = pFace->sMouthFrame;
 
   // if (audio_gap_active == 1)
   //  {
@@ -1772,7 +1772,7 @@ BOOLEAN FaceRestoreSavedBackgroundRect(INT32 iFaceIndex, INT16 sDestLeft, INT16 
   pDestBuf = LockVideoSurface(pFace->uiAutoDisplayBuffer, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(pFace->uiAutoRestoreBuffer, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
                   sDestLeft, sDestTop, sSrcLeft, sSrcTop, sWidth, sHeight);
 
   UnLockVideoSurface(pFace->uiAutoDisplayBuffer);

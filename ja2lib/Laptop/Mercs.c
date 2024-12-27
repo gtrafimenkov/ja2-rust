@@ -121,8 +121,8 @@ enum {
 };
 
 typedef struct {
-  UINT16 usMoneyPaid;
-  UINT16 usDay;
+  uint16_t usMoneyPaid;
+  uint16_t usDay;
   UINT8 ubMercArrayID;
 
 } CONTITION_FOR_MERC_AVAILABLE;
@@ -164,10 +164,10 @@ UINT8 gubCurMercIndex;
 
 INT32 iMercPopUpBox = -1;
 
-UINT16 gusPositionOfSpecksDialogBox_X;
+uint16_t gusPositionOfSpecksDialogBox_X;
 wchar_t gsSpeckDialogueTextPopUp[900];
-UINT16 gusSpeckDialogueX;
-UINT16 gusSpeckDialogueActualWidth;
+uint16_t gusSpeckDialogueX;
+uint16_t gusSpeckDialogueActualWidth;
 
 BOOLEAN gfInMercSite = FALSE;  // this flag is set when inide of the merc site
 
@@ -182,7 +182,7 @@ enum {
 UINT8 gubCurrentMercVideoMode;
 BOOLEAN gfMercVideoIsBeingDisplayed;
 INT32 giVideoSpeckFaceIndex;
-UINT16 gusMercVideoSpeckSpeech;
+uint16_t gusMercVideoSpeckSpeech;
 
 BOOLEAN gfDisplaySpeckTextBox = FALSE;
 
@@ -251,18 +251,19 @@ void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
 //
 //*******************************
 
-BOOLEAN StartSpeckTalking(UINT16 usQuoteNum);
+BOOLEAN StartSpeckTalking(uint16_t usQuoteNum);
 void InitMercVideoFace();
 BOOLEAN HandleSpeckTalking(BOOLEAN fReset);
 // BOOLEAN	PixelateVideoMercImage();
-BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
-                               UINT16 usHeight);
+BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                               uint16_t usHeight);
 BOOLEAN InitDestroyXToCloseVideoWindow(BOOLEAN fCreate);
-BOOLEAN DisplayMercVideoIntro(UINT16 usTimeTillFinish);
+BOOLEAN DisplayMercVideoIntro(uint16_t usTimeTillFinish);
 void HandleCurrentMercDistortion();
 void HandleTalkingSpeck();
 // BOOLEAN DistortVideoMercImage();
-BOOLEAN DistortVideoMercImage(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT16 usHeight);
+BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                              uint16_t usHeight);
 BOOLEAN IsAnyMercMercsHired();
 BOOLEAN IsAnyMercMercsDead();
 UINT8 CountNumberOfMercMercsHired();
@@ -675,7 +676,7 @@ void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void DailyUpdateOfMercSite(UINT16 usDate) {
+void DailyUpdateOfMercSite(uint16_t usDate) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sSoldierID, i;
   UINT8 ubMercID;
@@ -959,7 +960,7 @@ void InitMercVideoFace() {
   gfMercVideoIsBeingDisplayed = TRUE;
 }
 
-BOOLEAN StartSpeckTalking(UINT16 usQuoteNum) {
+BOOLEAN StartSpeckTalking(uint16_t usQuoteNum) {
   if (usQuoteNum == MERC_VIDEO_SPECK_SPEECH_NOT_TALKING ||
       usQuoteNum == MERC_VIDEO_SPECK_HAS_TO_TALK_BUT_QUOTE_NOT_CHOSEN_YET)
     return (FALSE);
@@ -1089,18 +1090,18 @@ void HandleCurrentMercDistortion() {
   }
 }
 
-BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
-                               UINT16 usHeight) {
+BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                               uint16_t usHeight) {
   static uint32_t uiLastTime;
   uint32_t uiCurTime = GetJA2Clock();
-  UINT16 *pBuffer = NULL, DestColor;
+  uint16_t *pBuffer = NULL, DestColor;
   uint32_t uiPitch;
-  UINT16 i, j;
+  uint16_t i, j;
   static UINT8 ubPixelationAmount = 255;
   BOOLEAN fReturnStatus = FALSE;
   i = 0;
 
-  pBuffer = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
+  pBuffer = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
   Assert(pBuffer);
 
   if (ubPixelationAmount == 255) {
@@ -1161,17 +1162,18 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16
   return (fReturnStatus);
 }
 
-BOOLEAN DistortVideoMercImage(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT16 usHeight) {
+BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                              uint16_t usHeight) {
   uint32_t uiPitch;
-  UINT16 i, j;
-  UINT16 *pBuffer = NULL, DestColor;
+  uint16_t i, j;
+  uint16_t *pBuffer = NULL, DestColor;
   uint32_t uiColor;
   UINT8 red, green, blue;
-  static UINT16 usDistortionValue = 255;
+  static uint16_t usDistortionValue = 255;
   UINT8 uiReturnValue;
-  UINT16 usEndOnLine = 0;
+  uint16_t usEndOnLine = 0;
 
-  pBuffer = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
+  pBuffer = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
   Assert(pBuffer);
 
   uiPitch /= 2;
@@ -1273,7 +1275,7 @@ void BtnXToCloseMercVideoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-BOOLEAN DisplayMercVideoIntro(UINT16 usTimeTillFinish) {
+BOOLEAN DisplayMercVideoIntro(uint16_t usTimeTillFinish) {
   uint32_t uiCurTime = GetJA2Clock();
   static uint32_t uiLastTime = 0;
 
@@ -1393,7 +1395,7 @@ void HandleTalkingSpeck() {
 }
 
 void DisplayTextForSpeckVideoPopUp(STR16 pString) {
-  UINT16 usActualHeight;
+  uint16_t usActualHeight;
   INT32 iOldMercPopUpBoxId = iMercPopUpBox;
 
   // If the user has selected no subtitles
@@ -1458,7 +1460,7 @@ void CheatToGetAll5Merc() {
 }
 
 BOOLEAN GetSpeckConditionalOpening(BOOLEAN fJustEnteredScreen) {
-  static UINT16 usQuoteToSay = MERC_VIDEO_SPECK_SPEECH_NOT_TALKING;
+  static uint16_t usQuoteToSay = MERC_VIDEO_SPECK_SPEECH_NOT_TALKING;
   UINT8 ubCnt;
   BOOLEAN fCanSayLackOfPaymentQuote = TRUE;
   BOOLEAN fCanUseIdleTag = FALSE;

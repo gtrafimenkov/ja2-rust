@@ -194,7 +194,7 @@ void EnterLaptopInitInsuranceContract() {
 
 BOOLEAN EnterInsuranceContract() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosX, i;
+  uint16_t usPosX, i;
 
   // build the list of mercs that are can be displayed
   BuildInsuranceArray();
@@ -219,7 +219,7 @@ BOOLEAN EnterInsuranceContract() {
   for (i = 0; i < 2; i++) {
     MSYS_DefineRegion(
         &gSelectedInsuranceContractLinkRegion[i], usPosX, INS_CTRCT_BOTTON_LINK_RED_BAR_Y - 37,
-        (UINT16)(usPosX + INS_CTRCT_BOTTOM_LINK_RED_WIDTH), INS_CTRCT_BOTTON_LINK_RED_BAR_Y + 2,
+        (uint16_t)(usPosX + INS_CTRCT_BOTTOM_LINK_RED_WIDTH), INS_CTRCT_BOTTON_LINK_RED_BAR_Y + 2,
         MSYS_PRIORITY_HIGH, CURSOR_WWW, MSYS_NO_CALLBACK, SelectInsuranceContractRegionCallBack);
     MSYS_AddRegion(&gSelectedInsuranceContractLinkRegion[i]);
     MSYS_SetRegionUserData(&gSelectedInsuranceContractLinkRegion[i], 0, i);
@@ -308,7 +308,7 @@ void RenderInsuranceContract() {
   UINT8 ubCount = 0;
   INT16 sMercID;
   INT16 sNextMercID;
-  UINT16 usPosX;
+  uint16_t usPosX;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   SetFontShadow(INS_FONT_SHADOW);
@@ -322,7 +322,7 @@ void RenderInsuranceContract() {
 
   // Display the red bar under the link at the bottom.  and the text
   DisplaySmallRedLineWithShadow(usPosX, INS_CTRCT_BOTTON_LINK_RED_BAR_Y,
-                                (UINT16)(usPosX + INS_CTRCT_BOTTOM_LINK_RED_WIDTH),
+                                (uint16_t)(usPosX + INS_CTRCT_BOTTOM_LINK_RED_WIDTH),
                                 INS_CTRCT_BOTTON_LINK_RED_BAR_Y);
   swprintf(sText, ARR_SIZE(sText), L"%s", pMessageStrings[MSG_HOMEPAGE]);
   DisplayWrappedString(usPosX, INS_CTRCT_BOTTON_LINK_Y + 18, INS_CTRCT_BOTTOM_LINK_RED_WIDTH, 2,
@@ -333,7 +333,7 @@ void RenderInsuranceContract() {
 
   // Display the red bar under the link at the bottom.  and the text
   DisplaySmallRedLineWithShadow(usPosX, INS_CTRCT_BOTTON_LINK_RED_BAR_Y,
-                                (UINT16)(usPosX + INS_CTRCT_BOTTOM_LINK_RED_WIDTH),
+                                (uint16_t)(usPosX + INS_CTRCT_BOTTOM_LINK_RED_WIDTH),
                                 INS_CTRCT_BOTTON_LINK_RED_BAR_Y);
   GetInsuranceText(INS_SNGL_HOW_DOES_INS_WORK, sText);
   DisplayWrappedString(usPosX, INS_CTRCT_BOTTON_LINK_Y + 12, INS_CTRCT_BOTTOM_LINK_RED_WIDTH, 2,
@@ -469,7 +469,7 @@ void BtnInsContractNextButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   VOBJECT_DESC VObjectDesc;
   struct VObject *hPixHandle;
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
   uint32_t uiInsMercFaceImage;
   INT32 iCostOfContract = 0;
   char sTemp[100];
@@ -543,7 +543,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
 
   // display the mercs nickname
   DrawTextToScreen(gMercProfiles[ubMercID].zNickname,
-                   (UINT16)(usPosX + INS_CTRCT_OG_NICK_NAME_OFFSET_X),
+                   (uint16_t)(usPosX + INS_CTRCT_OG_NICK_NAME_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_NICK_NAME_OFFSET_Y, 0, INS_FONT_MED,
                    INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -557,7 +557,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
       // Display the contract text
       GetInsuranceText(INS_SNGL_DEAD_NO_CONTRACT, sText);
     }
-    DisplayWrappedString((UINT16)(usPosX + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_X),
+    DisplayWrappedString((uint16_t)(usPosX + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_X),
                          INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_Y,
                          INS_CTRCT_CONTRACT_STATUS_TEXT_WIDTH, 2, INS_FONT_SMALL,
                          INS_FONT_COLOR_RED, sText, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
@@ -580,12 +580,12 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
       fDisplayMercContractStateTextColorInRed = TRUE;
     }
     if (fDisplayMercContractStateTextColorInRed)
-      DisplayWrappedString((UINT16)(usPosX + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_X),
+      DisplayWrappedString((uint16_t)(usPosX + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_X),
                            INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_Y,
                            INS_CTRCT_CONTRACT_STATUS_TEXT_WIDTH, 2, INS_FONT_SMALL,
                            INS_FONT_COLOR_RED, sText, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
     else
-      DisplayWrappedString((UINT16)(usPosX + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_X),
+      DisplayWrappedString((uint16_t)(usPosX + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_X),
                            INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_HAS_CONTRACT_OFFSET_Y,
                            INS_CTRCT_CONTRACT_STATUS_TEXT_WIDTH, 2, INS_FONT_SMALL, INS_FONT_COLOR,
                            sText, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
@@ -593,26 +593,26 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
 
   // Display the Emplyment contract text
   GetInsuranceText(INS_SNGL_EMPLOYMENT_CONTRACT, sText);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_Y,
                    INS_CTRCT_ORDER_GRID_WIDTH, INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, CENTER_JUSTIFIED);
 
   // Display the merc contract Length text
   GetInsuranceText(INS_SNGL_LENGTH, sText);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_LENGTH_OFFSET_Y, 0, INS_FONT_MED,
                    INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   // Display the mercs contract length
   swprintf(sText, ARR_SIZE(sText), L"%d", pSoldier->iTotalContractLength);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_LENGTH_OFFSET_Y, INS_CTRCT_OG_BOX_WIDTH,
                    INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 
   // Display the days remaining for the emplyment contract text
   GetInsuranceText(INS_SNGL_DAYS_REMAINING, sText);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_DAYS_REMAINING_OFFSET_Y, 0, INS_FONT_MED,
                    INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -622,26 +622,26 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   else
     swprintf(sText, ARR_SIZE(sText), L"%d", GetTimeRemainingOnSoldiersContract(pSoldier));
 
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_DAYS_REMAINING_OFFSET_Y,
                    INS_CTRCT_OG_BOX_WIDTH, INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    RIGHT_JUSTIFIED);
 
   // Display the Insurqance contract
   GetInsuranceText(INS_SNGL_INSURANCE_CONTRACT, sText);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_INSURANCE_CNTRCT_OFFSET_Y,
                    INS_CTRCT_ORDER_GRID_WIDTH, INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, CENTER_JUSTIFIED);
 
   GetInsuranceText(INS_SNGL_LENGTH, sText);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_LENGTH_OFFSET_Y + 54, 0, INS_FONT_MED,
                    INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   // Display the insurance days remaining text
   GetInsuranceText(INS_SNGL_DAYS_REMAINING, sText);
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_LENGTH_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_DAYS_REMAINING_OFFSET_Y + 54, 0,
                    INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -659,7 +659,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   else
     swprintf(sText, ARR_SIZE(sText), L"%d", 0);
 
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_DAYS_REMAINING_OFFSET_Y + 54,
                    INS_CTRCT_OG_BOX_WIDTH, INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    RIGHT_JUSTIFIED);
@@ -684,7 +684,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   } else {
     // Display the premium owing text
     GetInsuranceText(INS_SNGL_PREMIUM_OWING, sText);
-    DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_X),
+    DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_EMPLYMNT_CNTRCT_TEXT_OFFSET_X),
                      INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_PREMIUM_OWING_OFFSET_Y,
                      INS_CTRCT_ORDER_GRID_WIDTH, INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK,
                      FALSE, CENTER_JUSTIFIED);
@@ -700,7 +700,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
     InsertDollarSignInToString(sText);
   }
   // display the amount owing
-  DrawTextToScreen(sText, (UINT16)(usPosX + 32), INS_CTRCT_ORDER_GRID1_Y + 179, 72, INS_FONT_MED,
+  DrawTextToScreen(sText, (uint16_t)(usPosX + 32), INS_CTRCT_ORDER_GRID1_Y + 179, 72, INS_FONT_MED,
                    INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 
   //
@@ -709,7 +709,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   swprintf(sText, ARR_SIZE(sText), L"%d", CalculateSoldiersInsuranceContractLength(pSoldier));
 
   // Display the length of time the player can get for the insurance contract
-  DrawTextToScreen(sText, (UINT16)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
+  DrawTextToScreen(sText, (uint16_t)(usPosX + INS_CTRCT_OG_BOX_OFFSET_X),
                    INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_LENGTH_OFFSET_Y + 52 + 2,
                    INS_CTRCT_OG_BOX_WIDTH, INS_FONT_MED, INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    RIGHT_JUSTIFIED);

@@ -87,7 +87,7 @@ void GameInitInsurance() {}
 
 BOOLEAN EnterInsurance() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosX, i;
+  uint16_t usPosX, i;
 
   SetBookMark(INSURANCE_BOOKMARK);
 
@@ -105,10 +105,11 @@ BOOLEAN EnterInsurance() {
 
   usPosX = INSURANCE_BOTTOM_LINK_RED_BAR_X;
   for (i = 0; i < 3; i++) {
-    MSYS_DefineRegion(
-        &gSelectedInsuranceLinkRegion[i], usPosX, INSURANCE_BOTTOM_LINK_RED_BAR_Y - 37,
-        (UINT16)(usPosX + INSURANCE_BOTTOM_LINK_RED_BAR_WIDTH), INSURANCE_BOTTOM_LINK_RED_BAR_Y + 2,
-        MSYS_PRIORITY_HIGH, CURSOR_WWW, MSYS_NO_CALLBACK, SelectInsuranceRegionCallBack);
+    MSYS_DefineRegion(&gSelectedInsuranceLinkRegion[i], usPosX,
+                      INSURANCE_BOTTOM_LINK_RED_BAR_Y - 37,
+                      (uint16_t)(usPosX + INSURANCE_BOTTOM_LINK_RED_BAR_WIDTH),
+                      INSURANCE_BOTTOM_LINK_RED_BAR_Y + 2, MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      MSYS_NO_CALLBACK, SelectInsuranceRegionCallBack);
     MSYS_AddRegion(&gSelectedInsuranceLinkRegion[i]);
     MSYS_SetRegionUserData(&gSelectedInsuranceLinkRegion[i], 0, i);
 
@@ -260,8 +261,8 @@ BOOLEAN InitInsuranceDefaults() {
     // create the link to the home page on the small titles
     MSYS_DefineRegion(
         &gSelectedInsuranceTitleLinkRegion, INSURANCE_SMALL_TITLE_X + 85, INSURANCE_SMALL_TITLE_Y,
-        (UINT16)(INSURANCE_SMALL_TITLE_X + INSURANCE_SMALL_TITLE_WIDTH),
-        (UINT16)(INSURANCE_SMALL_TITLE_Y + INSURANCE_SMALL_TITLE_HEIGHT), MSYS_PRIORITY_HIGH,
+        (uint16_t)(INSURANCE_SMALL_TITLE_X + INSURANCE_SMALL_TITLE_WIDTH),
+        (uint16_t)(INSURANCE_SMALL_TITLE_Y + INSURANCE_SMALL_TITLE_HEIGHT), MSYS_PRIORITY_HIGH,
         CURSOR_WWW, MSYS_NO_CALLBACK, SelectInsuranceTitleLinkRegionCallBack);
     MSYS_AddRegion(&gSelectedInsuranceTitleLinkRegion);
   }
@@ -272,7 +273,7 @@ BOOLEAN InitInsuranceDefaults() {
 void DisplayInsuranceDefaults() {
   struct VObject *hPixHandle;
   UINT8 i;
-  UINT16 usPosY;
+  uint16_t usPosY;
 
   WebPageTileBackground(4, 4, INSURANCE_BACKGROUND_WIDTH, INSURANCE_BACKGROUND_HEIGHT,
                         guiInsuranceBackGround);
@@ -330,7 +331,8 @@ void RemoveInsuranceDefaults() {
   }
 }
 
-void DisplaySmallRedLineWithShadow(UINT16 usStartX, UINT16 usStartY, UINT16 EndX, UINT16 EndY) {
+void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX,
+                                   uint16_t EndY) {
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
 

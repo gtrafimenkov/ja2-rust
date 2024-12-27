@@ -11,7 +11,7 @@ typedef void (*MOUSE_CALLBACK)(struct MOUSE_REGION *,
 typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback
 
 struct MOUSE_REGION {
-  UINT16 IDNumber;       // Region's ID number, set by mouse system
+  uint16_t IDNumber;     // Region's ID number, set by mouse system
   INT8 PriorityLevel;    // Region's Priority, set by system and/or caller
   uint32_t uiFlags;      // Region's state flags
   INT16 RegionTopLeftX;  // Screen area affected by this region (absolute coordinates)
@@ -22,8 +22,8 @@ struct MOUSE_REGION {
   INT16 MouseYPos;
   INT16 RelativeXPos;  // Mouse's Coordinates relative to the Top-Left corner of the region
   INT16 RelativeYPos;
-  UINT16 ButtonState;  // Current state of the mouse buttons
-  UINT16 Cursor;       // Cursor to use when mouse in this region (see flags)
+  uint16_t ButtonState;  // Current state of the mouse buttons
+  uint16_t Cursor;       // Cursor to use when mouse in this region (see flags)
   MOUSE_CALLBACK
   MovementCallback;  // Pointer to callback function if movement occured in this region
   MOUSE_CALLBACK
@@ -138,15 +138,15 @@ void MSYS_AddRegionToList(struct MOUSE_REGION *region);
 INT32 MSYS_RegionInList(struct MOUSE_REGION *region);
 void MSYS_DeleteRegionFromList(struct MOUSE_REGION *region);
 void MSYS_UpdateMouseRegion(void);
-void MSYS_SetCurrentCursor(UINT16 Cursor);
+void MSYS_SetCurrentCursor(uint16_t Cursor);
 
 // External
 INT32 MSYS_Init(void);
 void MSYS_Shutdown(void);
-void MSYS_DefineRegion(struct MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT16 brx, UINT16 bry,
-                       INT8 priority, UINT16 crsr, MOUSE_CALLBACK movecallback,
+void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
+                       uint16_t bry, INT8 priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback);
-void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, UINT16 crsr);
+void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, uint16_t crsr);
 INT32 MSYS_AddRegion(struct MOUSE_REGION *region);
 void MSYS_RemoveRegion(struct MOUSE_REGION *region);
 void MSYS_EnableRegion(struct MOUSE_REGION *region);

@@ -21,8 +21,8 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
 BOOLEAN InitInteractiveTileManagement();
 void ShutdownInteractiveTileManagement();
 BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, uint32_t uiFlags,
-                           UINT16 usType);
-BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, struct SOLDIERTYPE *pSoldier,
+                           uint16_t usType);
+BOOLEAN StartInteractiveObject(INT16 sGridNo, uint16_t usStructureID, struct SOLDIERTYPE *pSoldier,
                                UINT8 ubDirection);
 BOOLEAN StartInteractiveObjectFromMouse(struct SOLDIERTYPE *pSoldier, UINT8 ubDirection);
 void CompileInteractiveTiles();
@@ -41,7 +41,7 @@ void EndCurInteractiveTileCheck();
 void LogMouseOverInteractiveTile(INT16 sGridNo);
 BOOLEAN ShouldCheckForMouseDetections();
 
-void CycleIntTileFindStack(UINT16 usMapPos);
+void CycleIntTileFindStack(uint16_t usMapPos);
 void SetActionModeDoorCursorText();
 
 struct LEVELNODE *GetCurInteractiveTile();

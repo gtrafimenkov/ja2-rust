@@ -75,8 +75,8 @@ extern uint32_t guiUITargetSoldierId;
 extern BOOLEAN gfUIShowExitSouth;
 
 BOOLEAN gfStartLookingForRubberBanding = FALSE;
-UINT16 gusRubberBandX = 0;
-UINT16 gusRubberBandY = 0;
+uint16_t gusRubberBandX = 0;
+uint16_t gusRubberBandY = 0;
 
 BOOLEAN gfBeginBurstSpreadTracking = FALSE;
 
@@ -91,7 +91,7 @@ void GetRTMouseButtonInput(uint32_t *puiNewEvent) {
 }
 
 void QueryRTLeftButton(uint32_t *puiNewEvent) {
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiMercFlags;
   static uint32_t uiSingleClickTime;
@@ -1022,13 +1022,13 @@ void QueryRTRightButton(uint32_t *puiNewEvent) {
   }
 }
 
-extern BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos);
+extern BOOLEAN ConfirmActionCancel(uint16_t usMapPos, uint16_t usOldMapPos);
 
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
 void GetRTMousePositionInput(uint32_t *puiNewEvent) {
   INT16 usMapPos;
-  static UINT16 usOldMapPos = 0;
+  static uint16_t usOldMapPos = 0;
   static uint32_t uiMoveTargetSoldierId = NO_SOLDIER;
   struct SOLDIERTYPE *pSoldier;
 

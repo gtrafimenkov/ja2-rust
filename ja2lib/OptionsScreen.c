@@ -304,9 +304,9 @@ uint32_t OptionsScreenShutdown() { return (TRUE); }
 
 BOOLEAN EnterOptionsScreen() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosY;
+  uint16_t usPosY;
   UINT8 cnt;
-  UINT16 usTextWidth, usTextHeight;
+  uint16_t usTextWidth, usTextHeight;
 
   // Default this to off
   gfHideBloodAndGoreOption = FALSE;
@@ -432,8 +432,8 @@ BOOLEAN EnterOptionsScreen() {
 
       // Create mouse regions for the option toggle text
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_FIRST_COLUMN_X + 13, usPosY,
-                        (UINT16)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
+                        (uint16_t)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
                         CURSOR_NORMAL, SelectedOptionTextRegionMovementCallBack,
                         SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
@@ -441,8 +441,8 @@ BOOLEAN EnterOptionsScreen() {
     } else {
       // Create mouse regions for the option toggle text
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_FIRST_COLUMN_X + 13, usPosY,
-                        (UINT16)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        (uint16_t)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectedOptionTextRegionMovementCallBack, SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
       MSYS_SetRegionUserData(&gSelectedOptionTextRegion[cnt], 0, cnt);
@@ -480,16 +480,16 @@ BOOLEAN EnterOptionsScreen() {
       usTextWidth = OPT_TOGGLE_BOX_TEXT_WIDTH;
 
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_SECOND_COLUMN_X + 13,
-                        usPosY, (UINT16)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
+                        usPosY, (uint16_t)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
                         CURSOR_NORMAL, SelectedOptionTextRegionMovementCallBack,
                         SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
       MSYS_SetRegionUserData(&gSelectedOptionTextRegion[cnt], 0, cnt);
     } else {
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_SECOND_COLUMN_X + 13,
-                        usPosY, (UINT16)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        usPosY, (uint16_t)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectedOptionTextRegionMovementCallBack, SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
       MSYS_SetRegionUserData(&gSelectedOptionTextRegion[cnt], 0, cnt);
@@ -645,9 +645,9 @@ void HandleOptionsScreen() {
 
 void RenderOptionsScreen() {
   struct VObject *hPixHandle;
-  UINT16 usPosY;
+  uint16_t usPosY;
   UINT8 cnt;
-  UINT16 usWidth = 0;
+  uint16_t usWidth = 0;
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiOptionBackGroundImage);
@@ -994,21 +994,21 @@ void SpeechSliderChangeCallBack(INT32 iNewValue) {
 void MusicSliderChangeCallBack(INT32 iNewValue) { MusicSetVolume(iNewValue); }
 
 BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                    UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                    uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const SGPRect *pCenteringRect) {
   // reset exit mode
   gfExitOptionsDueToMessageBox = TRUE;
 
   // do message box and return
   giOptionsMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                     (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                     (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                      ReturnCallback, pCenteringRect);
 
   // send back return state
   return ((giOptionsMessageBox != -1));
 }
 
-BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
+BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                             MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
@@ -1017,7 +1017,7 @@ BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScree
 
   // do message box and return
   giOptionsMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                     (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                     (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                      ReturnCallback, &CenteringRect);
 
   // send back return state
@@ -1130,11 +1130,11 @@ void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT3
 }
 
 void HandleHighLightedText(BOOLEAN fHighLight) {
-  UINT16 usPosX = 0;
-  UINT16 usPosY = 0;
+  uint16_t usPosX = 0;
+  uint16_t usPosY = 0;
   UINT8 ubCnt;
   INT8 bHighLight = -1;
-  UINT16 usWidth;
+  uint16_t usWidth;
 
   static INT8 bLastRegion = -1;
 

@@ -6,10 +6,10 @@
 typedef struct MAPEDGEPOINTINFO {
   UINT8 ubNumPoints;
   UINT8 ubStrategicInsertionCode;
-  UINT16 sGridNo[32];
+  uint16_t sGridNo[32];
 } MAPEDGEPOINTINFO;
 
-UINT16 ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode);
+uint16_t ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode);
 void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategicInsertionCode,
                          UINT8 ubNumDesiredPoints);
 void GenerateMapEdgepoints();
@@ -23,17 +23,17 @@ extern INT16 *gps1stEastEdgepointArray;
 extern INT16 *gps1stSouthEdgepointArray;
 extern INT16 *gps1stWestEdgepointArray;
 // contains the size for each array
-extern UINT16 gus1stNorthEdgepointArraySize;
-extern UINT16 gus1stEastEdgepointArraySize;
-extern UINT16 gus1stSouthEdgepointArraySize;
-extern UINT16 gus1stWestEdgepointArraySize;
+extern uint16_t gus1stNorthEdgepointArraySize;
+extern uint16_t gus1stEastEdgepointArraySize;
+extern uint16_t gus1stSouthEdgepointArraySize;
+extern uint16_t gus1stWestEdgepointArraySize;
 // contains the index value for the first array index of the second row of each edgepoint array.
 // Because each edgepoint side has two rows, the outside most row is calculated first, then the
 // inside row. For purposes of AI, it may become necessary to avoid this.
-extern UINT16 gus1stNorthEdgepointMiddleIndex;
-extern UINT16 gus1stEastEdgepointMiddleIndex;
-extern UINT16 gus1stSouthEdgepointMiddleIndex;
-extern UINT16 gus1stWestEdgepointMiddleIndex;
+extern uint16_t gus1stNorthEdgepointMiddleIndex;
+extern uint16_t gus1stEastEdgepointMiddleIndex;
+extern uint16_t gus1stSouthEdgepointMiddleIndex;
+extern uint16_t gus1stWestEdgepointMiddleIndex;
 
 // dynamic arrays that contain the valid gridno's for each edge
 extern INT16 *gps2ndNorthEdgepointArray;
@@ -41,17 +41,17 @@ extern INT16 *gps2ndEastEdgepointArray;
 extern INT16 *gps2ndSouthEdgepointArray;
 extern INT16 *gps2ndWestEdgepointArray;
 // contains the size for each array
-extern UINT16 gus2ndNorthEdgepointArraySize;
-extern UINT16 gus2ndEastEdgepointArraySize;
-extern UINT16 gus2ndSouthEdgepointArraySize;
-extern UINT16 gus2ndWestEdgepointArraySize;
+extern uint16_t gus2ndNorthEdgepointArraySize;
+extern uint16_t gus2ndEastEdgepointArraySize;
+extern uint16_t gus2ndSouthEdgepointArraySize;
+extern uint16_t gus2ndWestEdgepointArraySize;
 // contains the index value for the first array index of the second row of each edgepoint array.
 // Because each edgepoint side has two rows, the outside most row is calculated first, then the
 // inside row. For purposes of AI, it may become necessary to avoid this.
-extern UINT16 gus2ndNorthEdgepointMiddleIndex;
-extern UINT16 gus2ndEastEdgepointMiddleIndex;
-extern UINT16 gus2ndSouthEdgepointMiddleIndex;
-extern UINT16 gus2ndWestEdgepointMiddleIndex;
+extern uint16_t gus2ndNorthEdgepointMiddleIndex;
+extern uint16_t gus2ndEastEdgepointMiddleIndex;
+extern uint16_t gus2ndSouthEdgepointMiddleIndex;
+extern uint16_t gus2ndWestEdgepointMiddleIndex;
 
 // This is the search code that will determine the closest map edgepoint to a given gridno and
 // a strategic insertion code.  You must call the begin...() first, the call

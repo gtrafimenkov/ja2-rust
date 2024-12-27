@@ -23,7 +23,7 @@
 #include "Utils/TextInput.h"
 
 BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
-UINT16 usCurrentMode;
+uint16_t usCurrentMode;
 UINT8 gubCurrRoomNumber;
 UINT8 gubMaxRoomNumber;
 BOOLEAN gfEditingDoor;
@@ -40,7 +40,7 @@ void GameInitEditorBuildingInfo() {
 // BEGINNING OF BUILDING UTILITY FUNCTIONS
 void UpdateRoofsView() {
   INT32 x;
-  UINT16 usType;
+  uint16_t usType;
   for (x = 0; x < WORLD_MAX; x++) {
     for (usType = FIRSTROOF; usType <= LASTSLANTROOF; usType++) {
       HideStructOfGivenType(x, usType, (BOOLEAN)(!fBuildingShowRoofs));
@@ -99,12 +99,12 @@ void KillBuilding(uint32_t iMapIndex) {
     return;
   }
 
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex - WORLD_COLS)))
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex - WORLD_COLS)))
     KillBuilding(iMapIndex - WORLD_COLS);
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex + WORLD_COLS)))
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex + WORLD_COLS)))
     KillBuilding(iMapIndex + WORLD_COLS);
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex + 1))) KillBuilding(iMapIndex + 1);
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex - 1))) KillBuilding(iMapIndex - 1);
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex + 1))) KillBuilding(iMapIndex + 1);
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex - 1))) KillBuilding(iMapIndex - 1);
 
   if (gfBasement) RebuildRoof(iMapIndex, 0);
 }
@@ -243,7 +243,7 @@ void SortBuildingLayout(INT32 iMapIndex) {
 void PasteMapElementToNewMapElement(INT32 iSrcGridNo, INT32 iDstGridNo) {
   MAP_ELEMENT *pSrcMapElement;
   struct LEVELNODE *pNode;
-  UINT16 usType;
+  uint16_t usType;
 
   DeleteStuffFromMapTile(iDstGridNo);
   DeleteAllLandLayers(iDstGridNo);
@@ -347,7 +347,7 @@ typedef struct ROOFNODE {
 
 ROOFNODE *gpRoofList = NULL;
 
-void ReplaceRoof(INT32 iMapIndex, UINT16 usRoofType) {
+void ReplaceRoof(INT32 iMapIndex, uint16_t usRoofType) {
   ROOFNODE *curr;
   // First, validate the gridno
   if (iMapIndex < 0 && iMapIndex >= WORLD_COLS * WORLD_ROWS) return;
@@ -376,14 +376,14 @@ void ReplaceRoof(INT32 iMapIndex, UINT16 usRoofType) {
 }
 
 void ReplaceBuildingWithNewRoof(INT32 iMapIndex) {
-  UINT16 usRoofType;
+  uint16_t usRoofType;
   ROOFNODE *curr;
   // Not in normal editor mode, then can't do it.
   if (gfBasement || gfCaves) return;
   // if we don't have a floor here, then we can't replace the roof!
   if (!FloorAtGridNo(iMapIndex)) return;
   // Extract the selected roof type.
-  usRoofType = (UINT16)SelSingleNewRoof[iCurBank].uiObject;
+  usRoofType = (uint16_t)SelSingleNewRoof[iCurBank].uiObject;
 
   // now start building a linked list of all nodes visited -- start the first node.
   gpRoofList = (ROOFNODE *)MemAlloc(sizeof(ROOFNODE));

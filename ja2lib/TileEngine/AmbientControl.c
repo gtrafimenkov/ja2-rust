@@ -220,7 +220,7 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
   return (TRUE);
 }
 
-void GetAmbientDataPtr(AMBIENTDATA_STRUCT **ppAmbData, UINT16 *pusNumData) {
+void GetAmbientDataPtr(AMBIENTDATA_STRUCT **ppAmbData, uint16_t *pusNumData) {
   *ppAmbData = gAmbData;
   *pusNumData = gsNumAmbData;
 }

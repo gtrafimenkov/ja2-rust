@@ -332,8 +332,8 @@ void InitTacticalPlacementGUI() {
     }
     xp = 91 + (i / 2) * 54;
     yp = (i % 2) ? 412 : 361;
-    MSYS_DefineRegion(&gMercPlacement[i].region, (UINT16)xp, (UINT16)yp, (UINT16)(xp + 54),
-                      (UINT16)(yp + 62), MSYS_PRIORITY_HIGH, 0, MercMoveCallback,
+    MSYS_DefineRegion(&gMercPlacement[i].region, (uint16_t)xp, (uint16_t)yp, (uint16_t)(xp + 54),
+                      (uint16_t)(yp + 62), MSYS_PRIORITY_HIGH, 0, MercMoveCallback,
                       MercClickCallback);
   }
 
@@ -360,7 +360,7 @@ void RenderTacticalPlacementGUI() {
   INT32 iStartY;
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiDestPitchBYTES;
-  UINT16 usHatchColor;
+  uint16_t usHatchColor;
   CHAR16 str[128];
   UINT8 *pDestBuf;
   UINT8 ubColor;
@@ -480,7 +480,7 @@ void RenderTacticalPlacementGUI() {
       }
     }
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-    Blt16BPPBufferLooseHatchRectWithColor((UINT16 *)pDestBuf, uiDestPitchBYTES, &gTPClipRect,
+    Blt16BPPBufferLooseHatchRectWithColor((uint16_t *)pDestBuf, uiDestPitchBYTES, &gTPClipRect,
                                           usHatchColor);
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
     RectangleDraw(TRUE, gTPClipRect.iLeft, gTPClipRect.iTop, gTPClipRect.iRight,

@@ -29,14 +29,14 @@ void HandleRightButtonUpEvent(void);
 BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
                            MSGBOX_CALLBACK ReturnCallback);
 void GoToWebPage(INT32 iPageId);
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight,
+BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, uint16_t usWidth, uint16_t usHeight,
                               uint32_t uiBackGround);
 void BlitTitleBarIcons(void);
-void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, uint32_t usParam, UINT16 usKeyState);
+void HandleKeyBoardShortCutsForLapTop(uint16_t usEvent, uint32_t usParam, uint16_t usKeyState);
 BOOLEAN RenderWWWProgramTitleBar(void);
 void DisplayProgramBoundingBox(BOOLEAN fMarkButtons);
 BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                 UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback);
+                                 uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
 BOOLEAN RemoveBookMark(INT32 iBookId);
 void CreateFileAndNewEmailIconFastHelpText(uint32_t uiHelpTextID, BOOLEAN fClearHelpText);
 BOOLEAN InitLaptopAndLaptopScreens();

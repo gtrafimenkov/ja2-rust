@@ -78,7 +78,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   uint32_t uiTimeStamp;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum, usFileCheckSum;
+  uint16_t usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];
@@ -392,7 +392,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
   uint32_t uiTimeStamp;
   HWFILE hfile;
   SCHEDULENODE *pSchedule;
-  UINT16 usCheckSum;
+  uint16_t usCheckSum;
   CHAR8 zMapName[128];
   UINT8 ubSectorID;
 
@@ -674,7 +674,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   uint32_t uiTimeStamp;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum, usFileCheckSum;
+  uint16_t usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];
@@ -1042,7 +1042,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   uint32_t uiTimeSinceLastLoaded;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum, usFileCheckSum;
+  uint16_t usCheckSum, usFileCheckSum;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -1327,7 +1327,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
   UINT8 ubSectorID;
-  UINT16 usCheckSum;
+  uint16_t usCheckSum;
 
   UINT8 ubStartID = 0;
   UINT8 ubEndID = 0;
@@ -1598,7 +1598,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   uint32_t uiTimeStamp;
   HWFILE hfile;
   INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum;
+  uint16_t usCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
   CHAR8 zReason[256];

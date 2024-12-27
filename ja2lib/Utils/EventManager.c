@@ -64,7 +64,7 @@ BOOLEAN ShutdownEventManager() {
   return (TRUE);
 }
 
-BOOLEAN AddEvent(uint32_t uiEvent, UINT16 usDelay, PTR pEventData, uint32_t uiDataSize,
+BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
                  UINT8 ubQueueID) {
   EVENT *pEvent;
   uint32_t uiEventSize = sizeof(EVENT);

@@ -451,10 +451,10 @@ BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
   if (iResult > 0) {
     // MECHANICAL GAIN:  Picked open a lock
-    StatChange(pSoldier, MECHANAMT, (UINT16)(pLock->ubPickDifficulty / 5), FALSE);
+    StatChange(pSoldier, MECHANAMT, (uint16_t)(pLock->ubPickDifficulty / 5), FALSE);
 
     // DEXTERITY GAIN:  Picked open a lock
-    StatChange(pSoldier, DEXTAMT, (UINT16)(pLock->ubPickDifficulty / 10), FALSE);
+    StatChange(pSoldier, DEXTAMT, (uint16_t)(pLock->ubPickDifficulty / 10), FALSE);
 
     // succeeded!
     pDoor->fLocked = FALSE;
@@ -583,8 +583,8 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
       DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                String("!!!!!!! Trap gone off %d", gTacticalStatus.ubAttackBusyCount));
 
-      SoldierTakeDamage(pSoldier, 0, (UINT16)(10 + PreRandom(10)),
-                        (UINT16)((3 + PreRandom(3) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
+      SoldierTakeDamage(pSoldier, 0, (uint16_t)(10 + PreRandom(10)),
+                        (uint16_t)((3 + PreRandom(3) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
                         pDoor->sGridNo, 0, TRUE);
       break;
 
@@ -601,8 +601,8 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
       DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                String("!!!!!!! Trap gone off %d", gTacticalStatus.ubAttackBusyCount));
 
-      SoldierTakeDamage(pSoldier, 0, (UINT16)(20 + PreRandom(20)),
-                        (UINT16)((6 + PreRandom(6) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
+      SoldierTakeDamage(pSoldier, 0, (uint16_t)(20 + PreRandom(20)),
+                        (uint16_t)((6 + PreRandom(6) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
                         pDoor->sGridNo, 0, TRUE);
       break;
 

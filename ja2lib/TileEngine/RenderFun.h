@@ -18,13 +18,13 @@ void ShutdownRoomDatabase();
 void SetTileRoomNum(INT16 sGridNo, UINT8 ubRoomNum);
 void SetTileRangeRoomNum(SGPRect *pSelectRegion, UINT8 ubRoomNum);
 
-void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier);
-BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo);
-BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo);
+void RemoveRoomRoof(uint16_t sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier);
+BOOLEAN InARoom(uint16_t sGridNo, UINT8 *pubRoomNo);
+BOOLEAN InAHiddenRoom(uint16_t sGridNo, UINT8 *pubRoomNo);
 
-void SetGridNoRevealedFlag(UINT16 sGridNo);
+void SetGridNoRevealedFlag(uint16_t sGridNo);
 
-void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo);
+void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo);
 
 void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius);
 

@@ -118,8 +118,8 @@ void DirectXZeroMem(void *pMemory, int nSize);
 
 typedef struct {
   BOOLEAN fRestore;
-  UINT16 usMouseXPos, usMouseYPos;
-  UINT16 usLeft, usTop, usRight, usBottom;
+  uint16_t usMouseXPos, usMouseYPos;
+  uint16_t usLeft, usTop, usRight, usBottom;
   RECT Region;
   LPDIRECTDRAWSURFACE _pSurface;
   LPDIRECTDRAWSURFACE2 pSurface;
@@ -137,7 +137,7 @@ static RECT gScrollRegion;
 BOOLEAN gfVideoCapture = FALSE;
 uint32_t guiFramePeriod = (1000 / 15);
 uint32_t guiLastFrame;
-UINT16 *gpFrameData[MAX_NUM_FRAMES];
+uint16_t *gpFrameData[MAX_NUM_FRAMES];
 INT32 giNumFrames = 0;
 
 //
@@ -170,8 +170,8 @@ extern RECT rcWindow;
 // Globals for mouse cursor
 //
 
-static UINT16 gusMouseCursorWidth;
-static UINT16 gusMouseCursorHeight;
+static uint16_t gusMouseCursorWidth;
+static uint16_t gusMouseCursorHeight;
 static INT16 gsMouseCursorXOffset;
 static INT16 gsMouseCursorYOffset;
 
@@ -226,9 +226,9 @@ BOOLEAN gBACKUPfForceFullScreenRefresh;
 BOOLEAN gfPrintFrameBuffer;
 uint32_t guiPrintFrameBufferIndex;
 
-extern UINT16 gusRedMask;
-extern UINT16 gusGreenMask;
-extern UINT16 gusBlueMask;
+extern uint16_t gusRedMask;
+extern uint16_t gusGreenMask;
+extern uint16_t gusBlueMask;
 extern INT16 gusRedShift;
 extern INT16 gusBlueShift;
 extern INT16 gusGreenShift;
@@ -802,13 +802,13 @@ void InvalidateScreen(void) {
 void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
                          BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
-  UINT16 usWidth, usHeight;
+  uint16_t usWidth, usHeight;
   UINT8 ubBitDepth;
   HRESULT ReturnCode;
   static RECT Region;
-  static UINT16 usMouseXPos, usMouseYPos;
+  static uint16_t usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
-  UINT16 usNumStrips = 0;
+  uint16_t usNumStrips = 0;
   INT32 cnt;
   INT16 sShiftX, sShiftY;
   INT32 uiCountY;
@@ -1270,7 +1270,7 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
 
 void RefreshScreen(void *DummyVariable) {
   static uint32_t uiRefreshThreadState, uiIndex;
-  UINT16 usScreenWidth, usScreenHeight;
+  uint16_t usScreenWidth, usScreenHeight;
   static BOOLEAN fShowMouse;
   HRESULT ReturnCode;
   static RECT Region;
@@ -1477,7 +1477,7 @@ void RefreshScreen(void *DummyVariable) {
     CHAR8 FileName[64];
     INT32 iIndex;
     STRING512 ExecDir;
-    UINT16 *p16BPPData;
+    uint16_t *p16BPPData;
 
     Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
     Plat_SetCurrentDirectory(ExecDir);
@@ -1549,7 +1549,7 @@ void RefreshScreen(void *DummyVariable) {
 
       // 5/6/5.. create buffer...
       if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-        p16BPPData = (UINT16 *)MemAlloc(640 * 2);
+        p16BPPData = (uint16_t *)MemAlloc(640 * 2);
       }
 
       for (iIndex = 479; iIndex >= 0; iIndex--) {
@@ -1669,25 +1669,25 @@ void RefreshScreen(void *DummyVariable) {
 
       gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore = TRUE;
       gMouseCursorBackground[CURRENT_MOUSE_DATA].usRight =
-          (UINT16)Region.right - (UINT16)Region.left;
+          (uint16_t)Region.right - (uint16_t)Region.left;
       gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom =
-          (UINT16)Region.bottom - (UINT16)Region.top;
+          (uint16_t)Region.bottom - (uint16_t)Region.top;
       if (Region.left < 0) {
-        gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = (UINT16)(0 - Region.left);
+        gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = (uint16_t)(0 - Region.left);
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos = 0;
         Region.left = 0;
       } else {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos =
-            (UINT16)MousePos.x - gsMouseCursorXOffset;
+            (uint16_t)MousePos.x - gsMouseCursorXOffset;
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = 0;
       }
       if (Region.top < 0) {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos = 0;
-        gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = (UINT16)(0 - Region.top);
+        gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = (uint16_t)(0 - Region.top);
         Region.top = 0;
       } else {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos =
-            (UINT16)MousePos.y - gsMouseCursorYOffset;
+            (uint16_t)MousePos.y - gsMouseCursorYOffset;
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = 0;
       }
 
@@ -2127,7 +2127,7 @@ void UnlockMouseBuffer(void) {
 
 BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
-  UINT16 usBit;
+  uint16_t usBit;
   HRESULT ReturnCode;
 
   Assert(gpPrimarySurface != NULL);
@@ -2145,9 +2145,9 @@ BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  gusRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  gusGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  gusBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  gusRedMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  gusGreenMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  gusBlueMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   // RGB 5,5,5
   if ((gusRedMask == 0x7c00) && (gusGreenMask == 0x03e0) && (gusBlueMask == 0x1f))
@@ -2205,8 +2205,8 @@ BOOLEAN EraseMouseCursor() {
   return (TRUE);
 }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                 UINT16 usCursorWidth) {
+BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, uint16_t usCursorHeight,
+                                 uint16_t usCursorWidth) {
   gsMouseCursorXOffset = sOffsetX;
   gsMouseCursorYOffset = sOffsetY;
   gusMouseCursorWidth = usCursorWidth;
@@ -2216,7 +2216,7 @@ BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursor
 
 void DirtyCursor() { guiMouseBufferState = BUFFER_DIRTY; }
 
-BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
+BOOLEAN SetCurrentCursor(uint16_t usVideoObjectSubIndex, uint16_t usOffsetX, uint16_t usOffsetY) {
   BOOLEAN ReturnValue;
   PTR pTmpPointer;
   uint32_t uiPitch;
@@ -2351,13 +2351,13 @@ typedef struct {
   UINT8 ubIDLength;
   UINT8 ubColorMapType;
   UINT8 ubTargaType;
-  UINT16 usColorMapOrigin;
-  UINT16 usColorMapLength;
+  uint16_t usColorMapOrigin;
+  uint16_t usColorMapLength;
   UINT8 ubColorMapEntrySize;
-  UINT16 usOriginX;
-  UINT16 usOriginY;
-  UINT16 usImageWidth;
-  UINT16 usImageHeight;
+  uint16_t usOriginX;
+  uint16_t usOriginY;
+  uint16_t usImageWidth;
+  uint16_t usImageHeight;
   UINT8 ubBitsPerPixel;
   UINT8 ubImageDescriptor;
 
@@ -2368,7 +2368,7 @@ typedef struct {
 void SnapshotSmall(void) {
   INT32 iCountX, iCountY;
   DDSURFACEDESC SurfaceDescription;
-  UINT16 *pVideo, *pDest;
+  uint16_t *pVideo, *pDest;
 
   HRESULT ReturnCode;
 
@@ -2394,22 +2394,22 @@ void SnapshotSmall(void) {
   //	fwrite(&Header, sizeof(TARGA_HEADER), 1, disk);
 
   // Get the write pointer
-  pVideo = (UINT16 *)SurfaceDescription.lpSurface;
+  pVideo = (uint16_t *)SurfaceDescription.lpSurface;
 
   pDest = gpFrameData[giNumFrames];
 
   for (iCountY = SCREEN_HEIGHT - 1; iCountY >= 0; iCountY -= 1) {
     for (iCountX = 0; iCountX < SCREEN_WIDTH; iCountX += 1) {
-      //		uiData=(UINT16)*(pVideo+(iCountY*640*2)+ ( iCountX * 2 ) );
+      //		uiData=(uint16_t)*(pVideo+(iCountY*640*2)+ ( iCountX * 2 ) );
 
       //				1111 1111 1100 0000
       //				f		 f		c
-      //		usPixel555=	(UINT16)(uiData&0xffff);
+      //		usPixel555=	(uint16_t)(uiData&0xffff);
       //			usPixel555= ((usPixel555 & 0xffc0) >> 1) | (usPixel555 & 0x1f);
 
-      //		usPixel555=	(UINT16)(uiData);
+      //		usPixel555=	(uint16_t)(uiData);
 
-      //	fwrite( &usPixel555, sizeof(UINT16), 1, disk);
+      //	fwrite( &usPixel555, sizeof(uint16_t), 1, disk);
       //		fwrite(	(void *)(((UINT8 *)SurfaceDescription.lpSurface) + ( iCountY * 640 *
       // 2) + ( iCountX * 2 ) ), 2 * sizeof( BYTE ), 1, disk );
 
@@ -2445,7 +2445,7 @@ void VideoMovieCapture(BOOLEAN fEnable) {
   gfVideoCapture = fEnable;
   if (fEnable) {
     for (cnt = 0; cnt < MAX_NUM_FRAMES; cnt++) {
-      gpFrameData[cnt] = (UINT16 *)MemAlloc(640 * 480 * 2);
+      gpFrameData[cnt] = (uint16_t *)MemAlloc(640 * 480 * 2);
     }
 
     giNumFrames = 0;
@@ -2469,7 +2469,7 @@ void RefreshMovieCache() {
   FILE *disk;
   CHAR8 cFilename[_MAX_PATH];
   static uint32_t uiPicNum = 0;
-  UINT16 *pDest;
+  uint16_t *pDest;
   INT32 cnt;
   STRING512 ExecDir;
 
@@ -2496,7 +2496,7 @@ void RefreshMovieCache() {
 
     for (iCountY = 480 - 1; iCountY >= 0; iCountY -= 1) {
       for (iCountX = 0; iCountX < 640; iCountX++) {
-        fwrite((pDest + (iCountY * 640) + iCountX), sizeof(UINT16), 1, disk);
+        fwrite((pDest + (iCountY * 640) + iCountX), sizeof(uint16_t), 1, disk);
       }
     }
 
@@ -2916,7 +2916,7 @@ BOOLEAN AddVideoSurfaceRegion(uint32_t uiIndex, VSURFACE_REGION *pNewRegion) {
   return (TRUE);
 }
 
-BOOLEAN GetVideoSurfaceDescription(uint32_t uiIndex, UINT16 *usWidth, UINT16 *usHeight,
+BOOLEAN GetVideoSurfaceDescription(uint32_t uiIndex, uint16_t *usWidth, uint16_t *usHeight,
                                    UINT8 *ubBitDepth) {
   struct VSurface *hVSurface;
 
@@ -2987,7 +2987,7 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, UINT16 usRegionIndex,
+BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, uint16_t usRegionIndex,
                         INT32 iDestX, INT32 iDestY, uint32_t fBltFlags, blt_vs_fx *pBltFx) {
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
@@ -3019,7 +3019,7 @@ BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, UINT16 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP) {
+                                  INT32 iDestX2, INT32 iDestY2, uint16_t Color16BPP) {
   blt_vs_fx BltFx;
   struct VSurface *hDestVSurface;
   SGPRect Clip;
@@ -3074,7 +3074,7 @@ BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 
 
 BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  UINT16 Index, INT16 Ox, INT16 Oy) {
+                                  uint16_t Index, INT16 Ox, INT16 Oy) {
   INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
@@ -3175,8 +3175,8 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   struct VSurface *hVSurface;
   HIMAGE hImage;
   SGPRect tempRect;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint16_t usHeight;
+  uint16_t usWidth;
   UINT8 ubBitDepth;
   uint32_t fMemUsage;
 
@@ -3552,12 +3552,12 @@ void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
 }
 
 // Given an HIMAGE object, blit imagery into existing Video Surface. Can be from 8->16 BPP
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, UINT16 usX,
-                                      UINT16 usY, SGPRect *pSrcRect) {
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, uint16_t usX,
+                                      uint16_t usY, SGPRect *pSrcRect) {
   BYTE *pDest;
   uint32_t fBufferBPP = 0;
   uint32_t uiPitch;
-  UINT16 usEffectiveWidth;
+  uint16_t usEffectiveWidth;
   SGPRect aRect;
 
   // Assertions
@@ -3595,7 +3595,7 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage,
   pDest = LockVideoSurfaceBuffer(hVSurface, &uiPitch);
 
   // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-  usEffectiveWidth = (UINT16)(uiPitch / (hVSurface->ubBitDepth / 8));
+  usEffectiveWidth = (uint16_t)(uiPitch / (hVSurface->ubBitDepth / 8));
 
   CHECKF(pDest != NULL);
 
@@ -3813,9 +3813,9 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
 //
 // ********************************************************
 
-BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNumRegions) {
+BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, uint16_t usNumRegions) {
   RGNDATA *pRgnData;
-  UINT16 cnt;
+  uint16_t cnt;
   RECT aRect;
   LPDIRECTDRAW2 lpDD2Object;
 
@@ -3902,8 +3902,8 @@ BOOLEAN AddVSurfaceRegion(struct VSurface *hVSurface, VSURFACE_REGION *pNewRegio
 
 // Add a group of regions
 BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRegions,
-                           UINT16 uiNumRegions) {
-  UINT16 cnt;
+                           uint16_t uiNumRegions) {
+  uint16_t cnt;
 
   Assert(hVSurface != NULL);
   Assert(ppNewRegions != NULL);
@@ -3915,7 +3915,7 @@ BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRe
   return (TRUE);
 }
 
-BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex) {
+BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex) {
   VSURFACE_REGION aRegion;
 
   Assert(hVSurface != NULL);
@@ -3931,13 +3931,13 @@ BOOLEAN ClearAllVSurfaceRegions(struct VSurface *hVSurface) {
   uiListSize = ListSize(hVSurface->RegionList);
 
   for (cnt = uiListSize - 1; cnt >= 0; cnt--) {
-    RemoveVSurfaceRegion(hVSurface, (UINT16)cnt);
+    RemoveVSurfaceRegion(hVSurface, (uint16_t)cnt);
   }
 
   return (TRUE);
 }
 
-BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion) {
+BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex, VSURFACE_REGION *aRegion) {
   Assert(hVSurface != NULL);
 
   if (!PeekList(hVSurface->RegionList, aRegion, usIndex)) {
@@ -3959,7 +3959,7 @@ BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, RECT *pRect) {
   return (TRUE);
 }
 
-BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
+BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex,
                               VSURFACE_REGION *aRegion) {
   VSURFACE_REGION OldRegion;
 
@@ -3976,7 +3976,7 @@ BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
   return (TRUE);
 }
 
-BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, UINT16 usIndex,
+BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, uint16_t usIndex,
                                  VSURFACE_REGION *pNewRegion) {
   Assert(hVSurface != NULL);
   Assert(pNewRegion != NULL);
@@ -3997,12 +3997,12 @@ BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, UINT16 usIndex,
 // Will drop down into user-defined blitter if 8->16 BPP blitting is being done
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
+                                      uint16_t usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
                                       blt_vs_fx *pBltFx) {
   VSURFACE_REGION aRegion;
   RECT SrcRect, DestRect;
   UINT8 *pSrcSurface8, *pDestSurface8;
-  UINT16 *pDestSurface16, *pSrcSurface16;
+  uint16_t *pDestSurface16, *pSrcSurface16;
   uint32_t uiSrcPitch, uiDestPitch, uiWidth, uiHeight;
 
   // Assertions
@@ -4124,13 +4124,13 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   // First check BPP values for compatibility
   if (hDestVSurface->ubBitDepth == 16 && hSrcVSurface->ubBitDepth == 16) {
     if (fBltFlags & VS_BLT_MIRROR_Y) {
-      if ((pSrcSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
+      if ((pSrcSurface16 = (uint16_t *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
         DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
                    String("Failed on lock of 16BPP surface for blitting"));
         return (FALSE);
       }
 
-      if ((pDestSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) ==
+      if ((pDestSurface16 = (uint16_t *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) ==
           NULL) {
         UnLockVideoSurfaceBuffer(hSrcVSurface);
         DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
@@ -4232,8 +4232,8 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   DDGetSurfaceDescription(lpDDSurface, &DDSurfaceDesc);
   PixelFormat = DDSurfaceDesc.ddpfPixelFormat;
 
-  hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
-  hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
+  hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
+  hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
   hVSurface->ubBitDepth = (UINT8)PixelFormat.dwRGBBitCount;
   hVSurface->pSurfaceData = (PTR)lpDDSurface;
   hVSurface->pSurfaceData1 = NULL;
@@ -4465,12 +4465,12 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
   return (TRUE);
 }
 
-BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, uint32_t uiDestPitchBYTES,
+BOOLEAN Blt16BPPBufferShadowRectAlternateTable(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                SGPRect *area);
 
 BOOLEAN InternalShadowVideoSurfaceRect(uint32_t uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2,
                                        INT32 Y2, BOOLEAN fLowPercentShadeTable) {
-  UINT16 *pBuffer;
+  uint16_t *pBuffer;
   uint32_t uiPitch;
   SGPRect area;
   struct VSurface *hVSurface;
@@ -4512,7 +4512,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(uint32_t uiDestVSurface, INT32 X1, INT32 
   area.iRight = X2;
 
   // Lock video surface
-  pBuffer = (UINT16 *)LockVideoSurface(uiDestVSurface, &uiPitch);
+  pBuffer = (uint16_t *)LockVideoSurface(uiDestVSurface, &uiPitch);
   // UnLockVideoSurface( uiDestVSurface );
 
   if (pBuffer == NULL) {
@@ -4634,7 +4634,7 @@ BOOLEAN ShadowVideoSurfaceImage(uint32_t uiDestVSurface, struct VObject *hImageH
   return (TRUE);
 }
 
-BOOLEAN MakeVSurfaceFromVObject(uint32_t uiVObject, UINT16 usSubIndex, uint32_t *puiVSurface) {
+BOOLEAN MakeVSurfaceFromVObject(uint32_t uiVObject, uint16_t usSubIndex, uint32_t *puiVSurface) {
   struct VObject *hSrcVObject;
   uint32_t uiVSurface;
   VSURFACE_DESC hDesc;
@@ -4792,7 +4792,7 @@ void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
 // Debug wrapper for adding vsurfaces
 BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex, uint32_t uiLineNum,
                               CHAR8 *pSourceFile) {
-  UINT16 usLength;
+  uint16_t usLength;
   CHAR8 str[256];
   if (!AddStandardVideoSurface(VSurfaceDesc, uiIndex)) {
     return FALSE;
@@ -5052,7 +5052,7 @@ struct SmkFlic *SmkGetFreeFlic(void) {
 void SmkSetupVideo(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
-  UINT16 usRed, usGreen, usBlue;
+  uint16_t usRed, usGreen, usBlue;
   struct VSurface *hVSurface;
 
   // DEF:
@@ -5069,9 +5069,9 @@ void SmkSetupVideo(void) {
     return;
   }
 
-  usRed = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  usGreen = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  usBlue = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  usRed = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  usGreen = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  usBlue = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   if ((usRed == 0xf800) && (usGreen == 0x07e0) && (usBlue == 0x001f))
     guiSmackPixelFormat = SMACKBUFFER565;
@@ -5108,7 +5108,7 @@ LOGFONT gLogFont;
 
 struct HWINFONT WinFonts[MAX_WIN_FONTS];
 
-void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, UINT16 *src) {
+void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, uint16_t *src) {
   INT32 i, j;
   char *ptr;
 

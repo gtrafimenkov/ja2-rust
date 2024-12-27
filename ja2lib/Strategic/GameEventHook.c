@@ -143,13 +143,13 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       break;
     // Add items to BobbyR's new/used inventory
     case EVENT_UPDATE_BOBBY_RAY_INVENTORY:
-      AddFreshBobbyRayInventory((UINT16)pEvent->uiParam);
+      AddFreshBobbyRayInventory((uint16_t)pEvent->uiParam);
       break;
     // Called once a day to update the number of days that a hired merc from M.E.R.C. has been on
     // contract.
     // Also if the player hasn't paid for a while Specks will start sending e-mails to the player
     case EVENT_DAILY_UPDATE_OF_MERC_SITE:
-      DailyUpdateOfMercSite((UINT16)GetWorldDay());
+      DailyUpdateOfMercSite((uint16_t)GetWorldDay());
       break;
     case EVENT_DAY3_ADD_EMAIL_FROM_SPECK:
       AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());

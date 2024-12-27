@@ -48,7 +48,7 @@ extern uint32_t guiBrownBackgroundForTeamPanel;
 extern uint32_t guiGoldBackgroundForTeamPanel;
 
 // selected grunt
-extern UINT16 gusSelectedSoldier;
+extern uint16_t gusSelectedSoldier;
 
 // car portraits
 enum {
@@ -104,11 +104,11 @@ void UnLoadCarPortraits(void) {
 void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                      INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
-  // UINT16 usLineColor;
+  // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   INT8 bBandage;
 
   // Erase what was there
@@ -186,11 +186,11 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
 void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                        INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
-  // UINT16 usLineColor;
+  // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   struct VObject *hHandle;
 
   // Erase what was there
@@ -288,11 +288,11 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
 void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                        INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
-  // UINT16 usLineColor;
+  // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
 
   // Erase what was there
   if (fErase) {
@@ -330,11 +330,11 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, IN
                      INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
                      uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
-  // UINT16 usLineColor;
+  // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   INT16 sValue;
 
   if (ubStatus >= DRAW_ITEM_STATUS_ATTACHMENT1) {

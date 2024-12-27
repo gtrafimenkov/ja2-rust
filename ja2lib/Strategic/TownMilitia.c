@@ -485,7 +485,7 @@ void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier
   return;
 }
 
-void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, CHAR16 *str, UINT16 usFlags,
+void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, CHAR16 *str, uint16_t usFlags,
                                          MSGBOX_CALLBACK ReturnCallback) {
   if (mapX <= 10 && mapY >= 6 && mapY <= 11) {
     DoLowerScreenIndependantMessageBox(str, usFlags, ReturnCallback);

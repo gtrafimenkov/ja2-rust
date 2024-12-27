@@ -130,7 +130,7 @@ void HandleInterfaceBackgrounds();
 void BeginOverlayMessage(uint32_t uiFont, CHAR16 *pFontString, ...);
 void EndOverlayMessage();
 
-void DrawSelectedUIAboveGuy(UINT16 usSoldierID);
+void DrawSelectedUIAboveGuy(uint16_t usSoldierID);
 
 void CreateCurrentTacticalPanelButtons();
 void RemoveCurrentTacticalPanelButtons();
@@ -162,7 +162,7 @@ void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...);
 // map screen version, for centering over the map area
 void BeginMapUIMessage(UINT8 fPosition, CHAR16 *pFontString, ...);
 
-extern UINT16 gusUIOldSelectedSoldier;
+extern uint16_t gusUIOldSelectedSoldier;
 extern INT32 giUIMessageOverlay;
 extern uint32_t guiUIMessageTime;
 

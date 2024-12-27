@@ -343,8 +343,8 @@ extern BOOLEAN fMapScreenBottomDirty;
 BOOLEAN fFoundTixa = FALSE;
 
 // selected sector
-UINT16 sSelMapX = 9;
-UINT16 sSelMapY = 1;
+uint16_t sSelMapX = 9;
+uint16_t sSelMapY = 1;
 
 // highlighted sector
 INT16 gsHighlightSectorX = -1;
@@ -354,10 +354,10 @@ INT16 gsHighlightSectorY = -1;
 INT32 iCurrentMapSectorZ = 0;
 
 // the palettes
-UINT16 *pMapLTRedPalette;
-UINT16 *pMapDKRedPalette;
-UINT16 *pMapLTGreenPalette;
-UINT16 *pMapDKGreenPalette;
+uint16_t *pMapLTRedPalette;
+uint16_t *pMapDKRedPalette;
+uint16_t *pMapLTGreenPalette;
+uint16_t *pMapDKGreenPalette;
 
 // the map border eta pop up
 uint32_t guiMapBorderEtaPopUp;
@@ -459,7 +459,7 @@ INT16 sSectorMilitiaMapSectorOutline = -1;
 // have any nodes in the current path list been deleted?
 BOOLEAN fDeletedNode = FALSE;
 
-UINT16 gusUndergroundNearBlack;
+uint16_t gusUndergroundNearBlack;
 
 BOOLEAN gfMilitiaPopupCreated = FALSE;
 
@@ -471,7 +471,7 @@ INT32 giClickHeliIconBaseTime = 0;
 void DisplayLevelString(void);
 
 void ShowTownText(void);
-void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFirstY);
+void DrawTownLabels(STR16 pString, STR16 pStringA, uint16_t usFirstX, uint16_t usFirstY);
 void ShowTeamAndVehicles(INT32 fShowFlags);
 BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor);
 BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor);
@@ -521,7 +521,7 @@ void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
 BOOLEAN CanMilitiaAutoDistribute(void);
 
 void ShowItemsOnMap(void);
-void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
+void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, INT16 sMapX, INT16 sMapY,
                     UINT8 ubIconPosition);
 void DisplayDestinationOfHelicopter(void);
 void DrawOrta();
@@ -666,14 +666,14 @@ uint32_t DrawMap(void) {
   struct VSurface *hSrcVSurface;
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
+  uint16_t *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
   INT16 cnt, cnt2;
   INT32 iCounter = 0;
 
   if (!iCurrentMapSectorZ) {
-    pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+    pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
 
     CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
     pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
@@ -847,7 +847,7 @@ void ShowTownText(void) {
   CHAR16 sString[32];
   CHAR16 sStringA[32];
   INT8 bTown = 0;
-  UINT16 usX, usY;
+  uint16_t usX, usY;
   BOOLEAN fLoyaltyTooLowToTrainMilitia;
 
   // this procedure will display the town names on the screen
@@ -877,14 +877,14 @@ void ShowTownText(void) {
       }
 
       if (!fZoomFlag) {
-        usX = (UINT16)(MAP_VIEW_START_X + MAP_GRID_X + (pTownPoints[bTown].x * MAP_GRID_X) / 10);
-        usY = (UINT16)(MAP_VIEW_START_Y + MAP_GRID_Y + ((pTownPoints[bTown].y * MAP_GRID_Y) / 10) +
-                       1);
+        usX = (uint16_t)(MAP_VIEW_START_X + MAP_GRID_X + (pTownPoints[bTown].x * MAP_GRID_X) / 10);
+        usY = (uint16_t)(MAP_VIEW_START_Y + MAP_GRID_Y +
+                         ((pTownPoints[bTown].y * MAP_GRID_Y) / 10) + 1);
       } else {
-        usX = (UINT16)(MAP_VIEW_START_X + MAP_GRID_X + MAP_GRID_ZOOM_X - iZoomX +
-                       (pTownPoints[bTown].x * MAP_GRID_ZOOM_X) / 10);
-        usY = (UINT16)(MAP_VIEW_START_Y + MAP_GRID_Y + MAP_GRID_ZOOM_Y - iZoomY +
-                       ((pTownPoints[bTown].y * MAP_GRID_ZOOM_Y) / 10) + 1);
+        usX = (uint16_t)(MAP_VIEW_START_X + MAP_GRID_X + MAP_GRID_ZOOM_X - iZoomX +
+                         (pTownPoints[bTown].x * MAP_GRID_ZOOM_X) / 10);
+        usY = (uint16_t)(MAP_VIEW_START_Y + MAP_GRID_Y + MAP_GRID_ZOOM_Y - iZoomY +
+                         ((pTownPoints[bTown].y * MAP_GRID_ZOOM_Y) / 10) + 1);
         //			usX = 2 * pTownPoints[ bTown  ].x - iZoomX - MAP_VIEW_START_X +
         // MAP_GRID_X; 			usY = 2 * pTownPoints[ bTown  ].y - iZoomY -
         // MAP_VIEW_START_Y
@@ -900,7 +900,7 @@ void ShowTownText(void) {
   }
 }
 
-void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFirstY) {
+void DrawTownLabels(STR16 pString, STR16 pStringA, uint16_t usFirstX, uint16_t usFirstY) {
   // this procedure will draw the given strings on the screen centered around the given x and at the
   // given y
 
@@ -1152,10 +1152,10 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   // struct VSurface* hMineSurface;
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
+  uint16_t *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
-  UINT16 *pOriginalPallette;
+  uint16_t *pOriginalPallette;
 
   // get original video surface palette
   CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
@@ -1216,7 +1216,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         // hSAMSurface->p16BPPPalette = pMapLTGreenPalette;
 
         // lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1240,7 +1240,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         // hSAMSurface->p16BPPPalette = pMapDKGreenPalette;
 
         /// lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1264,7 +1264,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         // hSAMSurface->p16BPPPalette = pMapLTRedPalette;
 
         // lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1288,7 +1288,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         // hSAMSurface->p16BPPPalette = pMapDKRedPalette;
 
         // lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1321,18 +1321,18 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   struct VSurface *hSrcVSurface;
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
+  uint16_t *pDestBuf;
   // UINT8 *pDestBuf2;
   UINT8 *pSrcBuf;
   SGPRect clip;
-  UINT16 *pOriginalPallette;
+  uint16_t *pOriginalPallette;
 
   // get sX and sY
   iX = (INT32)sMapX;
   iY = (INT32)sMapY;
 
   // trabslate to screen co-ords for zoomed
-  GetScreenXYFromMapXYStationary(((UINT16)(iX)), ((UINT16)(iY)), &sScreenX, &sScreenY);
+  GetScreenXYFromMapXYStationary(((uint16_t)(iX)), ((uint16_t)(iY)), &sScreenX, &sScreenY);
 
   // shift left by one sector
   iY = (INT32)sScreenY - MAP_GRID_Y;
@@ -1401,7 +1401,7 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         hSrcVSurface->p16BPPPalette = pMapLTGreenPalette;
 
         // lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1421,7 +1421,7 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         hSrcVSurface->p16BPPPalette = pMapDKGreenPalette;
 
         /// lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1441,7 +1441,7 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         hSrcVSurface->p16BPPPalette = pMapLTRedPalette;
 
         // lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1461,7 +1461,7 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
         hSrcVSurface->p16BPPPalette = pMapDKRedPalette;
 
         // lock source and dest buffers
-        pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
         pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
 
@@ -1982,8 +1982,8 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
         iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
 
       } else {
-        GetScreenXYFromMapXYStationary(((UINT16)(SectorID16_X(pNode->uiSectorId))),
-                                       ((UINT16)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
+        GetScreenXYFromMapXYStationary(((uint16_t)(SectorID16_X(pNode->uiSectorId))),
+                                       ((uint16_t)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
         iY = sY - MAP_GRID_Y;
         iX = sX - MAP_GRID_X;
       }
@@ -2327,8 +2327,8 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
         iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
 
       } else {
-        GetScreenXYFromMapXYStationary(((UINT16)(SectorID16_X(pNode->uiSectorId))),
-                                       ((UINT16)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
+        GetScreenXYFromMapXYStationary(((uint16_t)(SectorID16_X(pNode->uiSectorId))),
+                                       ((uint16_t)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
         iY = sY - MAP_GRID_Y;
         iX = sX - MAP_GRID_X;
       }
@@ -2463,11 +2463,11 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
       if ((!fZoomFlag) ||
           ((fZoomFlag) && (iX > MAP_VIEW_START_X) && (iY > MAP_VIEW_START_Y) &&
            (iX < 640 - MAP_GRID_X * 2) && (iY < MAP_VIEW_START_Y + MAP_VIEW_HEIGHT))) {
-        BltVideoObject(FRAME_BUFFER, hMapHandle, (UINT16)iDirection, iX, iY, VO_BLT_SRCTRANSPARENCY,
-                       NULL);
+        BltVideoObject(FRAME_BUFFER, hMapHandle, (uint16_t)iDirection, iX, iY,
+                       VO_BLT_SRCTRANSPARENCY, NULL);
 
         if (!fUTurnFlag) {
-          BltVideoObject(FRAME_BUFFER, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
+          BltVideoObject(FRAME_BUFFER, hMapHandle, (uint16_t)iArrow, iArrowX, iArrowY,
                          VO_BLT_SRCTRANSPARENCY, NULL);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
@@ -2688,8 +2688,8 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
       iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
       iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
     } else {
-      GetScreenXYFromMapXYStationary(((UINT16)(SectorID16_X(pNode->uiSectorId))),
-                                     ((UINT16)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
+      GetScreenXYFromMapXYStationary(((uint16_t)(SectorID16_X(pNode->uiSectorId))),
+                                     ((uint16_t)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
       iY = sY - MAP_GRID_Y;
       iX = sX - MAP_GRID_X;
     }
@@ -3205,7 +3205,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         // RestoreExternBackgroundRect(((INT16)iArrowX), ((INT16)iArrowY),DMAP_GRID_ZOOM_X,
         // DMAP_GRID_ZOOM_Y);
         if (pNode != pPath) {
-          BltVideoObject(FRAME_BUFFER, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
+          BltVideoObject(FRAME_BUFFER, hMapHandle, (uint16_t)iArrow, iArrowX, iArrowY,
                          VO_BLT_SRCTRANSPARENCY, NULL);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
@@ -3575,10 +3575,11 @@ void ShowPeopleInMotion(INT16 sX, INT16 sY) {
           iX = MAP_VIEW_START_X + (iX * MAP_GRID_X) + sOffsetX;
           iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
 
-          BltVideoObject(guiSAVEBUFFER, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY,
+          BltVideoObject(guiSAVEBUFFER, hIconHandle, (uint16_t)iCounter, (INT16)iX, (INT16)iY,
                          VO_BLT_SRCTRANSPARENCY, NULL);
         } else {
-          GetScreenXYFromMapXYStationary(((UINT16)(iX)), ((UINT16)(iY)), &sXPosition, &sYPosition);
+          GetScreenXYFromMapXYStationary(((uint16_t)(iX)), ((uint16_t)(iY)), &sXPosition,
+                                         &sYPosition);
 
           iY = sYPosition - MAP_GRID_Y + sOffsetY;
           iX = sXPosition - MAP_GRID_X + sOffsetX;
@@ -3586,7 +3587,7 @@ void ShowPeopleInMotion(INT16 sX, INT16 sY) {
           // clip blits to mapscreen region
           ClipBlitsToMapViewRegion();
 
-          BltVideoObject(guiSAVEBUFFER, hIconHandle, (UINT16)iCounter, iX, iY,
+          BltVideoObject(guiSAVEBUFFER, hIconHandle, (uint16_t)iCounter, iX, iY,
                          VO_BLT_SRCTRANSPARENCY, NULL);
 
           // restore clip blits
@@ -3781,7 +3782,7 @@ void DisplayPositionOfHelicopter(void) {
   //	INT16 sX =0, sY = 0;
   FLOAT flRatio = 0.0;
   uint32_t x, y;
-  UINT16 minX, minY, maxX, maxY;
+  uint16_t minX, minY, maxX, maxY;
   struct GROUP *pGroup;
   struct VObject *hHandle;
   INT32 iNumberOfPeopleInHelicopter = 0;
@@ -3842,14 +3843,14 @@ void DisplayPositionOfHelicopter(void) {
 
                                       // zoomed in, takes a little more work
                                       GetScreenXYFromMapXYStationary(
-         ((UINT16)(pGroup->ubSectorX)),((UINT16)(pGroup->ubSectorY)) , &sX, &sY ); sY=sY-MAP_GRID_Y;
-                                      sX=sX-MAP_GRID_X;
+         ((uint16_t)(pGroup->ubSectorX)),((uint16_t)(pGroup->ubSectorY)) , &sX, &sY );
+         sY=sY-MAP_GRID_Y; sX=sX-MAP_GRID_X;
 
                                       minX = ( sX );
                                       minY = ( sY );
 
                                       GetScreenXYFromMapXYStationary(
-         ((UINT16)(pGroup->ubNextX)),((UINT16)(pGroup->ubNextY)) , &sX, &sY ); sY=sY-MAP_GRID_Y;
+         ((uint16_t)(pGroup->ubNextX)),((uint16_t)(pGroup->ubNextY)) , &sX, &sY ); sY=sY-MAP_GRID_Y;
                                       sX=sX-MAP_GRID_X;
 
                                       maxX = ( sX );
@@ -4171,7 +4172,7 @@ void BlitTownGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usColor = 0;
+  uint16_t usColor = 0;
   INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
 
@@ -4247,7 +4248,7 @@ void BlitMineGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usColor = 0;
+  uint16_t usColor = 0;
   INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
 
@@ -4514,7 +4515,7 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
-  BltVideoObject(FRAME_BUFFER, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
+  BltVideoObject(FRAME_BUFFER, hVObject, (uint16_t)(sSelectedMilitiaTown - 1),
                  MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
                  MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -4696,8 +4697,8 @@ void RenderIconsPerSectorForSelectedTown(void) {
         }
       }
 
-      BltVideoObject(FRAME_BUFFER, hVObject, (UINT16)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject(FRAME_BUFFER, hVObject, (uint16_t)(iCurrentIcon), sX, sY,
+                     VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
 
@@ -4978,7 +4979,7 @@ void DisplayUnallocatedMilitia(void) {
       iCurrentIcon = 10;
     }
 
-    BltVideoObject(FRAME_BUFFER, hVObject, (UINT16)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
+    BltVideoObject(FRAME_BUFFER, hVObject, (uint16_t)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
                    NULL);
   }
 }
@@ -5390,7 +5391,7 @@ void DrawTownMilitiaForcesOnMap(void) {
           iIconValue += 2;
         }
 
-        DrawMapBoxIcon(hVObject, (UINT16)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
+        DrawMapBoxIcon(hVObject, (uint16_t)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
       }
     }
 
@@ -5425,7 +5426,7 @@ void DrawTownMilitiaForcesOnMap(void) {
           iIconValue += 2;
         }
 
-        DrawMapBoxIcon(hVObject, (UINT16)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
+        DrawMapBoxIcon(hVObject, (uint16_t)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
       }
     }
   }
@@ -5824,7 +5825,7 @@ void BlitSAMGridMarkers(void) {
   INT16 sScreenX = 0, sScreenY = 0;
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usColor = 0;
+  uint16_t usColor = 0;
   INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
 
@@ -5961,7 +5962,7 @@ void ShowItemsOnMap(void) {
   RestoreClipRegionToFullScreen();
 }
 
-void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
+void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, INT16 sMapX, INT16 sMapY,
                     UINT8 ubIconPosition) {
   INT32 iRowNumber, iColumnNumber;
   INT32 iX, iY;
@@ -5987,7 +5988,7 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, 
           {
                   INT sX, sY;
 
-                  GetScreenXYFromMapXYStationary( ( UINT16 ) sX,( UINT16 ) sY, &sX, &sY );
+                  GetScreenXYFromMapXYStationary( ( uint16_t ) sX,( uint16_t ) sY, &sX, &sY );
                   iY = sY-MAP_GRID_Y;
                   iX = sX-MAP_GRID_X;
 

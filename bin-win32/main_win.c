@@ -41,11 +41,11 @@
 
 extern BOOLEAN gfPauseDueToPlayerGamePause;
 
-extern void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam);
+extern void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam);
 
 // Prototype Declarations
 
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam);
+INT32 FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam);
 
 int PASCAL HandledWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandLine,
                           int sCommandShow);
@@ -71,7 +71,7 @@ CHAR8 gzCommandLine[100];  // Command line given
 
 BOOLEAN gfIgnoreMessages = FALSE;
 
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam) {
+INT32 FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam) {
   static BOOLEAN fRestore = FALSE;
 
   if (gfIgnoreMessages) return (DefWindowProc(hWindow, Message, wParam, lParam));
@@ -218,7 +218,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandL
   ShowCursor(FALSE);
 
   // Inititialize the SGP
-  struct PlatformInitParams params = {hInstance, (UINT16)sCommandShow, (void *)WindowProcedure,
+  struct PlatformInitParams params = {hInstance, (uint16_t)sCommandShow, (void *)WindowProcedure,
                                       IDI_ICON1};
   if (InitializeStandardGamingPlatform(&params) == FALSE) {
     return 0;

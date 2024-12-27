@@ -19,7 +19,7 @@ struct LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo);
 
 BOOLEAN IsDoorVisibleAtGridNo(INT16 sGridNo);
 
-BOOLEAN IsHiddenStructureVisible(INT16 sGridNo, UINT16 usIndex);
+BOOLEAN IsHiddenStructureVisible(INT16 sGridNo, uint16_t usIndex);
 
 BOOLEAN DoesGridnoContainHiddenStruct(INT16 sGridNo, BOOLEAN *pfVisible);
 

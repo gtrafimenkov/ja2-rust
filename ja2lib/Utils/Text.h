@@ -944,10 +944,10 @@ extern STR16 zMarksMapScreenText[];
 #define SIZE_ITEM_PROS 160
 #define SIZE_ITEM_CONS 160
 
-BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString);
+BOOLEAN LoadItemInfo(uint16_t ubIndex, STR16 pNameString, STR16 pInfoString);
 extern void LoadAllExternalText(void);
-BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString);
-BOOLEAN LoadItemProsAndCons(UINT16 usIndex, STR16 pProsString, STR16 pConsString);
+BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, STR16 pNameString);
+BOOLEAN LoadItemProsAndCons(uint16_t usIndex, STR16 pProsString, STR16 pConsString);
 
 enum {
   // Coordinating simultaneous arrival dialog strings

@@ -25,7 +25,7 @@ typedef struct TAG_SMOKE_EFFECT {
   INT8 bAge;         // the number of turns gas has been around
   BOOLEAN fAllocated;
   INT8 bType;
-  UINT16 usItem;
+  uint16_t usItem;
   UINT8 ubOwner;
   UINT8 ubPadding;
   uint32_t uiTimeOfLastUpdate;
@@ -44,7 +44,7 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 
 
 void RemoveSmokeEffectFromTile(INT16 sGridNo, INT8 bLevel);
 
-INT32 NewSmokeEffect(INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner);
+INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, UINT8 ubOwner);
 
 BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile);

@@ -54,7 +54,7 @@ uint32_t guiFlowerCardsBackButton;
 void GameInitFloristCards() {}
 
 BOOLEAN EnterFloristCards() {
-  UINT16 i, j, usPosX, usPosY;
+  uint16_t i, j, usPosX, usPosY;
   VOBJECT_DESC VObjectDesc;
   UINT8 ubCount;
 
@@ -71,9 +71,9 @@ BOOLEAN EnterFloristCards() {
     usPosX = FLORIST_CARD_FIRST_POS_X;
     for (i = 0; i < 3; i++) {
       MSYS_DefineRegion(&gSelectedFloristCardsRegion[ubCount], usPosX, usPosY,
-                        (UINT16)(usPosX + FLORIST_CARD_CARD_WIDTH),
-                        (UINT16)(usPosY + FLORIST_CARD_CARD_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
-                        MSYS_NO_CALLBACK, SelectFloristCardsRegionCallBack);
+                        (uint16_t)(usPosX + FLORIST_CARD_CARD_WIDTH),
+                        (uint16_t)(usPosY + FLORIST_CARD_CARD_HEIGHT), MSYS_PRIORITY_HIGH,
+                        CURSOR_WWW, MSYS_NO_CALLBACK, SelectFloristCardsRegionCallBack);
       MSYS_AddRegion(&gSelectedFloristCardsRegion[ubCount]);
       MSYS_SetRegionUserData(&gSelectedFloristCardsRegion[ubCount], 0, ubCount);
       ubCount++;
@@ -116,11 +116,11 @@ void HandleFloristCards() {}
 
 void RenderFloristCards() {
   UINT8 i, j, ubCount;
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
   wchar_t sTemp[640];
   uint32_t uiStartLoc = 0;
   struct VObject *hPixHandle;
-  UINT16 usHeightOffset;
+  uint16_t usHeightOffset;
 
   DisplayFloristDefaults();
 
@@ -141,16 +141,16 @@ void RenderFloristCards() {
       uiStartLoc = FLOR_CARD_TEXT_TITLE_SIZE * ubCount;
       LoadEncryptedDataFromFile(FLOR_CARD_TEXT_FILE, sTemp, uiStartLoc, FLOR_CARD_TEXT_TITLE_SIZE);
 
-      //			DisplayWrappedString((UINT16)(usPosX+7), (UINT16)(usPosY+15),
+      //			DisplayWrappedString((uint16_t)(usPosX+7), (uint16_t)(usPosY+15),
       // FLORIST_CARD_TEXT_WIDTH, 2, FLORIST_CARDS_SENTENCE_FONT, FLORIST_CARDS_SENTENCE_COLOR,
       // sTemp, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
       usHeightOffset = IanWrappedStringHeight(
-          (UINT16)(usPosX + 7), (UINT16)(usPosY), FLORIST_CARD_TEXT_WIDTH, 2,
+          (uint16_t)(usPosX + 7), (uint16_t)(usPosY), FLORIST_CARD_TEXT_WIDTH, 2,
           FLORIST_CARDS_SENTENCE_FONT, FLORIST_CARDS_SENTENCE_COLOR, sTemp, 0, FALSE, 0);
 
       usHeightOffset = (FLORIST_CARD_TEXT_HEIGHT - usHeightOffset) / 2;
 
-      IanDisplayWrappedString((UINT16)(usPosX + 7), (UINT16)(usPosY + 10 + usHeightOffset),
+      IanDisplayWrappedString((uint16_t)(usPosX + 7), (uint16_t)(usPosY + 10 + usHeightOffset),
                               FLORIST_CARD_TEXT_WIDTH, 2, FLORIST_CARDS_SENTENCE_FONT,
                               FLORIST_CARDS_SENTENCE_COLOR, sTemp, 0, FALSE, 0);
 

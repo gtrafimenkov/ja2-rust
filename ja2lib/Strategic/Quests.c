@@ -42,9 +42,10 @@ UINT8 gubFact[NUM_FACTS];  // this has to be updated when we figure out how many
 INT16 gsFoodQuestSectorX;
 INT16 gsFoodQuestSectorY;
 
-extern void GuaranteeAtLeastXItemsOfIndex(UINT8 ubArmsDealer, UINT16 usItemIndex, UINT8 ubHowMany);
+extern void GuaranteeAtLeastXItemsOfIndex(UINT8 ubArmsDealer, uint16_t usItemIndex,
+                                          UINT8 ubHowMany);
 
-void SetFactTrue(UINT16 usFact) {
+void SetFactTrue(uint16_t usFact) {
   // This function is here just for control flow purposes (debug breakpoints)
   // and code is more readable that way
 
@@ -57,7 +58,7 @@ void SetFactTrue(UINT16 usFact) {
   gubFact[usFact] = TRUE;
 }
 
-void SetFactFalse(UINT16 usFact) { gubFact[usFact] = FALSE; }
+void SetFactFalse(uint16_t usFact) { gubFact[usFact] = FALSE; }
 
 BOOLEAN CheckForNewShipment(void) {
   struct ITEM_POOL *pItemPool;
@@ -510,7 +511,7 @@ BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
   }
 }
 
-BOOLEAN CheckFact(UINT16 usFact, UINT8 ubProfileID) {
+BOOLEAN CheckFact(uint16_t usFact, UINT8 ubProfileID) {
   INT8 bTown = -1;
 
   switch (usFact) {

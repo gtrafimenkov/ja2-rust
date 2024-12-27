@@ -91,7 +91,7 @@ UINT8 ubFileRecordsLength[] = {
     ENRICO_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH, SLAY_LENGTH,
 };
 
-UINT16 ubFileOffsets[] = {
+uint16_t ubFileOffsets[] = {
     0,
     ENRICO_LENGTH,
     SLAY_LENGTH + ENRICO_LENGTH,
@@ -101,7 +101,7 @@ UINT16 ubFileOffsets[] = {
     5 * SLAY_LENGTH + ENRICO_LENGTH,
 };
 
-UINT16 usProfileIdsForTerroristFiles[] = {
+uint16_t usProfileIdsForTerroristFiles[] = {
     0,    // no body
     112,  // elgin
     64,   // slay
@@ -684,10 +684,10 @@ void FilesBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
 BOOLEAN DisplayFormattedText(void) {
   FilesUnitPtr pFilesList = pFilesListHead;
 
-  UINT16 usFirstWidth = 0;
-  UINT16 usFirstHeight = 0;
-  UINT16 usSecondWidth;
-  UINT16 usSecondHeight;
+  uint16_t usFirstWidth = 0;
+  uint16_t usFirstHeight = 0;
+  uint16_t usSecondWidth;
+  uint16_t usSecondHeight;
   INT32 iCounter = 0;
   INT32 iLength = 0;
   INT32 iHeight = 0;
@@ -757,7 +757,7 @@ BOOLEAN DisplayFormattedText(void) {
                                   FILE_STRING_SIZE * 2);
 
         // display string and get height
-        iHeight += IanDisplayWrappedString(FILE_VIEWER_X + 4, (UINT16)(FILE_VIEWER_Y + iHeight),
+        iHeight += IanDisplayWrappedString(FILE_VIEWER_X + 4, (uint16_t)(FILE_VIEWER_Y + iHeight),
                                            FILE_VIEWER_WIDTH, FILE_GAP, FILES_TEXT_FONT,
                                            FILE_TEXT_COLOR, sString, 0, FALSE, 0);
 
@@ -794,7 +794,7 @@ BOOLEAN DisplayFormattedText(void) {
                                   FILE_STRING_SIZE * 2);
 
         // display string and get height
-        iHeight += IanDisplayWrappedString(FILE_VIEWER_X + 4, (UINT16)(FILE_VIEWER_Y + iHeight),
+        iHeight += IanDisplayWrappedString(FILE_VIEWER_X + 4, (uint16_t)(FILE_VIEWER_Y + iHeight),
                                            FILE_VIEWER_WIDTH, FILE_GAP, FILES_TEXT_FONT,
                                            FILE_TEXT_COLOR, sString, 0, FALSE, 0);
 
@@ -860,7 +860,7 @@ BOOLEAN DisplayFormattedText(void) {
                                   FILE_STRING_SIZE * 2);
 
         // display string and get height
-        iHeight += IanDisplayWrappedString(FILE_VIEWER_X + 4, (UINT16)(FILE_VIEWER_Y + iHeight),
+        iHeight += IanDisplayWrappedString(FILE_VIEWER_X + 4, (uint16_t)(FILE_VIEWER_Y + iHeight),
                                            FILE_VIEWER_WIDTH, FILE_GAP, FILES_TEXT_FONT,
                                            FILE_TEXT_COLOR, sString, 0, FALSE, 0);
 
@@ -956,7 +956,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
         // reset width
         iFileLineWidth = 350;
-        iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+        iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
 
         // based on the record we are at, selected X start position and the width to wrap the line,
         // to fit around pictures
@@ -964,45 +964,45 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
         if (iCounter == 0) {
           // title
           iFileLineWidth = 350;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
 
         } else if (iCounter == 1) {
           // opening on first page
           iFileLineWidth = 350;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
 
         } else if ((iCounter > 1) && (iCounter < FILES_COUNTER_1_WIDTH)) {
           iFileLineWidth = 350;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
 
         } else if (iCounter == FILES_COUNTER_1_WIDTH) {
           if (giFilesPage == 0) {
             iYPositionOnPage += (MAX_FILE_MESSAGE_PAGE_SIZE - iYPositionOnPage);
           }
           iFileLineWidth = 350;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
         }
 
         else if (iCounter == FILES_COUNTER_2_WIDTH) {
           iFileLineWidth = 200;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 150);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 150);
         } else if (iCounter == FILES_COUNTER_3_WIDTH) {
           iFileLineWidth = 200;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 150);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 150);
         }
 
         else {
           iFileLineWidth = 350;
-          iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+          iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
         }
         // not far enough, advance
 
-        if ((iYPositionOnPage + IanWrappedStringHeight(0, 0, (UINT16)iFileLineWidth, FILE_GAP,
+        if ((iYPositionOnPage + IanWrappedStringHeight(0, 0, (uint16_t)iFileLineWidth, FILE_GAP,
                                                        uiFont, 0, sString, 0, 0, 0)) <
             MAX_FILE_MESSAGE_PAGE_SIZE) {
           // now print it
           iYPositionOnPage += (INT32)IanDisplayWrappedString(
-              (UINT16)(iFileStartX), (UINT16)(FILE_VIEWER_Y + iYPositionOnPage),
+              (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
               (INT16)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
 
           fGoingOffCurrentPage = FALSE;
@@ -1466,22 +1466,22 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
 
     if ((iCounter > 3) && (iCounter < 7)) {
       iFileLineWidth = 170;
-      iFileStartX = (UINT16)(FILE_VIEWER_X + 180);
+      iFileStartX = (uint16_t)(FILE_VIEWER_X + 180);
     } else {
       // reset width
       iFileLineWidth = 350;
-      iFileStartX = (UINT16)(FILE_VIEWER_X + 10);
+      iFileStartX = (uint16_t)(FILE_VIEWER_X + 10);
     }
 
     // based on the record we are at, selected X start position and the width to wrap the line, to
     // fit around pictures
-    if ((iYPositionOnPage + IanWrappedStringHeight(0, 0, (UINT16)iFileLineWidth, FILE_GAP, uiFont,
+    if ((iYPositionOnPage + IanWrappedStringHeight(0, 0, (uint16_t)iFileLineWidth, FILE_GAP, uiFont,
                                                    0, sString, 0, 0, 0)) <
         MAX_FILE_MESSAGE_PAGE_SIZE) {
       // now print it
       iYPositionOnPage += (INT32)IanDisplayWrappedString(
-          (UINT16)(iFileStartX), (UINT16)(FILE_VIEWER_Y + iYPositionOnPage), (INT16)iFileLineWidth,
-          FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
+          (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
+          (INT16)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
 
       fGoingOffCurrentPage = FALSE;
     } else {

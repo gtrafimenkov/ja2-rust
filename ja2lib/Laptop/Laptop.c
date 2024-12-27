@@ -514,7 +514,7 @@ void CreateDestroyErrorButton(void);
 void DrawTextOnErrorButton();
 BOOLEAN LeaveLapTopScreen();
 void HandleAnimatedButtons(void);
-void AnimateButton(uint32_t uiIconID, UINT16 usX, UINT16 usY);
+void AnimateButton(uint32_t uiIconID, uint16_t usX, uint16_t usY);
 void CreateDestoryBookMarkRegions(void);
 void EnterLaptopInitLaptopPages();
 void CheckMarkButtonsDirtyFlag(void);
@@ -524,10 +524,10 @@ void DisplayPlayersBalanceToDate(void);
 void CheckIfNewWWWW(void);
 void HandleLapTopESCKey(void);
 BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
-                                     uint32_t uiIconGraphic, UINT16 usIconGraphicIndex);
+                                     uint32_t uiIconGraphic, uint16_t usIconGraphicIndex);
 void RemoveTitleBarMaximizeGraphics();
-BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 usTopLeftX,
-                                       UINT16 usTopLeftY, UINT16 usTopRightX);
+BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t usTopLeftX,
+                                       uint16_t usTopLeftY, uint16_t usTopRightX);
 void HandleSlidingTitleBar(void);
 void ShowLights(void);
 void FlickerHDLight(void);
@@ -2315,9 +2315,9 @@ CreateLapTopMouseRegions() {
   // define regions
 
   // the entire laptop display region
-  MSYS_DefineRegion(&gLapTopScreenRegion, (UINT16)(LaptopScreenRect.iLeft),
-                    (UINT16)(LaptopScreenRect.iTop), (UINT16)(LaptopScreenRect.iRight),
-                    (UINT16)(LaptopScreenRect.iBottom), MSYS_PRIORITY_NORMAL + 1,
+  MSYS_DefineRegion(&gLapTopScreenRegion, (uint16_t)(LaptopScreenRect.iLeft),
+                    (uint16_t)(LaptopScreenRect.iTop), (uint16_t)(LaptopScreenRect.iRight),
+                    (uint16_t)(LaptopScreenRect.iBottom), MSYS_PRIORITY_NORMAL + 1,
                     CURSOR_LAPTOP_SCREEN, ScreenRegionMvtCallback, LapTopScreenCallBack);
 
   // MSYS_AddRegion(&gLapTopScreenRegion);
@@ -2583,7 +2583,7 @@ void RestoreOldRegion(INT32 iOldRegion) { return; }
 void HighLightRegion(INT32 iCurrentRegion) { return; }
 
 void HandleAnimatedButtons() { return; }
-void AnimateButton(uint32_t uiIconID, UINT16 usX, UINT16 usY) { return; }
+void AnimateButton(uint32_t uiIconID, uint16_t usX, uint16_t usY) { return; }
 
 void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iFrame = 0;
@@ -2591,7 +2591,7 @@ void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiWWWICON);
-    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (uint16_t)iFrame, LAPTOP_ICONS_X,
                    LAPTOP_ICONS_WWW_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
@@ -2606,7 +2606,7 @@ void EmailRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     iFrame = 0;
     DrawLapTopText();
     GetVideoObject(&hLapTopIconHandle, guiMAILICON);
-    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (uint16_t)iFrame, LAPTOP_ICONS_X,
                    LAPTOP_ICONS_MAIL_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     if (fUnReadMailFlag) {
       GetVideoObject(&hLapTopIconHandle, guiUNREAD);
@@ -2625,7 +2625,7 @@ void FinancialRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiFINANCIALICON);
-    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X - 4,
+    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (uint16_t)iFrame, LAPTOP_ICONS_X - 4,
                    LAPTOP_ICONS_FINANCIAL_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
@@ -2640,7 +2640,7 @@ void HistoryRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     iFrame = 0;
 
     GetVideoObject(&hLapTopIconHandle, guiHISTORYICON);
-    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (uint16_t)iFrame, LAPTOP_ICONS_X,
                    LAPTOP_ICONS_HISTORY_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
@@ -2654,7 +2654,7 @@ void FilesRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiFILESICON);
-    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (uint16_t)iFrame, LAPTOP_ICONS_X,
                    LAPTOP_ICONS_FILES_Y + 7, VO_BLT_SRCTRANSPARENCY, NULL);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
@@ -2669,7 +2669,7 @@ void PersonnelRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     iFrame = 0;
 
     GetVideoObject(&hLapTopIconHandle, guiPERSICON);
-    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+    BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (uint16_t)iFrame, LAPTOP_ICONS_X,
                    LAPTOP_ICONS_PERSONNEL_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
@@ -2846,7 +2846,7 @@ void DisplayBookMarks(void) {
     }
 
     FindFontCenterCoordinates(
-        BOOK_X + 3, (UINT16)(BOOK_TOP_Y + 2 + (iCounter * (BOOK_HEIGHT + 6)) + 6), BOOK_WIDTH - 3,
+        BOOK_X + 3, (uint16_t)(BOOK_TOP_Y + 2 + (iCounter * (BOOK_HEIGHT + 6)) + 6), BOOK_WIDTH - 3,
         BOOK_HEIGHT + 6, pBookMarkStrings[LaptopSaveInfo.iBookMarkList[iCounter - 1]], BOOK_FONT,
         &sX, &sY);
 
@@ -2876,7 +2876,7 @@ void DisplayBookMarks(void) {
     SetFontBackground(FONT_BLACK);
   }
   FindFontCenterCoordinates(
-      BOOK_X + 3, (UINT16)(BOOK_TOP_Y + 2 + (iCounter * (BOOK_HEIGHT + 6)) + 6), BOOK_WIDTH - 3,
+      BOOK_X + 3, (uint16_t)(BOOK_TOP_Y + 2 + (iCounter * (BOOK_HEIGHT + 6)) + 6), BOOK_WIDTH - 3,
       BOOK_HEIGHT + 6, pBookMarkStrings[CANCEL_STRING], BOOK_FONT, &sX, &sY);
   mprintf(sX, sY, pBookMarkStrings[CANCEL_STRING]);
   iCounter++;
@@ -2966,7 +2966,7 @@ void CreateBookMarkMouseRegions() {
   while (LaptopSaveInfo.iBookMarkList[iCounter] != -1) {
     MSYS_DefineRegion(
         &gBookmarkMouseRegions[iCounter], (INT16)BOOK_X,
-        (UINT16)(BOOK_TOP_Y + ((iCounter + 1) * (BOOK_HEIGHT + 6)) + 6), BOOK_X + BOOK_WIDTH,
+        (uint16_t)(BOOK_TOP_Y + ((iCounter + 1) * (BOOK_HEIGHT + 6)) + 6), BOOK_X + BOOK_WIDTH,
         (INT16)(BOOK_TOP_Y + ((iCounter + 2) * (BOOK_HEIGHT + 6)) + 6), MSYS_PRIORITY_HIGHEST - 2,
         CURSOR_LAPTOP_SCREEN, BookmarkMvtCallBack, BookmarkCallBack);
     // MSYS_AddRegion(&gBookmarkMouseRegions[iCounter]);
@@ -2983,7 +2983,7 @@ void CreateBookMarkMouseRegions() {
   // for the cancel button
   MSYS_DefineRegion(
       &gBookmarkMouseRegions[iCounter], (INT16)BOOK_X,
-      (UINT16)(BOOK_TOP_Y + ((iCounter + 1) * (BOOK_HEIGHT + 6)) + 6), BOOK_X + BOOK_WIDTH,
+      (uint16_t)(BOOK_TOP_Y + ((iCounter + 1) * (BOOK_HEIGHT + 6)) + 6), BOOK_X + BOOK_WIDTH,
       (INT16)(BOOK_TOP_Y + ((iCounter + 2) * (BOOK_HEIGHT + 6)) + 6), MSYS_PRIORITY_HIGHEST - 2,
       CURSOR_LAPTOP_SCREEN, BookmarkMvtCallBack, BookmarkCallBack);
   // MSYS_AddRegion(&gBookmarkMouseRegions[iCounter]);
@@ -3473,10 +3473,10 @@ void DisplayErrorBox(void) {
   // display error string
   DisplayWrappedString(
       ERROR_X + ERROR_TEXT_X,
-      (UINT16)(ERROR_Y + ERROR_TEXT_Y +
-               DisplayWrappedString(ERROR_X + ERROR_TEXT_X, ERROR_Y + ERROR_TEXT_Y, BOOK_WIDTH, 2,
-                                    ERROR_FONT, FONT_BLACK, pErrorStrings[1], FONT_BLACK, FALSE,
-                                    CENTER_JUSTIFIED)),
+      (uint16_t)(ERROR_Y + ERROR_TEXT_Y +
+                 DisplayWrappedString(ERROR_X + ERROR_TEXT_X, ERROR_Y + ERROR_TEXT_Y, BOOK_WIDTH, 2,
+                                      ERROR_FONT, FONT_BLACK, pErrorStrings[1], FONT_BLACK, FALSE,
+                                      CENTER_JUSTIFIED)),
       BOOK_WIDTH, 2, ERROR_FONT, FONT_BLACK, pErrorStrings[2], FONT_BLACK, FALSE, CENTER_JUSTIFIED);
 
   SetFontShadow(DEFAULT_SHADOW);
@@ -3744,14 +3744,14 @@ BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen
 }
 
 BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                         UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                         uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const SGPRect *pCenteringRect) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
 
   // do message box and return
   iLaptopMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                   (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                   (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                    ReturnCallback, pCenteringRect);
 
   // send back return state
@@ -3759,13 +3759,13 @@ BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_
 }
 
 BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                 UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback) {
+                                 uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
 
   // do message box and return
   iLaptopMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                   (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                   (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                    ReturnCallback, GetMapCenteringRect());
 
   // send back return state
@@ -3773,10 +3773,10 @@ BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExit
 }
 
 // places a tileable pattern down
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight,
+BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, uint16_t usWidth, uint16_t usHeight,
                               uint32_t uiBackgroundIdentifier) {
   struct VObject *hBackGroundHandle;
-  UINT16 x, y, uiPosX, uiPosY;
+  uint16_t x, y, uiPosX, uiPosY;
 
   // Blt the Wood background
   GetVideoObject(&hBackGroundHandle, uiBackgroundIdentifier);
@@ -3795,7 +3795,7 @@ BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16
 }
 
 BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
-                                     uint32_t uiIconGraphic, UINT16 usIconGraphicIndex) {
+                                     uint32_t uiIconGraphic, uint16_t usIconGraphicIndex) {
   VSURFACE_DESC vs_desc;
   struct VObject *hImageHandle;
 
@@ -3826,8 +3826,8 @@ BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
   return (TRUE);
 }
 
-BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 usTopLeftX,
-                                       UINT16 usTopLeftY, UINT16 usTopRightX) {
+BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t usTopLeftX,
+                                       uint16_t usTopLeftY, uint16_t usTopRightX) {
   static INT8 ubCount;
   INT16 sPosX, sPosY, sPosRightX, sPosBottomY, sWidth, sHeight;
   SGPRect SrcRect;
@@ -3879,34 +3879,34 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 u
   if (fForward) {
     // Restore the old rect
     if (ubCount > 1) {
-      sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
-      sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, sWidth, sHeight);
+      sWidth = (uint16_t)(LastRect.iRight - LastRect.iLeft);
+      sHeight = (uint16_t)(LastRect.iBottom - LastRect.iTop);
+      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (uint16_t)LastRect.iLeft,
+                         (uint16_t)LastRect.iTop, sWidth, sHeight);
     }
 
     // Save rectangle
     if (ubCount > 0) {
-      sWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
-      sHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, sWidth, sHeight);
+      sWidth = (uint16_t)(DestRect.iRight - DestRect.iLeft);
+      sHeight = (uint16_t)(DestRect.iBottom - DestRect.iTop);
+      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (uint16_t)DestRect.iLeft,
+                         (uint16_t)DestRect.iTop, sWidth, sHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS - 1) {
-      sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
-      sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, sWidth, sHeight);
+      sWidth = (uint16_t)(LastRect.iRight - LastRect.iLeft);
+      sHeight = (uint16_t)(LastRect.iBottom - LastRect.iTop);
+      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (uint16_t)LastRect.iLeft,
+                         (uint16_t)LastRect.iTop, sWidth, sHeight);
     }
 
     // Save rectangle
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS) {
-      sWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
-      sHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, sWidth, sHeight);
+      sWidth = (uint16_t)(DestRect.iRight - DestRect.iLeft);
+      sHeight = (uint16_t)(DestRect.iBottom - DestRect.iTop);
+      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (uint16_t)DestRect.iLeft,
+                         (uint16_t)DestRect.iTop, sWidth, sHeight);
     }
   }
 
@@ -4415,7 +4415,7 @@ BOOLEAN DrawDeskTopBackground(void) {
   struct VSurface *hSrcVSurface;
   uint32_t uiDestPitchBYTES;
   uint32_t uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
+  uint16_t *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
 
@@ -4425,7 +4425,7 @@ BOOLEAN DrawDeskTopBackground(void) {
   clip.iTop = 0;
   clip.iBottom = 408 + 19;
   // get surfaces
-  pDestBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   CHECKF(GetVideoSurface(&hSrcVSurface, guiDESKTOP));
   pSrcBuf = LockVideoSurface(guiDESKTOP, &uiSrcPitchBYTES);
 
@@ -4460,7 +4460,7 @@ void DeleteDesktopBackground(void) {
 
 void PrintBalance(void) {
   CHAR16 pString[32];
-  //	UINT16 usX, usY;
+  //	uint16_t usX, usY;
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BLACK);
@@ -4487,7 +4487,7 @@ void PrintNumberOnTeam(void) {
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BLACK);
@@ -4539,7 +4539,7 @@ void PrintDate(void) {
    Now use the render clock function used every where else
 
           CHAR16 pString[ 32 ];
-  //	UINT16 usX, usY;
+  //	uint16_t usX, usY;
 
           SetFont( FONT10ARIAL );
           SetFontForeground( FONT_BLACK );
@@ -4560,7 +4560,7 @@ void PrintDate(void) {
 
 void DisplayTaskBarIcons() {
   struct VObject *hPixHandle;
-  //	UINT16 usPosX;
+  //	uint16_t usPosX;
 
   //	usPosX = 83;
 
@@ -4580,7 +4580,7 @@ void DisplayTaskBarIcons() {
   }
 }
 
-void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, uint32_t usParam, UINT16 usKeyState) {
+void HandleKeyBoardShortCutsForLapTop(uint16_t usEvent, uint32_t usParam, uint16_t usKeyState) {
   // will handle keyboard shortcuts for the laptop ... to be added to later
 
   if ((fExitingLaptopFlag == TRUE) || (fTabHandled)) {
@@ -5149,8 +5149,9 @@ void DisplayWebBookMarkNotify(void) {
     BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, 1, DOWNLOAD_X + 4, DOWNLOAD_Y + 1,
                    VO_BLT_SRCTRANSPARENCY, NULL);
 
-    //	MSYS_DefineRegion( &gLapTopScreenRegion, ( UINT16 )( LaptopScreenRect.iLeft ),( UINT16 )(
-    // LaptopScreenRect.iTop ),( UINT16 ) ( LaptopScreenRect.iRight ),( UINT16 )(
+    //	MSYS_DefineRegion( &gLapTopScreenRegion, ( uint16_t )( LaptopScreenRect.iLeft ),( uint16_t
+    //)(
+    // LaptopScreenRect.iTop ),( uint16_t ) ( LaptopScreenRect.iRight ),( uint16_t )(
     // LaptopScreenRect.iBottom ), MSYS_PRIORITY_NORMAL+1,
     // CURSOR_LAPTOP_SCREEN, ScreenRegionMvtCallback, LapTopScreenCallBack );
 
@@ -5169,9 +5170,9 @@ void DisplayWebBookMarkNotify(void) {
     SetFontShadow(NO_SHADOW);
 
     // now draw the message
-    DisplayWrappedString((INT16)(DOWN_STRING_X - 42), (UINT16)(DOWN_STRING_Y + 20), BOOK_WIDTH + 45,
-                         2, BOOK_FONT, FONT_BLACK, pShowBookmarkString[1], FONT_BLACK, FALSE,
-                         CENTER_JUSTIFIED);
+    DisplayWrappedString((INT16)(DOWN_STRING_X - 42), (uint16_t)(DOWN_STRING_Y + 20),
+                         BOOK_WIDTH + 45, 2, BOOK_FONT, FONT_BLACK, pShowBookmarkString[1],
+                         FONT_BLACK, FALSE, CENTER_JUSTIFIED);
 
     // invalidate region
     InvalidateRegion(DOWNLOAD_X, DOWNLOAD_Y, DOWNLOAD_X + 150, DOWNLOAD_Y + 100);

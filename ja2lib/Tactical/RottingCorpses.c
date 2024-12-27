@@ -57,7 +57,7 @@
 
 // From lighting
 extern struct SGPPaletteEntry gpLightColors[3];
-extern UINT16 gusShadeLevels[16][3];
+extern uint16_t gusShadeLevels[16][3];
 
 void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);
 
@@ -367,7 +367,7 @@ void RecountRottingCorpses(void) {
   }
 }
 
-UINT16 GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage) {
+uint16_t GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage) {
   INT8 bDirection;
 
   switch (pCorpseDef->ubType) {
@@ -428,7 +428,7 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   UINT8 ubLoop;
   INT16 sTileGridNo;
   DB_STRUCTURE_TILE **ppTile;
-  UINT16 usStructIndex;
+  uint16_t usStructIndex;
   uint32_t uiDirectionUseFlag;
 
   if (pCorpseDef->sGridNo == NOWHERE) {
@@ -566,7 +566,7 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
 
   // Add structure data.....
   CheckForAndAddTileCacheStructInfo(pCorpse->pAniTile->pLevelNode, pCorpse->def.sGridNo,
-                                    (UINT16)(pCorpse->iCachedTileID),
+                                    (uint16_t)(pCorpse->iCachedTileID),
                                     GetCorpseStructIndex(pCorpseDef, TRUE));
 
   pStructureFileRef = GetCachedTileStructureRefFromFilename(zFilename);
@@ -685,7 +685,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   ROTTING_CORPSE_DEFINITION Corpse;
   UINT8 ubType;
   INT32 cnt;
-  UINT16 usItemFlags = 0;  // WORLD_ITEM_DONTRENDER;
+  uint16_t usItemFlags = 0;  // WORLD_ITEM_DONTRENDER;
   INT32 iCorpseID;
   INT8 bVisible = -1;
   struct OBJECTTYPE *pObj;
@@ -1160,7 +1160,7 @@ void RebuildAllCorpseShadeTables() {
   }
 }
 
-UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
+uint16_t CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
   struct SGPPaletteEntry LightPal[256];
   uint32_t uiCount;
 
@@ -1168,11 +1168,12 @@ UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
   for (uiCount = 0; uiCount < 256; uiCount++) {
     // combine the rgb of the light color with the object's palette
     LightPal[uiCount].peRed = (UINT8)(min(
-        (UINT16)pCorpse->p8BPPPalette[uiCount].peRed + (UINT16)gpLightColors[0].peRed, 255));
+        (uint16_t)pCorpse->p8BPPPalette[uiCount].peRed + (uint16_t)gpLightColors[0].peRed, 255));
     LightPal[uiCount].peGreen = (UINT8)(min(
-        (UINT16)pCorpse->p8BPPPalette[uiCount].peGreen + (UINT16)gpLightColors[0].peGreen, 255));
+        (uint16_t)pCorpse->p8BPPPalette[uiCount].peGreen + (uint16_t)gpLightColors[0].peGreen,
+        255));
     LightPal[uiCount].peBlue = (UINT8)(min(
-        (UINT16)pCorpse->p8BPPPalette[uiCount].peBlue + (UINT16)gpLightColors[0].peBlue, 255));
+        (uint16_t)pCorpse->p8BPPPalette[uiCount].peBlue + (uint16_t)gpLightColors[0].peBlue, 255));
   }
   // build the shade tables
   CreateCorpseShadedPalette(pCorpse, 0, LightPal);
@@ -1219,7 +1220,7 @@ ROTTING_CORPSE *FindCorpseBasedOnStructure(INT16 sGridNo, struct STRUCTURE *pStr
   return (pCorpse);
 }
 
-void CorpseHit(INT16 sGridNo, UINT16 usStructureID) {
+void CorpseHit(INT16 sGridNo, uint16_t usStructureID) {
 #if 0
 	struct STRUCTURE				*pStructure, *pBaseStructure;
 	ROTTING_CORPSE	*pCorpse = NULL;
@@ -1268,7 +1269,7 @@ void CorpseHit(INT16 sGridNo, UINT16 usStructureID) {
 #endif
 }
 
-void VaporizeCorpse(INT16 sGridNo, UINT16 usStructureID) {
+void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID) {
   struct STRUCTURE *pStructure, *pBaseStructure;
   ROTTING_CORPSE *pCorpse = NULL;
   INT16 sBaseGridNo;
@@ -1481,7 +1482,7 @@ void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel) 
   struct OBJECTTYPE Object;
   ROTTING_CORPSE *pCorpse;
   ROTTING_CORPSE_DEFINITION CorpseDef;
-  UINT16 usHeadIndex = HEAD_1;
+  uint16_t usHeadIndex = HEAD_1;
 
   pCorpse = GetCorpseAtGridNo(sGridNo, bLevel);
 

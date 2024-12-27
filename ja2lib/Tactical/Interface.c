@@ -99,20 +99,20 @@ TOP_MESSAGE gTopMessage;
 BOOLEAN gfTopMessageDirty = FALSE;
 
 void CreateTopMessage(uint32_t uiSurface, UINT8 ubType, CHAR16 *psString);
-extern UINT16 GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
-                                         UINT16 usAnimState);
+extern uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
+                                           uint16_t usAnimState);
 
 struct MOUSE_REGION gMenuOverlayRegion;
 
-UINT16 gusOldSelectedSoldier = NO_SOLDIER;
+uint16_t gusOldSelectedSoldier = NO_SOLDIER;
 
 // OVerlay ID
 INT32 giPopupSlideMessageOverlay = -1;
-UINT16 gusOverlayPopupBoxWidth, gusOverlayPopupBoxHeight;
+uint16_t gusOverlayPopupBoxWidth, gusOverlayPopupBoxHeight;
 MercPopUpBox gpOverrideMercBox;
 
 INT32 giUIMessageOverlay = -1;
-UINT16 gusUIMessageWidth, gusUIMessageHeight;
+uint16_t gusUIMessageWidth, gusUIMessageHeight;
 MercPopUpBox gpUIMessageOverrideMercBox;
 uint32_t guiUIMessageTime = 0;
 INT32 iOverlayMessageBox = -1;
@@ -214,10 +214,10 @@ uint32_t guiITEMPOINTERHATCHES;
 struct MOUSE_REGION gViewportRegion;
 struct MOUSE_REGION gRadarRegion;
 
-UINT16 gsUpArrowX;
-UINT16 gsUpArrowY;
-UINT16 gsDownArrowX;
-UINT16 gsDownArrowY;
+uint16_t gsUpArrowX;
+uint16_t gsUpArrowY;
+uint16_t gsDownArrowX;
+uint16_t gsDownArrowY;
 
 uint32_t giUpArrowRect;
 uint32_t giDownArrowRect;
@@ -1075,7 +1075,7 @@ void EraseRenderArrows() {
 void GetArrowsBackground() {
   struct SOLDIERTYPE *pSoldier;
   INT16 sMercScreenX, sMercScreenY;
-  UINT16 sArrowHeight = ARROWS_HEIGHT, sArrowWidth = ARROWS_WIDTH;
+  uint16_t sArrowHeight = ARROWS_HEIGHT, sArrowWidth = ARROWS_WIDTH;
 
   if (guiShowUPDownArrows & ARROWS_HIDE_UP && guiShowUPDownArrows & ARROWS_HIDE_DOWN) {
     return;
@@ -1259,7 +1259,7 @@ void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16
   }
 }
 
-void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
+void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sXPos, sYPos;
   INT16 sX, sY;
@@ -1267,7 +1267,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
   TILE_ELEMENT TileElem;
   CHAR16 *pStr;
   CHAR16 NameStr[50];
-  UINT16 usGraphicToUse = THIRDPOINTERS1;
+  uint16_t usGraphicToUse = THIRDPOINTERS1;
   BOOLEAN fRaiseName = FALSE;
   BOOLEAN fDoName = TRUE;
 
@@ -1601,11 +1601,11 @@ void EndOverlayMessage() {
 void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                      INT16 sHeight) {
   FLOAT dWidth, dPercentage;
-  // UINT16 usLineColor;
+  // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usLineColor;
+  uint16_t usLineColor;
   INT8 bBandage;
 
   // Draw breath points

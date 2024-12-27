@@ -29,15 +29,15 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
                     BOOLEAN fTacticalTraversal);
 
 /*
-BOOLEAN SectorIsBlockedFromVehicleExit( UINT16 sSectorDest, INT8 bToDirection  );
-BOOLEAN SectorIsBlockedFromFootExit( UINT16 sSector, INT8 bToDirection );
-BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( UINT16 sSourceSector, UINT16 sDestSector );
-BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( UINT16 sSourceSector, UINT16 sDestSector );
+BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSectorDest, INT8 bToDirection  );
+BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSector, INT8 bToDirection );
+BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( uint16_t sSourceSector, uint16_t sDestSector );
+BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( uint16_t sSourceSector, uint16_t sDestSector );
 BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY );
 void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, UINT8
 ubFromDirection);
 */
-BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum);
+BOOLEAN AddSectorToPathList(struct path* pPath, uint16_t uiSectorNum);
 
 // build a stategic path
 struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT16 iEndSectorNum,

@@ -37,9 +37,9 @@ struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename)
 
 struct VObject *GetCachedTileVideoObject(INT32 iIndex);
 struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex);
-void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, UINT16 usIndex,
-                                       UINT16 usSubIndex);
-void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, UINT16 usIndex);
+void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, uint16_t usIndex,
+                                       uint16_t usSubIndex);
+void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIndex);
 void GetRootName(STR8 pDestStr, STR8 pSrcStr);
 
 // OF COURSE, FOR SPEED, WE EXPORT OUR ARRAY

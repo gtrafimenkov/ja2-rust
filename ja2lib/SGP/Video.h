@@ -18,7 +18,7 @@ extern BOOLEAN InitializeVideoManager(struct PlatformInitParams *params);
 extern void ShutdownVideoManager(void);
 extern void SuspendVideoManager(void);
 extern BOOLEAN RestoreVideoManager(void);
-extern void GetCurrentVideoSettings(UINT16 *usWidth, UINT16 *usHeight, UINT8 *ubBitDepth);
+extern void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, UINT8 *ubBitDepth);
 extern void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom);
 extern void InvalidateScreen(void);
 extern PTR LockPrimarySurface(uint32_t *uiPitch);
@@ -31,14 +31,15 @@ extern PTR LockMouseBuffer(uint32_t *uiPitch);
 extern void UnlockMouseBuffer(void);
 extern BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitMask,
                                               uint32_t *BblueBitMask);
-extern BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY);
+extern BOOLEAN SetCurrentCursor(uint16_t usVideoObjectSubIndex, uint16_t usOffsetX,
+                                uint16_t usOffsetY);
 extern void StartFrameBufferRender(void);
 extern void EndFrameBufferRender(void);
 extern void PrintScreen(void);
 
 extern BOOLEAN EraseMouseCursor();
-extern BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                        UINT16 usCursorWidth);
+extern BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, uint16_t usCursorHeight,
+                                        uint16_t usCursorWidth);
 void DirtyCursor();
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);

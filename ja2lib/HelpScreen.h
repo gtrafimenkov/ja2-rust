@@ -21,14 +21,14 @@ typedef struct {
   INT8 bCurrentHelpScreen;
   uint32_t uiFlags;
 
-  UINT16 usHasPlayerSeenHelpScreenInCurrentScreen;
+  uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
 
   UINT8 ubHelpScreenDirty;
 
-  UINT16 usScreenLocX;
-  UINT16 usScreenLocY;
-  UINT16 usScreenWidth;
-  UINT16 usScreenHeight;
+  uint16_t usScreenLocX;
+  uint16_t usScreenLocY;
+  uint16_t usScreenWidth;
+  uint16_t usScreenHeight;
 
   INT32 iLastMouseClickY;  // last position the mouse was clicked ( if != -1 )
 
@@ -41,16 +41,16 @@ typedef struct {
   BOOLEAN fHaveAlreadyBeenInHelpScreenSinceEnteringCurrenScreen;
 
   INT8 bDelayEnteringHelpScreenBy1FrameCount;
-  UINT16 usLeftMarginPosX;
+  uint16_t usLeftMarginPosX;
 
-  UINT16 usCursor;
+  uint16_t usCursor;
 
   BOOLEAN fWasTheGamePausedPriorToEnteringHelpScreen;
 
   // scroll variables
-  UINT16 usTotalNumberOfPixelsInBuffer;
+  uint16_t usTotalNumberOfPixelsInBuffer;
   INT32 iLineAtTopOfTextBuffer;
-  UINT16 usTotalNumberOfLinesInBuffer;
+  uint16_t usTotalNumberOfLinesInBuffer;
   BOOLEAN fForceHelpScreenToComeUp;
 
 } HELP_SCREEN_STRUCT;

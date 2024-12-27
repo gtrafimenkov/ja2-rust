@@ -174,7 +174,7 @@ extern BOOLEAN fInMapMode;
 INT8 gbTrainingMode = -1;
 
 // who is the highlighted guy
-extern UINT16 gusUIFullTargetID;
+extern uint16_t gusUIFullTargetID;
 
 // showing town info?
 extern BOOLEAN fShowTownInfo;
@@ -273,10 +273,10 @@ at all! #define SAM_SITE_REPAIR_DIVISOR		10
 */
 
 // how many points worth of tool kits does the character have?
-UINT16 ToolKitPoints(struct SOLDIERTYPE *pSoldier);
+uint16_t ToolKitPoints(struct SOLDIERTYPE *pSoldier);
 
 // how many points worth of doctoring does the character have in his medical kits ?
-UINT16 TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier);
+uint16_t TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier);
 
 // handle doctor in this sector
 void HandleDoctorsInSector(INT16 sX, INT16 sY, INT8 bZ);
@@ -294,11 +294,11 @@ void UpdatePatientsWhoAreDoneHealing(void);
 UINT8 GetMinHealingSkillNeeded(struct SOLDIERTYPE *pPatient);
 
 // heal patient, given doctor and total healing pts available to doctor at this time
-UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
-                   UINT16 usHundredthsHealed);
+uint16_t HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
+                     uint16_t usHundredthsHealed);
 
 // can item be repaired?
-BOOLEAN IsItemRepairable(UINT16 usItem, INT8 bStatus);
+BOOLEAN IsItemRepairable(uint16_t usItem, INT8 bStatus);
 
 // does another merc have a repairable item on them?
 INT8 FindRepairableItemOnOtherSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubPassType);
@@ -331,7 +331,7 @@ void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts);
 
 // train militia in this sector with this soldier
 BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY,
-                          UINT16 sTrainingPts);
+                          uint16_t sTrainingPts);
 
 // is the character between secotrs in mvt
 BOOLEAN CharacterIsBetweenSectors(struct SOLDIERTYPE *pSoldier);
@@ -391,7 +391,7 @@ BOOLEAN CanSoldierBeHealedByDoctor(struct SOLDIERTYPE *pSoldier, struct SOLDIERT
 UINT8 GetNumberThatCanBeDoctored(struct SOLDIERTYPE *pDoctor, BOOLEAN fThisHour,
                                  BOOLEAN fSkipKitCheck, BOOLEAN fSkipSkillCheck);
 void CheckForAndHandleHospitalPatients(void);
-void HealHospitalPatient(struct SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft);
+void HealHospitalPatient(struct SOLDIERTYPE *pPatient, uint16_t usHealingPtsLeft);
 
 void MakeSureToolKitIsInHand(struct SOLDIERTYPE *pSoldier);
 BOOLEAN MakeSureMedKitIsInHand(struct SOLDIERTYPE *pSoldier);
@@ -1785,10 +1785,10 @@ struct SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(struct SOLDIERTYPE *pPatient,
   return (NULL);
 }
 
-UINT16 CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pDoctor, UINT16 *pusMaxPts,
-                                       BOOLEAN fMakeSureKitIsInHand) {
-  UINT16 usHealPts = 0;
-  UINT16 usKitPts = 0;
+uint16_t CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pDoctor, uint16_t *pusMaxPts,
+                                         BOOLEAN fMakeSureKitIsInHand) {
+  uint16_t usHealPts = 0;
+  uint16_t usKitPts = 0;
   INT8 bMedFactor;
 
   // make sure he has a medkit in his hand, and preferably make it a medical bag, not a first aid
@@ -1839,10 +1839,10 @@ UINT16 CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pDoctor, UINT16 *pusM
   return (usHealPts);
 }
 
-UINT8 CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
+UINT8 CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, uint16_t *pusMaxPts,
                                         BOOLEAN fMakeSureKitIsInHand) {
-  UINT16 usRepairPts;
-  UINT16 usKitPts;
+  uint16_t usRepairPts;
+  uint16_t usKitPts;
   UINT8 ubKitEffectiveness;
 
   // make sure toolkit in hand?
@@ -1891,8 +1891,8 @@ UINT8 CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, UINT16 *pu
   return ((UINT8)usRepairPts);
 }
 
-UINT16 ToolKitPoints(struct SOLDIERTYPE *pSoldier) {
-  UINT16 usKitpts = 0;
+uint16_t ToolKitPoints(struct SOLDIERTYPE *pSoldier) {
+  uint16_t usKitpts = 0;
   UINT8 ubPocket;
 
   // add up kit points
@@ -1905,9 +1905,9 @@ UINT16 ToolKitPoints(struct SOLDIERTYPE *pSoldier) {
   return (usKitpts);
 }
 
-UINT16 TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier) {
+uint16_t TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubPocket;
-  UINT16 usKitpts = 0;
+  uint16_t usKitpts = 0;
 
   // add up kit points of all medkits
   for (ubPocket = HANDPOS; ubPocket <= SMALLPOCK8POS; ubPocket++) {
@@ -1986,15 +1986,15 @@ void UpdatePatientsWhoAreDoneHealing(void) {
 
 void HealCharacters(struct SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ) {
   // heal all patients in this sector
-  UINT16 usAvailableHealingPts = 0;
-  UINT16 usRemainingHealingPts = 0;
-  UINT16 usUsedHealingPts = 0;
-  UINT16 usEvenHealingAmount = 0;
-  UINT16 usMax = 0;
+  uint16_t usAvailableHealingPts = 0;
+  uint16_t usRemainingHealingPts = 0;
+  uint16_t usUsedHealingPts = 0;
+  uint16_t usEvenHealingAmount = 0;
+  uint16_t usMax = 0;
   UINT8 ubTotalNumberOfPatients = 0;
   struct SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL, *pWorstHurtSoldier = NULL;
   INT32 cnt = 0;
-  UINT16 usOldLeftOvers = 0;
+  uint16_t usOldLeftOvers = 0;
 
   // now find number of healable mercs in sector that are wounded
   ubTotalNumberOfPatients = GetNumberThatCanBeDoctored(pDoctor, HEALABLE_THIS_HOUR, FALSE, FALSE);
@@ -2061,9 +2061,9 @@ void HealCharacters(struct SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ) {
     usUsedHealingPts = usAvailableHealingPts - usRemainingHealingPts;
 
     // increment skills based on healing pts used
-    StatChange(pDoctor, MEDICALAMT, (UINT16)(usUsedHealingPts / 100), FALSE);
-    StatChange(pDoctor, DEXTAMT, (UINT16)(usUsedHealingPts / 200), FALSE);
-    StatChange(pDoctor, WISDOMAMT, (UINT16)(usUsedHealingPts / 200), FALSE);
+    StatChange(pDoctor, MEDICALAMT, (uint16_t)(usUsedHealingPts / 100), FALSE);
+    StatChange(pDoctor, DEXTAMT, (uint16_t)(usUsedHealingPts / 200), FALSE);
+    StatChange(pDoctor, WISDOMAMT, (uint16_t)(usUsedHealingPts / 200), FALSE);
   }
 
   // if there's nobody else here who can EVER be helped by this doctor (regardless of whether they
@@ -2212,12 +2212,12 @@ UINT8 GetMinHealingSkillNeeded(struct SOLDIERTYPE *pPatient) {
   }
 }
 
-UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
-                   UINT16 usHundredthsHealed) {
+uint16_t HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
+                     uint16_t usHundredthsHealed) {
   // heal patient and return the number of healing pts used
-  UINT16 usHealingPtsLeft;
-  UINT16 usTotalFullPtsUsed = 0;
-  UINT16 usTotalHundredthsUsed = 0;
+  uint16_t usHealingPtsLeft;
+  uint16_t usTotalFullPtsUsed = 0;
+  uint16_t usTotalHundredthsUsed = 0;
   INT8 bPointsToUse = 0;
   INT8 bPointsUsed = 0;
   INT8 bPointsHealed = 0;
@@ -2264,7 +2264,7 @@ UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
   (that's already factored into lower healing pts)
                                   // but it does effect how fast the medkit is used up!  First aid
   kits disappear at double their doctoring rate! bPointsUsed = (INT8) UseKitPoints( &( pDoctor ->
-  inv[ bPocket ] ), (UINT16) (bPointsToUse * bMedFactor), pDoctor ); bPointsHealed = bPointsUsed /
+  inv[ bPocket ] ), (uint16_t) (bPointsToUse * bMedFactor), pDoctor ); bPointsHealed = bPointsUsed /
   bMedFactor;
 
                                   bPointsToUse -= bPointsHealed;
@@ -2302,7 +2302,7 @@ UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
         // into lower healing pts) but it does effect how fast the medkit is used up!  First aid
         // kits disappear at double their doctoring rate!
         bPointsUsed = (INT8)UseKitPoints(&(pDoctor->inv[bPocket]),
-                                         (UINT16)(bPointsToUse * bMedFactor), pDoctor);
+                                         (uint16_t)(bPointsToUse * bMedFactor), pDoctor);
         bPointsHealed = bPointsUsed / bMedFactor;
 
         bPointsToUse -= bPointsHealed;
@@ -2342,7 +2342,7 @@ UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
         // into lower healing pts) but it does effect how fast the medkit is used up!  First aid
         // kits disappear at double their doctoring rate!
         bPointsUsed = (INT8)UseKitPoints(&(pDoctor->inv[bPocket]),
-                                         (UINT16)(bPointsToUse * bMedFactor), pDoctor);
+                                         (uint16_t)(bPointsToUse * bMedFactor), pDoctor);
         bPointsHealed = bPointsUsed / bMedFactor;
 
         bPointsToUse -= bPointsHealed;
@@ -2408,7 +2408,7 @@ void CheckForAndHandleHospitalPatients(void) {
   }
 }
 
-void HealHospitalPatient(struct SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft) {
+void HealHospitalPatient(struct SOLDIERTYPE *pPatient, uint16_t usHealingPtsLeft) {
   INT8 bPointsToUse;
 
   if (usHealingPtsLeft <= 0) {
@@ -2591,10 +2591,10 @@ INT8 FindRepairableItemOnOtherSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubPass
   return (NO_SLOT);
 }
 
-void DoActualRepair(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 *pbStatus,
+void DoActualRepair(struct SOLDIERTYPE *pSoldier, uint16_t usItem, INT8 *pbStatus,
                     UINT8 *pubRepairPtsLeft) {
   INT16 sRepairCostAdj;
-  UINT16 usDamagePts, usPtsFixed;
+  uint16_t usDamagePts, usPtsFixed;
 
   // get item's repair ease, for each + point is 10% easier, each - point is 10% harder to repair
   sRepairCostAdj = 100 - (10 * Item[usItem].bRepairEase);
@@ -2653,8 +2653,8 @@ BOOLEAN RepairObject(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOwner,
     if (IsItemRepairable(pObj->usItem, pObj->bStatus[ubLoop])) {
       // repairable, try to repair it
 
-      // void DoActualRepair( struct SOLDIERTYPE * pSoldier, UINT16 usItem, INT8 * pbStatus, UINT8 *
-      // pubRepairPtsLeft )
+      // void DoActualRepair( struct SOLDIERTYPE * pSoldier, uint16_t usItem, INT8 * pbStatus, UINT8
+      // * pubRepairPtsLeft )
       DoActualRepair(pSoldier, pObj->usItem, &(pObj->bStatus[ubLoop]), pubRepairPtsLeft);
 
       fSomethingWasRepaired = TRUE;
@@ -2713,7 +2713,7 @@ BOOLEAN RepairObject(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOwner,
 }
 
 void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier) {
-  UINT16 usMax = 0;
+  uint16_t usMax = 0;
   UINT8 ubRepairPtsLeft = 0;
   UINT8 ubInitialRepairPts = 0;
   UINT8 ubRepairPtsUsed = 0;
@@ -2801,8 +2801,8 @@ void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier) {
   ubRepairPtsUsed = ubInitialRepairPts - ubRepairPtsLeft;
   if (ubRepairPtsUsed > 0) {
     // improve stats
-    StatChange(pSoldier, MECHANAMT, (UINT16)(ubRepairPtsUsed / 2), FALSE);
-    StatChange(pSoldier, DEXTAMT, (UINT16)(ubRepairPtsUsed / 2), FALSE);
+    StatChange(pSoldier, MECHANAMT, (uint16_t)(ubRepairPtsUsed / 2), FALSE);
+    StatChange(pSoldier, DEXTAMT, (uint16_t)(ubRepairPtsUsed / 2), FALSE);
 
     // check if kit damaged/depleted
     if ((Random(100)) <
@@ -2836,7 +2836,7 @@ void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier) {
   return;
 }
 
-BOOLEAN IsItemRepairable(UINT16 usItem, INT8 bStatus) {
+BOOLEAN IsItemRepairable(uint16_t usItem, INT8 bStatus) {
   // check to see if item can/needs to be repaired
   if ((bStatus < 100) && (Item[usItem].fFlags & ITEM_REPAIRABLE)) {
     // yep
@@ -2987,14 +2987,14 @@ void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ) {
   BOOLEAN fAtGunRange = FALSE;
   uint32_t uiCnt = 0;
   INT16 sTotalTrainingPts = 0;
-  UINT16 sTrainingPtsDueToInstructor = 0;
+  uint16_t sTrainingPtsDueToInstructor = 0;
   struct SOLDIERTYPE *pStatTrainerList[NUM_TRAINABLE_STATS];  // can't have more "best" trainers
                                                               // than trainable stats
   INT16 sBestTrainingPts;
   INT16 sTownTrainingPts;
   TOWN_TRAINER_TYPE TownTrainer[MAX_CHARACTER_COUNT];
   UINT8 ubTownTrainers;
-  UINT16 usMaxPts;
+  uint16_t usMaxPts;
   BOOLEAN fSamSiteInSector = FALSE;
   BOOLEAN fTrainingCompleted = FALSE;
 
@@ -3139,7 +3139,7 @@ void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ) {
     // for each trainer, in sorted order from the best to the worst
     for (uiCnt = 0; uiCnt < ubTownTrainers; uiCnt++) {
       // top trainer has full effect (divide by 1), then divide by 2, 4, 8, etc.
-      // sTownTrainingPts = TownTrainer[ uiCnt ].sTrainingPts / (UINT16) pow(2, uiCnt);
+      // sTownTrainingPts = TownTrainer[ uiCnt ].sTrainingPts / (uint16_t) pow(2, uiCnt);
       // CJC: took this out and replaced with limit of 2 guys per sector
       sTownTrainingPts = TownTrainer[uiCnt].sTrainingPts;
 
@@ -3170,10 +3170,10 @@ int TownTrainerQsortCompare(const void *pArg1, const void *pArg2) {
 
 INT16 GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
                                          struct SOLDIERTYPE *pStudent, INT8 bTrainStat,
-                                         BOOLEAN fAtGunRange, UINT16 *pusMaxPts) {
+                                         BOOLEAN fAtGunRange, uint16_t *pusMaxPts) {
   // return the bonus training pts of this instructor with this student,...if student null, simply
   // assignment student skill of 0 and student wisdom of 100
-  UINT16 sTrainingPts = 0;
+  uint16_t sTrainingPts = 0;
   INT8 bTraineeEffWisdom = 0;
   INT8 bTraineeNatWisdom = 0;
   INT8 bTraineeSkill = 0;
@@ -3353,8 +3353,8 @@ INT16 GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
 }
 
 INT16 GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
-                            UINT16 *pusMaxPts) {
-  UINT16 sTrainingPts = 0;
+                            uint16_t *pusMaxPts) {
+  uint16_t sTrainingPts = 0;
   INT8 bTrainingBonus = 0;
   INT8 bSkill = 0;
 
@@ -3429,13 +3429,13 @@ INT16 GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLE
 }
 
 INT16 GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
-                           UINT16 *pusMaxPts) {
-  UINT16 sTrainingPts = 0;
+                           uint16_t *pusMaxPts) {
+  uint16_t sTrainingPts = 0;
   INT8 bTrainingBonus = 0;
   INT8 bSkill = 0;
 
   INT16 sBestTrainingPts, sTrainingPtsDueToInstructor;
-  UINT16 usMaxTrainerPts, usBestMaxTrainerPts;
+  uint16_t usMaxTrainerPts, usBestMaxTrainerPts;
   uint32_t uiCnt;
   struct SOLDIERTYPE *pTrainer;
 
@@ -3597,7 +3597,7 @@ void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts) {
 
 // will train a town in sector by character
 BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY,
-                          UINT16 sTrainingPts) {
+                          uint16_t sTrainingPts) {
   SECTORINFO *pSectorInfo = &(SectorInfo[GetSectorID8(sMapX, sMapY)]);
   UINT8 ubTownId = 0;
   BOOLEAN fSamSiteInSector = FALSE;
@@ -3613,8 +3613,8 @@ BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY
 
   // trainer gains leadership - training argument is FALSE, because the trainer is not the one
   // training!
-  StatChange(pTrainer, LDRAMT, (UINT16)(1 + (sTrainingPts / 200)), FALSE);
-  //	StatChange( pTrainer, WISDOMAMT, (UINT16) ( 1 + ( sTrainingPts / 400 ) ), FALSE );
+  StatChange(pTrainer, LDRAMT, (uint16_t)(1 + (sTrainingPts / 200)), FALSE);
+  //	StatChange( pTrainer, WISDOMAMT, (uint16_t) ( 1 + ( sTrainingPts / 400 ) ), FALSE );
 
   // increase town's training completed percentage
   pSectorInfo->ubMilitiaTrainingPercentDone += (sTrainingPts / 100);
@@ -3645,8 +3645,8 @@ BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY
   }
 }
 
-INT16 GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, UINT16 *pusMaxPts) {
-  UINT16 sTotalTrainingPts = 0;
+INT16 GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, uint16_t *pusMaxPts) {
+  uint16_t sTotalTrainingPts = 0;
   INT8 bTrainingBonus = 0;
   //	UINT8 ubTownId = 0;
 
@@ -9170,7 +9170,7 @@ void BandageBleedingDyingPatientsBeingTreated() {
   struct SOLDIERTYPE *pDoctor = NULL;
   INT32 iKitSlot;
   struct OBJECTTYPE *pKit = NULL;
-  UINT16 usKitPts;
+  uint16_t usKitPts;
   uint32_t uiKitPtsUsed;
   BOOLEAN fSomeoneStillBleedingDying = FALSE;
 
@@ -9213,7 +9213,7 @@ void BandageBleedingDyingPatientsBeingTreated() {
               if (usKitPts) {
                 uiKitPtsUsed =
                     VirtualSoldierDressWound(pDoctor, pSoldier, pKit, usKitPts, usKitPts);
-                UseKitPoints(pKit, (UINT16)uiKitPtsUsed, pDoctor);
+                UseKitPoints(pKit, (uint16_t)uiKitPtsUsed, pDoctor);
 
                 // if he is STILL bleeding or dying
                 if ((pSoldier->bBleeding) || (pSoldier->bLife < OKLIFE)) {
@@ -9551,9 +9551,9 @@ BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(struct SOLDIERTYPE *pT
                                                           INT8 bTargetStat) {
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
-  UINT16 sTrainingPts = 0;
+  uint16_t sTrainingPts = 0;
   BOOLEAN fAtGunRange = FALSE;
-  UINT16 usMaxPts;
+  uint16_t usMaxPts;
 
   // this function only makes sense for training teammates or by others, not for self training which
   // doesn't require partners
@@ -9606,8 +9606,8 @@ BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(struct SOLDIERTYPE *pT
 void UnEscortEPC(struct SOLDIERTYPE *pSoldier) {
   if (IsMapScreen()) {
     BOOLEAN fGotInfo;
-    UINT16 usQuoteNum;
-    UINT16 usFactToSetToTrue;
+    uint16_t usQuoteNum;
+    uint16_t usFactToSetToTrue;
 
     SetupProfileInsertionDataForSoldier(pSoldier);
 

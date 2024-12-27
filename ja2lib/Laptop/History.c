@@ -51,8 +51,8 @@
 #define RECORD_HEADER_Y 90
 
 #define NUM_RECORDS_PER_PAGE PAGE_SIZE
-#define SIZE_OF_HISTORY_FILE_RECORD                                                     \
-  (sizeof(UINT8) + sizeof(UINT8) + sizeof(uint32_t) + sizeof(UINT16) + sizeof(UINT16) + \
+#define SIZE_OF_HISTORY_FILE_RECORD                                                         \
+  (sizeof(UINT8) + sizeof(UINT8) + sizeof(uint32_t) + sizeof(uint16_t) + sizeof(uint16_t) + \
    sizeof(UINT8) + sizeof(UINT8))
 
 // button positions

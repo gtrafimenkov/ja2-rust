@@ -57,20 +57,20 @@ enum { URGENCY_LOW = 0, URGENCY_MED, URGENCY_HIGH, NUM_URGENCY_STATES };
    5000 + 2000 * Random(3))
 #define REALTIME_CREATURE_AI_DELAY (10000 + 1000 * Random(3))
 
-//#define PLAYINGMODE             0
-//#define CAMPAIGNLENGTH          1
-//#define LASTUSABLESLOT          2
-//#define RANDOMMERCS             3
-//#define AVAILABLEMERCS          4
-//#define HIRINGKNOWLEDGE         5
-//#define EQUIPMENTLEVEL          6
-//#define ENEMYTEAMSIZE           7
+// #define PLAYINGMODE             0
+// #define CAMPAIGNLENGTH          1
+// #define LASTUSABLESLOT          2
+// #define RANDOMMERCS             3
+// #define AVAILABLEMERCS          4
+// #define HIRINGKNOWLEDGE         5
+// #define EQUIPMENTLEVEL          6
+// #define ENEMYTEAMSIZE           7
 #define ENEMYDIFFICULTY 8  // this is being used in this module
-//#define FOG_OF_WAR              9
-//#define TURNLENGTH              10
-//#define INCREASEDAP             11
-//#define BLOODSTAINS             12
-//#define STARTINGBALANCE         13
+// #define FOG_OF_WAR              9
+// #define TURNLENGTH              10
+// #define INCREASEDAP             11
+// #define BLOODSTAINS             12
+// #define STARTINGBALANCE         13
 #define MAXGAMEOPTIONS 14
 
 #define NOSHOOT_WAITABIT -1
@@ -159,7 +159,7 @@ void CreatureDecideAlertStatus(struct SOLDIERTYPE *pCreature);
 INT8 CrowDecideAction(struct SOLDIERTYPE *pSoldier);
 void DecideAlertStatus(struct SOLDIERTYPE *pSoldier);
 INT8 DecideAutoBandage(struct SOLDIERTYPE *pSoldier);
-UINT16 DetermineMovementMode(struct SOLDIERTYPE *pSoldier, INT8 bAction);
+uint16_t DetermineMovementMode(struct SOLDIERTYPE *pSoldier, INT8 bAction);
 
 INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
                          UINT8 ubChanceToHit);
@@ -206,11 +206,11 @@ INT8 PointPatrolAI(struct SOLDIERTYPE *pSoldier);
 void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier);
 INT8 RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier);
 INT32 RangeChangeDesire(struct SOLDIERTYPE *pSoldier);
-UINT16 RealtimeDelay(struct SOLDIERTYPE *pSoldier);
+uint16_t RealtimeDelay(struct SOLDIERTYPE *pSoldier);
 void RearrangePocket(struct SOLDIERTYPE *pSoldier, INT8 bPocket1, INT8 bPocket2, UINT8 bPermanent);
 void RTHandleAI(struct SOLDIERTYPE *pSoldier);
-UINT16 RunAway(struct SOLDIERTYPE *pSoldier);
-INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem);
+uint16_t RunAway(struct SOLDIERTYPE *pSoldier);
+INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, uint16_t usItem);
 UINT8 ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
                            INT8 bDesiredDirection);
 UINT8 StanceChange(struct SOLDIERTYPE *pSoldier, UINT8 ubAttackAPCost);

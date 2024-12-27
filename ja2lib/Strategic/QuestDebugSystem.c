@@ -347,23 +347,23 @@ typedef void (*TEXT_ENTRY_CALLBACK)(INT32);  // Callback for when the text entry
 typedef struct {
   LISTBOX_DISPLAY_FNCTN DisplayFunction;  //	The array of items
 
-  UINT16 usScrollPosX;    //	Top Left Pos of list box
-  UINT16 usScrollPosY;    //	Top Left Pos of list box
-  UINT16 usScrollHeight;  //	Height of list box
-  UINT16 usScrollWidth;   //	Width of list box
+  uint16_t usScrollPosX;    //	Top Left Pos of list box
+  uint16_t usScrollPosY;    //	Top Left Pos of list box
+  uint16_t usScrollHeight;  //	Height of list box
+  uint16_t usScrollWidth;   //	Width of list box
 
-  UINT16 usScrollBarHeight;    //	Height of Scroll box
-  UINT16 usScrollBarWidth;     //	Width of Scroll box
-  UINT16 usScrollBoxY;         //	Current Vertical location of the scroll box
-  UINT16 usScrollBoxEndY;      //	Bottom position on the scroll box
-  UINT16 usScrollArrowHeight;  //	Scroll Arrow height
+  uint16_t usScrollBarHeight;    //	Height of Scroll box
+  uint16_t usScrollBarWidth;     //	Width of Scroll box
+  uint16_t usScrollBoxY;         //	Current Vertical location of the scroll box
+  uint16_t usScrollBoxEndY;      //	Bottom position on the scroll box
+  uint16_t usScrollArrowHeight;  //	Scroll Arrow height
 
-  INT16 sCurSelectedItem;             //	Currently selected item
-  UINT16 usItemDisplayedOnTopOfList;  //	item at the top of displayed list
-  UINT16 usStartIndex;                //	index to start at for the array of elements
-  UINT16 usMaxArrayIndex;             //	Max Size of the array
-  UINT16 usNumDisplayedItems;         //	Num of displayed item
-  UINT16 usMaxNumDisplayedItems;      //  Max number of Displayed items
+  INT16 sCurSelectedItem;               //	Currently selected item
+  uint16_t usItemDisplayedOnTopOfList;  //	item at the top of displayed list
+  uint16_t usStartIndex;                //	index to start at for the array of elements
+  uint16_t usMaxArrayIndex;             //	Max Size of the array
+  uint16_t usNumDisplayedItems;         //	Num of displayed item
+  uint16_t usMaxNumDisplayedItems;      //  Max number of Displayed items
 
   UINT8 ubCurScrollBoxAction;  //	Holds the status of the current action ( create; destroy...
                                //)
@@ -385,9 +385,9 @@ BOOLEAN gfQuestDebugExit = FALSE;
 
 BOOLEAN gfRedrawQuestDebugSystem = TRUE;
 
-UINT16 gusQuestDebugBlue;
-UINT16 gusQuestDebugLtBlue;
-UINT16 gusQuestDebugDkBlue;
+uint16_t gusQuestDebugBlue;
+uint16_t gusQuestDebugLtBlue;
+uint16_t gusQuestDebugDkBlue;
 
 // INT16		gsCurScrollBoxY=0;
 
@@ -410,8 +410,8 @@ UINT8 gubCurrentNpcInSector[QUEST_DBS_SIZE_NPC_ARRAY];
 UINT8 gubNumNPCinSector;
 
 UINT8 gubCurQuestSelected;
-UINT16 gusCurFactSelected;
-UINT16 gusFactAtTopOfList;
+uint16_t gusCurFactSelected;
+uint16_t gusFactAtTopOfList;
 
 // INT16				gsCurrentNPCLog=-1;
 // //If this is set, the value will be set to the
@@ -576,7 +576,7 @@ void EnableQDSButtons();
 BOOLEAN DoQDSMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT8 ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 void IncrementActiveDropDownBox(INT16 sIncrementValue);
-INT16 IsMercInTheSector(UINT16 usMercID);
+INT16 IsMercInTheSector(uint16_t usMercID);
 void RefreshAllNPCInventory();
 void SetQDSMercProfile();
 void HandleQDSTalkingMerc();
@@ -587,7 +587,7 @@ void EndMercTalking();
 void EnableFactMouseRegions();
 void DisableFactMouseRegions();
 INT32 GetMaxNumberOfQuotesToPlay();
-void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize);
+void GetDebugLocationString(uint16_t usProfileID, STR16 pzText, size_t bufSize);
 
 // ppp
 
@@ -598,7 +598,7 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize);
 //*******************************
 
 uint32_t QuestDebugScreenInit() {
-  UINT16 usListBoxFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
+  uint16_t usListBoxFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
 
   // Set so next time we come in, we can set up
   gfQuestDebugEntry = TRUE;
@@ -749,14 +749,14 @@ uint32_t QuestDebugScreenShutdown() { return (TRUE); }
 
 BOOLEAN EnterQuestDebugSystem() {
   UINT8 i;
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
   wchar_t zName[128];
-  //	UINT16	usListBoxFontHeight = GetFontHeight( QUEST_DBS_FONT_LISTBOX_TEXT ) + 2;
+  //	uint16_t	usListBoxFontHeight = GetFontHeight( QUEST_DBS_FONT_LISTBOX_TEXT ) + 2;
 
   //	CHAR16	zItemName[ SIZE_ITEM_NAME ];
   //	CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
 
-  UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
+  uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
   VOBJECT_DESC VObjectDesc;
 
   if (gfExitQdsDueToMessageBox) {
@@ -897,8 +897,8 @@ BOOLEAN EnterQuestDebugSystem() {
   usPosY = QUEST_DBS_FIRST_COL_NUMBER_Y + QUEST_DBS_LIST_TEXT_OFFSET;
   for (i = 0; i < QUEST_DBS_NUM_DISPLAYED_QUESTS; i++) {
     MSYS_DefineRegion(&gQuestListRegion[i], usPosX, usPosY,
-                      (UINT16)(usPosX + QUEST_DBS_FIRST_SECTION_WIDTH),
-                      (UINT16)(usPosY + usFontHeight), MSYS_PRIORITY_HIGH + 2, CURSOR_WWW,
+                      (uint16_t)(usPosX + QUEST_DBS_FIRST_SECTION_WIDTH),
+                      (uint16_t)(usPosY + usFontHeight), MSYS_PRIORITY_HIGH + 2, CURSOR_WWW,
                       MSYS_NO_CALLBACK, ScrollQuestListRegionCallBack);  // CURSOR_LAPTOP_SCREEN
     // Add region
     MSYS_AddRegion(&gQuestListRegion[i]);
@@ -912,8 +912,8 @@ BOOLEAN EnterQuestDebugSystem() {
   usPosY = QUEST_DBS_SECOND_COL_NUMBER_Y + QUEST_DBS_LIST_TEXT_OFFSET + QUEST_DBS_FACT_LIST_OFFSET;
   for (i = 0; i < QUEST_DBS_NUM_DISPLAYED_FACTS; i++) {
     MSYS_DefineRegion(&gFactListRegion[i], usPosX, usPosY,
-                      (UINT16)(usPosX + QUEST_DBS_SECOND_SECTION_WIDTH),
-                      (UINT16)(usPosY + usFontHeight), MSYS_PRIORITY_HIGH + 2, CURSOR_WWW,
+                      (uint16_t)(usPosX + QUEST_DBS_SECOND_SECTION_WIDTH),
+                      (uint16_t)(usPosY + usFontHeight), MSYS_PRIORITY_HIGH + 2, CURSOR_WWW,
                       MSYS_NO_CALLBACK, ScrollFactListRegionCallBack);  // CURSOR_LAPTOP_SCREEN
     // Add region
     MSYS_AddRegion(&gFactListRegion[i]);
@@ -981,7 +981,7 @@ BOOLEAN EnterQuestDebugSystem() {
 }
 
 void ExitQuestDebugSystem() {
-  UINT16 i;
+  uint16_t i;
 
   if (gfExitQdsDueToMessageBox) {
     return;
@@ -1326,10 +1326,10 @@ void QuestDebug_EnterTactical() { EnterTacticalScreen(); }
 void DisplaySectionLine() {
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usStartX;
-  UINT16 usStartY;
-  UINT16 usEndX;
-  UINT16 usEndY;
+  uint16_t usStartX;
+  uint16_t usStartY;
+  uint16_t usEndX;
+  uint16_t usEndY;
 
   usStartX = usEndX = QUEST_DBS_FIRST_SECTION_WIDTH;
 
@@ -1431,10 +1431,10 @@ void BtnQuestDebugExitButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void DisplayQuestList() {
-  UINT16 usLoop1, usCount;
-  UINT16 usTextHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
+  uint16_t usLoop1, usCount;
+  uint16_t usTextHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
   wchar_t sTemp[15];
-  UINT16 usPosY;
+  uint16_t usPosY;
 
   usPosY = QUEST_DBS_FIRST_COL_NUMBER_Y +
            QUEST_DBS_LIST_TEXT_OFFSET;  //&& (usCount < QUEST_DBS_MAX_DISPLAYED_ENTRIES )
@@ -1466,10 +1466,10 @@ void DisplayQuestList() {
 }
 
 void DisplayFactList() {
-  UINT16 usLoop1, usCount;
-  UINT16 usTextHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
+  uint16_t usLoop1, usCount;
+  uint16_t usTextHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
   wchar_t sTemp[512];
-  UINT16 usPosY;
+  uint16_t usPosY;
 
   usPosY =
       QUEST_DBS_SECOND_COL_NUMBER_Y + QUEST_DBS_LIST_TEXT_OFFSET + QUEST_DBS_FACT_LIST_OFFSET;  //
@@ -1585,8 +1585,8 @@ void DisplayNPCInfo() {
 
 BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
   static BOOLEAN fMouseRegionsCreated = FALSE;
-  UINT16 i;
-  UINT16 usPosX, usPosY;
+  uint16_t i;
+  uint16_t usPosX, usPosY;
 
   // if there are
   if (gpActiveListBox->usMaxArrayIndex == 0) return (FALSE);
@@ -1596,7 +1596,7 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
     } break;
 
     case QD_DROP_DOWN_CREATE: {
-      UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
+      uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
 
       // if the mouse regions have already been creates, return
       if (fMouseRegionsCreated) break;
@@ -1616,9 +1616,9 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
 
       // create the scroll regions
       for (i = 0; i < gpActiveListBox->usNumDisplayedItems; i++) {
-        MSYS_DefineRegion(&gSelectedNpcListRegion[i], usPosX, (UINT16)(usPosY),
-                          (UINT16)(usPosX + gpActiveListBox->usScrollWidth),
-                          (UINT16)(usPosY + usFontHeight), MSYS_PRIORITY_HIGH + 20, CURSOR_WWW,
+        MSYS_DefineRegion(&gSelectedNpcListRegion[i], usPosX, (uint16_t)(usPosY),
+                          (uint16_t)(usPosX + gpActiveListBox->usScrollWidth),
+                          (uint16_t)(usPosY + usFontHeight), MSYS_PRIORITY_HIGH + 20, CURSOR_WWW,
                           SelectNpcListMovementCallBack, SelectNpcListRegionCallBack);
         MSYS_AddRegion(&gSelectedNpcListRegion[i]);
         MSYS_SetRegionUserData(&gSelectedNpcListRegion[i], 0, i);
@@ -1637,8 +1637,8 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
 
       for (i = 0; i < QUEST_DBS_NUM_INCREMENTS_IN_SCROLL_BAR; i++) {
         MSYS_DefineRegion(&gScrollAreaRegion[i], usPosX, usPosY,
-                          (UINT16)(usPosX + gpActiveListBox->usScrollBarWidth),
-                          (UINT16)(usPosY + gpActiveListBox->usScrollBarHeight),
+                          (uint16_t)(usPosX + gpActiveListBox->usScrollBarWidth),
+                          (uint16_t)(usPosY + gpActiveListBox->usScrollBarHeight),
                           MSYS_PRIORITY_HIGH + 20, CURSOR_WWW, ScrollAreaMovementCallBack,
                           ScrollAreaRegionCallBack);
         MSYS_AddRegion(&gScrollAreaRegion[i]);
@@ -1649,9 +1649,9 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
       usPosX = gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth;
       usPosY = gpActiveListBox->usScrollPosY + 2;
 
-      MSYS_DefineRegion(&gScrollArrowsRegion[0], usPosX, (UINT16)(usPosY),
-                        (UINT16)(usPosX + gpActiveListBox->usScrollBarWidth),
-                        (UINT16)(usPosY + gpActiveListBox->usScrollArrowHeight),
+      MSYS_DefineRegion(&gScrollArrowsRegion[0], usPosX, (uint16_t)(usPosY),
+                        (uint16_t)(usPosX + gpActiveListBox->usScrollBarWidth),
+                        (uint16_t)(usPosY + gpActiveListBox->usScrollArrowHeight),
                         MSYS_PRIORITY_HIGH + 20, CURSOR_WWW, MSYS_NO_CALLBACK,
                         ScrollArrowsRegionCallBack);
       MSYS_AddRegion(&gScrollArrowsRegion[0]);
@@ -1662,8 +1662,8 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
                gpActiveListBox->usScrollArrowHeight - 2;
 
       MSYS_DefineRegion(&gScrollArrowsRegion[1], usPosX, usPosY,
-                        (UINT16)(usPosX + gpActiveListBox->usScrollBarWidth),
-                        (UINT16)(usPosY + gpActiveListBox->usScrollArrowHeight),
+                        (uint16_t)(usPosX + gpActiveListBox->usScrollBarWidth),
+                        (uint16_t)(usPosY + gpActiveListBox->usScrollArrowHeight),
                         MSYS_PRIORITY_HIGH + 20, CURSOR_WWW, MSYS_NO_CALLBACK,
                         ScrollArrowsRegionCallBack);
       MSYS_AddRegion(&gScrollArrowsRegion[1]);
@@ -1726,7 +1726,7 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
 }
 
 void DisplaySelectedListBox() {
-  UINT16 usPosX, usPosY;
+  uint16_t usPosX, usPosY;
   struct VObject *hImageHandle;
 
   // DEBUG: make sure it wont go over array bounds
@@ -1784,17 +1784,17 @@ void DisplaySelectedListBox() {
                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // display the scroll rectangle
-  DrawQdsScrollRectangle();  // gpActiveListBox->sCurSelectedItem, usPosX, usPosY, (UINT16)(usPosY +
-                             // gpActiveListBox->usScrollHeight), NUM_PROFILES-FIRST_RPC );
+  DrawQdsScrollRectangle();  // gpActiveListBox->sCurSelectedItem, usPosX, usPosY, (uint16_t)(usPosY
+                             // + gpActiveListBox->usScrollHeight), NUM_PROFILES-FIRST_RPC );
 
   InvalidateRegion(0, 0, 640, 480);
 }
 
 void DisplaySelectedNPC() {
-  UINT16 i;
-  UINT16 usPosX, usPosY;
+  uint16_t i;
+  uint16_t usPosX, usPosY;
   INT16 usLocationX = 0, usLocationY = 0;
-  UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
+  uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
   CHAR16 sTempString[64];
   wchar_t zButtonName[256];
 
@@ -1823,8 +1823,9 @@ void DisplaySelectedNPC() {
                              &usLocationY);
 
     // the location value
-    DrawTextToScreen(sTempString, (UINT16)(usLocationX - 2), usPosY, 0, QUEST_DBS_FONT_DYNAMIC_TEXT,
-                     QUEST_DBS_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
+    DrawTextToScreen(sTempString, (uint16_t)(usLocationX - 2), usPosY, 0,
+                     QUEST_DBS_FONT_DYNAMIC_TEXT, QUEST_DBS_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK,
+                     FALSE, LEFT_JUSTIFIED);
 
     usPosY += usFontHeight;
   }
@@ -1848,25 +1849,25 @@ void DisplaySelectedNPC() {
     if (gfUseLocalNPCs) {
       DrawTextToScreen(
           gMercProfiles[gubCurrentNpcInSector[gpActiveListBox->sCurSelectedItem]].zNickname,
-          gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0, QUEST_DBS_FONT_LISTBOX_TEXT, 2,
+          gpActiveListBox->usScrollPosX, (uint16_t)(usPosY), 0, QUEST_DBS_FONT_LISTBOX_TEXT, 2,
           FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
       GetDebugLocationString(gubCurrentNpcInSector[gpActiveListBox->sCurSelectedItem], sTempString,
                              ARR_SIZE(sTempString));
     } else {
       DrawTextToScreen(gMercProfiles[gpActiveListBox->sCurSelectedItem].zNickname,
-                       gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0,
+                       gpActiveListBox->usScrollPosX, (uint16_t)(usPosY), 0,
                        QUEST_DBS_FONT_LISTBOX_TEXT, 2, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       GetDebugLocationString(gpActiveListBox->sCurSelectedItem, sTempString, ARR_SIZE(sTempString));
     }
 
-    FindFontRightCoordinates(gpActiveListBox->usScrollPosX, (UINT16)(usPosY),
+    FindFontRightCoordinates(gpActiveListBox->usScrollPosX, (uint16_t)(usPosY),
                              gpActiveListBox->usScrollWidth, 0, sTempString,
                              QUEST_DBS_FONT_LISTBOX_TEXT, &usLocationX, &usLocationY);
 
     // the location value
-    DrawTextToScreen(sTempString, usLocationX, (UINT16)(usPosY), 0, QUEST_DBS_FONT_LISTBOX_TEXT, 2,
-                     FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
+    DrawTextToScreen(sTempString, usLocationX, (uint16_t)(usPosY), 0, QUEST_DBS_FONT_LISTBOX_TEXT,
+                     2, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
     SetFontShadow(DEFAULT_SHADOW);
 
@@ -1885,9 +1886,9 @@ void DisplaySelectedNPC() {
 }
 
 void DisplaySelectedItem() {
-  UINT16 i;
-  UINT16 usPosX, usPosY;
-  UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
+  uint16_t i;
+  uint16_t usPosX, usPosY;
+  uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
   CHAR16 zItemName[SIZE_ITEM_NAME];
   //	CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
 
@@ -1930,7 +1931,7 @@ void DisplaySelectedItem() {
 
     if (zItemName[0] == '\0') wcscpy(zItemName, QuestDebugText[QUEST_DBS_NO_ITEM]);
 
-    DrawTextToScreen(zItemName, gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0,
+    DrawTextToScreen(zItemName, gpActiveListBox->usScrollPosX, (uint16_t)(usPosY), 0,
                      QUEST_DBS_FONT_LISTBOX_TEXT, 2, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
     SetFontShadow(DEFAULT_SHADOW);
 
@@ -2000,28 +2001,29 @@ void SelectNpcListMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   }
 }
 
-void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT16 usStartPosY,
-                               // UINT16 usScrollAreaHeight, UINT16 usNumEntries )
+void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, uint16_t usStartPosX, uint16_t usStartPosY,
+                               // uint16_t usScrollAreaHeight, uint16_t usNumEntries )
 {
   uint32_t uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  UINT16 usWidth, usTempPosY;
-  UINT16 usHeight, usPosY, usPosX;
+  uint16_t usWidth, usTempPosY;
+  uint16_t usHeight, usPosY, usPosX;
 
-  UINT16 usNumEntries = gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex - 1;
+  uint16_t usNumEntries = gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex - 1;
 
-  UINT16 temp;
+  uint16_t temp;
 
   usTempPosY = gpActiveListBox->usScrollPosY + gpActiveListBox->usScrollArrowHeight;
   usPosX = gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth;
   usWidth = gpActiveListBox->usScrollBarWidth;
 
-  usHeight = (UINT16)(gpActiveListBox->usScrollBarHeight / (FLOAT)(usNumEntries) + .5);  // qq+ 1 );
+  usHeight =
+      (uint16_t)(gpActiveListBox->usScrollBarHeight / (FLOAT)(usNumEntries) + .5);  // qq+ 1 );
 
   if (usNumEntries > gpActiveListBox->usMaxNumDisplayedItems)
-    usPosY =
-        usTempPosY + (UINT16)((gpActiveListBox->usScrollBarHeight / (FLOAT)(usNumEntries + 1)) *
-                              (gpActiveListBox->sCurSelectedItem - gpActiveListBox->usStartIndex));
+    usPosY = usTempPosY +
+             (uint16_t)((gpActiveListBox->usScrollBarHeight / (FLOAT)(usNumEntries + 1)) *
+                        (gpActiveListBox->sCurSelectedItem - gpActiveListBox->usStartIndex));
   else
     usPosY = usTempPosY;
 
@@ -2609,7 +2611,7 @@ void InitQuestDebugTextInputBoxes() {
   //	wchar_t	sText[ 640 ];
 
   InitTextInputMode();
-  SetTextInputFont((UINT16)FONT12ARIAL);
+  SetTextInputFont((uint16_t)FONT12ARIAL);
   Set16BPPTextFieldColor(Get16BPPColor(FROMRGB(255, 255, 255)));
   SetBevelColors(Get16BPPColor(FROMRGB(136, 138, 135)), Get16BPPColor(FROMRGB(24, 61, 81)));
   SetTextInputRegularColors(2, FONT_WHITE);
@@ -2638,7 +2640,7 @@ void AddNPCToGridNo(INT32 iGridNo) {
   MercCreateStruct.sSectorX = sSectorX;
   MercCreateStruct.sSectorY = sSectorY;
   MercCreateStruct.bSectorZ = gbWorldSectorZ;
-  MercCreateStruct.sInsertionGridNo = (UINT16)iGridNo;
+  MercCreateStruct.sInsertionGridNo = (uint16_t)iGridNo;
 
   //	RandomizeNewSoldierStats( &MercCreateStruct );
 
@@ -2669,7 +2671,7 @@ void AddItemToGridNo(INT32 iGridNo) {
                &Object);
 
     // add the item to the world
-    AddItemToPool((UINT16)iGridNo, &Object, -1, 0, 0, 0);
+    AddItemToPool((uint16_t)iGridNo, &Object, -1, 0, 0, 0);
   }
 }
 
@@ -2706,7 +2708,7 @@ void ChangeDayNumber(INT32 iDayToChangeTo) {
 
 void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
   static BOOLEAN fMouseRegionCreated = FALSE;
-  UINT16 usPosY, i;
+  uint16_t usPosY, i;
   struct SOLDIERTYPE *pSoldier;
 
   switch (ubAction) {
@@ -2767,7 +2769,7 @@ void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
     case QD_DROP_DOWN_DISPLAY: {
       CHAR16 zItemName[SIZE_ITEM_NAME];
       //			CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
-      UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
+      uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
 
       // if the soldier is active
       // if the soldier is active
@@ -2902,7 +2904,7 @@ void BtnQuestDebugAllOrSectorNPCToggleCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void AddNPCsInSectorToArray() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 cnt, i;
+  uint16_t cnt, i;
 
   // Setup array of merc who are in the current sector
   i = 0;
@@ -3219,7 +3221,7 @@ void IncrementActiveDropDownBox(INT16 sIncrementValue) {
   gpActiveListBox->ubCurScrollBoxAction = QD_DROP_DOWN_DISPLAY;
 }
 
-INT16 IsMercInTheSector(UINT16 usMercID) {
+INT16 IsMercInTheSector(uint16_t usMercID) {
   UINT8 cnt;
 
   if (usMercID == -1) return (FALSE);
@@ -3235,10 +3237,10 @@ INT16 IsMercInTheSector(UINT16 usMercID) {
 }
 
 void RefreshAllNPCInventory() {
-  UINT16 usCnt;
-  UINT16 usItemCnt;
+  uint16_t usCnt;
+  uint16_t usItemCnt;
   struct OBJECTTYPE TempObject;
-  UINT16 usItem;
+  uint16_t usItem;
 
   for (usCnt = 0; usCnt < TOTAL_SOLDIERS; usCnt++) {
     // if the is active
@@ -3348,16 +3350,16 @@ void HandleQDSTalkingMerc() {
 
         // Start the merc talking
         if (ubPanelMercShouldUse == QDS_REGULAR_PANEL)
-          TacticalCharacterDialogue(gTalkingMercSoldier, (UINT16)giSelectedMercCurrentQuote);
+          TacticalCharacterDialogue(gTalkingMercSoldier, (uint16_t)giSelectedMercCurrentQuote);
         else if (gfRpcToSaySectorDesc && gTalkingMercSoldier->ubProfile >= 57 &&
                  gTalkingMercSoldier->ubProfile <= 60) {
           // ATE: Trigger the sector desc here
           CharacterDialogueWithSpecialEvent(
-              gTalkingMercSoldier->ubProfile, (UINT16)giSelectedMercCurrentQuote,
+              gTalkingMercSoldier->ubProfile, (uint16_t)giSelectedMercCurrentQuote,
               gTalkPanel.iFaceIndex, DIALOGUE_NPC_UI, TRUE, FALSE,
               DIALOGUE_SPECIAL_EVENT_USE_ALTERNATE_FILES, FALSE, FALSE);
         } else
-          CharacterDialogue(gTalkingMercSoldier->ubProfile, (UINT16)giSelectedMercCurrentQuote,
+          CharacterDialogue(gTalkingMercSoldier->ubProfile, (uint16_t)giSelectedMercCurrentQuote,
                             gTalkPanel.iFaceIndex, DIALOGUE_NPC_UI, FALSE, FALSE);
 
         // Incremenet the current quote number
@@ -3427,8 +3429,8 @@ void SetQDSMercProfile() {
 
 void DisplayQDSCurrentlyQuoteNum() {
   CHAR16 zTemp[512];
-  UINT16 usPosY;
-  UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_TEXT_ENTRY) + 2;
+  uint16_t usPosY;
+  uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_TEXT_ENTRY) + 2;
 
   // Display the box frame
   ColorFillVideoSurfaceArea(FRAME_BUFFER, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
@@ -3553,7 +3555,7 @@ INT32 GetMaxNumberOfQuotesToPlay() {
   return (iNumberOfQuotes + 1);
 }
 
-void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize) {
+void GetDebugLocationString(uint16_t usProfileID, STR16 pzText, size_t bufSize) {
   struct SOLDIERTYPE *pSoldier;
 
   // Get a soldier pointer

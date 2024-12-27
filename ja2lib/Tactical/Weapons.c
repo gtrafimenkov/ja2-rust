@@ -582,7 +582,7 @@ INT8 gzBurstSndStrings[][30] = {
 // used to determine whether the bullet will go through someone
 UINT8 BodyImpactReduction[4] = {0, 15, 30, 23};
 
-UINT16 GunRange(struct OBJECTTYPE *pObj) {
+uint16_t GunRange(struct OBJECTTYPE *pObj) {
   INT8 bAttachPos;
 
   if (Item[pObj->usItem].usItemClass & IC_WEAPON) {
@@ -997,7 +997,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   FLOAT dTargetX;
   FLOAT dTargetY;
   FLOAT dTargetZ;
-  UINT16 usItemNum;
+  uint16_t usItemNum;
   BOOLEAN fBuckshot;
   UINT8 ubVolume;
   INT8 bSilencerPos;
@@ -1006,7 +1006,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   INT16 sNewGridNo;
   UINT8 ubMerc;
   BOOLEAN fGonnaHit = FALSE;
-  UINT16 usExpGain = 0;
+  uint16_t usExpGain = 0;
   uint32_t uiDepreciateTest;
 
   // Deduct points!
@@ -1246,9 +1246,9 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
       }
 
       // MARKSMANSHIP/DEXTERITY GAIN: throwing knife attack
-      StatChange(pSoldier, MARKAMT, (UINT16)(usExpGain / 2),
+      StatChange(pSoldier, MARKAMT, (uint16_t)(usExpGain / 2),
                  (UINT8)(fGonnaHit ? FALSE : FROM_FAILURE));
-      StatChange(pSoldier, DEXTAMT, (UINT16)(usExpGain / 2),
+      StatChange(pSoldier, DEXTAMT, (uint16_t)(usExpGain / 2),
                  (UINT8)(fGonnaHit ? FALSE : FROM_FAILURE));
     }
   }
@@ -1276,7 +1276,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   }
 
   FireBulletGivenTarget(pSoldier, dTargetX, dTargetY, dTargetZ, pSoldier->usAttackingWeapon,
-                        (UINT16)(uiHitChance - uiDiceRoll), fBuckshot, FALSE);
+                        (uint16_t)(uiHitChance - uiDiceRoll), fBuckshot, FALSE);
 
   ubVolume = Weapon[pSoldier->usAttackingWeapon].ubAttackVolume;
 
@@ -1290,7 +1290,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
 
     // Direction to center of explosion
     ubDirection = gOppositeDirection[pSoldier->bDirection];
-    sNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo, (UINT16)(1 * DirectionInc(ubDirection)));
+    sNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)(1 * DirectionInc(ubDirection)));
 
     // Check if a person exists here and is not prone....
     ubMerc = WhoIsThere2(sNewGridNo, pSoldier->bLevel);
@@ -1349,7 +1349,7 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   EV_S_WEAPONHIT SWeaponHit;
   INT32 iImpact, iImpactForCrits;
   BOOLEAN fGonnaHit = FALSE;
-  UINT16 usExpGain = 0;
+  uint16_t usExpGain = 0;
   INT8 bMaxDrop;
   BOOLEAN fSurpriseAttack;
 
@@ -1436,7 +1436,7 @@ BOOLEAN UseBlade(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
       SWeaponHit.ubAttackerID = GetSolID(pSoldier);
       SWeaponHit.fHit = TRUE;
       SWeaponHit.ubSpecial = FIRE_WEAPON_NO_SPECIAL;
-      AddGameEvent(S_WEAPONHIT, (UINT16)20, &SWeaponHit);
+      AddGameEvent(S_WEAPONHIT, (uint16_t)20, &SWeaponHit);
     } else {
       // if it was another team shooting at someone under our control
       if ((pSoldier->bTeam != Menptr[pTargetSoldier->ubID].bTeam)) {
@@ -1502,7 +1502,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
   INT16 sAPCost;
   EV_S_WEAPONHIT SWeaponHit;
   INT32 iImpact;
-  UINT16 usOldItem;
+  uint16_t usOldItem;
   UINT8 ubExpGain;
 
   // Deduct points!
@@ -1689,7 +1689,7 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
         SWeaponHit.ubAttackerID = GetSolID(pSoldier);
         SWeaponHit.fHit = TRUE;
         SWeaponHit.ubSpecial = FIRE_WEAPON_NO_SPECIAL;
-        AddGameEvent(S_WEAPONHIT, (UINT16)20, &SWeaponHit);
+        AddGameEvent(S_WEAPONHIT, (uint16_t)20, &SWeaponHit);
       } else {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("@@@@@@@ Freeing up attacker - missed in HTH attack"));
@@ -1783,7 +1783,7 @@ BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   INT8 bAttachPos;
   struct OBJECTTYPE Launchable;
   struct OBJECTTYPE *pObj;
-  UINT16 usItemNum;
+  uint16_t usItemNum;
 
   usItemNum = pSoldier->usAttackingWeapon;
 
@@ -1889,7 +1889,7 @@ BOOLEAN DoSpecialEffectAmmoMiss(UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos, 
                                 INT32 iBullet) {
   ANITILE_PARAMS AniParams;
   UINT8 ubAmmoType;
-  UINT16 usItem;
+  uint16_t usItem;
 
   ubAmmoType = MercPtrs[ubAttackerID]->inv[MercPtrs[ubAttackerID]->ubAttackingHand].ubGunAmmoType;
   usItem = MercPtrs[ubAttackerID]->inv[MercPtrs[ubAttackerID]->ubAttackingHand].usItem;
@@ -1958,8 +1958,8 @@ BOOLEAN DoSpecialEffectAmmoMiss(UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos, 
   return (FALSE);
 }
 
-void WeaponHit(UINT16 usSoldierID, UINT16 usWeaponIndex, INT16 sDamage, INT16 sBreathLoss,
-               UINT16 usDirection, INT16 sXPos, INT16 sYPos, INT16 sZPos, INT16 sRange,
+void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, INT16 sDamage, INT16 sBreathLoss,
+               uint16_t usDirection, INT16 sXPos, INT16 sYPos, INT16 sZPos, INT16 sRange,
                UINT8 ubAttackerID, BOOLEAN fHit, UINT8 ubSpecial, UINT8 ubHitLocation) {
   struct SOLDIERTYPE *pTargetSoldier;
 
@@ -2006,14 +2006,14 @@ void WeaponHit(UINT16 usSoldierID, UINT16 usWeaponIndex, INT16 sDamage, INT16 sB
   }
 }
 
-void StructureHit(INT32 iBullet, UINT16 usWeaponIndex, INT8 bWeaponStatus, UINT8 ubAttackerID,
-                  UINT16 sXPos, INT16 sYPos, INT16 sZPos, UINT16 usStructureID, INT32 iImpact,
+void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus, UINT8 ubAttackerID,
+                  uint16_t sXPos, INT16 sYPos, INT16 sZPos, uint16_t usStructureID, INT32 iImpact,
                   BOOLEAN fStopped) {
   BOOLEAN fDoMissForGun = FALSE;
   ANITILE *pNode;
   INT16 sGridNo;
   ANITILE_PARAMS AniParams;
-  UINT16 usMissTileIndex, usMissTileType;
+  uint16_t usMissTileIndex, usMissTileType;
   struct STRUCTURE *pStructure = NULL;
   uint32_t uiMissVolume = MIDVOLUME;
   BOOLEAN fHitSameStructureAsBefore;
@@ -2254,11 +2254,12 @@ void StructureHit(INT32 iBullet, UINT16 usWeaponIndex, INT8 bWeaponStatus, UINT8
   }
 }
 
-void WindowHit(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth, BOOLEAN fLargeForce) {
+void WindowHit(INT16 sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
+               BOOLEAN fLargeForce) {
   struct STRUCTURE *pWallAndWindow;
   struct DB_STRUCTURE *pWallAndWindowInDB;
   INT16 sShatterGridNo;
-  UINT16 usTileIndex;
+  uint16_t usTileIndex;
   ANITILE_PARAMS AniParams;
 
   // ATE: Make large force always for now ( feel thing )
@@ -2365,7 +2366,7 @@ void WindowHit(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth, BO
 
 BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   INT16 sRange;
-  UINT16 usInHand;
+  uint16_t usInHand;
 
   usInHand = pSoldier->inv[HANDPOS].usItem;
 
@@ -2388,14 +2389,14 @@ BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   return (FALSE);
 }
 
-uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
+uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT8 ubAimTime,
                             UINT8 ubAimPos) {
   // struct SOLDIERTYPE *vicpSoldier;
   struct SOLDIERTYPE *pTarget;
   INT32 iChance, iRange, iSightRange, iMaxRange, iScopeBonus, iBonus;  //, minRange;
   INT32 iGunCondition, iMarksmanship;
   INT32 iPenalty;
-  UINT16 usInHand;
+  uint16_t usInHand;
   struct OBJECTTYPE *pInHand;
   INT8 bAttachPos;
   INT8 bBandaged;
@@ -2920,9 +2921,9 @@ uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 
   return (iChance);
 }
 
-uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
+uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT8 ubAimTime,
                               UINT8 ubAimPos) {
-  UINT16 usTrueState;
+  uint16_t usTrueState;
   uint32_t uiChance;
 
   // same as CCTHG but fakes the attacker always standing
@@ -3520,7 +3521,7 @@ void ShotMiss(UINT8 ubAttackerID, INT32 iBullet) {
 
 uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
                        UINT8 ubAimTime, UINT8 ubMode) {
-  UINT16 usInHand;
+  uint16_t usInHand;
   UINT8 ubBandaged;
   INT32 iAttRating, iDefRating;
   INT32 iChance;
@@ -3826,9 +3827,9 @@ BOOLEAN IsGunBurstCapable(struct SOLDIERTYPE *pSoldier, UINT8 ubHandPos, BOOLEAN
   return (fCapable);
 }
 
-INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem, BOOLEAN fArmed) {
+INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fArmed) {
   INT32 iRange;
-  UINT16 usSubItem;
+  uint16_t usSubItem;
 
   if (EXPLOSIVE_GUN(usItem)) {
     // oops! return value in weapons table
@@ -3879,7 +3880,7 @@ INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem, BOOLEAN fArm
 uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTime,
                                UINT8 ubAimPos) {
   INT32 iChance, iMaxRange, iRange;
-  UINT16 usHandItem;
+  uint16_t usHandItem;
   INT8 bPenalty, bBandaged;
 
   if (pSoldier->bWeaponMode == WM_ATTACHED) {

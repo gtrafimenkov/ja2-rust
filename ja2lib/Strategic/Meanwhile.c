@@ -60,7 +60,7 @@ INT8 gzMeanwhileStr[][30] = {
 };
 
 // the snap to grid nos for meanwhile scenes
-UINT16 gusMeanWhileGridNo[] = {
+uint16_t gusMeanWhileGridNo[] = {
     12248, 12248, 12248, 12248, 12248, 12248, 12248, 12248, 12248,
     12248, 12248, 8075,  12248, 12248, 12248, 12248, 12248,
 };
@@ -123,7 +123,7 @@ uint32_t uiMeanWhileFlags = 0;
 #define INTERROGATION_FLAG 0x00008000
 #define BALIME_LIBERATED_FLAG 0x00010000
 
-extern void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce);
+extern void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce);
 
 void ProcessImplicationsOfMeanwhile(void);
 

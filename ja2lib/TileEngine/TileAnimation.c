@@ -219,13 +219,13 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   if ((uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME)) {
     // Our start frame is actually a direction indicator
     ubTempDir = gOneCDirection[pAniParams->uiUserData3];
-    sStartFrame = (UINT16)sStartFrame + (pNewAniNode->usNumFrames * ubTempDir);
+    sStartFrame = (uint16_t)sStartFrame + (pNewAniNode->usNumFrames * ubTempDir);
   }
 
   if ((uiFlags & ANITILE_USE_4DIRECTION_FOR_START_FRAME)) {
     // Our start frame is actually a direction indicator
     ubTempDir = gb4DirectionsFrom8[pAniParams->uiUserData3];
-    sStartFrame = (UINT16)sStartFrame + (pNewAniNode->usNumFrames * ubTempDir);
+    sStartFrame = (uint16_t)sStartFrame + (pNewAniNode->usNumFrames * ubTempDir);
   }
 
   pNewAniNode->usTileType = usTileType;
@@ -396,7 +396,7 @@ void UpdateAniTiles() {
   ANITILE *pAniNode = NULL;
   ANITILE *pNode = NULL;
   uint32_t uiClock = GetJA2Clock();
-  UINT16 usMaxFrames, usMinFrames;
+  uint16_t usMaxFrames, usMinFrames;
   UINT8 ubTempDir;
 
   // LOOP THROUGH EACH NODE
@@ -425,12 +425,12 @@ void UpdateAniTiles() {
 
         if (pNode->uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME) {
           ubTempDir = gOneCDirection[pNode->uiUserData3];
-          usMaxFrames = (UINT16)usMaxFrames + (pNode->usNumFrames * ubTempDir);
+          usMaxFrames = (uint16_t)usMaxFrames + (pNode->usNumFrames * ubTempDir);
         }
 
         if (pNode->uiFlags & ANITILE_USE_4DIRECTION_FOR_START_FRAME) {
           ubTempDir = gb4DirectionsFrom8[pNode->uiUserData3];
-          usMaxFrames = (UINT16)usMaxFrames + (pNode->usNumFrames * ubTempDir);
+          usMaxFrames = (uint16_t)usMaxFrames + (pNode->usNumFrames * ubTempDir);
         }
 
         if ((pNode->sCurrentFrame + 1) < usMaxFrames) {
@@ -454,7 +454,7 @@ void UpdateAniTiles() {
 
                 IgniteExplosion(pNode->ubUserData2, pNode->pLevelNode->sRelativeX,
                                 pNode->pLevelNode->sRelativeY, 0, pNode->sGridNo,
-                                (UINT16)(pNode->uiUserData), 0);
+                                (uint16_t)(pNode->uiUserData), 0);
                 break;
 
               case ANI_KEYFRAME_DO_SOUND:
@@ -473,20 +473,20 @@ void UpdateAniTiles() {
             switch (pNode->uiKeyFrame2Code) {
               case ANI_KEYFRAME_BEGIN_DAMAGE:
 
-                ubExpType = Explosive[Item[(UINT16)pNode->uiUserData].ubClassIndex].ubType;
+                ubExpType = Explosive[Item[(uint16_t)pNode->uiUserData].ubClassIndex].ubType;
 
                 if (ubExpType == EXPLOSV_TEARGAS || ubExpType == EXPLOSV_MUSTGAS ||
                     ubExpType == EXPLOSV_SMOKE) {
                   // Do sound....
                   // PlayJA2Sample( AIR_ESCAPING_1, RATE_11025, SoundVolume( HIGHVOLUME,
                   // pNode->sGridNo ), 1, SoundDir( pNode->sGridNo ) );
-                  NewSmokeEffect(pNode->sGridNo, (UINT16)pNode->uiUserData,
+                  NewSmokeEffect(pNode->sGridNo, (uint16_t)pNode->uiUserData,
                                  gExplosionData[pNode->uiUserData3].Params.bLevel,
                                  (UINT8)pNode->ubUserData2);
                 } else {
                   SpreadEffect(pNode->sGridNo,
-                               Explosive[Item[(UINT16)pNode->uiUserData].ubClassIndex].ubRadius,
-                               (UINT16)pNode->uiUserData, (UINT8)pNode->ubUserData2, FALSE,
+                               Explosive[Item[(uint16_t)pNode->uiUserData].ubClassIndex].ubRadius,
+                               (uint16_t)pNode->uiUserData, (UINT8)pNode->ubUserData2, FALSE,
                                gExplosionData[pNode->uiUserData3].Params.bLevel, -1);
                 }
                 // Forfait any other animations this frame....
@@ -502,13 +502,13 @@ void UpdateAniTiles() {
             if ((pNode->uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME)) {
               // Our start frame is actually a direction indicator
               ubTempDir = gOneCDirection[pNode->uiUserData3];
-              pNode->sCurrentFrame = (UINT16)(pNode->usNumFrames * ubTempDir);
+              pNode->sCurrentFrame = (uint16_t)(pNode->usNumFrames * ubTempDir);
             }
 
             if ((pNode->uiFlags & ANITILE_USE_4DIRECTION_FOR_START_FRAME)) {
               // Our start frame is actually a direction indicator
               ubTempDir = gb4DirectionsFrom8[pNode->uiUserData3];
-              pNode->sCurrentFrame = (UINT16)(pNode->usNumFrames * ubTempDir);
+              pNode->sCurrentFrame = (uint16_t)(pNode->usNumFrames * ubTempDir);
             }
 
           } else if (pNode->uiFlags & ANITILE_REVERSE_LOOPING) {
@@ -579,12 +579,12 @@ void UpdateAniTiles() {
             if ((pNode->uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME)) {
               // Our start frame is actually a direction indicator
               ubTempDir = gOneCDirection[pNode->uiUserData3];
-              pNode->sCurrentFrame = (UINT16)(pNode->usNumFrames * ubTempDir);
+              pNode->sCurrentFrame = (uint16_t)(pNode->usNumFrames * ubTempDir);
             }
             if ((pNode->uiFlags & ANITILE_USE_4DIRECTION_FOR_START_FRAME)) {
               // Our start frame is actually a direction indicator
               ubTempDir = gb4DirectionsFrom8[pNode->uiUserData3];
-              pNode->sCurrentFrame = (UINT16)(pNode->usNumFrames * ubTempDir);
+              pNode->sCurrentFrame = (uint16_t)(pNode->usNumFrames * ubTempDir);
             }
 
           } else if (pNode->uiFlags & ANITILE_REVERSE_LOOPING) {
@@ -641,13 +641,13 @@ void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
   if ((pAniTile->uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME)) {
     // Our start frame is actually a direction indicator
     ubTempDir = gOneCDirection[pAniTile->uiUserData3];
-    sStartFrame = (UINT16)sFrame + (pAniTile->usNumFrames * ubTempDir);
+    sStartFrame = (uint16_t)sFrame + (pAniTile->usNumFrames * ubTempDir);
   }
 
   if ((pAniTile->uiFlags & ANITILE_USE_4DIRECTION_FOR_START_FRAME)) {
     // Our start frame is actually a direction indicator
     ubTempDir = gb4DirectionsFrom8[pAniTile->uiUserData3];
-    sStartFrame = (UINT16)sFrame + (pAniTile->usNumFrames * ubTempDir);
+    sStartFrame = (uint16_t)sFrame + (pAniTile->usNumFrames * ubTempDir);
   }
 
   pAniTile->sCurrentFrame = sStartFrame;

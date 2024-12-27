@@ -160,19 +160,19 @@ BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset);
 BOOLEAN LightHideRays(INT16 iX, INT16 iY);
 
 // makes the 16-bit palettes
-UINT16 CreateTilePaletteTables(struct VObject *pObj, uint32_t uiType, BOOLEAN fForce);
+uint16_t CreateTilePaletteTables(struct VObject *pObj, uint32_t uiType, BOOLEAN fForce);
 BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase,
                                    struct SGPPaletteEntry *pShadePal);
-UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
+uint16_t CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
 UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel);
 
 // system variables
 extern LIGHT_NODE *pLightList[MAX_LIGHT_TEMPLATES];
-extern UINT16 usTemplateSize[MAX_LIGHT_TEMPLATES];
-extern UINT16 *pLightRayList[MAX_LIGHT_TEMPLATES];
-extern UINT16 usRaySize[MAX_LIGHT_TEMPLATES];
+extern uint16_t usTemplateSize[MAX_LIGHT_TEMPLATES];
+extern uint16_t *pLightRayList[MAX_LIGHT_TEMPLATES];
+extern uint16_t usRaySize[MAX_LIGHT_TEMPLATES];
 extern INT16 LightHeight[MAX_LIGHT_TEMPLATES];
 extern INT16 LightWidth[MAX_LIGHT_TEMPLATES];
 extern INT16 LightXOffset[MAX_LIGHT_TEMPLATES];

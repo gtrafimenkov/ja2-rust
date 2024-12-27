@@ -7,14 +7,14 @@
 
 typedef struct PROGRESSBAR {
   UINT8 ubProgressBarID;
-  UINT16 usBarLeft, usBarTop, usBarRight, usBarBottom;
+  uint16_t usBarLeft, usBarTop, usBarRight, usBarBottom;
   BOOLEAN fPanel;
-  UINT16 usPanelLeft, usPanelTop, usPanelRight, usPanelBottom;
-  UINT16 usColor, usLtColor, usDkColor;
+  uint16_t usPanelLeft, usPanelTop, usPanelRight, usPanelBottom;
+  uint16_t usColor, usLtColor, usDkColor;
   STR16 swzTitle;
-  UINT16 usTitleFont;
+  uint16_t usTitleFont;
   UINT8 ubTitleFontForeColor, ubTitleFontShadowColor;
-  UINT16 usMsgFont;
+  uint16_t usMsgFont;
   UINT8 ubMsgFontForeColor, ubMsgFontShadowColor;
   UINT8 ubRelativeStartPercentage, ubRelativeEndPercentage;
   UINT8 ubColorFillRed;
@@ -33,13 +33,13 @@ void RemoveLoadingScreenProgressBar();
 
 // This creates a single progress bar given the coordinates without a panel (containing a title and
 // background). A panel is automatically created if you specify a title using SetProgressBarTitle
-BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, UINT16 usLeft, UINT16 usTop, UINT16 usRight,
-                          UINT16 usBottom);
+BOOLEAN CreateProgressBar(UINT8 ubProgressBarID, uint16_t usLeft, uint16_t usTop, uint16_t usRight,
+                          uint16_t usBottom);
 
 // You may also define a panel to go in behind the progress bar.  You can now assign a title to go
 // with the panel.
-void DefineProgressBarPanel(uint32_t ubID, UINT8 r, UINT8 g, UINT8 b, UINT16 usLeft, UINT16 usTop,
-                            UINT16 usRight, UINT16 usBottom);
+void DefineProgressBarPanel(uint32_t ubID, UINT8 r, UINT8 g, UINT8 b, uint16_t usLeft,
+                            uint16_t usTop, uint16_t usRight, uint16_t usBottom);
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
 // panel and vertically centered from the top of the panel, to the top of the progress bar.

@@ -46,8 +46,8 @@ typedef enum {
 
 // Enumerate all structures for events
 typedef struct {
-  UINT16 usIndex;
-  UINT16 usRate;
+  uint16_t usIndex;
+  uint16_t usRate;
   UINT8 ubVolume;
   UINT8 ubLoops;
   uint32_t uiPan;
@@ -55,25 +55,25 @@ typedef struct {
 } EV_E_PLAYSOUND;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT16 usNewState;
+  uint16_t usNewState;
   INT16 sXPos;
   INT16 sYPos;
-  UINT16 usStartingAniCode;
+  uint16_t usStartingAniCode;
   BOOLEAN fForce;
 
 } EV_S_CHANGESTATE;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT16 usNewDestination;
+  uint16_t usNewDestination;
 
 } EV_S_CHANGEDEST;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
   FLOAT dNewXPos;
   FLOAT dNewYPos;
@@ -81,20 +81,20 @@ typedef struct {
 } EV_S_SETPOSITION;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
   INT16 sDestGridNo;
-  UINT16 usMovementAnim;
+  uint16_t usMovementAnim;
 
 } EV_S_GETNEWPATH;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
 } EV_S_BEGINTURN;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
   UINT8 ubNewStance;
   INT16 sXPos;
@@ -103,21 +103,21 @@ typedef struct {
 } EV_S_CHANGESTANCE;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT16 usNewDirection;
+  uint16_t usNewDirection;
 
 } EV_S_SETDIRECTION;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT16 usDesiredDirection;
+  uint16_t usDesiredDirection;
 
 } EV_S_SETDESIREDDIRECTION;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
   INT16 sTargetGridNo;
   INT8 bTargetLevel;
@@ -125,7 +125,7 @@ typedef struct {
 } EV_S_BEGINFIREWEAPON;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
   INT16 sTargetGridNo;
   INT8 bTargetLevel;
@@ -133,12 +133,12 @@ typedef struct {
 } EV_S_FIREWEAPON;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
-  UINT16 usWeaponIndex;
+  uint16_t usWeaponIndex;
   INT16 sDamage;
   INT16 sBreathLoss;
-  UINT16 usDirection;
+  uint16_t usDirection;
   INT16 sXPos;
   INT16 sYPos;
   INT16 sZPos;
@@ -154,10 +154,10 @@ typedef struct {
   INT16 sXPos;
   INT16 sYPos;
   INT16 sZPos;
-  UINT16 usWeaponIndex;
+  uint16_t usWeaponIndex;
   INT8 bWeaponStatus;
   UINT8 ubAttackerID;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   INT32 iImpact;
   INT32 iBullet;
 
@@ -165,7 +165,7 @@ typedef struct {
 
 typedef struct {
   INT16 sGridNo;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   BOOLEAN fBlowWindowSouth;
   BOOLEAN fLargeForce;
 } EV_S_WINDOWHIT;
@@ -184,7 +184,7 @@ typedef struct {
 } EV_S_NOISE;
 
 typedef struct {
-  UINT16 usSoldierID;
+  uint16_t usSoldierID;
   uint32_t uiUniqueId;
   INT8 bDirection;
   INT16 sGridNo;
@@ -217,8 +217,8 @@ typedef struct {
 } EV_S_UPDATENETWORKSOLDIER;
 
 // FUNCTIONS
-BOOLEAN AddGameEvent(uint32_t uiEvent, UINT16 usDelay, PTR pEventData);
-BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, UINT16 usDelay, PTR pEventData);
+BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData);
+BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, PTR pEventData);
 BOOLEAN DequeAllGameEvents(BOOLEAN fExecute);
 BOOLEAN DequeueAllDemandGameEvents(BOOLEAN fExecute);
 

@@ -20,20 +20,20 @@ CursorData *gpCursorDatabase;
 INT16 gsGlobalCursorYOffset = 0;
 INT16 gsCurMouseOffsetX = 0;
 INT16 gsCurMouseOffsetY = 0;
-UINT16 gsCurMouseHeight = 0;
-UINT16 gsCurMouseWidth = 0;
-UINT16 gusNumDataFiles = 0;
+uint16_t gsCurMouseHeight = 0;
+uint16_t gsCurMouseWidth = 0;
+uint16_t gusNumDataFiles = 0;
 uint32_t guiExternVo;
-UINT16 gusExternVoSubIndex;
+uint16_t gusExternVoSubIndex;
 uint32_t guiExtern2Vo;
-UINT16 gusExtern2VoSubIndex;
+uint16_t gusExtern2VoSubIndex;
 uint32_t guiOldSetCursor = 0;
 uint32_t guiDelayTimer = 0;
 
 MOUSEBLT_HOOK gMouseBltOverride = NULL;
 
-BOOLEAN BltToMouseCursorFromVObject(struct VObject *hVObject, UINT16 usVideoObjectSubIndex,
-                                    UINT16 usXPos, UINT16 usYPos) {
+BOOLEAN BltToMouseCursorFromVObject(struct VObject *hVObject, uint16_t usVideoObjectSubIndex,
+                                    uint16_t usXPos, uint16_t usYPos) {
   BOOLEAN ReturnValue;
 
   ReturnValue = BltVideoObject(MOUSE_BUFFER, hVObject, usVideoObjectSubIndex, usXPos, usYPos,
@@ -43,8 +43,8 @@ BOOLEAN BltToMouseCursorFromVObject(struct VObject *hVObject, UINT16 usVideoObje
 }
 
 BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
-                                               UINT16 usVideoObjectSubIndex, UINT16 usXPos,
-                                               UINT16 usYPos) {
+                                               uint16_t usVideoObjectSubIndex, uint16_t usXPos,
+                                               uint16_t usYPos) {
   BOOLEAN ReturnValue;
   ETRLEObject *pTrav;
   INT16 sXPos, sYPos;
@@ -71,7 +71,7 @@ BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
 
 // THESE TWO PARAMETERS MUST POINT TO STATIC OR GLOBAL DATA, NOT AUTOMATIC VARIABLES
 void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCursorData,
-                        UINT16 suNumDataFiles) {
+                        uint16_t suNumDataFiles) {
   // Set global values!
 
   gpCursorFileDatabase = pCursorFileData;
@@ -271,14 +271,14 @@ void CursorDatabaseClear(void) {
 
 BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex) {
   BOOLEAN ReturnValue = TRUE;
-  UINT16 usSubIndex;
+  uint16_t usSubIndex;
   CursorData *pCurData;
   CursorImage *pCurImage;
   uint32_t cnt;
   INT16 sCenterValX, sCenterValY;
   struct VObject *hVObject;
   ETRLEObject *pTrav;
-  UINT16 usEffHeight, usEffWidth;
+  uint16_t usEffHeight, usEffWidth;
 
   if (gfCursorDatabaseInit) {
     // Enter mouse buffer mutex
@@ -347,7 +347,7 @@ BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex) {
         }
 
         SetMouseCursorProperties((INT16)(usEffWidth / 2), (INT16)(usEffHeight / 2),
-                                 (UINT16)(usEffHeight), (UINT16)(usEffWidth));
+                                 (uint16_t)(usEffHeight), (uint16_t)(usEffWidth));
         DirtyCursor();
 
       } else {
@@ -424,7 +424,7 @@ BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex) {
 
           // Adjust sub-index if cursor is animated
           if (gpCursorFileDatabase[pCurImage->uiFileIndex].ubFlags & ANIMATED_CURSOR) {
-            usSubIndex = (UINT16)pCurImage->uiCurrentFrame;
+            usSubIndex = (uint16_t)pCurImage->uiCurrentFrame;
           } else {
             usSubIndex = pCurImage->uiSubIndex;
           }
@@ -474,7 +474,7 @@ BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex) {
       // EnableCursor( FALSE );
 
     } else {
-      SetCurrentCursor((UINT16)uiCursorIndex, 0, 0);
+      SetCurrentCursor((uint16_t)uiCursorIndex, 0, 0);
       ReturnValue = TRUE;
     }
   }
@@ -485,7 +485,7 @@ BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex) {
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride) { gMouseBltOverride = pMouseBltOverride; }
 
 // Sets an external video object as cursor file data....
-void SetExternVOData(uint32_t uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex) {
+void SetExternVOData(uint32_t uiCursorIndex, struct VObject *hVObject, uint16_t usSubIndex) {
   CursorData *pCurData;
   CursorImage *pCurImage;
   uint32_t cnt;

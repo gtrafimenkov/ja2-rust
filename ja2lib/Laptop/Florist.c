@@ -131,7 +131,7 @@ void HandleFlorist() {}
 
 void RenderFlorist() {
   struct VObject *hPixHandle;
-  UINT16 i, usPosY;
+  uint16_t i, usPosY;
   UINT8 ubTextCounter;
 
   GetVideoObject(&hPixHandle, guiHandBullet);
@@ -162,13 +162,13 @@ void RenderFlorist() {
     BltVideoObject(FRAME_BUFFER, hPixHandle, 0, FLORIST_FIRST_BULLET_X, usPosY,
                    VO_BLT_SRCTRANSPARENCY, NULL);
 
-    DisplayWrappedString(FLORIST_FIRST_SENTENCE_COLUMN_TEXT_X, (UINT16)(usPosY + 20),
+    DisplayWrappedString(FLORIST_FIRST_SENTENCE_COLUMN_TEXT_X, (uint16_t)(usPosY + 20),
                          FLORIST_FIRST_SENTENCE_COLUMN_TEXT_WIDTH, 2, FLORIST_SENTENCE_FONT,
                          FLORIST_SENTENCE_COLOR, sFloristText[ubTextCounter], FONT_MCOLOR_BLACK,
                          FALSE, LEFT_JUSTIFIED);
     ubTextCounter++;
 
-    DisplayWrappedString(FLORIST_SECOND_SENTENCE_COLUMN_TEXT_X, (UINT16)(usPosY + 15),
+    DisplayWrappedString(FLORIST_SECOND_SENTENCE_COLUMN_TEXT_X, (uint16_t)(usPosY + 15),
                          FLORIST_SECOND_SENTENCE_COLUMN_TEXT_WIDTH, 2, FLORIST_SENTENCE_FONT,
                          FLORIST_SENTENCE_COLOR, sFloristText[ubTextCounter], FONT_MCOLOR_BLACK,
                          FALSE, LEFT_JUSTIFIED);
@@ -206,8 +206,8 @@ BOOLEAN InitFloristDefaults() {
     // flower title homepage link
     MSYS_DefineRegion(
         &gSelectedFloristTitleHomeLinkRegion, FLORIST_SMALL_TITLE_X, FLORIST_SMALL_TITLE_Y,
-        (UINT16)(FLORIST_SMALL_TITLE_X + FLORIST_SMALL_TITLE_WIDTH),
-        (UINT16)(FLORIST_SMALL_TITLE_Y + FLORIST_SMALL_TITLE_HEIGHT), MSYS_PRIORITY_HIGH,
+        (uint16_t)(FLORIST_SMALL_TITLE_X + FLORIST_SMALL_TITLE_WIDTH),
+        (uint16_t)(FLORIST_SMALL_TITLE_Y + FLORIST_SMALL_TITLE_HEIGHT), MSYS_PRIORITY_HIGH,
         CURSOR_WWW, MSYS_NO_CALLBACK, SelectFloristTitleHomeLinkRegionCallBack);
     MSYS_AddRegion(&gSelectedFloristTitleHomeLinkRegion);
   }

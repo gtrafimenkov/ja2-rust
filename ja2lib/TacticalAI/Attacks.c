@@ -38,7 +38,7 @@ extern INT16 DirIncrementer[8];
 // this define should go in soldier control.h
 
 void LoadWeaponIfNeeded(struct SOLDIERTYPE *pSoldier) {
-  UINT16 usInHand;
+  uint16_t usInHand;
   INT8 bPayloadPocket;
 
   usInHand = pSoldier->inv[HANDPOS].usItem;
@@ -160,14 +160,14 @@ void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
 
     if ((pSoldier->uiStatusFlags & SOLDIER_MONSTER) && (pSoldier->ubBodyType != QUEENMONSTER)) {
       struct STRUCTURE_FILE_REF *pStructureFileRef;
-      UINT16 usAnimSurface;
+      uint16_t usAnimSurface;
 
       usAnimSurface = DetermineSoldierAnimationSurface(pSoldier, pSoldier->usUIMovementMode);
       pStructureFileRef =
           GetAnimationStructureRef(pSoldier->ubID, usAnimSurface, pSoldier->usUIMovementMode);
 
       if (pStructureFileRef) {
-        UINT16 usStructureID;
+        uint16_t usStructureID;
         INT8 bDir;
 
         // must make sure that structure data can be added in the direction of the target
@@ -382,9 +382,9 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   UINT8 ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit;
   uint32_t uiPenalty;
   UINT8 ubSearchRange;
-  UINT16 usOppDist;
+  uint16_t usOppDist;
   BOOLEAN fFriendsNearby;
-  UINT16 usInHand, usGrenade;
+  uint16_t usInHand, usGrenade;
   UINT8 ubOppsInRange, ubOppsAdjacent;
   BOOLEAN fSkipLocation;
   INT8 bPayloadPocket;
@@ -957,7 +957,7 @@ void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN f
   UINT8 ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   UINT8 ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
   struct SOLDIERTYPE *pOpponent;
-  UINT16 usTrueMovementMode;
+  uint16_t usTrueMovementMode;
 
   InitAttackType(pBestStab);  // set all structure fields to defaults
 
@@ -1565,7 +1565,7 @@ INT8 TryToReload(struct SOLDIERTYPE *pSoldier) {
 /*
 INT8 TryToReloadLauncher( struct SOLDIERTYPE * pSoldier )
 {
-        UINT16	usWeapon;
+        uint16_t	usWeapon;
         INT8		bSlot;
 
         usWeapon = pSoldier->inv[HANDPOS].usItem;
@@ -1954,7 +1954,7 @@ INT16 AdvanceToFiringRange(struct SOLDIERTYPE *pSoldier, INT16 sClosestOpponent)
   // see how far we can go down a path and still shoot
 
   INT8 bAttackCost, bTrueActionPoints;
-  UINT16 usActionData;
+  uint16_t usActionData;
 
   bAttackCost = MinAPsToAttack(pSoldier, sClosestOpponent, ADDTURNCOST);
 

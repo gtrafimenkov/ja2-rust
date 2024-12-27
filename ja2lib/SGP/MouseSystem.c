@@ -56,7 +56,7 @@ BOOLEAN MSYS_UseMouseHandlerHook = FALSE;
 BOOLEAN MSYS_Mouse_Grabbed = FALSE;
 struct MOUSE_REGION *MSYS_GrabRegion = NULL;
 
-UINT16 gusClickedIDNumber;
+uint16_t gusClickedIDNumber;
 BOOLEAN gfClickedModeOn = FALSE;
 
 struct MOUSE_REGION *MSYS_RegList = NULL;
@@ -196,8 +196,8 @@ void MSYS_Shutdown(void) {
 //
 //	Hook to the SGP's mouse handler
 //
-void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type, UINT16 Xcoord, UINT16 Ycoord, BOOLEAN LeftButton,
-                                 BOOLEAN RightButton) {
+void MSYS_SGP_Mouse_Handler_Hook(uint16_t Type, uint16_t Xcoord, uint16_t Ycoord,
+                                 BOOLEAN LeftButton, BOOLEAN RightButton) {
   // If the mouse system isn't initialized, get out o' here
   if (!MSYS_SystemInitialized) return;
 
@@ -356,7 +356,7 @@ void MSYS_AddRegionToList(struct MOUSE_REGION *region) {
   }
 
   // Set an ID number!
-  region->IDNumber = (UINT16)MSYS_GetNewID();
+  region->IDNumber = (uint16_t)MSYS_GetNewID();
 
   region->next = NULL;
   region->prev = NULL;
@@ -709,8 +709,8 @@ void MSYS_UpdateMouseRegion(void) {
 //
 //	Inits a struct MOUSE_REGION structure for use with the mouse system
 //
-void MSYS_DefineRegion(struct MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT16 brx, UINT16 bry,
-                       INT8 priority, UINT16 crsr, MOUSE_CALLBACK movecallback,
+void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
+                       uint16_t bry, INT8 priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback) {
 #ifdef MOUSESYSTEM_DEBUGGING
   if (region->uiFlags & MSYS_REGION_EXISTS)
@@ -769,7 +769,7 @@ void MSYS_DefineRegion(struct MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT
 //=================================================================================================
 //	MSYS_ChangeRegionCursor
 //
-void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, UINT16 crsr) {
+void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, uint16_t crsr) {
   region->uiFlags &= (~MSYS_SET_CURSOR);
   region->Cursor = crsr;
   if (crsr != MSYS_NO_CURSOR) {
@@ -864,7 +864,7 @@ void MSYS_DisableRegion(struct MOUSE_REGION *region) { region->uiFlags &= (~MSYS
 //
 //	Sets the mouse cursor to the regions defined value.
 //
-void MSYS_SetCurrentCursor(UINT16 Cursor) { SetCurrentCursorFromDatabase(Cursor); }
+void MSYS_SetCurrentCursor(uint16_t Cursor) { SetCurrentCursorFromDatabase(Cursor); }
 
 //=================================================================================================
 //	MSYS_ChangeRegionPriority

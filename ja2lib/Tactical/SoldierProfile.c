@@ -132,7 +132,7 @@ INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
     {CAMBRIA, BALIME, ALMA, GRUMM, DRASSEN},
 };
 
-UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile);
+uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile);
 INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile);
 extern void HandleEndDemoInCreatureLevel();
 void DecideActiveTerrorists(void);
@@ -145,7 +145,7 @@ BOOLEAN LoadMercProfiles(void) {
   HWFILE fptr;
   char *pFileName = "BINARYDATA\\Prof.dat";
   uint32_t uiLoop, uiLoop2, uiLoop3;
-  UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
+  uint16_t usItem, usNewGun, usAmmo, usNewAmmo;
   uint32_t uiNumBytesRead;
 
   fptr = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
@@ -378,7 +378,7 @@ void DecideActiveTerrorists(void) {
 
 void MakeRemainingTerroristsTougher(void) {
   UINT8 ubRemainingTerrorists = 0, ubLoop;
-  UINT16 usNewItem, usOldItem;
+  uint16_t usNewItem, usOldItem;
   struct OBJECTTYPE Object;
   UINT8 ubRemainingDifficulty;
 
@@ -495,7 +495,7 @@ void DecideOnAssassin(void) {
 
 void MakeRemainingAssassinsTougher(void) {
   UINT8 ubRemainingAssassins = 0, ubLoop;
-  UINT16 usNewItem, usOldItem;
+  uint16_t usNewItem, usOldItem;
   struct OBJECTTYPE Object;
   UINT8 ubRemainingDifficulty;
 
@@ -584,8 +584,8 @@ void StartSomeMercsOnAssignment(void) {
   }
 }
 
-void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, UINT16 usEyesX, UINT16 usEyesY,
-                        UINT16 usMouthX, UINT16 usMouthY) {
+void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, uint16_t usEyesX, uint16_t usEyesY,
+                        uint16_t usMouthX, uint16_t usMouthY) {
   gMercProfiles[ubCharNum].ubFaceIndex = ubFaceIndex;
   gMercProfiles[ubCharNum].usEyesX = usEyesX;
   gMercProfiles[ubCharNum].usEyesY = usEyesY;
@@ -593,9 +593,9 @@ void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, UINT16 usEyesX, UINT
   gMercProfiles[ubCharNum].usMouthY = usMouthY;
 }
 
-UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
+uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile) {
   uint32_t uiStats, uiSkills, uiActionPoints, uiSpecialSkills;
-  UINT16 usCompetence;
+  uint16_t usCompetence;
 
   // count life twice 'cause it's also hit points
   // mental skills are halved 'cause they're actually not that important within the game
@@ -619,16 +619,16 @@ UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
   uiSpecialSkills =
       ((pProfile->bSkillTrait != 0) ? 1 : 0) + ((pProfile->bSkillTrait2 != 0) ? 1 : 0);
 
-  usCompetence = (UINT16)((pow(pProfile->bExpLevel, 0.2) * uiStats * uiSkills *
-                           (uiActionPoints - 6) * (1 + (0.05 * (FLOAT)uiSpecialSkills))) /
-                          1000);
+  usCompetence = (uint16_t)((pow(pProfile->bExpLevel, 0.2) * uiStats * uiSkills *
+                             (uiActionPoints - 6) * (1 + (0.05 * (FLOAT)uiSpecialSkills))) /
+                            1000);
 
   // this currently varies from about 10 (Flo) to 1200 (Gus)
   return (usCompetence);
 }
 
 INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
-  UINT16 usDeposit;
+  uint16_t usDeposit;
 
   // this rounds off to the nearest hundred
   usDeposit = (((5 * CalcCompetence(pProfile)) + 50) / 100) * 100;
@@ -1155,7 +1155,7 @@ struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
 
   memcpy(pNewProfile->bInvStatus, gMercProfiles[ubSrcProfile].bInvStatus, sizeof(UINT8) * 19);
   memcpy(pNewProfile->bInvStatus, gMercProfiles[ubSrcProfile].bInvStatus, sizeof(UINT8) * 19);
-  memcpy(pNewProfile->inv, gMercProfiles[ubSrcProfile].inv, sizeof(UINT16) * 19);
+  memcpy(pNewProfile->inv, gMercProfiles[ubSrcProfile].inv, sizeof(uint16_t) * 19);
   memcpy(pNewProfile->bMercTownReputation, gMercProfiles[ubSrcProfile].bMercTownReputation,
          sizeof(UINT8) * 20);
 

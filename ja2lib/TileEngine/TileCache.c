@@ -266,8 +266,8 @@ struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename)
   return (gpTileCacheStructInfo[sStructDataIndex].pStructureFileRef);
 }
 
-void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, UINT16 usIndex,
-                                       UINT16 usSubIndex) {
+void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, uint16_t usIndex,
+                                       uint16_t usSubIndex) {
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
   pStructureFileRef = GetCachedTileStructureRef(usIndex);
@@ -286,7 +286,7 @@ void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, U
   }
 }
 
-void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, UINT16 usIndex) {
+void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIndex) {
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
   if (usIndex >= TILE_CACHE_START_INDEX) {

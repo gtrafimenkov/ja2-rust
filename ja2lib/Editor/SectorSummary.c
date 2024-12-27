@@ -64,14 +64,14 @@ void ExtractTempFilename();
 INT32 giCurrLevel;
 
 BOOLEAN gfOutdatedDenied;
-UINT16 gusNumEntriesWithOutdatedOrNoSummaryInfo;
+uint16_t gusNumEntriesWithOutdatedOrNoSummaryInfo;
 
 void UpdateMasterProgress();
 BOOLEAN gfUpdatingNow;
-UINT16 gusTotal, gusCurrent;
+uint16_t gusTotal, gusCurrent;
 
 BOOLEAN gfMustForceUpdateAllMaps = FALSE;
-UINT16 gusNumberOfMapsToBeForceUpdated = 0;
+uint16_t gusNumberOfMapsToBeForceUpdated = 0;
 BOOLEAN gfMajorUpdate = FALSE;
 
 void LoadSummary(CHAR8 *pSector, UINT8 ubLevel, FLOAT dMajorMapVersion);
@@ -161,17 +161,17 @@ UINT8 gubSummaryItemMode = ITEMMODE_SCIFI;
 BOOLEAN gfItemDetailsMode = FALSE;
 
 WORLDITEM *gpWorldItemsSummaryArray = NULL;
-UINT16 gusWorldItemsSummaryArraySize = 0;
+uint16_t gusWorldItemsSummaryArraySize = 0;
 struct OBJECTTYPE *gpPEnemyItemsSummaryArray = NULL;
-UINT16 gusPEnemyItemsSummaryArraySize = 0;
+uint16_t gusPEnemyItemsSummaryArraySize = 0;
 struct OBJECTTYPE *gpNEnemyItemsSummaryArray = NULL;
-UINT16 gusNEnemyItemsSummaryArraySize = 0;
+uint16_t gusNEnemyItemsSummaryArraySize = 0;
 
 BOOLEAN gfSetupItemDetailsMode = TRUE;
 
 BOOLEAN gfUpdateSummaryInfo;
 
-UINT16 usNumSummaryFilesOutOfDate;
+uint16_t usNumSummaryFilesOutOfDate;
 
 BOOLEAN gfMapFileDirty;
 
@@ -464,7 +464,7 @@ void RenderSectorInformation() {
   MAPCREATE_STRUCT *m;
   SUMMARYFILE *s;
   UINT8 ePoints = 0;
-  UINT16 usLine = 35;
+  uint16_t usLine = 35;
   INT32 iOverall;
 
   SetFont(FONT10ARIAL);
@@ -722,7 +722,7 @@ void RenderItemDetails() {
         dAvgExistChance = (FLOAT)(uiExistChance / 100.0);
         dAvgStatus = uiStatus / (FLOAT)uiQuantity;
         // Display stats.
-        LoadShortNameItemInfo((UINT16)index, str);
+        LoadShortNameItemInfo((uint16_t)index, str);
         mprintf(xp, yp, L"%s", str);
         mprintf(xp + 85, yp, L"%3.02f", dAvgExistChance);
         mprintf(xp + 110, yp, L"@ %3.02f%%", dAvgStatus);
@@ -826,7 +826,7 @@ void RenderItemDetails() {
           dAvgExistChance = (FLOAT)(uiExistChance / 100.0);
           dAvgStatus = uiStatus / (FLOAT)uiQuantity;
           // Display stats.
-          LoadShortNameItemInfo((UINT16)index, str);
+          LoadShortNameItemInfo((uint16_t)index, str);
           mprintf(xp, yp, L"%s", str);
           mprintf(xp + 85, yp, L"%3.02f", dAvgExistChance);
           mprintf(xp + 110, yp, L"@ %3.02f%%", dAvgStatus);
@@ -885,7 +885,7 @@ void RenderItemDetails() {
         dAvgExistChance = (FLOAT)(uiExistChance / 100.0);
         dAvgStatus = uiStatus / (FLOAT)uiQuantity;
         // Display stats.
-        LoadShortNameItemInfo((UINT16)index, str);
+        LoadShortNameItemInfo((uint16_t)index, str);
         mprintf(xp, yp, L"%s", str);
         mprintf(xp + 85, yp, L"%3.02f", dAvgExistChance);
         mprintf(xp + 110, yp, L"@ %3.02f%%", dAvgStatus);
@@ -1299,15 +1299,15 @@ void RenderSummaryWindow() {
       mprintf(MAP_LEFT + x * 13 - (13 + StringPixLength(str, SMALLCOMPFONT)) / 2, MAP_TOP - 8, str);
     }
     if (gfRenderGrid) {
-      UINT16 pos;
+      uint16_t pos;
       pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
       SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
       for (i = 1; i <= 15; i++) {
         // draw vertical lines
-        pos = (UINT16)(i * 13 + MAP_LEFT);
+        pos = (uint16_t)(i * 13 + MAP_LEFT);
         LineDraw(TRUE, pos, MAP_TOP, pos, MAP_BOTTOM - 1, 0, pDestBuf);
         // draw horizontal lines
-        pos = (UINT16)(i * 13 + MAP_TOP);
+        pos = (uint16_t)(i * 13 + MAP_TOP);
         LineDraw(TRUE, MAP_LEFT, pos, MAP_RIGHT - 1, pos, 0, pDestBuf);
       }
       UnLockVideoSurface(FRAME_BUFFER);
@@ -1361,13 +1361,13 @@ void RenderSummaryWindow() {
           ClipRect.iLeft = MAP_LEFT + x * 13;
           ClipRect.iRight = ClipRect.iLeft + 12;
           pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-          Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+          Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
           if (giCurrentViewLevel == BASEMENT1_LEVEL_MASK ||
               giCurrentViewLevel == BASEMENT2_LEVEL_MASK ||
               giCurrentViewLevel == BASEMENT3_LEVEL_MASK ||
               giCurrentViewLevel == ALTERNATE_B1_MASK || giCurrentViewLevel == ALTERNATE_B2_MASK ||
               giCurrentViewLevel == ALTERNATE_B3_MASK)
-            Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+            Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
           UnLockVideoSurface(FRAME_BUFFER);
         }
       }
@@ -2330,10 +2330,10 @@ void UpdateMasterProgress() {
     gusCurrent++;
     MasterEnd = (gusCurrent / (double)gusTotal) * 100.0;
     if (gfMajorUpdate) {
-      SetRelativeStartAndEndPercentage(2, (UINT16)MasterStart, (UINT16)MasterEnd, NULL);
+      SetRelativeStartAndEndPercentage(2, (uint16_t)MasterStart, (uint16_t)MasterEnd, NULL);
       RenderProgressBar(2, 0);
     } else
-      SetRelativeStartAndEndPercentage(1, (UINT16)MasterStart, (UINT16)MasterEnd, NULL);
+      SetRelativeStartAndEndPercentage(1, (uint16_t)MasterStart, (uint16_t)MasterEnd, NULL);
   }
 }
 
@@ -2579,9 +2579,9 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   BASIC_SOLDIERCREATE_STRUCT basic;
   SOLDIERCREATE_STRUCT priority;
   INT32 i, j;
-  UINT16 usNumItems;
+  uint16_t usNumItems;
   struct OBJECTTYPE *pItem;
-  UINT16 usPEnemyIndex, usNEnemyIndex;
+  uint16_t usPEnemyIndex, usNEnemyIndex;
 
   // Clear memory for all the item summaries loaded
   if (gpWorldItemsSummaryArray) {

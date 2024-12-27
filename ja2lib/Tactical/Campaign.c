@@ -52,7 +52,7 @@ UINT8 CalcImportantSectorControl(void);
 
 // give pSoldier usNumChances to improve ubStat.  If it's from training, it doesn't count towards
 // experience level gain
-void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances, UINT8 ubReason) {
+void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, uint16_t usNumChances, UINT8 ubReason) {
   Assert(pSoldier != NULL);
   Assert(IsSolActive(pSoldier));
 
@@ -91,7 +91,7 @@ void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances,
 // this is the equivalent of StatChange(), but for use with mercs not currently on player's team
 // give pProfile usNumChances to improve ubStat.  If it's from training, it doesn't count towards
 // experience level gain
-void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
+void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, uint16_t usNumChances,
                        UINT8 ubReason) {
   // dead guys don't do nuthin' !
   if (pProfile->bMercStatus == MERC_IS_DEAD) return;
@@ -104,13 +104,13 @@ void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumCh
   ProfileUpdateStats(pProfile);
 }
 
-void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
+void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, uint16_t usNumChances,
                        UINT8 ubReason) {
   uint32_t uiCnt, uiEffLevel;
   INT16 sSubPointChange = 0;
-  UINT16 usChance = 0;
-  UINT16 usSubpointsPerPoint;
-  UINT16 usSubpointsPerLevel;
+  uint16_t usChance = 0;
+  uint16_t usSubpointsPerPoint;
+  uint16_t usSubpointsPerLevel;
   INT8 bCurrentRating;
   INT16 *psStatGainPtr;
   BOOLEAN fAffectedByWisdom = TRUE;
@@ -378,8 +378,8 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8
   BOOLEAN fChangeSalary;
   uint32_t uiLevelCnt;
   UINT8 ubMercMercIdValue = 0;
-  UINT16 usIncreaseValue = 0;
-  UINT16 usSubpointsPerPoint;
+  uint16_t usIncreaseValue = 0;
+  uint16_t usSubpointsPerPoint;
 
   usSubpointsPerPoint = SubpointsPerPoint(ubStat, pProfile->bExpLevel);
 
@@ -697,7 +697,7 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
   INT8 *pbStatPtr = NULL;
   INT8 bMinStatValue;
   INT8 bMaxStatValue;
-  UINT16 usSubpointsPerPoint;
+  uint16_t usSubpointsPerPoint;
   INT16 sPtsChanged;
 
   // if hired, not back at AIM
@@ -908,8 +908,8 @@ uint32_t RoundOffSalary(uint32_t uiSalary) {
   return (uiSalary);
 }
 
-UINT16 SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel) {
-  UINT16 usSubpointsPerPoint;
+uint16_t SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel) {
+  uint16_t usSubpointsPerPoint;
 
   // figure out how many subpoints this type of stat needs to change
   switch (ubStat) {
@@ -949,7 +949,7 @@ UINT16 SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel) {
 void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile) {
   UINT8 ubNumStats;
   UINT8 ubStat;
-  UINT16 usNumChances;
+  uint16_t usNumChances;
 
   ubNumStats = LAST_CHANGEABLE_STAT - FIRST_CHANGEABLE_STAT + 1;
 
@@ -988,7 +988,7 @@ void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile) {
     } while (ubStat == EXPERAMT);
 
     // try to improve that one stat
-    ProfileStatChange(pProfile, ubStat, (UINT16)(pProfile->bWisdom / 2), FROM_TRAINING);
+    ProfileStatChange(pProfile, ubStat, (uint16_t)(pProfile->bWisdom / 2), FROM_TRAINING);
   }
 
   ProfileUpdateStats(pProfile);
@@ -1078,8 +1078,8 @@ UINT8 CurrentPlayerProgressPercentage(void) {
   uint32_t uiPossibleIncome;
   UINT8 ubCurrentProgress;
   UINT8 ubKillsPerPoint;
-  UINT16 usKillsProgress;
-  UINT16 usControlProgress;
+  uint16_t usKillsProgress;
+  uint16_t usControlProgress;
 
   if (gfEditMode) return 0;
 
@@ -1268,7 +1268,7 @@ void TestDumpStatChanges(void) {
 #endif
 
 void AwardExperienceBonusToActiveSquad(UINT8 ubExpBonusType) {
-  UINT16 usXPs = 0;
+  uint16_t usXPs = 0;
   UINT8 ubGuynum;
   struct SOLDIERTYPE *pSoldier;
 

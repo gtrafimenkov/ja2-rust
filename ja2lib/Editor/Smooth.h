@@ -14,15 +14,15 @@
   (((x) >= r->iLeft) && ((x) <= r->iRight) && ((y) >= r->iTop) && ((y) <= r->iBottom))
 
 void SmoothAllTerrainWorld(void);
-void SmoothTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fForceSmooth);
+void SmoothTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN fForceSmooth);
 
 void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, UINT8 ubRadius,
                          BOOLEAN fForceSmooth);
 void SmoothTerrainWorld(uint32_t uiCheckType);
-void SmoothWaterTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fForceSmooth);
+void SmoothWaterTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN fForceSmooth);
 void SmoothAllTerrainTypeRadius(uint32_t iMapIndex, UINT8 ubRadius, BOOLEAN fForceSmooth);
 
-void SmoothExitGrid(int gridno, UINT16 *piNewTile, BOOLEAN fForceSmooth);
+void SmoothExitGrid(int gridno, uint16_t *piNewTile, BOOLEAN fForceSmooth);
 void SmoothExitGridRadius(INT16 sMapIndex, UINT8 ubRadius);
 
 #endif

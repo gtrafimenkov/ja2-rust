@@ -120,7 +120,7 @@ struct LEVELNODE {
 
   union {
     struct {
-      UINT16 usIndex;       // TILE DATABASE INDEX
+      uint16_t usIndex;     // TILE DATABASE INDEX
       INT16 sCurrentFrame;  // Stuff for animated tiles for a given tile location ( doors, etc )
     };
 
@@ -198,9 +198,9 @@ typedef struct {
   struct STRUCTURE *pStructureHead;
   struct STRUCTURE *pStructureTail;
 
-  UINT16 uiFlags;
+  uint16_t uiFlags;
   UINT8 ubExtFlags[2];
-  UINT16 sSumRealLights[1];
+  uint16_t sSumRealLights[1];
   UINT8 sHeight;
   UINT8 ubAdjacentSoldierCnt;
   UINT8 ubTerrainID;
@@ -254,7 +254,7 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce);
 void RemoveWorldWireFrameTiles();
 void RemoveWireFrameTiles(INT16 sGridNo);
 
-struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
+struct LEVELNODE *GetAnimProfileFlags(uint16_t sGridNo, uint16_t *usFlags,
                                       struct SOLDIERTYPE **ppTargSoldier,
                                       struct LEVELNODE *pGivenNode);
 

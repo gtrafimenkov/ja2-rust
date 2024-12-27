@@ -16,7 +16,7 @@ uint32_t WaitForFileName(void);
 void RemoveFileDialog(void);
 void CreateFileDialog(CHAR16 *zTitle);
 
-void SelectFileDialogYPos(UINT16 usRelativeYPos);
+void SelectFileDialogYPos(uint16_t usRelativeYPos);
 
 void BuildFilenameWithCoordinate();
 void BuildCoordinateWithFilename();

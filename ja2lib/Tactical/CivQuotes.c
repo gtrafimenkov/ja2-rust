@@ -71,8 +71,8 @@ typedef struct {
 QUOTE_SYSTEM_STRUCT gCivQuoteData;
 
 CHAR16 gzCivQuote[320];
-UINT16 gusCivQuoteBoxWidth;
-UINT16 gusCivQuoteBoxHeight;
+uint16_t gusCivQuoteBoxWidth;
+uint16_t gusCivQuoteBoxHeight;
 
 void CopyNumEntriesIntoQuoteStruct() {
   INT32 cnt;

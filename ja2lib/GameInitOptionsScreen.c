@@ -207,7 +207,7 @@ void DoneFadeOutForExitGameInitOptionScreen(void);
 void DoneFadeInForExitGameInitOptionScreen(void);
 // JA2Gold: no more timed turns setting
 // UINT8			GetCurrentTimedTurnsButtonSetting();
-BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
+BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                         MSGBOX_CALLBACK ReturnCallback);
 void DisplayMessageToUserAboutGameDifficulty();
 void ConfirmGioDifSettingMessageBoxCallBack(UINT8 bExitValue);
@@ -273,8 +273,8 @@ uint32_t GameInitOptionsScreenShutdown(void) { return (1); }
 
 BOOLEAN EnterGIOScreen() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 cnt;
-  UINT16 usPosY;
+  uint16_t cnt;
+  uint16_t usPosY;
 
   if (gfGIOButtonsAllocated) return (TRUE);
 
@@ -415,7 +415,7 @@ BOOLEAN EnterGIOScreen() {
 }
 
 BOOLEAN ExitGIOScreen() {
-  UINT16 cnt;
+  uint16_t cnt;
 
   if (!gfGIOButtonsAllocated) return (TRUE);
 
@@ -496,7 +496,7 @@ void HandleGIOScreen() {
 
 BOOLEAN RenderGIOScreen() {
   struct VObject *hPixHandle;
-  UINT16 usPosY;
+  uint16_t usPosY;
 
   // Get the main background screen graphic and blt it
   GetVideoObject(&hPixHandle, guiGIOMainBackGroundImage);
@@ -512,86 +512,87 @@ BOOLEAN RenderGIOScreen() {
 
   // Display the Dif Settings Title Text
   // DrawTextToScreen( gzGIOScreenText[ GIO_DIF_LEVEL_TEXT ], GIO_DIF_SETTINGS_X,
-  // (UINT16)(GIO_DIF_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_DIF_SETTINGS_WIDTH, GIO_TOGGLE_TEXT_FONT,
-  // GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString(GIO_DIF_SETTINGS_X, (UINT16)(GIO_DIF_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
+  // (uint16_t)(GIO_DIF_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_DIF_SETTINGS_WIDTH,
+  // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
+  DisplayWrappedString(GIO_DIF_SETTINGS_X, (uint16_t)(GIO_DIF_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
                        GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_DIF_LEVEL_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 
   usPosY = GIO_DIF_SETTINGS_Y + 2;
   // DrawTextToScreen( gzGIOScreenText[ GIO_EASY_TEXT ],
-  // (UINT16)(GIO_DIF_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_DIF_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_DIF_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_DIF_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_EASY_TEXT], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   usPosY += GIO_GAP_BN_SETTINGS;
   // DrawTextToScreen( gzGIOScreenText[ GIO_MEDIUM_TEXT ],
-  // (UINT16)(GIO_DIF_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_DIF_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_DIF_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_DIF_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_MEDIUM_TEXT], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   usPosY += GIO_GAP_BN_SETTINGS;
   // DrawTextToScreen( gzGIOScreenText[ GIO_HARD_TEXT ],
-  // (UINT16)(GIO_DIF_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_DIF_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_DIF_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_DIF_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_HARD_TEXT], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   // Display the Game Settings Title Text
   //	DrawTextToScreen( gzGIOScreenText[ GIO_GAME_STYLE_TEXT ], GIO_GAME_SETTINGS_X,
-  //(UINT16)(GIO_GAME_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_GAME_SETTINGS_WIDTH,
+  //(uint16_t)(GIO_GAME_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_GAME_SETTINGS_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString(GIO_GAME_SETTINGS_X, (UINT16)(GIO_GAME_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
+  DisplayWrappedString(GIO_GAME_SETTINGS_X, (uint16_t)(GIO_GAME_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
                        GIO_GAME_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_GAME_STYLE_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 
   usPosY = GIO_GAME_SETTINGS_Y + 2;
   // DrawTextToScreen( gzGIOScreenText[ GIO_REALISTIC_TEXT ],
-  // (UINT16)(GIO_GAME_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_GAME_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_GAME_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_GAME_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_GAME_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_REALISTIC_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 
   usPosY += GIO_GAP_BN_SETTINGS;
   // DrawTextToScreen( gzGIOScreenText[ GIO_SCI_FI_TEXT ],
-  // (UINT16)(GIO_GAME_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_GAME_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_GAME_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_GAME_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_GAME_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_SCI_FI_TEXT], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   // Display the Gun Settings Title Text
   //	DrawTextToScreen( gzGIOScreenText[ GIO_GUN_OPTIONS_TEXT ], GIO_GUN_SETTINGS_X,
-  //(UINT16)(GIO_GUN_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_GUN_SETTINGS_WIDTH, GIO_TOGGLE_TEXT_FONT,
+  //(uint16_t)(GIO_GUN_SETTINGS_Y-GIO_GAP_BN_SETTINGS), GIO_GUN_SETTINGS_WIDTH,
+  //GIO_TOGGLE_TEXT_FONT,
   // GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString(GIO_GUN_SETTINGS_X, (UINT16)(GIO_GUN_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
+  DisplayWrappedString(GIO_GUN_SETTINGS_X, (uint16_t)(GIO_GUN_SETTINGS_Y - GIO_GAP_BN_SETTINGS),
                        GIO_GUN_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_GUN_OPTIONS_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 
   usPosY = GIO_GUN_SETTINGS_Y + 2;
   // DrawTextToScreen( gzGIOScreenText[ GIO_REDUCED_GUNS_TEXT ],
-  // (UINT16)(GIO_GUN_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_GUN_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_GUN_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_GUN_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_GUN_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_REDUCED_GUNS_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 
   usPosY += GIO_GAP_BN_SETTINGS;
   // DrawTextToScreen( gzGIOScreenText[ GIO_GUN_NUT_TEXT ],
-  // (UINT16)(GIO_GUN_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
+  // (uint16_t)(GIO_GUN_SETTINGS_X+GIO_OFFSET_TO_TEXT), usPosY, GIO_MAIN_TITLE_WIDTH,
   // GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
-  DisplayWrappedString((UINT16)(GIO_GUN_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_GUN_SETTINGS_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_GUN_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_GUN_NUT_TEXT], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -599,40 +600,40 @@ BOOLEAN RenderGIOScreen() {
   /*
   //Display the Timed turns Settings Title Text
   DisplayWrappedString( GIO_TIMED_TURN_SETTING_X,
-  (UINT16)(GIO_TIMED_TURN_SETTING_Y-GIO_GAP_BN_SETTINGS), GIO_DIF_SETTINGS_WIDTH, 2,
+  (uint16_t)(GIO_TIMED_TURN_SETTING_Y-GIO_GAP_BN_SETTINGS), GIO_DIF_SETTINGS_WIDTH, 2,
   GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, gzGIOScreenText[ GIO_TIMED_TURN_TITLE_TEXT ],
   FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED ); usPosY = GIO_TIMED_TURN_SETTING_Y+2;
 
-  DisplayWrappedString( (UINT16)(GIO_TIMED_TURN_SETTING_X+GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString( (uint16_t)(GIO_TIMED_TURN_SETTING_X+GIO_OFFSET_TO_TEXT), usPosY,
   GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, gzGIOScreenText[
   GIO_NO_TIMED_TURNS_TEXT ], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED ); usPosY +=
   GIO_GAP_BN_SETTINGS;
 
-  DisplayWrappedString( (UINT16)(GIO_TIMED_TURN_SETTING_X+GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString( (uint16_t)(GIO_TIMED_TURN_SETTING_X+GIO_OFFSET_TO_TEXT), usPosY,
   GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, gzGIOScreenText[
   GIO_TIMED_TURNS_TEXT ], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
   */
 
   // JA2Gold: Display the iron man Settings Title Text
   DisplayWrappedString(
-      GIO_IRON_MAN_SETTING_X, (UINT16)(GIO_IRON_MAN_SETTING_Y - GIO_GAP_BN_SETTINGS),
+      GIO_IRON_MAN_SETTING_X, (uint16_t)(GIO_IRON_MAN_SETTING_Y - GIO_GAP_BN_SETTINGS),
       GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
       gzGIOScreenText[GIO_GAME_SAVE_STYLE_TEXT], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   usPosY = GIO_IRON_MAN_SETTING_Y + 2;
 
-  DisplayWrappedString((UINT16)(GIO_IRON_MAN_SETTING_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_IRON_MAN_SETTING_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_SAVE_ANYWHERE_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
   usPosY += GIO_GAP_BN_SETTINGS;
 
-  DisplayWrappedString((UINT16)(GIO_IRON_MAN_SETTING_X + GIO_OFFSET_TO_TEXT), usPosY,
+  DisplayWrappedString((uint16_t)(GIO_IRON_MAN_SETTING_X + GIO_OFFSET_TO_TEXT), usPosY,
                        GIO_DIF_SETTINGS_WIDTH, 2, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR,
                        gzGIOScreenText[GIO_IRON_MAN_TEXT], FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 
   usPosY += 20;
-  DisplayWrappedString((UINT16)(GIO_IRON_MAN_SETTING_X + GIO_OFFSET_TO_TEXT), usPosY, 220, 2,
+  DisplayWrappedString((uint16_t)(GIO_IRON_MAN_SETTING_X + GIO_OFFSET_TO_TEXT), usPosY, 220, 2,
                        FONT12ARIAL, GIO_TOGGLE_TEXT_COLOR,
                        zNewTacticalMessages[TCTL_MSG__CANNOT_SAVE_DURING_COMBAT], FONT_MCOLOR_BLACK,
                        FALSE, LEFT_JUSTIFIED);
@@ -923,7 +924,7 @@ UINT8 GetCurrentGameSaveButtonSetting() {
 
 void RestoreGIOButtonBackGrounds() {
   UINT8 cnt;
-  UINT16 usPosY;
+  uint16_t usPosY;
 
   usPosY = GIO_DIF_SETTINGS_Y - GIO_OFFSET_TO_TOGGLE_BOX_Y;
   // Check box to toggle Difficulty settings
@@ -1002,7 +1003,7 @@ void DoneFadeOutForExitGameInitOptionScreen(void) {
 
 void DoneFadeInForExitGameInitOptionScreen(void) { SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR); }
 
-BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
+BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
@@ -1011,7 +1012,7 @@ BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, U
 
   // do message box and return
   giGioMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                 (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                 (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                  ReturnCallback, &CenteringRect);
 
   // send back return state

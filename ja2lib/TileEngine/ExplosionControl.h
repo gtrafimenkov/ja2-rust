@@ -15,7 +15,7 @@ typedef struct {
   UINT8 ubOwner;
   UINT8 ubTypeID;
 
-  UINT16 usItem;
+  uint16_t usItem;
 
   INT16 sX;       // World X ( optional )
   INT16 sY;       // World Y ( optional )
@@ -68,15 +68,15 @@ extern EXPLOSIONTYPE gExplosionData[NUM_EXPLOSION_SLOTS];
 extern UINT8 gubElementsOnExplosionQueue;
 extern BOOLEAN gfExplosionQueueActive;
 
-void IgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo, UINT16 usItem,
+void IgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo, uint16_t usItem,
                      INT8 bLevel);
 void InternalIgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo,
-                             UINT16 usItem, BOOLEAN fLocate, INT8 bLevel);
+                             uint16_t usItem, BOOLEAN fLocate, INT8 bLevel);
 
 void GenerateExplosion(EXPLOSION_PARAMS *pExpParams);
 
-void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, UINT16 usItem, UINT8 ubOwner, BOOLEAN fSubsequent,
-                  INT8 bLevel, INT32 iSmokeEffectNum);
+void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, uint16_t usItem, UINT8 ubOwner,
+                  BOOLEAN fSubsequent, INT8 bLevel, INT32 iSmokeEffectNum);
 
 void AddBombToQueue(uint32_t uiWorldBombIndex, uint32_t uiTimeStamp);
 

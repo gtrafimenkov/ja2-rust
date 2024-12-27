@@ -117,7 +117,7 @@ UINT8 FromSmokeTypeToWorldFlags(INT8 bType) {
   }
 }
 
-INT32 NewSmokeEffect(INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner) {
+INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, INT8 bLevel, UINT8 ubOwner) {
   SMOKEEFFECT *pSmoke;
   INT32 iSmokeIndex;
   INT8 bSmokeEffectType = 0;
@@ -367,7 +367,7 @@ void DecaySmokeEffects(uint32_t uiTime) {
   BOOLEAN fUpdate = FALSE;
   BOOLEAN fSpreadEffect;
   INT8 bLevel;
-  UINT16 usNumUpdates = 1;
+  uint16_t usNumUpdates = 1;
 
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
     if (MercSlots[cnt]) {
@@ -401,7 +401,7 @@ void DecaySmokeEffects(uint32_t uiTime) {
         if ((uiTime - pSmoke->uiTimeOfLastUpdate) > 10) {
           fUpdate = TRUE;
 
-          usNumUpdates = (UINT16)((uiTime - pSmoke->uiTimeOfLastUpdate) / 10);
+          usNumUpdates = (uint16_t)((uiTime - pSmoke->uiTimeOfLastUpdate) / 10);
         }
       }
 

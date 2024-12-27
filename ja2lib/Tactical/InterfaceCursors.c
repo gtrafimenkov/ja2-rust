@@ -655,8 +655,8 @@ UICursor gUICursors[NUM_UI_CURSORS] = {
 
 uint32_t guiCurUICursor = NO_UICURSOR;
 uint32_t guiOldUICursor = NO_UICURSOR;
-UINT16 gusCurMousePos;
-UINT16 gusTargetDropPos;
+uint16_t gusCurMousePos;
+uint16_t gusTargetDropPos;
 BOOLEAN gfTargetDropPos = FALSE;
 
 // LOCAL FUNCTIONS
@@ -674,7 +674,7 @@ BOOLEAN DrawUICursor() {
   INT16 usMapPos;
   static BOOLEAN fHideCursor = FALSE;
   struct LEVELNODE *pNode;
-  UINT16 usTileCursor;
+  uint16_t usTileCursor;
 
   // RaiseMouseToLevel( (INT8)gsInterfaceLevel );
 
@@ -1068,7 +1068,7 @@ void HandleLooseCursorHide() {
   }
 }
 
-UINT16 GetSnapCursorIndex(UINT16 usAdditionalData) {
+uint16_t GetSnapCursorIndex(uint16_t usAdditionalData) {
   // OK, this function will get the 'true' index for drawing the cursor....
   if (gGameSettings.fOptions[TOPTION_3D_CURSOR]) {
     switch (usAdditionalData) {

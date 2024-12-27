@@ -7,18 +7,18 @@
 #define MIN_CACHE_SIZE 2
 
 struct AnimationSurfaceCache {
-  UINT16 *usCachedSurfaces;
+  uint16_t *usCachedSurfaces;
   INT16 *sCacheHits;
   UINT8 ubCacheSize;
 };
 
 extern uint32_t guiCacheSize;
 
-BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache,
-                                  UINT16 usSurfaceIndex, UINT16 usCurrentAnimation);
-BOOLEAN InitAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache);
-void DeleteAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache);
+BOOLEAN GetCachedAnimationSurface(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache,
+                                  uint16_t usSurfaceIndex, uint16_t usCurrentAnimation);
+BOOLEAN InitAnimationCache(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache);
+void DeleteAnimationCache(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache);
 void DetermineOptimumAnimationCacheSize();
-void UnLoadCachedAnimationSurfaces(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache);
+void UnLoadCachedAnimationSurfaces(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache);
 
 #endif

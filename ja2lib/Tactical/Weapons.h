@@ -183,14 +183,14 @@ typedef struct {
   UINT8 ubDeadliness;    // comparative ratings of guns
   INT8 bAccuracy;        // accuracy or penalty
   UINT8 ubMagSize;
-  UINT16 usRange;
-  UINT16 usReloadDelay;
+  uint16_t usRange;
+  uint16_t usReloadDelay;
   UINT8 ubAttackVolume;
   UINT8 ubHitVolume;
-  UINT16 sSound;
-  UINT16 sBurstSound;
-  UINT16 sReloadSound;
-  UINT16 sLocknLoadSound;
+  uint16_t sSound;
+  uint16_t sBurstSound;
+  uint16_t sReloadSound;
+  uint16_t sLocknLoadSound;
 
 } WEAPONTYPE;
 
@@ -227,22 +227,23 @@ extern EXPLOSIVETYPE Explosive[];
 extern INT8 EffectiveArmour(struct OBJECTTYPE *pObj);
 extern INT8 ArmourVersusExplosivesPercent(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN FireWeapon(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
-extern void WeaponHit(UINT16 usSoldierID, UINT16 usWeaponIndex, INT16 sDamage, INT16 sBreathLoss,
-                      UINT16 usDirection, INT16 sXPos, INT16 sYPos, INT16 sZPos, INT16 sRange,
-                      UINT8 ubAttackerID, BOOLEAN fHit, UINT8 ubSpecial, UINT8 ubHitLocation);
-extern void StructureHit(INT32 iBullet, UINT16 usWeaponIndex, INT8 bWeaponStatus,
-                         UINT8 ubAttackerID, UINT16 sXPos, INT16 sYPos, INT16 sZPos,
-                         UINT16 usStructureID, INT32 iImpact, BOOLEAN fStopped);
-extern void WindowHit(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth,
+extern void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, INT16 sDamage,
+                      INT16 sBreathLoss, uint16_t usDirection, INT16 sXPos, INT16 sYPos,
+                      INT16 sZPos, INT16 sRange, UINT8 ubAttackerID, BOOLEAN fHit, UINT8 ubSpecial,
+                      UINT8 ubHitLocation);
+extern void StructureHit(INT32 iBullet, uint16_t usWeaponIndex, INT8 bWeaponStatus,
+                         UINT8 ubAttackerID, uint16_t sXPos, INT16 sYPos, INT16 sZPos,
+                         uint16_t usStructureID, INT32 iImpact, BOOLEAN fStopped);
+extern void WindowHit(INT16 sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
                       BOOLEAN fLargeForce);
 extern INT32 BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
                           UINT8 ubHitLocation, INT32 iImpact, INT16 sHitBy, UINT8 *pubSpecial);
 extern BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 extern void ShotMiss(UINT8 ubAttackerID, INT32 iBullet);
-extern uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
+extern uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, UINT8 ubAimTime,
                                    UINT8 ubAimPos);
-extern uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime,
-                                     UINT8 ubAimPos);
+extern uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                                     UINT8 ubAimTime, UINT8 ubAimPos);
 extern uint32_t CalcChanceToPunch(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
                                   UINT8 ubAimTime);
 extern uint32_t CalcChanceToStab(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
@@ -262,7 +263,7 @@ extern void GetTargetWorldPositions(struct SOLDIERTYPE *pSoldier, INT16 sTargetG
 extern BOOLEAN OKFireWeapon(struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN CheckForGunJam(struct SOLDIERTYPE *pSoldier);
 
-extern INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem, BOOLEAN fArmed);
+extern INT32 CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN fArmed);
 extern uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTime,
                                       UINT8 ubAimPos);
 
@@ -275,6 +276,6 @@ void DishoutQueenSwipeDamage(struct SOLDIERTYPE *pQueenSoldier);
 INT32 HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, INT32 iHitBy,
                 BOOLEAN fBladeAttack);
 
-UINT16 GunRange(struct OBJECTTYPE *pObj);
+uint16_t GunRange(struct OBJECTTYPE *pObj);
 
 #endif

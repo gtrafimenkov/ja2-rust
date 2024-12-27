@@ -36,7 +36,7 @@
 uint32_t giIMPConfirmButton[2];
 uint32_t giIMPConfirmButtonImage[2];
 BOOLEAN fNoAlreadySelected = FALSE;
-UINT16 uiEyeXPositions[] = {
+uint16_t uiEyeXPositions[] = {
     8, 9,  8, 6, 13, 11, 8, 8,
     4,  // 208
     5,  // 209
@@ -47,7 +47,7 @@ UINT16 uiEyeXPositions[] = {
     5,
 };
 
-UINT16 uiEyeYPositions[] = {
+uint16_t uiEyeYPositions[] = {
     5, 4, 5, 6, 5, 5, 4, 4,
     4,  // 208
     5,
@@ -59,7 +59,7 @@ UINT16 uiEyeYPositions[] = {
     6,
 };
 
-UINT16 uiMouthXPositions[] = {
+uint16_t uiMouthXPositions[] = {
     8, 9, 7, 7, 11, 10, 8, 8,
     5,  // 208
     6,
@@ -71,7 +71,7 @@ UINT16 uiMouthXPositions[] = {
     5,
 };
 
-UINT16 uiMouthYPositions[] = {
+uint16_t uiMouthYPositions[] = {
     21, 23, 24, 25, 23, 24, 24, 24,
     25,  // 208
     24,
@@ -88,11 +88,11 @@ BOOLEAN fLoadingCharacterForPreviousImpProfile = FALSE;
 void CreateConfirmButtons(void);
 void DestroyConfirmButtons(void);
 void GiveItemsToPC(UINT8 ubProfileId);
-void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8 ubStatus,
+void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, UINT8 ubStatus,
                                UINT8 ubHowMany);
-void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, UINT16 usItem,
+void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, uint16_t usItem,
                                 UINT8 ubStatus, UINT8 ubHowMany);
-INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem);
+INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, uint16_t usItem);
 
 // callbacks
 void BtnIMPConfirmNo(GUI_BUTTON *btn, INT32 reason);
@@ -407,7 +407,7 @@ void GiveItemsToPC(UINT8 ubProfileId) {
   }
 }
 
-void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8 ubStatus,
+void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, UINT8 ubStatus,
                                UINT8 ubHowMany) {
   INT32 iSlot;
 
@@ -422,14 +422,14 @@ void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8
   MakeProfileInvItemThisSlot(pProfile, iSlot, usItem, ubStatus, ubHowMany);
 }
 
-void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, UINT16 usItem,
+void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, uint16_t usItem,
                                 UINT8 ubStatus, UINT8 ubHowMany) {
   pProfile->inv[uiPos] = usItem;
   pProfile->bInvStatus[uiPos] = ubStatus;
   pProfile->bInvNumber[uiPos] = ubHowMany;
 }
 
-INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem) {
+INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, uint16_t usItem) {
   uint32_t uiPos;
 
   // if it fits into a small pocket

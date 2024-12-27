@@ -11,7 +11,7 @@
 extern BOOLEAN gfFakeLights;
 extern GUI_BUTTON* gpPersistantButton;
 
-extern UINT16 GenericButtonFillColors[40];
+extern uint16_t GenericButtonFillColors[40];
 
 void DisplayWayPoints(void);
 
@@ -52,12 +52,12 @@ void ProcessSelectionArea();
 
 void MapOptimize(void);
 
-extern UINT16 GenericButtonFillColors[40];
+extern uint16_t GenericButtonFillColors[40];
 
 // These go together.  The taskbar has a specific color scheme.
-extern UINT16 gusEditorTaskbarColor;
-extern UINT16 gusEditorTaskbarHiColor;
-extern UINT16 gusEditorTaskbarLoColor;
+extern uint16_t gusEditorTaskbarColor;
+extern uint16_t gusEditorTaskbarHiColor;
+extern uint16_t gusEditorTaskbarLoColor;
 
 extern INT32 iOldTaskMode;
 extern INT32 iCurrentTaskbar;

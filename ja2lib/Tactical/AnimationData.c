@@ -4221,9 +4221,9 @@ BOOLEAN DeInitAnimationSystem() {
   return (TRUE);
 }
 
-struct STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(UINT16 usSoldierID,
-                                                            UINT16 usSurfaceIndex,
-                                                            UINT16 usAnimState,
+struct STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(uint16_t usSoldierID,
+                                                            uint16_t usSurfaceIndex,
+                                                            uint16_t usAnimState,
                                                             BOOLEAN fUseAbsolute) {
   INT8 bStructDataType;
 
@@ -4250,18 +4250,18 @@ struct STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(UINT16 usSoldierID,
       gAnimStructureDatabase[MercPtrs[usSoldierID]->ubBodyType][bStructDataType].pStructureFileRef);
 }
 
-struct STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
-                                                    UINT16 usAnimState) {
+struct STRUCTURE_FILE_REF *GetAnimationStructureRef(uint16_t usSoldierID, uint16_t usSurfaceIndex,
+                                                    uint16_t usAnimState) {
   return (InternalGetAnimationStructureRef(usSoldierID, usSurfaceIndex, usAnimState, FALSE));
 }
 
-struct STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID) {
+struct STRUCTURE_FILE_REF *GetDefaultStructureRef(uint16_t usSoldierID) {
   return (
       gAnimStructureDatabase[MercPtrs[usSoldierID]->ubBodyType][DEFAULT_STRUCT].pStructureFileRef);
 }
 
 // Surface mamagement functions
-BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 usAnimState) {
+BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint16_t usAnimState) {
   struct AuxObjectData *pAuxData;
 
   // Check for valid surface
@@ -4369,7 +4369,7 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
   return (TRUE);
 }
 
-BOOLEAN UnLoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex) {
+BOOLEAN UnLoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex) {
   // Decrement usage flag, only if this soldier has it currently tagged
   if (gbAnimUsageHistory[usSurfaceIndex][usSoldierID] > 0) {
     // Decrement usage count
@@ -4409,7 +4409,7 @@ BOOLEAN UnLoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex) {
   return (TRUE);
 }
 
-void ClearAnimationSurfacesUsageHistory(UINT16 usSoldierID) {
+void ClearAnimationSurfacesUsageHistory(uint16_t usSoldierID) {
   uint32_t cnt;
 
   for (cnt = 0; cnt < NUMANIMATIONSURFACETYPES; cnt++) {
@@ -4461,8 +4461,8 @@ BOOLEAN LoadAnimationProfiles() {
       // Loop tiles
       for (iTileCount = 0; iTileCount < pProfileDirs->ubNumTiles; iTileCount++) {
         //				if ( fread( &pProfileDirs->pTiles[ iTileCount ].usTileFlags,
-        // sizeof( UINT16 ), 1, pInput ) != 1 )
-        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].usTileFlags, sizeof(UINT16),
+        // sizeof( uint16_t ), 1, pInput ) != 1 )
+        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].usTileFlags, sizeof(uint16_t),
                          &uiBytesRead) != 1) {
           return (FALSE);
         }

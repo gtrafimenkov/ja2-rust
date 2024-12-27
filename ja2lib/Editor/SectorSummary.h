@@ -25,7 +25,7 @@ extern BOOLEAN gfSummaryWindowActive;
 
 extern BOOLEAN gSectorExists[16][16];
 
-extern UINT16 gusNumEntriesWithOutdatedOrNoSummaryInfo;
+extern uint16_t gusNumEntriesWithOutdatedOrNoSummaryInfo;
 
 extern BOOLEAN gfUpdateSummaryInfo;
 

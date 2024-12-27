@@ -55,7 +55,7 @@ UINT8 AtHeight[PROFILE_Z_SIZE] = {0x01, 0x02, 0x04, 0x08};
 
 #define FIRST_AVAILABLE_STRUCTURE_ID (INVALID_STRUCTURE_ID + 2)
 
-UINT16 gusNextAvailableStructureID = FIRST_AVAILABLE_STRUCTURE_ID;
+uint16_t gusNextAvailableStructureID = FIRST_AVAILABLE_STRUCTURE_ID;
 
 struct STRUCTURE_FILE_REF *gpStructureFileRefs;
 
@@ -170,7 +170,7 @@ void FreeStructureFileRef(
         *pFileRef) {  // Frees all of the memory associated with a file reference,
                       // including the file reference structure itself
 
-  UINT16 usLoop;
+  uint16_t usLoop;
 
   Assert(pFileRef != NULL);
   if (pFileRef->pDBStructureRef != NULL) {
@@ -322,9 +322,9 @@ BOOLEAN CreateFileStructureArrays(
   UINT8 *pCurrent;
   struct DB_STRUCTURE_REF *pDBStructureRef;
   DB_STRUCTURE_TILE **ppTileArray;
-  UINT16 usLoop;
-  UINT16 usIndex;
-  UINT16 usTileLoop;
+  uint16_t usLoop;
+  uint16_t usIndex;
+  uint16_t usTileLoop;
   uint32_t uiHitPoints;
 
   pCurrent = pFileRef->pubStructureData;
@@ -715,8 +715,8 @@ BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
 
 BOOLEAN AddStructureToTile(
     MAP_ELEMENT *pMapElement, struct STRUCTURE *pStructure,
-    UINT16 usStructureID) {  // adds a struct STRUCTURE to a MAP_ELEMENT (adds part
-                             // of a structure to a location on the map)
+    uint16_t usStructureID) {  // adds a struct STRUCTURE to a MAP_ELEMENT (adds part
+                               // of a structure to a location on the map)
   struct STRUCTURE *pStructureTail;
 
   CHECKF(pMapElement);
@@ -748,7 +748,7 @@ struct STRUCTURE *InternalAddStructureToWorld(
   UINT8 ubLoop;
   UINT8 ubLoop2;
   INT16 sBaseTileHeight = -1;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
 
   CHECKF(pDBStructureRef);
   CHECKF(pLevelNode);
@@ -833,7 +833,7 @@ struct STRUCTURE *InternalAddStructureToWorld(
     usStructureID = pLevelNode->pSoldier->ubID;
   } else if (pLevelNode->uiFlags & LEVELNODE_ROTTINGCORPSE) {
     // ATE: Offset IDs so they don't collide with soldiers
-    usStructureID = (UINT16)(TOTAL_SOLDIERS + pLevelNode->pAniTile->uiUserData);
+    usStructureID = (uint16_t)(TOTAL_SOLDIERS + pLevelNode->pAniTile->uiUserData);
   } else {
     gusNextAvailableStructureID++;
     if (gusNextAvailableStructureID == 0) {
@@ -937,7 +937,7 @@ BOOLEAN DeleteStructureFromWorld(
   UINT8 ubLoop, ubLoop2;
   UINT8 ubNumberOfTiles;
   INT16 sBaseGridNo, sGridNo;
-  UINT16 usStructureID;
+  uint16_t usStructureID;
   BOOLEAN fRecompileMPs;
   BOOLEAN fRecompileExtraRadius;  // for doors... yuck
   INT16 sCheckGridNo;
@@ -1109,7 +1109,8 @@ struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, uint32_t fFlag
 }
 
 struct STRUCTURE *FindStructureByID(
-    INT16 sGridNo, UINT16 usStructureID) {  // finds a structure that matches any of the given flags
+    INT16 sGridNo,
+    uint16_t usStructureID) {  // finds a structure that matches any of the given flags
   struct STRUCTURE *pCurrent;
 
   pCurrent = gpWorldLevelData[sGridNo].pStructureHead;
@@ -1589,7 +1590,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
   INT16 sRightHalfWidth;
   INT16 sOffsetX;
   INT16 sOffsetY;
-  UINT16 usWidth;
+  uint16_t usWidth;
   struct DB_STRUCTURE_REF *pDBStructureRef;
   struct DB_STRUCTURE *pDBStructure = NULL;
   INT16 sSTIStep = 0;
@@ -1657,7 +1658,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
 
     // Increment struct index....
     if (uiLoop == (uint32_t)sNext) {
-      sNext = (UINT16)(uiLoop + sSTIStep);
+      sNext = (uint16_t)(uiLoop + sSTIStep);
       sStructIndex++;
     } else {
       if (fFirstTime) {

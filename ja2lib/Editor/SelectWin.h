@@ -72,19 +72,19 @@ typedef struct {
   union {
     struct {
       struct VObject *hVObject;
-      UINT16 usStart;
-      UINT16 usEnd;
+      uint16_t usStart;
+      uint16_t usEnd;
       uint32_t uiObjIndx;
     };
     struct {
-      UINT16 *pString;
+      uint16_t *pString;
     };
   };
 } DisplaySpec;
 
 typedef struct _DisplayList {
   struct VObject *hObj;
-  UINT16 uiIndex;
+  uint16_t uiIndex;
   INT16 iX;
   INT16 iY;
   INT16 iWidth;
@@ -96,7 +96,7 @@ typedef struct _DisplayList {
 
 typedef struct _Selections {
   uint32_t uiObject;
-  UINT16 usIndex;
+  uint16_t usIndex;
   INT16 sCount;
 } Selections;
 
@@ -156,11 +156,11 @@ extern INT32 iNumRoomsSelected;
 extern INT32 iDrawMode;
 extern DisplayList *TrashList(DisplayList *pNode);
 
-extern BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
+extern BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,
                                   DisplayList **pDisplayList, SGPPoint *pUpperLeft,
-                                  SGPPoint *pBottomRight, SGPPoint *pSpacing, UINT16 fFlags);
+                                  SGPPoint *pBottomRight, SGPPoint *pSpacing, uint16_t fFlags);
 
 extern BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCutOff,
-                                 SGPPoint *pUpperLeft, UINT16 fFlags);
+                                 SGPPoint *pUpperLeft, uint16_t fFlags);
 
 #endif

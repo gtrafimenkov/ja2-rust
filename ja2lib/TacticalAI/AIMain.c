@@ -1874,7 +1874,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
               } else {
                 // Have buddy wait a while...
                 pSoldier->bNextAction = AI_ACTION_WAIT;
-                pSoldier->usNextActionData = (UINT16)REALTIME_AI_DELAY;
+                pSoldier->usNextActionData = (uint16_t)REALTIME_AI_DELAY;
               }
             }
 

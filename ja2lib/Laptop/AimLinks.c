@@ -55,7 +55,7 @@ void GameInitAimLinks() {}
 
 BOOLEAN EnterAimLinks() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosY;
+  uint16_t usPosY;
   INT16 i;
 
   InitAimDefaults();
@@ -80,7 +80,7 @@ BOOLEAN EnterAimLinks() {
   for (i = 0; i < AIM_LINK_NUM_LINKS; i++) {
     MSYS_DefineRegion(&gSelectedLinkRegion[i], AIM_LINK_BOBBY_LINK_X, usPosY,
                       AIM_LINK_BOBBY_LINK_X + AIM_LINK_LINK_WIDTH,
-                      (UINT16)(usPosY + AIM_LINK_LINK_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      (uint16_t)(usPosY + AIM_LINK_LINK_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                       MSYS_NO_CALLBACK, SelectLinkRegionCallBack);
     MSYS_AddRegion(&gSelectedLinkRegion[i]);
     MSYS_SetRegionUserData(&gSelectedLinkRegion[i], 0, gubLinkPages[i]);

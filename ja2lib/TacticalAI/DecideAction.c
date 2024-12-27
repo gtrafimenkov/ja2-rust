@@ -57,7 +57,7 @@ INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
   INT32 iScheduleIndex;
   UINT8 ubScheduleAction;
-  UINT16 usGridNo1, usGridNo2;
+  uint16_t usGridNo1, usGridNo2;
   INT16 sX, sY;
   INT8 bDirection;
   struct STRUCTURE *pStructure;
@@ -927,7 +927,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
           if (fCivilianOrMilitia && !gfTurnBasedAI) {
             // pause at the end of the walk!
             pSoldier->bNextAction = AI_ACTION_WAIT;
-            pSoldier->usNextActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+            pSoldier->usNextActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
           }
 
           return (AI_ACTION_SEEK_FRIEND);
@@ -961,7 +961,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
               (pSoldier->bDirection != pSoldier->bDominantDir) && PreRandom(2)) {
             pSoldier->usActionData = pSoldier->bDominantDir;
           } else {
-            pSoldier->usActionData = (UINT16)PreRandom(8);
+            pSoldier->usActionData = (uint16_t)PreRandom(8);
           }
         } while (pSoldier->usActionData == pSoldier->bDirection);
 
@@ -1641,7 +1641,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         } else  // not in battle, cower for a certain length of time
         {
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
           pSoldier->usActionData = ANIM_CROUCH;
           return (AI_ACTION_COWER);
         }
@@ -1701,7 +1701,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         } else  // not in battle, cower for a certain length of time
         {
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
           pSoldier->usActionData = ANIM_CROUCH;
           return (AI_ACTION_COWER);
         }
@@ -1727,7 +1727,8 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         ubOpponentDir = (UINT8)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
 
         // Get new gridno!
-        sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo, (UINT16)DirectionInc(ubOpponentDir));
+        sCheckGridNo =
+            NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(ubOpponentDir));
 
         if (!OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel, ubOpponentDir,
                              pSoldier->usAnimState)) {
@@ -1735,8 +1736,8 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
           BestThrow.ubPossible = FALSE;
 
           // try behind us, see if there's room to move back
-          sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                                   (UINT16)DirectionInc(gOppositeDirection[ubOpponentDir]));
+          sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                   (uint16_t)DirectionInc(gOppositeDirection[ubOpponentDir]));
           if (OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel,
                               gOppositeDirection[ubOpponentDir], pSoldier->usAnimState)) {
             pSoldier->usActionData = sCheckGridNo;
@@ -2467,7 +2468,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
               pSoldier->bNextAction = AI_ACTION_END_TURN;
             } else {
               pSoldier->bNextAction = AI_ACTION_WAIT;
-              pSoldier->usNextActionData = (UINT16)REALTIME_AI_DELAY;
+              pSoldier->usNextActionData = (uint16_t)REALTIME_AI_DELAY;
             }
           }
 
@@ -2982,7 +2983,8 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
           ubOpponentDir = (UINT8)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
 
           // Get new gridno!
-          sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo, (UINT16)DirectionInc(ubOpponentDir));
+          sCheckGridNo =
+              NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(ubOpponentDir));
 
           if (!OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel, ubOpponentDir,
                                pSoldier->usAnimState)) {
@@ -2990,8 +2992,8 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
             BestThrow.ubPossible = FALSE;
 
             // try behind us, see if there's room to move back
-            sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                                     (UINT16)DirectionInc(gOppositeDirection[ubOpponentDir]));
+            sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                     (uint16_t)DirectionInc(gOppositeDirection[ubOpponentDir]));
             if (OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel,
                                 gOppositeDirection[ubOpponentDir], pSoldier->usAnimState)) {
               pSoldier->usActionData = sCheckGridNo;

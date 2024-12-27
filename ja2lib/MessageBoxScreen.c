@@ -60,7 +60,7 @@ void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 uint32_t ExitMsgBox(INT8 ubExitCode);
-UINT16 GetMSgBoxButtonWidth(INT32 iButtonImage);
+uint16_t GetMSgBoxButtonWidth(INT32 iButtonImage);
 
 SGPRect gOldCursorLimitRectangle;
 
@@ -77,11 +77,11 @@ extern STR16 pUpdatePanelButtons[];
 CHAR16 gzUserDefinedButton1[128];
 CHAR16 gzUserDefinedButton2[128];
 
-INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
+INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint16_t usFlags,
                    MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
   VSURFACE_DESC vs_desc;
-  UINT16 usTextBoxWidth;
-  UINT16 usTextBoxHeight;
+  uint16_t usTextBoxWidth;
+  uint16_t usTextBoxHeight;
   SGPRect aRect;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
@@ -89,7 +89,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16
   UINT8 ubMercBoxBackground = BASIC_MERC_POPUP_BACKGROUND,
         ubMercBoxBorder = BASIC_MERC_POPUP_BORDER;
   UINT8 ubFontColor, ubFontShadowColor;
-  UINT16 usCursor;
+  uint16_t usCursor;
   INT32 iId = -1;
 
   GetMousePos(&pOldMousePosition);
@@ -259,8 +259,8 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16
   pDestBuf = LockVideoSurface(gMsgBox.uiSaveBuffer, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
-                  gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight);
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
+                  0, gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight);
 
   UnLockVideoSurface(gMsgBox.uiSaveBuffer);
   UnLockVideoSurface(FRAME_BUFFER);
@@ -789,7 +789,7 @@ uint32_t ExitMsgBox(INT8 ubExitCode) {
     pSrcBuf = LockVideoSurface(gMsgBox.uiSaveBuffer, &uiSrcPitchBYTES);
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
+    Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
                     gMsgBox.sX, gMsgBox.sY, 0, 0, gMsgBox.usWidth, gMsgBox.usHeight);
 
     UnLockVideoSurface(gMsgBox.uiSaveBuffer);
@@ -868,8 +868,8 @@ uint32_t MessageBoxScreenHandle() {
                               pDestBuf = LockVideoSurface( gMsgBox.uiSaveBuffer, &uiDestPitchBYTES);
                               pSrcBuf = LockVideoSurface( FRAME_BUFFER, &uiSrcPitchBYTES);
 
-                              Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                                      (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
+                              Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES,
+                                                      (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
                                                       0 , 0,
                                                       gMsgBox.sX , gMsgBox.sY,
                                                       gMsgBox.usWidth, gMsgBox.usHeight );
@@ -1030,26 +1030,26 @@ uint32_t MessageBoxScreenHandle() {
 uint32_t MessageBoxScreenShutdown() { return (FALSE); }
 
 // a basic box that don't care what screen we came from
-void DoScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
+void DoScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
                                    MSGBOX_CALLBACK ReturnCallback) {
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, GetMapCenteringRect());
 }
 
 // a basic box that don't care what screen we came from
-void DoUpperScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
+void DoUpperScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y / 2};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
 // a basic box that don't care what screen we came from
-void DoLowerScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
+void DoLowerScreenIndependantMessageBox(CHAR16 *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
-void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
+void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, uint16_t usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
                                            const SGPRect *pCenteringRect) {
   /// which screen are we in?
@@ -1099,6 +1099,6 @@ void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
   }
 }
 
-UINT16 GetMSgBoxButtonWidth(INT32 iButtonImage) {
-  return (GetWidthOfButtonPic((UINT16)iButtonImage, ButtonPictures[iButtonImage].OnNormal));
+uint16_t GetMSgBoxButtonWidth(INT32 iButtonImage) {
+  return (GetWidthOfButtonPic((uint16_t)iButtonImage, ButtonPictures[iButtonImage].OnNormal));
 }

@@ -5,7 +5,7 @@
 // 512-767 is when ALT is pressed and 768-1023 is when CTRL is pressed. This table should be
 // modified during translation
 
-UINT16 gsKeyTranslationTable[1024] = {
+uint16_t gsKeyTranslationTable[1024] = {
     0,     //
     1,     //
     2,     //

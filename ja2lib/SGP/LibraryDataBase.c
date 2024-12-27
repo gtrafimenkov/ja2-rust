@@ -26,7 +26,7 @@ typedef struct {
   UINT8 ubState;
   UINT8 ubReserved;
   struct _FILETIME sFileTime;
-  UINT16 usReserved2;
+  uint16_t usReserved2;
 } DIRENTRY;
 
 BOOLEAN IsLibraryRealFile(HWFILE hFile) {
@@ -116,7 +116,7 @@ BOOLEAN InitializeFileDatabase() {
 //************************************************************************
 
 BOOLEAN ShutDownFileDatabase() {
-  UINT16 sLoop1;
+  uint16_t sLoop1;
 
   // Free up the memory used for each library
   for (sLoop1 = 0; sLoop1 < gFileDataBase.usNumberOfLibraries; sLoop1++) CloseLibrary(sLoop1);
@@ -155,7 +155,7 @@ BOOLEAN CheckForLibraryExistence(STR pLibraryName) {
 BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
                           BOOLEAN fCanBeOnCDrom) {
   SYS_FILE_HANDLE hFile;
-  UINT16 usNumEntries = 0;
+  uint16_t usNumEntries = 0;
   uint32_t uiNumBytesRead;
   uint32_t uiLoop;
   DIRENTRY DirEntry;
@@ -474,7 +474,7 @@ HWFILE OpenFileFromLibrary(STR pName) {
   FileHeaderStruct *pFileHeader;
   HWFILE hLibFile;
   INT16 sLibraryID;
-  UINT16 uiLoop1;
+  uint16_t uiLoop1;
   uint32_t uiFileNum = 0;
 
   // Check if the file can be contained from an open library ( the path to the file a library path )
@@ -619,7 +619,7 @@ HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
 BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
                                                  uint32_t *pFileNum) {
   *pFileNum = DB_EXTRACT_FILE_ID(hlibFile);
-  *pLibraryID = (UINT16)DB_EXTRACT_LIBRARY(hlibFile);
+  *pLibraryID = (uint16_t)DB_EXTRACT_LIBRARY(hlibFile);
 
   // TEST: qq
   /*	if( *pLibraryID == LIBRARY_SOUNDS )
@@ -797,7 +797,7 @@ BOOLEAN IsLibraryOpened(INT16 sLibraryID) {
 }
 
 BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, INT16 sLibraryID) {
-  UINT16 usLoop1 = 0;
+  uint16_t usLoop1 = 0;
 
   char filename[256];
 

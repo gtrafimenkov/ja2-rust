@@ -167,7 +167,7 @@ typedef struct {
   BOOLEAN fHavePurchasedItemsFromTony;
 
   // The selected soldier in tactical
-  UINT16 usSelectedSoldier;
+  uint16_t usSelectedSoldier;
 
   // The x and y scroll position
   INT16 sRenderCenterX;
@@ -282,7 +282,7 @@ typedef struct {
 
   UINT8 gubScreenCount;
 
-  UINT16 usOldMeanWhileFlags;
+  uint16_t usOldMeanWhileFlags;
 
   INT32 iPortraitNumber;
 
@@ -312,7 +312,7 @@ typedef struct {
   INT16 sSelMapY;
   INT32 iCurrentMapSectorZ;
 
-  UINT16 usHasPlayerSeenHelpScreenInCurrentScreen;
+  uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
   BOOLEAN fHideHelpInAllScreens;
   UINT8 ubBoxingMatchesWon;
 
@@ -448,7 +448,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   BOOLEAN fPausedStateBeforeSaving = gfGamePaused;
   BOOLEAN fLockPauseStateBeforeSaving = gfLockPauseState;
   INT32 iSaveLoadGameMessageBoxID = -1;
-  UINT16 usPosX, usActualWidth, usActualHeight;
+  uint16_t usPosX, usActualWidth, usActualHeight;
   BOOLEAN fWePausedIt = FALSE;
 
   sprintf(saveDir, "%S", pMessageStrings[MSG_SAVEDIRECTORY]);
@@ -2109,7 +2109,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 }
 
 BOOLEAN SaveMercProfiles(HWFILE hFile) {
-  UINT16 cnt;
+  uint16_t cnt;
   uint32_t uiNumBytesWritten = 0;
   uint32_t uiSaveSize = sizeof(MERCPROFILESTRUCT);
 
@@ -2126,7 +2126,7 @@ BOOLEAN SaveMercProfiles(HWFILE hFile) {
 }
 
 BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
-  UINT16 cnt;
+  uint16_t cnt;
   uint32_t uiNumBytesRead = 0;
 
   // Lopp through all the profiles to Load
@@ -2153,23 +2153,23 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
 //	struct LEVELNODE				*pLevelNode;
 //	struct LEVELNODE				*pExternShadowLevelNode;
 //	struct LEVELNODE				*pRoofUILevelNode;
-//	UINT16 *pBackGround; 	UINT16
-//*pZBackground; 	UINT16
+//	uint16_t *pBackGround; 	uint16_t
+//*pZBackground; 	uint16_t
 //*pForcedShade;
 //
-// 	UINT16
+// 	uint16_t
 // *pEffectShades[ NUM_SOLDIER_EFFECTSHADES ]; // Shading tables for effects
 //  THROW_PARAMS								*pThrowParams;
-//  UINT16
+//  uint16_t
 //  *pCurrentShade;
-//	UINT16 *pGlowShades[ 20
+//	uint16_t *pGlowShades[ 20
 //];
 ////
-//	UINT16 *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	UINT16 *p16BPPPalette;
+//	uint16_t *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	uint16_t *p16BPPPalette;
 // struct SGPPaletteEntry *p8BPPPalette 	struct OBJECTTYPE *pTempObject;
 
 BOOLEAN SaveSoldierStructure(HWFILE hFile) {
-  UINT16 cnt;
+  uint16_t cnt;
   uint32_t uiNumBytesWritten = 0;
   UINT8 ubOne = 1;
   UINT8 ubZero = 0;
@@ -2241,7 +2241,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
 }
 
 BOOLEAN LoadSoldierStructure(HWFILE hFile) {
-  UINT16 cnt;
+  uint16_t cnt;
   uint32_t uiNumBytesRead = 0;
   struct SOLDIERTYPE SavedSoldierInfo;
   uint32_t uiSaveSize = sizeof(struct SOLDIERTYPE);
@@ -2296,8 +2296,8 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
       SavedSoldierInfo.pKeyRing = NULL;
       SavedSoldierInfo.p8BPPPalette = NULL;
       SavedSoldierInfo.p16BPPPalette = NULL;
-      memset(SavedSoldierInfo.pShades, 0, sizeof(UINT16 *) * NUM_SOLDIER_SHADES);
-      memset(SavedSoldierInfo.pGlowShades, 0, sizeof(UINT16 *) * 20);
+      memset(SavedSoldierInfo.pShades, 0, sizeof(uint16_t *) * NUM_SOLDIER_SHADES);
+      memset(SavedSoldierInfo.pGlowShades, 0, sizeof(uint16_t *) * 20);
       SavedSoldierInfo.pCurrentShade = NULL;
       SavedSoldierInfo.pThrowParams = NULL;
       SavedSoldierInfo.pLevelNode = NULL;
@@ -2307,7 +2307,7 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
       SavedSoldierInfo.pZBackground = NULL;
       SavedSoldierInfo.pForcedShade = NULL;
       SavedSoldierInfo.pMercPath = NULL;
-      memset(SavedSoldierInfo.pEffectShades, 0, sizeof(UINT16 *) * NUM_SOLDIER_EFFECTSHADES);
+      memset(SavedSoldierInfo.pEffectShades, 0, sizeof(uint16_t *) * NUM_SOLDIER_EFFECTSHADES);
 
       // if the soldier wasnt active, dont add them now.  Advance to the next merc
       // if( !SavedSoldierInfo.bActive )
@@ -2878,7 +2878,7 @@ BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
 }
 
 BOOLEAN SetMercsInsertionGridNo() {
-  UINT16 cnt = 0;
+  uint16_t cnt = 0;
 
   // loop through all the mercs
   for (cnt = 0; cnt < TOTAL_SOLDIERS; cnt++) {

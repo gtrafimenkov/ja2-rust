@@ -72,10 +72,10 @@ void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier);
 
 void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass);
 
-UINT16 SelectStandardArmyGun(UINT8 uiGunLevel);
+uint16_t SelectStandardArmyGun(UINT8 uiGunLevel);
 
-INT8 GetWeaponClass(UINT16 usGun);
-void MarkAllWeaponsOfSameGunClassAsDropped(UINT16 usWeapon);
+INT8 GetWeaponClass(uint16_t usGun);
+void MarkAllWeaponsOfSameGunClassAsDropped(uint16_t usWeapon);
 
 void ResetMortarsOnTeamCount(void);
 

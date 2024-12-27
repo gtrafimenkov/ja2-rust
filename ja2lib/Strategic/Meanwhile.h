@@ -27,7 +27,7 @@ enum {
 typedef struct {
   INT16 sSectorX;
   INT16 sSectorY;
-  UINT16 usTriggerEvent;
+  uint16_t usTriggerEvent;
 
   UINT8 ubMeanwhileID;
   UINT8 ubNPCNumber;

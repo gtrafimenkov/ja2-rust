@@ -17,7 +17,7 @@
 #endif
 
 // Special prototype for mouse handler hook
-extern void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type, UINT16 Xcoord, UINT16 Ycoord,
+extern void MSYS_SGP_Mouse_Handler_Hook(uint16_t Type, uint16_t Xcoord, uint16_t Ycoord,
                                         BOOLEAN LeftButton, BOOLEAN RightButton);
 
 #endif

@@ -55,7 +55,7 @@ typedef struct {
 typedef struct {
   STR sLibraryPath;
   SYS_FILE_HANDLE hLibraryHandle;
-  UINT16 usNumberOfEntries;
+  uint16_t usNumberOfEntries;
   BOOLEAN fLibraryOpen;
   //	BOOLEAN	fAnotherFileAlreadyOpenedLibrary;				//this variable is
   // set when a file is opened from the library and reset when the file is close.  No 2 files can
@@ -90,7 +90,7 @@ typedef struct {
 typedef struct {
   STR sManagerName;
   LibraryHeaderStruct *pLibraries;
-  UINT16 usNumberOfLibraries;
+  uint16_t usNumberOfLibraries;
   BOOLEAN fInitialized;
   RealFileHeaderStruct RealFiles;
 } DatabaseManagerHeaderStruct;
@@ -111,8 +111,8 @@ typedef struct {
   CHAR8 sPathToLibrary[FILENAME_SIZE];
   INT32 iEntries;
   INT32 iUsed;
-  UINT16 iSort;
-  UINT16 iVersion;
+  uint16_t iSort;
+  uint16_t iVersion;
   BOOLEAN fContainsSubDirectories;
   INT32 iReserved;
 } LIBHEADER;

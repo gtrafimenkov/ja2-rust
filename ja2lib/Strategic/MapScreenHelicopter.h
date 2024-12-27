@@ -215,7 +215,7 @@ void SetUpHelicopterForMovement(void);
 INT32 GetNumberOfPassengersInHelicopter(void);
 
 // skyrider talking to player
-void SkyRiderTalk(UINT16 usQuoteNum);
+void SkyRiderTalk(uint16_t usQuoteNum);
 
 // sky rider monlogue events for mapscreen
 void HandleSkyRiderMonologueEvent(uint32_t uiEventCode, uint32_t uiSpecialCode);

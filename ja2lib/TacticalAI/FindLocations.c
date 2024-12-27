@@ -496,12 +496,12 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
   uint32_t uiThreatCnt = 0;
   INT32 iMaxMoveTilesLeft, iSearchRange, iRoamRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  UINT16 sOrigin;  // has to be a short, need a pointer
+  uint16_t sOrigin;  // has to be a short, need a pointer
   INT16 *pusLastLoc;
   INT8 *pbPersOL;
   INT8 *pbPublOL;
   struct SOLDIERTYPE *pOpponent;
-  UINT16 usMovementMode;
+  uint16_t usMovementMode;
   INT8 fHasGasMask;
 
   UINT8 ubBackgroundLightLevel;
@@ -1013,7 +1013,7 @@ INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT8 *pbPersOL, *pbPublOL, bEscapeDirection, bBestEscapeDirection = -1;
   struct SOLDIERTYPE *pOpponent;
-  UINT16 sOrigin;
+  uint16_t sOrigin;
   INT32 iRoamRange;
 
   INT8 fHasGasMask;
@@ -1364,7 +1364,7 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
   INT32 iSearchRange;
   INT8 bLightLevel, bCurrLightLevel, bLightDiff;
   INT32 iRoamRange;
-  UINT16 sOrigin;
+  uint16_t sOrigin;
 
   bCurrLightLevel = LightTrueLevel(pSoldier->sGridNo, pSoldier->bLevel);
 
@@ -1479,7 +1479,7 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
 
 #define MINIMUM_REQUIRED_STATUS 70
 
-INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
+INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, uint16_t usItem) {
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT16 sGridNo;

@@ -35,8 +35,8 @@ struct VObject;
 // typedefs
 
 typedef struct {
-  UINT16 usNumberOfSymbols;
-  UINT16 *DynamicArrayOf16BitValues;
+  uint16_t usNumberOfSymbols;
+  uint16_t *DynamicArrayOf16BitValues;
 
 } FontTranslationTable;
 
@@ -58,7 +58,7 @@ extern BOOLEAN FontDestWrap;
                      FontDestRegion.right, FontDestRegion.bottom, x))
 // functions
 
-void SetFontColors(UINT16 usColors);
+void SetFontColors(uint16_t usColors);
 void SetFontForeground(UINT8 ubForeground);
 void SetFontBackground(UINT8 ubBackground);
 void SetFontShadow(UINT8 ubBackground);
@@ -69,9 +69,9 @@ void SetRGBFontBackground(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue);
 void SetRGBFontShadow(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue);
 
 BOOLEAN ResetFontObjectPalette(INT32 iFont);
-UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8);
-UINT16 *SetFontObjectPalette16BPP(INT32 iFont, UINT16 *pPal16);
-UINT16 *GetFontObjectPalette16BPP(INT32 iFont);
+uint16_t *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8);
+uint16_t *SetFontObjectPalette16BPP(INT32 iFont, uint16_t *pPal16);
+uint16_t *GetFontObjectPalette16BPP(INT32 iFont);
 
 void DestroyEnglishTransTable(void);
 
@@ -98,14 +98,14 @@ extern BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, INT32 x1, INT32 y1, INT32 
 extern BOOLEAN SetFont(INT32 iFontIndex);
 
 extern INT32 LoadFontFile(STR8 pFileName);
-extern UINT16 GetFontHeight(INT32 FontNum);
-extern BOOLEAN InitializeFontManager(UINT16 usDefaultPixDepth, FontTranslationTable *pTransTable);
+extern uint16_t GetFontHeight(INT32 FontNum);
+extern BOOLEAN InitializeFontManager(uint16_t usDefaultPixDepth, FontTranslationTable *pTransTable);
 extern void ShutdownFontManager(void);
 extern void UnloadFont(uint32_t FontIndex);
 
 extern FontTranslationTable *CreateEnglishTransTable();
 
-extern INT16 GetIndex(UINT16 siChar);
+extern INT16 GetIndex(uint16_t siChar);
 extern uint32_t GetWidth(struct VObject *hSrcVObject, INT16 ssIndex);
 
 extern INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiCharCount,

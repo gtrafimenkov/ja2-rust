@@ -15,9 +15,9 @@ HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile);
 
 struct PlatformInitParams {
   HINSTANCE hInstance;
-  UINT16 usCommandShow;
+  uint16_t usCommandShow;
   void *WindowProc;
-  UINT16 iconID;
+  uint16_t iconID;
 };
 
 extern HWND ghWindow;

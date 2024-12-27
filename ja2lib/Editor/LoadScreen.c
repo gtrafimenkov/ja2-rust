@@ -59,7 +59,7 @@ extern void RemoveMercsInSector();
 
 enum { DIALOG_NONE, DIALOG_SAVE, DIALOG_LOAD, DIALOG_CANCEL, DIALOG_DELETE };
 
-extern UINT16 Counter;
+extern uint16_t Counter;
 
 // Hook into the text input code.  These callbacks help give back control, so we
 // can use the dialog interface in conjunction with the
@@ -76,7 +76,7 @@ BOOLEAN RemoveFromFDlgList(struct FileDialogList **head, struct FileDialogList *
 
 void DrawFileDialog();
 void HandleMainKeyEvents(InputAtom *pEvent);
-void SetTopFileToLetter(UINT16 usLetter);
+void SetTopFileToLetter(uint16_t usLetter);
 
 INT32 iTotalFiles;
 INT32 iTopFileShown;
@@ -115,7 +115,7 @@ INT8 gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading me
 uint32_t ProcessFileIO();
 
 // BOOLEAN fSavingFile;
-extern UINT16 gusLightLevel, gusSavedLightLevel;
+extern uint16_t gusLightLevel, gusSavedLightLevel;
 uint32_t LoadSaveScreenInit(void) {
   gfUpdateSummaryInfo = TRUE;
   fEnteringLoadSaveScreen = TRUE;
@@ -515,7 +515,7 @@ void DrawFileDialog(void) {
 
 // The callback calls this function passing the relative y position of where
 // the user clicked on the hot spot.
-void SelectFileDialogYPos(UINT16 usRelativeYPos) {
+void SelectFileDialogYPos(uint16_t usRelativeYPos) {
   INT16 sSelName;
   INT32 x;
   struct FileDialogList *FListNode;
@@ -615,11 +615,11 @@ void TrashFDlgList(struct FileDialogList *pList) {
   }
 }
 
-void SetTopFileToLetter(UINT16 usLetter) {
+void SetTopFileToLetter(uint16_t usLetter) {
   uint32_t x;
   struct FileDialogList *curr;
   struct FileDialogList *prev;
-  UINT16 usNodeLetter;
+  uint16_t usNodeLetter;
 
   // Skip to first filename
   x = 0;
@@ -699,7 +699,7 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
           (pEvent->usParam >= 'A' && pEvent->usParam <= 'Z')) {
         if (pEvent->usParam >= 'A' && pEvent->usParam <= 'Z')  // convert upper case to lower case
           pEvent->usParam += 32;                               // A = 65, a = 97 (difference of 32)
-        SetTopFileToLetter((UINT16)pEvent->usParam);
+        SetTopFileToLetter((uint16_t)pEvent->usParam);
       }
       break;
   }
@@ -855,7 +855,7 @@ uint32_t ProcessFileIO() {
           LightSetBaseLevel(ubAmbientLightLevel);
         }
       } else
-        gusLightLevel = (UINT16)(EDITOR_LIGHT_MAX - ubAmbientLightLevel);
+        gusLightLevel = (uint16_t)(EDITOR_LIGHT_MAX - ubAmbientLightLevel);
       gEditorLightColor = gpLightColors[0];
       gfRenderWorld = TRUE;
       gfRenderTaskbar = TRUE;
@@ -935,7 +935,7 @@ BOOLEAN ExtractFilenameFromFields() {
 BOOLEAN ValidCoordinate() {
   if ((gzFilename[0] >= 'A' && gzFilename[0] <= 'P') ||
       (gzFilename[0] >= 'a' && gzFilename[0] <= 'p')) {
-    UINT16 usTotal;
+    uint16_t usTotal;
     if (gzFilename[1] == '1' && gzFilename[2] >= '0' && gzFilename[2] <= '6') {
       usTotal = (gzFilename[1] - 0x30) * 10 + (gzFilename[2] - 0x30);
     } else if (gzFilename[1] >= '1' && gzFilename[1] <= '9') {

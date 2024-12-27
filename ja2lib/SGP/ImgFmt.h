@@ -34,8 +34,8 @@ typedef struct {
   uint32_t uiStoredSize;  // equal to uiOriginalSize if data uncompressed
   uint32_t uiTransparentValue;
   uint32_t fFlags;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint16_t usHeight;
+  uint16_t usWidth;
   union {
     struct {
       uint32_t uiRedMask;
@@ -50,7 +50,7 @@ typedef struct {
     struct {  // For indexed files, the palette will contain 3 separate bytes for red, green, and
               // blue
       uint32_t uiNumberOfColours;
-      UINT16 usNumberOfSubImages;
+      uint16_t usNumberOfSubImages;
       UINT8 ubRedDepth;
       UINT8 ubGreenDepth;
       UINT8 ubBlueDepth;
@@ -69,8 +69,8 @@ typedef struct {
   uint32_t uiDataLength;
   INT16 sOffsetX;
   INT16 sOffsetY;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint16_t usHeight;
+  uint16_t usWidth;
 } STCISubImage;
 
 #define STCI_SUBIMAGE_SIZE 16

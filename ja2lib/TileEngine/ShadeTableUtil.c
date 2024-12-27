@@ -137,7 +137,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   // MISSING:  Compare time stamps.
 
   for (i = 0; i < 16; i++) {
-    pObj->pShades[i] = (UINT16*)MemAlloc(512);
+    pObj->pShades[i] = (uint16_t*)MemAlloc(512);
     Assert(pObj->pShades[i]);
     FileMan_Read(hfile, pObj->pShades[i], 512, &uiNumBytesRead);
   }

@@ -46,7 +46,7 @@ BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WOR
 //  If you want to overwrite all the items in the array set fReplaceEntireFile to TRUE.
 BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
                                  uint32_t uiNumberOfItems, struct OBJECTTYPE *pObject,
-                                 UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
+                                 UINT8 ubLevel, uint16_t usFlags, INT8 bRenderZHeightAboveLevel,
                                  INT8 bVisible, BOOLEAN fReplaceEntireFile);
 
 BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,

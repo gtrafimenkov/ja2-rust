@@ -35,12 +35,12 @@ void AddSectorToFrontOfMercPath(struct path** ppMercPath, UINT8 ubSectorX, UINT8
 // mvt modifier
 // #define FOOT_MVT_MODIFIER 2
 
-UINT16 gusPlottedPath[256];
-UINT16 gusMapPathingData[256];
-UINT16 gusPathDataSize;
+uint16_t gusPlottedPath[256];
+uint16_t gusMapPathingData[256];
+uint16_t gusPathDataSize;
 BOOLEAN gfPlotToAvoidPlayerInfuencedSectors = FALSE;
 
-// UINT16 gusEndPlotGridNo;
+// uint16_t gusEndPlotGridNo;
 
 UINT8 ubFromMapDirToInsertionCode[] = {
     INSERTION_CODE_SOUTH,  // NORTH_STRATEGIC_MOVE
@@ -179,7 +179,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   INT32 iCnt, ndx, insertNdx, qNewNdx;
   INT32 iDestX, iDestY, locX, locY, dx, dy;
   INT16 sSectorX, sSectorY;
-  UINT16 newLoc, curLoc;
+  uint16_t newLoc, curLoc;
   TRAILCELLTYPE curCost, newTotCost, nextCost;
   INT16 sOrigination;
   BOOLEAN fPlotDirectPath = FALSE;
@@ -214,7 +214,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   memset(pathQB, 0, sizeof(pathQB));
 
   // FOLLOWING LINE COMMENTED OUT ON MARCH 7/97 BY IC
-  memset(gusMapPathingData, ((UINT16)sStart), sizeof(gusMapPathingData));
+  memset(gusMapPathingData, ((uint16_t)sStart), sizeof(gusMapPathingData));
   trailStratTreedxB = 0;
 
   // set up common info
@@ -406,7 +406,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
       z = trailStratTreeB[z].nextLink;
     }
 
-    gusPathDataSize = (UINT16)iCnt;
+    gusPathDataSize = (uint16_t)iCnt;
 
     // return path length : serves as a "successful" flag and a path length counter
     return (iCnt);
@@ -461,7 +461,7 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
     // create new node
     iCurrentSectorNum += iDelta;
 
-    if (!AddSectorToPathList(pHeadOfPathList, (UINT16)iCurrentSectorNum)) {
+    if (!AddSectorToPathList(pHeadOfPathList, (uint16_t)iCurrentSectorNum)) {
       pNode = pHeadOfPathList;
       // intersected previous node, delete path to date
       if (!pNode) return NULL;
@@ -507,7 +507,7 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
   return pPath;
 }
 
-BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum) {
+BOOLEAN AddSectorToPathList(struct path* pPath, uint16_t uiSectorNum) {
   struct path* pNode = NULL;
   struct path* pTempNode = NULL;
   struct path* pHeadOfList = pPath;
@@ -560,7 +560,7 @@ BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum) {
 }
 
 /*
-BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( UINT16 sSourceSector, UINT16 sDestSector )
+BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( uint16_t sSourceSector, uint16_t sDestSector )
 {
         INT16 sDelta;
 
@@ -590,7 +590,7 @@ BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( UINT16 sSourceSector, UINT16 s
 
 
 
-BOOLEAN SectorIsBlockedFromVehicleExit( UINT16 sSourceSector, INT8 bToDirection  )
+BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSourceSector, INT8 bToDirection  )
 {
 
         if( StrategicMap[ sSourceSector ].uiBadVehicleSector[ bToDirection ] )
@@ -606,7 +606,7 @@ BOOLEAN SectorIsBlockedFromVehicleExit( UINT16 sSourceSector, INT8 bToDirection 
 
 
 
-BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( UINT16 sSourceSector, UINT16 sDestSector )
+BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( uint16_t sSourceSector, uint16_t sDestSector )
 {
         INT16 sDelta;
 
@@ -635,7 +635,7 @@ BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( UINT16 sSourceSector, UINT16 sDes
 }
 
 
-BOOLEAN SectorIsBlockedFromFootExit( UINT16 sSourceSector, INT8 bToDirection )
+BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSourceSector, INT8 bToDirection )
 {
         if( StrategicMap[ sSourceSector ].uiBadFootSector[ bToDirection ]  )
         {

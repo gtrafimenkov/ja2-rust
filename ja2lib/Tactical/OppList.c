@@ -64,7 +64,7 @@ void ProcessNoise(UINT8 ubNoiseMaker, INT16 sGridNo, INT8 bLevel, UINT8 ubTerrTy
                   UINT8 ubBaseVolume, UINT8 ubNoiseType);
 UINT8 CalcEffVolume(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, UINT8 ubNoiseType,
                     UINT8 ubBaseVolume, UINT8 bCheckTerrain, UINT8 ubTerrType1, UINT8 ubTerrType2);
-void HearNoise(struct SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, UINT16 sGridNo, INT8 bLevel,
+void HearNoise(struct SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, uint16_t sGridNo, INT8 bLevel,
                UINT8 ubVolume, UINT8 ubNoiseType, UINT8 *ubSeen);
 void TellPlayerAboutNoise(struct SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, INT16 sGridNo,
                           INT8 bLevel, UINT8 ubVolume, UINT8 ubNoiseType, UINT8 ubNoiseDir);
@@ -271,7 +271,7 @@ INT8 gbSmellStrength[3] = {
     NORMAL_HUMAN_SMELL_STRENGTH - 1   // snob
 };
 
-UINT16 gsWhoThrewRock = NOBODY;
+uint16_t gsWhoThrewRock = NOBODY;
 
 #define NIGHTSIGHTGOGGLES_BONUS 2
 #define UVGOGGLES_BONUS 4
@@ -885,7 +885,7 @@ void OurTeamRadiosRandomlyAbout(UINT8 ubAbout) {
 
 INT16 TeamNoLongerSeesMan(UINT8 ubTeam, struct SOLDIERTYPE *pOpponent, UINT8 ubExcludeID,
                           INT8 bIteration) {
-  UINT16 bLoop;
+  uint16_t bLoop;
   struct SOLDIERTYPE *pMate;
 
   bLoop = gTacticalStatus.Team[ubTeam].bFirstID;
@@ -3021,7 +3021,7 @@ extern uint32_t guiNumBackSaves;
 
 void DebugSoldierPage1() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   uint32_t uiMercFlags;
   INT16 usMapPos;
   UINT8 ubLine = 0;
@@ -3201,7 +3201,7 @@ void DebugSoldierPage1() {
 
 void DebugSoldierPage2() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   uint32_t uiMercFlags;
   INT16 usMapPos;
   TILE_ELEMENT TileElem;
@@ -3459,7 +3459,7 @@ void DebugSoldierPage2() {
 
 void DebugSoldierPage3() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   uint32_t uiMercFlags;
   INT16 usMapPos;
   UINT8 ubLine;
@@ -3726,7 +3726,7 @@ void DebugSoldierPage3() {
   }
 }
 
-void AppendAttachmentCode(UINT16 usItem, CHAR16 *str) {
+void AppendAttachmentCode(uint16_t usItem, CHAR16 *str) {
   switch (usItem) {
     case SILENCER:
       wcscat(str, L" Sil");
@@ -3798,7 +3798,7 @@ void DebugSoldierPage4() {
   uint32_t uiMercFlags;
   CHAR16 szOrders[20];
   CHAR16 szAttitude[20];
-  UINT16 usSoldierIndex;
+  uint16_t usSoldierIndex;
   UINT8 ubLine;
 
   if (FindSoldierFromMouse(&usSoldierIndex, &uiMercFlags)) {
@@ -4929,7 +4929,7 @@ UINT8 CalcEffVolume(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, UI
   }
 }
 
-void HearNoise(struct SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, UINT16 sGridNo, INT8 bLevel,
+void HearNoise(struct SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, uint16_t sGridNo, INT8 bLevel,
                UINT8 ubVolume, UINT8 ubNoiseType, UINT8 *ubSeen) {
   INT16 sNoiseX, sNoiseY;
   INT8 bHadToTurn = FALSE, bSourceSeen = FALSE;

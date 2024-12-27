@@ -134,7 +134,7 @@ UINT8 gubAdjacentJumpCode;
 uint32_t guiAdjacentTraverseTime;
 UINT8 gubTacticalDirection;
 INT16 gsAdditionalData;
-UINT16 gusDestExitGridNo;
+uint16_t gusDestExitGridNo;
 
 BOOLEAN fUsingEdgePointsForStrategicEntry = FALSE;
 BOOLEAN gfInvalidTraversal = FALSE;
@@ -558,11 +558,11 @@ UINT8 GetTownSectorSize(TownID bTownId) {
 UINT8 GetTownSectorsUnderControl(TownID bTownId) {
   INT8 ubSectorsControlled = 0;
   INT32 iCounterA = 0, iCounterB = 0;
-  UINT16 usSector = 0;
+  uint16_t usSector = 0;
 
   for (iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
     for (iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      usSector = (UINT16)GetSectorID16(iCounterA, iCounterB);
+      usSector = (uint16_t)GetSectorID16(iCounterA, iCounterB);
 
       if ((StrategicMap[usSector].townID == bTownId) &&
           (StrategicMap[usSector].fEnemyControlled == FALSE) &&
@@ -2562,7 +2562,7 @@ void DoneFadeOutAdjacentSector() {
 }
 
 BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
-                               UINT16 usAdditionalData) {
+                               uint16_t usAdditionalData) {
   INT16 sXMapPos;
   INT16 sYMapPos;
   INT16 sWorldX;
@@ -2639,7 +2639,7 @@ BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection
       if (gTacticalStatus.uiFlags & INCOMBAT) {
         // Turn off at end of function...
         sAPs = PlotPath(pSoldier, sGridNo, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                        (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                        (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                         pSoldier->bActionPoints);
 
         if (!EnoughPoints(pSoldier, sAPs, 0, FALSE)) {
@@ -2653,7 +2653,7 @@ BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection
 
 // ATE: Returns FALSE if NOBODY is close enough, 1 if ONLY selected guy is and 2 if all on squad
 // are...
-BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
+BOOLEAN OKForSectorExit(INT8 bExitDirection, uint16_t usAdditionalData,
                         uint32_t *puiTraverseTimeInMinutes) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
@@ -3393,7 +3393,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
   switch (ubTacticalDirection) {
     case EAST:
 
-      sNewGridNo = NewGridNo((UINT16)sEndGridNo, (UINT16)DirectionInc((UINT8)NORTHEAST));
+      sNewGridNo = NewGridNo((uint16_t)sEndGridNo, (uint16_t)DirectionInc((UINT8)NORTHEAST));
 
       if (OutOfBounds(sEndGridNo, sNewGridNo)) {
         return;
@@ -3404,7 +3404,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
       pSoldier->sFinalDestination = sNewGridNo;
       pSoldier->usActionData = sNewGridNo;
 
-      sTempGridNo = NewGridNo((UINT16)sNewGridNo, (UINT16)DirectionInc((UINT8)NORTHEAST));
+      sTempGridNo = NewGridNo((uint16_t)sNewGridNo, (uint16_t)DirectionInc((UINT8)NORTHEAST));
 
       if (OutOfBounds(sNewGridNo, sTempGridNo)) {
         return;
@@ -3420,7 +3420,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
 
     case WEST:
 
-      sNewGridNo = NewGridNo((UINT16)sEndGridNo, (UINT16)DirectionInc((UINT8)SOUTHWEST));
+      sNewGridNo = NewGridNo((uint16_t)sEndGridNo, (uint16_t)DirectionInc((UINT8)SOUTHWEST));
 
       if (OutOfBounds(sEndGridNo, sNewGridNo)) {
         return;
@@ -3431,7 +3431,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
       pSoldier->sFinalDestination = sNewGridNo;
       pSoldier->usActionData = sNewGridNo;
 
-      sTempGridNo = NewGridNo((UINT16)sNewGridNo, (UINT16)DirectionInc((UINT8)SOUTHWEST));
+      sTempGridNo = NewGridNo((uint16_t)sNewGridNo, (uint16_t)DirectionInc((UINT8)SOUTHWEST));
 
       if (OutOfBounds(sNewGridNo, sTempGridNo)) {
         return;
@@ -3446,7 +3446,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
 
     case NORTH:
 
-      sNewGridNo = NewGridNo((UINT16)sEndGridNo, (UINT16)DirectionInc((UINT8)NORTHWEST));
+      sNewGridNo = NewGridNo((uint16_t)sEndGridNo, (uint16_t)DirectionInc((UINT8)NORTHWEST));
 
       if (OutOfBounds(sEndGridNo, sNewGridNo)) {
         return;
@@ -3457,7 +3457,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
       pSoldier->sFinalDestination = sNewGridNo;
       pSoldier->usActionData = sNewGridNo;
 
-      sTempGridNo = NewGridNo((UINT16)sNewGridNo, (UINT16)DirectionInc((UINT8)NORTHWEST));
+      sTempGridNo = NewGridNo((uint16_t)sNewGridNo, (uint16_t)DirectionInc((UINT8)NORTHWEST));
 
       if (OutOfBounds(sNewGridNo, sTempGridNo)) {
         return;
@@ -3473,7 +3473,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
 
     case SOUTH:
 
-      sNewGridNo = NewGridNo((UINT16)sEndGridNo, (UINT16)DirectionInc((UINT8)SOUTHEAST));
+      sNewGridNo = NewGridNo((uint16_t)sEndGridNo, (uint16_t)DirectionInc((UINT8)SOUTHEAST));
 
       if (OutOfBounds(sEndGridNo, sNewGridNo)) {
         return;
@@ -3484,7 +3484,7 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
       pSoldier->sFinalDestination = sNewGridNo;
       pSoldier->usActionData = sNewGridNo;
 
-      sTempGridNo = NewGridNo((UINT16)sNewGridNo, (UINT16)DirectionInc((UINT8)SOUTHEAST));
+      sTempGridNo = NewGridNo((uint16_t)sNewGridNo, (uint16_t)DirectionInc((UINT8)SOUTHEAST));
 
       if (OutOfBounds(sNewGridNo, sTempGridNo)) {
         return;

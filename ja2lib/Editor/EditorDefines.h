@@ -225,8 +225,8 @@ extern INT32 iCurrentAction;
 extern INT32 iActionParam;
 extern INT32 iEditAction;
 
-extern UINT16 gusLightLevel;
-extern UINT16 gusLightLevelPercentage;
+extern uint16_t gusLightLevel;
+extern uint16_t gusLightLevelPercentage;
 extern INT16 gsLightRadius;
 
 extern BOOLEAN gfRenderWorld;

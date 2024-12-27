@@ -421,8 +421,8 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   INT8 bMercID;
   BOOLEAN fBuddyAround = FALSE;
   BOOLEAN fUnhappy = FALSE;
-  UINT16 usBuddyQuote = 0;
-  UINT16 usReasonQuote = 0;
+  uint16_t usBuddyQuote = 0;
+  uint16_t usReasonQuote = 0;
   BOOLEAN fSayPrecedent = FALSE;
   struct SOLDIERTYPE *pHated;
 
@@ -988,11 +988,11 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
       // set up for mapscreen
       DoMapMessageBox(
           MSG_BOX_BASIC_STYLE, sString, MAP_SCREEN,
-          (UINT16)((fAddRehireButton ? MSG_BOX_FLAG_GENERICCONTRACT : MSG_BOX_FLAG_GENERIC)),
+          (uint16_t)((fAddRehireButton ? MSG_BOX_FLAG_GENERICCONTRACT : MSG_BOX_FLAG_GENERIC)),
           MercDepartEquipmentBoxCallBack);
     } else {
       DoMapMessageBox(MSG_BOX_BASIC_STYLE, sString, MAP_SCREEN,
-                      (UINT16)((fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK)),
+                      (uint16_t)((fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK)),
                       MercDepartEquipmentBoxCallBack);
     }
 
@@ -1001,13 +1001,13 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
       // set up for all otherscreens
       DoMessageBox(
           MSG_BOX_BASIC_STYLE, sString, guiCurrentScreen,
-          (UINT16)(MSG_BOX_FLAG_USE_CENTERING_RECT |
-                   (fAddRehireButton ? MSG_BOX_FLAG_GENERICCONTRACT : MSG_BOX_FLAG_GENERIC)),
+          (uint16_t)(MSG_BOX_FLAG_USE_CENTERING_RECT |
+                     (fAddRehireButton ? MSG_BOX_FLAG_GENERICCONTRACT : MSG_BOX_FLAG_GENERIC)),
           MercDepartEquipmentBoxCallBack, &pCenteringRect);
     } else {
       DoMessageBox(MSG_BOX_BASIC_STYLE, sString, guiCurrentScreen,
-                   (UINT16)(MSG_BOX_FLAG_USE_CENTERING_RECT |
-                            (fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK)),
+                   (uint16_t)(MSG_BOX_FLAG_USE_CENTERING_RECT |
+                              (fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK)),
                    MercDepartEquipmentBoxCallBack, &pCenteringRect);
     }
   }

@@ -87,7 +87,7 @@ INT32 giSubTitleWinFont;
 
 BOOLEAN gfFontsInit = FALSE;
 
-UINT16 CreateFontPaletteTables(struct VObject* pObj);
+uint16_t CreateFontPaletteTables(struct VObject* pObj);
 
 extern CHAR16 gzFontName[32];
 
@@ -245,7 +245,7 @@ BOOLEAN SetFontShade(uint32_t uiFontID, INT8 bColorID) {
   return (TRUE);
 }
 
-UINT16 CreateFontPaletteTables(struct VObject* pObj) {
+uint16_t CreateFontPaletteTables(struct VObject* pObj) {
   uint32_t count;
 
   for (count = 0; count < 16; count++) {
@@ -291,7 +291,7 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj) {
   return (TRUE);
 }
 
-UINT16 WFGetFontHeight(INT32 FontNum) {
+uint16_t WFGetFontHeight(INT32 FontNum) {
   if (USE_WINFONTS()) {
     // return how many Y pixels we used
     return (GetWinFontHeight(L"a\0", GET_WINFONT()));

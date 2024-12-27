@@ -33,8 +33,8 @@ typedef struct {
   BOOLEAN fFreeMemory;
   BOOLEAN fZBuffer;
   uint32_t uiFlags;
-  UINT16 *pSaveArea;
-  UINT16 *pZSaveArea;
+  uint16_t *pSaveArea;
+  uint16_t *pZSaveArea;
   INT16 sLeft;
   INT16 sTop;
   INT16 sRight;
@@ -55,7 +55,7 @@ typedef struct _VIDEO_OVERLAY {
   BOOLEAN fDeletionPending;
   INT32 uiBackground;
   BACKGROUND_SAVE *pBackground;
-  UINT16 *pSaveArea;
+  uint16_t *pSaveArea;
   uint32_t uiUserData[5];
   uint32_t uiFontID;
   INT16 sX;
@@ -117,9 +117,9 @@ void SetBackgroundRectFilled(uint32_t uiBackgroundID);
 BOOLEAN EmptyBackgroundRects(void);
 
 // GPRINTF DIRTY STUFF
-UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...);
-UINT16 gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...);
-UINT16 gprintfRestore(INT16 x, INT16 y, STR16 pFontString, ...);
+uint16_t gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...);
+uint16_t gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...);
+uint16_t gprintfRestore(INT16 x, INT16 y, STR16 pFontString, ...);
 
 // VIDEO OVERLAY STUFF
 INT32 GetFreeVideoOverlay(void);
@@ -139,7 +139,7 @@ void EnableVideoOverlay(BOOLEAN fEnable, INT32 iOverlayIndex);
 
 void BlitMFont(VIDEO_OVERLAY *pBlitter);
 
-BOOLEAN BlitBufferToBuffer(uint32_t uiSrcBuffer, uint32_t uiDestBuffer, UINT16 usSrcX,
-                           UINT16 usSrcY, UINT16 usWidth, UINT16 usHeight);
+BOOLEAN BlitBufferToBuffer(uint32_t uiSrcBuffer, uint32_t uiDestBuffer, uint16_t usSrcX,
+                           uint16_t usSrcY, uint16_t usWidth, uint16_t usHeight);
 
 #endif

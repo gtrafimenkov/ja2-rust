@@ -142,7 +142,7 @@ BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void UpdateLastDayOfPlayerActivity(UINT16 usDay) {
+void UpdateLastDayOfPlayerActivity(uint16_t usDay) {
   if (usDay > gStrategicStatus.usLastDayOfPlayerActivity) {
     gStrategicStatus.usLastDayOfPlayerActivity = usDay;
     gStrategicStatus.ubNumberOfDaysOfInactivity = 0;

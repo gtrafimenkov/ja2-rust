@@ -234,7 +234,7 @@ void HandleSaveLoadScreen();
 void GetSaveLoadScreenUserInput();
 void SaveLoadGameNumber(INT8 bSaveGameID);
 BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader);
-BOOLEAN DisplaySaveGameEntry(INT8 bEntryID);  //, UINT16 usPosY );
+BOOLEAN DisplaySaveGameEntry(INT8 bEntryID);  //, uint16_t usPosY );
 BOOLEAN DisplaySaveGameList();
 void InitSaveLoadScreenTextInputBoxes();
 void DestroySaveLoadTextInputBoxes();
@@ -395,8 +395,8 @@ void SetSaveLoadExitScreen(uint32_t uiScreen) {
 BOOLEAN EnterSaveLoadScreen() {
   INT8 i;
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosX = SLG_FIRST_SAVED_SPOT_X;
-  UINT16 usPosY = SLG_FIRST_SAVED_SPOT_Y;
+  uint16_t usPosX = SLG_FIRST_SAVED_SPOT_X;
+  uint16_t usPosY = SLG_FIRST_SAVED_SPOT_Y;
 
   //	if( guiPreviousOptionScreen != MAINMENU_SCREEN )
   //		gbSetSlotToBeSelected = -1;
@@ -487,10 +487,10 @@ BOOLEAN EnterSaveLoadScreen() {
   usPosX = SLG_FIRST_SAVED_SPOT_X;
   usPosY = SLG_FIRST_SAVED_SPOT_Y;
   for (i = 0; i < NUM_SAVE_GAMES; i++) {
-    MSYS_DefineRegion(&gSelectedSaveRegion[i], usPosX, usPosY,
-                      (UINT16)(usPosX + SLG_SAVELOCATION_WIDTH),
-                      (UINT16)(usPosY + SLG_SAVELOCATION_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
-                      SelectedSaveRegionMovementCallBack, SelectedSaveRegionCallBack);
+    MSYS_DefineRegion(
+        &gSelectedSaveRegion[i], usPosX, usPosY, (uint16_t)(usPosX + SLG_SAVELOCATION_WIDTH),
+        (uint16_t)(usPosY + SLG_SAVELOCATION_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+        SelectedSaveRegionMovementCallBack, SelectedSaveRegionCallBack);
     MSYS_AddRegion(&gSelectedSaveRegion[i]);
     MSYS_SetRegionUserData(&gSelectedSaveRegion[i], 0, i);
 
@@ -977,7 +977,7 @@ void SaveLoadGameNumber(INT8 bSaveGameID) {
 }
 
 BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
-                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                      const SGPRect *pCenteringRect) {
   // do message box and return
   giSaveLoadMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
@@ -988,8 +988,8 @@ BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, uint32_t ui
   return ((giSaveLoadMessageBox != -1));
 }
 
-BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen, UINT16 usFlags,
-                             MSGBOX_CALLBACK ReturnCallback) {
+BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
+                             uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   SGPRect CenteringRect = {0, 0, 639, 479};
 
   // do message box and return
@@ -1024,8 +1024,8 @@ BOOLEAN InitSaveGameArray() {
 
 BOOLEAN DisplaySaveGameList() {
   INT8 bLoop1;
-  //	UINT16 usPosX = SLG_FIRST_SAVED_SPOT_X;
-  UINT16 usPosY = SLG_FIRST_SAVED_SPOT_Y;
+  //	uint16_t usPosX = SLG_FIRST_SAVED_SPOT_X;
+  uint16_t usPosY = SLG_FIRST_SAVED_SPOT_Y;
 
   for (bLoop1 = 0; bLoop1 < NUM_SAVE_GAMES; bLoop1++) {
     // display all the information from the header
@@ -1037,7 +1037,7 @@ BOOLEAN DisplaySaveGameList() {
   return (TRUE);
 }
 
-BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
+BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, uint16_t usPosY )
 {
   CHAR16 zDateString[128];
   CHAR16 zLocationString[128];
@@ -1045,10 +1045,10 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
   CHAR16 zBalanceString[128];
   SAVED_GAME_HEADER SaveGameHeader;
   struct VObject *hPixHandle;
-  UINT16 usPosX = SLG_FIRST_SAVED_SPOT_X;
+  uint16_t usPosX = SLG_FIRST_SAVED_SPOT_X;
   uint32_t uiFont = SAVE_LOAD_TITLE_FONT;
   UINT8 ubFontColor = SAVE_LOAD_TITLE_COLOR;
-  UINT16 usPosY = SLG_FIRST_SAVED_SPOT_Y + (SLG_GAP_BETWEEN_LOCATIONS * bEntryID);
+  uint16_t usPosY = SLG_FIRST_SAVED_SPOT_Y + (SLG_GAP_BETWEEN_LOCATIONS * bEntryID);
 
   // if we are going to be instantly leaving the screen, dont draw the numbers
   if (gfLoadGameUponEntry) {
@@ -1186,8 +1186,8 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
                                                          : zSaveLoadText[SLG_REALISTIC]);
 
       // The date
-      DrawTextToScreen(zMouseHelpTextString, (UINT16)(usPosX + SLG_DATE_OFFSET_X),
-                       (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 0, uiFont, ubFontColor,
+      DrawTextToScreen(zMouseHelpTextString, (uint16_t)(usPosX + SLG_DATE_OFFSET_X),
+                       (uint16_t)(usPosY + SLG_DATE_OFFSET_Y), 0, uiFont, ubFontColor,
                        FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
     } else {
       // Create the string for the Data
@@ -1237,33 +1237,33 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
       //
 
       // The date
-      DrawTextToScreen(zDateString, (UINT16)(usPosX + SLG_DATE_OFFSET_X),
-                       (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 0, uiFont, ubFontColor,
+      DrawTextToScreen(zDateString, (uint16_t)(usPosX + SLG_DATE_OFFSET_X),
+                       (uint16_t)(usPosY + SLG_DATE_OFFSET_Y), 0, uiFont, ubFontColor,
                        FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       // if the sector string exceeds the width, and the ...
       ReduceStringLength(zLocationString, ARR_SIZE(zLocationString), SLG_SECTOR_WIDTH, uiFont);
 
       // The Sector
-      DrawTextToScreen(zLocationString, (UINT16)(usPosX + SLG_SECTOR_OFFSET_X),
-                       (UINT16)(usPosY + SLG_SECTOR_OFFSET_Y), 0, uiFont, ubFontColor,
+      DrawTextToScreen(zLocationString, (uint16_t)(usPosX + SLG_SECTOR_OFFSET_X),
+                       (uint16_t)(usPosY + SLG_SECTOR_OFFSET_Y), 0, uiFont, ubFontColor,
                        FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       // The Num of mercs
-      DrawTextToScreen(zNumMercsString, (UINT16)(usPosX + SLG_NUM_MERCS_OFFSET_X),
-                       (UINT16)(usPosY + SLG_NUM_MERCS_OFFSET_Y), 0, uiFont, ubFontColor,
+      DrawTextToScreen(zNumMercsString, (uint16_t)(usPosX + SLG_NUM_MERCS_OFFSET_X),
+                       (uint16_t)(usPosY + SLG_NUM_MERCS_OFFSET_Y), 0, uiFont, ubFontColor,
                        FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       // The balance
-      DrawTextToScreen(zBalanceString, (UINT16)(usPosX + SLG_BALANCE_OFFSET_X),
-                       (UINT16)(usPosY + SLG_BALANCE_OFFSET_Y), 0, uiFont, ubFontColor,
+      DrawTextToScreen(zBalanceString, (uint16_t)(usPosX + SLG_BALANCE_OFFSET_X),
+                       (uint16_t)(usPosY + SLG_BALANCE_OFFSET_Y), 0, uiFont, ubFontColor,
                        FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       if (gbSaveGameArray[bEntryID] ||
           (gfSaveGame && !gfUserInTextInputMode && (gbSelectedSaveLocation == bEntryID))) {
         // The Saved Game description
-        DrawTextToScreen(SaveGameHeader.sSavedGameDesc, (UINT16)(usPosX + SLG_SAVE_GAME_DESC_X),
-                         (UINT16)(usPosY + SLG_SAVE_GAME_DESC_Y), 0, uiFont, ubFontColor,
+        DrawTextToScreen(SaveGameHeader.sSavedGameDesc, (uint16_t)(usPosX + SLG_SAVE_GAME_DESC_X),
+                         (uint16_t)(usPosY + SLG_SAVE_GAME_DESC_Y), 0, uiFont, ubFontColor,
                          FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
       }
     }
@@ -1272,12 +1272,13 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
     if (bEntryID == 0) {
       // display the empty spot
       DrawTextToScreen(pMessageStrings[MSG_EMPTY_QUICK_SAVE_SLOT], usPosX,
-                       (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 609, uiFont, ubFontColor,
+                       (uint16_t)(usPosY + SLG_DATE_OFFSET_Y), 609, uiFont, ubFontColor,
                        FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
     } else {
       // display the empty spot
-      DrawTextToScreen(pMessageStrings[MSG_EMPTYSLOT], usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y),
-                       609, uiFont, ubFontColor, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
+      DrawTextToScreen(pMessageStrings[MSG_EMPTYSLOT], usPosX,
+                       (uint16_t)(usPosY + SLG_DATE_OFFSET_Y), 609, uiFont, ubFontColor,
+                       FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
     }
   }
 
@@ -1603,7 +1604,7 @@ void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reas
 }
 
 void InitSaveLoadScreenTextInputBoxes() {
-  UINT16 usPosY;
+  uint16_t usPosY;
   SAVED_GAME_HEADER SaveGameHeader;
 
   if (gbSelectedSaveLocation == -1) return;
@@ -1616,7 +1617,7 @@ void InitSaveLoadScreenTextInputBoxes() {
   InitTextInputMode();
 
   SetTextInputCursor(CUROSR_IBEAM_WHITE);
-  SetTextInputFont((UINT16)FONT12ARIALFIXEDWIDTH);  // FONT12ARIAL //FONT12ARIALFIXEDWIDTH
+  SetTextInputFont((uint16_t)FONT12ARIALFIXEDWIDTH);  // FONT12ARIAL //FONT12ARIALFIXEDWIDTH
   Set16BPPTextFieldColor(Get16BPPColor(FROMRGB(0, 0, 0)));
   SetBevelColors(Get16BPPColor(FROMRGB(136, 138, 135)), Get16BPPColor(FROMRGB(24, 61, 81)));
   SetTextInputRegularColors(FONT_WHITE, 2);
@@ -1824,8 +1825,8 @@ void DeleteSaveGameNumber(UINT8 ubSaveGameSlotID) {
 
 void DisplayOnScreenNumber(BOOLEAN fErase) {
   wchar_t zTempString[16];
-  UINT16 usPosX = 6;
-  UINT16 usPosY;
+  uint16_t usPosX = 6;
+  uint16_t usPosY;
   INT8 bLoopNum;
   INT8 bNum = 0;
 
@@ -1838,8 +1839,8 @@ void DisplayOnScreenNumber(BOOLEAN fErase) {
       continue;
     }
 
-    BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y),
-                       10, 10);
+    BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, usPosX,
+                       (uint16_t)(usPosY + SLG_DATE_OFFSET_Y), 10, 10);
 
     if (bLoopNum != 10) {
       bNum = bLoopNum;
@@ -1850,7 +1851,7 @@ void DisplayOnScreenNumber(BOOLEAN fErase) {
     }
 
     if (!fErase)
-      DrawTextToScreen(zTempString, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 0,
+      DrawTextToScreen(zTempString, usPosX, (uint16_t)(usPosY + SLG_DATE_OFFSET_Y), 0,
                        SAVE_LOAD_NUMBER_FONT, SAVE_LOAD_NUMBER_COLOR, FONT_MCOLOR_BLACK, FALSE,
                        LEFT_JUSTIFIED);
 

@@ -16,7 +16,7 @@ typedef struct {
   INT16 sGridNo;
   UINT8 ubLevel;
   struct OBJECTTYPE o;
-  UINT16 usFlags;
+  uint16_t usFlags;
   INT8 bRenderZHeightAboveLevel;
 
   INT8 bVisible;
@@ -34,10 +34,10 @@ typedef struct {
 extern WORLDITEM *gWorldItems;
 extern uint32_t guiNumWorldItems;
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
+INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, uint16_t usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible);
 void RemoveItemFromWorld(INT32 iItemIndex);
-INT32 FindWorldItem(UINT16 usItem);
+INT32 FindWorldItem(uint16_t usItem);
 
 void LoadWorldItemsFromMap(INT8 **hBuffer);
 void SaveWorldItemsToMap(HWFILE fp);

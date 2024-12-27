@@ -514,7 +514,7 @@ enum {
 
 // Struct for animation 'surface' information
 typedef struct {
-  UINT16 ubName;
+  uint16_t ubName;
   CHAR8 Filename[50];
   CHAR8 bStructDataType;
   UINT8 ubFlags;
@@ -539,16 +539,16 @@ extern AnimationStructureType gAnimStructureDatabase[TOTALBODYTYPES][NUM_STRUCT_
 // Functions
 BOOLEAN InitAnimationSystem();
 BOOLEAN DeInitAnimationSystem();
-BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 usAnimState);
-BOOLEAN UnLoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex);
-void ClearAnimationSurfacesUsageHistory(UINT16 usSoldierID);
+BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint16_t usAnimState);
+BOOLEAN UnLoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex);
+void ClearAnimationSurfacesUsageHistory(uint16_t usSoldierID);
 
 void DeleteAnimationProfiles();
 BOOLEAN LoadAnimationProfiles();
 
-struct STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
-                                                    UINT16 usAnimState);
-struct STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID);
+struct STRUCTURE_FILE_REF *GetAnimationStructureRef(uint16_t usSoldierID, uint16_t usSurfaceIndex,
+                                                    uint16_t usAnimState);
+struct STRUCTURE_FILE_REF *GetDefaultStructureRef(uint16_t usSoldierID);
 
 // Profile data
 extern struct ANIM_PROF *gpAnimProfiles;

@@ -45,12 +45,12 @@ typedef enum {
 } CollisionEnums;
 
 INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDeltaY, FLOAT dDeltaZ,
-                        UINT16 *pusStructureID, FLOAT *pdNormalX, FLOAT *pdNormalY,
+                        uint16_t *pusStructureID, FLOAT *pdNormalX, FLOAT *pdNormalY,
                         FLOAT *pdNormalZ);
 
 INT8 ChanceToGetThrough(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ);
 INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ,
-                           UINT16 usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake);
+                           uint16_t usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake);
 
 INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
                                       struct SOLDIERTYPE *pEndSoldier, UINT8 ubSightLimit,
@@ -95,16 +95,16 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier);
 #define HEIGHT_UNITS_PER_INDEX (HEIGHT_UNITS / PROFILE_Z_SIZE)
 #define MAX_STRUCTURE_HEIGHT 50
 // 5.12 == HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT
-#define CONVERT_PIXELS_TO_HEIGHTUNITS(n) ((n)*HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT)
+#define CONVERT_PIXELS_TO_HEIGHTUNITS(n) ((n) * HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT)
 #define CONVERT_PIXELS_TO_INDEX(n) \
-  ((n)*HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS_PER_INDEX)
+  ((n) * HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS_PER_INDEX)
 #define CONVERT_HEIGHTUNITS_TO_INDEX(n) ((n) / HEIGHT_UNITS_PER_INDEX)
 #define CONVERT_HEIGHTUNITS_TO_DISTANCE(n) ((n) / (HEIGHT_UNITS / CELL_X_SIZE))
-#define CONVERT_HEIGHTUNITS_TO_PIXELS(n) ((n)*MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS)
+#define CONVERT_HEIGHTUNITS_TO_PIXELS(n) ((n) * MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS)
 #define CONVERT_WITHINTILE_TO_INDEX(n) ((n) >> 1)
 #define CONVERT_INDEX_TO_WITHINTILE(n) ((n) << 1)
 #define CONVERT_INDEX_TO_PIXELS(n) \
-  ((n)*MAX_STRUCTURE_HEIGHT * HEIGHT_UNITS_PER_INDEX / HEIGHT_UNITS)
+  ((n) * MAX_STRUCTURE_HEIGHT * HEIGHT_UNITS_PER_INDEX / HEIGHT_UNITS)
 
 #define TREE_SIGHT_REDUCTION 6
 #define NORMAL_TREES 10

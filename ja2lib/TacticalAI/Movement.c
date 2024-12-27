@@ -356,8 +356,8 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
                                        INT8 bReserveAPs, INT8 bAction, INT8 fFlags) {
   INT16 sLoop, sAPCost;
   INT16 sTempDest, sGoToGrid;
-  UINT16 sOrigin;
-  UINT16 usMaxDist;
+  uint16_t sOrigin;
+  uint16_t usMaxDist;
   UINT8 ubDirection, ubDirsLeft, ubDirChecked[8], fFound = FALSE;
   INT8 bAPsLeft, fPathFlags;
   UINT8 ubRoomRequired = 0, ubTempRoom;
@@ -643,7 +643,7 @@ void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
 #endif
   }
 
-  usNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
+  usNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
                           DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
 
   // Find out how much it takes to move here!

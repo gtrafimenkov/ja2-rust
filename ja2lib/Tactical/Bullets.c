@@ -55,7 +55,7 @@ void RecountBullets(void) {
   guiNumBullets = 0;
 }
 
-INT32 CreateBullet(UINT8 ubFirerID, BOOLEAN fFake, UINT16 usFlags) {
+INT32 CreateBullet(UINT8 ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
   INT32 iBulletIndex;
   BULLET *pBullet;
 
@@ -341,7 +341,7 @@ void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qC
 
 BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten;
-  UINT16 usCnt;
+  uint16_t usCnt;
   uint32_t uiBulletCount = 0;
 
   // loop through and count the number of bullets
@@ -376,7 +376,7 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
 
 BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesRead;
-  UINT16 usCnt;
+  uint16_t usCnt;
 
   // make sure the bullets are not allocated
   memset(gBullets, 0, NUM_BULLET_SLOTS * sizeof(BULLET));

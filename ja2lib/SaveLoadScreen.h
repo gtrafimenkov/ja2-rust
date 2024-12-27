@@ -22,7 +22,7 @@ uint32_t SaveLoadScreenShutdown(void);
 uint32_t SaveLoadScreenHandle(void);
 uint32_t SaveLoadScreenInit(void);
 
-BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, STR16 zString, uint32_t uiExitScreen, UINT16 usFlags,
+BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, STR16 zString, uint32_t uiExitScreen, uint16_t usFlags,
                              MSGBOX_CALLBACK ReturnCallback);
 
 BOOLEAN InitSaveGameArray();

@@ -23,8 +23,8 @@ typedef struct SUMMARYFILE {
   // start version 1
   UINT8 ubSummaryVersion;
   UINT8 ubSpecial;
-  UINT16 usNumItems;
-  UINT16 usNumLights;
+  uint16_t usNumItems;
+  uint16_t usNumLights;
   MAPCREATE_STRUCT MapInfo;
   TEAMSUMMARY EnemyTeam;
   TEAMSUMMARY CreatureTeam;
@@ -64,7 +64,7 @@ typedef struct SUMMARYFILE {
   //	190
   // start version 10
   EXITGRID ExitGrid[4];           // 5*4 //	 20
-  UINT16 usExitGridSize[4];       // 2*4 //    8
+  uint16_t usExitGridSize[4];     // 2*4 //    8
   BOOLEAN fInvalidDest[4];        //    4
   UINT8 ubNumExitGridDests;       //		1
   BOOLEAN fTooManyExitGridDests;  //		1
@@ -75,8 +75,8 @@ typedef struct SUMMARYFILE {
   //																//-----
   //																		225
   // start version 12
-  UINT16 usWarningRoomNums;  //    2
-                             //	227
+  uint16_t usWarningRoomNums;  //    2
+                               //	227
   // start version 13
   UINT8 ubEnemiesHaveWaypoints;  //		1
   uint32_t uiNumItemsPosition;   //		4

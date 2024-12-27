@@ -8,11 +8,11 @@
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
-BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader);
 BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage);
 
-BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
+BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents) {
   HWFILE hFile;
   STCIHeader Header;
   uint32_t uiBytesRead;
@@ -71,7 +71,7 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
   return (TRUE);
 }
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader) {
   uint32_t uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
@@ -95,9 +95,9 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *p
     if (pHeader->ubDepth == 16) {
       // ASSUMPTION: file data is 565 R,G,B
 
-      if (gusRedMask != (UINT16)pHeader->RGB.uiRedMask ||
-          gusGreenMask != (UINT16)pHeader->RGB.uiGreenMask ||
-          gusBlueMask != (UINT16)pHeader->RGB.uiBlueMask) {
+      if (gusRedMask != (uint16_t)pHeader->RGB.uiRedMask ||
+          gusGreenMask != (uint16_t)pHeader->RGB.uiGreenMask ||
+          gusBlueMask != (uint16_t)pHeader->RGB.uiBlueMask) {
         // colour distribution of the file is different from hardware!  We have to change it!
         DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Converting to current RGB distribution!");
         // Convert the image to the current hardware's specifications
@@ -133,7 +133,7 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *p
   return (TRUE);
 }
 
-BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader) {
   uint32_t uiFileSectionSize;
   uint32_t uiBytesRead;
   PTR pSTCIPalette;
@@ -286,7 +286,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeade
 }
 
 BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage) {
-  UINT16 usIndex;
+  uint16_t usIndex;
   STCIPaletteElement *pubPalette;
 
   pubPalette = (STCIPaletteElement *)pSTCIPalette;

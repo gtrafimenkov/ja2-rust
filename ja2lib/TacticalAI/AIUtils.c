@@ -37,7 +37,7 @@ UINT8 Urgency[NUM_STATUS_STATES][NUM_MORALE_STATES] = {
     {URGENCY_HIGH, URGENCY_HIGH, URGENCY_HIGH, URGENCY_MED, URGENCY_MED}  // black
 };
 
-UINT16 MovementMode[LAST_MOVEMENT_ACTION + 1][NUM_URGENCY_STATES] = {
+uint16_t MovementMode[LAST_MOVEMENT_ACTION + 1][NUM_URGENCY_STATES] = {
     {WALKING, WALKING, WALKING},  // AI_ACTION_NONE
 
     {WALKING, WALKING, WALKING},  // AI_ACTION_RANDOM_PATROL
@@ -145,7 +145,7 @@ UINT8 ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
   // just compare the chance of the bullet hitting if we are
   // standing, crouched, or prone
 
-  UINT16 usRealAnimState, usBestAnimState;
+  uint16_t usRealAnimState, usBestAnimState;
   INT8 bBestStanceDiff = -1;
   INT8 bLoop, bStanceNum, bStanceDiff, bAPsAfterAttack;
   uint32_t uiChanceOfDamage, uiBestChanceOfDamage, uiCurrChanceOfDamage;
@@ -264,7 +264,7 @@ UINT8 ShootingStanceChange(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pAttack,
   }
 }
 
-UINT16 DetermineMovementMode(struct SOLDIERTYPE *pSoldier, INT8 bAction) {
+uint16_t DetermineMovementMode(struct SOLDIERTYPE *pSoldier, INT8 bAction) {
   if (pSoldier->fUIMovementFast) {
     return (RUNNING);
   } else if (CREATURE_OR_BLOODCAT(pSoldier)) {
@@ -291,7 +291,7 @@ UINT16 DetermineMovementMode(struct SOLDIERTYPE *pSoldier, INT8 bAction) {
   }
 }
 
-void NewDest(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo) {
+void NewDest(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo) {
   // ATE: Setting sDestination? Tis does not make sense...
   // pSoldier->sDestination = usGridNo;
   BOOLEAN fSet = FALSE;
@@ -300,7 +300,7 @@ void NewDest(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo) {
       (pSoldier->bOrders == DEFENSIVE || pSoldier->bOrders == CUNNINGSOLO ||
        pSoldier->bOrders == CUNNINGAID) &&
       (SoldierDifficultyLevel(pSoldier) >= 2)) {
-    UINT16 usMovementMode;
+    uint16_t usMovementMode;
 
     // getting real movement anim for someone who is going to take cover, not just considering
     usMovementMode =
@@ -483,13 +483,13 @@ BOOLEAN IsActionAffordable(struct SOLDIERTYPE *pSoldier) {
 
 INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoop;
-  UINT16 usMaxDist;
+  uint16_t usMaxDist;
   UINT8 ubFriendCount, ubFriendIDs[MAXMERCS], ubFriendID;
-  UINT16 usDirection;
+  uint16_t usDirection;
   UINT8 ubDirsLeft;
   BOOLEAN fDirChecked[8];
   BOOLEAN fRangeRestricted = FALSE, fFound = FALSE;
-  UINT16 usDest, usOrigin;
+  uint16_t usDest, usOrigin;
   struct SOLDIERTYPE *pFriend;
 
   // obtain maximum roaming distance from soldier's origin
@@ -565,7 +565,7 @@ INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier) {
       while ((ubDirsLeft--) && !fFound) {
         // randomly select a direction which hasn't been 'checked' yet
         do {
-          usDirection = (UINT16)Random(8);
+          usDirection = (uint16_t)Random(8);
         } while (fDirChecked[usDirection]);
 
         fDirChecked[usDirection] = TRUE;
@@ -605,7 +605,7 @@ INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier) {
 
 INT16 RandDestWithinRange(struct SOLDIERTYPE *pSoldier) {
   INT16 sRandDest = NOWHERE;
-  UINT16 usOrigin, usMaxDist;
+  uint16_t usOrigin, usMaxDist;
   UINT8 ubTriesLeft;
   BOOLEAN fLimited = FALSE, fFound = FALSE;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXRange, sYRange, sXOffset, sYOffset;
@@ -1119,7 +1119,7 @@ INT16 ClosestPC(struct SOLDIERTYPE *pSoldier, INT16 *psDistance) {
 INT16 FindClosestClimbPointAvailableToAI(struct SOLDIERTYPE *pSoldier, INT16 sStartGridNo,
                                          INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
   INT16 sGridNo;
-  UINT16 sRoamingOrigin;
+  uint16_t sRoamingOrigin;
   INT16 sRoamingRange;
 
   if (pSoldier->uiStatusFlags & SOLDIER_PC) {
@@ -1886,7 +1886,7 @@ INT32 CalcManThreatValue(struct SOLDIERTYPE *pEnemy, INT16 sMyGrid, UINT8 ubRedu
   return (iThreatValue);
 }
 
-INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, UINT16 *pusFromGridNo) {
+INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, uint16_t *pusFromGridNo) {
   if (CREATURE_OR_BLOODCAT(pSoldier)) {
     if (pSoldier->bAlertStatus == STATUS_BLACK) {
       *pusFromGridNo = pSoldier->sGridNo;  // from current position!
