@@ -187,13 +187,13 @@ BOOLEAN gfOverrideDirty;
 BOOLEAN gfOverride;
 
 // The sector coordinates of the map currently loaded in memory (blue)
-INT16 gsSectorX, gsSectorY;
+int16_t gsSectorX, gsSectorY;
 // The layer of the sector that is currently loaded in memory.
 INT32 gsSectorLayer;
 // The sector coordinates of the mouse position (yellow)
-INT16 gsHiSectorX = 0, gsHiSectorY = 0;
+int16_t gsHiSectorX = 0, gsHiSectorY = 0;
 // The sector coordinates of the selected sector (red)
-INT16 gsSelSectorX = 0, gsSelSectorY = 0;
+int16_t gsSelSectorX = 0, gsSelSectorY = 0;
 
 // Used to determine how long the F5 key has been held down for to determine whether or not the
 // summary is going to be persistant or not.
@@ -267,14 +267,14 @@ void CreateSummaryWindow() {
   // GiveButtonDefaultStatus( iSummaryButton[ SUMMARY_OKAY ], DEFAULT_STATUS_WINDOWS95 );
 
   iSummaryButton[SUMMARY_GRIDCHECKBOX] =
-      CreateCheckBoxButton(MAP_LEFT, (INT16)(MAP_BOTTOM + 5), "EDITOR//smcheckbox.sti",
+      CreateCheckBoxButton(MAP_LEFT, (int16_t)(MAP_BOTTOM + 5), "EDITOR//smcheckbox.sti",
                            MSYS_PRIORITY_HIGH, SummaryToggleGridCallback);
   ButtonList[iSummaryButton[SUMMARY_GRIDCHECKBOX]]->uiFlags |= BUTTON_CLICKED_ON;
   gfRenderGrid = TRUE;
 
   iSummaryButton[SUMMARY_PROGRESSCHECKBOX] = CreateCheckBoxButton(
-      (INT16)(MAP_LEFT + 50), (INT16)(MAP_BOTTOM + 5), "EDITOR//smcheckbox.sti", MSYS_PRIORITY_HIGH,
-      SummaryToggleProgressCallback);
+      (int16_t)(MAP_LEFT + 50), (int16_t)(MAP_BOTTOM + 5), "EDITOR//smcheckbox.sti",
+      MSYS_PRIORITY_HIGH, SummaryToggleProgressCallback);
   ButtonList[iSummaryButton[SUMMARY_PROGRESSCHECKBOX]]->uiFlags |= BUTTON_CLICKED_ON;
   gfRenderProgress = TRUE;
 
@@ -310,7 +310,7 @@ void CreateSummaryWindow() {
     ButtonList[iSummaryButton[SUMMARY_B3]]->uiFlags |= BUTTON_CLICKED_ON;
 
   iSummaryButton[SUMMARY_ALTERNATE] =
-      CreateCheckBoxButton(MAP_LEFT, (INT16)(MAP_BOTTOM + 25), "EDITOR//smcheckbox.sti",
+      CreateCheckBoxButton(MAP_LEFT, (int16_t)(MAP_BOTTOM + 25), "EDITOR//smcheckbox.sti",
                            MSYS_PRIORITY_HIGH, SummaryToggleAlternateCallback);
   if (gfAlternateMaps) ButtonList[iSummaryButton[SUMMARY_ALTERNATE]]->uiFlags |= BUTTON_CLICKED_ON;
 
@@ -322,7 +322,7 @@ void CreateSummaryWindow() {
                        MAP_LEFT + 55, MAP_BOTTOM + 45, 50, 26, BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH,
                        DEFAULT_MOVE_CALLBACK, SummarySaveMapCallback);
   iSummaryButton[SUMMARY_OVERRIDE] =
-      CreateCheckBoxButton((INT16)(MAP_LEFT + 110), (INT16)(MAP_BOTTOM + 59),
+      CreateCheckBoxButton((int16_t)(MAP_LEFT + 110), (int16_t)(MAP_BOTTOM + 59),
                            "EDITOR\\smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryOverrideCallback);
 
 #if 0
@@ -1426,7 +1426,7 @@ void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate) {
   CHAR16 str[50];
   CHAR8 szCoord[40];
   CHAR16 *ptr;
-  INT16 x, y;
+  int16_t x, y;
 
   gfRenderSummary = TRUE;
   // Extract the sector
@@ -1753,7 +1753,7 @@ void CreateGlobalSummary() {
 }
 
 void MapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  static INT16 gsPrevX = 0, gsPrevY = 0;
+  static int16_t gsPrevX = 0, gsPrevY = 0;
   // calc current sector highlighted.
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gsPrevX = gsHiSectorX = 0;
@@ -1771,7 +1771,7 @@ void MapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
 }
 
 void MapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  static INT16 sLastX = -1, sLastY = -1;
+  static int16_t sLastX = -1, sLastY = -1;
   static INT32 iLastClickTime = 0;
   // calc current sector selected.
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

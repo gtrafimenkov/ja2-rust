@@ -621,7 +621,7 @@ void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
   uint8_t ubType = 0;
 
   // Find the base structure
-  pCurrent = FindStructure((INT16)pMap->usGridNo, STRUCTURE_BASE_TILE);
+  pCurrent = FindStructure((int16_t)pMap->usGridNo, STRUCTURE_BASE_TILE);
 
   if (pCurrent == NULL) return;
 
@@ -642,8 +642,8 @@ void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
 
 //////////////
 
-void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                    INT16 sSectorY, uint8_t ubSectorZ) {
+void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                    int16_t sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -665,8 +665,8 @@ void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                    INT16 sSectorY, uint8_t ubSectorZ) {
+void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                    int16_t sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -688,8 +688,8 @@ void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                         INT16 sSectorY, uint8_t ubSectorZ) {
+void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                         int16_t sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -711,8 +711,8 @@ void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, 
   SaveModifiedMapStructToMapTempFile(&Map, sSectorX, sSectorY, ubSectorZ);
 }
 
-void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                          INT16 sSectorY, uint8_t ubSectorZ) {
+void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                          int16_t sSectorY, uint8_t ubSectorZ) {
   MODIFY_MAP Map;
   uint32_t uiType;
   uint16_t usSubIndex;
@@ -870,9 +870,9 @@ void AddWindowHitToMapTempFile(uint32_t uiMapIndex) {
 BOOLEAN ModifyWindowStatus(uint32_t uiMapIndex) {
   struct STRUCTURE *pStructure;
 
-  pStructure = FindStructure((INT16)uiMapIndex, STRUCTURE_WALLNWINDOW);
+  pStructure = FindStructure((int16_t)uiMapIndex, STRUCTURE_WALLNWINDOW);
   if (pStructure) {
-    SwapStructureForPartner((INT16)uiMapIndex, pStructure);
+    SwapStructureForPartner((int16_t)uiMapIndex, pStructure);
     return (TRUE);
   }
   // else forget it, window could be destroyed
@@ -884,7 +884,7 @@ void SetOpenableStructStatusFromMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened
   struct STRUCTURE *pBase;
   BOOLEAN fStatusOnTheMap;
   struct ITEM_POOL *pItemPool;
-  INT16 sBaseGridNo = (INT16)uiMapIndex;
+  int16_t sBaseGridNo = (int16_t)uiMapIndex;
 
   pStructure = FindStructure((uint16_t)uiMapIndex, STRUCTURE_OPENABLE);
 

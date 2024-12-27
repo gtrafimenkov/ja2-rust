@@ -126,19 +126,19 @@ BOOLEAN CheckForLibraryExistence(STR pLibraryName);
 BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibheader, BOOLEAN fCanBeOnCDrom);
 
 BOOLEAN CheckIfFileExistInLibrary(STR pFileName);
-INT16 GetLibraryIDFromFileName(STR pFileName);
+int16_t GetLibraryIDFromFileName(STR pFileName);
 HWFILE OpenFileFromLibrary(STR pName);
 HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile);
-BOOLEAN CloseLibraryFile(INT16 sLibraryID, uint32_t uiFileID);
-BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
+BOOLEAN CloseLibraryFile(int16_t sLibraryID, uint32_t uiFileID);
+BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, int16_t *pLibraryID,
                                                  uint32_t *pFileNum);
-BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, uint32_t uiFileIndex, PTR pData,
+BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileIndex, PTR pData,
                             uint32_t uiBytesToRead, uint32_t *pBytesRead);
-BOOLEAN LibraryFileSeek(INT16 sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
+BOOLEAN LibraryFileSeek(int16_t sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
                         uint8_t uiHowToSeek);
 
 // used to open and close libraries during the game
-BOOLEAN CloseLibrary(INT16 sLibraryID);
-BOOLEAN OpenLibrary(INT16 sLibraryID);
+BOOLEAN CloseLibrary(int16_t sLibraryID);
+BOOLEAN OpenLibrary(int16_t sLibraryID);
 
 #endif

@@ -35,13 +35,13 @@ typedef struct _CRDT_NODE {
 
   uint32_t uiFlags;  // various flags
 
-  INT16 sPosX;  // position of the node on the screen if the node is displaying stuff
-  INT16 sPosY;
+  int16_t sPosX;  // position of the node on the screen if the node is displaying stuff
+  int16_t sPosY;
 
-  INT16 sOldPosX;  // position of the node on the screen if the node is displaying stuff
-  INT16 sOldPosY;
+  int16_t sOldPosX;  // position of the node on the screen if the node is displaying stuff
+  int16_t sOldPosY;
 
-  INT16 sHeightOfString;  // The height of the displayed string
+  int16_t sHeightOfString;  // The height of the displayed string
 
   BOOLEAN fDelete;  // Delete this loop
 
@@ -137,18 +137,18 @@ enum
 // ddd
 
 typedef struct {
-  INT16 sX;
-  INT16 sY;
-  INT16 sWidth;
-  INT16 sHeight;
+  int16_t sX;
+  int16_t sY;
+  int16_t sWidth;
+  int16_t sHeight;
 
-  INT16 sEyeX;
-  INT16 sEyeY;
+  int16_t sEyeX;
+  int16_t sEyeY;
 
-  INT16 sMouthX;
-  INT16 sMouthY;
+  int16_t sMouthX;
+  int16_t sMouthY;
 
-  INT16 sBlinkFreq;
+  int16_t sBlinkFreq;
   uint32_t uiLastBlinkTime;
   uint32_t uiEyesClosedTime;
 
@@ -427,8 +427,8 @@ BOOLEAN EnterCreditsScreen() {
   for (uiCnt = 0; uiCnt < NUM_PEOPLE_IN_CREDITS; uiCnt++) {
     // Make a mouse region
     MSYS_DefineRegion(&gCrdtMouseRegions[uiCnt], gCreditFaces[uiCnt].sX, gCreditFaces[uiCnt].sY,
-                      (INT16)(gCreditFaces[uiCnt].sX + gCreditFaces[uiCnt].sWidth),
-                      (INT16)(gCreditFaces[uiCnt].sY + gCreditFaces[uiCnt].sHeight),
+                      (int16_t)(gCreditFaces[uiCnt].sX + gCreditFaces[uiCnt].sWidth),
+                      (int16_t)(gCreditFaces[uiCnt].sY + gCreditFaces[uiCnt].sHeight),
                       MSYS_PRIORITY_NORMAL, CURSOR_WWW, SelectCreditFaceMovementRegionCallBack,
                       SelectCreditFaceRegionCallBack);
 
@@ -504,7 +504,7 @@ void HandleCreditScreen() {
   // is it time to get a new node
   if (gCrdtLastAddedNode == NULL ||
       (CRDT_START_POS_Y - (gCrdtLastAddedNode->sPosY + gCrdtLastAddedNode->sHeightOfString - 16)) >=
-          (INT16)guiGapTillReadNextCredit) {
+          (int16_t)guiGapTillReadNextCredit) {
     // if there are no more credits in the file
     if (!GetNextCreditFromTextFile() && gCrdtLastAddedNode == NULL) {
       SetCreditsExitScreen(MAINMENU_SCREEN);
@@ -512,7 +512,7 @@ void HandleCreditScreen() {
   }
 
   RestoreExternBackgroundRect(CRDT_NAME_LOC_X, CRDT_NAME_LOC_Y, CRDT_NAME_LOC_WIDTH,
-                              (INT16)CRDT_NAME_LOC_HEIGHT);
+                              (int16_t)CRDT_NAME_LOC_HEIGHT);
 
   if (giCurrentlySelectedFace != -1) {
     DrawTextToScreen(gzCreditNames[giCurrentlySelectedFace], CRDT_NAME_LOC_X, CRDT_NAME_LOC_Y,
@@ -903,7 +903,7 @@ BOOLEAN DisplayCreditNode(CRDT_NODE *pCurrent) {
 
     // if the surface is at the bottom of the screen
     if (pCurrent->sOldPosY + pCurrent->sHeightOfString > CRDT_START_POS_Y) {
-      INT16 sHeight = 480 - pCurrent->sOldPosY;
+      int16_t sHeight = 480 - pCurrent->sOldPosY;
       RestoreExternBackgroundRect(pCurrent->sOldPosX, pCurrent->sOldPosY, CRDT_WIDTH_OF_TEXT_AREA,
                                   sHeight);
     } else if (pCurrent->sOldPosY > CRDT_LINE_NODE_DISAPPEARS_AT) {
@@ -913,7 +913,7 @@ BOOLEAN DisplayCreditNode(CRDT_NODE *pCurrent) {
 
     // if the surface is at the top of the screen
     else {
-      INT16 sHeight = pCurrent->sOldPosY + pCurrent->sHeightOfString;
+      int16_t sHeight = pCurrent->sOldPosY + pCurrent->sHeightOfString;
 
       RestoreExternBackgroundRect(pCurrent->sOldPosX, CRDT_LINE_NODE_DISAPPEARS_AT,
                                   CRDT_WIDTH_OF_TEXT_AREA, sHeight);

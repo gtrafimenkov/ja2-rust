@@ -144,12 +144,12 @@ INT32 GetTotalDistanceHelicopterCanTravel( void );
 INT32 HowFurtherCanHelicopterTravel( void );
 
 // check if this sector is out of the way
-BOOLEAN IsSectorOutOfTheWay( INT16 sX, INT16 sY );
+BOOLEAN IsSectorOutOfTheWay( int16_t sX, int16_t sY );
 
 */
 
 // how far to nearest refuel point from this sector?
-INT32 DistanceToNearestRefuelPoint(INT16 sX, INT16 sY);
+INT32 DistanceToNearestRefuelPoint(int16_t sX, int16_t sY);
 
 // location of closest
 INT32 LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
@@ -158,7 +158,7 @@ INT32 LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
 void ReFuelHelicopter(void);
 
 // how much will it cost for helicopter to travel through this sector?
-INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY);
+INT32 GetCostOfPassageForHelicopter(int16_t sX, int16_t sY);
 
 // helicopter shot down, kill all on board
 void SkyriderDestroyed(void);
@@ -179,13 +179,13 @@ void LandHelicopter(void);
 void TakeOffHelicopter(void);
 
 // test whether or not a sector contains a fuel site
-BOOLEAN IsRefuelSiteInSector(INT16 sMapX, INT16 sMapY);
+BOOLEAN IsRefuelSiteInSector(int16_t sMapX, int16_t sMapY);
 
 // update which refueling sites are controlled by player & therefore available
 void UpdateRefuelSiteAvailability(void);
 
 // setup helicopter for player
-void SetUpHelicopterForPlayer(INT16 sX, INT16 sY);
+void SetUpHelicopterForPlayer(int16_t sX, int16_t sY);
 
 // the intended path of the helicopter
 INT32 DistanceOfIntendedHelicopterPath(void);
@@ -203,7 +203,7 @@ void StartHoverTime(void);
 void DropOffEveryOneInHelicopter(void);
 
 // handle heli entering this sector
-BOOLEAN HandleHeliEnteringSector(INT16 sX, INT16 sY);
+BOOLEAN HandleHeliEnteringSector(int16_t sX, int16_t sY);
 
 // check for arrival at refuel
 BOOLEAN CheckForArrivalAtRefuelPoint(void);
@@ -227,7 +227,7 @@ void HandleAnimationOfSectors(void);
 void CheckAndHandleSkyriderMonologues(void);
 
 // last sector value in helicopter's path
-INT16 LastSectorInHelicoptersPath(void);
+int16_t LastSectorInHelicoptersPath(void);
 
 // total cost of helicopter trip
 // INT32 GetTotalCostOfHelicopterTrip( void );
@@ -252,9 +252,9 @@ BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY);
 
 BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup);
 
-INT16 GetNumSafeSectorsInPath(void);
+int16_t GetNumSafeSectorsInPath(void);
 
-INT16 GetNumUnSafeSectorsInPath(void);
+int16_t GetNumUnSafeSectorsInPath(void);
 
 BOOLEAN SoldierAboardAirborneHeli(struct SOLDIERTYPE *pSoldier);
 

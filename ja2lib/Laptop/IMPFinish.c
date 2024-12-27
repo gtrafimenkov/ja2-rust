@@ -36,8 +36,8 @@ INT32 giIMPFinishButtonImage[6];
 BOOLEAN fFinishedCharGeneration = FALSE;
 
 // portrait position
-INT16 sFaceX = 253;
-INT16 sFaceY = 245;
+int16_t sFaceX = 253;
+int16_t sFaceY = 245;
 
 // what voice are we playing?
 uint32_t uiVoiceSound = 0;
@@ -520,7 +520,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
 void RenderCharFullName(void) {
   CHAR16 sString[64];
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // render the characters full name
   SetFont(FONT14ARIAL);

@@ -4,7 +4,7 @@
 #include "TacticalAI/NPC.h"
 
 extern BOOLEAN gfNpcLogButton;
-extern INT16 gsQdsEnteringGridNo;
+extern int16_t gsQdsEnteringGridNo;
 
 void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
                           uint8_t ubApproach);

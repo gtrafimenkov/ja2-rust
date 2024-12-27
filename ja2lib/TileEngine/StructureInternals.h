@@ -125,7 +125,7 @@ extern uint8_t AtHeight[PROFILE_Z_SIZE];
 #define TILE_PASSABLE 0x02
 
 typedef struct TAG_STRUCTURE_TILE {
-  INT16 sPosRelToBase;  // "single-axis"
+  int16_t sPosRelToBase;  // "single-axis"
   int8_t bXPosRelToBase;
   int8_t bYPosRelToBase;
   PROFILE Shape;  // 25 bytes
@@ -161,7 +161,7 @@ struct DB_STRUCTURE_REF {
 struct STRUCTURE {
   struct STRUCTURE* pPrev;
   struct STRUCTURE* pNext;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint16_t usStructureID;
   struct DB_STRUCTURE_REF* pDBStructureRef;
   union {
@@ -170,11 +170,11 @@ struct STRUCTURE {
       uint8_t ubLockStrength;
     };
     struct {
-      INT16 sBaseGridNo;
+      int16_t sBaseGridNo;
     };
   };  // 2 bytes
-  INT16 sCubeOffset;  // height of bottom of object in profile "cubes"
-  uint32_t fFlags;    // need to have something to indicate base tile/not
+  int16_t sCubeOffset;  // height of bottom of object in profile "cubes"
+  uint32_t fFlags;      // need to have something to indicate base tile/not
   PROFILE* pShape;
   uint8_t ubWallOrientation;
   uint8_t ubVehicleHitLocation;

@@ -2419,9 +2419,9 @@ void InitStrategicMovementCosts() {
 #endif
 }
 
-uint8_t GetTraversability(INT16 sStartSector, INT16 sEndSector) {
+uint8_t GetTraversability(int16_t sStartSector, int16_t sEndSector) {
   uint8_t ubDirection = 0;
-  INT16 sDifference = 0;
+  int16_t sDifference = 0;
 
   // given start and end sectors
   sDifference = sEndSector - sStartSector;
@@ -2439,7 +2439,7 @@ uint8_t GetTraversability(INT16 sStartSector, INT16 sEndSector) {
   return (SectorInfo[sStartSector].ubTraversability[ubDirection]);
 }
 
-BOOLEAN SectorIsImpassable(INT16 sSector) {
+BOOLEAN SectorIsImpassable(int16_t sSector) {
   // returns true if the sector is impassable in all directions
   return (SectorInfo[sSector].ubTraversability[THROUGH_STRATEGIC_MOVE] == GROUNDBARRIER ||
           SectorInfo[sSector].ubTraversability[THROUGH_STRATEGIC_MOVE] == EDGEOFWORLD);

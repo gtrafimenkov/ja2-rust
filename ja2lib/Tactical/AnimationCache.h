@@ -8,7 +8,7 @@
 
 struct AnimationSurfaceCache {
   uint16_t *usCachedSurfaces;
-  INT16 *sCacheHits;
+  int16_t *sCacheHits;
   uint8_t ubCacheSize;
 };
 

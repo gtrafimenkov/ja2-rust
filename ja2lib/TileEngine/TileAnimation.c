@@ -35,15 +35,15 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   ANITILE *pNewAniNode;
   struct LEVELNODE *pNode;
   INT32 iCachedTile = -1;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubLevel;
-  INT16 usTileType;
-  INT16 usTileIndex;
-  INT16 sDelay;
-  INT16 sStartFrame = -1;
+  int16_t usTileType;
+  int16_t usTileIndex;
+  int16_t sDelay;
+  int16_t sStartFrame = -1;
   uint32_t uiFlags;
   struct LEVELNODE *pGivenNode;
-  INT16 sX, sY, sZ;
+  int16_t sX, sY, sZ;
   uint8_t ubTempDir;
 
   // Get some parameters from structure sent in...
@@ -128,7 +128,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
 
     if ((uiFlags & ANITILE_CACHEDTILE)) {
       pNewAniNode->pLevelNode->uiFlags |= (LEVELNODE_CACHEDANITILE);
-      pNewAniNode->sCachedTileID = (INT16)iCachedTile;
+      pNewAniNode->sCachedTileID = (int16_t)iCachedTile;
       pNewAniNode->usCachedTileSubIndex = usTileType;
       pNewAniNode->pLevelNode->pAniTile = pNewAniNode;
       pNewAniNode->sRelativeX = sX;
@@ -460,8 +460,8 @@ void UpdateAniTiles() {
               case ANI_KEYFRAME_DO_SOUND:
 
                 PlayJA2Sample(pNode->uiUserData, RATE_11025,
-                              SoundVolume(MIDVOLUME, (INT16)pNode->uiUserData3), 1,
-                              SoundDir((INT16)pNode->uiUserData3));
+                              SoundVolume(MIDVOLUME, (int16_t)pNode->uiUserData3), 1,
+                              SoundDir((int16_t)pNode->uiUserData3));
                 break;
             }
           }
@@ -634,9 +634,9 @@ void UpdateAniTiles() {
   }
 }
 
-void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
+void SetAniTileFrame(ANITILE *pAniTile, int16_t sFrame) {
   uint8_t ubTempDir;
-  INT16 sStartFrame = 0;
+  int16_t sStartFrame = 0;
 
   if ((pAniTile->uiFlags & ANITILE_USE_DIRECTION_FOR_START_FRAME)) {
     // Our start frame is actually a direction indicator
@@ -653,7 +653,7 @@ void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
   pAniTile->sCurrentFrame = sStartFrame;
 }
 
-ANITILE *GetCachedAniTileOfType(INT16 sGridNo, uint8_t ubLevelID, uint32_t uiFlags) {
+ANITILE *GetCachedAniTileOfType(int16_t sGridNo, uint8_t ubLevelID, uint32_t uiFlags) {
   struct LEVELNODE *pNode = NULL;
 
   switch (ubLevelID) {

@@ -127,7 +127,7 @@ BOOLEAN gfTownUsesLoyalty[NUM_TOWNS] = {
 };
 
 // location of first enocunter with enemy
-INT16 sWorldSectorLocationOfFirstBattle = 0;
+int16_t sWorldSectorLocationOfFirstBattle = 0;
 
 // number of items in currently loaded sector
 extern uint32_t guiNumWorldItems;
@@ -148,7 +148,7 @@ void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
 /* ARM: Civilian theft of items was removed
 // handle theft by civi in a town sector
-void HandleTheftByCiviliansInSector( INT16 sX, INT16 sY, INT32 iLoyalty );
+void HandleTheftByCiviliansInSector( int16_t sX, int16_t sY, INT32 iLoyalty );
 
 // handle theft in all towns
 void HandleTownTheft( void );
@@ -220,7 +220,7 @@ void SetTownLoyalty(TownID bTownId, uint8_t ubNewLoyaltyRating) {
 // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease) {
   uint32_t uiRemainingIncrement;
-  INT16 sThisIncrement;
+  int16_t sThisIncrement;
 
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
@@ -237,10 +237,10 @@ void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease) {
   // only do a maximum of 10000 pts at a time...
   uiRemainingIncrement = uiLoyaltyIncrease;
   while (uiRemainingIncrement) {
-    sThisIncrement = (INT16)min(uiRemainingIncrement, 10000);
+    sThisIncrement = (int16_t)min(uiRemainingIncrement, 10000);
 
     // up the gain value
-    gTownLoyalty[bTownId].sChange += (INT16)sThisIncrement;
+    gTownLoyalty[bTownId].sChange += (int16_t)sThisIncrement;
     // update town value now
     UpdateTownLoyaltyRating(bTownId);
 
@@ -254,7 +254,7 @@ void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease) {
 // NOTE: This function expects a POSITIVE number for a decrease!!!
 void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease) {
   uint32_t uiRemainingDecrement;
-  INT16 sThisDecrement;
+  int16_t sThisDecrement;
 
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
@@ -271,7 +271,7 @@ void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease) {
   // only do a maximum of 10000 pts at a time...
   uiRemainingDecrement = uiLoyaltyDecrease;
   while (uiRemainingDecrement) {
-    sThisDecrement = (INT16)min(uiRemainingDecrement, 10000);
+    sThisDecrement = (int16_t)min(uiRemainingDecrement, 10000);
 
     // down the gain value
     gTownLoyalty[bTownId].sChange -= sThisDecrement;
@@ -288,7 +288,7 @@ void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease) {
 void UpdateTownLoyaltyRating(TownID bTownId) {
   // check gain value and update loyaty
   uint8_t ubOldLoyaltyRating = 0;
-  INT16 sRatingChange = 0;
+  int16_t sRatingChange = 0;
   uint8_t ubMaxLoyalty = 0;
 
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
@@ -609,12 +609,12 @@ BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier) {
 }
 
 // handle loyalty adjustment for dmg inflicted on a building
-void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sPointsDmg) {
+void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t sPointsDmg) {
   // find this soldier's team and decrement the loyalty rating for them and for the people who
   // police the sector more penalty for the people who did it, a lesser one for those who should
   // have stopped it
-  INT16 sLoyaltyValue = 0;
-  INT16 sPolicingLoyalty = 0;
+  int16_t sLoyaltyValue = 0;
+  int16_t sPolicingLoyalty = 0;
   TownID bTownId = 0;
 
   // hurt loyalty for damaging the building
@@ -655,7 +655,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   return;
 }
 
-void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubChance) {
+void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubChance) {
   // remove random items in sector
   uint32_t uiNumberOfItems = 0, iCounter = 0;
   WORLDITEM *pItemList;
@@ -769,8 +769,9 @@ void CalcDistancesBetweenTowns(void) {
       if (ubTownA != ubTownB) {
         // calculate fastest distance between them (in sectors) - not necessarily shortest distance,
         // roads are faster!
-        iDistance = FindStratPath((INT16)(*townSectors)[uiCounterA].sectorID,
-                                  (INT16)(*townSectors)[uiCounterB].sectorID, ubTempGroupId, FALSE);
+        iDistance =
+            FindStratPath((int16_t)(*townSectors)[uiCounterA].sectorID,
+                          (int16_t)(*townSectors)[uiCounterB].sectorID, ubTempGroupId, FALSE);
       } else {
         // same town, distance is 0 by definition
         iDistance = 0;
@@ -1079,7 +1080,7 @@ void HandleGlobalLoyaltyEvent(uint8_t ubEventType, u8 sSectorX, u8 sSectorY, int
 
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          int8_t bSectorZ) {
-  INT16 sEventSector;
+  int16_t sEventSector;
   uint8_t ubTempGroupId;
   TownID bTownId;
   uint32_t uiIndex;
@@ -1108,7 +1109,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
     // skip path test if distance is already known to be zero to speed this up a bit
     if (iShortestDistance[bTownId] > 0) {
       // calculate across how many sectors the fastest travel path from event to this town sector
-      iThisDistance = FindStratPath(sEventSector, (INT16)(*townSectors)[uiIndex].sectorID,
+      iThisDistance = FindStratPath(sEventSector, (int16_t)(*townSectors)[uiIndex].sectorID,
                                     ubTempGroupId, FALSE);
 
       if (iThisDistance < iShortestDistance[bTownId]) {
@@ -1254,7 +1255,7 @@ void HandleLoyaltyChangeForNPCAction(uint8_t ubNPCProfileId) {
 }
 
 // set the location of the first encounter with enemy
-void SetTheFirstBattleSector(INT16 sSectorValue) {
+void SetTheFirstBattleSector(int16_t sSectorValue) {
   if (sWorldSectorLocationOfFirstBattle == 0) {
     sWorldSectorLocationOfFirstBattle = sSectorValue;
   }
@@ -1319,7 +1320,7 @@ uint32_t EnemyStrength(void) {
 // retreat which slightly demoralizes the mercs, the other handles abandonment of militia forces
 // which poses as a serious loyalty penalty.
 void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, u8 sSectorX, u8 sSectorY,
-                                            INT16 sSectorZ) {
+                                            int16_t sSectorZ) {
   if (CountAllMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
     HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (int8_t)sSectorZ);
   }

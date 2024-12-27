@@ -51,8 +51,8 @@
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
 
-BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect);
-BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, SGPRect *pRect);
+BOOLEAN IsGridNoInScreenRect(int16_t sGridNo, SGPRect *pRect);
+BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, SGPRect *pRect);
 void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect);
 
 // This value is used to keep a small static array of uBID's which are stacked
@@ -79,7 +79,7 @@ extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 extern uint32_t guiUITargetSoldierId;
 
 BOOLEAN FindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags) {
-  INT16 sMapPos;
+  int16_t sMapPos;
 
   *pMercFlags = 0;
 
@@ -93,7 +93,7 @@ BOOLEAN FindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags) {
 }
 
 BOOLEAN SelectiveFindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags) {
-  INT16 sMapPos;
+  int16_t sMapPos;
 
   *pMercFlags = 0;
 
@@ -164,14 +164,14 @@ extern BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObjec
                                                       INT32 iTextX, INT32 iTestY);
 
 // THIS FUNCTION IS CALLED FAIRLY REGULARLY
-BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
+BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
                     uint32_t uiFlags) {
   uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   SGPRect aRect;
   BOOLEAN fSoldierFound = FALSE;
-  INT16 sXMapPos, sYMapPos, sScreenX, sScreenY;
-  INT16 sMaxScreenMercY, sHeighestMercScreenY = -32000;
+  int16_t sXMapPos, sYMapPos, sScreenX, sScreenY;
+  int16_t sMaxScreenMercY, sHeighestMercScreenY = -32000;
   BOOLEAN fDoFull;
   uint8_t ubBestMerc = NOBODY;
   uint16_t usAnimSurface;
@@ -237,7 +237,7 @@ BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFla
 
           // Get screen XY pos from map XY
           // Be carefull to convert to cell cords
-          // CellXYToScreenXY( (INT16)((sXMapPos*CELL_X_SIZE)), (INT16)((sYMapPos*CELL_Y_SIZE)),
+          // CellXYToScreenXY( (int16_t)((sXMapPos*CELL_X_SIZE)), (int16_t)((sYMapPos*CELL_Y_SIZE)),
           // &sScreenX, &sScreenY);
 
           // Set mouse stuff
@@ -428,7 +428,7 @@ BOOLEAN CycleSoldierFindStack(uint16_t usMapPos) {
   return (gfHandleStack);
 }
 
-struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, int8_t bLevel) {
+struct SOLDIERTYPE *SimpleFindSoldier(int16_t sGridNo, int8_t bLevel) {
   uint8_t ubID;
 
   ubID = WhoIsThere2(sGridNo, bLevel);
@@ -462,9 +462,9 @@ BOOLEAN IsValidTargetMerc(uint8_t ubSoldierID) {
   return (TRUE);
 }
 
-BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
+BOOLEAN IsGridNoInScreenRect(int16_t sGridNo, SGPRect *pRect) {
   INT32 iXTrav, iYTrav;
-  INT16 sMapPos;
+  int16_t sMapPos;
 
   // Start with top left corner
   iXTrav = pRect->iLeft;
@@ -472,7 +472,7 @@ BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
 
   do {
     do {
-      GetScreenXYGridNo((INT16)iXTrav, (INT16)iYTrav, &sMapPos);
+      GetScreenXYGridNo((int16_t)iXTrav, (int16_t)iYTrav, &sMapPos);
 
       if (sMapPos == sGridNo) {
         return (TRUE);
@@ -491,7 +491,7 @@ BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
 }
 
 void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
-  INT16 sMercScreenX, sMercScreenY;
+  int16_t sMercScreenX, sMercScreenY;
   uint16_t usAnimSurface;
   //		ETRLEObject *pTrav;
   //		uint32_t usHeight, usWidth;
@@ -518,14 +518,14 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
   pRect->iRight = sMercScreenX + pSoldier->sBoundingBoxWidth;
 }
 
-void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *psWidth) {
+void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, int16_t *psHeight, int16_t *psWidth) {
   uint16_t usAnimSurface;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
   if (usAnimSurface == INVALID_ANIMATION_SURFACE) {
-    *psHeight = (INT16)5;
-    *psWidth = (INT16)5;
+    *psHeight = (int16_t)5;
+    *psWidth = (int16_t)5;
 
     return;
   }
@@ -534,28 +534,28 @@ void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *ps
   // depending on the frame and the value returned here will vary thusly. However, for the
   // uses of this function, we should be able to use just the first frame...
 
-  *psHeight = (INT16)pSoldier->sBoundingBoxHeight;
-  *psWidth = (INT16)pSoldier->sBoundingBoxWidth;
+  *psHeight = (int16_t)pSoldier->sBoundingBoxHeight;
+  *psWidth = (int16_t)pSoldier->sBoundingBoxWidth;
 }
 
-void GetSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, INT16 *sOffsetY) {
+void GetSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, int16_t *sOffsetX, int16_t *sOffsetY) {
   uint16_t usAnimSurface;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
   if (usAnimSurface == INVALID_ANIMATION_SURFACE) {
-    *sOffsetX = (INT16)0;
-    *sOffsetY = (INT16)0;
+    *sOffsetX = (int16_t)0;
+    *sOffsetY = (int16_t)0;
 
     return;
   }
 
-  *sOffsetX = (INT16)pSoldier->sBoundingBoxOffsetX;
-  *sOffsetY = (INT16)pSoldier->sBoundingBoxOffsetY;
+  *sOffsetX = (int16_t)pSoldier->sBoundingBoxOffsetX;
+  *sOffsetY = (int16_t)pSoldier->sBoundingBoxOffsetY;
 }
 
-void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *psScreenY) {
-  INT16 sMercScreenX, sMercScreenY;
+void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16_t *psScreenY) {
+  int16_t sMercScreenX, sMercScreenY;
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
   uint16_t usAnimSurface;
@@ -578,8 +578,8 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
   // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[
   // pSoldier->usAniFrame ] );
 
-  sMercScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-  sMercScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S;
+  sMercScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+  sMercScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S;
 
   // Adjust starting screen coordinates
   sMercScreenX -= gsRenderWorldOffsetX;
@@ -602,8 +602,8 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
 }
 
 // THE TRUE SCREN RECT DOES NOT TAKE THE OFFSETS OF BUDDY INTO ACCOUNT!
-void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *psScreenY) {
-  INT16 sMercScreenX, sMercScreenY;
+void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16_t *psScreenY) {
+  int16_t sMercScreenX, sMercScreenY;
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
   uint16_t usAnimSurface;
@@ -622,8 +622,8 @@ void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT
 
   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-  sMercScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-  sMercScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S;
+  sMercScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+  sMercScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S;
 
   // Adjust starting screen coordinates
   sMercScreenX -= gsRenderWorldOffsetX;
@@ -639,11 +639,11 @@ void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT
   *psScreenY = sMercScreenY;
 }
 
-BOOLEAN GridNoOnScreen(INT16 sGridNo) {
-  INT16 sNewCenterWorldX, sNewCenterWorldY;
-  INT16 sWorldX;
-  INT16 sWorldY;
-  INT16 sAllowance = 20;
+BOOLEAN GridNoOnScreen(int16_t sGridNo) {
+  int16_t sNewCenterWorldX, sNewCenterWorldY;
+  int16_t sWorldX;
+  int16_t sWorldY;
+  int16_t sAllowance = 20;
 
   if (gsVIEWPORT_WINDOW_START_Y == 20) {
     sAllowance = 40;
@@ -652,7 +652,7 @@ BOOLEAN GridNoOnScreen(INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sNewCenterWorldX, &sNewCenterWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sNewCenterWorldX), (INT16)(sNewCenterWorldY), &sWorldX,
+  GetWorldXYAbsoluteScreenXY((int16_t)(sNewCenterWorldX), (int16_t)(sNewCenterWorldY), &sWorldX,
                              &sWorldY);
 
   // ATE: OK, here, adjust the top value so that it's a tile and a bit over, because of our mercs!
@@ -676,14 +676,14 @@ BOOLEAN SoldierOnVisibleWorldTile(struct SOLDIERTYPE *pSoldier) {
   return (GridNoOnVisibleWorldTile(pSoldier->sGridNo));
 }
 
-BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8_t *pbDirection,
+BOOLEAN SoldierLocationRelativeToScreen(int16_t sGridNo, uint16_t usReasonID, int8_t *pbDirection,
                                         uint32_t *puiScrollFlags) {
-  INT16 sWorldX;
-  INT16 sWorldY;
-  INT16 sY, sX;
+  int16_t sWorldX;
+  int16_t sWorldY;
+  int16_t sY, sX;
   static BOOLEAN fCountdown = 0;
-  INT16 sScreenCenterX, sScreenCenterY;
-  INT16 sDistToCenterY, sDistToCenterX;
+  int16_t sScreenCenterX, sScreenCenterY;
+  int16_t sDistToCenterY, sDistToCenterX;
 
   *puiScrollFlags = 0;
 
@@ -691,7 +691,7 @@ BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8
   sY = CenterY(sGridNo);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sX / CELL_X_SIZE), (INT16)(sY / CELL_Y_SIZE), &sWorldX,
+  GetWorldXYAbsoluteScreenXY((int16_t)(sX / CELL_X_SIZE), (int16_t)(sY / CELL_Y_SIZE), &sWorldX,
                              &sWorldY);
 
   // Find the diustance from render center to true world center
@@ -711,7 +711,7 @@ BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8
 
   // Get direction
   //*pbDirection = atan8( sScreenCenterX, sScreenCenterY, sWorldX, sWorldY );
-  *pbDirection = atan8(gsRenderCenterX, gsRenderCenterY, (INT16)(sX), (INT16)(sY));
+  *pbDirection = atan8(gsRenderCenterX, gsRenderCenterY, (int16_t)(sX), (int16_t)(sY));
 
   // Check values!
   if (sWorldX > (sScreenCenterX + 20)) {
@@ -742,7 +742,7 @@ BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8
   return (TRUE);
 }
 
-BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY) {
+BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, int16_t sX, int16_t sY) {
   SGPRect aRect;
 
   // Get Rect contained in the soldier
@@ -755,10 +755,10 @@ BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, INT16 sX, INT1
   return (FALSE);
 }
 
-BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFlags, INT16 sX,
-                                    INT16 sY) {
+BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFlags, int16_t sX,
+                                    int16_t sY) {
   SGPRect aRect;
-  INT16 sRelX, sRelY;
+  int16_t sRelX, sRelY;
   FLOAT dRelPer;
 
   // Get Rect contained in the soldier
@@ -803,7 +803,7 @@ BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFl
 }
 
 // VERY quickly finds a soldier at gridno , ( that is visible )
-uint8_t QuickFindSoldier(INT16 sGridNo) {
+uint8_t QuickFindSoldier(int16_t sGridNo) {
   uint32_t cnt;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -821,8 +821,8 @@ uint8_t QuickFindSoldier(INT16 sGridNo) {
   return (NOBODY);
 }
 
-void GetGridNoScreenPos(INT16 sGridNo, uint8_t ubLevel, INT16 *psScreenX, INT16 *psScreenY) {
-  INT16 sScreenX, sScreenY;
+void GetGridNoScreenPos(int16_t sGridNo, uint8_t ubLevel, int16_t *psScreenX, int16_t *psScreenY) {
+  int16_t sScreenX, sScreenY;
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
 
@@ -835,8 +835,8 @@ void GetGridNoScreenPos(INT16 sGridNo, uint8_t ubLevel, INT16 *psScreenX, INT16 
 
   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-  sScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-  sScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S;
+  sScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+  sScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S;
 
   // Adjust starting screen coordinates
   sScreenX -= gsRenderWorldOffsetX;

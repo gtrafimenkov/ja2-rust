@@ -4325,7 +4325,7 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
         InternalGetAnimationStructureRef(usSoldierID, usSurfaceIndex, usAnimState, TRUE);
 
     if (pStructureFileRef != NULL) {
-      INT16 sStartFrame = 0;
+      int16_t sStartFrame = 0;
 
       if (usSurfaceIndex == RGMPRONE) {
         sStartFrame = 5;

@@ -41,22 +41,22 @@ typedef struct TAG_anitile {
 
   struct LEVELNODE *pLevelNode;
   uint8_t ubLevelID;
-  INT16 sCurrentFrame;
-  INT16 sStartFrame;
-  INT16 sDelay;
+  int16_t sCurrentFrame;
+  int16_t sStartFrame;
+  int16_t sDelay;
   uint16_t usTileType;
   uint16_t usNumFrames;
 
   uint16_t usMissAnimationPlayed;
   uint16_t ubAttackerMissed;
-  INT16 sRelativeX;
-  INT16 sRelativeY;
-  INT16 sRelativeZ;
-  INT16 sGridNo;
+  int16_t sRelativeX;
+  int16_t sRelativeY;
+  int16_t sRelativeZ;
+  int16_t sGridNo;
   uint16_t usTileIndex;
 
   uint16_t usCachedTileSubIndex;  // sub Index
-  INT16 sCachedTileID;            // Index into cached tile ID
+  int16_t sCachedTileID;          // Index into cached tile ID
 
   uint8_t ubOwner;
   uint8_t ubKeyFrame1;
@@ -75,14 +75,14 @@ typedef struct TAG_anitile {
 typedef struct TAG_anitile_params {
   uint32_t uiFlags;      // flags struct
   uint8_t ubLevelID;     // Level ID for rendering layer
-  INT16 sStartFrame;     // Start frame
-  INT16 sDelay;          // Delay time
+  int16_t sStartFrame;   // Start frame
+  int16_t sDelay;        // Delay time
   uint16_t usTileType;   // Tile databse type ( optional )
   uint16_t usTileIndex;  // Tile database index ( optional )
-  INT16 sX;              // World X ( optional )
-  INT16 sY;              // World Y ( optional )
-  INT16 sZ;              // World Z ( optional )
-  INT16 sGridNo;         // World GridNo
+  int16_t sX;            // World X ( optional )
+  int16_t sY;            // World Y ( optional )
+  int16_t sZ;            // World Z ( optional )
+  int16_t sGridNo;       // World GridNo
 
   struct LEVELNODE *pGivenLevelNode;  // Levelnode for existing tile ( optional )
   CHAR8 zCachedFile[100];             // Filename for cached tile name ( optional )
@@ -115,13 +115,13 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams);
 
 void DeleteAniTile(ANITILE *pAniTile);
 void UpdateAniTiles();
-void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame);
+void SetAniTileFrame(ANITILE *pAniTile, int16_t sFrame);
 void DeleteAniTiles();
 
 void HideAniTile(ANITILE *pAniTile, BOOLEAN fHide);
 void PauseAniTile(ANITILE *pAniTile, BOOLEAN fPause);
 
-ANITILE *GetCachedAniTileOfType(INT16 sGridNo, uint8_t ubLevelID, uint32_t uiFlags);
+ANITILE *GetCachedAniTileOfType(int16_t sGridNo, uint8_t ubLevelID, uint32_t uiFlags);
 
 void PauseAllAniTilesOfType(uint32_t uiType, BOOLEAN fPause);
 

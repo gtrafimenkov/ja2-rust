@@ -174,7 +174,7 @@ int8_t gbEditingMode = EDITING_NOTHING;
 
 struct OBJECTTYPE *gpItem = NULL;
 BOOLEAN gfShowItemStatsPanel;
-INT16 gsItemGridNo;
+int16_t gsItemGridNo;
 
 struct ITEM_POOL *gpEditingItemPool = NULL;
 extern struct ITEM_POOL *gpItemPool;
@@ -342,7 +342,7 @@ void SpecifyItemToEdit(struct OBJECTTYPE *pItem, INT32 iMapIndex) {
     if (gpItemPool) {
       gpEditingItemPool = gpItemPool;
     }
-    gsItemGridNo = (INT16)iMapIndex;
+    gsItemGridNo = (int16_t)iMapIndex;
   } else
     RemoveItemGUI();
 
@@ -604,7 +604,7 @@ void RemoveGameTypeFlags() {
 
 void SetupGunGUI() {
   CHAR16 str[20];
-  INT16 yp;
+  int16_t yp;
   memset(gfAttachment, 0, NUM_ATTACHMENT_BUTTONS);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bGunStatus);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
@@ -875,7 +875,7 @@ void ExtractAndUpdateEquipGUI() {
 
 void SetupExplosivesGUI() {
   CHAR16 str[20];
-  INT16 yp;
+  int16_t yp;
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bStatus[0]);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->ubNumberOfObjects);

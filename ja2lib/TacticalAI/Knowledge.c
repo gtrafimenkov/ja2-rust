@@ -10,7 +10,7 @@
 #include "TacticalAI/NPC.h"
 #include "TileEngine/RenderFun.h"
 
-void CallAvailableEnemiesTo(INT16 sGridNo) {
+void CallAvailableEnemiesTo(int16_t sGridNo) {
   INT32 iLoop;
   INT32 iLoop2;
   struct SOLDIERTYPE *pSoldier;
@@ -39,7 +39,7 @@ void CallAvailableEnemiesTo(INT16 sGridNo) {
   }
 }
 
-void CallAvailableTeamEnemiesTo(INT16 sGridno, int8_t bTeam) {
+void CallAvailableTeamEnemiesTo(int16_t sGridno, int8_t bTeam) {
   INT32 iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
@@ -65,7 +65,7 @@ void CallAvailableTeamEnemiesTo(INT16 sGridno, int8_t bTeam) {
   }
 }
 
-void CallAvailableKingpinMenTo(INT16 sGridNo) {
+void CallAvailableKingpinMenTo(int16_t sGridNo) {
   // like call all enemies, but only affects civgroup KINGPIN guys with
   // NO PROFILE
 
@@ -92,7 +92,7 @@ void CallAvailableKingpinMenTo(INT16 sGridNo) {
   }
 }
 
-void CallEldinTo(INT16 sGridNo) {
+void CallEldinTo(int16_t sGridNo) {
   // like call all enemies, but only affects Eldin
   struct SOLDIERTYPE *pSoldier;
 
@@ -129,19 +129,19 @@ void CallEldinTo(INT16 sGridNo) {
   }
 }
 
-INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
-                              BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
+int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
+                                BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
   uint32_t uiLoop;
   int8_t *pbPersOL, *pbPublOL;
-  INT16 *psLastLoc, *psNoiseGridNo;
+  int16_t *psLastLoc, *psNoiseGridNo;
   int8_t *pbNoiseLevel;
   int8_t *pbLastLevel;
   uint8_t *pubNoiseVolume;
   INT32 iDistAway;
   INT32 iNoiseValue, iBestValue = -10000;
-  INT16 sBestGridNo = NOWHERE;
+  int16_t sBestGridNo = NOWHERE;
   int8_t bBestLevel = 0;
-  INT16 sClimbingGridNo;
+  int16_t sClimbingGridNo;
   BOOLEAN fClimbingNecessary = FALSE;
   struct SOLDIERTYPE *pTemp;
 
@@ -292,7 +292,7 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
   return (sBestGridNo);
 }
 
-INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, uint8_t ubInSightOnly) {
+int16_t WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, uint8_t ubInSightOnly) {
   uint8_t ubTotal = 0;
   uint32_t uiLoop;
   int8_t *pbPersOL, *pbPublOL;

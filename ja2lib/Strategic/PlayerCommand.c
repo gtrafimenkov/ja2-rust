@@ -24,7 +24,8 @@
 
 extern BOOLEAN fMapScreenBottomDirty;
 
-void GetSectorFacilitiesFlags(INT16 sMapX, INT16 sMapY, STR16 sFacilitiesString, size_t bufSize) {
+void GetSectorFacilitiesFlags(int16_t sMapX, int16_t sMapY, STR16 sFacilitiesString,
+                              size_t bufSize) {
   // will build a string stating current facilities present in sector
 
   if (SectorInfo[GetSectorID8(sMapX, sMapY)].uiFacilitiesFlags == 0) {
@@ -84,7 +85,7 @@ void GetSectorFacilitiesFlags(INT16 sMapX, INT16 sMapY, STR16 sFacilitiesString,
 }
 
 // ALL changes of control to player must be funneled through here!
-BOOLEAN SetThisSectorAsPlayerControlled(INT16 sMapX, INT16 sMapY, int8_t bMapZ,
+BOOLEAN SetThisSectorAsPlayerControlled(int16_t sMapX, int16_t sMapY, int8_t bMapZ,
                                         BOOLEAN fContested) {
   // NOTE: MapSector must be 16-bit, cause MAX_WORLD_X is actually 18, so the sector numbers exceed
   // 256 although we use only 16x16
@@ -238,7 +239,8 @@ BOOLEAN SetThisSectorAsPlayerControlled(INT16 sMapX, INT16 sMapY, int8_t bMapZ,
 }
 
 // ALL changes of control to enemy must be funneled through here!
-BOOLEAN SetThisSectorAsEnemyControlled(INT16 sMapX, INT16 sMapY, int8_t bMapZ, BOOLEAN fContested) {
+BOOLEAN SetThisSectorAsEnemyControlled(int16_t sMapX, int16_t sMapY, int8_t bMapZ,
+                                       BOOLEAN fContested) {
   uint16_t usMapSector = 0;
   BOOLEAN fWasPlayerControlled = FALSE;
   TownID bTownId = 0;
@@ -363,7 +365,7 @@ void ClearMapControlledFlags(void) {
 #endif
 
 /*
-BOOLEAN IsTheSectorPerceivedToBeUnderEnemyControl( INT16 sMapX, INT16 sMapY, int8_t bMapZ )
+BOOLEAN IsTheSectorPerceivedToBeUnderEnemyControl( int16_t sMapX, int16_t sMapY, int8_t bMapZ )
 {
 
         // are we in battle in this sector?
@@ -379,7 +381,7 @@ BOOLEAN IsTheSectorPerceivedToBeUnderEnemyControl( INT16 sMapX, INT16 sMapY, int
 }
 
 
-void MakePlayerPerceptionOfSectorControlCorrect( INT16 sMapX, INT16 sMapY, int8_t bMapZ )
+void MakePlayerPerceptionOfSectorControlCorrect( int16_t sMapX, int16_t sMapY, int8_t bMapZ )
 {
         if (bMapZ == 0)
         {

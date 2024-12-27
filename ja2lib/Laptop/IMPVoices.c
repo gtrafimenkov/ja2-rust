@@ -375,7 +375,7 @@ void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason
 
 void RenderVoiceIndex(void) {
   CHAR16 sString[32];
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // render the voice index value on the the blank portrait
   swprintf(sString, ARR_SIZE(sString), L"%s %d", pIMPVoicesStrings[0], iCurrentVoices + 1);

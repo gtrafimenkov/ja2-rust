@@ -115,7 +115,7 @@ CREW_COMPARTMENT_HIT_LOCATION, GAS_TANK_HIT_LOCATION }, // top
         HELICOPTER,
 */
 
-INT16 sVehicleArmourType[NUMBER_OF_TYPES_OF_VEHICLES] = {
+int16_t sVehicleArmourType[NUMBER_OF_TYPES_OF_VEHICLES] = {
     KEVLAR_VEST,   // El Dorado
     SPECTRA_VEST,  // Hummer
     KEVLAR_VEST,   // Ice cream truck
@@ -125,7 +125,7 @@ INT16 sVehicleArmourType[NUMBER_OF_TYPES_OF_VEHICLES] = {
 };
 
 /*
-INT16 sVehicleExternalOrigArmorValues[ NUMBER_OF_TYPES_OF_VEHICLES ][
+int16_t sVehicleExternalOrigArmorValues[ NUMBER_OF_TYPES_OF_VEHICLES ][
 NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ]={ { 100,100,100,100,100,100 }, // helicopter {
 500,500,500,500,500,500 }, // hummer
 };
@@ -133,7 +133,7 @@ NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ]={ { 100,100,100,100,100,100 }, // 
 
 /*
 // external armor values
-INT16 sVehicleInternalOrigArmorValues[ NUMBER_OF_TYPES_OF_VEHICLES ][
+int16_t sVehicleInternalOrigArmorValues[ NUMBER_OF_TYPES_OF_VEHICLES ][
 NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ]={ { 250,250,250,250,250,250 }, // eldorado {
 250,250,250,250,250,250 }, // hummer { 250,250,250,250,250,250 }, // ice cream {
 250,250,250,250,250,250 }, // feep { 850,850,850,850,850,850 }, // tank { 50,50,50,50,50,50 }, //
@@ -180,7 +180,7 @@ void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle) {
   pVehicle->ubWhatKindOfMercAmI = MERC_TYPE__VEHICLE;
 }
 
-INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, uint8_t ubType) {
+INT32 AddVehicleToList(int16_t sMapX, int16_t sMapY, int16_t sGridNo, uint8_t ubType) {
   // insert this vehicle into the list
   // how many vehicles are there?
   INT32 iVehicleIdValue = -1;
@@ -1174,7 +1174,7 @@ struct SOLDIERTYPE *GetVehicleSoldierPointerFromPassenger(struct SOLDIERTYPE *pS
 BOOLEAN ExitVehicle(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pVehicle;
   uint8_t ubDirection;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   // Get vehicle from soldier...
   pVehicle = GetVehicleSoldierPointerFromPassenger(pSoldier);
@@ -1242,7 +1242,7 @@ void AddPassangersToTeamPanel(INT32 iId) {
   }
 }
 
-void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, INT16 sDamage, INT16 sGridNo,
+void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, int16_t sDamage, int16_t sGridNo,
                        uint8_t ubAttackerID) {
   if (ubReason != TAKE_DAMAGE_GAS) {
     PlayJA2Sample((uint32_t)(S_METAL_IMPACT3), RATE_11025, SoundVolume(MIDVOLUME, sGridNo), 1,
@@ -1267,7 +1267,7 @@ void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, INT16 sDamage, INT16 sGri
   }
 }
 
-void HandleCriticalHitForVehicleInLocation(uint8_t ubID, INT16 sDmg, INT16 sGridNo,
+void HandleCriticalHitForVehicleInLocation(uint8_t ubID, int16_t sDmg, int16_t sGridNo,
                                            uint8_t ubAttackerID) {
   // check state the armor was s'posed to be in vs. the current state..the difference / orig state
   // is % chance that a critical hit will occur
@@ -1294,7 +1294,7 @@ void HandleCriticalHitForVehicleInLocation(uint8_t ubID, INT16 sDmg, INT16 sGrid
     // If we are already dead, don't show damage!
     if (sDmg != 0) {
       // Display damage
-      INT16 sMercScreenX, sMercScreenY, sOffsetX, sOffsetY;
+      int16_t sMercScreenX, sMercScreenY, sOffsetX, sOffsetY;
 
       // Set Damage display counter
       pSoldier->fDisplayDamage = TRUE;
@@ -1398,9 +1398,9 @@ int8_t RepairVehicle(INT32 iVehicleId, int8_t bRepairPtsLeft, BOOLEAN *pfNothing
 }
 
 /*
-INT16 GetOrigInternalArmorValueForVehicleInLocation( uint8_t ubID, uint8_t ubLocation )
+int16_t GetOrigInternalArmorValueForVehicleInLocation( uint8_t ubID, uint8_t ubLocation )
 {
-        INT16 sArmorValue = 0;
+        int16_t sArmorValue = 0;
 
         sArmorValue = sVehicleInternalOrigArmorValues[ pVehicleList[ ubID ].ubVehicleType ][
 ubLocation ];
@@ -1769,7 +1769,7 @@ void TeleportVehicleToItsClosestSector(INT32 iVehicleId, uint8_t ubGroupID) {
   struct GROUP *pGroup = NULL;
   uint32_t uiTimeToNextSector;
   uint32_t uiTimeToLastSector;
-  INT16 sPrevX, sPrevY, sNextX, sNextY;
+  int16_t sPrevX, sPrevY, sNextX, sNextY;
 
   pGroup = GetGroup(ubGroupID);
   Assert(pGroup);

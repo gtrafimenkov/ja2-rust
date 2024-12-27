@@ -2423,7 +2423,7 @@ BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
         if (bSlot != NO_SLOT) {
           // ce would reload using this ammo!
           bAPCost = GetAPsToReloadGunWithAmmo(pObj, &(pSoldier->inv[bSlot]));
-          if (EnoughPoints(pSoldier, (INT16)bAPCost, 0, FALSE)) {
+          if (EnoughPoints(pSoldier, (int16_t)bAPCost, 0, FALSE)) {
             // reload the 2nd gun too
             fRet = ReloadGun(pSoldier, pObj, &(pSoldier->inv[bSlot]));
           } else {
@@ -3530,7 +3530,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
                   */
   /*
           uint32_t	uiLoop;
-          INT16		sGridNo;
+          int16_t		sGridNo;
           uint32_t	uiStartTime, uiEndTime;
 
           if (GetMouseMapPos( &sGridNo ))
@@ -4288,8 +4288,8 @@ void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDam
   }
 }
 
-BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, int8_t bLevel, INT32 iDamage,
-                           uint8_t ubOwner) {
+BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel,
+                           INT32 iDamage, uint8_t ubOwner) {
   BOOLEAN fBlowsUp;
 
   fBlowsUp = DamageItem(pObject, iDamage, TRUE);
@@ -4467,7 +4467,7 @@ BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEA
 }
 
 BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) {
-  INT16 sPointsToUse;
+  int16_t sPointsToUse;
   uint16_t usTotalKitPoints;
 
   (*pfGoodAPs) = TRUE;
@@ -4498,7 +4498,7 @@ BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOL
   sPointsToUse = min(20, usTotalKitPoints);
 
   // CJC Feb 9.  Canteens don't seem effective enough, so doubled return from them
-  DeductPoints(pSoldier, AP_DRINK, (INT16)(2 * sPointsToUse * -(100 - pSoldier->bBreath)));
+  DeductPoints(pSoldier, AP_DRINK, (int16_t)(2 * sPointsToUse * -(100 - pSoldier->bBreath)));
 
   UseKitPoints(pObj, sPointsToUse, pSoldier);
 
@@ -4508,7 +4508,7 @@ BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOL
 #define MAX_HUMAN_CREATURE_SMELL (NORMAL_HUMAN_SMELL_STRENGTH - 1)
 
 BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) {
-  INT16 sPointsToUse;
+  int16_t sPointsToUse;
   uint16_t usTotalKitPoints;
 
   (*pfGoodAPs) = TRUE;

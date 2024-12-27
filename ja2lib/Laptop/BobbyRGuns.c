@@ -226,7 +226,7 @@ void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyI
                             BOOLEAN fUsed);
 uint16_t DisplayWeight(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
 uint16_t DisplayCaliber(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
-void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, INT16 *pItemNumbers);
+void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, int16_t *pItemNumbers);
 void PurchaseBobbyRayItem(uint16_t usItemNumber);
 uint8_t CheckIfItemIsPurchased(uint16_t usItemNumber);
 uint8_t GetNextPurchaseNumber();
@@ -235,7 +235,7 @@ uint32_t CalculateTotalPurchasePrice();
 void DisableBobbyRButtons();
 void CalcFirstIndexForPage(STORE_INVENTORY *pInv, uint32_t uiItemClass);
 void OutOfStockMessageBoxCallBack(uint8_t bExitValue);
-uint8_t CheckPlayersInventoryForGunMatchingGivenAmmoID(INT16 sItemID);
+uint8_t CheckPlayersInventoryForGunMatchingGivenAmmoID(int16_t sItemID);
 void BobbyrRGunsHelpTextDoneCallBack(void);
 #ifdef JA2BETAVERSION
 void ReportBobbyROrderError(uint16_t usItemNumber, uint8_t ubPurchaseNum, uint8_t ubQtyOnHand,
@@ -555,7 +555,7 @@ BOOLEAN DisplayItemInfo(uint32_t uiItemClass) {
   uint16_t usItemIndex;
   wchar_t sDollarTemp[60];
   wchar_t sTemp[60];
-  INT16 pItemNumbers[BOBBYR_NUM_WEAPONS_ON_PAGE];
+  int16_t pItemNumbers[BOBBYR_NUM_WEAPONS_ON_PAGE];
 
   PosY = BOBBYR_GRID_PIC_Y;
   usTextPosY = BOBBYR_ITEM_DESC_START_Y;
@@ -804,7 +804,7 @@ BOOLEAN DisplayAmmoInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
 }  // DisplayAmmoInfo
 
 BOOLEAN DisplayBigItemImage(uint16_t usIndex, uint16_t PosY) {
-  INT16 PosX, sCenX, sCenY;
+  int16_t PosX, sCenX, sCenY;
   uint32_t usWidth;
   ETRLEObject *pTrav;
   INVTYPE *pItem;
@@ -1170,8 +1170,8 @@ void CalculateFirstAndLastIndexs()
 // Loops through Bobby Rays Inventory to find the first and last index
 void SetFirstLastPagesForNew(uint32_t uiClassMask) {
   uint16_t i;
-  INT16 sFirst = -1;
-  INT16 sLast = -1;
+  int16_t sFirst = -1;
+  int16_t sLast = -1;
   uint8_t ubNumItems = 0;
 
   gubCurPage = 0;
@@ -1205,8 +1205,8 @@ void SetFirstLastPagesForNew(uint32_t uiClassMask) {
 // Loops through Bobby Rays Used Inventory to find the first and last index
 void SetFirstLastPagesForUsed() {
   uint16_t i;
-  INT16 sFirst = -1;
-  INT16 sLast = -1;
+  int16_t sFirst = -1;
+  int16_t sLast = -1;
   uint8_t ubNumItems = 0;
 
   gubCurPage = 0;
@@ -1234,7 +1234,7 @@ void SetFirstLastPagesForUsed() {
   if ((ubNumItems % BOBBYR_NUM_WEAPONS_ON_PAGE) != 0) gubNumPages += 1;
 }
 
-void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, INT16 *pItemNumbers) {
+void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, int16_t *pItemNumbers) {
   uint8_t i;
   CHAR16 zItemName[SIZE_ITEM_NAME];
   uint8_t ubItemCount = 0;
@@ -1618,7 +1618,7 @@ void OutOfStockMessageBoxCallBack(uint8_t bExitValue) {
   }
 }
 
-uint8_t CheckPlayersInventoryForGunMatchingGivenAmmoID(INT16 sItemID) {
+uint8_t CheckPlayersInventoryForGunMatchingGivenAmmoID(int16_t sItemID) {
   uint8_t ubItemCount = 0;
   uint8_t ubMercCount;
   uint8_t ubPocketCount;

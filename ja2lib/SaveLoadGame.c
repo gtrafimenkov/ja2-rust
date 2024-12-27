@@ -107,7 +107,7 @@ BOOLEAN fFirstTimeInMapScreen = TRUE;
 //
 /////////////////////////////////////////////////////
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ);
+void GetBestPossibleSectorXYZValues(int16_t *psSectorX, int16_t *psSectorY, int8_t *pbSectorZ);
 extern void NextLoopCheckForEnoughFreeHardDriveSpace();
 extern void UpdatePersistantGroupsFromOldSave(uint32_t uiSavedGameVersion);
 extern void TrashAllSoldiers();
@@ -124,11 +124,11 @@ char gzNameOfMapTempFile[128];
 
 extern struct SOLDIERTYPE *gpSMCurrentMerc;
 extern INT32 giSortStateForMapScreenList;
-extern INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
+extern int16_t sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 extern INT32 giRTAILastUpdateTime;
 extern BOOLEAN gfRedrawSaveLoadScreen;
 extern uint8_t gubScreenCount;
-extern INT16 sWorldSectorLocationOfFirstBattle;
+extern int16_t sWorldSectorLocationOfFirstBattle;
 extern BOOLEAN gfGamePaused;
 extern BOOLEAN gfLockPauseState;
 extern BOOLEAN gfLoadedGame;
@@ -170,8 +170,8 @@ typedef struct {
   uint16_t usSelectedSoldier;
 
   // The x and y scroll position
-  INT16 sRenderCenterX;
-  INT16 sRenderCenterY;
+  int16_t sRenderCenterX;
+  int16_t sRenderCenterY;
 
   BOOLEAN fAtLeastOneMercWasHired;
 
@@ -201,7 +201,7 @@ typedef struct {
   BOOLEAN UNUSEDfSkyriderMonologue;
 
   // list of sector locations
-  INT16 UNUSED[2][2];
+  int16_t UNUSED[2][2];
 
   // is the heli in the air?
   BOOLEAN fHelicopterIsAirBorne;
@@ -232,7 +232,7 @@ typedef struct {
   uint8_t ubHelicopterHitsTaken;
   uint8_t ubQuitType;
   BOOLEAN fSkyriderSaidCongratsOnTakingSAM;
-  INT16 sContractRehireSoldierID;
+  int16_t sContractRehireSoldierID;
 
   GAME_OPTIONS GameOptions;
 
@@ -241,7 +241,7 @@ typedef struct {
   // The GetJA2Clock() value
   uint32_t uiBaseJA2Clock;
 
-  INT16 sCurInterfacePanel;
+  int16_t sCurInterfacePanel;
 
   uint8_t ubSMCurrentMercID;
 
@@ -251,7 +251,7 @@ typedef struct {
 
   BOOLEAN fDisableMapInterfaceDueToBattle;
 
-  INT16 sBoxerGridNo[NUM_BOXERS];
+  int16_t sBoxerGridNo[NUM_BOXERS];
   uint8_t ubBoxerID[NUM_BOXERS];
   BOOLEAN fBoxerFought[NUM_BOXERS];
 
@@ -275,7 +275,7 @@ typedef struct {
   BOOLEAN gfInMeanwhile;
 
   // list of dead guys for squads...in id values -> -1 means no one home
-  INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
+  int16_t sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 
   // levels of publicly known noises
   int8_t gbPublicNoiseLevel[MAXTEAMS];
@@ -286,7 +286,7 @@ typedef struct {
 
   INT32 iPortraitNumber;
 
-  INT16 sWorldSectorLocationOfFirstBattle;
+  int16_t sWorldSectorLocationOfFirstBattle;
 
   BOOLEAN fUnReadMailFlag;
   BOOLEAN fNewMailFlag;
@@ -308,8 +308,8 @@ typedef struct {
 
   BOOLEAN fDisableTacticalPanelButtons;
 
-  INT16 sSelMapX;
-  INT16 sSelMapY;
+  int16_t sSelMapX;
+  int16_t sSelMapY;
   INT32 iCurrentMapSectorZ;
 
   uint16_t usHasPlayerSeenHelpScreenInCurrentScreen;
@@ -321,8 +321,8 @@ typedef struct {
   uint8_t ubDesertTemperature;
   uint8_t ubGlobalTemperature;
 
-  INT16 sMercArriveSectorX;
-  INT16 sMercArriveSectorY;
+  int16_t sMercArriveSectorX;
+  int16_t sMercArriveSectorY;
 
   BOOLEAN fCreatureMeanwhileScenePlayed;
   uint8_t ubPlayerNum;
@@ -1084,8 +1084,8 @@ BOOLEAN LoadSavedGame(uint8_t ubSavedGameID) {
   SAVED_GAME_HEADER SaveGameHeader;
   uint32_t uiNumBytesRead = 0;
 
-  INT16 sLoadSectorX;
-  INT16 sLoadSectorY;
+  int16_t sLoadSectorX;
+  int16_t sLoadSectorY;
   int8_t bLoadSectorZ;
   CHAR8 zSaveGameName[512];
   uint32_t uiRelStartPerc;
@@ -3034,7 +3034,7 @@ BOOLEAN SaveWatchedLocsToSavedGame(HWFILE hFile) {
   uiArraySize = TOTAL_SOLDIERS * NUM_WATCHED_LOCS;
 
   // save locations of watched points
-  uiSaveSize = uiArraySize * sizeof(INT16);
+  uiSaveSize = uiArraySize * sizeof(int16_t);
   FileMan_Write(hFile, gsWatchedLoc, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
@@ -3067,7 +3067,7 @@ BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile) {
 
   uiArraySize = TOTAL_SOLDIERS * NUM_WATCHED_LOCS;
 
-  uiLoadSize = uiArraySize * sizeof(INT16);
+  uiLoadSize = uiArraySize * sizeof(int16_t);
   FileMan_Read(hFile, gsWatchedLoc, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
@@ -3420,7 +3420,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
   sGeneralInfo.fDisableMapInterfaceDueToBattle = fDisableMapInterfaceDueToBattle;
 
   // Save boxing info
-  memcpy(&sGeneralInfo.sBoxerGridNo, &gsBoxerGridNo, NUM_BOXERS * sizeof(INT16));
+  memcpy(&sGeneralInfo.sBoxerGridNo, &gsBoxerGridNo, NUM_BOXERS * sizeof(int16_t));
   memcpy(&sGeneralInfo.ubBoxerID, &gubBoxerID, NUM_BOXERS * sizeof(int8_t));
   memcpy(&sGeneralInfo.fBoxerFought, &gfBoxerFought, NUM_BOXERS * sizeof(BOOLEAN));
 
@@ -3445,7 +3445,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
 
   // list of dead guys for squads...in id values -> -1 means no one home
   memcpy(&sGeneralInfo.sDeadMercs, &sDeadMercs,
-         sizeof(INT16) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
+         sizeof(int16_t) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
 
   // level of public noises
   memcpy(&sGeneralInfo.gbPublicNoiseLevel, &gbPublicNoiseLevel, sizeof(int8_t) * MAXTEAMS);
@@ -3665,7 +3665,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   fDisableDueToBattleRoster = sGeneralInfo.fDisableDueToBattleRoster;
   fDisableMapInterfaceDueToBattle = sGeneralInfo.fDisableMapInterfaceDueToBattle;
 
-  memcpy(&gsBoxerGridNo, &sGeneralInfo.sBoxerGridNo, NUM_BOXERS * sizeof(INT16));
+  memcpy(&gsBoxerGridNo, &sGeneralInfo.sBoxerGridNo, NUM_BOXERS * sizeof(int16_t));
   memcpy(&gubBoxerID, &sGeneralInfo.ubBoxerID, NUM_BOXERS * sizeof(int8_t));
   memcpy(&gfBoxerFought, &sGeneralInfo.fBoxerFought, NUM_BOXERS * sizeof(BOOLEAN));
 
@@ -3690,7 +3690,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
 
   // list of dead guys for squads...in id values -> -1 means no one home
   memcpy(&sDeadMercs, &sGeneralInfo.sDeadMercs,
-         sizeof(INT16) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
+         sizeof(int16_t) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
 
   // level of public noises
   memcpy(&gbPublicNoiseLevel, &sGeneralInfo.gbPublicNoiseLevel, sizeof(int8_t) * MAXTEAMS);
@@ -3911,7 +3911,7 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveG
 
 #endif
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ) {
+void GetBestPossibleSectorXYZValues(int16_t *psSectorX, int16_t *psSectorY, int8_t *pbSectorZ) {
   // if the current sector is valid
   if (gfWorldLoaded) {
     *psSectorX = gWorldSectorX;
@@ -3924,9 +3924,9 @@ void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, int8_t *
       *pbSectorZ = Squad[iCurrentTacticalSquad][0]->bSectorZ;
     }
   } else {
-    INT16 sSoldierCnt;
+    int16_t sSoldierCnt;
     struct SOLDIERTYPE *pSoldier;
-    INT16 bLastTeamID;
+    int16_t bLastTeamID;
     BOOLEAN fFoundAMerc = FALSE;
 
     // Set locator to first merc

@@ -964,7 +964,7 @@ uint8_t ChanceOfItemTransaction(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEA
 BOOLEAN ItemTransactionOccurs(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
                               BOOLEAN fUsed) {
   uint8_t ubChance;
-  INT16 sInventorySlot;
+  int16_t sInventorySlot;
 
   ubChance = ChanceOfItemTransaction(bArmsDealer, usItemIndex, fDealerIsSelling, fUsed);
 

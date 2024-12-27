@@ -319,8 +319,8 @@ void InitializeMouseRegions() {
   // init mouseregions
   for (iCounter = 0; iCounter < MAX_MESSAGES_PAGE; iCounter++) {
     MSYS_DefineRegion(&pEmailRegions[iCounter], MIDDLE_X,
-                      ((INT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)), MIDDLE_X + LINE_WIDTH,
-                      (INT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH + MIDDLE_WIDTH),
+                      ((int16_t)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)), MIDDLE_X + LINE_WIDTH,
+                      (int16_t)(MIDDLE_Y + iCounter * MIDDLE_WIDTH + MIDDLE_WIDTH),
                       MSYS_PRIORITY_NORMAL + 2, MSYS_NO_CURSOR, EmailMvtCallBack, EmailBtnCallBack);
     MSYS_AddRegion(&pEmailRegions[iCounter]);
     MSYS_SetRegionUserData(&pEmailRegions[iCounter], 0, iCounter);
@@ -1707,7 +1707,7 @@ void AddDeleteRegionsToMessageRegion(INT32 iViewerY) {
     // add X button
     giMessageButtonImage[0] = LoadButtonImage("LAPTOP\\X.sti", -1, 0, -1, 1, -1);
     giMessageButton[0] = QuickCreateButton(
-        giMessageButtonImage[0], BUTTON_X + 2, (INT16)(BUTTON_Y + (INT16)iViewerY + 1),
+        giMessageButtonImage[0], BUTTON_X + 2, (int16_t)(BUTTON_Y + (int16_t)iViewerY + 1),
         BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1, (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
         (GUI_CALLBACK)BtnMessageXCallback);
     SetButtonCursor(giMessageButton[0], CURSOR_LAPTOP_SCREEN);
@@ -1718,16 +1718,17 @@ void AddDeleteRegionsToMessageRegion(INT32 iViewerY) {
           LoadButtonImage("LAPTOP\\NewMailButtons.sti", -1, 0, -1, 3, -1);
       giMailMessageButtons[0] = QuickCreateButton(
           giMailMessageButtonsImage[0], PREVIOUS_PAGE_BUTTON_X,
-          (INT16)(LOWER_BUTTON_Y + (INT16)iViewerY + 2), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-          (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
+          (int16_t)(LOWER_BUTTON_Y + (int16_t)iViewerY + 2), BUTTON_TOGGLE,
+          MSYS_PRIORITY_HIGHEST - 1, (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
           (GUI_CALLBACK)BtnPreviousEmailPageCallback);
 
       giMailMessageButtonsImage[1] =
           LoadButtonImage("LAPTOP\\NewMailButtons.sti", -1, 1, -1, 4, -1);
-      giMailMessageButtons[1] = QuickCreateButton(
-          giMailMessageButtonsImage[1], NEXT_PAGE_BUTTON_X,
-          (INT16)(LOWER_BUTTON_Y + (INT16)iViewerY + 2), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-          (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnNextEmailPageCallback);
+      giMailMessageButtons[1] = QuickCreateButton(giMailMessageButtonsImage[1], NEXT_PAGE_BUTTON_X,
+                                                  (int16_t)(LOWER_BUTTON_Y + (int16_t)iViewerY + 2),
+                                                  BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                                                  (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
+                                                  (GUI_CALLBACK)BtnNextEmailPageCallback);
 
       gfPageButtonsWereCreated = TRUE;
     }
@@ -1735,7 +1736,7 @@ void AddDeleteRegionsToMessageRegion(INT32 iViewerY) {
     giMailMessageButtonsImage[2] = LoadButtonImage("LAPTOP\\NewMailButtons.sti", -1, 2, -1, 5, -1);
     giMailMessageButtons[2] = QuickCreateButton(
         giMailMessageButtonsImage[2], DELETE_BUTTON_X,
-        (INT16)(BUTTON_LOWER_Y + (INT16)iViewerY + 2), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+        (int16_t)(BUTTON_LOWER_Y + (int16_t)iViewerY + 2), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
         (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnDeleteCallback);
     /*
                     // set up disable methods
@@ -2106,13 +2107,13 @@ void CreateDestroyNextPreviousRegions() {
 
     /*
     // ' next' region
-MSYS_DefineRegion(&pEmailMoveRegions[NEXT_BUTTON],NEXT_PAGE_X, NEXT_PAGE_Y,(INT16)
-(NEXT_PAGE_X+NEXT_WIDTH), (INT16)(NEXT_PAGE_Y+NEXT_HEIGHT), MSYS_PRIORITY_NORMAL+2,MSYS_NO_CURSOR,
+MSYS_DefineRegion(&pEmailMoveRegions[NEXT_BUTTON],NEXT_PAGE_X, NEXT_PAGE_Y,(int16_t)
+(NEXT_PAGE_X+NEXT_WIDTH), (int16_t)(NEXT_PAGE_Y+NEXT_HEIGHT), MSYS_PRIORITY_NORMAL+2,MSYS_NO_CURSOR,
 MSYS_NO_CALLBACK, NextRegionButtonCallback);
 
     // ' previous ' region
 MSYS_DefineRegion(&pEmailMoveRegions[PREVIOUS_BUTTON],PREVIOUS_PAGE_X,PREVIOUS_PAGE_Y,
-(INT16)(PREVIOUS_PAGE_X+PREVIOUS_WIDTH),(INT16)(PREVIOUS_PAGE_Y+PREVIOUS_HEIGHT),
+(int16_t)(PREVIOUS_PAGE_X+PREVIOUS_WIDTH),(int16_t)(PREVIOUS_PAGE_Y+PREVIOUS_HEIGHT),
             MSYS_PRIORITY_NORMAL+2,MSYS_NO_CURSOR, MSYS_NO_CALLBACK, PreviousRegionButtonCallback );
 
     // add regions
@@ -2479,7 +2480,7 @@ void CreateMailScreenButtons(void) {
 void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, INT32 iViewerY) {
   // this procedure will draw the title/headers to From, Subject, Date fields in the display
   // message box
-  INT16 usX, usY;
+  int16_t usX, usY;
   wchar_t sString[100];
 
   // font stuff
@@ -2491,10 +2492,10 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, INT32 iViewerY) {
   // all headers, but not info are right justified
 
   // print from
-  FindFontRightCoordinates(MESSAGE_HEADER_X - 20, (INT16)(MESSAGE_FROM_Y + (INT16)iViewerY),
+  FindFontRightCoordinates(MESSAGE_HEADER_X - 20, (int16_t)(MESSAGE_FROM_Y + (int16_t)iViewerY),
                            MESSAGE_HEADER_WIDTH,
-                           (INT16)(MESSAGE_FROM_Y + GetFontHeight(MESSAGE_FONT)), pEmailHeaders[0],
-                           MESSAGE_FONT, &usX, &usY);
+                           (int16_t)(MESSAGE_FROM_Y + GetFontHeight(MESSAGE_FONT)),
+                           pEmailHeaders[0], MESSAGE_FONT, &usX, &usY);
   mprintf(usX, MESSAGE_FROM_Y + (uint16_t)iViewerY, pEmailHeaders[0]);
 
   // the actual from info
@@ -2502,10 +2503,10 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, INT32 iViewerY) {
           pSenderNameList[pMail->ubSender]);
 
   // print date
-  FindFontRightCoordinates(MESSAGE_HEADER_X + 168, (INT16)(MESSAGE_DATE_Y + (uint16_t)iViewerY),
+  FindFontRightCoordinates(MESSAGE_HEADER_X + 168, (int16_t)(MESSAGE_DATE_Y + (uint16_t)iViewerY),
                            MESSAGE_HEADER_WIDTH,
-                           (INT16)(MESSAGE_DATE_Y + GetFontHeight(MESSAGE_FONT)), pEmailHeaders[2],
-                           MESSAGE_FONT, &usX, &usY);
+                           (int16_t)(MESSAGE_DATE_Y + GetFontHeight(MESSAGE_FONT)),
+                           pEmailHeaders[2], MESSAGE_FONT, &usX, &usY);
   mprintf(usX, MESSAGE_DATE_Y + (uint16_t)iViewerY, pEmailHeaders[2]);
 
   // the actual date info
@@ -2514,13 +2515,13 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, INT32 iViewerY) {
 
   // print subject
   FindFontRightCoordinates(MESSAGE_HEADER_X - 20, MESSAGE_SUBJECT_Y, MESSAGE_HEADER_WIDTH,
-                           (INT16)(MESSAGE_SUBJECT_Y + GetFontHeight(MESSAGE_FONT)),
+                           (int16_t)(MESSAGE_SUBJECT_Y + GetFontHeight(MESSAGE_FONT)),
                            pEmailHeaders[1], MESSAGE_FONT, &usX, &usY);
   mprintf(usX, MESSAGE_SUBJECT_Y + (uint16_t)iViewerY, pEmailHeaders[1]);
 
   // the actual subject info
   // mprintf( , MESSAGE_SUBJECT_Y, pMail->pSubject);
-  IanDisplayWrappedString(SUBJECT_LINE_X + 2, (INT16)(SUBJECT_LINE_Y + 2 + (uint16_t)iViewerY),
+  IanDisplayWrappedString(SUBJECT_LINE_X + 2, (int16_t)(SUBJECT_LINE_Y + 2 + (uint16_t)iViewerY),
                           SUBJECT_LINE_WIDTH, MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR,
                           pMail->pSubject, 0, FALSE, 0);
 
@@ -4144,7 +4145,7 @@ BOOLEAN DisplayNumberOfPagesToThisEmail(INT32 iViewerY) {
   // display the indent for the display of pages to this email..along with the current page/number
   // of pages
 
-  INT16 sX = 0, sY = 0;
+  int16_t sX = 0, sY = 0;
   CHAR16 sString[32];
 
   // get and blt the email list background

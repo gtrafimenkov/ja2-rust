@@ -22,8 +22,8 @@
 #include "UI.h"
 
 typedef struct {
-  INT16 uiID;  // The soldiers ID
-  INT16 sPadding[5];
+  int16_t uiID;  // The soldiers ID
+  int16_t sPadding[5];
   //	int8_t	bSquadValue;		// The squad id
 
 } SAVE_SQUAD_INFO_STRUCT;
@@ -32,7 +32,7 @@ typedef struct {
 struct SOLDIERTYPE *Squad[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 
 // list of dead guys for squads...in id values -> -1 means no one home
-INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
+int16_t sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 
 // the movement group ids
 int8_t SquadMovementGroups[NUMBER_OF_SQUADS];
@@ -75,7 +75,7 @@ void InitSquads(void) {
     pGroup->fPersistant = TRUE;
   }
 
-  memset(sDeadMercs, -1, sizeof(INT16) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
+  memset(sDeadMercs, -1, sizeof(int16_t) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD);
 
   return;
 }
@@ -113,7 +113,7 @@ int8_t GetFirstEmptySquad(void) {
 
 BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, int8_t bSquadValue) {
   int8_t bCounter = 0;
-  INT16 sX, sY;
+  int16_t sX, sY;
   int8_t bZ;
   //	BOOLEAN fBetweenSectors = FALSE;
   struct GROUP *pGroup;
@@ -549,7 +549,7 @@ BOOLEAN IsRobotControllerInSquad(int8_t bSquadValue) {
   return (FALSE);
 }
 
-BOOLEAN SectorSquadIsIn(int8_t bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMapZ) {
+BOOLEAN SectorSquadIsIn(int8_t bSquadValue, int16_t *sMapX, int16_t *sMapY, int16_t *sMapZ) {
   // returns if there is anyone on the squad and what sector ( strategic ) they are in
   int8_t bCounter = 0;
 
@@ -560,7 +560,7 @@ BOOLEAN SectorSquadIsIn(int8_t bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *s
     if (Squad[bSquadValue][bCounter] != NULL) {
       *sMapX = Squad[bSquadValue][bCounter]->sSectorX;
       *sMapY = Squad[bSquadValue][bCounter]->sSectorY;
-      *sMapZ = (INT16)Squad[bSquadValue][bCounter]->bSectorZ;
+      *sMapZ = (int16_t)Squad[bSquadValue][bCounter]->bSectorZ;
 
       return (TRUE);
     }
@@ -974,7 +974,7 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-void GetLocationOfSquad(INT16 *sX, INT16 *sY, int8_t *bZ, int8_t bSquadValue) {
+void GetLocationOfSquad(int16_t *sX, int16_t *sY, int8_t *bZ, int8_t bSquadValue) {
   // run through list of guys, once valid merc found, get his sector x and y and z
   INT32 iCounter = 0;
 
@@ -1204,7 +1204,7 @@ BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, int8_t bSquadVa
 }
 
 BOOLEAN ResetDeadSquadMemberList(INT32 iSquadValue) {
-  memset(sDeadMercs[iSquadValue], -1, sizeof(INT16) * NUMBER_OF_SOLDIERS_PER_SQUAD);
+  memset(sDeadMercs[iSquadValue], -1, sizeof(int16_t) * NUMBER_OF_SOLDIERS_PER_SQUAD);
 
   return (TRUE);
 }

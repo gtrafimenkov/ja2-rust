@@ -28,8 +28,8 @@
 
 struct sectorSearch {
   uint8_t townID;
-  INT16 skipX;
-  INT16 skipY;
+  int16_t skipX;
+  int16_t skipY;
   uint8_t townSectorsIndex;
 };
 
@@ -65,7 +65,7 @@ static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer);
 static void PayMilitiaTrainingYesNoBoxCallback(uint8_t bExitValue);
 static void CantTrainMilitiaOkBoxCallback(uint8_t bExitValue);
 static void MilitiaTrainingRejected(void);
-static void initNextSectorSearch(uint8_t ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY);
+static void initNextSectorSearch(uint8_t ubTownId, int16_t sSkipSectorX, int16_t sSkipSectorY);
 static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY);
 static INT32 GetNumberOfUnpaidTrainableSectors(void);
 static void ContinueTrainingInThisSector();
@@ -389,7 +389,7 @@ void SetMilitiaTrainingPayedForSectorID8(SectorID8 sectorID, bool value) {
   _st.trainingPaid[sectorID] = value;
 }
 
-static void initNextSectorSearch(uint8_t ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY) {
+static void initNextSectorSearch(uint8_t ubTownId, int16_t sSkipSectorX, int16_t sSkipSectorY) {
   _st.sectorSearch.townID = ubTownId;
   _st.sectorSearch.skipX = sSkipSectorX;
   _st.sectorSearch.skipY = sSkipSectorY;
@@ -802,7 +802,7 @@ static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer) {
 
 void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(struct SOLDIERTYPE *pSoldier) {
   INT32 iCounter = 0;
-  INT16 sSector = 0, sCurrentSector = 0;
+  int16_t sSector = 0, sCurrentSector = 0;
   struct SOLDIERTYPE *pCurrentSoldier = NULL;
 
   // get the sector value
@@ -880,7 +880,7 @@ void HandleContinueOfTownTraining(void) {
 static void BuildListOfUnpaidTrainableSectors(void) {
   INT32 iCounter = 0, iCounterB = 0;
 
-  memset(_st.unpaidSectors, 0, sizeof(INT16) * MAX_CHARACTER_COUNT);
+  memset(_st.unpaidSectors, 0, sizeof(int16_t) * MAX_CHARACTER_COUNT);
 
   if (IsMapScreen()) {
     for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -1132,7 +1132,7 @@ void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize) {
 bool HasNewMilitiaPromotions() { return _st.gbMilitiaPromotions > 0; }
 
 BOOLEAN DoesPlayerHaveAnyMilitia() {
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // run through list of towns that might have militia..if any return TRUE..else return FALSE
   for (sX = 1; sX < MAP_WORLD_X - 1; sX++) {

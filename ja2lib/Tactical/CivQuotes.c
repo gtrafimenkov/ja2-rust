@@ -264,8 +264,8 @@ void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, INT16 sX,
-                   INT16 sY) {
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, int16_t sX,
+                   int16_t sY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   CHAR16 zQuote[320];
 
@@ -588,9 +588,9 @@ void HandleCivQuote() {
 
 void StartCivQuote(struct SOLDIERTYPE *pCiv) {
   uint8_t ubCivQuoteID;
-  INT16 sX, sY;
+  int16_t sX, sY;
   uint8_t ubEntryID = 0;
-  INT16 sScreenX, sScreenY;
+  int16_t sScreenX, sScreenY;
   uint8_t ubCivHintToUse;
 
   // ATE: Check for old quote.....

@@ -3,8 +3,8 @@
 
 #include "SGP/Types.h"
 
-void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
-                           INT16 sIMPTextRecordNumber, uint32_t uiFont, uint8_t ubColor,
+void LoadAndDisplayIMPText(int16_t sStartX, int16_t sStartY, int16_t sLineLength,
+                           int16_t sIMPTextRecordNumber, uint32_t uiFont, uint8_t ubColor,
                            BOOLEAN fShadow, uint32_t uiFlags);
 void InitializeImpRecordLengthList(void);
 void PrintImpText(void);

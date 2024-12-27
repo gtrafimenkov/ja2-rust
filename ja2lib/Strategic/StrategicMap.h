@@ -19,15 +19,15 @@ enum {
 };
 
 // For speed, etc lets make these globals, forget the functions if you want
-extern INT16 gWorldSectorX;
-extern INT16 gWorldSectorY;
+extern int16_t gWorldSectorX;
+extern int16_t gWorldSectorY;
 extern int8_t gbWorldSectorZ;
 
 #define NUMBER_OF_SAMS 4
 
-extern INT16 pSamList[NUMBER_OF_SAMS];
-extern INT16 pSamGridNoAList[NUMBER_OF_SAMS];
-extern INT16 pSamGridNoBList[NUMBER_OF_SAMS];
+extern int16_t pSamList[NUMBER_OF_SAMS];
+extern int16_t pSamGridNoAList[NUMBER_OF_SAMS];
+extern int16_t pSamGridNoBList[NUMBER_OF_SAMS];
 
 extern BOOLEAN fFoundOrta;
 extern BOOLEAN fSamSiteFound[NUMBER_OF_SAMS];
@@ -52,8 +52,8 @@ extern BOOLEAN gfUseAlternateMap;
 #define CHECK_DIR_X_DELTA (WORLD_TILE_X * 4)
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)
 
-void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY);
-BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
+void GetCurrentWorldSector(int16_t *psMapX, int16_t *psMapY);
+BOOLEAN SetCurrentWorldSector(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
 
 BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
@@ -62,7 +62,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
 void InitializeMapStructure();
 
 // get short sector name without town name
-void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSize);
+void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bufSize);
 
 // NEW!
 // Calculates the name of the sector based on the loaded sector values.
@@ -72,13 +72,13 @@ void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSiz
 // equivalent)
 void GetLoadedSectorString(STR16 pString, size_t bufSize);
 
-void GetMapFileName(INT16 sMapX, INT16 sMapY, int8_t bSectorZ, STR8 bString,
+void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, STR8 bString,
                     BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter);
 
 // Called from within tactical.....
-void JumpIntoAdjacentSector(uint8_t ubDirection, uint8_t ubJumpCode, INT16 sAdditionalData);
+void JumpIntoAdjacentSector(uint8_t ubDirection, uint8_t ubJumpCode, int16_t sAdditionalData);
 
-BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, uint8_t ubZ);
+BOOLEAN CanGoToTacticalInSector(int16_t sX, int16_t sY, uint8_t ubZ);
 
 void UpdateAirspaceControl(void);
 
@@ -107,7 +107,7 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile);
 
 void AllMercsHaveWalkedOffSector();
 
-void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
+void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, int16_t sEndGridNo,
                                   uint8_t ubTacticalDirection);
 
 void AllMercsWalkedToExitGrid();
@@ -117,7 +117,7 @@ void PrepareLoadedSector();
 // handle for slay...no better place to really put this stuff
 void HandleSlayDailyEvent(void);
 
-void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, int8_t bNewSectorZ);
+void HandleQuestCodeOnSectorEntry(int16_t sNewSectorX, int16_t sNewSectorY, int8_t bNewSectorZ);
 
 // handle a soldier leaving thier squad behind, this sets them up for mvt and potential rejoining of
 // group
@@ -134,7 +134,7 @@ BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, int8_t bSect
 BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
 
 // sam site under players control?
-INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY);
+INT32 SAMSitesUnderPlayerControl(int16_t sX, int16_t sY);
 
 int8_t GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 

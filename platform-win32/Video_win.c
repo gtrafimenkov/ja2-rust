@@ -172,8 +172,8 @@ extern RECT rcWindow;
 
 static uint16_t gusMouseCursorWidth;
 static uint16_t gusMouseCursorHeight;
-static INT16 gsMouseCursorXOffset;
-static INT16 gsMouseCursorYOffset;
+static int16_t gsMouseCursorXOffset;
+static int16_t gsMouseCursorYOffset;
 
 static LPDIRECTDRAWSURFACE _gpMouseCursor = NULL;
 static LPDIRECTDRAWSURFACE2 gpMouseCursor = NULL;
@@ -229,9 +229,9 @@ uint32_t guiPrintFrameBufferIndex;
 extern uint16_t gusRedMask;
 extern uint16_t gusGreenMask;
 extern uint16_t gusBlueMask;
-extern INT16 gusRedShift;
-extern INT16 gusBlueShift;
-extern INT16 gusGreenShift;
+extern int16_t gusRedShift;
+extern int16_t gusBlueShift;
+extern int16_t gusGreenShift;
 
 void AddRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, uint32_t uiFlags);
 void SnapshotSmall(void);
@@ -799,7 +799,7 @@ void InvalidateScreen(void) {
   guiFrameBufferState = BUFFER_DIRTY;
 }
 
-void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
+void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_t sScrollYIncrement,
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
                          BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
   uint16_t usWidth, usHeight;
@@ -810,7 +810,7 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
   static RECT StripRegions[2], MouseRegion;
   uint16_t usNumStrips = 0;
   INT32 cnt;
-  INT16 sShiftX, sShiftY;
+  int16_t sShiftX, sShiftY;
   INT32 uiCountY;
 
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
@@ -859,7 +859,7 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
         memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usMouseXPos += sScrollXIncrement;
 
       usNumStrips = 1;
@@ -898,7 +898,7 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       //					uiDestPitchBYTES-sScrollXIncrement*uiBPP);
       //}
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usMouseXPos -= sScrollXIncrement;
 
       usNumStrips = 1;
@@ -935,7 +935,7 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       //					pSrcBuf+((uiCountY-sScrollYIncrement)*uiDestPitchBYTES),
       //					uiDestPitchBYTES);
       //}
-      StripRegions[0].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[0].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
       usNumStrips = 1;
 
       usMouseYPos += sScrollYIncrement;
@@ -974,7 +974,7 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       //					uiDestPitchBYTES);
       //}
 
-      StripRegions[0].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[0].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
       usNumStrips = 1;
 
       usMouseYPos -= sScrollYIncrement;
@@ -1010,9 +1010,9 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
         memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
-      StripRegions[1].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
-      StripRegions[1].left = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[1].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[1].left = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos += sScrollYIncrement;
@@ -1051,9 +1051,9 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
         memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
-      StripRegions[1].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
-      StripRegions[1].right = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[1].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[1].right = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos += sScrollYIncrement;
@@ -1090,10 +1090,10 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
         memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
 
-      StripRegions[1].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
-      StripRegions[1].left = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[1].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[1].left = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos -= sScrollYIncrement;
@@ -1131,9 +1131,9 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
         memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
-      StripRegions[1].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
-      StripRegions[1].right = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[1].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[1].right = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos -= sScrollYIncrement;
@@ -1156,11 +1156,12 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
 #endif
 
     for (cnt = 0; cnt < usNumStrips; cnt++) {
-      RenderStaticWorldRect((INT16)StripRegions[cnt].left, (INT16)StripRegions[cnt].top,
-                            (INT16)StripRegions[cnt].right, (INT16)StripRegions[cnt].bottom, TRUE);
+      RenderStaticWorldRect((int16_t)StripRegions[cnt].left, (int16_t)StripRegions[cnt].top,
+                            (int16_t)StripRegions[cnt].right, (int16_t)StripRegions[cnt].bottom,
+                            TRUE);
       // Optimize Redundent tiles too!
-      // ExamineZBufferRect( (INT16)StripRegions[ cnt ].left, (INT16)StripRegions[ cnt ].top,
-      // (INT16)StripRegions[ cnt ].right, (INT16)StripRegions[ cnt ].bottom );
+      // ExamineZBufferRect( (int16_t)StripRegions[ cnt ].left, (int16_t)StripRegions[ cnt ].top,
+      // (int16_t)StripRegions[ cnt ].right, (int16_t)StripRegions[ cnt ].bottom );
 
       do {
         ReturnCode = IDirectDrawSurface2_SGPBltFast(
@@ -2205,7 +2206,7 @@ BOOLEAN EraseMouseCursor() {
   return (TRUE);
 }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, uint16_t usCursorHeight,
+BOOLEAN SetMouseCursorProperties(int16_t sOffsetX, int16_t sOffsetY, uint16_t usCursorHeight,
                                  uint16_t usCursorWidth) {
   gsMouseCursorXOffset = sOffsetX;
   gsMouseCursorYOffset = sOffsetY;
@@ -3075,17 +3076,17 @@ BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 
 
 BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  uint16_t Index, INT16 Ox, INT16 Oy) {
-  INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
+                                  uint16_t Index, int16_t Ox, int16_t Oy) {
+  int16_t xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
 
   pTrav = &(BkgrndImg->pETRLEObject[Index]);
-  ph = (INT16)(pTrav->usHeight + pTrav->sOffsetY);
-  pw = (INT16)(pTrav->usWidth + pTrav->sOffsetX);
+  ph = (int16_t)(pTrav->usHeight + pTrav->sOffsetY);
+  pw = (int16_t)(pTrav->usWidth + pTrav->sOffsetX);
 
-  ah = (INT16)(iDestY2 - iDestY1);
-  aw = (INT16)(iDestX2 - iDestX1);
+  ah = (int16_t)(iDestY2 - iDestY1);
+  aw = (int16_t)(iDestX2 - iDestX1);
 
   Ox %= pw;
   Oy %= ph;
@@ -3146,9 +3147,9 @@ BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 
 
   SetClippingRect(&NewClip);
 
-  yc = (INT16)iDestY1;
+  yc = (int16_t)iDestY1;
   for (h = 0; h < hblits; h++) {
-    xc = (INT16)iDestX1;
+    xc = (int16_t)iDestX1;
     for (w = 0; w < wblits; w++) {
       BltVideoObject(uiDestVSurface, BkgrndImg, Index, xc + Ox, yc + Oy, VO_BLT_SRCTRANSPARENCY,
                      NULL);
@@ -5165,7 +5166,7 @@ void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor) {
   }
 }
 
-INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) {
+int16_t WinFontStringPixLength(STR16 string2, INT32 iFont) {
   struct HWINFONT *pWinFont;
   HDC hdc;
   SIZE RectSize;
@@ -5188,10 +5189,10 @@ INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) {
   GetTextExtentPoint32(hdc, string, strlen(string), &RectSize);
   ReleaseDC(NULL, hdc);
 
-  return ((INT16)RectSize.cx);
+  return ((int16_t)RectSize.cx);
 }
 
-INT16 GetWinFontHeight(STR16 string2, INT32 iFont) {
+int16_t GetWinFontHeight(STR16 string2, INT32 iFont) {
   struct HWINFONT *pWinFont;
   HDC hdc;
   SIZE RectSize;
@@ -5214,7 +5215,7 @@ INT16 GetWinFontHeight(STR16 string2, INT32 iFont) {
   GetTextExtentPoint32(hdc, string, strlen(string), &RectSize);
   ReleaseDC(NULL, hdc);
 
-  return ((INT16)RectSize.cy);
+  return ((int16_t)RectSize.cy);
 }
 
 uint32_t WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) {

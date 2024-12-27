@@ -545,8 +545,8 @@ void InitAlumniFaceRegions() {
   for (y = 0; y < usNumRows; y++) {
     for (x = 0; x < AIM_ALUMNI_NUM_FACE_COLS; x++) {
       MSYS_DefineRegion(&gMercAlumniFaceMouseRegions[i], usPosX, usPosY,
-                        (INT16)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
-                        (INT16)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
+                        (int16_t)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
+                        (int16_t)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
                         CURSOR_WWW, MSYS_NO_CALLBACK, SelectAlumniFaceRegionCallBack);
       // Add region
       MSYS_AddRegion(&gMercAlumniFaceMouseRegions[i]);
@@ -562,8 +562,8 @@ void InitAlumniFaceRegions() {
   // the 3rd page now has an additional row with 1 merc on it, so add a new row
   if (gubPageNum == 2) {
     MSYS_DefineRegion(&gMercAlumniFaceMouseRegions[i], usPosX, usPosY,
-                      (INT16)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
-                      (INT16)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
+                      (int16_t)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
+                      (int16_t)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
                       CURSOR_WWW, MSYS_NO_CALLBACK, SelectAlumniFaceRegionCallBack);
     // Add region
     MSYS_AddRegion(&gMercAlumniFaceMouseRegions[i]);
@@ -606,7 +606,7 @@ void CreateDestroyDoneMouseRegion(uint16_t usPosY) {
     usPosY -= AIM_ALUMNI_DONE_HEIGHT;
     MSYS_DefineRegion(&gDoneRegion, AIM_ALUMNI_DONE_X - 2, usPosY,
                       (AIM_ALUMNI_DONE_X - 2 + AIM_ALUMNI_DONE_WIDTH),
-                      (INT16)(usPosY + AIM_ALUMNI_DONE_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      (int16_t)(usPosY + AIM_ALUMNI_DONE_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                       MSYS_NO_CALLBACK, SelectAlumniDoneRegionCallBack);
     // Add region
     MSYS_AddRegion(&gDoneRegion);

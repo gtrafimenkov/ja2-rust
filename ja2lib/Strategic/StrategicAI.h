@@ -33,7 +33,7 @@ void RecalculateGroupWeight(struct GROUP *pGroup);
 BOOLEAN OkayForEnemyToMoveThroughSector(uint8_t ubSectorID);
 BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, uint8_t ubSectorID);
 
-void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
 
 void InvestigateSector(uint8_t ubSectorID);
 
@@ -41,9 +41,9 @@ void WakeUpQueen();
 
 void StrategicHandleMineThatRanOut(uint8_t ubSectorID);
 
-INT16 FindPatrolGroupIndexForGroupID(uint8_t ubGroupID);
-INT16 FindPatrolGroupIndexForGroupIDPending(uint8_t ubGroupID);
-INT16 FindGarrisonIndexForGroupIDPending(uint8_t ubGroupID);
+int16_t FindPatrolGroupIndexForGroupID(uint8_t ubGroupID);
+int16_t FindPatrolGroupIndexForGroupIDPending(uint8_t ubGroupID);
+int16_t FindGarrisonIndexForGroupIDPending(uint8_t ubGroupID);
 
 struct GROUP *FindPendingGroupInSector(uint8_t ubSectorID);
 

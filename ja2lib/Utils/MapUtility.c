@@ -50,12 +50,12 @@ typedef struct {
 uint32_t MapUtilScreenInit() { return (TRUE); }
 
 uint32_t MapUtilScreenHandle() {
-  static INT16 fNewMap = TRUE;
-  static INT16 sFileNum = 0;
+  static int16_t fNewMap = TRUE;
+  static int16_t sFileNum = 0;
   InputAtom InputEvent;
   struct GetFile FileInfo;
   static struct FileDialogList *FListNode;
-  static INT16 sFiles = 0, sCurFile = 0;
+  static int16_t sFiles = 0, sCurFile = 0;
   static struct FileDialogList *FileList = NULL;
   CHAR8 zFilename[260], zFilename2[260];
   VSURFACE_DESC vs_desc;
@@ -72,10 +72,10 @@ uint32_t MapUtilScreenHandle() {
   uint32_t uiRGBColor;
 
   uint32_t bR, bG, bB, bAvR, bAvG, bAvB;
-  INT16 s16BPPSrc, sDest16BPPColor;
+  int16_t s16BPPSrc, sDest16BPPColor;
   INT32 cnt;
 
-  INT16 sX1, sX2, sY1, sY2, sTop, sBottom, sLeft, sRight;
+  int16_t sX1, sX2, sY1, sY2, sTop, sBottom, sLeft, sRight;
 
   FLOAT dX, dY, dStartX, dStartY;
   INT32 iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
@@ -85,7 +85,7 @@ uint32_t MapUtilScreenHandle() {
   bAvR = bAvG = bAvB = 0;
 
   // Zero out area!
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, (INT16)(640), (INT16)(480),
+  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, (int16_t)(640), (int16_t)(480),
                             Get16BPPColor(FROMRGB(0, 0, 0)));
 
   if (fNewMap) {
@@ -261,9 +261,9 @@ uint32_t MapUtilScreenHandle() {
     for (cnt = 0; cnt < 256; cnt++) {
       usLineColor =
           Get16BPPColor(FROMRGB(pPalette[cnt].peRed, pPalette[cnt].peGreen, pPalette[cnt].peBlue));
-      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
+      RectangleDraw(TRUE, sX, sY, sX, (int16_t)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
       sX++;
-      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
+      RectangleDraw(TRUE, sX, sY, sX, (int16_t)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
       sX++;
     }
   }

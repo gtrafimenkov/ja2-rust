@@ -63,7 +63,7 @@ extern uint32_t guiExitScreen;
 extern uint32_t uiMeanWhileFlags;
 extern BOOLEAN gfGamePaused;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, uint8_t bMapZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(int16_t sMapX, int16_t sMapY, uint8_t bMapZ);
 extern void InitVehicles();
 
 uint8_t gubScreenCount = 0;
@@ -449,7 +449,7 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
 BOOLEAN AnyMercsHired() {
   INT32 cnt;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
 
   // Find first guy availible in team
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;

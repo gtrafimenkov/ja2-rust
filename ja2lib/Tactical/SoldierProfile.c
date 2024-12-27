@@ -95,7 +95,7 @@ uint8_t gubNumTerrorists = 0;
 
 #define NUM_TERRORIST_POSSIBLE_LOCATIONS 5
 
-INT16 gsTerroristSector[NUM_TERRORISTS][NUM_TERRORIST_POSSIBLE_LOCATIONS][2] = {
+int16_t gsTerroristSector[NUM_TERRORISTS][NUM_TERRORIST_POSSIBLE_LOCATIONS][2] = {
     // Elgin... preplaced
     {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}},
     // Slay
@@ -109,7 +109,7 @@ INT16 gsTerroristSector[NUM_TERRORISTS][NUM_TERRORIST_POSSIBLE_LOCATIONS][2] = {
     // Rexall
     {{9, MAP_ROW_F}, {14, MAP_ROW_H}, {2, MAP_ROW_H}, {1, MAP_ROW_G}, {2, MAP_ROW_B}}};
 
-INT16 gsRobotGridNo;
+int16_t gsRobotGridNo;
 
 #define NUM_ASSASSINS 6
 
@@ -133,7 +133,7 @@ int8_t gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
 };
 
 uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile);
-INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile);
+int16_t CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile);
 extern void HandleEndDemoInCreatureLevel();
 void DecideActiveTerrorists(void);
 
@@ -290,7 +290,7 @@ void DecideActiveTerrorists(void) {
   uint8_t ubNumAdditionalTerrorists, ubNumTerroristsAdded = 0;
   uint32_t uiChance, uiLocationChoice;
   BOOLEAN fFoundSpot;
-  INT16 sTerroristPlacement[MAX_ADDITIONAL_TERRORISTS][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
+  int16_t sTerroristPlacement[MAX_ADDITIONAL_TERRORISTS][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
 #ifdef CRIPPLED_VERSION
   return;
@@ -627,7 +627,7 @@ uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile) {
   return (usCompetence);
 }
 
-INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
+int16_t CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
   uint16_t usDeposit;
 
   // this rounds off to the nearest hundred
@@ -659,7 +659,7 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, uint8_t ubTe
   struct SOLDIERTYPE *pNewSoldier = NULL;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   uint32_t cnt;
-  INT16 sOldGridNo;
+  int16_t sOldGridNo;
 
   uint32_t uiSlot;
   struct SOLDIERTYPE *pGroupMember;
@@ -1193,7 +1193,7 @@ struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
   return (pSoldier);
 }
 
-BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
   uint8_t ubRoomInfo;
 
   // Get room info

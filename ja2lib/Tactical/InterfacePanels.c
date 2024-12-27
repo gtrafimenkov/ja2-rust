@@ -311,7 +311,7 @@ extern uint32_t guiVEHINV;
 extern INT32 giMapInvDoneButton;
 extern BOOLEAN gfBeginEndTurn;
 extern struct SOLDIERTYPE *gpItemDescSoldier;
-extern BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT16 sY,
+extern BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, int16_t sY,
                                               uint8_t ubStatusIndex, struct SOLDIERTYPE *pSoldier);
 extern BOOLEAN gfInItemPickupMenu;
 extern void HandleAnyMercInSquadHasCompatibleStuff(uint8_t ubSquad, struct OBJECTTYPE *pObject,
@@ -362,43 +362,43 @@ INV_REGION_DESC gSMCamoXY = {
     SM_BODYINV_X, SM_BODYINV_Y  // X, Y Location of cammo region
 };
 
-INT16 sTEAMAPPanelXY[] = {69,  (6 + INTERFACE_START_Y), 151, (6 + INTERFACE_START_Y),
-                          234, (6 + INTERFACE_START_Y), 317, (6 + INTERFACE_START_Y),
-                          401, (6 + INTERFACE_START_Y), 484, (6 + INTERFACE_START_Y)};
+int16_t sTEAMAPPanelXY[] = {69,  (6 + INTERFACE_START_Y), 151, (6 + INTERFACE_START_Y),
+                            234, (6 + INTERFACE_START_Y), 317, (6 + INTERFACE_START_Y),
+                            401, (6 + INTERFACE_START_Y), 484, (6 + INTERFACE_START_Y)};
 
-INT16 sTEAMFacesXY[] = {13, (366), 97, (366), 180, (366), 263, (366), 346, (366), 429, (366)};
+int16_t sTEAMFacesXY[] = {13, (366), 97, (366), 180, (366), 263, (366), 346, (366), 429, (366)};
 
-INT16 sTEAMNamesXY[] = {7, (415), 90, (415), 173, (415), 256, (415), 339, (415), 422, (415)};
+int16_t sTEAMNamesXY[] = {7, (415), 90, (415), 173, (415), 256, (415), 339, (415), 422, (415)};
 
-INT16 sTEAMFaceHighlXY[] = {4,   (2 + INTERFACE_START_Y), 87,  (2 + INTERFACE_START_Y),
-                            170, (2 + INTERFACE_START_Y), 253, (2 + INTERFACE_START_Y),
-                            336, (2 + INTERFACE_START_Y), 419, (2 + INTERFACE_START_Y)};
+int16_t sTEAMFaceHighlXY[] = {4,   (2 + INTERFACE_START_Y), 87,  (2 + INTERFACE_START_Y),
+                              170, (2 + INTERFACE_START_Y), 253, (2 + INTERFACE_START_Y),
+                              336, (2 + INTERFACE_START_Y), 419, (2 + INTERFACE_START_Y)};
 
-INT16 sTEAMLifeXY[] = {
+int16_t sTEAMLifeXY[] = {
     69,  (365 + TM_LIFEBAR_HEIGHT), 152, (365 + TM_LIFEBAR_HEIGHT), 235, (365 + TM_LIFEBAR_HEIGHT),
     318, (365 + TM_LIFEBAR_HEIGHT), 401, (365 + TM_LIFEBAR_HEIGHT), 484, (365 + TM_LIFEBAR_HEIGHT),
 };
 
-INT16 sTEAMBreathXY[] = {
+int16_t sTEAMBreathXY[] = {
     75,  (365 + TM_LIFEBAR_HEIGHT), 158, (365 + TM_LIFEBAR_HEIGHT), 241, (365 + TM_LIFEBAR_HEIGHT),
     324, (365 + TM_LIFEBAR_HEIGHT), 407, (365 + TM_LIFEBAR_HEIGHT), 490, (365 + TM_LIFEBAR_HEIGHT),
 };
 
-INT16 sTEAMMoraleXY[] = {
+int16_t sTEAMMoraleXY[] = {
     81,  (365 + TM_LIFEBAR_HEIGHT), 164, (365 + TM_LIFEBAR_HEIGHT), 247, (365 + TM_LIFEBAR_HEIGHT),
     330, (365 + TM_LIFEBAR_HEIGHT), 413, (365 + TM_LIFEBAR_HEIGHT), 496, (365 + TM_LIFEBAR_HEIGHT),
 };
 
-INT16 sTEAMApXY[] = {70, (413), 153, (413), 235, (413), 319, (413), 402, (413), 485, (413)};
+int16_t sTEAMApXY[] = {70, (413), 153, (413), 235, (413), 319, (413), 402, (413), 485, (413)};
 
-INT16 sTEAMBarsXY[] = {61, (363), 145, (363), 228, (363), 311, (363), 394, (363), 477, (362)};
+int16_t sTEAMBarsXY[] = {61, (363), 145, (363), 228, (363), 311, (363), 394, (363), 477, (362)};
 
-INT16 sTEAMHandInvXY[] = {TM_INV_HAND1STARTX + (0 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (1 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (2 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (3 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (4 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
-                          TM_INV_HAND1STARTX + (5 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY};
+int16_t sTEAMHandInvXY[] = {TM_INV_HAND1STARTX + (0 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (1 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (2 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (3 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (4 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY,
+                            TM_INV_HAND1STARTX + (5 * TM_INV_HAND_SEP), TM_INV_HAND1STARTY};
 
 INT32 iSMPanelButtons[NUM_SM_BUTTONS];
 INT32 iTEAMPanelButtons[NUM_TEAM_BUTTONS];
@@ -487,7 +487,7 @@ void TMClickFirstHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void TMClickSecondHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void EnemyIndicatorClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY, uint8_t ubPanelNum,
+void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, int16_t sX, int16_t sY, uint8_t ubPanelNum,
                           BOOLEAN fDirty);
 
 // keyring stuff
@@ -495,8 +495,8 @@ void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
 
 void UpdateSelectedSoldier(uint16_t usSoldierID, BOOLEAN fSelect);
 
-void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, INT16 sPanelX, INT16 sPanelY);
-void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY);
+void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, int16_t sPanelX, int16_t sPanelY);
+void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFaceY);
 BOOLEAN PlayerExistsInSlot(uint8_t ubID);
 void UpdateStatColor(uint32_t uiTimer, BOOLEAN fUpdate);
 
@@ -520,9 +520,9 @@ int8_t GetUIApsToDisplay(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CheckForDisabledForGiveItem() {
-  INT16 sDist;
-  INT16 sDistVisible;
-  INT16 sDestGridNo;
+  int16_t sDist;
+  int16_t sDistVisible;
+  int16_t sDestGridNo;
   int8_t bDestLevel;
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
@@ -1437,8 +1437,8 @@ BOOLEAN ShutdownSMPanel() {
 }
 
 void RenderSMPanel(BOOLEAN *pfDirty) {
-  INT16 sFontX, sFontY;
-  INT16 usX, usY;
+  int16_t sFontX, sFontY;
+  int16_t usX, usY;
   wchar_t sString[9];
   uint32_t cnt;
   static CHAR16 pStr[200], pMoraleStr[20];
@@ -1532,8 +1532,8 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(STATS_TITLE_FONT_COLOR);
       for (cnt = 0; cnt < 5; cnt++) {
-        mprintf(92, (INT16)(347 + cnt * 10), pShortAttributeStrings[cnt]);
-        mprintf(137, (INT16)(347 + cnt * 10), pShortAttributeStrings[cnt + 5]);
+        mprintf(92, (int16_t)(347 + cnt * 10), pShortAttributeStrings[cnt]);
+        mprintf(137, (int16_t)(347 + cnt * 10), pShortAttributeStrings[cnt + 5]);
       }
 
       mprintf(SM_ARMOR_LABEL_X - StringPixLength(pInvPanelTitleStrings[0], BLOCKFONT2) / 2,
@@ -2056,7 +2056,7 @@ void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // if we are in the shop keeper interface
   if (guiTacticalInterfaceFlags & INTERFACE_SHOPKEEP_INTERFACE) {
     // and this inventory slot is hatched out
-    if (ShouldSoldierDisplayHatchOnItem(gpSMCurrentMerc->ubProfile, (INT16)uiHandPos)) {
+    if (ShouldSoldierDisplayHatchOnItem(gpSMCurrentMerc->ubProfile, (int16_t)uiHandPos)) {
       // it means that item is a copy of one in the player's offer area, so we treat it as if the
       // slot was empty (ignore) if the cursor has an item in it, we still ignore the click, because
       // handling swaps in this situation would be ugly, we'd have to the the swap, then make the
@@ -2327,7 +2327,7 @@ void MergeMessageBoxCallBack(uint8_t ubExitValue) {
 
 void HandleMouseOverSoldierFaceForContMove(struct SOLDIERTYPE *pSoldier, BOOLEAN fOn) {
   FACETYPE *pFace;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   if (pSoldier == NULL) {
     return;
@@ -2604,7 +2604,7 @@ void BtnMuteCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void BtnPrevMercCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT16 sID;
+  int16_t sID;
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -2639,7 +2639,7 @@ void BtnPrevMercCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void BtnNextMercCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT16 sID;
+  int16_t sID;
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -2805,17 +2805,17 @@ BOOLEAN InitializeTEAMPanel() {
 
   for (posIndex = 0, cnt = 0; cnt < 6; cnt++, posIndex += 2) {
     MSYS_DefineRegion(&gTEAM_FaceRegions[cnt], sTEAMFacesXY[posIndex], sTEAMFacesXY[posIndex + 1],
-                      (INT16)(sTEAMFacesXY[posIndex] + TM_FACE_WIDTH),
-                      (INT16)(sTEAMFacesXY[posIndex + 1] + TM_FACE_HEIGHT), MSYS_PRIORITY_NORMAL,
+                      (int16_t)(sTEAMFacesXY[posIndex] + TM_FACE_WIDTH),
+                      (int16_t)(sTEAMFacesXY[posIndex + 1] + TM_FACE_HEIGHT), MSYS_PRIORITY_NORMAL,
                       MSYS_NO_CURSOR, MercFacePanelMoveCallback, MercFacePanelCallback);
     // Add region
     MSYS_AddRegion(&gTEAM_FaceRegions[cnt]);
     MSYS_SetRegionUserData(&gTEAM_FaceRegions[cnt], 0, cnt);
 
-    MSYS_DefineRegion(&gTEAM_EnemyIndicator[cnt], (INT16)(sTEAMFacesXY[posIndex] + 1),
-                      (INT16)(sTEAMFacesXY[posIndex + 1] + 1),
-                      (INT16)(sTEAMFacesXY[posIndex] + INDICATOR_BOX_WIDTH),
-                      (INT16)(sTEAMFacesXY[posIndex + 1] + INDICATOR_BOX_HEIGHT),
+    MSYS_DefineRegion(&gTEAM_EnemyIndicator[cnt], (int16_t)(sTEAMFacesXY[posIndex] + 1),
+                      (int16_t)(sTEAMFacesXY[posIndex + 1] + 1),
+                      (int16_t)(sTEAMFacesXY[posIndex] + INDICATOR_BOX_WIDTH),
+                      (int16_t)(sTEAMFacesXY[posIndex + 1] + INDICATOR_BOX_HEIGHT),
                       MSYS_PRIORITY_NORMAL, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                       EnemyIndicatorClickCallback);
     // Add region
@@ -2829,17 +2829,17 @@ BOOLEAN InitializeTEAMPanel() {
     }
 
     MSYS_DefineRegion(&gTEAM_BarsRegions[cnt], sTEAMBarsXY[posIndex], sTEAMBarsXY[posIndex + 1],
-                      (INT16)(sTEAMBarsXY[posIndex] + TM_BARS_REGION_WIDTH),
-                      (INT16)(sTEAMBarsXY[posIndex + 1] + TM_BARS_REGION_HEIGHT),
+                      (int16_t)(sTEAMBarsXY[posIndex] + TM_BARS_REGION_WIDTH),
+                      (int16_t)(sTEAMBarsXY[posIndex + 1] + TM_BARS_REGION_HEIGHT),
                       MSYS_PRIORITY_NORMAL, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                       MercFacePanelCallback);
     // Add region
     MSYS_AddRegion(&gTEAM_BarsRegions[cnt]);
     MSYS_SetRegionUserData(&gTEAM_BarsRegions[cnt], 0, cnt);
 
-    MSYS_DefineRegion(&gTEAM_LeftBarsRegions[cnt], (INT16)(sTEAMFacesXY[posIndex] - 8),
-                      sTEAMFacesXY[posIndex + 1], (INT16)(sTEAMFacesXY[posIndex]),
-                      (INT16)(sTEAMFacesXY[posIndex + 1] + TM_BARS_REGION_HEIGHT),
+    MSYS_DefineRegion(&gTEAM_LeftBarsRegions[cnt], (int16_t)(sTEAMFacesXY[posIndex] - 8),
+                      sTEAMFacesXY[posIndex + 1], (int16_t)(sTEAMFacesXY[posIndex]),
+                      (int16_t)(sTEAMFacesXY[posIndex + 1] + TM_BARS_REGION_HEIGHT),
                       MSYS_PRIORITY_NORMAL, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                       MercFacePanelCallback);
     // Add region
@@ -2848,8 +2848,8 @@ BOOLEAN InitializeTEAMPanel() {
 
     MSYS_DefineRegion(&gTEAM_FirstHandInv[cnt], sTEAMHandInvXY[posIndex],
                       sTEAMHandInvXY[posIndex + 1],
-                      (INT16)(sTEAMHandInvXY[posIndex] + TM_INV_WIDTH),
-                      (INT16)(sTEAMHandInvXY[posIndex + 1] + TM_INV_HEIGHT), MSYS_PRIORITY_NORMAL,
+                      (int16_t)(sTEAMHandInvXY[posIndex] + TM_INV_WIDTH),
+                      (int16_t)(sTEAMHandInvXY[posIndex + 1] + TM_INV_HEIGHT), MSYS_PRIORITY_NORMAL,
                       MSYS_NO_CURSOR, MSYS_NO_CALLBACK, TMClickFirstHandInvCallback);
     // Add region
     MSYS_AddRegion(&gTEAM_FirstHandInv[cnt]);
@@ -2858,9 +2858,9 @@ BOOLEAN InitializeTEAMPanel() {
     MSYS_SetRegionUserData(&gTEAM_FirstHandInv[cnt], 0, cnt);
 
     MSYS_DefineRegion(&gTEAM_SecondHandInv[cnt], sTEAMHandInvXY[posIndex],
-                      (INT16)(sTEAMHandInvXY[posIndex + 1] + 24),
-                      (INT16)(sTEAMHandInvXY[posIndex] + TM_INV_WIDTH),
-                      (INT16)(sTEAMHandInvXY[posIndex + 1] + TM_INV_HEIGHT + 24),
+                      (int16_t)(sTEAMHandInvXY[posIndex + 1] + 24),
+                      (int16_t)(sTEAMHandInvXY[posIndex] + TM_INV_WIDTH),
+                      (int16_t)(sTEAMHandInvXY[posIndex + 1] + TM_INV_HEIGHT + 24),
                       MSYS_PRIORITY_NORMAL, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                       TMClickSecondHandInvCallback);
     // Add region
@@ -2922,7 +2922,7 @@ BOOLEAN ShutdownTEAMPanel() {
 }
 
 void RenderTEAMPanel(BOOLEAN fDirty) {
-  INT16 sFontX, sFontY;
+  int16_t sFontX, sFontY;
   uint32_t cnt, posIndex;
   struct SOLDIERTYPE *pSoldier;
   static CHAR16 pStr[200], pMoraleStr[20];
@@ -2950,10 +2950,11 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
         // BLIT AP CLOSE PANEL
         // BltVideoObjectFromIndex( FRAME_BUFFER, guiTEAMObjects, 3, sTEAMAPPanelXY[ posIndex ],
         // sTEAMAPPanelXY[ posIndex + 1 ], VO_BLT_SRCTRANSPARENCY, NULL );
-        // RestoreExternBackgroundRect( (INT16)(sTEAMAPPanelXY[ posIndex ]), (INT16)(sTEAMAPPanelXY[
-        // posIndex + 1 ]), TM_APPANEL_WIDTH, TM_APPANEL_HEIGHT ); InvalidateRegion(
-        // (INT16)(sTEAMAPPanelXY[ posIndex ]), (INT16)(sTEAMAPPanelXY[ posIndex + 1 ]),
-        // (INT16)(sTEAMAPPanelXY[ posIndex ] + TM_APPANEL_WIDTH), (INT16)(sTEAMAPPanelXY[ posIndex
+        // RestoreExternBackgroundRect( (int16_t)(sTEAMAPPanelXY[ posIndex ]),
+        // (int16_t)(sTEAMAPPanelXY[ posIndex + 1 ]), TM_APPANEL_WIDTH, TM_APPANEL_HEIGHT );
+        // InvalidateRegion( (int16_t)(sTEAMAPPanelXY[ posIndex ]), (int16_t)(sTEAMAPPanelXY[
+        // posIndex + 1 ]), (int16_t)(sTEAMAPPanelXY[ posIndex ] + TM_APPANEL_WIDTH),
+        // (int16_t)(sTEAMAPPanelXY[ posIndex
         // + 1 ] + TM_APPANEL_HEIGHT ) );
 
         if (gTacticalStatus.ubCurrentTeam != OUR_TEAM || INTERRUPT_QUEUED) {
@@ -3018,8 +3019,8 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
           // Render faceplate
           // BltVideoObjectFromIndex( guiSAVEBUFFER, guiTEAMObjects, 1, sTEAMFacesXY[ posIndex ] +
           // TM_FACEPLATE_OFFSET_X, sTEAMFacesXY[ posIndex + 1 ] + TM_FACEPLATE_OFFSET_Y,
-          // VO_BLT_SRCTRANSPARENCY, NULL ); RestoreExternBackgroundRect( (INT16)(sTEAMFacesXY[
-          // posIndex ] + TM_FACEPLATE_OFFSET_X), (INT16)(sTEAMFacesXY[ posIndex + 1 ] +
+          // VO_BLT_SRCTRANSPARENCY, NULL ); RestoreExternBackgroundRect( (int16_t)(sTEAMFacesXY[
+          // posIndex ] + TM_FACEPLATE_OFFSET_X), (int16_t)(sTEAMFacesXY[ posIndex + 1 ] +
           // TM_FACEPLATE_OFFSET_Y ), TM_FACEPLATE_WIDTH, TM_FACEPLATE_HEIGHT );
         }
 
@@ -3043,8 +3044,8 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
         // RENDER ON SAVE BUFFER!
         SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
         VarFindFontCenterCoordinates(
-            (INT16)(sTEAMNamesXY[posIndex] + 2), (INT16)(sTEAMNamesXY[posIndex + 1]), TM_NAME_WIDTH,
-            TM_NAME_HEIGHT, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name);
+            (int16_t)(sTEAMNamesXY[posIndex] + 2), (int16_t)(sTEAMNamesXY[posIndex + 1]),
+            TM_NAME_WIDTH, TM_NAME_HEIGHT, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name);
         mprintf(sFontX, sFontY, L"%s", pSoldier->name);
         gprintfRestore(sFontX, sFontY, L"%s", pSoldier->name);
         // reset to frame buffer!
@@ -3619,7 +3620,7 @@ void EndRadioLocator(uint8_t ubID) {
   MercPtrs[ubID]->fShowLocator = FALSE;
 }
 
-void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, INT16 sPanelX, INT16 sPanelY) {
+void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, int16_t sPanelX, int16_t sPanelY) {
   if (!IsSolActive(pSoldier)) {
     return;
   }
@@ -3799,14 +3800,14 @@ void HandlePanelFaceAnimations(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY) {}
+void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFaceY) {}
 
-void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY, uint8_t ubPanelNum,
+void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, int16_t sX, int16_t sY, uint8_t ubPanelNum,
                           BOOLEAN fDirty) {
   if (IsSolActive(pSoldier) && !(pSoldier->uiStatusFlags & SOLDIER_DEAD)) {
     if (pSoldier->uiStatusFlags & SOLDIER_DRIVER) {
       BltVideoObjectFromIndex(guiSAVEBUFFER, guiVEHINV, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
-      RestoreExternBackgroundRect(sX, sY, (INT16)(TM_INV_WIDTH), (INT16)(TM_INV_HEIGHT));
+      RestoreExternBackgroundRect(sX, sY, (int16_t)(TM_INV_WIDTH), (int16_t)(TM_INV_HEIGHT));
     } else {
       // Look in primary hand
       INVRenderItem(guiSAVEBUFFER, pSoldier, &(pSoldier->inv[HANDPOS]), sX, sY, TM_INV_WIDTH,
@@ -3815,14 +3816,14 @@ void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY, uint
     }
 
     if (pSoldier->uiStatusFlags & (SOLDIER_PASSENGER | SOLDIER_DRIVER)) {
-      BltVideoObjectFromIndex(guiSAVEBUFFER, guiVEHINV, 1, sX, (INT16)(sY + TM_INV_HAND_SEPY),
+      BltVideoObjectFromIndex(guiSAVEBUFFER, guiVEHINV, 1, sX, (int16_t)(sY + TM_INV_HAND_SEPY),
                               VO_BLT_SRCTRANSPARENCY, NULL);
-      RestoreExternBackgroundRect(sX, (INT16)(sY + TM_INV_HAND_SEPY), (INT16)(TM_INV_WIDTH),
-                                  (INT16)(TM_INV_HEIGHT));
+      RestoreExternBackgroundRect(sX, (int16_t)(sY + TM_INV_HAND_SEPY), (int16_t)(TM_INV_WIDTH),
+                                  (int16_t)(TM_INV_HEIGHT));
     } else {
       // Do secondary hand
       INVRenderItem(guiSAVEBUFFER, pSoldier, &(pSoldier->inv[SECONDHANDPOS]), sX,
-                    (INT16)(sY + TM_INV_HAND_SEPY), TM_INV_WIDTH, TM_INV_HEIGHT, fDirty,
+                    (int16_t)(sY + TM_INV_HAND_SEPY), TM_INV_WIDTH, TM_INV_HEIGHT, fDirty,
                     &(gfTEAM_HandInvDispText[ubPanelNum][SECONDHANDPOS]), 0, FALSE, 0);
     }
   }
@@ -4063,7 +4064,7 @@ BOOLEAN RemovePlayerFromInterfaceTeamSlot(uint8_t ubPanelSlot) {
 
 void RenderTownIDString() {
   CHAR16 zTownIDString[80];
-  INT16 sFontX, sFontY;
+  int16_t sFontX, sFontY;
 
   // Render town, position
   SetFont(COMPFONT);
@@ -4196,8 +4197,8 @@ void DisableTacticalTeamPanelButtons(BOOLEAN fDisable) { gfDisableTacticalPanelB
 
 void BeginKeyPanelFromKeyShortcut() {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT16 sStartYPosition = 0;
-  INT16 sWidth = 0, sHeight = 0;
+  int16_t sStartYPosition = 0;
+  int16_t sWidth = 0, sHeight = 0;
 
   if (gsCurInterfacePanel != SM_PANEL) {
     return;
@@ -4224,8 +4225,8 @@ void BeginKeyPanelFromKeyShortcut() {
 
 void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT16 sStartYPosition = 0;
-  INT16 sWidth = 0, sHeight = 0;
+  int16_t sStartYPosition = 0;
+  int16_t sWidth = 0, sHeight = 0;
 
   if (IsMapScreen_2()) {
     if (bSelectedInfoChar == -1) {

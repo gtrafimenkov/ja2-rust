@@ -76,11 +76,11 @@ initialize the original padding to -1.
 
 // EntryPoints can't be placed on the top two gridnos in a map.  So all we do in this case
 // is return the closest gridno.  Returns TRUE if the mapindex changes.
-BOOLEAN ValidateEntryPointGridNo(INT16 *sGridNo) {
-  INT16 sXMapPos, sYMapPos;
-  INT16 sWorldX, sWorldY;
+BOOLEAN ValidateEntryPointGridNo(int16_t *sGridNo) {
+  int16_t sXMapPos, sYMapPos;
+  int16_t sWorldX, sWorldY;
   INT32 iNewMapX, iNewMapY;
-  INT16 sTopLimit, sBottomLimit;
+  int16_t sTopLimit, sBottomLimit;
 
   if (*sGridNo < 0) return FALSE;  // entry point is non-existant
 
@@ -100,7 +100,7 @@ BOOLEAN ValidateEntryPointGridNo(INT16 *sGridNo) {
     return FALSE;  // already valid
   }
 
-  *sGridNo = (INT16)MAPROWCOLTOPOS(iNewMapY / 10, iNewMapX / 10);
+  *sGridNo = (int16_t)MAPROWCOLTOPOS(iNewMapY / 10, iNewMapX / 10);
 
   return TRUE;  // modified
 }

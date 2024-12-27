@@ -20,14 +20,14 @@
 extern uint32_t guiExitScreen;
 BOOLEAN gfFadeInitialized = FALSE;
 int8_t gbFadeValue;
-INT16 gsFadeLimit;
+int16_t gsFadeLimit;
 uint32_t guiTime;
 uint32_t guiFadeDelay;
 BOOLEAN gfFirstTimeInFade = FALSE;
-INT16 gsFadeCount;
+int16_t gsFadeCount;
 int8_t gbFadeType;
 INT32 giX1, giX2, giY1, giY2;
-INT16 gsFadeRealCount;
+int16_t gsFadeRealCount;
 BOOLEAN gfFadeInVideo;
 
 uint32_t uiOldMusicMode;
@@ -294,7 +294,7 @@ void FadeFrameBufferVersionOne() {
   INT32 cX, cY;
   uint32_t uiDestPitchBYTES;
   uint16_t *pBuf;
-  INT16 bR, bG, bB;
+  int16_t bR, bG, bB;
   uint32_t uiRGBColor;
   uint16_t s16BPPSrc;
 
@@ -333,10 +333,10 @@ void FadeInBackBufferVersionOne() {
   INT32 cX, cY;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint16_t *pSrcBuf, *pDestBuf;
-  INT16 bR, bG, bB;
+  int16_t bR, bG, bB;
   uint32_t uiRGBColor;
   uint16_t s16BPPSrc;
-  INT16 bFadeVal = (gsFadeLimit - gsFadeCount) * gbFadeValue;
+  int16_t bFadeVal = (gsFadeLimit - gsFadeCount) * gbFadeValue;
 
   pDestBuf = (uint16_t *)LockVideoSurface(BACKBUFFER, &uiDestPitchBYTES);
   pSrcBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
@@ -375,7 +375,7 @@ void FadeFrameBufferVersionFaster(int8_t bFadeValue) {
   INT32 cX, cY, iStartX, iStartY;
   uint32_t uiDestPitchBYTES;
   uint16_t *pBuf;
-  INT16 bR, bG, bB;
+  int16_t bR, bG, bB;
   uint32_t uiRGBColor;
   uint16_t s16BPPSrc;
 
@@ -421,7 +421,7 @@ void FadeFrameBufferVersionFaster(int8_t bFadeValue) {
 
 void FadeFrameBufferSide() {
   INT32 iX1, iX2;
-  INT16 sFadeMove;
+  int16_t sFadeMove;
 
   sFadeMove = gsFadeCount * 4;
 
@@ -438,10 +438,10 @@ void FadeFrameBufferSide() {
 
 void FadeFrameBufferSquare() {
   INT32 iX1, iX2, iY1, iY2;
-  INT16 sFadeXMove, sFadeYMove;
+  int16_t sFadeXMove, sFadeYMove;
 
   sFadeXMove = SQUARE_STEP;
-  sFadeYMove = (INT16)(sFadeXMove * .75);
+  sFadeYMove = (int16_t)(sFadeXMove * .75);
 
   iX1 = giX1;
   iX2 = giX1 + sFadeXMove;
@@ -467,11 +467,11 @@ void FadeFrameBufferSquare() {
 
 void FadeInBackBufferSquare() {
   INT32 iX1, iX2, iY1, iY2;
-  INT16 sFadeXMove, sFadeYMove;
+  int16_t sFadeXMove, sFadeYMove;
   blt_vs_fx BltFx;
 
   sFadeXMove = SQUARE_STEP;
-  sFadeYMove = (INT16)(sFadeXMove * .75);
+  sFadeYMove = (int16_t)(sFadeXMove * .75);
 
   if (gsFadeCount == 0) {
     ColorFillVideoSurfaceArea(BACKBUFFER, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));

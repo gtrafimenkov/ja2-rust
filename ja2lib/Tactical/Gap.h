@@ -5,7 +5,7 @@
 #include "Tactical/Faces.h"
 
 typedef uint8_t AudioSample8;
-typedef INT16 AudioSample16;
+typedef int16_t AudioSample16;
 
 void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList);
 void AudioGapListDone(AudioGapList *pGapList);

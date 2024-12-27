@@ -57,7 +57,7 @@ SGPRect gOldClippingRect, gOldDirtyClippingRect;
 uint32_t guiTacticalInterfaceFlags;
 
 uint16_t gusUICurIntTileEffectIndex;
-INT16 gsUICurIntTileEffectGridNo;
+int16_t gsUICurIntTileEffectGridNo;
 uint8_t gsUICurIntTileOldShade;
 
 BOOLEAN gfRerenderInterfaceFromHelpText = FALSE;
@@ -66,7 +66,7 @@ struct MOUSE_REGION gLockPanelOverlayRegion;
 
 extern void RenderTownIDString();
 extern BOOLEAN gfUIOverItemPool;
-extern INT16 gfUIOverItemPoolGridNo;
+extern int16_t gfUIOverItemPoolGridNo;
 extern BOOLEAN gfInMovementMenu;
 extern BOOLEAN gfInItemPickupMenu;
 extern BOOLEAN gfInOpenDoorMenu;
@@ -347,17 +347,17 @@ void RenderRubberBanding() {
   uint16_t usLineColor;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
-  INT16 iLeft, iRight, iTop, iBottom;
+  int16_t iLeft, iRight, iTop, iBottom;
   INT32 iBack = -1;
   static INT32 iFlashColor = 0;
   static INT32 uiTimeOfLastUpdate = 0;
 
   if (!gRubberBandActive) return;
 
-  iLeft = (INT16)gRubberBandRect.iLeft;
-  iRight = (INT16)gRubberBandRect.iRight;
-  iTop = (INT16)gRubberBandRect.iTop;
-  iBottom = (INT16)gRubberBandRect.iBottom;
+  iLeft = (int16_t)gRubberBandRect.iLeft;
+  iRight = (int16_t)gRubberBandRect.iRight;
+  iTop = (int16_t)gRubberBandRect.iTop;
+  iBottom = (int16_t)gRubberBandRect.iBottom;
 
   if (iLeft == iRight && iTop == iBottom) {
     return;
@@ -380,12 +380,12 @@ void RenderRubberBanding() {
 
   if ((iRight - iLeft) > 0) {
     LineDraw(TRUE, iLeft, iTop, iRight, iTop, usLineColor, pDestBuf);
-    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iTop, (INT16)(iRight + 1),
-                                   (INT16)(iTop + 1));
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iTop, (int16_t)(iRight + 1),
+                                   (int16_t)(iTop + 1));
   } else if ((iRight - iLeft) < 0) {
     LineDraw(TRUE, iLeft, iTop, iRight, iTop, usLineColor, pDestBuf);
-    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iTop, (INT16)(iLeft + 1),
-                                   (INT16)(iTop + 1));
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iTop, (int16_t)(iLeft + 1),
+                                   (int16_t)(iTop + 1));
   }
 
   if (iBack != -1) {
@@ -396,12 +396,12 @@ void RenderRubberBanding() {
 
   if ((iRight - iLeft) > 0) {
     LineDraw(TRUE, iLeft, iBottom, iRight, iBottom, usLineColor, pDestBuf);
-    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iBottom, (INT16)(iRight + 1),
-                                   (INT16)(iBottom + 1));
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iBottom, (int16_t)(iRight + 1),
+                                   (int16_t)(iBottom + 1));
   } else if ((iRight - iLeft) < 0) {
     LineDraw(TRUE, iLeft, iBottom, iRight, iBottom, usLineColor, pDestBuf);
-    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iBottom, (INT16)(iLeft + 1),
-                                   (INT16)(iBottom + 1));
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iBottom, (int16_t)(iLeft + 1),
+                                   (int16_t)(iBottom + 1));
   }
 
   if (iBack != -1) {
@@ -413,11 +413,11 @@ void RenderRubberBanding() {
   if ((iBottom - iTop) > 0) {
     LineDraw(TRUE, iLeft, iTop, iLeft, iBottom, usLineColor, pDestBuf);
     iBack =
-        RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iTop, (INT16)(iLeft + 1), iBottom);
+        RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iTop, (int16_t)(iLeft + 1), iBottom);
   } else if ((iBottom - iTop) < 0) {
     LineDraw(TRUE, iLeft, iTop, iLeft, iBottom, usLineColor, pDestBuf);
     iBack =
-        RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iBottom, (INT16)(iLeft + 1), iTop);
+        RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iLeft, iBottom, (int16_t)(iLeft + 1), iTop);
   }
 
   if (iBack != -1) {
@@ -428,12 +428,12 @@ void RenderRubberBanding() {
 
   if ((iBottom - iTop) > 0) {
     LineDraw(TRUE, iRight, iTop, iRight, iBottom, usLineColor, pDestBuf);
-    iBack =
-        RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iTop, (INT16)(iRight + 1), iBottom);
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iTop, (int16_t)(iRight + 1),
+                                   iBottom);
   } else if ((iBottom - iTop) < 0) {
     LineDraw(TRUE, iRight, iTop, iRight, iBottom, usLineColor, pDestBuf);
-    iBack =
-        RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iBottom, (INT16)(iRight + 1), iTop);
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, iRight, iBottom, (int16_t)(iRight + 1),
+                                   iTop);
   }
 
   if (iBack != -1) {
@@ -448,9 +448,9 @@ void RenderTopmostTacticalInterface() {
   uint32_t cnt;
   static uint32_t uiBogTarget = 0;
   VOBJECT_DESC VObjectDesc;
-  INT16 sX, sY;
-  INT16 sOffsetX, sOffsetY, sTempY_S, sTempX_S;
-  INT16 usMapPos;
+  int16_t sX, sY;
+  int16_t sOffsetX, sOffsetY, sTempY_S, sTempX_S;
+  int16_t usMapPos;
   struct ITEM_POOL *pItemPool;
 
   if (gfRerenderInterfaceFromHelpText == TRUE) {
@@ -512,8 +512,8 @@ void RenderTopmostTacticalInterface() {
           }
 
           if (GridNoOnScreen(
-                  (INT16)MAPROWCOLTOPOS((MercPtrs[cnt]->sPlannedTargetY / CELL_Y_SIZE),
-                                        (MercPtrs[cnt]->sPlannedTargetX / CELL_X_SIZE)))) {
+                  (int16_t)MAPROWCOLTOPOS((MercPtrs[cnt]->sPlannedTargetY / CELL_Y_SIZE),
+                                          (MercPtrs[cnt]->sPlannedTargetX / CELL_X_SIZE)))) {
             // GET SCREEN COORDINATES
             sOffsetX = (MercPtrs[cnt]->sPlannedTargetX - gsRenderCenterX);
             sOffsetY = (MercPtrs[cnt]->sPlannedTargetY - gsRenderCenterY);
@@ -572,7 +572,7 @@ void RenderTopmostTacticalInterface() {
         // Display damage
 
         // Use world coordinates!
-        INT16 sMercScreenX, sMercScreenY, sOffsetX, sOffsetY, sDamageX, sDamageY;
+        int16_t sMercScreenX, sMercScreenY, sOffsetX, sOffsetY, sDamageX, sDamageY;
 
         if (pSoldier->sGridNo != NOWHERE && pSoldier->bVisible != -1) {
           GetSoldierScreenPos(pSoldier, &sMercScreenX, &sMercScreenY);
@@ -585,8 +585,8 @@ void RenderTopmostTacticalInterface() {
             sDamageX += 25;
             sDamageY += 10;
           } else {
-            sDamageX = pSoldier->sDamageX + (INT16)(sMercScreenX + (2 * 30 / 3));
-            sDamageY = pSoldier->sDamageY + (INT16)(sMercScreenY - 5);
+            sDamageX = pSoldier->sDamageX + (int16_t)(sMercScreenX + (2 * 30 / 3));
+            sDamageY = pSoldier->sDamageY + (int16_t)(sMercScreenY - 5);
 
             sDamageX -= sOffsetX;
             sDamageY -= sOffsetY;
@@ -637,9 +637,9 @@ void RenderTopmostTacticalInterface() {
         // Check if we are over an item pool
         if (GetItemPool(gfUIOverItemPoolGridNo, &pItemPool, pSoldier->bLevel)) {
           struct STRUCTURE *pStructure = NULL;
-          INT16 sIntTileGridNo;
+          int16_t sIntTileGridNo;
           int8_t bZLevel = 0;
-          INT16 sActionGridNo = usMapPos;
+          int16_t sActionGridNo = usMapPos;
 
           // Get interactive tile...
           if (ConditionalGetCurInteractiveTileGridNoAndStructure(&sIntTileGridNo, &pStructure,
@@ -669,9 +669,9 @@ void RenderTopmostTacticalInterface() {
           // Check if we are over an item pool
           if (GetItemPool(gfUIOverItemPoolGridNo, &pItemPool, bCheckLevel)) {
             struct STRUCTURE *pStructure = NULL;
-            INT16 sIntTileGridNo;
+            int16_t sIntTileGridNo;
             int8_t bZLevel = 0;
-            INT16 sActionGridNo = usMapPos;
+            int16_t sActionGridNo = usMapPos;
 
             // Get interactive tile...
             if (ConditionalGetCurInteractiveTileGridNoAndStructure(&sIntTileGridNo, &pStructure,

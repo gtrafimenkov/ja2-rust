@@ -426,7 +426,7 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   CHAR8 zFilename[150];
   struct DB_STRUCTURE_REF *pDBStructureRef;
   uint8_t ubLoop;
-  INT16 sTileGridNo;
+  int16_t sTileGridNo;
   DB_STRUCTURE_TILE **ppTile;
   uint16_t usStructIndex;
   uint32_t uiDirectionUseFlag;
@@ -487,13 +487,13 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
   AniParams.sGridNo = pCorpse->def.sGridNo;
   AniParams.ubLevelID = ubLevelID;
-  AniParams.sDelay = (INT16)(150);
+  AniParams.sDelay = (int16_t)(150);
   AniParams.sStartFrame = 0;
   AniParams.uiFlags = ANITILE_CACHEDTILE | ANITILE_PAUSED | ANITILE_OPTIMIZEFORSLOWMOVING |
                       ANITILE_ANIMATE_Z | ANITILE_ERASEITEMFROMSAVEBUFFFER | uiDirectionUseFlag;
   AniParams.sX = CenterX(pCorpse->def.sGridNo);
   AniParams.sY = CenterY(pCorpse->def.sGridNo);
-  AniParams.sZ = (INT16)pCorpse->def.sHeightAdjustment;
+  AniParams.sZ = (int16_t)pCorpse->def.sHeightAdjustment;
   AniParams.uiUserData3 = pCorpse->def.bDirection;
 
   if (!gGameSettings.fOptions[TOPTION_BLOOD_N_GORE]) {
@@ -690,7 +690,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   int8_t bVisible = -1;
   struct OBJECTTYPE *pObj;
   uint8_t ubNumGoo;
-  INT16 sNewGridNo;
+  int16_t sNewGridNo;
   struct OBJECTTYPE ItemObject;
 
   if (pSoldier->sGridNo == NOWHERE) {
@@ -712,7 +712,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   Corpse.ubProfile = GetSolProfile(pSoldier);
 
   if (Corpse.bLevel > 0) {
-    Corpse.sHeightAdjustment = (INT16)(pSoldier->sHeightAdjustment - WALL_HEIGHT);
+    Corpse.sHeightAdjustment = (int16_t)(pSoldier->sHeightAdjustment - WALL_HEIGHT);
   }
 
   SET_PALETTEREP_ID(Corpse.HeadPal, pSoldier->HeadPal);
@@ -841,9 +841,9 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   return (TRUE);
 }
 
-INT16 FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier) {
+int16_t FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier) {
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = NOWHERE;
+  int16_t sLowestGridNo = NOWHERE;
   INT32 cnt;
   ROTTING_CORPSE *pCorpse;
 
@@ -871,7 +871,7 @@ void AddCrowToCorpse(ROTTING_CORPSE *pCorpse) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
   int8_t bBodyType = CROW;
   uint8_t iNewIndex;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubDirection;
   struct SOLDIERTYPE *pSoldier;
   uint8_t ubRoomNum;
@@ -942,7 +942,7 @@ void HandleCrowLeave(struct SOLDIERTYPE *pSoldier) {
 
 void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubDirection;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   // Set desired height
   pSoldier->sDesiredHeight = 100;
@@ -1037,8 +1037,8 @@ void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse) {
 void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, int8_t bTeam) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sDistVisible;
-  INT16 sGridNo;
+  int16_t sDistVisible;
+  int16_t sGridNo;
 
   // If this cump is already visible, return
   if (pCorpse->def.bVisible == 1) {
@@ -1078,8 +1078,8 @@ void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, int8_t bTeam) {
 
 void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt;
-  INT16 sDistVisible;
-  INT16 sGridNo;
+  int16_t sDistVisible;
+  int16_t sGridNo;
   ROTTING_CORPSE *pCorpse;
 
   // Should we say disgust quote?
@@ -1200,7 +1200,7 @@ BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, uint32_t uiBase,
   return (TRUE);
 }
 
-ROTTING_CORPSE *FindCorpseBasedOnStructure(INT16 sGridNo, struct STRUCTURE *pStructure) {
+ROTTING_CORPSE *FindCorpseBasedOnStructure(int16_t sGridNo, struct STRUCTURE *pStructure) {
   struct LEVELNODE *pLevelNode;
   ROTTING_CORPSE *pCorpse = NULL;
 
@@ -1220,11 +1220,11 @@ ROTTING_CORPSE *FindCorpseBasedOnStructure(INT16 sGridNo, struct STRUCTURE *pStr
   return (pCorpse);
 }
 
-void CorpseHit(INT16 sGridNo, uint16_t usStructureID) {
+void CorpseHit(int16_t sGridNo, uint16_t usStructureID) {
 #if 0
 	struct STRUCTURE				*pStructure, *pBaseStructure;
 	ROTTING_CORPSE	*pCorpse = NULL;
-	INT16						sBaseGridNo;
+	int16_t						sBaseGridNo;
 
 	pStructure = FindStructureByID( sGridNo, usStructureID );
 
@@ -1269,10 +1269,10 @@ void CorpseHit(INT16 sGridNo, uint16_t usStructureID) {
 #endif
 }
 
-void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID) {
+void VaporizeCorpse(int16_t sGridNo, uint16_t usStructureID) {
   struct STRUCTURE *pStructure, *pBaseStructure;
   ROTTING_CORPSE *pCorpse = NULL;
-  INT16 sBaseGridNo;
+  int16_t sBaseGridNo;
   ANITILE_PARAMS AniParams;
 
   pStructure = FindStructureByID(sGridNo, usStructureID);
@@ -1303,12 +1303,12 @@ void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID) {
     memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
     AniParams.sGridNo = sBaseGridNo;
     AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-    AniParams.sDelay = (INT16)(80);
+    AniParams.sDelay = (int16_t)(80);
     AniParams.sStartFrame = 0;
     AniParams.uiFlags = ANITILE_CACHEDTILE | ANITILE_FORWARD;
     AniParams.sX = CenterX(sBaseGridNo);
     AniParams.sY = CenterY(sBaseGridNo);
-    AniParams.sZ = (INT16)pCorpse->def.sHeightAdjustment;
+    AniParams.sZ = (int16_t)pCorpse->def.sHeightAdjustment;
 
     strcpy(AniParams.zCachedFile, "TILECACHE\\GEN_BLOW.STI");
     CreateAnimationTile(&AniParams);
@@ -1328,14 +1328,14 @@ void VaporizeCorpse(INT16 sGridNo, uint16_t usStructureID) {
                 SoundDir(sGridNo));
 }
 
-INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, int8_t ubRadius) {
-  INT16 sSweetGridNo;
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, cnt3;
-  INT16 sGridNo;
+int16_t FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, int8_t ubRadius) {
+  int16_t sSweetGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, cnt3;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = 0;
+  int16_t sLowestGridNo = 0;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
@@ -1410,7 +1410,7 @@ INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, int8_
           } else {
             for (cnt3 = 0; cnt3 < 8; cnt3++) {
               if (OkayToAddStructureToWorld(
-                      (INT16)sGridNo, pDef->bLevel,
+                      (int16_t)sGridNo, pDef->bLevel,
                       &(pStructureFileRef->pDBStructureRef[gOneCDirection[cnt3]]),
                       INVALID_STRUCTURE_ID)) {
                 fDirectionFound = TRUE;
@@ -1457,9 +1457,9 @@ BOOLEAN IsValidDecapitationCorpse(ROTTING_CORPSE *pCorpse) {
   return (gbCorpseValidForDecapitation[pCorpse->def.ubType]);
 }
 
-ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, int8_t bLevel) {
+ROTTING_CORPSE *GetCorpseAtGridNo(int16_t sGridNo, int8_t bLevel) {
   struct STRUCTURE *pStructure, *pBaseStructure;
-  INT16 sBaseGridNo;
+  int16_t sBaseGridNo;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_CORPSE);
 
@@ -1478,7 +1478,7 @@ ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, int8_t bLevel) {
   return (NULL);
 }
 
-void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel) {
+void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel) {
   struct OBJECTTYPE Object;
   ROTTING_CORPSE *pCorpse;
   ROTTING_CORPSE_DEFINITION CorpseDef;
@@ -1598,7 +1598,7 @@ void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iI
   }
 }
 
-void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                         uint8_t ubLevel) {
   ROTTING_CORPSE *pCorpse;
   int8_t bToleranceThreshold = 0;
@@ -1652,7 +1652,7 @@ void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGri
   }
 }
 
-INT16 GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID) {
+int16_t GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID) {
   INT32 cnt;
   ROTTING_CORPSE *pCorpse;
 
@@ -1683,7 +1683,7 @@ void DecayRottingCorpseAIWarnings(void) {
   }
 }
 
-uint8_t GetNearestRottingCorpseAIWarning(INT16 sGridNo) {
+uint8_t GetNearestRottingCorpseAIWarning(int16_t sGridNo) {
   INT32 cnt;
   ROTTING_CORPSE *pCorpse;
   uint8_t ubHighestWarning = 0;

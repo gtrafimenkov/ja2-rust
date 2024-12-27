@@ -306,7 +306,7 @@ void RestoreBackgroundForSleepGlowRegionList(void);
 void PlayGlowRegionSound(void);
 
 // is this character in the action of plotting a path?
-INT16 CharacterIsGettingPathPlotted(INT16 sCharNumber);
+int16_t CharacterIsGettingPathPlotted(int16_t sCharNumber);
 
 // disable team info panels
 void DisableTeamInfoPanels(void);
@@ -315,7 +315,8 @@ void DisableTeamInfoPanels(void);
 void EnableTeamInfoPanels(void);
 
 // activate pop up for soldiers in the pre battle interface
-void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPopupType, INT16 xp, INT16 yp);
+void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPopupType, int16_t xp,
+                          int16_t yp);
 
 // hop up one leve,l int he map screen level interface
 void GoUpOneLevelInMap(void);
@@ -330,7 +331,7 @@ void JumpToLevel(INT32 iLevel);
 void CheckAndUpdateBasedOnContractTimes(void);
 
 // check if are just about to display this pop up or stopping display
-void HandleDisplayOfItemPopUpForSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
+void HandleDisplayOfItemPopUpForSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ);
 
 // display red arrow by name of selected merc
 void HandleDisplayOfSelectedMercArrows(void);
@@ -404,7 +405,7 @@ void GoToPrevCharacterInList(void);
 void GoToNextCharacterInList(void);
 
 // this does the whole miner giving player info speil
-void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuoteNumber,
+void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, int16_t sQuoteNumber,
                       BOOLEAN fForceMapscreen);
 
 // set up the event of animating a mine sector
@@ -428,14 +429,14 @@ void SetUpMapScreenFastHelpText(void);
 void TurnOnSectorLocator(uint8_t ubProfileID);
 void TurnOffSectorLocator();
 
-extern INT16 gsSectorLocatorX;
-extern INT16 gsSectorLocatorY;
+extern int16_t gsSectorLocatorX;
+extern int16_t gsSectorLocatorY;
 extern uint8_t gubBlitSectorLocatorCode;
 
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };
 
 extern uint32_t guiSectorLocatorGraphicID;
-void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubLocatorID);
+void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubLocatorID);
 
 // the tactical version
 
@@ -468,11 +469,11 @@ void DeselectVehicleForMovement(INT32 iVehicleId);
 void AddVehicleToMovingLists(INT32 iVehicleId);
 void AddSquadToMovingLists(INT32 iSquadNumber);
 void AddSoldierToMovingLists(struct SOLDIERTYPE *pSoldier);
-void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
-void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
+void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
 void ReBuildMoveBox(void);
-BOOLEAN IsCharacterSelectedForAssignment(INT16 sCharNumber);
-BOOLEAN IsCharacterSelectedForSleep(INT16 sCharNumber);
+BOOLEAN IsCharacterSelectedForAssignment(int16_t sCharNumber);
+BOOLEAN IsCharacterSelectedForSleep(int16_t sCharNumber);
 
 // the update box
 void CreateDestroyTheUpdateBox(void);

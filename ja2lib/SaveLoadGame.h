@@ -32,8 +32,8 @@ typedef struct {
   uint32_t uiDay;
   uint8_t ubHour;
   uint8_t ubMin;
-  INT16 sSectorX;
-  INT16 sSectorY;
+  int16_t sSectorX;
+  int16_t sSectorY;
   int8_t bSectorZ;
   uint8_t ubNumOfMercsOnPlayersTeam;
   INT32 iCurrentBalance;
@@ -71,7 +71,7 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile);
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ);
+void GetBestPossibleSectorXYZValues(int16_t *psSectorX, int16_t *psSectorY, int8_t *pbSectorZ);
 
 extern uint32_t guiLastSaveGameNum;
 int8_t GetNumberForAutoSave(BOOLEAN fLatestAutoSave);

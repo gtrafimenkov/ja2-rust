@@ -76,11 +76,11 @@ void UpdateLightingSprite(LIGHTEFFECT *pLight) {
 
   LightSpritePower(pLight->iLight, TRUE);
   //	LightSpriteFake( pLight->iLight );
-  LightSpritePosition(pLight->iLight, (INT16)(CenterX(pLight->sGridNo) / CELL_X_SIZE),
-                      (INT16)(CenterY(pLight->sGridNo) / CELL_Y_SIZE));
+  LightSpritePosition(pLight->iLight, (int16_t)(CenterX(pLight->sGridNo) / CELL_X_SIZE),
+                      (int16_t)(CenterY(pLight->sGridNo) / CELL_Y_SIZE));
 }
 
-INT32 NewLightEffect(INT16 sGridNo, int8_t bType) {
+INT32 NewLightEffect(int16_t sGridNo, int8_t bType) {
   LIGHTEFFECT *pLight;
   INT32 iLightIndex;
   uint8_t ubDuration = 0;
@@ -119,7 +119,7 @@ INT32 NewLightEffect(INT16 sGridNo, int8_t bType) {
   return (iLightIndex);
 }
 
-void RemoveLightEffectFromTile(INT16 sGridNo) {
+void RemoveLightEffectFromTile(int16_t sGridNo) {
   LIGHTEFFECT *pLight;
   uint32_t cnt;
 
@@ -278,7 +278,7 @@ BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
+BOOLEAN SaveLightEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   uint32_t uiNumLightEffects = 0;
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
@@ -343,7 +343,7 @@ BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadLightEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
+BOOLEAN LoadLightEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   uint32_t uiNumBytesRead;
   uint32_t uiCount;
   uint32_t uiCnt = 0;

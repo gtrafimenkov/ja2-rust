@@ -1237,7 +1237,7 @@ BOOLEAN LoadMercBioInfo(uint8_t ubIndex, STR16 pInfoString, STR16 pAddInfo) {
 
 BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
   uint8_t i;
-  INT16 PosX, PosY, sCenX, sCenY;
+  int16_t PosX, PosY, sCenX, sCenY;
   uint16_t usItem;
   INVTYPE *pItem;
   struct VObject *hVObject;
@@ -1624,7 +1624,7 @@ uint8_t GetStatColor(int8_t bStat) {
 // displays the dots between the stats and the stat name
 void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, STR16 pString) {
   uint16_t usStringLength = StringPixLength(pString, AIM_M_FONT_STATIC_TEXT);
-  INT16 i;
+  int16_t i;
   uint16_t usPosX;
 
   usPosX = usStatX;
@@ -1769,7 +1769,7 @@ int8_t AimMemberHireMerc() {
   MERC_HIRE_STRUCT HireMercStruct;
   uint8_t ubCurrentSoldier = AimMercArray[gbCurrentIndex];
   int8_t bReturnCode;
-  INT16 sSoldierID = 0;
+  int16_t sSoldierID = 0;
   int8_t bTypeOfContract = 0;
 
   if (MoneyGetBalance() < giContractAmount) {
@@ -3740,7 +3740,7 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
 #ifdef JA2TESTVERSION
 // TEMP:
 void TempHiringOfMercs(uint8_t ubNumberOfMercs, BOOLEAN fReset) {
-  INT16 i;
+  int16_t i;
   uint8_t MercID[] = {11, 16, 29, 36, 2, 10, 17, 6, 7, 12, 0, 1, 3, 4, 5, 8, 9, 13, 14, 15, 18, 19};
   MERC_HIRE_STRUCT HireMercStruct;
   static BOOLEAN fHaveCalledBefore = FALSE;
@@ -3996,7 +3996,7 @@ VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect ) ) return(FALSE);
 #if defined(JA2TESTVERSION)
 
 void DemoHiringOfMercs() {
-  INT16 i;
+  int16_t i;
 #ifdef GERMAN
   uint8_t MercID[] = {7, 10, 4, 14, 50};
 #else

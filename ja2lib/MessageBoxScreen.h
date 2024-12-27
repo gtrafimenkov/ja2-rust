@@ -9,8 +9,8 @@ typedef struct {
   uint16_t usFlags;
   uint32_t uiExitScreen;
   MSGBOX_CALLBACK ExitCallback;
-  INT16 sX;
-  INT16 sY;
+  int16_t sX;
+  int16_t sY;
   uint32_t uiSaveBuffer;
   struct MOUSE_REGION BackRegion;
   uint16_t usWidth;

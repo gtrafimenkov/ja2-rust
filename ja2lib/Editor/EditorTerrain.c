@@ -153,7 +153,7 @@ void TerrainTileButtonRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
 
 void ChooseWeightedTerrainTile() {
   uint16_t x, usWeight;
-  INT16 sRandomNum;
+  int16_t sRandomNum;
   if (!usTotalWeight) {  // Not in the weighted mode.  CurrentPaste will already contain the
                          // selected tile.
     return;
@@ -183,7 +183,7 @@ void Fill(INT32 x, INT32 y) {
   if (count > maxCount) maxCount = count;
 
   iMapIndex = y * WORLD_COLS + x;
-  if (!GridNoOnVisibleWorldTile((INT16)iMapIndex)) {
+  if (!GridNoOnVisibleWorldTile((int16_t)iMapIndex)) {
     count--;
     return;
   }
@@ -203,14 +203,14 @@ void Fill(INT32 x, INT32 y) {
 }
 
 void TerrainFill(uint32_t iMapIndex) {
-  INT16 sX, sY;
+  int16_t sX, sY;
   // determine what we should be looking for to replace...
   GetTileType(gpWorldLevelData[iMapIndex].pLandHead->usIndex, &guiSearchType);
 
   // check terminating conditions
   if (guiSearchType == CurrentPaste) return;
 
-  ConvertGridNoToXY((INT16)iMapIndex, &sX, &sY);
+  ConvertGridNoToXY((int16_t)iMapIndex, &sX, &sY);
 
   count = 0;
 

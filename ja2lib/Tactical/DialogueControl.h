@@ -308,11 +308,11 @@ void ShutdownStaticExternalNPCFaces(void);
 void SayQuoteFromAnyBodyInSector(uint16_t usQuoteNum);
 void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                      uint16_t usQuoteNum);
-void SayQuoteFromNearbyMercInSector(INT16 sGridNo, int8_t bDistance, uint16_t usQuoteNum);
-void SayQuote58FromNearbyMercInSector(INT16 sGridNo, int8_t bDistance, uint16_t usQuoteNum,
+void SayQuoteFromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum);
+void SayQuote58FromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum,
                                       int8_t bSex);
-void ExecuteTacticalTextBox(INT16 sLeftPosition, STR16 pString);
-void ExecuteTacticalTextBoxForLastQuote(INT16 sLeftPosition, STR16 pString);
+void ExecuteTacticalTextBox(int16_t sLeftPosition, STR16 pString);
+void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, STR16 pString);
 uint32_t FindDelayForString(STR16 sString);
 void BeginLoggingForBleedMeToos(BOOLEAN fStart);
 
@@ -348,6 +348,6 @@ void PauseDialogueQueue(void);
 // unpause the dialogue queue
 void UnPauseDialogueQueue(void);
 
-void SetExternMapscreenSpeechPanelXY(INT16 sXPos, INT16 sYPos);
+void SetExternMapscreenSpeechPanelXY(int16_t sXPos, int16_t sYPos);
 
 #endif

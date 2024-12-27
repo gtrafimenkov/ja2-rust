@@ -175,8 +175,8 @@ uint16_t FindReplacementMagazine(uint8_t ubCalibre, uint8_t ubMagSize, uint8_t u
 uint16_t FindReplacementMagazineIfNecessary(uint16_t usOldGun, uint16_t usOldAmmo,
                                             uint16_t usNewGun);
 
-BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, int8_t bLevel, INT32 iDamage,
-                           uint8_t ubOwner);
+BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel,
+                           INT32 iDamage, uint8_t ubOwner);
 
 BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);
 BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs);

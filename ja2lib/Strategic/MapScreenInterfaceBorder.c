@@ -710,7 +710,7 @@ void ToggleItemsFilter(void) {
 /*
 void ShowDestinationOfPlottedPath( STR16 pLoc )
 {
-        INT16 sFontX, sFontY;
+        int16_t sFontX, sFontY;
 
         SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
 
@@ -1012,21 +1012,21 @@ void DisplayCurrentLevelMarker(void) {
   // it's actually a white rectangle, not a green arrow!
   GetVideoObject(&hHandle, guiLEVELMARKER);
   BltVideoObject(guiSAVEBUFFER, hHandle, 0, MAP_LEVEL_MARKER_X + 1,
-                 MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * (INT16)iCurrentMapSectorZ),
+                 MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * (int16_t)iCurrentMapSectorZ),
                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   return;
 }
 
 void CreateMouseRegionsForLevelMarkers(void) {
-  INT16 sCounter = 0;
+  int16_t sCounter = 0;
   CHAR16 sString[64];
 
   for (sCounter = 0; sCounter < 4; sCounter++) {
     MSYS_DefineRegion(&LevelMouseRegions[sCounter], MAP_LEVEL_MARKER_X,
-                      (INT16)(MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * sCounter)),
+                      (int16_t)(MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * sCounter)),
                       MAP_LEVEL_MARKER_X + MAP_LEVEL_MARKER_WIDTH,
-                      (INT16)(MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * (sCounter + 1))),
+                      (int16_t)(MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * (sCounter + 1))),
                       MSYS_PRIORITY_HIGH, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, LevelMarkerBtnCallback);
 
     MSYS_SetRegionUserData(&LevelMouseRegions[sCounter], 0, sCounter);
@@ -1037,7 +1037,7 @@ void CreateMouseRegionsForLevelMarkers(void) {
 }
 
 void DeleteMouseRegionsForLevelMarkers(void) {
-  INT16 sCounter = 0;
+  int16_t sCounter = 0;
 
   for (sCounter = 0; sCounter < 4; sCounter++) {
     MSYS_RemoveRegion(&LevelMouseRegions[sCounter]);

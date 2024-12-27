@@ -332,7 +332,7 @@ void UnloadFont(uint32_t FontIndex) {
 //	Returns the width of a given character in the font.
 //
 //*****************************************************************************
-uint32_t GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
+uint32_t GetWidth(struct VObject *hSrcVObject, int16_t ssIndex) {
   ETRLEObject *pTrav;
 
   // Assertions
@@ -351,7 +351,7 @@ uint32_t GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
 // evaluate to is 512.
 //    'uiCharCount' specifies how many characters of the string are counted.
 //*****************************************************************************
-INT16 StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, STR16 pFontString, ...) {
+int16_t StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
 
@@ -385,11 +385,11 @@ INT16 StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, STR16 pFontStrin
 // 'uiCharCount' specifies how many characters of the string are counted.
 // YOU HAVE TO PREBUILD THE FAST HELP STRING!
 //*****************************************************************************
-INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiCharCount,
-                                 STR16 pFontString) {
+int16_t StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiCharCount,
+                                   STR16 pFontString) {
   wchar_t string[512];
   uint32_t i, index;
-  INT16 sBoldDiff = 0;
+  int16_t sBoldDiff = 0;
   CHAR16 str[2];
 
   Assert(pFontString != NULL);
@@ -431,16 +431,16 @@ INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiC
 //  Return the length of the of the string or count characters in the
 //  string, which ever comes first.
 //
-//  Returns INT16
+//  Returns int16_t
 //
 //  Created by:     Gilles Beauparlant
 //  Created on:     12/1/99
 //
 //*****************************************************************************************
-INT16 StringNPixLength(STR16 string, uint32_t uiMaxCount, INT32 UseFont) {
+int16_t StringNPixLength(STR16 string, uint32_t uiMaxCount, INT32 UseFont) {
   uint32_t Cur, uiCharCount;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
 
   Cur = 0;
   uiCharCount = 0;
@@ -451,7 +451,7 @@ INT16 StringNPixLength(STR16 string, uint32_t uiMaxCount, INT32 UseFont) {
     Cur += GetWidth(FontObjs[UseFont], transletter);
     uiCharCount++;
   }
-  return ((INT16)Cur);
+  return ((int16_t)Cur);
 }
 
 //*****************************************************************************
@@ -461,10 +461,10 @@ INT16 StringNPixLength(STR16 string, uint32_t uiMaxCount, INT32 UseFont) {
 //	Returns the length of a string in pixels, depending on the font given.
 //
 //*****************************************************************************
-INT16 StringPixLength(STR16 string, INT32 UseFont) {
+int16_t StringPixLength(STR16 string, INT32 UseFont) {
   uint32_t Cur;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
 
   if (string == NULL) {
     return (0);
@@ -477,7 +477,7 @@ INT16 StringPixLength(STR16 string, INT32 UseFont) {
     transletter = GetIndex(*curletter++);
     Cur += GetWidth(FontObjs[UseFont], transletter);
   }
-  return ((INT16)Cur);
+  return ((int16_t)Cur);
 }
 
 //*****************************************************************************
@@ -528,7 +528,7 @@ void RestoreFontSettings(void) {
 //	Returns the height of a given character in the font.
 //
 //*****************************************************************************
-uint32_t GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
+uint32_t GetHeight(struct VObject *hSrcVObject, int16_t ssIndex) {
   ETRLEObject *pTrav;
 
   // Assertions
@@ -562,7 +562,7 @@ uint16_t GetFontHeight(INT32 FontNum) {
 //	CreateEnglishTransTable()
 //
 //*****************************************************************************
-INT16 GetIndex(uint16_t siChar) {
+int16_t GetIndex(uint16_t siChar) {
   uint16_t *pTrav;
   uint16_t ssCount = 0;
   uint16_t usNumberOfSymbols = pFManager->pTranslationTable->usNumberOfSymbols;
@@ -633,7 +633,7 @@ BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, INT32 x1, INT32 y1, INT32 x2, INT
 uint32_t mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
   uint32_t uiDestPitchBYTES;
@@ -676,9 +676,9 @@ uint32_t mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   return (0);
 }
 
-void VarFindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight,
-                                 INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY, STR16 pFontString,
-                                 ...) {
+void VarFindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                                 INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY,
+                                 STR16 pFontString, ...) {
   wchar_t string[512];
   va_list argptr;
 
@@ -690,9 +690,9 @@ void VarFindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
   FindFontRightCoordinates(sLeft, sTop, sWidth, sHeight, string, iFontIndex, psNewX, psNewY);
 }
 
-void VarFindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight,
-                                  INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY, STR16 pFontString,
-                                  ...) {
+void VarFindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                                  INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY,
+                                  STR16 pFontString, ...) {
   wchar_t string[512];
   va_list argptr;
 
@@ -704,9 +704,9 @@ void VarFindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 s
   FindFontCenterCoordinates(sLeft, sTop, sWidth, sHeight, string, iFontIndex, psNewX, psNewY);
 }
 
-void FindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, STR16 pStr,
-                              INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY) {
-  INT16 xp, yp;
+void FindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                              STR16 pStr, INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY) {
+  int16_t xp, yp;
 
   // Compute the coordinates to right justify the text
   xp = ((sWidth - StringPixLength(pStr, iFontIndex))) + sLeft;
@@ -716,9 +716,9 @@ void FindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeig
   *psNewY = yp;
 }
 
-void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, STR16 pStr,
-                               INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY) {
-  INT16 xp, yp;
+void FindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                               STR16 pStr, INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY) {
+  int16_t xp, yp;
 
   // Compute the coordinates to center the text
   xp = ((sWidth - StringPixLength(pStr, iFontIndex) + 1) / 2) + sLeft;
@@ -739,7 +739,7 @@ void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHei
 uint32_t gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
   uint32_t uiDestPitchBYTES;
@@ -785,7 +785,7 @@ uint32_t gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
 uint32_t gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
   uint32_t uiDestPitchBYTES;
@@ -841,7 +841,7 @@ uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t F
                         INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
 
@@ -881,7 +881,7 @@ uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t F
                         INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
 
@@ -920,7 +920,7 @@ uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint
                               INT32 x, INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
   uint16_t usOldForeColor;
@@ -970,7 +970,7 @@ uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint
 uint32_t mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
   INT32 destx, desty;
   STR16 curletter;
-  INT16 transletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
   uint16_t usOldForeColor;
@@ -2113,7 +2113,7 @@ siHeightEach)
 //
 //*****************************************************************************
 
-/*uint32_t GetOffset(FontBase *pFontBase, INT16 ssIndex)
+/*uint32_t GetOffset(FontBase *pFontBase, int16_t ssIndex)
 {
   FontObject *pTrav;
   uint16_t siCount=0;
@@ -2148,7 +2148,7 @@ siHeightEach)
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-/*uint32_t GetOffLen(FontBase *pFontBase, INT16 ssIndex)
+/*uint32_t GetOffLen(FontBase *pFontBase, int16_t ssIndex)
 {
   FontObject *pTrav;
   uint16_t siCount=0;
@@ -2194,7 +2194,7 @@ siTotalWidth, uint16_t siTotalHeight, BOOLEAN fMultiLine, FontBase *pFontBase)
   uint16_t  siScreenHt;
         uint16_t  siScreenWt;
         uint16_t  siChar, siHeightEach;
-        INT16   ssIndex;
+        int16_t   ssIndex;
         uint32_t  uiWidth, uiOffsetSt, uiOffsetEnd, uiOldoffst;
         uint16_t *pTempFStr;
         uint16_t  siNewX, siNewY;

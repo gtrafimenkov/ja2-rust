@@ -17,6 +17,6 @@ uint8_t GetAutoResolveSectorID();
 extern BOOLEAN gfTransferTacticalOppositionToAutoResolve;
 
 // Returns TRUE if autoresolve is active or a sector is loaded.
-BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psSectorZ);
+BOOLEAN GetCurrentBattleSectorXYZ(int16_t *psSectorX, int16_t *psSectorY, int16_t *psSectorZ);
 
 #endif

@@ -15,7 +15,7 @@ extern uint8_t gubWorldRoomInfo[WORLD_MAX];
 BOOLEAN InitRoomDatabase();
 void ShutdownRoomDatabase();
 
-void SetTileRoomNum(INT16 sGridNo, uint8_t ubRoomNum);
+void SetTileRoomNum(int16_t sGridNo, uint8_t ubRoomNum);
 void SetTileRangeRoomNum(SGPRect *pSelectRegion, uint8_t ubRoomNum);
 
 void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSoldier);
@@ -26,6 +26,6 @@ void SetGridNoRevealedFlag(uint16_t sGridNo);
 
 void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo);
 
-void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius);
+void SetRecalculateWireFrameFlagRadius(int16_t sX, int16_t sY, int16_t sRadius);
 
 #endif

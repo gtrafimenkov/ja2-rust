@@ -23,8 +23,8 @@ extern BOOLEAN fDontUseRandom;
 extern uint16_t GenericButtonFillColors[40];
 
 BOOLEAN gfRenderSquareArea = FALSE;
-INT16 iStartClickX, iStartClickY;
-INT16 iEndClickX, iEndClickY;
+int16_t iStartClickX, iStartClickY;
+int16_t iEndClickX, iEndClickY;
 
 INT32 iButtonIcons[4];
 INT32 iSelectWin, iCancelWin, iScrollUp, iScrollDown, iOkWin;
@@ -153,7 +153,7 @@ INT32 *pNumSelList;
 INT32 iCurBank = 0;
 
 DisplayList *pDispList;
-INT16 iTopWinCutOff, iBotWinCutOff;
+int16_t iTopWinCutOff, iBotWinCutOff;
 DisplayList Selection;
 
 uint16_t SelWinFillColor = 0x0000;         // Black
@@ -164,7 +164,7 @@ uint16_t SelWinHilightFillColor = 0x000d;  // a kind of medium dark blue
 //
 //	Creates a selection window of the given type.
 //
-void CreateJA2SelectionWindow(INT16 sWhat) {
+void CreateJA2SelectionWindow(int16_t sWhat) {
   DisplaySpec *pDSpec;
   uint16_t usNSpecs;
 
@@ -182,22 +182,22 @@ void CreateJA2SelectionWindow(INT16 sWhat) {
       CreateHotSpot(0, 0, 600, 360, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, SelWinClkCallback);
 
   iCancelWin =
-      CreateIconButton((INT16)iButtonIcons[CANCEL_ICON], 0, BUTTON_USE_DEFAULT, 600, 40, 40, 40,
+      CreateIconButton((int16_t)iButtonIcons[CANCEL_ICON], 0, BUTTON_USE_DEFAULT, 600, 40, 40, 40,
                        BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, CnclClkCallback);
   SetButtonFastHelpText(iCancelWin, L"Cancel selections");
 
   iOkWin =
-      CreateIconButton((INT16)iButtonIcons[OK_ICON], 0, BUTTON_USE_DEFAULT, 600, 0, 40, 40,
+      CreateIconButton((int16_t)iButtonIcons[OK_ICON], 0, BUTTON_USE_DEFAULT, 600, 0, 40, 40,
                        BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, OkClkCallback);
   SetButtonFastHelpText(iOkWin, L"Accept selections");
 
   iScrollUp =
-      CreateIconButton((INT16)iButtonIcons[UP_ICON], 0, BUTTON_USE_DEFAULT, 600, 80, 40, 160,
+      CreateIconButton((int16_t)iButtonIcons[UP_ICON], 0, BUTTON_USE_DEFAULT, 600, 80, 40, 160,
                        BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, UpClkCallback);
   SetButtonFastHelpText(iScrollUp, L"Scroll window up");
 
   iScrollDown =
-      CreateIconButton((INT16)iButtonIcons[DOWN_ICON], 0, BUTTON_USE_DEFAULT, 600, 240, 40, 160,
+      CreateIconButton((int16_t)iButtonIcons[DOWN_ICON], 0, BUTTON_USE_DEFAULT, 600, 240, 40, 160,
                        BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, DwnClkCallback);
   SetButtonFastHelpText(iScrollDown, L"Scroll window down");
 
@@ -748,9 +748,9 @@ void InitJA2SelectionWindow(void) {
 // memory 	is removed.
 //
 void ShutdownJA2SelectionWindow(void) {
-  INT16 x;
+  int16_t x;
 
-  for (x = 0; x < 4; x++) UnloadGenericButtonIcon((INT16)iButtonIcons[x]);
+  for (x = 0; x < 4; x++) UnloadGenericButtonIcon((int16_t)iButtonIcons[x]);
 
   if (pDispList != NULL) {
     pDispList = TrashList(pDispList);
@@ -820,13 +820,13 @@ void RenderSelectionWindow(void) {
     if (button == NULL) return;
 
     if ((abs(iStartClickX - button->Area.MouseXPos) > 9) ||
-        (abs(iStartClickY - (button->Area.MouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY)) >
-         9)) {
+        (abs(iStartClickY -
+             (button->Area.MouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY)) > 9)) {
       //			iSX = (INT32)iStartClickX;
       //			iEX = (INT32)button->Area.MouseXPos;
       //			iSY = (INT32)iStartClickY;
       //			iEY = (INT32)(button->Area.MouseYPos + iTopWinCutOff -
-      //(INT16)SelWinStartPoint.iY);
+      //(int16_t)SelWinStartPoint.iY);
 
       iSX = iStartClickX;
       iSY = iStartClickY - iTopWinCutOff + SelWinStartPoint.iY;
@@ -875,12 +875,12 @@ void RenderSelectionWindow(void) {
 void SelWinClkCallback(GUI_BUTTON *button, INT32 reason) {
   DisplayList *pNode;
   BOOLEAN fDone;
-  INT16 iClickX, iClickY, iYInc, iXInc;
+  int16_t iClickX, iClickY, iYInc, iXInc;
 
   if (!(button->uiFlags & BUTTON_ENABLED)) return;
 
   iClickX = button->Area.MouseXPos;
-  iClickY = button->Area.MouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY;
+  iClickY = button->Area.MouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     button->uiFlags |= BUTTON_CLICKED_ON;
@@ -966,7 +966,7 @@ void DisplaySelectionWindowGraphicalInformation() {
   uint16_t y;
   // Determine if there is a valid picture at cursor position.
   // iRelX = gusMouseXPos;
-  // iRelY = gusMouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY;
+  // iRelY = gusMouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY;
 
   y = gusMouseYPos + iTopWinCutOff - (uint16_t)SelWinStartPoint.iY;
   pNode = pDispList;
@@ -1248,7 +1248,7 @@ void UpClkCallback(GUI_BUTTON *button, INT32 reason) {
 //
 void ScrollSelWinUp(void) {
   DisplayList *pNode;
-  INT16 iCutOff;
+  int16_t iCutOff;
   BOOLEAN fDone;
 
   // Code to scroll window up!
@@ -1276,7 +1276,7 @@ void ScrollSelWinUp(void) {
 //
 void ScrollSelWinDown(void) {
   DisplayList *pNode;
-  INT16 iCutOff;
+  int16_t iCutOff;
   BOOLEAN fDone;
 
   pNode = pDispList;
@@ -1388,8 +1388,8 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,
         if ((pCurNode = (DisplayList *)MemAlloc(sizeof(DisplayList))) != FALSE) {
           pCurNode->hObj = pDisplaySpec->hVObject;
           pCurNode->uiIndex = usETRLELoop;
-          pCurNode->iX = (INT16)iCurrX;
-          pCurNode->iY = (INT16)iCurrY;
+          pCurNode->iX = (int16_t)iCurrX;
+          pCurNode->iY = (int16_t)iCurrY;
           pCurNode->iWidth = pETRLEObject->usWidth;
           pCurNode->iHeight = pETRLEObject->usHeight;
           pCurNode->pNext = *pDisplayList;
@@ -1423,15 +1423,15 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,
 //	have been selected (in the selection list) are highlighted and the count placed in the upper
 //	left corner of the image.
 //
-BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCutOff,
+BOOLEAN DisplayWindowFunc(DisplayList *pNode, int16_t iTopCutOff, int16_t iBottomCutOff,
                           SGPPoint *pUpperLeft, uint16_t fFlags) {
-  INT16 iCurrY;
-  INT16 sTempOffsetX;
-  INT16 sTempOffsetY;
+  int16_t iCurrY;
+  int16_t sTempOffsetX;
+  int16_t sTempOffsetY;
   BOOLEAN fReturnVal;
   ETRLEObject *pETRLEObject;
   uint16_t usFillColor;
-  INT16 sCount;
+  int16_t sCount;
 
   if (pNode == NULL) return (TRUE);
 

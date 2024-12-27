@@ -56,7 +56,7 @@ void GameInitAimLinks() {}
 BOOLEAN EnterAimLinks() {
   VOBJECT_DESC VObjectDesc;
   uint16_t usPosY;
-  INT16 i;
+  int16_t i;
 
   InitAimDefaults();
   InitAimMenuBar();
@@ -92,7 +92,7 @@ BOOLEAN EnterAimLinks() {
 }
 
 void ExitAimLinks() {
-  INT16 i;
+  int16_t i;
 
   RemoveAimDefaults();
 

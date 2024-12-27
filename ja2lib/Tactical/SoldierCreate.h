@@ -43,8 +43,8 @@ typedef struct {
   int8_t bDirection;  // 1 of 8 values (always mandatory)
   int8_t bOrders;
   int8_t bAttitude;
-  int8_t bBodyType;                   // up to 128 body types, -1 means random
-  INT16 sPatrolGrid[MAXPATROLGRIDS];  // possible locations to visit, patrol, etc.
+  int8_t bBodyType;                     // up to 128 body types, -1 means random
+  int16_t sPatrolGrid[MAXPATROLGRIDS];  // possible locations to visit, patrol, etc.
   int8_t bPatrolCnt;
   BOOLEAN fOnRoof;
   uint8_t ubSoldierClass;  // army, administrator, elite
@@ -66,10 +66,10 @@ typedef struct {
   BOOLEAN fCopyProfileItemsOver;
 
   // Location information
-  INT16 sSectorX;
-  INT16 sSectorY;
+  int16_t sSectorX;
+  int16_t sSectorY;
   int8_t bDirection;
-  INT16 sInsertionGridNo;
+  int16_t sInsertionGridNo;
 
   // Can force a team, but needs flag set
   int8_t bTeam;
@@ -106,7 +106,7 @@ typedef struct {
   PaletteRepID MiscPal;
 
   // Waypoint information for patrolling
-  INT16 sPatrolGrid[MAXPATROLGRIDS];
+  int16_t sPatrolGrid[MAXPATROLGRIDS];
   int8_t bPatrolCnt;
 
   // Kris:  Additions November 16, 1997 (padding down to 129 from 150)

@@ -13,17 +13,17 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow);
 
 uint32_t DrawMap(void);
 
-void GetScreenXYFromMapXY(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY);
-void GetScreenXYFromMapXYStationary(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY);
+void GetScreenXYFromMapXY(int16_t sMapX, int16_t sMapY, int16_t *psX, int16_t *psY);
+void GetScreenXYFromMapXYStationary(int16_t sMapX, int16_t sMapY, int16_t *psX, int16_t *psY);
 
 BOOLEAN InitializePalettesForMap(void);
 void ShutDownPalettesForMap(void);
 
 // plot path for helicopter
-void PlotPathForHelicopter(INT16 sX, INT16 sY);
+void PlotPathForHelicopter(int16_t sX, int16_t sY);
 
 // the temp path, where the helicopter could go
-void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY);
+void PlotATemporaryPathForHelicopter(int16_t sX, int16_t sY);
 
 // trace a route for a passed path...doesn't require dest char - most more general
 BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath);
@@ -35,11 +35,11 @@ void DisplayPathArrows(uint16_t usCharNum, struct VObject *hMapHandle);
 void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY, BOOLEAN fZoom);
 
 // build path for character
-void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY,
+void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, int16_t sX, int16_t sY,
                           BOOLEAN fTacticalTraversal);
 
 // build temp path for character
-void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, int16_t sX, int16_t sY);
 
 // display current/temp paths
 void DisplaySoldierPath(struct SOLDIERTYPE *pCharacter);
@@ -48,7 +48,8 @@ void DisplayHelicopterPath(void);
 void DisplayHelicopterTempPath(void);
 
 // clear path after this sector
-uint32_t ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+uint32_t ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, int16_t sX,
+                                              int16_t sY);
 
 // cancel path : clear the path completely and gives player feedback message that the route was
 // canceled
@@ -57,10 +58,10 @@ void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed);
 void CancelPathForGroup(struct GROUP *pGroup);
 
 // check if we have waited long enought o update temp path
-void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
+void DisplayThePotentialPathForHelicopter(int16_t sMapX, int16_t sMapY);
 
 // clear out helicopter list after this sector
-uint32_t ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY);
+uint32_t ClearPathAfterThisSectorForHelicopter(int16_t sX, int16_t sY);
 
 // check to see if sector is highlightable
 BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
@@ -69,7 +70,7 @@ BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
 void SetUpBadSectorsList(void);
 
 // restore background for map grids
-void RestoreBackgroundForMapGrid(INT16 sMapX, INT16 sMapY);
+void RestoreBackgroundForMapGrid(int16_t sMapX, int16_t sMapY);
 
 // clip blits to map view region
 void ClipBlitsToMapViewRegion(void);
@@ -80,10 +81,10 @@ void RestoreClipRegionToFullScreen(void);
 void RestoreClipRegionToFullScreenForRectangle(uint32_t uiDestPitchBYTES);
 
 // show the icons for people in motion
-void ShowPeopleInMotion(INT16 sX, INT16 sY);
+void ShowPeopleInMotion(int16_t sX, int16_t sY);
 
 // last sector in helicopter's path
-INT16 GetLastSectorOfHelicoptersPath(void);
+int16_t GetLastSectorOfHelicoptersPath(void);
 
 // display info about helicopter path
 void DisplayDistancesForHelicopter(void);
@@ -92,14 +93,15 @@ void DisplayDistancesForHelicopter(void);
 void DisplayPositionOfHelicopter(void);
 
 // check for click
-BOOLEAN CheckForClickOverHelicopterIcon(INT16 sX, INT16 sY);
+BOOLEAN CheckForClickOverHelicopterIcon(int16_t sX, int16_t sY);
 
 // load and delete the graphics for the map screen map militia
 BOOLEAN LoadMilitiaPopUpBox(void);
 void RemoveMilitiaPopUpBox(void);
 
 // check if anyone left behind, if not, move selected cursor along with movement group
-// void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, int8_t bZ );
+// void CheckIfAnyoneLeftInSector( int16_t sX, int16_t sY, int16_t sNewX, int16_t sNewY, int8_t bZ
+// );
 
 // create destroy
 void CreateDestroyMilitiaPopUPRegions(void);
@@ -183,13 +185,13 @@ extern INT32 iZoomX;
 extern INT32 iZoomY;
 
 // the number of militia on the cursor
-extern INT16 sGreensOnCursor;
-extern INT16 sRegularsOnCursor;
-extern INT16 sElitesOnCursor;
+extern int16_t sGreensOnCursor;
+extern int16_t sRegularsOnCursor;
+extern int16_t sElitesOnCursor;
 
 // highlighted sectors
-extern INT16 gsHighlightSectorX;
-extern INT16 gsHighlightSectorY;
+extern int16_t gsHighlightSectorX;
+extern int16_t gsHighlightSectorY;
 
 // the big map
 extern uint32_t guiBIGMAP;
@@ -243,7 +245,7 @@ extern uint32_t guiMapBorderEtaPopUp;
 extern uint32_t guiMapBorderHeliSectors;
 
 // the currently selected town militia
-extern INT16 sSelectedMilitiaTown;
+extern int16_t sSelectedMilitiaTown;
 
 // the selected sectors
 extern uint16_t sSelMapX;

@@ -66,8 +66,8 @@ extern BOOLEAN gfFirstHeliRun;
 // ATE: Globals that dictate where the mercs will land once being hired
 // Default to Omerta
 // Saved in general saved game structure
-INT16 gsMercArriveSectorX = 9;
-INT16 gsMercArriveSectorY = 1;
+int16_t gsMercArriveSectorX = 9;
+int16_t gsMercArriveSectorY = 1;
 
 void CheckForValidArrivalSector();
 
@@ -406,7 +406,7 @@ BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier) {
 uint8_t NumberOfMercsOnPlayerTeam() {
   int8_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
   uint8_t ubCount = 0;
 
   // Set locator to first merc
@@ -519,15 +519,15 @@ void UpdateAnyInTransitMercsWithGlobalArrivalSector() {
   }
 }
 
-INT16 StrategicPythSpacesAway(INT16 sOrigin, INT16 sDest) {
-  INT16 sRows, sCols, sResult;
+int16_t StrategicPythSpacesAway(int16_t sOrigin, int16_t sDest) {
+  int16_t sRows, sCols, sResult;
 
   sRows = abs((SectorID16_Y(sOrigin)) - (SectorID16_Y(sDest)));
   sCols = abs((SectorID16_X(sOrigin)) - (SectorID16_X(sDest)));
 
   // apply Pythagoras's theorem for right-handed triangle:
   // dist^2 = rows^2 + cols^2, so use the square root to get the distance
-  sResult = (INT16)sqrt((float)(sRows * sRows) + (sCols * sCols));
+  sResult = (int16_t)sqrt((float)(sRows * sRows) + (sCols * sCols));
 
   return (sResult);
 }
@@ -537,12 +537,12 @@ INT16 StrategicPythSpacesAway(INT16 sOrigin, INT16 sDest) {
 // if there are enemies present, it's invalid
 // if so, search around for nearest non-occupied sector.
 void CheckForValidArrivalSector() {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, sGoodX, sGoodY;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, sGoodX, sGoodY;
   uint8_t ubRadius = 4;
   INT32 leftmost;
-  INT16 sSectorGridNo, sSectorGridNo2;
+  int16_t sSectorGridNo, sSectorGridNo2;
   INT32 uiRange, uiLowestRange = 999999;
   BOOLEAN fFound = FALSE;
   CHAR16 sString[1024];

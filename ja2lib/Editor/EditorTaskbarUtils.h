@@ -45,8 +45,8 @@ void EnableEditorRegion(int8_t bRegionID);
 void DisableEditorRegion(int8_t bRegionID);
 
 // Rendering Utils
-void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...);
-void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void mprintfEditor(int16_t x, int16_t y, STR16 pFontString, ...);
+void ClearTaskbarRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void DrawEditorInfoBox(STR16 str, uint32_t uiFont, uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
 extern INT32 giEditMercDirectionIcons[2];

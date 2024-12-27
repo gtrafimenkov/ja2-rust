@@ -605,11 +605,11 @@ int x,dif,absDif;
 }
 #endif
 
-int8_t SoundDir(INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX;
-  INT16 sDif, sAbsDif;
+int8_t SoundDir(int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX;
+  int16_t sDif, sAbsDif;
 
   if (sGridNo == NOWHERE) {
     return (MIDDLEPAN);
@@ -619,7 +619,7 @@ int8_t SoundDir(INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -650,12 +650,12 @@ int8_t SoundDir(INT16 sGridNo) {
     return (MIDDLE);
 }
 
-int8_t SoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX, sMiddleY;
-  INT16 sDifX, sAbsDifX;
-  INT16 sDifY, sAbsDifY;
+int8_t SoundVolume(int8_t bInitialVolume, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX, sMiddleY;
+  int16_t sDifX, sAbsDifX;
+  int16_t sDifY, sAbsDifY;
 
   if (sGridNo == NOWHERE) {
     return (bInitialVolume);
@@ -665,7 +665,7 @@ int8_t SoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -722,7 +722,7 @@ void DelayedSoundTimerCallback(void) {
 
 typedef struct {
   uint32_t uiFlags;
-  INT16 sGridNo;
+  int16_t sGridNo;
   INT32 iSoundSampleID;
   INT32 iSoundToPlay;
   void *uiData;
@@ -761,7 +761,7 @@ void RecountPositionSnds(void) {
   }
 }
 
-INT32 NewPositionSnd(INT16 sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay) {
+INT32 NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay) {
   POSITIONSND *pPositionSnd;
   INT32 iPositionSndIndex;
 
@@ -810,7 +810,7 @@ void DeletePositionSnd(INT32 iPositionSndIndex) {
   }
 }
 
-void SetPositionSndGridNo(INT32 iPositionSndIndex, INT16 sGridNo) {
+void SetPositionSndGridNo(INT32 iPositionSndIndex, int16_t sGridNo) {
   POSITIONSND *pPositionSnd;
 
   pPositionSnd = &gPositionSndData[iPositionSndIndex];
@@ -865,11 +865,11 @@ void SetPositionSndsInActive() {
   }
 }
 
-int8_t PositionSoundDir(INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX;
-  INT16 sDif, sAbsDif;
+int8_t PositionSoundDir(int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX;
+  int16_t sDif, sAbsDif;
 
   if (sGridNo == NOWHERE) {
     return (MIDDLEPAN);
@@ -879,7 +879,7 @@ int8_t PositionSoundDir(INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -910,13 +910,13 @@ int8_t PositionSoundDir(INT16 sGridNo) {
     return (MIDDLE);
 }
 
-int8_t PositionSoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX, sMiddleY;
-  INT16 sDifX, sAbsDifX;
-  INT16 sDifY, sAbsDifY;
-  INT16 sMaxDistX, sMaxDistY;
+int8_t PositionSoundVolume(int8_t bInitialVolume, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX, sMiddleY;
+  int16_t sDifX, sAbsDifX;
+  int16_t sDifY, sAbsDifY;
+  int16_t sMaxDistX, sMaxDistY;
   double sMaxSoundDist, sSoundDist;
 
   if (sGridNo == NOWHERE) {
@@ -927,7 +927,7 @@ int8_t PositionSoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -939,8 +939,8 @@ int8_t PositionSoundVolume(int8_t bInitialVolume, INT16 sGridNo) {
   sAbsDifX = abs(sDifX);
   sAbsDifY = abs(sDifY);
 
-  sMaxDistX = (INT16)((gsBottomRightWorldX - gsTopLeftWorldX) * 1.5);
-  sMaxDistY = (INT16)((gsBottomRightWorldY - gsTopLeftWorldY) * 1.5);
+  sMaxDistX = (int16_t)((gsBottomRightWorldX - gsTopLeftWorldX) * 1.5);
+  sMaxDistY = (int16_t)((gsBottomRightWorldY - gsTopLeftWorldY) * 1.5);
 
   sMaxSoundDist = sqrt((double)(sMaxDistX * sMaxDistX) + (sMaxDistY * sMaxDistY));
   sSoundDist = sqrt((double)(sAbsDifX * sAbsDifX) + (sAbsDifY * sAbsDifY));

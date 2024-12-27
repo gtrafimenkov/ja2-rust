@@ -125,8 +125,8 @@ struct VObject *GenericButtonOnHilite[MAX_GENERIC_PICS];
 struct VObject *GenericButtonBackground[MAX_GENERIC_PICS];
 uint16_t GenericButtonFillColors[MAX_GENERIC_PICS];
 uint16_t GenericButtonBackgroundIndex[MAX_GENERIC_PICS];
-INT16 GenericButtonOffsetX[MAX_GENERIC_PICS];
-INT16 GenericButtonOffsetY[MAX_GENERIC_PICS];
+int16_t GenericButtonOffsetX[MAX_GENERIC_PICS];
+int16_t GenericButtonOffsetY[MAX_GENERIC_PICS];
 
 struct VObject *GenericButtonIcons[MAX_BUTTON_ICONS];
 
@@ -707,8 +707,8 @@ BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, IN
 //
 //	Finds the next available slot for generic (TEXT and/or ICONIC) buttons.
 //
-INT16 FindFreeGenericSlot(void) {
-  INT16 slot, x;
+int16_t FindFreeGenericSlot(void) {
+  int16_t slot, x;
 
   slot = BUTTON_NO_SLOT;
   for (x = 0; x < MAX_GENERIC_PICS && slot < 0; x++) {
@@ -723,8 +723,8 @@ INT16 FindFreeGenericSlot(void) {
 //
 //	Finds the next available slot for button icon images.
 //
-INT16 FindFreeIconSlot(void) {
-  INT16 slot, x;
+int16_t FindFreeIconSlot(void) {
+  int16_t slot, x;
 
   slot = BUTTON_NO_SLOT;
   for (x = 0; x < MAX_BUTTON_ICONS && slot < 0; x++) {
@@ -739,8 +739,8 @@ INT16 FindFreeIconSlot(void) {
 //
 //	Loads an image file for use as a button icon.
 //
-INT16 LoadGenericButtonIcon(STR8 filename) {
-  INT16 ImgSlot;
+int16_t LoadGenericButtonIcon(STR8 filename) {
+  int16_t ImgSlot;
   VOBJECT_DESC vo_desc;
 
   AssertMsg(filename != BUTTON_NO_FILENAME,
@@ -772,7 +772,7 @@ INT16 LoadGenericButtonIcon(STR8 filename) {
 //
 //	Removes a button icon graphic from the system
 //
-BOOLEAN UnloadGenericButtonIcon(INT16 GenImg) {
+BOOLEAN UnloadGenericButtonIcon(int16_t GenImg) {
   if (GenImg < 0 || GenImg >= MAX_BUTTON_ICONS) {
     sprintf(str, "Attempting to UnloadGenericButtonIcon with out of range index %d.", GenImg);
     AssertMsg(0, str);
@@ -797,7 +797,7 @@ BOOLEAN UnloadGenericButtonIcon(INT16 GenImg) {
 //	Removes the images associated with a generic button. Except the icon
 //	image of iconic buttons. See above.
 //
-BOOLEAN UnloadGenericButtonImage(INT16 GenImg) {
+BOOLEAN UnloadGenericButtonImage(int16_t GenImg) {
   if (GenImg < 0 || GenImg >= MAX_GENERIC_PICS) {
     sprintf(str, "Attempting to UnloadGenericButtonImage with out of range index %d.", GenImg);
     AssertMsg(0, str);
@@ -849,10 +849,10 @@ BOOLEAN UnloadGenericButtonImage(INT16 GenImg) {
 //
 //	Loads the image files required for displaying a generic button.
 //
-INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteName, STR8 OnNormName,
-                              STR8 OnHiliteName, STR8 BkGrndName, INT16 Index, INT16 OffsetX,
-                              INT16 OffsetY) {
-  INT16 ImgSlot;
+int16_t LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteName,
+                                STR8 OnNormName, STR8 OnHiliteName, STR8 BkGrndName, int16_t Index,
+                                int16_t OffsetX, int16_t OffsetY) {
+  int16_t ImgSlot;
   VOBJECT_DESC vo_desc;
   uint8_t Pix;
 
@@ -1167,7 +1167,7 @@ INT32 GetNextButtonNumber(void) {
 //	QuickButtons cannot be resized, therefore this function ignores the
 //	call if a QuickButton is given.
 //
-void ResizeButton(INT32 iButtonID, INT16 w, INT16 h) {
+void ResizeButton(INT32 iButtonID, int16_t w, int16_t h) {
   GUI_BUTTON *b;
   INT32 xloc, yloc;
 
@@ -1204,8 +1204,8 @@ void ResizeButton(INT32 iButtonID, INT16 w, INT16 h) {
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
     FreeBackgroundRectPending(b->BackRect);
     b->BackRect =
-        RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (INT16)xloc,
-                               (INT16)yloc, (INT16)(xloc + w), (INT16)(yloc + h));
+        RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (int16_t)xloc,
+                               (int16_t)yloc, (int16_t)(xloc + w), (int16_t)(yloc + h));
   }
 }
 
@@ -1215,7 +1215,7 @@ void ResizeButton(INT32 iButtonID, INT16 w, INT16 h) {
 //	Sets the position of a button on the screen. The position is relative
 //	to the top left corner of the button.
 //
-void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
+void SetButtonPosition(INT32 iButtonID, int16_t x, int16_t y) {
   GUI_BUTTON *b;
   INT32 xloc, yloc, w, h;
 
@@ -1232,8 +1232,8 @@ void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
   }
 
   // Get new screen position
-  xloc = (INT16)x;
-  yloc = (INT16)y;
+  xloc = (int16_t)x;
+  yloc = (int16_t)y;
   // Compute current width and height of this button
   w = b->Area.RegionBottomRightX - b->Area.RegionTopLeftX;
   h = b->Area.RegionBottomRightY - b->Area.RegionTopLeftY;
@@ -1251,8 +1251,8 @@ void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
     FreeBackgroundRectPending(b->BackRect);
     b->BackRect =
-        RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (INT16)xloc,
-                               (INT16)yloc, (INT16)(xloc + w), (INT16)(yloc + h));
+        RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (int16_t)xloc,
+                               (int16_t)yloc, (int16_t)(xloc + w), (int16_t)(yloc + h));
   }
 }
 
@@ -1263,7 +1263,7 @@ void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
 //
 //	Calling this function with a button type other than Iconic has no effect.
 //
-INT32 SetButtonIcon(INT32 iButtonID, INT16 Icon, INT16 IconIndex) {
+INT32 SetButtonIcon(INT32 iButtonID, int16_t Icon, int16_t IconIndex) {
   GUI_BUTTON *b;
 
   if (iButtonID < 0 || iButtonID >= MAX_BUTTONS) {
@@ -1305,9 +1305,9 @@ INT32 SetButtonIcon(INT32 iButtonID, INT16 Icon, INT16 IconIndex) {
 //
 //	Creates an Iconic type button.
 //
-INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, INT16 yloc, INT16 w,
-                       INT16 h, INT32 Type, INT16 Priority, GUI_CALLBACK MoveCallback,
-                       GUI_CALLBACK ClickCallback) {
+INT32 CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_t xloc, int16_t yloc,
+                       int16_t w, int16_t h, INT32 Type, int16_t Priority,
+                       GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 ButtonNum;
   INT32 BType, x;
@@ -1423,9 +1423,9 @@ INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, IN
 }
 
 // Creates a generic button with text on it.
-INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sShadowColor,
-                       INT16 GenImg, INT16 xloc, INT16 yloc, INT16 w, INT16 h, INT32 Type,
-                       INT16 Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
+INT32 CreateTextButton(STR16 string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
+                       int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w, int16_t h, INT32 Type,
+                       int16_t Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 ButtonNum;
   INT32 BType, x;
@@ -1552,11 +1552,11 @@ INT32 CreateTextButton(STR16 string, uint32_t uiFont, INT16 sForeColor, INT16 sS
 //	Creates a button like HotSpot. HotSpots have no graphics associated with
 //	them.
 //
-INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Priority,
+INT32 CreateHotSpot(int16_t xloc, int16_t yloc, int16_t Width, int16_t Height, int16_t Priority,
                     GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 ButtonNum;
-  INT16 BType, x;
+  int16_t BType, x;
 
   if (xloc < 0 || yloc < 0 || Width < 0 || Height < 0) {
     sprintf(
@@ -1650,7 +1650,7 @@ BOOLEAN SetButtonCursor(INT32 iBtnId, uint16_t crsr) {
 //	Creates a QuickButton. QuickButtons only have graphics associated with
 //	them. They cannot be re-sized, nor can the graphic be changed.
 //
-INT32 QuickCreateButton(uint32_t Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 Priority,
+INT32 QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, INT32 Type, int16_t Priority,
                         GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 ButtonNum;
@@ -1752,8 +1752,8 @@ INT32 QuickCreateButton(uint32_t Image, INT16 xloc, INT16 yloc, INT32 Type, INT1
   memset(&b->Area, 0, sizeof(struct MOUSE_REGION));
   // Define a struct MOUSE_REGION for this QuickButton
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc,
-                    (uint16_t)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
-                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (int8_t)Priority,
+                    (uint16_t)(xloc + (int16_t)ButtonPictures[Image].MaxWidth),
+                    (uint16_t)(yloc + (int16_t)ButtonPictures[Image].MaxHeight), (int8_t)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1799,7 +1799,7 @@ INT32 CreateEasyButton(INT32 x, INT32 y, STR8 filename, INT32 Type, GUI_CALLBACK
 }
 
 // Same as above, but accepts priority specification.
-INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, INT16 Priority,
+INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, int16_t Priority,
                          GUI_CALLBACK ClickCallback) {
   INT32 ButPic, ButNum;
 
@@ -1811,8 +1811,8 @@ INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, INT16 Prio
     return (-1);
   }
 
-  ButNum = (INT16)QuickCreateButton(ButPic, (INT16)x, (INT16)y, Type, Priority,
-                                    DEFAULT_MOVE_CALLBACK, ClickCallback);
+  ButNum = (int16_t)QuickCreateButton(ButPic, (int16_t)x, (int16_t)y, Type, Priority,
+                                      DEFAULT_MOVE_CALLBACK, ClickCallback);
 
   AssertMsg(ButNum != -1, "Failed to CreateSimpleButton.");
 
@@ -1823,10 +1823,10 @@ INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, INT16 Prio
   return (ButNum);
 }
 
-INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 sForeColor,
-                              INT16 sShadowColor, INT16 sForeColorDown, INT16 sShadowColorDown,
-                              int8_t bJustification, INT16 xloc, INT16 yloc, INT32 Type,
-                              INT16 Priority, GUI_CALLBACK MoveCallback,
+INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, int16_t sForeColor,
+                              int16_t sShadowColor, int16_t sForeColorDown,
+                              int16_t sShadowColorDown, int8_t bJustification, int16_t xloc,
+                              int16_t yloc, INT32 Type, int16_t Priority, GUI_CALLBACK MoveCallback,
                               GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 iButtonID;
@@ -1920,8 +1920,8 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, uint32_t uiFont, INT16 
 
   // Define a struct MOUSE_REGION for this QuickButton
   MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc,
-                    (uint16_t)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
-                    (uint16_t)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (int8_t)Priority,
+                    (uint16_t)(xloc + (int16_t)ButtonPictures[Image].MaxWidth),
+                    (uint16_t)(yloc + (int16_t)ButtonPictures[Image].MaxHeight), (int8_t)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1988,7 +1988,7 @@ void SpecifyButtonFont(INT32 iButtonID, uint32_t uiFont) {
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonUpTextColors(INT32 iButtonID, INT16 sForeColor, INT16 sShadowColor) {
+void SpecifyButtonUpTextColors(INT32 iButtonID, int16_t sForeColor, int16_t sShadowColor) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -1999,7 +1999,8 @@ void SpecifyButtonUpTextColors(INT32 iButtonID, INT16 sForeColor, INT16 sShadowC
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonDownTextColors(INT32 iButtonID, INT16 sForeColorDown, INT16 sShadowColorDown) {
+void SpecifyButtonDownTextColors(INT32 iButtonID, int16_t sForeColorDown,
+                                 int16_t sShadowColorDown) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2010,8 +2011,8 @@ void SpecifyButtonDownTextColors(INT32 iButtonID, INT16 sForeColorDown, INT16 sS
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonHilitedTextColors(INT32 iButtonID, INT16 sForeColorHilited,
-                                    INT16 sShadowColorHilited) {
+void SpecifyButtonHilitedTextColors(INT32 iButtonID, int16_t sForeColorHilited,
+                                    int16_t sShadowColorHilited) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2035,9 +2036,10 @@ void SpecifyButtonTextJustification(INT32 iButtonID, int8_t bJustification) {
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont, INT16 sForeColor,
-                                     INT16 sShadowColor, INT16 sForeColorDown,
-                                     INT16 sShadowColorDown, int8_t bJustification) {
+void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont,
+                                     int16_t sForeColor, int16_t sShadowColor,
+                                     int16_t sForeColorDown, int16_t sShadowColorDown,
+                                     int8_t bJustification) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2058,7 +2060,7 @@ void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont
 }
 
 void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont,
-                                        INT16 sForeColor, INT16 sShadowColor) {
+                                        int16_t sForeColor, int16_t sShadowColor) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2098,7 +2100,7 @@ void SpecifyButtonTextSubOffsets(INT32 iButtonID, int8_t bTextXOffset, int8_t bT
   b->fShiftText = fShiftText;
 }
 
-void SpecifyButtonTextWrappedWidth(INT32 iButtonID, INT16 sWrappedWidth) {
+void SpecifyButtonTextWrappedWidth(INT32 iButtonID, int16_t sWrappedWidth) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -2903,10 +2905,10 @@ void DrawIconOnButton(GUI_BUTTON *b) {
     SetClippingRect(&NewClip);
     // Blit the icon
     if (b->uiFlags & BUTTON_GENERIC)
-      BltVideoObject(ButtonDestBuffer, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp,
-                     (INT16)yp, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject(ButtonDestBuffer, GenericButtonIcons[b->iIconID], b->usIconIndex, (int16_t)xp,
+                     (int16_t)yp, VO_BLT_SRCTRANSPARENCY, NULL);
     else
-      BltVideoObject(ButtonDestBuffer, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp,
+      BltVideoObject(ButtonDestBuffer, hvObject, b->usIconIndex, (int16_t)xp, (int16_t)yp,
                      VO_BLT_SRCTRANSPARENCY, NULL);
     // Restore previous clip region
     SetClippingRect(&OldClip);
@@ -2917,7 +2919,7 @@ void DrawIconOnButton(GUI_BUTTON *b) {
 void DrawTextOnButton(GUI_BUTTON *b) {
   INT32 xp, yp, width, height, TextX, TextY;
   SGPRect NewClip, OldClip;
-  INT16 sForeColor;
+  int16_t sForeColor;
 
   // If this button actually has a string to print
   if (b->string) {
@@ -3296,7 +3298,7 @@ typedef struct _CreateDlgInfo {
 
 //------------------------------------------------------------------------------------------------------
 
-INT32 CreateCheckBoxButton(INT16 x, INT16 y, CHAR8 *filename, INT16 Priority,
+INT32 CreateCheckBoxButton(int16_t x, int16_t y, CHAR8 *filename, int16_t Priority,
                            GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   INT32 ButPic, iButtonID;
@@ -3306,8 +3308,8 @@ INT32 CreateCheckBoxButton(INT16 x, INT16 y, CHAR8 *filename, INT16 Priority,
     DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateCheckBoxButton: Can't load button image");
     return (-1);
   }
-  iButtonID = (INT16)QuickCreateButton((uint32_t)ButPic, x, y, BUTTON_CHECKBOX, Priority,
-                                       MSYS_NO_CALLBACK, ClickCallback);
+  iButtonID = (int16_t)QuickCreateButton((uint32_t)ButPic, x, y, BUTTON_CHECKBOX, Priority,
+                                         MSYS_NO_CALLBACK, ClickCallback);
   if (iButtonID == -1) {
     DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateCheckBoxButton: Can't create button");
     return (-1);
@@ -3398,8 +3400,8 @@ BOOLEAN SetButtonSavedRect(INT32 iButton) {
     b->uiFlags |= BUTTON_SAVEBACKGROUND;
 
     b->BackRect =
-        RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (INT16)xloc,
-                               (INT16)yloc, (INT16)(xloc + w), (INT16)(yloc + h));
+        RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (int16_t)xloc,
+                               (int16_t)yloc, (int16_t)(xloc + w), (int16_t)(yloc + h));
   }
 
   return (TRUE);

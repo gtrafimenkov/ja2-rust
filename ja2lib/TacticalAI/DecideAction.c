@@ -58,7 +58,7 @@ int8_t DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   INT32 iScheduleIndex;
   uint8_t ubScheduleAction;
   uint16_t usGridNo1, usGridNo2;
-  INT16 sX, sY;
+  int16_t sX, sY;
   int8_t bDirection;
   struct STRUCTURE *pStructure;
   BOOLEAN fDoUseDoor;
@@ -433,7 +433,7 @@ int8_t DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
 
 int8_t DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubRoom;
-  INT16 sDesiredMercLoc;
+  int16_t sDesiredMercLoc;
   uint8_t ubDesiredMercDir;
 
   // boxer, should move into ring!
@@ -473,10 +473,10 @@ int8_t DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
-  INT16 sDesiredMercLoc;
+  int16_t sDesiredMercLoc;
   uint8_t ubDesiredMercDir;
   uint8_t ubDesiredMerc;
-  INT16 sDesiredMercDist;
+  int16_t sDesiredMercDist;
 
   // if a quote record has been set and we're not doing movement, then
   // it means we have to wait until someone is nearby and then see
@@ -830,7 +830,7 @@ int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
     // if we're in water with land miles (> 25 tiles) away,
     // OR if we roll under the chance calculated
-    if (bInWater || ((INT16)PreRandom(100) < iChance)) {
+    if (bInWater || ((int16_t)PreRandom(100) < iChance)) {
       pSoldier->usActionData = RandDestWithinRange(pSoldier);
 
       if (pSoldier->usActionData != NOWHERE) {
@@ -915,7 +915,7 @@ int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
     // reduce chance if breath is down
     iChance -= (100 - pSoldier->bBreath);  // very likely to wait when exhausted
 
-    if ((INT16)PreRandom(100) < iChance) {
+    if ((int16_t)PreRandom(100) < iChance) {
       if (RandomFriendWithin(pSoldier)) {
         if (pSoldier->usActionData ==
             GoAsFarAsPossibleTowards(pSoldier, pSoldier->usActionData, AI_ACTION_SEEK_FRIEND)) {
@@ -952,7 +952,7 @@ int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
       if (pSoldier->bAttitude == DEFENSIVE) iChance += 25;
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         // roll random directions (stored in actionData) until different from current
         do {
           // if man has a LEGAL dominant facing, and isn't facing it, he will turn
@@ -997,10 +997,10 @@ int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   INT32 iDummy;
   uint8_t ubNoiseDir;
-  INT16 sNoiseGridNo;
+  int16_t sNoiseGridNo;
   INT32 iNoiseValue;
   INT32 iChance, iSneaky;
-  INT16 sClosestFriend;
+  int16_t sClosestFriend;
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
                         (pSoldier->ubBodyType >= FATCIV && pSoldier->ubBodyType <= CRIPPLECIV)));
@@ -1066,7 +1066,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
 
       if (pSoldier->bAttitude == DEFENSIVE) iChance += 15;
 
-      if ((INT16)PreRandom(100) < iChance &&
+      if ((int16_t)PreRandom(100) < iChance &&
           InternalIsValidStance(pSoldier, ubNoiseDir,
                                 gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
         pSoldier->usActionData = ubNoiseDir;
@@ -1151,7 +1151,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       AINumMessage("Chance to radio yellow alert = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a YELLOW alert!", 1000);
 #endif
@@ -1260,7 +1260,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       // reduce chance if breath is down, less likely to wander around when tired
       iChance -= (100 - pSoldier->bBreath);
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->usActionData =
             GoAsFarAsPossibleTowards(pSoldier, sNoiseGridNo, AI_ACTION_SEEK_NOISE);
 
@@ -1350,7 +1350,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       // reduce chance if breath is down, less likely to wander around when tired
       iChance -= (100 - pSoldier->bBreath);
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->usActionData =
             GoAsFarAsPossibleTowards(pSoldier, sClosestFriend, AI_ACTION_SEEK_FRIEND);
 
@@ -1440,7 +1440,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       // reduce chance if breath is down, less likely to wander around when tired
       iChance -= (100 - pSoldier->bBreath);
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->bAIMorale = CalcMorale(pSoldier);
         pSoldier->usActionData = FindBestNearbyCover(pSoldier, pSoldier->bAIMorale, &iDummy);
 
@@ -1459,7 +1459,7 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   ////////////////////////////////////////////////////////////////////////////
   // SWITCH TO GREEN: determine if soldier acts as if nothing at all was wrong
   ////////////////////////////////////////////////////////////////////////////
-  if ((INT16)PreRandom(100) < 50) {
+  if ((int16_t)PreRandom(100) < 50) {
 #ifdef RECORDNET
     fprintf(NetDebugFile,
             "\tDecideActionYellow: guynum %d ignores noise, switching to GREEN AI...\n",
@@ -1508,8 +1508,8 @@ int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
 int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
   int8_t bActionReturned;
   INT32 iDummy;
-  INT16 iChance, sClosestOpponent, sClosestFriend;
-  INT16 sClosestDisturbance, sDistVisible, sCheckGridNo;
+  int16_t iChance, sClosestOpponent, sClosestFriend;
+  int16_t sClosestDisturbance, sDistVisible, sCheckGridNo;
   uint8_t ubCanMove, ubOpponentDir;
   int8_t bInWater, bInDeepWater, bInGas;
   int8_t bSeekPts = 0, bHelpPts = 0, bHidePts = 0, bWatchPts = 0;
@@ -1929,7 +1929,7 @@ int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
       AINumMessage("Chance to radio RED alert = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a RED alert!", 1000);
 #endif
@@ -2418,7 +2418,7 @@ int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
           iChance += 50;
         }
 
-        if ((INT16)PreRandom(100) < iChance &&
+        if ((int16_t)PreRandom(100) < iChance &&
             InternalIsValidStance(pSoldier, ubOpponentDir,
                                   gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
           pSoldier->usActionData = ubOpponentDir;
@@ -2451,7 +2451,7 @@ int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
 
       if ((pSoldier->bDirection != ubOpponentDir)) {
         if ((pSoldier->bActionPoints == pSoldier->bInitialActionPoints ||
-             (INT16)PreRandom(100) < 60) &&
+             (int16_t)PreRandom(100) < 60) &&
             InternalIsValidStance(pSoldier, ubOpponentDir,
                                   gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
           pSoldier->usActionData = ubOpponentDir;
@@ -2611,8 +2611,8 @@ int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
 
 int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   INT32 iCoverPercentBetter, iOffense, iDefense, iChance;
-  INT16 sClosestOpponent, sBestCover = NOWHERE;
-  INT16 sClosestDisturbance;
+  int16_t sClosestOpponent, sBestCover = NOWHERE;
+  int16_t sClosestDisturbance;
   uint8_t ubMinAPCost, ubCanMove;
   int8_t bInDeepWater, bInGas;
   int8_t bDirection;
@@ -2630,7 +2630,7 @@ int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fClimb;
   uint8_t ubBurstAPs;
   uint8_t ubOpponentDir;
-  INT16 sCheckGridNo;
+  int16_t sCheckGridNo;
 
   BOOLEAN fAllowCoverCheck = FALSE;
 
@@ -3578,7 +3578,7 @@ int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
       AINumMessage("Chance to radio for SPOTTING = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a RED for SPOTTING!", 1000);
 #endif
@@ -3779,7 +3779,7 @@ int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
       AINumMessage("Chance to radio RED alert = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a RED alert!", 1000);
 #endif

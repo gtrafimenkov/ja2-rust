@@ -38,11 +38,11 @@ struct SectorInfo* GetSectorInfoByID8(SectorID8 sectorIndex);
 struct SectorInfo* GetSectorInfoByXY(u8 x, u8 y);
 
 // Counts enemies and crepitus, but not bloodcats.
-uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
 
 // Returns TRUE if sector is under player control, has no enemies in it, and isn't currently in
 // combat mode
-BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
+BOOLEAN SectorOursAndPeaceful(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
 
 BOOLEAN IsThisSectorASAMSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 

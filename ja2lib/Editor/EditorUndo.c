@@ -364,7 +364,7 @@ BOOLEAN AddToUndoList(INT32 iMapIndex) {
   // Check to see if the tile in question is even on the visible map, then
   // if that is true, then check to make sure we don't already have the mapindex
   // saved in the new binary tree (which only holds unique mapindex values).
-  if (GridNoOnVisibleWorldTile((INT16)iMapIndex) && AddMapIndexToTree((uint16_t)iMapIndex))
+  if (GridNoOnVisibleWorldTile((int16_t)iMapIndex) && AddMapIndexToTree((uint16_t)iMapIndex))
 
   {
     if (AddToUndoListCmd(iMapIndex, ++iCount)) return TRUE;
@@ -514,11 +514,11 @@ BOOLEAN ExecuteUndoList(void) {
 
     // Find which map tile we are to "undo"
     if (gpTileUndoStack->pData->fLightSaved) {  // We saved a light, so delete that light
-      INT16 sX, sY;
+      int16_t sX, sY;
       // Turn on this flag so that the following code, when executed, doesn't attempt to
       // add lights to the undo list.  That would cause problems...
       gfIgnoreUndoCmdsForLights = TRUE;
-      ConvertGridNoToXY((INT16)iUndoMapIndex, &sX, &sY);
+      ConvertGridNoToXY((int16_t)iUndoMapIndex, &sX, &sY);
       if (!gpTileUndoStack->pData->ubLightRadius)
         RemoveLight(sX, sY);
       else
@@ -675,7 +675,7 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
                 struct
                 {
                         uint16_t
-   usIndex;							// TILE DATABASE INDEX INT16
+   usIndex;							// TILE DATABASE INDEX int16_t
    sCurrentFrame;				// Stuff for animated tiles for a given tile
    location ( doors, etc )
                 };

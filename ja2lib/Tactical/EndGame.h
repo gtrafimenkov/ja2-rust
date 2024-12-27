@@ -5,19 +5,19 @@
 
 struct SOLDIERTYPE;
 
-BOOLEAN DoesO3SectorStatueExistHere(INT16 sGridNo);
+BOOLEAN DoesO3SectorStatueExistHere(int16_t sGridNo);
 void ChangeO3SectorStatue(BOOLEAN fFromExplosion);
 
-void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel);
-void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel);
+void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel);
+void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel);
 
 void HandleDoneLastKilledQueenQuote();
 
 void EndQueenDeathEndgameBeginEndCimenatic();
 void EndQueenDeathEndgame();
 
-void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel);
-void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel);
+void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel);
+void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel);
 
 void HandleDoneLastEndGameQuote();
 

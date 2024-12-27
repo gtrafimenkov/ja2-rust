@@ -105,26 +105,26 @@ extern void UnloadFont(uint32_t FontIndex);
 
 extern FontTranslationTable *CreateEnglishTransTable();
 
-extern INT16 GetIndex(uint16_t siChar);
-extern uint32_t GetWidth(struct VObject *hSrcVObject, INT16 ssIndex);
+extern int16_t GetIndex(uint16_t siChar);
+extern uint32_t GetWidth(struct VObject *hSrcVObject, int16_t ssIndex);
 
-extern INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiCharCount,
-                                        CHAR16 *pFontString);
-extern INT16 StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, CHAR16 *pFontString, ...);
-extern INT16 StringPixLength(CHAR16 *string, INT32 UseFont);
-extern INT16 StringNPixLength(CHAR16 *string, uint32_t uiMaxCount, INT32 UseFont);
+extern int16_t StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, uint32_t uiCharCount,
+                                          CHAR16 *pFontString);
+extern int16_t StringPixLengthArg(INT32 usUseFont, uint32_t uiCharCount, CHAR16 *pFontString, ...);
+extern int16_t StringPixLength(CHAR16 *string, INT32 UseFont);
+extern int16_t StringNPixLength(CHAR16 *string, uint32_t uiMaxCount, INT32 UseFont);
 extern void SaveFontSettings(void);
 extern void RestoreFontSettings(void);
 
-void VarFindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight,
-                                 INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY,
+void VarFindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                                 INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY,
                                  CHAR16 *pFontString, ...);
-void VarFindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight,
-                                  INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY,
+void VarFindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                                  INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY,
                                   CHAR16 *pFontString, ...);
-void FindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, CHAR16 *pStr,
-                              INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY);
-void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, CHAR16 *pStr,
-                               INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY);
+void FindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                              CHAR16 *pStr, INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY);
+void FindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                               CHAR16 *pStr, INT32 iFontIndex, int16_t *psNewX, int16_t *psNewY);
 
 #endif

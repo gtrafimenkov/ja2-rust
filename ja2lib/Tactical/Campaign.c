@@ -108,12 +108,12 @@ void ProfileStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usN
 void ProcessStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
                        uint8_t ubReason) {
   uint32_t uiCnt, uiEffLevel;
-  INT16 sSubPointChange = 0;
+  int16_t sSubPointChange = 0;
   uint16_t usChance = 0;
   uint16_t usSubpointsPerPoint;
   uint16_t usSubpointsPerLevel;
   int8_t bCurrentRating;
-  INT16 *psStatGainPtr;
+  int16_t *psStatGainPtr;
   BOOLEAN fAffectedByWisdom = TRUE;
 
   Assert(pProfile != NULL);
@@ -368,9 +368,9 @@ void UpdateStats(struct SOLDIERTYPE *pSoldier) {
 void ProfileUpdateStats(MERCPROFILESTRUCT *pProfile) { ProcessUpdateStats(pProfile, NULL); }
 
 void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, uint8_t ubStat,
-                INT16 sPtsChanged) {
+                int16_t sPtsChanged) {
   // this function changes the stat a given amount...
-  INT16 *psStatGainPtr = NULL;
+  int16_t *psStatGainPtr = NULL;
   int8_t *pbStatPtr = NULL;
   int8_t *pbSoldierStatPtr = NULL;
   int8_t *pbStatDeltaPtr = NULL;
@@ -668,14 +668,14 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, uint8
         // increase all salaries and medical deposits, once for each level gained
         for (uiLevelCnt = 0; uiLevelCnt < (uint32_t)sPtsChanged; uiLevelCnt++) {
           pProfile->sSalary =
-              (INT16)CalcNewSalary(pProfile->sSalary, fChangeTypeIncrease, MAX_DAILY_SALARY);
+              (int16_t)CalcNewSalary(pProfile->sSalary, fChangeTypeIncrease, MAX_DAILY_SALARY);
           pProfile->uiWeeklySalary =
               CalcNewSalary(pProfile->uiWeeklySalary, fChangeTypeIncrease, MAX_LARGE_SALARY);
           pProfile->uiBiWeeklySalary =
               CalcNewSalary(pProfile->uiBiWeeklySalary, fChangeTypeIncrease, MAX_LARGE_SALARY);
           pProfile->sTrueSalary =
-              (INT16)CalcNewSalary(pProfile->sTrueSalary, fChangeTypeIncrease, MAX_DAILY_SALARY);
-          pProfile->sMedicalDepositAmount = (INT16)CalcNewSalary(
+              (int16_t)CalcNewSalary(pProfile->sTrueSalary, fChangeTypeIncrease, MAX_DAILY_SALARY);
+          pProfile->sMedicalDepositAmount = (int16_t)CalcNewSalary(
               pProfile->sMedicalDepositAmount, fChangeTypeIncrease, MAX_DAILY_SALARY);
 
           // if (pSoldier != NULL)
@@ -694,12 +694,12 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
   // this function will run through the soldier's profile and update their stats based on any
   // accumulated gain pts.
   uint8_t ubStat = 0;
-  INT16 *psStatGainPtr = NULL;
+  int16_t *psStatGainPtr = NULL;
   int8_t *pbStatPtr = NULL;
   int8_t bMinStatValue;
   int8_t bMaxStatValue;
   uint16_t usSubpointsPerPoint;
-  INT16 sPtsChanged;
+  int16_t sPtsChanged;
 
   // if hired, not back at AIM
   if (pSoldier != NULL) {
@@ -998,7 +998,7 @@ void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile) {
 // handles possible death of mercs not currently working for the player
 void HandleUnhiredMercDeaths(INT32 iProfileID) {
   uint8_t ubMaxDeaths;
-  INT16 sChance;
+  int16_t sChance;
   MERCPROFILESTRUCT *pProfile = &(gMercProfiles[iProfileID]);
 
   // if the player has never yet had the chance to hire this merc
@@ -1050,7 +1050,7 @@ void HandleUnhiredMercDeaths(INT32 iProfileID) {
     sChance -= 1;
   }
 
-  if ((INT16)PreRandom(1000) < sChance) {
+  if ((int16_t)PreRandom(1000) < sChance) {
     // this merc gets Killed In Action!!!
     pProfile->bMercStatus = MERC_IS_DEAD;
     pProfile->uiDayBecomesAvailable = 0;
@@ -1306,7 +1306,7 @@ void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType) {
 }
 
 void BuildStatChangeString(STR16 wString, size_t bufSize, STR16 wName, BOOLEAN fIncrease,
-                           INT16 sPtsChanged, uint8_t ubStat) {
+                           int16_t sPtsChanged, uint8_t ubStat) {
   uint8_t ubStringIndex;
 
   Assert(sPtsChanged != 0);

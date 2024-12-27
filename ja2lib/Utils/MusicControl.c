@@ -436,13 +436,13 @@ void MusicStopCallback(void *pData) {
 void SetMusicFadeSpeed(int8_t bFadeSpeed) { gbFadeSpeed = bFadeSpeed; }
 
 void FadeMusicForXSeconds(uint32_t uiDelay) {
-  INT16 sNumTimeSteps, sNumVolumeSteps;
+  int16_t sNumTimeSteps, sNumVolumeSteps;
 
   // get # time steps in delay....
-  sNumTimeSteps = (INT16)(uiDelay / 10);
+  sNumTimeSteps = (int16_t)(uiDelay / 10);
 
   // Devide this by music volume...
-  sNumVolumeSteps = (INT16)(uiMusicVolume / sNumTimeSteps);
+  sNumVolumeSteps = (int16_t)(uiMusicVolume / sNumTimeSteps);
 
   // Set fade delay...
   SetMusicFadeSpeed((int8_t)sNumVolumeSteps);

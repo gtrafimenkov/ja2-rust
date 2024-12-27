@@ -143,8 +143,8 @@ void RecountBackgrounds(void) {
   }
 }
 
-INT32 RegisterBackgroundRect(uint32_t uiFlags, INT16 *pSaveArea, INT16 sLeft, INT16 sTop,
-                             INT16 sRight, INT16 sBottom) {
+INT32 RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
+                             int16_t sRight, int16_t sBottom) {
   uint32_t uiBufSize;
   INT32 iBackIndex;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
@@ -184,10 +184,10 @@ INT32 RegisterBackgroundRect(uint32_t uiFlags, INT16 *pSaveArea, INT16 sLeft, IN
   if ((uiTopSkip >= (INT32)usHeight) || (uiBottomSkip >= (INT32)usHeight)) return (-1);
 
   // Set re-set values given based on clipping
-  sLeft = sLeft + (INT16)uiLeftSkip;
-  sRight = sRight - (INT16)uiRightSkip;
-  sTop = sTop + (INT16)uiTopSkip;
-  sBottom = sBottom - (INT16)uiBottomSkip;
+  sLeft = sLeft + (int16_t)uiLeftSkip;
+  sRight = sRight - (int16_t)uiRightSkip;
+  sTop = sTop + (int16_t)uiTopSkip;
+  sBottom = sBottom - (int16_t)uiBottomSkip;
 
   if ((iBackIndex = GetFreeBackgroundBuffer()) == (-1)) return (-1);
 
@@ -472,7 +472,7 @@ BOOLEAN UpdateSaveBuffer(void) {
   return (TRUE);
 }
 
-BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight) {
+BOOLEAN RestoreExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint8_t *pDestBuf, *pSrcBuf;
 
@@ -494,7 +494,7 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
 
 BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
-  INT16 sLeft, sTop, sWidth, sHeight;
+  int16_t sLeft, sTop, sWidth, sHeight;
   uint8_t *pDestBuf, *pSrcBuf;
 
   if (!gBackSaves[iBack].fAllocated) {
@@ -522,7 +522,7 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   return (TRUE);
 }
 
-BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight) {
+BOOLEAN CopyExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight) {
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint8_t *pDestBuf, *pSrcBuf;
 
@@ -548,7 +548,7 @@ BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
 // to the video buffer.
 //
 //*****************************************************************************
-uint16_t gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
+uint16_t gprintfdirty(int16_t x, int16_t y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -570,8 +570,8 @@ uint16_t gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
   }
 
   if (uiStringLength > 0) {
-    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, x, y, (INT16)(x + uiStringLength),
-                                   (INT16)(y + uiStringHeight));
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, x, y, (int16_t)(x + uiStringLength),
+                                   (int16_t)(y + uiStringHeight));
 
     if (iBack != -1) {
       SetBackgroundRectFilled(iBack);
@@ -581,7 +581,7 @@ uint16_t gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
   return (uiStringLength);
 }
 
-uint16_t gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...) {
+uint16_t gprintfinvalidate(int16_t x, int16_t y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -597,12 +597,12 @@ uint16_t gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...) {
   uiStringHeight = GetFontHeight(FontDefault);
 
   if (uiStringLength > 0) {
-    InvalidateRegionEx(x, y, (INT16)(x + uiStringLength), (INT16)(y + uiStringHeight), 0);
+    InvalidateRegionEx(x, y, (int16_t)(x + uiStringLength), (int16_t)(y + uiStringHeight), 0);
   }
   return (uiStringLength);
 }
 
-uint16_t gprintfRestore(INT16 x, INT16 y, STR16 pFontString, ...) {
+uint16_t gprintfRestore(int16_t x, int16_t y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -664,8 +664,8 @@ INT32 RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
 
     iBackIndex =
         RegisterBackgroundRect(BGND_FLAG_PERMANENT, NULL, pTopmostDesc->sLeft, pTopmostDesc->sTop,
-                               (INT16)(pTopmostDesc->sLeft + uiStringLength),
-                               (INT16)(pTopmostDesc->sTop + uiStringHeight));
+                               (int16_t)(pTopmostDesc->sLeft + uiStringLength),
+                               (int16_t)(pTopmostDesc->sTop + uiStringHeight));
 
   } else {
     // Register background
@@ -796,8 +796,8 @@ BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, uint32_t iBlitterIn
 
           gVideoOverlays[iBlitterIndex].uiBackground = RegisterBackgroundRect(
               BGND_FLAG_PERMANENT, NULL, pTopmostDesc->sLeft, pTopmostDesc->sTop,
-              (INT16)(pTopmostDesc->sLeft + uiStringLength),
-              (INT16)(pTopmostDesc->sTop + uiStringHeight));
+              (int16_t)(pTopmostDesc->sLeft + uiStringLength),
+              (int16_t)(pTopmostDesc->sTop + uiStringHeight));
           gVideoOverlays[iBlitterIndex].sX = pTopmostDesc->sX;
           gVideoOverlays[iBlitterIndex].sY = pTopmostDesc->sY;
         }
@@ -986,7 +986,7 @@ void DeleteVideoOverlaysArea() {
   }
 }
 
-BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
+BOOLEAN RestoreShiftedVideoOverlays(int16_t sShiftX, int16_t sShiftY) {
   uint32_t uiCount, uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint32_t iBackIndex;
@@ -995,7 +995,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   INT32 uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
   uint32_t usHeight, usWidth;
   INT32 iTempX, iTempY;
-  INT16 sLeft, sTop, sRight, sBottom;
+  int16_t sLeft, sTop, sRight, sBottom;
 
   ClipX1 = 0;
   ClipY1 = gsVIEWPORT_WINDOW_START_Y;
@@ -1034,10 +1034,10 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
         if ((uiTopSkip >= (INT32)usHeight) || (uiBottomSkip >= (INT32)usHeight)) continue;
 
         // Set re-set values given based on clipping
-        sLeft = iTempX + (INT16)uiLeftSkip;
-        sTop = iTempY + (INT16)uiTopSkip;
-        sRight = sRight + sShiftX - (INT16)uiRightSkip;
-        sBottom = sBottom + sShiftY - (INT16)uiBottomSkip;
+        sLeft = iTempX + (int16_t)uiLeftSkip;
+        sTop = iTempY + (int16_t)uiTopSkip;
+        sRight = sRight + sShiftX - (int16_t)uiRightSkip;
+        sBottom = sBottom + sShiftY - (int16_t)uiBottomSkip;
 
         usHeight = sBottom - sTop;
         usWidth = sRight - sLeft;

@@ -9,8 +9,8 @@
 #include "TileEngine/WorldMan.h"
 
 typedef struct MACROSTRUCT {
-  INT16 sMacroID;
-  INT16 sOffset;
+  int16_t sMacroID;
+  int16_t sOffset;
 } MACROSTRUCT;
 // road macros
 
@@ -363,13 +363,13 @@ MACROSTRUCT gRoadMacros[] = {
     {TE, -1},
     {TE, 0}};
 
-INT16 gsRoadMacroStartIndex[NUM_ROAD_MACROS];
+int16_t gsRoadMacroStartIndex[NUM_ROAD_MACROS];
 
 // A simple optimization function that calculates the first index in the large database for
 // the particular macro ID.
 void InitializeRoadMacros() {
-  INT16 i, end;
-  INT16 sMacro = 0;
+  int16_t i, end;
+  int16_t sMacro = 0;
   end = sizeof(gRoadMacros) / 4;
   for (i = 0; i < end; i++) {
     if (i >= sizeof(gRoadMacros) / sizeof(MACROSTRUCT)) {

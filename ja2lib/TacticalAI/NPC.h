@@ -44,8 +44,8 @@ typedef struct {
 
   // conditions
   union {
-    INT16 sRequiredItem;    // item NPC must have to say quote
-    INT16 sRequiredGridno;  // location for NPC req'd to say quote
+    int16_t sRequiredItem;    // item NPC must have to say quote
+    int16_t sRequiredGridno;  // location for NPC req'd to say quote
   };
   uint16_t usFactMustBeTrue;   // ...before saying quote
   uint16_t usFactMustBeFalse;  // ...before saying quote
@@ -68,7 +68,7 @@ typedef struct {
   uint16_t usSetFactTrue;
   uint16_t usGiftItem;  // item NPC gives to merc after saying quote
   uint16_t usGoToGridno;
-  INT16 sActionData;  // special action value
+  int16_t sActionData;  // special action value
 
 #if !defined(CRIPPLED_VERSION) && !defined(RUSSIAN)
   uint8_t ubUnused[4];
@@ -165,8 +165,8 @@ BOOLEAN LoadNPCInfoFromSavedGameFile(HWFILE hFile, uint32_t uiSaveGameVersion);
 
 extern void TriggerFriendWithHostileQuote(uint8_t ubNPC);
 
-extern void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, INT16 sOldGridNo,
-                                                  INT16 sNewGridNo);
+extern void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, int16_t sOldGridNo,
+                                                  int16_t sNewGridNo);
 
 extern uint8_t ActionIDForMovementRecord(uint8_t ubNPC, uint8_t ubRecord);
 
@@ -178,7 +178,7 @@ extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(uint8_t ubNPCId, uint32_t uiMone
                                                 uint8_t *pQuoteValue);
 
 // given a victory in this sector, handle specific facts
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ);
 
 // check if this shopkeep has been shutdown, if so do soething and return the fact
 BOOLEAN HandleShopKeepHasBeenShutDown(uint8_t ubCharNum);
@@ -201,7 +201,7 @@ BOOLEAN GetInfoForAbandoningEPC(uint8_t ubNPC, uint16_t *pusQuoteNum, uint16_t *
 
 BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord);
 
-int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed);
+int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, BOOLEAN fSetAsUsed);
 
 void ResetOncePerConvoRecordsForNPC(uint8_t ubNPC);
 

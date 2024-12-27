@@ -8,8 +8,8 @@ void MarkMapIndexDirty(INT32 iMapIndex) {
 }
 
 void CenterScreenAtMapIndex(INT32 iMapIndex) {
-  INT16 sWorldX, sWorldY;
-  INT16 sCellX, sCellY;
+  int16_t sWorldX, sWorldY;
+  int16_t sCellX, sCellY;
 
   // Get X, Y world GRID Coordinates
   sWorldY = (iMapIndex / WORLD_COLS);

@@ -92,7 +92,7 @@ void HandleIMPPortraits(void) {
   return;
 }
 
-BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
+BOOLEAN RenderPortrait(int16_t sX, int16_t sY) {
   // render the portrait of the current picture
   VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;

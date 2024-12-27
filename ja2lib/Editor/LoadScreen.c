@@ -516,7 +516,7 @@ void DrawFileDialog(void) {
 // The callback calls this function passing the relative y position of where
 // the user clicked on the hot spot.
 void SelectFileDialogYPos(uint16_t usRelativeYPos) {
-  INT16 sSelName;
+  int16_t sSelName;
   INT32 x;
   struct FileDialogList *FListNode;
 
@@ -760,7 +760,7 @@ void InitErrorCatchDialog() {
 // When we come back for the next frame, we then actually save or load the map.  So this
 // process takes two full screen cycles.
 uint32_t ProcessFileIO() {
-  INT16 usStartX, usStartY;
+  int16_t usStartX, usStartY;
   CHAR8 ubNewFilename[1024];
   switch (gbCurrentFileIOStatus) {
     case INITIATE_MAP_SAVE:  // draw save message

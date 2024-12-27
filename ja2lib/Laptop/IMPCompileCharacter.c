@@ -44,7 +44,7 @@ INT32 iLastElementInPersonalityList = 0;
 extern BOOLEAN fLoadingCharacterForPreviousImpProfile;
 
 // positions of the face x and y for eyes and mouth for the 10 portraits
-INT16 sFacePositions[NUMBER_OF_PLAYER_PORTRAITS][4] = {
+int16_t sFacePositions[NUMBER_OF_PLAYER_PORTRAITS][4] = {
     {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
     {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
     {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
@@ -571,7 +571,7 @@ void SetMercSkinAndHairColors(void) {
   };
 
   // given the portrait number, set the merc's skin and hair color
-  INT16 sSkinColor = 0, sHairColor = 0;
+  int16_t sSkinColor = 0, sHairColor = 0;
 
   switch (iPortraitNumber) {
     case (0):

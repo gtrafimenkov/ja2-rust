@@ -18,10 +18,10 @@ BOOLEAN LoadMapEdgepoints(int8_t **hBuffer);
 void TrashMapEdgepoints();
 
 // dynamic arrays that contain the valid gridno's for each edge
-extern INT16 *gps1stNorthEdgepointArray;
-extern INT16 *gps1stEastEdgepointArray;
-extern INT16 *gps1stSouthEdgepointArray;
-extern INT16 *gps1stWestEdgepointArray;
+extern int16_t *gps1stNorthEdgepointArray;
+extern int16_t *gps1stEastEdgepointArray;
+extern int16_t *gps1stSouthEdgepointArray;
+extern int16_t *gps1stWestEdgepointArray;
 // contains the size for each array
 extern uint16_t gus1stNorthEdgepointArraySize;
 extern uint16_t gus1stEastEdgepointArraySize;
@@ -36,10 +36,10 @@ extern uint16_t gus1stSouthEdgepointMiddleIndex;
 extern uint16_t gus1stWestEdgepointMiddleIndex;
 
 // dynamic arrays that contain the valid gridno's for each edge
-extern INT16 *gps2ndNorthEdgepointArray;
-extern INT16 *gps2ndEastEdgepointArray;
-extern INT16 *gps2ndSouthEdgepointArray;
-extern INT16 *gps2ndWestEdgepointArray;
+extern int16_t *gps2ndNorthEdgepointArray;
+extern int16_t *gps2ndEastEdgepointArray;
+extern int16_t *gps2ndSouthEdgepointArray;
+extern int16_t *gps2ndWestEdgepointArray;
 // contains the size for each array
 extern uint16_t gus2ndNorthEdgepointArraySize;
 extern uint16_t gus2ndEastEdgepointArraySize;
@@ -62,8 +62,8 @@ extern uint16_t gus2ndWestEdgepointMiddleIndex;
 // anybody else.
 void BeginMapEdgepointSearch();
 void EndMapEdgepointSearch();
-INT16 SearchForClosestPrimaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCode);
-INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCode);
+int16_t SearchForClosestPrimaryMapEdgepoint(int16_t sGridNo, uint8_t ubInsertionCode);
+int16_t SearchForClosestSecondaryMapEdgepoint(int16_t sGridNo, uint8_t ubInsertionCode);
 
 // There are two classes of edgepoints.
 // PRIMARY		: The default list of edgepoints.  This list includes edgepoints that are
@@ -72,7 +72,7 @@ INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, uint8_t ubInsertionCo
 // traversing 						to these areas is possible.  Examples would
 // be isolated sections of Grumm or Alma, which you can't immediately
 //
-uint8_t CalcMapEdgepointClassInsertionCode(INT16 sGridNo);
+uint8_t CalcMapEdgepointClassInsertionCode(int16_t sGridNo);
 
 #ifdef JA2EDITOR
 void ShowMapEdgepoints();

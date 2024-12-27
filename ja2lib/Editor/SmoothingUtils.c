@@ -22,8 +22,8 @@ extern uint16_t PickAWallPiece(uint16_t usWallPieceType);
 uint16_t SearchForWallType(uint32_t iMapIndex) {
   uint32_t uiTileType;
   struct LEVELNODE *pWall;
-  INT16 sOffset;
-  INT16 x, y, sRadius = 0;
+  int16_t sOffset;
+  int16_t x, y, sRadius = 0;
   if (gfBasement) {
     uint16_t usWallType;
     usWallType = GetRandomIndexByRange(FIRSTWALL, LASTWALL);
@@ -38,7 +38,7 @@ uint16_t SearchForWallType(uint32_t iMapIndex) {
       for (x = -sRadius; x <= sRadius; x++) {
         if (abs(x) == abs(sRadius) || abs(y) == abs(sRadius)) {
           sOffset = y * WORLD_COLS + x;
-          if (!GridNoOnVisibleWorldTile((INT16)(iMapIndex + sOffset))) {
+          if (!GridNoOnVisibleWorldTile((int16_t)(iMapIndex + sOffset))) {
             continue;
           }
           pWall = gpWorldLevelData[iMapIndex + sOffset].pStructHead;
@@ -67,14 +67,14 @@ uint16_t SearchForWallType(uint32_t iMapIndex) {
 uint16_t SearchForRoofType(uint32_t iMapIndex) {
   uint32_t uiTileType;
   struct LEVELNODE *pRoof;
-  INT16 x, y, sRadius = 0;
-  INT16 sOffset;
+  int16_t x, y, sRadius = 0;
+  int16_t sOffset;
   while (sRadius < 32) {
     for (y = -sRadius; y <= sRadius; y++)
       for (x = -sRadius; x <= sRadius; x++) {
         if (abs(x) == abs(sRadius) || abs(y) == abs(sRadius)) {
           sOffset = y * WORLD_COLS + x;
-          if (!GridNoOnVisibleWorldTile((INT16)(iMapIndex + sOffset))) {
+          if (!GridNoOnVisibleWorldTile((int16_t)(iMapIndex + sOffset))) {
             continue;
           }
           pRoof = gpWorldLevelData[iMapIndex + sOffset].pRoofHead;
@@ -253,7 +253,7 @@ void ChangeHorizontalWall(uint32_t iMapIndex, uint16_t usNewPiece) {
   struct LEVELNODE *pWall;
   uint32_t uiTileType;
   uint16_t usTileIndex;
-  INT16 sIndex;
+  int16_t sIndex;
   pWall = GetHorizontalWall(iMapIndex);
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);
@@ -271,7 +271,7 @@ void ChangeVerticalWall(uint32_t iMapIndex, uint16_t usNewPiece) {
   struct LEVELNODE *pWall;
   uint32_t uiTileType;
   uint16_t usTileIndex;
-  INT16 sIndex;
+  int16_t sIndex;
   pWall = GetVerticalWall(iMapIndex);
   if (pWall) {
     GetTileType(pWall->usIndex, &uiTileType);

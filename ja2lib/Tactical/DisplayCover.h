@@ -8,7 +8,7 @@ struct SOLDIERTYPE;
 void DisplayCoverOfSelectedGridNo();
 void RemoveCoverOfSelectedGridNo();
 
-void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
+void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 
 void RemoveVisibleGridNoAtSelectedGridNo();
 void DisplayGridNoVisibleToSoldierGrid();

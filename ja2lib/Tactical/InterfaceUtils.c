@@ -101,8 +101,8 @@ void UnLoadCarPortraits(void) {
   return;
 }
 
-void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                     INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
+void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
+                     int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
@@ -113,7 +113,7 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
 
   // Erase what was there
   if (fErase) {
-    RestoreExternBackgroundRect(sXPos, (INT16)(sYPos - sHeight), sWidth, (INT16)(sHeight + 1));
+    RestoreExternBackgroundRect(sXPos, (int16_t)(sYPos - sHeight), sWidth, (int16_t)(sHeight + 1));
   }
 
   if (pSoldier->bLife == 0) {
@@ -183,8 +183,8 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                       INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
+void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
+                       int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
@@ -195,7 +195,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
 
   // Erase what was there
   if (fErase) {
-    RestoreExternBackgroundRect(sXPos, (INT16)(sYPos - sHeight), sWidth, (INT16)(sHeight + 1));
+    RestoreExternBackgroundRect(sXPos, (int16_t)(sYPos - sHeight), sWidth, (int16_t)(sHeight + 1));
   }
 
   if (pSoldier->bLife == 0) {
@@ -216,17 +216,17 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
     if (gusSelectedSoldier == GetSolID(pSoldier) && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
         OK_INTERRUPT_MERC(pSoldier)) {
       // gold, the second entry in the .sti
-      BltVideoObject(uiBuffer, hHandle, 1, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject(uiBuffer, hHandle, 1, sXPos, (int16_t)(sYPos - sHeight),
+                     VO_BLT_SRCTRANSPARENCY, NULL);
 
     } else {
       // brown, first entry
-      BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject(uiBuffer, hHandle, 0, sXPos, (int16_t)(sYPos - sHeight),
+                     VO_BLT_SRCTRANSPARENCY, NULL);
     }
   } else {
     // brown, first entry
-    BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
+    BltVideoObject(uiBuffer, hHandle, 0, sXPos, (int16_t)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
                    NULL);
   }
 
@@ -285,8 +285,8 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                       INT16 sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
+void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
+                       int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
@@ -296,7 +296,7 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
 
   // Erase what was there
   if (fErase) {
-    RestoreExternBackgroundRect(sXPos, (INT16)(sYPos - sHeight), sWidth, (INT16)(sHeight + 1));
+    RestoreExternBackgroundRect(sXPos, (int16_t)(sYPos - sHeight), sWidth, (int16_t)(sHeight + 1));
   }
 
   if (pSoldier->bLife == 0) {
@@ -326,16 +326,16 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, INT16 sXPos, INT16 sYPos,
-                     INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
-                     uint32_t uiBuffer) {
+void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, int16_t sXPos, int16_t sYPos,
+                     int16_t sWidth, int16_t sHeight, int16_t sColor1, int16_t sColor2,
+                     BOOLEAN fErase, uint32_t uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // uint16_t usLineColor;
 
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usLineColor;
-  INT16 sValue;
+  int16_t sValue;
 
   if (ubStatus >= DRAW_ITEM_STATUS_ATTACHMENT1) {
     sValue = pObject->bAttachStatus[ubStatus - DRAW_ITEM_STATUS_ATTACHMENT1];
@@ -363,7 +363,8 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, INT16 sXPos, 
 
   // Erase what was there
   if (fErase) {
-    // RestoreExternBackgroundRect( sXPos, (INT16)(sYPos - sHeight), sWidth, (INT16)(sHeight + 1 )
+    // RestoreExternBackgroundRect( sXPos, (int16_t)(sYPos - sHeight), sWidth, (int16_t)(sHeight + 1
+    // )
     // );
   }
 
@@ -386,13 +387,13 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, INT16 sXPos, 
   UnLockVideoSurface(uiBuffer);
 
   if (uiBuffer == guiSAVEBUFFER) {
-    RestoreExternBackgroundRect(sXPos, (INT16)(sYPos - sHeight), sWidth, (INT16)(sHeight + 1));
+    RestoreExternBackgroundRect(sXPos, (int16_t)(sYPos - sHeight), sWidth, (int16_t)(sHeight + 1));
   } else {
-    InvalidateRegion(sXPos, (INT16)(sYPos - sHeight), sXPos + sWidth, (INT16)(sYPos + 1));
+    InvalidateRegion(sXPos, (int16_t)(sYPos - sHeight), sXPos + sWidth, (int16_t)(sYPos + 1));
   }
 }
 
-void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
+void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFaceY,
                        BOOLEAN fAutoFace) {
   BOOLEAN fDoFace = FALSE;
   uint8_t ubVehicleType = 0;

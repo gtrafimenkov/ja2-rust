@@ -625,7 +625,7 @@ BOOLEAN InitBobbyRayUsedInventory() {
 }
 
 void DailyUpdateOfBobbyRaysNewInventory() {
-  INT16 i;
+  int16_t i;
   uint16_t usItemIndex;
   BOOLEAN fPrevElig;
 
@@ -681,7 +681,7 @@ void DailyUpdateOfBobbyRaysNewInventory() {
 }
 
 void DailyUpdateOfBobbyRaysUsedInventory() {
-  INT16 i;
+  int16_t i;
   uint16_t usItemIndex;
   BOOLEAN fPrevElig;
 
@@ -718,7 +718,7 @@ void DailyUpdateOfBobbyRaysUsedInventory() {
             // reordering lag...
             AddFreshBobbyRayInventory(usItemIndex);
           } else {
-            OrderBobbyRItem((INT16)(usItemIndex + BOBBY_R_USED_PURCHASE_OFFSET));
+            OrderBobbyRItem((int16_t)(usItemIndex + BOBBY_R_USED_PURCHASE_OFFSET));
           }
         }
       }
@@ -763,7 +763,7 @@ void OrderBobbyRItem(uint16_t usItemIndex) {
 }
 
 void AddFreshBobbyRayInventory(uint16_t usItemIndex) {
-  INT16 sInventorySlot;
+  int16_t sInventorySlot;
   STORE_INVENTORY *pInventoryArray;
   BOOLEAN fUsed;
   uint8_t ubItemQuality;
@@ -800,9 +800,9 @@ void AddFreshBobbyRayInventory(uint16_t usItemIndex) {
   pInventoryArray[sInventorySlot].ubQtyOnOrder = 0;
 }
 
-INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
-                              BOOLEAN fUsed) {
-  INT16 i;
+int16_t GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
+                                BOOLEAN fUsed) {
+  int16_t i;
 
   for (i = 0; i < LaptopSaveInfo.usInventoryListLength[fUsed]; i++) {
     // if we have some of this item in stock
@@ -816,7 +816,7 @@ INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemI
 }
 
 void SimulateBobbyRayCustomer(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
-  INT16 i;
+  int16_t i;
   uint8_t ubItemsSold;
 
   // loop through all items BR can stock to see what gets sold
@@ -839,7 +839,7 @@ void SimulateBobbyRayCustomer(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
 }
 
 void CancelAllPendingBRPurchaseOrders(void) {
-  INT16 i;
+  int16_t i;
 
   // remove all the BR-Order events off the event queue
   DeleteAllStrategicEventsOfType(EVENT_UPDATE_BOBBY_RAY_INVENTORY);

@@ -169,7 +169,7 @@ extern UI_EVENT gEvents[NUM_UI_EVENTS];
 extern UI_MODE gCurrentUIMode;
 extern UI_MODE gOldUIMode;
 extern uint32_t guiCurrentEvent;
-extern INT16 gsSelectedLevel;
+extern int16_t gsSelectedLevel;
 extern BOOLEAN gfPlotNewMovement;
 extern uint32_t guiPendingOverrideEvent;
 
@@ -178,14 +178,14 @@ extern BOOLEAN gfUIDisplayActionPoints;
 extern BOOLEAN gfUIDisplayActionPointsInvalid;
 extern BOOLEAN gfUIDisplayActionPointsBlack;
 extern BOOLEAN gfUIDisplayActionPointsCenter;
-extern INT16 gUIDisplayActionPointsOffY;
-extern INT16 gUIDisplayActionPointsOffX;
+extern int16_t gUIDisplayActionPointsOffY;
+extern int16_t gUIDisplayActionPointsOffX;
 extern BOOLEAN gfUIDoNotHighlightSelMerc;
 extern uint32_t guiShowUPDownArrows;
 extern BOOLEAN gfUIHandleSelection;
 extern BOOLEAN gfUIHandleSelectionAboveGuy;
-extern INT16 gsSelectedGridNo;
-extern INT16 gsSelectedGuy;
+extern int16_t gsSelectedGridNo;
+extern int16_t gsSelectedGuy;
 extern BOOLEAN gfUIInDeadlock;
 extern uint8_t gUIDeadlockedSoldier;
 
@@ -235,7 +235,7 @@ extern uint16_t gusUIFullTargetID;
 extern uint32_t guiUIFullTargetFlags;
 
 extern BOOLEAN gfUIConfirmExitArrows;
-extern INT16 gsJumpOverGridNo;
+extern int16_t gsJumpOverGridNo;
 
 uint32_t HandleTacticalUI(void);
 uint32_t UIHandleEndTurn(UI_EVENT *pUIEvent);
@@ -251,8 +251,8 @@ void HandleObjectHighlighting();
 
 extern BOOLEAN gfUIForceReExamineCursorData;
 
-extern INT16 guiCreateGuyIndex;
-extern INT16 guiCreateBadGuyIndex;
+extern int16_t guiCreateGuyIndex;
+extern int16_t guiCreateBadGuyIndex;
 
 // FUNCTIONS IN INPUT MODULES
 void GetKeyboardInput(uint32_t *puiNewEvent);
@@ -287,7 +287,7 @@ BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFl
                                uint16_t usMapPos, uint32_t uiFlags);
 BOOLEAN UIMouseOnValidAttackLocation(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
+BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, int16_t sGridNo);
 
 BOOLEAN IsValidTalkableNPCFromMouse(uint8_t *pubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs,
                                     BOOLEAN fCheckCollapsed);
@@ -313,7 +313,7 @@ BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 uint32_t UIHandleChangeLevel(UI_EVENT *pUIEvent);
 BOOLEAN UIHandleOnMerc(BOOLEAN fMovementMode);
 
-void ChangeInterfaceLevel(INT16 sLevel);
+void ChangeInterfaceLevel(int16_t sLevel);
 
 void EndRubberBanding();
 void ResetMultiSelection();
@@ -325,7 +325,7 @@ BOOLEAN SelectedGuyInBusyAnimation();
 void GotoLowerStance(struct SOLDIERTYPE *pSoldier);
 void GotoHeigherStance(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fCheckForPath);
+BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fCheckForPath);
 
 void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier);
 

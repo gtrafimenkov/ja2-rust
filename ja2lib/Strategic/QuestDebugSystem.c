@@ -358,7 +358,7 @@ typedef struct {
   uint16_t usScrollBoxEndY;      //	Bottom position on the scroll box
   uint16_t usScrollArrowHeight;  //	Scroll Arrow height
 
-  INT16 sCurSelectedItem;               //	Currently selected item
+  int16_t sCurSelectedItem;             //	Currently selected item
   uint16_t usItemDisplayedOnTopOfList;  //	item at the top of displayed list
   uint16_t usStartIndex;                //	index to start at for the array of elements
   uint16_t usMaxArrayIndex;             //	Max Size of the array
@@ -389,14 +389,14 @@ uint16_t gusQuestDebugBlue;
 uint16_t gusQuestDebugLtBlue;
 uint16_t gusQuestDebugDkBlue;
 
-// INT16		gsCurScrollBoxY=0;
+// int16_t		gsCurScrollBoxY=0;
 
 SCROLL_BOX gNpcListBox;   // The Npc Scroll box
 SCROLL_BOX gItemListBox;  // The Npc Scroll box
 
 SCROLL_BOX *gpActiveListBox;  // Only 1 scroll box is active at a time, this is set to it.
 
-INT16 gsQdsEnteringGridNo = 0;
+int16_t gsQdsEnteringGridNo = 0;
 
 uint8_t gubTextEntryAction = QD_DROP_DOWN_NO_ACTION;
 BOOLEAN gfTextEntryActive = FALSE;
@@ -413,7 +413,7 @@ uint8_t gubCurQuestSelected;
 uint16_t gusCurFactSelected;
 uint16_t gusFactAtTopOfList;
 
-// INT16				gsCurrentNPCLog=-1;
+// int16_t				gsCurrentNPCLog=-1;
 // //If this is set, the value will be set to the
 BOOLEAN gfNpcLogButton = FALSE;
 
@@ -542,7 +542,7 @@ void RenderQuestDebugSystem();
 void ExitQuestDebugSystem();
 void HandleQuestDebugSystem();
 void GetUserInput();
-void ColorFillQuestDebugScreenScreen(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void ColorFillQuestDebugScreenScreen(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void QuestDebug_ExitTactical();
 void QuestDebug_EnterTactical();
 void DisplayQuestInformation();
@@ -575,8 +575,8 @@ void DisplayCurrentGridNo();
 void EnableQDSButtons();
 BOOLEAN DoQDSMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen, uint8_t ubFlags,
                         MSGBOX_CALLBACK ReturnCallback);
-void IncrementActiveDropDownBox(INT16 sIncrementValue);
-INT16 IsMercInTheSector(uint16_t usMercID);
+void IncrementActiveDropDownBox(int16_t sIncrementValue);
+int16_t IsMercInTheSector(uint16_t usMercID);
 void RefreshAllNPCInventory();
 void SetQDSMercProfile();
 void HandleQDSTalkingMerc();
@@ -958,7 +958,7 @@ BOOLEAN EnterQuestDebugSystem() {
                gMercProfiles[giHaveSelectedNPC].zNickname);
     SpecifyButtonText(guiQuestDebugCurNPCButton, zItemDesc);
 
-    gNpcListBox.sCurSelectedItem = (INT16)giHaveSelectedNPC;
+    gNpcListBox.sCurSelectedItem = (int16_t)giHaveSelectedNPC;
 
     EnableQDSButtons();
   }
@@ -972,7 +972,7 @@ BOOLEAN EnterQuestDebugSystem() {
     swprintf(zItemDesc, ARR_SIZE(zItemDesc), L"%d - %s", giHaveSelectedItem, zItemName);
     SpecifyButtonText(guiQuestDebugCurItemButton, zItemDesc);
 
-    gItemListBox.sCurSelectedItem = (INT16)giHaveSelectedItem;
+    gItemListBox.sCurSelectedItem = (int16_t)giHaveSelectedItem;
 
     EnableQDSButtons();
   }
@@ -1220,26 +1220,26 @@ void GetUserInput() {
         case PGDN:
           if (gfInDropDownBox) {
             IncrementActiveDropDownBox(
-                (INT16)(gpActiveListBox->sCurSelectedItem + QUEST_DBS_MAX_DISPLAYED_ENTRIES));
+                (int16_t)(gpActiveListBox->sCurSelectedItem + QUEST_DBS_MAX_DISPLAYED_ENTRIES));
           }
           break;
 
         case PGUP:
           if (gfInDropDownBox) {
             IncrementActiveDropDownBox(
-                (INT16)(gpActiveListBox->sCurSelectedItem - QUEST_DBS_MAX_DISPLAYED_ENTRIES));
+                (int16_t)(gpActiveListBox->sCurSelectedItem - QUEST_DBS_MAX_DISPLAYED_ENTRIES));
           }
           break;
 
         case DNARROW:
           if (gfInDropDownBox) {
-            IncrementActiveDropDownBox((INT16)(gpActiveListBox->sCurSelectedItem + 1));
+            IncrementActiveDropDownBox((int16_t)(gpActiveListBox->sCurSelectedItem + 1));
           }
           break;
 
         case UPARROW:
           if (gfInDropDownBox) {
-            IncrementActiveDropDownBox((INT16)(gpActiveListBox->sCurSelectedItem - 1));
+            IncrementActiveDropDownBox((int16_t)(gpActiveListBox->sCurSelectedItem - 1));
           }
           break;
 
@@ -1260,26 +1260,26 @@ void GetUserInput() {
         case PGDN:
           if (gfInDropDownBox) {
             IncrementActiveDropDownBox(
-                (INT16)(gpActiveListBox->sCurSelectedItem + QUEST_DBS_MAX_DISPLAYED_ENTRIES));
+                (int16_t)(gpActiveListBox->sCurSelectedItem + QUEST_DBS_MAX_DISPLAYED_ENTRIES));
           }
           break;
 
         case PGUP:
           if (gfInDropDownBox) {
             IncrementActiveDropDownBox(
-                (INT16)(gpActiveListBox->sCurSelectedItem - QUEST_DBS_MAX_DISPLAYED_ENTRIES));
+                (int16_t)(gpActiveListBox->sCurSelectedItem - QUEST_DBS_MAX_DISPLAYED_ENTRIES));
           }
           break;
 
         case DNARROW:
           if (gfInDropDownBox) {
-            IncrementActiveDropDownBox((INT16)(gpActiveListBox->sCurSelectedItem + 1));
+            IncrementActiveDropDownBox((int16_t)(gpActiveListBox->sCurSelectedItem + 1));
           }
           break;
 
         case UPARROW:
           if (gfInDropDownBox) {
-            IncrementActiveDropDownBox((INT16)(gpActiveListBox->sCurSelectedItem - 1));
+            IncrementActiveDropDownBox((int16_t)(gpActiveListBox->sCurSelectedItem - 1));
           }
           break;
 
@@ -1315,7 +1315,7 @@ void GetUserInput() {
   }
 }
 
-void ColorFillQuestDebugScreenScreen(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
+void ColorFillQuestDebugScreenScreen(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
   ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusQuestDebugBlue);
 }
 
@@ -1739,7 +1739,8 @@ void DisplaySelectedListBox() {
       else
         gpActiveListBox->sCurSelectedItem = 0;
 
-      if ((INT16)(gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usNumDisplayedItems - 1) < 0)
+      if ((int16_t)(gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usNumDisplayedItems - 1) <
+          0)
         gpActiveListBox->usItemDisplayedOnTopOfList = 0;
       else
         gpActiveListBox->usItemDisplayedOnTopOfList =
@@ -1793,7 +1794,7 @@ void DisplaySelectedListBox() {
 void DisplaySelectedNPC() {
   uint16_t i;
   uint16_t usPosX, usPosY;
-  INT16 usLocationX = 0, usLocationY = 0;
+  int16_t usLocationX = 0, usLocationY = 0;
   uint16_t usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
   CHAR16 sTempString[64];
   wchar_t zButtonName[256];
@@ -1964,7 +1965,7 @@ void SelectNpcListMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
     InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX,
                      pRegion->RegionBottomRightY);
   } else if (reason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
-    INT16 sSelected = (INT16)MSYS_GetRegionUserData(pRegion, 0);  // + gubCityAtTopOfList;
+    int16_t sSelected = (int16_t)MSYS_GetRegionUserData(pRegion, 0);  // + gubCityAtTopOfList;
 
     pRegion->uiFlags |= BUTTON_CLICKED_ON;
 
@@ -1972,12 +1973,14 @@ void SelectNpcListMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
 
     // if we are at the top of the list
     //		if( sSelected == 0 )
-    //			IncrementActiveDropDownBox( (INT16)(gpActiveListBox->sCurSelectedItem - 1 )
+    //			IncrementActiveDropDownBox( (int16_t)(gpActiveListBox->sCurSelectedItem - 1
+    //)
     //);
 
     // else we are at the bottom of the list
     //		else if( sSelected == gpActiveListBox->usMaxNumDisplayedItems - 1 )
-    //			IncrementActiveDropDownBox( (INT16)(gpActiveListBox->sCurSelectedItem + 1 )
+    //			IncrementActiveDropDownBox( (int16_t)(gpActiveListBox->sCurSelectedItem + 1
+    //)
     //);
 
     DisplaySelectedListBox();
@@ -1985,7 +1988,7 @@ void SelectNpcListMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
     InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX,
                      pRegion->RegionBottomRightY);
   } else if (reason & MSYS_CALLBACK_REASON_MOVE) {
-    INT16 sSelected = (INT16)MSYS_GetRegionUserData(pRegion, 0);  // + gubCityAtTopOfList;
+    int16_t sSelected = (int16_t)MSYS_GetRegionUserData(pRegion, 0);  // + gubCityAtTopOfList;
 
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
 
@@ -2001,8 +2004,8 @@ void SelectNpcListMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   }
 }
 
-void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, uint16_t usStartPosX, uint16_t usStartPosY,
-                               // uint16_t usScrollAreaHeight, uint16_t usNumEntries )
+void DrawQdsScrollRectangle()  // int16_t sSelectedEntry, uint16_t usStartPosX, uint16_t
+                               // usStartPosY, uint16_t usScrollAreaHeight, uint16_t usNumEntries )
 {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
@@ -2131,11 +2134,11 @@ void ScrollAreaMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
 }
 
 void CalcPositionOfNewScrollBoxLocation() {
-  INT16 sMouseYPos;
-  INT16 sIncrementValue;
+  int16_t sMouseYPos;
+  int16_t sIncrementValue;
   FLOAT dValue;
-  INT16 sHeight = 0;
-  INT16 sStartPosOfScrollArea =
+  int16_t sHeight = 0;
+  int16_t sStartPosOfScrollArea =
       gpActiveListBox->usScrollPosY + gpActiveListBox->usScrollArrowHeight;
 
   sMouseYPos = gusMouseYPos;
@@ -2148,8 +2151,8 @@ void CalcPositionOfNewScrollBoxLocation() {
 
     dValue = sHeight / (FLOAT)(gpActiveListBox->usScrollBarHeight);
     sIncrementValue =
-        (INT16)((dValue) * (gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex) +
-                .5) +
+        (int16_t)((dValue) * (gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex) +
+                  .5) +
         gpActiveListBox->usStartIndex;
 
     IncrementActiveDropDownBox(sIncrementValue);
@@ -2629,7 +2632,7 @@ void DestroyQuestDebugTextInputBoxes() { KillTextInputMode(); }
 
 void AddNPCToGridNo(INT32 iGridNo) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   uint8_t ubID;
 
   GetCurrentWorldSector(&sSectorX, &sSectorY);
@@ -2654,13 +2657,13 @@ void AddNPCToGridNo(INT32 iGridNo) {
   // Add all the npc in the current sectory the npc array
   AddNPCsInSectorToArray();
 
-  gsQdsEnteringGridNo = (INT16)iGridNo;
+  gsQdsEnteringGridNo = (int16_t)iGridNo;
 }
 
 void AddItemToGridNo(INT32 iGridNo) {
   struct OBJECTTYPE Object;
 
-  gsQdsEnteringGridNo = (INT16)iGridNo;
+  gsQdsEnteringGridNo = (int16_t)iGridNo;
 
   if (Item[gItemListBox.sCurSelectedItem].usItemClass == IC_KEY) {
     gfAddKeyNextPass = TRUE;
@@ -3176,7 +3179,7 @@ BOOLEAN DoQDSMessageBox(uint8_t ubStyle, CHAR16 *zString, uint32_t uiExitScreen,
   return ((giQdsMessageBox != -1));
 }
 
-void IncrementActiveDropDownBox(INT16 sIncrementValue) {
+void IncrementActiveDropDownBox(int16_t sIncrementValue) {
   if (sIncrementValue < 0) sIncrementValue = 0;
 
   // if the mouse was clicked above the scroll box
@@ -3222,7 +3225,7 @@ void IncrementActiveDropDownBox(INT16 sIncrementValue) {
   gpActiveListBox->ubCurScrollBoxAction = QD_DROP_DOWN_DISPLAY;
 }
 
-INT16 IsMercInTheSector(uint16_t usMercID) {
+int16_t IsMercInTheSector(uint16_t usMercID) {
   uint8_t cnt;
 
   if (usMercID == -1) return (FALSE);

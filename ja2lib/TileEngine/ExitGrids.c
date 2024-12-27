@@ -201,14 +201,14 @@ void AttemptToChangeFloorLevel(int8_t bRelativeZLevel) {
   }
 }
 
-uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
+uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
                                                 int8_t ubRadius, uint8_t *pubDirection) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = 0;
+  int16_t sLowestGridNo = 0;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
@@ -311,13 +311,13 @@ uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, IN
   }
 }
 
-uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo, int8_t ubRadius) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
+uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSrcGridNo, int8_t ubRadius) {
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = 0;
+  int16_t sLowestGridNo = 0;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   EXITGRID ExitGrid;

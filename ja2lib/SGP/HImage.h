@@ -70,8 +70,8 @@ struct RelTileLoc {
 typedef struct tagETRLEObject {
   uint32_t uiDataOffset;
   uint32_t uiDataLength;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
   uint16_t usHeight;
   uint16_t usWidth;
 } ETRLEObject;
@@ -174,9 +174,9 @@ extern uint16_t gusAlphaMask;
 extern uint16_t gusRedMask;
 extern uint16_t gusGreenMask;
 extern uint16_t gusBlueMask;
-extern INT16 gusRedShift;
-extern INT16 gusBlueShift;
-extern INT16 gusGreenShift;
+extern int16_t gusRedShift;
+extern int16_t gusBlueShift;
+extern int16_t gusGreenShift;
 
 // used to convert 565 RGB data into different bit-formats
 void ConvertRGBDistribution565To555(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);

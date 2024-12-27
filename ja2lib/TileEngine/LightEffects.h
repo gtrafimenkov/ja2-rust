@@ -10,7 +10,7 @@ enum {
 };
 
 typedef struct {
-  INT16 sGridNo;  // gridno at which the tear gas cloud is centered
+  int16_t sGridNo;  // gridno at which the tear gas cloud is centered
 
   uint8_t ubDuration;  // the number of turns will remain effective
   uint8_t bRadius;     // the current radius
@@ -27,17 +27,17 @@ void DecayLightEffects(uint32_t uiTime);
 
 // Add light to gridno
 // ( Replacement algorithm uses distance away )
-void AddLightEffectToTile(int8_t bType, INT16 sGridNo);
+void AddLightEffectToTile(int8_t bType, int16_t sGridNo);
 
-void RemoveLightEffectFromTile(INT16 sGridNo);
+void RemoveLightEffectFromTile(int16_t sGridNo);
 
-INT32 NewLightEffect(INT16 sGridNo, int8_t bType);
+INT32 NewLightEffect(int16_t sGridNo, int8_t bType);
 
 BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile);
 
-BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
-BOOLEAN LoadLightEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
+BOOLEAN SaveLightEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
+BOOLEAN LoadLightEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
 void ResetLightEffects();
 
 #endif

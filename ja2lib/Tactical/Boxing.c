@@ -25,7 +25,7 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 
-INT16 gsBoxerGridNo[NUM_BOXERS] = {11393, 11233, 11073};
+int16_t gsBoxerGridNo[NUM_BOXERS] = {11393, 11233, 11073};
 uint8_t gubBoxerID[NUM_BOXERS] = {NOBODY, NOBODY, NOBODY};
 BOOLEAN gfBoxerFought[NUM_BOXERS] = {FALSE, FALSE, FALSE};
 BOOLEAN gfLastBoxingMatchWonByPlayer = FALSE;
@@ -78,7 +78,7 @@ void ExitBoxing(void) {
             pSoldier->bLife = max(OKLIFE * 2, pSoldier->bLife);
             if (pSoldier->bBreath < 100) {
               // deduct -ve BPs to grant some BPs back (properly)
-              DeductPoints(pSoldier, 0, (INT16) - ((100 - pSoldier->bBreath) * 100));
+              DeductPoints(pSoldier, 0, (int16_t) - ((100 - pSoldier->bBreath) * 100));
             }
             BeginSoldierGetup(pSoldier);
           }

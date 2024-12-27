@@ -1056,7 +1056,7 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   // check if we have a min width, if so then update box for such
   if ((PopUpBoxList[uiCounter]->uiBoxMinWidth) &&
       (usWidth < PopUpBoxList[uiCounter]->uiBoxMinWidth)) {
-    usWidth = (INT16)(PopUpBoxList[uiCounter]->uiBoxMinWidth);
+    usWidth = (int16_t)(PopUpBoxList[uiCounter]->uiBoxMinWidth);
   }
 
   // make sure it will fit on screen!
@@ -1133,7 +1133,7 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
 
 BOOLEAN DrawBoxText(uint32_t uiCounter) {
   uint32_t uiCount = 0;
-  INT16 uX, uY;
+  int16_t uX, uY;
   wchar_t sString[100];
 
   if ((uiCounter < 0) || (uiCounter >= MAX_POPUP_BOX_COUNT)) return (FALSE);
@@ -1185,23 +1185,24 @@ BOOLEAN DrawBoxText(uint32_t uiCounter) {
       // cnetering?
       if (PopUpBoxList[uiCounter]->uiFlags & POPUP_BOX_FLAG_CENTER_TEXT) {
         FindFontCenterCoordinates(
-            ((INT16)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin)),
-            ((INT16)(PopUpBoxList[uiCounter]->Position.iY +
-                     uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
-                     PopUpBoxList[uiCounter]->uiTopMargin +
-                     uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
-            ((INT16)(PopUpBoxList[uiCounter]->Dimensions.iRight -
-                     (PopUpBoxList[uiCounter]->uiRightMargin +
-                      PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
-            ((INT16)GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont)), (sString),
+            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                       PopUpBoxList[uiCounter]->uiLeftMargin)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
+                       uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
+                       PopUpBoxList[uiCounter]->uiTopMargin +
+                       uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Dimensions.iRight -
+                       (PopUpBoxList[uiCounter]->uiRightMargin +
+                        PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
+            ((int16_t)GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont)), (sString),
             ((INT32)PopUpBoxList[uiCounter]->Text[uiCount]->uiFont), &uX, &uY);
       } else {
-        uX =
-            ((INT16)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin));
-        uY = ((INT16)(PopUpBoxList[uiCounter]->Position.iY +
-                      uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
-                      PopUpBoxList[uiCounter]->uiTopMargin +
-                      uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
+        uX = ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                        PopUpBoxList[uiCounter]->uiLeftMargin));
+        uY = ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
+                        uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
+                        PopUpBoxList[uiCounter]->uiTopMargin +
+                        uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
       }
 
       // print
@@ -1237,26 +1238,30 @@ BOOLEAN DrawBoxText(uint32_t uiCounter) {
       // cnetering?
       if (PopUpBoxList[uiCounter]->uiFlags & POPUP_BOX_FLAG_CENTER_TEXT) {
         FindFontCenterCoordinates(
-            ((INT16)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin)),
-            ((INT16)(PopUpBoxList[uiCounter]->Position.iY +
-                     uiCount * GetFontHeight(
-                                   PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
-                     PopUpBoxList[uiCounter]->uiTopMargin +
-                     uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
-            ((INT16)(PopUpBoxList[uiCounter]->Dimensions.iRight -
-                     (PopUpBoxList[uiCounter]->uiRightMargin +
-                      PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
-            ((INT16)GetFontHeight(PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                       PopUpBoxList[uiCounter]->uiLeftMargin)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
+                       uiCount *
+                           GetFontHeight(
+                               PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
+                       PopUpBoxList[uiCounter]->uiTopMargin +
+                       uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Dimensions.iRight -
+                       (PopUpBoxList[uiCounter]->uiRightMargin +
+                        PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
+            ((int16_t)GetFontHeight(PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont)),
             (sString), ((INT32)PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont), &uX,
             &uY);
       } else {
-        uX = ((INT16)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin +
-                      PopUpBoxList[uiCounter]->uiSecondColumnCurrentOffset));
-        uY = ((INT16)(PopUpBoxList[uiCounter]->Position.iY +
-                      uiCount * GetFontHeight(
-                                    PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
-                      PopUpBoxList[uiCounter]->uiTopMargin +
-                      uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
+        uX = ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                        PopUpBoxList[uiCounter]->uiLeftMargin +
+                        PopUpBoxList[uiCounter]->uiSecondColumnCurrentOffset));
+        uY = ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
+                        uiCount *
+                            GetFontHeight(
+                                PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
+                        PopUpBoxList[uiCounter]->uiTopMargin +
+                        uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
       }
 
       // print

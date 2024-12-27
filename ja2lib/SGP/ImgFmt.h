@@ -67,8 +67,8 @@ typedef struct {
 typedef struct {
   uint32_t uiDataOffset;
   uint32_t uiDataLength;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
   uint16_t usHeight;
   uint16_t usWidth;
 } STCISubImage;

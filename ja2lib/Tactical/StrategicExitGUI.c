@@ -68,9 +68,9 @@ typedef struct {
   INT32 iButtonImages;
   uint16_t usWidth;
   uint16_t usHeight;
-  INT16 sX;
-  INT16 sY;
-  INT16 sAdditionalData;
+  int16_t sX;
+  int16_t sY;
+  int16_t sAdditionalData;
   uint8_t ubFlags;
   uint8_t ubLeaveSectorType;
   uint8_t ubLeaveSectorCode;
@@ -101,17 +101,17 @@ typedef struct {
 EXIT_DIALOG_STRUCT gExitDialog;
 
 uint8_t gubExitGUIDirection;
-INT16 gsExitGUIAdditionalData;
-INT16 gsWarpWorldX;
-INT16 gsWarpWorldY;
+int16_t gsExitGUIAdditionalData;
+int16_t gsWarpWorldX;
+int16_t gsWarpWorldY;
 int8_t gbWarpWorldZ;
-INT16 gsWarpGridNo;
+int16_t gsWarpGridNo;
 
 // KM:  New method is coded for more sophistocated rules.  All the information is stored within the
 // gExitDialog struct 		 and calculated upon entry to this function instead of passing in
 // multiple
 // arguments and calculating it prior.
-BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
+BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData) {
   uint32_t uiTraverseTimeInMinutes;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
@@ -292,8 +292,8 @@ BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
       -1, DIALOG_MERC_POPUP_BACKGROUND, DIALOG_MERC_POPUP_BORDER, TacticalStr[EXIT_GUI_TITLE_STR],
       100, 85, 2, 75, &usTextBoxWidth, &usTextBoxHeight);
 
-  gExitDialog.sX = (INT16)((((aRect.iRight - aRect.iLeft) - usTextBoxWidth) / 2) + aRect.iLeft);
-  gExitDialog.sY = (INT16)((((aRect.iBottom - aRect.iTop) - usTextBoxHeight) / 2) + aRect.iTop);
+  gExitDialog.sX = (int16_t)((((aRect.iRight - aRect.iLeft) - usTextBoxWidth) / 2) + aRect.iLeft);
+  gExitDialog.sY = (int16_t)((((aRect.iBottom - aRect.iTop) - usTextBoxHeight) / 2) + aRect.iTop);
   gExitDialog.usWidth = usTextBoxWidth;
   gExitDialog.usHeight = usTextBoxHeight;
 
@@ -307,46 +307,46 @@ BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
 
   gExitDialog.iButtonImages = LoadButtonImage("INTERFACE\\popupbuttons.sti", -1, 0, -1, 1, -1);
 
-  MSYS_DefineRegion(&gExitDialog.SingleRegion, (INT16)(gExitDialog.sX + 20),
-                    (INT16)(gExitDialog.sY + 37), (INT16)(gExitDialog.sX + 45 + 120),
-                    (INT16)(gExitDialog.sY + 37 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
+  MSYS_DefineRegion(&gExitDialog.SingleRegion, (int16_t)(gExitDialog.sX + 20),
+                    (int16_t)(gExitDialog.sY + 37), (int16_t)(gExitDialog.sX + 45 + 120),
+                    (int16_t)(gExitDialog.sY + 37 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
                     SingleRegionMoveCallback, SingleRegionCallback);
   MSYS_AllowDisabledRegionFastHelp(&gExitDialog.SingleRegion, TRUE);
 
-  MSYS_DefineRegion(&(gExitDialog.AllRegion), (INT16)(gExitDialog.sX + 20),
-                    (INT16)(gExitDialog.sY + 57), (INT16)(gExitDialog.sX + 45 + 120),
-                    (INT16)(gExitDialog.sY + 57 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
+  MSYS_DefineRegion(&(gExitDialog.AllRegion), (int16_t)(gExitDialog.sX + 20),
+                    (int16_t)(gExitDialog.sY + 57), (int16_t)(gExitDialog.sX + 45 + 120),
+                    (int16_t)(gExitDialog.sY + 57 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
                     AllRegionMoveCallback, AllRegionCallback);
   MSYS_AllowDisabledRegionFastHelp(&gExitDialog.AllRegion, TRUE);
 
-  MSYS_DefineRegion(&(gExitDialog.LoadRegion), (INT16)(gExitDialog.sX + 155),
-                    (INT16)(gExitDialog.sY + 45), (INT16)(gExitDialog.sX + 180 + 85),
-                    (INT16)(gExitDialog.sY + 45 + 15), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
+  MSYS_DefineRegion(&(gExitDialog.LoadRegion), (int16_t)(gExitDialog.sX + 155),
+                    (int16_t)(gExitDialog.sY + 45), (int16_t)(gExitDialog.sX + 180 + 85),
+                    (int16_t)(gExitDialog.sY + 45 + 15), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
                     LoadRegionMoveCallback, LoadRegionCallback);
   MSYS_AllowDisabledRegionFastHelp(&gExitDialog.LoadRegion, TRUE);
 
   gExitDialog.uiLoadCheckButton = CreateCheckBoxButton(
-      (INT16)(gExitDialog.sX + 155), (INT16)(gExitDialog.sY + 43), "INTERFACE\\popupcheck.sti",
+      (int16_t)(gExitDialog.sX + 155), (int16_t)(gExitDialog.sY + 43), "INTERFACE\\popupcheck.sti",
       MSYS_PRIORITY_HIGHEST, CheckLoadMapCallback);
 
   gExitDialog.uiSingleMoveButton = CreateCheckBoxButton(
-      (INT16)(gExitDialog.sX + 20), (INT16)(gExitDialog.sY + 35),
+      (int16_t)(gExitDialog.sX + 20), (int16_t)(gExitDialog.sY + 35),
       "INTERFACE\\popupradiobuttons.sti", MSYS_PRIORITY_HIGHEST, SingleMoveCallback);
 
   gExitDialog.uiAllMoveButton = CreateCheckBoxButton(
-      (INT16)(gExitDialog.sX + 20), (INT16)(gExitDialog.sY + 55),
+      (int16_t)(gExitDialog.sX + 20), (int16_t)(gExitDialog.sY + 55),
       "INTERFACE\\popupradiobuttons.sti", MSYS_PRIORITY_HIGHEST, AllMoveCallback);
 
   gExitDialog.uiOKButton = CreateIconAndTextButton(
       gExitDialog.iButtonImages, TacticalStr[OK_BUTTON_TEXT_STR], FONT12ARIAL, FONT_MCOLOR_WHITE,
       DEFAULT_SHADOW, FONT_MCOLOR_WHITE, DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-      (INT16)(gExitDialog.sX + 65), (INT16)(gExitDialog.sY + 78), BUTTON_TOGGLE,
+      (int16_t)(gExitDialog.sX + 65), (int16_t)(gExitDialog.sY + 78), BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)OKCallback);
 
   gExitDialog.uiCancelButton = CreateIconAndTextButton(
       gExitDialog.iButtonImages, TacticalStr[CANCEL_BUTTON_TEXT_STR], FONT12ARIAL,
       FONT_MCOLOR_WHITE, DEFAULT_SHADOW, FONT_MCOLOR_WHITE, DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-      (INT16)(gExitDialog.sX + 135), (INT16)(gExitDialog.sY + 78), BUTTON_TOGGLE,
+      (int16_t)(gExitDialog.sX + 135), (int16_t)(gExitDialog.sY + 78), BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)CancelCallback);
 
   gfIgnoreScrolling = TRUE;
@@ -413,7 +413,7 @@ void WarpToSurfaceCallback(uint8_t bExitValue) {
   }
 }
 
-BOOLEAN InitSectorExitMenu(uint8_t ubDirection, INT16 sAdditionalData) {
+BOOLEAN InitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData) {
   gubExitGUIDirection = ubDirection;
   gsExitGUIAdditionalData = sAdditionalData;
 

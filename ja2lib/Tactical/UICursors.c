@@ -56,7 +56,7 @@ uint8_t HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint
 
 extern BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
                                                    struct SOLDIERTYPE *pTargetSoldier,
-                                                   INT16 sTargetGridNo, int8_t bLevel);
+                                                   int16_t sTargetGridNo, int8_t bLevel);
 
 BOOLEAN gfCannotGetThrough = FALSE;
 extern uint32_t guiUITargetSoldierId;
@@ -120,7 +120,7 @@ uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t 
   uint32_t uiCursorFlags;
   BOOLEAN fShowAPs = FALSE;
   BOOLEAN fRecalc = FALSE;
-  INT16 sTargetGridNo = usMapPos;
+  int16_t sTargetGridNo = usMapPos;
   uint8_t ubCursorID = 0;
   uint8_t ubItemCursor;
 
@@ -285,7 +285,7 @@ uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMap
   uint8_t switchVal;
   BOOLEAN fEnoughPoints = TRUE;
   uint8_t bFutureAim;
-  INT16 sAPCosts;
+  int16_t sAPCosts;
   uint16_t usCursor = 0;
   BOOLEAN fMaxPointLimitHit = FALSE;
   uint16_t usInHand;
@@ -334,7 +334,7 @@ uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMap
         sAPCosts = MinAPsToAttack(pSoldier, usMapPos, TRUE) + (bFutureAim / 2);
 
         // Determine if we can afford!
-        if (!EnoughPoints(pSoldier, (INT16)sAPCosts, 0, FALSE)) {
+        if (!EnoughPoints(pSoldier, (int16_t)sAPCosts, 0, FALSE)) {
           fEnoughPoints = FALSE;
         }
       }
@@ -670,10 +670,10 @@ uint8_t HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t us
 }
 
 void DetermineCursorBodyLocation(uint8_t ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc) {
-  INT16 usMapPos;
+  int16_t usMapPos;
   struct SOLDIERTYPE *pTargetSoldier = NULL, *pSoldier;
   uint16_t usFlags;
-  INT16 sMouseX, sMouseY, sCellX, sCellY, sScreenX, sScreenY;
+  int16_t sMouseX, sMouseY, sCellX, sCellY, sScreenX, sScreenY;
   BOOLEAN fOnGuy = FALSE;
   struct LEVELNODE *pNode;
 
@@ -847,7 +847,7 @@ void DetermineCursorBodyLocation(uint8_t ubSoldierID, BOOLEAN fDisplay, BOOLEAN 
 
 uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
                           uint32_t uiCursorFlags) {
-  INT16 sAPCosts;
+  int16_t sAPCosts;
   int8_t bFutureAim;
   BOOLEAN fEnoughPoints = TRUE;
 
@@ -882,7 +882,7 @@ uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEA
       sAPCosts = CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(bFutureAim / 2));
 
       // Determine if we can afford!
-      if (!EnoughPoints(pSoldier, (INT16)sAPCosts, 0, FALSE)) {
+      if (!EnoughPoints(pSoldier, (int16_t)sAPCosts, 0, FALSE)) {
         fEnoughPoints = FALSE;
       }
     }
@@ -946,7 +946,7 @@ uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEA
 
 uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
                           uint32_t uiCursorFlags) {
-  INT16 sAPCosts;
+  int16_t sAPCosts;
   int8_t bFutureAim;
   BOOLEAN fEnoughPoints = TRUE;
 
@@ -981,7 +981,7 @@ uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEA
       sAPCosts = CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(bFutureAim / 2));
 
       // Determine if we can afford!
-      if (!EnoughPoints(pSoldier, (INT16)sAPCosts, 0, FALSE)) {
+      if (!EnoughPoints(pSoldier, (int16_t)sAPCosts, 0, FALSE)) {
         fEnoughPoints = FALSE;
       }
     }
@@ -1069,7 +1069,7 @@ uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo
 uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
                                      BOOLEAN fRecalc, uint32_t uiCursorFlags,
                                      uint8_t ubItemCursor) {
-  INT16 sFinalGridNo;
+  int16_t sFinalGridNo;
   static BOOLEAN fBadCTGH = FALSE;
   BOOLEAN fArmed = FALSE;
   int8_t bLevel;
@@ -1156,7 +1156,7 @@ uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGri
 
           if (!CalculateLaunchItemChanceToGetThrough(
                   pSoldier, &TempObject, sGridNo, (int8_t)gsInterfaceLevel,
-                  (INT16)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
+                  (int16_t)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
             fBadCTGH = TRUE;
           } else {
             fBadCTGH = FALSE;
@@ -1166,7 +1166,7 @@ uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGri
       } else {
         if (!CalculateLaunchItemChanceToGetThrough(
                 pSoldier, &TempObject, sGridNo, (int8_t)gsInterfaceLevel,
-                (INT16)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
+                (int16_t)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
           fBadCTGH = TRUE;
         } else {
           fBadCTGH = FALSE;
@@ -1233,7 +1233,7 @@ uint8_t HandleJarCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t
 
 uint8_t HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t uiCursorFlags) {
   struct STRUCTURE *pStructure;
-  INT16 sIntTileGridNo;
+  int16_t sIntTileGridNo;
   struct LEVELNODE *pIntTile;
 
   // DRAW PATH TO GUY
@@ -1309,7 +1309,7 @@ void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier) {
 
 void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
   uint8_t ubItemCursor;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   ubItemCursor = GetActionModeCursor(pSoldier);
 
@@ -1384,12 +1384,12 @@ void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) {
-  INT16 sAPCosts;
+void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, int16_t usMapPos) {
+  int16_t sAPCosts;
   int8_t bFutureAim;
   uint8_t ubCursor;
   struct SOLDIERTYPE *pTSoldier;
-  INT16 sGridNo;
+  int16_t sGridNo;
   int8_t bTargetLevel;
 
   ubCursor = GetActionModeCursor(pSoldier);

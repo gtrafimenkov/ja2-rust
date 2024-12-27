@@ -58,7 +58,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
   uint16_t us16BPPColor;
   uint32_t cnt1;
   uint8_t ubSize;
-  INT16 sTLX, sTLY, sBRX, sBRY;
+  int16_t sTLX, sTLY, sBRX, sBRY;
   uint8_t ubPaletteRep;
 
   // Create 16BPP Palette
@@ -115,7 +115,7 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, uint16_t usWidth, I
           // Split Line!
           fLineSplit = TRUE;
 
-          pStr[uiNewLet] = (INT16)'\0';
+          pStr[uiNewLet] = (int16_t)'\0';
 
           wcscpy(pStr2, &(pStr[uiNewLet + 1]));
         }
@@ -128,7 +128,7 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, uint16_t usWidth, I
       if (!fLineSplit) {
         // We completed the check for a space, but failed, so use the hyphen method.
         swprintf(pStr2, buf2Size, L"-%s", &(pStr[uiHyphenLet]));
-        pStr[uiHyphenLet] = (INT16)'\0';
+        pStr[uiHyphenLet] = (int16_t)'\0';
         fLineSplit = TRUE;  // hyphen method
         break;
       }

@@ -57,7 +57,7 @@ void SelectNextKeyOfType(uint8_t ubKeyID);
 INT32 giDefaultExistChance = 100;
 
 typedef struct IPListNode {
-  INT16 sGridNo;
+  int16_t sGridNo;
   struct IPListNode *next;
 } IPListNode;
 
@@ -186,8 +186,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
   struct VObject *hVObject;
   uint32_t uiVideoObjectIndex;
   uint16_t usUselessWidth, usUselessHeight;
-  INT16 sWidth, sOffset, sStart;
-  INT16 i, x, y;
+  int16_t sWidth, sOffset, sStart;
+  int16_t i, x, y;
   uint16_t usCounter;
   CHAR16 pStr[100];  //, pStr2[ 100 ];
   CHAR16 pItemName[SIZE_ITEM_NAME];
@@ -485,9 +485,9 @@ void RenderEditorItemsInfo() {
   INVTYPE *item;
   struct VObject *hVObject;
   uint32_t uiVideoObjectIndex;
-  INT16 i;
-  INT16 minIndex, maxIndex;
-  INT16 sWidth, sOffset, sStart, x, y;
+  int16_t i;
+  int16_t minIndex, maxIndex;
+  int16_t sWidth, sOffset, sStart, x, y;
   uint16_t usNumItems;
   uint16_t usQuantity;
 
@@ -623,7 +623,7 @@ void ClearEditorItemsInfo() {
 }
 
 void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, int8_t bEvent) {
-  INT16 sIndex;
+  int16_t sIndex;
   uint16_t usQuantity;
   // Calc base index from scrolling index
   sIndex = eInfo.sScrollIndex * 2;
@@ -682,7 +682,7 @@ void ShowItemCursor(INT32 iMapIndex) {
 
 void HideItemCursor(INT32 iMapIndex) { RemoveTopmost(iMapIndex, SELRING1); }
 
-BOOLEAN TriggerAtGridNo(INT16 sGridNo) {
+BOOLEAN TriggerAtGridNo(int16_t sGridNo) {
   struct ITEM_POOL *pItemPool;
   if (!GetItemPool(sGridNo, &pItemPool, 0)) {
     return FALSE;
@@ -696,7 +696,7 @@ BOOLEAN TriggerAtGridNo(INT16 sGridNo) {
   return FALSE;
 }
 
-void AddSelectedItemToWorld(INT16 sGridNo) {
+void AddSelectedItemToWorld(int16_t sGridNo) {
   struct OBJECTTYPE tempObject;
   struct OBJECTTYPE *pObject;
   INVTYPE *pItem;
@@ -852,7 +852,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
   }
 }
 
-void HandleRightClickOnItem(INT16 sGridNo) {
+void HandleRightClickOnItem(int16_t sGridNo) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
 
@@ -895,7 +895,7 @@ void DeleteSelectedItem() {
     return;
   }
   if (gpItemPool) {  // Okay, we have a selected item...
-    INT16 sGridNo;
+    int16_t sGridNo;
     // save the mapindex
     if (gpItemPool->pNext) {
       SpecifyItemToEdit(&gWorldItems[gpItemPool->pNext->iItemIndex].o, gpItemPool->sGridNo);
@@ -1243,7 +1243,7 @@ void SelectNextPressureAction() {
 uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  INT16 num = 0;
+  int16_t num = 0;
   *pusQuantity = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
@@ -1331,7 +1331,7 @@ uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *p
 uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  INT16 num = 0;
+  int16_t num = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
     GetItemPool(pIPCurr->sGridNo, &pItemPool, 0);
@@ -1350,7 +1350,7 @@ uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID) {
 
 void DisplayItemStatistics() {
   BOOLEAN fUseSelectedItem;
-  INT16 usItemIndex;
+  int16_t usItemIndex;
   CHAR16 pItemName[SIZE_ITEM_NAME];
 
   if (!eInfo.fActive) {

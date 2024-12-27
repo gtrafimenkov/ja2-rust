@@ -14,7 +14,7 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
-INT16 gbSmoothStruct[] =
+int16_t gbSmoothStruct[] =
 
     {3,  2,  12, 27, 12, 0,  5,  2,  15, 30, 39, 0,  7,  2,  17, 32, 41, 0,  11, 2,  14, 29, 14,
      0,  8,  2,  13, 28, 38, 0,  15, 1,  19, 0,  43, 0,  26, 1,  20, 0,  44, 0,  12, 2,  18, 33,
@@ -28,7 +28,7 @@ INT16 gbSmoothStruct[] =
 // 3rd - the first variation
 // 4th - the second variation
 
-INT16 gbSmoothWaterStruct[] =
+int16_t gbSmoothWaterStruct[] =
     // FIRST			ENTRY			MAJIC NUMBER CALCULATED
     // 2nd				ENTRY			# OF VARIATIONS
     // 3rd, 4rth  ENTRY			TILE NUMBERS ( entry 1, entry 2 )
@@ -56,7 +56,7 @@ void SmoothTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN fForce
   uint32_t uiTopType;
   BOOLEAN fSameTile;
 
-  INT16 *pSmoothStruct;
+  int16_t *pSmoothStruct;
   // Check to see if the orginal texture was water, is so, smooth square/hex with
   // SmoothWaterTerrain rather than the proceeding method
   if (origType == REGWATERTEXTURE) {
@@ -164,10 +164,10 @@ void SmoothTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN fForce
   *piNewTile = usTileIndex;
 }
 
-void SmoothExitGridRadius(INT16 sMapIndex, uint8_t ubRadius) {
+void SmoothExitGridRadius(int16_t sMapIndex, uint8_t ubRadius) {
   struct LEVELNODE *pShadow;
-  INT16 x, y;
-  INT16 centerX, centerY;
+  int16_t x, y;
+  int16_t centerX, centerY;
 
   ConvertGridNoToXY(sMapIndex, &centerX, &centerY);
 
@@ -199,7 +199,7 @@ void SmoothExitGrid(int gridno, uint16_t *piNewTile, BOOLEAN fForceSmooth) {
   uint16_t usExitGridIndex = 0;
   BOOLEAN fSameTile;
 
-  INT16 *pSmoothStruct;
+  int16_t *pSmoothStruct;
 
   pSmoothStruct = gbSmoothStruct;
 
@@ -339,9 +339,9 @@ void SmoothAllTerrainWorld(void) {
 
 void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, uint8_t ubRadius,
                          BOOLEAN fForceSmooth) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
   INT32 iNewIndex;
   uint16_t NewTile;
   uint16_t usIndex;
@@ -374,9 +374,9 @@ void SmoothTerrainRadius(uint32_t iMapIndex, uint32_t uiCheckType, uint8_t ubRad
 }
 
 void SmoothAllTerrainTypeRadius(uint32_t iMapIndex, uint8_t ubRadius, BOOLEAN fForceSmooth) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, cnt3;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, cnt3;
   INT32 iNewIndex;
   uint16_t NewTile;
   uint16_t usIndex;
@@ -420,7 +420,7 @@ void SmoothWaterTerrain(int gridno, int origType, uint16_t *piNewTile, BOOLEAN f
   uint16_t land = 0;
   uint32_t uiTopType;
   BOOLEAN fSameTile;
-  INT16 *pSmoothStruct;
+  int16_t *pSmoothStruct;
 
   pSmoothStruct = gbSmoothWaterStruct;
   // Get land index value for given level and adjust according to type

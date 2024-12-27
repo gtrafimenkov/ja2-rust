@@ -62,7 +62,7 @@ extern BOOLEAN gfSwitchPanel;
 extern BOOLEAN gfUIStanceDifferent;
 extern uint8_t gbNewPanel;
 extern uint8_t gubNewPanelParam;
-extern INT16 gsCurInterfacePanel;
+extern int16_t gsCurInterfacePanel;
 
 extern uint32_t guiCLOSE;
 extern uint32_t guiDEAD;
@@ -108,7 +108,7 @@ BOOLEAN ShutdownTacticalInterface();
 extern BOOLEAN fInterfacePanelDirty;
 extern BOOLEAN gfPausedTacticalRenderFlags;
 extern BOOLEAN gfPausedTacticalRenderInterfaceFlags;
-extern INT16 gsInterfaceLevel;
+extern int16_t gsInterfaceLevel;
 extern BOOLEAN gfInMovementMenu;
 
 void PopupPositionMenu(UI_EVENT *pUIEvent);
@@ -194,14 +194,14 @@ void ResetAimCubeAI();
 void SetupAimCubeAI();
 void IncrementAimCubeUI();
 void EndAimCubeUI();
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t ubLevel,
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel,
                     uint8_t bStartPower, int8_t bStartHeight);
 BOOLEAN AimCubeUIClick();
 
 void ResetPhysicsTrajectoryUI();
 void SetupPhysicsTrajectoryUI();
 void EndPhysicsTrajectoryUI();
-void BeginPhysicsTrajectoryUI(INT16 sGridNo, int8_t bLevel, BOOLEAN fBadCTGT);
+void BeginPhysicsTrajectoryUI(int16_t sGridNo, int8_t bLevel, BOOLEAN fBadCTGT);
 
 void InitPlayerUIBar(BOOLEAN fInterrupt);
 
@@ -209,7 +209,7 @@ void ToggleTacticalPanels();
 
 void DirtyTopMessage();
 
-void BeginMultiPurposeLocator(INT16 sGridNo, int8_t bLevel, BOOLEAN fSlideTo);
+void BeginMultiPurposeLocator(int16_t sGridNo, int8_t bLevel, BOOLEAN fSlideTo);
 void HandleMultiPurposeLocator();
 void RenderTopmostMultiPurposeLocator();
 

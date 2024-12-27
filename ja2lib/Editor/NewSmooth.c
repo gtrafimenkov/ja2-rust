@@ -603,7 +603,7 @@ uint16_t PickAWallPiece(uint16_t usWallPieceType) {
 //  use that for building this new wall.  It is necessary for restructuring a building, but not for
 //  adding on to an existing building, where the type is already known.
 void BuildWallPiece(uint32_t iMapIndex, uint8_t ubWallPiece, uint16_t usWallType) {
-  INT16 sIndex;
+  int16_t sIndex;
   uint16_t usTileIndex;
   uint16_t ubWallClass;
   struct LEVELNODE *pStruct;

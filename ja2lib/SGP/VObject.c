@@ -1091,7 +1091,7 @@ BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, uint16_t usRegionI
 
 BOOLEAN BltVideoObjectOutlineFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,
                                        uint16_t usIndex, INT32 iDestX, INT32 iDestY,
-                                       INT16 s16BPPColor, BOOLEAN fDoOutline) {
+                                       int16_t s16BPPColor, BOOLEAN fDoOutline) {
   uint16_t *pBuffer;
   uint32_t uiPitch;
   struct VObject *hSrcVObject;
@@ -1124,7 +1124,7 @@ BOOLEAN BltVideoObjectOutlineFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVO
 }
 
 BOOLEAN BltVideoObjectOutline(uint32_t uiDestVSurface, struct VObject *hSrcVObject,
-                              uint16_t usIndex, INT32 iDestX, INT32 iDestY, INT16 s16BPPColor,
+                              uint16_t usIndex, INT32 iDestX, INT32 iDestY, int16_t s16BPPColor,
                               BOOLEAN fDoOutline) {
   uint16_t *pBuffer;
   uint32_t uiPitch;

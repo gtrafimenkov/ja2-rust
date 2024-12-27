@@ -6,8 +6,9 @@
 struct MOUSE_REGION;
 
 void InitNewOverheadDB(uint8_t ubTilesetID);
-void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                       INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, BOOLEAN fFromMapUtility);
+void RenderOverheadMap(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                       int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS,
+                       BOOLEAN fFromMapUtility);
 
 void HandleOverheadMap();
 BOOLEAN InOverheadMap();
@@ -18,9 +19,9 @@ void KillOverheadMap();
 void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 
-void CalculateRestrictedMapCoords(int8_t bDirection, INT16 *psX1, INT16 *psY1, INT16 *psX2,
-                                  INT16 *psY2, INT16 sEndXS, INT16 sEndYS);
-void CalculateRestrictedScaleFactors(INT16 *pScaleX, INT16 *pScaleY);
+void CalculateRestrictedMapCoords(int8_t bDirection, int16_t *psX1, int16_t *psY1, int16_t *psX2,
+                                  int16_t *psY2, int16_t sEndXS, int16_t sEndYS);
+void CalculateRestrictedScaleFactors(int16_t *pScaleX, int16_t *pScaleY);
 
 void TrashOverheadMap();
 

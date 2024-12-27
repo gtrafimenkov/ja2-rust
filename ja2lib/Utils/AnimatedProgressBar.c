@@ -194,8 +194,8 @@ void SetRelativeStartAndEndPercentage(uint8_t ubID, uint32_t uiRelStartPerc, uin
         uint16_t usFontHeight = GetFontHeight(pCurr->usMsgFont);
 
         RestoreExternBackgroundRect(pCurr->usBarLeft, pCurr->usBarBottom,
-                                    (INT16)(pCurr->usBarRight - pCurr->usBarLeft),
-                                    (INT16)(usFontHeight + 3));
+                                    (int16_t)(pCurr->usBarRight - pCurr->usBarLeft),
+                                    (int16_t)(usFontHeight + 3));
       }
 
       SetFont(pCurr->usMsgFont);

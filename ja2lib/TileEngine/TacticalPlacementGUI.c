@@ -51,7 +51,7 @@ enum { DONE_BUTTON, SPREAD_BUTTON, GROUP_BUTTON, CLEAR_BUTTON, NUM_TP_BUTTONS };
 uint32_t iTPButtons[NUM_TP_BUTTONS];
 
 extern BOOLEAN gfOverheadMapDirty;
-extern BOOLEAN GetOverheadMouseGridNo(INT16 *psGridNo);
+extern BOOLEAN GetOverheadMouseGridNo(int16_t *psGridNo);
 
 uint8_t gubDefaultButton = CLEAR_BUTTON;
 BOOLEAN gfTacticalPlacementGUIActive = FALSE;
@@ -508,8 +508,8 @@ void RenderTacticalPlacementGUI() {
     SetFontShadow(141);
     // Render the question mark over the face if the merc hasn't yet been placed.
     if (gMercPlacement[i].fPlaced) {
-      RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, (INT16)(xp + 16), (INT16)(yp + 14),
-                             (INT16)(xp + 24), (INT16)(yp + 22));
+      RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, (int16_t)(xp + 16), (int16_t)(yp + 14),
+                             (int16_t)(xp + 24), (int16_t)(yp + 22));
     } else {
       mprintf(xp + 16, yp + 14, L"?");
       InvalidateRegion(xp + 16, yp + 14, xp + 24, yp + 22);
@@ -851,7 +851,7 @@ void SelectNextUnplacedUnit() {
 
 void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, INT32 reason) {
   INT32 i;
-  INT16 sGridNo;
+  int16_t sGridNo;
   BOOLEAN fInvalidArea = FALSE;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {  // if we have a selected merc, move him to the
                                                    // new closest map edgepoint of his side.
@@ -939,7 +939,7 @@ void SetCursorMerc(int8_t bPlacementID) {
 }
 
 void PutDownMercPiece(INT32 iPlacement) {
-  INT16 sGridNo, sCellX, sCellY;
+  int16_t sGridNo, sCellX, sCellY;
   uint8_t ubDirection;
 
   struct SOLDIERTYPE *pSoldier;

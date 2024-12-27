@@ -18,7 +18,7 @@
 #define DEALER_SELLING 1
 
 typedef struct {
-  INT16 sItemIndex;
+  int16_t sItemIndex;
   uint8_t ubOptimalNumber;
 
 } DEALER_POSSIBLE_INV;

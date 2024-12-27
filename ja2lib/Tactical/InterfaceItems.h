@@ -22,23 +22,23 @@ extern BOOLEAN fShowDescriptionFlag;
 // A STRUCT USED INTERNALLY FOR INV SLOT REGIONS
 typedef struct {
   BOOLEAN fBigPocket;
-  INT16 sBarDx;
-  INT16 sBarDy;
-  INT16 sWidth;
-  INT16 sHeight;
-  INT16 sX;  // starts at 0, gets set via InitInvSlotInterface()
-  INT16 sY;  // starts at 0, gets set via InitInvSlotInterface()
+  int16_t sBarDx;
+  int16_t sBarDy;
+  int16_t sWidth;
+  int16_t sHeight;
+  int16_t sX;  // starts at 0, gets set via InitInvSlotInterface()
+  int16_t sY;  // starts at 0, gets set via InitInvSlotInterface()
 } INV_REGIONS;
 
 // USED TO SETUP REGION POSITIONS, ETC
 typedef struct {
-  INT16 sX;
-  INT16 sY;
+  int16_t sX;
+  int16_t sY;
 } INV_REGION_DESC;
 
 // Itempickup stuff
-BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
-                                 struct ITEM_POOL *pItemPool, INT16 sScreenX, INT16 sScreenY,
+BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 struct ITEM_POOL *pItemPool, int16_t sScreenX, int16_t sScreenY,
                                  int8_t bZLevel);
 void RenderItemPickupMenu();
 void RemoveItemPickupMenu();
@@ -47,17 +47,17 @@ BOOLEAN HandleItemPickupMenu();
 void SetPickUpMenuDirtyLevel(BOOLEAN fDirtyLevel);
 
 // FUNCTIONS FOR INTERFACEING WITH ITEM PANEL STUFF
-void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, uint8_t fDirtyLevel);
+void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, int16_t sPocket, uint8_t fDirtyLevel);
 BOOLEAN InitInvSlotInterface(INV_REGION_DESC *pRegionDesc, INV_REGION_DESC *pCamoRegion,
                              MOUSE_CALLBACK INVMoveCallback, MOUSE_CALLBACK INVClickCallback,
                              MOUSE_CALLBACK INVMoveCammoCallback,
                              MOUSE_CALLBACK INVClickCammoCallback, BOOLEAN fSetHighestPrioity);
 void ShutdownInvSlotInterface();
-void GetSlotInvXY(uint8_t ubPos, INT16 *psX, INT16 *psY);
-void GetSlotInvHeightWidth(uint8_t ubPos, INT16 *psWidth, INT16 *psHeight);
+void GetSlotInvXY(uint8_t ubPos, int16_t *psX, int16_t *psY);
+void GetSlotInvHeightWidth(uint8_t ubPos, int16_t *psWidth, int16_t *psHeight);
 void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, uint8_t fDirtyLevel);
 void HandleNewlyAddedItems(struct SOLDIERTYPE *pSoldier, BOOLEAN *fDirtyLevel);
-void RenderInvBodyPanel(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY);
+void RenderInvBodyPanel(struct SOLDIERTYPE *pSoldier, int16_t sX, int16_t sY);
 void DisableInvRegions(BOOLEAN fDisable);
 
 void DegradeNewlyAddedItems();
@@ -80,34 +80,34 @@ BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, int8_t bInvPos, BOO
 //  Last parameter used mainly for when mouse is over item
 
 void INVRenderItem(uint32_t uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
-                   INT16 sX, INT16 sY, INT16 sWidth, INT16 sHeight, uint8_t fDirtyLevel,
+                   int16_t sX, int16_t sY, int16_t sWidth, int16_t sHeight, uint8_t fDirtyLevel,
                    uint8_t *pubHighlightCounter, uint8_t ubStatusIndex, BOOLEAN fOutline,
-                   INT16 sOutlineColor);
+                   int16_t sOutlineColor);
 
 extern BOOLEAN gfInItemDescBox;
 
 BOOLEAN InItemDescriptionBox();
-BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, INT16 sX, INT16 sY,
-                               uint8_t ubStatusIndex);
-BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT16 sY,
+BOOLEAN InitItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX,
+                               int16_t sY, uint8_t ubStatusIndex);
+BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, int16_t sY,
                                        uint8_t ubStatusIndex, struct SOLDIERTYPE *pSoldier);
-BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, INT16 sX,
-                                  INT16 sY, uint8_t ubStatusIndex);
+BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sX,
+                                  int16_t sY, uint8_t ubStatusIndex);
 void RenderItemDescriptionBox();
 void HandleItemDescriptionBox(BOOLEAN *pfDirty);
 void DeleteItemDescriptionBox();
 
 BOOLEAN InItemStackPopup();
-BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, INT16 sInvX,
-                           INT16 sInvY, INT16 sInvWidth, INT16 sInvHeight);
+BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sInvX,
+                           int16_t sInvY, int16_t sInvWidth, int16_t sInvHeight);
 void RenderItemStackPopup(BOOLEAN fFullRender);
 void HandleItemStackPopup();
 void DeleteItemStackPopup();
 void EndItemStackPopupWithItemInHand();
 
 // keyring handlers
-BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY, INT16 sInvWidth,
-                         INT16 sInvHeight);
+BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY,
+                         int16_t sInvWidth, int16_t sInvHeight);
 void RenderKeyRingPopup(BOOLEAN fFullRender);
 void InitKeyRingInterface(MOUSE_CALLBACK KeyRingClickCallback);
 void InitMapKeyRingInterface(MOUSE_CALLBACK KeyRingClickCallback);

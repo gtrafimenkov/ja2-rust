@@ -111,7 +111,7 @@ void DebugAI(STR szOutput) {
 BOOLEAN InitAI(void) {
 #ifdef _DEBUG
   if (gfDisplayCoverValues) {
-    memset(gsCoverValue, 0x7F, sizeof(INT16) * WORLD_MAX);
+    memset(gsCoverValue, 0x7F, sizeof(int16_t) * WORLD_MAX);
   }
 #endif
 
@@ -751,7 +751,7 @@ void StartNPCAI(struct SOLDIERTYPE *pSoldier) {
   DecideAlertStatus(pSoldier);
 }
 
-BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
+BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
   INT32 cnt;
   struct SOLDIERTYPE *pOurTeam;
 
@@ -768,10 +768,10 @@ BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   return (TRUE);  // dest is free to go to...
 }
 
-INT16 FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
+int16_t FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
   INT32 cnt;
-  INT16 mods[4] = {-1, -MAPWIDTH, 1, MAPWIDTH};
-  INT16 sTempGridno, sCheapestCost = 500, sMovementCost, sCheapestDest = NOWHERE;
+  int16_t mods[4] = {-1, -MAPWIDTH, 1, MAPWIDTH};
+  int16_t sTempGridno, sCheapestCost = 500, sMovementCost, sCheapestDest = NOWHERE;
 
   for (cnt = 0; cnt < 4; cnt++) {
     sTempGridno = sGridno + mods[cnt];
@@ -1243,7 +1243,7 @@ void ActionTimeoutExceeded(struct SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
 }
 */
 
-INT16 ActionInProgress(struct SOLDIERTYPE *pSoldier) {
+int16_t ActionInProgress(struct SOLDIERTYPE *pSoldier) {
   // if NPC has a desired destination, but isn't currently going there
   if ((pSoldier->sFinalDestination != NOWHERE) &&
       (pSoldier->sDestination != pSoldier->sFinalDestination)) {
@@ -1935,7 +1935,7 @@ int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
         SaveGame(ERROR_SAVE);
 #endif
         // temporarily black list this gridno to stop enemy from going there
-        pSoldier->sBlackList = (INT16)pSoldier->usActionData;
+        pSoldier->sBlackList = (int16_t)pSoldier->usActionData;
 
         DebugAI(String("Setting blacklist for %d to %d", GetSolID(pSoldier), pSoldier->sBlackList));
 
@@ -2028,7 +2028,7 @@ int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
     case AI_ACTION_PULL_TRIGGER:  // activate an adjacent panic trigger
 
       // turn to face trigger first
-      if (FindStructure((INT16)(pSoldier->sGridNo + DirectionInc(NORTH)), STRUCTURE_SWITCH)) {
+      if (FindStructure((int16_t)(pSoldier->sGridNo + DirectionInc(NORTH)), STRUCTURE_SWITCH)) {
         SendSoldierSetDesiredDirectionEvent(pSoldier, NORTH);
       } else {
         SendSoldierSetDesiredDirectionEvent(pSoldier, WEST);
@@ -2159,7 +2159,7 @@ int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
     case AI_ACTION_LOCK_DOOR: {
       struct STRUCTURE *pStructure;
       int8_t bDirection;
-      INT16 sDoorGridNo;
+      int16_t sDoorGridNo;
 
       bDirection = (int8_t)GetDirectionFromGridNo(pSoldier->usActionData, pSoldier);
       if (bDirection == EAST || bDirection == SOUTH) {
@@ -2340,7 +2340,7 @@ void HandleInitialRedAlert(int8_t bTeam, uint8_t ubCommunicate) {
 void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pFriend;
-  INT16 sDistVisible;
+  int16_t sDistVisible;
 
   // THIS ROUTINE SHOULD ONLY BE CALLED FOR SOLDIERS ON STATUS GREEN or YELLOW
 

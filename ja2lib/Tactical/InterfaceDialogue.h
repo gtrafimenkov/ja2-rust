@@ -9,10 +9,10 @@ extern uint8_t gubSrcSoldierProfile;
 // Structure used in Tactical display of NPC dialogue
 typedef struct {
   INT32 iFaceIndex;
-  INT16 sX;
-  INT16 sY;
-  INT16 sPopupX;
-  INT16 sPopupY;
+  int16_t sX;
+  int16_t sY;
+  int16_t sPopupX;
+  int16_t sPopupY;
   uint8_t ubPopupOrientation;
   uint8_t ubCharNum;
   uint32_t uiPanelVO;
@@ -47,7 +47,7 @@ BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYP
                              int8_t bApproach, uintptr_t uiApproachData);
 
 // THis fuction will allocate and setup an NPCDiaogue structure. Loads the face for the character..
-BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, INT16 sGridNo);
+BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, int16_t sGridNo);
 
 // Begins quote of NPC Dialogue
 BOOLEAN TalkingMenuDialogue(uint16_t usQuoteNum);
@@ -87,7 +87,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
 
 BOOLEAN ProfileCurrentlyTalkingInDialoguePanel(uint8_t ubProfile);
 
-BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, INT16 sX, INT16 sY);
+BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, int16_t sX, int16_t sY);
 
 void HandleFactForNPCUnescorted(uint8_t ubNPC);
 

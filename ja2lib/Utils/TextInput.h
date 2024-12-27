@@ -89,8 +89,9 @@ uint16_t GetTextInputCursor();
 // of calls to this function dictate the TAB order from traversing from one field to the next.  This
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
-void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, int8_t bPriority,
-                       STR16 szInitText, uint8_t ubMaxChars, uint16_t usInputType);
+void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                       int8_t bPriority, STR16 szInitText, uint8_t ubMaxChars,
+                       uint16_t usInputType);
 
 // This allows you to insert special processing functions and modes that can't be determined here.
 // An example would be a file dialog where there would be a file list.  This file list would be
@@ -139,7 +140,7 @@ void SelectNextField();
 void SelectPrevField();
 
 // Returns the active field ID number.  It'll return -1 if no field is active.
-INT16 GetActiveFieldID();
+int16_t GetActiveFieldID();
 
 // These allow you to customize the general color scheme of your text input boxes.  I am assuming
 // that under no circumstances would a user want a different color for each field.  It follows the

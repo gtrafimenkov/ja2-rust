@@ -221,8 +221,9 @@ void KillAllTextInputModes() {
 // of calls to this function dictate the TAB order from traversing from one field to the next.  This
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
-void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, int8_t bPriority,
-                       STR16 szInitText, uint8_t ubMaxChars, uint16_t usInputType) {
+void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                       int8_t bPriority, STR16 szInitText, uint8_t ubMaxChars,
+                       uint16_t usInputType) {
   TEXTINPUTNODE *pNode;
   pNode = (TEXTINPUTNODE *)MemAlloc(sizeof(TEXTINPUTNODE));
   Assert(pNode);
@@ -271,9 +272,9 @@ void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, int
   pNode->fUserField = FALSE;
   pNode->fEnabled = TRUE;
   // Setup the region.
-  MSYS_DefineRegion(&pNode->region, sLeft, sTop, (INT16)(sLeft + sWidth), (INT16)(sTop + sHeight),
-                    bPriority, gusTextInputCursor, MouseMovedInTextRegionCallback,
-                    MouseClickedInTextRegionCallback);
+  MSYS_DefineRegion(&pNode->region, sLeft, sTop, (int16_t)(sLeft + sWidth),
+                    (int16_t)(sTop + sHeight), bPriority, gusTextInputCursor,
+                    MouseMovedInTextRegionCallback, MouseClickedInTextRegionCallback);
   MSYS_SetRegionUserData(&pNode->region, 0, pNode->ubID);
 }
 
@@ -344,7 +345,7 @@ void RemoveTextInputField(uint8_t ubField) {
 }
 
 // Returns the gpActive field ID number.  It'll return -1 if no field is active.
-INT16 GetActiveFieldID() {
+int16_t GetActiveFieldID() {
   if (gpActive) return gpActive->ubID;
   return -1;
 }
@@ -885,8 +886,8 @@ void AddChar(uint32_t uiKey) {
     gpActive->ubStrLen++;
     gubCursorPos = gpActive->ubStrLen;
   } else {  // insert character after cursor
-    INT16 sChar;
-    sChar = (INT16)(gpActive->ubStrLen + 1);
+    int16_t sChar;
+    sChar = (int16_t)(gpActive->ubStrLen + 1);
     while (sChar >= gubCursorPos) {
       gpActive->szString[sChar + 1] = gpActive->szString[sChar];
       sChar--;

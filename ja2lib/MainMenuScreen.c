@@ -465,7 +465,7 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
   static BOOLEAN fButtonsCreated = FALSE;
   INT32 cnt;
   SGPFILENAME filename;
-  INT16 sSlot;
+  int16_t sSlot;
   INT32 iStartLoc = 0;
 #ifndef _DEBUG
   CHAR16 zText[512];
@@ -508,13 +508,13 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
       }
 #ifdef TESTFOREIGNFONTS
       iMenuButtons[cnt] =
-          QuickCreateButton(iMenuImages[cnt], (INT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                            (INT16)(0 + (cnt * 18)), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
+          QuickCreateButton(iMenuImages[cnt], (int16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
+                            (int16_t)(0 + (cnt * 18)), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
                             DEFAULT_MOVE_CALLBACK, MenuButtonCallback);
 #else
       iMenuButtons[cnt] =
-          QuickCreateButton(iMenuImages[cnt], (INT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                            (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE)), BUTTON_TOGGLE,
+          QuickCreateButton(iMenuImages[cnt], (int16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
+                            (int16_t)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE)), BUTTON_TOGGLE,
                             MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, MenuButtonCallback);
 #endif
       if (iMenuButtons[cnt] == -1) {
@@ -645,7 +645,7 @@ void RestoreButtonBackGrounds() {
 #ifndef TESTFOREIGNFONTS
   for (cnt = 0; cnt < NUM_MENU_ITEMS; cnt++) {
     RestoreExternBackgroundRect((uint16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                                (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE) - 1),
+                                (int16_t)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE) - 1),
                                 (uint16_t)(gusMainMenuButtonWidths[cnt] + 1), 23);
   }
 #endif

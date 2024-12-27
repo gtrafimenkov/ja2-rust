@@ -107,7 +107,7 @@ uint8_t ubRefuelList[NUMBER_OF_REFUEL_SITES][2] = {
     {6, 9},   // Estoni
 };
 
-INT16 sRefuelStartGridNo[NUMBER_OF_REFUEL_SITES] = {
+int16_t sRefuelStartGridNo[NUMBER_OF_REFUEL_SITES] = {
     9001,   // drassen
     13068,  // estoni
 };
@@ -261,7 +261,7 @@ BOOLEAN RemoveSoldierFromHelicopter(struct SOLDIERTYPE *pSoldier) {
   return (TakeSoldierOutOfVehicle(pSoldier));
 }
 
-BOOLEAN HandleHeliEnteringSector(INT16 sX, INT16 sY) {
+BOOLEAN HandleHeliEnteringSector(int16_t sX, int16_t sY) {
   uint8_t ubNumEnemies;
 
   // check for SAM attack upon the chopper.  If it's destroyed by the attack, do nothing else here
@@ -375,9 +375,9 @@ INT32 FindLocationOfClosestRefuelSite(BOOLEAN fMustBeAvailable) {
     if ((fRefuelingSiteAvailable[iCounter]) || (fMustBeAvailable == FALSE)) {
       // find if sector is under control, find distance from heli to it
       iDistance = (INT32)FindStratPath(
-          (INT16)(GetSectorID16(pVehicleList[iHelicopterVehicleId].sSectorX,
-                                pVehicleList[iHelicopterVehicleId].sSectorY)),
-          (INT16)(GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])),
+          (int16_t)(GetSectorID16(pVehicleList[iHelicopterVehicleId].sSectorX,
+                                  pVehicleList[iHelicopterVehicleId].sSectorY)),
+          (int16_t)(GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])),
           pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
 
       if (iDistance < iShortestDistance) {
@@ -392,17 +392,17 @@ INT32 FindLocationOfClosestRefuelSite(BOOLEAN fMustBeAvailable) {
   return (iClosestLocation);
 }
 
-INT32 DistanceToNearestRefuelPoint(INT16 sX, INT16 sY) {
+INT32 DistanceToNearestRefuelPoint(int16_t sX, int16_t sY) {
   INT32 iClosestLocation;
   INT32 iDistance;
 
   // don't notify player during these checks!
   iClosestLocation = LocationOfNearestRefuelPoint(FALSE);
 
-  iDistance = (INT32)FindStratPath(
-      (INT16)(GetSectorID16(sX, sY)),
-      (INT16)(GetSectorID16(ubRefuelList[iClosestLocation][0], ubRefuelList[iClosestLocation][1])),
-      pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
+  iDistance = (INT32)FindStratPath((int16_t)(GetSectorID16(sX, sY)),
+                                   (int16_t)(GetSectorID16(ubRefuelList[iClosestLocation][0],
+                                                           ubRefuelList[iClosestLocation][1])),
+                                   pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
   return (iDistance);
 }
 
@@ -412,7 +412,7 @@ void ReFuelHelicopter(void) {
   LandHelicopter();
 }
 
-INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY) {
+INT32 GetCostOfPassageForHelicopter(int16_t sX, int16_t sY) {
   // check if sector is air controlled or not, if so, then normal cost, otherwise increase the cost
   INT32 iCost = 0;
 
@@ -714,7 +714,7 @@ INT32 GetNumberOfPassengersInHelicopter(void) {
   return (iNumber);
 }
 
-BOOLEAN IsRefuelSiteInSector(INT16 sMapX, INT16 sMapY) {
+BOOLEAN IsRefuelSiteInSector(int16_t sMapX, int16_t sMapY) {
   INT32 iCounter = 0;
 
   for (iCounter = 0; iCounter < NUMBER_OF_REFUEL_SITES; iCounter++) {
@@ -759,7 +759,7 @@ void UpdateRefuelSiteAvailability(void) {
   }
 }
 
-void SetUpHelicopterForPlayer(INT16 sX, INT16 sY) {
+void SetUpHelicopterForPlayer(int16_t sX, int16_t sY) {
   if (fSkyRiderSetUp == FALSE) {
     fHelicopterAvailable = TRUE;
     fSkyRiderAvailable = TRUE;
@@ -1133,7 +1133,7 @@ void HandleAnimationOfSectors(void) {
   return;
 }
 
-INT16 LastSectorInHelicoptersPath(void) {
+int16_t LastSectorInHelicoptersPath(void) {
   // get the last sector value in the helictoper's path
   struct path *pNode = NULL;
   uint32_t uiLocation = 0;
@@ -1169,7 +1169,7 @@ INT16 LastSectorInHelicoptersPath(void) {
     }
   }
 
-  return ((INT16)uiLocation);
+  return ((int16_t)uiLocation);
 }
 
 void HandleHelicopterOnGroundGraphic(void) {
@@ -1400,7 +1400,7 @@ BOOLEAN EndOfHelicoptersPath(void) {
 
 // check if helicopter can take off?
 BOOLEAN CanHelicopterTakeOff(void) {
-  INT16 sHelicopterSector = 0;
+  int16_t sHelicopterSector = 0;
 
   // if it's already in the air
   if (fHelicopterIsAirBorne == TRUE) {
@@ -1418,7 +1418,7 @@ BOOLEAN CanHelicopterTakeOff(void) {
   return (FALSE);
 }
 
-void AddHeliPeice(INT16 sGridNo, uint16_t sOStruct) {
+void AddHeliPeice(int16_t sGridNo, uint16_t sOStruct) {
   uint16_t usDummy;
 
   // ATE: Check first if already exists....
@@ -1429,11 +1429,11 @@ void AddHeliPeice(INT16 sGridNo, uint16_t sOStruct) {
 }
 
 void AddHelicopterToMaps(BOOLEAN fAdd, uint8_t ubSite) {
-  INT16 sGridNo = sRefuelStartGridNo[ubSite];
-  INT16 sOStruct = 0;
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
-  INT16 sCentreGridX, sCentreGridY;
+  int16_t sGridNo = sRefuelStartGridNo[ubSite];
+  int16_t sOStruct = 0;
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
+  int16_t sCentreGridX, sCentreGridY;
 
   // find out what slot it is by which site
   if (ubSite == 0) {
@@ -1448,10 +1448,10 @@ void AddHelicopterToMaps(BOOLEAN fAdd, uint8_t ubSite) {
   if (fAdd) {
     AddHeliPeice(sGridNo, sOStruct);
     AddHeliPeice(sGridNo, (uint16_t)(sOStruct + 1));
-    AddHeliPeice((INT16)(sGridNo - 800), (uint16_t)(sOStruct + 2));
+    AddHeliPeice((int16_t)(sGridNo - 800), (uint16_t)(sOStruct + 2));
     AddHeliPeice(sGridNo, (uint16_t)(sOStruct + 3));
     AddHeliPeice(sGridNo, (uint16_t)(sOStruct + 4));
-    AddHeliPeice((INT16)(sGridNo - 800), (uint16_t)(sOStruct + 5));
+    AddHeliPeice((int16_t)(sGridNo - 800), (uint16_t)(sOStruct + 5));
 
     InvalidateWorldRedundency();
     SetRenderFlags(RENDER_FLAG_FULL);
@@ -1507,7 +1507,7 @@ BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup) {
   return (FALSE);
 }
 
-INT16 GetNumSafeSectorsInPath(void) {
+int16_t GetNumSafeSectorsInPath(void) {
   // get the last sector value in the helictoper's path
   struct path *pNode = NULL;
   uint32_t uiLocation = 0;
@@ -1580,10 +1580,10 @@ INT16 GetNumSafeSectorsInPath(void) {
     }
   }
 
-  return ((INT16)uiCount);
+  return ((int16_t)uiCount);
 }
 
-INT16 GetNumUnSafeSectorsInPath(void) {
+int16_t GetNumUnSafeSectorsInPath(void) {
   // get the last sector value in the helictoper's path
   struct path *pNode = NULL;
   uint32_t uiLocation = 0;
@@ -1656,7 +1656,7 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     }
   }
 
-  return ((INT16)uiCount);
+  return ((int16_t)uiCount);
 }
 
 void PaySkyriderBill(void) {
@@ -1740,7 +1740,7 @@ void MakeHeliReturnToBase(void) {
     pVehicleList[iHelicopterVehicleId].pMercPath = AppendStrategicPath(
         MoveToBeginningOfPathList(BuildAStrategicPath(
             NULL, GetLastSectorIdInVehiclePath(iHelicopterVehicleId),
-            (INT16)(GetSectorID16(ubRefuelList[iLocation][0], ubRefuelList[iLocation][1])),
+            (int16_t)(GetSectorID16(ubRefuelList[iLocation][0], ubRefuelList[iLocation][1])),
             pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE /*, FALSE */)),
         pVehicleList[iHelicopterVehicleId].pMercPath);
     pVehicleList[iHelicopterVehicleId].pMercPath =

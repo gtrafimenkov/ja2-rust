@@ -62,7 +62,7 @@ uint8_t gubOutOfTurnPersons = 0;
 #define REMOVE_LATEST_INTERRUPT_GUY() (DeleteFromIntList((uint8_t)(gubOutOfTurnPersons), TRUE))
 #define INTERRUPTS_OVER (gubOutOfTurnPersons == 1)
 
-INT16 InterruptOnlyGuynum = NOBODY;
+int16_t InterruptOnlyGuynum = NOBODY;
 BOOLEAN InterruptsAllowed = TRUE;
 BOOLEAN gfHiddenInterrupt = FALSE;
 uint8_t gubLastInterruptedGuy = 0;
@@ -73,8 +73,8 @@ extern uint8_t gubSightFlags;
 typedef struct {
   uint8_t ubOutOfTurnPersons;
 
-  INT16 InterruptOnlyGuynum;
-  INT16 sWhoThrewRock;
+  int16_t InterruptOnlyGuynum;
+  int16_t sWhoThrewRock;
   BOOLEAN InterruptsAllowed;
   BOOLEAN fHiddenInterrupt;
   uint8_t ubLastInterruptedGuy;

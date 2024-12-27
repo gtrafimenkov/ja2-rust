@@ -117,22 +117,22 @@ BOOLEAN gfConfirmExitPending = FALSE;
 BOOLEAN gfIntendOnEnteringEditor = FALSE;
 
 // original
-INT16 gsBanksSubIndex = 0;
-INT16 gsOldBanksSubIndex = 1;
-INT16 gsCliffsSubIndex = 0;
-INT16 gsOldCliffsSubIndex = 1;
+int16_t gsBanksSubIndex = 0;
+int16_t gsOldBanksSubIndex = 1;
+int16_t gsCliffsSubIndex = 0;
+int16_t gsOldCliffsSubIndex = 1;
 BOOLEAN gfSwitchScreen = FALSE;
 BOOLEAN gDoTest = FALSE;
 BOOLEAN gDoTest2 = FALSE;
 FLOAT gShadePercent = (FLOAT)0.65;
-INT16 gusCurrentRoofType = ONELEVELTYPEONEROOF;
+int16_t gusCurrentRoofType = ONELEVELTYPEONEROOF;
 
 uint16_t gusLightLevel = 0;
 uint16_t gusGameLightLevel = 0;
 uint16_t gusSavedLightLevel = 0;
 BOOLEAN gfFakeLights = FALSE;
 
-INT16 gsLightRadius = 5;
+int16_t gsLightRadius = 5;
 
 BOOLEAN gfOldDoVideoScroll;      // Saved for returning to previous settings
 uint8_t gubOldCurScrollSpeedID;  // Saved for returning to previous settings
@@ -153,7 +153,7 @@ INT32 TestButtons[10];
 
 struct LEVELNODE *gCursorNode = NULL;
 // struct LEVELNODE *gBasicCursorNode = NULL;
-INT16 gsCursorGridNo;
+int16_t gsCursorGridNo;
 
 INT32 giMusicID = 0;
 
@@ -597,7 +597,7 @@ void RemoveTempMouseCursorObject(void) {
 // Whenever the editor wishes to show an object in the world, it will temporarily attach it to
 // the mouse cursor, to indicate what is about to be drawn.
 BOOLEAN DrawTempMouseCursorObject(void) {
-  INT16 sMouseX_M, sMouseY_M;
+  int16_t sMouseX_M, sMouseY_M;
   uint16_t usUseIndex;
   uint16_t usUseObjIndex;
 
@@ -719,8 +719,8 @@ void ShowCurrentDrawingMode(void) {
   INT32 iStartX = 50;
   INT32 iStartY = 440;
   INT32 iPicHeight, iPicWidth;
-  INT16 sTempOffsetX;
-  INT16 sTempOffsetY;
+  int16_t sTempOffsetX;
+  int16_t sTempOffsetY;
   ETRLEObject *pETRLEObject;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
@@ -2435,8 +2435,8 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
   INT32 iStartX;
   INT32 iStartY;
   INT32 iPicHeight, iPicWidth;
-  INT16 sTempOffsetX;
-  INT16 sTempOffsetY;
+  int16_t sTempOffsetX;
+  int16_t sTempOffsetY;
   ETRLEObject *pETRLEObject;
   INT32 iWinWidth, iWinHeight;
 
@@ -2481,7 +2481,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
 //
 //	Creates and places a light of selected radius and color into the world.
 //
-BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType) {
+BOOLEAN PlaceLight(int16_t sRadius, int16_t iMapX, int16_t iMapY, int16_t sType) {
   INT32 iLightHandle;
   uint8_t ubIntensity;
   STRING512 Filename;
@@ -2558,7 +2558,7 @@ BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType) {
 //	Returns TRUE if deleted the light, otherwise, returns FALSE.
 //	i.e. FALSE is not an error condition!
 //
-BOOLEAN RemoveLight(INT16 iMapX, INT16 iMapY) {
+BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY) {
   INT32 iCount;
   uint16_t cnt;
   struct SOLDIERTYPE *pSoldier;
@@ -2719,7 +2719,7 @@ BOOLEAN CheckForSlantRoofs(void) {
 //
 void MapOptimize(void) {
 #if 0
-	INT16 gridno;
+	int16_t gridno;
 	struct LEVELNODE *start, *head, *end, *node, *temp;
 	MAP_ELEMENT		*pMapTile;
 	BOOLEAN fFound, fChangedHead, fChangedTail;
@@ -2854,7 +2854,7 @@ void EnsureStatusOfEditorButtons() {
 }
 
 void HandleMouseClicksInGameScreen() {
-  INT16 sX, sY;
+  int16_t sX, sY;
   BOOLEAN fPrevState;
   if (!GetMouseXY(&sGridX, &sGridY)) return;
   if (iCurrentTaskbar == TASK_OPTIONS ||
@@ -2875,8 +2875,8 @@ void HandleMouseClicksInGameScreen() {
     // Are we trying to erase something?
     if (iDrawMode >= DRAW_MODE_ERASE) {
       // Erasing can have a brush size larger than 1 tile
-      for (sY = (INT16)gSelectRegion.iTop; sY <= (INT16)gSelectRegion.iBottom; sY++) {
-        for (sX = (INT16)gSelectRegion.iLeft; sX <= (INT16)gSelectRegion.iRight; sX++) {
+      for (sY = (int16_t)gSelectRegion.iTop; sY <= (int16_t)gSelectRegion.iBottom; sY++) {
+        for (sX = (int16_t)gSelectRegion.iLeft; sX <= (int16_t)gSelectRegion.iRight; sX++) {
           if (iDrawMode == (DRAW_MODE_LIGHT + DRAW_MODE_ERASE)) {
             RemoveLight(sX, sY);
           } else
@@ -3125,7 +3125,7 @@ void HandleMouseClicksInGameScreen() {
 }
 
 BOOLEAN DoIRenderASpecialMouseCursor() {
-  INT16 sMouseX_M, sMouseY_M;
+  int16_t sMouseX_M, sMouseY_M;
 
   // Draw basic mouse
   if (GetMouseXY(&sMouseX_M, &sMouseY_M)) {
@@ -3302,7 +3302,7 @@ void DrawObjectsBasedOnSelectionRegion() {
   // Process the cursor area
   for (x = gSelectRegion.iLeft; x <= gSelectRegion.iRight; x++) {
     // process the region from
-    for (y = gSelectRegion.iTop; y <= (INT16)gSelectRegion.iBottom; y++) {
+    for (y = gSelectRegion.iTop; y <= (int16_t)gSelectRegion.iBottom; y++) {
       if (fSkipTest || PerformDensityTest()) {
         iMapIndex = MAPROWCOLTOPOS(y, x);
         switch (iDrawMode) {

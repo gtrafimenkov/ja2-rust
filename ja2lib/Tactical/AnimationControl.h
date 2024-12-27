@@ -83,8 +83,8 @@ struct SOLDIERTYPE;
 
 typedef struct {
   CHAR8 zAnimStr[MAX_ANIM_STR_SIZE + 1];
-  INT16 sAP;
-  INT16 sSpeed;
+  int16_t sAP;
+  int16_t sSpeed;
   FLOAT dMovementChange;
   uint32_t uiFlags;
   uint8_t ubHeight;
@@ -94,14 +94,14 @@ typedef struct {
 } ANIMCONTROLTYPE;
 
 typedef struct {
-  INT16 sSpeed;
+  int16_t sSpeed;
   FLOAT dMovementChange;
 
 } ANI_SPEED_DEF;
 
 typedef struct {
   uint8_t ubHandRestriction;
-  INT16 sAnimID;
+  int16_t sAnimID;
   uint8_t ubStartRoll;
   uint8_t ubEndRoll;
   uint8_t ubFlags;

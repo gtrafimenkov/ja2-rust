@@ -445,7 +445,7 @@ uint8_t StoreInventory[MAXITEMS][BOBBY_RAY_LISTS] = {
 
 };
 
-INT16 WeaponROF[MAX_WEAPONS] = {
+int16_t WeaponROF[MAX_WEAPONS] = {
     0, /* Nothing */
 
     40,   /* Glock 17        */
@@ -599,10 +599,10 @@ STORE_INVENTORY *GetPtrToStoreInventory(uint8_t ubDealerID) {
 }
 
 /*
-INT16	CountNumberOfItemsInStoreInventory( uint8_t ubArmsDealerID )
+int16_t	CountNumberOfItemsInStoreInventory( uint8_t ubArmsDealerID )
 {
         uint16_t	cnt;
-        INT16		ubNumItems=0;
+        int16_t		ubNumItems=0;
 
         STORE_INVENTORY *pInventoryArray;
 

@@ -23,10 +23,10 @@ struct SOLDIERTYPE;
 
 typedef struct {
   uint8_t ubProfileID;
-  INT16 sSectorX;
-  INT16 sSectorY;
+  int16_t sSectorX;
+  int16_t sSectorY;
   int8_t bSectorZ;
-  INT16 iTotalContractLength;
+  int16_t iTotalContractLength;
   BOOLEAN fCopyProfileItemsOver;
   uint32_t uiTimeTillMercArrives;
   uint8_t ubInsertionCode;
@@ -36,8 +36,8 @@ typedef struct {
 } MERC_HIRE_STRUCT;
 
 // ATE: Globals that dictate where the mercs will land once being hired
-extern INT16 gsMercArriveSectorX;
-extern INT16 gsMercArriveSectorY;
+extern int16_t gsMercArriveSectorX;
+extern int16_t gsMercArriveSectorY;
 
 int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc);
 void MercArrivesCallback(uint8_t ubSoldierID);

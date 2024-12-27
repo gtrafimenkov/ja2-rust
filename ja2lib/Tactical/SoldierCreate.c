@@ -538,8 +538,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, u
     if (!pSoldier) return NULL;
     memcpy(pSoldier, &Soldier, sizeof(struct SOLDIERTYPE));
     pSoldier->ubID = 255;
-    pSoldier->sSectorX = (INT16)SectorID8_X(ubSectorID);
-    pSoldier->sSectorY = (INT16)SectorID8_Y(ubSectorID);
+    pSoldier->sSectorX = (int16_t)SectorID8_X(ubSectorID);
+    pSoldier->sSectorY = (int16_t)SectorID8_Y(ubSectorID);
     pSoldier->bSectorZ = 0;
     *pubID = 255;
     return pSoldier;
@@ -595,7 +595,7 @@ BOOLEAN TacticalCopySoldierFromProfile(struct SOLDIERTYPE *pSoldier,
   pSoldier->bAttitude = pCreateStruct->bAttitude;
   pSoldier->bDirection = pCreateStruct->bDirection;
   pSoldier->bPatrolCnt = pCreateStruct->bPatrolCnt;
-  memcpy(pSoldier->usPatrolGrid, pCreateStruct->sPatrolGrid, sizeof(INT16) * MAXPATROLGRIDS);
+  memcpy(pSoldier->usPatrolGrid, pCreateStruct->sPatrolGrid, sizeof(int16_t) * MAXPATROLGRIDS);
 
   if (HAS_SKILL_TRAIT(pSoldier, CAMOUFLAGED)) {
     // set camouflaged to 100 automatically
@@ -975,7 +975,7 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
   // Adding patrol points
   // CAUTION:  CONVERTING SIGNED TO UNSIGNED though the values should never be negative.
   pSoldier->bPatrolCnt = pCreateStruct->bPatrolCnt;
-  memcpy(pSoldier->usPatrolGrid, pCreateStruct->sPatrolGrid, sizeof(INT16) * MAXPATROLGRIDS);
+  memcpy(pSoldier->usPatrolGrid, pCreateStruct->sPatrolGrid, sizeof(int16_t) * MAXPATROLGRIDS);
 
   // Kris:  November 10, 1997
   // Expanded the default names based on team.
@@ -1480,7 +1480,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 
   // Transfer over the patrol points.
   pp->bPatrolCnt = bp->bPatrolCnt;
-  memcpy(pp->sPatrolGrid, bp->sPatrolGrid, sizeof(INT16) * MAXPATROLGRIDS);
+  memcpy(pp->sPatrolGrid, bp->sPatrolGrid, sizeof(int16_t) * MAXPATROLGRIDS);
 
   // If it is a detailed placement, don't do this yet, as detailed placements may have their
   // own equipment.
@@ -1549,7 +1549,7 @@ void CreateStaticDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *
 
   // Transfer over the patrol points.
   spp->bPatrolCnt = bp->bPatrolCnt;
-  memcpy(spp->sPatrolGrid, bp->sPatrolGrid, sizeof(INT16) * MAXPATROLGRIDS);
+  memcpy(spp->sPatrolGrid, bp->sPatrolGrid, sizeof(int16_t) * MAXPATROLGRIDS);
 
   // Starts with nothing
   for (i = 0; i < NUM_INV_SLOTS; i++) {
@@ -1592,7 +1592,7 @@ void CreateDetailedPlacementGivenStaticDetailedPlacementAndBasicPlacementInfo(
     pp->bAttitude = bp->bAttitude;
     pp->bDirection = bp->bDirection;
     pp->bPatrolCnt = bp->bPatrolCnt;
-    memcpy(pp->sPatrolGrid, bp->sPatrolGrid, sizeof(INT16) * MAXPATROLGRIDS);
+    memcpy(pp->sPatrolGrid, bp->sPatrolGrid, sizeof(int16_t) * MAXPATROLGRIDS);
     pp->fHasKeys = bp->fHasKeys;
     pp->ubCivilianGroup = bp->ubCivilianGroup;
 
@@ -1869,8 +1869,8 @@ struct SOLDIERTYPE *TacticalCreateAdministrator() {
   if (pSoldier) {
     // send soldier to centre of map, roughly
     pSoldier->sNoiseGridno =
-        (INT16)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
-                (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
+        (int16_t)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
+                  (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
     pSoldier->ubNoiseVolume = MAX_MISC_NOISE_DURATION;
   }
   return (pSoldier);
@@ -1901,8 +1901,8 @@ struct SOLDIERTYPE *TacticalCreateArmyTroop() {
   if (pSoldier) {
     // send soldier to centre of map, roughly
     pSoldier->sNoiseGridno =
-        (INT16)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
-                (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
+        (int16_t)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
+                  (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
     pSoldier->ubNoiseVolume = MAX_MISC_NOISE_DURATION;
   }
   return (pSoldier);
@@ -1942,8 +1942,8 @@ struct SOLDIERTYPE *TacticalCreateEliteEnemy() {
   if (pSoldier) {
     // send soldier to centre of map, roughly
     pSoldier->sNoiseGridno =
-        (INT16)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
-                (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
+        (int16_t)(CENTRAL_GRIDNO + (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) +
+                  (Random(CENTRAL_RADIUS * 2 + 1) - CENTRAL_RADIUS) * WORLD_COLS);
     pSoldier->ubNoiseVolume = MAX_MISC_NOISE_DURATION;
   }
   return (pSoldier);
@@ -2084,7 +2084,7 @@ void RandomizeRelativeLevel(int8_t *pbRelLevel, uint8_t ubSoldierClass) {
 void QuickCreateProfileMerc(int8_t bTeam, uint8_t ubProfileID) {
   // Create guy # X
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
+  int16_t sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
   uint8_t ubID;
   uint16_t usMapPos;
 
@@ -2268,7 +2268,7 @@ void TrashAllSoldiers() {
 uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
   uint8_t ubLocationModifier;
   uint8_t ubPalaceDistance;
-  INT16 sSectorX, sSectorY, sSectorZ;
+  int16_t sSectorX, sSectorY, sSectorZ;
   TownID bTownId;
   BOOLEAN fSuccess;
 
@@ -2310,12 +2310,12 @@ uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
 // grab the distance from the palace
 uint8_t GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY) {
   uint8_t ubDistance = 0;
-  INT16 sRows = 0, sCols = 0;
+  int16_t sRows = 0, sCols = 0;
   float fValue = 0.0;
 
   // grab number of rows and cols
-  sRows = (INT16)(abs((sSectorX) - (PALACE_SECTOR_X)));
-  sCols = (INT16)(abs((sSectorY) - (PALACE_SECTOR_Y)));
+  sRows = (int16_t)(abs((sSectorX) - (PALACE_SECTOR_X)));
+  sCols = (int16_t)(abs((sSectorY) - (PALACE_SECTOR_Y)));
 
   // apply Pythagoras's theorem for right-handed triangle:
   // dist^2 = rows^2 + cols^2, so use the square root to get the distance

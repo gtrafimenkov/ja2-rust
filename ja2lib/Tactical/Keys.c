@@ -548,7 +548,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   switch (pDoor->ubTrapID) {
     case EXPLOSION:
       // cause damage as a regular hand grenade
-      IgniteExplosion(NOBODY, CenterX(pSoldier->sGridNo), (INT16)CenterY(pSoldier->sGridNo), 25,
+      IgniteExplosion(NOBODY, CenterX(pSoldier->sGridNo), (int16_t)CenterY(pSoldier->sGridNo), 25,
                       pSoldier->sGridNo, HAND_GRENADE, 0);
       break;
 
@@ -626,8 +626,8 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     // Do explosive graphic....
     {
       ANITILE_PARAMS AniParams;
-      INT16 sGridNo;
-      INT16 sX, sY, sZ;
+      int16_t sGridNo;
+      int16_t sX, sY, sZ;
 
       // Get gridno
       sGridNo = pDoor->sGridNo;
@@ -641,7 +641,7 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
       AniParams.sGridNo = sGridNo;
       AniParams.ubLevelID = ANI_TOPMOST_LEVEL;
-      AniParams.sDelay = (INT16)(100);
+      AniParams.sDelay = (int16_t)(100);
       AniParams.sStartFrame = 0;
       AniParams.uiFlags = ANITILE_CACHEDTILE | ANITILE_FORWARD | ANITILE_ALWAYS_TRANSLUCENT;
       AniParams.sX = sX;
@@ -681,7 +681,7 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
     // OOPS! ... BOOM!
     IgniteExplosion(NOBODY, pSoldier->sX, pSoldier->sY,
-                    (INT16)(gpWorldLevelData[pSoldier->sGridNo].sHeight), pSoldier->sGridNo,
+                    (int16_t)(gpWorldLevelData[pSoldier->sGridNo].sHeight), pSoldier->sGridNo,
                     SHAPED_CHARGE, 0);
   }
   return (FALSE);
@@ -927,7 +927,7 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
 }
 
 // fOpen is True if the door is open, false if it is closed
-BOOLEAN ModifyDoorStatus(INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fPerceivedOpen) {
+BOOLEAN ModifyDoorStatus(int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fPerceivedOpen) {
   uint8_t ubCnt;
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBaseStructure;
@@ -1029,7 +1029,7 @@ void TrashDoorStatusArray() {
   gubNumDoorStatus = 0;
 }
 
-BOOLEAN IsDoorOpen(INT16 sGridNo) {
+BOOLEAN IsDoorOpen(int16_t sGridNo) {
   uint8_t ubCnt;
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBaseStructure;
@@ -1072,7 +1072,7 @@ BOOLEAN IsDoorOpen(INT16 sGridNo) {
 }
 
 // Returns a doors status value, NULL if not found
-DOOR_STATUS *GetDoorStatus(INT16 sGridNo) {
+DOOR_STATUS *GetDoorStatus(int16_t sGridNo) {
   uint8_t ubCnt;
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBaseStructure;
@@ -1103,13 +1103,13 @@ DOOR_STATUS *GetDoorStatus(INT16 sGridNo) {
   return (NULL);
 }
 
-BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
+BOOLEAN AllMercsLookForDoor(int16_t sGridNo, BOOLEAN fUpdateValue) {
   INT32 cnt, cnt2;
   int8_t bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
   struct SOLDIERTYPE *pSoldier;
-  INT16 sDistVisible;
+  int16_t sDistVisible;
   DOOR_STATUS *pDoorStatus;
-  INT16 usNewGridNo;
+  int16_t usNewGridNo;
 
   // Get door
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1171,11 +1171,11 @@ BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
 
 BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
   INT32 cnt, cnt2;
-  INT16 sDistVisible;
-  INT16 sGridNo;
+  int16_t sDistVisible;
+  int16_t sGridNo;
   DOOR_STATUS *pDoorStatus;
   int8_t bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
-  INT16 usNewGridNo;
+  int16_t usNewGridNo;
 
   // Loop through all corpses....
   for (cnt = 0; cnt < gubNumDoorStatus; cnt++) {
@@ -1235,7 +1235,7 @@ BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
 void SyncronizeDoorStatusToStructureData(DOOR_STATUS *pDoorStatus) {
   struct STRUCTURE *pStructure, *pBaseStructure;
   struct LEVELNODE *pNode;
-  INT16 sBaseGridNo = NOWHERE;
+  int16_t sBaseGridNo = NOWHERE;
 
   // First look for a door structure here...
   pStructure = FindStructure(pDoorStatus->sGridNo, STRUCTURE_ANYDOOR);
@@ -1306,7 +1306,7 @@ void InternalUpdateDoorGraphicFromStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fUseP
   struct LEVELNODE *pNode;
   BOOLEAN fWantToBeOpen = FALSE;
   BOOLEAN fDifferent = FALSE;
-  INT16 sBaseGridNo = NOWHERE;
+  int16_t sBaseGridNo = NOWHERE;
 
   // OK, look at perceived status and adjust graphic
   // First look for a door structure here...
@@ -1474,7 +1474,7 @@ void InternalUpdateDoorsPerceivedValue(DOOR_STATUS *pDoorStatus) {
   }
 }
 
-BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo) {
+BOOLEAN UpdateDoorStatusPerceivedValue(int16_t sGridNo) {
   DOOR_STATUS *pDoorStatus = NULL;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1485,7 +1485,7 @@ BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo) {
   return (TRUE);
 }
 
-BOOLEAN IsDoorPerceivedOpen(INT16 sGridNo) {
+BOOLEAN IsDoorPerceivedOpen(int16_t sGridNo) {
   DOOR_STATUS *pDoorStatus;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1516,7 +1516,7 @@ BOOLEAN InternalSetDoorPerceivedOpenStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fPe
   return (TRUE);
 }
 
-BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen) {
+BOOLEAN SetDoorPerceivedOpenStatus(int16_t sGridNo, BOOLEAN fPerceivedOpen) {
   DOOR_STATUS *pDoorStatus = NULL;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1526,7 +1526,7 @@ BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen) {
   return (InternalSetDoorPerceivedOpenStatus(pDoorStatus, fPerceivedOpen));
 }
 
-BOOLEAN SetDoorOpenStatus(INT16 sGridNo, BOOLEAN fOpen) {
+BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen) {
   DOOR_STATUS *pDoorStatus;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1804,8 +1804,9 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   }
 }
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel, int8_t bVisible,
-                       BOOLEAN fAddToDropList, INT32 iDropListSlot, BOOLEAN fUseUnLoaded) {
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
+                       int8_t bVisible, BOOLEAN fAddToDropList, INT32 iDropListSlot,
+                       BOOLEAN fUseUnLoaded) {
   uint8_t ubLoop;
   uint8_t ubItem;
   struct OBJECTTYPE Object;

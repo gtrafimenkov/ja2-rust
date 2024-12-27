@@ -90,7 +90,7 @@ typedef struct SOLDIERCELL {
   uint16_t usIndex;
   uint32_t uiFlags;
   uint16_t usFrame;
-  INT16 xp, yp;
+  int16_t xp, yp;
   uint16_t usAttack, usDefence;
   uint16_t usNextAttack;
   uint16_t usNextHit[3];
@@ -129,8 +129,8 @@ typedef struct AUTORESOLVE_STRUCT {
   uint16_t usPlayerDefence;
   uint16_t usEnemyAttack;
   uint16_t usEnemyDefence;
-  INT16 sWidth, sHeight;
-  INT16 sCenterStartX;
+  int16_t sWidth, sHeight;
+  int16_t sCenterStartX;
 
   uint8_t ubEnemyLeadership;
   uint8_t ubPlayerLeadership;
@@ -255,8 +255,8 @@ enum {
 extern void CreateDestroyMapInvButton();
 
 // Autoresolve sets this variable which defaults to -1 when not needed.
-INT16 gsEnemyGainedControlOfSectorID = -1;
-INT16 gsCiviliansEatenByMonsters = -1;
+int16_t gsEnemyGainedControlOfSectorID = -1;
+int16_t gsCiviliansEatenByMonsters = -1;
 
 // Autoresolve handling -- keyboard input, callbacks
 void HandleAutoResolveInput();
@@ -452,7 +452,7 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
   uint32_t uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
   uint32_t uiTimeRange;
-  INT16 sStartLeft, sEndLeft, sStartTop, sEndTop;
+  int16_t sStartLeft, sEndLeft, sStartTop, sEndTop;
   INT32 iLeft, iTop, iWidth, iHeight;
 
   PauseTime(FALSE);
@@ -1157,7 +1157,7 @@ void ExpandWindow() {
 }
 
 uint32_t VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
-                                  struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus) {
+                                  struct OBJECTTYPE *pKit, int16_t sKitPts, int16_t sStatus) {
   uint32_t uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
   uint8_t bBelowOKlife, bPtsLeft;
 
@@ -1515,7 +1515,7 @@ void RenderAutoResolve() {
         if (gpAR->ubBattleStatus == BATTLE_VICTORY) {
           SetFactTrue(FACT_FIRST_BATTLE_WON);
         }
-        SetTheFirstBattleSector((INT16)(gpAR->ubSectorX + gpAR->ubSectorY * MAP_WORLD_X));
+        SetTheFirstBattleSector((int16_t)(gpAR->ubSectorX + gpAR->ubSectorY * MAP_WORLD_X));
         HandleFirstBattleEndingWhileInTown(gpAR->ubSectorX, gpAR->ubSectorY, 0, TRUE);
       }
 
@@ -1549,15 +1549,17 @@ void RenderAutoResolve() {
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
 
           SetMusicMode(MUSIC_TACTICAL_DEATH);
-          gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+          gsEnemyGainedControlOfSectorID = (int16_t)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           break;
         case BATTLE_DEFEAT:
           HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID =
+                (int16_t)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID =
+                (int16_t)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           SetMusicMode(MUSIC_TACTICAL_DEATH);
@@ -1572,9 +1574,11 @@ void RenderAutoResolve() {
           HandleLoyaltyImplicationsOfMercRetreat(RETREAT_AUTORESOLVE, gpAR->ubSectorX,
                                                  gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID =
+                (int16_t)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else if (gpAR->ubAliveEnemies) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID =
+                (int16_t)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           break;
@@ -1851,25 +1855,25 @@ void CreateAutoResolveInterface() {
 
   // Create the buttons -- subject to relocation
   gpAR->iButton[PLAY_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[PLAY_BUTTON], (INT16)(gpAR->sCenterStartX + 11),
-                        (INT16)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[PLAY_BUTTON], (int16_t)(gpAR->sCenterStartX + 11),
+                        (int16_t)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, PlayButtonCallback);
   gpAR->iButton[FAST_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[FAST_BUTTON], (INT16)(gpAR->sCenterStartX + 51),
-                        (INT16)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[FAST_BUTTON], (int16_t)(gpAR->sCenterStartX + 51),
+                        (int16_t)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, FastButtonCallback);
   gpAR->iButton[FINISH_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[FINISH_BUTTON], (INT16)(gpAR->sCenterStartX + 91),
-                        (INT16)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[FINISH_BUTTON], (int16_t)(gpAR->sCenterStartX + 91),
+                        (int16_t)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, FinishButtonCallback);
   gpAR->iButton[PAUSE_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[PAUSE_BUTTON], (INT16)(gpAR->sCenterStartX + 11),
-                        (INT16)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[PAUSE_BUTTON], (int16_t)(gpAR->sCenterStartX + 11),
+                        (int16_t)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, PauseButtonCallback);
 
   gpAR->iButton[RETREAT_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[RETREAT_BUTTON], (INT16)(gpAR->sCenterStartX + 51),
-                        (INT16)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[RETREAT_BUTTON], (int16_t)(gpAR->sCenterStartX + 51),
+                        (int16_t)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, RetreatButtonCallback);
   if (!gpAR->ubMercs) {
     DisableButton(gpAR->iButton[RETREAT_BUTTON]);
@@ -1879,32 +1883,32 @@ void CreateAutoResolveInterface() {
                                      FONT_NEARBLACK);
 
   gpAR->iButton[BANDAGE_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[BANDAGE_BUTTON], (INT16)(gpAR->sCenterStartX + 11),
-                        (INT16)(245 + gpAR->bVerticalOffset), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH,
-                        DEFAULT_MOVE_CALLBACK, BandageButtonCallback);
+      QuickCreateButton(gpAR->iButtonImage[BANDAGE_BUTTON], (int16_t)(gpAR->sCenterStartX + 11),
+                        (int16_t)(245 + gpAR->bVerticalOffset), BUTTON_NO_TOGGLE,
+                        MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, BandageButtonCallback);
 
   gpAR->iButton[DONEWIN_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[DONEWIN_BUTTON], (INT16)(gpAR->sCenterStartX + 51),
-                        (INT16)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[DONEWIN_BUTTON], (int16_t)(gpAR->sCenterStartX + 51),
+                        (int16_t)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, DoneButtonCallback);
   SpecifyGeneralButtonTextAttributes(gpAR->iButton[DONEWIN_BUTTON],
                                      gpStrategicString[STR_AR_DONE_BUTTON], BLOCKFONT2, 169,
                                      FONT_NEARBLACK);
 
   gpAR->iButton[DONELOSE_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[DONELOSE_BUTTON], (INT16)(gpAR->sCenterStartX + 25),
-                        (INT16)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[DONELOSE_BUTTON], (int16_t)(gpAR->sCenterStartX + 25),
+                        (int16_t)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, DoneButtonCallback);
   SpecifyGeneralButtonTextAttributes(gpAR->iButton[DONELOSE_BUTTON],
                                      gpStrategicString[STR_AR_DONE_BUTTON], BLOCKFONT2, 169,
                                      FONT_NEARBLACK);
   gpAR->iButton[YES_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[YES_BUTTON], (INT16)(gpAR->sCenterStartX + 21),
-                        (INT16)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[YES_BUTTON], (int16_t)(gpAR->sCenterStartX + 21),
+                        (int16_t)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, AcceptSurrenderCallback);
   gpAR->iButton[NO_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[NO_BUTTON], (INT16)(gpAR->sCenterStartX + 81),
-                        (INT16)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[NO_BUTTON], (int16_t)(gpAR->sCenterStartX + 81),
+                        (int16_t)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, RejectSurrenderCallback);
   HideButton(gpAR->iButton[YES_BUTTON]);
   HideButton(gpAR->iButton[NO_BUTTON]);
@@ -3015,8 +3019,8 @@ void CalculateAttackValues() {
   //{
   //	//bonus equals 20 if good guys outnumber bad guys 2 to 1.
   //	sMaxBonus = 20;
-  //	sOutnumberBonus = (INT16)gpAR->ubEnemies * sMaxBonus / (gpAR->ubMercs + gpAR->ubCivs) -
-  // sMaxBonus; 	sOutnumberBonus = (INT16)min( sOutnumberBonus, max( sMaxBonus, 0 ) );
+  //	sOutnumberBonus = (int16_t)gpAR->ubEnemies * sMaxBonus / (gpAR->ubMercs + gpAR->ubCivs) -
+  // sMaxBonus; 	sOutnumberBonus = (int16_t)min( sOutnumberBonus, max( sMaxBonus, 0 ) );
   //}
 
   for (i = 0; i < gpAR->ubEnemies; i++) {
@@ -4015,7 +4019,7 @@ uint8_t GetAutoResolveSectorID() {
 }
 
 // Returns TRUE if a battle is happening or sector is loaded
-BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psSectorZ) {
+BOOLEAN GetCurrentBattleSectorXYZ(int16_t *psSectorX, int16_t *psSectorY, int16_t *psSectorZ) {
   if (gpAR) {
     *psSectorX = gpAR->ubSectorX;
     *psSectorY = gpAR->ubSectorY;
@@ -4040,8 +4044,9 @@ BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psS
 }
 
 // Returns TRUE if a battle is happening ONLY
-BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX, INT16 *psSectorY,
-                                                               INT16 *psSectorZ) {
+BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(int16_t *psSectorX,
+                                                               int16_t *psSectorY,
+                                                               int16_t *psSectorZ) {
   if (gpAR) {
     *psSectorX = gpAR->ubSectorX;
     *psSectorY = gpAR->ubSectorY;

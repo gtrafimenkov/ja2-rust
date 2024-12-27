@@ -227,7 +227,7 @@ extern INT32 iEditAction;
 
 extern uint16_t gusLightLevel;
 extern uint16_t gusLightLevelPercentage;
-extern INT16 gsLightRadius;
+extern int16_t gsLightRadius;
 
 extern BOOLEAN gfRenderWorld;
 extern BOOLEAN gfRenderTaskbar;

@@ -28,7 +28,7 @@ WRAPPED_STRING *LineWrapForSingleCharWords(uint32_t ulFont, uint16_t usLineWidth
   WRAPPED_STRING *pWrappedString = NULL;
   wchar_t TempString[1024];
   //	wchar_t         pNullString[2];
-  INT16 usCurIndex, usEndIndex, usDestIndex;
+  int16_t usCurIndex, usEndIndex, usDestIndex;
   wchar_t DestString[1024];
   va_list argptr;
   BOOLEAN fDone = FALSE;
@@ -133,7 +133,7 @@ WRAPPED_STRING *LineWrap(uint32_t ulFont, uint16_t usLineWidthPixels,
   WRAPPED_STRING *pWrappedString = NULL;
   wchar_t TempString[1024];
   wchar_t pNullString[2];
-  INT16 usCurIndex, usEndIndex, usDestIndex;
+  int16_t usCurIndex, usEndIndex, usDestIndex;
   STR16 pCurrentStringLoc;
   wchar_t DestString[1024];
   va_list argptr;
@@ -389,7 +389,7 @@ uint16_t DeleteWrappedString(WRAPPED_STRING *pWrappedString) {
 BOOLEAN DrawTextToScreen(STR16 pStr, uint16_t usLocX, uint16_t usLocY, uint16_t usWidth,
                          uint32_t ulFont, uint8_t ubColor, uint8_t ubBackGroundColor,
                          BOOLEAN fDirty, uint32_t ulFlags) {
-  INT16 usPosX, usPosY;
+  int16_t usPosX, usPosY;
   uint16_t usFontHeight = 0;
   uint16_t usStringWidth = 0;
 
@@ -947,11 +947,11 @@ void CleanOutControlCodesFromString(STR16 pSourceString, STR16 pDestString) {
 // and which page you want the text displayed for, and the total height to date
 //
 
-INT16 IanDisplayWrappedStringToPages(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
-                                     uint16_t usPageHeight, uint16_t usTotalHeight,
-                                     uint16_t usPageNumber, uint8_t ubGap, uint32_t uiFont,
-                                     uint8_t ubColor, STR16 pString, uint8_t ubBackGroundColor,
-                                     BOOLEAN fDirty, uint32_t uiFlags, BOOLEAN *fOnLastPageFlag) {
+int16_t IanDisplayWrappedStringToPages(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                                       uint16_t usPageHeight, uint16_t usTotalHeight,
+                                       uint16_t usPageNumber, uint8_t ubGap, uint32_t uiFont,
+                                       uint8_t ubColor, STR16 pString, uint8_t ubBackGroundColor,
+                                       BOOLEAN fDirty, uint32_t uiFlags, BOOLEAN *fOnLastPageFlag) {
   uint16_t usSourceCounter = 0, usDestCounter = 0, usWordLengthPixels, usLineLengthPixels = 0,
            usPhraseLengthPixels = 0;
   uint16_t usLinesUsed = 1, usLocalWidth = usWidth;
@@ -1516,8 +1516,8 @@ BOOLEAN WillThisStringGetCutOff(INT32 iTotalYPosition, INT32 iBottomOfPage, INT3
   INT32 iHeight;
   // Will return if this string will get cut off
 
-  iHeight = IanWrappedStringHeight(0, 0, (INT16)iWrapWidth, (uint8_t)(iGap), uiFont, 0, pString, 0,
-                                   FALSE, 0);
+  iHeight = IanWrappedStringHeight(0, 0, (int16_t)iWrapWidth, (uint8_t)(iGap), uiFont, 0, pString,
+                                   0, FALSE, 0);
 
   if (iHeight + iTotalYPosition >= ((iPage + 1) * iBottomOfPage)) {
     fGetCutOff = TRUE;
@@ -1532,8 +1532,8 @@ BOOLEAN IsThisStringBeforeTheCurrentPage(INT32 iTotalYPosition, INT32 iPageSize,
   // check to see if the current string will appear on the current page
   BOOLEAN fBeforeCurrentPage = FALSE;
 
-  if (iTotalYPosition + IanWrappedStringHeight(0, 0, (INT16)iWrapWidth, (uint8_t)(iGap), uiFont, 0,
-                                               pString, 0, FALSE, 0) >
+  if (iTotalYPosition + IanWrappedStringHeight(0, 0, (int16_t)iWrapWidth, (uint8_t)(iGap), uiFont,
+                                               0, pString, 0, FALSE, 0) >
       (iPageSize * iCurrentPage)) {
     fBeforeCurrentPage = FALSE;
   } else if (iTotalYPosition <= (iPageSize * iCurrentPage)) {
@@ -1549,8 +1549,9 @@ INT32 GetNewTotalYPositionOfThisString(INT32 iTotalYPosition, INT32 iPageSize, I
   INT32 iNewYPosition = 0;
   // will returnt he new total y value of this string
 
-  iNewYPosition = iTotalYPosition + IanWrappedStringHeight(0, 0, (INT16)iWrapWidth, (uint8_t)(iGap),
-                                                           uiFont, 0, pString, 0, FALSE, 0);
+  iNewYPosition =
+      iTotalYPosition + IanWrappedStringHeight(0, 0, (int16_t)iWrapWidth, (uint8_t)(iGap), uiFont,
+                                               0, pString, 0, FALSE, 0);
 
   return (iNewYPosition);
 }
@@ -1638,7 +1639,7 @@ FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, uint32_t uiFont
 
     while (pWidthList) {
       if (iCounter == pWidthList->iRecordNumber) {
-        usCurrentWidth = (INT16)pWidthList->iRecordWidth;
+        usCurrentWidth = (int16_t)pWidthList->iRecordWidth;
         //				iCurrentPositionOnThisPage +=
         // pWidthList->iRecordHeightAdjustment;
 
@@ -1667,7 +1668,7 @@ FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, uint32_t uiFont
       pWidthList = WidthList;
       while (pWidthList) {
         if (iCounter == pWidthList->iRecordNumber) {
-          usCurrentWidth = (INT16)pWidthList->iRecordWidth;
+          usCurrentWidth = (int16_t)pWidthList->iRecordWidth;
 
           if (pWidthList->iRecordHeightAdjustment == iPageSize) {
             if (iCurrentPositionOnThisPage != 0)

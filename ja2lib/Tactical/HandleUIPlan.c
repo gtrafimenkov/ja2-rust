@@ -35,8 +35,8 @@ BOOLEAN BeginUIPlan(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
   struct SOLDIERTYPE *pPlanSoldier;
-  INT16 sXPos, sYPos;
-  INT16 sAPCost = 0;
+  int16_t sXPos, sYPos;
+  int16_t sAPCost = 0;
   int8_t bDirection;
   INT32 iLoop;
   SOLDIERCREATE_STRUCT MercCreateStruct;

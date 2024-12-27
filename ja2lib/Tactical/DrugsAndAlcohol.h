@@ -26,7 +26,7 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject);
 
 void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier);
 void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints);
-void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPoints);
+void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, int16_t *psPoints);
 
 int8_t GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
 int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);

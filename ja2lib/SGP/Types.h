@@ -21,7 +21,7 @@ typedef int32_t INT32;
 typedef unsigned char uint8_t;
 typedef signed char int8_t;
 typedef uint16_t uint16_t;
-typedef int16_t INT16;
+typedef int16_t int16_t;
 // floats
 typedef float FLOAT;
 typedef double DOUBLE;

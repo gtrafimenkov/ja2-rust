@@ -14,23 +14,23 @@
 
 BOOLEAN InitPathAI(void);
 void ShutDownPathAI(void);
-INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, int8_t bCopyRoute, int8_t bPlot,
-               int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
-               INT16 sAPBudget);
-INT16 UIPlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, int8_t bCopyRoute, int8_t bPlot,
+int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute, int8_t bPlot,
                  int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
-                 INT16 sAPBudget);
-INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, int8_t bCopyRoute,
-                       int8_t bPlot, int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth,
-                       int8_t bReverse, INT16 sAPBudget);
+                 int16_t sAPBudget);
+int16_t UIPlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute, int8_t bPlot,
+                   int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
+                   int16_t sAPBudget);
+int16_t EstimatePlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute,
+                         int8_t bPlot, int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth,
+                         int8_t bReverse, int16_t sAPBudget);
 
 void ErasePath(char bEraseOldOne);
-INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, int8_t ubLevel, INT16 usMovementMode,
-                   int8_t bCopy, uint8_t fFlags);
-void GlobalReachableTest(INT16 sStartGridNo);
-void GlobalItemsReachableTest(INT16 sStartGridNo1, INT16 sStartGridNo2);
-void RoofReachableTest(INT16 sStartGridNo, uint8_t ubBuildingID);
-void LocalReachableTest(INT16 sStartGridNo, int8_t bRadius);
+INT32 FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
+                   int16_t usMovementMode, int8_t bCopy, uint8_t fFlags);
+void GlobalReachableTest(int16_t sStartGridNo);
+void GlobalItemsReachableTest(int16_t sStartGridNo1, int16_t sStartGridNo2);
+void RoofReachableTest(int16_t sStartGridNo, uint8_t ubBuildingID);
+void LocalReachableTest(int16_t sStartGridNo, int8_t bRadius);
 
 uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint8_t ubMovementCost,
                        BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo);
@@ -38,7 +38,7 @@ uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, uint
                                BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
                                BOOLEAN fReturnDoorCost);
 
-INT16 RecalculatePathCost(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
+int16_t RecalculatePathCost(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
 
 // Exporting these global variables
 extern uint32_t guiPathingData[256];

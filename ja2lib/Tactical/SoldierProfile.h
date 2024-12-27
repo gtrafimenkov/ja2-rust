@@ -9,7 +9,7 @@ struct SOLDIERTYPE;
 
 extern int8_t gbSkillTraitBonus[NUM_SKILLTRAITS];
 extern uint8_t gubTerrorists[];
-extern INT16 gsTerroristSector[][5][2];
+extern int16_t gsTerroristSector[][5][2];
 extern BOOLEAN gfPotentialTeamChangeDuringDeath;
 
 extern MERCPROFILESTRUCT gMercProfiles[NUM_PROFILES];
@@ -192,6 +192,6 @@ void MakeRemainingTerroristsTougher(void);
 void MakeRemainingAssassinsTougher(void);
 struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
+BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, int16_t sGridNo);
 
 #endif

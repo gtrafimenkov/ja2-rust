@@ -17,8 +17,8 @@ struct history {
   uint32_t uiIdNumber;   // unique id number
   uint8_t ubSecondCode;  // secondary code
   uint32_t uiDate;       // time in the world in global time
-  INT16 sSectorX;        // sector X this took place in
-  INT16 sSectorY;        // sector Y this took place in
+  int16_t sSectorX;      // sector X this took place in
+  int16_t sSectorY;      // sector Y this took place in
   int8_t bSectorZ;
   uint8_t ubColor;
   struct history *Next;  // next unit in the list
@@ -114,11 +114,11 @@ extern HistoryUnitPtr pHistoryListHead;
 void ResetHistoryFact(uint8_t ubCode, u8 sSectorX, u8 sSectorY);
 
 // set history fact...to allow for a different color for in progress quests
-uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, INT16 sSectorX,
-                        INT16 sSectorY);
+uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, int16_t sSectorX,
+                        int16_t sSectorY);
 
 uint32_t AddHistoryToPlayersLog(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate,
-                                INT16 sSectorX, INT16 sSectorY);
+                                int16_t sSectorX, int16_t sSectorY);
 uint32_t GetTimeQuestWasStarted(uint8_t ubCode);
 
 #endif

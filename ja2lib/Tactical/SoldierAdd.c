@@ -23,11 +23,11 @@
 #include "TileEngine/StructureInternals.h"
 
 // Adds a soldier to a world gridno and set's direction
-void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubDirection,
+void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection,
                               BOOLEAN fUseAnimation, uint16_t usAnimState, uint16_t usAnimCode);
 
 uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState,
-                                               INT16 sSweetGridNo, int8_t ubRadius,
+                                               int16_t sSweetGridNo, int8_t ubRadius,
                                                uint8_t *pubDirection, BOOLEAN fClosestToMerc);
 
 // SO, STEPS IN CREATING A MERC!
@@ -51,14 +51,14 @@ uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uin
 
 // Kris:  modified to actually path from sweetspot to gridno.  Previously, it only checked if the
 // destination was sittable (though it was possible that that location would be trapped.
-uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo, int8_t ubRadius,
-                                 uint8_t *pubDirection) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
+uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
+                                 int8_t ubRadius, uint8_t *pubDirection) {
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
@@ -147,14 +147,14 @@ uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridN
   }
 }
 
-uint16_t FindGridNoFromSweetSpotThroughPeople(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
+uint16_t FindGridNoFromSweetSpotThroughPeople(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
                                               int8_t ubRadius, uint8_t *pubDirection) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
@@ -240,14 +240,14 @@ uint16_t FindGridNoFromSweetSpotThroughPeople(struct SOLDIERTYPE *pSoldier, INT1
 // Kris:  modified to actually path from sweetspot to gridno.  Previously, it only checked if the
 // destination was sittable (though it was possible that that location would be trapped.
 uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState,
-                                               INT16 sSweetGridNo, int8_t ubRadius,
+                                               int16_t sSweetGridNo, int8_t ubRadius,
                                                uint8_t *pubDirection, BOOLEAN fClosestToMerc) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, cnt3;
-  INT16 sGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, cnt3;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
@@ -339,7 +339,7 @@ uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uin
           // Check each struct in each direction
           for (cnt3 = 0; cnt3 < 8; cnt3++) {
             if (OkayToAddStructureToWorld(
-                    (INT16)sGridNo, pSoldier->bLevel,
+                    (int16_t)sGridNo, pSoldier->bLevel,
                     &(pStructureFileRef->pDBStructureRef[gOneCDirection[cnt3]]),
                     usOKToAddStructID)) {
               fDirectionFound = TRUE;
@@ -383,14 +383,14 @@ uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uin
 }
 
 uint16_t FindGridNoFromSweetSpotWithStructDataUsingGivenDirectionFirst(
-    struct SOLDIERTYPE *pSoldier, uint16_t usAnimState, INT16 sSweetGridNo, int8_t ubRadius,
+    struct SOLDIERTYPE *pSoldier, uint16_t usAnimState, int16_t sSweetGridNo, int8_t ubRadius,
     uint8_t *pubDirection, BOOLEAN fClosestToMerc, int8_t bGivenDirection) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, cnt3;
-  INT16 sGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, cnt3;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
@@ -481,7 +481,7 @@ uint16_t FindGridNoFromSweetSpotWithStructDataUsingGivenDirectionFirst(
 
           // OK, check the perfered given direction first
           if (OkayToAddStructureToWorld(
-                  (INT16)sGridNo, pSoldier->bLevel,
+                  (int16_t)sGridNo, pSoldier->bLevel,
                   &(pStructureFileRef->pDBStructureRef[gOneCDirection[bGivenDirection]]),
                   usOKToAddStructID)) {
             fDirectionFound = TRUE;
@@ -491,7 +491,7 @@ uint16_t FindGridNoFromSweetSpotWithStructDataUsingGivenDirectionFirst(
             for (cnt3 = 0; cnt3 < 8; cnt3++) {
               if (cnt3 != bGivenDirection) {
                 if (OkayToAddStructureToWorld(
-                        (INT16)sGridNo, pSoldier->bLevel,
+                        (int16_t)sGridNo, pSoldier->bLevel,
                         &(pStructureFileRef->pDBStructureRef[gOneCDirection[cnt3]]),
                         usOKToAddStructID)) {
                   fDirectionFound = TRUE;
@@ -541,18 +541,18 @@ uint16_t FindGridNoFromSweetSpotWithStructDataFromSoldier(struct SOLDIERTYPE *pS
                                                           uint8_t *pubDirection,
                                                           BOOLEAN fClosestToMerc,
                                                           struct SOLDIERTYPE *pSrcSoldier) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, cnt3;
-  INT16 sGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, cnt3;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   uint8_t ubSaveNPCAPBudget;
   uint8_t ubSaveNPCDistLimit;
   uint8_t ubBestDirection = 0;
-  INT16 sSweetGridNo;
+  int16_t sSweetGridNo;
   struct SOLDIERTYPE soldier;
 
   sSweetGridNo = pSrcSoldier->sGridNo;
@@ -628,7 +628,7 @@ uint16_t FindGridNoFromSweetSpotWithStructDataFromSoldier(struct SOLDIERTYPE *pS
             // Check each struct in each direction
             for (cnt3 = 0; cnt3 < 8; cnt3++) {
               if (OkayToAddStructureToWorld(
-                      (INT16)sGridNo, pSoldier->bLevel,
+                      (int16_t)sGridNo, pSoldier->bLevel,
                       &(pStructureFileRef->pDBStructureRef[gOneCDirection[cnt3]]),
                       usOKToAddStructID)) {
                 fDirectionFound = TRUE;
@@ -677,14 +677,15 @@ uint16_t FindGridNoFromSweetSpotWithStructDataFromSoldier(struct SOLDIERTYPE *pS
   }
 }
 
-uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                                   int8_t ubRadius, uint8_t *pubDirection) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
+uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
+                                                   int16_t sSweetGridNo, int8_t ubRadius,
+                                                   uint8_t *pubDirection) {
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
 
@@ -734,15 +735,15 @@ uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
 }
 
 uint16_t FindGridNoFromSweetSpotExcludingSweetSpotInQuardent(struct SOLDIERTYPE *pSoldier,
-                                                             INT16 sSweetGridNo, int8_t ubRadius,
+                                                             int16_t sSweetGridNo, int8_t ubRadius,
                                                              uint8_t *pubDirection,
                                                              int8_t ubQuardentDir) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = -1;
+  int16_t sLowestGridNo = -1;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
 
@@ -796,10 +797,10 @@ uint16_t FindGridNoFromSweetSpotExcludingSweetSpotInQuardent(struct SOLDIERTYPE 
   }
 }
 
-BOOLEAN CanSoldierReachGridNoInGivenTileLimit(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
-                                              INT16 sMaxTiles, int8_t bLevel) {
+BOOLEAN CanSoldierReachGridNoInGivenTileLimit(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                              int16_t sMaxTiles, int8_t bLevel) {
   INT32 iNumTiles;
-  INT16 sActionGridNo;
+  int16_t sActionGridNo;
   uint8_t ubDirection;
 
   if (pSoldier->bLevel != bLevel) {
@@ -826,19 +827,19 @@ BOOLEAN CanSoldierReachGridNoInGivenTileLimit(struct SOLDIERTYPE *pSoldier, INT1
   }
 }
 
-uint16_t FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
+uint16_t FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
                                        int8_t ubRadius, uint8_t *pubDirection) {
-  INT16 sX, sY;
-  INT16 sGridNo;
+  int16_t sX, sY;
+  int16_t sGridNo;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   uint32_t cnt = 0;
   struct SOLDIERTYPE soldier;
   uint8_t ubSaveNPCAPBudget;
   uint8_t ubSaveNPCDistLimit;
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
   uint8_t ubRoomNum;
 
   // Save AI pathing vars.  changing the distlimit restricts how
@@ -921,10 +922,10 @@ uint16_t FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, INT16 sSwee
 }
 
 uint16_t FindRandomGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
-                                                         INT16 sSweetGridNo, int8_t ubRadius,
+                                                         int16_t sSweetGridNo, int8_t ubRadius,
                                                          uint8_t *pubDirection) {
-  INT16 sX, sY;
-  INT16 sGridNo;
+  int16_t sX, sY;
+  int16_t sGridNo;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
   uint32_t cnt = 0;
@@ -968,8 +969,8 @@ BOOLEAN InternalAddSoldierToSector(uint8_t ubID, BOOLEAN fCalculateDirection, BO
                                    uint16_t usAnimState, uint16_t usAnimCode) {
   uint8_t ubDirection, ubCalculatedDirection;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sGridNo;
-  INT16 sExitGridNo;
+  int16_t sGridNo;
+  int16_t sExitGridNo;
 
   pSoldier = MercPtrs[ubID];
 
@@ -1091,11 +1092,11 @@ BOOLEAN AddSoldierToSectorNoCalculateDirectionUseAnimation(uint8_t ubID, uint16_
   return (InternalAddSoldierToSector(ubID, FALSE, TRUE, usAnimState, usAnimCode));
 }
 
-void InternalSoldierInSectorSleep(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+void InternalSoldierInSectorSleep(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                   BOOLEAN fDoTransition) {
-  INT16 sWorldX, sWorldY;
+  int16_t sWorldX, sWorldY;
   uint8_t ubNewDirection;
-  INT16 sGoodGridNo;
+  int16_t sGoodGridNo;
   uint16_t usAnim = SLEEPING;
 
   if (!pSoldier->bInSector) {
@@ -1131,10 +1132,10 @@ void InternalSoldierInSectorSleep(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   }
 }
 
-void SoldierInSectorIncompaciated(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
+void SoldierInSectorIncompaciated(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
   uint8_t ubNewDirection;
-  INT16 sGoodGridNo;
+  int16_t sGoodGridNo;
 
   if (!pSoldier->bInSector) {
     return;
@@ -1158,16 +1159,16 @@ void SoldierInSectorIncompaciated(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 }
 
 /*
-void SoldierInSectorSleep( struct SOLDIERTYPE *pSoldier, INT16 sGridNo )
+void SoldierInSectorSleep( struct SOLDIERTYPE *pSoldier, int16_t sGridNo )
 {
         InternalSoldierInSectorSleep( pSoldier, sGridNo, TRUE );
 }
 */
 
-void SoldierInSectorPatient(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
+void SoldierInSectorPatient(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
   uint8_t ubNewDirection;
-  INT16 sGoodGridNo;
+  int16_t sGoodGridNo;
 
   if (!pSoldier->bInSector) {
     return;
@@ -1194,10 +1195,10 @@ void SoldierInSectorPatient(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 }
 
-void SoldierInSectorDoctor(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
+void SoldierInSectorDoctor(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
   uint8_t ubNewDirection;
-  INT16 sGoodGridNo;
+  int16_t sGoodGridNo;
 
   if (!pSoldier->bInSector) {
     return;
@@ -1224,10 +1225,10 @@ void SoldierInSectorDoctor(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 }
 
-void SoldierInSectorRepair(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
+void SoldierInSectorRepair(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
   uint8_t ubNewDirection;
-  INT16 sGoodGridNo;
+  int16_t sGoodGridNo;
 
   if (!pSoldier->bInSector) {
     return;
@@ -1258,10 +1259,10 @@ extern void EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination(
     struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos, BOOLEAN fUpdateDest,
     BOOLEAN fUpdateFinalDest);
 
-void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t ubDirection,
+void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubDirection,
                               BOOLEAN fUseAnimation, uint16_t usAnimState, uint16_t usAnimCode) {
-  INT16 sWorldX, sWorldY;
-  INT16 sNewGridNo;
+  int16_t sWorldX, sWorldY;
+  int16_t sNewGridNo;
   uint8_t ubNewDirection;
   uint8_t ubInsertionCode;
   BOOLEAN fUpdateFinalPosition = TRUE;
@@ -1479,7 +1480,7 @@ BOOLEAN IsMercOnTeamAndInOmertaAlreadyAndAlive(uint8_t ubMercID) {
 }
 
 // GetSoldierIDFromMercID() Gets the Soldier ID from the Merc Profile ID, else returns -1
-INT16 GetSoldierIDFromMercID(uint8_t ubMercID) {
+int16_t GetSoldierIDFromMercID(uint8_t ubMercID) {
   uint16_t cnt;
   uint8_t ubLastTeamID;
   struct SOLDIERTYPE *pTeamSoldier;

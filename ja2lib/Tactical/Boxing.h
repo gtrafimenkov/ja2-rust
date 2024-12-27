@@ -17,7 +17,7 @@ struct SOLDIERTYPE;
 
 typedef enum { BOXER_OUT_OF_RING, NON_BOXER_IN_RING, BAD_ATTACK } DisqualificationReasons;
 
-extern INT16 gsBoxerGridNo[NUM_BOXERS];
+extern int16_t gsBoxerGridNo[NUM_BOXERS];
 extern uint8_t gubBoxerID[NUM_BOXERS];
 extern BOOLEAN gfBoxerFought[NUM_BOXERS];
 extern int8_t gbBoxingState;

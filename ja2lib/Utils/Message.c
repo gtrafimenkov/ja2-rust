@@ -392,8 +392,8 @@ void ScrollString() {
         if (gpDisplayList[cnt] != NULL) {
           SetStringVideoOverlayPosition(
               gpDisplayList[cnt], X_START,
-              (INT16)((Y_START - ((cnt)*GetFontHeight(SMALLFONT1))) -
-                      (INT16)(WIDTH_BETWEEN_NEW_STRINGS * (iNumberOfNewStrings))));
+              (int16_t)((Y_START - ((cnt)*GetFontHeight(SMALLFONT1))) -
+                        (int16_t)(WIDTH_BETWEEN_NEW_STRINGS * (iNumberOfNewStrings))));
 
           // start of new string, increment count of new strings, for spacing purposes
           if (gpDisplayList[cnt]->fBeginningOfNewString == TRUE) {
@@ -876,7 +876,7 @@ void AddStringToMapScreenMessageList(STR16 pString, uint16_t usColor, uint32_t u
 void DisplayStringsInMapScreenMessageList(void) {
   uint8_t ubCurrentStringIndex;
   uint8_t ubLinesPrinted;
-  INT16 sY;
+  int16_t sY;
   uint16_t usSpacing;
 
   SetFontDestBuffer(FRAME_BUFFER, 17, 360 + 6, 407, 360 + 101, FALSE);
@@ -1591,8 +1591,8 @@ fBeginningOfNewString ) )
                         ubCounter++;
                 }
                 // execute text box
-                ExecuteTacticalTextBoxForLastQuote( ( INT16 )( ( 640 - gusSubtitleBoxWidth ) / 2 ),
-sString );
+                ExecuteTacticalTextBoxForLastQuote( ( int16_t )( ( 640 - gusSubtitleBoxWidth ) / 2
+), sString );
         }
 
         return;

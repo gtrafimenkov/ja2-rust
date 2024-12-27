@@ -8,7 +8,7 @@ void Add5X5Pit(INT32 iMapIndex);
 void Remove3X3Pit(INT32 iMapIndex);
 void Remove5X5Pit(INT32 iMapIndex);
 
-void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sRadius);
+void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(int16_t sGridNo, int16_t sRadius);
 
 void AddAllPits();
 void RemoveAllPits();

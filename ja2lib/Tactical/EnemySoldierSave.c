@@ -78,7 +78,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   uint16_t usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -268,7 +268,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
 
             curr->pBasicPlacement->bPatrolCnt = curr->pDetailedPlacement->bPatrolCnt;
             memcpy(curr->pBasicPlacement->sPatrolGrid, curr->pDetailedPlacement->sPatrolGrid,
-                   sizeof(INT16) * curr->pBasicPlacement->bPatrolCnt);
+                   sizeof(int16_t) * curr->pBasicPlacement->bPatrolCnt);
 
             FileMan_Read(hfile, &usCheckSum, 2, &uiNumBytesRead);
             if (uiNumBytesRead != 2) {
@@ -479,7 +479,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
           // Copy patrol points
           curr->pDetailedPlacement->bPatrolCnt = pSoldier->bPatrolCnt;
           memcpy(curr->pDetailedPlacement->sPatrolGrid, pSoldier->usPatrolGrid,
-                 sizeof(INT16) * MAXPATROLGRIDS);
+                 sizeof(int16_t) * MAXPATROLGRIDS);
 
           // copy colors for soldier based on the body type.
           memcpy(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
@@ -675,7 +675,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   uint16_t usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -904,7 +904,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 
           curr->pBasicPlacement->bPatrolCnt = curr->pDetailedPlacement->bPatrolCnt;
           memcpy(curr->pBasicPlacement->sPatrolGrid, curr->pDetailedPlacement->sPatrolGrid,
-                 sizeof(INT16) * curr->pBasicPlacement->bPatrolCnt);
+                 sizeof(int16_t) * curr->pBasicPlacement->bPatrolCnt);
 
           FileMan_Read(hfile, &usCheckSum, 2, &uiNumBytesRead);
           if (uiNumBytesRead != 2) {
@@ -1043,7 +1043,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   uint32_t uiTimeStamp;
   uint32_t uiTimeSinceLastLoaded;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   uint16_t usCheckSum, usFileCheckSum;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
@@ -1204,7 +1204,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 
             curr->pBasicPlacement->bPatrolCnt = curr->pDetailedPlacement->bPatrolCnt;
             memcpy(curr->pBasicPlacement->sPatrolGrid, curr->pDetailedPlacement->sPatrolGrid,
-                   sizeof(INT16) * curr->pBasicPlacement->bPatrolCnt);
+                   sizeof(int16_t) * curr->pBasicPlacement->bPatrolCnt);
 
             FileMan_Read(hfile, &usCheckSum, 2, &uiNumBytesRead);
             if (uiNumBytesRead != 2) {
@@ -1419,7 +1419,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, int8_
             // Copy patrol points
             curr->pDetailedPlacement->bPatrolCnt = pSoldier->bPatrolCnt;
             memcpy(curr->pDetailedPlacement->sPatrolGrid, pSoldier->usPatrolGrid,
-                   sizeof(INT16) * MAXPATROLGRIDS);
+                   sizeof(int16_t) * MAXPATROLGRIDS);
 
             // copy colors for soldier based on the body type.
             memcpy(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
@@ -1600,7 +1600,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   uint32_t uiNumBytesRead;
   uint32_t uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   uint16_t usCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -1806,7 +1806,8 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
 
                                             curr->pBasicPlacement->bPatrolCnt			=
        curr->pDetailedPlacement->bPatrolCnt; memcpy( curr->pBasicPlacement->sPatrolGrid,
-       curr->pDetailedPlacement->sPatrolGrid, sizeof( INT16 ) * curr->pBasicPlacement->bPatrolCnt );
+       curr->pDetailedPlacement->sPatrolGrid, sizeof( int16_t ) * curr->pBasicPlacement->bPatrolCnt
+       );
 
                                             FileMan_Read( hfile, &usCheckSum, 2, &uiNumBytesRead );
                                             if( uiNumBytesRead != 2 )

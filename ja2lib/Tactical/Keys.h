@@ -57,7 +57,7 @@ typedef struct {
 #define DOOR_PERCEIVED_UNTRAPPED 2
 
 typedef struct {
-  INT16 sGridNo;
+  int16_t sGridNo;
   BOOLEAN fLocked;           // is the door locked
   uint8_t ubTrapLevel;       // difficulty of finding the trap, 0-10
   uint8_t ubTrapID;          // the trap type (0 is no trap)
@@ -99,7 +99,7 @@ typedef struct {
 #define DONTSETDOORSTATUS 2
 
 typedef struct {
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubFlags;
 
 } DOOR_STATUS;
@@ -189,16 +189,16 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile();
 //  if the door already exists, nothing happens
 // fOpen is True if the door is to be initially open, false if it is closed
 // fInitiallyPercieveOpen is true if the door is to be initially open, else false
-BOOLEAN ModifyDoorStatus(INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen);
+BOOLEAN ModifyDoorStatus(int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen);
 
 // Deletes the door status array
 void TrashDoorStatusArray();
 
 // Returns true if the door is open, otherwise false
-BOOLEAN IsDoorOpen(INT16 sGridNo);
+BOOLEAN IsDoorOpen(int16_t sGridNo);
 
 // Returns true if the door is perceioved as open
-BOOLEAN IsDoorPerceivedOpen(INT16 sGridNo);
+BOOLEAN IsDoorPerceivedOpen(int16_t sGridNo);
 
 // Saves the Door Status array to the MapTempfile
 BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
@@ -207,10 +207,10 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile();
 
 // Modify the Doors open status
-BOOLEAN SetDoorOpenStatus(INT16 sGridNo, BOOLEAN fOpen);
+BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen);
 
 // Modify the doors perceived open status
-BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen);
+BOOLEAN SetDoorPerceivedOpenStatus(int16_t sGridNo, BOOLEAN fPerceivedOpen);
 
 // Save the key table to the saved game file
 BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile);
@@ -219,11 +219,11 @@ BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadKeyTableFromSaveedGameFile(HWFILE hFile);
 
 // Returns a doors status value, NULL if not found
-DOOR_STATUS *GetDoorStatus(INT16 sGridNo);
+DOOR_STATUS *GetDoorStatus(int16_t sGridNo);
 
-BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo);
+BOOLEAN UpdateDoorStatusPerceivedValue(int16_t sGridNo);
 
-BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue);
+BOOLEAN AllMercsLookForDoor(int16_t sGridNo, BOOLEAN fUpdateValue);
 
 BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue);
 
@@ -237,9 +237,10 @@ void ExamineDoorsOnEnteringSector();
 
 void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded();
 
-void AttachStringToDoor(INT16 sGridNo);
+void AttachStringToDoor(int16_t sGridNo);
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t bLevel, int8_t bVisible,
-                       BOOLEAN fAddToDropList, INT32 iDropListSlot, BOOLEAN fUseUnLoaded);
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
+                       int8_t bVisible, BOOLEAN fAddToDropList, INT32 iDropListSlot,
+                       BOOLEAN fUseUnLoaded);
 
 #endif

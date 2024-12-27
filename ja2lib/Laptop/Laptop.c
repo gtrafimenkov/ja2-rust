@@ -614,28 +614,28 @@ void GetLaptopKeyboardInput() {
     // HOOK INTO MOUSE HOOKS
     switch (InputEvent.usEvent) {
       case LEFT_BUTTON_DOWN:
-        MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_UP:
-        MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
-        MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
 
@@ -2803,7 +2803,7 @@ void DisplayBookMarks(void) {
   // load images
   struct VObject *hLapTopIconHandle;
   // laptop icons
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // check if we are maximizing or minimizing.. if so, do not display
   if ((fMaximizingProgram == TRUE) || (fMinizingProgram == TRUE)) {
@@ -2929,7 +2929,7 @@ void DeleteBookmark() {
 
 void ScrollDisplayText(INT32 iY) {
   static INT32 iBaseTime = 0;
-  static INT16 sCurX;
+  static int16_t sCurX;
 
   // if we are just enetering, set basetime to current clock value
   if (iBaseTime == 0) iBaseTime = GetJA2Clock();
@@ -2965,9 +2965,9 @@ void CreateBookMarkMouseRegions() {
   // creates regions based on number of entries
   while (LaptopSaveInfo.iBookMarkList[iCounter] != -1) {
     MSYS_DefineRegion(
-        &gBookmarkMouseRegions[iCounter], (INT16)BOOK_X,
+        &gBookmarkMouseRegions[iCounter], (int16_t)BOOK_X,
         (uint16_t)(BOOK_TOP_Y + ((iCounter + 1) * (BOOK_HEIGHT + 6)) + 6), BOOK_X + BOOK_WIDTH,
-        (INT16)(BOOK_TOP_Y + ((iCounter + 2) * (BOOK_HEIGHT + 6)) + 6), MSYS_PRIORITY_HIGHEST - 2,
+        (int16_t)(BOOK_TOP_Y + ((iCounter + 2) * (BOOK_HEIGHT + 6)) + 6), MSYS_PRIORITY_HIGHEST - 2,
         CURSOR_LAPTOP_SCREEN, BookmarkMvtCallBack, BookmarkCallBack);
     // MSYS_AddRegion(&gBookmarkMouseRegions[iCounter]);
     MSYS_SetRegionUserData(&gBookmarkMouseRegions[iCounter], 0, iCounter);
@@ -2982,9 +2982,9 @@ void CreateBookMarkMouseRegions() {
   // now add one more
   // for the cancel button
   MSYS_DefineRegion(
-      &gBookmarkMouseRegions[iCounter], (INT16)BOOK_X,
+      &gBookmarkMouseRegions[iCounter], (int16_t)BOOK_X,
       (uint16_t)(BOOK_TOP_Y + ((iCounter + 1) * (BOOK_HEIGHT + 6)) + 6), BOOK_X + BOOK_WIDTH,
-      (INT16)(BOOK_TOP_Y + ((iCounter + 2) * (BOOK_HEIGHT + 6)) + 6), MSYS_PRIORITY_HIGHEST - 2,
+      (int16_t)(BOOK_TOP_Y + ((iCounter + 2) * (BOOK_HEIGHT + 6)) + 6), MSYS_PRIORITY_HIGHEST - 2,
       CURSOR_LAPTOP_SCREEN, BookmarkMvtCallBack, BookmarkCallBack);
   // MSYS_AddRegion(&gBookmarkMouseRegions[iCounter]);
   MSYS_SetRegionUserData(&gBookmarkMouseRegions[iCounter], 0, iCounter);
@@ -3217,7 +3217,7 @@ BOOLEAN DisplayLoadPending(void) {
   struct VObject *hLapTopIconHandle;
   INT32 iLoadTime;
   INT32 iUnitTime;
-  INT16 sXPosition = 0, sYPosition = 0;
+  int16_t sXPosition = 0, sYPosition = 0;
 
   // if merc webpage, make it longer
   // TEMP disables the loadpending
@@ -3552,7 +3552,7 @@ void ShouldNewMailBeDisplayed() {
 void DisplayPlayersBalanceToDate(void) {
   // print players balance to date
   CHAR16 sString[100];
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // initialize string
   memset(sString, 0, sizeof(sString));
@@ -3570,8 +3570,8 @@ void DisplayPlayersBalanceToDate(void) {
   InsertDollarSignInToString(sString);
 
   // get center
-  FindFontCenterCoordinates((INT16)LAPTOP_ICON_TEXT_X, 0, (INT16)(LAPTOP_ICON_TEXT_WIDTH),
-                            (INT16)(LAPTOP_ICON_TEXT_HEIGHT), sString, LAPTOPICONFONT, &sX, &sY);
+  FindFontCenterCoordinates((int16_t)LAPTOP_ICON_TEXT_X, 0, (int16_t)(LAPTOP_ICON_TEXT_WIDTH),
+                            (int16_t)(LAPTOP_ICON_TEXT_HEIGHT), sString, LAPTOPICONFONT, &sX, &sY);
   //	gprintfdirty( sX , LAPTOP_ICON_TEXT_FINANCIAL_Y + 10, sString );
   // printf it!
   if (ButtonList[gLaptopButton[5]]->uiFlags & BUTTON_CLICKED_ON) {
@@ -3829,7 +3829,7 @@ BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, STR16 pTitle,
 BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t usTopLeftX,
                                        uint16_t usTopLeftY, uint16_t usTopRightX) {
   static int8_t ubCount;
-  INT16 sPosX, sPosY, sPosRightX, sPosBottomY, sWidth, sHeight;
+  int16_t sPosX, sPosY, sPosRightX, sPosBottomY, sWidth, sHeight;
   SGPRect SrcRect;
   SGPRect DestRect;
   static SGPRect LastRect;
@@ -3847,14 +3847,14 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t
   }
 
   dTemp = (LAPTOP_TITLE_BAR_TOP_LEFT_X - usTopLeftX) / (FLOAT)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
-  sPosX = (INT16)(usTopLeftX + dTemp * ubCount);
+  sPosX = (int16_t)(usTopLeftX + dTemp * ubCount);
 
   dTemp =
       (LAPTOP_TITLE_BAR_TOP_RIGHT_X - usTopRightX) / (FLOAT)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
-  sPosRightX = (INT16)(usTopRightX + dTemp * ubCount);
+  sPosRightX = (int16_t)(usTopRightX + dTemp * ubCount);
 
   dTemp = (LAPTOP_TITLE_BAR_TOP_LEFT_Y - usTopLeftY) / (FLOAT)NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS;
-  sPosY = (INT16)(usTopLeftY + dTemp * ubCount);
+  sPosY = (int16_t)(usTopLeftY + dTemp * ubCount);
 
   sPosBottomY = LAPTOP_TITLE_BAR_HEIGHT;
 
@@ -5170,7 +5170,7 @@ void DisplayWebBookMarkNotify(void) {
     SetFontShadow(NO_SHADOW);
 
     // now draw the message
-    DisplayWrappedString((INT16)(DOWN_STRING_X - 42), (uint16_t)(DOWN_STRING_Y + 20),
+    DisplayWrappedString((int16_t)(DOWN_STRING_X - 42), (uint16_t)(DOWN_STRING_Y + 20),
                          BOOK_WIDTH + 45, 2, BOOK_FONT, FONT_BLACK, pShowBookmarkString[1],
                          FONT_BLACK, FALSE, CENTER_JUSTIFIED);
 

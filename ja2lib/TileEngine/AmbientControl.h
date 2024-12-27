@@ -13,7 +13,7 @@ void StopAmbients();
 void DeleteAllAmbients();
 
 extern AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
-extern INT16 gsNumAmbData;
+extern int16_t gsNumAmbData;
 
 BOOLEAN SetSteadyStateAmbience(uint8_t ubAmbience);
 

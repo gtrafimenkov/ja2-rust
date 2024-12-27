@@ -25,7 +25,7 @@
 
 #define NUM_MOUSE_LEVELS 2
 
-INT16 gsMouseGlobalYOffsets[NUM_MOUSE_LEVELS] = {0, 50};
+int16_t gsMouseGlobalYOffsets[NUM_MOUSE_LEVELS] = {0, 50};
 
 void UpdateFlashingCursorFrames(uint32_t uiCursorIndex);
 
@@ -4701,7 +4701,7 @@ void BltJA2CursorData() {
 
 void DrawMouseText() {
   CHAR16 pStr[512];
-  INT16 sX, sY;
+  int16_t sX, sY;
   static BOOLEAN fShow = FALSE;
   static BOOLEAN fHoldInvalid = TRUE;
 

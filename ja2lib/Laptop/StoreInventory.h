@@ -25,11 +25,11 @@ enum {
 };
 
 extern uint8_t StoreInventory[MAXITEMS][BOBBY_RAY_LISTS];
-extern INT16 WeaponROF[MAX_WEAPONS];
+extern int16_t WeaponROF[MAX_WEAPONS];
 
 void SetupStoreInventory(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed);
 BOOLEAN DoesGunOfSameClassExistInInventory(uint8_t ubItemIndex, uint8_t ubDealerID);
 STORE_INVENTORY *GetPtrToStoreInventory(uint8_t ubDealerID);
-// INT16	CountNumberOfItemsInStoreInventory( uint8_t ubArmsDealerID );
+// int16_t	CountNumberOfItemsInStoreInventory( uint8_t ubArmsDealerID );
 
 #endif

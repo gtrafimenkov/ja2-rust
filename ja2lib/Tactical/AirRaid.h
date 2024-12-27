@@ -9,9 +9,9 @@ struct SOLDIERTYPE;
 #define AIR_RAID_CAN_RANDOMIZE_TEASE_DIVES 0x00000002
 
 typedef struct {
-  INT16 sSectorX;
-  INT16 sSectorY;
-  INT16 sSectorZ;
+  int16_t sSectorX;
+  int16_t sSectorY;
+  int16_t sSectorZ;
   int8_t bIntensity;
   uint32_t uiFlags;
   uint8_t ubNumMinsFromCurrentTime;

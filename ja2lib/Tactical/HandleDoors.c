@@ -37,10 +37,10 @@
 
 BOOLEAN gfSetPerceivedDoorState = FALSE;
 
-BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure, BOOLEAN fNoAnimations);
 
-void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                 BOOLEAN fNoAnimations) {
   struct STRUCTURE *pStructure;
   DOOR_STATUS *pDoorStatus;
@@ -354,10 +354,10 @@ void ProcessImplicationsOfPCMessingWithDoor(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure) {
   BOOLEAN fHandleDoor = FALSE;
-  INT16 sAPCost = 0, sBPCost = 0;
+  int16_t sAPCost = 0, sBPCost = 0;
   DOOR *pDoor;
   BOOLEAN fTrapFound = FALSE;
   BOOLEAN fDoAction = TRUE;
@@ -808,7 +808,7 @@ BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   return (fHandleDoor);
 }
 
-BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure, BOOLEAN fNoAnimations) {
   struct LEVELNODE *pNode;
   INT32 cnt;
@@ -872,7 +872,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
   if (!(pStructure->fFlags & STRUCTURE_OPEN)) {
     // ATE, the last parameter is the perceived value, I dont know what it is so could you please
-    // add the value? ModifyDoorStatus( INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fPercievedOpen )
+    // add the value? ModifyDoorStatus( int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fPercievedOpen )
     if (gfSetPerceivedDoorState) {
       ModifyDoorStatus(sGridNo, TRUE, TRUE);
     } else {
@@ -973,7 +973,8 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
   } else {
     // ATE, the last parameter is the perceived value, I dont know what it is so could you please
-    // add the value? ModifyDoorStatus( INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen
+    // add the value? ModifyDoorStatus( int16_t sGridNo, BOOLEAN fOpen, BOOLEAN
+    // fInitiallyPercieveOpen
     // )
 
     if (gfSetPerceivedDoorState) {
@@ -1086,7 +1087,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   return (fDoAnimation);
 }
 
-void SetDoorString(INT16 sGridNo) {
+void SetDoorString(int16_t sGridNo) {
   DOOR *pDoor;
   DOOR_STATUS *pDoorStatus;
   struct STRUCTURE *pStructure;

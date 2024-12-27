@@ -135,12 +135,12 @@ BOOLEAN DoesItemAppearInDealerInventoryList(uint8_t ubArmsDealer, uint16_t usIte
 BOOLEAN LoadIncompleteArmsDealersStatus(HWFILE hFile, BOOLEAN fIncludesElgin,
                                         BOOLEAN fIncludesManny);
 
-// INT16 GetSpecialItemFromArmsDealerInventory( uint8_t ubArmsDealer, uint16_t usItemIndex,
+// int16_t GetSpecialItemFromArmsDealerInventory( uint8_t ubArmsDealer, uint16_t usItemIndex,
 // SPECIAL_ITEM_INFO *pSpclItemInfo );
 
 void GuaranteeMinimumAlcohol(uint8_t ubArmsDealer);
 
-BOOLEAN ItemIsARocketRifle(INT16 sItemIndex);
+BOOLEAN ItemIsARocketRifle(int16_t sItemIndex);
 
 BOOLEAN GetArmsDealerShopHours(uint8_t ubArmsDealer, uint32_t *puiOpeningTime,
                                uint32_t *puiClosingTime);
@@ -912,7 +912,7 @@ BOOLEAN DoesDealerDoRepairs(uint8_t ubArmsDealer) {
 }
 
 /*
-INT16 GetSpecialItemFromArmsDealerInventory( uint8_t ubArmsDealer, uint16_t usItemIndex,
+int16_t GetSpecialItemFromArmsDealerInventory( uint8_t ubArmsDealer, uint16_t usItemIndex,
 SPECIAL_ITEM_INFO *pSpclItemInfo )
 {
         uint8_t ubElement;
@@ -2085,7 +2085,7 @@ uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemInde
                                        int8_t bItemCondition) {
   uint32_t uiItemCost = 0;
   uint32_t uiRepairCost = 0;
-  INT16 sRepairCostAdj = 0;
+  int16_t sRepairCostAdj = 0;
   //	uint32_t	uiDifFrom10=0;
 
   // figure out the full value of the item, modified by this dealer's personal Sell (i.e. repair
@@ -2389,7 +2389,7 @@ void GuaranteeMinimumAlcohol(uint8_t ubArmsDealer) {
                                 (uint8_t)(GetDealersMaxItemAmount(ubArmsDealer, ALCOHOL) / 3));
 }
 
-BOOLEAN ItemIsARocketRifle(INT16 sItemIndex) {
+BOOLEAN ItemIsARocketRifle(int16_t sItemIndex) {
   if ((sItemIndex == ROCKET_RIFLE) || (sItemIndex == AUTO_ROCKET_RIFLE)) {
     return (TRUE);
   } else {

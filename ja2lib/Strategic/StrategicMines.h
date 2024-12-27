@@ -54,8 +54,8 @@ enum {
 
 // the strategic mine structures
 typedef struct MINE_LOCATION_TYPE {
-  INT16 sSectorX;          // x value of sector mine is in
-  INT16 sSectorY;          // y value of sector mine is in
+  int16_t sSectorX;        // x value of sector mine is in
+  int16_t sSectorY;        // y value of sector mine is in
   int8_t bAssociatedTown;  // associated town of this mine
 
 } MINE_LOCATION_TYPE;
@@ -134,16 +134,16 @@ uint32_t PredictDailyIncomeFromAMine(int8_t bMineIndex);
 INT32 CalcMaxPlayerIncomeFromMines(void);
 
 // get index value of this mine in the mine list
-int8_t GetMineIndexForSector(INT16 sX, INT16 sY);
+int8_t GetMineIndexForSector(int16_t sX, int16_t sY);
 
 // get the index of the mine associated with this town
 int8_t GetMineIndexForTown(TownID bTownId);
 
 // get the sector value for the mine associated with this town
-INT16 GetMineSectorForTown(TownID bTownId);
+int16_t GetMineSectorForTown(TownID bTownId);
 
 // is there a mine here?
-BOOLEAN IsThereAMineInThisSector(INT16 sX, INT16 sY);
+BOOLEAN IsThereAMineInThisSector(int16_t sX, int16_t sY);
 
 // Save the mine status to the save game file
 BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile);
@@ -164,7 +164,7 @@ uint8_t GetHeadMinerIndexForMine(int8_t bMineIndex);
 uint16_t GetHeadMinerProfileIdForMine(int8_t bMineIndex);
 
 // Find the sector location of a mine
-void GetMineSector(uint8_t ubMineIndex, INT16* psX, INT16* psY);
+void GetMineSector(uint8_t ubMineIndex, int16_t* psX, int16_t* psY);
 
 void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType);
 

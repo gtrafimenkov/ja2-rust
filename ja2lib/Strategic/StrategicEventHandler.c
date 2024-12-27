@@ -31,7 +31,7 @@
 #define MEDUNA_ITEM_DROP_OFF_SECTOR_Y 14
 #define MEDUNA_ITEM_DROP_OFF_SECTOR_Z 0
 
-extern INT16 gsRobotGridNo;
+extern int16_t gsRobotGridNo;
 
 uint32_t guiPabloExtraDaysBribed = 0;
 
@@ -332,7 +332,7 @@ void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
 void HandleDelayedItemsArrival(uint32_t uiReason) {
   // This function moves all the items that Pablos has stolen
   // (or items that were delayed) to the arrival location for new shipments,
-  INT16 sStartGridNo;
+  int16_t sStartGridNo;
   uint32_t uiNumWorldItems, uiLoop;
   BOOLEAN fOk;
   WORLDITEM *pTemp;

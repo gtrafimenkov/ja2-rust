@@ -189,7 +189,8 @@ void RemoveTextMercPopupImages() {
   return;
 }
 
-BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, uint32_t uiBuffer) {
+BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, int16_t sDestX, int16_t sDestY,
+                                    uint32_t uiBuffer) {
   // set the current box
   if (SetCurrentPopUpBox(iBoxId) == FALSE) {
     return (FALSE);
@@ -199,7 +200,7 @@ BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, ui
   return (RenderMercPopupBox(sDestX, sDestY, uiBuffer));
 }
 
-BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, uint32_t uiBuffer) {
+BOOLEAN RenderMercPopupBox(int16_t sDestX, int16_t sDestY, uint32_t uiBuffer) {
   //	uint32_t  uiDestPitchBYTES;
   //	uint32_t  uiSrcPitchBYTES;
   //  uint16_t  *pDestBuf;
@@ -230,8 +231,8 @@ BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, uint32_t uiBuffer) {
 
   // Invalidate!
   if (uiBuffer == FRAME_BUFFER) {
-    InvalidateRegion(sDestX, sDestY, (INT16)(sDestX + gPopUpTextBox->sWidth),
-                     (INT16)(sDestY + gPopUpTextBox->sHeight));
+    InvalidateRegion(sDestX, sDestY, (int16_t)(sDestX + gPopUpTextBox->sWidth),
+                     (int16_t)(sDestY + gPopUpTextBox->sHeight));
   }
 
   // unlock the video surfaces
@@ -295,7 +296,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBor
   uint8_t ubFontColor, ubFontShadowColor;
   uint16_t usColorVal;
   uint16_t usLoopEnd;
-  INT16 sDispTextXPos;
+  int16_t sDispTextXPos;
   MercPopUpBox *pPopUpTextBox = NULL;
 
   if (usWidth >= 640) return (-1);
@@ -494,7 +495,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBor
   SetFontDestBuffer(pPopUpTextBox->uiSourceBufferIndex, 0, 0, usWidth, usHeight, FALSE);
 
   // Display the text
-  sDispTextXPos = (INT16)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X + usMarginX));
+  sDispTextXPos = (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X + usMarginX));
 
   if (pPopUpTextBox->uiFlags &
       (MERC_POPUP_PREPARE_FLAGS_STOPICON | MERC_POPUP_PREPARE_FLAGS_SKULLICON)) {
@@ -510,9 +511,10 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBor
     }
 
     // Display the text
-    DisplayWrappedString(
-        sDispTextXPos, (INT16)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)), usTextWidth,
-        2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
+    DisplayWrappedString(sDispTextXPos,
+                         (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)),
+                         usTextWidth, 2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK,
+                         FALSE, LEFT_JUSTIFIED);
 
     // Disable the use of single word wordwrap
     UseSingleCharWordsForWordWrap(FALSE);
@@ -520,9 +522,10 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, uint8_t ubBackgroundIndex, uint8_t ubBor
 #else
   {
     // Display the text
-    DisplayWrappedString(
-        sDispTextXPos, (INT16)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)), usTextWidth,
-        2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
+    DisplayWrappedString(sDispTextXPos,
+                         (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)),
+                         usTextWidth, 2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK,
+                         FALSE, LEFT_JUSTIFIED);
   }
 #endif
 

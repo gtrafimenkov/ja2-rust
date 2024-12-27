@@ -34,7 +34,7 @@ BOOLEAN InitRoomDatabase() {
 
 void ShutdownRoomDatabase() {}
 
-void SetTileRoomNum(INT16 sGridNo, uint8_t ubRoomNum) {
+void SetTileRoomNum(int16_t sGridNo, uint8_t ubRoomNum) {
   // Add to global room list
   gubWorldRoomInfo[sGridNo] = ubRoomNum;
 }
@@ -44,7 +44,7 @@ void SetTileRangeRoomNum(SGPRect *pSelectRegion, uint8_t ubRoomNum) {
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
-      gubWorldRoomInfo[(INT16)MAPROWCOLTOPOS(cnt1, cnt2)] = ubRoomNum;
+      gubWorldRoomInfo[(int16_t)MAPROWCOLTOPOS(cnt1, cnt2)] = ubRoomNum;
     }
   }
 }
@@ -72,8 +72,8 @@ BOOLEAN InAHiddenRoom(uint16_t sGridNo, uint8_t *pubRoomNo) {
 }
 
 // @@ATECLIP TO WORLD!
-void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
-  INT16 sCountX, sCountY;
+void SetRecalculateWireFrameFlagRadius(int16_t sX, int16_t sY, int16_t sRadius) {
+  int16_t sCountX, sCountY;
   uint32_t uiTile;
 
   for (sCountY = sY - sRadius; sCountY < (sY + sRadius + 2); sCountY++) {
@@ -88,7 +88,7 @@ void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
 void SetGridNoRevealedFlag(uint16_t sGridNo) {
   //	uint32_t cnt;
   //  struct ITEM_POOL					*pItemPool;
-  //	INT16							sX, sY;
+  //	int16_t							sX, sY;
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure, *pBase;
 
@@ -117,7 +117,7 @@ void SetGridNoRevealedFlag(uint16_t sGridNo) {
 
   // ATE: If there are any structs here, we can render them with the obscured flag!
   // Look for anything but walls pn this gridno!
-  pStructure = gpWorldLevelData[(INT16)sGridNo].pStructureHead;
+  pStructure = gpWorldLevelData[(int16_t)sGridNo].pStructureHead;
 
   while (pStructure != NULL) {
     if (pStructure->sCubeOffset == STRUCTURE_ON_GROUND ||
@@ -152,7 +152,7 @@ void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo) {
   struct STRUCTURE *pStructure, *pBase;
   uint8_t ubLoop;
   DB_STRUCTURE_TILE **ppTile;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint16_t usIndex;
   BOOLEAN fChanged = FALSE;
 
@@ -208,7 +208,7 @@ void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo) {
 void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSoldier) {
   uint32_t cnt;
   struct ITEM_POOL *pItemPool;
-  INT16 sX, sY;
+  int16_t sX, sY;
   BOOLEAN fSaidItemSeenQuote = FALSE;
 
   //	struct STRUCTURE					*pStructure;//, *pBase;
@@ -221,7 +221,7 @@ void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSol
       RemoveRoofIndexFlagsFromTypeRange(cnt, FIRSTROOF, SECONDSLANTROOF, LEVELNODE_REVEAL);
 
       // Reveal any items if here!
-      if (GetItemPool((INT16)cnt, &pItemPool, 0)) {
+      if (GetItemPool((int16_t)cnt, &pItemPool, 0)) {
         // Set visible! ( only if invisible... )
         if (SetItemPoolVisibilityOn(pItemPool, INVISIBLE, TRUE)) {
           if (!fSaidItemSeenQuote) {
@@ -237,7 +237,7 @@ void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSol
 
       // OK, re-set writeframes ( in a radius )
       // Get XY
-      ConvertGridNoToXY((INT16)cnt, &sX, &sY);
+      ConvertGridNoToXY((int16_t)cnt, &sX, &sY);
       SetRecalculateWireFrameFlagRadius(sX, sY, 2);
     }
   }
@@ -262,7 +262,7 @@ BOOLEAN AddSpecialTileRange(SGPRect *pSelectRegion) {
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
-      AddObjectToHead((INT16)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
+      AddObjectToHead((int16_t)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
     }
   }
 
@@ -274,7 +274,7 @@ BOOLEAN RemoveSpecialTileRange(SGPRect *pSelectRegion) {
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
-      RemoveObject((INT16)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
+      RemoveObject((int16_t)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
     }
   }
 

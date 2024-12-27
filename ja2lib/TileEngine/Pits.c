@@ -48,7 +48,7 @@ void Add3X3Pit(INT32 iMapIndex) {
     AddExitGridToWorld(iMapIndex + 161, &ExitGrid);
     AddExitGridToWorld(iMapIndex + 1, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 159, &ExitGrid);
-    RecompileLocalMovementCostsFromRadius((INT16)iMapIndex, 2);
+    RecompileLocalMovementCostsFromRadius((int16_t)iMapIndex, 2);
   }
 
   MarkWorldDirty();
@@ -113,7 +113,7 @@ void Add5X5Pit(INT32 iMapIndex) {
     AddExitGridToWorld(iMapIndex + 2, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 158, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 318, &ExitGrid);
-    RecompileLocalMovementCostsFromRadius((INT16)iMapIndex, 3);
+    RecompileLocalMovementCostsFromRadius((int16_t)iMapIndex, 3);
   }
   MarkWorldDirty();
   if (!gfEditMode) ApplyMapChangesToMapTempFile(FALSE);
@@ -185,8 +185,8 @@ void RemoveAllPits() {
   }
 }
 
-void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sRadius) {
-  INT16 x, y, sNewGridNo;
+void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(int16_t sGridNo, int16_t sRadius) {
+  int16_t x, y, sNewGridNo;
   uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
@@ -216,10 +216,10 @@ void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sR
 void HandleFallIntoPitFromAnimation(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier = MercPtrs[ubID];
   EXITGRID ExitGrid;
-  INT16 sPitGridNo;
+  int16_t sPitGridNo;
   // OK, get exit grid...
 
-  sPitGridNo = (INT16)pSoldier->uiPendingActionData4;
+  sPitGridNo = (int16_t)pSoldier->uiPendingActionData4;
 
   GetExitGrid(sPitGridNo, &ExitGrid);
 

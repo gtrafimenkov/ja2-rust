@@ -47,25 +47,25 @@ enum {
 // extern int8_t bInternalCritHitsByLocation[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE][
 // NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE ];
 
-extern INT16 sVehicleOrigArmorValues[NUMBER_OF_TYPES_OF_VEHICLES]
-                                    [NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE];
+extern int16_t sVehicleOrigArmorValues[NUMBER_OF_TYPES_OF_VEHICLES]
+                                      [NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE];
 
 // struct for vehicles
 typedef struct {
   struct path *pMercPath;   // vehicle's stategic path list
   uint8_t ubMovementGroup;  // the movement group this vehicle belongs to
   uint8_t ubVehicleType;    // type of vehicle
-  INT16 sSectorX;           // X position on the Stategic Map
-  INT16 sSectorY;           // Y position on the Stategic Map
-  INT16 sSectorZ;
+  int16_t sSectorX;         // X position on the Stategic Map
+  int16_t sSectorY;         // Y position on the Stategic Map
+  int16_t sSectorZ;
   BOOLEAN fBetweenSectors;  // between sectors?
-  INT16 sGridNo;            // location in tactical
+  int16_t sGridNo;          // location in tactical
   struct SOLDIERTYPE *pPassengers[10];
   uint8_t ubDriver;
-  INT16 sInternalHitLocations[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
-  INT16 sArmourType;
-  INT16 sExternalArmorLocationsStatus[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
-  INT16 sCriticalHits[NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE];
+  int16_t sInternalHitLocations[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
+  int16_t sArmourType;
+  int16_t sExternalArmorLocationsStatus[NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE];
+  int16_t sCriticalHits[NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE];
   INT32 iOnSound;
   INT32 iOffSound;
   INT32 iMoveSound;
@@ -90,7 +90,7 @@ extern INT32 iMvtTypes[];
 void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle);
 
 // add vehicle to list and return id value
-INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, uint8_t ubType);
+INT32 AddVehicleToList(int16_t sMapX, int16_t sMapY, int16_t sGridNo, uint8_t ubType);
 
 // remove this vehicle from the list
 BOOLEAN RemoveVehicleFromList(INT32 iId);
@@ -164,7 +164,7 @@ BOOLEAN ExitVehicle(struct SOLDIERTYPE *pSoldier);
 
 void AddPassangersToTeamPanel(INT32 iId);
 
-void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, INT16 sDamage, INT16 sGridNo,
+void VehicleTakeDamage(uint8_t ubID, uint8_t ubReason, int16_t sDamage, int16_t sGridNo,
                        uint8_t ubAttackerID);
 
 // the soldiertype containing this tactical incarnation of this vehicle
@@ -173,10 +173,10 @@ struct SOLDIERTYPE *GetSoldierStructureForVehicle(INT32 iId);
 void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints);
 
 // get orig armor values for vehicle in this location
-// INT16 GetOrigInternalArmorValueForVehicleInLocation( uint8_t ubID, uint8_t ubLocation );
+// int16_t GetOrigInternalArmorValueForVehicleInLocation( uint8_t ubID, uint8_t ubLocation );
 
 // handle crit hit to vehicle in this location
-void HandleCriticalHitForVehicleInLocation(uint8_t ubID, INT16 sDmg, INT16 sGridNo,
+void HandleCriticalHitForVehicleInLocation(uint8_t ubID, int16_t sDmg, int16_t sGridNo,
                                            uint8_t ubAttackerID);
 
 // ste up armor values for this vehicle

@@ -23,7 +23,7 @@ void ReBuildCharactersList(void);
 BOOLEAN HandlePreloadOfMapGraphics(void);
 void HandleRemovalOfPreLoadedMapGraphics(void);
 
-void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, int8_t bMapZ);
+void ChangeSelectedMapSector(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
 
 BOOLEAN CanToggleSelectedCharInventory(void);
 

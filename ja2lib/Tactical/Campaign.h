@@ -34,7 +34,7 @@
 #define TRAINIMPROVERATE 2  // increase to make training mercs improve more
 
 #define SALARY_CHANGE_PER_LEVEL 1.25  // Mercs salary is multiplied by this
-#define MAX_DAILY_SALARY 30000        // must fit into an INT16 (32k)
+#define MAX_DAILY_SALARY 30000        // must fit into an int16_t (32k)
 #define MAX_LARGE_SALARY 500000       // no limit, really
 
 // training cap: you can't train any stat/skill beyond this value
@@ -83,7 +83,7 @@ void HandleAnyStatChangesAfterAttack(void);
 void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType);
 
 void BuildStatChangeString(STR16 wString, size_t bufSize, STR16 wName, BOOLEAN fIncrease,
-                           INT16 sPtsChanged, uint8_t ubStat);
+                           int16_t sPtsChanged, uint8_t ubStat);
 
 void MERCMercWentUpALevelSendEmail(uint8_t ubMercMercIdValue);
 

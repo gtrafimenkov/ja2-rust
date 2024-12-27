@@ -19,7 +19,7 @@ BOOLEAN gfResetInputCheck = FALSE;
 BOOLEAN gfGlobalError = FALSE;
 BOOLEAN fFirstTimeInGameScreen = TRUE;
 uint32_t guiGameCycleCounter = 0;
-INT16 gsCurrentActionPoints = 1;
+int16_t gsCurrentActionPoints = 1;
 
 BOOLEAN SET_ERROR(const char *String, ...) {
   va_list ArgPtr;

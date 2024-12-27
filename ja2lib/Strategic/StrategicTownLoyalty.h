@@ -28,7 +28,7 @@ typedef enum {
 
 typedef struct TOWN_LOYALTY {
   uint8_t ubRating;
-  INT16 sChange;
+  int16_t sChange;
   BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first enters
                      // that town
   uint8_t UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
@@ -70,10 +70,10 @@ void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier);
 BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier);
 
 // handle loyalty adjustments for dmg/destruction of buildings
-void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sPointsDmg);
+void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t sPointsDmg);
 
 // remove random item from this sector
-void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubChance);
+void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubChance);
 
 // get the shortest distance between these two towns via roads
 INT32 GetTownDistances(uint8_t ubTown, uint8_t ubTownA);
@@ -129,7 +129,7 @@ void CheckIfEntireTownHasBeenLost(TownID bTownId, u8 sSectorX, u8 sSectorY);
 void HandleLoyaltyChangeForNPCAction(uint8_t ubNPCProfileId);
 
 BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId);
-void SetTheFirstBattleSector(INT16 sSectorValue);
+void SetTheFirstBattleSector(int16_t sSectorValue);
 
 // gte number of whole towns but exclude this one
 INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude);
@@ -142,7 +142,7 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude);
 #define RETREAT_PBI 1
 #define RETREAT_AUTORESOLVE 2
 void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, u8 sSectorX, u8 sSectorY,
-                                            INT16 sSectorZ);
+                                            int16_t sSectorZ);
 
 void MaximizeLoyaltyForDeidrannaKilled(void);
 

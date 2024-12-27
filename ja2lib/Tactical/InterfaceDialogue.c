@@ -80,8 +80,8 @@
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
 
-INT16 sBasementEnterGridNos[] = {13362, 13363, 13364, 13365, 13525, 13524};
-INT16 sBasementExitGridNos[] = {8047, 8207, 8208, 8048, 7888, 7728, 7727, 7567};
+int16_t sBasementEnterGridNos[] = {13362, 13363, 13364, 13365, 13525, 13524};
+int16_t sBasementExitGridNos[] = {8047, 8207, 8208, 8048, 7888, 7728, 7727, 7567};
 
 extern uint8_t gubWaitingForAllMercsToExitCode;
 extern BOOLEAN fFoundTixa;
@@ -149,15 +149,15 @@ void TalkPanelNameRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason
 void TalkPanelNameRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void DoneTalkingButtonClickCallback(GUI_BUTTON *btn, INT32 reason);
 
-void CalculatePopupTextPosition(INT16 sWidth, INT16 sHeight);
-void CalculatePopupTextOrientation(INT16 sWidth, INT16 sHeight);
+void CalculatePopupTextPosition(int16_t sWidth, int16_t sHeight);
+void CalculatePopupTextOrientation(int16_t sWidth, int16_t sHeight);
 void HandleNPCTrigger();
 BOOLEAN InternalInitiateConversation(struct SOLDIERTYPE *pDestSoldier,
                                      struct SOLDIERTYPE *pSrcSoldier, int8_t bApproach,
                                      uintptr_t uiApproachData);
 
 extern void EndGameMessageBoxCallBack(uint8_t ubExitValue);
-extern INT16 FindNearestOpenableNonDoor(INT16 sStartGridNo);
+extern int16_t FindNearestOpenableNonDoor(int16_t sStartGridNo);
 extern void RecalculateOppCntsDueToBecomingNeutral(struct SOLDIERTYPE *pSoldier);
 
 uint8_t ubTalkMenuApproachIDs[] = {APPROACH_REPEAT,   APPROACH_FRIENDLY, APPROACH_DIRECT,
@@ -317,9 +317,9 @@ BOOLEAN InternalInitiateConversation(struct SOLDIERTYPE *pDestSoldier,
   return (TRUE);
 }
 
-BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, INT16 sGridNo) {
-  INT16 sXMapPos, sYMapPos, sScreenX, sScreenY;
-  INT16 sX, sY;
+BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, int16_t sGridNo) {
+  int16_t sXMapPos, sYMapPos, sScreenX, sScreenY;
+  int16_t sX, sY;
 
   // Get XY values
   {
@@ -328,7 +328,7 @@ BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, INT16 sGridNo) {
 
     // Get screen XY pos from map XY
     // Be carefull to convert to cell cords
-    CellXYToScreenXY((INT16)((sXMapPos * CELL_X_SIZE)), (INT16)((sYMapPos * CELL_Y_SIZE)),
+    CellXYToScreenXY((int16_t)((sXMapPos * CELL_X_SIZE)), (int16_t)((sYMapPos * CELL_Y_SIZE)),
                      &sScreenX, &sScreenY);
 
     // First get mouse xy screen location
@@ -339,14 +339,14 @@ BOOLEAN InitTalkingMenu(uint8_t ubCharacterNum, INT16 sGridNo) {
   }
 }
 
-BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, INT16 sX, INT16 sY) {
+BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, int16_t sX, int16_t sY) {
   INT32 iFaceIndex, cnt;
   VSURFACE_DESC vs_desc;
   FACETYPE *pFace;
   uint16_t usWidth;
   uint16_t usHeight;
   VOBJECT_DESC VObjectDesc;
-  INT16 sCenterYVal, sCenterXVal;
+  int16_t sCenterYVal, sCenterXVal;
   CHAR8 ubString[48];
 
   // disable scroll messages
@@ -437,18 +437,18 @@ BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, INT16 sX, INT16 sY) {
   MSYS_AddRegion(&(gTalkPanel.ScreenRegion));
 
   // Define main region
-  MSYS_DefineRegion(&(gTalkPanel.BackRegion), (INT16)(gTalkPanel.sX), (INT16)(gTalkPanel.sY),
-                    (INT16)(gTalkPanel.sX + gTalkPanel.usWidth),
-                    (INT16)(gTalkPanel.sY + gTalkPanel.usHeight), MSYS_PRIORITY_HIGHEST,
+  MSYS_DefineRegion(&(gTalkPanel.BackRegion), (int16_t)(gTalkPanel.sX), (int16_t)(gTalkPanel.sY),
+                    (int16_t)(gTalkPanel.sX + gTalkPanel.usWidth),
+                    (int16_t)(gTalkPanel.sY + gTalkPanel.usHeight), MSYS_PRIORITY_HIGHEST,
                     CURSOR_NORMAL, MSYS_NO_CALLBACK, TalkPanelBaseRegionClickCallback);
   // Add region
   MSYS_AddRegion(&(gTalkPanel.BackRegion));
 
   // Define name region
-  MSYS_DefineRegion(&(gTalkPanel.NameRegion), (INT16)(gTalkPanel.sX + TALK_PANEL_NAME_X),
-                    (INT16)(gTalkPanel.sY + TALK_PANEL_NAME_Y),
-                    (INT16)(gTalkPanel.sX + TALK_PANEL_NAME_WIDTH + TALK_PANEL_NAME_X),
-                    (INT16)(gTalkPanel.sY + TALK_PANEL_NAME_HEIGHT + TALK_PANEL_NAME_Y),
+  MSYS_DefineRegion(&(gTalkPanel.NameRegion), (int16_t)(gTalkPanel.sX + TALK_PANEL_NAME_X),
+                    (int16_t)(gTalkPanel.sY + TALK_PANEL_NAME_Y),
+                    (int16_t)(gTalkPanel.sX + TALK_PANEL_NAME_WIDTH + TALK_PANEL_NAME_X),
+                    (int16_t)(gTalkPanel.sY + TALK_PANEL_NAME_HEIGHT + TALK_PANEL_NAME_Y),
                     MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL, TalkPanelNameRegionMoveCallback,
                     TalkPanelNameRegionClickCallback);
   // Add region
@@ -456,10 +456,10 @@ BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, INT16 sX, INT16 sY) {
 
   for (cnt = 0; cnt < 6; cnt++) {
     // Build a mouse region here that is over any others.....
-    MSYS_DefineRegion(&(gTalkPanel.Regions[cnt]), (INT16)(sX), (INT16)(sY),
-                      (INT16)(sX + TALK_PANEL_REGION_WIDTH), (INT16)(sY + TALK_PANEL_REGION_HEIGHT),
-                      MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL, TalkPanelMoveCallback,
-                      TalkPanelClickCallback);
+    MSYS_DefineRegion(&(gTalkPanel.Regions[cnt]), (int16_t)(sX), (int16_t)(sY),
+                      (int16_t)(sX + TALK_PANEL_REGION_WIDTH),
+                      (int16_t)(sY + TALK_PANEL_REGION_HEIGHT), MSYS_PRIORITY_HIGHEST,
+                      CURSOR_NORMAL, TalkPanelMoveCallback, TalkPanelClickCallback);
     // Add region
     MSYS_AddRegion(&(gTalkPanel.Regions[cnt]));
     MSYS_SetRegionUserData(&(gTalkPanel.Regions[cnt]), 0, cnt);
@@ -486,8 +486,8 @@ BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, INT16 sX, INT16 sY) {
 
   gTalkPanel.uiCancelButton = CreateIconAndTextButton(
       gTalkPanel.iButtonImages, zDialogActions[DIALOG_DONE], MILITARYFONT1, 33, DEFAULT_SHADOW, 33,
-      DEFAULT_SHADOW, TEXT_CJUSTIFIED, (INT16)(gTalkPanel.sX + TALK_PANEL_BUTTON_X),
-      (INT16)(gTalkPanel.sY + TALK_PANEL_BUTTON_Y), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
+      DEFAULT_SHADOW, TEXT_CJUSTIFIED, (int16_t)(gTalkPanel.sX + TALK_PANEL_BUTTON_X),
+      (int16_t)(gTalkPanel.sY + TALK_PANEL_BUTTON_Y), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
       DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)DoneTalkingButtonClickCallback);
 
   SpecifyButtonHilitedTextColors(gTalkPanel.uiCancelButton, FONT_MCOLOR_WHITE, DEFAULT_SHADOW);
@@ -626,7 +626,7 @@ void DeleteTalkingMenu() {
 void RenderTalkingMenu() {
   INT32 cnt;
   FACETYPE *pFace;
-  INT16 sFontX, sFontY, sX, sY;
+  int16_t sFontX, sFontY, sX, sY;
   uint8_t ubCharacterNum = gTalkPanel.ubCharNum;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint8_t *pDestBuf, *pSrcBuf;
@@ -654,10 +654,10 @@ void RenderTalkingMenu() {
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(33);
     }
-    VarFindFontCenterCoordinates((INT16)(gTalkPanel.sX + TALK_PANEL_NAME_X),
-                                 (INT16)(gTalkPanel.sY + TALK_PANEL_NAME_Y), TALK_PANEL_NAME_WIDTH,
-                                 TALK_PANEL_NAME_HEIGHT, MILITARYFONT1, &sFontX, &sFontY, L"%s",
-                                 gMercProfiles[gTalkPanel.ubCharNum].zNickname);
+    VarFindFontCenterCoordinates(
+        (int16_t)(gTalkPanel.sX + TALK_PANEL_NAME_X), (int16_t)(gTalkPanel.sY + TALK_PANEL_NAME_Y),
+        TALK_PANEL_NAME_WIDTH, TALK_PANEL_NAME_HEIGHT, MILITARYFONT1, &sFontX, &sFontY, L"%s",
+        gMercProfiles[gTalkPanel.ubCharNum].zNickname);
     mprintf(sFontX, sFontY, L"%s", gMercProfiles[ubCharacterNum].zNickname);
 
     // Set font settings back
@@ -667,8 +667,8 @@ void RenderTalkingMenu() {
     pSrcBuf = LockVideoSurface(gTalkPanel.uiSaveBuffer, &uiSrcPitchBYTES);
 
     Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
-                    (INT16)(gTalkPanel.sX + TALK_PANEL_FACE_X),
-                    (INT16)(gTalkPanel.sY + TALK_PANEL_FACE_Y), 0, 0, pFace->usFaceWidth,
+                    (int16_t)(gTalkPanel.sX + TALK_PANEL_FACE_X),
+                    (int16_t)(gTalkPanel.sY + TALK_PANEL_FACE_Y), 0, 0, pFace->usFaceWidth,
                     pFace->usFaceHeight);
 
     UnLockVideoSurface(FRAME_BUFFER);
@@ -679,10 +679,10 @@ void RenderTalkingMenu() {
     // If guy is talking.... shadow area
     if (pFace->fTalking || !DialogueQueueIsEmpty()) {
       ShadowVideoSurfaceRect(
-          FRAME_BUFFER, (INT16)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X),
-          (INT16)(gTalkPanel.sY + TALK_PANEL_SHADOW_AREA_Y),
-          (INT16)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X + TALK_PANEL_SHADOW_AREA_WIDTH),
-          (INT16)(gTalkPanel.sY + TALK_PANEL_SHADOW_AREA_Y + TALK_PANEL_SHADOW_AREA_HEIGHT));
+          FRAME_BUFFER, (int16_t)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X),
+          (int16_t)(gTalkPanel.sY + TALK_PANEL_SHADOW_AREA_Y),
+          (int16_t)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X + TALK_PANEL_SHADOW_AREA_WIDTH),
+          (int16_t)(gTalkPanel.sY + TALK_PANEL_SHADOW_AREA_Y + TALK_PANEL_SHADOW_AREA_HEIGHT));
 
       // Disable mouse regions....
       for (cnt = 0; cnt < 6; cnt++) {
@@ -735,8 +735,8 @@ void RenderTalkingMenu() {
       }
 
       MSYS_DefineRegion(&(gTalkPanel.TextRegion), gTalkPanel.sPopupX, gTalkPanel.sPopupY,
-                        (INT16)(gTalkPanel.sPopupX + usTextBoxWidth),
-                        (INT16)(gTalkPanel.sPopupY + usTextBoxHeight), MSYS_PRIORITY_HIGHEST,
+                        (int16_t)(gTalkPanel.sPopupX + usTextBoxWidth),
+                        (int16_t)(gTalkPanel.sPopupY + usTextBoxHeight), MSYS_PRIORITY_HIGHEST,
                         CURSOR_NORMAL, MSYS_NO_CALLBACK, TextRegionClickCallback);
       // Add region
       MSYS_AddRegion(&(gTalkPanel.TextRegion));
@@ -1070,9 +1070,9 @@ void HandleTalkingMenuBackspace(void) {
   }
 }
 
-void CalculatePopupTextOrientation(INT16 sWidth, INT16 sHeight) {
+void CalculatePopupTextOrientation(int16_t sWidth, int16_t sHeight) {
   BOOLEAN fOKLeft = FALSE, fOKTop = FALSE, fOKBottom = FALSE, fOK = FALSE;
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // Check Left
   sX = gTalkPanel.sX - sWidth;
@@ -1134,7 +1134,7 @@ void CalculatePopupTextOrientation(INT16 sWidth, INT16 sHeight) {
   // DebugMsg
 }
 
-void CalculatePopupTextPosition(INT16 sWidth, INT16 sHeight) {
+void CalculatePopupTextPosition(int16_t sWidth, int16_t sHeight) {
   switch (gTalkPanel.ubPopupOrientation) {
     case TALK_PANEL_POPUP_LEFT:
 
@@ -1210,7 +1210,7 @@ BOOLEAN NPCClosePanel() {
 }
 
 BOOLEAN SourceSoldierPointerIsValidAndReachableForGive(struct SOLDIERTYPE *pGiver) {
-  INT16 sAdjGridNo;
+  int16_t sAdjGridNo;
 
   if (!gpSrcSoldier) {
     return (FALSE);
@@ -1332,7 +1332,7 @@ void HandleNPCTriggerNPC(uint8_t ubTargetNPC, uint8_t ubTargetRecord, BOOLEAN fS
 
 void HandleNPCTrigger() {
   struct SOLDIERTYPE *pSoldier;
-  INT16 sPlayerGridNo;
+  int16_t sPlayerGridNo;
   uint8_t ubPlayerID;
 
   pSoldier = FindSoldierByProfileID(gubTargetNPC, FALSE);
@@ -1519,7 +1519,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier, *pSoldier2;
   int8_t bNumDone = 0;
-  INT16 sGridNo = NOWHERE, sAdjustedGridNo;
+  int16_t sGridNo = NOWHERE, sAdjustedGridNo;
   int8_t bItemIn;
   uint8_t ubDesiredMercDir;
   EXITGRID ExitGrid;
@@ -1715,8 +1715,8 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         pSoldier = FindSoldierByProfileID(ubTargetNPC, FALSE);
         if (pSoldier && pSoldier->inv[HANDPOS].usItem != NOTHING) {
           sGridNo = pSoldier->sGridNo + DirectionInc(pSoldier->bDirection);
-          SoldierReadyWeapon(pSoldier, (INT16)(sGridNo % WORLD_COLS), (INT16)(sGridNo / WORLD_COLS),
-                             FALSE);
+          SoldierReadyWeapon(pSoldier, (int16_t)(sGridNo % WORLD_COLS),
+                             (int16_t)(sGridNo / WORLD_COLS), FALSE);
         }
         break;
 
@@ -1953,8 +1953,8 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         if (bItemIn != NO_SLOT && bItemIn != HANDPOS) {
           SwapObjs(&(pSoldier->inv[HANDPOS]), &(pSoldier->inv[bItemIn]));
           sGridNo = pSoldier->sGridNo + DirectionInc(pSoldier->bDirection);
-          SoldierReadyWeapon(pSoldier, (INT16)(sGridNo % WORLD_COLS), (INT16)(sGridNo / WORLD_COLS),
-                             FALSE);
+          SoldierReadyWeapon(pSoldier, (int16_t)(sGridNo % WORLD_COLS),
+                             (int16_t)(sGridNo / WORLD_COLS), FALSE);
         }
         // fall through so that the person faces the nearest merc!
       case NPC_ACTION_TURN_TO_FACE_NEAREST_MERC:
@@ -2088,7 +2088,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         // and then have him pick it up
         {
           struct OBJECTTYPE Object;
-          INT16 sGridNo = 14952;
+          int16_t sGridNo = 14952;
           INT32 iWorldItem;
 
           pSoldier = FindSoldierByProfileID(ubTargetNPC, FALSE);
@@ -2596,7 +2596,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         // NOW overwrite name with true name in profile
         // copy new nickname into soldier structure
         {
-          // INT16	zTemp[ NICKNAME_LENGTH ];
+          // int16_t	zTemp[ NICKNAME_LENGTH ];
           // wcsncpy( zTemp, gMercProfiles[ ubTargetNPC ].zNickname, NICKNAME_LENGTH );
           wcsncpy(gMercProfiles[ubTargetNPC].zNickname, gMercProfiles[ubTargetNPC].zName,
                   NICKNAME_LENGTH);
@@ -2722,7 +2722,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         pSoldier = FindSoldierByProfileID(ubTargetNPC, FALSE);
 
         if (pSoldier) {
-          INT16 sNearestPC;
+          int16_t sNearestPC;
           uint8_t ubID;
           int8_t bMoneySlot;
           int8_t bEmptySlot;
@@ -3295,7 +3295,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
 
       case NPC_ACTION_INVOKE_CONVERSATION_MODE:
         if (!gfInTalkPanel) {
-          INT16 sNearestPC;
+          int16_t sNearestPC;
           uint8_t ubID;
 
           pSoldier = FindSoldierByProfileID(ubTargetNPC, FALSE);
@@ -3800,7 +3800,7 @@ uint32_t CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier) {
 uint32_t CalcMedicalCost(uint8_t ubId) {
   INT32 cnt;
   uint32_t uiCostSoFar;
-  INT16 sGridNo = 0;
+  int16_t sGridNo = 0;
   struct SOLDIERTYPE *pSoldier, *pNPC;
 
   uiCostSoFar = 0;
@@ -4217,10 +4217,10 @@ void DoneFadeInActionLeaveBasement() {
 
 BOOLEAN NPCOpenThing(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor) {
   struct STRUCTURE *pStructure;
-  INT16 sStructGridNo;
-  INT16 sActionGridNo;
+  int16_t sStructGridNo;
+  int16_t sActionGridNo;
   uint8_t ubDirection;
-  INT16 sGridNo;
+  int16_t sGridNo;
   DOOR *pDoor;
 
   // Find closest door and get struct data for it!

@@ -38,7 +38,7 @@ extern void EndFrameBufferRender(void);
 extern void PrintScreen(void);
 
 extern BOOLEAN EraseMouseCursor();
-extern BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, uint16_t usCursorHeight,
+extern BOOLEAN SetMouseCursorProperties(int16_t sOffsetX, int16_t sOffsetY, uint16_t usCursorHeight,
                                         uint16_t usCursorWidth);
 void DirtyCursor();
 

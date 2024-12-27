@@ -48,9 +48,9 @@ extern uint8_t gubCurrMercMode, gubPrevMercMode;
 #define NUM_DIFF_LVLS 5
 
 extern CHAR16 *zDiffNames[NUM_DIFF_LVLS];
-extern INT16 sCurBaseDiff;
-extern INT16 gsSelectedMercID;
-extern INT16 gsSelectedMercGridNo;
+extern int16_t sCurBaseDiff;
+extern int16_t gsSelectedMercID;
+extern int16_t gsSelectedMercGridNo;
 extern uint8_t gubCurrMercMode;
 
 enum _ForUseWithIndicateSelectedMerc {
@@ -64,7 +64,7 @@ enum _ForUseWithIndicateSelectedMerc {
   // >= 0 select merc with matching ID
 };
 
-void IndicateSelectedMerc(INT16 sID);
+void IndicateSelectedMerc(int16_t sID);
 
 void GameInitEditorMercsInfo();
 void GameShutdownEditorMercsInfo();
@@ -102,7 +102,7 @@ void ExtractCurrentMercModeInfo(BOOLEAN fKillTextInputMode);
 
 void SetMercEditability(BOOLEAN fEditable);
 
-void HandleMercInventoryPanel(INT16 sX, INT16 sY, int8_t bEvent);
+void HandleMercInventoryPanel(int16_t sX, int16_t sY, int8_t bEvent);
 
 extern uint16_t gusMercsNewItemIndex;
 extern BOOLEAN gfRenderMercInfo;

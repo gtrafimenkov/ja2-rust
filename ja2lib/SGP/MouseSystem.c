@@ -38,17 +38,17 @@ uint32_t guiRegionLastLButtonDownTime = 0;
 extern void ReleaseAnchorMode();  // private function used here (implemented in Button System.c)
 
 // number of lines in height help text will be
-INT16 GetNumberOfLinesInHeight(STR16 pStringA);
-INT16 GetWidthOfString(STR16 pStringA);
-void DisplayHelpTokenizedString(STR16 pStringA, INT16 sX, INT16 sY);
+int16_t GetNumberOfLinesInHeight(STR16 pStringA);
+int16_t GetWidthOfString(STR16 pStringA);
+void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY);
 
 INT32 MSYS_ScanForID = FALSE;
 INT32 MSYS_CurrentID = MSYS_ID_SYSTEM;
 
-INT16 MSYS_CurrentMX = 0;
-INT16 MSYS_CurrentMY = 0;
-INT16 MSYS_CurrentButtons = 0;
-INT16 MSYS_Action = 0;
+int16_t MSYS_CurrentMX = 0;
+int16_t MSYS_CurrentMY = 0;
+int16_t MSYS_CurrentButtons = 0;
+int16_t MSYS_Action = 0;
 
 BOOLEAN MSYS_SystemInitialized = FALSE;
 BOOLEAN MSYS_UseMouseHandlerHook = FALSE;
@@ -69,7 +69,7 @@ struct MOUSE_REGION *MSYS_CurrRegion = NULL;
 // cleared as soon as the cursor moves into no region or a region with no helptext.
 BOOLEAN gfPersistantFastHelpMode;
 
-INT16 gsFastHelpDelay = 600;  // In timer ticks
+int16_t gsFastHelpDelay = 600;  // In timer ticks
 BOOLEAN gfShowFastHelp = TRUE;
 
 // help text is done, now execute callback, if there is one
@@ -945,15 +945,15 @@ void MSYS_ReleaseMouse(struct MOUSE_REGION *region) {
 }
 
 /* ==================================================================================
-   MSYS_MoveMouseRegionTo( struct MOUSE_REGION *region, INT16 sX, INT16 sY)
+   MSYS_MoveMouseRegionTo( struct MOUSE_REGION *region, int16_t sX, int16_t sY)
 
          Moves a Mouse region to X Y on the screen
 
 */
 
-void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, INT16 sX, INT16 sY) {
-  INT16 sWidth;
-  INT16 sHeight;
+void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, int16_t sX, int16_t sY) {
+  int16_t sWidth;
+  int16_t sHeight;
 
   sWidth = region->RegionBottomRightX - region->RegionTopLeftX;
   sHeight = region->RegionBottomRightY - region->RegionTopLeftY;
@@ -970,13 +970,13 @@ void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, INT16 sX, INT16 sY) {
 }
 
 /* ==================================================================================
-   MSYS_MoveMouseRegionBy( struct MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY)
+   MSYS_MoveMouseRegionBy( struct MOUSE_REGION *region, int16_t sDeltaX, int16_t sDeltaY)
 
          Moves a Mouse region by sDeltaX sDeltaY on the screen
 
 */
 
-void MSYS_MoveMouseRegionBy(struct MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY) {
+void MSYS_MoveMouseRegionBy(struct MOUSE_REGION *region, int16_t sDeltaX, int16_t sDeltaY) {
   // move top left
   region->RegionTopLeftX = region->RegionTopLeftX + sDeltaX;
   region->RegionTopLeftY = region->RegionTopLeftY + sDeltaY;
@@ -1029,9 +1029,9 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
   // region->FastHelpTimer = gsFastHelpDelay;
 }
 
-INT16 GetNumberOfLinesInHeight(STR16 pStringA) {
+int16_t GetNumberOfLinesInHeight(STR16 pStringA) {
   STR16 pToken;
-  INT16 sCounter = 0;
+  int16_t sCounter = 0;
   CHAR16 pString[512];
 
   wcscpy(pString, pStringA);
@@ -1073,8 +1073,8 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
 
     if (!(region->uiFlags & MSYS_GOT_BACKGROUND)) {
       region->FastHelpRect =
-          RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (INT16)iX,
-                                 (INT16)iY, (INT16)(iX + iW), (INT16)(iY + iH));
+          RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (int16_t)iX,
+                                 (int16_t)iY, (int16_t)(iX + iW), (int16_t)(iY + iH));
       region->uiFlags |= MSYS_GOT_BACKGROUND;
       region->uiFlags |= MSYS_HAS_BACKRECT;
     } else {
@@ -1092,16 +1092,16 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
 
       SetFont(FONT10ARIAL);
       SetFontShadow(FONT_NEARBLACK);
-      DisplayHelpTokenizedString(region->FastHelpText, (INT16)(iX + 5), (INT16)(iY + 5));
+      DisplayHelpTokenizedString(region->FastHelpText, (int16_t)(iX + 5), (int16_t)(iY + 5));
       InvalidateRegion(iX, iY, (iX + iW), (iY + iH));
     }
   }
 }
 
-INT16 GetWidthOfString(STR16 pStringA) {
+int16_t GetWidthOfString(STR16 pStringA) {
   CHAR16 pString[512];
   STR16 pToken;
-  INT16 sWidth = 0;
+  int16_t sWidth = 0;
   wcscpy(pString, pStringA);
 
   // tokenize
@@ -1119,7 +1119,7 @@ INT16 GetWidthOfString(STR16 pStringA) {
   return (sWidth);
 }
 
-void DisplayHelpTokenizedString(STR16 pStringA, INT16 sX, INT16 sY) {
+void DisplayHelpTokenizedString(STR16 pStringA, int16_t sX, int16_t sY) {
   STR16 pToken;
   INT32 iCounter = 0, i;
   uint32_t uiCursorXPos;
@@ -1180,7 +1180,7 @@ void RenderFastHelp() {
         if (MSYS_CurrRegion->uiFlags & MSYS_MOUSE_IN_AREA &&
             !MSYS_CurrRegion->ButtonState)  // & (MSYS_LEFT_BUTTON|MSYS_RIGHT_BUTTON)) )
         {
-          MSYS_CurrRegion->FastHelpTimer -= (INT16)max(iTimeDifferential, 0);
+          MSYS_CurrRegion->FastHelpTimer -= (int16_t)max(iTimeDifferential, 0);
 
           if (MSYS_CurrRegion->FastHelpTimer < 0) {
             MSYS_CurrRegion->FastHelpTimer = 0;
@@ -1238,7 +1238,7 @@ void ExecuteMouseHelpEndCallBack(struct MOUSE_REGION *region) {
   return;
 }
 
-void SetFastHelpDelay(INT16 sFastHelpDelay) { gsFastHelpDelay = sFastHelpDelay; }
+void SetFastHelpDelay(int16_t sFastHelpDelay) { gsFastHelpDelay = sFastHelpDelay; }
 
 void EnableMouseFastHelp(void) { gfShowFastHelp = TRUE; }
 

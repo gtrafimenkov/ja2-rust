@@ -101,6 +101,6 @@ void ReconnectSchedules(void);
 
 void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, uint16_t usSleepSpot);
 
-BOOLEAN BumpAnyExistingMerc(INT16 sGridNo);
+BOOLEAN BumpAnyExistingMerc(int16_t sGridNo);
 
 #endif

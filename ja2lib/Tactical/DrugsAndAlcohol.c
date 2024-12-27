@@ -280,7 +280,7 @@ int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
 
 void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) {
   int8_t bDrunkLevel;
-  INT16 sPoints = (*pubPoints);
+  int16_t sPoints = (*pubPoints);
 
   // Are we in a side effect or good effect?
   if (pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE]) {
@@ -309,7 +309,7 @@ void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) 
   (*pubPoints) = (uint8_t)sPoints;
 }
 
-void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPointReduction) {
+void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, int16_t *psPointReduction) {
   int8_t bDrunkLevel;
 
   // Are we in a side effect or good effect?

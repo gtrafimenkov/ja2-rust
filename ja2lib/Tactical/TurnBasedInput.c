@@ -113,8 +113,8 @@ extern uint32_t guiCurrentEvent;
 extern uint8_t gubIntTileCheckFlags;
 extern uint32_t guiCurrentUICursor;
 extern struct SOLDIERTYPE *gpSMCurrentMerc;
-extern INT16 gsOverItemsGridNo;
-extern INT16 gsOverItemsLevel;
+extern int16_t gsOverItemsGridNo;
+extern int16_t gsOverItemsLevel;
 extern BOOLEAN gfUIShowExitSouth;
 
 extern BOOLEAN gfBeginBurstSpreadTracking;
@@ -217,7 +217,7 @@ void GetTBMouseButtonInput(uint32_t *puiNewEvent) {
 
 void QueryTBLeftButton(uint32_t *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fCanCheckForSpeechAdvance = FALSE;
 
@@ -604,7 +604,7 @@ void QueryTBRightButton(uint32_t *puiNewEvent) {
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fClickIntercepted = FALSE;
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
   BOOLEAN fDone = FALSE;
   if (!GetMouseMapPos(&usMapPos)) {
     return;
@@ -806,7 +806,7 @@ void QueryTBRightButton(uint32_t *puiNewEvent) {
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
 void GetTBMousePositionInput(uint32_t *puiNewEvent) {
-  INT16 usMapPos;
+  int16_t usMapPos;
   static uint16_t usOldMapPos = 0;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN bHandleCode;
@@ -1159,7 +1159,7 @@ extern BOOLEAN gfUserTurnRegionActive;
 void GetKeyboardInput(uint32_t *puiNewEvent) {
   InputAtom InputEvent;
   BOOLEAN fKeyTaken = FALSE;
-  INT16 usMapPos;
+  int16_t usMapPos;
   BOOLEAN fGoodCheatLevelKey = FALSE;
 
   struct Point MousePos = GetMousePoint();
@@ -1170,19 +1170,19 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
     // HOOK INTO MOUSE HOOKS
     switch (InputEvent.usEvent) {
       case LEFT_BUTTON_DOWN:
-        MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_UP:
-        MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
-        MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
     }
@@ -1427,7 +1427,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
     if ((InputEvent.usEvent == KEY_DOWN) && (InputEvent.usParam == '0') &&
         (InputEvent.usKeyState & ALT_DOWN)) {
       INT32 i = 0;
-      INT16 sGridNo;
+      int16_t sGridNo;
       INT32 iTime = GetJA2Clock();
       int8_t ubLevel;
 
@@ -2016,7 +2016,7 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
               ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[MSG_TACKING_MODE_ON]);
             }
           } else {
-            INT16 sGridNo;
+            int16_t sGridNo;
 
             // Get the gridno the cursor is at
             GetMouseMapPos(&sGridNo);
@@ -2785,7 +2785,7 @@ void HandleItemMenuKeys(InputAtom *pInputEvent, uint32_t *puiNewEvent) {
 }
 
 BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
-  INT16 sMapPos;
+  int16_t sMapPos;
 
   // If not in move mode, return!
   if (gCurrentUIMode != MOVE_MODE) {
@@ -2931,7 +2931,7 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
 
 void CreateRandomItem() {
   struct OBJECTTYPE Object;
-  INT16 usMapPos;
+  int16_t usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     CreateItem((uint16_t)(Random(35) + 1), 100, &Object);
     AddItemToPool(usMapPos, &Object, -1, 0, 0, 0);
@@ -2942,7 +2942,7 @@ void MakeSelectedSoldierTired() {
   // Key to make guy get tired!
   struct SOLDIERTYPE *pSoldier;
   struct OBJECTTYPE Object;
-  INT16 usMapPos;
+  int16_t usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     CreateItem((uint16_t)TNT, 100, &Object);
     AddItemToPool(usMapPos, &Object, -1, 0, 0, 0);
@@ -3011,7 +3011,7 @@ void ToggleViewAllItems() {
 }
 
 void TestExplosion() {
-  INT16 usMapPos;
+  int16_t usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     EXPLOSION_PARAMS ExpParams;
     ExpParams.uiFlags = 0;
@@ -3063,7 +3063,7 @@ void ToggleWireFrame() {
 
 void RefreshSoldier() {
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (gfUIFullTargetFound) {
     // Get Soldier
@@ -3129,7 +3129,7 @@ void ChangeSoldiersBodyType(uint8_t ubBodyType, BOOLEAN fCreateNewPalette) {
 
 void TeleportSelectedSoldier() {
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     if (GetMouseMapPos(&usMapPos)) {
@@ -3180,7 +3180,7 @@ void ToggleZBuffer() {
 
 void TogglePlanningMode() {
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
   // DO ONLY IN TURNED BASED!
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     // CANCEL FROM PLANNING MODE!
@@ -3266,9 +3266,9 @@ void JumpFence() {
 }
 
 void CreateNextCivType() {
-  INT16 sWorldX, sWorldY;
+  int16_t sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 usMapPos;
+  int16_t usMapPos;
   static int8_t bBodyType = FATCIV;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
@@ -3316,9 +3316,9 @@ void ToggleCliffDebug() {
 }
 
 void CreateCow() {
-  INT16 sWorldX, sWorldY;
+  int16_t sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 usMapPos;
+  int16_t usMapPos;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     uint8_t iNewIndex;
@@ -3344,9 +3344,9 @@ void CreateCow() {
 }
 
 void CreatePlayerControlledCow() {
-  INT16 sWorldX, sWorldY;
+  int16_t sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 usMapPos;
+  int16_t usMapPos;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     uint8_t iNewIndex;
@@ -3376,7 +3376,7 @@ void ToggleRealTimeConfirm() {}
 
 void GrenadeTest1() {
   // Get mousexy
-  INT16 sX, sY;
+  int16_t sX, sY;
   if (GetMouseXY(&sX, &sY)) {
     struct OBJECTTYPE Object;
     Object.usItem = MUSTARD_GRENADE;
@@ -3389,7 +3389,7 @@ void GrenadeTest1() {
 
 void GrenadeTest2() {
   // Get mousexy
-  INT16 sX, sY;
+  int16_t sX, sY;
   if (GetMouseXY(&sX, &sY)) {
     struct OBJECTTYPE Object;
     Object.usItem = HAND_GRENADE;
@@ -3402,7 +3402,7 @@ void GrenadeTest2() {
 
 void GrenadeTest3() {
   // Get mousexy
-  INT16 sX, sY;
+  int16_t sX, sY;
   if (GetMouseXY(&sX, &sY)) {
     struct OBJECTTYPE Object;
     Object.usItem = HAND_GRENADE;
@@ -3414,8 +3414,8 @@ void GrenadeTest3() {
 }
 
 void CreatePlayerControlledMonster() {
-  INT16 sWorldX, sWorldY;
-  INT16 usMapPos;
+  int16_t sWorldX, sWorldY;
+  int16_t usMapPos;
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     SOLDIERCREATE_STRUCT MercCreateStruct;
     uint8_t iNewIndex;
@@ -3444,10 +3444,10 @@ void CreatePlayerControlledMonster() {
 int8_t CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier,
                                                       uint16_t usMapPos, BOOLEAN fMovementMode) {
   // Look for an item pool
-  INT16 sActionGridNo;
+  int16_t sActionGridNo;
   uint8_t ubDirection;
   struct SOLDIERTYPE *pTSoldier;
-  INT16 sAPCost = 0;
+  int16_t sAPCost = 0;
 
   if (gfUIFullTargetFound) {
     pTSoldier = MercPtrs[gusUIFullTargetID];
@@ -3501,11 +3501,11 @@ int8_t CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldi
 void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
   struct LEVELNODE *pIntTile;
-  INT16 sIntTileGridNo;
-  INT16 sActionGridNo;
+  int16_t sIntTileGridNo;
+  int16_t sActionGridNo;
   uint8_t ubDirection;
-  INT16 sAPCost;
-  INT16 sAdjustedGridNo;
+  int16_t sAPCost;
+  int16_t sAdjustedGridNo;
   struct STRUCTURE *pStructure = NULL;
   struct ITEM_POOL *pItemPool;
   BOOLEAN fIgnoreItems = FALSE;
@@ -3635,8 +3635,8 @@ int8_t HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent) 
   BOOLEAN fContinue = TRUE;
   struct SOLDIERTYPE *pSoldier;
   struct LEVELNODE *pIntTile;
-  INT16 sIntTileGridNo;
-  INT16 sActionGridNo;
+  int16_t sIntTileGridNo;
+  int16_t sActionGridNo;
   uint8_t ubDirection;
   int8_t bReturnCode = 0;
   int8_t bZLevel;

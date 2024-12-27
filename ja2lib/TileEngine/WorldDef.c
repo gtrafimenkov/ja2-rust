@@ -114,9 +114,9 @@ BOOLEAN AddTileSurface(SGPFILENAME cFilename, uint32_t ubType, uint8_t ubTileset
                        BOOLEAN fGetFromRoot);
 void DestroyTileSurfaces(void);
 void ProcessTilesetNamesForBPP(void);
-BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos);
+BOOLEAN IsRoofVisibleForWireframe(int16_t sMapPos);
 
-int8_t IsHiddenTileMarkerThere(INT16 sGridNo);
+int8_t IsHiddenTileMarkerThere(int16_t sGridNo);
 extern void SetInterfaceHeightLevel();
 
 void SaveMapLights(HWFILE hfile);
@@ -129,10 +129,10 @@ uint32_t gSurfaceMemUsage;
 uint8_t gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 
 // set to nonzero (locs of base gridno of structure are good) to have it defined by structure code
-INT16 gsRecompileAreaTop = 0;
-INT16 gsRecompileAreaLeft = 0;
-INT16 gsRecompileAreaRight = 0;
-INT16 gsRecompileAreaBottom = 0;
+int16_t gsRecompileAreaTop = 0;
+int16_t gsRecompileAreaLeft = 0;
+int16_t gsRecompileAreaRight = 0;
+int16_t gsRecompileAreaBottom = 0;
 
 // TIMER TESTING STUFF
 #ifdef JA2TESTVERSION
@@ -504,8 +504,8 @@ void DestroyTileSurfaces() {
 }
 
 void CompileWorldTerrainIDs(void) {
-  INT16 sGridNo;
-  INT16 sTempGridNo;
+  int16_t sGridNo;
+  int16_t sTempGridNo;
   struct LEVELNODE *pNode;
   TILE_ELEMENT *pTileElement;
   uint8_t ubLoop;
@@ -589,7 +589,8 @@ void CompileTileMovementCosts(uint16_t usGridNo) {
     pLand = gpWorldLevelData[usGridNo].pLandHead;
     if (pLand != NULL) {
       // Get terrain type
-      ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (INT16)usGridNo );
+      ubTerrainID =
+          gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (int16_t)usGridNo );
 
       for (ubDirLoop = 0; ubDirLoop < NUM_WORLD_DIRECTIONS; ubDirLoop++) {
         SET_CURRMOVEMENTCOST(ubDirLoop, gTileTypeMovementCost[ubTerrainID]);
@@ -1113,7 +1114,7 @@ void CompileTileMovementCosts(uint16_t usGridNo) {
     // consider just the land
 
     // Get terrain type
-    ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (INT16)usGridNo );
+    ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (int16_t)usGridNo );
     for (ubDirLoop = 0; ubDirLoop < 8; ubDirLoop++) {
       SET_MOVEMENTCOST(usGridNo, ubDirLoop, 0, gTileTypeMovementCost[ubTerrainID]);
     }
@@ -1127,7 +1128,7 @@ void CompileTileMovementCosts(uint16_t usGridNo) {
                             TileElem = gTileDatabase[ pLand->usIndex ];
 
                             // Get terrain type
-                            ubTerrainID =	GetTerrainType( (INT16)usGridNo );
+                            ubTerrainID =	GetTerrainType( (int16_t)usGridNo );
 
                             for (ubDirLoop=0; ubDirLoop < 8; ubDirLoop++)
                             {
@@ -1151,10 +1152,10 @@ void CompileTileMovementCosts(uint16_t usGridNo) {
 
 #define LOCAL_RADIUS 4
 
-void RecompileLocalMovementCosts(INT16 sCentreGridNo) {
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
-  INT16 sCentreGridX, sCentreGridY;
+void RecompileLocalMovementCosts(int16_t sCentreGridNo) {
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
+  int16_t sCentreGridX, sCentreGridY;
   int8_t bDirLoop;
 
   ConvertGridNoToXY(sCentreGridNo, &sCentreGridX, &sCentreGridY);
@@ -1186,10 +1187,10 @@ void RecompileLocalMovementCosts(INT16 sCentreGridNo) {
   }
 }
 
-void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, int8_t bRadius) {
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
-  INT16 sCentreGridX, sCentreGridY;
+void RecompileLocalMovementCostsFromRadius(int16_t sCentreGridNo, int8_t bRadius) {
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
+  int16_t sCentreGridX, sCentreGridY;
   int8_t bDirLoop;
 
   ConvertGridNoToXY(sCentreGridNo, &sCentreGridX, &sCentreGridY);
@@ -1228,10 +1229,10 @@ void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, int8_t bRadius) 
   }
 }
 
-void AddTileToRecompileArea(INT16 sGridNo) {
-  INT16 sCheckGridNo;
-  INT16 sCheckX;
-  INT16 sCheckY;
+void AddTileToRecompileArea(int16_t sGridNo) {
+  int16_t sCheckGridNo;
+  int16_t sCheckX;
+  int16_t sCheckY;
 
   // Set flag to wipe and recompile MPs in this tile
   if (sGridNo < 0 || sGridNo >= WORLD_MAX) {
@@ -1264,8 +1265,8 @@ void AddTileToRecompileArea(INT16 sGridNo) {
 }
 
 void RecompileLocalMovementCostsInAreaWithFlags(void) {
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
   int8_t bDirLoop;
 
   for (sGridY = gsRecompileAreaTop; sGridY <= gsRecompileAreaBottom; sGridY++) {
@@ -1294,10 +1295,10 @@ void RecompileLocalMovementCostsInAreaWithFlags(void) {
   }
 }
 
-void RecompileLocalMovementCostsForWall(INT16 sGridNo, uint8_t ubOrientation) {
+void RecompileLocalMovementCostsForWall(int16_t sGridNo, uint8_t ubOrientation) {
   int8_t bDirLoop;
-  INT16 sUp, sDown, sLeft, sRight;
-  INT16 sX, sY, sTempGridNo;
+  int16_t sUp, sDown, sLeft, sRight;
+  int16_t sX, sY, sTempGridNo;
 
   switch (ubOrientation) {
     case OUTSIDE_TOP_RIGHT:
@@ -1416,7 +1417,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Write out height values
-    FileMan_Write(hfile, &gpWorldLevelData[cnt].sHeight, sizeof(INT16), &uiBytesWritten);
+    FileMan_Write(hfile, &gpWorldLevelData[cnt].sHeight, sizeof(int16_t), &uiBytesWritten);
   }
 
   // Write out # values - we'll have no more than 15 per level!
@@ -1782,13 +1783,14 @@ int8_t bDirectionsForShadowSearch[NUM_DIR_SEARCHES] = {WEST, SOUTHWEST, SOUTH, S
 
 void OptimizeMapForShadows() {
   INT32 cnt, dir;
-  INT16 sNewGridNo;
+  int16_t sNewGridNo;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // CHECK IF WE ARE A TREE HERE
-    if (IsTreePresentAtGridno((INT16)cnt)) {
+    if (IsTreePresentAtGridno((int16_t)cnt)) {
       // CHECK FOR A struct STRUCTURE A FOOTPRINT AWAY
       for (dir = 0; dir < NUM_DIR_SEARCHES; dir++) {
-        sNewGridNo = NewGridNo((INT16)cnt, (uint16_t)DirectionInc(bDirectionsForShadowSearch[dir]));
+        sNewGridNo =
+            NewGridNo((int16_t)cnt, (uint16_t)DirectionInc(bDirectionsForShadowSearch[dir]));
 
         if (gpWorldLevelData[sNewGridNo].pStructureHead == NULL) {
           break;
@@ -1936,7 +1938,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel) {
   pBuffer += sizeof(INT32);
 
   // skip height values
-  pBuffer += sizeof(INT16) * WORLD_MAX;
+  pBuffer += sizeof(int16_t) * WORLD_MAX;
 
   // read layer counts
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
@@ -2342,7 +2344,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Read height values
-    LOADDATA(&gpWorldLevelData[cnt].sHeight, pBuffer, sizeof(INT16));
+    LOADDATA(&gpWorldLevelData[cnt].sHeight, pBuffer, sizeof(int16_t));
   }
 
   // FP 0x00c810
@@ -2918,7 +2920,7 @@ void TrashWorld(void) {
   sprintf(gubFilename, "none");
 }
 
-void TrashMapTile(INT16 MapTile) {
+void TrashMapTile(int16_t MapTile) {
   MAP_ELEMENT *pMapTile;
   struct LEVELNODE *pLandNode;
   struct LEVELNODE *pObjectNode;
@@ -3075,7 +3077,7 @@ void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadN
   }
 }
 
-void AddWireFrame(INT16 sGridNo, uint16_t usIndex, BOOLEAN fForced) {
+void AddWireFrame(int16_t sGridNo, uint16_t usIndex, BOOLEAN fForced) {
   struct LEVELNODE *pTopmost, *pTopmostTail;
 
   pTopmost = gpWorldLevelData[sGridNo].pTopmostHead;
@@ -3095,7 +3097,7 @@ void AddWireFrame(INT16 sGridNo, uint16_t usIndex, BOOLEAN fForced) {
   }
 }
 
-uint16_t GetWireframeGraphicNumToUseForWall(INT16 sGridNo, struct STRUCTURE *pStructure) {
+uint16_t GetWireframeGraphicNumToUseForWall(int16_t sGridNo, struct STRUCTURE *pStructure) {
   struct LEVELNODE *pNode = NULL;
   uint8_t ubWallOrientation;
   uint16_t usValue = 0;
@@ -3152,7 +3154,7 @@ uint16_t GetWireframeGraphicNumToUseForWall(INT16 sGridNo, struct STRUCTURE *pSt
 void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
   INT32 cnt;
   struct STRUCTURE *pStructure;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubWallOrientation;
   int8_t bHiddenVal;
   int8_t bNumWallsSameGridNo;
@@ -3165,7 +3167,7 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
       gpWorldLevelData[cnt].uiFlags &= (~MAPELEMENT_RECALCULATE_WIREFRAMES);
 
       // Remove old ones
-      RemoveWireFrameTiles((INT16)cnt);
+      RemoveWireFrameTiles((int16_t)cnt);
 
       bNumWallsSameGridNo = 0;
 
@@ -3192,12 +3194,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_LEFT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(SOUTH));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(SOUTH));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES4,
+                      (int16_t)cnt, WIREFRAMES4,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3206,12 +3208,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_RIGHT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES3,
+                      (int16_t)cnt, WIREFRAMES3,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3230,12 +3232,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_LEFT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(SOUTH));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(SOUTH));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES2,
+                      (int16_t)cnt, WIREFRAMES2,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3244,12 +3246,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_RIGHT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES1,
+                      (int16_t)cnt, WIREFRAMES1,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3269,24 +3271,24 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_LEFT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(SOUTH));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(SOUTH));
 
                 if (IsRoofVisibleForWireframe(sGridNo)) {
                   bNumWallsSameGridNo++;
 
                   AddWireFrame(
-                      (INT16)cnt, usWireFrameIndex,
+                      (int16_t)cnt, usWireFrameIndex,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
 
                   // Check along our direction to see if we are a corner
-                  sGridNo = NewGridNo((INT16)cnt, DirectionInc(WEST));
+                  sGridNo = NewGridNo((int16_t)cnt, DirectionInc(WEST));
                   sGridNo = NewGridNo(sGridNo, DirectionInc(SOUTH));
                   bHiddenVal = IsHiddenTileMarkerThere(sGridNo);
                   // If we do not exist ( -1 ) or are revealed ( 1 )
                   if (bHiddenVal == -1 || bHiddenVal == 1) {
                     // Place corner!
                     AddWireFrame(
-                        (INT16)cnt, WIREFRAMES9,
+                        (int16_t)cnt, WIREFRAMES9,
                         (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                   }
                 }
@@ -3296,24 +3298,24 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_RIGHT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
 
                 if (IsRoofVisibleForWireframe(sGridNo)) {
                   bNumWallsSameGridNo++;
 
                   AddWireFrame(
-                      (INT16)cnt, usWireFrameIndex,
+                      (int16_t)cnt, usWireFrameIndex,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
 
                   // Check along our direction to see if we are a corner
-                  sGridNo = NewGridNo((INT16)cnt, DirectionInc(NORTH));
+                  sGridNo = NewGridNo((int16_t)cnt, DirectionInc(NORTH));
                   sGridNo = NewGridNo(sGridNo, DirectionInc(EAST));
                   bHiddenVal = IsHiddenTileMarkerThere(sGridNo);
                   // If we do not exist ( -1 ) or are revealed ( 1 )
                   if (bHiddenVal == -1 || bHiddenVal == 1) {
                     // Place corner!
                     AddWireFrame(
-                        (INT16)cnt, WIREFRAMES8,
+                        (int16_t)cnt, WIREFRAMES8,
                         (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                   }
                 }
@@ -3322,10 +3324,10 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
 
             // Check for both walls
             if (bNumWallsSameGridNo == 2) {
-              sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+              sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
               sGridNo = NewGridNo(sGridNo, DirectionInc(SOUTH));
               AddWireFrame(
-                  (INT16)cnt, WIREFRAMES7,
+                  (int16_t)cnt, WIREFRAMES7,
                   (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
             }
           }
@@ -3342,11 +3344,11 @@ void RemoveWorldWireFrameTiles() {
 
   // Create world randomly from tiles
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
-    RemoveWireFrameTiles((INT16)cnt);
+    RemoveWireFrameTiles((int16_t)cnt);
   }
 }
 
-void RemoveWireFrameTiles(INT16 sGridNo) {
+void RemoveWireFrameTiles(int16_t sGridNo) {
   struct LEVELNODE *pTopmost, *pNewTopmost;
   TILE_ELEMENT *pTileElement;
 
@@ -3367,7 +3369,7 @@ void RemoveWireFrameTiles(INT16 sGridNo) {
   }
 }
 
-int8_t IsHiddenTileMarkerThere(INT16 sGridNo) {
+int8_t IsHiddenTileMarkerThere(int16_t sGridNo) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
@@ -3540,7 +3542,7 @@ void LoadMapLights(int8_t **hBuffer) {
   }
 }
 
-BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos) {
+BOOLEAN IsRoofVisibleForWireframe(int16_t sMapPos) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {

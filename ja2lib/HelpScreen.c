@@ -32,7 +32,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern INT16 gsVIEWPORT_END_Y;
+extern int16_t gsVIEWPORT_END_Y;
 extern void PrintDate(void);
 extern void PrintNumberOnTeam(void);
 extern void PrintBalance(void);
@@ -951,28 +951,28 @@ void GetHelpScreenUserInput() {
     // HOOK INTO MOUSE HOOKS
     switch (Event.usEvent) {
       case LEFT_BUTTON_DOWN:
-        MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_UP:
-        MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
-        MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
 

@@ -623,9 +623,9 @@ void InitializeFilesMouseRegions(void) {
   // init mouseregions
   for (iCounter = 0; iCounter < MAX_FILES_PAGE; iCounter++) {
     MSYS_DefineRegion(&pFilesRegions[iCounter], FILES_LIST_X,
-                      (INT16)(FILES_LIST_Y + iCounter * (BLOCK_HEIGHT + 2)),
+                      (int16_t)(FILES_LIST_Y + iCounter * (BLOCK_HEIGHT + 2)),
                       FILES_LIST_X + FILES_LIST_WIDTH,
-                      (INT16)(FILES_LIST_Y + (iCounter + 1) * (BLOCK_HEIGHT + 2)),
+                      (int16_t)(FILES_LIST_Y + (iCounter + 1) * (BLOCK_HEIGHT + 2)),
                       MSYS_PRIORITY_NORMAL + 2, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, FilesBtnCallBack);
     MSYS_AddRegion(&pFilesRegions[iCounter]);
     MSYS_SetRegionUserData(&pFilesRegions[iCounter], 0, iCounter);
@@ -699,7 +699,7 @@ BOOLEAN DisplayFormattedText(void) {
   uint32_t uiFirstTempPicture;
   uint32_t uiSecondTempPicture;
   VOBJECT_DESC VObjectDesc;
-  INT16 usFreeSpace = 0;
+  int16_t usFreeSpace = 0;
 
   fWaitAFrame = FALSE;
 
@@ -1004,7 +1004,8 @@ BOOLEAN HandleSpecialFiles(uint8_t ubFormat) {
           // now print it
           iYPositionOnPage += (INT32)IanDisplayWrappedString(
               (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
-              (INT16)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
+              (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE,
+              uiFlags);
 
           fGoingOffCurrentPage = FALSE;
         } else {
@@ -1482,7 +1483,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       // now print it
       iYPositionOnPage += (INT32)IanDisplayWrappedString(
           (uint16_t)(iFileStartX), (uint16_t)(FILE_VIEWER_Y + iYPositionOnPage),
-          (INT16)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
+          (int16_t)iFileLineWidth, FILE_GAP, uiFont, FILE_TEXT_COLOR, sString, 0, FALSE, uiFlags);
 
       fGoingOffCurrentPage = FALSE;
     } else {
@@ -1522,10 +1523,10 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       GetVideoObject(&hHandle, uiPicture);
 
       // def: 3/24/99
-      //				BltVideoObject(FRAME_BUFFER, hHandle, 0,( INT16 ) (
-      // FILE_VIEWER_X +  30 ), ( INT16 ) ( iYPositionOnPage + 5), VO_BLT_SRCTRANSPARENCY,NULL);
-      BltVideoObject(FRAME_BUFFER, hHandle, 0, (INT16)(FILE_VIEWER_X + 30),
-                     (INT16)(iYPositionOnPage + 21), VO_BLT_SRCTRANSPARENCY, NULL);
+      //				BltVideoObject(FRAME_BUFFER, hHandle, 0,( int16_t ) (
+      // FILE_VIEWER_X +  30 ), ( int16_t ) ( iYPositionOnPage + 5), VO_BLT_SRCTRANSPARENCY,NULL);
+      BltVideoObject(FRAME_BUFFER, hHandle, 0, (int16_t)(FILE_VIEWER_X + 30),
+                     (int16_t)(iYPositionOnPage + 21), VO_BLT_SRCTRANSPARENCY, NULL);
 
       DeleteVideoObjectFromIndex(uiPicture);
 
@@ -1536,8 +1537,8 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       // Blt face to screen to
       GetVideoObject(&hHandle, uiPicture);
 
-      BltVideoObject(FRAME_BUFFER, hHandle, 0, (INT16)(FILE_VIEWER_X + 25),
-                     (INT16)(iYPositionOnPage + 16), VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject(FRAME_BUFFER, hHandle, 0, (int16_t)(FILE_VIEWER_X + 25),
+                     (int16_t)(iYPositionOnPage + 16), VO_BLT_SRCTRANSPARENCY, NULL);
 
       DeleteVideoObjectFromIndex(uiPicture);
     }

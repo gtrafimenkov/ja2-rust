@@ -37,7 +37,7 @@ enum {
 void ExecuteItemStatsCmd(uint8_t ubAction);
 
 extern struct OBJECTTYPE *gpItem;
-extern INT16 gsItemGridNo;
+extern int16_t gsItemGridNo;
 
 // enumerations for all of the different action items.  Used by the popup menu for
 // changing the type of action item.  When modified, an equivalent text array must be

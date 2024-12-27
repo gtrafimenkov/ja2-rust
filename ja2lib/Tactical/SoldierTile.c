@@ -94,7 +94,7 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
 }
 #endif
 
-void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, int8_t bValue) {
+void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, int16_t sCauseGridNo, int8_t bValue) {
   uint8_t ubPerson;
 
   // Cancel AI Action
@@ -125,7 +125,7 @@ void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, int
   }
 }
 
-void SetFinalTile(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fGivenUp) {
+void SetFinalTile(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fGivenUp) {
   // OK, If we were waiting for stuff, do it here...
 
   // ATE: Disabled stuff below, made obsolete by timeout...
@@ -149,7 +149,7 @@ void SetFinalTile(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fGivenUp)
   EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
 }
 
-void MarkMovementReserved(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void MarkMovementReserved(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
   // Check if we have one reserrved already, and free it first!
   if (pSoldier->sReservedMovementGridNo != NOWHERE) {
     UnMarkMovementReserved(pSoldier);
@@ -165,7 +165,7 @@ void MarkMovementReserved(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
 }
 
 void UnMarkMovementReserved(struct SOLDIERTYPE *pSoldier) {
-  INT16 sNewGridNo;
+  int16_t sNewGridNo;
 
   sNewGridNo = GETWORLDINDEXFROMWORLDCOORDS(pSoldier->dYPos, pSoldier->dXPos);
 
@@ -183,10 +183,11 @@ void UnMarkMovementReserved(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-int8_t TileIsClear(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sGridNo, int8_t bLevel) {
+int8_t TileIsClear(struct SOLDIERTYPE *pSoldier, int8_t bDirection, int16_t sGridNo,
+                   int8_t bLevel) {
   uint8_t ubPerson;
-  INT16 sTempDestGridNo;
-  INT16 sNewGridNo;
+  int16_t sTempDestGridNo;
+  int16_t sNewGridNo;
 
   if (sGridNo == NOWHERE) {
     return (MOVE_TILE_CLEAR);
@@ -331,10 +332,10 @@ int8_t TileIsClear(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sGridN
   return (MOVE_TILE_CLEAR);
 }
 
-BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sGridNo,
-                       INT16 sFinalDestTile) {
+BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, int8_t bDirection, int16_t sGridNo,
+                       int16_t sFinalDestTile) {
   int8_t bBlocked;
-  INT16 bOverTerrainType;
+  int16_t bOverTerrainType;
 
   // Check for blocking if in realtime
   /// if ( ( gTacticalStatus.uiFlags & REALTIME ) || !( gTacticalStatus.uiFlags & INCOMBAT ) )
@@ -367,7 +368,7 @@ BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sG
       else if (bBlocked == MOVE_TILE_STATIONARY_BLOCKED) {
         // Stationary,
         {
-          INT16 sOldFinalDest;
+          int16_t sOldFinalDest;
 
           // Maintain sFinalDest....
           sOldFinalDest = pSoldier->sFinalDestination;
@@ -386,7 +387,7 @@ BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sG
         }
       } else {
         {
-          INT16 sOldFinalDest;
+          int16_t sOldFinalDest;
 
           // Maintain sFinalDest....
           sOldFinalDest = pSoldier->sFinalDestination;
@@ -441,8 +442,8 @@ BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, int8_t bDirection, INT16 sG
 BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   // Buddy is waiting to continue his path
   int8_t bBlocked, bPathBlocked;
-  INT16 sCost;
-  INT16 sNewGridNo, sCheckGridNo;
+  int16_t sCost;
+  int16_t sNewGridNo, sCheckGridNo;
   uint8_t ubDirection, bCauseDirection;
   uint8_t ubPerson;
   uint8_t fFlags = 0;
@@ -530,8 +531,8 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
           gfPlotPathToExitGrid = TRUE;
         }
 
-        sCost = (INT16)FindBestPath(pSoldier, sCheckGridNo, pSoldier->bLevel,
-                                    pSoldier->usUIMovementMode, NO_COPYROUTE, fFlags);
+        sCost = (int16_t)FindBestPath(pSoldier, sCheckGridNo, pSoldier->bLevel,
+                                      pSoldier->usUIMovementMode, NO_COPYROUTE, fFlags);
         gfPlotPathToExitGrid = FALSE;
 
         // Can we get there
@@ -551,9 +552,9 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
               gfPlotPathToExitGrid = TRUE;
             }
 
-            sCost = (INT16)FindBestPath(pSoldier, sCheckGridNo, pSoldier->bLevel,
-                                        pSoldier->usUIMovementMode, NO_COPYROUTE,
-                                        PATH_IGNORE_PERSON_AT_DEST);
+            sCost = (int16_t)FindBestPath(pSoldier, sCheckGridNo, pSoldier->bLevel,
+                                          pSoldier->usUIMovementMode, NO_COPYROUTE,
+                                          PATH_IGNORE_PERSON_AT_DEST);
 
             gfPlotPathToExitGrid = FALSE;
 
@@ -679,8 +680,8 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fForce) {
-  INT16 sX, sY;
+BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fForce) {
+  int16_t sX, sY;
 
   // Check dest...
   if (NewOKDestination(pSoldier, sGridNo, TRUE, 0) || fForce) {
@@ -714,7 +715,7 @@ BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fFo
 
 // Swaps 2 soldier positions...
 void SwapMercPositions(struct SOLDIERTYPE *pSoldier1, struct SOLDIERTYPE *pSoldier2) {
-  INT16 sGridNo1, sGridNo2;
+  int16_t sGridNo1, sGridNo2;
 
   // OK, save positions...
   sGridNo1 = pSoldier1->sGridNo;

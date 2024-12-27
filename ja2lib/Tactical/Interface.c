@@ -90,8 +90,8 @@ typedef struct {
   int8_t bAnimate;
   int8_t bYPos;
   BOOLEAN fCreated;
-  INT16 sWorldRenderX;
-  INT16 sWorldRenderY;
+  int16_t sWorldRenderX;
+  int16_t sWorldRenderY;
 
 } TOP_MESSAGE;
 
@@ -222,14 +222,14 @@ uint16_t gsDownArrowY;
 uint32_t giUpArrowRect;
 uint32_t giDownArrowRect;
 
-void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                     INT16 sHeight);
+void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
+                     int16_t sHeight);
 void PopupDoorOpenMenu(BOOLEAN fClosingDoor);
 
 BOOLEAN fInterfacePanelDirty = DIRTYLEVEL2;
-INT16 gsInterfaceLevel = I_GROUND_LEVEL;
-INT16 gsCurrentSoldierGridNo = 0;
-INT16 gsCurInterfacePanel = TEAM_PANEL;
+int16_t gsInterfaceLevel = I_GROUND_LEVEL;
+int16_t gsCurrentSoldierGridNo = 0;
+int16_t gsCurInterfacePanel = TEAM_PANEL;
 
 // LOCAL FUCTIONS
 void BtnPositionCallback(GUI_BUTTON *btn, INT32 reason);
@@ -599,9 +599,10 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   iMenuAnchorX = giMenuAnchorX + 9;
   iMenuAnchorY = giMenuAnchorY + 8;
 
-  iActionIcons[RUN_ICON] = QuickCreateButton(
-      iIconImages[RUN_IMAGES], (INT16)(iMenuAnchorX + 20), (INT16)(iMenuAnchorY), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
+  iActionIcons[RUN_ICON] =
+      QuickCreateButton(iIconImages[RUN_IMAGES], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[RUN_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
     return;
@@ -615,9 +616,10 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
     DisableButton(iActionIcons[RUN_ICON]);
   }
 
-  iActionIcons[WALK_ICON] = QuickCreateButton(
-      iIconImages[WALK_IMAGES], (INT16)(iMenuAnchorX + 40), (INT16)(iMenuAnchorY), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
+  iActionIcons[WALK_ICON] =
+      QuickCreateButton(iIconImages[WALK_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[WALK_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
     return;
@@ -639,8 +641,8 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   }
 
   iActionIcons[SNEAK_ICON] =
-      QuickCreateButton(iIconImages[SNEAK_IMAGES], (INT16)(iMenuAnchorX + 40),
-                        (INT16)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[SNEAK_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[SNEAK_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -656,8 +658,8 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   }
 
   iActionIcons[CRAWL_ICON] =
-      QuickCreateButton(iIconImages[CRAWL_IMAGES], (INT16)(iMenuAnchorX + 40),
-                        (INT16)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[CRAWL_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[CRAWL_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -673,7 +675,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   }
 
   iActionIcons[LOOK_ICON] = QuickCreateButton(
-      iIconImages[LOOK_IMAGES], (INT16)(iMenuAnchorX), (INT16)(iMenuAnchorY), BUTTON_NO_TOGGLE,
+      iIconImages[LOOK_IMAGES], (int16_t)(iMenuAnchorX), (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE,
       MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[LOOK_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -754,8 +756,8 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   }
 
   iActionIcons[ACTIONC_ICON] =
-      QuickCreateButton(iIconImages[uiActionImages], (INT16)(iMenuAnchorX),
-                        (INT16)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[uiActionImages], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[ACTIONC_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -769,9 +771,10 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
     DisableButton(iActionIcons[ACTIONC_ICON]);
   }
 
-  iActionIcons[TALK_ICON] = QuickCreateButton(
-      iIconImages[TALK_IMAGES], (INT16)(iMenuAnchorX), (INT16)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
+  iActionIcons[TALK_ICON] =
+      QuickCreateButton(iIconImages[TALK_IMAGES], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[TALK_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
     return;
@@ -785,8 +788,8 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   }
 
   iActionIcons[HAND_ICON] =
-      QuickCreateButton(iIconImages[HAND_IMAGES], (INT16)(iMenuAnchorX + 20),
-                        (INT16)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[HAND_IMAGES], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[HAND_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -801,8 +804,8 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   }
 
   iActionIcons[CANCEL_ICON] =
-      QuickCreateButton(iIconImages[CANCEL_IMAGES], (INT16)(iMenuAnchorX + 20),
-                        (INT16)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[CANCEL_IMAGES], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[CANCEL_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -1074,7 +1077,7 @@ void EraseRenderArrows() {
 
 void GetArrowsBackground() {
   struct SOLDIERTYPE *pSoldier;
-  INT16 sMercScreenX, sMercScreenY;
+  int16_t sMercScreenX, sMercScreenY;
   uint16_t sArrowHeight = ARROWS_HEIGHT, sArrowWidth = ARROWS_WIDTH;
 
   if (guiShowUPDownArrows & ARROWS_HIDE_UP && guiShowUPDownArrows & ARROWS_HIDE_DOWN) {
@@ -1167,21 +1170,21 @@ void GetArrowsBackground() {
 
     // Register dirty rects
     giDownArrowRect = RegisterBackgroundRect(BGND_FLAG_PERMANENT, NULL, gsDownArrowX, gsDownArrowY,
-                                             (INT16)(gsDownArrowX + sArrowWidth),
-                                             (INT16)(gsDownArrowY + sArrowHeight));
+                                             (int16_t)(gsDownArrowX + sArrowWidth),
+                                             (int16_t)(gsDownArrowY + sArrowHeight));
     giUpArrowRect = RegisterBackgroundRect(BGND_FLAG_PERMANENT, NULL, gsUpArrowX, gsUpArrowY,
-                                           (INT16)(gsUpArrowX + sArrowWidth),
-                                           (INT16)(gsUpArrowY + sArrowHeight));
+                                           (int16_t)(gsUpArrowX + sArrowWidth),
+                                           (int16_t)(gsUpArrowY + sArrowHeight));
   }
 }
 
-void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
+void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, int16_t *psX, int16_t *psY,
                                  BOOLEAN fRadio) {
-  INT16 sMercScreenX, sMercScreenY;
-  INT16 sOffsetX, sOffsetY;
+  int16_t sMercScreenX, sMercScreenY;
+  int16_t sOffsetX, sOffsetY;
   uint8_t ubAnimUseHeight;
-  INT16 sStanceOffset = 0;
-  INT16 sTextBodyTypeYOffset = 62;
+  int16_t sStanceOffset = 0;
+  int16_t sTextBodyTypeYOffset = 62;
 
   // Find XY, dims, offsets
   GetSoldierScreenPos(pSoldier, &sMercScreenX, &sMercScreenY);
@@ -1261,8 +1264,8 @@ void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16
 
 void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
   struct SOLDIERTYPE *pSoldier;
-  INT16 sXPos, sYPos;
-  INT16 sX, sY;
+  int16_t sXPos, sYPos;
+  int16_t sX, sY;
   INT32 iBack;
   TILE_ELEMENT TileElem;
   CHAR16 *pStr;
@@ -1328,10 +1331,11 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
         // sYPos += 21;
 
         // Add bars
-        // iBack = RegisterBackgroundRect( BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (INT16)(sXPos + 55
-        // ), (INT16)(sYPos + 80 ) );
-        iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (INT16)(sXPos + 40),
-                                       (INT16)(sYPos + 40));
+        // iBack = RegisterBackgroundRect( BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos +
+        // 55
+        // ), (int16_t)(sYPos + 80 ) );
+        iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos + 40),
+                                       (int16_t)(sYPos + 40));
 
         if (iBack != -1) {
           SetBackgroundRectFilled(iBack);
@@ -1394,21 +1398,21 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
   if (GetSolProfile(pSoldier) != NO_PROFILE || (pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
     if (gfUIMouseOnValidCatcher == 1 && GetSolID(pSoldier) == gubUIValidCatcherID) {
       swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[CATCH_STR]);
-      FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos), (int16_t)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
       fRaiseName = TRUE;
     } else if (gfUIMouseOnValidCatcher == 3 && GetSolID(pSoldier) == gubUIValidCatcherID) {
       swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[RELOAD_STR]);
-      FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos), (int16_t)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
       fRaiseName = TRUE;
     } else if (gfUIMouseOnValidCatcher == 4 && GetSolID(pSoldier) == gubUIValidCatcherID) {
       swprintf(NameStr, ARR_SIZE(NameStr), pMessageStrings[MSG_PASS]);
-      FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos), (int16_t)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
@@ -1416,7 +1420,7 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
     } else if (pSoldier->bAssignment >= ON_DUTY) {
       SetFontForeground(FONT_YELLOW);
       swprintf(NameStr, ARR_SIZE(NameStr), L"(%s)", pAssignmentStrings[pSoldier->bAssignment]);
-      FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos), (int16_t)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
@@ -1425,7 +1429,7 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
                pSoldier->bAssignment != CurrentSquad() &&
                !(pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED)) {
       swprintf(NameStr, ARR_SIZE(NameStr), gzLateLocalizedString[34], (pSoldier->bAssignment + 1));
-      FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos), (int16_t)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
@@ -1446,13 +1450,13 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
     if (fDoName) {
       if (fRaiseName) {
         swprintf(NameStr, ARR_SIZE(NameStr), L"%s", pSoldier->name);
-        FindFontCenterCoordinates(sXPos, (INT16)(sYPos - 10), (INT16)(80), 1, NameStr, TINYFONT1,
-                                  &sX, &sY);
+        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos - 10), (int16_t)(80), 1, NameStr,
+                                  TINYFONT1, &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
       } else {
         swprintf(NameStr, ARR_SIZE(NameStr), L"%s", pSoldier->name);
-        FindFontCenterCoordinates(sXPos, sYPos, (INT16)(80), 1, NameStr, TINYFONT1, &sX, &sY);
+        FindFontCenterCoordinates(sXPos, sYPos, (int16_t)(80), 1, NameStr, TINYFONT1, &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
       }
@@ -1471,8 +1475,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
       }
 
       // Add bars
-      iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (INT16)(sXPos + 34),
-                                     (INT16)(sYPos + 11));
+      iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos + 34),
+                                     (int16_t)(sYPos + 11));
 
       if (iBack != -1) {
         SetBackgroundRectFilled(iBack);
@@ -1484,9 +1488,9 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
       // Draw life, breath
       // Only do this when we are a vehicle but on our team
       if (pSoldier->ubID == gusSelectedSoldier) {
-        DrawBarsInUIBox(pSoldier, (INT16)(sXPos + 1), (INT16)(sYPos + 2), 16, 1);
+        DrawBarsInUIBox(pSoldier, (int16_t)(sXPos + 1), (int16_t)(sYPos + 2), 16, 1);
       } else {
-        DrawBarsInUIBox(pSoldier, (INT16)(sXPos), (INT16)(sYPos), 16, 1);
+        DrawBarsInUIBox(pSoldier, (int16_t)(sXPos), (int16_t)(sYPos), 16, 1);
       }
     } else {
       if (gfUIMouseOnValidCatcher == 2 && GetSolID(pSoldier) == gubUIValidCatcherID) {
@@ -1495,8 +1499,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
         SetFontForeground(FONT_MCOLOR_WHITE);
 
         swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[GIVE_STR]);
-        FindFontCenterCoordinates(sXPos, (INT16)(sYPos + 10), (INT16)(80), 1, NameStr, TINYFONT1,
-                                  &sX, &sY);
+        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, NameStr,
+                                  TINYFONT1, &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
       } else {
@@ -1506,8 +1510,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
 
         pStr = GetSoldierHealthString(pSoldier);
 
-        FindFontCenterCoordinates(sXPos, (INT16)(sYPos + 10), (INT16)(80), 1, pStr, TINYFONT1, &sX,
-                                  &sY);
+        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, pStr, TINYFONT1,
+                                  &sX, &sY);
         gprintfdirty(sX, sY, pStr);
         mprintf(sX, sY, pStr);
       }
@@ -1520,8 +1524,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
       SetFontForeground(FONT_YELLOW);
 
       swprintf(NameStr, ARR_SIZE(NameStr), gzLateLocalizedString[15]);
-      FindFontCenterCoordinates(sXPos, (INT16)(sYPos + 10), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
-                                &sY);
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, NameStr, TINYFONT1,
+                                &sX, &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
     }
@@ -1532,7 +1536,7 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
     SetFontBackground(FONT_MCOLOR_BLACK);
     SetFontForeground(FONT_MCOLOR_DKRED);
 
-    FindFontCenterCoordinates(sXPos, sYPos, (INT16)(80), 1, pStr, TINYFONT1, &sX, &sY);
+    FindFontCenterCoordinates(sXPos, sYPos, (int16_t)(80), 1, pStr, TINYFONT1, &sX, &sY);
     gprintfdirty(sX, sY, pStr);
     mprintf(sX, sY, pStr);
   }
@@ -1598,8 +1602,8 @@ void EndOverlayMessage() {
   }
 }
 
-void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                     INT16 sHeight) {
+void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
+                     int16_t sHeight) {
   FLOAT dWidth, dPercentage;
   // uint16_t usLineColor;
 
@@ -1759,8 +1763,8 @@ typedef struct {
   struct SOLDIERTYPE *pSoldier;
   struct STRUCTURE *pStructure;
   uint8_t ubDirection;
-  INT16 sX;
-  INT16 sY;
+  int16_t sX;
+  int16_t sY;
   BOOLEAN fMenuHandled;
   BOOLEAN fClosingDoor;
 
@@ -1771,8 +1775,8 @@ BOOLEAN gfInOpenDoorMenu = FALSE;
 
 BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
                          uint8_t ubDirection, BOOLEAN fClosingDoor) {
-  INT16 sHeight, sWidth;
-  INT16 sScreenX, sScreenY;
+  int16_t sHeight, sWidth;
+  int16_t sScreenX, sScreenY;
 
   // Erase other menus....
   EraseInterfaceMenus(TRUE);
@@ -1844,8 +1848,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   MSYS_AddRegion(&gMenuOverlayRegion);
 
   iActionIcons[USE_KEYRING_ICON] =
-      QuickCreateButton(iIconImages[USE_KEYRING_IMAGES], (INT16)(iMenuAnchorX + 20),
-                        (INT16)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[USE_KEYRING_IMAGES], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[USE_KEYRING_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -1871,8 +1875,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   iActionIcons[USE_CROWBAR_ICON] =
-      QuickCreateButton(iIconImages[CROWBAR_DOOR_IMAGES], (INT16)(iMenuAnchorX + 40),
-                        (INT16)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[CROWBAR_DOOR_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[USE_CROWBAR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -1897,8 +1901,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   iActionIcons[LOCKPICK_DOOR_ICON] =
-      QuickCreateButton(iIconImages[LOCKPICK_DOOR_IMAGES], (INT16)(iMenuAnchorX + 40),
-                        (INT16)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[LOCKPICK_DOOR_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[LOCKPICK_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -1924,8 +1928,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   iActionIcons[EXPLOSIVE_DOOR_ICON] =
-      QuickCreateButton(iIconImages[EXPLOSIVE_DOOR_IMAGES], (INT16)(iMenuAnchorX + 40),
-                        (INT16)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[EXPLOSIVE_DOOR_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[EXPLOSIVE_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -1951,9 +1955,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
     DisableButton(iActionIcons[EXPLOSIVE_DOOR_ICON]);
   }
 
-  iActionIcons[OPEN_DOOR_ICON] = QuickCreateButton(
-      iIconImages[OPEN_DOOR_IMAGES], (INT16)(iMenuAnchorX), (INT16)(iMenuAnchorY), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
+  iActionIcons[OPEN_DOOR_ICON] =
+      QuickCreateButton(iIconImages[OPEN_DOOR_IMAGES], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[OPEN_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
     return;
@@ -1982,8 +1987,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
 
   // Create button based on what is in our hands at the moment!
   iActionIcons[EXAMINE_DOOR_ICON] =
-      QuickCreateButton(iIconImages[EXAMINE_DOOR_IMAGES], (INT16)(iMenuAnchorX),
-                        (INT16)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[EXAMINE_DOOR_IMAGES], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[EXAMINE_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -2004,8 +2009,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   iActionIcons[BOOT_DOOR_ICON] =
-      QuickCreateButton(iIconImages[BOOT_DOOR_IMAGES], (INT16)(iMenuAnchorX),
-                        (INT16)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[BOOT_DOOR_IMAGES], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[BOOT_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -2026,8 +2031,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   iActionIcons[UNTRAP_DOOR_ICON] =
-      QuickCreateButton(iIconImages[UNTRAP_DOOR_ICON], (INT16)(iMenuAnchorX + 20),
-                        (INT16)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[UNTRAP_DOOR_ICON], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[UNTRAP_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -2048,8 +2053,8 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   iActionIcons[CANCEL_ICON] =
-      QuickCreateButton(iIconImages[CANCEL_IMAGES], (INT16)(iMenuAnchorX + 20),
-                        (INT16)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iIconImages[CANCEL_IMAGES], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[CANCEL_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
@@ -2472,9 +2477,9 @@ BOOLEAN AddTopMessage(uint8_t ubType, CHAR16 *pzString) {
 void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
   uint32_t uiBAR, uiPLAYERBAR, uiINTBAR;
   VOBJECT_DESC VObjectDesc;
-  INT16 sX, sY;
+  int16_t sX, sY;
   INT32 cnt2;
-  INT16 sBarX = 0;
+  int16_t sBarX = 0;
   uint32_t uiBarToUseInUpDate = 0;
   BOOLEAN fDoLimitBar = FALSE;
 
@@ -2548,7 +2553,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
 	if ( ubType == COMPUTER_TURN_MESSAGE )
 	{
 		INT32		cnt1, iLength;
-		INT16		usNumStepsPerEnemy;
+		int16_t		usNumStepsPerEnemy;
 
 		if ( gfProgBarActive )
 		{
@@ -2576,7 +2581,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
 					break;
 				}
 
-				BltVideoObjectFromIndex( uiSurface, uiBAR, (INT16)( 4 + cnt2 ), sBarX, PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
+				BltVideoObjectFromIndex( uiSurface, uiBAR, (int16_t)( 4 + cnt2 ), sBarX, PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
 
 				cnt1++;
 				cnt2++;
@@ -2626,7 +2631,7 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
         break;
       }
 
-      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
+      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (int16_t)(2 + cnt2), sBarX,
                               PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
       dCurSize++;
@@ -2640,10 +2645,10 @@ void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, CHAR16 *psString) {
     // Do end...
     if (gTacticalStatus.usTactialTurnLimitCounter == gTacticalStatus.usTactialTurnLimitMax) {
       sBarX++;
-      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
+      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (int16_t)(2 + cnt2), sBarX,
                               PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
       sBarX++;
-      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (INT16)(12), sBarX, PROG_BAR_START_Y,
+      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (int16_t)(12), sBarX, PROG_BAR_START_Y,
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
@@ -3013,7 +3018,7 @@ CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier) {
 typedef struct {
   int8_t bHeight;
   int8_t bPower;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubLevel;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fShowHeight;
@@ -3021,7 +3026,7 @@ typedef struct {
   BOOLEAN fActiveHeightBar;
   BOOLEAN fActivePowerBar;
   BOOLEAN fAtEndHeight;
-  INT16 sTargetGridNo;
+  int16_t sTargetGridNo;
   FLOAT dInitialForce;
   FLOAT dForce;
   FLOAT dDegrees;
@@ -3060,7 +3065,7 @@ void CalculateAimCubeUIPhysics() {
   }
 }
 
-INT16 GetInAimCubeUIGridNo() { return (gCubeUIData.sGridNo); }
+int16_t GetInAimCubeUIGridNo() { return (gCubeUIData.sGridNo); }
 
 BOOLEAN InAimCubeUI() { return (gfInAimCubeUI); }
 
@@ -3081,7 +3086,7 @@ BOOLEAN AimCubeUIClick() {
   }
 }
 
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, int8_t ubLevel,
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel,
                     uint8_t bStartPower, int8_t bStartHeight) {
   gfInAimCubeUI = TRUE;
 
@@ -3160,9 +3165,9 @@ void ResetAimCubeAI() {
 }
 
 void RenderAimCubeUI() {
-  INT16 sScreenX, sScreenY;
+  int16_t sScreenX, sScreenY;
   INT32 cnt;
-  INT16 sBarHeight;
+  int16_t sBarHeight;
   INT32 iBack;
   int8_t bGraphicNum;
 
@@ -3173,8 +3178,8 @@ void RenderAimCubeUI() {
       GetGridNoScreenPos(gCubeUIData.sGridNo, gCubeUIData.ubLevel, &sScreenX, &sScreenY);
 
       // Save background
-      iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sScreenX, (INT16)(sScreenY - 70),
-                                     (INT16)(sScreenX + 40), (INT16)(sScreenY + 50));
+      iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sScreenX, (int16_t)(sScreenY - 70),
+                                     (int16_t)(sScreenX + 40), (int16_t)(sScreenY + 50));
       if (iBack != -1) {
         SetBackgroundRectFilled(iBack);
       }
@@ -3222,11 +3227,11 @@ void RenderAimCubeUI() {
 void GetLaunchItemParamsFromUI() {}
 
 static BOOLEAN gfDisplayPhysicsUI = FALSE;
-static INT16 gsPhysicsImpactPointGridNo;
+static int16_t gsPhysicsImpactPointGridNo;
 static int8_t gbPhysicsImpactPointLevel;
 static BOOLEAN gfBadPhysicsCTGT = FALSE;
 
-void BeginPhysicsTrajectoryUI(INT16 sGridNo, int8_t bLevel, BOOLEAN fBadCTGT) {
+void BeginPhysicsTrajectoryUI(int16_t sGridNo, int8_t bLevel, BOOLEAN fBadCTGT) {
   gfDisplayPhysicsUI = TRUE;
   gsPhysicsImpactPointGridNo = sGridNo;
   gbPhysicsImpactPointLevel = bLevel;
@@ -3278,11 +3283,11 @@ uint32_t CalcUIMessageDuration(STR16 wString) {
 BOOLEAN gfMultipurposeLocatorOn = FALSE;
 uint32_t guiMultiPurposeLocatorLastUpdate;
 int8_t gbMultiPurposeLocatorFrame;
-INT16 gsMultiPurposeLocatorGridNo;
+int16_t gsMultiPurposeLocatorGridNo;
 int8_t gbMultiPurposeLocatorLevel;
 int8_t gbMultiPurposeLocatorCycles;
 
-void BeginMultiPurposeLocator(INT16 sGridNo, int8_t bLevel, BOOLEAN fSlideTo) {
+void BeginMultiPurposeLocator(int16_t sGridNo, int8_t bLevel, BOOLEAN fSlideTo) {
   guiMultiPurposeLocatorLastUpdate = 0;
   gbMultiPurposeLocatorCycles = 0;
   gbMultiPurposeLocatorFrame = 0;
@@ -3337,7 +3342,7 @@ void HandleMultiPurposeLocator() {
 void RenderTopmostMultiPurposeLocator() {
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
-  INT16 sX, sY, sXPos, sYPos;
+  int16_t sX, sY, sXPos, sYPos;
   INT32 iBack;
 
   if (!gfMultipurposeLocatorOn) {
@@ -3352,8 +3357,8 @@ void RenderTopmostMultiPurposeLocator() {
   // Calculate guy's position
   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-  sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-  sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S -
+  sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+  sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S -
           gpWorldLevelData[gsMultiPurposeLocatorGridNo].sHeight;
 
   // Adjust for offset position on screen
@@ -3372,8 +3377,8 @@ void RenderTopmostMultiPurposeLocator() {
   sXPos -= 20;
   sYPos -= 20;
 
-  iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (INT16)(sXPos + 40),
-                                 (INT16)(sYPos + 40));
+  iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos + 40),
+                                 (int16_t)(sYPos + 40));
   if (iBack != -1) {
     SetBackgroundRectFilled(iBack);
   }

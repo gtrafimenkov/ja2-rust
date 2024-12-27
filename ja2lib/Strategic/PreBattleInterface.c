@@ -688,7 +688,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
   uint32_t uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
   uint32_t uiTimeRange;
-  INT16 sStartLeft, sEndLeft, sStartTop, sEndTop;
+  int16_t sStartLeft, sEndLeft, sStartTop, sEndTop;
   INT32 iLeft, iTop, iWidth, iHeight;
   BOOLEAN fEnterAutoResolveMode = FALSE;
 
@@ -1338,11 +1338,11 @@ void InvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
                 struct SOLDIERTYPE *pSoldier;
-                INT16 y;
+                int16_t y;
                 pSoldier = InvolvedSoldier( giHilitedInvolved );
                 if( !pSoldier )
                         return;
-                y = (INT16)(reg->RegionTopLeftY + giHilitedUninvolved * ROW_HEIGHT + 5);
+                y = (int16_t)(reg->RegionTopLeftY + giHilitedUninvolved * ROW_HEIGHT + 5);
                 if( y + 102 >= 360 )
                         y -= 102;
                 if( gusMouseXPos >= 76 && gusMouseXPos <= 129 )
@@ -1368,11 +1368,11 @@ void UninvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
                 struct SOLDIERTYPE *pSoldier;
-                INT16 y;
+                int16_t y;
                 pSoldier = UninvolvedSoldier( giHilitedUninvolved );
                 if( !pSoldier )
                         return;
-                y = (INT16)(reg->RegionTopLeftY + giHilitedUninvolved * ROW_HEIGHT + 5);
+                y = (int16_t)(reg->RegionTopLeftY + giHilitedUninvolved * ROW_HEIGHT + 5);
                 if( y + 102 >= 360 )
                         y -= 102;
                 if( gusMouseXPos >= 76 && gusMouseXPos <= 129 )
@@ -1714,8 +1714,8 @@ BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup) {
   return (FALSE);
 }
 
-BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
-  INT16 sBattleSectorX, sBattleSectorY, sBattleSectorZ;
+BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
+  int16_t sBattleSectorX, sBattleSectorY, sBattleSectorZ;
   BOOLEAN fSuccess;
 
   fSuccess = GetCurrentBattleSectorXYZ(&sBattleSectorX, &sBattleSectorY, &sBattleSectorZ);
@@ -1752,7 +1752,7 @@ void CheckForRobotAndIfItsControlled(void) {
 }
 
 void LogBattleResults(uint8_t ubVictoryCode) {
-  INT16 sSectorX, sSectorY, sSectorZ;
+  int16_t sSectorX, sSectorY, sSectorZ;
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   if (ubVictoryCode == LOG_VICTORY) {
     switch (gubEnemyEncounterCode) {

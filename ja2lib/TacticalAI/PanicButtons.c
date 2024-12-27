@@ -13,11 +13,11 @@
 
 void MakeClosestEnemyChosenOne() {
   uint32_t cnt;
-  INT16 sPathCost, sShortestPath = 1000;
+  int16_t sPathCost, sShortestPath = 1000;
   uint8_t ubClosestEnemy = NOBODY;
   struct SOLDIERTYPE *pSoldier;
   int8_t bPanicTrigger;
-  INT16 sPanicTriggerGridNo;
+  int16_t sPanicTriggerGridNo;
 
   if (!(gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE)) {
 #ifdef BETAVERSION
@@ -158,7 +158,7 @@ void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
   INT32 iAPCost, iPathCost;
   // int8_t		bOldKeys;
   int8_t bPanicTrigger;
-  INT16 sPanicTriggerGridNo;
+  int16_t sPanicTriggerGridNo;
   uint32_t uiPercentEnemiesKilled;
 
   if (!(gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE)) {
@@ -216,7 +216,7 @@ int8_t PanicAI(struct SOLDIERTYPE *pSoldier, uint8_t ubCanMove) {
   int8_t bSlot;
   INT32 iPathCost;
   int8_t bPanicTrigger;
-  INT16 sPanicTriggerGridNo;
+  int16_t sPanicTriggerGridNo;
 
   // if there are panic bombs here
   if (gTacticalStatus.fPanicFlags & PANIC_BOMBS_HERE) {
@@ -362,8 +362,8 @@ void InitPanicSystem(void) {
 
 int8_t ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier) {
   int8_t bLoop;
-  INT16 sDistance;
-  INT16 sClosestDistance = 1000;
+  int16_t sDistance;
+  int16_t sClosestDistance = 1000;
   int8_t bClosestTrigger = -1;
   uint32_t uiPercentEnemiesKilled;
 

@@ -120,8 +120,8 @@ INT32 giDestroyedLairID = 0;
 
 // various information required for keeping track of the battle sector involved for
 // prebattle interface, autoresolve, etc.
-INT16 gsCreatureInsertionCode = 0;
-INT16 gsCreatureInsertionGridNo = 0;
+int16_t gsCreatureInsertionCode = 0;
+int16_t gsCreatureInsertionGridNo = 0;
 uint8_t gubNumCreaturesAttackingTown = 0;
 uint8_t gubYoungMalesAttackingTown = 0;
 uint8_t gubYoungFemalesAttackingTown = 0;
@@ -130,7 +130,7 @@ uint8_t gubAdultFemalesAttackingTown = 0;
 uint8_t gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
 uint8_t gubSectorIDOfCreatureAttack = 0;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, uint8_t bMapZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(int16_t sMapX, int16_t sMapY, uint8_t bMapZ);
 extern UNDERGROUND_SECTORINFO *NewUndergroundNode(uint8_t ubSectorX, uint8_t ubSectorY,
                                                   uint8_t ubSectorZ);
 extern void BuildUndergroundSectorInfoList();
@@ -1395,7 +1395,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   CREATURE_DIRECTIVE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   int8_t bSectorZ;
 
   if (giLairID <= 0) {  // Creature quest inactive
@@ -1427,8 +1427,8 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
 }
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, int8_t *pbSectorZ,
-                              INT16 *psInsertionGridNo) {
+BOOLEAN GetWarpOutOfMineCodes(int16_t *psSectorX, int16_t *psSectorY, int8_t *pbSectorZ,
+                              int16_t *psInsertionGridNo) {
   INT32 iSwitchValue;
 
   if (!gfWorldLoaded) {

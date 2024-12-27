@@ -34,14 +34,14 @@ BUILDING* CreateNewBuilding(uint8_t* pubBuilding) {
   return (&(gBuildings[gubNumberOfBuildings]));
 }
 
-BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
+BUILDING* GenerateBuilding(int16_t sDesiredSpot) {
   uint32_t uiLoop;
-  INT16 sTempGridNo, sNextTempGridNo, sVeryTemporaryGridNo;
-  INT16 sStartGridNo, sCurrGridNo, sPrevGridNo = NOWHERE, sRightGridNo;
+  int16_t sTempGridNo, sNextTempGridNo, sVeryTemporaryGridNo;
+  int16_t sStartGridNo, sCurrGridNo, sPrevGridNo = NOWHERE, sRightGridNo;
   int8_t bDirection, bTempDirection;
   BOOLEAN fFoundDir, fFoundWall;
   uint32_t uiChanceIn = ROOF_LOCATION_CHANCE;  // chance of a location being considered
-  INT16 sWallGridNo;
+  int16_t sWallGridNo;
   int8_t bDesiredOrientation;
   int8_t bSkipSpots = 0;
   struct SOLDIERTYPE FakeSoldier;
@@ -60,7 +60,7 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
   FakeSoldier.bTeam = 1;
 
 #ifdef ROOF_DEBUG
-  memset(gsCoverValue, 0x7F, sizeof(INT16) * WORLD_MAX);
+  memset(gsCoverValue, 0x7F, sizeof(int16_t) * WORLD_MAX);
 #endif
 
   // Set reachable
@@ -192,11 +192,11 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
           bDesiredOrientation = OUTSIDE_TOP_LEFT;
           break;
         case SOUTH:
-          sWallGridNo = (INT16)(sCurrGridNo + DirectionInc(gTwoCDirection[bDirection]));
+          sWallGridNo = (int16_t)(sCurrGridNo + DirectionInc(gTwoCDirection[bDirection]));
           bDesiredOrientation = OUTSIDE_TOP_RIGHT;
           break;
         case WEST:
-          sWallGridNo = (INT16)(sCurrGridNo + DirectionInc(gTwoCDirection[bDirection]));
+          sWallGridNo = (int16_t)(sCurrGridNo + DirectionInc(gTwoCDirection[bDirection]));
           bDesiredOrientation = OUTSIDE_TOP_LEFT;
           break;
         default:
@@ -286,7 +286,7 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
   return (pBuilding);
 }
 
-BUILDING* FindBuilding(INT16 sGridNo) {
+BUILDING* FindBuilding(int16_t sGridNo) {
   uint8_t ubBuildingID;
   // uint8_t					ubRoomNo;
 
@@ -320,7 +320,7 @@ BUILDING* FindBuilding(INT16 sGridNo) {
   return (&(gBuildings[ubBuildingID]));
 }
 
-BOOLEAN InBuilding(INT16 sGridNo) {
+BOOLEAN InBuilding(int16_t sGridNo) {
   if (FindBuilding(sGridNo) == NULL) {
     return (FALSE);
   }
@@ -352,18 +352,18 @@ void GenerateBuildings(void) {
 
   for (uiLoop = 0; uiLoop < WORLD_MAX; uiLoop++) {
     if ((gubWorldRoomInfo[uiLoop] != NO_ROOM) && (gubBuildingInfo[uiLoop] == NO_BUILDING) &&
-        (FindStructure((INT16)uiLoop, STRUCTURE_NORMAL_ROOF) != NULL)) {
-      GenerateBuilding((INT16)uiLoop);
+        (FindStructure((int16_t)uiLoop, STRUCTURE_NORMAL_ROOF) != NULL)) {
+      GenerateBuilding((int16_t)uiLoop);
     }
   }
 }
 
-INT16 FindClosestClimbPoint(INT16 sStartGridNo, INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
+int16_t FindClosestClimbPoint(int16_t sStartGridNo, int16_t sDesiredGridNo, BOOLEAN fClimbUp) {
   BUILDING* pBuilding;
   uint8_t ubNumClimbSpots;
-  INT16* psClimbSpots;
+  int16_t* psClimbSpots;
   uint8_t ubLoop;
-  INT16 sDistance, sClosestDistance = 1000, sClosestSpot = NOWHERE;
+  int16_t sDistance, sClosestDistance = 1000, sClosestSpot = NOWHERE;
 
   pBuilding = FindBuilding(sDesiredGridNo);
   if (!pBuilding) {
@@ -392,7 +392,7 @@ INT16 FindClosestClimbPoint(INT16 sStartGridNo, INT16 sDesiredGridNo, BOOLEAN fC
   return (sClosestSpot);
 }
 
-BOOLEAN SameBuilding(INT16 sGridNo1, INT16 sGridNo2) {
+BOOLEAN SameBuilding(int16_t sGridNo1, int16_t sGridNo2) {
   if (gubBuildingInfo[sGridNo1] == NO_BUILDING) {
     return (FALSE);
   }

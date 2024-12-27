@@ -67,10 +67,10 @@ uint16_t gusMeanWhileGridNo[] = {
 
 typedef struct {
   uint8_t ubProfile;
-  INT16 sX;
-  INT16 sY;
-  INT16 sZ;
-  INT16 sGridNo;
+  int16_t sX;
+  int16_t sY;
+  int16_t sZ;
+  int16_t sGridNo;
 
 } NPC_SAVE_INFO;
 
@@ -80,18 +80,18 @@ MEANWHILE_DEFINITION gMeanwhileDef[NUM_MEANWHILES];
 BOOLEAN gfMeanwhileTryingToStart = FALSE;
 BOOLEAN gfInMeanwhile = FALSE;
 // END SERIALIZATION
-INT16 gsOldSectorX;
-INT16 gsOldSectorY;
-INT16 gsOldSectorZ;
-INT16 gsOldSelectedSectorX;
-INT16 gsOldSelectedSectorY;
-INT16 gsOldSelectedSectorZ;
+int16_t gsOldSectorX;
+int16_t gsOldSectorY;
+int16_t gsOldSectorZ;
+int16_t gsOldSelectedSectorX;
+int16_t gsOldSelectedSectorY;
+int16_t gsOldSelectedSectorZ;
 
 uint32_t guiOldScreen;
 NPC_SAVE_INFO gNPCSaveData[MAX_MEANWHILE_PROFILES];
 uint32_t guiNumNPCSaves = 0;
 BOOLEAN gfReloadingScreenFromMeanwhile = FALSE;
-INT16 gsOldCurInterfacePanel = 0;
+int16_t gsOldCurInterfacePanel = 0;
 BOOLEAN gfWorldWasLoaded = FALSE;
 uint8_t ubCurrentMeanWhileId = 0;
 
@@ -387,7 +387,7 @@ void StartMeanwhile() {
 
   gsOldSelectedSectorX = sSelMapX;
   gsOldSelectedSectorY = sSelMapY;
-  gsOldSelectedSectorZ = (INT16)iCurrentMapSectorZ;
+  gsOldSelectedSectorZ = (int16_t)iCurrentMapSectorZ;
 
   gfInMeanwhile = TRUE;
 
@@ -623,7 +623,7 @@ void ProcessImplicationsOfMeanwhile(void) {
       HandleNPCDoAction(QUEEN, NPC_ACTION_ADD_RAT, 0);
       break;
     case AWOL_SCIENTIST: {
-      INT16 sSectorX, sSectorY;
+      int16_t sSectorX, sSectorY;
 
       StartQuest(QUEST_FIND_SCIENTIST, -1, -1);
       // place Madlab and robot!
@@ -773,7 +773,7 @@ void DoneFadeOutMeanwhileOnceDone() {
 void DoneFadeInMeanwhileOnceDone() {}
 
 void LocateMeanWhileGrid(void) {
-  INT16 sGridNo = 0;
+  int16_t sGridNo = 0;
 
   // go to the approp. gridno
   sGridNo = gusMeanWhileGridNo[ubCurrentMeanWhileId];
@@ -1108,10 +1108,10 @@ void HandleDelayedFirstBattleVictory(void) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, INT16 bSectorZ,
+void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, int16_t bSectorZ,
                                         BOOLEAN fFromAutoResolve) {
   TownID bTownId = 0;
-  INT16 sSector = 0;
+  int16_t sSector = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
     return;

@@ -12,9 +12,9 @@ typedef struct {
   CHAR8 zName[128];               // Name of tile ( filename and directory here )
   CHAR8 zRootName[30];            // Root name
   struct TILE_IMAGERY *pImagery;  // Tile imagery
-  INT16 sHits;
+  int16_t sHits;
   uint8_t ubNumFrames;
-  INT16 sStructRefID;
+  int16_t sStructRefID;
 
 } TILE_CACHE_ELEMENT;
 
@@ -37,7 +37,7 @@ struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename)
 
 struct VObject *GetCachedTileVideoObject(INT32 iIndex);
 struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex);
-void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, uint16_t usIndex,
+void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, int16_t sGridNo, uint16_t usIndex,
                                        uint16_t usSubIndex);
 void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIndex);
 void GetRootName(STR8 pDestStr, STR8 pSrcStr);

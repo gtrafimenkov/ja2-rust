@@ -178,15 +178,15 @@ typedef struct {
   int8_t bDeathRate;
   int8_t bScientific;
 
-  INT16 sExpLevelGain;
-  INT16 sLifeGain;
-  INT16 sAgilityGain;
-  INT16 sDexterityGain;
-  INT16 sWisdomGain;
-  INT16 sMarksmanshipGain;
-  INT16 sMedicalGain;
-  INT16 sMechanicGain;
-  INT16 sExplosivesGain;
+  int16_t sExpLevelGain;
+  int16_t sLifeGain;
+  int16_t sAgilityGain;
+  int16_t sDexterityGain;
+  int16_t sWisdomGain;
+  int16_t sMarksmanshipGain;
+  int16_t sMedicalGain;
+  int16_t sMechanicGain;
+  int16_t sExplosivesGain;
 
   uint8_t ubBodyType;
   int8_t bMedical;
@@ -226,13 +226,13 @@ typedef struct {
   uint16_t usTimesWounded;
   uint16_t usTotalDaysServed;
 
-  INT16 sLeadershipGain;
-  INT16 sStrengthGain;
+  int16_t sLeadershipGain;
+  int16_t sStrengthGain;
 
   // BODY TYPE SUBSITUTIONS
   uint32_t uiBodyTypeSubFlags;
 
-  INT16 sSalary;
+  int16_t sSalary;
   int8_t bLife;
   int8_t bDexterity;  // dexterity (hand coord) value
   int8_t bPersonalityTrait;
@@ -261,7 +261,7 @@ typedef struct {
   int8_t bAgility;  // agility (speed) value
 
   BOOLEAN fUseProfileInsertionInfo;  // Set to various flags, ( contained in TacticalSave.h )
-  INT16 sGridNo;                     // The Gridno the NPC was in before leaving the sector
+  int16_t sGridNo;                   // The Gridno the NPC was in before leaving the sector
   uint8_t ubQuoteActionID;
   int8_t bMechanical;
 
@@ -323,8 +323,8 @@ typedef struct {
   int8_t bThreatenDefaultResponseUsedRecently;
   int8_t bNPCData;  // NPC specific
   INT32 iBalance;
-  INT16 sTrueSalary;  // for use when the person is working for us for free but has a positive
-                      // salary value
+  int16_t sTrueSalary;  // for use when the person is working for us for free but has a positive
+                        // salary value
   uint8_t ubCivilianGroup;
   uint8_t ubNeedForSleep;
   uint32_t uiMoney;
@@ -340,7 +340,7 @@ typedef struct {
   // -  ~107.  Gets reset every day
   uint32_t uiPrecedentQuoteSaid;
   uint32_t uiProfileChecksum;
-  INT16 sPreCombatGridNo;
+  int16_t sPreCombatGridNo;
   uint8_t ubTimeTillNextHatedComplaint;
   uint8_t ubSuspiciousDeath;
 

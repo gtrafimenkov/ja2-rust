@@ -220,7 +220,7 @@ BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitM
 
 BOOLEAN EraseMouseCursor() { return FALSE; }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, uint16_t usCursorHeight,
+BOOLEAN SetMouseCursorProperties(int16_t sOffsetX, int16_t sOffsetY, uint16_t usCursorHeight,
                                  uint16_t usCursorWidth) {
   return FALSE;
 }
@@ -263,7 +263,7 @@ BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 
 
 BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  uint16_t Index, INT16 Ox, INT16 Oy) {
+                                  uint16_t Index, int16_t Ox, int16_t Oy) {
   return FALSE;
 }
 
@@ -333,9 +333,9 @@ void SmkCloseFlic(struct SmkFlic *pSmack) {}
 
 void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor) {}
 
-INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) { return 0; }
+int16_t WinFontStringPixLength(STR16 string2, INT32 iFont) { return 0; }
 
-INT16 GetWinFontHeight(STR16 string2, INT32 iFont) { return 0; }
+int16_t GetWinFontHeight(STR16 string2, INT32 iFont) { return 0; }
 
 uint32_t WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) { return 0; }
 

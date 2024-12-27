@@ -1212,7 +1212,7 @@ void AwardExperienceForTravelling(struct GROUP *pGroup) {
 
 void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
   ROTTING_CORPSE_DEFINITION Corpse;
-  INT16 sXPos, sYPos;
+  int16_t sXPos, sYPos;
 
   memset(&Corpse, 0, sizeof(ROTTING_CORPSE_DEFINITION));
 
@@ -1392,7 +1392,7 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
       pSoldier = GetSoldierStructureForVehicle(iVehicleID);
       AssertMsg(pSoldier, "GroupArrival for vehicle group.  Invalid soldier pointer.");
 
-      SpendVehicleFuel(pSoldier, (INT16)(pGroup->uiTraverseTime * 6));
+      SpendVehicleFuel(pSoldier, (int16_t)(pGroup->uiTraverseTime * 6));
 
       if (!VehicleFuelRemaining(pSoldier)) {
         ReportVehicleOutOfGas(iVehicleID, pGroup->ubSectorX, pGroup->ubSectorY);
@@ -2198,7 +2198,7 @@ void RemoveAllGroups() {
   gfRemovingAllGroups = FALSE;
 }
 
-void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubGroupID) {
+void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubGroupID) {
   struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
 
@@ -2744,10 +2744,10 @@ void HandleArrivalOfReinforcements(struct GROUP *pGroup) {
   }
 }
 
-BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnter,
+BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, INT32 *iCountEnter,
                                    INT32 *iCountExit, BOOLEAN *fAboutToArriveEnter) {
   struct GROUP *curr = gpGroupList;
-  INT16 sBattleSector = -1;
+  int16_t sBattleSector = -1;
   BOOLEAN fMayRetreatFromBattle = FALSE;
   BOOLEAN fRetreatingFromBattle = FALSE;
   BOOLEAN fHelicopterGroup = FALSE;
@@ -2759,7 +2759,7 @@ BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnte
 
   if (gpBattleGroup) {
     // Assert( gfPreBattleInterfaceActive );
-    sBattleSector = (INT16)GetSectorID8(gpBattleGroup->ubSectorX, gpBattleGroup->ubSectorY);
+    sBattleSector = (int16_t)GetSectorID8(gpBattleGroup->ubSectorX, gpBattleGroup->ubSectorY);
   }
 
   // debug only
@@ -3168,7 +3168,7 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
   uint32_t uiProfileID = 0;
   uint32_t uiNumBytesRead;
   uint32_t cnt = 0;
-  INT16 sTempID;
+  int16_t sTempID;
   struct GROUP *pTempGroup = *pGroup;
 
   //	pTemp = pGroup;
@@ -3575,7 +3575,7 @@ WAYPOINT *GetFinalWaypoint(struct GROUP *pGroup) {
 // ResetMovementForEnemyGroup() for more details on what the resetting does.
 void ResetMovementForEnemyGroupsInLocation(uint8_t ubSectorX, uint8_t ubSectorY) {
   struct GROUP *pGroup, *next;
-  INT16 sSectorX, sSectorY, sSectorZ;
+  int16_t sSectorX, sSectorY, sSectorZ;
 
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   pGroup = gpGroupList;
@@ -3771,7 +3771,7 @@ BOOLEAN GroupWillMoveThroughSector(struct GROUP *pGroup, uint8_t ubSectorX, uint
   return FALSE;
 }
 
-INT16 CalculateFuelCostBetweenSectors(uint8_t ubSectorID1, uint8_t ubSectorID2) { return (0); }
+int16_t CalculateFuelCostBetweenSectors(uint8_t ubSectorID1, uint8_t ubSectorID2) { return (0); }
 
 BOOLEAN VehicleHasFuel(struct SOLDIERTYPE *pSoldier) {
   Assert(pSoldier->uiStatusFlags & SOLDIER_VEHICLE);
@@ -3781,22 +3781,22 @@ BOOLEAN VehicleHasFuel(struct SOLDIERTYPE *pSoldier) {
   return FALSE;
 }
 
-INT16 VehicleFuelRemaining(struct SOLDIERTYPE *pSoldier) {
+int16_t VehicleFuelRemaining(struct SOLDIERTYPE *pSoldier) {
   Assert(pSoldier->uiStatusFlags & SOLDIER_VEHICLE);
   return pSoldier->sBreathRed;
 }
 
-BOOLEAN SpendVehicleFuel(struct SOLDIERTYPE *pSoldier, INT16 sFuelSpent) {
+BOOLEAN SpendVehicleFuel(struct SOLDIERTYPE *pSoldier, int16_t sFuelSpent) {
   Assert(pSoldier->uiStatusFlags & SOLDIER_VEHICLE);
   pSoldier->sBreathRed -= sFuelSpent;
-  pSoldier->sBreathRed = (INT16)max(0, pSoldier->sBreathRed);
+  pSoldier->sBreathRed = (int16_t)max(0, pSoldier->sBreathRed);
   pSoldier->bBreath = (int8_t)((pSoldier->sBreathRed + 99) / 100);
   return (FALSE);
 }
 
 void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle) {
   struct OBJECTTYPE *pItem;
-  INT16 sFuelNeeded, sFuelAvailable, sFuelAdded;
+  int16_t sFuelNeeded, sFuelAvailable, sFuelAdded;
   pItem = &pSoldier->inv[HANDPOS];
   if (pItem->usItem != GAS_CAN) {
 #ifdef JA2BETAVERSION
@@ -4057,8 +4057,8 @@ void NotifyPlayerOfBloodcatBattle(uint8_t ubSectorX, uint8_t ubSectorY) {
   DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, TriggerPrebattleInterface);
 }
 
-void PlaceGroupInSector(uint8_t ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
-                        int8_t bZ, BOOLEAN fCheckForBattle) {
+void PlaceGroupInSector(uint8_t ubGroupID, int16_t sPrevX, int16_t sPrevY, int16_t sNextX,
+                        int16_t sNextY, int8_t bZ, BOOLEAN fCheckForBattle) {
   ClearMercPathsAndWaypointsForAllInGroup(GetGroup(ubGroupID));
 
   // change where they are and where they're going
@@ -4171,11 +4171,11 @@ void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPC
 }
 
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup) {
-  INT16 sSectorX = 0, sSectorY = 0;
+  int16_t sSectorX = 0, sSectorY = 0;
   int8_t bSectorZ = 0;
   CHAR16 sString[128];
   CHAR16 wSectorName[128];
-  INT16 sStrategicSector;
+  int16_t sStrategicSector;
 
   Assert(pGroup);
   Assert(pGroup->fPlayer);

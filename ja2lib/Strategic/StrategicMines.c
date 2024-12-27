@@ -337,7 +337,7 @@ int8_t GetMineAssociatedWithThisTown(TownID bTownId) {
 uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
   uint32_t uiAmountExtracted = 0;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
@@ -625,7 +625,7 @@ INT32 CalcMaxPlayerIncomeFromMines(void) {
 }
 
 // get index of this mine, return -1 if no mine found
-int8_t GetMineIndexForSector(INT16 sX, INT16 sY) {
+int8_t GetMineIndexForSector(int16_t sX, int16_t sY) {
   uint8_t ubMineIndex = 0;
 
   for (ubMineIndex = 0; ubMineIndex < MAX_NUMBER_OF_MINES; ubMineIndex++) {
@@ -639,7 +639,7 @@ int8_t GetMineIndexForSector(INT16 sX, INT16 sY) {
   return (-1);
 }
 
-void GetMineSector(uint8_t ubMineIndex, INT16 *psX, INT16 *psY) {
+void GetMineSector(uint8_t ubMineIndex, int16_t *psX, int16_t *psY) {
   Assert((ubMineIndex >= 0) && (ubMineIndex < MAX_NUMBER_OF_MINES));
 
   *psX = gMineLocation[ubMineIndex].sSectorX;
@@ -661,9 +661,9 @@ int8_t GetMineIndexForTown(TownID bTownId) {
 }
 
 // get the sector value for the mine associated with this town
-INT16 GetMineSectorForTown(TownID bTownId) {
+int16_t GetMineSectorForTown(TownID bTownId) {
   int8_t ubMineIndex;
-  INT16 sMineSector = -1;
+  int16_t sMineSector = -1;
 
   // given town id, send sector value of mine, a 0 means no mine for this town
   for (ubMineIndex = 0; ubMineIndex < MAX_NUMBER_OF_MINES; ubMineIndex++) {
@@ -678,7 +678,7 @@ INT16 GetMineSectorForTown(TownID bTownId) {
   return (sMineSector);
 }
 
-BOOLEAN IsThereAMineInThisSector(INT16 sX, INT16 sY) {
+BOOLEAN IsThereAMineInThisSector(int16_t sX, int16_t sY) {
   uint8_t ubMineIndex;
 
   // run through the list...if a mine here, great
@@ -799,7 +799,7 @@ void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType) {
   uint16_t usHeadMinerProfileId = 0;
   int8_t bQuoteNum = 0;
   BOOLEAN fForceMapscreen = FALSE;
-  INT16 sXPos, sYPos;
+  int16_t sXPos, sYPos;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
   Assert(ubQuoteType < NUM_HEAD_MINER_STRATEGIC_QUOTES);
@@ -857,7 +857,7 @@ void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType) {
   // cause this quote to come up for this profile id and an indicator to flash over the mine sector
   HandleMinerEvent(gHeadMinerData[ubHeadMinerIndex].ubExternalFace,
                    gMineLocation[bMineIndex].sSectorX, gMineLocation[bMineIndex].sSectorY,
-                   (INT16)bQuoteNum, fForceMapscreen);
+                   (int16_t)bQuoteNum, fForceMapscreen);
 
   // stop time compression with any miner quote - these are important events.
   StopTimeCompression();
@@ -1023,7 +1023,7 @@ BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId) {
 // gte the id of the mine for this sector x,y,z...-1 is invalid
 int8_t GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   int8_t bMineIndex = -1;
-  INT16 sSectorValue;
+  int16_t sSectorValue;
 
   // are we even on the right level?
   if ((bSectorZ < 0) && (bSectorZ > 2)) {

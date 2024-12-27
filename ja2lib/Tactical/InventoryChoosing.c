@@ -665,7 +665,7 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bWeapon
 void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bGrenades,
                                           int8_t bGrenadeClass, BOOLEAN fGrenadeLauncher) {
   struct OBJECTTYPE Object;
-  INT16 sNumPoints;
+  int16_t sNumPoints;
   uint16_t usItem;
   uint8_t ubBaseQuality;
   uint8_t ubQualityVariation;

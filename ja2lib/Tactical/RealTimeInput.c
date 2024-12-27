@@ -69,8 +69,8 @@ extern uint32_t guiCurrentEvent;
 extern uint32_t guiCurrentUICursor;
 extern void DetermineWhichAssignmentMenusCanBeShown(void);
 extern BOOLEAN gfIgnoreOnSelectedGuy;
-extern INT16 gsOverItemsGridNo;
-extern INT16 gsOverItemsLevel;
+extern int16_t gsOverItemsGridNo;
+extern int16_t gsOverItemsLevel;
 extern uint32_t guiUITargetSoldierId;
 extern BOOLEAN gfUIShowExitSouth;
 
@@ -95,7 +95,7 @@ void QueryRTLeftButton(uint32_t *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiMercFlags;
   static uint32_t uiSingleClickTime;
-  INT16 usMapPos;
+  int16_t usMapPos;
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
   static BOOLEAN fCanCheckForSpeechAdvance = FALSE;
@@ -527,7 +527,7 @@ void QueryRTLeftButton(uint32_t *puiNewEvent) {
                                   //}/
                                   // else
                                   {
-                                    INT16 sIntTileGridNo;
+                                    int16_t sIntTileGridNo;
 
                                     if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
                                       BeginDisplayTimedCursor(
@@ -780,7 +780,7 @@ void QueryRTRightButton(uint32_t *puiNewEvent) {
   static BOOLEAN fValidDoubleClickPossible = FALSE;
 
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
 
   if (gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
     if (!GetMouseMapPos(&usMapPos)) {
@@ -1027,7 +1027,7 @@ extern BOOLEAN ConfirmActionCancel(uint16_t usMapPos, uint16_t usOldMapPos);
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
 void GetRTMousePositionInput(uint32_t *puiNewEvent) {
-  INT16 usMapPos;
+  int16_t usMapPos;
   static uint16_t usOldMapPos = 0;
   static uint32_t uiMoveTargetSoldierId = NO_SOLDIER;
   struct SOLDIERTYPE *pSoldier;

@@ -78,7 +78,7 @@ BOOLEAN IsRobotControllerInSquad(int8_t bSquadValue);
 int8_t NumberOfPlayerControllableMercsInSquad(int8_t bSquadValue);
 
 // what sector is the squad currently in?..return if anyone in squad
-BOOLEAN SectorSquadIsIn(int8_t bSquadValue, INT16 *sMapX, INT16 *sMapY, INT16 *sMapZ);
+BOOLEAN SectorSquadIsIn(int8_t bSquadValue, int16_t *sMapX, int16_t *sMapY, int16_t *sMapZ);
 
 // rebuild current squad list
 void RebuildCurrentSquad(void);
@@ -122,7 +122,7 @@ void GetSquadPosition(uint8_t *ubNextX, uint8_t *ubNextY, uint8_t *ubPrevX, uint
 void ExamineCurrentSquadLights(void);
 
 // get location of this squad
-void GetLocationOfSquad(INT16 *sX, INT16 *sY, int8_t *bZ, int8_t bSquadValue);
+void GetLocationOfSquad(int16_t *sX, int16_t *sY, int8_t *bZ, int8_t bSquadValue);
 
 // Save the squad information to the saved game file
 BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile);

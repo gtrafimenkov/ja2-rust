@@ -23,7 +23,7 @@ typedef struct {
   int8_t bStartCubesAboveLevelZ;
   int8_t bEndCubesAboveLevelZ;
   uint32_t sGridNo;
-  INT16 sUnused;
+  int16_t sUnused;
   uint16_t usLastStructureHit;
   FIXEDPT qCurrX;
   FIXEDPT qCurrY;
@@ -49,7 +49,7 @@ typedef struct {
   uint16_t usClockTicksPerUpdate;
   struct SOLDIERTYPE *pFirer;
   uint32_t sTargetGridNo;
-  INT16 sHitBy;
+  int16_t sHitBy;
   INT32 iImpact;
   INT32 iImpactReduction;
   INT32 iRange;

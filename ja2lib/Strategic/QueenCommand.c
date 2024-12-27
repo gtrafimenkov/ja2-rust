@@ -63,7 +63,7 @@ extern INT32 giGarrisonArraySize;
 extern BOOLEAN gfOverrideSector;
 #endif
 
-INT16 gsInterrogationGridNo[3] = {7756, 7757, 7758};
+int16_t gsInterrogationGridNo[3] = {7756, 7757, 7758};
 
 void ValidateEnemiesHaveWeapons() {
 #ifdef JA2BETAVERSION
@@ -96,7 +96,7 @@ void ValidateEnemiesHaveWeapons() {
 }
 
 // Counts enemies and crepitus, but not bloodcats.
-uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   uint8_t ubNumHostiles = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -133,7 +133,7 @@ uint8_t NumHostilesInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   return ubNumHostiles;
 }
 
-uint8_t NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+uint8_t NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   uint8_t ubNumEnemies = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -375,7 +375,7 @@ BOOLEAN PrepareEnemyForSectorBattle() {
   uint8_t ubTotalAdmins, ubTotalElites, ubTotalTroops;
   uint8_t ubStationaryEnemies;
   INT32 i, num;
-  INT16 sNumSlots;
+  int16_t sNumSlots;
 
   gfPendingEnemies = FALSE;
 
@@ -1380,7 +1380,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, uint8_t bMapZ) {
+UNDERGROUND_SECTORINFO *FindUnderGroundSector(int16_t sMapX, int16_t sMapY, uint8_t bMapZ) {
   UNDERGROUND_SECTORINFO *pUnderground;
   pUnderground = gpUndergroundSectorInfoHead;
 
@@ -1452,10 +1452,10 @@ void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fMadeCorpse;
   INT32 iNumEnemiesInSector;
 
-  static INT16 sAlmaCaptureGridNos[] = {9208, 9688, 9215};
-  static INT16 sAlmaCaptureItemsGridNo[] = {12246, 12406, 13046};
+  static int16_t sAlmaCaptureGridNos[] = {9208, 9688, 9215};
+  static int16_t sAlmaCaptureItemsGridNo[] = {12246, 12406, 13046};
 
-  static INT16 sInterrogationItemGridNo[] = {12089, 12089, 12089};
+  static int16_t sInterrogationItemGridNo[] = {12089, 12089, 12089};
 
   // ATE: Check first if ! in player captured sequence already
   // CJC Dec 1 2002: fixing multiple captures

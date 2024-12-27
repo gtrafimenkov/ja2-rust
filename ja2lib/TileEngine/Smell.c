@@ -124,7 +124,7 @@ uint8_t ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
 #define SET_BLOOD_ROOF_TYPE(s, ntr) \
   { (s) = BLOOD_ROOF_TYPE(ntr) | (s & 0xFD); }
 
-void RemoveBlood(INT16 sGridNo, int8_t bLevel) {
+void RemoveBlood(int16_t sGridNo, int8_t bLevel) {
   gpWorldLevelData[sGridNo].ubBloodInfo = 0;
 
   gpWorldLevelData[sGridNo].uiFlags |= MAPELEMENT_REEVALUATEBLOOD;
@@ -295,7 +295,7 @@ void DropSmell(struct SOLDIERTYPE* pSoldier) {
   // otherwise skip dropping smell
 }
 
-void InternalDropBlood(INT16 sGridNo, int8_t bLevel, uint8_t ubType, uint8_t ubStrength,
+void InternalDropBlood(int16_t sGridNo, int8_t bLevel, uint8_t ubType, uint8_t ubStrength,
                        int8_t bVisible) {
   MAP_ELEMENT* pMapElement;
   uint8_t ubOldStrength = 0;
@@ -408,7 +408,7 @@ void DropBlood(struct SOLDIERTYPE* pSoldier, uint8_t ubStrength, int8_t bVisible
   InternalDropBlood(pSoldier->sGridNo, pSoldier->bLevel, ubType, ubStrength, bVisible);
 }
 
-void UpdateBloodGraphics(INT16 sGridNo, int8_t bLevel) {
+void UpdateBloodGraphics(int16_t sGridNo, int8_t bLevel) {
   MAP_ELEMENT* pMapElement;
   int8_t bValue;
   uint16_t usIndex, usNewIndex;

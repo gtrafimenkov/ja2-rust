@@ -808,7 +808,7 @@ STR16 sKeyDescriptionStrings[2] = {
 
 // The headers used to describe various weapon statistics.
 
-INT16 gWeaponStatsDesc[][14] = {
+int16_t gWeaponStatsDesc[][14] = {
     L"Peso (%s):", L"Stato:",
     L"Ammontare:",  // Number of bullets left in a magazine
     L"Git:",        // Range
@@ -819,7 +819,7 @@ INT16 gWeaponStatsDesc[][14] = {
 
 // The headers used for the merc's money.
 
-INT16 gMoneyStatsDesc[][13] = {
+int16_t gMoneyStatsDesc[][13] = {
     L"Ammontare",
     L"Rimanenti:",  // this is the overall balance
     L"Ammontare",
@@ -850,11 +850,11 @@ STR16 gzMoneyAmounts[6] = {
 };
 
 // short words meaning "Advantages" for "Pros" and "Disadvantages" for "Cons."
-INT16 gzProsLabel[10] = {
+int16_t gzProsLabel[10] = {
     L"Vant.:",
 };
 
-INT16 gzConsLabel[10] = {
+int16_t gzConsLabel[10] = {
     L"Svant.:",
 };
 

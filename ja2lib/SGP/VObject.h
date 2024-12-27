@@ -49,8 +49,8 @@ typedef struct {
   uint8_t ubShadeLevel;
   uint16_t usWidth;
   uint16_t usHeight;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
 } SixteenBPPObjectInfo;
 
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
@@ -239,9 +239,9 @@ BOOLEAN CheckFor16BPPRegion(struct VObject *hVObject, uint16_t usRegionIndex, ui
 
 BOOLEAN BltVideoObjectOutlineFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,
                                        uint16_t usIndex, INT32 iDestX, INT32 iDestY,
-                                       INT16 s16BPPColor, BOOLEAN fDoOutline);
+                                       int16_t s16BPPColor, BOOLEAN fDoOutline);
 BOOLEAN BltVideoObjectOutline(uint32_t uiDestVSurface, struct VObject *hSrcVObject,
-                              uint16_t usIndex, INT32 iDestX, INT32 iDestY, INT16 s16BPPColor,
+                              uint16_t usIndex, INT32 iDestX, INT32 iDestY, int16_t s16BPPColor,
                               BOOLEAN fDoOutline);
 BOOLEAN BltVideoObjectOutlineShadowFromIndex(uint32_t uiDestVSurface, uint32_t uiSrcVObject,
                                              uint16_t usIndex, INT32 iDestX, INT32 iDestY);

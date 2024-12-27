@@ -60,20 +60,20 @@
 
 BOOLEAN fLandLayerDirty = TRUE;
 
-extern INT16 gsVIEWPORT_START_X;
-extern INT16 gsVIEWPORT_START_Y;
-extern INT16 gsVIEWPORT_END_Y;
-extern INT16 gsVIEWPORT_WINDOW_END_Y;
-extern INT16 gsVIEWPORT_WINDOW_START_Y;
-extern INT16 gsVIEWPORT_END_X;
+extern int16_t gsVIEWPORT_START_X;
+extern int16_t gsVIEWPORT_START_Y;
+extern int16_t gsVIEWPORT_END_Y;
+extern int16_t gsVIEWPORT_WINDOW_END_Y;
+extern int16_t gsVIEWPORT_WINDOW_START_Y;
+extern int16_t gsVIEWPORT_END_X;
 
 uint16_t *gpZBuffer = NULL;
 BOOLEAN gfTagAnimatedTiles = TRUE;
 
-INT16 gsCurrentGlowFrame = 0;
-INT16 gsCurrentItemGlowFrame = 0;
+int16_t gsCurrentGlowFrame = 0;
+int16_t gsCurrentItemGlowFrame = 0;
 
-INT16 gCenterWorldX, gCenterWorldY;
+int16_t gCenterWorldX, gCenterWorldY;
 
 extern BOOLEAN gfUIShowExitEast;
 extern BOOLEAN gfUIShowExitWest;
@@ -130,7 +130,7 @@ enum {
 #define SCROLL_INTERTIA_STEP1 6
 #define SCROLL_INTERTIA_STEP2 8
 
-// #define SHORT_ROUND( x ) ( (INT16)( ( x * 1000 ) / 1000 ) )
+// #define SHORT_ROUND( x ) ( (int16_t)( ( x * 1000 ) / 1000 ) )
 #define SHORT_ROUND(x) (x)
 
 #define NUM_ITEM_CYCLE_COLORS 60
@@ -139,13 +139,13 @@ uint16_t us16BPPItemCycleWhiteColors[NUM_ITEM_CYCLE_COLORS];
 uint16_t us16BPPItemCycleRedColors[NUM_ITEM_CYCLE_COLORS];
 uint16_t us16BPPItemCycleYellowColors[NUM_ITEM_CYCLE_COLORS];
 
-INT16 gsLobOutline;
-INT16 gsThrowOutline;
-INT16 gsGiveOutline;
-INT16 gusNormalItemOutlineColor;
-INT16 gusYellowItemOutlineColor;
+int16_t gsLobOutline;
+int16_t gsThrowOutline;
+int16_t gsGiveOutline;
+int16_t gusNormalItemOutlineColor;
+int16_t gusYellowItemOutlineColor;
 
-INT16 gsRenderHeight = 0;
+int16_t gsRenderHeight = 0;
 BOOLEAN gfRenderFullThisFrame = 0;
 
 // uint8_t		gubIntTileCheckFlags	 = INTILE_CHECK_FULL;
@@ -247,7 +247,7 @@ uint32_t uiAdditiveLayerUsedFlags = 0xffffffff;
 #define NUM_GLOW_FRAMES 30
 
 #if 0
-INT16	gsGlowFrames[] =
+int16_t	gsGlowFrames[] =
 {
 	0,
 	0,
@@ -284,7 +284,7 @@ INT16	gsGlowFrames[] =
 };
 #endif
 
-INT16 gsGlowFrames[] = {
+int16_t gsGlowFrames[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -293,7 +293,7 @@ INT16 gsGlowFrames[] = {
 };
 
 // This has to be the same # of frames as NUM_GLOW_FRAMES
-INT16 gsFastGlowFrames[] = {
+int16_t gsFastGlowFrames[] = {
     0, 0, 6, 7, 8, 9, 8, 7, 6, 5,
 
     0, 0, 6, 7, 8, 9, 8, 7, 6, 5,
@@ -302,40 +302,40 @@ INT16 gsFastGlowFrames[] = {
 };
 
 // The glow frame pointer can be adjusted to use a faster/ slower glow
-INT16 *gpGlowFramePointer = gsGlowFrames;
+int16_t *gpGlowFramePointer = gsGlowFrames;
 
 uint32_t gScrollDirectionFlags[NUM_WORLD_DIRECTIONS] = {
     SCROLL_UP | SCROLL_RIGHT,  SCROLL_RIGHT, SCROLL_DOWN | SCROLL_RIGHT, SCROLL_DOWN,
     SCROLL_DOWN | SCROLL_LEFT, SCROLL_LEFT,  SCROLL_UP | SCROLL_LEFT,    SCROLL_UP,
 };
 
-INT16 SCROLL_X_STEP = (WORLD_TILE_X);
-INT16 SCROLL_Y_STEP = (WORLD_TILE_Y * 2);
+int16_t SCROLL_X_STEP = (WORLD_TILE_X);
+int16_t SCROLL_Y_STEP = (WORLD_TILE_Y * 2);
 
-INT16 gsVIEWPORT_START_X = 0;
-INT16 gsVIEWPORT_START_Y = 0;
-INT16 gsVIEWPORT_END_Y = 360;
-INT16 gsVIEWPORT_WINDOW_END_Y = 360;
-INT16 gsVIEWPORT_WINDOW_START_Y = 0;
-INT16 gsVIEWPORT_END_X = 640;
+int16_t gsVIEWPORT_START_X = 0;
+int16_t gsVIEWPORT_START_Y = 0;
+int16_t gsVIEWPORT_END_Y = 360;
+int16_t gsVIEWPORT_WINDOW_END_Y = 360;
+int16_t gsVIEWPORT_WINDOW_START_Y = 0;
+int16_t gsVIEWPORT_END_X = 640;
 
-INT16 gsTopLeftWorldX, gsTopLeftWorldY;
-INT16 gsTopRightWorldX, gsTopRightWorldY;
-INT16 gsBottomLeftWorldX, gsBottomLeftWorldY;
-INT16 gsBottomRightWorldX, gsBottomRightWorldY;
+int16_t gsTopLeftWorldX, gsTopLeftWorldY;
+int16_t gsTopRightWorldX, gsTopRightWorldY;
+int16_t gsBottomLeftWorldX, gsBottomLeftWorldY;
+int16_t gsBottomRightWorldX, gsBottomRightWorldY;
 BOOLEAN gfIgnoreScrolling = FALSE;
 
 BOOLEAN gfIgnoreScrollDueToCenterAdjust = FALSE;
 
 // GLOBAL SCROLLING PARAMS
-INT16 gTopLeftWorldLimitX, gTopLeftWorldLimitY;
-INT16 gTopRightWorldLimitX, gTopRightWorldLimitY;
-INT16 gBottomLeftWorldLimitX, gBottomLeftWorldLimitY;
-INT16 gBottomRightWorldLimitX, gBottomRightWorldLimitY;
-INT16 Slide;
-INT16 gsTLX, gsTLY, gsTRX, gsTRY;
-INT16 gsBLX, gsBLY, gsBRX, gsBRY;
-INT16 gsCX, gsCY;
+int16_t gTopLeftWorldLimitX, gTopLeftWorldLimitY;
+int16_t gTopRightWorldLimitX, gTopRightWorldLimitY;
+int16_t gBottomLeftWorldLimitX, gBottomLeftWorldLimitY;
+int16_t gBottomRightWorldLimitX, gBottomRightWorldLimitY;
+int16_t Slide;
+int16_t gsTLX, gsTLY, gsTRX, gsTRY;
+int16_t gsBLX, gsBLY, gsBRX, gsBRY;
+int16_t gsCX, gsCY;
 DOUBLE gdScaleX, gdScaleY;
 
 #define FASTMAPROWCOLTOPOS(r, c) ((r) * WORLD_COLS + (c))
@@ -343,20 +343,20 @@ DOUBLE gdScaleX, gdScaleY;
 BOOLEAN gfScrollInertia = FALSE;
 
 // GLOBALS FOR CALCULATING STARTING PARAMETERS
-INT16 gsStartPointX_W, gsStartPointY_W;
-INT16 gsStartPointX_S, gsStartPointY_S;
-INT16 gsStartPointX_M, gsStartPointY_M;
-INT16 gsEndXS, gsEndYS;
+int16_t gsStartPointX_W, gsStartPointY_W;
+int16_t gsStartPointX_S, gsStartPointY_S;
+int16_t gsStartPointX_M, gsStartPointY_M;
+int16_t gsEndXS, gsEndYS;
 // LARGER OFFSET VERSION FOR GIVEN LAYERS
-INT16 gsLStartPointX_W, gsLStartPointY_W;
-INT16 gsLStartPointX_S, gsLStartPointY_S;
-INT16 gsLStartPointX_M, gsLStartPointY_M;
-INT16 gsLEndXS, gsLEndYS;
+int16_t gsLStartPointX_W, gsLStartPointY_W;
+int16_t gsLStartPointX_S, gsLStartPointY_S;
+int16_t gsLStartPointX_M, gsLStartPointY_M;
+int16_t gsLEndXS, gsLEndYS;
 
 BOOLEAN gfRenderScroll = FALSE;
 BOOLEAN gfScrollStart = FALSE;
-INT16 gsScrollXIncrement;
-INT16 gsScrollYIncrement;
+int16_t gsScrollXIncrement;
+int16_t gsScrollYIncrement;
 INT32 guiScrollDirection;
 
 // Rendering flags (full, partial, etc.)
@@ -364,10 +364,10 @@ uint32_t gRenderFlags = 0;
 
 SGPRect gClippingRect = {0, 0, 640, 360};
 SGPRect gOldClipRect;
-INT16 gsRenderCenterX;
-INT16 gsRenderCenterY;
-INT16 gsRenderWorldOffsetX = -1;
-INT16 gsRenderWorldOffsetY = -1;
+int16_t gsRenderCenterX;
+int16_t gsRenderCenterY;
+int16_t gsRenderWorldOffsetX = -1;
+int16_t gsRenderWorldOffsetY = -1;
 SGPRect gSelectRegion;
 uint32_t fSelectMode = NO_SELECT;
 SGPPoint gSelectAnchor;
@@ -427,26 +427,27 @@ uint8_t RenderFXStartIndex[] = {
     TOPMOST_START_INDEX,  // DYNAMIC TOPMOST
 };
 
-// INT16 gsCoordArray[ 500 ][ 500 ][ 4 ];
-// INT16 gsCoordArrayX;
-// INT16 gsCoordArrayY;
+// int16_t gsCoordArray[ 500 ][ 500 ][ 4 ];
+// int16_t gsCoordArrayX;
+// int16_t gsCoordArrayY;
 
-// void SetRenderGlobals( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16
-// sStartPointY_S, INT16 sEndXS, INT16 sEndYS ); void TempRenderTiles(uint32_t uiFlags, INT16
-// sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS,
-// INT16 sEndYS ); void TempRenderTiles(uint32_t uiFlags, INT16 sStartPointX_M, INT16
-// sStartPointY_M, INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, uint8_t
-// ubNumLevels, uint32_t *puiLevels );
+// void SetRenderGlobals( int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+// int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS ); void TempRenderTiles(uint32_t uiFlags,
+// int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S, int16_t sStartPointY_S,
+// int16_t sEndXS, int16_t sEndYS ); void TempRenderTiles(uint32_t uiFlags, int16_t sStartPointX_M,
+// int16_t sStartPointY_M, int16_t sStartPointX_S, int16_t sStartPointY_S, int16_t sEndXS, int16_t
+// sEndYS, uint8_t ubNumLevels, uint32_t *puiLevels );
 
-void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                                  INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
+void ExamineZBufferForHiddenTiles(int16_t sStartPointX_M, int16_t sStartPointY_M,
+                                  int16_t sStartPointX_S, int16_t sStartPointY_S, int16_t sEndXS,
+                                  int16_t sEndYS);
 
-// void ReRenderWorld(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+// void ReRenderWorld(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void ClearMarkedTiles(void);
-void CorrectRenderCenter(INT16 sRenderX, INT16 sRenderY, INT16 *pSNewX, INT16 *pSNewY);
-void ScrollBackground(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement);
+void CorrectRenderCenter(int16_t sRenderX, int16_t sRenderY, int16_t *pSNewX, int16_t *pSNewY);
+void ScrollBackground(uint32_t uiDirection, int16_t sScrollXIncrement, int16_t sScrollYIncrement);
 
-void CalcRenderParameters(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void CalcRenderParameters(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void ResetRenderParameters();
 
 BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
@@ -460,7 +461,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(uint16_t *pBuffer, uint32_t uiDestPitc
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
-    INT16 sZIndex, uint16_t *p16BPPPalette);
+    int16_t sZIndex, uint16_t *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                      uint16_t *pZBuffer, uint16_t usZValue,
                                                      struct VObject *hSrcVObject, INT32 iX,
@@ -469,13 +470,13 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
-    INT16 sZIndex, uint16_t *p16BPPPalette);
+    int16_t sZIndex, uint16_t *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion);
 
-void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                    INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
+void RenderRoomInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                    int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS);
 
 #ifdef _DEBUG
 
@@ -485,27 +486,29 @@ extern uint8_t gubGridNoValue;
 
 extern BOOLEAN gfDisplayCoverValues;
 extern BOOLEAN gfDisplayGridNoVisibleValues = 0;
-extern INT16 gsCoverValue[WORLD_MAX];
-extern INT16 gsBestCover;
+extern int16_t gsCoverValue[WORLD_MAX];
+extern int16_t gsBestCover;
 
-void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                        INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
-void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                          INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
-void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                                  INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
+void RenderFOVDebugInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                        int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS);
+void RenderCoverDebugInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                          int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS);
+void RenderGridNoVisibleDebugInfo(int16_t sStartPointX_M, int16_t sStartPointY_M,
+                                  int16_t sStartPointX_S, int16_t sStartPointY_S, int16_t sEndXS,
+                                  int16_t sEndYS);
 
 #endif
 
 void DeleteFromWorld(uint16_t usTileIndex, uint32_t uiRenderTiles, uint16_t usIndex);
 
-void RenderHighlight(INT16 sMouseX_M, INT16 sMouseY_M, INT16 sStartPointX_M, INT16 sStartPointY_M,
-                     INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
-BOOLEAN CheckRenderCenter(INT16 sNewCenterX, INT16 sNewCenterY);
+void RenderHighlight(int16_t sMouseX_M, int16_t sMouseY_M, int16_t sStartPointX_M,
+                     int16_t sStartPointY_M, int16_t sStartPointX_S, int16_t sStartPointY_S,
+                     int16_t sEndXS, int16_t sEndYS);
+BOOLEAN CheckRenderCenter(int16_t sNewCenterX, int16_t sNewCenterY);
 
-BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
+BOOLEAN RevealWalls(int16_t sX, int16_t sY, int16_t sRadius) {
   struct LEVELNODE *pStruct;
-  INT16 sCountX, sCountY;
+  int16_t sCountX, sCountY;
   uint32_t uiTile;
   TILE_ELEMENT *TileElem;
 
@@ -541,9 +544,9 @@ BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
   return (TRUE);
 }
 
-BOOLEAN ConcealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
+BOOLEAN ConcealWalls(int16_t sX, int16_t sY, int16_t sRadius) {
   struct LEVELNODE *pStruct;
-  INT16 sCountX, sCountY;
+  int16_t sCountX, sCountY;
   uint32_t uiTile;
   BOOLEAN fRerender = FALSE;
   TILE_ELEMENT *TileElem;
@@ -645,8 +648,8 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   uint32_t uiTileIndex;
   uint16_t usImageIndex, *pShadeTable, *pDirtyBackPtr;
   uint32_t uiBrushWidth, uiBrushHeight, uiDirtyFlags;
-  INT16 sTileHeight, sXPos, sYPos, sZLevel;
-  INT16 sMouseX_M, sMouseY_M;
+  int16_t sTileHeight, sXPos, sYPos, sZLevel;
+  int16_t sMouseX_M, sMouseY_M;
   BOOLEAN fShadowBlitter = FALSE;
   BOOLEAN fZBlitter = FALSE;
   BOOLEAN fZWrite = FALSE;
@@ -662,9 +665,9 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   BOOLEAN fMultiZBlitter = FALSE;
   BOOLEAN fWallTile = FALSE;
   BOOLEAN fMultiTransShadowZBlitter = FALSE;
-  INT16 sMultiTransShadowZBlitterIndex = -1;
+  int16_t sMultiTransShadowZBlitterIndex = -1;
   BOOLEAN fTranslucencyType = FALSE;
-  INT16 sX, sY;
+  int16_t sX, sY;
   BOOLEAN fTileInvisible = FALSE;
   BOOLEAN fConvertTo16 = FALSE;
   BOOLEAN fBlit16 = FALSE;
@@ -682,11 +685,11 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   BOOLEAN fCheckForMouseDetections = FALSE;
   static RenderFXType RenderFXList[NUM_RENDER_FX_TYPES];
   BOOLEAN fSaveZ;
-  INT16 sWorldY;
-  INT16 sZOffsetX = -1;
-  INT16 sZOffsetY = -1;
+  int16_t sWorldY;
+  int16_t sZOffsetX = -1;
+  int16_t sZOffsetY = -1;
   BOOLEAN fIntensityBlitter;
-  INT16 gsForceSoldierZLevel;
+  int16_t gsForceSoldierZLevel;
   ROTTING_CORPSE *pCorpse = NULL;
   BOOLEAN fUseTileElem;
   uint32_t uiLevelNodeFlags;
@@ -694,7 +697,7 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
   int8_t bGlowShadeOffset;
   BOOLEAN fObscured;
   BOOLEAN fObscuredBlitter;
-  INT16 sModifiedTileHeight;
+  int16_t sModifiedTileHeight;
   BOOLEAN fDoRow;
   uint16_t **pShadeStart;
 
@@ -793,7 +796,7 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
             // Experimental!
             if (uiFlags & TILES_DYNAMIC_CHECKFOR_INT_TILE) {
               if (fCheckForMouseDetections && gpWorldLevelData[uiTileIndex].pStructHead != NULL) {
-                LogMouseOverInteractiveTile((INT16)uiTileIndex);
+                LogMouseOverInteractiveTile((int16_t)uiTileIndex);
               }
             }
 
@@ -874,8 +877,8 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
                 fPixelate = FALSE;
 
               // non-type specific setup
-              sXPos = (INT16)iTempPosX_S;
-              sYPos = (INT16)iTempPosY_S;
+              sXPos = (int16_t)iTempPosX_S;
+              sYPos = (int16_t)iTempPosY_S;
 
               // setup for any tile type except mercs
               if (!fMerc) {
@@ -1019,8 +1022,8 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
                     // Calculate guy's position
                     FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-                    sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-                    sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S -
+                    sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+                    sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S -
                             sTileHeight;
 
                     // Adjust for offset position on screen
@@ -1070,9 +1073,9 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
                     FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
                     sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) +
-                            (INT16)SHORT_ROUND(dTempX_S);
+                            (int16_t)SHORT_ROUND(dTempX_S);
                     sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) +
-                            (INT16)SHORT_ROUND(dTempY_S);
+                            (int16_t)SHORT_ROUND(dTempY_S);
 
                     // Adjust for offset position on screen
                     sXPos -= gsRenderWorldOffsetX;
@@ -1348,9 +1351,9 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
                   // Calculate guy's position
                   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-                  sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-                  sYPos =
-                      ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S - sTileHeight;
+                  sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+                  sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S -
+                          sTileHeight;
 
                   // Adjust for offset position on screen
                   sXPos -= gsRenderWorldOffsetX;
@@ -1675,14 +1678,14 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
                     sYPos += pTrav->sOffsetY;
 
                     RegisterBackgroundRect(
-                        uiDirtyFlags, NULL, sXPos, sYPos, (INT16)(sXPos + uiBrushWidth),
-                        (INT16)(min((INT16)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
+                        uiDirtyFlags, NULL, sXPos, sYPos, (int16_t)(sXPos + uiBrushWidth),
+                        (int16_t)(min((int16_t)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
 
                     if (fSaveZ) {
-                      RegisterBackgroundRect(
-                          uiDirtyFlags | BGND_FLAG_SAVE_Z, NULL, sXPos, sYPos,
-                          (INT16)(sXPos + uiBrushWidth),
-                          (INT16)(min((INT16)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
+                      RegisterBackgroundRect(uiDirtyFlags | BGND_FLAG_SAVE_Z, NULL, sXPos, sYPos,
+                                             (int16_t)(sXPos + uiBrushWidth),
+                                             (int16_t)(min((int16_t)(sYPos + uiBrushHeight),
+                                                           gsVIEWPORT_WINDOW_END_Y)));
                     }
                   }
                 } else {
@@ -2019,8 +2022,8 @@ void RenderTiles(uint32_t uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, I
               if (iTempPosY_S < 360) {
                 if (!(uiFlags & TILES_DIRTY)) UnLockVideoSurface(FRAME_BUFFER);
                 ColorFillVideoSurfaceArea(
-                    FRAME_BUFFER, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40),
-                    (INT16)(min(iTempPosY_S + 20, 360)), Get16BPPColor(FROMRGB(0, 0, 0)));
+                    FRAME_BUFFER, iTempPosX_S, iTempPosY_S, (int16_t)(iTempPosX_S + 40),
+                    (int16_t)(min(iTempPosY_S + 20, 360)), Get16BPPColor(FROMRGB(0, 0, 0)));
                 if (!(uiFlags & TILES_DIRTY))
                   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
               }
@@ -2093,7 +2096,7 @@ void DeleteFromWorld(uint16_t usTileIndex, uint32_t uiRenderTiles, uint16_t usIn
 // memcpy's the background to the new scroll position, and renders the missing strip
 // via the RenderStaticWorldRect. Dynamic stuff will be updated on the next frame
 // by the normal render cycle
-void ScrollBackground(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement) {
+void ScrollBackground(uint32_t uiDirection, int16_t sScrollXIncrement, int16_t sScrollYIncrement) {
   // RestoreBackgroundRects();
 
   if (!gfDoVideoScroll) {
@@ -2279,7 +2282,7 @@ void RenderWorld() {
 // Start with a center X,Y,Z world coordinate and render direction
 // Determine WorldIntersectionPoint and the starting block from these
 // Then render away!
-void RenderStaticWorldRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom,
+void RenderStaticWorldRect(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom,
                            BOOLEAN fDynamicsToo) {
   uint32_t uiLevelFlags[10];
   uint16_t sLevelIDs[10];
@@ -2600,20 +2603,20 @@ void RenderDynamicWorld() {
   ResetRenderParameters();
 }
 
-BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 sScrollYStep,
-                               INT16 *psTempRenderCenterX, INT16 *psTempRenderCenterY,
+BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, int16_t sScrollXStep, int16_t sScrollYStep,
+                               int16_t *psTempRenderCenterX, int16_t *psTempRenderCenterY,
                                BOOLEAN fCheckOnly) {
   BOOLEAN fAGoodMove = FALSE, fMovedPos = FALSE;
-  INT16 sTempX_W, sTempY_W;
+  int16_t sTempX_W, sTempY_W;
   BOOLEAN fUpOK, fLeftOK;
   BOOLEAN fDownOK, fRightOK;
-  INT16 sTempRenderCenterX, sTempRenderCenterY;
+  int16_t sTempRenderCenterX, sTempRenderCenterY;
 
   sTempRenderCenterX = sTempRenderCenterY = 0;
 
   // This checking sequence just validates the values!
   if (ScrollFlags & SCROLL_LEFT) {
-    FromScreenToCellCoordinates((INT16)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
+    FromScreenToCellCoordinates((int16_t)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
     sTempRenderCenterX = gsRenderCenterX + sTempX_W;
     sTempRenderCenterY = gsRenderCenterY + sTempY_W;
 
@@ -2642,7 +2645,7 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
   }
 
   if (ScrollFlags & SCROLL_UP) {
-    FromScreenToCellCoordinates(0, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+    FromScreenToCellCoordinates(0, (int16_t)-sScrollYStep, &sTempX_W, &sTempY_W);
     sTempRenderCenterX = gsRenderCenterX + sTempX_W;
     sTempRenderCenterY = gsRenderCenterY + sTempY_W;
     fMovedPos = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
@@ -2671,19 +2674,20 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
 
   if (ScrollFlags & SCROLL_UPLEFT) {
     // Check up
-    FromScreenToCellCoordinates(0, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+    FromScreenToCellCoordinates(0, (int16_t)-sScrollYStep, &sTempX_W, &sTempY_W);
     sTempRenderCenterX = gsRenderCenterX + sTempX_W;
     sTempRenderCenterY = gsRenderCenterY + sTempY_W;
     fUpOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
 
     // Check left
-    FromScreenToCellCoordinates((INT16)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
+    FromScreenToCellCoordinates((int16_t)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
     sTempRenderCenterX = gsRenderCenterX + sTempX_W;
     sTempRenderCenterY = gsRenderCenterY + sTempY_W;
     fLeftOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
 
     if (fLeftOK && fUpOK) {
-      FromScreenToCellCoordinates((INT16)-sScrollXStep, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates((int16_t)-sScrollXStep, (int16_t)-sScrollYStep, &sTempX_W,
+                                  &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
       fAGoodMove = TRUE;
@@ -2695,7 +2699,7 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
     } else if (fUpOK) {
       fAGoodMove = TRUE;
 
-      FromScreenToCellCoordinates(0, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates(0, (int16_t)-sScrollYStep, &sTempX_W, &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
 
@@ -2706,7 +2710,7 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
     } else if (fLeftOK) {
       fAGoodMove = TRUE;
 
-      FromScreenToCellCoordinates((INT16)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates((int16_t)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
 
@@ -2718,7 +2722,7 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
 
   if (ScrollFlags & SCROLL_UPRIGHT) {
     // Check up
-    FromScreenToCellCoordinates(0, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+    FromScreenToCellCoordinates(0, (int16_t)-sScrollYStep, &sTempX_W, &sTempY_W);
     sTempRenderCenterX = gsRenderCenterX + sTempX_W;
     sTempRenderCenterY = gsRenderCenterY + sTempY_W;
     fUpOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
@@ -2730,7 +2734,8 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
     fRightOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
 
     if (fUpOK && fRightOK) {
-      FromScreenToCellCoordinates((INT16)sScrollXStep, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates((int16_t)sScrollXStep, (int16_t)-sScrollYStep, &sTempX_W,
+                                  &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
       fAGoodMove = TRUE;
@@ -2742,7 +2747,7 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
     } else if (fUpOK) {
       fAGoodMove = TRUE;
 
-      FromScreenToCellCoordinates(0, (INT16)-sScrollYStep, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates(0, (int16_t)-sScrollYStep, &sTempX_W, &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
 
@@ -2770,14 +2775,15 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
     fDownOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
 
     // Check left.....
-    FromScreenToCellCoordinates((INT16)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
+    FromScreenToCellCoordinates((int16_t)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
     sTempRenderCenterX = gsRenderCenterX + sTempX_W;
     sTempRenderCenterY = gsRenderCenterY + sTempY_W;
     fLeftOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
 
     if (fLeftOK && fDownOK) {
       fAGoodMove = TRUE;
-      FromScreenToCellCoordinates((INT16)-sScrollXStep, (INT16)sScrollYStep, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates((int16_t)-sScrollXStep, (int16_t)sScrollYStep, &sTempX_W,
+                                  &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
 
@@ -2786,7 +2792,7 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
       }
 
     } else if (fLeftOK) {
-      FromScreenToCellCoordinates((INT16)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates((int16_t)-sScrollXStep, 0, &sTempX_W, &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
       fAGoodMove = TRUE;
@@ -2820,7 +2826,8 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
     fDownOK = ApplyScrolling(sTempRenderCenterX, sTempRenderCenterY, FALSE, fCheckOnly);
 
     if (fDownOK && fRightOK) {
-      FromScreenToCellCoordinates((INT16)sScrollXStep, (INT16)sScrollYStep, &sTempX_W, &sTempY_W);
+      FromScreenToCellCoordinates((int16_t)sScrollXStep, (int16_t)sScrollYStep, &sTempX_W,
+                                  &sTempY_W);
       sTempRenderCenterX = gsRenderCenterX + sTempX_W;
       sTempRenderCenterY = gsRenderCenterY + sTempY_W;
       fAGoodMove = TRUE;
@@ -2859,10 +2866,10 @@ BOOLEAN HandleScrollDirections(uint32_t ScrollFlags, INT16 sScrollXStep, INT16 s
 void ScrollWorld() {
   uint32_t ScrollFlags = 0;
   BOOLEAN fDoScroll = FALSE, fMovedPos = FALSE, fAGoodMove = FALSE;
-  INT16 sTempRenderCenterX, sTempRenderCenterY;
+  int16_t sTempRenderCenterX, sTempRenderCenterY;
   int8_t bDirection;
-  INT16 sScrollXStep = -1;
-  INT16 sScrollYStep = -1;
+  int16_t sScrollXStep = -1;
+  int16_t sScrollYStep = -1;
   BOOLEAN fIgnoreInput = FALSE;
   static uint8_t ubOldScrollSpeed = 0;
   static BOOLEAN fFirstTimeInSlideToMode = TRUE;
@@ -3085,7 +3092,7 @@ void ScrollWorld() {
 }
 
 void InitRenderParams(uint8_t ubRestrictionID) {
-  INT16 gsTilesX, gsTilesY;
+  int16_t gsTilesX, gsTilesY;
   uint32_t cnt, cnt2;
   DOUBLE dWorldX, dWorldY;
 
@@ -3178,7 +3185,7 @@ void InitRenderParams(uint8_t ubRestrictionID) {
 }
 
 // Appy? HEahehahehahehae.....
-BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLEAN fForceAdjust,
+BOOLEAN ApplyScrolling(int16_t sTempRenderCenterX, int16_t sTempRenderCenterY, BOOLEAN fForceAdjust,
                        BOOLEAN fCheckOnly) {
   BOOLEAN fScrollGood = FALSE;
   BOOLEAN fOutLeft = FALSE;
@@ -3188,21 +3195,21 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
 
   double dOpp, dAdj, dAngle;
 
-  INT16 sTopLeftWorldX, sTopLeftWorldY;
-  INT16 sTopRightWorldX, sTopRightWorldY;
-  INT16 sBottomLeftWorldX, sBottomLeftWorldY;
-  INT16 sBottomRightWorldX, sBottomRightWorldY;
+  int16_t sTopLeftWorldX, sTopLeftWorldY;
+  int16_t sTopRightWorldX, sTopRightWorldY;
+  int16_t sBottomLeftWorldX, sBottomLeftWorldY;
+  int16_t sBottomRightWorldX, sBottomRightWorldY;
 
-  INT16 sTempPosX_W, sTempPosY_W;
+  int16_t sTempPosX_W, sTempPosY_W;
 
   // For debug text for all 4 angles
   double at1, at2, at3, at4;
 
-  INT16 sX_S, sY_S;
-  INT16 sScreenCenterX, sScreenCenterY;
-  INT16 sDistToCenterY, sDistToCenterX;
-  INT16 sNewScreenX, sNewScreenY;
-  INT16 sMult;
+  int16_t sX_S, sY_S;
+  int16_t sScreenCenterX, sScreenCenterY;
+  int16_t sDistToCenterY, sDistToCenterX;
+  int16_t sNewScreenX, sNewScreenY;
+  int16_t sMult;
 
   // Makesure it's a multiple of 5
   sMult = sTempRenderCenterX / CELL_X_SIZE;
@@ -3319,7 +3326,7 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
     if (fForceAdjust) {
       if (fOutTop) {
         // Adjust screen coordinates on the Y!
-        CorrectRenderCenter(sScreenCenterX, (INT16)(gsTLY + sY_S), &sNewScreenX, &sNewScreenY);
+        CorrectRenderCenter(sScreenCenterX, (int16_t)(gsTLY + sY_S), &sNewScreenX, &sNewScreenY);
         FromScreenToCellCoordinates(sNewScreenX, sNewScreenY, &sTempPosX_W, &sTempPosY_W);
 
         sTempRenderCenterX = sTempPosX_W;
@@ -3329,7 +3336,8 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
 
       if (fOutBottom) {
         // OK, Ajust this since we get rounding errors in our two different calculations.
-        CorrectRenderCenter(sScreenCenterX, (INT16)(gsBLY - sY_S - 50), &sNewScreenX, &sNewScreenY);
+        CorrectRenderCenter(sScreenCenterX, (int16_t)(gsBLY - sY_S - 50), &sNewScreenX,
+                            &sNewScreenY);
         FromScreenToCellCoordinates(sNewScreenX, sNewScreenY, &sTempPosX_W, &sTempPosY_W);
 
         sTempRenderCenterX = sTempPosX_W;
@@ -3338,7 +3346,7 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
       }
 
       if (fOutLeft) {
-        CorrectRenderCenter((INT16)(gsTLX + sX_S), sScreenCenterY, &sNewScreenX, &sNewScreenY);
+        CorrectRenderCenter((int16_t)(gsTLX + sX_S), sScreenCenterY, &sNewScreenX, &sNewScreenY);
         FromScreenToCellCoordinates(sNewScreenX, sNewScreenY, &sTempPosX_W, &sTempPosY_W);
 
         sTempRenderCenterX = sTempPosX_W;
@@ -3347,7 +3355,7 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
       }
 
       if (fOutRight) {
-        CorrectRenderCenter((INT16)(gsTRX - sX_S), sScreenCenterY, &sNewScreenX, &sNewScreenY);
+        CorrectRenderCenter((int16_t)(gsTRX - sX_S), sScreenCenterY, &sNewScreenX, &sNewScreenY);
         FromScreenToCellCoordinates(sNewScreenX, sNewScreenY, &sTempPosX_W, &sTempPosY_W);
 
         sTempRenderCenterX = sTempPosX_W;
@@ -3430,8 +3438,8 @@ void ClearMarkedTiles(void) {
 }
 
 // @@ATECLIP TO WORLD!
-void InvalidateWorldRedundencyRadius(INT16 sX, INT16 sY, INT16 sRadius) {
-  INT16 sCountX, sCountY;
+void InvalidateWorldRedundencyRadius(int16_t sX, int16_t sY, int16_t sRadius) {
+  int16_t sCountX, sCountY;
   uint32_t uiTile;
 
   SetRenderFlags(RENDER_FLAG_CHECKZ);
@@ -3542,7 +3550,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDest
     return (FALSE);
   }
 
-  usZStartLevel = (uint16_t)((INT16)usZValue + ((INT16)pZInfo->bInitialZChange * Z_STRIP_DELTA_Y));
+  usZStartLevel =
+      (uint16_t)((int16_t)usZValue + ((int16_t)pZInfo->bInitialZChange * Z_STRIP_DELTA_Y));
   // set to odd number of pixels for first column
 
   if (LeftSkip > pZInfo->ubFirstZStripWidth) {
@@ -3930,7 +3939,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
     return (FALSE);
   }
 
-  usZStartLevel = (uint16_t)((INT16)usZValue + ((INT16)pZInfo->bInitialZChange * Z_STRIP_DELTA_Y));
+  usZStartLevel =
+      (uint16_t)((int16_t)usZValue + ((int16_t)pZInfo->bInitialZChange * Z_STRIP_DELTA_Y));
   // set to odd number of pixels for first column
 
   if (LeftSkip > pZInfo->ubFirstZStripWidth) {
@@ -4325,7 +4335,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t
     return (FALSE);
   }
 
-  usZStartLevel = (uint16_t)((INT16)usZValue + ((INT16)pZInfo->bInitialZChange * Z_STRIP_DELTA_Y));
+  usZStartLevel =
+      (uint16_t)((int16_t)usZValue + ((int16_t)pZInfo->bInitialZChange * Z_STRIP_DELTA_Y));
   // set to odd number of pixels for first column
 
   if (LeftSkip > pZInfo->ubFirstZStripWidth) {
@@ -4657,7 +4668,7 @@ BlitDone:
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
-    INT16 sZIndex, uint16_t *p16BPPPalette) {
+    int16_t sZIndex, uint16_t *p16BPPPalette) {
   uint32_t uiOffset, uiLineFlag;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
@@ -4730,7 +4741,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     return (FALSE);
   }
 
-  usZStartLevel = (uint16_t)((INT16)usZValue + ((INT16)pZInfo->bInitialZChange * Z_SUBLAYERS * 10));
+  usZStartLevel =
+      (uint16_t)((int16_t)usZValue + ((int16_t)pZInfo->bInitialZChange * Z_SUBLAYERS * 10));
 
   if (LeftSkip > pZInfo->ubFirstZStripWidth) {
     usZStartCols = (LeftSkip - pZInfo->ubFirstZStripWidth);
@@ -5065,14 +5077,14 @@ BlitDone:
   return (TRUE);
 }
 
-void CorrectRenderCenter(INT16 sRenderX, INT16 sRenderY, INT16 *pSNewX, INT16 *pSNewY) {
-  INT16 sScreenX, sScreenY;
-  INT16 sNumXSteps, sNumYSteps;
+void CorrectRenderCenter(int16_t sRenderX, int16_t sRenderY, int16_t *pSNewX, int16_t *pSNewY) {
+  int16_t sScreenX, sScreenY;
+  int16_t sNumXSteps, sNumYSteps;
 
   // Use radar scale values to get screen values, then convert ot map values, rounding to nearest
   // middle tile
-  sScreenX = (INT16)sRenderX;
-  sScreenY = (INT16)sRenderY;
+  sScreenX = (int16_t)sRenderX;
+  sScreenY = (int16_t)sRenderY;
 
   // Adjust for offsets!
   sScreenX += 0;
@@ -5106,7 +5118,7 @@ void CorrectRenderCenter(INT16 sRenderX, INT16 sRenderY, INT16 *pSNewX, INT16 *p
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, SGPRect *clipregion,
-    INT16 sZIndex, uint16_t *p16BPPPalette) {
+    int16_t sZIndex, uint16_t *p16BPPPalette) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
@@ -5177,7 +5189,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
     return (FALSE);
   }
 
-  usZStartLevel = (uint16_t)((INT16)usZValue + ((INT16)pZInfo->bInitialZChange * Z_SUBLAYERS * 10));
+  usZStartLevel =
+      (uint16_t)((int16_t)usZValue + ((int16_t)pZInfo->bInitialZChange * Z_SUBLAYERS * 10));
 
   if (LeftSkip > pZInfo->ubFirstZStripWidth) {
     usZStartCols = (LeftSkip - pZInfo->ubFirstZStripWidth);
@@ -5492,16 +5505,16 @@ BlitDone:
   return (TRUE);
 }
 
-void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                    INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
+void RenderRoomInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                    int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS) {
   int8_t bXOddFlag = 0;
-  INT16 sAnchorPosX_M, sAnchorPosY_M;
-  INT16 sAnchorPosX_S, sAnchorPosY_S;
-  INT16 sTempPosX_M, sTempPosY_M;
-  INT16 sTempPosX_S, sTempPosY_S;
+  int16_t sAnchorPosX_M, sAnchorPosY_M;
+  int16_t sAnchorPosX_S, sAnchorPosY_S;
+  int16_t sTempPosX_M, sTempPosY_M;
+  int16_t sTempPosX_S, sTempPosY_S;
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   uint16_t usTileIndex;
-  INT16 sX, sY;
+  int16_t sX, sY;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 
@@ -5590,16 +5603,16 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
 
 #ifdef _DEBUG
 
-void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                        INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
+void RenderFOVDebugInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                        int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS) {
   int8_t bXOddFlag = 0;
-  INT16 sAnchorPosX_M, sAnchorPosY_M;
-  INT16 sAnchorPosX_S, sAnchorPosY_S;
-  INT16 sTempPosX_M, sTempPosY_M;
-  INT16 sTempPosX_S, sTempPosY_S;
+  int16_t sAnchorPosX_M, sAnchorPosY_M;
+  int16_t sAnchorPosX_S, sAnchorPosY_S;
+  int16_t sTempPosX_M, sTempPosY_M;
+  int16_t sTempPosX_S, sTempPosY_S;
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   uint16_t usTileIndex;
-  INT16 sX, sY;
+  int16_t sX, sY;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 
@@ -5681,16 +5694,16 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                          INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
+void RenderCoverDebugInfo(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t sStartPointX_S,
+                          int16_t sStartPointY_S, int16_t sEndXS, int16_t sEndYS) {
   int8_t bXOddFlag = 0;
-  INT16 sAnchorPosX_M, sAnchorPosY_M;
-  INT16 sAnchorPosX_S, sAnchorPosY_S;
-  INT16 sTempPosX_M, sTempPosY_M;
-  INT16 sTempPosX_S, sTempPosY_S;
+  int16_t sAnchorPosX_M, sAnchorPosY_M;
+  int16_t sAnchorPosX_S, sAnchorPosY_S;
+  int16_t sTempPosX_M, sTempPosY_M;
+  int16_t sTempPosX_S, sTempPosY_S;
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   uint16_t usTileIndex;
-  INT16 sX, sY;
+  int16_t sX, sY;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 
@@ -5766,16 +5779,17 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                                  INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
+void RenderGridNoVisibleDebugInfo(int16_t sStartPointX_M, int16_t sStartPointY_M,
+                                  int16_t sStartPointX_S, int16_t sStartPointY_S, int16_t sEndXS,
+                                  int16_t sEndYS) {
   int8_t bXOddFlag = 0;
-  INT16 sAnchorPosX_M, sAnchorPosY_M;
-  INT16 sAnchorPosX_S, sAnchorPosY_S;
-  INT16 sTempPosX_M, sTempPosY_M;
-  INT16 sTempPosX_S, sTempPosY_S;
+  int16_t sAnchorPosX_M, sAnchorPosY_M;
+  int16_t sAnchorPosX_S, sAnchorPosY_S;
+  int16_t sTempPosX_M, sTempPosY_M;
+  int16_t sTempPosX_S, sTempPosY_S;
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   uint16_t usTileIndex;
-  INT16 sX, sY;
+  int16_t sX, sY;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 
@@ -5849,23 +5863,24 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
 
 #endif
 
-void ExamineZBufferRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
+void ExamineZBufferRect(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
   CalcRenderParameters(sLeft, sTop, sRight, sBottom);
 
   ExamineZBufferForHiddenTiles(gsStartPointX_M, gsStartPointY_M, gsStartPointX_S, gsStartPointY_S,
                                gsEndXS, gsEndYS);
 }
 
-void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                                  INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
+void ExamineZBufferForHiddenTiles(int16_t sStartPointX_M, int16_t sStartPointY_M,
+                                  int16_t sStartPointX_S, int16_t sStartPointY_S, int16_t sEndXS,
+                                  int16_t sEndYS) {
   int8_t bXOddFlag = 0;
-  INT16 sAnchorPosX_M, sAnchorPosY_M;
-  INT16 sAnchorPosX_S, sAnchorPosY_S;
-  INT16 sTempPosX_M, sTempPosY_M;
-  INT16 sTempPosX_S, sTempPosY_S;
+  int16_t sAnchorPosX_M, sAnchorPosY_M;
+  int16_t sAnchorPosX_S, sAnchorPosY_S;
+  int16_t sTempPosX_M, sTempPosY_M;
+  int16_t sTempPosX_S, sTempPosY_S;
   BOOLEAN fEndRenderRow = FALSE, fEndRenderCol = FALSE;
   uint16_t usTileIndex;
-  INT16 sX, sY, sWorldX, sZLevel;
+  int16_t sX, sY, sWorldX, sZLevel;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   TILE_ELEMENT *TileElem;
@@ -5970,10 +5985,10 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void CalcRenderParameters(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
-  INT16 sTempPosX_W, sTempPosY_W;
-  INT16 sRenderCenterX_W, sRenderCenterY_W;
-  INT16 sOffsetX_W, sOffsetY_W, sOffsetX_S, sOffsetY_S;
+void CalcRenderParameters(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
+  int16_t sTempPosX_W, sTempPosY_W;
+  int16_t sRenderCenterX_W, sRenderCenterY_W;
+  int16_t sOffsetX_W, sOffsetY_W, sOffsetX_S, sOffsetY_S;
 
   gOldClipRect = gClippingRect;
 
@@ -6453,7 +6468,7 @@ void SetMercGlowNormal() { gpGlowFramePointer = gsGlowFrames; }
 
 #endif
 
-void SetRenderCenter(INT16 sNewX, INT16 sNewY) {
+void SetRenderCenter(int16_t sNewX, int16_t sNewY) {
   if (gfIgnoreScrolling == 1) {
     return;
   }

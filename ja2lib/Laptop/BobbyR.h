@@ -58,7 +58,7 @@ BOOLEAN InitBobbyRayUsedInventory();
 uint8_t HowManyBRItemsToOrder(uint16_t usItemIndex, uint8_t ubCurrentlyOnHand,
                               uint8_t ubBobbyRayNewUsed);
 void CancelAllPendingBRPurchaseOrders(void);
-INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
-                              BOOLEAN fUsed);
+int16_t GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
+                                BOOLEAN fUsed);
 
 #endif

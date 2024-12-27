@@ -64,18 +64,18 @@ BOOLEAN gfQuoteSaid = FALSE;
 int8_t gbNumDives = 0;
 int8_t gbMaxDives = 0;
 BOOLEAN gfFadingRaidOut = FALSE;
-INT16 gsDiveX;
-INT16 gsDiveY;
-INT16 gsDiveTargetLocation;
+int16_t gsDiveX;
+int16_t gsDiveY;
+int16_t gsDiveTargetLocation;
 uint8_t gubDiveDirection;
-INT16 gsNumGridNosMoved;
+int16_t gsNumGridNosMoved;
 INT32 giNumTurnsSinceLastDive;
 INT32 giNumTurnsSinceDiveStarted;
 INT32 giNumGridNosMovedThisTurn;
 BOOLEAN gfAirRaidHasHadTurn = FALSE;
 uint8_t gubBeginTeamTurn = 0;
 BOOLEAN gfHaveTBBatton = FALSE;
-INT16 gsNotLocatedYet = FALSE;
+int16_t gsNotLocatedYet = FALSE;
 
 AIR_RAID_DEFINITION gAirRaidDef;
 
@@ -90,11 +90,11 @@ typedef struct {
   int8_t bNumDives;
   int8_t bMaxDives;
   BOOLEAN fFadingRaidOut;
-  INT16 sDiveX;
-  INT16 sDiveY;
-  INT16 sDiveTargetLocation;
+  int16_t sDiveX;
+  int16_t sDiveY;
+  int16_t sDiveTargetLocation;
   uint8_t ubDiveDirection;
-  INT16 sNumGridNosMoved;
+  int16_t sNumGridNosMoved;
   INT32 iNumTurnsSinceLastDive;
   INT32 iNumTurnsSinceDiveStarted;
   INT32 iNumGridNosMovedThisTurn;
@@ -102,9 +102,9 @@ typedef struct {
   uint8_t ubBeginTeamTurn;
   BOOLEAN fHaveTBBatton;
   AIR_RAID_DEFINITION AirRaidDef;
-  INT16 sRaidSoldierID;
+  int16_t sRaidSoldierID;
 
-  INT16 sNotLocatedYet;
+  int16_t sNotLocatedYet;
   INT32 iNumFrames;
 
   int8_t bLevel;
@@ -114,9 +114,9 @@ typedef struct {
   uint16_t usAttackingWeapon;
   FLOAT dXPos;
   FLOAT dYPos;
-  INT16 sX;
-  INT16 sY;
-  INT16 sGridNo;
+  int16_t sX;
+  int16_t sY;
+  int16_t sGridNo;
 
   uint8_t ubFiller[32];
 
@@ -244,7 +244,7 @@ BOOLEAN BeginAirRaid() {
   return (TRUE);
 }
 
-INT16 PickLocationNearAnyMercInSector() {
+int16_t PickLocationNearAnyMercInSector() {
   uint8_t ubMercsInSector[20] = {0};
   uint8_t ubNumMercs = 0;
   uint8_t ubChosenMerc;
@@ -276,17 +276,17 @@ INT16 PickLocationNearAnyMercInSector() {
   return (NOWHERE);
 }
 
-INT16 PickRandomLocationAtMinSpacesAway(INT16 sGridNo, INT16 sMinValue, INT16 sRandomVar) {
-  INT16 sNewGridNo = NOWHERE;
+int16_t PickRandomLocationAtMinSpacesAway(int16_t sGridNo, int16_t sMinValue, int16_t sRandomVar) {
+  int16_t sNewGridNo = NOWHERE;
 
-  INT16 sX, sY, sNewX, sNewY;
+  int16_t sX, sY, sNewX, sNewY;
 
   sX = CenterX(sGridNo);
   sY = CenterY(sGridNo);
 
   while (sNewGridNo == NOWHERE) {
-    sNewX = sX + sMinValue + (INT16)Random(sRandomVar);
-    sNewY = sY + sMinValue + (INT16)Random(sRandomVar);
+    sNewX = sX + sMinValue + (int16_t)Random(sRandomVar);
+    sNewY = sY + sMinValue + (int16_t)Random(sRandomVar);
 
     if (Random(2)) {
       sNewX = -1 * sNewX;
@@ -444,7 +444,7 @@ void AirRaidStartEnding() {
 }
 
 void BeginBombing() {
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint32_t iSoundStartDelay;
 
   if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
@@ -487,7 +487,7 @@ void BeginBombing() {
 }
 
 void BeginDive() {
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint32_t iSoundStartDelay;
 
   // Start diving sound...
@@ -538,23 +538,23 @@ void MoveDiveAirplane(FLOAT dAngle) {
   dDeltaPos = MOVE_X * (FLOAT)sin(dAngle);
 
   // Find new position
-  gsDiveX = (INT16)(gsDiveX + dDeltaPos);
+  gsDiveX = (int16_t)(gsDiveX + dDeltaPos);
 
   // Find delta Movement for Y pos
   dDeltaPos = MOVE_X * (FLOAT)cos(dAngle);
 
   // Find new pos
-  gsDiveY = (INT16)(gsDiveY + dDeltaPos);
+  gsDiveY = (int16_t)(gsDiveY + dDeltaPos);
 }
 
 void DoDive() {
-  INT16 sRange;
-  INT16 sGridNo, sOldGridNo;
+  int16_t sRange;
+  int16_t sGridNo, sOldGridNo;
 
-  INT16 sTargetX, sTargetY;
-  INT16 sStrafeX, sStrafeY;
+  int16_t sTargetX, sTargetY;
+  int16_t sStrafeX, sStrafeY;
   FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // Delay for a specific perion of time to allow sound to Q up...
   if (TIMECOUNTERDONE(giTimerAirRaidDiveStarted, 0)) {
@@ -619,17 +619,17 @@ void DoDive() {
 
         // Get target.....
         dDeltaXPos = STRAFE_DIST * (FLOAT)sin(dAngle);
-        sStrafeX = (INT16)(gsDiveX + dDeltaXPos);
+        sStrafeX = (int16_t)(gsDiveX + dDeltaXPos);
 
         // Find delta Movement for Y pos
         dDeltaYPos = STRAFE_DIST * (FLOAT)cos(dAngle);
-        sStrafeY = (INT16)(gsDiveY + dDeltaYPos);
+        sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
         if ((gTacticalStatus.uiFlags & INCOMBAT)) {
           LocateGridNo(sGridNo);
         }
 
-        if (GridNoOnVisibleWorldTile((INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+        if (GridNoOnVisibleWorldTile((int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
           // if ( gsNotLocatedYet && !( gTacticalStatus.uiFlags & INCOMBAT ) )
           //	{
           //	gsNotLocatedYet = FALSE;
@@ -655,8 +655,8 @@ void DoDive() {
         }
 
         // Do second one.... ( ll )
-        sX = (INT16)(gsDiveX + ((FLOAT)sin(dAngle + (PI / 2)) * 40));
-        sY = (INT16)(gsDiveY + ((FLOAT)cos(dAngle + (PI / 2)) * 40));
+        sX = (int16_t)(gsDiveX + ((FLOAT)sin(dAngle + (PI / 2)) * 40));
+        sY = (int16_t)(gsDiveY + ((FLOAT)cos(dAngle + (PI / 2)) * 40));
 
         gpRaidSoldier->dXPos = sX;
         gpRaidSoldier->sX = sX;
@@ -665,12 +665,12 @@ void DoDive() {
         gpRaidSoldier->sGridNo = GETWORLDINDEXFROMWORLDCOORDS(sY, sX);
 
         // Get target.....
-        sStrafeX = (INT16)(sX + dDeltaXPos);
+        sStrafeX = (int16_t)(sX + dDeltaXPos);
 
         // Find delta Movement for Y pos
-        sStrafeY = (INT16)(sY + dDeltaYPos);
+        sStrafeY = (int16_t)(sY + dDeltaYPos);
 
-        if (GridNoOnVisibleWorldTile((INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+        if (GridNoOnVisibleWorldTile((int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
           // if ( ( gTacticalStatus.uiFlags & INCOMBAT ) )
           {
             // Increase attacker busy...
@@ -703,12 +703,12 @@ void DoDive() {
 }
 
 void DoBombing() {
-  INT16 sRange;
-  INT16 sGridNo, sOldGridNo, sBombGridNo;
+  int16_t sRange;
+  int16_t sGridNo, sOldGridNo, sBombGridNo;
 
-  INT16 sTargetX, sTargetY;
+  int16_t sTargetX, sTargetY;
   uint16_t usItem;
-  INT16 sStrafeX, sStrafeY;
+  int16_t sStrafeX, sStrafeY;
   FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
   BOOLEAN fLocate = FALSE;
 
@@ -774,13 +774,14 @@ void DoBombing() {
         if ((gsNumGridNosMoved % 4) == 0) {
           // Get target.....
           dDeltaXPos = BOMB_DIST * (FLOAT)sin(dAngle);
-          sStrafeX = (INT16)(gsDiveX + dDeltaXPos);
+          sStrafeX = (int16_t)(gsDiveX + dDeltaXPos);
 
           // Find delta Movement for Y pos
           dDeltaYPos = BOMB_DIST * (FLOAT)cos(dAngle);
-          sStrafeY = (INT16)(gsDiveY + dDeltaYPos);
+          sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
-          if (GridNoOnVisibleWorldTile((INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+          if (GridNoOnVisibleWorldTile(
+                  (int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
             // if ( gsNotLocatedYet && !( gTacticalStatus.uiFlags & INCOMBAT ) )
             //{
             //	gsNotLocatedYet = FALSE;
@@ -795,7 +796,7 @@ void DoBombing() {
 
             // Pick random gridno....
             sBombGridNo = PickRandomLocationAtMinSpacesAway(
-                (INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)), 40, 40);
+                (int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)), 40, 40);
 
             if ((gTacticalStatus.uiFlags & INCOMBAT)) {
               fLocate = TRUE;

@@ -10,8 +10,8 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
 INT32 GetFreeSlantRoof(void);
 void RecountSlantRoofs(void);
 void ClearSlantRoofs(void);
-BOOLEAN FindSlantRoofSlot(INT16 sGridNo);
-void AddSlantRoofFOVSlot(INT16 sGridNo);
+BOOLEAN FindSlantRoofSlot(int16_t sGridNo);
+void AddSlantRoofFOVSlot(int16_t sGridNo);
 void ExamineSlantRoofFOVSlots();
 
 #endif

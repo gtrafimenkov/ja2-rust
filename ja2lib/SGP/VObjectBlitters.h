@@ -195,15 +195,15 @@ BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(uint16_t *pBuffer, uint32_t uiDestPitch
 // ATE: New blitters for showing an outline at color 254
 BOOLEAN Blt8BPPDataTo16BPPBufferOutline(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                         struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                        uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline);
+                                        uint16_t usIndex, int16_t s16BPPColor, BOOLEAN fDoOutline);
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                            uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline,
-                                            SGPRect *clipregion);
+                                            uint16_t usIndex, int16_t s16BPPColor,
+                                            BOOLEAN fDoOutline, SGPRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                          uint16_t *pZBuffer, uint16_t usZValue,
                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                         uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline);
+                                         uint16_t usIndex, int16_t s16BPPColor, BOOLEAN fDoOutline);
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadow(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               uint16_t usIndex);
@@ -213,21 +213,22 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(uint16_t *pBuffer, uint32_t ui
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                            uint16_t *pZBuffer, uint16_t usZValue,
                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                           uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline);
+                                           uint16_t usIndex, int16_t s16BPPColor,
+                                           BOOLEAN fDoOutline);
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(uint16_t *pBuffer,
                                                          uint32_t uiDestPitchBYTES,
                                                          uint16_t *pZBuffer, uint16_t usZValue,
                                                          struct VObject *hSrcVObject, INT32 iX,
                                                          INT32 iY, uint16_t usIndex,
-                                                         INT16 s16BPPColor, BOOLEAN fDoOutline);
+                                                         int16_t s16BPPColor, BOOLEAN fDoOutline);
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, INT16 s16BPPColor,
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, int16_t s16BPPColor,
     BOOLEAN fDoOutline, SGPRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                              uint16_t *pZBuffer, uint16_t usZValue,
                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                             uint16_t usIndex, INT16 s16BPPColor,
+                                             uint16_t usIndex, int16_t s16BPPColor,
                                              BOOLEAN fDoOutline, SGPRect *clipregion);
 
 // ATE: New blitter for included shadow, but pixellate if obscured by z

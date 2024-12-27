@@ -17,7 +17,7 @@ extern INT32 iSelectWin, iCancelWin, iScrollUp, iScrollDown;
 
 extern BOOLEAN fAllDone;
 
-extern void CreateJA2SelectionWindow(INT16 sWhat);
+extern void CreateJA2SelectionWindow(int16_t sWhat);
 extern void InitJA2SelectionWindow(void);
 extern void ShutdownJA2SelectionWindow(void);
 extern void RemoveJA2SelectionWindow(void);
@@ -85,10 +85,10 @@ typedef struct {
 typedef struct _DisplayList {
   struct VObject *hObj;
   uint16_t uiIndex;
-  INT16 iX;
-  INT16 iY;
-  INT16 iWidth;
-  INT16 iHeight;
+  int16_t iX;
+  int16_t iY;
+  int16_t iWidth;
+  int16_t iHeight;
   uint32_t uiObjIndx;
   BOOLEAN fChosen;
   struct _DisplayList *pNext;
@@ -97,7 +97,7 @@ typedef struct _DisplayList {
 typedef struct _Selections {
   uint32_t uiObject;
   uint16_t usIndex;
-  INT16 sCount;
+  int16_t sCount;
 } Selections;
 
 INT32 FindInSelectionList(DisplayList *pNode);
@@ -160,7 +160,7 @@ extern BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpec
                                   DisplayList **pDisplayList, SGPPoint *pUpperLeft,
                                   SGPPoint *pBottomRight, SGPPoint *pSpacing, uint16_t fFlags);
 
-extern BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCutOff,
+extern BOOLEAN DisplayWindowFunc(DisplayList *pNode, int16_t iTopCutOff, int16_t iBottomCutOff,
                                  SGPPoint *pUpperLeft, uint16_t fFlags);
 
 #endif

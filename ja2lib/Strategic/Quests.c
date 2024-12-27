@@ -39,8 +39,8 @@ extern struct SOLDIERTYPE *gpDestSoldier;
 uint8_t gubQuest[MAX_QUESTS];
 uint8_t gubFact[NUM_FACTS];  // this has to be updated when we figure out how many facts we have
 
-INT16 gsFoodQuestSectorX;
-INT16 gsFoodQuestSectorY;
+int16_t gsFoodQuestSectorX;
+int16_t gsFoodQuestSectorY;
 
 extern void GuaranteeAtLeastXItemsOfIndex(uint8_t ubArmsDealer, uint16_t usItemIndex,
                                           uint8_t ubHowMany);
@@ -144,7 +144,7 @@ BOOLEAN CheckGuyVisible(uint8_t ubNPC, uint8_t ubGuy) {
   }
 }
 
-BOOLEAN CheckNPCAt(uint8_t ubNPC, INT16 sGridNo) {
+BOOLEAN CheckNPCAt(uint8_t ubNPC, int16_t sGridNo) {
   struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubNPC, FALSE);
@@ -177,7 +177,7 @@ BOOLEAN CheckNPCIsEnemy(uint8_t ubProfileID) {
 
 BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, uint8_t ubProfileId) {
   struct SOLDIERTYPE *pNPC;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   // no merc nearby?
   if (pMerc == NULL) {
@@ -203,7 +203,7 @@ int8_t NumWoundedMercsNearby(uint8_t ubProfileID) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -230,7 +230,7 @@ int8_t NumMercsNear(uint8_t ubProfileID, uint8_t ubMaxDist) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -351,7 +351,7 @@ int8_t NumMalesPresent(uint8_t ubProfileID) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -379,7 +379,7 @@ BOOLEAN FemalePresent(uint8_t ubProfileID) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pNPC;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -440,7 +440,7 @@ BOOLEAN CheckNPCSector(uint8_t ubProfileID, u8 sSectorX, u8 sSectorY, int8_t bSe
   return (FALSE);
 }
 
-BOOLEAN AIMMercWithin(INT16 sGridNo, INT16 sDistance) {
+BOOLEAN AIMMercWithin(int16_t sGridNo, int16_t sDistance) {
   uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 

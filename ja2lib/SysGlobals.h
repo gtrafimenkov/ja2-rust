@@ -17,7 +17,7 @@ extern CHAR8 gSystemDebugStr[128];
 extern uint32_t guiDoneButton;
 
 extern BOOLEAN gfMode;
-extern INT16 gsCurrentActionPoints;
+extern int16_t gsCurrentActionPoints;
 extern int8_t gbFPSDisplay;
 extern BOOLEAN gfResetInputCheck;
 extern BOOLEAN gfGlobalError;

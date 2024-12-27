@@ -128,8 +128,8 @@ void InitEditorRegions() {
 
   // Create the regions for the terrain tile selections
   for (x = 0; x < NUM_TERRAIN_TILE_REGIONS; x++) {
-    MSYS_DefineRegion(&TerrainTileButtonRegion[x], (INT16)(261 + x * 42), 369,
-                      (INT16)(303 + x * 42), 391, MSYS_PRIORITY_NORMAL, 0, MSYS_NO_CALLBACK,
+    MSYS_DefineRegion(&TerrainTileButtonRegion[x], (int16_t)(261 + x * 42), 369,
+                      (int16_t)(303 + x * 42), 391, MSYS_PRIORITY_NORMAL, 0, MSYS_NO_CALLBACK,
                       (MOUSE_CALLBACK)TerrainTileButtonRegionCallback);
     MSYS_SetRegionUserData(&TerrainTileButtonRegion[x], 0, x);
     MSYS_DisableRegion(&TerrainTileButtonRegion[x]);
@@ -180,8 +180,8 @@ void DeleteEditorImages() {
   DeleteVideoObjectFromIndex(guiMercInventoryPanel);
   DeleteVideoObjectFromIndex(guiOmertaMap);
   // The merc directional buttons
-  UnloadGenericButtonIcon((INT16)giEditMercDirectionIcons[0]);
-  UnloadGenericButtonIcon((INT16)giEditMercDirectionIcons[1]);
+  UnloadGenericButtonIcon((int16_t)giEditMercDirectionIcons[0]);
+  UnloadGenericButtonIcon((int16_t)giEditMercDirectionIcons[1]);
 
   UnloadButtonImage(giEditMercImage[0]);
   UnloadButtonImage(giEditMercImage[1]);
@@ -430,7 +430,7 @@ void EnableEditorTaskbar(void) {
 // A specialized mprint function that'll restore the editor panel underneath the
 // string before rendering the string.  This is obviously only useful for drawing text
 // in the editor taskbar.
-void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...) {
+void mprintfEditor(int16_t x, int16_t y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -445,11 +445,11 @@ void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...) {
   uiStringLength = StringPixLength(string, FontDefault);
   uiStringHeight = GetFontHeight(FontDefault);
 
-  ClearTaskbarRegion(x, y, (INT16)(x + uiStringLength), (INT16)(y + uiStringHeight));
+  ClearTaskbarRegion(x, y, (int16_t)(x + uiStringLength), (int16_t)(y + uiStringHeight));
   mprintf(x, y, string);
 }
 
-void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
+void ClearTaskbarRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
   ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusEditorTaskbarColor);
 
   if (!sLeft) {
@@ -573,8 +573,8 @@ void EnableEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID) 
 }
 
 void RenderMapEntryPointsAndLights() {
-  INT16 sGridNo;
-  INT16 sScreenX, sScreenY;
+  int16_t sGridNo;
+  int16_t sScreenX, sScreenY;
   INT32 i;
   if (gfSummaryWindowActive) return;
   SetFont(FONT10ARIAL);
@@ -584,7 +584,7 @@ void RenderMapEntryPointsAndLights() {
   if (sGridNo != -1) {
     GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40 && sScreenX < 640) {
-      DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
+      DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
                            L"North Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
     }
   }
@@ -592,7 +592,7 @@ void RenderMapEntryPointsAndLights() {
   if (sGridNo != -1) {
     GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40 && sScreenX < 640) {
-      DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
+      DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
                            L"West Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
     }
   }
@@ -600,7 +600,7 @@ void RenderMapEntryPointsAndLights() {
   if (sGridNo != -1) {
     GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40 && sScreenX < 640) {
-      DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
+      DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
                            L"East Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
     }
   }
@@ -608,7 +608,7 @@ void RenderMapEntryPointsAndLights() {
   if (sGridNo != -1) {
     GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40 && sScreenX < 640) {
-      DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
+      DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
                            L"South Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
     }
   }
@@ -616,7 +616,7 @@ void RenderMapEntryPointsAndLights() {
   if (sGridNo != -1) {
     GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40 && sScreenX < 640) {
-      DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
+      DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
                            L"Center Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
     }
   }
@@ -624,7 +624,7 @@ void RenderMapEntryPointsAndLights() {
   if (sGridNo != -1) {
     GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40 && sScreenX < 640) {
-      DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
+      DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 40, 2, FONT10ARIAL, FONT_YELLOW,
                            L"Isolated Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
     }
   }
@@ -635,13 +635,13 @@ void RenderMapEntryPointsAndLights() {
       GetGridNoScreenPos(sGridNo, 0, &sScreenX, &sScreenY);
       if (sScreenY >= -50 && sScreenY < 300 && sScreenX >= -40 && sScreenX < 640) {
         if (LightSprites[i].uiFlags & LIGHT_PRIMETIME)
-          DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 50, 2, FONT10ARIAL, FONT_ORANGE,
+          DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 50, 2, FONT10ARIAL, FONT_ORANGE,
                                L"Prime", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
         else if (LightSprites[i].uiFlags & LIGHT_NIGHTTIME)
-          DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 50, 2, FONT10ARIAL, FONT_RED,
+          DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 50, 2, FONT10ARIAL, FONT_RED,
                                L"Night", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
         else
-          DisplayWrappedString(sScreenX, (INT16)(sScreenY - 5), 50, 2, FONT10ARIAL, FONT_YELLOW,
+          DisplayWrappedString(sScreenX, (int16_t)(sScreenY - 5), 50, 2, FONT10ARIAL, FONT_YELLOW,
                                L"24Hour", FONT_BLACK, TRUE, CENTER_JUSTIFIED);
       }
     }
@@ -673,8 +673,8 @@ void BuildTriggerName(struct OBJECTTYPE *pItem, STR16 szItemName, int bufSize) {
 }
 
 void RenderDoorLockInfo() {
-  INT16 i, xp, yp;
-  INT16 sScreenX, sScreenY;
+  int16_t i, xp, yp;
+  int16_t sScreenX, sScreenY;
   CHAR16 str[50];
   for (i = 0; i < gubNumDoors; i++) {
     GetGridNoScreenPos(DoorTable[i].sGridNo, 0, &sScreenX, &sScreenY);
@@ -721,11 +721,11 @@ void RenderDoorLockInfo() {
 void RenderSelectedItemBlownUp() {
   uint32_t uiVideoObjectIndex;
   struct VObject *hVObject;
-  INT16 sScreenX, sScreenY, xp, yp;
+  int16_t sScreenX, sScreenY, xp, yp;
   struct ITEM_POOL *pItemPool;
   CHAR16 szItemName[SIZE_ITEM_NAME];
   INT32 i;
-  INT16 sWidth, sHeight, sOffsetX, sOffsetY;
+  int16_t sWidth, sHeight, sOffsetX, sOffsetY;
 
   GetGridNoScreenPos(gsItemGridNo, 0, &sScreenX, &sScreenY);
 
@@ -799,7 +799,7 @@ void RenderSelectedItemBlownUp() {
 
 void RenderEditorInfo() {
   wchar_t FPSText[50];
-  INT16 iMapIndex;
+  int16_t iMapIndex;
 
   SetFont(FONT12POINT1);
   SetFontForeground(FONT_BLACK);

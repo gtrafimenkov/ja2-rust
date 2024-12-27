@@ -53,9 +53,9 @@ void UpdateWallsView() {
   INT32 cnt;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (fBuildingShowWalls) {
-      RemoveWallLevelnodeFlags((INT16)cnt, LEVELNODE_HIDDEN);
+      RemoveWallLevelnodeFlags((int16_t)cnt, LEVELNODE_HIDDEN);
     } else {
-      SetWallLevelnodeFlags((INT16)cnt, LEVELNODE_HIDDEN);
+      SetWallLevelnodeFlags((int16_t)cnt, LEVELNODE_HIDDEN);
     }
   }
   gfRenderWorld = TRUE;
@@ -110,7 +110,7 @@ void KillBuilding(uint32_t iMapIndex) {
 }
 
 BUILDINGLAYOUTNODE *gpBuildingLayoutList = NULL;
-INT16 gsBuildingLayoutAnchorGridNo = -1;
+int16_t gsBuildingLayoutAnchorGridNo = -1;
 extern void RemoveBuildingLayout();
 
 void DeleteBuildingLayout() {
@@ -141,13 +141,13 @@ void BuildLayout(INT32 iMapIndex, INT32 iOffset) {
   // Now, check to make sure this gridno hasn't already been processed.
   curr = gpBuildingLayoutList;
   while (curr) {
-    if ((INT16)iMapIndex == curr->sGridNo) return;
+    if ((int16_t)iMapIndex == curr->sGridNo) return;
     curr = curr->next;
   }
   // Good, it hasn't, so process it and add it to the head of the list.
   curr = (BUILDINGLAYOUTNODE *)MemAlloc(sizeof(BUILDINGLAYOUTNODE));
   Assert(curr);
-  curr->sGridNo = (INT16)iMapIndex;
+  curr->sGridNo = (int16_t)iMapIndex;
   curr->next = gpBuildingLayoutList;
   gpBuildingLayoutList = curr;
 
@@ -169,11 +169,11 @@ void CopyBuilding(INT32 iMapIndex) {
   // Allocate the basic structure, then calculate the layout.  The head node is
   gpBuildingLayoutList = (BUILDINGLAYOUTNODE *)MemAlloc(sizeof(BUILDINGLAYOUTNODE));
   Assert(gpBuildingLayoutList);
-  gpBuildingLayoutList->sGridNo = (INT16)iMapIndex;
+  gpBuildingLayoutList->sGridNo = (int16_t)iMapIndex;
   gpBuildingLayoutList->next = NULL;
 
   // Set the anchor point for this building -- this is where the user clicked.
-  gsBuildingLayoutAnchorGridNo = (INT16)iMapIndex;
+  gsBuildingLayoutAnchorGridNo = (int16_t)iMapIndex;
 
   // Now, recursively expand out while adding unique gridnos to our list.  The recursion will
   // terminate when complete.
@@ -466,7 +466,7 @@ void ExtractAndUpdateDoorInfo() {
 
   memset(&door, 0, sizeof(DOOR));
 
-  door.sGridNo = (INT16)iDoorMapIndex;
+  door.sGridNo = (int16_t)iDoorMapIndex;
 
   num = min(GetNumericStrictValueFromField(0), NUM_LOCKS - 1);
   door.ubLockID = (uint8_t)num;

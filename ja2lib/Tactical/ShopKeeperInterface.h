@@ -31,7 +31,7 @@ enum {
 
 typedef struct {
   BOOLEAN fActive;
-  INT16 sItemIndex;
+  int16_t sItemIndex;
   uint32_t uiFlags;
   struct OBJECTTYPE ItemObject;
   uint8_t
@@ -42,9 +42,9 @@ typedef struct {
   uint8_t ubIdOfMercWhoOwnsTheItem;
   uint32_t uiItemPrice;  // Only used for the players item that have been evaluated
 
-  INT16 sSpecialItemElement;  // refers to which special item element an item in a dealer's
-                              // inventory area occupies.  -1 Means the item is "perfect" and has no
-                              // associated special item.
+  int16_t sSpecialItemElement;  // refers to which special item element an item in a dealer's
+                                // inventory area occupies.  -1 Means the item is "perfect" and has
+                                // no associated special item.
 
 } INVENTORY_IN_SLOT;
 
@@ -75,7 +75,7 @@ void EnterShopKeeperInterfaceScreen(uint8_t ubArmsDealer);
 
 void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
                           uint16_t usHeight);
-BOOLEAN ShouldSoldierDisplayHatchOnItem(uint8_t ubProfileID, INT16 sSlotNum);
+BOOLEAN ShouldSoldierDisplayHatchOnItem(uint8_t ubProfileID, int16_t sSlotNum);
 int8_t AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
                                  int8_t bSlotIdInOtherLocation);
 void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
@@ -98,7 +98,7 @@ BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier);
 void DealerGetsBribed(uint8_t ubProfileId, uint32_t uiMoneyAmount);
 
 #ifdef JA2TESTVERSION
-void AddShopkeeperToGridNo(uint8_t ubProfile, INT16 sGridNo);
+void AddShopkeeperToGridNo(uint8_t ubProfile, int16_t sGridNo);
 #endif
 
 void RestrictSkiMouseCursor();

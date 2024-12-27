@@ -341,7 +341,7 @@ HWFILE FileMan_Open(STR strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose)
 //**************************************************************************
 
 void FileMan_Close(HWFILE hFile) {
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
@@ -403,7 +403,7 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, uint32_t uiBytesToRead, uint32_t *
   DWORD dwNumBytesToRead;
   u32 dwNumBytesRead;
   BOOLEAN fRet = FALSE;
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
 #ifdef JA2TESTVERSION
@@ -491,7 +491,7 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, uint32_t uiBytesToWrite, uint32_t
   HANDLE hRealFile;
   DWORD dwNumBytesToWrite, dwNumBytesWritten;
   BOOLEAN fRet;
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
@@ -547,7 +547,7 @@ BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) {
   LONG lDistanceToMove;
   INT32 iDistance = 0;
 
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
@@ -601,7 +601,7 @@ INT32 FileMan_GetPos(HWFILE hFile) {
   HANDLE hRealFile;
   uint32_t uiPositionInFile = 0;
 
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
@@ -658,7 +658,7 @@ uint32_t FileMan_GetSize(HWFILE hFile) {
   HANDLE hRealHandle;
   uint32_t uiFileSize = 0xFFFFFFFF;
 
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
@@ -948,7 +948,7 @@ BOOLEAN Plat_ClearFileAttributes(STR strFilename) {
 
 // returns true if at end of file, else false
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
   HANDLE hRealFile;
   //	uint8_t		Data;
@@ -1013,7 +1013,7 @@ BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) {
   *pLastWriteTime = 0;
 
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
 
@@ -1056,7 +1056,7 @@ uint32_t FileMan_Size(STR strFilename) {
 }
 
 HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
-  INT16 sLibraryID;
+  int16_t sLibraryID;
   uint32_t uiFileNum;
 
   GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);

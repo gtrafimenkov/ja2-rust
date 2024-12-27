@@ -31,7 +31,8 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen);
 // bail out of sector inventory mode if it is on
 void CancelSectorInventoryDisplayIfOn(BOOLEAN fExitFromMapScreen);
 
-INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCountStacksAsOne);
+INT32 GetSizeOfStashInSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ,
+                             BOOLEAN fCountStacksAsOne);
 
 // get total number of items in sector
 INT32 GetTotalNumberOfItems(void);
@@ -48,7 +49,7 @@ BOOLEAN AutoPlaceObjectInInventoryStash(struct OBJECTTYPE *pItemPtr);
 // the current inventory item
 extern INT32 iCurrentlyHighLightedItem;
 extern BOOLEAN fFlashHighLightInventoryItemOnradarMap;
-extern INT16 sObjectSourceGridNo;
+extern int16_t sObjectSourceGridNo;
 extern WORLDITEM *pInventoryPoolList;
 extern INT32 iCurrentInventoryPoolPage;
 extern BOOLEAN fMapInventoryItemCompatable[];

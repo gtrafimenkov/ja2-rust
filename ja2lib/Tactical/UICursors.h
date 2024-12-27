@@ -16,7 +16,7 @@ uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t 
 void DetermineCursorBodyLocation(uint8_t ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc);
 
 void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier);
-void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos);
+void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, int16_t usMapPos);
 
 uint8_t GetActionModeCursor(struct SOLDIERTYPE *pSoldier);
 

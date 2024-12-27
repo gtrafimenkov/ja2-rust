@@ -29,26 +29,26 @@ struct SOLDIERTYPE;
 
 BOOLEAN FindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags);
 BOOLEAN SelectiveFindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags);
-BOOLEAN FindSoldier(INT16 sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
+BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
                     uint32_t uiFlags);
-struct SOLDIERTYPE *SimpleFindSoldier(INT16 sGridNo, int8_t bLevel);
+struct SOLDIERTYPE *SimpleFindSoldier(int16_t sGridNo, int8_t bLevel);
 
 BOOLEAN CycleSoldierFindStack(uint16_t usMapPos);
 
-BOOLEAN GridNoOnScreen(INT16 sGridNo);
+BOOLEAN GridNoOnScreen(int16_t sGridNo);
 
 BOOLEAN SoldierOnScreen(uint16_t usID);
-BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, uint16_t usReasonID, int8_t *pbDirection,
+BOOLEAN SoldierLocationRelativeToScreen(int16_t sGridNo, uint16_t usReasonID, int8_t *pbDirection,
                                         uint32_t *puiScrollFlags);
-void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *psScreenY);
-void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *psWidth);
-void GetSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, INT16 *sOffsetY);
-void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *psScreenY);
-BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY);
-BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFlags, INT16 sX,
-                                    INT16 sY);
+void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16_t *psScreenY);
+void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, int16_t *psHeight, int16_t *psWidth);
+void GetSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, int16_t *sOffsetX, int16_t *sOffsetY);
+void GetSoldierTRUEScreenPos(struct SOLDIERTYPE *pSoldier, int16_t *psScreenX, int16_t *psScreenY);
+BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, int16_t sX, int16_t sY);
+BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, uint16_t *usFlags, int16_t sX,
+                                    int16_t sY);
 
-uint8_t QuickFindSoldier(INT16 sGridNo);
-void GetGridNoScreenPos(INT16 sGridNo, uint8_t ubLevel, INT16 *psScreenX, INT16 *psScreenY);
+uint8_t QuickFindSoldier(int16_t sGridNo);
+void GetGridNoScreenPos(int16_t sGridNo, uint8_t ubLevel, int16_t *psScreenX, int16_t *psScreenY);
 
 #endif

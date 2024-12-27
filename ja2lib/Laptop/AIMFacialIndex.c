@@ -79,8 +79,8 @@ BOOLEAN EnterAimFacialIndex() {
   for (y = 0; y < AIM_FI_NUM_MUHSHOTS_Y; y++) {
     for (x = 0; x < AIM_FI_NUM_MUHSHOTS_X; x++) {
       MSYS_DefineRegion(&gMercFaceMouseRegions[i], usPosX, usPosY,
-                        (INT16)(usPosX + AIM_FI_PORTRAIT_WIDTH),
-                        (INT16)(usPosY + AIM_FI_PORTRAIT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                        (int16_t)(usPosX + AIM_FI_PORTRAIT_WIDTH),
+                        (int16_t)(usPosY + AIM_FI_PORTRAIT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                         SelectMercFaceMoveRegionCallBack, SelectMercFaceRegionCallBack);
       // Add region
       MSYS_AddRegion(&gMercFaceMouseRegions[i]);

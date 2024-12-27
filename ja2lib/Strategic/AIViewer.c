@@ -132,7 +132,7 @@ enum {
   NUM_ICON_COLORS
 };
 
-void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void HandleViewerInput();
 void RenderViewer();
 void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
@@ -184,10 +184,10 @@ uint16_t gusBlue;
 uint16_t gusLtBlue;
 uint16_t gusDkBlue;
 
-INT16 gsAINumAdmins = -1;
-INT16 gsAINumTroops = -1;
-INT16 gsAINumElites = -1;
-INT16 gsAINumCreatures = -1;
+int16_t gsAINumAdmins = -1;
+int16_t gsAINumTroops = -1;
+int16_t gsAINumElites = -1;
+int16_t gsAINumCreatures = -1;
 BOOLEAN gfOverrideSector = FALSE;
 
 uint32_t guiLastTime;
@@ -195,9 +195,9 @@ uint32_t guiLastTime;
 INT32 giSaveTCMode;  // time compression mode;
 
 // The sector coordinates of the mouse position (yellow)
-extern INT16 gsHiSectorX, gsHiSectorY;
+extern int16_t gsHiSectorX, gsHiSectorY;
 // The sector coordinates of the selected sector (red)
-extern INT16 gsSelSectorX, gsSelSectorY;
+extern int16_t gsSelSectorX, gsSelSectorY;
 
 INT32 iViewerButton[NUM_VIEWER_BUTTONS];
 
@@ -388,7 +388,7 @@ void DestroyAIViewer() {
   EnableScrollMessages();
 }
 
-void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
+void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
   ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusBlue);
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 
@@ -801,7 +801,7 @@ void RenderViewer() {
         ClipRect.iTop = VIEWER_TOP + y * VIEWER_CELLH;
         ClipRect.iBottom = ClipRect.iTop + VIEWER_CELLH - 1;
         for (x = 0; x < 16; x++) {
-          pUnder = FindUnderGroundSector((INT16)(x + 1), (INT16)(y + 1), gbViewLevel);
+          pUnder = FindUnderGroundSector((int16_t)(x + 1), (int16_t)(y + 1), gbViewLevel);
           if (pUnder) {
             xp = VIEWER_LEFT + x * VIEWER_CELLW + 2;
             yp = VIEWER_TOP + y * VIEWER_CELLH + 2;
@@ -968,7 +968,7 @@ void HardCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  static INT16 gsPrevX = 0, gsPrevY = 0;
+  static int16_t gsPrevX = 0, gsPrevY = 0;
   // calc current sector highlighted.
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gsPrevX = gsHiSectorX = 0;
@@ -986,7 +986,7 @@ void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
 }
 
 void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  static INT16 sLastX = -1, sLastY = -1;
+  static int16_t sLastX = -1, sLastY = -1;
   // calc current sector selected.
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gsSelSectorX = min((reg->RelativeXPos / 26) + 1, 16);
@@ -1414,7 +1414,7 @@ void PrintEnemyPopTable() {
 
   // titles and headings mean 2 extra rows
   ClearViewerRegion(usX, usY, 640,
-                    (INT16)(usY + (POP_TABLE_Y_GAP * (POP_TABLE_ENEMY_TYPES + 2)) + 11));
+                    (int16_t)(usY + (POP_TABLE_Y_GAP * (POP_TABLE_ENEMY_TYPES + 2)) + 11));
 
   // print table title
   SetFontForeground(FONT_RED);
@@ -1539,7 +1539,7 @@ void PrintEnemiesKilledTable() {
 
   // titles and headings mean 2 extra rows
   ClearViewerRegion(usX, usY, 640,
-                    (INT16)(usY + (KILLED_TABLE_Y_GAP * (KILLED_TABLE_ROWS + 2)) + 11));
+                    (int16_t)(usY + (KILLED_TABLE_Y_GAP * (KILLED_TABLE_ROWS + 2)) + 11));
 
   // print table title
   SetFontForeground(FONT_RED);
@@ -1640,8 +1640,8 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, uint8_t ub
   uint8_t ubSectorID;
   CHAR16 wString[120];
   CHAR16 wSubString[120];
-  INT16 iGarrisonIndex;
-  INT16 iPatrolIndex;
+  int16_t iGarrisonIndex;
+  int16_t iPatrolIndex;
   WAYPOINT *pFinalWaypoint;
 
   pSector = &SectorInfo[GetSectorID8(ubSectorX, ubSectorY)];

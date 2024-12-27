@@ -93,7 +93,7 @@ RENDER_HOOK gDebugRenderOverride[MAX_DEBUG_PAGES] = {
 void DisplayFrameRate() {
   static uint32_t uiFPS = 0;
   static uint32_t uiFrameCount = 0;
-  INT16 usMapPos;
+  int16_t usMapPos;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   // Increment frame count
@@ -629,7 +629,7 @@ uint32_t SexScreenHandle(void) {
   static uint32_t uiTimeOfLastUpdate = 0, uiTime;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // OK, Clear screen and show smily face....
   ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
@@ -694,8 +694,8 @@ uint32_t SexScreenHandle(void) {
   GetVideoObject(&hVObject, guiSMILY);
   pTrav = &(hVObject->pETRLEObject[0]);
 
-  sX = (INT16)((640 - pTrav->usWidth) / 2);
-  sY = (INT16)((480 - pTrav->usHeight) / 2);
+  sX = (int16_t)((640 - pTrav->usWidth) / 2);
+  sY = (int16_t)((480 - pTrav->usHeight) / 2);
 
   if (bCurFrame < 24) {
     BltVideoObjectFromIndex(FRAME_BUFFER, guiSMILY, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -704,7 +704,7 @@ uint32_t SexScreenHandle(void) {
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
-  InvalidateRegion(sX, sY, (INT16)(sX + pTrav->usWidth), (INT16)(sY + pTrav->usHeight));
+  InvalidateRegion(sX, sY, (int16_t)(sX + pTrav->usWidth), (int16_t)(sY + pTrav->usHeight));
 
   return (SEX_SCREEN);
 }

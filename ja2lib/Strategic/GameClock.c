@@ -239,7 +239,7 @@ void ResetTimeCompressHasOccured(void) {
 // has time compress occured?
 BOOLEAN HasTimeCompressOccured(void) { return (fTimeCompressHasOccured); }
 
-void RenderClock(INT16 sX, INT16 sY) {
+void RenderClock(int16_t sX, int16_t sY) {
   SetFont(CLOCK_FONT);
   SetFontBackground(FONT_MCOLOR_BLACK);
 
@@ -807,7 +807,7 @@ BOOLEAN LoadGameClock(HWFILE hFile) {
   return (TRUE);
 }
 
-void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY) {
+void CreateMouseRegionForPauseOfClock(int16_t sX, int16_t sY) {
   if (fClockMouseRegionCreated == FALSE) {
     // create a mouse region for pausing of game clock
     MSYS_DefineRegion(&gClockMouseRegion, (uint16_t)(sX), (uint16_t)(sY),
@@ -873,7 +873,7 @@ void HandlePlayerPauseUnPauseOfGame(void) {
 
 void CreateDestroyScreenMaskForPauseGame(void) {
   static BOOLEAN fCreated = FALSE;
-  INT16 sX = 0, sY = 0;
+  int16_t sX = 0, sY = 0;
 
   if (((fClockMouseRegionCreated == FALSE) || (gfGamePaused == FALSE) ||
        (gfPauseDueToPlayerGamePause == FALSE)) &&
@@ -925,12 +925,12 @@ void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReas
 
 void RenderPausedGameBox(void) {
   if ((gfPauseDueToPlayerGamePause == TRUE) && (gfGamePaused == TRUE) && (iPausedPopUpBox != -1)) {
-    RenderMercPopUpBoxFromIndex(iPausedPopUpBox, (INT16)(320 - usPausedActualWidth / 2),
-                                (INT16)(200 - usPausedActualHeight / 2), FRAME_BUFFER);
-    InvalidateRegion((INT16)(320 - usPausedActualWidth / 2),
-                     (INT16)(200 - usPausedActualHeight / 2),
-                     (INT16)(320 - usPausedActualWidth / 2 + usPausedActualWidth),
-                     (INT16)(200 - usPausedActualHeight / 2 + usPausedActualHeight));
+    RenderMercPopUpBoxFromIndex(iPausedPopUpBox, (int16_t)(320 - usPausedActualWidth / 2),
+                                (int16_t)(200 - usPausedActualHeight / 2), FRAME_BUFFER);
+    InvalidateRegion((int16_t)(320 - usPausedActualWidth / 2),
+                     (int16_t)(200 - usPausedActualHeight / 2),
+                     (int16_t)(320 - usPausedActualWidth / 2 + usPausedActualWidth),
+                     (int16_t)(200 - usPausedActualHeight / 2 + usPausedActualHeight));
   }
 
   // reset we've just finished a pause by the player

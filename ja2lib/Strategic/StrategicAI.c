@@ -221,7 +221,7 @@ void ValidateWeights(INT32 iID);
 void ValidateGroup(struct GROUP *pGroup);
 void ValidateLargeGroup(struct GROUP *pGroup);
 
-extern BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fForce);
+extern BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fForce);
 
 // The army composition defines attributes for the various garrisons.  The priority reflects how
 // important the sector is to the queen, the elite/troop percentages refer to the desired
@@ -1451,7 +1451,7 @@ uint8_t RedirectEnemyGroupsMovingThroughSector(uint8_t ubSectorX, uint8_t ubSect
 // increase the numbers so she would send larger attack forces.  This is questionable.
 void EvolveQueenPriorityPhase(BOOLEAN fForceChange);
 
-extern INT16 sWorldSectorLocationOfFirstBattle;
+extern int16_t sWorldSectorLocationOfFirstBattle;
 
 void ReassignAIGroup(struct GROUP **pGroup);
 void TransferGroupToPool(struct GROUP **pGroup);
@@ -4320,8 +4320,8 @@ void ExecuteStrategicAIAction(uint16_t usActionCode, u8 sSectorX, u8 sSectorY) {
       // following checks succeed, the enemies will be sent to attack and reinforce that sector.
       // Otherwise, the enemies will simply check it out, then leave.
       if (pSector->ubGarrisonID != NO_GARRISON) {  // sector has a garrison
-        if (!NumEnemiesInSector((INT16)SectorID8_X(ubSectorID),
-                                (INT16)SectorID8_Y(ubSectorID))) {  // no enemies are here
+        if (!NumEnemiesInSector((int16_t)SectorID8_X(ubSectorID),
+                                (int16_t)SectorID8_Y(ubSectorID))) {  // no enemies are here
           if (gArmyComp[!gGarrisonGroup[pSector->ubGarrisonID].ubComposition]
                   .bPriority) {  // the garrison is important
             if (!gGarrisonGroup[pSector->ubGarrisonID]
@@ -4476,14 +4476,14 @@ void InvestigateSector(uint8_t ubSectorID) {
   /*
           INT32 i;
           SECTORINFO *pSector;
-          INT16 sSectorX, sSectorY;
+          int16_t sSectorX, sSectorY;
           uint8_t ubAdmins[4], ubTroops[4], ubElites[4], ubNumToSend, ubTotal;
 
           //@@@ Disabled!  Also commented out the posting of the event
           return;
 
-          sSectorX = (INT16)SectorID8_X( ubSectorID );
-          sSectorY = (INT16)SectorID8_Y( ubSectorID );
+          sSectorX = (int16_t)SectorID8_X( ubSectorID );
+          sSectorY = (int16_t)SectorID8_Y( ubSectorID );
 
           if( guiCurrentScreen != GAME_SCREEN )
           { //If we aren't in tactical, then don't do this.  It is strictly added flavour and would
@@ -4588,7 +4588,7 @@ void InvestigateSector(uint8_t ubSectorID) {
   */
 }
 
-void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   SECTORINFO *pSector;
   uint8_t ubSectorID;
   if (sSectorZ) {  // The queen doesn't care about anything happening under the ground.
@@ -5085,7 +5085,7 @@ void UpgradeAdminsToTroops() {
   int8_t bPriority;
   uint8_t ubAdminsToCheck;
   struct GROUP *pGroup;
-  INT16 sPatrolIndex;
+  int16_t sPatrolIndex;
 
   // on normal, AI evaluates approximately every 10 hrs.  There are about 130 administrators seeded
   // on the map. Some of these will be killed by the player.
@@ -5171,8 +5171,8 @@ void UpgradeAdminsToTroops() {
   }
 }
 
-INT16 FindPatrolGroupIndexForGroupID(uint8_t ubGroupID) {
-  INT16 sPatrolIndex;
+int16_t FindPatrolGroupIndexForGroupID(uint8_t ubGroupID) {
+  int16_t sPatrolIndex;
 
   for (sPatrolIndex = 0; sPatrolIndex < giPatrolArraySize; sPatrolIndex++) {
     if (gPatrolGroup[sPatrolIndex].ubGroupID == ubGroupID) {
@@ -5185,8 +5185,8 @@ INT16 FindPatrolGroupIndexForGroupID(uint8_t ubGroupID) {
   return (-1);
 }
 
-INT16 FindPatrolGroupIndexForGroupIDPending(uint8_t ubGroupID) {
-  INT16 sPatrolIndex;
+int16_t FindPatrolGroupIndexForGroupIDPending(uint8_t ubGroupID) {
+  int16_t sPatrolIndex;
 
   for (sPatrolIndex = 0; sPatrolIndex < giPatrolArraySize; sPatrolIndex++) {
     if (gPatrolGroup[sPatrolIndex].ubPendingGroupID == ubGroupID) {
@@ -5199,8 +5199,8 @@ INT16 FindPatrolGroupIndexForGroupIDPending(uint8_t ubGroupID) {
   return (-1);
 }
 
-INT16 FindGarrisonIndexForGroupIDPending(uint8_t ubGroupID) {
-  INT16 sGarrisonIndex;
+int16_t FindGarrisonIndexForGroupIDPending(uint8_t ubGroupID) {
+  int16_t sGarrisonIndex;
 
   for (sGarrisonIndex = 0; sGarrisonIndex < giGarrisonArraySize; sGarrisonIndex++) {
     if (gGarrisonGroup[sGarrisonIndex].ubPendingGroupID == ubGroupID) {

@@ -31,7 +31,7 @@ TILE_CACHE_STRUCT *gpTileCacheStructInfo = NULL;
 BOOLEAN InitTileCache() {
   uint32_t cnt;
   struct GetFile FileInfo;
-  INT16 sFiles = 0;
+  int16_t sFiles = 0;
 
   gpTileCache = (TILE_CACHE_ELEMENT *)MemAlloc(sizeof(TILE_CACHE_ELEMENT) * guiMaxTileCacheSize);
 
@@ -111,12 +111,12 @@ void DeleteTileCache() {
   guiCurTileCacheSize = 0;
 }
 
-INT16 FindCacheStructDataIndex(STR8 cFilename) {
+int16_t FindCacheStructDataIndex(STR8 cFilename) {
   uint32_t cnt;
 
   for (cnt = 0; cnt < guiNumTileCacheStructs; cnt++) {
     if (strcasecmp(gpTileCacheStructInfo[cnt].zRootName, cFilename) == 0) {
-      return ((INT16)cnt);
+      return ((int16_t)cnt);
     }
   }
 
@@ -126,7 +126,7 @@ INT16 FindCacheStructDataIndex(STR8 cFilename) {
 INT32 GetCachedTile(STR8 cFilename) {
   uint32_t cnt;
   uint32_t ubLowestIndex = 0;
-  INT16 sMostHits = (INT16)15000;
+  int16_t sMostHits = (int16_t)15000;
 
   // Check to see if surface exists already
   for (cnt = 0; cnt < guiCurTileCacheSize; cnt++) {
@@ -254,7 +254,7 @@ struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex) {
 }
 
 struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename) {
-  INT16 sStructDataIndex;
+  int16_t sStructDataIndex;
 
   // Given filename, look for index
   sStructDataIndex = FindCacheStructDataIndex(cFilename);
@@ -266,7 +266,7 @@ struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename)
   return (gpTileCacheStructInfo[sStructDataIndex].pStructureFileRef);
 }
 
-void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, uint16_t usIndex,
+void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, int16_t sGridNo, uint16_t usIndex,
                                        uint16_t usSubIndex) {
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 

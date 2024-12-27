@@ -761,7 +761,7 @@ STR16 sKeyDescriptionStrings[2] = {
 
 // The headers used to describe various weapon statistics.
 
-INT16 gWeaponStatsDesc[][14] = {
+int16_t gWeaponStatsDesc[][14] = {
     L"Weight (%s):",
     L"Status:",
     L"Amount:",  // Number of bullets left in a magazine
@@ -775,7 +775,7 @@ INT16 gWeaponStatsDesc[][14] = {
 
 // The headers used for the merc's money.
 
-INT16 gMoneyStatsDesc[][13] = {
+int16_t gMoneyStatsDesc[][13] = {
     L"Amount",
     L"Remaining:",  // this is the overall balance
     L"Amount",

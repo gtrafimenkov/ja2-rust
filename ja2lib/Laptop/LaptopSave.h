@@ -61,9 +61,9 @@ typedef struct {
   BOOLEAN fSentImpWarningAlready;  // Has the Imp email warning already been sent
 
   // Personnel Info
-  INT16 ubDeadCharactersList[256];
-  INT16 ubLeftCharactersList[256];
-  INT16 ubOtherCharactersList[256];
+  int16_t ubDeadCharactersList[256];
+  int16_t ubLeftCharactersList[256];
+  int16_t ubOtherCharactersList[256];
 
   // MERC site info
   uint8_t gubPlayersMercAccountStatus;

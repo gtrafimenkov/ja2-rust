@@ -273,7 +273,7 @@ void RemoveSpeckPopupTextBox();
 BOOLEAN ShouldSpeckStartTalkingDueToActionOnSubPage();
 BOOLEAN ShouldSpeckSayAQuote();
 void HandleSpeckIdleConversation(BOOLEAN fReset);
-INT16 GetRandomQuoteThatHasBeenSaidTheLeast();
+int16_t GetRandomQuoteThatHasBeenSaidTheLeast();
 void StopSpeckFromTalking();
 BOOLEAN HasLarryRelapsed();
 void IncreaseMercRandomQuoteValue(uint8_t ubQuoteID, uint8_t ubValue);
@@ -678,7 +678,7 @@ void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void DailyUpdateOfMercSite(uint16_t usDate) {
   struct SOLDIERTYPE *pSoldier;
-  INT16 sSoldierID, i;
+  int16_t sSoldierID, i;
   uint8_t ubMercID;
   INT32 iNumDays;
 
@@ -1440,8 +1440,8 @@ void DisplayTextForSpeckVideoPopUp(STR16 pString) {
   // check to make sure the region is not already initialized
   if (!(gMercSiteSubTitleMouseRegion.uiFlags & MSYS_REGION_EXISTS)) {
     MSYS_DefineRegion(&gMercSiteSubTitleMouseRegion, gusSpeckDialogueX, MERC_TEXT_BOX_POS_Y,
-                      (INT16)(gusSpeckDialogueX + gusSpeckDialogueActualWidth),
-                      (INT16)(MERC_TEXT_BOX_POS_Y + usActualHeight), MSYS_PRIORITY_HIGH,
+                      (int16_t)(gusSpeckDialogueX + gusSpeckDialogueActualWidth),
+                      (int16_t)(MERC_TEXT_BOX_POS_Y + usActualHeight), MSYS_PRIORITY_HIGH,
                       CURSOR_LAPTOP_SCREEN, MSYS_NO_CALLBACK, MercSiteSubTitleRegionCallBack);
     MSYS_AddRegion(&gMercSiteSubTitleMouseRegion);
   }
@@ -1936,7 +1936,7 @@ BOOLEAN ShouldSpeckSayAQuote() {
 void HandleSpeckIdleConversation(BOOLEAN fReset) {
   static uint32_t uiLastTime = 0;
   uint32_t uiCurTime = GetJA2Clock();
-  INT16 sLeastSaidQuote;
+  int16_t sLeastSaidQuote;
 
   // if we should reset the variables
   if (fReset) {
@@ -1962,9 +1962,9 @@ void HandleSpeckIdleConversation(BOOLEAN fReset) {
   }
 }
 
-INT16 GetRandomQuoteThatHasBeenSaidTheLeast() {
+int16_t GetRandomQuoteThatHasBeenSaidTheLeast() {
   uint8_t cnt;
-  INT16 sSmallestNumber = 255;
+  int16_t sSmallestNumber = 255;
 
   for (cnt = 0; cnt < MERC_NUMBER_OF_RANDOM_QUOTES; cnt++) {
     // if the quote can be said ( the merc has not been hired )

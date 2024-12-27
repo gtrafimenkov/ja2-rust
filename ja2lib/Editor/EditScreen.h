@@ -41,8 +41,8 @@ uint32_t WaitForSelectionWindowResponse(void);
 uint32_t WaitForMessageBoxResponse(uint32_t uiCurrentScreen);
 uint32_t WaitForHelpScreenResponse(void);
 
-BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType);
-BOOLEAN RemoveLight(INT16 iMapX, INT16 iMapY);
+BOOLEAN PlaceLight(int16_t sRadius, int16_t iMapX, int16_t iMapY, int16_t sType);
+BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY);
 extern BOOLEAN gfMercResetUponEditorEntry;
 
 void ShowEditorToolbar(INT32 iNewTaskMode);

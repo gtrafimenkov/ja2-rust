@@ -61,7 +61,7 @@ void RecountSmokeEffects(void) {
 }
 
 // Returns NO_SMOKE_EFFECT if none there...
-int8_t GetSmokeEffectOnTile(INT16 sGridNo, int8_t bLevel) {
+int8_t GetSmokeEffectOnTile(int16_t sGridNo, int8_t bLevel) {
   uint8_t ubExtFlags;
 
   ubExtFlags = gpWorldLevelData[sGridNo].ubExtFlags[bLevel];
@@ -117,7 +117,7 @@ uint8_t FromSmokeTypeToWorldFlags(int8_t bType) {
   }
 }
 
-INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner) {
+INT32 NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner) {
   SMOKEEFFECT *pSmoke;
   INT32 iSmokeIndex;
   int8_t bSmokeEffectType = 0;
@@ -214,7 +214,7 @@ INT32 NewSmokeEffect(INT16 sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOw
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )
-void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, INT16 sGridNo, int8_t bLevel) {
+void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, int16_t sGridNo, int8_t bLevel) {
   ANITILE_PARAMS AniParams;
   SMOKEEFFECT *pSmoke;
   BOOLEAN fDissipating = FALSE;
@@ -242,12 +242,12 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, INT16 sGridNo, int
     AniParams.ubLevelID = ANI_ONROOF_LEVEL;
   }
 
-  AniParams.sDelay = (INT16)(300 + Random(300));
+  AniParams.sDelay = (int16_t)(300 + Random(300));
 
   if (!(gGameSettings.fOptions[TOPTION_ANIMATE_SMOKE])) {
-    AniParams.sStartFrame = (INT16)0;
+    AniParams.sStartFrame = (int16_t)0;
   } else {
-    AniParams.sStartFrame = (INT16)Random(5);
+    AniParams.sStartFrame = (int16_t)Random(5);
   }
 
   // Bare bones flags are...
@@ -266,7 +266,7 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, INT16 sGridNo, int
 
   AniParams.sX = CenterX(sGridNo);
   AniParams.sY = CenterY(sGridNo);
-  AniParams.sZ = (INT16)0;
+  AniParams.sZ = (int16_t)0;
 
   // Use the right graphic based on type..
   switch (bType) {
@@ -335,7 +335,7 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, int8_t bType, INT16 sGridNo, int
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
-void RemoveSmokeEffectFromTile(INT16 sGridNo, int8_t bLevel) {
+void RemoveSmokeEffectFromTile(int16_t sGridNo, int8_t bLevel) {
   ANITILE *pAniTile;
   uint8_t ubLevelID;
 
@@ -575,7 +575,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
+BOOLEAN SaveSmokeEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   uint32_t uiNumSmokeEffects = 0;
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
@@ -640,7 +640,7 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, int8_t bMapZ) {
+BOOLEAN LoadSmokeEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   uint32_t uiNumBytesRead;
   uint32_t uiCount;
   uint32_t uiCnt = 0;

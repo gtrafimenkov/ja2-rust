@@ -23,10 +23,11 @@ BOOLEAN RemoveMercPopupBox();
 BOOLEAN RemoveMercPopupBoxFromIndex(uint32_t uiId);
 
 // render the current pop up box
-BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, uint32_t uiBuffer);
+BOOLEAN RenderMercPopupBox(int16_t sDestX, int16_t sDestY, uint32_t uiBuffer);
 
 // render pop up box with this index value
-BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, uint32_t uiBuffer);
+BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, int16_t sDestX, int16_t sDestY,
+                                    uint32_t uiBuffer);
 
 void RemoveTextMercPopupImages();
 

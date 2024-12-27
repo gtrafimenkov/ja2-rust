@@ -7,8 +7,8 @@ typedef struct {
   uint32_t uiOffset;
   uint32_t uiWidth;
   uint32_t uiOffLen;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
 
 } TRLEObject;
 
@@ -21,11 +21,11 @@ typedef struct {
 
 } TRLEData;
 
-BOOLEAN GetTRLEObjectData(uint32_t uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
+BOOLEAN GetTRLEObjectData(uint32_t uiTotalElements, TRLEObject *pTRLEObject, int16_t ssIndex,
                           uint32_t *pWidth, uint32_t *pOffset, uint32_t *pOffLen,
                           uint16_t *pOffsetX, uint16_t *pOffsetY);
 
-BOOLEAN SetTRLEObjectOffset(uint32_t uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
-                            INT16 sOffsetX, INT16 sOffsetY);
+BOOLEAN SetTRLEObjectOffset(uint32_t uiTotalElements, TRLEObject *pTRLEObject, int16_t ssIndex,
+                            int16_t sOffsetX, int16_t sOffsetY);
 
 #endif

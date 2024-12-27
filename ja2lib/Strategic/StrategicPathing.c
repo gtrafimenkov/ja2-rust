@@ -51,12 +51,12 @@ uint8_t ubFromMapDirToInsertionCode[] = {
 
 // Globals
 struct path_s {
-  INT16 nextLink;   // 2
-  INT16 prevLink;   // 2
-  INT16 location;   // 2
-  INT32 costSoFar;  // 4
-  INT32 costToGo;   // 4
-  INT16 pathNdx;    // 2
+  int16_t nextLink;  // 2
+  int16_t prevLink;  // 2
+  int16_t location;  // 2
+  INT32 costSoFar;   // 4
+  INT32 costToGo;    // 4
+  int16_t pathNdx;   // 2
 };
 
 typedef struct path_s path_t;
@@ -159,7 +159,7 @@ short trailStratTreedxB = 0;
 
 INT32 queRequests;
 
-INT16 diStratDelta[8] = {
+int16_t diStratDelta[8] = {
     -MAP_WIDTH,     // N
     1 - MAP_WIDTH,  // NE
     1,              // E
@@ -170,18 +170,18 @@ INT16 diStratDelta[8] = {
     -MAP_WIDTH - 1  // NW
 };
 
-extern uint8_t GetTraversability(INT16 sStartSector, INT16 sEndSector);
+extern uint8_t GetTraversability(int16_t sStartSector, int16_t sEndSector);
 
 // this will find if a shortest strategic path
 
-INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
+INT32 FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumber,
                     BOOLEAN fTacticalTraversal) {
   INT32 iCnt, ndx, insertNdx, qNewNdx;
   INT32 iDestX, iDestY, locX, locY, dx, dy;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
   uint16_t newLoc, curLoc;
   TRAILCELLTYPE curCost, newTotCost, nextCost;
-  INT16 sOrigination;
+  int16_t sOrigination;
   BOOLEAN fPlotDirectPath = FALSE;
   static BOOLEAN fPreviousPlotDirectPath = FALSE;  // don't save
   struct GROUP* pGroup;
@@ -255,7 +255,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
     curLoc = pathQB[ndx].location;
     curCost = pathQB[ndx].costSoFar;
     // = totAPCostB[ndx];
-    DELQUENODE((INT16)ndx);
+    DELQUENODE((int16_t)ndx);
 
     if (trailCostB[curLoc] < curCost) continue;
 
@@ -323,8 +323,9 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
       if (fTacticalTraversal) {
         // if it's the first sector only (no cost yet)
         if (curCost == 0 && (newLoc == sDestination)) {
-          if (GetTraversability((INT16)(GetSectorID8(curLoc % 18, curLoc / 18)),
-                                (INT16)(GetSectorID8(newLoc % 18, newLoc / 18))) != GROUNDBARRIER) {
+          if (GetTraversability((int16_t)(GetSectorID8(curLoc % 18, curLoc / 18)),
+                                (int16_t)(GetSectorID8(newLoc % 18, newLoc / 18))) !=
+              GROUNDBARRIER) {
             nextCost = 0;
           }
         }
@@ -341,8 +342,8 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
       //make the destination look very attractive
       if( ( newLoc == sDestination ) )
       {
-              if( GetTraversability( ( INT16 )( GetSectorID8( curLoc % 18, curLoc / 18 ) ), ( INT16
-      ) ( GetSectorID8( newLoc %18,  newLoc / 18 ) ) ) != GROUNDBARRIER )
+              if( GetTraversability( ( int16_t )( GetSectorID8( curLoc % 18, curLoc / 18 ) ), (
+      int16_t ) ( GetSectorID8( newLoc %18,  newLoc / 18 ) ) ) != GROUNDBARRIER )
               {
                       nextCost = 0;
               }
@@ -363,7 +364,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
 
         // make new path to current location
         trailStratTreeB[trailStratTreedxB].nextLink = pathQB[ndx].pathNdx;
-        trailStratTreeB[trailStratTreedxB].diStratDelta = (INT16)iCnt;
+        trailStratTreeB[trailStratTreedxB].diStratDelta = (int16_t)iCnt;
         pathQB[qNewNdx].pathNdx = trailStratTreedxB;
         trailStratTreedxB++;
 
@@ -371,19 +372,19 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
           return (0);
         }
 
-        pathQB[qNewNdx].location = (INT16)newLoc;
+        pathQB[qNewNdx].location = (int16_t)newLoc;
         pathQB[qNewNdx].costSoFar = newTotCost;
         pathQB[qNewNdx].costToGo = REMAININGCOST(qNewNdx);
         trailCostB[newLoc] = newTotCost;
         // do a sorted que insert of the new path
         QUESEARCH(qNewNdx, insertNdx);
-        INSQUENODEPREV((INT16)qNewNdx, (INT16)insertNdx);
+        INSQUENODEPREV((int16_t)qNewNdx, (int16_t)insertNdx);
       }
     }
   } while (pathQNotEmpty && pathNotYetFound);
   // work finished. Did we find a path?
   if (pathFound) {
-    INT16 z, _z, _nextLink;  //,tempgrid;
+    int16_t z, _z, _nextLink;  //,tempgrid;
 
     _z = 0;
     z = pathQB[pathQB[QHEADNDX].nextLink].pathNdx;
@@ -416,8 +417,8 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   return (0);
 }
 
-struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT16 iEndSectorNum,
-                                 INT16 sMvtGroupNumber,
+struct path* BuildAStrategicPath(struct path* pPath, int16_t iStartSectorNum, int16_t iEndSectorNum,
+                                 int16_t sMvtGroupNumber,
                                  BOOLEAN fTacticalTraversal /*, BOOLEAN fTempPath */) {
   INT32 iCurrentSectorNum;
   INT32 iDelta = 0;
@@ -441,7 +442,7 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
 
   if (iEndSectorNum < MAP_WORLD_X - 1) return NULL;
 
-  iPathLength = ((INT32)FindStratPath(((INT16)iStartSectorNum), ((INT16)iEndSectorNum),
+  iPathLength = ((INT32)FindStratPath(((int16_t)iStartSectorNum), ((int16_t)iEndSectorNum),
                                       sMvtGroupNumber, fTacticalTraversal));
   while (iPathLength > iCount) {
     switch (gusMapPathingData[iCount]) {
@@ -563,7 +564,7 @@ BOOLEAN AddSectorToPathList(struct path* pPath, uint16_t uiSectorNum) {
 /*
 BOOLEAN TravelBetweenSectorsIsBlockedFromVehicle( uint16_t sSourceSector, uint16_t sDestSector )
 {
-        INT16 sDelta;
+        int16_t sDelta;
 
         sDelta = sDestSector - sSourceSector;
 
@@ -609,7 +610,7 @@ BOOLEAN SectorIsBlockedFromVehicleExit( uint16_t sSourceSector, int8_t bToDirect
 
 BOOLEAN TravelBetweenSectorsIsBlockedFromFoot( uint16_t sSourceSector, uint16_t sDestSector )
 {
-        INT16 sDelta;
+        int16_t sDelta;
 
         sDelta = sDestSector - sSourceSector;
 
@@ -651,7 +652,7 @@ BOOLEAN SectorIsBlockedFromFootExit( uint16_t sSourceSector, int8_t bToDirection
 
 
 
-BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY )
+BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,int16_t sX, int16_t sY )
 {
         // this fucntion will return if this merc ( pSoldier ), can move to sector sX, sY
   BOOLEAN fOkToMoveFlag = FALSE;
@@ -662,8 +663,8 @@ BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT
 
 
 
-void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, uint8_t
-ubFromDirection )
+void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,int16_t sX, int16_t sY,
+uint8_t ubFromDirection )
 {
   // will move a merc ( pSoldier )to a sector sX, sY
 
@@ -733,7 +734,7 @@ struct path* AppendStrategicPath(struct path* pNewSection, struct path* pHeadOfP
   return (pHeadOfPathList);
 }
 
-struct path* ClearStrategicPathList(struct path* pHeadOfPath, INT16 sMvtGroup) {
+struct path* ClearStrategicPathList(struct path* pHeadOfPath, int16_t sMvtGroup) {
   // will clear out a strategic path and return head of list as NULL
   struct path* pNode = pHeadOfPath;
   struct path* pDeleteNode = pHeadOfPath;
@@ -770,13 +771,13 @@ struct path* ClearStrategicPathList(struct path* pHeadOfPath, INT16 sMvtGroup) {
   return (pNode);
 }
 
-struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, INT16 sX, INT16 sY,
-                                                   INT16 sMvtGroup) {
+struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, int16_t sX, int16_t sY,
+                                                   int16_t sMvtGroup) {
   // will clear out a strategic path and return head of list as NULL
   struct path* pNode = pHeadOfPath;
   struct path* pDeleteNode = pHeadOfPath;
-  INT16 sSector = 0;
-  INT16 sCurrentSector = -1;
+  int16_t sSector = 0;
+  int16_t sCurrentSector = -1;
 
   // is there in fact a path?
   if (pNode == NULL) {
@@ -791,7 +792,7 @@ struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, INT
   pNode = MoveToEndOfPathList(pNode);
 
   // get current sector value
-  sCurrentSector = (INT16)pNode->uiSectorId;
+  sCurrentSector = (int16_t)pNode->uiSectorId;
 
   // move through list
   while ((pNode) && (sSector != sCurrentSector)) {
@@ -800,7 +801,7 @@ struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, INT
 
     // get current sector value
     if (pNode != NULL) {
-      sCurrentSector = (INT16)pNode->uiSectorId;
+      sCurrentSector = (int16_t)pNode->uiSectorId;
     }
   }
 
@@ -947,10 +948,10 @@ struct path* RemoveHeadFromStrategicPath(struct path* pList) {
   return (pNewHead);
 }
 
-struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT16 sY) {
+struct path* RemoveSectorFromStrategicPathList(struct path* pList, int16_t sX, int16_t sY) {
   // find sector sX, sY ...then remove it
-  INT16 sSector = 0;
-  INT16 sCurrentSector = -1;
+  int16_t sSector = 0;
+  int16_t sCurrentSector = -1;
   struct path* pNode = pList;
   struct path* pPastNode = pList;
 
@@ -963,7 +964,7 @@ struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT
   }
 
   // get current sector value
-  sCurrentSector = (INT16)pNode->uiSectorId;
+  sCurrentSector = (int16_t)pNode->uiSectorId;
 
   // move to end of list
   pNode = MoveToEndOfPathList(pNode);
@@ -977,7 +978,7 @@ struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT
     pNode = pNode->pPrev;
 
     // get current sector value
-    sCurrentSector = (INT16)pNode->uiSectorId;
+    sCurrentSector = (int16_t)pNode->uiSectorId;
   }
 
   // no list left, sector not found
@@ -999,15 +1000,15 @@ struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT
   return (pPastNode);
 }
 
-INT16 GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter) {
+int16_t GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter) {
   // will return the last sector of the current path, or the current sector if there's no path
-  INT16 sLastSector = (pCharacter->sSectorX) + (pCharacter->sSectorY) * (MAP_WORLD_X);
+  int16_t sLastSector = (pCharacter->sSectorX) + (pCharacter->sSectorY) * (MAP_WORLD_X);
   struct path* pNode = NULL;
 
   pNode = GetSoldierMercPathPtr(pCharacter);
 
   while (pNode) {
-    sLastSector = (INT16)(pNode->uiSectorId);
+    sLastSector = (int16_t)(pNode->uiSectorId);
     pNode = pNode->pNext;
   }
 
@@ -1015,8 +1016,8 @@ INT16 GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter) {
 }
 
 // get id of last sector in vehicle path list
-INT16 GetLastSectorIdInVehiclePath(INT32 iId) {
-  INT16 sLastSector = -1;
+int16_t GetLastSectorIdInVehiclePath(INT32 iId) {
+  int16_t sLastSector = -1;
   struct path* pNode = NULL;
 
   if ((iId >= ubNumberOfVehicles) || (iId < 0)) {
@@ -1033,7 +1034,7 @@ INT16 GetLastSectorIdInVehiclePath(INT32 iId) {
   pNode = pVehicleList[iId].pMercPath;
 
   while (pNode) {
-    sLastSector = (INT16)(pNode->uiSectorId);
+    sLastSector = (int16_t)(pNode->uiSectorId);
     pNode = pNode->pNext;
   }
 
@@ -1250,8 +1251,8 @@ void MoveCharacterOnPath( struct SOLDIERTYPE *pCharacter )
                 pNode -> pPrev = NULL;
 
                 // set up new location
-                pCharacter -> sSectorX = ( INT16 )( pNode -> uiSectorId ) % MAP_WORLD_X ;
-                pCharacter -> sSectorY = ( INT16 )( pNode -> uiSectorId ) / MAP_WORLD_X;
+                pCharacter -> sSectorX = ( int16_t )( pNode -> uiSectorId ) % MAP_WORLD_X ;
+                pCharacter -> sSectorY = ( int16_t )( pNode -> uiSectorId ) / MAP_WORLD_X;
 
                 // dirty map panel
                 MarkForRedrawalStrategicMap();
@@ -1346,7 +1347,7 @@ void VerifyAllMercsInGroupAreOnSameSquad(struct GROUP* pGroup) {
 }
 #endif
 
-void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup) {
+void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, int16_t sMvtGroup) {
   INT32 iDelta = 0;
   INT32 iOldDelta = 0;
   BOOLEAN fFirstNode = TRUE;
@@ -1462,13 +1463,14 @@ void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier) {
   ClearMercPathsAndWaypointsForAllInGroup(pGroup);
 }
 
-BOOLEAN MoveGroupFromSectorToSector(uint8_t ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
-                                    INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSector(uint8_t ubGroupID, int16_t sStartX, int16_t sStartY,
+                                    int16_t sDestX, int16_t sDestY) {
   struct path* pNode = NULL;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
+  pNode =
+      BuildAStrategicPath(pNode, (int16_t)GetSectorID16(sStartX, sStartY),
+                          (int16_t)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
 
   if (pNode == NULL) {
     return (FALSE);
@@ -1485,13 +1487,14 @@ BOOLEAN MoveGroupFromSectorToSector(uint8_t ubGroupID, INT16 sStartX, INT16 sSta
   return (TRUE);
 }
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(uint8_t ubGroupID, INT16 sStartX,
-                                                      INT16 sStartY, INT16 sDestX, INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(uint8_t ubGroupID, int16_t sStartX,
+                                                      int16_t sStartY, int16_t sDestX,
+                                                      int16_t sDestY) {
   struct path* pNode = NULL;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE*/);
+  pNode = BuildAStrategicPath(pNode, (int16_t)GetSectorID16(sStartX, sStartY),
+                              (int16_t)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE*/);
 
   if (pNode == NULL) {
     return (FALSE);
@@ -1511,9 +1514,9 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(uint8_t ubGroupID, INT16 s
   return (TRUE);
 }
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID, INT16 sStartX,
-                                                                   INT16 sStartY, INT16 sDestX,
-                                                                   INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID,
+                                                                   int16_t sStartX, int16_t sStartY,
+                                                                   int16_t sDestX, int16_t sDestY) {
   struct path* pNode = NULL;
 
   // init sectors with soldiers in them
@@ -1526,8 +1529,9 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGro
   gfPlotToAvoidPlayerInfuencedSectors = TRUE;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
+  pNode =
+      BuildAStrategicPath(pNode, (int16_t)GetSectorID16(sStartX, sStartY),
+                          (int16_t)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
 
   // turn off the avoid flag
   gfPlotToAvoidPlayerInfuencedSectors = FALSE;
@@ -1552,7 +1556,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGro
 }
 
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
-    uint8_t ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY) {
+    uint8_t ubGroupID, int16_t sStartX, int16_t sStartY, int16_t sDestX, int16_t sDestY) {
   struct path* pNode = NULL;
 
   // init sectors with soldiers in them
@@ -1565,8 +1569,9 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSect
   gfPlotToAvoidPlayerInfuencedSectors = TRUE;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
+  pNode =
+      BuildAStrategicPath(pNode, (int16_t)GetSectorID16(sStartX, sStartY),
+                          (int16_t)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
 
   // turn off the avoid flag
   gfPlotToAvoidPlayerInfuencedSectors = FALSE;

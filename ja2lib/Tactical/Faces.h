@@ -229,7 +229,7 @@ void SetAllAutoFacesInactive();
 
 // To render an allocated face but one that is indipendent of it's active status, ant does not
 // require eye blinking or mouth movements, call
-BOOLEAN ExternRenderFace(uint32_t uiBuffer, INT32 iFaceIndex, INT16 sX, INT16 sY);
+BOOLEAN ExternRenderFace(uint32_t uiBuffer, INT32 iFaceIndex, int16_t sX, int16_t sY);
 
 // FUnctions usually not needed for most uses, but give a finer control over rendering if needed
 void BlinkAutoFace(INT32 iFaceIndex);
@@ -244,6 +244,6 @@ void SetAutoFaceActiveFromSoldier(uint32_t uiDisplayBuffer, uint32_t uiRestoreBu
                                   uint8_t ubSoldierID, uint16_t usFaceX, uint16_t usFaceY);
 void SetAutoFaceInActiveFromSoldier(uint8_t ubSoldierID);
 BOOLEAN RenderAutoFaceFromSoldier(uint8_t ubSoldierID);
-BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, uint8_t ubSoldierID, INT16 sX, INT16 sY);
+BOOLEAN ExternRenderFaceFromSoldier(uint32_t uiBuffer, uint8_t ubSoldierID, int16_t sX, int16_t sY);
 
 #endif

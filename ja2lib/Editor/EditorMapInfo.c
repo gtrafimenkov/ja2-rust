@@ -182,7 +182,7 @@ void ExtractAndUpdateMapInfo() {
 
   // extract radius
   temp = max(min(GetNumericStrictValueFromField(4), 8), 1);
-  if (temp != -1) gsLightRadius = (INT16)temp;
+  if (temp != -1) gsLightRadius = (int16_t)temp;
   temp = max(min(GetNumericStrictValueFromField(5), 15), 1);
   if (temp != -1 && temp != gusLightLevel) {
     gusLightLevel = (uint16_t)temp;

@@ -493,8 +493,8 @@ BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *curr) {
           if (tempDetailedPlacement.ubProfile == NO_PROFILE) {
             // these guys should be guarding Tony!
             tempDetailedPlacement.sInsertionGridNo =
-                13531 + (INT16)(PreRandom(8) * (PreRandom(1) ? -1 : 1) +
-                                PreRandom(8) * (PreRandom(1) ? -1 : 1) * WORLD_ROWS);
+                13531 + (int16_t)(PreRandom(8) * (PreRandom(1) ? -1 : 1) +
+                                  PreRandom(8) * (PreRandom(1) ? -1 : 1) * WORLD_ROWS);
 
             switch (PreRandom(3)) {
               case 0:
@@ -510,8 +510,8 @@ BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *curr) {
           } else if (tempDetailedPlacement.ubProfile == BILLY) {
             // billy should now be able to roam around
             tempDetailedPlacement.sInsertionGridNo =
-                13531 + (INT16)(PreRandom(30) * (PreRandom(1) ? -1 : 1) +
-                                PreRandom(30) * (PreRandom(1) ? -1 : 1) * WORLD_ROWS);
+                13531 + (int16_t)(PreRandom(30) * (PreRandom(1) ? -1 : 1) +
+                                  PreRandom(30) * (PreRandom(1) ? -1 : 1) * WORLD_ROWS);
             tempDetailedPlacement.bOrders = SEEKENEMY;
           } else if (tempDetailedPlacement.ubProfile == MADAME) {
             // she shouldn't be here!

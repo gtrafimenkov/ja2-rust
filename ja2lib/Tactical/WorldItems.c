@@ -112,7 +112,7 @@ void RemoveBombFromWorldByItemIndex(INT32 iItemIndex) {
   }
 }
 
-INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, int8_t bLevel) {
+INT32 FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel) {
   uint32_t uiBombIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
@@ -131,7 +131,7 @@ void FindPanicBombsAndTriggers(void) {
   uint32_t uiBombIndex;
   struct OBJECTTYPE *pObj;
   struct STRUCTURE *pSwitch;
-  INT16 sGridNo = NOWHERE;
+  int16_t sGridNo = NOWHERE;
   int8_t bPanicIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
@@ -236,7 +236,7 @@ uint32_t GetNumUsedWorldItems(void) {
   return (uiNumItems);
 }
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
+INT32 AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
                      int8_t bRenderZHeightAboveLevel, int8_t bVisible) {
   uint32_t iItemIndex;
   INT32 iReturn;
@@ -437,7 +437,7 @@ void LoadWorldItemsFromMap(int8_t **hBuffer) {
 void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void) {
   uint32_t uiLoop;
   uint32_t uiLoop2;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubLevel;
 
   // only do this after Carmen has talked to player and terrorists have been placed
@@ -472,7 +472,7 @@ void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere(void) {
 void DeleteWorldItemsBelongingToQueenIfThere(void) {
   uint32_t uiLoop;
   uint32_t uiLoop2;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubLevel;
   int8_t bSlot;
 

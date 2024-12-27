@@ -13,7 +13,7 @@
 
 typedef struct {
   BOOLEAN fExists;
-  INT16 sGridNo;
+  int16_t sGridNo;
   uint8_t ubLevel;
   struct OBJECTTYPE o;
   uint16_t usFlags;
@@ -34,7 +34,7 @@ typedef struct {
 extern WORLDITEM *gWorldItems;
 extern uint32_t guiNumWorldItems;
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
+INT32 AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
                      int8_t bRenderZHeightAboveLevel, int8_t bVisible);
 void RemoveItemFromWorld(INT32 iItemIndex);
 INT32 FindWorldItem(uint16_t usItem);
@@ -54,7 +54,7 @@ extern uint32_t guiNumWorldBombs;
 
 extern INT32 AddBombToWorld(INT32 iItemIndex);
 extern void FindPanicBombsAndTriggers(void);
-extern INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, int8_t bLevel);
+extern INT32 FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel);
 
 void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems);
 

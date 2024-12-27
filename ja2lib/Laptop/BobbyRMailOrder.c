@@ -1614,7 +1614,7 @@ void SelectCloseDroDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 }
 
 void RemovePurchasedItemsFromBobbyRayInventory() {
-  INT16 i;
+  int16_t i;
 
   for (i = 0; i < MAX_PURCHASE_AMOUNT; i++) {
     // if the item was purchased

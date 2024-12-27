@@ -191,7 +191,7 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup);
 void CalculateNextMoveIntention(struct GROUP *pGroup);
 
 // set current sector of the group..used for player controlled mercs
-void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, uint8_t ubGroupID);
+void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubGroupID);
 
 void SetEnemyGroupSector(struct GROUP *pGroup, uint8_t ubSectorID);
 
@@ -220,7 +220,7 @@ INT32 GetTravelTimeForFootTeam(uint8_t ubSector, uint8_t ubDirection);
 INT32 GetTravelTimeForGroup(uint8_t ubSector, uint8_t ubDirection, uint8_t ubGroup);
 
 // get number of mercs between sectors
-BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnter,
+BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, INT32 *iCountEnter,
                                    INT32 *iCountExit, BOOLEAN *fAboutToArriveEnter);
 
 // set this groups waypoints as cancelled
@@ -286,18 +286,18 @@ void ResetMovementForEnemyGroup(struct GROUP *pGroup);
 BOOLEAN GroupWillMoveThroughSector(struct GROUP *pGroup, uint8_t ubSectorX, uint8_t ubSectorY);
 
 // Vehicle fuel support functions
-INT16 CalculateFuelCostBetweenSectors(uint8_t ubSectorID1, uint8_t ubSectorID2);
+int16_t CalculateFuelCostBetweenSectors(uint8_t ubSectorID1, uint8_t ubSectorID2);
 BOOLEAN VehicleHasFuel(struct SOLDIERTYPE *pSoldier);
-INT16 VehicleFuelRemaining(struct SOLDIERTYPE *pSoldier);
-BOOLEAN SpendVehicleFuel(struct SOLDIERTYPE *pSoldier, INT16 sFuelSpent);
+int16_t VehicleFuelRemaining(struct SOLDIERTYPE *pSoldier);
+BOOLEAN SpendVehicleFuel(struct SOLDIERTYPE *pSoldier, int16_t sFuelSpent);
 void ReportVehicleOutOfGas(INT32 iVehicleID, uint8_t ubSectorX, uint8_t ubSectorY);
 
 void RandomizePatrolGroupLocation(struct GROUP *pGroup);
 
 void InitStrategicMovementCosts();
 
-void PlaceGroupInSector(uint8_t ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
-                        int8_t bZ, BOOLEAN fCheckForBattle);
+void PlaceGroupInSector(uint8_t ubGroupID, int16_t sPrevX, int16_t sPrevY, int16_t sNextX,
+                        int16_t sNextY, int8_t bZ, BOOLEAN fCheckForBattle);
 
 void SetGroupArrivalTime(struct GROUP *pGroup, uint32_t uiArrivalTime);
 

@@ -481,9 +481,9 @@ BOOLEAN SetLandIndex(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOL
 BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, uint16_t usIndex, uint32_t uiNewType,
                                uint8_t ubRadius, BOOLEAN fReplace) {
   uint16_t usTempIndex;
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
   INT32 iNewIndex;
   BOOLEAN fDoPaste = FALSE;
   INT32 leftmost;

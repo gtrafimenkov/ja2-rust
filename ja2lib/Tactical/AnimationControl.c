@@ -5590,7 +5590,7 @@ uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t
 
     // Assume a target gridno is here.... get direction...
     // ATE: use +2 in gridno because here head is far from body
-    bDir = (int8_t)GetDirectionToGridNoFromGridNo((INT16)(pSoldier->sGridNo + 2),
+    bDir = (int8_t)GetDirectionToGridNoFromGridNo((int16_t)(pSoldier->sGridNo + 2),
                                                   pSoldier->sTargetGridNo);
 
     return (gusQueenMonsterSpitAnimPerDir[bDir]);

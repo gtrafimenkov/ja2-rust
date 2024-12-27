@@ -326,7 +326,7 @@ void DisplayHiredMercs() {
 
 void SettleMercAccounts() {
   //	struct SOLDIERTYPE *pSoldier;
-  INT16 i;
+  int16_t i;
   uint8_t ubMercID;
   INT32 iPartialPayment = 0;
   INT32 iContractCharge = 0;

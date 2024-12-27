@@ -203,9 +203,9 @@ typedef struct {
 
 } RGBValues;
 
-BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, INT16 sWidth, INT16 sHeight,
+BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight,
                       struct SGPPaletteEntry* pPalette) {
-  INT16 sNumColors;
+  int16_t sNumColors;
 
   // FIRST CREATE PALETTE
   struct CQuantizer q;
@@ -226,7 +226,7 @@ BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, INT16 sWidth, INT16 sHeight
   return (TRUE);
 }
 
-void MapPalette(uint8_t* pDest, uint8_t* pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
+void MapPalette(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight, int16_t sNumColors,
                 struct SGPPaletteEntry* pTable) {
   INT32 cX, cY, cnt, bBest;
   real dLowestDist;

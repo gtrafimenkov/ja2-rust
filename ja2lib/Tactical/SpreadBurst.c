@@ -19,9 +19,9 @@
 #define MAX_BURST_LOCATIONS 50
 
 typedef struct {
-  INT16 sX;
-  INT16 sY;
-  INT16 sGridNo;
+  int16_t sX;
+  int16_t sY;
+  int16_t sGridNo;
 
 } BURST_LOCATIONS;
 
@@ -32,7 +32,7 @@ extern BOOLEAN gfBeginBurstSpreadTracking;
 
 void ResetBurstLocations() { gbNumBurstLocations = 0; }
 
-void AccumulateBurstLocation(INT16 sGridNo) {
+void AccumulateBurstLocation(int16_t sGridNo) {
   INT32 cnt;
 
   if (gbNumBurstLocations < MAX_BURST_LOCATIONS) {
@@ -122,7 +122,7 @@ extern struct VObject *GetCursorFileVideoObject(uint32_t uiCursorFile);
 
 void RenderAccumulatedBurstLocations() {
   INT32 cnt;
-  INT16 sGridNo;
+  int16_t sGridNo;
   struct VObject *hVObject;
 
   if (!gfBeginBurstSpreadTracking) {
@@ -145,7 +145,7 @@ void RenderAccumulatedBurstLocations() {
     if (GridNoOnScreen(sGridNo)) {
       FLOAT dOffsetX, dOffsetY;
       FLOAT dTempX_S, dTempY_S;
-      INT16 sXPos, sYPos;
+      int16_t sXPos, sYPos;
       INT32 iBack;
 
       dOffsetX = (FLOAT)(gsBurstLocations[cnt].sX - gsRenderCenterX);
@@ -154,8 +154,8 @@ void RenderAccumulatedBurstLocations() {
       // Calculate guy's position
       FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-      sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
-      sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)dTempY_S -
+      sXPos = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)dTempX_S;
+      sYPos = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)dTempY_S -
               gpWorldLevelData[sGridNo].sHeight;
 
       // Adjust for offset position on screen
@@ -171,8 +171,8 @@ void RenderAccumulatedBurstLocations() {
       // sXPos -= 10;
       // sYPos -= 10;
 
-      iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (INT16)(sXPos + 40),
-                                     (INT16)(sYPos + 40));
+      iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos + 40),
+                                     (int16_t)(sYPos + 40));
       if (iBack != -1) {
         SetBackgroundRectFilled(iBack);
       }

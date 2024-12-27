@@ -503,7 +503,7 @@ void BtnOptionsFromMapScreenCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void DrawNameOfLoadedSector(void) {
   CHAR16 sString[128];
-  INT16 sFontX, sFontY;
+  int16_t sFontX, sFontY;
 
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
 
@@ -752,7 +752,7 @@ void EnableDisableMessageScrollButtonsAndRegions(void) {
 }
 
 void DisplayCompressMode(void) {
-  INT16 sX, sY;
+  int16_t sX, sY;
   CHAR16 sString[128];
   static uint8_t usColor = FONT_LTGREEN;
 
@@ -1128,7 +1128,7 @@ BOOLEAN AllowedToTimeCompress(void) {
 
 void DisplayCurrentBalanceTitleForMapBottom(void) {
   CHAR16 sString[128];
-  INT16 sFontX, sFontY;
+  int16_t sFontX, sFontY;
 
   // ste the font buffer
   SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
@@ -1161,7 +1161,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
 void DisplayCurrentBalanceForMapBottom(void) {
   // show the current balance for the player on the map panel bottom
   CHAR16 sString[128];
-  INT16 sFontX, sFontY;
+  int16_t sFontX, sFontY;
 
   // ste the font buffer
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
@@ -1237,7 +1237,7 @@ void DisplayProjectedDailyMineIncome(void) {
   INT32 iRate = 0;
   static INT32 iOldRate = -1;
   CHAR16 sString[128];
-  INT16 sFontX, sFontY;
+  int16_t sFontX, sFontY;
 
   // grab the rate from the financial system
   iRate = GetProjectedTotalDailyIncome();

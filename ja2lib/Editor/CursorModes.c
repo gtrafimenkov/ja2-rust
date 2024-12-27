@@ -24,8 +24,8 @@ uint16_t gusSelectionType = SMALLSELECTION;
 uint16_t gusSelectionDensity = 2;
 uint16_t gusSavedSelectionType = SMALLSELECTION;
 uint16_t gusSavedBuildingSelectionType = AREASELECTION;
-INT16 sGridX, sGridY;
-INT16 sBadMarker = -1;
+int16_t sGridX, sGridY;
+int16_t sBadMarker = -1;
 
 CHAR16 wszSelType[6][16] = {L"Small", L"Medium", L"Large", L"XLarge", L"Width: xx", L"Area"};
 
@@ -172,10 +172,10 @@ void UpdateCursorAreas() {
           RemoveBadMarker();
           if (gfRoofPlacement && FlatRoofAboveGridNo(iMapIndex)) {
             AddTopmostToTail(iMapIndex + ROOF_OFFSET, BADMARKER1);
-            sBadMarker = (INT16)(iMapIndex + ROOF_OFFSET);
+            sBadMarker = (int16_t)(iMapIndex + ROOF_OFFSET);
           } else {
             AddTopmostToTail((iMapIndex), BADMARKER1);
-            sBadMarker = (INT16)(iMapIndex);
+            sBadMarker = (int16_t)(iMapIndex);
           }
         }
       } else {

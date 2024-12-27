@@ -78,16 +78,16 @@ struct VObject;
 
 // stucture of node in linked list for lights
 typedef struct light_p {
-  INT16 iDX, iDY;
+  int16_t iDX, iDY;
   uint8_t uiFlags;
   uint8_t ubLight;
 } LIGHT_NODE;
 
 // structure of light instance, or sprite (a copy of the template)
 typedef struct {
-  INT16 iX, iY;
-  INT16 iOldX, iOldY;
-  INT16 iAnimSpeed;
+  int16_t iX, iY;
+  int16_t iOldX, iOldY;
+  int16_t iAnimSpeed;
   INT32 iTemplate;
   uint32_t uiFlags;
   uint32_t uiLightType;
@@ -112,15 +112,15 @@ BOOLEAN LightAddBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Subtracts a light value from all tiles
 BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Creates an omni (circular) light
-INT32 LightCreateOmni(uint8_t ubIntensity, INT16 iRadius);
+INT32 LightCreateOmni(uint8_t ubIntensity, int16_t iRadius);
 // Creates an oval-shaped light (two separate radii)
-INT32 LightCreateElliptical(uint8_t ubIntensity, INT16 iRadius1, INT16 iRadius2);
+INT32 LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
 // Creates a square light
-INT32 LightCreateSquare(uint8_t ubIntensity, INT16 iRadius1, INT16 iRadius2);
+INT32 LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
 // Draws a light into the scene at X,Y
-BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite);
+BOOLEAN LightDraw(uint32_t uiLightType, INT32 iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Reverts the tiles a light has affected back to normal
-BOOLEAN LightErase(uint32_t uiLightType, INT32 iLight, INT16 iX, INT16 iY, uint32_t uiSprite);
+BOOLEAN LightErase(uint32_t uiLightType, INT32 iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Save a light list into a file
 BOOLEAN LightSave(INT32 uiLight, STR pFilename);
 // Load a light list from a file
@@ -138,7 +138,7 @@ INT32 LightSpriteCreate(STR pName, uint32_t uiLightType);
 // Destroys the instance of that light
 BOOLEAN LightSpriteDestroy(INT32 iSprite);
 // Sets the tile position of the light instance
-BOOLEAN LightSpritePosition(INT32 iSprite, INT16 iX, INT16 iY);
+BOOLEAN LightSpritePosition(INT32 iSprite, int16_t iX, int16_t iY);
 // Makes a light "fake"
 BOOLEAN LightSpriteFake(INT32 iSprite);
 // Updates any change in position in lights
@@ -151,13 +151,13 @@ BOOLEAN LightSpritePower(INT32 iSprite, BOOLEAN fOn);
 BOOLEAN LightSpriteRoofStatus(INT32 iSprite, BOOLEAN fOnRoof);
 
 // Reveals translucent walls
-BOOLEAN CalcTranslucentWalls(INT16 iX, INT16 iY);
-BOOLEAN ApplyTranslucencyToWalls(INT16 iX, INT16 iY);
+BOOLEAN CalcTranslucentWalls(int16_t iX, int16_t iY);
+BOOLEAN ApplyTranslucencyToWalls(int16_t iX, int16_t iY);
 // Makes trees translucent
-BOOLEAN LightTranslucentTrees(INT16 iX, INT16 iY);
-BOOLEAN LightHideTrees(INT16 iX, INT16 iY);
-BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset);
-BOOLEAN LightHideRays(INT16 iX, INT16 iY);
+BOOLEAN LightTranslucentTrees(int16_t iX, int16_t iY);
+BOOLEAN LightHideTrees(int16_t iX, int16_t iY);
+BOOLEAN LightShowRays(int16_t iX, int16_t iY, BOOLEAN fReset);
+BOOLEAN LightHideRays(int16_t iX, int16_t iY);
 
 // makes the 16-bit palettes
 uint16_t CreateTilePaletteTables(struct VObject *pObj, uint32_t uiType, BOOLEAN fForce);
@@ -166,21 +166,21 @@ BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase
 uint16_t CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
-uint8_t LightTrueLevel(INT16 sGridNo, int8_t bLevel);
+uint8_t LightTrueLevel(int16_t sGridNo, int8_t bLevel);
 
 // system variables
 extern LIGHT_NODE *pLightList[MAX_LIGHT_TEMPLATES];
 extern uint16_t usTemplateSize[MAX_LIGHT_TEMPLATES];
 extern uint16_t *pLightRayList[MAX_LIGHT_TEMPLATES];
 extern uint16_t usRaySize[MAX_LIGHT_TEMPLATES];
-extern INT16 LightHeight[MAX_LIGHT_TEMPLATES];
-extern INT16 LightWidth[MAX_LIGHT_TEMPLATES];
-extern INT16 LightXOffset[MAX_LIGHT_TEMPLATES];
-extern INT16 LightYOffset[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapLeft[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapTop[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapRight[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapBottom[MAX_LIGHT_TEMPLATES];
+extern int16_t LightHeight[MAX_LIGHT_TEMPLATES];
+extern int16_t LightWidth[MAX_LIGHT_TEMPLATES];
+extern int16_t LightXOffset[MAX_LIGHT_TEMPLATES];
+extern int16_t LightYOffset[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapLeft[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapTop[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapRight[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapBottom[MAX_LIGHT_TEMPLATES];
 extern STR pLightNames[MAX_LIGHT_TEMPLATES];
 
 // Sprite data

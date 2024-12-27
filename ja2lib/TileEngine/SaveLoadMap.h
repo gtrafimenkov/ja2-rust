@@ -79,14 +79,14 @@ BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile();
 
-void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                          INT16 sSectorY, uint8_t ubSectorZ);
-void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                         INT16 sSectorY, uint8_t ubSectorZ);
-void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                    INT16 sSectorY, uint8_t ubSectorZ);
-void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, INT16 sSectorX,
-                                    INT16 sSectorY, uint8_t ubSectorZ);
+void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                          int16_t sSectorY, uint8_t ubSectorZ);
+void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                         int16_t sSectorY, uint8_t ubSectorZ);
+void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                    int16_t sSectorY, uint8_t ubSectorZ);
+void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
+                                    int16_t sSectorY, uint8_t ubSectorZ);
 
 // Adds the exit grid to
 void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSectorX, u8 sSectorY,

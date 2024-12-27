@@ -534,12 +534,12 @@ BOOLEAN SortSchedule(SCHEDULENODE *pSchedule) {
   return fSorted;
 }
 
-BOOLEAN BumpAnyExistingMerc(INT16 sGridNo) {
+BOOLEAN BumpAnyExistingMerc(int16_t sGridNo) {
   uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;  // NB this is the person already in the location,
-  INT16 sNewGridNo;
+  int16_t sNewGridNo;
   uint8_t ubDir;
-  INT16 sCellX, sCellY;
+  int16_t sCellX, sCellY;
 
   // this is for autoprocessing schedules...
   // there could be someone in the destination location, in which case
@@ -573,7 +573,7 @@ BOOLEAN BumpAnyExistingMerc(INT16 sGridNo) {
 }
 
 void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
-  INT16 sCellX, sCellY, sGridNo;
+  int16_t sCellX, sCellY, sGridNo;
   int8_t bDirection;
   struct SOLDIERTYPE *pSoldier;
 
@@ -921,10 +921,10 @@ void PostSchedules() {
 }
 
 void PerformActionOnDoorAdjacentToGridNo(uint8_t ubScheduleAction, uint16_t usGridNo) {
-  INT16 sDoorGridNo;
+  int16_t sDoorGridNo;
   DOOR *pDoor;
 
-  sDoorGridNo = FindDoorAtGridNoOrAdjacent((INT16)usGridNo);
+  sDoorGridNo = FindDoorAtGridNoOrAdjacent((int16_t)usGridNo);
   if (sDoorGridNo != NOWHERE) {
     switch (ubScheduleAction) {
       case SCHEDULE_ACTION_LOCKDOOR:
@@ -1165,7 +1165,7 @@ void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, uint16_t usSleepSpot) {
         usSleepSpot2 = FindSleepSpot(pSchedule);
         if (usSleepSpot2 == usSleepSpot) {
           // conflict!
-          // usNewSleepSpot = (INT16) FindGridNoFromSweetSpotWithStructData( pSoldier2,
+          // usNewSleepSpot = (int16_t) FindGridNoFromSweetSpotWithStructData( pSoldier2,
           // pSoldier2->usAnimState, usSleepSpot2, 3, &ubDirection, FALSE );
           usNewSleepSpot =
               FindGridNoFromSweetSpotExcludingSweetSpot(pSoldier2, usSleepSpot2, 3, &ubDirection);

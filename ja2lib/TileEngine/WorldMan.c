@@ -218,7 +218,7 @@ struct LEVELNODE *AddObjectToTail(uint32_t iMapIndex, uint16_t usIndex) {
     }
   }
 
-  // CheckForAndAddTileCacheStructInfo( pNextObject, (INT16)iMapIndex, usIndex );
+  // CheckForAndAddTileCacheStructInfo( pNextObject, (int16_t)iMapIndex, usIndex );
 
   ResetSpecificLayerOptimizing(TILES_DYNAMIC_OBJECTS);
   return (pNextObject);
@@ -238,7 +238,7 @@ BOOLEAN AddObjectToHead(uint32_t iMapIndex, uint16_t usIndex) {
   // Set head
   gpWorldLevelData[iMapIndex].pObjectHead = pNextObject;
 
-  // CheckForAndAddTileCacheStructInfo( pNextObject, (INT16)iMapIndex, usIndex );
+  // CheckForAndAddTileCacheStructInfo( pNextObject, (int16_t)iMapIndex, usIndex );
 
   // If it's NOT the first head
   ResetSpecificLayerOptimizing(TILES_DYNAMIC_OBJECTS);
@@ -888,7 +888,7 @@ struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex,
     if (fAddStructDBInfo) {
       if (usIndex < NUMBEROFTILES) {
         if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-          if (AddStructureToWorld((INT16)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
+          if (AddStructureToWorld((int16_t)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
                                   pNextStruct) == FALSE) {
             MemFree(pNextStruct);
             guiLevelNodes--;
@@ -917,7 +917,7 @@ struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex,
     if (fAddStructDBInfo) {
       if (usIndex < NUMBEROFTILES) {
         if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-          if (AddStructureToWorld((INT16)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
+          if (AddStructureToWorld((int16_t)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
                                   pNextStruct) == FALSE) {
             MemFree(pNextStruct);
             guiLevelNodes--;
@@ -950,7 +950,7 @@ struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex,
       gpWorldLevelData[iMapIndex].ubExtFlags[0] &= (~MAPELEMENT_EXT_NOBURN_STRUCT);
 
       // If we are NOT a wall and NOT multi-tiles, set mapelement flag...
-      if (!FindStructure((INT16)iMapIndex, STRUCTURE_WALLSTUFF) &&
+      if (!FindStructure((int16_t)iMapIndex, STRUCTURE_WALLSTUFF) &&
           pDBStructure->ubNumberOfTiles == 1) {
         // Set flag...
         gpWorldLevelData[iMapIndex].ubExtFlags[0] |= MAPELEMENT_EXT_NOBURN_STRUCT;
@@ -961,7 +961,7 @@ struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex,
   // Add the structure the maps temp file
   AddStructToMapTempFile(iMapIndex, usIndex);
 
-  // CheckForAndAddTileCacheStructInfo( pNextStruct, (INT16)iMapIndex, usIndex );
+  // CheckForAndAddTileCacheStructInfo( pNextStruct, (int16_t)iMapIndex, usIndex );
 
   ResetSpecificLayerOptimizing(TILES_DYNAMIC_STRUCTURES);
 
@@ -979,7 +979,7 @@ BOOLEAN AddStructToHead(uint32_t iMapIndex, uint16_t usIndex) {
 
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-      if (AddStructureToWorld((INT16)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
+      if (AddStructureToWorld((int16_t)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
                               pNextStruct) == FALSE) {
         MemFree(pNextStruct);
         guiLevelNodes--;
@@ -1012,7 +1012,7 @@ BOOLEAN AddStructToHead(uint32_t iMapIndex, uint16_t usIndex) {
       gpWorldLevelData[iMapIndex].ubExtFlags[0] &= (~MAPELEMENT_EXT_NOBURN_STRUCT);
 
       // If we are NOT a wall and NOT multi-tiles, set mapelement flag...
-      if (!!FindStructure((INT16)iMapIndex, STRUCTURE_WALLSTUFF) &&
+      if (!!FindStructure((int16_t)iMapIndex, STRUCTURE_WALLSTUFF) &&
           pDBStructure->ubNumberOfTiles == 1) {
         // Set flag...
         gpWorldLevelData[iMapIndex].ubExtFlags[0] |= MAPELEMENT_EXT_NOBURN_STRUCT;
@@ -1023,7 +1023,7 @@ BOOLEAN AddStructToHead(uint32_t iMapIndex, uint16_t usIndex) {
   // Add the structure the maps temp file
   AddStructToMapTempFile(iMapIndex, usIndex);
 
-  // CheckForAndAddTileCacheStructInfo( pNextStruct, (INT16)iMapIndex, usIndex );
+  // CheckForAndAddTileCacheStructInfo( pNextStruct, (int16_t)iMapIndex, usIndex );
 
   ResetSpecificLayerOptimizing(TILES_DYNAMIC_STRUCTURES);
   return (TRUE);
@@ -1067,7 +1067,7 @@ BOOLEAN InsertStructIndex(uint32_t iMapIndex, uint16_t usIndex, uint8_t ubLevel)
 
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-      if (AddStructureToWorld((INT16)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
+      if (AddStructureToWorld((int16_t)iMapIndex, 0, gTileDatabase[usIndex].pDBStructureRef,
                               pNextStruct) == FALSE) {
         MemFree(pNextStruct);
         guiLevelNodes--;
@@ -1080,7 +1080,7 @@ BOOLEAN InsertStructIndex(uint32_t iMapIndex, uint16_t usIndex, uint8_t ubLevel)
   pNextStruct->pNext = pStruct->pNext;
   pStruct->pNext = pNextStruct;
 
-  // CheckForAndAddTileCacheStructInfo( pNextStruct, (INT16)iMapIndex, usIndex );
+  // CheckForAndAddTileCacheStructInfo( pNextStruct, (int16_t)iMapIndex, usIndex );
 
   ResetSpecificLayerOptimizing(TILES_DYNAMIC_STRUCTURES);
   return (TRUE);
@@ -1755,7 +1755,7 @@ BOOLEAN AddMercToHead(uint32_t iMapIndex, struct SOLDIERTYPE *pSoldier, BOOLEAN 
   return (TRUE);
 }
 
-BOOLEAN AddMercStructureInfo(INT16 sGridNo, struct SOLDIERTYPE *pSoldier) {
+BOOLEAN AddMercStructureInfo(int16_t sGridNo, struct SOLDIERTYPE *pSoldier) {
   uint16_t usAnimSurface;
 
   // Get surface data
@@ -1766,7 +1766,7 @@ BOOLEAN AddMercStructureInfo(INT16 sGridNo, struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, struct SOLDIERTYPE *pSoldier,
+BOOLEAN AddMercStructureInfoFromAnimSurface(int16_t sGridNo, struct SOLDIERTYPE *pSoldier,
                                             uint16_t usAnimSurface, uint16_t usAnimState) {
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   BOOLEAN fReturn;
@@ -1971,7 +1971,7 @@ struct LEVELNODE *AddRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
     if (usIndex < NUMBEROFTILES) {
       if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-        if (AddStructureToWorld((INT16)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
+        if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
                                 pRoof) == FALSE) {
           MemFree(pRoof);
           guiLevelNodes--;
@@ -1991,7 +1991,7 @@ struct LEVELNODE *AddRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
         if (usIndex < NUMBEROFTILES) {
           if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-            if (AddStructureToWorld((INT16)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
+            if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
                                     pNextRoof) == FALSE) {
               MemFree(pNextRoof);
               guiLevelNodes--;
@@ -2026,7 +2026,7 @@ BOOLEAN AddRoofToHead(uint32_t iMapIndex, uint16_t usIndex) {
 
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-      if (AddStructureToWorld((INT16)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
+      if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
                               pNextRoof) == FALSE) {
         MemFree(pNextRoof);
         guiLevelNodes--;
@@ -2118,7 +2118,7 @@ BOOLEAN TypeRangeExistsInRoofLayer(uint32_t iMapIndex, uint32_t fStartType, uint
   return (FALSE);
 }
 
-BOOLEAN IndexExistsInRoofLayer(INT16 sGridNo, uint16_t usIndex) {
+BOOLEAN IndexExistsInRoofLayer(int16_t sGridNo, uint16_t usIndex) {
   struct LEVELNODE *pRoof = NULL;
 
   pRoof = gpWorldLevelData[sGridNo].pRoofHead;
@@ -2249,7 +2249,7 @@ struct LEVELNODE *AddOnRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
     if (usIndex < NUMBEROFTILES) {
       if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-        if (AddStructureToWorld((INT16)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
+        if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
                                 pOnRoof) == FALSE) {
           MemFree(pOnRoof);
           guiLevelNodes--;
@@ -2271,7 +2271,7 @@ struct LEVELNODE *AddOnRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
         if (usIndex < NUMBEROFTILES) {
           if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-            if (AddStructureToWorld((INT16)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
+            if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
                                     pNextOnRoof) == FALSE) {
               MemFree(pNextOnRoof);
               guiLevelNodes--;
@@ -2304,7 +2304,7 @@ BOOLEAN AddOnRoofToHead(uint32_t iMapIndex, uint16_t usIndex) {
   CHECKF(CreateLevelNode(&pNextOnRoof) != FALSE);
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
-      if (AddStructureToWorld((INT16)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
+      if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
                               pNextOnRoof) == FALSE) {
         MemFree(pNextOnRoof);
         guiLevelNodes--;
@@ -2651,7 +2651,7 @@ BOOLEAN SetMapElementShadeLevel(uint32_t uiMapIndex, uint8_t ubShadeLevel) {
   return (TRUE);
 }
 
-BOOLEAN IsHeigherLevel(INT16 sGridNo) {
+BOOLEAN IsHeigherLevel(int16_t sGridNo) {
   struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_NORMAL_ROOF);
@@ -2663,7 +2663,7 @@ BOOLEAN IsHeigherLevel(INT16 sGridNo) {
   return (FALSE);
 }
 
-BOOLEAN IsLowerLevel(INT16 sGridNo) {
+BOOLEAN IsLowerLevel(int16_t sGridNo) {
   struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_NORMAL_ROOF);
@@ -2675,7 +2675,7 @@ BOOLEAN IsLowerLevel(INT16 sGridNo) {
   return (FALSE);
 }
 
-BOOLEAN IsRoofVisible(INT16 sMapPos) {
+BOOLEAN IsRoofVisible(int16_t sMapPos) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
@@ -2697,7 +2697,7 @@ BOOLEAN IsRoofVisible(INT16 sMapPos) {
   return (FALSE);
 }
 
-BOOLEAN IsRoofVisible2(INT16 sMapPos) {
+BOOLEAN IsRoofVisible2(int16_t sMapPos) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
@@ -2720,7 +2720,7 @@ BOOLEAN IsRoofVisible2(INT16 sMapPos) {
   return (FALSE);
 }
 
-uint8_t WhoIsThere2(INT16 sGridNo, int8_t bLevel) {
+uint8_t WhoIsThere2(int16_t sGridNo, int8_t bLevel) {
   struct STRUCTURE *pStructure;
 
   if (!GridNoOnVisibleWorldTile(sGridNo)) {
@@ -2749,7 +2749,7 @@ uint8_t WhoIsThere2(INT16 sGridNo, int8_t bLevel) {
   return ((uint8_t)NOBODY);
 }
 
-uint8_t GetTerrainType(INT16 sGridNo) {
+uint8_t GetTerrainType(int16_t sGridNo) {
   return (gpWorldLevelData[sGridNo].ubTerrainID);
   /*
           struct LEVELNODE	*pNode;
@@ -2773,7 +2773,7 @@ uint8_t GetTerrainType(INT16 sGridNo) {
   */
 }
 
-BOOLEAN Water(INT16 sGridNo) {
+BOOLEAN Water(int16_t sGridNo) {
   MAP_ELEMENT *pMapElement;
 
   if (sGridNo == NOWHERE) {
@@ -2790,7 +2790,7 @@ BOOLEAN Water(INT16 sGridNo) {
   }
 }
 
-BOOLEAN DeepWater(INT16 sGridNo) {
+BOOLEAN DeepWater(int16_t sGridNo) {
   MAP_ELEMENT *pMapElement;
 
   pMapElement = &(gpWorldLevelData[sGridNo]);
@@ -2802,7 +2802,7 @@ BOOLEAN DeepWater(INT16 sGridNo) {
   }
 }
 
-BOOLEAN WaterTooDeepForAttacks(INT16 sGridNo) { return (DeepWater(sGridNo)); }
+BOOLEAN WaterTooDeepForAttacks(int16_t sGridNo) { return (DeepWater(sGridNo)); }
 
 void SetStructAframeFlags(uint32_t iMapIndex, uint32_t uiFlags) {
   struct LEVELNODE *pStruct = NULL;
@@ -2850,7 +2850,7 @@ void RemoveStructAframeFlags(uint32_t iMapIndex, uint32_t uiFlags) {
   }
 }
 
-struct LEVELNODE *FindLevelNodeBasedOnStructure(INT16 sGridNo, struct STRUCTURE *pStructure) {
+struct LEVELNODE *FindLevelNodeBasedOnStructure(int16_t sGridNo, struct STRUCTURE *pStructure) {
   struct LEVELNODE *pLevelNode;
 
   // ATE: First look on the struct layer.....
@@ -2895,7 +2895,7 @@ struct LEVELNODE *FindLevelNodeBasedOnStructure(INT16 sGridNo, struct STRUCTURE 
   return (NULL);
 }
 
-struct LEVELNODE *FindShadow(INT16 sGridNo, uint16_t usStructIndex) {
+struct LEVELNODE *FindShadow(int16_t sGridNo, uint16_t usStructIndex) {
   struct LEVELNODE *pLevelNode;
   uint16_t usShadowIndex;
 

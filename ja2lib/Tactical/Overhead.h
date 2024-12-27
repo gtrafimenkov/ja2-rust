@@ -58,12 +58,12 @@ typedef struct {
   uint32_t uiFlags;
   TacticalTeamType Team[MAXTEAMS];
   uint8_t ubCurrentTeam;
-  INT16 sSlideTarget;
-  INT16 sSlideReason;
+  int16_t sSlideTarget;
+  int16_t sSlideReason;
   uint32_t uiTimeSinceMercAIStart;
   int8_t fPanicFlags;
-  INT16 sPanicTriggerGridnoUnused;
-  INT16 sHandGrid;
+  int16_t sPanicTriggerGridnoUnused;
+  int16_t sHandGrid;
   uint8_t ubSpottersCalledForBy;
   uint8_t ubTheChosenOne;
   uint32_t uiTimeOfLastInput;
@@ -102,7 +102,7 @@ typedef struct {
   int8_t bConsNumTurnsNotSeen;
   uint8_t ubArmyGuysKilled;
 
-  INT16 sPanicTriggerGridNo[NUM_PANIC_TRIGGERS];
+  int16_t sPanicTriggerGridNo[NUM_PANIC_TRIGGERS];
   int8_t bPanicTriggerIsAlarm[NUM_PANIC_TRIGGERS];
   uint8_t ubPanicTolerance[NUM_PANIC_TRIGGERS];
   BOOLEAN fAtLeastOneGuyOnMultiSelect;
@@ -121,8 +121,8 @@ typedef struct {
   uint8_t ubLastQuoteSaid;
   uint8_t ubLastQuoteProfileNUm;
   BOOLEAN fCantGetThrough;
-  INT16 sCantGetThroughGridNo;
-  INT16 sCantGetThroughSoldierGridNo;
+  int16_t sCantGetThroughGridNo;
+  int16_t sCantGetThroughSoldierGridNo;
   uint8_t ubCantGetThroughID;
   BOOLEAN fDidGameJustStart;
   BOOLEAN fStatChangeCheatOn;
@@ -191,8 +191,8 @@ BOOLEAN InitOverhead();
 BOOLEAN ShutdownOverhead();
 BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, uint16_t usSoldierIndex);
 
-INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo,
-                       int8_t bLevel);
+int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOLEAN fPeopleToo,
+                         int8_t bLevel);
 
 // Simple check to see if a (one-tiled) soldier can occupy a given location on the ground or roof.
 extern BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof);
@@ -212,8 +212,8 @@ void LocateGridNo(uint16_t sGridNo);
 void LocateSoldier(uint16_t usID, BOOLEAN fSetLocator);
 
 void BeginTeamTurn(uint8_t ubTeam);
-void SlideTo(INT16 sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN fSetLocator);
-void SlideToLocation(uint16_t usReasonID, INT16 sDestGridNo);
+void SlideTo(int16_t sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN fSetLocator);
+void SlideToLocation(uint16_t usReasonID, int16_t sDestGridNo);
 
 void RebuildAllSoldierShadeTables();
 void HandlePlayerTeamMemberDeath(struct SOLDIERTYPE *pSoldier);
@@ -234,13 +234,14 @@ uint32_t EnterTacticalDemoMode();
 
 BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos);
 
-INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *pubDirection,
-                         INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
-INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *pubDirection,
-                               INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
+int16_t FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
+                           int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
+int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t *pubDirection, int16_t *psAdjustedGridNo,
+                                 BOOLEAN fForceToPerson, BOOLEAN fDoor);
 
 void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier);
-BOOLEAN TeamMemberNear(int8_t bTeam, INT16 sGridNo, INT32 iRange);
+BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, INT32 iRange);
 BOOLEAN IsValidTargetMerc(uint8_t ubSoldierID);
 
 // FUNCTIONS FOR MANIPULATING MERC SLOTS - A LIST OF ALL ACTIVE MERCS
@@ -302,8 +303,8 @@ void MakeCivHostile(struct SOLDIERTYPE *pSoldier, int8_t bNewSide);
 BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
                                       int8_t bReason);
 
-INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                              INT16 *psAdjustedTargetGridNo, uint8_t *pubDirection);
+int16_t FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
+                                int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection);
 
 struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacked);
 void CivilianGroupChangesSides(uint8_t ubCivilianGroup);

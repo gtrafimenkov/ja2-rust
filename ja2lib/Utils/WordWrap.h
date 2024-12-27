@@ -45,11 +45,11 @@ uint16_t DisplayWrappedString(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
                               uint8_t ubBackGroundColor, BOOLEAN fDirty, uint32_t ulFlags);
 uint16_t DeleteWrappedString(WRAPPED_STRING *pWrappedString);
 void CleanOutControlCodesFromString(STR16 pSourceString, STR16 pDestString);
-INT16 IanDisplayWrappedStringToPages(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
-                                     uint16_t usPageHeight, uint16_t usTotalHeight,
-                                     uint16_t usPageNumber, uint8_t ubGap, uint32_t uiFont,
-                                     uint8_t ubColor, STR16 pString, uint8_t ubBackGroundColor,
-                                     BOOLEAN fDirty, uint32_t uiFlags, BOOLEAN *fOnLastPageFlag);
+int16_t IanDisplayWrappedStringToPages(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                                       uint16_t usPageHeight, uint16_t usTotalHeight,
+                                       uint16_t usPageNumber, uint8_t ubGap, uint32_t uiFont,
+                                       uint8_t ubColor, STR16 pString, uint8_t ubBackGroundColor,
+                                       BOOLEAN fDirty, uint32_t uiFlags, BOOLEAN *fOnLastPageFlag);
 BOOLEAN DrawTextToScreen(STR16 pStr, uint16_t LocX, uint16_t LocY, uint16_t usWidth,
                          uint32_t ulFont, uint8_t ubColor, uint8_t ubBackGroundColor,
                          BOOLEAN fDirty, uint32_t FLAGS);

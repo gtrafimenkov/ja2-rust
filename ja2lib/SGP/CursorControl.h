@@ -46,16 +46,16 @@ typedef struct {
   uint32_t uiFileIndex;
   uint16_t uiSubIndex;
   uint32_t uiCurrentFrame;
-  INT16 usPosX;
-  INT16 usPosY;
+  int16_t usPosX;
+  int16_t usPosY;
 
 } CursorImage;
 
 typedef struct {
   CursorImage Composites[MAX_COMPOSITES];
   uint16_t usNumComposites;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
   uint16_t usHeight;
   uint16_t usWidth;
   uint8_t bFlags;
@@ -63,11 +63,11 @@ typedef struct {
 
 } CursorData;
 
-extern INT16 gsGlobalCursorYOffset;
+extern int16_t gsGlobalCursorYOffset;
 
 // Globals for cursor database offset values
-extern INT16 gsCurMouseOffsetX;
-extern INT16 gsCurMouseOffsetY;
+extern int16_t gsCurMouseOffsetX;
+extern int16_t gsCurMouseOffsetY;
 extern uint16_t gsCurMouseHeight;
 extern uint16_t gsCurMouseWidth;
 

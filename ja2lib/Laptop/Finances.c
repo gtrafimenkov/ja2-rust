@@ -617,7 +617,7 @@ void DrawRecordsBackGround(void) {
 
 void DrawRecordsColumnHeadersText(void) {
   // write the headers text for each column
-  INT16 usX, usY;
+  int16_t usX, usY;
 
   // font stuff
   SetFont(FINANCE_TEXT_FONT);
@@ -659,7 +659,7 @@ void DrawRecordsText(void) {
   FinanceUnitPtr pCurFinance = pCurrentFinance;
   FinanceUnitPtr pTempFinance = pFinanceListHead;
   wchar_t sString[512];
-  INT16 usX, usY;
+  int16_t usX, usY;
   INT32 iBalance = 0;
 
   // setup the font stuff
@@ -792,7 +792,7 @@ void InvalidateLapTopScreen(void) {
 }
 
 void DrawSummaryText(void) {
-  INT16 usX, usY;
+  int16_t usX, usY;
   wchar_t pString[100];
   INT32 iBalance = 0;
 
@@ -1713,10 +1713,10 @@ BOOLEAN LoadInRecords(uint32_t uiPage) {
 }
 
 void InsertCommasForDollarFigure(STR16 pString) {
-  INT16 sCounter = 0;
-  INT16 sZeroCount = 0;
-  INT16 sTempCounter = 0;
-  INT16 sEndPosition = 0;
+  int16_t sCounter = 0;
+  int16_t sZeroCount = 0;
+  int16_t sTempCounter = 0;
+  int16_t sEndPosition = 0;
 
   // go to end of dollar figure
   while (pString[sCounter] != 0) {

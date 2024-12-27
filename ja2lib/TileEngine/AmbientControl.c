@@ -14,7 +14,7 @@
 #include "Utils/SoundControl.h"
 
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
-INT16 gsNumAmbData = 0;
+int16_t gsNumAmbData = 0;
 
 uint8_t gubCurrentSteadyStateAmbience = SSA_NONE;
 uint8_t gubCurrentSteadyStateSound = 0;
@@ -201,7 +201,7 @@ BOOLEAN LoadAmbientControlFile(uint8_t ubAmbientID) {
   }
 
   // READ #
-  if (!FileMan_Read(hFile, &gsNumAmbData, sizeof(INT16), NULL)) {
+  if (!FileMan_Read(hFile, &gsNumAmbData, sizeof(int16_t), NULL)) {
     return (FALSE);
   }
 

@@ -88,7 +88,7 @@ void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
 ///////////////////////////////////////////////////
 
 void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY,
-                    INT16 iColor);
+                    int16_t iColor);
 
 void RenderSelectedSliderBar(SLIDER *pSlider);
 void CalculateNewSliderBoxPosition(SLIDER *pSlider);
@@ -557,7 +557,7 @@ void CalculateNewSliderIncrement(uint32_t uiSliderID, uint16_t usPos) {
 }
 
 void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY,
-                    INT16 iColor) {
+                    int16_t iColor) {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 

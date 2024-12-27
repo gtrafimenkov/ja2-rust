@@ -120,8 +120,8 @@ struct LEVELNODE {
 
   union {
     struct {
-      uint16_t usIndex;     // TILE DATABASE INDEX
-      INT16 sCurrentFrame;  // Stuff for animated tiles for a given tile location ( doors, etc )
+      uint16_t usIndex;       // TILE DATABASE INDEX
+      int16_t sCurrentFrame;  // Stuff for animated tiles for a given tile location ( doors, etc )
     };
 
     struct SOLDIERTYPE *pSoldier;  // POINTER TO SOLDIER
@@ -131,8 +131,8 @@ struct LEVELNODE {
   union {
     // Some levelnodes can specify relative X and Y values!
     struct {
-      INT16 sRelativeX;  // Relative position values
-      INT16 sRelativeY;  // Relative position values
+      int16_t sRelativeX;  // Relative position values
+      int16_t sRelativeY;  // Relative position values
     };
 
     // Some can contains index values into dead corpses
@@ -156,7 +156,7 @@ struct LEVELNODE {
     };
   };
 
-  INT16 sRelativeZ;             // Relative position values
+  int16_t sRelativeZ;           // Relative position values
   uint8_t ubShadeLevel;         // LIGHTING INFO
   uint8_t ubNaturalShadeLevel;  // LIGHTING INFO
   uint8_t ubFakeShadeLevel;     // LIGHTING INFO
@@ -224,10 +224,10 @@ extern uint32_t gSurfaceMemUsage;
 
 extern CHAR8 gzLastLoadedFile[260];
 
-extern INT16 gsRecompileAreaTop;
-extern INT16 gsRecompileAreaLeft;
-extern INT16 gsRecompileAreaRight;
-extern INT16 gsRecompileAreaBottom;
+extern int16_t gsRecompileAreaTop;
+extern int16_t gsRecompileAreaLeft;
+extern int16_t gsRecompileAreaRight;
+extern int16_t gsRecompileAreaBottom;
 
 // Functions
 BOOLEAN InitializeWorld();
@@ -237,13 +237,13 @@ void BuildTileShadeTables();
 void DestroyTileShadeTables();
 
 void TrashWorld(void);
-void TrashMapTile(INT16 MapTile);
+void TrashMapTile(int16_t MapTile);
 BOOLEAN NewWorld(void);
 BOOLEAN SaveWorld(STR8 puiFilename);
 BOOLEAN LoadWorld(STR8 puiFilename);
 void CompileWorldMovementCosts();
-void RecompileLocalMovementCosts(INT16 sCentreGridNo);
-void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, int8_t bRadius);
+void RecompileLocalMovementCosts(int16_t sCentreGridNo);
+void RecompileLocalMovementCostsFromRadius(int16_t sCentreGridNo, int8_t bRadius);
 
 BOOLEAN LoadMapTileset(INT32 iTilesetID);
 BOOLEAN SaveMapTileset(INT32 iTilesetID);
@@ -252,7 +252,7 @@ void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadN
 
 void CalculateWorldWireFrameTiles(BOOLEAN fForce);
 void RemoveWorldWireFrameTiles();
-void RemoveWireFrameTiles(INT16 sGridNo);
+void RemoveWireFrameTiles(int16_t sGridNo);
 
 struct LEVELNODE *GetAnimProfileFlags(uint16_t sGridNo, uint16_t *usFlags,
                                       struct SOLDIERTYPE **ppTargSoldier,
@@ -267,6 +267,6 @@ BOOLEAN GridNoIndoors(uint32_t iMapIndex);
 BOOLEAN OpenableAtGridNo(uint32_t iMapIndex);
 
 void RecompileLocalMovementCostsInAreaWithFlags(void);
-void AddTileToRecompileArea(INT16 sGridNo);
+void AddTileToRecompileArea(int16_t sGridNo);
 
 #endif

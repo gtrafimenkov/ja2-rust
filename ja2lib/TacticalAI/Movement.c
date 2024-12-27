@@ -16,8 +16,8 @@
 #include "Utils/Message.h"
 
 // from strategic
-extern INT16 DirXIncrementer[8];
-extern INT16 DirYIncrementer[8];
+extern int16_t DirXIncrementer[8];
+extern int16_t DirYIncrementer[8];
 //
 // CJC's DG->JA2 conversion notes
 //
@@ -26,7 +26,7 @@ extern INT16 DirYIncrementer[8];
 // GoAsFarAsPossibleTowards - C.O. stuff related to current animation esp first aid
 // SetCivilianDestination - C.O. stuff for if we don't control the civ
 
-int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, uint8_t ubPathMode,
+int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, int16_t sGridno, uint8_t ubPathMode,
                         uint8_t ubWaterOK, uint8_t fFlags) {
   BOOLEAN fSkipTilesWithMercs;
 
@@ -95,7 +95,7 @@ int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, uint8_t ubP
     return (FALSE);  // illegal destination
 }
 
-int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
+int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
   uint8_t ubGottaCancel = FALSE;
   uint8_t ubSuccess = FALSE;
 
@@ -190,7 +190,7 @@ int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   return (ubSuccess);
 }
 
-INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier) {
+int16_t NextPatrolPoint(struct SOLDIERTYPE *pSoldier) {
   // patrol slot 0 is UNUSED, so max patrolCnt is actually only 9
   if ((pSoldier->bPatrolCnt < 1) || (pSoldier->bPatrolCnt >= MAXPATROLGRIDS)) {
 #ifdef BETAVERSION
@@ -212,7 +212,7 @@ INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
-  INT16 sPatrolPoint;
+  int16_t sPatrolPoint;
   int8_t bOldOrders;
 
   sPatrolPoint = pSoldier->usPatrolGrid[pSoldier->bNextPatrolPnt];
@@ -276,7 +276,7 @@ int8_t PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
 }
 
 int8_t RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
-  INT16 sPatrolPoint;
+  int16_t sPatrolPoint;
   int8_t bOldOrders, bPatrolIndex;
   int8_t bCnt;
 
@@ -352,10 +352,10 @@ int8_t RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid,
-                                       int8_t bReserveAPs, int8_t bAction, int8_t fFlags) {
-  INT16 sLoop, sAPCost;
-  INT16 sTempDest, sGoToGrid;
+int16_t InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, int16_t sDesGrid,
+                                         int8_t bReserveAPs, int8_t bAction, int8_t fFlags) {
+  int16_t sLoop, sAPCost;
+  int16_t sTempDest, sGoToGrid;
   uint16_t sOrigin;
   uint16_t usMaxDist;
   uint8_t ubDirection, ubDirsLeft, ubDirChecked[8], fFound = FALSE;
@@ -442,7 +442,7 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
         ubDirChecked[ubDirection] = TRUE;
 
         // determine the gridno 1 tile away from current friend in this direction
-        sTempDest = NewGridNo(sDesGrid, DirectionInc((INT16)(ubDirection + 1)));
+        sTempDest = NewGridNo(sDesGrid, DirectionInc((int16_t)(ubDirection + 1)));
 
         // if that's out of bounds, ignore it & check next direction
         if (sTempDest == sDesGrid) continue;
@@ -487,9 +487,10 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
   for (sLoop = 0; sLoop < (pSoldier->usPathDataSize - pSoldier->usPathIndex); sLoop++) {
     // what is the next gridno in the path?
 
-    // sTempDest = NewGridNo( sGoToGrid,DirectionInc( (INT16) (pSoldier->usPathingData[sLoop] + 1) )
+    // sTempDest = NewGridNo( sGoToGrid,DirectionInc( (int16_t) (pSoldier->usPathingData[sLoop] + 1)
+    // )
     // );
-    sTempDest = NewGridNo(sGoToGrid, DirectionInc((INT16)(pSoldier->usPathingData[sLoop])));
+    sTempDest = NewGridNo(sGoToGrid, DirectionInc((int16_t)(pSoldier->usPathingData[sLoop])));
     // NumMessage("sTempDest = ",sTempDest);
 
     // this should NEVER be out of bounds
@@ -598,12 +599,12 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
   }
 }
 
-INT16 GoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid, int8_t bAction) {
+int16_t GoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, int16_t sDesGrid, int8_t bAction) {
   return (InternalGoAsFarAsPossibleTowards(pSoldier, sDesGrid, -1, bAction, 0));
 }
 
 void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
-  INT16 usNewGridNo, bAPCost;
+  int16_t usNewGridNo, bAPCost;
 
   // turn off the flag now that we're going to do something about it...
   // ATE: USed to be redundent, now if called befroe NewDest can cause some side efects...
@@ -692,7 +693,7 @@ void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void SetCivilianDestination(uint8_t ubWho, INT16 sGridno) {
+void SetCivilianDestination(uint8_t ubWho, int16_t sGridno) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = MercPtrs[ubWho];
@@ -739,7 +740,7 @@ void SetCivilianDestination(uint8_t ubWho, INT16 sGridno) {
 
 #define RADIUS 3
 
-INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
+int16_t TrackScent(struct SOLDIERTYPE *pSoldier) {
   // This function returns the best gridno to go to based on the scent being followed,
   // and the soldier (creature/animal)'s current direction (which is used to resolve
   // ties.
@@ -790,8 +791,8 @@ INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
             if (ubStrength > ubBestStrength) {
               iBestGridNo = iGridNo;
               ubBestStrength = ubStrength;
-              bDir = atan8((INT16)iXStart, (INT16)iYStart, (INT16)(iXStart + iXDiff),
-                           (INT16)(iYStart + iYDiff));
+              bDir = atan8((int16_t)iXStart, (int16_t)iYStart, (int16_t)(iXStart + iXDiff),
+                           (int16_t)(iYStart + iYDiff));
               // now convert it into a difference in degree between it and our current dir
               ubBestDirDiff = abs(pSoldier->bDirection - bDir);
               if (ubBestDirDiff > 4)  // dir 0 compared with dir 6, for instance
@@ -806,8 +807,8 @@ INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
               } else {
                 // use directions to decide between the two
                 // start by calculating direction to the new gridno
-                bDir = atan8((INT16)iXStart, (INT16)iYStart, (INT16)(iXStart + iXDiff),
-                             (INT16)(iYStart + iYDiff));
+                bDir = atan8((int16_t)iXStart, (int16_t)iYStart, (int16_t)(iXStart + iXDiff),
+                             (int16_t)(iYStart + iYDiff));
                 // now convert it into a difference in degree between it and our current dir
                 ubDirDiff = abs(pSoldier->bDirection - bDir);
                 if (ubDirDiff > 4)  // dir 0 compared with dir 6, for instance
@@ -831,8 +832,8 @@ INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
     // who else can track?
   }
   if (iBestGridNo != NOWHERE) {
-    pSoldier->usActionData = (INT16)iBestGridNo;
-    return ((INT16)iBestGridNo);
+    pSoldier->usActionData = (int16_t)iBestGridNo;
+    return ((int16_t)iBestGridNo);
   }
   return (0);
 }

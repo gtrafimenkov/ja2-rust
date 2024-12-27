@@ -108,9 +108,9 @@
 uint32_t guiInsOrderGridImage;
 uint32_t guiInsOrderBulletImage;
 
-INT16 gsForm1InsuranceLengthNumber;
-INT16 gsForm2InsuranceLengthNumber;
-INT16 gsForm3InsuranceLengthNumber;
+int16_t gsForm1InsuranceLengthNumber;
+int16_t gsForm2InsuranceLengthNumber;
+int16_t gsForm3InsuranceLengthNumber;
 
 uint8_t gubMercIDForMercInForm1;
 uint8_t gubMercIDForMercInForm2;
@@ -121,8 +121,8 @@ uint8_t gubNumberofDisplayedInsuranceGrids;
 BOOLEAN gfChangeInsuranceFormButtons = FALSE;
 
 uint8_t gubInsuranceMercArray[20];
-INT16 gsCurrentInsuranceMercIndex;
-INT16 gsMaxPlayersOnTeam;
+int16_t gsCurrentInsuranceMercIndex;
+int16_t gsMaxPlayersOnTeam;
 
 // link to the varios pages
 struct MOUSE_REGION gSelectedInsuranceContractLinkRegion[2];
@@ -162,7 +162,7 @@ int8_t CountInsurableMercs();
 void DisableInsuranceContractNextPreviousbuttons();
 void CreateDestroyInsuranceContractFormButtons(BOOLEAN fCreate);
 void HandleAcceptButton(uint8_t ubSoldierID, uint8_t ubFormID);
-FLOAT DiffFromNormRatio(INT16 sThisValue, INT16 sNormalValue);
+FLOAT DiffFromNormRatio(int16_t sThisValue, int16_t sNormalValue);
 void InsContractNoMercsPopupCallBack(uint8_t bExitValue);
 void BuildInsuranceArray();
 BOOLEAN MercIsInsurable(struct SOLDIERTYPE *pSoldier);
@@ -306,8 +306,8 @@ void RenderInsuranceContract() {
   struct VObject *hPixHandle;
   wchar_t sText[800];
   uint8_t ubCount = 0;
-  INT16 sMercID;
-  INT16 sNextMercID;
+  int16_t sMercID;
+  int16_t sNextMercID;
   uint16_t usPosX;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -486,19 +486,19 @@ BOOLEAN DisplayOrderGrid(uint8_t ubGridNumber, uint8_t ubMercID) {
     case 0:
       usPosX = INS_CTRCT_ORDER_GRID1_X;
       gubMercIDForMercInForm1 = ubMercID;
-      gsForm1InsuranceLengthNumber = (INT16)pSoldier->iTotalLengthOfInsuranceContract;
+      gsForm1InsuranceLengthNumber = (int16_t)pSoldier->iTotalLengthOfInsuranceContract;
       break;
 
     case 1:
       usPosX = INS_CTRCT_ORDER_GRID2_X;
       gubMercIDForMercInForm2 = ubMercID;
-      gsForm2InsuranceLengthNumber = (INT16)pSoldier->iTotalLengthOfInsuranceContract;
+      gsForm2InsuranceLengthNumber = (int16_t)pSoldier->iTotalLengthOfInsuranceContract;
       break;
 
     case 2:
       usPosX = INS_CTRCT_ORDER_GRID3_X;
       gubMercIDForMercInForm3 = ubMercID;
-      gsForm3InsuranceLengthNumber = (INT16)pSoldier->iTotalLengthOfInsuranceContract;
+      gsForm3InsuranceLengthNumber = (int16_t)pSoldier->iTotalLengthOfInsuranceContract;
       break;
 
     default:
@@ -895,9 +895,9 @@ void SelectInsuranceContractRegionCallBack(struct MOUSE_REGION *pRegion, INT32 i
 }
 
 int8_t CountInsurableMercs() {
-  INT16 cnt;
+  int16_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
   int8_t bCount = 0;
 
   // Set locator to first merc
@@ -1015,8 +1015,8 @@ void HandleAcceptButton(uint8_t ubSoldierID, uint8_t ubFormID) {
 
 // determines if a merc will run out of their insurance contract
 void DailyUpdateOfInsuredMercs() {
-  INT16 cnt;
-  INT16 bLastTeamID;
+  int16_t cnt;
+  int16_t bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -1028,7 +1028,7 @@ void DailyUpdateOfInsuredMercs() {
       // if the merc has life insurance
       if (pSoldier->usLifeInsurance) {
         // if the merc wasn't just hired
-        if ((INT16)GetWorldDay() != pSoldier->iStartOfInsuranceContract) {
+        if ((int16_t)GetWorldDay() != pSoldier->iStartOfInsuranceContract) {
           // if the contract has run out of time
           if (GetTimeRemainingOnSoldiersInsuranceContract(pSoldier) <= 0) {
             // if the soldier isn't dead
@@ -1049,7 +1049,7 @@ void DailyUpdateOfInsuredMercs() {
 
 INT32 CalculateInsuranceContractCost(INT32 iLength, uint8_t ubMercID) {
   MERCPROFILESTRUCT *pProfile;
-  INT16 sTotalSkill = 0;
+  int16_t sTotalSkill = 0;
   FLOAT flSkillFactor, flFitnessFactor, flExpFactor, flSurvivalFactor;
   FLOAT flRiskFactor;
   uint32_t uiDailyInsurancePremium;
@@ -1094,7 +1094,7 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, uint8_t ubMercID) {
   flExpFactor = DiffFromNormRatio(pProfile->bExpLevel, INS_CTRCT_EXP_LEVEL_BASE);
 
   // calc player's survival rate (death rate subtracted from 100)
-  flSurvivalFactor = DiffFromNormRatio((INT16)(100 - CalcDeathRate()), INS_CTRCT_SURVIVAL_BASE);
+  flSurvivalFactor = DiffFromNormRatio((int16_t)(100 - CalcDeathRate()), INS_CTRCT_SURVIVAL_BASE);
 
   // calculate the overall insurability risk factor for this merc by combining all the subfactors
   flRiskFactor = flSkillFactor * flFitnessFactor * flExpFactor * flSurvivalFactor;
@@ -1117,7 +1117,7 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, uint8_t ubMercID) {
 }
 
 // values passed in must be such that exceeding the normal value REDUCES insurance premiums
-FLOAT DiffFromNormRatio(INT16 sThisValue, INT16 sNormalValue) {
+FLOAT DiffFromNormRatio(int16_t sThisValue, int16_t sNormalValue) {
   FLOAT flRatio;
 
   if (sThisValue > 0) {
@@ -1147,9 +1147,9 @@ void InsContractNoMercsPopupCallBack(uint8_t bExitValue) {
 }
 
 void BuildInsuranceArray() {
-  INT16 cnt;
+  int16_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   bLastTeamID = gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -1389,7 +1389,7 @@ void EnableDisableInsuranceContractAcceptButtons() {
 
 void EnableDisableIndividualInsuranceContractButton(uint8_t ubMercIDForMercInForm,
                                                     uint32_t *puiAcceptButton) {
-  INT16 sSoldierID = 0;
+  int16_t sSoldierID = 0;
 
   sSoldierID = GetSoldierIDFromMercID(ubMercIDForMercInForm);
   if (sSoldierID == -1) return;
@@ -1599,7 +1599,7 @@ INT32 CalcStartDayOfInsurance(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN AreAnyAimMercsOnTeam() {
-  INT16 sNextMercID = 0;
+  int16_t sNextMercID = 0;
   BOOLEAN fIsThereAnyAimMercs = FALSE;
   struct SOLDIERTYPE *pSoldier = NULL;
 

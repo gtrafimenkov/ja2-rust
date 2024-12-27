@@ -736,7 +736,7 @@ void DisableFPSOverlay(BOOLEAN fEnable) {
 void TacticalScreenLocateToSoldier() {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
   BOOLEAN fPreferedGuyUsed = FALSE;
 
   if (gubPreferredInitialSelectedGuy != NOBODY) {
@@ -774,7 +774,7 @@ void EnterMapScreen() {
 void UpdateTeamPanelAssignments() {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
 
   // Remove all players
   RemoveAllPlayersFromSlot();

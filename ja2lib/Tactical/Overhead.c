@@ -145,7 +145,7 @@ void CaptureTimerCallback(void);
 extern void CheckForAlertWhenEnemyDies(struct SOLDIERTYPE *pDyingSoldier);
 extern void PlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
 extern void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier,
-                              struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, int8_t bLevel);
+                              struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel);
 extern uint16_t PickSoldierReadyAnimation(struct SOLDIERTYPE *pSoldier, BOOLEAN fEndReady);
 
 extern void PlayStealthySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
@@ -692,14 +692,14 @@ FLOAT gdRadiansForAngle[] = {
 BOOLEAN ExecuteOverhead() {
   uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sAPCost;
-  INT16 sBPCost;
+  int16_t sAPCost;
+  int16_t sBPCost;
   FLOAT dXPos, dYPos;
   FLOAT dAngle;
   BOOLEAN fKeepMoving;
   int8_t bShadeLevel;
   BOOLEAN fNoAPsForPendingAction;
-  INT16 sGridNo;
+  int16_t sGridNo;
   struct STRUCTURE *pStructure;
   BOOLEAN fHandleAI = FALSE;
 
@@ -712,8 +712,8 @@ BOOLEAN ExecuteOverhead() {
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     if (IsSolActive(pSoldier)) {
       if (pSoldier->uiStatusFlags & SOLDIER_GREEN_RAY)
-        LightShowRays((INT16)(pSoldier->dXPos / CELL_X_SIZE),
-                      (INT16)(pSoldier->dYPos / CELL_Y_SIZE), FALSE);
+        LightShowRays((int16_t)(pSoldier->dXPos / CELL_X_SIZE),
+                      (int16_t)(pSoldier->dYPos / CELL_Y_SIZE), FALSE);
     }
   }
 
@@ -1097,12 +1097,12 @@ BOOLEAN ExecuteOverhead() {
                         if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
                           // If the two gridnos are not the same, check to see if we can
                           // now go into it
-                          if (sGridNo != (INT16)pSoldier->uiPendingActionData4) {
-                            if (NewOKDestination(pSoldier, (INT16)pSoldier->uiPendingActionData4,
+                          if (sGridNo != (int16_t)pSoldier->uiPendingActionData4) {
+                            if (NewOKDestination(pSoldier, (int16_t)pSoldier->uiPendingActionData4,
                                                  TRUE, pSoldier->bLevel)) {
                               // GOTO NEW TILE!
                               SoldierPickupItem(pSoldier, pSoldier->uiPendingActionData1,
-                                                (INT16)pSoldier->uiPendingActionData4,
+                                                (int16_t)pSoldier->uiPendingActionData4,
                                                 pSoldier->bPendingActionData3);
                               continue;
                             }
@@ -1111,16 +1111,16 @@ BOOLEAN ExecuteOverhead() {
 
                         // OK MORON, DOUBLE CHECK THAT THE ITEM EXISTS HERE...
                         if (pSoldier->uiPendingActionData1 != ITEM_PICKUP_ACTION_ALL) {
-                          // if ( ItemExistsAtLocation( (INT16)( pSoldier->uiPendingActionData4 ),
+                          // if ( ItemExistsAtLocation( (int16_t)( pSoldier->uiPendingActionData4 ),
                           // pSoldier->uiPendingActionData1, pSoldier->bLevel ) )
                           {
                             PickPickupAnimation(pSoldier, pSoldier->uiPendingActionData1,
-                                                (INT16)(pSoldier->uiPendingActionData4),
+                                                (int16_t)(pSoldier->uiPendingActionData4),
                                                 pSoldier->bPendingActionData3);
                           }
                         } else {
                           PickPickupAnimation(pSoldier, pSoldier->uiPendingActionData1,
-                                              (INT16)(pSoldier->uiPendingActionData4),
+                                              (int16_t)(pSoldier->uiPendingActionData4),
                                               pSoldier->bPendingActionData3);
                         }
                       } else {
@@ -1261,7 +1261,7 @@ BOOLEAN ExecuteOverhead() {
                       if (FindBestPath(pSoldier, pSoldier->sFinalDestination, pSoldier->bLevel,
                                        pSoldier->usUIMovementMode, NO_COPYROUTE,
                                        PATH_THROUGH_PEOPLE) != 0) {
-                        INT16 sNewGridNo;
+                        int16_t sNewGridNo;
 
                         sNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
                                                DirectionInc((uint8_t)guiPathingData[0]));
@@ -1496,8 +1496,8 @@ void HandleLocateToGuyAsHeWalks(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
                             BOOLEAN fInitialMove, uint16_t usAnimState) {
-  INT16 sAPCost;
-  INT16 sBPCost;
+  int16_t sAPCost;
+  int16_t sBPCost;
   uint16_t usNewGridNo, sOverFenceGridNo, sMineGridNo;
 
   if (gTacticalStatus.uiFlags & INCOMBAT && fInitialMove) {
@@ -1585,7 +1585,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
                  (BOOLEAN)(pSoldier->bTeam == gbPlayerNum), NULL, TRUE) == TRAVELCOST_DOOR) {
     struct STRUCTURE *pStructure;
     int8_t bDirection;
-    INT16 sDoorGridNo;
+    int16_t sDoorGridNo;
 
     // OK, if we are here, we have been told to get a pth through a door.
 
@@ -1788,11 +1788,12 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
           EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
           fDontContinue = TRUE;
 
-          DishOutGasDamage(pSoldier, pExplosive, TRUE, FALSE,
-                           (INT16)(pExplosive->ubDamage + (uint8_t)PreRandom(pExplosive->ubDamage)),
-                           (INT16)(100 * (pExplosive->ubStunDamage +
-                                          (INT16)PreRandom((pExplosive->ubStunDamage / 2)))),
-                           NOBODY);
+          DishOutGasDamage(
+              pSoldier, pExplosive, TRUE, FALSE,
+              (int16_t)(pExplosive->ubDamage + (uint8_t)PreRandom(pExplosive->ubDamage)),
+              (int16_t)(100 * (pExplosive->ubStunDamage +
+                               (int16_t)PreRandom((pExplosive->ubStunDamage / 2)))),
+              NOBODY);
         }
       }
 
@@ -1821,7 +1822,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
         if ((pSoldier->bBlindedCounter > 0) && (pSoldier->usAnimState == RUNNING) &&
             (Random(5) == 0) &&
             OKFallDirection(pSoldier,
-                            (INT16)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
+                            (int16_t)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
                             pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
           // 20% chance of falling over!
           DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
@@ -1832,9 +1833,9 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
           }
           return (FALSE);
         } else if ((GetDrunkLevel(pSoldier) == DRUNK) && (Random(5) == 0) &&
-                   OKFallDirection(pSoldier,
-                                   (INT16)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
-                                   pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
+                   OKFallDirection(
+                       pSoldier, (int16_t)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
+                       pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
           // 20% chance of falling over!
           DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
           ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[37], pSoldier->name);
@@ -1931,7 +1932,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 }
 
 void HandleMaryArrival(struct SOLDIERTYPE *pSoldier) {
-  INT16 sDist;
+  int16_t sDist;
 
   if (!pSoldier) {
     pSoldier = FindSoldierByProfileID(MARY, TRUE);
@@ -1961,7 +1962,7 @@ void HandleMaryArrival(struct SOLDIERTYPE *pSoldier) {
 
 void HandleJohnArrival(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2 = NULL;
-  INT16 sDist;
+  int16_t sDist;
 
   if (!pSoldier) {
     pSoldier = FindSoldierByProfileID(JOHN, TRUE);
@@ -2001,7 +2002,7 @@ void HandleJohnArrival(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
-  INT16 sMineGridNo;
+  int16_t sMineGridNo;
   uint8_t ubVolume;
 
   // ATE; Handle bad guys, as they fade, to cancel it if
@@ -2245,7 +2246,7 @@ BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
       case RAY:
       case OLGA:
       case TYRONE: {
-        INT16 sDesiredMercDist;
+        int16_t sDesiredMercDist;
 
         if (ClosestPC(pSoldier, &sDesiredMercDist) != NOWHERE) {
           if (sDesiredMercDist <= NPC_TALK_RADIUS * 2) {
@@ -2283,7 +2284,7 @@ void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (fSoldierFound) {
-    SelectSoldier((INT16)cnt, FALSE, FALSE);
+    SelectSoldier((int16_t)cnt, FALSE, FALSE);
   } else {
     gusSelectedSoldier = NO_SOLDIER;
     // Change UI mode to reflact that we are selected
@@ -2349,18 +2350,18 @@ void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN f
 
     // DB This used to say pSoldier... I fixed it
     if (pOldSoldier->bLevel == 0) {
-      // ConcealWalls((INT16)(pSoldier->dXPos/CELL_X_SIZE), (INT16)(pSoldier->dYPos/CELL_Y_SIZE),
-      // REVEAL_WALLS_RADIUS);
-      //	ApplyTranslucencyToWalls((INT16)(pOldSoldier->dXPos/CELL_X_SIZE),
-      //(INT16)(pOldSoldier->dYPos/CELL_Y_SIZE));
-      // LightHideTrees((INT16)(pOldSoldier->dXPos/CELL_X_SIZE),
-      // (INT16)(pOldSoldier->dYPos/CELL_Y_SIZE));
+      // ConcealWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+      // (int16_t)(pSoldier->dYPos/CELL_Y_SIZE), REVEAL_WALLS_RADIUS);
+      //	ApplyTranslucencyToWalls((int16_t)(pOldSoldier->dXPos/CELL_X_SIZE),
+      //(int16_t)(pOldSoldier->dYPos/CELL_Y_SIZE));
+      // LightHideTrees((int16_t)(pOldSoldier->dXPos/CELL_X_SIZE),
+      // (int16_t)(pOldSoldier->dYPos/CELL_Y_SIZE));
     }
     // DeleteSoldierLight( pOldSoldier );
 
     if (pOldSoldier->uiStatusFlags & SOLDIER_GREEN_RAY) {
-      LightHideRays((INT16)(pOldSoldier->dXPos / CELL_X_SIZE),
-                    (INT16)(pOldSoldier->dYPos / CELL_Y_SIZE));
+      LightHideRays((int16_t)(pOldSoldier->dXPos / CELL_X_SIZE),
+                    (int16_t)(pOldSoldier->dYPos / CELL_Y_SIZE));
       pOldSoldier->uiStatusFlags &= (~SOLDIER_GREEN_RAY);
     }
 
@@ -2373,12 +2374,12 @@ void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN f
   SetCurrentSquad(pSoldier->bAssignment, FALSE);
 
   if (pSoldier->bLevel == 0) {
-    // RevealWalls((INT16)(pSoldier->dXPos/CELL_X_SIZE), (INT16)(pSoldier->dYPos/CELL_Y_SIZE),
+    // RevealWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE), (int16_t)(pSoldier->dYPos/CELL_Y_SIZE),
     // REVEAL_WALLS_RADIUS);
-    //	CalcTranslucentWalls((INT16)(pSoldier->dXPos/CELL_X_SIZE),
-    //(INT16)(pSoldier->dYPos/CELL_Y_SIZE));
-    // LightTranslucentTrees((INT16)(pSoldier->dXPos/CELL_X_SIZE),
-    // (INT16)(pSoldier->dYPos/CELL_Y_SIZE));
+    //	CalcTranslucentWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+    //(int16_t)(pSoldier->dYPos/CELL_Y_SIZE));
+    // LightTranslucentTrees((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+    // (int16_t)(pSoldier->dYPos/CELL_Y_SIZE));
   }
 
   // SetCheckSoldierLightFlag( pSoldier );
@@ -2448,7 +2449,7 @@ BOOLEAN ResetAllAnimationCache() {
 
 void LocateSoldier(uint16_t usID, BOOLEAN fSetLocator) {
   struct SOLDIERTYPE *pSoldier;
-  INT16 sNewCenterWorldX, sNewCenterWorldY;
+  int16_t sNewCenterWorldX, sNewCenterWorldY;
 
   // if (!bCenter && SoldierOnScreen(usID))
   // return;
@@ -2460,8 +2461,8 @@ void LocateSoldier(uint16_t usID, BOOLEAN fSetLocator) {
     pSoldier = MercPtrs[usID];
 
     // Center on guy
-    sNewCenterWorldX = (INT16)pSoldier->dXPos;
-    sNewCenterWorldY = (INT16)pSoldier->dYPos;
+    sNewCenterWorldX = (int16_t)pSoldier->dXPos;
+    sNewCenterWorldY = (int16_t)pSoldier->dYPos;
 
     SetRenderCenter(sNewCenterWorldX, sNewCenterWorldY);
 
@@ -2480,7 +2481,7 @@ void LocateSoldier(uint16_t usID, BOOLEAN fSetLocator) {
 }
 
 void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce) {
-  INT16 sNewCenterWorldX, sNewCenterWorldY;
+  int16_t sNewCenterWorldX, sNewCenterWorldY;
 
   ConvertGridNoToCenterCellXY(sGridNo, &sNewCenterWorldX, &sNewCenterWorldY);
 
@@ -2494,7 +2495,7 @@ void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce) {
 
 void LocateGridNo(uint16_t sGridNo) { InternalLocateGridNo(sGridNo, FALSE); }
 
-void SlideTo(INT16 sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN fSetLocator) {
+void SlideTo(int16_t sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN fSetLocator) {
   INT32 cnt;
 
   if (usSoldierID == NOBODY) {
@@ -2526,7 +2527,7 @@ void SlideTo(INT16 sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN f
   gfPlotNewMovement = TRUE;
 }
 
-void SlideToLocation(uint16_t usReasonID, INT16 sDestGridNo) {
+void SlideToLocation(uint16_t usReasonID, int16_t sDestGridNo) {
   if (sDestGridNo == NOWHERE) {
     return;
   }
@@ -2641,7 +2642,7 @@ void HandlePlayerTeamMemberDeath(struct SOLDIERTYPE *pSoldier) {
 
   if (gusSelectedSoldier == GetSolID(pSoldier)) {
     if (!fMissionFailed) {
-      SelectSoldier((INT16)iNewSelectedSoldier, FALSE, FALSE);
+      SelectSoldier((int16_t)iNewSelectedSoldier, FALSE, FALSE);
     } else {
       gusSelectedSoldier = NO_SOLDIER;
       // Change UI mode to reflact that we are selected
@@ -3523,16 +3524,16 @@ uint32_t EnterTacticalDemoMode() {
 
 CHAR8 *GetSceneFilename() { return (gzLevelFilenames[gubCurrentScene]); }
 
-extern BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, int8_t bLevel,
+extern BOOLEAN InternalOkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
                                                  struct DB_STRUCTURE_REF *pDBStructureRef,
-                                                 INT16 sExclusionID, BOOLEAN fIgnorePeople);
+                                                 int16_t sExclusionID, BOOLEAN fIgnorePeople);
 
 // NB if making changes don't forget to update NewOKDestinationAndDirection
-INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo,
-                       int8_t bLevel) {
+int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOLEAN fPeopleToo,
+                         int8_t bLevel) {
   uint8_t bPerson;
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
+  int16_t sDesiredLevel;
   BOOLEAN fOKCheckStruct;
 
   if (!GridNoOnVisibleWorldTile(sGridNo)) {
@@ -3638,11 +3639,11 @@ INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN 
 }
 
 // NB if making changes don't forget to update NewOKDestination
-INT16 NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo,
-                                   int8_t bDirection, BOOLEAN fPeopleToo, int8_t bLevel) {
+int16_t NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo,
+                                     int8_t bDirection, BOOLEAN fPeopleToo, int8_t bLevel) {
   uint8_t bPerson;
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
+  int16_t sDesiredLevel;
   BOOLEAN fOKCheckStruct;
 
   if (fPeopleToo && (bPerson = WhoIsThere2(sGridNo, bLevel)) != NO_SOLDIER) {
@@ -3767,8 +3768,8 @@ BOOLEAN FlatRoofAboveGridNo(INT32 iMapIndex) {
 // this to be quick and dirty, and I don't expect it to perform perfectly in all situations.
 BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof) {
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
-  if (WhoIsThere2((INT16)iMapIndex, 0) != NO_SOLDIER) return FALSE;
+  int16_t sDesiredLevel;
+  if (WhoIsThere2((int16_t)iMapIndex, 0) != NO_SOLDIER) return FALSE;
   // Locations on roofs without a roof is not possible, so
   // we convert the onroof intention to ground.
   if (fOnRoof && !FlatRoofAboveGridNo(iMapIndex)) fOnRoof = FALSE;
@@ -3776,7 +3777,7 @@ BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof) {
   if (gpWorldLevelData[iMapIndex].pStructureHead) {
     // Something is here, check obstruction in future
     sDesiredLevel = fOnRoof ? STRUCTURE_ON_ROOF : STRUCTURE_ON_GROUND;
-    pStructure = FindStructure((INT16)iMapIndex, STRUCTURE_BLOCKSMOVES);
+    pStructure = FindStructure((int16_t)iMapIndex, STRUCTURE_BLOCKSMOVES);
     while (pStructure) {
       if (!(pStructure->fFlags & STRUCTURE_PASSABLE) && pStructure->sCubeOffset == sDesiredLevel)
         return FALSE;
@@ -3788,7 +3789,7 @@ BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof) {
 
 BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof) {
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
+  int16_t sDesiredLevel;
 
   // Locations on roofs without a roof is not possible, so
   // we convert the onroof intention to ground.
@@ -3797,7 +3798,7 @@ BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof) {
   if (gpWorldLevelData[iMapIndex].pStructureHead) {
     // Something is here, check obstruction in future
     sDesiredLevel = fOnRoof ? STRUCTURE_ON_ROOF : STRUCTURE_ON_GROUND;
-    pStructure = FindStructure((INT16)iMapIndex, STRUCTURE_BLOCKSMOVES);
+    pStructure = FindStructure((int16_t)iMapIndex, STRUCTURE_BLOCKSMOVES);
     while (pStructure) {
       if (!(pStructure->fFlags & STRUCTURE_PASSABLE) && pStructure->sCubeOffset == sDesiredLevel)
         return FALSE;
@@ -3807,7 +3808,7 @@ BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof) {
   return TRUE;
 }
 
-BOOLEAN TeamMemberNear(int8_t bTeam, INT16 sGridNo, INT32 iRange) {
+BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, INT32 iRange) {
   uint8_t bLoop;
   struct SOLDIERTYPE *pSoldier;
 
@@ -3824,8 +3825,8 @@ BOOLEAN TeamMemberNear(int8_t bTeam, INT16 sGridNo, INT32 iRange) {
   return (FALSE);
 }
 
-INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *pubDirection,
-                         INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
+int16_t FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
+                           int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
   // psAdjustedGridNo gets the original gridno or the new one if updated
   // It will ONLY be updated IF we were over a merc, ( it's updated to their gridno )
   // pubDirection gets the direction to the final gridno
@@ -3833,11 +3834,11 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *p
   // in that location, because we could be passed a gridno based on the overlap of soldier's graphic
   // fDoor determines whether special door-handling code should be used (for interacting with doors)
 
-  INT16 sDistance = 0;
-  INT16 sDirs[4] = {NORTH, EAST, SOUTH, WEST};
+  int16_t sDistance = 0;
+  int16_t sDirs[4] = {NORTH, EAST, SOUTH, WEST};
   INT32 cnt;
-  INT16 sClosest = NOWHERE, sSpot, sOkTest;
-  INT16 sCloseGridNo = NOWHERE;
+  int16_t sClosest = NOWHERE, sSpot, sOkTest;
+  int16_t sCloseGridNo = NOWHERE;
   uint32_t uiMercFlags;
   uint16_t usSoldierIndex;
   uint8_t ubDir;
@@ -3938,13 +3939,13 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *p
 
     if (fCheckGivenGridNo) {
       sDistance = PlotPath(pSoldier, sGridNo, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                           (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                           (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                            pSoldier->bActionPoints);
 
       if (sDistance > 0) {
         if (sDistance < sClosest) {
           sClosest = sDistance;
-          sCloseGridNo = (INT16)sGridNo;
+          sCloseGridNo = (int16_t)sGridNo;
         }
       }
     }
@@ -4013,11 +4014,11 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *p
 
     if ((NewOKDestinationAndDirection(pSoldier, sSpot, ubDir, TRUE, pSoldier->bLevel) > 0) &&
         ((sDistance = PlotPath(pSoldier, sSpot, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                               (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                               (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                                pSoldier->bActionPoints)) > 0)) {
       if (sDistance < sClosest) {
         sClosest = sDistance;
-        sCloseGridNo = (INT16)sSpot;
+        sCloseGridNo = (int16_t)sSpot;
       }
     }
   }
@@ -4065,8 +4066,9 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *p
     return (-1);
 }
 
-INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint8_t *pubDirection,
-                               INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
+int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t *pubDirection, int16_t *psAdjustedGridNo,
+                                 BOOLEAN fForceToPerson, BOOLEAN fDoor) {
   // This function works in a similar way as FindAdjacentGridEx, but looks for a location 2 tiles
   // away
 
@@ -4076,11 +4078,11 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint
   // in that location, because we could be passed a gridno based on the overlap of soldier's graphic
   // fDoor determines whether special door-handling code should be used (for interacting with doors)
 
-  INT16 sDistance = 0;
-  INT16 sDirs[4] = {NORTH, EAST, SOUTH, WEST};
+  int16_t sDistance = 0;
+  int16_t sDirs[4] = {NORTH, EAST, SOUTH, WEST};
   INT32 cnt;
-  INT16 sClosest = WORLD_MAX, sSpot, sSpot2, sOkTest;
-  INT16 sCloseGridNo = NOWHERE;
+  int16_t sClosest = WORLD_MAX, sSpot, sSpot2, sOkTest;
+  int16_t sCloseGridNo = NOWHERE;
   uint32_t uiMercFlags;
   uint16_t usSoldierIndex;
   uint8_t ubDir;
@@ -4130,13 +4132,13 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint
 
     if (fCheckGivenGridNo) {
       sDistance = PlotPath(pSoldier, sGridNo, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                           (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                           (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                            pSoldier->bActionPoints);
 
       if (sDistance > 0) {
         if (sDistance < sClosest) {
           sClosest = sDistance;
-          sCloseGridNo = (INT16)sGridNo;
+          sCloseGridNo = (int16_t)sGridNo;
         }
       }
     }
@@ -4213,11 +4215,11 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint
     // don't store path, just measure it
     if ((NewOKDestinationAndDirection(pSoldier, sSpot, ubDir, TRUE, pSoldier->bLevel) > 0) &&
         ((sDistance = PlotPath(pSoldier, sSpot, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                               (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                               (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                                pSoldier->bActionPoints)) > 0)) {
       if (sDistance < sClosest) {
         sClosest = sDistance;
-        sCloseGridNo = (INT16)sSpot;
+        sCloseGridNo = (int16_t)sSpot;
       }
     }
   }
@@ -4298,14 +4300,14 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, uint
   */
 }
 
-INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                              INT16 *psAdjustedTargetGridNo, uint8_t *pubDirection) {
-  INT16 cnt;
-  INT16 sSpot;
+int16_t FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
+                                int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection) {
+  int16_t cnt;
+  int16_t sSpot;
   uint8_t ubGuyThere;
 
   for (cnt = 0; cnt < NUM_WORLD_DIRECTIONS; cnt++) {
-    sSpot = (INT16)NewGridNo(pSoldier->sGridNo, DirectionInc(cnt));
+    sSpot = (int16_t)NewGridNo(pSoldier->sGridNo, DirectionInc(cnt));
 
     if (DoorTravelCost(pSoldier, sSpot, gubWorldMovementCosts[sSpot][cnt][pSoldier->bLevel], FALSE,
                        NULL) >= TRAVELCOST_BLOCKED) {
@@ -5069,7 +5071,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       // this is our first battle... and we lost it!
       SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
       SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-      SetTheFirstBattleSector((INT16)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
+      SetTheFirstBattleSector((int16_t)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
       HandleFirstBattleEndingWhileInTown(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
     }
 
@@ -5248,7 +5250,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       LogBattleResults(LOG_VICTORY);
 
       SetThisSectorAsPlayerControlled(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE);
-      HandleVictoryInNPCSector(gWorldSectorX, gWorldSectorY, (INT16)gbWorldSectorZ);
+      HandleVictoryInNPCSector(gWorldSectorX, gWorldSectorY, (int16_t)gbWorldSectorZ);
       if (CheckFact(FACT_FIRST_BATTLE_BEING_FOUGHT, 0)) {
         // ATE: Need to trigger record for this event .... for NPC scripting
         TriggerNPCRecord(PACOS, 18);
@@ -5257,7 +5259,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
         SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
         SetFactTrue(FACT_FIRST_BATTLE_WON);
         SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-        SetTheFirstBattleSector((INT16)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
+        SetTheFirstBattleSector((int16_t)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
         HandleFirstBattleEndingWhileInTown(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
       }
     }
@@ -5776,7 +5778,7 @@ int8_t CalcSuppressionTolerance(struct SOLDIERTYPE *pSoldier) {
 #define MAX_APS_SUPPRESSED 8
 void HandleSuppressionFire(uint8_t ubTargetedMerc, uint8_t ubCausedAttacker) {
   int8_t bTolerance;
-  INT16 sClosestOpponent, sClosestOppLoc;
+  int16_t sClosestOpponent, sClosestOppLoc;
   uint8_t ubPointsLost, ubTotalPointsLost, ubNewStance;
   uint32_t uiLoop;
   uint8_t ubLoop2;
@@ -5944,7 +5946,7 @@ void HandleSuppressionFire(uint8_t ubTargetedMerc, uint8_t ubCausedAttacker) {
 
 BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
                                       int8_t bReason) {
-  INT16 sTargetXPos, sTargetYPos;
+  int16_t sTargetXPos, sTargetYPos;
   BOOLEAN fEnterCombat = TRUE;
   struct SOLDIERTYPE *pTarget = *ppTarget;
 
@@ -6775,7 +6777,7 @@ void HandleCreatureTenseQuote() {
           }
 
           // Adjust delay....
-          gTacticalStatus.sCreatureTenseQuoteDelay = (INT16)(60 + Random(60));
+          gTacticalStatus.sCreatureTenseQuoteDelay = (int16_t)(60 + Random(60));
         }
       }
     }
@@ -6826,6 +6828,6 @@ void DoCreatureTensionQuote(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (fCanDoQuote) {
-    TacticalCharacterDialogue(pSoldier, (INT16)iQuoteToUse);
+    TacticalCharacterDialogue(pSoldier, (int16_t)iQuoteToUse);
   }
 }

@@ -93,7 +93,7 @@ typedef struct {
   uint32_t uiFlags;
   struct RelTileLoc *pTileLocData;
   uint16_t usRegionIndex;
-  INT16 sBuddyNum;
+  int16_t sBuddyNum;
   uint8_t ubTerrainID;
   uint8_t ubNumberOfTiles;
 
@@ -104,7 +104,7 @@ typedef struct {
   union {
     // Land and overlay type
     struct {
-      INT16 sOffsetHeight;
+      int16_t sOffsetHeight;
       uint16_t usWallOrientation;
       uint8_t ubFullTile;
 

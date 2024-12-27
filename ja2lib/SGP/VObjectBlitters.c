@@ -7445,7 +7445,7 @@ CHAR8 BltIsClippedOrOffScreen(struct VObject *hSrcVObject, INT32 iX, INT32 iY, u
 // is FALSE
 BOOLEAN Blt8BPPDataTo16BPPBufferOutline(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                         struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                        uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline) {
+                                        uint16_t usIndex, int16_t s16BPPColor, BOOLEAN fDoOutline) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *DestPtr;
@@ -7557,8 +7557,8 @@ BlitDone:
 // is FALSE
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                            uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline,
-                                            SGPRect *clipregion) {
+                                            uint16_t usIndex, int16_t s16BPPColor,
+                                            BOOLEAN fDoOutline, SGPRect *clipregion) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr;
@@ -7802,7 +7802,7 @@ BlitDone:
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                              uint16_t *pZBuffer, uint16_t usZValue,
                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                             uint16_t usIndex, INT16 s16BPPColor,
+                                             uint16_t usIndex, int16_t s16BPPColor,
                                              BOOLEAN fDoOutline, SGPRect *clipregion) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
@@ -8064,7 +8064,7 @@ BlitDone:
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
     uint16_t *pBuffer, uint32_t uiDestPitchBYTES, uint16_t *pZBuffer, uint16_t usZValue,
-    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, INT16 s16BPPColor,
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, uint16_t usIndex, int16_t s16BPPColor,
     BOOLEAN fDoOutline, SGPRect *clipregion) {
   uint32_t uiOffset;
   uint32_t usHeight, usWidth, Unblitted;
@@ -8732,7 +8732,8 @@ BlitDone:
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                          uint16_t *pZBuffer, uint16_t usZValue,
                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                         uint16_t usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline) {
+                                         uint16_t usIndex, int16_t s16BPPColor,
+                                         BOOLEAN fDoOutline) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -8864,7 +8865,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(uint16_t *pBuffer,
                                                          uint16_t *pZBuffer, uint16_t usZValue,
                                                          struct VObject *hSrcVObject, INT32 iX,
                                                          INT32 iY, uint16_t usIndex,
-                                                         INT16 s16BPPColor, BOOLEAN fDoOutline) {
+                                                         int16_t s16BPPColor, BOOLEAN fDoOutline) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;
   uint32_t usHeight, usWidth;
@@ -9019,7 +9020,7 @@ BlitDone:
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                            uint16_t *pZBuffer, uint16_t usZValue,
                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                           uint16_t usIndex, INT16 s16BPPColor,
+                                           uint16_t usIndex, int16_t s16BPPColor,
                                            BOOLEAN fDoOutline) {
   uint16_t *p16BPPPalette;
   uint32_t uiOffset;

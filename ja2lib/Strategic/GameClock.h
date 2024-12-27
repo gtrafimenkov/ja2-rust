@@ -158,7 +158,7 @@ void InitNewGameClock();
 
 void GotoNextTimeOfDay(uint32_t uiTOD);
 
-void RenderClock(INT16 sX, INT16 sY);
+void RenderClock(int16_t sX, int16_t sY);
 
 void ToggleSuperCompression();
 
@@ -182,7 +182,7 @@ void ResetTimeCompressHasOccured(void);
 void SetFactTimeCompressHasOccured(void);
 
 // create mouse region to pause game
-void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY);
+void CreateMouseRegionForPauseOfClock(int16_t sX, int16_t sY);
 
 // remove mouse region for pause game
 void RemoveMouseRegionForPauseOfClock(void);

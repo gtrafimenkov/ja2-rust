@@ -55,7 +55,7 @@ void BuildMercQuitList(struct SOLDIERTYPE *pMercList);
 
 void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pKiller = NULL;
-  INT16 sSectorX, sSectorY;
+  int16_t sSectorX, sSectorY;
 
   // if the soldier HAS a profile
   if (GetSolProfile(pSoldier) != NO_PROFILE) {
@@ -239,7 +239,7 @@ void MercDailyUpdate() {
 
       // if the character is an RPC
       if (GetSolProfile(pSoldier) >= FIRST_RPC && GetSolProfile(pSoldier) < FIRST_NPC) {
-        INT16 sSalary = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
+        int16_t sSalary = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
         INT32 iMoneyOwedToMerc = 0;
 
         // increment the number of days the mercs has been on the team

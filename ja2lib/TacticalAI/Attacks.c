@@ -23,7 +23,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
 
-extern INT16 DirIncrementer[8];
+extern int16_t DirIncrementer[8];
 
 //
 // CJC DG->JA2 conversion notes
@@ -317,10 +317,10 @@ void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
 }
 
 // JA2Gold: added
-BOOLEAN CloseEnoughForGrenadeToss(INT16 sGridNo, INT16 sGridNo2) {
-  INT16 sTempGridNo;
+BOOLEAN CloseEnoughForGrenadeToss(int16_t sGridNo, int16_t sGridNo2) {
+  int16_t sTempGridNo;
   int8_t bDirection;
-  INT16 sXPos, sYPos, sXPos2, sYPos2;
+  int16_t sXPos, sYPos, sXPos2, sYPos2;
   uint8_t ubMovementCost;
 
   if (sGridNo == sGridNo2) {
@@ -374,7 +374,7 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   uint8_t ubLoop, ubLoop2;
   INT32 iAttackValue;
   INT32 iHitRate, iThreatValue, iTotalThreatValue, iOppThreatValue[MAXMERCS];
-  INT16 sGridNo, sEndGridNo, sFriendTile[MAXMERCS], sOpponentTile[MAXMERCS];
+  int16_t sGridNo, sEndGridNo, sFriendTile[MAXMERCS], sOpponentTile[MAXMERCS];
   int8_t bFriendLevel[MAXMERCS], bOpponentLevel[MAXMERCS];
   INT32 iEstDamage;
   uint8_t ubFriendCnt = 0, ubOpponentCnt = 0, ubOpponentID[MAXMERCS];
@@ -391,8 +391,8 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   int8_t bMaxLeft, bMaxRight, bMaxUp, bMaxDown, bXOffset, bYOffset;
   int8_t bPersOL, bPublOL;
   struct SOLDIERTYPE *pOpponent, *pFriend;
-  static INT16 sExcludeTile[100];  // This array is for storing tiles that we have
-  uint8_t ubNumExcludedTiles = 0;  // already considered, to prevent duplication of effort
+  static int16_t sExcludeTile[100];  // This array is for storing tiles that we have
+  uint8_t ubNumExcludedTiles = 0;    // already considered, to prevent duplication of effort
   INT32 iTossRange;
   uint8_t ubSafetyMargin = 0;
   uint8_t ubDiff;
@@ -1275,7 +1275,7 @@ void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
   }
 }
 
-uint8_t NumMercsCloseTo(INT16 sGridNo, uint8_t ubMaxDist) {
+uint8_t NumMercsCloseTo(int16_t sGridNo, uint8_t ubMaxDist) {
   int8_t bNumber = 0;
   uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
@@ -1423,7 +1423,7 @@ INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOppo
 }
 
 INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
-                          struct SOLDIERTYPE *pOpponent, INT16 sGridno) {
+                          struct SOLDIERTYPE *pOpponent, int16_t sGridno) {
   uint8_t ubExplosiveIndex;
   INT32 iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
   int8_t bSlot;
@@ -1684,12 +1684,12 @@ void CheckIfTossPossible(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   }
 }
 
-int8_t CountAdjacentSpreadTargets(struct SOLDIERTYPE *pSoldier, INT16 sFirstTarget,
+int8_t CountAdjacentSpreadTargets(struct SOLDIERTYPE *pSoldier, int16_t sFirstTarget,
                                   int8_t bTargetLevel) {
   // return the number of people next to this guy for burst-spread purposes
 
   int8_t bDirLoop, bDir, bCheckDir, bTargetIndex, bTargets;
-  INT16 sTarget;
+  int16_t sTarget;
   struct SOLDIERTYPE *pTarget, *pTargets[5] = {NULL};
 
   bTargetIndex = -1;
@@ -1800,9 +1800,9 @@ int8_t CountAdjacentSpreadTargets(struct SOLDIERTYPE *pSoldier, INT16 sFirstTarg
   return (bTargets - 1);
 }
 
-INT16 CalcSpreadBurst(struct SOLDIERTYPE *pSoldier, INT16 sFirstTarget, int8_t bTargetLevel) {
+int16_t CalcSpreadBurst(struct SOLDIERTYPE *pSoldier, int16_t sFirstTarget, int8_t bTargetLevel) {
   int8_t bDirLoop, bDir, bCheckDir, bTargetIndex = 0, bLoop, bTargets;
-  INT16 sTarget;
+  int16_t sTarget;
   struct SOLDIERTYPE *pTarget, *pTargets[5] = {NULL};
   int8_t bAdjacents, bOtherAdjacents;
 
@@ -1950,7 +1950,7 @@ INT16 CalcSpreadBurst(struct SOLDIERTYPE *pSoldier, INT16 sFirstTarget, int8_t b
   return (sFirstTarget);
 }
 
-INT16 AdvanceToFiringRange(struct SOLDIERTYPE *pSoldier, INT16 sClosestOpponent) {
+int16_t AdvanceToFiringRange(struct SOLDIERTYPE *pSoldier, int16_t sClosestOpponent) {
   // see how far we can go down a path and still shoot
 
   int8_t bAttackCost, bTrueActionPoints;

@@ -48,7 +48,7 @@
 #define NUM_CIVQUOTE_SECTORS 20
 #define MINERS_CIV_QUOTE_INDEX 16
 
-INT16 gsCivQuoteSector[NUM_CIVQUOTE_SECTORS][2] = {
+int16_t gsCivQuoteSector[NUM_CIVQUOTE_SECTORS][2] = {
     {2, MAP_ROW_A},  {2, MAP_ROW_B},  {13, MAP_ROW_B}, {13, MAP_ROW_C}, {13, MAP_ROW_D},
     {8, MAP_ROW_F},  {9, MAP_ROW_F},  {8, MAP_ROW_G},  {9, MAP_ROW_G},  {1, MAP_ROW_H},
 
@@ -1212,8 +1212,8 @@ uint8_t NPCConsiderQuote(uint8_t ubNPC, uint8_t ubMerc, uint8_t ubApproach, uint
   return (TRUE);
 }
 
-void ReplaceLocationInNPCData(NPCQuoteInfo *pNPCQuoteInfoArray, INT16 sOldGridNo,
-                              INT16 sNewGridNo) {
+void ReplaceLocationInNPCData(NPCQuoteInfo *pNPCQuoteInfoArray, int16_t sOldGridNo,
+                              int16_t sNewGridNo) {
   uint8_t ubFirstQuoteRecord, ubLastQuoteRecord, ubLoop;
   NPCQuoteInfo *pNPCQuoteInfo;
 
@@ -1230,7 +1230,7 @@ void ReplaceLocationInNPCData(NPCQuoteInfo *pNPCQuoteInfoArray, INT16 sOldGridNo
   }
 }
 
-void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, INT16 sOldGridNo, INT16 sNewGridNo) {
+void ReplaceLocationInNPCDataFromProfileID(uint8_t ubNPC, int16_t sOldGridNo, int16_t sNewGridNo) {
   NPCQuoteInfo *pNPCQuoteInfoArray;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
@@ -1815,8 +1815,8 @@ void Converse(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uintptr_t uiAppro
   }
 }
 
-INT16 NPCConsiderInitiatingConv(struct SOLDIERTYPE *pNPC, uint8_t *pubDesiredMerc) {
-  INT16 sMyGridNo, sDist, sDesiredMercDist = 100;
+int16_t NPCConsiderInitiatingConv(struct SOLDIERTYPE *pNPC, uint8_t *pubDesiredMerc) {
+  int16_t sMyGridNo, sDist, sDesiredMercDist = 100;
   uint8_t ubNPC, ubMerc, ubDesiredMerc = NOBODY;
   uint8_t ubTalkDesire, ubHighestTalkDesire = 0;
   struct SOLDIERTYPE *pMerc;
@@ -2728,9 +2728,9 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   // handle special cases of victory in certain sector
-  INT16 sSector = 0;
+  int16_t sSector = 0;
 
   // not the surface?..leave
   if (sSectorZ != 0) {
@@ -2794,7 +2794,7 @@ void ToggleNPCRecordDisplay(void) {
 void UpdateDarrelScriptToGoTo(struct SOLDIERTYPE *pSoldier) {
   // change destination in Darrel record 10 to go to a gridno adjacent to the
   // soldier's gridno, and destination in record 11
-  INT16 sAdjustedGridNo;
+  int16_t sAdjustedGridNo;
   uint8_t ubDummyDirection;
   struct SOLDIERTYPE *pDarrel;
 
@@ -2836,7 +2836,7 @@ BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord) {
   }
 }
 
-int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, int16_t sSectorZ) {
   uint8_t ubLoop;
 
   if (sSectorZ > 0) {
@@ -2851,7 +2851,7 @@ int8_t FindCivQuoteFileIndex(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   return (-1);
 }
 
-int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed) {
+int8_t ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, BOOLEAN fSetAsUsed) {
   int8_t bLoop, bCivQuoteSectorIndex;
   NPCQuoteInfo *pCivQuoteInfoArray;
 

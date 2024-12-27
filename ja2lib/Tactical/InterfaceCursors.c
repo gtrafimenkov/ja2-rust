@@ -29,7 +29,7 @@
 
 #define LOOSE_CURSOR_DELAY 300
 static BOOLEAN gfLooseCursorOn = FALSE;
-static INT16 gsLooseCursorGridNo = NOWHERE;
+static int16_t gsLooseCursorGridNo = NOWHERE;
 static uint32_t guiLooseCursorID = 0;
 static uint32_t guiLooseCursorTimeOfLastUpdate = 0;
 
@@ -671,7 +671,7 @@ BOOLEAN SetUICursor(uint32_t uiNewCursor) {
 }
 
 BOOLEAN DrawUICursor() {
-  INT16 usMapPos;
+  int16_t usMapPos;
   static BOOLEAN fHideCursor = FALSE;
   struct LEVELNODE *pNode;
   uint16_t usTileCursor;
@@ -1038,7 +1038,7 @@ void EraseSnappingCursor() {
   RemoveAllOnRoofsOfTypeRange(gusCurMousePos, MOCKFLOOR, MOCKFLOOR);
 }
 
-void StartLooseCursor(INT16 sGridNo, uint32_t uiCursorID) {
+void StartLooseCursor(int16_t sGridNo, uint32_t uiCursorID) {
   gfLooseCursorOn = TRUE;
 
   guiLooseCursorID = uiCursorID;
