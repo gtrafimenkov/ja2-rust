@@ -16,12 +16,12 @@
 #include "Tactical/SoldierControl.h"
 #include "Utils/FontControl.h"
 
-void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
+void FilenameForBPP(char *pFilename, char *pDestination) { strcpy(pDestination, pFilename); }
 
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   HWFILE hFileHandle;
-  BYTE bColHeader[8];
-  UINT32 cnt;
+  uint8_t bColHeader[8];
+  uint32_t cnt;
 
   // See if files exists, if not, return error
   if (!FileMan_Exists(ColFile)) {
@@ -42,9 +42,9 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
 
   // Read in a palette entry at a time
   for (cnt = 0; cnt < 256; cnt++) {
-    FileMan_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
-    FileMan_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
-    FileMan_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(uint8_t), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(uint8_t), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(uint8_t), NULL);
   }
 
   // Close file
@@ -53,12 +53,13 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
   return (TRUE);
 }
 
-BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT32 uiDestSurface) {
-  UINT16 us16BPPColor;
-  UINT32 cnt1;
-  UINT8 ubSize;
-  INT16 sTLX, sTLY, sBRX, sBRY;
-  UINT8 ubPaletteRep;
+BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
+                          uint32_t uiDestSurface) {
+  uint16_t us16BPPColor;
+  uint32_t cnt1;
+  uint8_t ubSize;
+  int16_t sTLX, sTLY, sBRX, sBRY;
+  uint8_t ubPaletteRep;
 
   // Create 16BPP Palette
   CHECKF(GetPaletteRepIndexFromID(aPalRep, &ubPaletteRep));
@@ -68,8 +69,8 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
   ubSize = gpPalRep[ubPaletteRep].ubPaletteSize;
 
   for (cnt1 = 0; cnt1 < ubSize; cnt1++) {
-    sTLX = ubXPos + (UINT16)((cnt1 % 16) * 20);
-    sTLY = ubYPos + (UINT16)((cnt1 / 16) * 20);
+    sTLX = ubXPos + (uint16_t)((cnt1 % 16) * 20);
+    sTLY = ubYPos + (uint16_t)((cnt1 / 16) * 20);
     sBRX = sTLX + 20;
     sBRY = sTLY + 20;
 
@@ -85,9 +86,10 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
   return (TRUE);
 }
 
-BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, UINT16 usWidth, INT32 uiFont) {
-  UINT32 Cur, uiLet, uiNewLet, uiHyphenLet;
-  CHAR16 *curletter, transletter;
+BOOLEAN WrapString(wchar_t *pStr, wchar_t *pStr2, size_t buf2Size, uint16_t usWidth,
+                   int32_t uiFont) {
+  uint32_t Cur, uiLet, uiNewLet, uiHyphenLet;
+  wchar_t *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;
   struct VObject *hFont;
 
@@ -114,7 +116,7 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, UINT16 usWidth, INT
           // Split Line!
           fLineSplit = TRUE;
 
-          pStr[uiNewLet] = (INT16)'\0';
+          pStr[uiNewLet] = (int16_t)'\0';
 
           wcscpy(pStr2, &(pStr[uiNewLet + 1]));
         }
@@ -127,7 +129,7 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, UINT16 usWidth, INT
       if (!fLineSplit) {
         // We completed the check for a space, but failed, so use the hyphen method.
         swprintf(pStr2, buf2Size, L"-%s", &(pStr[uiHyphenLet]));
-        pStr[uiHyphenLet] = (INT16)'\0';
+        pStr[uiHyphenLet] = (int16_t)'\0';
         fLineSplit = TRUE;  // hyphen method
         break;
       }

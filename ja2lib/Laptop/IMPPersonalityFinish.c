@@ -18,7 +18,7 @@
 
 // this is the amount of time, the player waits until booted back to main profileing screen
 
-UINT8 bPersonalityEndState = 0;
+uint8_t bPersonalityEndState = 0;
 
 #define PERSONALITY_CONFIRM_FINISH_DELAY 2500
 
@@ -32,8 +32,8 @@ BOOLEAN fExitIMPPerFinAtOk = FALSE;
 BOOLEAN fCreateFinishOkButton = FALSE;
 
 // buttons
-UINT32 giIMPPersonalityFinishButton[2];
-UINT32 giIMPPersonalityFinishButtonImage[2];
+uint32_t giIMPPersonalityFinishButton[2];
+uint32_t giIMPPersonalityFinishButtonImage[2];
 
 // function definitions
 void CreateIMPPersonalityFinishButtons(void);
@@ -43,9 +43,9 @@ void CreatePersonalityFinishOkButton(void);
 void DestroyPersonalityFinishOkButton(void);
 
 // callbacks
-void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPPersonalityFinish(void) {
   // reset states
@@ -189,7 +189,7 @@ void DestroyIMPersonalityFinishButtons(void) {
   return;
 }
 
-void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -223,7 +223,7 @@ void BtnIMPPersonalityFinishYesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityFinishNoCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -276,7 +276,7 @@ void DestroyPersonalityFinishOkButton(void) {
   UnloadButtonImage(giIMPPersonalityFinishButtonImage[0]);
 }
 
-void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

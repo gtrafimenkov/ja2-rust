@@ -1,7 +1,7 @@
 #include "SGP/Types.h"
 #include "Strategic/Quests.h"
 
-STR16 QuestDescText[] = {
+wchar_t* QuestDescText[] = {
     L"Deliver Letter",
     L"Food Route",
     L"Terrorists",
@@ -37,7 +37,7 @@ STR16 QuestDescText[] = {
 
 };
 
-STR16 FactDescText[] = {
+wchar_t* FactDescText[] = {
     L"Omerta Liberated",
     L"Drassen Liberated",
     L"Sanmona Liberated",

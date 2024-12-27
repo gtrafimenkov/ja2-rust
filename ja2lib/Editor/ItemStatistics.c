@@ -26,13 +26,13 @@
 #include "Utils/FontControl.h"
 #include "Utils/TextInput.h"
 
-INT32 giBothCheckboxButton = -1;
-INT32 giRealisticCheckboxButton = -1;
-INT32 giSciFiCheckboxButton = -1;
-INT32 giAlarmTriggerButton = -1;
-INT32 giOwnershipGroupButton = -1;
+int32_t giBothCheckboxButton = -1;
+int32_t giRealisticCheckboxButton = -1;
+int32_t giSciFiCheckboxButton = -1;
+int32_t giAlarmTriggerButton = -1;
+int32_t giOwnershipGroupButton = -1;
 
-CHAR16 gszActionItemDesc[NUM_ACTIONITEMS][30] = {
+wchar_t gszActionItemDesc[NUM_ACTIONITEMS][30] = {
     L"Klaxon Mine",      L"Flare Mine",      L"Teargas Explosion",   L"Stun Explosion",
     L"Smoke Explosion",  L"Mustard Gas",     L"Land Mine",           L"Open Door",
     L"Close Door",       L"3x3 Hidden Pit",  L"5x5 Hidden Pit",      L"Small Explosion",
@@ -44,7 +44,7 @@ CHAR16 gszActionItemDesc[NUM_ACTIONITEMS][30] = {
     L"Bloodcat alarm",   L"Big teargas",
 };
 
-CHAR16 *GetActionItemName(struct OBJECTTYPE *pItem) {
+wchar_t *GetActionItemName(struct OBJECTTYPE *pItem) {
   if (!pItem || pItem->usItem != ACTION_ITEM) return NULL;
   if (pItem->bActionValue != ACTION_ITEM_BLOW_UP) {
     switch (pItem->bActionValue) {
@@ -135,24 +135,24 @@ enum {
   GLAUNCHER_ATTACHMENT_BUTTON,
   NUM_ATTACHMENT_BUTTONS
 };
-UINT32 guiAttachmentButton[NUM_ATTACHMENT_BUTTONS];
+uint32_t guiAttachmentButton[NUM_ATTACHMENT_BUTTONS];
 BOOLEAN gfAttachment[NUM_ATTACHMENT_BUTTONS];
-void ToggleAttachment(GUI_BUTTON *btn, INT32 reason);
+void ToggleAttachment(GUI_BUTTON *btn, int32_t reason);
 
-UINT32 guiCeramicPlatesButton;
+uint32_t guiCeramicPlatesButton;
 BOOLEAN gfCeramicPlates;
-void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason);
+void ToggleCeramicPlates(GUI_BUTTON *btn, int32_t reason);
 
-UINT32 guiDetonatorButton;
+uint32_t guiDetonatorButton;
 BOOLEAN gfDetonator;
-void ToggleDetonator(GUI_BUTTON *btn, INT32 reason);
+void ToggleDetonator(GUI_BUTTON *btn, int32_t reason);
 
-UINT32 guiActionItemButton;
-void ActionItemCallback(GUI_BUTTON *btn, INT32 reason);
-INT8 gbActionItemIndex = ACTIONITEM_MEDIUM;
-INT8 gbDefaultBombTrapLevel = 9;
+uint32_t guiActionItemButton;
+void ActionItemCallback(GUI_BUTTON *btn, int32_t reason);
+int8_t gbActionItemIndex = ACTIONITEM_MEDIUM;
+int8_t gbDefaultBombTrapLevel = 9;
 
-void RemoveBombFromWorldByItemIndex(INT32 iItemIndex);
+void RemoveBombFromWorldByItemIndex(int32_t iItemIndex);
 
 enum {
   EDITING_NOTHING,
@@ -170,11 +170,11 @@ enum {
   EDITING_OWNERSHIP,
 };
 
-INT8 gbEditingMode = EDITING_NOTHING;
+int8_t gbEditingMode = EDITING_NOTHING;
 
 struct OBJECTTYPE *gpItem = NULL;
 BOOLEAN gfShowItemStatsPanel;
-INT16 gsItemGridNo;
+int16_t gsItemGridNo;
 
 struct ITEM_POOL *gpEditingItemPool = NULL;
 extern struct ITEM_POOL *gpItemPool;
@@ -217,7 +217,7 @@ void RemoveMoneyGUI();
 void SetupOwnershipGUI();
 void ExtractAndUpdateOwnershipGUI();
 void RemoveOwnershipGUI();
-void OwnershipGroupButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void OwnershipGroupButtonCallback(GUI_BUTTON *btn, int32_t reason);
 
 void SetupKeysGUI();
 void ExtractAndUpdateKeysGUI();
@@ -241,7 +241,7 @@ void EnableItemStatsPanel() {}
 
 void DisableItemStatsPanel() {}
 
-void ExecuteItemStatsCmd(UINT8 ubAction) {
+void ExecuteItemStatsCmd(uint8_t ubAction) {
   switch (ubAction) {
     case ITEMSTATS_APPLY:
       if (gpItem && gpItem->usItem == ACTION_ITEM) {
@@ -332,7 +332,7 @@ void RemoveItemGUI() {
     }
 }
 
-void SpecifyItemToEdit(struct OBJECTTYPE *pItem, INT32 iMapIndex) {
+void SpecifyItemToEdit(struct OBJECTTYPE *pItem, int32_t iMapIndex) {
   // Set the global item pointer to point to the new item
   if (gpItem == pItem) return;
   if (gpItem != pItem) {
@@ -342,7 +342,7 @@ void SpecifyItemToEdit(struct OBJECTTYPE *pItem, INT32 iMapIndex) {
     if (gpItemPool) {
       gpEditingItemPool = gpItemPool;
     }
-    gsItemGridNo = (INT16)iMapIndex;
+    gsItemGridNo = (int16_t)iMapIndex;
   } else
     RemoveItemGUI();
 
@@ -512,7 +512,7 @@ void UpdateItemStatsPanel() {
       break;
   }
   if (gpEditingItemPool) {
-    INT32 iPercent = 100 - gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance;
+    int32_t iPercent = 100 - gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance;
     if (iPercent == 100)
       SetFontForeground(FONT_YELLOW);
     else if (iPercent >= 50)
@@ -527,7 +527,7 @@ void UpdateItemStatsPanel() {
   InvalidateRegion(477, 362, 161, 97);
 }
 
-void RealisticOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void RealisticOnlyCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[giRealisticCheckboxButton]->uiFlags |= (BUTTON_CLICKED_ON | BUTTON_DIRTY);
     ButtonList[giSciFiCheckboxButton]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -540,7 +540,7 @@ void RealisticOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SciFiOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void SciFiOnlyCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[giRealisticCheckboxButton]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[giRealisticCheckboxButton]->uiFlags |= BUTTON_DIRTY;
@@ -553,7 +553,7 @@ void SciFiOnlyCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BothModesCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void BothModesCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[giRealisticCheckboxButton]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[giRealisticCheckboxButton]->uiFlags |= BUTTON_DIRTY;
@@ -603,8 +603,8 @@ void RemoveGameTypeFlags() {
 }
 
 void SetupGunGUI() {
-  CHAR16 str[20];
-  INT16 yp;
+  wchar_t str[20];
+  int16_t yp;
   memset(gfAttachment, 0, NUM_ATTACHMENT_BUTTONS);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bGunStatus);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
@@ -690,7 +690,7 @@ void SetupGunGUI() {
 }
 
 void RemoveGunGUI() {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < NUM_ATTACHMENT_BUTTONS; i++) {
     if (guiAttachmentButton[i] != -1) {
       RemoveButton(guiAttachmentButton[i]);
@@ -700,14 +700,14 @@ void RemoveGunGUI() {
 }
 
 void ExtractAndUpdateGunGUI() {
-  INT32 i;
+  int32_t i;
   // Update the gun status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bGunStatus = (INT8)i;
+  gpItem->bGunStatus = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the ammo
   i = GetNumericStrictValueFromField(2);
@@ -715,25 +715,25 @@ void ExtractAndUpdateGunGUI() {
     i = Random(1 + Weapon[gpItem->usItem].ubMagSize);
   else
     i = min(i, Weapon[gpItem->usItem].ubMagSize);
-  gpItem->ubGunShotsLeft = (UINT8)i;
+  gpItem->ubGunShotsLeft = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(3);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(3, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(4);
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(4, giDefaultExistChance);
   }
 }
 
 void SetupAmmoGUI() {
-  CHAR16 str[20];
+  wchar_t str[20];
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->ubNumberOfObjects);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 1, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bTrap);
@@ -750,33 +750,33 @@ void RemoveAmmoGUI() {
 }
 
 void ExtractAndUpdateAmmoGUI() {
-  INT32 i;
+  int32_t i;
   // Update the number of clips
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = 1 + Random(Item[gpItem->usItem].ubPerPocket);
   else
     i = max(1, min(i, Item[gpItem->usItem].ubPerPocket));
-  gpItem->ubNumberOfObjects = (UINT8)i;
+  gpItem->ubNumberOfObjects = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   CreateItems(gpItem->usItem, 100, gpItem->ubNumberOfObjects, gpItem);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(3);
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
 
 void SetupArmourGUI() {
-  CHAR16 str[20];
+  wchar_t str[20];
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bStatus[0]);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bTrap);
@@ -807,32 +807,32 @@ void RemoveArmourGUI() {
 }
 
 void ExtractAndUpdateArmourGUI() {
-  INT32 i;
+  int32_t i;
   // Update the armour status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(3);
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
 
 void SetupEquipGUI() {
-  CHAR16 str[20];
+  wchar_t str[20];
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bStatus[0]);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bTrap);
@@ -849,33 +849,33 @@ void RemoveEquipGUI() {
 }
 
 void ExtractAndUpdateEquipGUI() {
-  INT32 i;
+  int32_t i;
   // Update the equipment status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(3);
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
 
 void SetupExplosivesGUI() {
-  CHAR16 str[20];
-  INT16 yp;
+  wchar_t str[20];
+  int16_t yp;
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bStatus[0]);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->ubNumberOfObjects);
@@ -913,14 +913,14 @@ void RemoveExplosivesGUI() {
 }
 
 void ExtractAndUpdateExplosivesGUI() {
-  INT32 i;
+  int32_t i;
   // Update the explosives status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the quantity
   if (Item[gpItem->usItem].ubPerPocket > 1) {
@@ -929,27 +929,27 @@ void ExtractAndUpdateExplosivesGUI() {
       i = 1 + Random(Item[gpItem->usItem].ubPerPocket);
     else
       i = max(1, min(i, Item[gpItem->usItem].ubPerPocket));
-    gpItem->ubNumberOfObjects = (UINT8)i;
+    gpItem->ubNumberOfObjects = (uint8_t)i;
     SetInputFieldStringWithNumericStrictValue(2, i);
     CreateItems(gpItem->usItem, gpItem->bStatus[0], gpItem->ubNumberOfObjects, gpItem);
   }
   // Update the trap level
   i = GetNumericStrictValueFromField(3);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(3, i);
   if (gpEditingItemPool) {
     giDefaultExistChance = GetNumericStrictValueFromField(4);
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(4, giDefaultExistChance);
   }
 }
 
 void SetupMoneyGUI() {
-  CHAR16 str[20];
+  wchar_t str[20];
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->uiMoneyAmount);
   AddTextInputField(485, 380, 45, 15, MSYS_PRIORITY_NORMAL, str, 5, INPUTTYPE_NUMERICSTRICT);
   if (gpEditingItemPool) {
@@ -960,7 +960,7 @@ void SetupMoneyGUI() {
 }
 
 void ExtractAndUpdateMoneyGUI() {
-  INT32 i;
+  int32_t i;
   // Update the amount of cash
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
@@ -975,7 +975,7 @@ void ExtractAndUpdateMoneyGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(2, giDefaultExistChance);
   }
 }
@@ -983,7 +983,7 @@ void ExtractAndUpdateMoneyGUI() {
 void RemoveMoneyGUI() {}
 
 void SetupOwnershipGUI() {
-  CHAR16 str[20];
+  wchar_t str[20];
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->ubOwnerProfile);
   AddTextInputField(485, 380, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   giOwnershipGroupButton =
@@ -992,26 +992,26 @@ void SetupOwnershipGUI() {
                        MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, OwnershipGroupButtonCallback);
 }
 
-void OwnershipGroupButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void OwnershipGroupButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     InitPopupMenu(btn->IDNum, OWNERSHIPGROUP_POPUP, DIR_UPLEFT);
   }
 }
 
-void SetOwnershipGroup(UINT8 ubNewGroup) {
+void SetOwnershipGroup(uint8_t ubNewGroup) {
   gpItem->ubOwnerCivGroup = ubNewGroup;
   SpecifyButtonText(giOwnershipGroupButton, gszCivGroupNames[ubNewGroup]);
 }
 
 void ExtractAndUpdateOwnershipGUI() {
-  INT32 i;
+  int32_t i;
   // Update the amount of cash
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = Random(0);
   else
     i = max(0, min(i, 255));
-  gpItem->ubOwnerProfile = (UINT8)i;
+  gpItem->ubOwnerProfile = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
 }
 
@@ -1023,7 +1023,7 @@ void RemoveOwnershipGUI() {
 }
 
 void SetupKeysGUI() {
-  CHAR16 str[20];
+  wchar_t str[20];
   if (gpEditingItemPool) {
     swprintf(str, ARR_SIZE(str), L"%d",
              100 - gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance);
@@ -1037,7 +1037,7 @@ void ExtractAndUpdateKeysGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(1, giDefaultExistChance);
   }
 }
@@ -1045,8 +1045,8 @@ void ExtractAndUpdateKeysGUI() {
 void RemoveKeysGUI() {}
 
 void SetupActionItemsGUI() {
-  CHAR16 str[4];
-  CHAR16 *pStr;
+  wchar_t str[4];
+  wchar_t *pStr;
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bStatus[0]);
   AddTextInputField(485, 365, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bTrap);
@@ -1063,20 +1063,20 @@ void SetupActionItemsGUI() {
 }
 
 void ExtractAndUpdateActionItemsGUI() {
-  INT32 i;
+  int32_t i;
   // Update the equipment status
   i = GetNumericStrictValueFromField(1);
   if (i == -1)
     i = 20 + Random(81);
   else
     i = min(i, 100);
-  gpItem->bStatus[0] = (INT8)i;
+  gpItem->bStatus[0] = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
   // Update the trap level
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : min(i, 20);
-  if (i != gpItem->bTrap) gbDefaultBombTrapLevel = (INT8)i;
-  gpItem->bTrap = (INT8)i;
+  if (i != gpItem->bTrap) gbDefaultBombTrapLevel = (int8_t)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
 
   if (gpEditingItemPool) {
@@ -1084,7 +1084,7 @@ void ExtractAndUpdateActionItemsGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
@@ -1096,7 +1096,7 @@ void RemoveActionItemsGUI() {
   }
 }
 
-void AlarmTriggerCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
+void AlarmTriggerCheckboxCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON)
       gpItem->fFlags |= OBJECT_ALARM_TRIGGER;
@@ -1106,7 +1106,7 @@ void AlarmTriggerCheckboxCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void SetupTriggersGUI() {
-  CHAR16 str[4];
+  wchar_t str[4];
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->bTrap);
   AddTextInputField(485, 365, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
   swprintf(str, ARR_SIZE(str), L"%d", gpItem->ubTolerance);
@@ -1128,16 +1128,16 @@ void SetupTriggersGUI() {
 }
 
 void ExtractAndUpdateTriggersGUI() {
-  INT32 i;
+  int32_t i;
   // Update the trap level
   i = GetNumericStrictValueFromField(1);
   i = (i == -1) ? 0 : min(i, 20);
-  gpItem->bTrap = (INT8)i;
+  gpItem->bTrap = (int8_t)i;
   SetInputFieldStringWithNumericStrictValue(1, i);
 
   i = GetNumericStrictValueFromField(2);
   i = (i == -1) ? 0 : max(0, min(i, 99));
-  gpItem->ubTolerance = (UINT8)i;
+  gpItem->ubTolerance = (uint8_t)i;
   SetInputFieldStringWithNumericStrictValue(2, i);
 
   if (gpEditingItemPool) {
@@ -1145,7 +1145,7 @@ void ExtractAndUpdateTriggersGUI() {
     giDefaultExistChance =
         (giDefaultExistChance == -1) ? 100 : max(1, min(giDefaultExistChance, 100));
     gWorldItems[gpEditingItemPool->iItemIndex].ubNonExistChance =
-        (UINT8)(100 - giDefaultExistChance);
+        (uint8_t)(100 - giDefaultExistChance);
     SetInputFieldStringWithNumericStrictValue(3, giDefaultExistChance);
   }
 }
@@ -1160,10 +1160,10 @@ void RemoveTriggersGUI() {
   }
 }
 
-void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
+void ToggleAttachment(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    INT32 i;
-    UINT16 usAttachment;
+    int32_t i;
+    uint16_t usAttachment;
     struct OBJECTTYPE temp;
     for (i = 0; i < NUM_ATTACHMENT_BUTTONS;
          i++) {  // Loop through and find the button that was just modified
@@ -1196,7 +1196,7 @@ void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
           CreateItem(usAttachment, gpItem->bGunStatus, &temp);
           AttachObject(NULL, gpItem, &temp);
         } else {  // Button is out, so remove the attachment
-          INT8 slot;
+          int8_t slot;
           gfAttachment[i] = FALSE;
           btn->uiFlags &= ~BUTTON_CLICKED_ON;
           slot = FindAttachment(gpItem, usAttachment);
@@ -1208,7 +1208,7 @@ void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
+void ToggleCeramicPlates(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct OBJECTTYPE temp;
     gfCeramicPlates ^= TRUE;
@@ -1217,7 +1217,7 @@ void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
       CreateItem(CERAMIC_PLATES, gpItem->bStatus[0], &temp);
       AttachObject(NULL, gpItem, &temp);
     } else {
-      INT8 slot;
+      int8_t slot;
       btn->uiFlags &= ~BUTTON_CLICKED_ON;
       slot = FindAttachment(gpItem, CERAMIC_PLATES);
       if (slot != -1) RemoveAttachment(gpItem, slot, &temp);
@@ -1225,7 +1225,7 @@ void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
+void ToggleDetonator(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct OBJECTTYPE temp;
     if (!gfDetonator) {
@@ -1234,7 +1234,7 @@ void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
       CreateItem(DETONATOR, gpItem->bStatus[0], &temp);
       AttachObject(NULL, gpItem, &temp);
     } else {  // Button is out, so remove the attachment
-      INT8 slot;
+      int8_t slot;
       gfDetonator = FALSE;
       btn->uiFlags &= ~BUTTON_CLICKED_ON;
       slot = FindAttachment(gpItem, DETONATOR);
@@ -1243,13 +1243,13 @@ void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ActionItemCallback(GUI_BUTTON *btn, INT32 reason) {
+void ActionItemCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     InitPopupMenu(guiActionItemButton, ACTIONITEM_POPUP, DIR_UPLEFT);
   }
 }
 
-void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex) {
+void ChangeActionItem(struct OBJECTTYPE *pItem, int8_t bActionItemIndex) {
   pItem->usItem = ACTION_ITEM;
   pItem->bActionValue = ACTION_ITEM_BLOW_UP;
   switch (bActionItemIndex) {
@@ -1381,7 +1381,7 @@ void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex) {
   }
 }
 
-void UpdateActionItem(INT8 bActionItemIndex) {
+void UpdateActionItem(int8_t bActionItemIndex) {
   gbActionItemIndex = bActionItemIndex;  // used for future new actionitems as the default.
 
   if (!gpItemPool || !gpItem) return;
@@ -1407,8 +1407,8 @@ void UpdateActionItem(INT8 bActionItemIndex) {
 }
 
 void ReEvaluateAttachmentStatii() {
-  INT32 i;
-  UINT16 usAttachment;
+  int32_t i;
+  uint16_t usAttachment;
   for (i = 0; i < NUM_ATTACHMENT_BUTTONS; i++) {
     if (guiAttachmentButton[i] != -1 &&
         !(ButtonList[guiAttachmentButton[i]]->uiFlags &

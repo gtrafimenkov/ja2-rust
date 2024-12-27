@@ -17,12 +17,12 @@ void SetTilesetFourTerrainValues();
 TILESET gTilesets[NUM_TILESETS];
 
 void InitEngineTilesets() {
-  UINT8 ubNumSets;
-  UINT32 cnt, cnt2, uiNumFiles;
+  uint8_t ubNumSets;
+  uint32_t cnt, cnt2, uiNumFiles;
   //	FILE					*hfile;
   HWFILE hfile;
-  CHAR8 zName[32];
-  UINT32 uiNumBytesRead;
+  char zName[32];
+  uint32_t uiNumBytesRead;
 
   // OPEN FILE
   //	hfile = fopen( "BINARYDATA\\JA2SET.DAT", "rb" );
@@ -60,8 +60,8 @@ void InitEngineTilesets() {
     FileMan_Read(hfile, &zName, sizeof(zName), &uiNumBytesRead);
 
     // Read ambience value
-    //		fread( &(gTilesets[ cnt ].ubAmbientID), sizeof( UINT8), 1, hfile );
-    FileMan_Read(hfile, &(gTilesets[cnt].ubAmbientID), sizeof(UINT8), &uiNumBytesRead);
+    //		fread( &(gTilesets[ cnt ].ubAmbientID), sizeof( uint8_t), 1, hfile );
+    FileMan_Read(hfile, &(gTilesets[cnt].ubAmbientID), sizeof(uint8_t), &uiNumBytesRead);
 
     // Set into tileset
     swprintf(gTilesets[cnt].zName, ARR_SIZE(gTilesets[cnt].zName), L"%S", zName);

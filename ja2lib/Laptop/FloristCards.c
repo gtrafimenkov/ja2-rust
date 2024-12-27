@@ -39,24 +39,24 @@
 #define FLORIST_CARD_
 #define FLORIST_CARD_
 
-UINT32 guiCardBackground;
+uint32_t guiCardBackground;
 
-INT8 gbCurrentlySelectedCard;
+int8_t gbCurrentlySelectedCard;
 
 // link to the card gallery
 struct MOUSE_REGION gSelectedFloristCardsRegion[9];
-void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-INT32 guiFlowerCardsButtonImage;
-void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFlowerCardsBackButton;
+int32_t guiFlowerCardsButtonImage;
+void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiFlowerCardsBackButton;
 
 void GameInitFloristCards() {}
 
 BOOLEAN EnterFloristCards() {
-  UINT16 i, j, usPosX, usPosY;
+  uint16_t i, j, usPosX, usPosY;
   VOBJECT_DESC VObjectDesc;
-  UINT8 ubCount;
+  uint8_t ubCount;
 
   InitFloristDefaults();
 
@@ -71,9 +71,9 @@ BOOLEAN EnterFloristCards() {
     usPosX = FLORIST_CARD_FIRST_POS_X;
     for (i = 0; i < 3; i++) {
       MSYS_DefineRegion(&gSelectedFloristCardsRegion[ubCount], usPosX, usPosY,
-                        (UINT16)(usPosX + FLORIST_CARD_CARD_WIDTH),
-                        (UINT16)(usPosY + FLORIST_CARD_CARD_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
-                        MSYS_NO_CALLBACK, SelectFloristCardsRegionCallBack);
+                        (uint16_t)(usPosX + FLORIST_CARD_CARD_WIDTH),
+                        (uint16_t)(usPosY + FLORIST_CARD_CARD_HEIGHT), MSYS_PRIORITY_HIGH,
+                        CURSOR_WWW, MSYS_NO_CALLBACK, SelectFloristCardsRegionCallBack);
       MSYS_AddRegion(&gSelectedFloristCardsRegion[ubCount]);
       MSYS_SetRegionUserData(&gSelectedFloristCardsRegion[ubCount], 0, ubCount);
       ubCount++;
@@ -100,7 +100,7 @@ BOOLEAN EnterFloristCards() {
 }
 
 void ExitFloristCards() {
-  UINT8 i;
+  uint8_t i;
 
   RemoveFloristDefaults();
   DeleteVideoObjectFromIndex(guiCardBackground);
@@ -115,12 +115,12 @@ void ExitFloristCards() {
 void HandleFloristCards() {}
 
 void RenderFloristCards() {
-  UINT8 i, j, ubCount;
-  UINT16 usPosX, usPosY;
+  uint8_t i, j, ubCount;
+  uint16_t usPosX, usPosY;
   wchar_t sTemp[640];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
   struct VObject *hPixHandle;
-  UINT16 usHeightOffset;
+  uint16_t usHeightOffset;
 
   DisplayFloristDefaults();
 
@@ -141,16 +141,16 @@ void RenderFloristCards() {
       uiStartLoc = FLOR_CARD_TEXT_TITLE_SIZE * ubCount;
       LoadEncryptedDataFromFile(FLOR_CARD_TEXT_FILE, sTemp, uiStartLoc, FLOR_CARD_TEXT_TITLE_SIZE);
 
-      //			DisplayWrappedString((UINT16)(usPosX+7), (UINT16)(usPosY+15),
+      //			DisplayWrappedString((uint16_t)(usPosX+7), (uint16_t)(usPosY+15),
       // FLORIST_CARD_TEXT_WIDTH, 2, FLORIST_CARDS_SENTENCE_FONT, FLORIST_CARDS_SENTENCE_COLOR,
       // sTemp, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
       usHeightOffset = IanWrappedStringHeight(
-          (UINT16)(usPosX + 7), (UINT16)(usPosY), FLORIST_CARD_TEXT_WIDTH, 2,
+          (uint16_t)(usPosX + 7), (uint16_t)(usPosY), FLORIST_CARD_TEXT_WIDTH, 2,
           FLORIST_CARDS_SENTENCE_FONT, FLORIST_CARDS_SENTENCE_COLOR, sTemp, 0, FALSE, 0);
 
       usHeightOffset = (FLORIST_CARD_TEXT_HEIGHT - usHeightOffset) / 2;
 
-      IanDisplayWrappedString((UINT16)(usPosX + 7), (UINT16)(usPosY + 10 + usHeightOffset),
+      IanDisplayWrappedString((uint16_t)(usPosX + 7), (uint16_t)(usPosY + 10 + usHeightOffset),
                               FLORIST_CARD_TEXT_WIDTH, 2, FLORIST_CARDS_SENTENCE_FONT,
                               FLORIST_CARDS_SENTENCE_COLOR, sTemp, 0, FALSE, 0);
 
@@ -166,17 +166,17 @@ void RenderFloristCards() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    gbCurrentlySelectedCard = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gbCurrentlySelectedCard = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST_ORDERFORM;
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
   }
 }
 
-void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

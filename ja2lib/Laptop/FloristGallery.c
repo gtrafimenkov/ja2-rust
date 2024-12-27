@@ -42,7 +42,7 @@
 #define FLOR_GALLERY_FLOWER_BUTTON_X LAPTOP_SCREEN_UL_X + 7
 #define FLOR_GALLERY_FLOWER_BUTTON_Y LAPTOP_SCREEN_WEB_UL_Y + 74
 
-//#define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
+// #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
 
 #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_Y 112
 
@@ -58,31 +58,31 @@
 #define FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y FLOR_GALLERY_FLOWER_TITLE_OFFSET_Y + 17
 #define FLOR_GALLERY_FLOWER_DESC_OFFSET_Y FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y + 15
 
-UINT32 guiFlowerImages[3];
+uint32_t guiFlowerImages[3];
 
-UINT32 guiCurrentlySelectedFlower = 0;
+uint32_t guiCurrentlySelectedFlower = 0;
 
-UINT8 gubCurFlowerIndex = 0;
-UINT8 gubCurNumberOfFlowers = 0;
-UINT8 gubPrevNumberOfFlowers = 0;
+uint8_t gubCurFlowerIndex = 0;
+uint8_t gubCurNumberOfFlowers = 0;
+uint8_t gubPrevNumberOfFlowers = 0;
 BOOLEAN gfRedrawFloristGallery = FALSE;
 
 BOOLEAN FloristGallerySubPagesVisitedFlag[4];
 
 // Floral buttons
-void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGalleryButtons[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
+void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiGalleryButtons[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
 
 // Next Previous buttons
-INT32 guiFloralGalleryButtonImage;
-void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiFloralGalleryButton[2];
+int32_t guiFloralGalleryButtonImage;
+void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiFloralGalleryButton[2];
 
 BOOLEAN InitFlowerButtons();
 void DeleteFlowerButtons();
 BOOLEAN DisplayFloralDescriptions();
-void ChangingFloristGallerySubPage(UINT8 ubSubPageNumber);
+void ChangingFloristGallerySubPage(uint8_t ubSubPageNumber);
 
 void GameInitFloristGallery() {}
 
@@ -118,7 +118,7 @@ BOOLEAN EnterFloristGallery() {
 }
 
 void ExitFloristGallery() {
-  UINT16 i;
+  uint16_t i;
 
   RemoveFloristDefaults();
 
@@ -161,7 +161,7 @@ void RenderFloristGallery() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -188,7 +188,7 @@ void BtnFloralGalleryNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -222,7 +222,7 @@ void BtnFloralGalleryBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -232,7 +232,7 @@ void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
-      guiCurrentlySelectedFlower = (UINT8)MSYS_GetBtnUserData(btn, 0);
+      guiCurrentlySelectedFlower = (uint8_t)MSYS_GetBtnUserData(btn, 0);
       guiCurrentLaptopMode = LAPTOP_MODE_FLORIST_ORDERFORM;
 
       gfShowBookmarks = FALSE;
@@ -249,8 +249,8 @@ void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN InitFlowerButtons() {
-  UINT16 i, j, count;
-  UINT16 usPosY;
+  uint16_t i, j, count;
+  uint16_t usPosY;
   char sTemp[40];
   VOBJECT_DESC VObjectDesc;
 
@@ -306,7 +306,7 @@ BOOLEAN InitFlowerButtons() {
 }
 
 void DeleteFlowerButtons() {
-  UINT16 i;
+  uint16_t i;
 
   for (i = 0; i < gubPrevNumberOfFlowers; i++) {
     DeleteVideoObjectFromIndex(guiFlowerImages[i]);
@@ -321,8 +321,8 @@ void DeleteFlowerButtons() {
 
 BOOLEAN DisplayFloralDescriptions() {
   wchar_t sTemp[640];
-  UINT32 uiStartLoc = 0, i;
-  UINT16 usPosY, usPrice;
+  uint32_t uiStartLoc = 0, i;
+  uint16_t usPosY, usPrice;
 
   if ((FLOR_GALLERY_NUMBER_FLORAL_IMAGES - gubCurFlowerIndex) >= 3)
     gubCurNumberOfFlowers = 3;
@@ -336,7 +336,7 @@ BOOLEAN DisplayFloralDescriptions() {
     LoadEncryptedDataFromFile(FLOR_GALLERY_TEXT_FILE, sTemp, uiStartLoc,
                               FLOR_GALLERY_TEXT_TITLE_SIZE);
     DrawTextToScreen(sTemp, FLOR_GALLERY_FLOWER_TITLE_X,
-                     (UINT16)(usPosY + FLOR_GALLERY_FLOWER_TITLE_OFFSET_Y), 0,
+                     (uint16_t)(usPosY + FLOR_GALLERY_FLOWER_TITLE_OFFSET_Y), 0,
                      FLOR_GALLERY_FLOWER_TITLE_FONT, FLOR_GALLERY_FLOWER_TITLE_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -349,7 +349,7 @@ BOOLEAN DisplayFloralDescriptions() {
     swprintf(sTemp, ARR_SIZE(sTemp), L"$%d.00 %s", usPrice,
              pMessageStrings[MSG_USDOLLAR_ABBREVIATION]);
     DrawTextToScreen(sTemp, FLOR_GALLERY_FLOWER_TITLE_X,
-                     (UINT16)(usPosY + FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y), 0,
+                     (uint16_t)(usPosY + FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y), 0,
                      FLOR_GALLERY_FLOWER_PRICE_FONT, FLOR_GALLERY_FLOWER_PRICE_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -359,7 +359,7 @@ BOOLEAN DisplayFloralDescriptions() {
     LoadEncryptedDataFromFile(FLOR_GALLERY_TEXT_FILE, sTemp, uiStartLoc,
                               FLOR_GALLERY_TEXT_DESC_SIZE);
     DisplayWrappedString(
-        FLOR_GALLERY_FLOWER_TITLE_X, (UINT16)(usPosY + FLOR_GALLERY_FLOWER_DESC_OFFSET_Y),
+        FLOR_GALLERY_FLOWER_TITLE_X, (uint16_t)(usPosY + FLOR_GALLERY_FLOWER_DESC_OFFSET_Y),
         FLOR_GALLERY_DESC_WIDTH, 2, FLOR_GALLERY_FLOWER_DESC_FONT, FLOR_GALLERY_FLOWER_DESC_COLOR,
         sTemp, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
@@ -369,7 +369,7 @@ BOOLEAN DisplayFloralDescriptions() {
   return (TRUE);
 }
 
-void ChangingFloristGallerySubPage(UINT8 ubSubPageNumber) {
+void ChangingFloristGallerySubPage(uint8_t ubSubPageNumber) {
   fLoadPendingFlag = TRUE;
 
   // there are 3 flowers per page

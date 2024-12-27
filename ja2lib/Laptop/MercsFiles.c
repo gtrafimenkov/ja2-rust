@@ -102,31 +102,31 @@
 
 #define MERC_PORTRAIT_TEXT_OFFSET_Y 110
 
-UINT32 guiPortraitBox;
-UINT32 guiStatsBox;
-UINT32 guiBioBox;
-UINT32 guiMercFace;
+uint32_t guiPortraitBox;
+uint32_t guiStatsBox;
+uint32_t guiBioBox;
+uint32_t guiMercFace;
 
 //
 // Buttons
 //
 
 // The Prev button
-void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiPrevButton;
-INT32 guiButtonImage;
+void BtnMercPrevButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiPrevButton;
+int32_t guiButtonImage;
 
 // The Next button
-void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiNextButton;
+void BtnMercNextButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiNextButton;
 
 // The Hire button
-void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiHireButton;
+void BtnMercHireButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiHireButton;
 
 // The Back button
-void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiMercBackButton;
+void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiMercBackButton;
 
 //****************************
 //
@@ -134,10 +134,10 @@ UINT32 guiMercBackButton;
 //
 //****************************
 
-BOOLEAN DisplayMercFace(UINT8 ubMercID);
-void LoadAndDisplayMercBio(UINT8 ubMercID);
-void DisplayMercsStats(UINT8 ubMercID);
-BOOLEAN MercFilesHireMerc(UINT8 ubMercID);
+BOOLEAN DisplayMercFace(uint8_t ubMercID);
+void LoadAndDisplayMercBio(uint8_t ubMercID);
+void DisplayMercsStats(uint8_t ubMercID);
+BOOLEAN MercFilesHireMerc(uint8_t ubMercID);
 void EnableDisableMercFilesNextPreviousButton();
 
 void GameInitMercsFiles() {}
@@ -251,7 +251,7 @@ void RenderMercsFiles() {
                    LEFT_JUSTIFIED);
 
   // Load and display the mercs bio
-  LoadAndDisplayMercBio((UINT8)(GetMercIDFromMERCArray(gubCurMercIndex) - BIFF));
+  LoadAndDisplayMercBio((uint8_t)(GetMercIDFromMERCArray(gubCurMercIndex) - BIFF));
 
   // Display the mercs statistic
   DisplayMercsStats(GetMercIDFromMERCArray(gubCurMercIndex));
@@ -276,7 +276,7 @@ void RenderMercsFiles() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercPrevButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -307,7 +307,7 @@ void BtnMercPrevButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -338,7 +338,7 @@ void BtnMercNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercHireButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -387,10 +387,10 @@ void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-BOOLEAN DisplayMercFace(UINT8 ubMercID) {
+BOOLEAN DisplayMercFace(uint8_t ubMercID) {
   struct VObject *hFaceHandle;
   struct VObject *hPortraitHandle;
-  STR sFaceLoc = "FACES\\BIGFACES\\";
+  char *sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
   MERCPROFILESTRUCT *pMerc;
   VOBJECT_DESC VObjectDesc;
@@ -481,9 +481,9 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
   return (TRUE);
 }
 
-void LoadAndDisplayMercBio(UINT8 ubMercID) {
+void LoadAndDisplayMercBio(uint8_t ubMercID) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   // load and display the merc bio
   uiStartLoc = MERC_BIO_SIZE * ubMercID;
@@ -503,8 +503,8 @@ void LoadAndDisplayMercBio(UINT8 ubMercID) {
   }
 }
 
-void DisplayMercsStats(UINT8 ubMercID) {
-  UINT16 usPosY, usPosX;
+void DisplayMercsStats(uint8_t ubMercID) {
+  uint16_t usPosY, usPosX;
   wchar_t sString[128];
 
   usPosY = MERC_HEALTH_Y;
@@ -607,9 +607,9 @@ void DisplayMercsStats(UINT8 ubMercID) {
                    FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 }
 
-BOOLEAN MercFilesHireMerc(UINT8 ubMercID) {
+BOOLEAN MercFilesHireMerc(uint8_t ubMercID) {
   MERC_HIRE_STRUCT HireMercStruct;
-  INT8 bReturnCode;
+  int8_t bReturnCode;
 
   memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));
 
@@ -666,7 +666,7 @@ BOOLEAN MercFilesHireMerc(UINT8 ubMercID) {
   }
 }
 
-void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnMercFilesBackButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

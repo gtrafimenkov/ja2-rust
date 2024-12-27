@@ -13,13 +13,13 @@
 
 typedef struct {
   BOOLEAN fExists;
-  INT16 sGridNo;
-  UINT8 ubLevel;
+  int16_t sGridNo;
+  uint8_t ubLevel;
   struct OBJECTTYPE o;
-  UINT16 usFlags;
-  INT8 bRenderZHeightAboveLevel;
+  uint16_t usFlags;
+  int8_t bRenderZHeightAboveLevel;
 
-  INT8 bVisible;
+  int8_t bVisible;
 
   // This is the chance associated with an item or a trap not-existing in the world.  The reason why
   // this is reversed (10 meaning item has 90% chance of appearing, is because the order that the
@@ -27,35 +27,35 @@ typedef struct {
   // added. Because this value is zero in the saved maps, we can't change it to 100, hence the
   // reversal method. This check is only performed the first time a map is loaded.  Later, it is
   // entirely skipped.
-  UINT8 ubNonExistChance;
+  uint8_t ubNonExistChance;
 
 } WORLDITEM;
 
 extern WORLDITEM *gWorldItems;
-extern UINT32 guiNumWorldItems;
+extern uint32_t guiNumWorldItems;
 
-INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
-                     INT8 bRenderZHeightAboveLevel, INT8 bVisible);
-void RemoveItemFromWorld(INT32 iItemIndex);
-INT32 FindWorldItem(UINT16 usItem);
+int32_t AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel,
+                       uint16_t usFlags, int8_t bRenderZHeightAboveLevel, int8_t bVisible);
+void RemoveItemFromWorld(int32_t iItemIndex);
+int32_t FindWorldItem(uint16_t usItem);
 
-void LoadWorldItemsFromMap(INT8 **hBuffer);
+void LoadWorldItemsFromMap(int8_t **hBuffer);
 void SaveWorldItemsToMap(HWFILE fp);
 
 void TrashWorldItems();
 
 typedef struct {
   BOOLEAN fExists;
-  INT32 iItemIndex;
+  int32_t iItemIndex;
 } WORLDBOMB;
 
 extern WORLDBOMB *gWorldBombs;
-extern UINT32 guiNumWorldBombs;
+extern uint32_t guiNumWorldBombs;
 
-extern INT32 AddBombToWorld(INT32 iItemIndex);
+extern int32_t AddBombToWorld(int32_t iItemIndex);
 extern void FindPanicBombsAndTriggers(void);
-extern INT32 FindWorldItemForBombInGridNo(INT16 sGridNo, INT8 bLevel);
+extern int32_t FindWorldItemForBombInGridNo(int16_t sGridNo, int8_t bLevel);
 
-void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems);
+void RefreshWorldItemsIntoItemPools(WORLDITEM *pItemList, int32_t iNumberOfItems);
 
 #endif

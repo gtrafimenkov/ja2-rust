@@ -15,18 +15,18 @@
 DatabaseManagerHeaderStruct gFileDataBase;
 
 struct _FILETIME {
-  UINT32 Lo;
-  UINT32 Hi;
+  uint32_t Lo;
+  uint32_t Hi;
 };
 
 typedef struct {
-  CHAR8 sFileName[FILENAME_SIZE];
-  UINT32 uiOffset;
-  UINT32 uiLength;
-  UINT8 ubState;
-  UINT8 ubReserved;
+  char sFileName[FILENAME_SIZE];
+  uint32_t uiOffset;
+  uint32_t uiLength;
+  uint8_t ubState;
+  uint8_t ubReserved;
   struct _FILETIME sFileTime;
-  UINT16 usReserved2;
+  uint16_t usReserved2;
 } DIRENTRY;
 
 BOOLEAN IsLibraryRealFile(HWFILE hFile) {
@@ -34,16 +34,16 @@ BOOLEAN IsLibraryRealFile(HWFILE hFile) {
 }
 
 // used when doing the binary search of the libraries
-INT16 gsCurrentLibrary = -1;
+int16_t gsCurrentLibrary = -1;
 
-static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2);
-BOOLEAN GetFileHeaderFromLibrary(INT16 sLibraryID, STR pstrFileName,
+static int CompareFileNames(char *arg1, FileHeaderStruct *arg2);
+BOOLEAN GetFileHeaderFromLibrary(int16_t sLibraryID, char *pstrFileName,
                                  FileHeaderStruct **pFileHeader);
-void AddSlashToPath(STR pName);
-HWFILE CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum);
-BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, INT16 sLibraryID);
+void AddSlashToPath(char *pName);
+HWFILE CreateLibraryFileHandle(int16_t sLibraryID, uint32_t uiFileNum);
+BOOLEAN CheckIfFileIsAlreadyOpen(char *pFileName, int16_t sLibraryID);
 
-INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2);
+int32_t CompareDirEntryFileNames(char *arg1, DIRENTRY *arg2);
 
 //************************************************************************
 //
@@ -55,8 +55,8 @@ INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2);
 //
 //************************************************************************
 BOOLEAN InitializeFileDatabase() {
-  INT16 i;
-  UINT32 uiSize;
+  int16_t i;
+  uint32_t uiSize;
   BOOLEAN fLibraryInited = FALSE;
 
   // if all the libraries exist, set them up
@@ -116,7 +116,7 @@ BOOLEAN InitializeFileDatabase() {
 //************************************************************************
 
 BOOLEAN ShutDownFileDatabase() {
-  UINT16 sLoop1;
+  uint16_t sLoop1;
 
   // Free up the memory used for each library
   for (sLoop1 = 0; sLoop1 < gFileDataBase.usNumberOfLibraries; sLoop1++) CloseLibrary(sLoop1);
@@ -143,7 +143,7 @@ BOOLEAN ShutDownFileDatabase() {
   return (TRUE);
 }
 
-BOOLEAN CheckForLibraryExistence(STR pLibraryName) {
+BOOLEAN CheckForLibraryExistence(char *pLibraryName) {
   SYS_FILE_HANDLE handle;
   if (Plat_OpenForReading(pLibraryName, &handle)) {
     Plat_CloseFile(handle);
@@ -152,15 +152,15 @@ BOOLEAN CheckForLibraryExistence(STR pLibraryName) {
   return FALSE;
 }
 
-BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
+BOOLEAN InitializeLibrary(char *pLibraryName, LibraryHeaderStruct *pLibHeader,
                           BOOLEAN fCanBeOnCDrom) {
   SYS_FILE_HANDLE hFile;
-  UINT16 usNumEntries = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiLoop;
+  uint16_t usNumEntries = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t uiLoop;
   DIRENTRY DirEntry;
   LIBHEADER LibFileHeader;
-  UINT32 uiCount = 0;
+  uint32_t uiCount = 0;
 
   // open the library for reading ( if it exists )
   if (!Plat_OpenForReading(pLibraryName, &hFile)) {
@@ -176,13 +176,13 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
   }
 
   // place the file pointer at the begining of the file headers ( they are at the end of the file )
-  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)),
+  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (int32_t)sizeof(DIRENTRY)),
                       FILE_SEEK_FROM_END);
 
   // loop through the library and determine the number of files that are FILE_OK
   // ie.  so we dont load the old or deleted files
   usNumEntries = 0;
-  for (uiLoop = 0; uiLoop < (UINT32)LibFileHeader.iEntries; uiLoop++) {
+  for (uiLoop = 0; uiLoop < (uint32_t)LibFileHeader.iEntries; uiLoop++) {
     // read in the file header
     if (!Plat_ReadFile(hFile, &DirEntry, sizeof(DIRENTRY), &uiNumBytesRead)) return (FALSE);
 
@@ -197,12 +197,12 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
 #endif
 
   // place the file pointer at the begining of the file headers ( they are at the end of the file )
-  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)),
+  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (int32_t)sizeof(DIRENTRY)),
                       FILE_SEEK_FROM_END);
 
   // loop through all the entries
   uiCount = 0;
-  for (uiLoop = 0; uiLoop < (UINT32)LibFileHeader.iEntries; uiLoop++) {
+  for (uiLoop = 0; uiLoop < (uint32_t)LibFileHeader.iEntries; uiLoop++) {
     // read in the file header
     if (!Plat_ReadFile(hFile, &DirEntry, sizeof(DIRENTRY), &uiNumBytesRead)) return (FALSE);
 
@@ -216,7 +216,7 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
                    FILENAME_SIZE));
 
       // allocate memory for the files name
-      pLibHeader->pFileHeader[uiCount].pFileName = (STR)MemAlloc(strlen(DirEntry.sFileName) + 1);
+      pLibHeader->pFileHeader[uiCount].pFileName = (char *)MemAlloc(strlen(DirEntry.sFileName) + 1);
 
       // if we couldnt allocate memory
       if (!pLibHeader->pFileHeader[uiCount].pFileName) {
@@ -248,12 +248,12 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
 
   // if the library has a path
   if (strlen(LibFileHeader.sPathToLibrary) != 0) {
-    pLibHeader->sLibraryPath = (STR)MemAlloc(strlen(LibFileHeader.sPathToLibrary) + 1);
+    pLibHeader->sLibraryPath = (char *)MemAlloc(strlen(LibFileHeader.sPathToLibrary) + 1);
     strcpy(pLibHeader->sLibraryPath, LibFileHeader.sPathToLibrary);
   } else {
     // else the library name does not contain a path ( most likely either an error or it is the
     // default path )
-    pLibHeader->sLibraryPath = (STR)MemAlloc(1);
+    pLibHeader->sLibraryPath = (char *)MemAlloc(1);
     pLibHeader->sLibraryPath[0] = '\0';
   }
 
@@ -283,12 +283,12 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
   return (TRUE);
 }
 
-BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, UINT32 uiFileNum, PTR pData, UINT32 uiBytesToRead,
-                            UINT32 *pBytesRead) {
-  UINT32 uiOffsetInLibrary, uiLength;
+BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileNum, void *pData,
+                            uint32_t uiBytesToRead, uint32_t *pBytesRead) {
+  uint32_t uiOffsetInLibrary, uiLength;
   SYS_FILE_HANDLE hLibraryFile;
-  UINT32 uiNumBytesRead;
-  UINT32 uiCurPos;
+  uint32_t uiNumBytesRead;
+  uint32_t uiCurPos;
 
   // get the offset into the library, the length and current position of the file pointer.
   uiOffsetInLibrary =
@@ -311,7 +311,7 @@ BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, UINT32 uiFileNum, PTR pData, UINT3
 
   if (uiBytesToRead != uiNumBytesRead) {
     //		Gets the reason why the function failed
-    //		UINT32 uiLastError = GetLastError();
+    //		uint32_t uiLastError = GetLastError();
     //		char zString[1024];
     //		FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
 
@@ -333,8 +333,8 @@ BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, UINT32 uiFileNum, PTR pData, UINT3
 //
 //************************************************************************
 
-BOOLEAN CheckIfFileExistInLibrary(STR pFileName) {
-  INT16 sLibraryID;
+BOOLEAN CheckIfFileExistInLibrary(char *pFileName) {
+  int16_t sLibraryID;
   FileHeaderStruct *pFileHeader;
 
   // get thelibrary that file is in
@@ -357,8 +357,8 @@ BOOLEAN CheckIfFileExistInLibrary(STR pFileName) {
 //	( eg. File is  Laptop\Test.sti, if the Laptop\ library is open, it returns true
 //
 //************************************************************************
-INT16 GetLibraryIDFromFileName(STR pFileName) {
-  INT16 sLoop1, sBestMatch = -1;
+int16_t GetLibraryIDFromFileName(char *pFileName) {
+  int16_t sLoop1, sBestMatch = -1;
 
   // loop through all the libraries to check which library the file is in
   for (sLoop1 = 0; sLoop1 < gFileDataBase.usNumberOfLibraries; sLoop1++) {
@@ -401,10 +401,10 @@ INT16 GetLibraryIDFromFileName(STR pFileName) {
 //
 //************************************************************************
 
-BOOLEAN GetFileHeaderFromLibrary(INT16 sLibraryID, STR pstrFileName,
+BOOLEAN GetFileHeaderFromLibrary(int16_t sLibraryID, char *pstrFileName,
                                  FileHeaderStruct **pFileHeader) {
   FileHeaderStruct **ppFileHeader;
-  CHAR8 sFileNameWithPath[FILENAME_SIZE];
+  char sFileNameWithPath[FILENAME_SIZE];
 
   // combine the library path to the file name (need it for the search of the library )
   strcpy(sFileNameWithPath, pstrFileName);
@@ -427,9 +427,9 @@ BOOLEAN GetFileHeaderFromLibrary(INT16 sLibraryID, STR pstrFileName,
   }
 }
 
-static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2) {
-  CHAR8 sSearchKey[FILENAME_SIZE];
-  CHAR8 sFileNameWithPath[FILENAME_SIZE];
+static int CompareFileNames(char *arg1, FileHeaderStruct *arg2) {
+  char sSearchKey[FILENAME_SIZE];
+  char sFileNameWithPath[FILENAME_SIZE];
 
   sprintf(sSearchKey, "%s", arg1);
 
@@ -440,10 +440,10 @@ static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2) {
   return strcasecmp(sSearchKey, sFileNameWithPath);
 }
 
-void AddSlashToPath(STR pName) {
-  UINT32 uiLoop, uiCounter;
+void AddSlashToPath(char *pName) {
+  uint32_t uiLoop, uiCounter;
   BOOLEAN fDone = FALSE;
-  CHAR8 sNewName[FILENAME_SIZE];
+  char sNewName[FILENAME_SIZE];
 
   // find out if there is a '\' in the file name
 
@@ -470,12 +470,12 @@ void AddSlashToPath(STR pName) {
 //
 //************************************************************************
 
-HWFILE OpenFileFromLibrary(STR pName) {
+HWFILE OpenFileFromLibrary(char *pName) {
   FileHeaderStruct *pFileHeader;
   HWFILE hLibFile;
-  INT16 sLibraryID;
-  UINT16 uiLoop1;
-  UINT32 uiFileNum = 0;
+  int16_t sLibraryID;
+  uint16_t uiLoop1;
+  uint32_t uiFileNum = 0;
 
   // Check if the file can be contained from an open library ( the path to the file a library path )
   sLibraryID = GetLibraryIDFromFileName(pName);
@@ -562,7 +562,7 @@ HWFILE OpenFileFromLibrary(STR pName) {
   return (hLibFile);
 }
 
-HWFILE CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum) {
+HWFILE CreateLibraryFileHandle(int16_t sLibraryID, uint32_t uiFileNum) {
   HWFILE hLibFile;
 
   hLibFile = uiFileNum;
@@ -573,9 +573,9 @@ HWFILE CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum) {
 
 HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
   HWFILE hLibFile;
-  INT32 iLoop1;
-  UINT32 uiFileNum = 0;
-  UINT32 uiSize;
+  int32_t iLoop1;
+  uint32_t uiFileNum = 0;
+  uint32_t uiSize;
 
   // if there isnt enough space to put the file, realloc more space
   if (gFileDataBase.RealFiles.iNumFilesOpen >= (gFileDataBase.RealFiles.iSizeOfOpenFileArray - 1)) {
@@ -616,10 +616,10 @@ HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
   return (hLibFile);
 }
 
-BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
-                                                 UINT32 *pFileNum) {
+BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, int16_t *pLibraryID,
+                                                 uint32_t *pFileNum) {
   *pFileNum = DB_EXTRACT_FILE_ID(hlibFile);
-  *pLibraryID = (UINT16)DB_EXTRACT_LIBRARY(hlibFile);
+  *pLibraryID = (uint16_t)DB_EXTRACT_LIBRARY(hlibFile);
 
   // TEST: qq
   /*	if( *pLibraryID == LIBRARY_SOUNDS )
@@ -636,10 +636,10 @@ BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibrar
 //
 //************************************************************************
 
-BOOLEAN CloseLibraryFile(INT16 sLibraryID, UINT32 uiFileID) {
+BOOLEAN CloseLibraryFile(int16_t sLibraryID, uint32_t uiFileID) {
   if (IsLibraryOpened(sLibraryID)) {
     // if the uiFileID is invalid
-    if ((uiFileID >= (UINT32)gFileDataBase.pLibraries[sLibraryID].iSizeOfOpenFileArray))
+    if ((uiFileID >= (uint32_t)gFileDataBase.pLibraries[sLibraryID].iSizeOfOpenFileArray))
       return (FALSE);
 
     // if the file is not opened, dont close it
@@ -668,8 +668,9 @@ BOOLEAN CloseLibraryFile(INT16 sLibraryID, UINT32 uiFileID) {
   return (TRUE);
 }
 
-BOOLEAN LibraryFileSeek(INT16 sLibraryID, UINT32 uiFileNum, UINT32 uiDistance, UINT8 uiHowToSeek) {
-  UINT32 uiCurPos, uiSize;
+BOOLEAN LibraryFileSeek(int16_t sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
+                        uint8_t uiHowToSeek) {
+  uint32_t uiCurPos, uiSize;
 
   // if the library is not open, return an error
   if (!IsLibraryOpened(sLibraryID)) return (FALSE);
@@ -698,7 +699,7 @@ BOOLEAN LibraryFileSeek(INT16 sLibraryID, UINT32 uiFileNum, UINT32 uiDistance, U
 //
 //************************************************************************
 
-BOOLEAN OpenLibrary(INT16 sLibraryID) {
+BOOLEAN OpenLibrary(int16_t sLibraryID) {
   // if the library is already opened, report an error
   if (gFileDataBase.pLibraries[sLibraryID].fLibraryOpen) return (FALSE);
 
@@ -713,8 +714,8 @@ BOOLEAN OpenLibrary(INT16 sLibraryID) {
   return (TRUE);
 }
 
-BOOLEAN CloseLibrary(INT16 sLibraryID) {
-  UINT32 uiLoop1;
+BOOLEAN CloseLibrary(int16_t sLibraryID) {
+  uint32_t uiLoop1;
 
   // if the library isnt loaded, dont close it
   if (!IsLibraryOpened(sLibraryID)) return (FALSE);
@@ -732,7 +733,7 @@ BOOLEAN CloseLibrary(INT16 sLibraryID) {
   // open
   if (gFileDataBase.pLibraries[sLibraryID].iNumFilesOpen) {
     // loop though the array of open files to see if any are still open
-    for (uiLoop1 = 0; uiLoop1 < (UINT32)gFileDataBase.pLibraries[sLibraryID].usNumberOfEntries;
+    for (uiLoop1 = 0; uiLoop1 < (uint32_t)gFileDataBase.pLibraries[sLibraryID].usNumberOfEntries;
          uiLoop1++) {
       if (CheckIfFileIsAlreadyOpen(
               gFileDataBase.pLibraries[sLibraryID].pFileHeader[uiLoop1].pFileName, sLibraryID)) {
@@ -781,7 +782,7 @@ BOOLEAN CloseLibrary(INT16 sLibraryID) {
   return (TRUE);
 }
 
-BOOLEAN IsLibraryOpened(INT16 sLibraryID) {
+BOOLEAN IsLibraryOpened(int16_t sLibraryID) {
   // if the database is not initialized
   if (!gFileDataBase.fInitialized) return (FALSE);
 
@@ -795,8 +796,8 @@ BOOLEAN IsLibraryOpened(INT16 sLibraryID) {
     return (FALSE);
 }
 
-BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, INT16 sLibraryID) {
-  UINT16 usLoop1 = 0;
+BOOLEAN CheckIfFileIsAlreadyOpen(char *pFileName, int16_t sLibraryID) {
+  uint16_t usLoop1 = 0;
 
   char filename[256];
 
@@ -823,9 +824,9 @@ BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, INT16 sLibraryID) {
 //
 //************************************************************************
 
-INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2) {
-  CHAR8 sSearchKey[FILENAME_SIZE];
-  CHAR8 sFileNameWithPath[FILENAME_SIZE];
+int32_t CompareDirEntryFileNames(char *arg1, DIRENTRY *arg2) {
+  char sSearchKey[FILENAME_SIZE];
+  char sFileNameWithPath[FILENAME_SIZE];
 
   sprintf(sSearchKey, "%s", arg1);
 

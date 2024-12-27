@@ -42,8 +42,8 @@ struct VSurface *ghMouseBuffer = NULL;
 #define MAX_CURSOR_HEIGHT 64
 #define VIDEO_NO_CURSOR 0xFFFF
 
-extern INT32 giNumFrames;
-extern UINT32 guiMouseBufferState;  // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
+extern int32_t giNumFrames;
+extern uint32_t guiMouseBufferState;  // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
 
 struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface);
 
@@ -57,39 +57,40 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
 void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurfaceDesc);
 void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *ppOldSurface2);
 void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACEDESC pSurfaceDesc,
-                   UINT32 uiFlags, HANDLE hEvent);
-void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
+                   uint32_t uiFlags, HANDLE hEvent);
+void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, void *pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
-void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, UINT32 uiX, UINT32 uiY,
-                      LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiTrans);
+void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, uint32_t uiX, uint32_t uiY,
+                      LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, uint32_t uiTrans);
 void DDBltSurface(LPDIRECTDRAWSURFACE2 pDestSurface, LPRECT pDestRect,
-                  LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiFlags,
+                  LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, uint32_t uiFlags,
                   LPDDBLTFX pDDBltFx);
-void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey);
+void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, uint32_t uiFlags,
+                          LPDDCOLORKEY pDDColorKey);
 
 // Palette Functions
-void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, UINT32 uiFlags, LPPALETTEENTRY pColorTable,
+void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, uint32_t uiFlags, LPPALETTEENTRY pColorTable,
                      LPDIRECTDRAWPALETTE FAR *ppDDPalette, IUnknown FAR *pUnkOuter);
-void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiStartingEntry,
-                         UINT32 uiCount, LPPALETTEENTRY pEntries);
+void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiStartingEntry,
+                         uint32_t uiCount, LPPALETTEENTRY pEntries);
 void DDReleasePalette(LPDIRECTDRAWPALETTE pPalette);
-void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiBase,
-                         UINT32 uiNumEntries, LPPALETTEENTRY pEntries);
+void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiBase,
+                         uint32_t uiNumEntries, LPPALETTEENTRY pEntries);
 
 // Clipper functions
-void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, UINT32 fFlags, LPDIRECTDRAWCLIPPER *pDDClipper);
+void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, uint32_t fFlags, LPDIRECTDRAWCLIPPER *pDDClipper);
 void DDSetClipper(LPDIRECTDRAWSURFACE2 pSurface, LPDIRECTDRAWCLIPPER pDDClipper);
 void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper);
-void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags);
+void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, uint32_t uiFlags);
 
 #define IDirectDrawSurface2_SGPBltFast(p, a, b, c, d, e) \
   IDirectDrawSurface2_BltFast(p, a, b, c, d, e)
 #define IDirectDrawSurface2_SGPBlt(p, a, b, c, d, e) IDirectDrawSurface2_Blt(p, a, b, c, d, e)
 
 // local functions
-char *DirectXErrorDescription(INT32 iDXReturn);
-void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename);
-void DirectXAssert(BOOLEAN fValue, INT32 nLine, char *szFilename);
+char *DirectXErrorDescription(int32_t iDXReturn);
+void DirectXAttempt(int32_t iErrorCode, int32_t nLine, char *szFilename);
+void DirectXAssert(BOOLEAN fValue, int32_t nLine, char *szFilename);
 void DirectXZeroMem(void *pMemory, int nSize);
 
 #undef ATTEMPT
@@ -117,8 +118,8 @@ void DirectXZeroMem(void *pMemory, int nSize);
 
 typedef struct {
   BOOLEAN fRestore;
-  UINT16 usMouseXPos, usMouseYPos;
-  UINT16 usLeft, usTop, usRight, usBottom;
+  uint16_t usMouseXPos, usMouseYPos;
+  uint16_t usLeft, usTop, usRight, usBottom;
   RECT Region;
   LPDIRECTDRAWSURFACE _pSurface;
   LPDIRECTDRAWSURFACE2 pSurface;
@@ -134,10 +135,10 @@ static RECT gScrollRegion;
 #define MAX_NUM_FRAMES 25
 
 BOOLEAN gfVideoCapture = FALSE;
-UINT32 guiFramePeriod = (1000 / 15);
-UINT32 guiLastFrame;
-UINT16 *gpFrameData[MAX_NUM_FRAMES];
-INT32 giNumFrames = 0;
+uint32_t guiFramePeriod = (1000 / 15);
+uint32_t guiLastFrame;
+uint16_t *gpFrameData[MAX_NUM_FRAMES];
+int32_t giNumFrames = 0;
 
 //
 // Direct Draw objects for both the Primary and Backbuffer surfaces
@@ -169,10 +170,10 @@ extern RECT rcWindow;
 // Globals for mouse cursor
 //
 
-static UINT16 gusMouseCursorWidth;
-static UINT16 gusMouseCursorHeight;
-static INT16 gsMouseCursorXOffset;
-static INT16 gsMouseCursorYOffset;
+static uint16_t gusMouseCursorWidth;
+static uint16_t gusMouseCursorHeight;
+static int16_t gsMouseCursorXOffset;
+static int16_t gsMouseCursorYOffset;
 
 static LPDIRECTDRAWSURFACE _gpMouseCursor = NULL;
 static LPDIRECTDRAWSURFACE2 gpMouseCursor = NULL;
@@ -196,10 +197,10 @@ LPDIRECTDRAWPALETTE gpDirectDrawPalette;
 // Refresh thread based variables
 //
 
-UINT32 guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY
-UINT32 guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
-UINT32 guiVideoManagerState;   // VIDEO_ON, VIDEO_OFF, VIDEO_SUSPENDED, VIDEO_SHUTTING_DOWN
-UINT32 guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
+uint32_t guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY
+uint32_t guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
+uint32_t guiVideoManagerState;   // VIDEO_ON, VIDEO_OFF, VIDEO_SUSPENDED, VIDEO_SHUTTING_DOWN
+uint32_t guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
 
 //
 // Dirty rectangle management variables
@@ -207,15 +208,15 @@ UINT32 guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
 
 void (*gpFrameBufferRefreshOverride)(void);
 SGPRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
-UINT32 guiDirtyRegionCount;
+uint32_t guiDirtyRegionCount;
 BOOLEAN gfForceFullScreenRefresh;
 
 SGPRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
-UINT32 gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
-UINT32 guiDirtyRegionExCount;
+uint32_t gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
+uint32_t guiDirtyRegionExCount;
 
 SGPRect gBACKUPListOfDirtyRegions[MAX_DIRTY_REGIONS];
-UINT32 gBACKUPuiDirtyRegionCount;
+uint32_t gBACKUPuiDirtyRegionCount;
 BOOLEAN gBACKUPfForceFullScreenRefresh;
 
 //
@@ -223,29 +224,29 @@ BOOLEAN gBACKUPfForceFullScreenRefresh;
 //
 
 BOOLEAN gfPrintFrameBuffer;
-UINT32 guiPrintFrameBufferIndex;
+uint32_t guiPrintFrameBufferIndex;
 
-extern UINT16 gusRedMask;
-extern UINT16 gusGreenMask;
-extern UINT16 gusBlueMask;
-extern INT16 gusRedShift;
-extern INT16 gusBlueShift;
-extern INT16 gusGreenShift;
+extern uint16_t gusRedMask;
+extern uint16_t gusGreenMask;
+extern uint16_t gusBlueMask;
+extern int16_t gusRedShift;
+extern int16_t gusBlueShift;
+extern int16_t gusGreenShift;
 
-void AddRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags);
+void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags);
 void SnapshotSmall(void);
 void VideoMovieCapture(BOOLEAN fEnable);
 void RefreshMovieCache();
 
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
-  UINT32 uiIndex, uiPitch;
+  uint32_t uiIndex, uiPitch;
   HRESULT ReturnCode;
   HWND hWindow;
   WNDCLASS WindowClass;
-  CHAR8 ClassName[] = APPLICATION_NAME;
+  char ClassName[] = APPLICATION_NAME;
   DDSURFACEDESC SurfaceDescription;
   DDCOLORKEY ColorKey;
-  PTR pTmpPointer;
+  void *pTmpPointer;
 
 #ifndef WINDOWED_MODE
   DDSCAPS SurfaceCaps;
@@ -585,7 +586,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 }
 
 void ShutdownVideoManager(void) {
-  // UINT32  uiRefreshThreadState;
+  // uint32_t  uiRefreshThreadState;
 
   DebugMsg(TOPIC_VIDEO, DBG_LEVEL_0, "Shutting down the video manager");
 
@@ -684,7 +685,7 @@ BOOLEAN RestoreVideoManager(void) {
   }
 }
 
-void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
+void InvalidateRegion(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom) {
   if (gfForceFullScreenRefresh == TRUE) {
     //
     // There's no point in going on since we are forcing a full screen refresh
@@ -731,8 +732,9 @@ void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
   }
 }
 
-void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags) {
-  INT32 iOldBottom;
+void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                        uint32_t uiFlags) {
+  int32_t iOldBottom;
 
   iOldBottom = iBottom;
 
@@ -752,7 +754,7 @@ void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UI
   }
 }
 
-void AddRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags) {
+void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags) {
   if (guiDirtyRegionExCount < MAX_DIRTY_REGIONS) {
     // DO SOME PREMIMARY CHECKS FOR VALID RECTS
     if (iLeft < 0) iLeft = 0;
@@ -798,19 +800,19 @@ void InvalidateScreen(void) {
   guiFrameBufferState = BUFFER_DIRTY;
 }
 
-void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
+void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_t sScrollYIncrement,
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
-                         BOOLEAN fRenderStrip, UINT32 uiCurrentMouseBackbuffer) {
-  UINT16 usWidth, usHeight;
-  UINT8 ubBitDepth;
+                         BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
+  uint16_t usWidth, usHeight;
+  uint8_t ubBitDepth;
   HRESULT ReturnCode;
   static RECT Region;
-  static UINT16 usMouseXPos, usMouseYPos;
+  static uint16_t usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
-  UINT16 usNumStrips = 0;
-  INT32 cnt;
-  INT16 sShiftX, sShiftY;
-  INT32 uiCountY;
+  uint16_t usNumStrips = 0;
+  int32_t cnt;
+  int16_t sShiftX, sShiftY;
+  int32_t uiCountY;
 
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
   usHeight = (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y);
@@ -855,10 +857,10 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usMouseXPos += sScrollXIncrement;
 
       usNumStrips = 1;
@@ -886,7 +888,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset(
-            (UINT8 *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
+            (uint8_t *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
             0, sScrollXIncrement * 2);
       }
 
@@ -897,7 +899,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       //					uiDestPitchBYTES-sScrollXIncrement*uiBPP);
       //}
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usMouseXPos -= sScrollXIncrement;
 
       usNumStrips = 1;
@@ -925,7 +927,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 
       for (uiCountY = sScrollYIncrement - 1 + gsVIEWPORT_WINDOW_START_Y;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
       // for(uiCountY=usHeight-1; uiCountY >= sScrollYIncrement; uiCountY--)
@@ -934,7 +936,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       //					pSrcBuf+((uiCountY-sScrollYIncrement)*uiDestPitchBYTES),
       //					uiDestPitchBYTES);
       //}
-      StripRegions[0].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[0].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
       usNumStrips = 1;
 
       usMouseYPos += sScrollYIncrement;
@@ -963,7 +965,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       // Zero out z
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
       // for(uiCountY=0; uiCountY < (usHeight-sScrollYIncrement); uiCountY++)
@@ -973,7 +975,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       //					uiDestPitchBYTES);
       //}
 
-      StripRegions[0].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[0].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
       usNumStrips = 1;
 
       usMouseYPos -= sScrollYIncrement;
@@ -1002,16 +1004,16 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement - 1;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
-      StripRegions[1].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
-      StripRegions[1].left = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[1].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[1].left = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos += sScrollYIncrement;
@@ -1042,17 +1044,17 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset(
-            (UINT8 *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
+            (uint8_t *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
             0, sScrollXIncrement * 2);
       }
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement - 1;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
-      StripRegions[1].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
-      StripRegions[1].right = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[1].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[1].right = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos += sScrollYIncrement;
@@ -1082,17 +1084,17 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
 
-      StripRegions[1].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
-      StripRegions[1].left = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[1].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[1].left = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos -= sScrollYIncrement;
@@ -1122,17 +1124,17 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset(
-            (UINT8 *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
+            (uint8_t *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
             0, sScrollXIncrement * 2);
       }
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
-      StripRegions[1].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
-      StripRegions[1].right = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[1].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[1].right = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos -= sScrollYIncrement;
@@ -1155,11 +1157,12 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 #endif
 
     for (cnt = 0; cnt < usNumStrips; cnt++) {
-      RenderStaticWorldRect((INT16)StripRegions[cnt].left, (INT16)StripRegions[cnt].top,
-                            (INT16)StripRegions[cnt].right, (INT16)StripRegions[cnt].bottom, TRUE);
+      RenderStaticWorldRect((int16_t)StripRegions[cnt].left, (int16_t)StripRegions[cnt].top,
+                            (int16_t)StripRegions[cnt].right, (int16_t)StripRegions[cnt].bottom,
+                            TRUE);
       // Optimize Redundent tiles too!
-      // ExamineZBufferRect( (INT16)StripRegions[ cnt ].left, (INT16)StripRegions[ cnt ].top,
-      // (INT16)StripRegions[ cnt ].right, (INT16)StripRegions[ cnt ].bottom );
+      // ExamineZBufferRect( (int16_t)StripRegions[ cnt ].left, (int16_t)StripRegions[ cnt ].top,
+      // (int16_t)StripRegions[ cnt ].right, (int16_t)StripRegions[ cnt ].bottom );
 
       do {
         ReturnCode = IDirectDrawSurface2_SGPBltFast(
@@ -1268,13 +1271,13 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 }
 
 void RefreshScreen(void *DummyVariable) {
-  static UINT32 uiRefreshThreadState, uiIndex;
-  UINT16 usScreenWidth, usScreenHeight;
+  static uint32_t uiRefreshThreadState, uiIndex;
+  uint16_t usScreenWidth, usScreenHeight;
   static BOOLEAN fShowMouse;
   HRESULT ReturnCode;
   static RECT Region;
   static BOOLEAN fFirstTime = TRUE;
-  UINT32 uiTime;
+  uint32_t uiTime;
 
   usScreenWidth = usScreenHeight = 0;
 
@@ -1473,10 +1476,10 @@ void RefreshScreen(void *DummyVariable) {
     LPDIRECTDRAWSURFACE2 pTmpBuffer;
     DDSURFACEDESC SurfaceDescription;
     FILE *OutputFile;
-    CHAR8 FileName[64];
-    INT32 iIndex;
+    char FileName[64];
+    int32_t iIndex;
     STRING512 ExecDir;
-    UINT16 *p16BPPData;
+    uint16_t *p16BPPData;
 
     Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
     Plat_SetCurrentDirectory(ExecDir);
@@ -1548,7 +1551,7 @@ void RefreshScreen(void *DummyVariable) {
 
       // 5/6/5.. create buffer...
       if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-        p16BPPData = (UINT16 *)MemAlloc(640 * 2);
+        p16BPPData = (uint16_t *)MemAlloc(640 * 2);
       }
 
       for (iIndex = 479; iIndex >= 0; iIndex--) {
@@ -1556,7 +1559,7 @@ void RefreshScreen(void *DummyVariable) {
         // if current settings are 5/6/5....
         if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
           // Read into a buffer...
-          memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)),
+          memcpy(p16BPPData, (((uint8_t *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)),
                  640 * 2);
 
           // Convert....
@@ -1565,8 +1568,8 @@ void RefreshScreen(void *DummyVariable) {
           // Write
           fwrite(p16BPPData, 640 * 2, 1, OutputFile);
         } else {
-          fwrite((void *)(((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2, 1,
-                 OutputFile);
+          fwrite((void *)(((uint8_t *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2,
+                 1, OutputFile);
         }
       }
 
@@ -1668,25 +1671,25 @@ void RefreshScreen(void *DummyVariable) {
 
       gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore = TRUE;
       gMouseCursorBackground[CURRENT_MOUSE_DATA].usRight =
-          (UINT16)Region.right - (UINT16)Region.left;
+          (uint16_t)Region.right - (uint16_t)Region.left;
       gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom =
-          (UINT16)Region.bottom - (UINT16)Region.top;
+          (uint16_t)Region.bottom - (uint16_t)Region.top;
       if (Region.left < 0) {
-        gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = (UINT16)(0 - Region.left);
+        gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = (uint16_t)(0 - Region.left);
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos = 0;
         Region.left = 0;
       } else {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos =
-            (UINT16)MousePos.x - gsMouseCursorXOffset;
+            (uint16_t)MousePos.x - gsMouseCursorXOffset;
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = 0;
       }
       if (Region.top < 0) {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos = 0;
-        gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = (UINT16)(0 - Region.top);
+        gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = (uint16_t)(0 - Region.top);
         Region.top = 0;
       } else {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos =
-            (UINT16)MousePos.y - gsMouseCursorYOffset;
+            (uint16_t)MousePos.y - gsMouseCursorYOffset;
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = 0;
       }
 
@@ -1979,7 +1982,7 @@ LPDIRECTDRAWSURFACE2 GetMouseBufferObject(void) {
   return gpMouseCursor;
 }
 
-PTR LockPrimarySurface(UINT32 *uiPitch) {
+void *LockPrimarySurface(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2012,7 +2015,7 @@ void UnlockPrimarySurface(void) {
   }
 }
 
-PTR LockBackBuffer(UINT32 *uiPitch) {
+void *LockBackBuffer(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2061,7 +2064,7 @@ void UnlockBackBuffer(void) {
   }
 }
 
-PTR LockFrameBuffer(UINT32 *uiPitch) {
+void *LockFrameBuffer(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2095,7 +2098,7 @@ void UnlockFrameBuffer(void) {
   }
 }
 
-PTR LockMouseBuffer(UINT32 *uiPitch) {
+void *LockMouseBuffer(uint32_t *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2126,7 +2129,7 @@ void UnlockMouseBuffer(void) {
 
 BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
-  UINT16 usBit;
+  uint16_t usBit;
   HRESULT ReturnCode;
 
   Assert(gpPrimarySurface != NULL);
@@ -2144,9 +2147,9 @@ BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  gusRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  gusGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  gusBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  gusRedMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  gusGreenMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  gusBlueMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   // RGB 5,5,5
   if ((gusRedMask == 0x7c00) && (gusGreenMask == 0x03e0) && (gusBlueMask == 0x1f))
@@ -2179,8 +2182,8 @@ BOOLEAN GetRGBDistribution(void) {
   return TRUE;
 }
 
-BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
-                                       UINT32 *BlueBitMask) {
+BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitMask,
+                                       uint32_t *BlueBitMask) {
   *RedBitMask = gusRedMask;
   *GreenBitMask = gusGreenMask;
   *BlueBitMask = gusBlueMask;
@@ -2189,8 +2192,8 @@ BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
 }
 
 BOOLEAN EraseMouseCursor() {
-  PTR pTmpPointer;
-  UINT32 uiPitch;
+  void *pTmpPointer;
+  uint32_t uiPitch;
 
   //
   // Erase cursor background
@@ -2204,8 +2207,8 @@ BOOLEAN EraseMouseCursor() {
   return (TRUE);
 }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                 UINT16 usCursorWidth) {
+BOOLEAN SetMouseCursorProperties(int16_t sOffsetX, int16_t sOffsetY, uint16_t usCursorHeight,
+                                 uint16_t usCursorWidth) {
   gsMouseCursorXOffset = sOffsetX;
   gsMouseCursorYOffset = sOffsetY;
   gusMouseCursorWidth = usCursorWidth;
@@ -2215,10 +2218,10 @@ BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursor
 
 void DirtyCursor() { guiMouseBufferState = BUFFER_DIRTY; }
 
-BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
+BOOLEAN SetCurrentCursor(uint16_t usVideoObjectSubIndex, uint16_t usOffsetX, uint16_t usOffsetY) {
   BOOLEAN ReturnValue;
-  PTR pTmpPointer;
-  UINT32 uiPitch;
+  void *pTmpPointer;
+  uint32_t uiPitch;
   ETRLEObject pETRLEPointer;
 
   //
@@ -2312,7 +2315,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) {
   return (TRUE);
 }
 
-void FatalError(STR8 pError, ...) {
+void FatalError(char *pError, ...) {
   va_list argptr;
 
   va_start(argptr, pError);  // Set up variable argument pointer
@@ -2347,27 +2350,27 @@ void FatalError(STR8 pError, ...) {
 #pragma pack(push, 1)
 
 typedef struct {
-  UINT8 ubIDLength;
-  UINT8 ubColorMapType;
-  UINT8 ubTargaType;
-  UINT16 usColorMapOrigin;
-  UINT16 usColorMapLength;
-  UINT8 ubColorMapEntrySize;
-  UINT16 usOriginX;
-  UINT16 usOriginY;
-  UINT16 usImageWidth;
-  UINT16 usImageHeight;
-  UINT8 ubBitsPerPixel;
-  UINT8 ubImageDescriptor;
+  uint8_t ubIDLength;
+  uint8_t ubColorMapType;
+  uint8_t ubTargaType;
+  uint16_t usColorMapOrigin;
+  uint16_t usColorMapLength;
+  uint8_t ubColorMapEntrySize;
+  uint16_t usOriginX;
+  uint16_t usOriginY;
+  uint16_t usImageWidth;
+  uint16_t usImageHeight;
+  uint8_t ubBitsPerPixel;
+  uint8_t ubImageDescriptor;
 
 } TARGA_HEADER;
 
 #pragma pack(pop)
 
 void SnapshotSmall(void) {
-  INT32 iCountX, iCountY;
+  int32_t iCountX, iCountY;
   DDSURFACEDESC SurfaceDescription;
-  UINT16 *pVideo, *pDest;
+  uint16_t *pVideo, *pDest;
 
   HRESULT ReturnCode;
 
@@ -2393,24 +2396,25 @@ void SnapshotSmall(void) {
   //	fwrite(&Header, sizeof(TARGA_HEADER), 1, disk);
 
   // Get the write pointer
-  pVideo = (UINT16 *)SurfaceDescription.lpSurface;
+  pVideo = (uint16_t *)SurfaceDescription.lpSurface;
 
   pDest = gpFrameData[giNumFrames];
 
   for (iCountY = SCREEN_HEIGHT - 1; iCountY >= 0; iCountY -= 1) {
     for (iCountX = 0; iCountX < SCREEN_WIDTH; iCountX += 1) {
-      //		uiData=(UINT16)*(pVideo+(iCountY*640*2)+ ( iCountX * 2 ) );
+      //		uiData=(uint16_t)*(pVideo+(iCountY*640*2)+ ( iCountX * 2 ) );
 
       //				1111 1111 1100 0000
       //				f		 f		c
-      //		usPixel555=	(UINT16)(uiData&0xffff);
+      //		usPixel555=	(uint16_t)(uiData&0xffff);
       //			usPixel555= ((usPixel555 & 0xffc0) >> 1) | (usPixel555 & 0x1f);
 
-      //		usPixel555=	(UINT16)(uiData);
+      //		usPixel555=	(uint16_t)(uiData);
 
-      //	fwrite( &usPixel555, sizeof(UINT16), 1, disk);
-      //		fwrite(	(void *)(((UINT8 *)SurfaceDescription.lpSurface) + ( iCountY * 640 *
-      // 2) + ( iCountX * 2 ) ), 2 * sizeof( BYTE ), 1, disk );
+      //	fwrite( &usPixel555, sizeof(uint16_t), 1, disk);
+      //		fwrite(	(void *)(((uint8_t *)SurfaceDescription.lpSurface) + ( iCountY * 640
+      //*
+      // 2) + ( iCountX * 2 ) ), 2 * sizeof( uint8_t ), 1, disk );
 
       *(pDest + (iCountY * 640) + (iCountX)) = *(pVideo + (iCountY * 640) + (iCountX));
     }
@@ -2439,12 +2443,12 @@ void VideoCaptureToggle(void) {
 }
 
 void VideoMovieCapture(BOOLEAN fEnable) {
-  INT32 cnt;
+  int32_t cnt;
 
   gfVideoCapture = fEnable;
   if (fEnable) {
     for (cnt = 0; cnt < MAX_NUM_FRAMES; cnt++) {
-      gpFrameData[cnt] = (UINT16 *)MemAlloc(640 * 480 * 2);
+      gpFrameData[cnt] = (uint16_t *)MemAlloc(640 * 480 * 2);
     }
 
     giNumFrames = 0;
@@ -2464,12 +2468,12 @@ void VideoMovieCapture(BOOLEAN fEnable) {
 
 void RefreshMovieCache() {
   TARGA_HEADER Header;
-  INT32 iCountX, iCountY;
+  int32_t iCountX, iCountY;
   FILE *disk;
-  CHAR8 cFilename[_MAX_PATH];
-  static UINT32 uiPicNum = 0;
-  UINT16 *pDest;
-  INT32 cnt;
+  char cFilename[_MAX_PATH];
+  static uint32_t uiPicNum = 0;
+  uint16_t *pDest;
+  int32_t cnt;
   STRING512 ExecDir;
 
   PauseTime(TRUE);
@@ -2495,7 +2499,7 @@ void RefreshMovieCache() {
 
     for (iCountY = 480 - 1; iCountY >= 0; iCountY -= 1) {
       for (iCountX = 0; iCountX < 640; iCountX++) {
-        fwrite((pDest + (iCountY * 640) + iCountX), sizeof(UINT16), 1, disk);
+        fwrite((pDest + (iCountY * 640) + iCountX), sizeof(uint16_t), 1, disk);
       }
     }
 
@@ -2628,31 +2632,32 @@ BOOLEAN ClipReleatedSrcAndDestRectangles(struct VSurface *hDestVSurface,
 BOOLEAN FillSurface(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx);
 BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx);
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect);
+                           uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                           struct Rect *SrcRect);
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
-                              RECT *DestRect);
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, RECT *DestRect);
 BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, RECT *pRect);
 
 void DeletePrimaryVideoSurfaces();
 
 typedef struct VSURFACE_NODE {
   struct VSurface *hVSurface;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
   struct VSURFACE_NODE *next, *prev;
 
 #ifdef SGP_VIDEO_DEBUGGING
-  CHAR8 *pName;
-  CHAR8 *pCode;
+  char *pName;
+  char *pCode;
 #endif
 
 } VSURFACE_NODE;
 
 VSURFACE_NODE *gpVSurfaceHead = NULL;
 VSURFACE_NODE *gpVSurfaceTail = NULL;
-UINT32 guiVSurfaceIndex = 0;
-UINT32 guiVSurfaceSize = 0;
-UINT32 guiVSurfaceTotalAdded = 0;
+uint32_t guiVSurfaceIndex = 0;
+uint32_t guiVSurfaceSize = 0;
+uint32_t guiVSurfaceTotalAdded = 0;
 
 #ifdef _DEBUG
 enum {
@@ -2669,12 +2674,12 @@ enum {
   DEBUGSTR_DELETEVIDEOSURFACEFROMINDEX
 };
 
-UINT8 gubVSDebugCode = 0;
+uint8_t gubVSDebugCode = 0;
 
-void CheckValidVSurfaceIndex(UINT32 uiIndex);
+void CheckValidVSurfaceIndex(uint32_t uiIndex);
 #endif
 
-INT32 giMemUsedInSurfaces;
+int32_t giMemUsedInSurfaces;
 
 BOOLEAN InitializeVideoSurfaceManager() {
   // Shouldn't be calling this if the video surface manager already exists.
@@ -2738,7 +2743,7 @@ BOOLEAN RestoreVideoSurfaces() {
   return TRUE;
 }
 
-BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) {
+BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, uint32_t *puiIndex) {
   struct VSurface *hVSurface;
 
   // Assertions
@@ -2785,26 +2790,26 @@ BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) 
   return TRUE;
 }
 
-BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *puiPitch) {
+uint8_t *LockVideoSurface(uint32_t uiVSurface, uint32_t *puiPitch) {
   VSURFACE_NODE *curr;
 
   //
   // Check if given backbuffer or primary buffer
   //
   if (uiVSurface == PRIMARY_SURFACE) {
-    return (BYTE *)LockPrimarySurface(puiPitch);
+    return (uint8_t *)LockPrimarySurface(puiPitch);
   }
 
   if (uiVSurface == BACKBUFFER) {
-    return (BYTE *)LockBackBuffer(puiPitch);
+    return (uint8_t *)LockBackBuffer(puiPitch);
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    return (BYTE *)LockFrameBuffer(puiPitch);
+    return (uint8_t *)LockFrameBuffer(puiPitch);
   }
 
   if (uiVSurface == MOUSE_BUFFER) {
-    return (BYTE *)LockMouseBuffer(puiPitch);
+    return (uint8_t *)LockMouseBuffer(puiPitch);
   }
 
   //
@@ -2829,7 +2834,7 @@ BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *puiPitch) {
   return LockVideoSurfaceBuffer(curr->hVSurface, puiPitch);
 }
 
-void UnLockVideoSurface(UINT32 uiVSurface) {
+void UnLockVideoSurface(uint32_t uiVSurface) {
   VSURFACE_NODE *curr;
 
   //
@@ -2873,7 +2878,7 @@ void UnLockVideoSurface(UINT32 uiVSurface) {
   UnLockVideoSurfaceBuffer(curr->hVSurface);
 }
 
-BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
+BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor) {
   struct VSurface *hVSurface;
 
   //
@@ -2894,7 +2899,7 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   return (TRUE);
 }
 
-BOOLEAN AddVideoSurfaceRegion(UINT32 uiIndex, VSURFACE_REGION *pNewRegion) {
+BOOLEAN AddVideoSurfaceRegion(uint32_t uiIndex, VSURFACE_REGION *pNewRegion) {
   struct VSurface *hVSurface;
 
   //
@@ -2915,8 +2920,8 @@ BOOLEAN AddVideoSurfaceRegion(UINT32 uiIndex, VSURFACE_REGION *pNewRegion) {
   return (TRUE);
 }
 
-BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHeight,
-                                   UINT8 *ubBitDepth) {
+BOOLEAN GetVideoSurfaceDescription(uint32_t uiIndex, uint16_t *usWidth, uint16_t *usHeight,
+                                   uint8_t *ubBitDepth) {
   struct VSurface *hVSurface;
 
   Assert(usWidth != NULL);
@@ -2939,7 +2944,7 @@ BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHe
   return TRUE;
 }
 
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) {
+BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex) {
   VSURFACE_NODE *curr;
 
 #ifdef _DEBUG
@@ -2986,8 +2991,8 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRegionIndex,
-                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_vs_fx *pBltFx) {
+BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, uint16_t usRegionIndex,
+                        int32_t iDestX, int32_t iDestY, uint32_t fBltFlags, blt_vs_fx *pBltFx) {
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
 
@@ -3017,8 +3022,8 @@ BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRe
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP) {
+BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, int32_t iDestX1, int32_t iDestY1,
+                                  int32_t iDestX2, int32_t iDestY2, uint16_t Color16BPP) {
   blt_vs_fx BltFx;
   struct VSurface *hDestVSurface;
   SGPRect Clip;
@@ -3071,19 +3076,19 @@ BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  UINT16 Index, INT16 Ox, INT16 Oy) {
-  INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
+BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, int32_t iDestX1, int32_t iDestY1,
+                                  int32_t iDestX2, int32_t iDestY2, struct VObject *BkgrndImg,
+                                  uint16_t Index, int16_t Ox, int16_t Oy) {
+  int16_t xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
 
   pTrav = &(BkgrndImg->pETRLEObject[Index]);
-  ph = (INT16)(pTrav->usHeight + pTrav->sOffsetY);
-  pw = (INT16)(pTrav->usWidth + pTrav->sOffsetX);
+  ph = (int16_t)(pTrav->usHeight + pTrav->sOffsetY);
+  pw = (int16_t)(pTrav->usWidth + pTrav->sOffsetX);
 
-  ah = (INT16)(iDestY2 - iDestY1);
-  aw = (INT16)(iDestX2 - iDestX1);
+  ah = (int16_t)(iDestY2 - iDestY1);
+  aw = (int16_t)(iDestX2 - iDestX1);
 
   Ox %= pw;
   Oy %= ph;
@@ -3144,9 +3149,9 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
 
   SetClippingRect(&NewClip);
 
-  yc = (INT16)iDestY1;
+  yc = (int16_t)iDestY1;
   for (h = 0; h < hblits; h++) {
-    xc = (INT16)iDestX1;
+    xc = (int16_t)iDestX1;
     for (w = 0; w < wblits; w++) {
       BltVideoObject(uiDestVSurface, BkgrndImg, Index, xc + Ox, yc + Oy, VO_BLT_SRCTRANSPARENCY,
                      NULL);
@@ -3174,14 +3179,14 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   struct VSurface *hVSurface;
   HIMAGE hImage;
   SGPRect tempRect;
-  UINT16 usHeight;
-  UINT16 usWidth;
-  UINT8 ubBitDepth;
-  UINT32 fMemUsage;
+  uint16_t usHeight;
+  uint16_t usWidth;
+  uint8_t ubBitDepth;
+  uint32_t fMemUsage;
 
-  UINT32 uiRBitMask;
-  UINT32 uiGBitMask;
-  UINT32 uiBBitMask;
+  uint32_t uiRBitMask;
+  uint32_t uiGBitMask;
+  uint32_t uiBBitMask;
 
   // Clear the memory
   memset(&SurfaceDescription, 0, sizeof(DDSURFACEDESC));
@@ -3342,8 +3347,8 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->usHeight = usHeight;
   hVSurface->usWidth = usWidth;
   hVSurface->ubBitDepth = ubBitDepth;
-  hVSurface->pSurfaceData1 = (PTR)lpDDS;
-  hVSurface->pSurfaceData = (PTR)lpDDS2;
+  hVSurface->pSurfaceData1 = (void *)lpDDS;
+  hVSurface->pSurfaceData = (void *)lpDDS2;
   hVSurface->pSavedSurfaceData1 = NULL;
   hVSurface->pSavedSurfaceData = NULL;
   hVSurface->pPalette = NULL;
@@ -3520,7 +3525,7 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
 // Lock must be followed by release
 // Pitch MUST be used for all width calculations ( Pitch is in bytes )
 // The time between Locking and unlocking must be minimal
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
+uint8_t *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch) {
   DDSURFACEDESC SurfaceDescription;
 
   // Assertions
@@ -3535,7 +3540,7 @@ BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
 
   *pPitch = SurfaceDescription.lPitch;
 
-  return (BYTE *)SurfaceDescription.lpSurface;
+  return (uint8_t *)SurfaceDescription.lpSurface;
 }
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
@@ -3551,12 +3556,12 @@ void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
 }
 
 // Given an HIMAGE object, blit imagery into existing Video Surface. Can be from 8->16 BPP
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, UINT16 usX,
-                                      UINT16 usY, SGPRect *pSrcRect) {
-  BYTE *pDest;
-  UINT32 fBufferBPP = 0;
-  UINT32 uiPitch;
-  UINT16 usEffectiveWidth;
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, uint16_t usX,
+                                      uint16_t usY, SGPRect *pSrcRect) {
+  uint8_t *pDest;
+  uint32_t fBufferBPP = 0;
+  uint32_t uiPitch;
+  uint16_t usEffectiveWidth;
   SGPRect aRect;
 
   // Assertions
@@ -3594,7 +3599,7 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage,
   pDest = LockVideoSurfaceBuffer(hVSurface, &uiPitch);
 
   // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-  usEffectiveWidth = (UINT16)(uiPitch / (hVSurface->ubBitDepth / 8));
+  usEffectiveWidth = (uint16_t)(uiPitch / (hVSurface->ubBitDepth / 8));
 
   CHECKF(pDest != NULL);
 
@@ -3706,7 +3711,7 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
   return (TRUE);
 }
 
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex) {
+BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex) {
   VSURFACE_NODE *curr;
 
 #ifdef _DEBUG
@@ -3812,9 +3817,9 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
 //
 // ********************************************************
 
-BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNumRegions) {
+BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, uint16_t usNumRegions) {
   RGNDATA *pRgnData;
-  UINT16 cnt;
+  uint16_t cnt;
   RECT aRect;
   LPDIRECTDRAW2 lpDD2Object;
 
@@ -3853,10 +3858,10 @@ BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNu
 
   // Copy rectangles into region
   for (cnt = 0; cnt < usNumRegions; cnt++) {
-    aRect.top = (UINT32)RegionData[cnt].iTop;
-    aRect.left = (UINT32)RegionData[cnt].iLeft;
-    aRect.bottom = (UINT32)RegionData[cnt].iBottom;
-    aRect.right = (UINT32)RegionData[cnt].iRight;
+    aRect.top = (uint32_t)RegionData[cnt].iTop;
+    aRect.left = (uint32_t)RegionData[cnt].iLeft;
+    aRect.bottom = (uint32_t)RegionData[cnt].iBottom;
+    aRect.right = (uint32_t)RegionData[cnt].iRight;
 
     memcpy(pRgnData + sizeof(RGNDATAHEADER) + (cnt * sizeof(RECT)), &aRect, sizeof(RECT));
   }
@@ -3880,7 +3885,7 @@ BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNu
 //
 // ********************************************************
 
-BOOLEAN GetNumRegions(struct VSurface *hVSurface, UINT32 *puiNumRegions) {
+BOOLEAN GetNumRegions(struct VSurface *hVSurface, uint32_t *puiNumRegions) {
   Assert(hVSurface);
 
   *puiNumRegions = ListSize(hVSurface->RegionList);
@@ -3901,8 +3906,8 @@ BOOLEAN AddVSurfaceRegion(struct VSurface *hVSurface, VSURFACE_REGION *pNewRegio
 
 // Add a group of regions
 BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRegions,
-                           UINT16 uiNumRegions) {
-  UINT16 cnt;
+                           uint16_t uiNumRegions) {
+  uint16_t cnt;
 
   Assert(hVSurface != NULL);
   Assert(ppNewRegions != NULL);
@@ -3914,7 +3919,7 @@ BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRe
   return (TRUE);
 }
 
-BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex) {
+BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex) {
   VSURFACE_REGION aRegion;
 
   Assert(hVSurface != NULL);
@@ -3923,20 +3928,20 @@ BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex) {
 }
 
 BOOLEAN ClearAllVSurfaceRegions(struct VSurface *hVSurface) {
-  UINT32 uiListSize, cnt;
+  uint32_t uiListSize, cnt;
 
   Assert(hVSurface != NULL);
 
   uiListSize = ListSize(hVSurface->RegionList);
 
   for (cnt = uiListSize - 1; cnt >= 0; cnt--) {
-    RemoveVSurfaceRegion(hVSurface, (UINT16)cnt);
+    RemoveVSurfaceRegion(hVSurface, (uint16_t)cnt);
   }
 
   return (TRUE);
 }
 
-BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion) {
+BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex, VSURFACE_REGION *aRegion) {
   Assert(hVSurface != NULL);
 
   if (!PeekList(hVSurface->RegionList, aRegion, usIndex)) {
@@ -3958,7 +3963,7 @@ BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, RECT *pRect) {
   return (TRUE);
 }
 
-BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
+BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex,
                               VSURFACE_REGION *aRegion) {
   VSURFACE_REGION OldRegion;
 
@@ -3975,7 +3980,7 @@ BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
   return (TRUE);
 }
 
-BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, UINT16 usIndex,
+BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, uint16_t usIndex,
                                  VSURFACE_REGION *pNewRegion) {
   Assert(hVSurface != NULL);
   Assert(pNewRegion != NULL);
@@ -3996,13 +4001,13 @@ BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, UINT16 usIndex,
 // Will drop down into user-defined blitter if 8->16 BPP blitting is being done
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
-                                      blt_vs_fx *pBltFx) {
+                                      uint16_t usIndex, int32_t iDestX, int32_t iDestY,
+                                      int32_t fBltFlags, blt_vs_fx *pBltFx) {
   VSURFACE_REGION aRegion;
   RECT SrcRect, DestRect;
-  UINT8 *pSrcSurface8, *pDestSurface8;
-  UINT16 *pDestSurface16, *pSrcSurface16;
-  UINT32 uiSrcPitch, uiDestPitch, uiWidth, uiHeight;
+  uint8_t *pSrcSurface8, *pDestSurface8;
+  uint16_t *pDestSurface16, *pSrcSurface16;
+  uint32_t uiSrcPitch, uiDestPitch, uiWidth, uiHeight;
 
   // Assertions
   Assert(hDestVSurface != NULL);
@@ -4093,17 +4098,17 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   // check for position entirely off the screen
   if (iDestX >= DestRect.right) return (FALSE);
   if (iDestY >= DestRect.bottom) return (FALSE);
-  if ((iDestX + (INT32)uiWidth) < (INT32)DestRect.left) return (FALSE);
-  if ((iDestY + (INT32)uiHeight) < (INT32)DestRect.top) return (FALSE);
+  if ((iDestX + (int32_t)uiWidth) < (int32_t)DestRect.left) return (FALSE);
+  if ((iDestY + (int32_t)uiHeight) < (int32_t)DestRect.top) return (FALSE);
 
   // DB The mirroring stuff has to do it's own clipping because
   // it needs to invert some of the numbers
   if (!(fBltFlags & VS_BLT_MIRROR_Y)) {
-    if ((iDestX + (INT32)uiWidth) >= (INT32)DestRect.right) {
+    if ((iDestX + (int32_t)uiWidth) >= (int32_t)DestRect.right) {
       SrcRect.right -= ((iDestX + uiWidth) - DestRect.right);
       uiWidth -= ((iDestX + uiWidth) - DestRect.right);
     }
-    if ((iDestY + (INT32)uiHeight) >= (INT32)DestRect.bottom) {
+    if ((iDestY + (int32_t)uiHeight) >= (int32_t)DestRect.bottom) {
       SrcRect.bottom -= ((iDestY + uiHeight) - DestRect.bottom);
       uiHeight -= ((iDestY + uiHeight) - DestRect.bottom);
     }
@@ -4112,7 +4117,7 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
       uiWidth -= (DestRect.left - iDestX);
       iDestX = DestRect.left;
     }
-    if (iDestY < (INT32)DestRect.top) {
+    if (iDestY < (int32_t)DestRect.top) {
       SrcRect.top += (DestRect.top - iDestY);
       uiHeight -= (DestRect.top - iDestY);
       iDestY = DestRect.top;
@@ -4123,13 +4128,13 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   // First check BPP values for compatibility
   if (hDestVSurface->ubBitDepth == 16 && hSrcVSurface->ubBitDepth == 16) {
     if (fBltFlags & VS_BLT_MIRROR_Y) {
-      if ((pSrcSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
+      if ((pSrcSurface16 = (uint16_t *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
         DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
                    String("Failed on lock of 16BPP surface for blitting"));
         return (FALSE);
       }
 
-      if ((pDestSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) ==
+      if ((pDestSurface16 = (uint16_t *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) ==
           NULL) {
         UnLockVideoSurfaceBuffer(hSrcVSurface);
         DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
@@ -4147,13 +4152,13 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
     CHECKF(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect));
 
   } else if (hDestVSurface->ubBitDepth == 8 && hSrcVSurface->ubBitDepth == 8) {
-    if ((pSrcSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
+    if ((pSrcSurface8 = (uint8_t *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
       DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
                  String("Failed on lock of 8BPP surface for blitting"));
       return (FALSE);
     }
 
-    if ((pDestSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) == NULL) {
+    if ((pDestSurface8 = (uint8_t *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) == NULL) {
       UnLockVideoSurfaceBuffer(hSrcVSurface);
       DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
                  String("Failed on lock of 8BPP dest surface for blitting"));
@@ -4231,10 +4236,10 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   DDGetSurfaceDescription(lpDDSurface, &DDSurfaceDesc);
   PixelFormat = DDSurfaceDesc.ddpfPixelFormat;
 
-  hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
-  hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
-  hVSurface->ubBitDepth = (UINT8)PixelFormat.dwRGBBitCount;
-  hVSurface->pSurfaceData = (PTR)lpDDSurface;
+  hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
+  hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
+  hVSurface->ubBitDepth = (uint8_t)PixelFormat.dwRGBBitCount;
+  hVSurface->pSurfaceData = (void *)lpDDSurface;
   hVSurface->pSurfaceData1 = NULL;
   hVSurface->pSavedSurfaceData = NULL;
   hVSurface->RegionList = CreateList(DEFAULT_NUM_REGIONS, sizeof(VSURFACE_REGION));
@@ -4270,21 +4275,13 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   return (hVSurface);
 }
 
-struct VSurface *GetPrimaryVideoSurface() {
-  return (ghPrimary);
-}
+struct VSurface *GetPrimaryVideoSurface() { return (ghPrimary); }
 
-struct VSurface *GetBackBufferVideoSurface() {
-  return (ghBackBuffer);
-}
+struct VSurface *GetBackBufferVideoSurface() { return (ghBackBuffer); }
 
-struct VSurface *GetFrameBufferVideoSurface() {
-  return (ghFrameBuffer);
-}
+struct VSurface *GetFrameBufferVideoSurface() { return (ghFrameBuffer); }
 
-struct VSurface *GetMouseBufferVideoSurface() {
-  return (ghMouseBuffer);
-}
+struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
 
 // UTILITY FUNCTIONS FOR BLITTING
 
@@ -4397,8 +4394,9 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx) {
 }
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect) {
-  UINT32 uiDDFlags;
+                           uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                           struct Rect *SrcRect) {
+  uint32_t uiDDFlags;
   RECT DestRect;
 
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
@@ -4472,13 +4470,13 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
   return (TRUE);
 }
 
-BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt16BPPBufferShadowRectAlternateTable(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                SGPRect *area);
 
-BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2,
-                                       INT32 Y2, BOOLEAN fLowPercentShadeTable) {
-  UINT16 *pBuffer;
-  UINT32 uiPitch;
+BOOLEAN InternalShadowVideoSurfaceRect(uint32_t uiDestVSurface, int32_t X1, int32_t Y1, int32_t X2,
+                                       int32_t Y2, BOOLEAN fLowPercentShadeTable) {
+  uint16_t *pBuffer;
+  uint32_t uiPitch;
   SGPRect area;
   struct VSurface *hVSurface;
 
@@ -4519,7 +4517,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   area.iRight = X2;
 
   // Lock video surface
-  pBuffer = (UINT16 *)LockVideoSurface(uiDestVSurface, &uiPitch);
+  pBuffer = (uint16_t *)LockVideoSurface(uiDestVSurface, &uiPitch);
   // UnLockVideoSurface( uiDestVSurface );
 
   if (pBuffer == NULL) {
@@ -4550,21 +4548,22 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
+BOOLEAN ShadowVideoSurfaceRect(uint32_t uiDestVSurface, int32_t X1, int32_t Y1, int32_t X2,
+                               int32_t Y2) {
   return (InternalShadowVideoSurfaceRect(uiDestVSurface, X1, Y1, X2, Y2, FALSE));
 }
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
-                                                   INT32 X2, INT32 Y2) {
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(uint32_t uiDestVSurface, int32_t X1, int32_t Y1,
+                                                   int32_t X2, int32_t Y2) {
   return (InternalShadowVideoSurfaceRect(uiDestVSurface, X1, Y1, X2, Y2, TRUE));
 }
 
 //
 // BltVSurfaceUsingDDBlt will always use Direct Draw Blt,NOT BltFast
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
-                              RECT *DestRect) {
-  UINT32 uiDDFlags;
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, RECT *DestRect) {
+  uint32_t uiDDFlags;
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
 
   // Default flags
@@ -4592,8 +4591,8 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
 //
 // If the 2 images are not 16 Bpp, it returns false.
 //
-BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect,
+BOOLEAN BltStretchVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, int32_t iDestX,
+                               int32_t iDestY, uint32_t fBltFlags, SGPRect *SrcRect,
                                SGPRect *DestRect) {
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
@@ -4627,8 +4626,8 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
-                                INT32 iPosY) {
+BOOLEAN ShadowVideoSurfaceImage(uint32_t uiDestVSurface, struct VObject *hImageHandle,
+                                int32_t iPosX, int32_t iPosY) {
   // Horizontal shadow
   ShadowVideoSurfaceRect(uiDestVSurface, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
                          iPosX + hImageHandle->pETRLEObject->usWidth,
@@ -4641,9 +4640,9 @@ BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHan
   return (TRUE);
 }
 
-BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *puiVSurface) {
+BOOLEAN MakeVSurfaceFromVObject(uint32_t uiVObject, uint16_t usSubIndex, uint32_t *puiVSurface) {
   struct VObject *hSrcVObject;
-  UINT32 uiVSurface;
+  uint32_t uiVSurface;
   VSURFACE_DESC hDesc;
 
   if (GetVideoObject(&hSrcVObject, uiVObject)) {
@@ -4668,7 +4667,7 @@ BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *pui
 }
 
 #ifdef _DEBUG
-void CheckValidVSurfaceIndex(UINT32 uiIndex) {
+void CheckValidVSurfaceIndex(uint32_t uiIndex) {
   BOOLEAN fAssertError = FALSE;
   if (uiIndex == 0xffffffff) {  //-1 index -- deleted
     fAssertError = TRUE;
@@ -4677,7 +4676,7 @@ void CheckValidVSurfaceIndex(UINT32 uiIndex) {
   }
 
   if (fAssertError) {
-    CHAR8 str[60];
+    char str[60];
     switch (gubVSDebugCode) {
       case DEBUGSTR_SETVIDEOSURFACETRANSPARENCY:
         sprintf(str, "SetVideoSurfaceTransparency");
@@ -4725,16 +4724,16 @@ void CheckValidVSurfaceIndex(UINT32 uiIndex) {
 
 #ifdef SGP_VIDEO_DEBUGGING
 typedef struct DUMPFILENAME {
-  CHAR8 str[256];
+  char str[256];
 } DUMPFILENAME;
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
+void DumpVSurfaceInfoIntoFile(char *filename, BOOLEAN fAppend) {
   VSURFACE_NODE *curr;
   FILE *fp;
   DUMPFILENAME *pName, *pCode;
-  UINT32 *puiCounter;
-  CHAR8 tempName[256];
-  CHAR8 tempCode[256];
-  UINT32 i, uiUniqueID;
+  uint32_t *puiCounter;
+  char tempName[256];
+  char tempCode[256];
+  uint32_t i, uiUniqueID;
   BOOLEAN fFound;
   if (!guiVSurfaceSize) {
     return;
@@ -4752,7 +4751,7 @@ void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
   pCode = (DUMPFILENAME *)MemAlloc(sizeof(DUMPFILENAME) * guiVSurfaceSize);
   memset(pName, 0, sizeof(DUMPFILENAME) * guiVSurfaceSize);
   memset(pCode, 0, sizeof(DUMPFILENAME) * guiVSurfaceSize);
-  puiCounter = (UINT32 *)MemAlloc(4 * guiVSurfaceSize);
+  puiCounter = (uint32_t *)MemAlloc(4 * guiVSurfaceSize);
   memset(puiCounter, 0, 4 * guiVSurfaceSize);
 
   // Loop through the list and record every unique filename and count them
@@ -4797,24 +4796,24 @@ void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
 }
 
 // Debug wrapper for adding vsurfaces
-BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT32 uiLineNum,
-                              CHAR8 *pSourceFile) {
-  UINT16 usLength;
-  CHAR8 str[256];
+BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex, uint32_t uiLineNum,
+                              char *pSourceFile) {
+  uint16_t usLength;
+  char str[256];
   if (!AddStandardVideoSurface(VSurfaceDesc, uiIndex)) {
     return FALSE;
   }
 
   // record the filename of the vsurface (some are created via memory though)
   usLength = strlen(VSurfaceDesc->ImageFile) + 1;
-  gpVSurfaceTail->pName = (CHAR8 *)MemAlloc(usLength);
+  gpVSurfaceTail->pName = (char *)MemAlloc(usLength);
   memset(gpVSurfaceTail->pName, 0, usLength);
   strcpy(gpVSurfaceTail->pName, VSurfaceDesc->ImageFile);
 
   // record the code location of the calling creating function.
   sprintf(str, "%s -- line(%d)", pSourceFile, uiLineNum);
   usLength = strlen(str) + 1;
-  gpVSurfaceTail->pCode = (CHAR8 *)MemAlloc(usLength);
+  gpVSurfaceTail->pCode = (char *)MemAlloc(usLength);
   memset(gpVSurfaceTail->pCode, 0, usLength);
   strcpy(gpVSurfaceTail->pCode, str);
 
@@ -4862,42 +4861,42 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 #define SMK_FLIC_AUTOCLOSE 0x00000008  // Close when done
 
 struct SmkFlic {
-  CHAR8 *cFilename;
+  char *cFilename;
   HWFILE hFileHandle;
   struct SmackTag *SmackHandle;
   struct SmackBufTag *SmackBuffer;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   LPDIRECTDRAWSURFACE2 lpDDS;
   HWND hWindow;
-  UINT32 uiFrame;
-  UINT32 uiLeft, uiTop;
+  uint32_t uiFrame;
+  uint32_t uiLeft, uiTop;
 };
 
 struct SmkFlic SmkList[SMK_NUM_FLICS];
 
 HWND hDisplayWindow = 0;
-UINT32 uiDisplayHeight, uiDisplayWidth;
+uint32_t uiDisplayHeight, uiDisplayWidth;
 BOOLEAN fSuspendFlics = FALSE;
-UINT32 uiFlicsPlaying = 0;
-UINT32 guiSmackPixelFormat = SMACKBUFFER565;
+uint32_t uiFlicsPlaying = 0;
+uint32_t guiSmackPixelFormat = SMACKBUFFER565;
 
 LPDIRECTDRAWSURFACE lpVideoPlayback = NULL;
 LPDIRECTDRAWSURFACE2 lpVideoPlayback2 = NULL;
 
 //-Function-Prototypes-------------------------------------------------------------
-void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight);
+void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight);
 void SmkShutdown(void);
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fAutoClose);
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fAutoClose);
 BOOLEAN SmkPollFlics(void);
-struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename);
-void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop);
+struct SmkFlic *SmkOpenFlic(char *cFilename);
+void SmkSetBlitPosition(struct SmkFlic *pSmack, uint32_t uiLeft, uint32_t uiTop);
 void SmkCloseFlic(struct SmkFlic *pSmack);
 struct SmkFlic *SmkGetFreeFlic(void);
 void SmkSetupVideo(void);
 void SmkShutdownVideo(void);
 
 BOOLEAN SmkPollFlics(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
   BOOLEAN fFlicStatus = FALSE;
   DDSURFACEDESC SurfaceDescription;
 
@@ -4935,7 +4934,7 @@ BOOLEAN SmkPollFlics(void) {
   return (fFlicStatus);
 }
 
-void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {
+void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight) {
   void *pSoundDriver = NULL;
 
   // Wipe the flic list clean
@@ -4957,7 +4956,7 @@ void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {
 }
 
 void SmkShutdown(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // Close and deallocate any open flics
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++) {
@@ -4965,7 +4964,7 @@ void SmkShutdown(void) {
   }
 }
 
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
   struct SmkFlic *pSmack;
 
   // Open the flic
@@ -4981,7 +4980,7 @@ struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLE
   return (pSmack);
 }
 
-struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
+struct SmkFlic *SmkOpenFlic(char *cFilename) {
   struct SmkFlic *pSmack;
   HANDLE hFile;
 
@@ -5008,7 +5007,7 @@ struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
   }
 
   if (!(pSmack->SmackHandle =
-            SmackOpen((CHAR8 *)hFile, SMACKFILEHANDLE | SMACKTRACKS, SMACKAUTOEXTRA)))
+            SmackOpen((char *)hFile, SMACKFILEHANDLE | SMACKTRACKS, SMACKAUTOEXTRA)))
   //	if(!(pSmack->SmackHandle=SmackOpen(cFilename, SMACKTRACKS, SMACKAUTOEXTRA)))
   {
     ErrorMsg("SMK ERROR: Smacker won't open the SMK file");
@@ -5028,7 +5027,7 @@ struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
   return (pSmack);
 }
 
-void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop) {
+void SmkSetBlitPosition(struct SmkFlic *pSmack, uint32_t uiLeft, uint32_t uiTop) {
   pSmack->uiLeft = uiLeft;
   pSmack->uiTop = uiTop;
 }
@@ -5048,7 +5047,7 @@ void SmkCloseFlic(struct SmkFlic *pSmack) {
 }
 
 struct SmkFlic *SmkGetFreeFlic(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++)
     if (!(SmkList[uiCount].uiFlags & SMK_FLIC_OPEN)) return (&SmkList[uiCount]);
@@ -5059,7 +5058,7 @@ struct SmkFlic *SmkGetFreeFlic(void) {
 void SmkSetupVideo(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
-  UINT16 usRed, usGreen, usBlue;
+  uint16_t usRed, usGreen, usBlue;
   struct VSurface *hVSurface;
 
   // DEF:
@@ -5076,9 +5075,9 @@ void SmkSetupVideo(void) {
     return;
   }
 
-  usRed = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  usGreen = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  usBlue = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  usRed = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  usGreen = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  usBlue = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   if ((usRed == 0xf800) && (usGreen == 0x07e0) && (usBlue == 0x001f))
     guiSmackPixelFormat = SMACKBUFFER565;
@@ -5098,7 +5097,7 @@ void SmkShutdownVideo(void) {
 #include "SGP/Font.h"
 #include "SGP/WinFont.h"
 
-INT32 FindFreeWinFont(void);
+int32_t FindFreeWinFont(void);
 BOOLEAN gfEnumSucceed = FALSE;
 
 #define MAX_WIN_FONTS 10
@@ -5115,8 +5114,8 @@ LOGFONT gLogFont;
 
 struct HWINFONT WinFonts[MAX_WIN_FONTS];
 
-void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, UINT16 *src) {
-  INT32 i, j;
+void Convert16BitStringTo8BitChineseBig5String(uint8_t *dst, uint16_t *src) {
+  int32_t i, j;
   char *ptr;
 
   i = j = 0;
@@ -5135,8 +5134,8 @@ void InitWinFonts() { memset(WinFonts, 0, sizeof(WinFonts)); }
 
 void ShutdownWinFonts() {}
 
-INT32 FindFreeWinFont(void) {
-  INT32 iCount;
+int32_t FindFreeWinFont(void) {
+  int32_t iCount;
 
   for (iCount = 0; iCount < MAX_WIN_FONTS; iCount++) {
     if (WinFonts[iCount].hFont == NULL) {
@@ -5147,7 +5146,7 @@ INT32 FindFreeWinFont(void) {
   return (-1);
 }
 
-struct HWINFONT *GetWinFont(INT32 iFont) {
+struct HWINFONT *GetWinFont(int32_t iFont) {
   if (iFont == -1) {
     return (NULL);
   }
@@ -5159,9 +5158,9 @@ struct HWINFONT *GetWinFont(INT32 iFont) {
   }
 }
 
-CHAR16 gzFontName[32];
+wchar_t gzFontName[32];
 
-void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor) {
+void SetWinFontForeColor(int32_t iFont, COLORVAL *pColor) {
   struct HWINFONT *pWinFont;
 
   pWinFont = GetWinFont(iFont);
@@ -5171,7 +5170,7 @@ void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor) {
   }
 }
 
-INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) {
+int16_t WinFontStringPixLength(wchar_t *string2, int32_t iFont) {
   struct HWINFONT *pWinFont;
   HDC hdc;
   SIZE RectSize;
@@ -5194,10 +5193,10 @@ INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) {
   GetTextExtentPoint32(hdc, string, strlen(string), &RectSize);
   ReleaseDC(NULL, hdc);
 
-  return ((INT16)RectSize.cx);
+  return ((int16_t)RectSize.cx);
 }
 
-INT16 GetWinFontHeight(STR16 string2, INT32 iFont) {
+int16_t GetWinFontHeight(wchar_t *string2, int32_t iFont) {
   struct HWINFONT *pWinFont;
   HDC hdc;
   SIZE RectSize;
@@ -5220,10 +5219,10 @@ INT16 GetWinFontHeight(STR16 string2, INT32 iFont) {
   GetTextExtentPoint32(hdc, string, strlen(string), &RectSize);
   ReleaseDC(NULL, hdc);
 
-  return ((INT16)RectSize.cy);
+  return ((int16_t)RectSize.cy);
 }
 
-UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) {
+uint32_t WinFont_mprintf(int32_t iFont, int32_t x, int32_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
 
@@ -5246,10 +5245,10 @@ int CALLBACK EnumFontFamProc(CONST LOGFONT *lplf, CONST TEXTMETRIC *lptm, DWORD 
 
 int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType,
                                LPARAM lParam) {
-  CHAR8 szFontName[32];
+  char szFontName[32];
 
   sprintf(szFontName, "%S", gzFontName);
-  if (!strcmp(szFontName, (STR8)lpelfe->elfFullName)) {
+  if (!strcmp(szFontName, (char *)lpelfe->elfFullName)) {
     gfEnumSucceed = TRUE;
     memcpy(&gLogFont, &(lpelfe->elfLogFont), sizeof(LOGFONT));
   }
@@ -5257,7 +5256,8 @@ int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, i
   return TRUE;
 }
 
-void PrintWinFont(UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) {
+void PrintWinFont(uint32_t uiDestBuf, int32_t iFont, int32_t x, int32_t y, wchar_t *pFontString,
+                  ...) {
   va_list argptr;
   wchar_t string2[512];
   char string[512];
@@ -5326,7 +5326,7 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
 
 // Lock, unlock calls
 void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACEDESC pSurfaceDesc,
-                   UINT32 uiFlags, HANDLE hEvent) {
+                   uint32_t uiFlags, HANDLE hEvent) {
   HRESULT ReturnCode;
 
   Assert(pSurface != NULL);
@@ -5343,7 +5343,7 @@ void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACED
   ATTEMPT(ReturnCode);
 }
 
-void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData) {
+void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, void *pSurfaceData) {
   Assert(pSurface != NULL);
 
   ATTEMPT(IDirectDrawSurface2_Unlock(pSurface, pSurfaceData));
@@ -5378,8 +5378,8 @@ void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
   ATTEMPT(IDirectDrawSurface2_Restore(pSurface));
 }
 
-void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, UINT32 uiX, UINT32 uiY,
-                      LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiTrans) {
+void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, uint32_t uiX, uint32_t uiY,
+                      LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, uint32_t uiTrans) {
   HRESULT ReturnCode;
 
   Assert(pDestSurface != NULL);
@@ -5393,7 +5393,7 @@ void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, UINT32 uiX, UINT32 uiY,
 }
 
 void DDBltSurface(LPDIRECTDRAWSURFACE2 pDestSurface, LPRECT pDestRect,
-                  LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiFlags,
+                  LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, uint32_t uiFlags,
                   LPDDBLTFX pDDBltFx) {
   HRESULT ReturnCode;
 
@@ -5408,23 +5408,23 @@ void DDBltSurface(LPDIRECTDRAWSURFACE2 pDestSurface, LPRECT pDestRect,
   ATTEMPT(ReturnCode);
 }
 
-void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, UINT32 uiFlags, LPPALETTEENTRY pColorTable,
+void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, uint32_t uiFlags, LPPALETTEENTRY pColorTable,
                      LPDIRECTDRAWPALETTE FAR *ppDDPalette, IUnknown FAR *pUnkOuter) {
   Assert(pDirectDraw != NULL);
 
   ATTEMPT(IDirectDraw2_CreatePalette(pDirectDraw, uiFlags, pColorTable, ppDDPalette, pUnkOuter));
 }
 
-void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiStartingEntry,
-                         UINT32 uiCount, LPPALETTEENTRY pEntries) {
+void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiStartingEntry,
+                         uint32_t uiCount, LPPALETTEENTRY pEntries) {
   Assert(pPalette != NULL);
   Assert(pEntries != NULL);
 
   ATTEMPT(IDirectDrawPalette_SetEntries(pPalette, uiFlags, uiStartingEntry, uiCount, pEntries));
 }
 
-void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiBase,
-                         UINT32 uiNumEntries, LPPALETTEENTRY pEntries) {
+void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, uint32_t uiFlags, uint32_t uiBase,
+                         uint32_t uiNumEntries, LPPALETTEENTRY pEntries) {
   Assert(pPalette != NULL);
   Assert(pEntries != NULL);
 
@@ -5437,7 +5437,8 @@ void DDReleasePalette(LPDIRECTDRAWPALETTE pPalette) {
   ATTEMPT(IDirectDrawPalette_Release(pPalette));
 }
 
-void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey) {
+void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, uint32_t uiFlags,
+                          LPDDCOLORKEY pDDColorKey) {
   Assert(pSurface != NULL);
   Assert(pDDColorKey != NULL);
 
@@ -5445,7 +5446,7 @@ void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOL
 }
 
 // Clipper FUnctions
-void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, UINT32 fFlags, LPDIRECTDRAWCLIPPER *pDDClipper) {
+void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, uint32_t fFlags, LPDIRECTDRAWCLIPPER *pDDClipper) {
   Assert(pDirectDraw != NULL);
   Assert(pDDClipper != NULL);
 
@@ -5465,7 +5466,7 @@ void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper) {
   ATTEMPT(IDirectDrawClipper_Release(pDDClipper));
 }
 
-void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags) {
+void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, uint32_t uiFlags) {
   Assert(pDDClipper != NULL);
   Assert(pClipList != NULL);
 
@@ -5478,7 +5479,7 @@ void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT3
 
 void DirectXZeroMem(void *pMemory, int nSize) { memset(pMemory, 0, nSize); }
 
-void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename) {
+void DirectXAttempt(int32_t iErrorCode, int32_t nLine, char *szFilename) {
 #ifdef _DEBUG
   if (iErrorCode != DD_OK) {
     FastDebugMsg("DIRECTX COMMON: DirectX Error\n");
@@ -5487,7 +5488,7 @@ void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename) {
 #endif
 }
 
-char *DirectXErrorDescription(INT32 iDXReturn) {
+char *DirectXErrorDescription(int32_t iDXReturn) {
   switch (iDXReturn) {
     case DD_OK:
       return "No error.\0";

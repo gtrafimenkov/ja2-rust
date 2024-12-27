@@ -74,30 +74,30 @@
 #define ARE_IN_FADE_IN() (gfFadeIn || gfFadeInitialized)
 
 BOOLEAN fDirtyRectangleMode = FALSE;
-UINT16 *gpFPSBuffer = NULL;
+uint16_t *gpFPSBuffer = NULL;
 // MarkNote
 // extern ScrollStringStPtr pStringS=NULL;
-UINT32 counter = 0;
-UINT32 count = 0;
+uint32_t counter = 0;
+uint32_t count = 0;
 BOOLEAN gfTacticalDoHeliRun = FALSE;
 BOOLEAN gfPlayAttnAfterMapLoad = FALSE;
 
 // VIDEO OVERLAYS
-INT32 giFPSOverlay = 0;
-INT32 giCounterPeriodOverlay = 0;
+int32_t giFPSOverlay = 0;
+int32_t giCounterPeriodOverlay = 0;
 
 BOOLEAN gfExitToNewSector = FALSE;
-// UINT8		gubNewSectorExitDirection;
+// uint8_t		gubNewSectorExitDirection;
 
 BOOLEAN gfGameScreenLocateToSoldier = FALSE;
 BOOLEAN gfEnteringMapScreen = FALSE;
-UINT32 uiOldMouseCursor;
-UINT8 gubPreferredInitialSelectedGuy = NOBODY;
+uint32_t uiOldMouseCursor;
+uint8_t gubPreferredInitialSelectedGuy = NOBODY;
 
 BOOLEAN gfTacticalIsModal = FALSE;
 struct MOUSE_REGION gTacticalDisableRegion;
 BOOLEAN gfTacticalDisableRegionActive = FALSE;
-INT8 gbTacticalDisableMode = FALSE;
+int8_t gbTacticalDisableMode = FALSE;
 MODAL_HOOK gModalDoneCallback;
 BOOLEAN gfBeginEndTurn = FALSE;
 extern BOOLEAN gfTopMessageDirty;
@@ -115,14 +115,14 @@ RENDER_HOOK gRenderOverride = NULL;
 
 void TacticalScreenLocateToSoldier();
 
-UINT32 guiTacticalLeaveScreenID;
+uint32_t guiTacticalLeaveScreenID;
 BOOLEAN guiTacticalLeaveScreen = FALSE;
 
 void HandleModalTactical();
 extern void CheckForDisabledRegionRemove();
-extern void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce);
+extern void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce);
 
-UINT32 MainGameScreenInit(void) {
+uint32_t MainGameScreenInit(void) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   gpZBuffer = InitZBuffer(1280, 480);
@@ -166,7 +166,7 @@ UINT32 MainGameScreenInit(void) {
 // The ShutdownGame function will free up/undo all things that were started in InitializeGame()
 // It will also be responsible to making sure that all Gaming Engine tasks exit properly
 
-UINT32 MainGameScreenShutdown(void) {
+uint32_t MainGameScreenShutdown(void) {
   ShutdownZBuffer(gpZBuffer);
   ShutdownBackgroundRects();
 
@@ -211,7 +211,7 @@ void EnterTacticalScreen() {
     }
   } else {
     // otherwise, make sure interface is team panel...
-    SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+    SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
   }
 
   if (!gfTacticalPlacementGUIActive) {
@@ -232,7 +232,7 @@ void EnterTacticalScreen() {
     if (gsCurInterfacePanel < 0 || gsCurInterfacePanel >= NUM_UI_PANELS)
       gsCurInterfacePanel = TEAM_PANEL;
 
-    SetCurrentInterfacePanel((UINT8)gsCurInterfacePanel);
+    SetCurrentInterfacePanel((uint8_t)gsCurInterfacePanel);
   }
 
   SetTacticalInterfaceFlags(0);
@@ -268,12 +268,12 @@ void EnterTacticalScreen() {
   EnableScrollMessages();
 }
 
-void LeaveTacticalScreen(UINT32 uiNewScreen) {
+void LeaveTacticalScreen(uint32_t uiNewScreen) {
   guiTacticalLeaveScreenID = uiNewScreen;
   guiTacticalLeaveScreen = TRUE;
 }
 
-void InternalLeaveTacticalScreen(UINT32 uiNewScreen) {
+void InternalLeaveTacticalScreen(uint32_t uiNewScreen) {
   gpCustomizableTimerCallback = NULL;
 
   // unload the sector they teleported out of
@@ -330,15 +330,15 @@ void InternalLeaveTacticalScreen(UINT32 uiNewScreen) {
   FinishAnySkullPanelAnimations();
 }
 
-extern INT32 iInterfaceDialogueBox;
+extern int32_t iInterfaceDialogueBox;
 
 #ifdef JA2BETAVERSION
-extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
+extern BOOLEAN ValidateSoldierInitLinks(uint8_t ubCode);
 extern BOOLEAN gfDoDialogOnceGameScreenFadesIn;
 #endif
 
-UINT32 MainGameScreenHandle(void) {
-  UINT32 uiNewScreen = GAME_SCREEN;
+uint32_t MainGameScreenHandle(void) {
+  uint32_t uiNewScreen = GAME_SCREEN;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
   // This determines if the help screen should be active
@@ -618,7 +618,7 @@ UINT32 MainGameScreenHandle(void) {
 #endif
 
   if (gTacticalStatus.uiFlags & SHOW_ALL_MERCS) {
-    INT32 iSchedules;
+    int32_t iSchedules;
     SCHEDULENODE *curr;
 
     SetFont(MILITARYFONT1);
@@ -734,9 +734,9 @@ void DisableFPSOverlay(BOOLEAN fEnable) {
 }
 
 void TacticalScreenLocateToSoldier() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
   BOOLEAN fPreferedGuyUsed = FALSE;
 
   if (gubPreferredInitialSelectedGuy != NOBODY) {
@@ -772,9 +772,9 @@ void EnterMapScreen() {
 }
 
 void UpdateTeamPanelAssignments() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
+  int16_t bLastTeamID;
 
   // Remove all players
   RemoveAllPlayersFromSlot();
@@ -788,7 +788,7 @@ void UpdateTeamPanelAssignments() {
   }
 }
 
-void EnterModalTactical(INT8 bMode) {
+void EnterModalTactical(int8_t bMode) {
   gbTacticalDisableMode = bMode;
   gfTacticalIsModal = TRUE;
 

@@ -5,8 +5,8 @@
 #include "TileEngine/TileDat.h"
 
 extern struct TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
-extern UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
-extern UINT8 gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
+extern uint8_t gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
+extern uint8_t gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
 
 struct TILE_IMAGERY *LoadTileSurface(char *cFilename);
 

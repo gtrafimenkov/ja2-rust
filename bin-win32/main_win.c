@@ -41,37 +41,37 @@
 
 extern BOOLEAN gfPauseDueToPlayerGamePause;
 
-extern void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
+extern void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam);
 
 // Prototype Declarations
 
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam);
+int32_t FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam);
 
 int PASCAL HandledWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandLine,
                           int sCommandShow);
 
 HINSTANCE ghInstance;
 
-void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine);
+void ProcessJa2CommandLineBeforeInitialization(char *pCommandLine);
 
 // Global Variable Declarations
 #ifdef WINDOWED_MODE
 RECT rcWindow;
 #endif
 
-UINT32 guiMouseWheelMsg;  // For mouse wheel messages
+uint32_t guiMouseWheelMsg;  // For mouse wheel messages
 
 BOOLEAN gfApplicationActive;
 BOOLEAN gfProgramIsRunning;
 BOOLEAN gfGameInitialized = FALSE;
 
 // There were TWO of them??!?! -- DB
-// CHAR8		gzCommandLine[ 100 ];
-CHAR8 gzCommandLine[100];  // Command line given
+// char		gzCommandLine[ 100 ];
+char gzCommandLine[100];  // Command line given
 
 BOOLEAN gfIgnoreMessages = FALSE;
 
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam) {
+int32_t FAR PASCAL WindowProcedure(HWND hWindow, uint16_t Message, WPARAM wParam, LPARAM lParam) {
   static BOOLEAN fRestore = FALSE;
 
   if (gfIgnoreMessages) return (DefWindowProc(hWindow, Message, wParam, lParam));
@@ -218,7 +218,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandL
   ShowCursor(FALSE);
 
   // Inititialize the SGP
-  struct PlatformInitParams params = {hInstance, (UINT16)sCommandShow, (void *)WindowProcedure,
+  struct PlatformInitParams params = {hInstance, (uint16_t)sCommandShow, (void *)WindowProcedure,
                                       IDI_ICON1};
   if (InitializeStandardGamingPlatform(&params) == FALSE) {
     return 0;
@@ -273,11 +273,11 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandL
   return Message.wParam;
 }
 
-void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine) {
-  CHAR8 cSeparators[] = "\t =";
-  CHAR8 *pCopy = NULL, *pToken;
+void ProcessJa2CommandLineBeforeInitialization(char *pCommandLine) {
+  char cSeparators[] = "\t =";
+  char *pCopy = NULL, *pToken;
 
-  pCopy = (CHAR8 *)MemAlloc(strlen(pCommandLine) + 1);
+  pCopy = (char *)MemAlloc(strlen(pCommandLine) + 1);
 
   Assert(pCopy);
   if (!pCopy) return;

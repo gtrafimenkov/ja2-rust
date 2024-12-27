@@ -8,7 +8,7 @@ struct SOLDIERTYPE;
 void DisplayCoverOfSelectedGridNo();
 void RemoveCoverOfSelectedGridNo();
 
-void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
+void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 
 void RemoveVisibleGridNoAtSelectedGridNo();
 void DisplayGridNoVisibleToSoldierGrid();
@@ -17,8 +17,8 @@ void DisplayGridNoVisibleToSoldierGrid();
 void DisplayLosAndDisplayCoverUsageScreenMsg();
 #endif
 
-void ChangeSizeOfDisplayCover(INT32 iNewSize);
+void ChangeSizeOfDisplayCover(int32_t iNewSize);
 
-void ChangeSizeOfLOS(INT32 iNewSize);
+void ChangeSizeOfLOS(int32_t iNewSize);
 
 #endif

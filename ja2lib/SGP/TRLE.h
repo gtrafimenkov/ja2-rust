@@ -4,28 +4,28 @@
 #include "SGP/Types.h"
 
 typedef struct {
-  UINT32 uiOffset;
-  UINT32 uiWidth;
-  UINT32 uiOffLen;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
+  uint32_t uiOffset;
+  uint32_t uiWidth;
+  uint32_t uiOffLen;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
 
 } TRLEObject;
 
 typedef struct {
-  UINT32 uiHeightEach;
-  UINT32 uiTotalElements;
+  uint32_t uiHeightEach;
+  uint32_t uiTotalElements;
   TRLEObject *pTRLEObject;
-  PTR pPixData;
-  UINT32 uiSizePixDataElem;
+  void *pPixData;
+  uint32_t uiSizePixDataElem;
 
 } TRLEData;
 
-BOOLEAN GetTRLEObjectData(UINT32 uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
-                          UINT32 *pWidth, UINT32 *pOffset, UINT32 *pOffLen, UINT16 *pOffsetX,
-                          UINT16 *pOffsetY);
+BOOLEAN GetTRLEObjectData(uint32_t uiTotalElements, TRLEObject *pTRLEObject, int16_t ssIndex,
+                          uint32_t *pWidth, uint32_t *pOffset, uint32_t *pOffLen,
+                          uint16_t *pOffsetX, uint16_t *pOffsetY);
 
-BOOLEAN SetTRLEObjectOffset(UINT32 uiTotalElements, TRLEObject *pTRLEObject, INT16 ssIndex,
-                            INT16 sOffsetX, INT16 sOffsetY);
+BOOLEAN SetTRLEObjectOffset(uint32_t uiTotalElements, TRLEObject *pTRLEObject, int16_t ssIndex,
+                            int16_t sOffsetX, int16_t sOffsetY);
 
 #endif

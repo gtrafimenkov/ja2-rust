@@ -50,39 +50,39 @@ BOOLEAN ShutdownTEAMPanel();
 void RenderTEAMPanel(BOOLEAN fDirty);
 void UpdateTEAMPanel();
 
-void SetSMPanelCurrentMerc(UINT8 ubNewID);
-void SetTEAMPanelCurrentMerc(UINT8 ubNewID);
-UINT16 GetSMPanelCurrentMerc();
+void SetSMPanelCurrentMerc(uint8_t ubNewID);
+void SetTEAMPanelCurrentMerc(uint8_t ubNewID);
+uint16_t GetSMPanelCurrentMerc();
 void UpdateSMPanel();
 
 BOOLEAN InitTEAMSlots();
-void AddPlayerToInterfaceTeamSlot(UINT8 ubID);
-BOOLEAN RemovePlayerFromInterfaceTeamSlot(UINT8 ubID);
-BOOLEAN GetPlayerIDFromInterfaceTeamSlot(UINT8 ubPanelSlot, UINT8 *pubID);
+void AddPlayerToInterfaceTeamSlot(uint8_t ubID);
+BOOLEAN RemovePlayerFromInterfaceTeamSlot(uint8_t ubID);
+BOOLEAN GetPlayerIDFromInterfaceTeamSlot(uint8_t ubPanelSlot, uint8_t *pubID);
 void RemoveAllPlayersFromSlot();
-BOOLEAN PlayerExistsInSlot(UINT8 ubID);
-BOOLEAN RemovePlayerFromTeamSlotGivenMercID(UINT8 ubMercID);
+BOOLEAN PlayerExistsInSlot(uint8_t ubID);
+BOOLEAN RemovePlayerFromTeamSlotGivenMercID(uint8_t ubMercID);
 void CheckForAndAddMercToTeamPanel(struct SOLDIERTYPE *pSoldier);
 
 void DisableTacticalTeamPanelButtons(BOOLEAN fDisable);
 void RenderTownIDString();
-void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-extern INT8 gbNewItem[NUM_INV_SLOTS];
-extern INT8 gbNewItemCycle[NUM_INV_SLOTS];
-extern UINT8 gubNewItemMerc;
+extern int8_t gbNewItem[NUM_INV_SLOTS];
+extern int8_t gbNewItemCycle[NUM_INV_SLOTS];
+extern uint8_t gubNewItemMerc;
 
-void ShowRadioLocator(UINT8 ubID, UINT8 ubLocatorSpeed);
-void EndRadioLocator(UINT8 ubID);
+void ShowRadioLocator(uint8_t ubID, uint8_t ubLocatorSpeed);
+void EndRadioLocator(uint8_t ubID);
 
 extern struct MOUSE_REGION gSMPanelRegion;
 
-extern UINT32 guiSecItemHiddenVO;
+extern uint32_t guiSecItemHiddenVO;
 
 extern BOOLEAN gfDisableTacticalPanelButtons;
 
 typedef struct {
-  UINT8 ubID;
+  uint8_t ubID;
   BOOLEAN fOccupied;
 
 } TEAM_PANEL_SLOTS_TYPE;
@@ -104,12 +104,12 @@ void HandlePanelFaceAnimations(struct SOLDIERTYPE *pSoldier);
 
 void GoToMapScreenFromTactical(void);
 
-void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, UINT32 uiInvPos,
-                                            UINT16 usOldItem, UINT16 usNewItem);
+void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, uint32_t uiInvPos,
+                                            uint16_t usOldItem, uint16_t usNewItem);
 
 void FinishAnySkullPanelAnimations();
 
-UINT8 FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                              BOOLEAN fOnlyRegularMercs);
+uint8_t FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
+                                BOOLEAN fOnlyRegularMercs);
 
 #endif

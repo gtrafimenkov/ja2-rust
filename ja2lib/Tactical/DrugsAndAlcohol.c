@@ -13,13 +13,13 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
-UINT8 ubDrugTravelRate[] = {4, 2};
-UINT8 ubDrugWearoffRate[] = {2, 2};
-UINT8 ubDrugEffect[] = {15, 8};
-UINT8 ubDrugSideEffect[] = {20, 10};
-UINT8 ubDrugSideEffectRate[] = {2, 1};
+uint8_t ubDrugTravelRate[] = {4, 2};
+uint8_t ubDrugWearoffRate[] = {2, 2};
+uint8_t ubDrugEffect[] = {15, 8};
+uint8_t ubDrugSideEffect[] = {20, 10};
+uint8_t ubDrugSideEffectRate[] = {2, 1};
 
-INT32 giDrunkModifier[] = {
+int32_t giDrunkModifier[] = {
     100,  // Sober
     75,   // Feeling good,
     65,   // Bporderline
@@ -30,7 +30,7 @@ INT32 giDrunkModifier[] = {
 #define HANGOVER_AP_REDUCE 5
 #define HANGOVER_BP_REDUCE 200
 
-UINT8 GetDrugType(UINT16 usItem) {
+uint8_t GetDrugType(uint16_t usItem) {
   if (usItem == ADRENALINE_BOOSTER) {
     return (DRUG_TYPE_ADRENALINE);
   }
@@ -47,10 +47,10 @@ UINT8 GetDrugType(UINT16 usItem) {
 }
 
 BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
-  UINT8 ubDrugType;
-  UINT8 ubKitPoints;
-  INT8 bRegenPointsGained;
-  UINT16 usItem;
+  uint8_t ubDrugType;
+  uint8_t ubKitPoints;
+  int8_t bRegenPointsGained;
+  uint16_t usItem;
 
   usItem = pObject->usItem;
 
@@ -146,7 +146,7 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
       if ((pObject->bStatus[0] % (100 / REGEN_POINTS_PER_BOOSTER)) != 0) {
         // chance of an extra point
         if (PreRandom(100 / REGEN_POINTS_PER_BOOSTER) <
-            (UINT32)(pObject->bStatus[0] % (100 / REGEN_POINTS_PER_BOOSTER))) {
+            (uint32_t)(pObject->bStatus[0] % (100 / REGEN_POINTS_PER_BOOSTER))) {
           bRegenPointsGained++;
         }
       }
@@ -179,9 +179,9 @@ BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
 }
 
 void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt, cnt2;
-  INT32 iNumLoops;
-  //	INT8 bBandaged;
+  int32_t cnt, cnt2;
+  int32_t iNumLoops;
+  //	int8_t bBandaged;
 
   for (cnt = 0; cnt < NUM_COMPLEX_DRUGS; cnt++) {
     // If side effect aret is non-zero....
@@ -265,11 +265,11 @@ void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType) {
+int8_t GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
   return (pSoldier->bDrugEffect[ubDrugType]);
 }
 
-INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType) {
+int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType) {
   // If we have a o-positive effect
   if (pSoldier->bDrugEffect[ubDrugType] > 0) {
     return (0);
@@ -278,9 +278,9 @@ INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType) {
   }
 }
 
-void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
-  INT8 bDrunkLevel;
-  INT16 sPoints = (*pubPoints);
+void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints) {
+  int8_t bDrunkLevel;
+  int16_t sPoints = (*pubPoints);
 
   // Are we in a side effect or good effect?
   if (pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE]) {
@@ -306,11 +306,11 @@ void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
     }
   }
 
-  (*pubPoints) = (UINT8)sPoints;
+  (*pubPoints) = (uint8_t)sPoints;
 }
 
-void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPointReduction) {
-  INT8 bDrunkLevel;
+void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, int16_t *psPointReduction) {
+  int8_t bDrunkLevel;
 
   // Are we in a side effect or good effect?
   if (pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE]) {
@@ -331,8 +331,8 @@ void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPointReduct
   }
 }
 
-INT8 GetDrunkLevel(struct SOLDIERTYPE *pSoldier) {
-  INT8 bNumDrinks;
+int8_t GetDrunkLevel(struct SOLDIERTYPE *pSoldier) {
+  int8_t bNumDrinks;
 
   // If we have a -ve effect ...
   if (pSoldier->bDrugEffect[DRUG_TYPE_ALCOHOL] == 0 &&
@@ -357,7 +357,7 @@ INT8 GetDrunkLevel(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT32 EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, INT32 iStat) {
+int32_t EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, int32_t iStat) {
   return ((iStat * giDrunkModifier[GetDrunkLevel(pSoldier)] / 100));
 }
 

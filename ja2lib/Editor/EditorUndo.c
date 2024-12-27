@@ -60,34 +60,34 @@ void DisableUndo() { gfUndoEnabled = FALSE; }
 
 // undo node data element
 typedef struct {
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   MAP_ELEMENT *pMapTile;
-  BOOLEAN fLightSaved;  // determines that a light has been saved
-  UINT8 ubLightRadius;  // the radius of the light to build if undo is called
-  UINT8 ubLightID;      // only applies if a light was saved.
-  UINT8 ubRoomNum;
+  BOOLEAN fLightSaved;    // determines that a light has been saved
+  uint8_t ubLightRadius;  // the radius of the light to build if undo is called
+  uint8_t ubLightID;      // only applies if a light was saved.
+  uint8_t ubRoomNum;
 } undo_struct;
 
 // Undo stack node
 typedef struct TAG_undo_stack {
-  INT32 iCmdCount;
+  int32_t iCmdCount;
   undo_struct *pData;
   struct TAG_undo_stack *pNext;
-  INT32 iUndoType;
+  int32_t iUndoType;
 } undo_stack;
 undo_stack *gpTileUndoStack = NULL;
 
 // Map tile element manipulation functions
-BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pMapTile, INT32 iMapIndex);
-BOOLEAN SwapMapElementWithWorld(INT32 iDestMapTileIndex, MAP_ELEMENT *pMapTile);
+BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pMapTile, int32_t iMapIndex);
+BOOLEAN SwapMapElementWithWorld(int32_t iDestMapTileIndex, MAP_ELEMENT *pMapTile);
 
 // Undo structure functions
 BOOLEAN DeleteTopStackNode(void);
 undo_stack *DeleteThisStackNode(undo_stack *pThisNode);
 BOOLEAN DeleteStackNodeContents(undo_stack *pCurrent);
-BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount);
-void CropStackToMaxLength(INT32 iMaxCmds);
-void SmoothUndoMapTileTerrain(INT32 iWorldTile, MAP_ELEMENT *pUndoTile);
+BOOLEAN AddToUndoListCmd(int32_t iMapIndex, int32_t iCmdCount);
+void CropStackToMaxLength(int32_t iMaxCmds);
+void SmoothUndoMapTileTerrain(int32_t iWorldTile, MAP_ELEMENT *pUndoTile);
 
 BOOLEAN fNewUndoCmd = TRUE;
 BOOLEAN gfIgnoreUndoCmdsForLights = FALSE;
@@ -97,13 +97,13 @@ BOOLEAN gfIgnoreUndoCmdsForLights = FALSE;
 // increase speed, and save memory.
 typedef struct MapIndexBinaryTree {
   struct MapIndexBinaryTree *left, *right;
-  UINT16 usMapIndex;
+  uint16_t usMapIndex;
 } MapIndexBinaryTree;
 
 MapIndexBinaryTree *top = NULL;
 void ClearUndoMapIndexTree();
-BOOLEAN AddMapIndexToTree(UINT16 usMapIndex);
-void CheckMapIndexForMultiTileStructures(UINT16 usMapIndex);
+BOOLEAN AddMapIndexToTree(uint16_t usMapIndex);
+void CheckMapIndexForMultiTileStructures(uint16_t usMapIndex);
 void CheckForMultiTilesInTreeAndAddToUndoList(MapIndexBinaryTree *node);
 
 // Recursively deletes all nodes below the node passed including itself.
@@ -119,7 +119,7 @@ void ClearUndoMapIndexTree() {
   if (top) DeleteTreeNode(&top);
 }
 
-BOOLEAN AddMapIndexToTree(UINT16 usMapIndex) {
+BOOLEAN AddMapIndexToTree(uint16_t usMapIndex) {
   MapIndexBinaryTree *curr, *parent;
   if (!top) {
     top = (MapIndexBinaryTree *)MemAlloc(sizeof(MapIndexBinaryTree));
@@ -286,8 +286,8 @@ BOOLEAN DeleteStackNodeContents(undo_stack *pCurrent) {
   return (TRUE);
 }
 
-void CropStackToMaxLength(INT32 iMaxCmds) {
-  INT32 iCmdCount;
+void CropStackToMaxLength(int32_t iMaxCmds) {
+  int32_t iCmdCount;
   undo_stack *pCurrent;
 
   iCmdCount = 0;
@@ -314,7 +314,7 @@ void CropStackToMaxLength(INT32 iMaxCmds) {
 // this will handle the way the undo command is handled.  If there is no lightradius in
 // our saved light, then we intend on erasing the light upon undo execution, otherwise, we
 // save the light radius and light ID, so that we place it during undo execution.
-void AddLightToUndoList(INT32 iMapIndex, INT32 iLightRadius, UINT8 ubLightID) {
+void AddLightToUndoList(int32_t iMapIndex, int32_t iLightRadius, uint8_t ubLightID) {
   undo_stack *pNode;
   undo_struct *pUndoInfo;
 
@@ -338,7 +338,7 @@ void AddLightToUndoList(INT32 iMapIndex, INT32 iLightRadius, UINT8 ubLightID) {
   pUndoInfo->fLightSaved = TRUE;
   // if ubLightRadius is 0, then we don't need to save the light information because we
   // will erase it when it comes time to execute the undo command.
-  pUndoInfo->ubLightRadius = (UINT8)iLightRadius;
+  pUndoInfo->ubLightRadius = (uint8_t)iLightRadius;
   pUndoInfo->ubLightID = ubLightID;
   pUndoInfo->iMapIndex = iMapIndex;
   pUndoInfo->pMapTile = NULL;
@@ -352,8 +352,8 @@ void AddLightToUndoList(INT32 iMapIndex, INT32 iLightRadius, UINT8 ubLightID) {
   CropStackToMaxLength(MAX_UNDO_COMMAND_LENGTH);
 }
 
-BOOLEAN AddToUndoList(INT32 iMapIndex) {
-  static INT32 iCount = 1;
+BOOLEAN AddToUndoList(int32_t iMapIndex) {
+  static int32_t iCount = 1;
 
   if (!gfUndoEnabled) return FALSE;
   if (fNewUndoCmd) {
@@ -364,7 +364,7 @@ BOOLEAN AddToUndoList(INT32 iMapIndex) {
   // Check to see if the tile in question is even on the visible map, then
   // if that is true, then check to make sure we don't already have the mapindex
   // saved in the new binary tree (which only holds unique mapindex values).
-  if (GridNoOnVisibleWorldTile((INT16)iMapIndex) && AddMapIndexToTree((UINT16)iMapIndex))
+  if (GridNoOnVisibleWorldTile((int16_t)iMapIndex) && AddMapIndexToTree((uint16_t)iMapIndex))
 
   {
     if (AddToUndoListCmd(iMapIndex, ++iCount)) return TRUE;
@@ -373,13 +373,13 @@ BOOLEAN AddToUndoList(INT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
+BOOLEAN AddToUndoListCmd(int32_t iMapIndex, int32_t iCmdCount) {
   undo_stack *pNode;
   undo_struct *pUndoInfo;
   MAP_ELEMENT *pData;
   struct STRUCTURE *pStructure;
-  INT32 iCoveredMapIndex;
-  UINT8 ubLoop;
+  int32_t iCoveredMapIndex;
+  uint8_t ubLoop;
 
   if ((pNode = (undo_stack *)MemAlloc(sizeof(undo_stack))) == NULL) {
     return (FALSE);
@@ -454,10 +454,10 @@ BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
   return (TRUE);
 }
 
-void CheckMapIndexForMultiTileStructures(UINT16 usMapIndex) {
+void CheckMapIndexForMultiTileStructures(uint16_t usMapIndex) {
   struct STRUCTURE *pStructure;
-  UINT8 ubLoop;
-  INT32 iCoveredMapIndex;
+  uint8_t ubLoop;
+  int32_t iCoveredMapIndex;
 
   pStructure = gpWorldLevelData[usMapIndex].pStructureHead;
   while (pStructure) {
@@ -495,8 +495,8 @@ BOOLEAN RemoveAllFromUndoList(void) {
 }
 
 BOOLEAN ExecuteUndoList(void) {
-  INT32 iCmdCount, iCurCount;
-  INT32 iUndoMapIndex;
+  int32_t iCmdCount, iCurCount;
+  int32_t iUndoMapIndex;
   BOOLEAN fExitGrid;
 
   if (!gfUndoEnabled) return FALSE;
@@ -514,11 +514,11 @@ BOOLEAN ExecuteUndoList(void) {
 
     // Find which map tile we are to "undo"
     if (gpTileUndoStack->pData->fLightSaved) {  // We saved a light, so delete that light
-      INT16 sX, sY;
+      int16_t sX, sY;
       // Turn on this flag so that the following code, when executed, doesn't attempt to
       // add lights to the undo list.  That would cause problems...
       gfIgnoreUndoCmdsForLights = TRUE;
-      ConvertGridNoToXY((INT16)iUndoMapIndex, &sX, &sY);
+      ConvertGridNoToXY((int16_t)iUndoMapIndex, &sX, &sY);
       if (!gpTileUndoStack->pData->ubLightRadius)
         RemoveLight(sX, sY);
       else
@@ -528,7 +528,7 @@ BOOLEAN ExecuteUndoList(void) {
       gfIgnoreUndoCmdsForLights = FALSE;
     } else {  // We execute the undo command node by simply swapping the contents
       // of the undo's MAP_ELEMENT with the world's element.
-      fExitGrid = ExitGridAtGridNo((UINT16)iUndoMapIndex);
+      fExitGrid = ExitGridAtGridNo((uint16_t)iUndoMapIndex);
       SwapMapElementWithWorld(iUndoMapIndex, gpTileUndoStack->pData->pMapTile);
 
       // copy the room number information back
@@ -552,25 +552,25 @@ BOOLEAN ExecuteUndoList(void) {
     RemoveAllTopmostsOfTypeRange(iUndoMapIndex, FIRSTPOINTERS, FIRSTPOINTERS);
 
     if (fExitGrid &&
-        !ExitGridAtGridNo((UINT16)iUndoMapIndex)) {  // An exitgrid has been removed, so get rid of
-                                                     // the associated indicator.
-      RemoveTopmost((UINT16)iUndoMapIndex, FIRSTPOINTERS8);
+        !ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been removed, so get rid
+                                                       // of the associated indicator.
+      RemoveTopmost((uint16_t)iUndoMapIndex, FIRSTPOINTERS8);
     } else if (!fExitGrid &&
-               ExitGridAtGridNo((UINT16)iUndoMapIndex)) {  // An exitgrid has been added, so add the
-                                                           // associated indicator
-      AddTopmostToTail((UINT16)iUndoMapIndex, FIRSTPOINTERS8);
+               ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been added, so add
+                                                             // the associated indicator
+      AddTopmostToTail((uint16_t)iUndoMapIndex, FIRSTPOINTERS8);
     }
   }
 
   return (TRUE);
 }
 
-void SmoothUndoMapTileTerrain(INT32 iWorldTile, MAP_ELEMENT *pUndoTile) {
+void SmoothUndoMapTileTerrain(int32_t iWorldTile, MAP_ELEMENT *pUndoTile) {
   struct LEVELNODE *pWorldLand;
   struct LEVELNODE *pUndoLand;
   struct LEVELNODE *pLand;
   struct LEVELNODE *pWLand;
-  UINT32 uiCheckType, uiWCheckType;
+  uint32_t uiCheckType, uiWCheckType;
   BOOLEAN fFound;
 
   pUndoLand = pUndoTile->pLandHead;
@@ -639,7 +639,7 @@ void SmoothUndoMapTileTerrain(INT32 iWorldTile, MAP_ELEMENT *pUndoTile) {
 void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
   struct LEVELNODE *pLevelNode;
   struct STRUCTURE *pStructure;
-  INT32 x;
+  int32_t x;
   for (x = 0; x < 9; x++) {
     if (x == 1) continue;
     pLevelNode = pNewMapElement->pLevelNodes[x];
@@ -665,17 +665,17 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
                 struct LEVELNODE				*pPrevNode;
    // FOR LAND, GOING BACKWARDS POINTER struct ITEM_POOL
    *pItemPool;					// ITEM POOLS struct STRUCTURE
-   *pStructureData;		// struct STRUCTURE DATA INT32
+   *pStructureData;		// struct STRUCTURE DATA int32_t
    iPhysicsObjectID;		// ID FOR PHYSICS ITEM
-                INT32
+                int32_t
    uiAPCost;						// FOR AP DISPLAY
         }; // ( 4 byte union )
         union
         {
                 struct
                 {
-                        UINT16
-   usIndex;							// TILE DATABASE INDEX INT16
+                        uint16_t
+   usIndex;							// TILE DATABASE INDEX int16_t
    sCurrentFrame;				// Stuff for animated tiles for a given tile
    location ( doors, etc )
                 };
@@ -686,13 +686,13 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
                 };
         }; // ( 4 byte union )
 */
-BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
+BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, int32_t iMapIndex) {
   MAP_ELEMENT *pOldMapElement;
   struct LEVELNODE *pOldLevelNode;
   struct LEVELNODE *pLevelNode;
   struct LEVELNODE *pNewLevelNode;
   struct LEVELNODE *tail;
-  INT32 x;
+  int32_t x;
 
   struct STRUCTURE *pOldStructure;
 
@@ -838,7 +838,7 @@ BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
   return TRUE;
 }
 
-BOOLEAN SwapMapElementWithWorld(INT32 iMapIndex, MAP_ELEMENT *pUndoMapElement) {
+BOOLEAN SwapMapElementWithWorld(int32_t iMapIndex, MAP_ELEMENT *pUndoMapElement) {
   MAP_ELEMENT *pCurrentMapElement;
   MAP_ELEMENT TempMapElement;
 

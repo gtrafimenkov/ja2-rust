@@ -105,21 +105,21 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 
-extern UINT8 gubAICounter;
+extern uint8_t gubAICounter;
 
 #define RT_DELAY_BETWEEN_AI_HANDLING 50
 #define RT_AI_TIMESLICE 10
 
-INT32 giRTAILastUpdateTime = 0;
-UINT32 guiAISlotToHandle = 0;
+int32_t giRTAILastUpdateTime = 0;
+uint32_t guiAISlotToHandle = 0;
 #define HANDLE_OFF_MAP_MERC 0xFFFF
 #define RESET_HANDLE_OF_OFF_MAP_MERCS 0xFFFF
-UINT32 guiAIAwaySlotToHandle = RESET_HANDLE_OF_OFF_MAP_MERCS;
+uint32_t guiAIAwaySlotToHandle = RESET_HANDLE_OF_OFF_MAP_MERCS;
 
 #define PAUSE_ALL_AI_DELAY 1500
 
 BOOLEAN gfPauseAllAI = FALSE;
-INT32 giPauseAllAITimer = 0;
+int32_t giPauseAllAITimer = 0;
 
 extern void RecalculateOppCntsDueToNoLongerNeutral(struct SOLDIERTYPE *pSoldier);
 extern void SetSoldierAniSpeed(struct SOLDIERTYPE *pSoldier);
@@ -127,9 +127,9 @@ extern void HandleExplosionQueue(void);
 extern void UpdateForContOverPortrait(struct SOLDIERTYPE *pSoldier, BOOLEAN fOn);
 extern void HandleSystemNewAISituation(struct SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
 
-extern BOOLEAN NPCInRoom(UINT8 ubProfileID, UINT8 ubRoomID);
+extern BOOLEAN NPCInRoom(uint8_t ubProfileID, uint8_t ubRoomID);
 
-extern INT8 gbInvalidPlacementSlot[NUM_INV_SLOTS];
+extern int8_t gbInvalidPlacementSlot[NUM_INV_SLOTS];
 
 void ResetAllMercSpeeds();
 void HandleBloodForNewGridNo(struct SOLDIERTYPE *pSoldier);
@@ -145,8 +145,8 @@ void CaptureTimerCallback(void);
 extern void CheckForAlertWhenEnemyDies(struct SOLDIERTYPE *pDyingSoldier);
 extern void PlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
 extern void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier,
-                              struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel);
-extern UINT16 PickSoldierReadyAnimation(struct SOLDIERTYPE *pSoldier, BOOLEAN fEndReady);
+                              struct SOLDIERTYPE *pKillerSoldier, int16_t sGridNo, int8_t bLevel);
+extern uint16_t PickSoldierReadyAnimation(struct SOLDIERTYPE *pSoldier, BOOLEAN fEndReady);
 
 extern void PlayStealthySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
 
@@ -157,15 +157,15 @@ extern BOOLEAN gfSurrendered;
 #define NUM_RANDOM_SCENES 4
 
 #ifdef NETWORKED
-extern BYTE gfAmIHost;
+extern uint8_t gfAmIHost;
 extern BOOLEAN gfAmINetworked;
 #endif
 
 #define NEW_FADE_DELAY 60
 
 // ATE: GLOBALS FOR E3
-UINT8 gubCurrentScene = 0;
-CHAR8 gzLevelFilenames[][50] = {
+uint8_t gubCurrentScene = 0;
+char gzLevelFilenames[][50] = {
     "A9.dat",         "ScotTBMines.dat",  "LindaTBCaves.dat", "LindaRTDesert.dat",
     "IanRTNight.dat", "LindaRTCave1.dat", "LindaRTCave2.dat"
 
@@ -173,30 +173,30 @@ CHAR8 gzLevelFilenames[][50] = {
 
 TacticalStatusType gTacticalStatus;
 
-INT8 ubLevelMoveLink[10] = {1, 2, 3, 4, 0, 0, 0, 0, 0, 0};
+int8_t ubLevelMoveLink[10] = {1, 2, 3, 4, 0, 0, 0, 0, 0, 0};
 
 // Soldier List used for all soldier overhead interaction
 struct SOLDIERTYPE Menptr[TOTAL_SOLDIERS];
 struct SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
 
 struct SOLDIERTYPE *MercSlots[TOTAL_SOLDIERS];
-UINT32 guiNumMercSlots = 0;
+uint32_t guiNumMercSlots = 0;
 
 struct SOLDIERTYPE *AwaySlots[TOTAL_SOLDIERS];
-UINT32 guiNumAwaySlots = 0;
+uint32_t guiNumAwaySlots = 0;
 
 // DEF: changed to have client wait for gPlayerNum assigned from host
-UINT8 gbPlayerNum = 0;
+uint8_t gbPlayerNum = 0;
 
 // Global for current selected soldier
-UINT16 gusSelectedSoldier = NO_SOLDIER;
-INT8 gbShowEnemies = FALSE;
+uint16_t gusSelectedSoldier = NO_SOLDIER;
+int8_t gbShowEnemies = FALSE;
 
 BOOLEAN gfMovingAnimation = FALSE;
 
-CHAR8 gzAlertStr[][30] = {"GREEN", "YELLOW", "RED", "BLACK"};
+char gzAlertStr[][30] = {"GREEN", "YELLOW", "RED", "BLACK"};
 
-CHAR8 gzActionStr[][30] = {
+char gzActionStr[][30] = {
     "NONE",
 
     "RANDOM PATROL",
@@ -255,11 +255,11 @@ CHAR8 gzActionStr[][30] = {
     "OFFER SURRENDER",
 };
 
-CHAR8 gzDirectionStr[][30] = {"NORTHEAST", "EAST", "SOUTHEAST", "SOUTH",
-                              "SOUTHWEST", "WEST", "NORTHWEST", "NORTH"};
+char gzDirectionStr[][30] = {"NORTHEAST", "EAST", "SOUTHEAST", "SOUTH",
+                             "SOUTHWEST", "WEST", "NORTHWEST", "NORTH"};
 
 // TEMP VALUES FOR TEAM DEAFULT POSITIONS
-UINT8 bDefaultTeamRanges[MAXTEAMS][2] = {
+uint8_t bDefaultTeamRanges[MAXTEAMS][2] = {
     {0, 19},                                // 20  US
     {20, 51},                               // 32  ENEMY
     {52, 83},                               // 32    CREATURE
@@ -273,43 +273,43 @@ COLORVAL bDefaultTeamColors[MAXTEAMS] = {FROMRGB(255, 255, 0),   FROMRGB(255, 0,
                                          FROMRGB(255, 255, 255), FROMRGB(0, 0, 255)};
 
 // UTILITY FUNCTIONS
-INT8 NumActiveAndConsciousTeamMembers(UINT8 ubTeam);
-UINT8 NumEnemyInSector();
-UINT8 NumEnemyInSectorExceptCreatures();
-UINT8 NumCapableEnemyInSector();
+int8_t NumActiveAndConsciousTeamMembers(uint8_t ubTeam);
+uint8_t NumEnemyInSector();
+uint8_t NumEnemyInSectorExceptCreatures();
+uint8_t NumCapableEnemyInSector();
 
 BOOLEAN KillIncompacitatedEnemyInSector();
 BOOLEAN CheckForLosingEndOfBattle();
-void EndBattleWithUnconsciousGuysCallback(UINT8 bExitValue);
-UINT8 NumEnemyInSectorNotDeadOrDying();
-UINT8 NumBloodcatsInSectorNotDeadOrDying();
+void EndBattleWithUnconsciousGuysCallback(uint8_t bExitValue);
+uint8_t NumEnemyInSectorNotDeadOrDying();
+uint8_t NumBloodcatsInSectorNotDeadOrDying();
 
-UINT8 gubWaitingForAllMercsToExitCode = 0;
-INT8 gbNumMercsUntilWaitingOver = 0;
-UINT32 guiWaitingForAllMercsToExitData[3];
-UINT32 guiWaitingForAllMercsToExitTimer = 0;
+uint8_t gubWaitingForAllMercsToExitCode = 0;
+int8_t gbNumMercsUntilWaitingOver = 0;
+uint32_t guiWaitingForAllMercsToExitData[3];
+uint32_t guiWaitingForAllMercsToExitTimer = 0;
 BOOLEAN gfKillingGuysForLosingBattle = FALSE;
 
-INT32 GetFreeMercSlot(void) {
-  UINT32 uiCount;
+int32_t GetFreeMercSlot(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumMercSlots; uiCount++) {
-    if ((MercSlots[uiCount] == NULL)) return ((INT32)uiCount);
+    if ((MercSlots[uiCount] == NULL)) return ((int32_t)uiCount);
   }
 
-  if (guiNumMercSlots < TOTAL_SOLDIERS) return ((INT32)guiNumMercSlots++);
+  if (guiNumMercSlots < TOTAL_SOLDIERS) return ((int32_t)guiNumMercSlots++);
 
   return (-1);
 }
 
 void RecountMercSlots(void) {
-  INT32 iCount;
+  int32_t iCount;
 
   if (guiNumMercSlots > 0) {
     // set equal to 0 as a default
     for (iCount = guiNumMercSlots - 1; (iCount >= 0); iCount--) {
       if ((MercSlots[iCount] != NULL)) {
-        guiNumMercSlots = (UINT32)(iCount + 1);
+        guiNumMercSlots = (uint32_t)(iCount + 1);
         return;
       }
     }
@@ -318,8 +318,8 @@ void RecountMercSlots(void) {
   }
 }
 
-INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier) {
-  INT32 iMercIndex;
+int32_t AddMercSlot(struct SOLDIERTYPE *pSoldier) {
+  int32_t iMercIndex;
 
   if ((iMercIndex = GetFreeMercSlot()) == (-1)) return (-1);
 
@@ -329,7 +329,7 @@ INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   CHECKF(pSoldier != NULL);
 
@@ -345,25 +345,25 @@ BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT32 GetFreeAwaySlot(void) {
-  UINT32 uiCount;
+int32_t GetFreeAwaySlot(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumAwaySlots; uiCount++) {
-    if ((AwaySlots[uiCount] == NULL)) return ((INT32)uiCount);
+    if ((AwaySlots[uiCount] == NULL)) return ((int32_t)uiCount);
   }
 
-  if (guiNumAwaySlots < TOTAL_SOLDIERS) return ((INT32)guiNumAwaySlots++);
+  if (guiNumAwaySlots < TOTAL_SOLDIERS) return ((int32_t)guiNumAwaySlots++);
 
   return (-1);
 }
 
 void RecountAwaySlots(void) {
-  INT32 iCount;
+  int32_t iCount;
 
   if (guiNumAwaySlots > 0) {
     for (iCount = guiNumAwaySlots - 1; (iCount >= 0); iCount--) {
       if ((AwaySlots[iCount] != NULL)) {
-        guiNumAwaySlots = (UINT32)(iCount + 1);
+        guiNumAwaySlots = (uint32_t)(iCount + 1);
         return;
       }
     }
@@ -372,8 +372,8 @@ void RecountAwaySlots(void) {
   }
 }
 
-INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier) {
-  INT32 iAwayIndex;
+int32_t AddAwaySlot(struct SOLDIERTYPE *pSoldier) {
+  int32_t iAwayIndex;
 
   if ((iAwayIndex = GetFreeAwaySlot()) == (-1)) return (-1);
 
@@ -383,7 +383,7 @@ INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   CHECKF(pSoldier != NULL);
 
@@ -399,7 +399,7 @@ BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT32 MoveSoldierFromMercToAwaySlot(struct SOLDIERTYPE *pSoldier) {
+int32_t MoveSoldierFromMercToAwaySlot(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fRet;
 
   fRet = RemoveMercSlot(pSoldier);
@@ -416,7 +416,7 @@ INT32 MoveSoldierFromMercToAwaySlot(struct SOLDIERTYPE *pSoldier) {
   return (AddAwaySlot(pSoldier));
 }
 
-INT32 MoveSoldierFromAwayToMercSlot(struct SOLDIERTYPE *pSoldier) {
+int32_t MoveSoldierFromAwayToMercSlot(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fRet;
 
   fRet = RemoveAwaySlot(pSoldier);
@@ -486,8 +486,8 @@ void ShutdownTacticalEngine() {
 }
 
 BOOLEAN InitOverhead() {
-  UINT32 cnt;
-  UINT8 cnt2;
+  uint32_t cnt;
+  uint8_t cnt2;
 
   memset(MercSlots, 0, sizeof(MercSlots));
   memset(AwaySlots, 0, sizeof(AwaySlots));
@@ -532,7 +532,7 @@ BOOLEAN InitOverhead() {
     // set team values in soldier structures for all who are on this team
     for (cnt2 = gTacticalStatus.Team[cnt].bFirstID; cnt2 <= gTacticalStatus.Team[cnt].bLastID;
          cnt2++) {
-      MercPtrs[cnt2]->bTeam = (INT8)cnt;
+      MercPtrs[cnt2]->bTeam = (int8_t)cnt;
     }
   }
 
@@ -581,7 +581,7 @@ BOOLEAN InitOverhead() {
 }
 
 BOOLEAN ShutdownOverhead() {
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Delete any soldiers which have been created!
   for (cnt = 0; cnt < TOTAL_SOLDIERS; cnt++) {
@@ -595,7 +595,7 @@ BOOLEAN ShutdownOverhead() {
   return (TRUE);
 }
 
-BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, UINT16 usSoldierIndex) {
+BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, uint16_t usSoldierIndex) {
   // Check range of index given
   *ppSoldier = NULL;
 
@@ -615,8 +615,8 @@ BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, UINT16 usSoldierIndex) {
   }
 }
 
-BOOLEAN NextAIToHandle(UINT32 uiCurrAISlot) {
-  UINT32 cnt;
+BOOLEAN NextAIToHandle(uint32_t uiCurrAISlot) {
+  uint32_t cnt;
 
   if (uiCurrAISlot >= guiNumMercSlots) {
     // last person to handle was an off-map merc, so now we start looping at the beginning
@@ -682,38 +682,38 @@ void UnPauseAI(void) {
   giPauseAllAITimer = 0;
 }
 
-FLOAT gdRadiansForAngle[] = {
-    (FLOAT)PI, (FLOAT)(3 * PI / 4), (FLOAT)(PI / 2),  (FLOAT)((PI) / 4),
+float gdRadiansForAngle[] = {
+    (float)PI, (float)(3 * PI / 4), (float)(PI / 2),  (float)((PI) / 4),
 
-    (FLOAT)0,  (FLOAT)((-PI) / 4),  (FLOAT)(-PI / 2), (FLOAT)(-3 * PI / 4),
+    (float)0,  (float)((-PI) / 4),  (float)(-PI / 2), (float)(-3 * PI / 4),
 
 };
 
 BOOLEAN ExecuteOverhead() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 sAPCost;
-  INT16 sBPCost;
-  FLOAT dXPos, dYPos;
-  FLOAT dAngle;
+  int16_t sAPCost;
+  int16_t sBPCost;
+  float dXPos, dYPos;
+  float dAngle;
   BOOLEAN fKeepMoving;
-  INT8 bShadeLevel;
+  int8_t bShadeLevel;
   BOOLEAN fNoAPsForPendingAction;
-  INT16 sGridNo;
+  int16_t sGridNo;
   struct STRUCTURE *pStructure;
   BOOLEAN fHandleAI = FALSE;
 
   // Diagnostic Stuff
-  static INT32 iTimerTest = 0;
-  static INT32 iTimerVal = 0;
+  static int32_t iTimerTest = 0;
+  static int32_t iTimerVal = 0;
 
   gfMovingAnimation = FALSE;
 
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     if (IsSolActive(pSoldier)) {
       if (pSoldier->uiStatusFlags & SOLDIER_GREEN_RAY)
-        LightShowRays((INT16)(pSoldier->dXPos / CELL_X_SIZE),
-                      (INT16)(pSoldier->dYPos / CELL_Y_SIZE), FALSE);
+        LightShowRays((int16_t)(pSoldier->dXPos / CELL_X_SIZE),
+                      (int16_t)(pSoldier->dYPos / CELL_Y_SIZE), FALSE);
     }
   }
 
@@ -994,7 +994,7 @@ BOOLEAN ExecuteOverhead() {
                   pSoldier->bReverse = FALSE;
 
                   // OK, if we are the selected soldier, refresh some UI stuff
-                  if (pSoldier->ubID == (UINT8)gusSelectedSoldier) {
+                  if (pSoldier->ubID == (uint8_t)gusSelectedSoldier) {
                     gfUIRefreshArrows = TRUE;
                   }
 
@@ -1042,7 +1042,7 @@ BOOLEAN ExecuteOverhead() {
                         // ATE wanted this line here...
                         pSoldier->usPathIndex--;
                         AdjustSoldierPathToGoOffEdge(pSoldier, pSoldier->sGridNo,
-                                                     (UINT8)pSoldier->uiPendingActionData1);
+                                                     (uint8_t)pSoldier->uiPendingActionData1);
                         continue;
                       }
                     } else if (pSoldier->ubWaitActionToDo == 1) {
@@ -1066,7 +1066,7 @@ BOOLEAN ExecuteOverhead() {
                     if (pSoldier->ubPendingAction == MERC_OPENDOOR ||
                         pSoldier->ubPendingAction == MERC_OPENSTRUCT) {
                       sGridNo = pSoldier->sPendingActionData2;
-                      // usStructureID           = (UINT16)pSoldier->uiPendingActionData1;
+                      // usStructureID           = (uint16_t)pSoldier->uiPendingActionData1;
                       // pStructure = FindStructureByID( sGridNo, usStructureID );
 
                       // LOOK FOR STRUCT OPENABLE
@@ -1097,30 +1097,30 @@ BOOLEAN ExecuteOverhead() {
                         if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
                           // If the two gridnos are not the same, check to see if we can
                           // now go into it
-                          if (sGridNo != (INT16)pSoldier->uiPendingActionData4) {
-                            if (NewOKDestination(pSoldier, (INT16)pSoldier->uiPendingActionData4,
+                          if (sGridNo != (int16_t)pSoldier->uiPendingActionData4) {
+                            if (NewOKDestination(pSoldier, (int16_t)pSoldier->uiPendingActionData4,
                                                  TRUE, pSoldier->bLevel)) {
                               // GOTO NEW TILE!
                               SoldierPickupItem(pSoldier, pSoldier->uiPendingActionData1,
-                                                (INT16)pSoldier->uiPendingActionData4,
+                                                (int16_t)pSoldier->uiPendingActionData4,
                                                 pSoldier->bPendingActionData3);
                               continue;
                             }
                           }
                         }
 
-                        // OK MORON, DOUBLE CHECK THAT THE ITEM EXISTS HERE...
+                        // OK MORON, double CHECK THAT THE ITEM EXISTS HERE...
                         if (pSoldier->uiPendingActionData1 != ITEM_PICKUP_ACTION_ALL) {
-                          // if ( ItemExistsAtLocation( (INT16)( pSoldier->uiPendingActionData4 ),
+                          // if ( ItemExistsAtLocation( (int16_t)( pSoldier->uiPendingActionData4 ),
                           // pSoldier->uiPendingActionData1, pSoldier->bLevel ) )
                           {
                             PickPickupAnimation(pSoldier, pSoldier->uiPendingActionData1,
-                                                (INT16)(pSoldier->uiPendingActionData4),
+                                                (int16_t)(pSoldier->uiPendingActionData4),
                                                 pSoldier->bPendingActionData3);
                           }
                         } else {
                           PickPickupAnimation(pSoldier, pSoldier->uiPendingActionData1,
-                                              (INT16)(pSoldier->uiPendingActionData4),
+                                              (int16_t)(pSoldier->uiPendingActionData4),
                                               pSoldier->bPendingActionData3);
                         }
                       } else {
@@ -1134,7 +1134,7 @@ BOOLEAN ExecuteOverhead() {
                                                     pSoldier->bPendingActionData3);
                       pSoldier->ubPendingAction = NO_PENDING_ACTION;
                     } else if (pSoldier->ubPendingAction == MERC_TALK) {
-                      PlayerSoldierStartTalking(pSoldier, (UINT8)pSoldier->uiPendingActionData1,
+                      PlayerSoldierStartTalking(pSoldier, (uint8_t)pSoldier->uiPendingActionData1,
                                                 TRUE);
                       pSoldier->ubPendingAction = NO_PENDING_ACTION;
                     } else if (pSoldier->ubPendingAction == MERC_DROPBOMB) {
@@ -1168,7 +1168,7 @@ BOOLEAN ExecuteOverhead() {
                     } else if (pSoldier->ubPendingAction == MERC_RELOADROBOT) {
                       EVENT_SoldierBeginReloadRobot(pSoldier, pSoldier->sPendingActionData2,
                                                     pSoldier->bPendingActionData3,
-                                                    (INT8)pSoldier->uiPendingActionData1);
+                                                    (int8_t)pSoldier->uiPendingActionData1);
                       pSoldier->ubPendingAction = NO_PENDING_ACTION;
                     } else if (pSoldier->ubPendingAction == MERC_TAKEBLOOD) {
                       EVENT_SoldierBeginTakeBlood(pSoldier, pSoldier->sPendingActionData2,
@@ -1261,10 +1261,10 @@ BOOLEAN ExecuteOverhead() {
                       if (FindBestPath(pSoldier, pSoldier->sFinalDestination, pSoldier->bLevel,
                                        pSoldier->usUIMovementMode, NO_COPYROUTE,
                                        PATH_THROUGH_PEOPLE) != 0) {
-                        INT16 sNewGridNo;
+                        int16_t sNewGridNo;
 
-                        sNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                                               DirectionInc((UINT8)guiPathingData[0]));
+                        sNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                               DirectionInc((uint8_t)guiPathingData[0]));
 
                         SetDelayedTileWaiting(pSoldier, sNewGridNo, 1);
                       }
@@ -1314,7 +1314,7 @@ BOOLEAN ExecuteOverhead() {
                 // dDeltaY = pSoldier->sDestYPos - pSoldier->dYPos;
 
                 // Determine angle
-                //	dAngle = (FLOAT)atan2( dDeltaX, dDeltaY );
+                //	dAngle = (float)atan2( dDeltaX, dDeltaY );
 
                 dAngle = gdRadiansForAngle[pSoldier->bMovementDirection];
 
@@ -1495,10 +1495,10 @@ void HandleLocateToGuyAsHeWalks(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
-                            BOOLEAN fInitialMove, UINT16 usAnimState) {
-  INT16 sAPCost;
-  INT16 sBPCost;
-  UINT16 usNewGridNo, sOverFenceGridNo, sMineGridNo;
+                            BOOLEAN fInitialMove, uint16_t usAnimState) {
+  int16_t sAPCost;
+  int16_t sBPCost;
+  uint16_t usNewGridNo, sOverFenceGridNo, sMineGridNo;
 
   if (gTacticalStatus.uiFlags & INCOMBAT && fInitialMove) {
     HandleLocateToGuyAsHeWalks(pSoldier);
@@ -1536,11 +1536,11 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
     }
   }
 
-  usNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                          DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
+  usNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                          DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
 
   // OK, check if this is a fence cost....
-  if (gubWorldMovementCosts[usNewGridNo][(UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]]
+  if (gubWorldMovementCosts[usNewGridNo][(uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]]
                            [pSoldier->bLevel] == TRAVELCOST_FENCE) {
     // We have been told to jump fence....
 
@@ -1551,9 +1551,9 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
     if (EnoughPoints(pSoldier, sAPCost, sBPCost, FALSE)) {
       // ATE: Check for tile being clear....
       sOverFenceGridNo = NewGridNo(
-          usNewGridNo, DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex + 1]));
+          usNewGridNo, DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex + 1]));
 
-      if (HandleNextTile(pSoldier, (INT8)pSoldier->usPathingData[pSoldier->usPathIndex + 1],
+      if (HandleNextTile(pSoldier, (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex + 1],
                          sOverFenceGridNo, pSoldier->sFinalDestination)) {
         // We do, adjust path data....
         pSoldier->usPathIndex++;
@@ -1580,12 +1580,12 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
   } else if (InternalDoorTravelCost(
                  pSoldier, usNewGridNo,
                  gubWorldMovementCosts[usNewGridNo]
-                                      [(UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]]
+                                      [(uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]]
                                       [pSoldier->bLevel],
                  (BOOLEAN)(pSoldier->bTeam == gbPlayerNum), NULL, TRUE) == TRAVELCOST_DOOR) {
     struct STRUCTURE *pStructure;
-    INT8 bDirection;
-    INT16 sDoorGridNo;
+    int8_t bDirection;
+    int16_t sDoorGridNo;
 
     // OK, if we are here, we have been told to get a pth through a door.
 
@@ -1594,12 +1594,13 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
     // No need to check for right key ( since the path checks for that? )
 
     // Just for now play the $&&% animation
-    bDirection = (UINT8)pSoldier->usPathingData[pSoldier->usPathIndex];
+    bDirection = (uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex];
 
     // OK, based on the direction, get door gridno
     if (bDirection == NORTH || bDirection == WEST) {
-      sDoorGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                              DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
+      sDoorGridNo =
+          NewGridNo((uint16_t)pSoldier->sGridNo,
+                    DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
     } else if (bDirection == SOUTH || bDirection == EAST) {
       sDoorGridNo = pSoldier->sGridNo;
     } else {
@@ -1648,12 +1649,12 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
   // Find out how much it takes to move here!
   sAPCost = ActionPointCost(pSoldier, usNewGridNo,
-                            (INT8)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
-  sBPCost = TerrainBreathPoints(pSoldier, usNewGridNo,
-                                (INT8)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
+                            (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
+  sBPCost = TerrainBreathPoints(
+      pSoldier, usNewGridNo, (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usAnimState);
 
   // CHECK IF THIS TILE IS A GOOD ONE!
-  if (!HandleNextTile(pSoldier, (INT8)pSoldier->usPathingData[pSoldier->usPathIndex], usNewGridNo,
+  if (!HandleNextTile(pSoldier, (int8_t)pSoldier->usPathingData[pSoldier->usPathIndex], usNewGridNo,
                       pSoldier->sFinalDestination)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("HandleGotoNewGridNo() Failed: Tile %d Was blocked", usNewGridNo));
@@ -1679,7 +1680,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
       // IF not in combat, stop them all
       if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
-        INT32 cnt2;
+        int32_t cnt2;
         struct SOLDIERTYPE *pSoldier2;
 
         cnt2 = gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -1748,7 +1749,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
       if (gpWorldLevelData[pSoldier->sGridNo].ubExtFlags[pSoldier->bLevel] & ANY_SMOKE_EFFECT &&
           PreRandom(5) == 0) {
         EXPLOSIVETYPE *pExplosive = NULL;
-        INT8 bPosOfMask;
+        int8_t bPosOfMask;
 
         if (pSoldier->inv[HEAD1POS].usItem == GASMASK &&
             pSoldier->inv[HEAD1POS].bStatus[0] >= GASMASK_MIN_STATUS) {
@@ -1787,11 +1788,12 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
           EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
           fDontContinue = TRUE;
 
-          DishOutGasDamage(pSoldier, pExplosive, TRUE, FALSE,
-                           (INT16)(pExplosive->ubDamage + (UINT8)PreRandom(pExplosive->ubDamage)),
-                           (INT16)(100 * (pExplosive->ubStunDamage +
-                                          (INT16)PreRandom((pExplosive->ubStunDamage / 2)))),
-                           NOBODY);
+          DishOutGasDamage(
+              pSoldier, pExplosive, TRUE, FALSE,
+              (int16_t)(pExplosive->ubDamage + (uint8_t)PreRandom(pExplosive->ubDamage)),
+              (int16_t)(100 * (pExplosive->ubStunDamage +
+                               (int16_t)PreRandom((pExplosive->ubStunDamage / 2)))),
+              NOBODY);
         }
       }
 
@@ -1799,7 +1801,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
         if ((pSoldier->bOverTerrainType == FLAT_FLOOR ||
              pSoldier->bOverTerrainType == PAVED_ROAD) &&
             pSoldier->bLevel == 0) {
-          INT32 iMarblesIndex;
+          int32_t iMarblesIndex;
 
           if (ItemTypeExistsAtLocation(pSoldier->sGridNo, MARBLES, 0, &iMarblesIndex)) {
             // Slip on marbles!
@@ -1811,7 +1813,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
             RemoveItemFromPool(pSoldier->sGridNo, iMarblesIndex, 0);
             SoldierCollapse(pSoldier);
             if (pSoldier->bActionPoints > 0) {
-              pSoldier->bActionPoints -= (INT8)(Random(pSoldier->bActionPoints) + 1);
+              pSoldier->bActionPoints -= (int8_t)(Random(pSoldier->bActionPoints) + 1);
             }
             return (FALSE);
           }
@@ -1820,26 +1822,26 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
         if ((pSoldier->bBlindedCounter > 0) && (pSoldier->usAnimState == RUNNING) &&
             (Random(5) == 0) &&
             OKFallDirection(pSoldier,
-                            (INT16)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
+                            (int16_t)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
                             pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
           // 20% chance of falling over!
           DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
           ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[37], pSoldier->name);
           SoldierCollapse(pSoldier);
           if (pSoldier->bActionPoints > 0) {
-            pSoldier->bActionPoints -= (INT8)(Random(pSoldier->bActionPoints) + 1);
+            pSoldier->bActionPoints -= (int8_t)(Random(pSoldier->bActionPoints) + 1);
           }
           return (FALSE);
         } else if ((GetDrunkLevel(pSoldier) == DRUNK) && (Random(5) == 0) &&
-                   OKFallDirection(pSoldier,
-                                   (INT16)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
-                                   pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
+                   OKFallDirection(
+                       pSoldier, (int16_t)(pSoldier->sGridNo + DirectionInc(pSoldier->bDirection)),
+                       pSoldier->bLevel, pSoldier->bDirection, pSoldier->usAnimState)) {
           // 20% chance of falling over!
           DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
           ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[37], pSoldier->name);
           SoldierCollapse(pSoldier);
           if (pSoldier->bActionPoints > 0) {
-            pSoldier->bActionPoints -= (INT8)(Random(pSoldier->bActionPoints) + 1);
+            pSoldier->bActionPoints -= (int8_t)(Random(pSoldier->bActionPoints) + 1);
           }
           return (FALSE);
         } else
@@ -1858,7 +1860,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
               TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
               EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
               if (pSoldier->bActionPoints > 0) {
-                pSoldier->bActionPoints -= (INT8)(Random(pSoldier->bActionPoints) + 1);
+                pSoldier->bActionPoints -= (int8_t)(Random(pSoldier->bActionPoints) + 1);
               }
 
               fDontContinue = TRUE;
@@ -1879,7 +1881,8 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
       // OK, let's check for monsters....
       if (pSoldier->uiStatusFlags & SOLDIER_MONSTER) {
-        if (!ValidCreatureTurn(pSoldier, (INT8)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
+        if (!ValidCreatureTurn(pSoldier,
+                               (int8_t)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
           if (!pSoldier->bReverse) {
             pSoldier->bReverse = TRUE;
 
@@ -1896,7 +1899,8 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 
       // OK, let's check for monsters....
       if (pSoldier->ubBodyType == BLOODCAT) {
-        if (!ValidCreatureTurn(pSoldier, (INT8)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
+        if (!ValidCreatureTurn(pSoldier,
+                               (int8_t)(pSoldier->usPathingData[pSoldier->usPathIndex]))) {
           if (!pSoldier->bReverse) {
             pSoldier->bReverse = TRUE;
             ChangeSoldierState(pSoldier, BLOODCAT_WALK_BACKWARDS, 1, TRUE);
@@ -1928,7 +1932,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
 }
 
 void HandleMaryArrival(struct SOLDIERTYPE *pSoldier) {
-  INT16 sDist;
+  int16_t sDist;
 
   if (!pSoldier) {
     pSoldier = FindSoldierByProfileID(MARY, TRUE);
@@ -1958,7 +1962,7 @@ void HandleMaryArrival(struct SOLDIERTYPE *pSoldier) {
 
 void HandleJohnArrival(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2 = NULL;
-  INT16 sDist;
+  int16_t sDist;
 
   if (!pSoldier) {
     pSoldier = FindSoldierByProfileID(JOHN, TRUE);
@@ -1998,8 +2002,8 @@ void HandleJohnArrival(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
-  INT16 sMineGridNo;
-  UINT8 ubVolume;
+  int16_t sMineGridNo;
+  uint8_t ubVolume;
 
   // ATE; Handle bad guys, as they fade, to cancel it if
   // too long...
@@ -2128,7 +2132,7 @@ BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
   }
 
   // OK, check for other stuff like mines...
-  if (NearbyGroundSeemsWrong(pSoldier, pSoldier->sGridNo, TRUE, (UINT16 *)&sMineGridNo)) {
+  if (NearbyGroundSeemsWrong(pSoldier, pSoldier->sGridNo, TRUE, (uint16_t *)&sMineGridNo)) {
     if (pSoldier->uiStatusFlags & SOLDIER_PC) {
       // NearbyGroundSeemsWrong returns true with gridno NOWHERE if
       // we find something by metal detector... we should definitely stop
@@ -2136,7 +2140,7 @@ BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
 
       // IF not in combat, stop them all
       if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
-        INT32 cnt2;
+        int32_t cnt2;
         struct SOLDIERTYPE *pSoldier2;
 
         cnt2 = gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -2242,7 +2246,7 @@ BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
       case RAY:
       case OLGA:
       case TYRONE: {
-        INT16 sDesiredMercDist;
+        int16_t sDesiredMercDist;
 
         if (ClosestPC(pSoldier, &sDesiredMercDist) != NOWHERE) {
           if (sDesiredMercDist <= NPC_TALK_RADIUS * 2) {
@@ -2263,7 +2267,7 @@ BOOLEAN HandleAtNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving) {
 }
 
 void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
   BOOLEAN fSoldierFound = FALSE;
 
@@ -2280,7 +2284,7 @@ void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (fSoldierFound) {
-    SelectSoldier((INT16)cnt, FALSE, FALSE);
+    SelectSoldier((int16_t)cnt, FALSE, FALSE);
   } else {
     gusSelectedSoldier = NO_SOLDIER;
     // Change UI mode to reflact that we are selected
@@ -2288,7 +2292,7 @@ void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void InternalSelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect,
+void InternalSelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect,
                            BOOLEAN fFromUI) {
   struct SOLDIERTYPE *pSoldier, *pOldSoldier;
 
@@ -2346,42 +2350,42 @@ void InternalSelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fFo
 
     // DB This used to say pSoldier... I fixed it
     if (pOldSoldier->bLevel == 0) {
-      // ConcealWalls((INT16)(pSoldier->dXPos/CELL_X_SIZE), (INT16)(pSoldier->dYPos/CELL_Y_SIZE),
-      // REVEAL_WALLS_RADIUS);
-      //	ApplyTranslucencyToWalls((INT16)(pOldSoldier->dXPos/CELL_X_SIZE),
-      //(INT16)(pOldSoldier->dYPos/CELL_Y_SIZE));
-      // LightHideTrees((INT16)(pOldSoldier->dXPos/CELL_X_SIZE),
-      // (INT16)(pOldSoldier->dYPos/CELL_Y_SIZE));
+      // ConcealWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+      // (int16_t)(pSoldier->dYPos/CELL_Y_SIZE), REVEAL_WALLS_RADIUS);
+      //	ApplyTranslucencyToWalls((int16_t)(pOldSoldier->dXPos/CELL_X_SIZE),
+      //(int16_t)(pOldSoldier->dYPos/CELL_Y_SIZE));
+      // LightHideTrees((int16_t)(pOldSoldier->dXPos/CELL_X_SIZE),
+      // (int16_t)(pOldSoldier->dYPos/CELL_Y_SIZE));
     }
     // DeleteSoldierLight( pOldSoldier );
 
     if (pOldSoldier->uiStatusFlags & SOLDIER_GREEN_RAY) {
-      LightHideRays((INT16)(pOldSoldier->dXPos / CELL_X_SIZE),
-                    (INT16)(pOldSoldier->dYPos / CELL_Y_SIZE));
+      LightHideRays((int16_t)(pOldSoldier->dXPos / CELL_X_SIZE),
+                    (int16_t)(pOldSoldier->dYPos / CELL_Y_SIZE));
       pOldSoldier->uiStatusFlags &= (~SOLDIER_GREEN_RAY);
     }
 
     UpdateForContOverPortrait(pOldSoldier, FALSE);
   }
 
-  gusSelectedSoldier = (UINT16)usSoldierID;
+  gusSelectedSoldier = (uint16_t)usSoldierID;
 
   // find which squad this guy is, then set selected squad to this guy
   SetCurrentSquad(pSoldier->bAssignment, FALSE);
 
   if (pSoldier->bLevel == 0) {
-    // RevealWalls((INT16)(pSoldier->dXPos/CELL_X_SIZE), (INT16)(pSoldier->dYPos/CELL_Y_SIZE),
+    // RevealWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE), (int16_t)(pSoldier->dYPos/CELL_Y_SIZE),
     // REVEAL_WALLS_RADIUS);
-    //	CalcTranslucentWalls((INT16)(pSoldier->dXPos/CELL_X_SIZE),
-    //(INT16)(pSoldier->dYPos/CELL_Y_SIZE));
-    // LightTranslucentTrees((INT16)(pSoldier->dXPos/CELL_X_SIZE),
-    // (INT16)(pSoldier->dYPos/CELL_Y_SIZE));
+    //	CalcTranslucentWalls((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+    //(int16_t)(pSoldier->dYPos/CELL_Y_SIZE));
+    // LightTranslucentTrees((int16_t)(pSoldier->dXPos/CELL_X_SIZE),
+    // (int16_t)(pSoldier->dYPos/CELL_Y_SIZE));
   }
 
   // SetCheckSoldierLightFlag( pSoldier );
 
   // Set interface to reflect new selection!
-  SetCurrentTacticalPanelCurrentMerc((UINT8)usSoldierID);
+  SetCurrentTacticalPanelCurrentMerc((uint8_t)usSoldierID);
 
   // PLay ATTN SOUND
   if (fAcknowledge) {
@@ -2425,27 +2429,27 @@ void InternalSelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fFo
   BeginCurInteractiveTileCheck(INTILE_CHECK_SELECTIVE);
 }
 
-void SelectSoldier(UINT16 usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect) {
+void SelectSoldier(uint16_t usSoldierID, BOOLEAN fAcknowledge, BOOLEAN fForceReselect) {
   InternalSelectSoldier(usSoldierID, fAcknowledge, fForceReselect, FALSE);
 }
 
 BOOLEAN ResetAllAnimationCache() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // Loop through all mercs and make go
   for (pSoldier = Menptr, cnt = 0; cnt < TOTAL_SOLDIERS; pSoldier++, cnt++) {
     if (pSoldier != NULL) {
-      InitAnimationCache((UINT16)cnt, &(pSoldier->AnimCache));
+      InitAnimationCache((uint16_t)cnt, &(pSoldier->AnimCache));
     }
   }
 
   return (TRUE);
 }
 
-void LocateSoldier(UINT16 usID, BOOLEAN fSetLocator) {
+void LocateSoldier(uint16_t usID, BOOLEAN fSetLocator) {
   struct SOLDIERTYPE *pSoldier;
-  INT16 sNewCenterWorldX, sNewCenterWorldY;
+  int16_t sNewCenterWorldX, sNewCenterWorldY;
 
   // if (!bCenter && SoldierOnScreen(usID))
   // return;
@@ -2457,8 +2461,8 @@ void LocateSoldier(UINT16 usID, BOOLEAN fSetLocator) {
     pSoldier = MercPtrs[usID];
 
     // Center on guy
-    sNewCenterWorldX = (INT16)pSoldier->dXPos;
-    sNewCenterWorldY = (INT16)pSoldier->dYPos;
+    sNewCenterWorldX = (int16_t)pSoldier->dXPos;
+    sNewCenterWorldY = (int16_t)pSoldier->dYPos;
 
     SetRenderCenter(sNewCenterWorldX, sNewCenterWorldY);
 
@@ -2469,15 +2473,15 @@ void LocateSoldier(UINT16 usID, BOOLEAN fSetLocator) {
   // do we flash the name & health bars/health string above?
   if (fSetLocator) {
     if (fSetLocator == SETLOCATOR || fSetLocator == 10) {
-      ShowRadioLocator((UINT8)usID, SHOW_LOCATOR_NORMAL);
+      ShowRadioLocator((uint8_t)usID, SHOW_LOCATOR_NORMAL);
     } else {
-      ShowRadioLocator((UINT8)usID, SHOW_LOCATOR_FAST);
+      ShowRadioLocator((uint8_t)usID, SHOW_LOCATOR_FAST);
     }
   }
 }
 
-void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce) {
-  INT16 sNewCenterWorldX, sNewCenterWorldY;
+void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce) {
+  int16_t sNewCenterWorldX, sNewCenterWorldY;
 
   ConvertGridNoToCenterCellXY(sGridNo, &sNewCenterWorldX, &sNewCenterWorldY);
 
@@ -2489,10 +2493,10 @@ void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce) {
   SetRenderCenter(sNewCenterWorldX, sNewCenterWorldY);
 }
 
-void LocateGridNo(UINT16 sGridNo) { InternalLocateGridNo(sGridNo, FALSE); }
+void LocateGridNo(uint16_t sGridNo) { InternalLocateGridNo(sGridNo, FALSE); }
 
-void SlideTo(INT16 sGridno, UINT16 usSoldierID, UINT16 usReasonID, BOOLEAN fSetLocator) {
-  INT32 cnt;
+void SlideTo(int16_t sGridno, uint16_t usSoldierID, uint16_t usReasonID, BOOLEAN fSetLocator) {
+  int32_t cnt;
 
   if (usSoldierID == NOBODY) {
     return;
@@ -2508,7 +2512,7 @@ void SlideTo(INT16 sGridno, UINT16 usSoldierID, UINT16 usReasonID, BOOLEAN fSetL
   }
 
   // Locate even if on screen
-  if (fSetLocator) ShowRadioLocator((UINT8)usSoldierID, SHOW_LOCATOR_NORMAL);
+  if (fSetLocator) ShowRadioLocator((uint8_t)usSoldierID, SHOW_LOCATOR_NORMAL);
 
   // FIRST CHECK IF WE ARE ON SCREEN
   if (GridNoOnScreen(MercPtrs[usSoldierID]->sGridNo)) {
@@ -2523,7 +2527,7 @@ void SlideTo(INT16 sGridno, UINT16 usSoldierID, UINT16 usReasonID, BOOLEAN fSetL
   gfPlotNewMovement = TRUE;
 }
 
-void SlideToLocation(UINT16 usReasonID, INT16 sDestGridNo) {
+void SlideToLocation(uint16_t usReasonID, int16_t sDestGridNo) {
   if (sDestGridNo == NOWHERE) {
     return;
   }
@@ -2542,7 +2546,7 @@ void SlideToLocation(UINT16 usReasonID, INT16 sDestGridNo) {
 }
 
 void RebuildAllSoldierShadeTables() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // Loop through all mercs and make go
@@ -2554,11 +2558,11 @@ void RebuildAllSoldierShadeTables() {
 }
 
 void HandlePlayerTeamMemberDeath(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt;
-  INT32 iNewSelectedSoldier;
+  int32_t cnt;
+  int32_t iNewSelectedSoldier;
   struct SOLDIERTYPE *pTeamSoldier;
   BOOLEAN fMissionFailed = TRUE;
-  INT8 bBuddyIndex;
+  int8_t bBuddyIndex;
 
   VerifyPublicOpplistDueToDeath(pSoldier);
 
@@ -2638,7 +2642,7 @@ void HandlePlayerTeamMemberDeath(struct SOLDIERTYPE *pSoldier) {
 
   if (gusSelectedSoldier == GetSolID(pSoldier)) {
     if (!fMissionFailed) {
-      SelectSoldier((INT16)iNewSelectedSoldier, FALSE, FALSE);
+      SelectSoldier((int16_t)iNewSelectedSoldier, FALSE, FALSE);
     } else {
       gusSelectedSoldier = NO_SOLDIER;
       // Change UI mode to reflact that we are selected
@@ -2750,7 +2754,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
         pOther = FindSoldierByProfileID(MARTHA, FALSE);
         if (pOther && (PythSpacesAway(pOther->sGridNo, pSoldierOld->sGridNo) < 10 ||
                        SoldierToSoldierLineOfSightTest(pOther, pSoldierOld,
-                                                       (UINT8)MaxDistanceVisible(), TRUE) != 0)) {
+                                                       (uint8_t)MaxDistanceVisible(), TRUE) != 0)) {
           // Martha has a heart attack and croaks
           TriggerNPCRecord(MARTHA, 17);
 
@@ -2826,7 +2830,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       }
     }
   } else if (pSoldierOld->bTeam == MILITIA_TEAM) {
-    INT8 bMilitiaRank;
+    int8_t bMilitiaRank;
 
     bMilitiaRank = SoldierClassToMilitiaRank(pSoldierOld->ubSoldierClass);
 
@@ -2894,14 +2898,14 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
   // killing crows/cows is not worth any experience!
   if ((pSoldierOld->ubBodyType != CROW) && (pSoldierOld->ubBodyType != COW) &&
       pSoldierOld->ubLastDamageReason != TAKE_DAMAGE_BLOODLOSS) {
-    UINT8 ubAssister;
+    uint8_t ubAssister;
 
     // if it was a kill by a player's merc
     if (pSoldierOld->ubAttackerID != NOBODY &&
         MercPtrs[pSoldierOld->ubAttackerID]->bTeam == gbPlayerNum) {
       // EXPERIENCE CLASS GAIN:  Earned a kill
       StatChange(MercPtrs[pSoldierOld->ubAttackerID], EXPERAMT,
-                 (UINT16)(10 * pSoldierOld->bExpLevel), FALSE);
+                 (uint16_t)(10 * pSoldierOld->bExpLevel), FALSE);
     }
 
     // JA2 Gold: if previous and current attackers are the same, the next-to-previous attacker gets
@@ -2915,7 +2919,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
     // if it was assisted by a player's merc
     if (ubAssister != NOBODY && MercPtrs[ubAssister]->bTeam == gbPlayerNum) {
       // EXPERIENCE CLASS GAIN:  Earned an assist
-      StatChange(MercPtrs[ubAssister], EXPERAMT, (UINT16)(5 * pSoldierOld->bExpLevel), FALSE);
+      StatChange(MercPtrs[ubAssister], EXPERAMT, (uint16_t)(5 * pSoldierOld->bExpLevel), FALSE);
     }
   }
 
@@ -2934,8 +2938,8 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
   CheckForEndOfBattle(FALSE);
 }
 
-UINT8 LastActiveTeamMember(UINT8 ubTeam) {
-  INT32 cnt;
+uint8_t LastActiveTeamMember(uint8_t ubTeam) {
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[ubTeam].bLastID;
@@ -2943,7 +2947,7 @@ UINT8 LastActiveTeamMember(UINT8 ubTeam) {
   // look for all mercs on the same team,
   for (pSoldier = MercPtrs[cnt]; cnt >= gTacticalStatus.Team[ubTeam].bFirstID; cnt--, pSoldier--) {
     if (IsSolActive(pSoldier)) {
-      return ((INT8)cnt);
+      return ((int8_t)cnt);
     }
   }
 
@@ -2998,7 +3002,7 @@ void SetSoldierNeutral(struct SOLDIERTYPE *pSoldier) {
     }
   }
 }
-void MakeCivHostile(struct SOLDIERTYPE *pSoldier, INT8 bNewSide) {
+void MakeCivHostile(struct SOLDIERTYPE *pSoldier, int8_t bNewSide) {
   if (pSoldier->ubBodyType == COW) {
     return;
   }
@@ -3076,10 +3080,10 @@ void MakeCivHostile(struct SOLDIERTYPE *pSoldier, INT8 bNewSide) {
   }
 }
 
-UINT8 CivilianGroupMembersChangeSidesWithinProximity(struct SOLDIERTYPE *pAttacked) {
+uint8_t CivilianGroupMembersChangeSidesWithinProximity(struct SOLDIERTYPE *pAttacked) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubFirstProfile = NO_PROFILE;
-  UINT8 cnt;
+  uint8_t ubFirstProfile = NO_PROFILE;
+  uint8_t cnt;
 
   if (pAttacked->ubCivilianGroup == NON_CIV_GROUP) {
     return (pAttacked->ubProfile);
@@ -3117,8 +3121,8 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
   struct SOLDIERTYPE *pNew;
   struct SOLDIERTYPE *pNewAttacked = pAttacked;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 cnt;
-  UINT8 ubFirstProfile = NO_PROFILE;
+  uint8_t cnt;
+  uint8_t ubFirstProfile = NO_PROFILE;
 
   if (pAttacked->ubCivilianGroup == NON_CIV_GROUP) {
     // abort
@@ -3175,9 +3179,9 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
   return (pNewAttacked);
 }
 
-void CivilianGroupChangesSides(UINT8 ubCivilianGroup) {
+void CivilianGroupChangesSides(uint8_t ubCivilianGroup) {
   // change civ group side due to external event (wall blowing up)
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   gTacticalStatus.fCivGroupHostile[ubCivilianGroup] = CIV_GROUP_HOSTILE;
@@ -3211,7 +3215,7 @@ void CivilianGroupChangesSides(UINT8 ubCivilianGroup) {
 }
 
 void HickCowAttacked(struct SOLDIERTYPE *pNastyGuy, struct SOLDIERTYPE *pTarget) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // now change sides for anyone on the civ team
@@ -3219,7 +3223,8 @@ void HickCowAttacked(struct SOLDIERTYPE *pNastyGuy, struct SOLDIERTYPE *pTarget)
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[CIV_TEAM].bLastID; cnt++, pSoldier++) {
     if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife && pSoldier->bNeutral &&
         pSoldier->ubCivilianGroup == HICKS_CIV_GROUP) {
-      if (SoldierToSoldierLineOfSightTest(pSoldier, pNastyGuy, (UINT8)MaxDistanceVisible(), TRUE)) {
+      if (SoldierToSoldierLineOfSightTest(pSoldier, pNastyGuy, (uint8_t)MaxDistanceVisible(),
+                                          TRUE)) {
         CivilianGroupMemberChangesSides(pSoldier);
         break;
       }
@@ -3230,7 +3235,7 @@ void HickCowAttacked(struct SOLDIERTYPE *pNastyGuy, struct SOLDIERTYPE *pTarget)
 void MilitiaChangesSides(void) {
   // make all the militia change sides
 
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.Team[MILITIA_TEAM].bMenInSector == 0) {
@@ -3251,7 +3256,7 @@ void MilitiaChangesSides(void) {
 /*
 void MakePotentiallyHostileCivGroupsHostile( void )
 {
-        UINT8		ubLoop;
+        uint8_t		ubLoop;
 
         // loop through all civ groups that might become hostile and set them
         // to hostile
@@ -3265,10 +3270,10 @@ void MakePotentiallyHostileCivGroupsHostile( void )
 }
 */
 
-INT8 NumActiveAndConsciousTeamMembers(UINT8 ubTeam) {
-  INT32 cnt;
+int8_t NumActiveAndConsciousTeamMembers(uint8_t ubTeam) {
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubCount = 0;
+  uint8_t ubCount = 0;
 
   cnt = gTacticalStatus.Team[ubTeam].bFirstID;
 
@@ -3282,10 +3287,10 @@ INT8 NumActiveAndConsciousTeamMembers(UINT8 ubTeam) {
   return (ubCount);
 }
 
-UINT8 FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                                 BOOLEAN fOnlyRegularMercs) {
-  UINT8 bLastTeamID;
-  INT32 cnt;
+uint8_t FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
+                                   BOOLEAN fOnlyRegularMercs) {
+  uint8_t bLastTeamID;
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
   cnt = GetSolID(pSoldier) + 1;
@@ -3304,12 +3309,12 @@ UINT8 FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForL
           pTeamSoldier->bTeam == gbPlayerNum && pTeamSoldier->bAssignment < ON_DUTY &&
           OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     } else {
       if (OK_CONTROLLABLE_MERC(pTeamSoldier) && OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     }
   }
@@ -3331,12 +3336,12 @@ UINT8 FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForL
           pTeamSoldier->bTeam == gbPlayerNum && pTeamSoldier->bAssignment < ON_DUTY &&
           OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     } else {
       if (OK_CONTROLLABLE_MERC(pTeamSoldier) && OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     }
   }
@@ -3346,7 +3351,7 @@ UINT8 FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForL
 }
 
 struct SOLDIERTYPE *FindNextActiveSquad(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt, cnt2;
+  int32_t cnt, cnt2;
 
   for (cnt = pSoldier->bAssignment + 1; cnt < NUMBER_OF_SQUADS; cnt++) {
     for (cnt2 = 0; cnt2 < NUMBER_OF_SOLDIERS_PER_SQUAD; cnt2++) {
@@ -3374,10 +3379,10 @@ struct SOLDIERTYPE *FindNextActiveSquad(struct SOLDIERTYPE *pSoldier) {
   return (pSoldier);
 }
 
-UINT8 FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                                 BOOLEAN fOnlyRegularMercs) {
-  UINT8 bLastTeamID;
-  INT32 cnt;
+uint8_t FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
+                                   BOOLEAN fOnlyRegularMercs) {
+  uint8_t bLastTeamID;
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
   // loop back
@@ -3397,12 +3402,12 @@ UINT8 FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForL
           pTeamSoldier->bTeam == gbPlayerNum && pTeamSoldier->bAssignment < ON_DUTY &&
           OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     } else {
       if (OK_CONTROLLABLE_MERC(pTeamSoldier) && OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     }
   }
@@ -3423,12 +3428,12 @@ UINT8 FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForL
           pTeamSoldier->bTeam == gbPlayerNum && pTeamSoldier->bAssignment < ON_DUTY &&
           OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     } else {
       if (OK_CONTROLLABLE_MERC(pTeamSoldier) && OK_INTERRUPT_MERC(pTeamSoldier) &&
           GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
-        return ((UINT8)cnt);
+        return ((uint8_t)cnt);
       }
     }
   }
@@ -3439,9 +3444,9 @@ UINT8 FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForL
 }
 
 BOOLEAN CheckForPlayerTeamInMissionExit() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 bGuysIn = 0;
+  uint8_t bGuysIn = 0;
 
   // End the turn of player charactors
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -3476,9 +3481,9 @@ void EndTacticalDemo() {
   gTacticalStatus.fGoingToEnterDemo = FALSE;
 }
 
-UINT32 EnterTacticalDemoMode() {
-  UINT8 ubNewScene = gubCurrentScene;
-  UINT8 ubNumScenes = NUM_RANDOM_SCENES;
+uint32_t EnterTacticalDemoMode() {
+  uint8_t ubNewScene = gubCurrentScene;
+  uint8_t ubNumScenes = NUM_RANDOM_SCENES;
 
   gTacticalStatus.uiTimeOfLastInput = GetJA2Clock();
 
@@ -3501,7 +3506,7 @@ UINT32 EnterTacticalDemoMode() {
   }
 
   do {
-    ubNewScene = START_DEMO_SCENE + (UINT8)Random(ubNumScenes);
+    ubNewScene = START_DEMO_SCENE + (uint8_t)Random(ubNumScenes);
 
   } while (ubNewScene == gubCurrentScene);
 
@@ -3517,18 +3522,18 @@ UINT32 EnterTacticalDemoMode() {
   return (INIT_SCREEN);
 }
 
-CHAR8 *GetSceneFilename() { return (gzLevelFilenames[gubCurrentScene]); }
+char *GetSceneFilename() { return (gzLevelFilenames[gubCurrentScene]); }
 
-extern BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+extern BOOLEAN InternalOkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
                                                  struct DB_STRUCTURE_REF *pDBStructureRef,
-                                                 INT16 sExclusionID, BOOLEAN fIgnorePeople);
+                                                 int16_t sExclusionID, BOOLEAN fIgnorePeople);
 
 // NB if making changes don't forget to update NewOKDestinationAndDirection
-INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo,
-                       INT8 bLevel) {
-  UINT8 bPerson;
+int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOLEAN fPeopleToo,
+                         int8_t bLevel) {
+  uint8_t bPerson;
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
+  int16_t sDesiredLevel;
   BOOLEAN fOKCheckStruct;
 
   if (!GridNoOnVisibleWorldTile(sGridNo)) {
@@ -3550,11 +3555,11 @@ INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN 
 
   // Check structure database
   if ((pCurrSoldier->uiStatusFlags & SOLDIER_MULTITILE) && !(gfEstimatePath)) {
-    UINT16 usAnimSurface;
+    uint16_t usAnimSurface;
     struct STRUCTURE_FILE_REF *pStructureFileRef;
     BOOLEAN fOk;
-    INT8 bLoop;
-    UINT16 usStructureID = INVALID_STRUCTURE_ID;
+    int8_t bLoop;
+    uint16_t usStructureID = INVALID_STRUCTURE_ID;
 
     // this could be kinda slow...
 
@@ -3634,11 +3639,11 @@ INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN 
 }
 
 // NB if making changes don't forget to update NewOKDestination
-INT16 NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, INT8 bDirection,
-                                   BOOLEAN fPeopleToo, INT8 bLevel) {
-  UINT8 bPerson;
+int16_t NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo,
+                                     int8_t bDirection, BOOLEAN fPeopleToo, int8_t bLevel) {
+  uint8_t bPerson;
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
+  int16_t sDesiredLevel;
   BOOLEAN fOKCheckStruct;
 
   if (fPeopleToo && (bPerson = WhoIsThere2(sGridNo, bLevel)) != NO_SOLDIER) {
@@ -3656,11 +3661,11 @@ INT16 NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, INT16 sGrid
 
   // Check structure database
   if ((pCurrSoldier->uiStatusFlags & SOLDIER_MULTITILE) && !(gfEstimatePath)) {
-    UINT16 usAnimSurface;
+    uint16_t usAnimSurface;
     struct STRUCTURE_FILE_REF *pStructureFileRef;
     BOOLEAN fOk;
-    INT8 bLoop;
-    UINT16 usStructureID = INVALID_STRUCTURE_ID;
+    int8_t bLoop;
+    uint16_t usStructureID = INVALID_STRUCTURE_ID;
 
     // this could be kinda slow...
 
@@ -3740,9 +3745,9 @@ INT16 NewOKDestinationAndDirection(struct SOLDIERTYPE *pCurrSoldier, INT16 sGrid
 }
 
 // Kris:
-BOOLEAN FlatRoofAboveGridNo(INT32 iMapIndex) {
+BOOLEAN FlatRoofAboveGridNo(int32_t iMapIndex) {
   struct LEVELNODE *pRoof;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pRoof = gpWorldLevelData[iMapIndex].pRoofHead;
   while (pRoof) {
     if (pRoof->usIndex != NO_TILE) {
@@ -3761,10 +3766,10 @@ BOOLEAN FlatRoofAboveGridNo(INT32 iMapIndex) {
 // multi-tiled stuff. All I want to know is whether or not I can put a merc here.  In most cases, I
 // won't be dealing with multi-tiled mercs, and the rarity doesn't justify the needs.  I just wrote
 // this to be quick and dirty, and I don't expect it to perform perfectly in all situations.
-BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof) {
+BOOLEAN IsLocationSittable(int32_t iMapIndex, BOOLEAN fOnRoof) {
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
-  if (WhoIsThere2((INT16)iMapIndex, 0) != NO_SOLDIER) return FALSE;
+  int16_t sDesiredLevel;
+  if (WhoIsThere2((int16_t)iMapIndex, 0) != NO_SOLDIER) return FALSE;
   // Locations on roofs without a roof is not possible, so
   // we convert the onroof intention to ground.
   if (fOnRoof && !FlatRoofAboveGridNo(iMapIndex)) fOnRoof = FALSE;
@@ -3772,7 +3777,7 @@ BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof) {
   if (gpWorldLevelData[iMapIndex].pStructureHead) {
     // Something is here, check obstruction in future
     sDesiredLevel = fOnRoof ? STRUCTURE_ON_ROOF : STRUCTURE_ON_GROUND;
-    pStructure = FindStructure((INT16)iMapIndex, STRUCTURE_BLOCKSMOVES);
+    pStructure = FindStructure((int16_t)iMapIndex, STRUCTURE_BLOCKSMOVES);
     while (pStructure) {
       if (!(pStructure->fFlags & STRUCTURE_PASSABLE) && pStructure->sCubeOffset == sDesiredLevel)
         return FALSE;
@@ -3782,9 +3787,9 @@ BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof) {
   return TRUE;
 }
 
-BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof) {
+BOOLEAN IsLocationSittableExcludingPeople(int32_t iMapIndex, BOOLEAN fOnRoof) {
   struct STRUCTURE *pStructure;
-  INT16 sDesiredLevel;
+  int16_t sDesiredLevel;
 
   // Locations on roofs without a roof is not possible, so
   // we convert the onroof intention to ground.
@@ -3793,7 +3798,7 @@ BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof) {
   if (gpWorldLevelData[iMapIndex].pStructureHead) {
     // Something is here, check obstruction in future
     sDesiredLevel = fOnRoof ? STRUCTURE_ON_ROOF : STRUCTURE_ON_GROUND;
-    pStructure = FindStructure((INT16)iMapIndex, STRUCTURE_BLOCKSMOVES);
+    pStructure = FindStructure((int16_t)iMapIndex, STRUCTURE_BLOCKSMOVES);
     while (pStructure) {
       if (!(pStructure->fFlags & STRUCTURE_PASSABLE) && pStructure->sCubeOffset == sDesiredLevel)
         return FALSE;
@@ -3803,8 +3808,8 @@ BOOLEAN IsLocationSittableExcludingPeople(INT32 iMapIndex, BOOLEAN fOnRoof) {
   return TRUE;
 }
 
-BOOLEAN TeamMemberNear(INT8 bTeam, INT16 sGridNo, INT32 iRange) {
-  UINT8 bLoop;
+BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, int32_t iRange) {
+  uint8_t bLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (bLoop = gTacticalStatus.Team[bTeam].bFirstID, pSoldier = MercPtrs[bLoop];
@@ -3820,8 +3825,8 @@ BOOLEAN TeamMemberNear(INT8 bTeam, INT16 sGridNo, INT32 iRange) {
   return (FALSE);
 }
 
-INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
-                         INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
+int16_t FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
+                           int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
   // psAdjustedGridNo gets the original gridno or the new one if updated
   // It will ONLY be updated IF we were over a merc, ( it's updated to their gridno )
   // pubDirection gets the direction to the final gridno
@@ -3829,19 +3834,19 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
   // in that location, because we could be passed a gridno based on the overlap of soldier's graphic
   // fDoor determines whether special door-handling code should be used (for interacting with doors)
 
-  INT16 sDistance = 0;
-  INT16 sDirs[4] = {NORTH, EAST, SOUTH, WEST};
-  INT32 cnt;
-  INT16 sClosest = NOWHERE, sSpot, sOkTest;
-  INT16 sCloseGridNo = NOWHERE;
-  UINT32 uiMercFlags;
-  UINT16 usSoldierIndex;
-  UINT8 ubDir;
+  int16_t sDistance = 0;
+  int16_t sDirs[4] = {NORTH, EAST, SOUTH, WEST};
+  int32_t cnt;
+  int16_t sClosest = NOWHERE, sSpot, sOkTest;
+  int16_t sCloseGridNo = NOWHERE;
+  uint32_t uiMercFlags;
+  uint16_t usSoldierIndex;
+  uint8_t ubDir;
   struct STRUCTURE *pDoor;
   // struct STRUCTURE                            *pWall;
-  UINT8 ubWallOrientation;
+  uint8_t ubWallOrientation;
   BOOLEAN fCheckGivenGridNo = TRUE;
-  UINT8 ubTestDirection;
+  uint8_t ubTestDirection;
   EXITGRID ExitGrid;
 
   // Set default direction
@@ -3876,7 +3881,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
           // To the south!
           sSpot = NewGridNo(sGridNo, DirectionInc(SOUTH));
           if (pubDirection) {
-            (*pubDirection) = (UINT8)GetDirectionFromGridNo(sSpot, pSoldier);
+            (*pubDirection) = (uint8_t)GetDirectionFromGridNo(sSpot, pSoldier);
           }
         }
 
@@ -3884,7 +3889,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
           // TO the east!
           sSpot = NewGridNo(sGridNo, DirectionInc(EAST));
           if (pubDirection) {
-            (*pubDirection) = (UINT8)GetDirectionFromGridNo(sSpot, pSoldier);
+            (*pubDirection) = (uint8_t)GetDirectionFromGridNo(sSpot, pSoldier);
           }
         }
       }
@@ -3909,7 +3914,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
 
         // Use direction to this guy!
         if (pubDirection) {
-          (*pubDirection) = (UINT8)GetDirectionFromGridNo(sGridNo, pSoldier);
+          (*pubDirection) = (uint8_t)GetDirectionFromGridNo(sGridNo, pSoldier);
         }
       }
     }
@@ -3934,13 +3939,13 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
 
     if (fCheckGivenGridNo) {
       sDistance = PlotPath(pSoldier, sGridNo, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                           (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                           (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                            pSoldier->bActionPoints);
 
       if (sDistance > 0) {
         if (sDistance < sClosest) {
           sClosest = sDistance;
-          sCloseGridNo = (INT16)sGridNo;
+          sCloseGridNo = (int16_t)sGridNo;
         }
       }
     }
@@ -3950,7 +3955,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
     // MOVE OUT TWO DIRECTIONS
     sSpot = NewGridNo(sGridNo, DirectionInc(sDirs[cnt]));
 
-    ubTestDirection = (UINT8)sDirs[cnt];
+    ubTestDirection = (uint8_t)sDirs[cnt];
 
     // For switches, ALLOW them to walk through walls to reach it....
     if (pDoor && pDoor->fFlags & STRUCTURE_SWITCH) {
@@ -3998,22 +4003,22 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
       {
         // Use direction to the door!
         if (pubDirection) {
-          (*pubDirection) = (UINT8)GetDirectionFromGridNo(sGridNo, pSoldier);
+          (*pubDirection) = (uint8_t)GetDirectionFromGridNo(sGridNo, pSoldier);
         }
       }
       return (sSpot);
     }
 
     // don't store path, just measure it
-    ubDir = (UINT8)GetDirectionToGridNoFromGridNo(sSpot, sGridNo);
+    ubDir = (uint8_t)GetDirectionToGridNoFromGridNo(sSpot, sGridNo);
 
     if ((NewOKDestinationAndDirection(pSoldier, sSpot, ubDir, TRUE, pSoldier->bLevel) > 0) &&
         ((sDistance = PlotPath(pSoldier, sSpot, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                               (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                               (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                                pSoldier->bActionPoints)) > 0)) {
       if (sDistance < sClosest) {
         sClosest = sDistance;
-        sCloseGridNo = (INT16)sSpot;
+        sCloseGridNo = (int16_t)sSpot;
       }
     }
   }
@@ -4044,7 +4049,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
       }
     } else {
       // Calculate direction if our gridno is different....
-      ubDir = (UINT8)GetDirectionToGridNoFromGridNo(sCloseGridNo, sGridNo);
+      ubDir = (uint8_t)GetDirectionToGridNoFromGridNo(sCloseGridNo, sGridNo);
       if (pubDirection) {
         *pubDirection = ubDir;
       }
@@ -4061,8 +4066,9 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
     return (-1);
 }
 
-INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
-                               INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor) {
+int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t *pubDirection, int16_t *psAdjustedGridNo,
+                                 BOOLEAN fForceToPerson, BOOLEAN fDoor) {
   // This function works in a similar way as FindAdjacentGridEx, but looks for a location 2 tiles
   // away
 
@@ -4072,19 +4078,19 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
   // in that location, because we could be passed a gridno based on the overlap of soldier's graphic
   // fDoor determines whether special door-handling code should be used (for interacting with doors)
 
-  INT16 sDistance = 0;
-  INT16 sDirs[4] = {NORTH, EAST, SOUTH, WEST};
-  INT32 cnt;
-  INT16 sClosest = WORLD_MAX, sSpot, sSpot2, sOkTest;
-  INT16 sCloseGridNo = NOWHERE;
-  UINT32 uiMercFlags;
-  UINT16 usSoldierIndex;
-  UINT8 ubDir;
+  int16_t sDistance = 0;
+  int16_t sDirs[4] = {NORTH, EAST, SOUTH, WEST};
+  int32_t cnt;
+  int16_t sClosest = WORLD_MAX, sSpot, sSpot2, sOkTest;
+  int16_t sCloseGridNo = NOWHERE;
+  uint32_t uiMercFlags;
+  uint16_t usSoldierIndex;
+  uint8_t ubDir;
   struct STRUCTURE *pDoor;
-  UINT8 ubWallOrientation;
+  uint8_t ubWallOrientation;
   BOOLEAN fCheckGivenGridNo = TRUE;
-  UINT8 ubTestDirection;
-  UINT8 ubWhoIsThere;
+  uint8_t ubTestDirection;
+  uint8_t ubWhoIsThere;
 
   // CHECK IF WE WANT TO FORCE GRIDNO TO PERSON
   if (psAdjustedGridNo != NULL) {
@@ -4126,13 +4132,13 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
 
     if (fCheckGivenGridNo) {
       sDistance = PlotPath(pSoldier, sGridNo, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                           (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                           (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                            pSoldier->bActionPoints);
 
       if (sDistance > 0) {
         if (sDistance < sClosest) {
           sClosest = sDistance;
-          sCloseGridNo = (INT16)sGridNo;
+          sCloseGridNo = (int16_t)sGridNo;
         }
       }
     }
@@ -4142,7 +4148,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
     // MOVE OUT TWO DIRECTIONS
     sSpot = NewGridNo(sGridNo, DirectionInc(sDirs[cnt]));
 
-    ubTestDirection = (UINT8)sDirs[cnt];
+    ubTestDirection = (uint8_t)sDirs[cnt];
 
     if (pDoor && pDoor->fFlags & STRUCTURE_SWITCH) {
       ubTestDirection = gOppositeDirection[ubTestDirection];
@@ -4198,22 +4204,22 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
     // If this spot is our soldier's gridno use that!
     if (sSpot == pSoldier->sGridNo) {
       if (pubDirection) {
-        (*pubDirection) = (UINT8)GetDirectionFromGridNo(sGridNo, pSoldier);
+        (*pubDirection) = (uint8_t)GetDirectionFromGridNo(sGridNo, pSoldier);
       }
       //*pubDirection = pSoldier->bDirection;
       return (sSpot);
     }
 
-    ubDir = (UINT8)GetDirectionToGridNoFromGridNo(sSpot, sGridNo);
+    ubDir = (uint8_t)GetDirectionToGridNoFromGridNo(sSpot, sGridNo);
 
     // don't store path, just measure it
     if ((NewOKDestinationAndDirection(pSoldier, sSpot, ubDir, TRUE, pSoldier->bLevel) > 0) &&
         ((sDistance = PlotPath(pSoldier, sSpot, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                               (INT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                               (int16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                                pSoldier->bActionPoints)) > 0)) {
       if (sDistance < sClosest) {
         sClosest = sDistance;
-        sCloseGridNo = (INT16)sSpot;
+        sCloseGridNo = (int16_t)sSpot;
       }
     }
   }
@@ -4244,7 +4250,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
       }
     } else {
       // Calculate direction if our gridno is different....
-      ubDir = (UINT8)GetDirectionToGridNoFromGridNo(sCloseGridNo, sGridNo);
+      ubDir = (uint8_t)GetDirectionToGridNoFromGridNo(sCloseGridNo, sGridNo);
       if (pubDirection) {
         *pubDirection = ubDir;
       }
@@ -4284,7 +4290,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
            else
            {
                           // Calculate direction if our gridno is different....
-                          ubDir = (UINT8)GetDirectionToGridNoFromGridNo( sCloseGridNo, sGridNo );
+                          ubDir = (uint8_t)GetDirectionToGridNoFromGridNo( sCloseGridNo, sGridNo );
                           *pubDirection = ubDir;
            }
            return( sCloseGridNo );
@@ -4294,14 +4300,14 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
   */
 }
 
-INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                              INT16 *psAdjustedTargetGridNo, UINT8 *pubDirection) {
-  INT16 cnt;
-  INT16 sSpot;
-  UINT8 ubGuyThere;
+int16_t FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
+                                int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection) {
+  int16_t cnt;
+  int16_t sSpot;
+  uint8_t ubGuyThere;
 
   for (cnt = 0; cnt < NUM_WORLD_DIRECTIONS; cnt++) {
-    sSpot = (INT16)NewGridNo(pSoldier->sGridNo, DirectionInc(cnt));
+    sSpot = (int16_t)NewGridNo(pSoldier->sGridNo, DirectionInc(cnt));
 
     if (DoorTravelCost(pSoldier, sSpot, gubWorldMovementCosts[sSpot][cnt][pSoldier->bLevel], FALSE,
                        NULL) >= TRAVELCOST_BLOCKED) {
@@ -4316,7 +4322,7 @@ INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *
       // We've got a guy here....
       // Who is the one we want......
       *psAdjustedTargetGridNo = pTargetSoldier->sGridNo;
-      *pubDirection = (UINT8)cnt;
+      *pubDirection = (uint8_t)cnt;
       return (sSpot);
     }
   }
@@ -4324,7 +4330,7 @@ INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *
   return (NOWHERE);
 }
 
-BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
+BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos) {
   BOOLEAN fVisible;
 
   // Check if a hidden tile exists but is not revealed
@@ -4335,7 +4341,7 @@ BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
     }
   }
 
-  if (!NewOKDestination(pSoldier, usMapPos, FALSE, (INT8)gsInterfaceLevel)) {
+  if (!NewOKDestination(pSoldier, usMapPos, FALSE, (int8_t)gsInterfaceLevel)) {
     return (FALSE);
   }
 
@@ -4356,13 +4362,13 @@ BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
   return (TRUE);
 }
 
-void HandleTeamServices(UINT8 ubTeamNum) {
-  INT32 cnt;
+void HandleTeamServices(uint8_t ubTeamNum) {
+  int32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier, *pTargetSoldier;
-  UINT32 uiPointsUsed;
-  UINT16 usSoldierIndex;
-  UINT16 usKitPts;
-  INT8 bSlot;
+  uint32_t uiPointsUsed;
+  uint16_t usSoldierIndex;
+  uint16_t usKitPts;
+  int8_t bSlot;
   BOOLEAN fDone;
 
   // IF IT'S THE SELECTED GUY, MAKE ANOTHER SELECTED!
@@ -4396,7 +4402,7 @@ void HandleTeamServices(UINT8 ubTeamNum) {
               fDone = TRUE;
             }
 
-            UseKitPoints(&(pTeamSoldier->inv[HANDPOS]), (UINT16)uiPointsUsed, pTeamSoldier);
+            UseKitPoints(&(pTeamSoldier->inv[HANDPOS]), (uint16_t)uiPointsUsed, pTeamSoldier);
 
             // Get new total
             usKitPts = TotalPoints(&(pTeamSoldier->inv[HANDPOS]));
@@ -4421,7 +4427,7 @@ void HandleTeamServices(UINT8 ubTeamNum) {
                 GivingSoldierCancelServices(pTeamSoldier);
 
                 if (!gTacticalStatus.fAutoBandageMode) {
-                  DoMercBattleSound(pTeamSoldier, (INT8)(BATTLE_SOUND_CURSE1));
+                  DoMercBattleSound(pTeamSoldier, (int8_t)(BATTLE_SOUND_CURSE1));
                 }
               }
             }
@@ -4434,10 +4440,10 @@ void HandleTeamServices(UINT8 ubTeamNum) {
 
 void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
   struct SOLDIERTYPE *pTargetSoldier;
-  UINT32 uiPointsUsed;
-  UINT16 usSoldierIndex;
-  UINT16 usKitPts;
-  INT8 bSlot;
+  uint32_t uiPointsUsed;
+  uint16_t usSoldierIndex;
+  uint16_t usKitPts;
+  int8_t bSlot;
   BOOLEAN fDone = FALSE;
 
   if (pTeamSoldier->bLife >= OKLIFE && pTeamSoldier->bActive) {
@@ -4465,7 +4471,7 @@ void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
             fDone = TRUE;
           }
 
-          UseKitPoints(&(pTeamSoldier->inv[HANDPOS]), (UINT16)uiPointsUsed, pTeamSoldier);
+          UseKitPoints(&(pTeamSoldier->inv[HANDPOS]), (uint16_t)uiPointsUsed, pTeamSoldier);
 
           // Get new total
           usKitPts = TotalPoints(&(pTeamSoldier->inv[HANDPOS]));
@@ -4491,7 +4497,7 @@ void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
               GivingSoldierCancelServices(pTeamSoldier);
 
               if (!gTacticalStatus.fAutoBandageMode) {
-                DoMercBattleSound(pTeamSoldier, (INT8)(BATTLE_SOUND_CURSE1));
+                DoMercBattleSound(pTeamSoldier, (int8_t)(BATTLE_SOUND_CURSE1));
               }
             }
           }
@@ -4502,7 +4508,7 @@ void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
 }
 
 void CommonEnterCombatModeCode() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   gTacticalStatus.uiFlags |= INCOMBAT;
@@ -4511,8 +4517,8 @@ void CommonEnterCombatModeCode() {
 
   // Reset num enemies fought flag...
   memset(&(gTacticalStatus.bNumFoughtInBattle), 0, MAXTEAMS);
-  gTacticalStatus.ubLastBattleSectorX = (UINT8)gWorldSectorX;
-  gTacticalStatus.ubLastBattleSectorY = (UINT8)gWorldSectorY;
+  gTacticalStatus.ubLastBattleSectorX = (uint8_t)gWorldSectorX;
+  gTacticalStatus.ubLastBattleSectorY = (uint8_t)gWorldSectorY;
   gTacticalStatus.fLastBattleWon = FALSE;
   gTacticalStatus.fItemsSeenOnAttack = FALSE;
 
@@ -4588,8 +4594,8 @@ void CommonEnterCombatModeCode() {
   SetMusicMode(MUSIC_TACTICAL_BATTLE);
 }
 
-void EnterCombatMode(UINT8 ubStartingTeam) {
-  UINT32 cnt;
+void EnterCombatMode(uint8_t ubStartingTeam) {
+  uint32_t cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
   if (gTacticalStatus.uiFlags & INCOMBAT) {
@@ -4638,7 +4644,7 @@ void EnterCombatMode(UINT8 ubStartingTeam) {
 }
 
 void ExitCombatMode() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Exiting combat mode");
@@ -4739,9 +4745,9 @@ void SetEnemyPresence() {
 extern BOOLEAN gfLastMercTalkedAboutKillingID;
 
 BOOLEAN SoldierHasSeenEnemiesLastFewTurns(struct SOLDIERTYPE *pTeamSoldier) {
-  INT32 cnt2;
+  int32_t cnt2;
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   for (cnt = 0; cnt < MAXTEAMS; cnt++) {
     if (GetTeamSide(cnt) != pTeamSoldier->bSide) {
@@ -4769,7 +4775,7 @@ BOOLEAN SoldierHasSeenEnemiesLastFewTurns(struct SOLDIERTYPE *pTeamSoldier) {
 }
 
 BOOLEAN WeSeeNoOne(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -4787,7 +4793,7 @@ BOOLEAN WeSeeNoOne(void) {
 }
 
 BOOLEAN NobodyAlerted(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -4804,7 +4810,7 @@ BOOLEAN NobodyAlerted(void) {
 }
 
 BOOLEAN WeSawSomeoneThisTurn(void) {
-  UINT32 uiLoop, uiLoop2;
+  uint32_t uiLoop, uiLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -4823,11 +4829,11 @@ BOOLEAN WeSawSomeoneThisTurn(void) {
   return (FALSE);
 }
 
-void SayBattleSoundFromAnyBodyInSector(INT32 iBattleSnd) {
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+void SayBattleSoundFromAnyBodyInSector(int32_t iBattleSnd) {
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Loop through all our guys and randomly say one from someone in our sector
 
@@ -4847,15 +4853,15 @@ void SayBattleSoundFromAnyBodyInSector(INT32 iBattleSnd) {
 
   // If we are > 0
   if (ubNumMercs > 0) {
-    ubChosenMerc = (UINT8)Random(ubNumMercs);
+    ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
-    DoMercBattleSound(MercPtrs[ubChosenMerc], (UINT8)iBattleSnd);
+    DoMercBattleSound(MercPtrs[ubChosenMerc], (uint8_t)iBattleSnd);
   }
 }
 
 BOOLEAN CheckForEndOfCombatMode(BOOLEAN fIncrementTurnsNotSeen) {
   struct SOLDIERTYPE *pTeamSoldier;
-  UINT32 cnt = 0;
+  uint32_t cnt = 0;
   BOOLEAN fWeSeeNoOne, fNobodyAlerted;
   BOOLEAN fSayQuote = FALSE;
   BOOLEAN fWeSawSomeoneRecently = FALSE, fSomeoneSawSomeoneRecently = FALSE;
@@ -4981,8 +4987,8 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
   struct SOLDIERTYPE *pTeamSoldier;
   BOOLEAN fBattleWon = TRUE;
   BOOLEAN fBattleLost = FALSE;
-  INT32 cnt = 0;
-  UINT16 usAnimState;
+  int32_t cnt = 0;
+  uint16_t usAnimState;
 
   if (gTacticalStatus.bBoxingState == BOXING) {
     // no way are we going to exit boxing prematurely, thank you! :-)
@@ -5046,7 +5052,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
     gTacticalStatus.fEnemyInSector = FALSE;
 
     // If here, the battle has been lost!
-    UnSetUIBusy((UINT8)gusSelectedSoldier);
+    UnSetUIBusy((uint8_t)gusSelectedSoldier);
 
     if (gTacticalStatus.uiFlags & INCOMBAT) {
       // Exit mode!
@@ -5065,7 +5071,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       // this is our first battle... and we lost it!
       SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
       SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-      SetTheFirstBattleSector((INT16)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
+      SetTheFirstBattleSector((int16_t)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
       HandleFirstBattleEndingWhileInTown(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
     }
 
@@ -5104,7 +5110,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
     // battle for us
     EndAllAITurns();
 
-    UnSetUIBusy((UINT8)gusSelectedSoldier);
+    UnSetUIBusy((uint8_t)gusSelectedSoldier);
 
     // ATE:
     // If we ended battle in any team other than the player's
@@ -5244,7 +5250,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       LogBattleResults(LOG_VICTORY);
 
       SetThisSectorAsPlayerControlled(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE);
-      HandleVictoryInNPCSector(gWorldSectorX, gWorldSectorY, (INT16)gbWorldSectorZ);
+      HandleVictoryInNPCSector(gWorldSectorX, gWorldSectorY, (int16_t)gbWorldSectorZ);
       if (CheckFact(FACT_FIRST_BATTLE_BEING_FOUGHT, 0)) {
         // ATE: Need to trigger record for this event .... for NPC scripting
         TriggerNPCRecord(PACOS, 18);
@@ -5253,7 +5259,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
         SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
         SetFactTrue(FACT_FIRST_BATTLE_WON);
         SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-        SetTheFirstBattleSector((INT16)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
+        SetTheFirstBattleSector((int16_t)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
         HandleFirstBattleEndingWhileInTown(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
       }
     }
@@ -5270,8 +5276,8 @@ void CycleThroughKnownEnemies() {
   // static to indicate last position we were at:
   struct SOLDIERTYPE *pSoldier;
   static BOOLEAN fFirstTime = TRUE;
-  static UINT16 usStartToLook;
-  UINT32 cnt;
+  static uint16_t usStartToLook;
+  uint32_t cnt;
   BOOLEAN fEnemyBehindStartLook = FALSE;
   BOOLEAN fEnemiesFound = FALSE;
 
@@ -5291,7 +5297,7 @@ void CycleThroughKnownEnemies() {
 
         // If we are > ok start, this is the one!
         if (cnt > usStartToLook) {
-          usStartToLook = (UINT16)cnt;
+          usStartToLook = (uint16_t)cnt;
 
           // Locate to!
           // LocateSoldier( GetSolID(pSoldier), 1 );
@@ -5322,7 +5328,7 @@ void CycleThroughKnownEnemies() {
 void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
   // static to indicate last position we were at:
   struct SOLDIERTYPE *pSoldier;
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bLastID, pSoldier = MercPtrs[cnt];
        cnt < TOTAL_SOLDIERS; cnt++, pSoldier++) {
@@ -5332,7 +5338,7 @@ void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
       if (pSrcSoldier->bOppList[pSoldier->ubID] == SEEN_CURRENTLY) {
         // If we are > ok start, this is the one!
         if (cnt > pSrcSoldier->ubLastEnemyCycledID) {
-          pSrcSoldier->ubLastEnemyCycledID = (UINT8)cnt;
+          pSrcSoldier->ubLastEnemyCycledID = (uint8_t)cnt;
 
           // ATE: Change to Slide To...
           SlideTo(0, GetSolID(pSoldier), 0, SETANDREMOVEPREVIOUSLOCATOR);
@@ -5355,7 +5361,7 @@ void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
       if (pSrcSoldier->bOppList[pSoldier->ubID] == SEEN_CURRENTLY) {
         // If we are > ok start, this is the one!
         if (cnt > pSrcSoldier->ubLastEnemyCycledID) {
-          pSrcSoldier->ubLastEnemyCycledID = (UINT8)cnt;
+          pSrcSoldier->ubLastEnemyCycledID = (uint8_t)cnt;
 
           // ATE: Change to Slide To...
           SlideTo(0, GetSolID(pSoldier), 0, SETANDREMOVEPREVIOUSLOCATOR);
@@ -5368,13 +5374,13 @@ void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
   }
 }
 
-INT8 CountNonVehiclesOnPlayerTeam(void) {
-  UINT32 cnt;
+int8_t CountNonVehiclesOnPlayerTeam(void) {
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT8 bNumber = 0;
+  int8_t bNumber = 0;
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[cnt];
-       cnt <= (UINT32)(gTacticalStatus.Team[gbPlayerNum].bLastID); cnt++, pSoldier++) {
+       cnt <= (uint32_t)(gTacticalStatus.Team[gbPlayerNum].bLastID); cnt++, pSoldier++) {
     if (IsSolActive(pSoldier) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
       bNumber++;
     }
@@ -5392,10 +5398,10 @@ BOOLEAN PlayerTeamFull() {
   return (TRUE);
 }
 
-UINT8 NumPCsInSector(void) {
+uint8_t NumPCsInSector(void) {
   struct SOLDIERTYPE *pTeamSoldier;
-  UINT32 cnt = 0;
-  UINT8 ubNumPlayers = 0;
+  uint32_t cnt = 0;
+  uint8_t ubNumPlayers = 0;
 
   // Check if the battle is won!
   // Loop through all mercs and make go
@@ -5411,10 +5417,10 @@ UINT8 NumPCsInSector(void) {
   return (ubNumPlayers);
 }
 
-UINT8 NumEnemyInSector() {
+uint8_t NumEnemyInSector() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
+  int32_t cnt = 0;
+  uint8_t ubNumEnemies = 0;
 
   // Check if the battle is won!
   // Loop through all mercs and make go
@@ -5430,10 +5436,10 @@ UINT8 NumEnemyInSector() {
   return (ubNumEnemies);
 }
 
-UINT8 NumEnemyInSectorExceptCreatures() {
+uint8_t NumEnemyInSectorExceptCreatures() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
+  int32_t cnt = 0;
+  uint8_t ubNumEnemies = 0;
 
   // Check if the battle is won!
   // Loop through all mercs and make go
@@ -5450,10 +5456,10 @@ UINT8 NumEnemyInSectorExceptCreatures() {
   return (ubNumEnemies);
 }
 
-UINT8 NumEnemyInSectorNotDeadOrDying() {
+uint8_t NumEnemyInSectorNotDeadOrDying() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
+  int32_t cnt = 0;
+  uint8_t ubNumEnemies = 0;
 
   // Check if the battle is won!
   // Loop through all mercs and make go
@@ -5478,10 +5484,10 @@ UINT8 NumEnemyInSectorNotDeadOrDying() {
   return (ubNumEnemies);
 }
 
-UINT8 NumBloodcatsInSectorNotDeadOrDying() {
+uint8_t NumBloodcatsInSectorNotDeadOrDying() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
+  int32_t cnt = 0;
+  uint8_t ubNumEnemies = 0;
 
   // Check if the battle is won!
   // Loop through all mercs and make go
@@ -5508,10 +5514,10 @@ UINT8 NumBloodcatsInSectorNotDeadOrDying() {
   return (ubNumEnemies);
 }
 
-UINT8 NumCapableEnemyInSector() {
+uint8_t NumCapableEnemyInSector() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
+  int32_t cnt = 0;
+  uint8_t ubNumEnemies = 0;
 
   // Check if the battle is won!
   // Loop through all mercs and make go
@@ -5539,8 +5545,8 @@ UINT8 NumCapableEnemyInSector() {
 
 BOOLEAN CheckForLosingEndOfBattle() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
-  INT8 bNumDead = 0, bNumNotOK = 0, bNumInBattle = 0, bNumNotOKRealMercs = 0;
+  int32_t cnt = 0;
+  int8_t bNumDead = 0, bNumNotOK = 0, bNumInBattle = 0, bNumNotOKRealMercs = 0;
   BOOLEAN fMadeCorpse;
   BOOLEAN fDoCapture = FALSE;
   BOOLEAN fOnlyEPCsLeft = TRUE;
@@ -5676,7 +5682,7 @@ BOOLEAN CheckForLosingEndOfBattle() {
 
 BOOLEAN KillIncompacitatedEnemyInSector() {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
   BOOLEAN fReturnVal = FALSE;
 
   // Check if the battle is won!
@@ -5697,7 +5703,7 @@ BOOLEAN KillIncompacitatedEnemyInSector() {
 }
 
 BOOLEAN AttackOnGroupWitnessed(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget) {
-  UINT32 uiSlot;
+  uint32_t uiSlot;
   struct SOLDIERTYPE *pGroupMember;
 
   // look for all group members... rebels could be on the civ team or ours!
@@ -5719,8 +5725,8 @@ BOOLEAN AttackOnGroupWitnessed(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE 
   return (FALSE);
 }
 
-INT8 CalcSuppressionTolerance(struct SOLDIERTYPE *pSoldier) {
-  INT8 bTolerance;
+int8_t CalcSuppressionTolerance(struct SOLDIERTYPE *pSoldier) {
+  int8_t bTolerance;
 
   // Calculate basic tolerance value
   bTolerance = pSoldier->bExpLevel * 2;
@@ -5770,12 +5776,12 @@ INT8 CalcSuppressionTolerance(struct SOLDIERTYPE *pSoldier) {
 }
 
 #define MAX_APS_SUPPRESSED 8
-void HandleSuppressionFire(UINT8 ubTargetedMerc, UINT8 ubCausedAttacker) {
-  INT8 bTolerance;
-  INT16 sClosestOpponent, sClosestOppLoc;
-  UINT8 ubPointsLost, ubTotalPointsLost, ubNewStance;
-  UINT32 uiLoop;
-  UINT8 ubLoop2;
+void HandleSuppressionFire(uint8_t ubTargetedMerc, uint8_t ubCausedAttacker) {
+  int8_t bTolerance;
+  int16_t sClosestOpponent, sClosestOppLoc;
+  uint8_t ubPointsLost, ubTotalPointsLost, ubNewStance;
+  uint32_t uiLoop;
+  uint8_t ubLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
@@ -5935,12 +5941,12 @@ void HandleSuppressionFire(UINT8 ubTargetedMerc, UINT8 ubCausedAttacker) {
       }
 
     }  // end of examining one soldier
-  }    // end of loop
+  }  // end of loop
 }
 
 BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
-                                      INT8 bReason) {
-  INT16 sTargetXPos, sTargetYPos;
+                                      int8_t bReason) {
+  int16_t sTargetXPos, sTargetYPos;
   BOOLEAN fEnterCombat = TRUE;
   struct SOLDIERTYPE *pTarget = *ppTarget;
 
@@ -6079,8 +6085,8 @@ BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDI
   return (fEnterCombat);
 }
 
-struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByAttacker,
-                                                  UINT8 ubTargetID) {
+struct SOLDIERTYPE *InternalReduceAttackBusyCount(uint8_t ubID, BOOLEAN fCalledByAttacker,
+                                                  uint8_t ubTargetID) {
   // Strange as this may seem, this function returns a pointer to
   // the *target* in case the target has changed sides as a result
   // of being attacked
@@ -6192,9 +6198,9 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
       if (pTarget->ubBodyType == CROW) {
         // Loop through our team, make guys who can see this fly away....
         {
-          UINT32 cnt;
+          uint32_t cnt;
           struct SOLDIERTYPE *pTeamSoldier;
-          UINT8 ubTeam;
+          uint8_t ubTeam;
 
           ubTeam = pTarget->bTeam;
 
@@ -6292,7 +6298,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
     if (!AM_AN_EPC(MercPtrs[gTacticalStatus.ubItemsSeenOnAttackSoldier])) {
       TacticalCharacterDialogueWithSpecialEvent(
           MercPtrs[gTacticalStatus.ubItemsSeenOnAttackSoldier],
-          (UINT16)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)),
+          (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)),
           DIALOGUE_SPECIAL_EVENT_SIGNAL_ITEM_LOCATOR_START,
           gTacticalStatus.usItemsSeenOnAttackGridNo, 0);
     } else {
@@ -6304,7 +6310,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
   }
 
   if (gTacticalStatus.uiFlags & CHECK_SIGHT_AT_END_OF_ATTACK) {
-    UINT8 ubLoop;
+    uint8_t ubLoop;
     struct SOLDIERTYPE *pSightSoldier;
 
     AllTeamsLookForAll(FALSE);
@@ -6343,7 +6349,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
   return (pTarget);
 }
 
-struct SOLDIERTYPE *ReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByAttacker) {
+struct SOLDIERTYPE *ReduceAttackBusyCount(uint8_t ubID, BOOLEAN fCalledByAttacker) {
   if (ubID == NOBODY) {
     return (InternalReduceAttackBusyCount(ubID, fCalledByAttacker, NOBODY));
   } else {
@@ -6351,7 +6357,7 @@ struct SOLDIERTYPE *ReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByAttacker)
   }
 }
 
-struct SOLDIERTYPE *FreeUpAttacker(UINT8 ubID) {
+struct SOLDIERTYPE *FreeUpAttacker(uint8_t ubID) {
   // Strange as this may seem, this function returns a pointer to
   // the *target* in case the target has changed sides as a result
   // of being attacked
@@ -6359,7 +6365,7 @@ struct SOLDIERTYPE *FreeUpAttacker(UINT8 ubID) {
   return (ReduceAttackBusyCount(ubID, TRUE));
 }
 
-struct SOLDIERTYPE *FreeUpAttackerGivenTarget(UINT8 ubID, UINT8 ubTargetID) {
+struct SOLDIERTYPE *FreeUpAttackerGivenTarget(uint8_t ubID, uint8_t ubTargetID) {
   // Strange as this may seem, this function returns a pointer to
   // the *target* in case the target has changed sides as a result
   // of being attacked
@@ -6367,7 +6373,7 @@ struct SOLDIERTYPE *FreeUpAttackerGivenTarget(UINT8 ubID, UINT8 ubTargetID) {
   return (InternalReduceAttackBusyCount(ubID, TRUE, ubTargetID));
 }
 
-struct SOLDIERTYPE *ReduceAttackBusyGivenTarget(UINT8 ubID, UINT8 ubTargetID) {
+struct SOLDIERTYPE *ReduceAttackBusyGivenTarget(uint8_t ubID, uint8_t ubTargetID) {
   // Strange as this may seem, this function returns a pointer to
   // the *target* in case the target has changed sides as a result
   // of being attacked
@@ -6376,7 +6382,7 @@ struct SOLDIERTYPE *ReduceAttackBusyGivenTarget(UINT8 ubID, UINT8 ubTargetID) {
 }
 
 void StopMercAnimation(BOOLEAN fStop) {
-  static INT8 bOldRealtimeSpeed;
+  static int8_t bOldRealtimeSpeed;
 
   if (fStop) {
     if (!(gTacticalStatus.uiFlags & SLOW_ANIMATION)) {
@@ -6400,7 +6406,7 @@ void StopMercAnimation(BOOLEAN fStop) {
 
 void ResetAllMercSpeeds() {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 cnt;
+  uint32_t cnt;
 
   for (cnt = 0; cnt < TOTAL_SOLDIERS; cnt++) {
     pSoldier = MercPtrs[cnt];
@@ -6411,8 +6417,8 @@ void ResetAllMercSpeeds() {
   }
 }
 
-void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiting, UINT32 uiData1,
-                                         UINT32 uiData2, UINT32 uiData3) {
+void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, int8_t bNumMercsWaiting,
+                                         uint32_t uiData1, uint32_t uiData2, uint32_t uiData3) {
   gubWaitingForAllMercsToExitCode = ubActionCode;
   gbNumMercsUntilWaitingOver = bNumMercsWaiting;
   guiWaitingForAllMercsToExitData[0] = uiData1;
@@ -6429,7 +6435,7 @@ void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiti
 void HandleBloodForNewGridNo(struct SOLDIERTYPE *pSoldier) {
   // Handle bleeding...
   if ((pSoldier->bBleeding > MIN_BLEEDING_THRESHOLD)) {
-    INT8 bBlood;
+    int8_t bBlood;
 
     bBlood = ((pSoldier->bBleeding - MIN_BLEEDING_THRESHOLD) / BLOODDIVISOR);
 
@@ -6439,7 +6445,7 @@ void HandleBloodForNewGridNo(struct SOLDIERTYPE *pSoldier) {
 
     // now, he shouldn't ALWAYS bleed the same amount; LOWER it perhaps. If it
     // goes less than zero, then no blood!
-    bBlood -= (INT8)Random(7);
+    bBlood -= (int8_t)Random(7);
 
     if (bBlood >= 0) {
       // this handles all soldiers' dropping blood during movement
@@ -6450,7 +6456,7 @@ void HandleBloodForNewGridNo(struct SOLDIERTYPE *pSoldier) {
 
 void CencelAllActionsForTimeCompression(void) {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   for (pSoldier = Menptr, cnt = 0; cnt < TOTAL_SOLDIERS; pSoldier++, cnt++) {
     if (IsSolActive(pSoldier)) {
@@ -6465,7 +6471,7 @@ void CencelAllActionsForTimeCompression(void) {
   }
 }
 
-void AddManToTeam(INT8 bTeam) {
+void AddManToTeam(int8_t bTeam) {
   // ATE: If not loading game!
   if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
     // Increment men in sector number!
@@ -6479,7 +6485,7 @@ void AddManToTeam(INT8 bTeam) {
   }
 }
 
-void RemoveManFromTeam(INT8 bTeam) {
+void RemoveManFromTeam(int8_t bTeam) {
   // ATE; if not loading game!
   if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
     // Decrement men in sector number!
@@ -6498,7 +6504,7 @@ void RemoveManFromTeam(INT8 bTeam) {
 }
 
 void RemoveSoldierFromTacticalSector(struct SOLDIERTYPE *pSoldier, BOOLEAN fAdjustSelected) {
-  UINT8 ubID;
+  uint8_t ubID;
   struct SOLDIERTYPE *pNewSoldier;
 
   // reset merc's opplist
@@ -6539,7 +6545,7 @@ void RemoveSoldierFromTacticalSector(struct SOLDIERTYPE *pSoldier, BOOLEAN fAdju
       if (IsTacticalMode()) {
         // otherwise, make sure interface is team panel...
         UpdateTeamPanelAssignments();
-        SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+        SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
       }
     }
   }
@@ -6551,14 +6557,14 @@ void DoneFadeOutDueToDeath(void) {
   // SetPendingNewScreen( MAINMENU_SCREEN );
 }
 
-void EndBattleWithUnconsciousGuysCallback(UINT8 bExitValue) {
+void EndBattleWithUnconsciousGuysCallback(uint8_t bExitValue) {
   // Enter mapscreen.....
   CheckAndHandleUnloadingOfCurrentWorld();
 }
 
 void InitializeTacticalStatusAtBattleStart(void) {
-  INT8 bLoop;
-  INT32 cnt;
+  int8_t bLoop;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   gTacticalStatus.ubArmyGuysKilled = 0;
@@ -6601,7 +6607,7 @@ void DoneFadeOutDemoCreatureLevel(void) {
   FadeInGameScreen();
 }
 
-void DemoEndOKCallback(INT8 bExitCode) {}
+void DemoEndOKCallback(int8_t bExitCode) {}
 
 void HandleEndDemoInCreatureLevel() {}
 
@@ -6610,26 +6616,26 @@ void DeathTimerCallback(void) {
       gTacticalStatus.Team[ENEMY_TEAM].bMenInSector) {
     DoMessageBox(MSG_BOX_BASIC_STYLE,
                  LargeTacticalStr[LARGESTR_NOONE_LEFT_CAPABLE_OF_BATTLE_AGAINST_CREATURES_STR],
-                 GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, EndBattleWithUnconsciousGuysCallback, NULL);
+                 GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, EndBattleWithUnconsciousGuysCallback, NULL);
   } else {
     DoMessageBox(MSG_BOX_BASIC_STYLE, LargeTacticalStr[LARGESTR_NOONE_LEFT_CAPABLE_OF_BATTLE_STR],
-                 GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, EndBattleWithUnconsciousGuysCallback, NULL);
+                 GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, EndBattleWithUnconsciousGuysCallback, NULL);
   }
 }
 
 void CaptureTimerCallback(void) {
   if (gfSurrendered) {
-    DoMessageBox(MSG_BOX_BASIC_STYLE, LargeTacticalStr[3], GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK,
+    DoMessageBox(MSG_BOX_BASIC_STYLE, LargeTacticalStr[3], GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK,
                  EndBattleWithUnconsciousGuysCallback, NULL);
   } else {
     DoMessageBox(MSG_BOX_BASIC_STYLE, LargeTacticalStr[LARGESTR_HAVE_BEEN_CAPTURED], GAME_SCREEN,
-                 (UINT8)MSG_BOX_FLAG_OK, EndBattleWithUnconsciousGuysCallback, NULL);
+                 (uint8_t)MSG_BOX_FLAG_OK, EndBattleWithUnconsciousGuysCallback, NULL);
   }
   gfSurrendered = FALSE;
 }
 
 void DoPOWPathChecks(void) {
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pSoldier;
 
   // loop through all mercs on our team and if they are POWs in sector, do POW path check and
@@ -6662,7 +6668,7 @@ void DoPOWPathChecks(void) {
 }
 
 BOOLEAN HostileCiviliansPresent(void) {
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.Team[CIV_TEAM].bTeamActive == FALSE) {
@@ -6683,7 +6689,7 @@ BOOLEAN HostileCiviliansPresent(void) {
 }
 
 BOOLEAN HostileCiviliansWithGunsPresent(void) {
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.Team[CIV_TEAM].bTeamActive == FALSE) {
@@ -6706,7 +6712,7 @@ BOOLEAN HostileCiviliansWithGunsPresent(void) {
 }
 
 BOOLEAN HostileBloodcatsPresent(void) {
-  INT32 iLoop;
+  int32_t iLoop;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.Team[CREATURE_TEAM].bTeamActive == FALSE) {
@@ -6731,12 +6737,12 @@ BOOLEAN HostileBloodcatsPresent(void) {
 }
 
 void HandleCreatureTenseQuote() {
-  UINT8 ubMercsInSector[20] = {0};
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubMercsInSector[20] = {0};
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
-  INT32 uiTime;
+  int32_t cnt;
+  int32_t uiTime;
 
   // Check for quote seeing creature attacks....
   if (gubQuest[QUEST_CREATURES] != QUESTDONE) {
@@ -6745,7 +6751,7 @@ void HandleCreatureTenseQuote() {
         uiTime = GetJA2Clock();
 
         if ((uiTime - gTacticalStatus.uiCreatureTenseQuoteLastUpdate) >
-            (UINT32)(gTacticalStatus.sCreatureTenseQuoteDelay * 1000)) {
+            (uint32_t)(gTacticalStatus.sCreatureTenseQuoteDelay * 1000)) {
           gTacticalStatus.uiCreatureTenseQuoteLastUpdate = uiTime;
 
           // set up soldier ptr as first element in mercptrs list
@@ -6758,20 +6764,20 @@ void HandleCreatureTenseQuote() {
             if (OK_INSECTOR_MERC(pTeamSoldier) && !AM_AN_EPC(pTeamSoldier) &&
                 !(pTeamSoldier->uiStatusFlags & SOLDIER_GASSED) && !(AM_A_ROBOT(pTeamSoldier)) &&
                 !pTeamSoldier->fMercAsleep) {
-              ubMercsInSector[ubNumMercs] = (UINT8)cnt;
+              ubMercsInSector[ubNumMercs] = (uint8_t)cnt;
               ubNumMercs++;
             }
           }
 
           // If we are > 0
           if (ubNumMercs > 0) {
-            ubChosenMerc = (UINT8)Random(ubNumMercs);
+            ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
             DoCreatureTensionQuote(MercPtrs[ubMercsInSector[ubChosenMerc]]);
           }
 
           // Adjust delay....
-          gTacticalStatus.sCreatureTenseQuoteDelay = (INT16)(60 + Random(60));
+          gTacticalStatus.sCreatureTenseQuoteDelay = (int16_t)(60 + Random(60));
         }
       }
     }
@@ -6779,9 +6785,9 @@ void HandleCreatureTenseQuote() {
 }
 
 void DoCreatureTensionQuote(struct SOLDIERTYPE *pSoldier) {
-  INT32 iRandomQuote;
+  int32_t iRandomQuote;
   BOOLEAN fCanDoQuote = TRUE;
-  INT32 iQuoteToUse;
+  int32_t iQuoteToUse;
 
   // Check for playing smell quote....
   iRandomQuote = Random(3);
@@ -6822,6 +6828,6 @@ void DoCreatureTensionQuote(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (fCanDoQuote) {
-    TacticalCharacterDialogue(pSoldier, (INT16)iQuoteToUse);
+    TacticalCharacterDialogue(pSoldier, (int16_t)iQuoteToUse);
   }
 }

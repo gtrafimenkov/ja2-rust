@@ -42,10 +42,10 @@ struct VObject;
 //
 
 typedef struct {
-  COLORVAL ColorFill;  // Used for fill effect
-  SGPRect SrcRect;     // Given SRC subrect instead of srcregion
-  SGPRect FillRect;    // Given SRC subrect instead of srcregion
-  UINT16 DestRegion;   // Given a DEST region for dest positions within the VO
+  COLORVAL ColorFill;   // Used for fill effect
+  SGPRect SrcRect;      // Given SRC subrect instead of srcregion
+  SGPRect FillRect;     // Given SRC subrect instead of srcregion
+  uint16_t DestRegion;  // Given a DEST region for dest positions within the VO
 
 } blt_vs_fx;
 
@@ -80,7 +80,7 @@ typedef struct {
 typedef struct {
   SGPRect RegionCoords;  // Rectangle describing coordinates of region
   SGPPoint Origin;       // Origin used for hot spots, etc
-  UINT8 ubHitMask;       // Byte flags for hit detection
+  uint8_t ubHitMask;     // Byte flags for hit detection
 
 } VSURFACE_REGION;
 
@@ -89,23 +89,23 @@ typedef struct {
 //
 
 struct VSurface {
-  UINT16 usHeight;         // Height of Video Surface
-  UINT16 usWidth;          // Width of Video Surface
-  UINT8 ubBitDepth;        // BPP ALWAYS 16!
-  PTR pSurfaceData;        // A void pointer, but for this implementation, is really a
-                           // lpDirectDrawSurface;
-  PTR pSurfaceData1;       // Direct Draw One Interface
-  PTR pSavedSurfaceData1;  // A void pointer, but for this implementation, is really a
-                           // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
-                           // memory Surfaces so that they my be restored
-  PTR pSavedSurfaceData;   // A void pointer, but for this implementation, is really a
-                          // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video memory
-                          // Surfaces so that they my be restored
-  UINT32 fFlags;              // Used to describe memory usage, etc
-  PTR pPalette;               // A void pointer, but for this implementation a DDPalette
-  UINT16 *p16BPPPalette;      // A 16BPP palette used for 8->16 blits
+  uint16_t usHeight;          // Height of Video Surface
+  uint16_t usWidth;           // Width of Video Surface
+  uint8_t ubBitDepth;         // BPP ALWAYS 16!
+  void *pSurfaceData;         // A void pointer, but for this implementation, is really a
+                              // lpDirectDrawSurface;
+  void *pSurfaceData1;        // Direct Draw One Interface
+  void *pSavedSurfaceData1;   // A void pointer, but for this implementation, is really a
+                              // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
+                              // memory Surfaces so that they my be restored
+  void *pSavedSurfaceData;    // A void pointer, but for this implementation, is really a
+                              // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
+                              // memory Surfaces so that they my be restored
+  uint32_t fFlags;            // Used to describe memory usage, etc
+  void *pPalette;             // A void pointer, but for this implementation a DDPalette
+  uint16_t *p16BPPPalette;    // A 16BPP palette used for 8->16 blits
   COLORVAL TransparentColor;  // Defaults to 0,0,0
-  PTR pClipper;               // A void pointer encapsolated as a clipper Surface
+  void *pClipper;             // A void pointer encapsolated as a clipper Surface
   HLIST RegionList;           // A List of regions within the video Surface
 };
 
@@ -114,11 +114,11 @@ struct VSurface {
 //
 
 typedef struct {
-  UINT32 fCreateFlags;    // Specifies creation flags like from file or not
+  uint32_t fCreateFlags;  // Specifies creation flags like from file or not
   SGPFILENAME ImageFile;  // Filename of image data to use
-  UINT16 usWidth;         // Width, ignored if given from file
-  UINT16 usHeight;        // Height, ignored if given from file
-  UINT8 ubBitDepth;       // BPP, ignored if given from file
+  uint16_t usWidth;       // Width, ignored if given from file
+  uint16_t usHeight;      // Height, ignored if given from file
+  uint8_t ubBitDepth;     // BPP, ignored if given from file
 
 } VSURFACE_DESC;
 
@@ -128,7 +128,7 @@ typedef struct {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-extern INT32 giMemUsedInSurfaces;
+extern int32_t giMemUsedInSurfaces;
 
 // Creates a list to contain video Surfaces
 BOOLEAN InitializeVideoSurfaceManager();
@@ -141,45 +141,45 @@ BOOLEAN RestoreVideoSurfaces();
 
 // Creates and adds a video Surface to list
 #ifdef SGP_VIDEO_DEBUGGING
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend);
-extern BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT32 uiLineNum,
-                                     CHAR8 *pSourceFile);
+void DumpVSurfaceInfoIntoFile(char *filename, BOOLEAN fAppend);
+extern BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex,
+                                     uint32_t uiLineNum, char *pSourceFile);
 #define AddVideoSurface(a, b) _AddAndRecordVSurface(a, b, __LINE__, __FILE__)
 #else
 #define AddVideoSurface(a, b) AddStandardVideoSurface(a, b)
 #endif
 
-BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex);
+BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex);
 
 // Returns a HVSurface for the specified index
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex);
+BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex);
 
-BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *uiPitch);
-void UnLockVideoSurface(UINT32 uiVSurface);
+uint8_t *LockVideoSurface(uint32_t uiVSurface, uint32_t *uiPitch);
+void UnLockVideoSurface(uint32_t uiVSurface);
 
 // Blits a video Surface to another video Surface
-BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRegionIndex,
-                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_vs_fx *pBltFx);
+BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, uint16_t usRegionIndex,
+                        int32_t iDestX, int32_t iDestY, uint32_t fBltFlags, blt_vs_fx *pBltFx);
 
-BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP);
+BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, int32_t iDestX1, int32_t iDestY1,
+                                  int32_t iDestX2, int32_t iDestY2, uint16_t Color16BPP);
 
-BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  UINT16 Index, INT16 Ox, INT16 Oy);
+BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, int32_t iDestX1, int32_t iDestY1,
+                                  int32_t iDestX2, int32_t iDestY2, struct VObject *BkgrndImg,
+                                  uint16_t Index, int16_t Ox, int16_t Oy);
 
 // This function sets the global video Surfaces for primary and backbuffer
 BOOLEAN SetPrimaryVideoSurfaces();
 
 // Sets transparency
-BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor);
+BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor);
 
 // Adds a video Surface region
-BOOLEAN AddVideoSurfaceRegion(UINT32 uiIndex, VSURFACE_REGION *pNewRegion);
+BOOLEAN AddVideoSurfaceRegion(uint32_t uiIndex, VSURFACE_REGION *pNewRegion);
 
 // Gets width, hight, bpp information
-BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHeight,
-                                   UINT8 *ubBitDepth);
+BOOLEAN GetVideoSurfaceDescription(uint32_t uiIndex, uint16_t *usWidth, uint16_t *usHeight,
+                                   uint8_t *ubBitDepth);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -188,7 +188,8 @@ BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHe
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Darkens a rectangular area on a surface for menus etc.
-BOOLEAN PixelateVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
+BOOLEAN PixelateVideoSurfaceRect(uint32_t uiDestVSurface, int32_t X1, int32_t Y1, int32_t X2,
+                                 int32_t Y2);
 
 // Created from a VSurface_DESC structure. Can be from a file via HIMAGE or empty.
 struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc);
@@ -199,14 +200,14 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
 // Returns a flat pointer for direct manipulation of data
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch);
+uint8_t *LockVideoSurfaceBuffer(struct VSurface *hVSurface, uint32_t *pPitch);
 
 // Must be called after Locking buffer call above
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
 
 // Set data from HIMAGE.
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, UINT16 usX,
-                                      UINT16 usY, SGPRect *pSrcRect);
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, uint16_t usX,
+                                      uint16_t usY, SGPRect *pSrcRect);
 
 // Sets Transparency color into HVSurface and the underlying DD surface
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor);
@@ -219,7 +220,7 @@ BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntr
 
 // Deletes all data, including palettes, regions, DD Surfaces
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface);
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
+BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -230,16 +231,17 @@ BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
 // Regions will allow creation of sections within the Surface to manipulate quickly and cleanly
 // An example would be a cursor tileset
 BOOLEAN AddVSurfaceRegion(struct VSurface *hVSurface, VSURFACE_REGION *pNewRegion);
-BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, UINT16 usIndex,
+BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, uint16_t usIndex,
                                  VSURFACE_REGION *pNewRegion);
 BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRegions,
-                           UINT16 uiNumRegions);
-BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex);
+                           uint16_t uiNumRegions);
+BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex);
 BOOLEAN ClearAllVSurfaceRegions(struct VSurface *hVSurface);
-BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion);
-BOOLEAN GetNumRegions(struct VSurface *hVSurface, UINT32 *puiNumRegions);
-BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion);
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
+BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex, VSURFACE_REGION *aRegion);
+BOOLEAN GetNumRegions(struct VSurface *hVSurface, uint32_t *puiNumRegions);
+BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, uint16_t usIndex,
+                              VSURFACE_REGION *aRegion);
+BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -247,7 +249,7 @@ BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNumRegions);
+BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, uint16_t usNumRegions);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -259,24 +261,26 @@ BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNu
 // Blitting, giving an API layer for portability.
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
-                                      blt_vs_fx *pBltFx);
+                                      uint16_t usIndex, int32_t iDestX, int32_t iDestY,
+                                      int32_t fBltFlags, blt_vs_fx *pBltFx);
 
 struct VSurface *GetPrimaryVideoSurface();
 struct VSurface *GetBackBufferVideoSurface();
 
-BOOLEAN ShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
-                                INT32 iPosY);
+BOOLEAN ShadowVideoSurfaceRect(uint32_t uiDestVSurface, int32_t X1, int32_t Y1, int32_t X2,
+                               int32_t Y2);
+BOOLEAN ShadowVideoSurfaceImage(uint32_t uiDestVSurface, struct VObject *hImageHandle,
+                                int32_t iPosX, int32_t iPosY);
 
 // If the Dest Rect and the source rect are not the same size, the source surface will be either
 // enlraged or shunk.
-BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect, SGPRect *DestRect);
+BOOLEAN BltStretchVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, int32_t iDestX,
+                               int32_t iDestY, uint32_t fBltFlags, SGPRect *SrcRect,
+                               SGPRect *DestRect);
 
-BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *puiVSurface);
+BOOLEAN MakeVSurfaceFromVObject(uint32_t uiVObject, uint16_t usSubIndex, uint32_t *puiVSurface);
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
-                                                   INT32 X2, INT32 Y2);
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(uint32_t uiDestVSurface, int32_t X1, int32_t Y1,
+                                                   int32_t X2, int32_t Y2);
 
 #endif

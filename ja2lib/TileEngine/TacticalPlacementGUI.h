@@ -11,7 +11,7 @@ void KillTacticalPlacementGUI();
 void TacticalPlacementHandle();
 void RenderTacticalPlacementGUI();
 
-void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, INT32 reason);
+void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, int32_t reason);
 
 extern BOOLEAN gfTacticalPlacementGUIActive;
 extern BOOLEAN gfEnterTacticalPlacementGUI;
@@ -20,6 +20,6 @@ extern struct SOLDIERTYPE *gpTacticalPlacementSelectedSoldier;
 extern struct SOLDIERTYPE *gpTacticalPlacementHilightedSoldier;
 
 // Saved value.  Contains the last choice for future battles.
-extern UINT8 gubDefaultButton;
+extern uint8_t gubDefaultButton;
 
 #endif

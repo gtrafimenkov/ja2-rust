@@ -18,27 +18,27 @@
 
 BOOLEAN fInitialized = FALSE;
 
-INT32 iIMPTextRecordLengths[300];
+int32_t iIMPTextRecordLengths[300];
 
 // the length of persona questions
-INT32 iIMPQuestionLengths[25] = {
+int32_t iIMPQuestionLengths[25] = {
     7, 5, 5, 6, 5, 6, 5, 5, 5, 5, 6, 9, 5, 5, 5, 5, 5, 5, 5, 5, 7, 10, 6, 5, 5,
 };
 
 // function headers
 void PrintIMPPersonalityQuizQuestionAndAnsers(void);
-void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset);
+void OffSetQuestionForFemaleSpecificQuestions(int32_t *iCurrentOffset);
 
 #define QTN_FIRST_COLUMN_X 80
 #define QTN_SECOND_COLUMN_X 320
 
-void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
-                           INT16 sIMPTextRecordNumber, UINT32 uiFont, UINT8 ubColor,
-                           BOOLEAN fShadow, UINT32 uiFlags) {
+void LoadAndDisplayIMPText(int16_t sStartX, int16_t sStartY, int16_t sLineLength,
+                           int16_t sIMPTextRecordNumber, uint32_t uiFont, uint8_t ubColor,
+                           BOOLEAN fShadow, uint32_t uiFlags) {
   // this procedure will load and display to the screen starting at postion X, Y relative to the
   // start of the laptop screen it will access record sIMPTextRecordNumber and go until all records
   // following it but before the next IMP record are displayed in font uiFont
-  CHAR16 sString[1024];
+  wchar_t sString[1024];
 
   if (fShadow == FALSE) {
     // don't want shadow, remove it
@@ -47,7 +47,7 @@ void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
 
   // load the string
   LoadEncryptedDataFromFile("BINARYDATA\\IMPText.EDT", sString,
-                            (UINT32)((sIMPTextRecordNumber)*IMP_SEEK_AMOUNT), IMP_SEEK_AMOUNT);
+                            (uint32_t)((sIMPTextRecordNumber)*IMP_SEEK_AMOUNT), IMP_SEEK_AMOUNT);
 
   // null put last char
   sString[wcslen(sString)] = 0;
@@ -56,7 +56,7 @@ void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
     uiFlags = LEFT_JUSTIFIED;
   }
 
-  DisplayWrappedString(sStartX, (INT16)(sStartY), sLineLength, 2, uiFont, ubColor, sString,
+  DisplayWrappedString(sStartX, (int16_t)(sStartY), sLineLength, 2, uiFont, ubColor, sString,
                        FONT_BLACK, FALSE, uiFlags);
 
   // reset shadow
@@ -70,7 +70,7 @@ void InitializeImpRecordLengthList(void) {
 }
 
 void PrintImpText(void) {
-  INT16 sWidth = LAPTOP_SCREEN_LR_X - LAPTOP_SCREEN_UL_X + 1;
+  int16_t sWidth = LAPTOP_SCREEN_LR_X - LAPTOP_SCREEN_UL_X + 1;
 
   // looks at current page and prints text needed
   switch (iCurrentImpPage) {
@@ -352,8 +352,8 @@ void PrintImpTextPostButtonRender(void) {
 }
 
 void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
-  INT32 iCounter = 0;
-  INT32 iOffset = 0;
+  int32_t iCounter = 0;
+  int32_t iOffset = 0;
 
   if (giCurrentPersonalityQuizQuestion < 0) {
     return;
@@ -379,21 +379,21 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
       // and there are 4 answers afterwards
       BltAnswerIndents(4);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + 20, LAPTOP_SCREEN_WEB_UL_Y + 30, (460),
-                            (INT16)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
+                            (int16_t)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
                             LEFT_JUSTIFIED);
 
       // answers
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (390), (INT16)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
+                            (390), (int16_t)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
                             LEFT_JUSTIFIED);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 150,
-                            (390), (INT16)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
+                            (390), (int16_t)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 200,
-                            (390), (INT16)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
+                            (390), (int16_t)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 250,
-                            (390), (INT16)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
+                            (390), (int16_t)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
                             0);
 
       iOffset = 0;
@@ -403,24 +403,24 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
       // and there are 5 answers afterwards
       BltAnswerIndents(5);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + 20, LAPTOP_SCREEN_WEB_UL_Y + 30, (460),
-                            (INT16)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
+                            (int16_t)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
                             LEFT_JUSTIFIED);
 
       // answers
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 150,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 200,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 250,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 5), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 5), FONT10ARIAL, 142, TRUE,
                             0);
 
       break;
@@ -429,27 +429,27 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
       // and there are 5 answers afterwards
       BltAnswerIndents(6);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + 20, LAPTOP_SCREEN_WEB_UL_Y + 30, (460),
-                            (INT16)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
+                            (int16_t)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
                             LEFT_JUSTIFIED);
 
       // answers
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 150,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 200,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 250,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 5), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 5), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 150,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 6), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 6), FONT10ARIAL, 142, TRUE,
                             0);
 
       break;
@@ -459,33 +459,33 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
       BltAnswerIndents(8);
 
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + 20, LAPTOP_SCREEN_WEB_UL_Y + 30, (460),
-                            (INT16)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
+                            (int16_t)(IMP_QUESTION_1 + iOffset), FONT10ARIAL, FONT_WHITE, TRUE,
                             LEFT_JUSTIFIED);
 
       // answers
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 1), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 150,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 2), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 200,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 3), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_FIRST_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 250,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 4), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 100,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 5), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 5), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 150,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 6), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 6), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 200,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 7), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 7), FONT10ARIAL, 142, TRUE,
                             0);
       LoadAndDisplayIMPText(LAPTOP_SCREEN_UL_X + QTN_SECOND_COLUMN_X, LAPTOP_SCREEN_WEB_UL_Y + 250,
-                            (160), (INT16)(IMP_QUESTION_1 + iOffset + 8), FONT10ARIAL, 142, TRUE,
+                            (160), (int16_t)(IMP_QUESTION_1 + iOffset + 8), FONT10ARIAL, 142, TRUE,
                             0);
 
       break;
@@ -494,8 +494,8 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
   return;
 }
 
-void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset) {
-  INT32 iExtraOffSet = 0;
+void OffSetQuestionForFemaleSpecificQuestions(int32_t *iCurrentOffset) {
+  int32_t iExtraOffSet = 0;
   BOOLEAN fOffSet = TRUE;
 
   // find the extra

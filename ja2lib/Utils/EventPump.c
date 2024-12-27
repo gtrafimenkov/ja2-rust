@@ -21,7 +21,7 @@
 #include "Networking.h"
 #endif
 
-UINT8 gubEncryptionArray4[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
+uint8_t gubEncryptionArray4[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
     {177, 131, 58,  218, 175, 130, 210, 59,  25,  190, 170, 189, 227, 245, 104, 118, 7,
      168, 136, 178, 184, 4,   27,  64,  199, 101, 160, 24,  83,  177, 178, 232, 185, 40,
      122, 109, 38,  253, 160, 14,  133, 106, 190, 206, 58,  102, 244, 229, 124},
@@ -275,10 +275,11 @@ EV_S_SENDPATHTONETWORK SUpdateNetworkSoldier;
 
 extern BOOLEAN gfAmINetworked;
 
-BOOLEAN AddGameEventToQueue(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT8 ubQueueID);
+BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, void *pEventData,
+                            uint8_t ubQueueID);
 BOOLEAN ExecuteGameEvent(EVENT *pEvent);
 
-BOOLEAN AddGameEvent(UINT32 uiEvent, UINT16 usDelay, PTR pEventData) {
+BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, void *pEventData) {
   if (usDelay == DEMAND_EVENT_DELAY) {
 // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("AddGameEvent: Sending Local and network #%d",
 // uiEvent));
@@ -308,12 +309,13 @@ BOOLEAN AddGameEvent(UINT32 uiEvent, UINT16 usDelay, PTR pEventData) {
     return (FALSE);
 }
 
-BOOLEAN AddGameEventFromNetwork(UINT32 uiEvent, UINT16 usDelay, PTR pEventData) {
+BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, void *pEventData) {
   return (AddGameEventToQueue(uiEvent, usDelay, pEventData, PRIMARY_EVENT_QUEUE));
 }
 
-BOOLEAN AddGameEventToQueue(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT8 ubQueueID) {
-  UINT32 uiDataSize;
+BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, void *pEventData,
+                            uint8_t ubQueueID) {
+  uint32_t uiDataSize;
 
   // Check range of Event ui
   if (uiEvent < 0 || uiEvent > NUM_EVENTS) {
@@ -428,7 +430,7 @@ BOOLEAN AddGameEventToQueue(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT
 
 BOOLEAN DequeAllGameEvents(BOOLEAN fExecute) {
   EVENT *pEvent;
-  UINT32 uiQueueSize, cnt;
+  uint32_t uiQueueSize, cnt;
   BOOLEAN fCompleteLoop = FALSE;
   // First dequeue all primary events
 

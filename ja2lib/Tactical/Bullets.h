@@ -17,63 +17,63 @@ struct SOLDIERTYPE;
 #define BULLET_FLAG_FLAME 0x0080
 
 typedef struct {
-  INT32 iBullet;
-  UINT8 ubFirerID;
-  UINT8 ubTargetID;
-  INT8 bStartCubesAboveLevelZ;
-  INT8 bEndCubesAboveLevelZ;
-  UINT32 sGridNo;
-  INT16 sUnused;
-  UINT16 usLastStructureHit;
+  int32_t iBullet;
+  uint8_t ubFirerID;
+  uint8_t ubTargetID;
+  int8_t bStartCubesAboveLevelZ;
+  int8_t bEndCubesAboveLevelZ;
+  uint32_t sGridNo;
+  int16_t sUnused;
+  uint16_t usLastStructureHit;
   FIXEDPT qCurrX;
   FIXEDPT qCurrY;
   FIXEDPT qCurrZ;
   FIXEDPT qIncrX;
   FIXEDPT qIncrY;
   FIXEDPT qIncrZ;
-  DOUBLE ddHorizAngle;
-  INT32 iCurrTileX;
-  INT32 iCurrTileY;
-  INT8 bLOSIndexX;
-  INT8 bLOSIndexY;
+  double ddHorizAngle;
+  int32_t iCurrTileX;
+  int32_t iCurrTileY;
+  int8_t bLOSIndexX;
+  int8_t bLOSIndexY;
   BOOLEAN fCheckForRoof;
-  INT32 iCurrCubesZ;
-  INT32 iLoop;
+  int32_t iCurrCubesZ;
+  int32_t iLoop;
   BOOLEAN fAllocated;
   BOOLEAN fToDelete;
   BOOLEAN fLocated;
   BOOLEAN fReal;
   BOOLEAN fAimed;
-  UINT32 uiLastUpdate;
-  UINT8 ubTilesPerUpdate;
-  UINT16 usClockTicksPerUpdate;
+  uint32_t uiLastUpdate;
+  uint8_t ubTilesPerUpdate;
+  uint16_t usClockTicksPerUpdate;
   struct SOLDIERTYPE *pFirer;
-  UINT32 sTargetGridNo;
-  INT16 sHitBy;
-  INT32 iImpact;
-  INT32 iImpactReduction;
-  INT32 iRange;
-  INT32 iDistanceLimit;
-  UINT16 usFlags;
+  uint32_t sTargetGridNo;
+  int16_t sHitBy;
+  int32_t iImpact;
+  int32_t iImpactReduction;
+  int32_t iRange;
+  int32_t iDistanceLimit;
+  uint16_t usFlags;
   ANITILE *pAniTile;
   ANITILE *pShadowAniTile;
-  UINT8 ubItemStatus;
+  uint8_t ubItemStatus;
 
 } BULLET;
 
-extern UINT32 guiNumBullets;
+extern uint32_t guiNumBullets;
 
-INT32 CreateBullet(UINT8 ubFirer, BOOLEAN fFake, UINT16 usFlags);
-void RemoveBullet(INT32 iBullet);
-void StopBullet(INT32 iBullet);
+int32_t CreateBullet(uint8_t ubFirer, BOOLEAN fFake, uint16_t usFlags);
+void RemoveBullet(int32_t iBullet);
+void StopBullet(int32_t iBullet);
 void UpdateBullets();
-BULLET *GetBulletPtr(INT32 iBullet);
+BULLET *GetBulletPtr(int32_t iBullet);
 
 void DeleteAllBullets();
 
-void LocateBullet(INT32 iBulletIndex);
+void LocateBullet(int32_t iBulletIndex);
 
-void HandleBulletSpecialFlags(INT32 iBulletIndex);
+void HandleBulletSpecialFlags(int32_t iBulletIndex);
 
 void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qCurrZ);
 

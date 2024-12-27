@@ -66,15 +66,15 @@ extern BOOLEAN gfFirstHeliRun;
 // ATE: Globals that dictate where the mercs will land once being hired
 // Default to Omerta
 // Saved in general saved game structure
-INT16 gsMercArriveSectorX = 9;
-INT16 gsMercArriveSectorY = 1;
+int16_t gsMercArriveSectorX = 9;
+int16_t gsMercArriveSectorY = 1;
 
 void CheckForValidArrivalSector();
 
-INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
+int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 iNewIndex;
-  UINT8 ubCurrentSoldier = pHireMerc->ubProfileID;
+  uint8_t iNewIndex;
+  uint8_t ubCurrentSoldier = pHireMerc->ubProfileID;
   MERCPROFILESTRUCT *pMerc;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   BOOLEAN fReturn = FALSE;
@@ -137,7 +137,7 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   }
 
   // record how long the merc will be gone for
-  pMerc->bMercStatus = (UINT8)pHireMerc->iTotalContractLength;
+  pMerc->bMercStatus = (uint8_t)pHireMerc->iTotalContractLength;
 
   pSoldier = GetSoldierByID(iNewIndex);
 
@@ -253,10 +253,10 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   return (MERC_HIRE_OK);
 }
 
-void MercArrivesCallback(UINT8 ubSoldierID) {
+void MercArrivesCallback(uint8_t ubSoldierID) {
   MERCPROFILESTRUCT *pMerc;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiTimeOfPost;
+  uint32_t uiTimeOfPost;
 
   if (!DidGameJustStart() && gsMercArriveSectorX == 9 &&
       gsMercArriveSectorY ==
@@ -264,7 +264,7 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
     // Seeing we don't support entry into a hostile sector (except for the beginning),
     // we will nuke any enemies in this sector first.
     if (gWorldSectorX != 9 || gWorldSectorY != 1 || gbWorldSectorZ) {
-      EliminateAllEnemies((UINT8)gsMercArriveSectorX, (UINT8)gsMercArriveSectorY);
+      EliminateAllEnemies((uint8_t)gsMercArriveSectorX, (uint8_t)gsMercArriveSectorY);
     }
   }
 
@@ -338,7 +338,7 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
   }
 
   // record how long the merc will be gone for
-  pMerc->bMercStatus = (UINT8)pSoldier->iTotalContractLength;
+  pMerc->bMercStatus = (uint8_t)pSoldier->iTotalContractLength;
 
   // remember when excatly he ARRIVED in Arulco, in case he gets fired early
   pSoldier->uiTimeOfLastContractUpdate = GetWorldTotalMin();
@@ -366,14 +366,14 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
   fTeamPanelDirty = TRUE;
 
   // if the currently selected sector has no one in it, select this one instead
-  if (!CanGoToTacticalInSector(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ)) {
+  if (!CanGoToTacticalInSector(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ)) {
     ChangeSelectedMapSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), 0);
   }
 
   return;
 }
 
-BOOLEAN IsMercHireable(UINT8 ubMercID) {
+BOOLEAN IsMercHireable(uint8_t ubMercID) {
   // If the merc has an .EDT file, is not away on assignment, and isnt already hired (but not
   // arrived yet), he is not DEAD and he isnt returning home
   if ((gMercProfiles[ubMercID].bMercStatus == MERC_HAS_NO_TEXT_FILE) ||
@@ -389,7 +389,7 @@ BOOLEAN IsMercHireable(UINT8 ubMercID) {
     return (TRUE);
 }
 
-BOOLEAN IsMercDead(UINT8 ubMercID) {
+BOOLEAN IsMercDead(uint8_t ubMercID) {
   if (gMercProfiles[ubMercID].bMercStatus == MERC_IS_DEAD)
     return (TRUE);
   else
@@ -403,11 +403,11 @@ BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
 }
 
-UINT8 NumberOfMercsOnPlayerTeam() {
-  INT8 cnt;
+uint8_t NumberOfMercsOnPlayerTeam() {
+  int8_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT16 bLastTeamID;
-  UINT8 ubCount = 0;
+  int16_t bLastTeamID;
+  uint8_t ubCount = 0;
 
   // Set locator to first merc
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -424,7 +424,7 @@ UINT8 NumberOfMercsOnPlayerTeam() {
 }
 
 void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier) {
-  INT8 cnt, bHated, bLastTeamID;
+  int8_t cnt, bHated, bLastTeamID;
   struct SOLDIERTYPE *pTeamSoldier;
 
   // If we are approaching with helicopter, don't say any ( yet )
@@ -467,9 +467,9 @@ void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier) {
 void SetFlagToForceHireMerc(BOOLEAN fForceHire) { gForceHireMerc = fForceHire; }
 #endif
 
-UINT32 GetMercArrivalTimeOfDay() {
-  UINT32 uiCurrHour;
-  UINT32 uiMinHour;
+uint32_t GetMercArrivalTimeOfDay() {
+  uint32_t uiCurrHour;
+  uint32_t uiMinHour;
 
   // Pick a time...
 
@@ -499,7 +499,7 @@ UINT32 GetMercArrivalTimeOfDay() {
 }
 
 void UpdateAnyInTransitMercsWithGlobalArrivalSector() {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -519,15 +519,15 @@ void UpdateAnyInTransitMercsWithGlobalArrivalSector() {
   }
 }
 
-INT16 StrategicPythSpacesAway(INT16 sOrigin, INT16 sDest) {
-  INT16 sRows, sCols, sResult;
+int16_t StrategicPythSpacesAway(int16_t sOrigin, int16_t sDest) {
+  int16_t sRows, sCols, sResult;
 
   sRows = abs((SectorID16_Y(sOrigin)) - (SectorID16_Y(sDest)));
   sCols = abs((SectorID16_X(sOrigin)) - (SectorID16_X(sDest)));
 
   // apply Pythagoras's theorem for right-handed triangle:
   // dist^2 = rows^2 + cols^2, so use the square root to get the distance
-  sResult = (INT16)sqrt((float)(sRows * sRows) + (sCols * sCols));
+  sResult = (int16_t)sqrt((float)(sRows * sRows) + (sCols * sCols));
 
   return (sResult);
 }
@@ -537,17 +537,17 @@ INT16 StrategicPythSpacesAway(INT16 sOrigin, INT16 sDest) {
 // if there are enemies present, it's invalid
 // if so, search around for nearest non-occupied sector.
 void CheckForValidArrivalSector() {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, sGoodX, sGoodY;
-  UINT8 ubRadius = 4;
-  INT32 leftmost;
-  INT16 sSectorGridNo, sSectorGridNo2;
-  INT32 uiRange, uiLowestRange = 999999;
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2, sGoodX, sGoodY;
+  uint8_t ubRadius = 4;
+  int32_t leftmost;
+  int16_t sSectorGridNo, sSectorGridNo2;
+  int32_t uiRange, uiLowestRange = 999999;
   BOOLEAN fFound = FALSE;
-  CHAR16 sString[1024];
-  CHAR16 zShortTownIDString1[50];
-  CHAR16 zShortTownIDString2[50];
+  wchar_t sString[1024];
+  wchar_t zShortTownIDString1[50];
+  wchar_t zShortTownIDString2[50];
 
   sSectorGridNo = gsMercArriveSectorX + (MAP_WORLD_X * gsMercArriveSectorY);
 

@@ -13,54 +13,54 @@ void InitIMPSubPageList(void);
 
 extern BOOLEAN fButtonPendingFlag;
 extern BOOLEAN fReDrawCharProfile;
-extern INT32 iCurrentImpPage;
+extern int32_t iCurrentImpPage;
 
 // attributes
-extern INT32 iStrength;
-extern INT32 iDexterity;
-extern INT32 iAgility;
-extern INT32 iWisdom;
-extern INT32 iLeadership;
-extern INT32 iHealth;
+extern int32_t iStrength;
+extern int32_t iDexterity;
+extern int32_t iAgility;
+extern int32_t iWisdom;
+extern int32_t iLeadership;
+extern int32_t iHealth;
 
 // skills
-extern INT32 iMarksmanship;
-extern INT32 iMedical;
-extern INT32 iExplosives;
-extern INT32 iMechanical;
+extern int32_t iMarksmanship;
+extern int32_t iMedical;
+extern int32_t iExplosives;
+extern int32_t iMechanical;
 
 // sex?
 extern BOOLEAN fCharacterIsMale;
 
 // name?
-extern CHAR16 pFullName[];
-extern CHAR16 pNickName[];
+extern wchar_t pFullName[];
+extern wchar_t pNickName[];
 
 // skills
-extern INT32 iSkillA;
-extern INT32 iSkillB;
+extern int32_t iSkillA;
+extern int32_t iSkillB;
 
 // persoanlity
-extern INT32 iPersonality;
+extern int32_t iPersonality;
 
 // attitude
-extern INT32 iAttitude;
+extern int32_t iAttitude;
 
 // addtivies
-extern INT32 iAddStrength;
-extern INT32 iAddDexterity;
-extern INT32 iAddAgility;
-extern INT32 iAddWisdom;
-extern INT32 iAddHealth;
-extern INT32 iAddLeadership;
+extern int32_t iAddStrength;
+extern int32_t iAddDexterity;
+extern int32_t iAddAgility;
+extern int32_t iAddWisdom;
+extern int32_t iAddHealth;
+extern int32_t iAddLeadership;
 
-extern INT32 iAddMarksmanship;
-extern INT32 iAddMedical;
-extern INT32 iAddExplosives;
-extern INT32 iAddMechanical;
+extern int32_t iAddMarksmanship;
+extern int32_t iAddMedical;
+extern int32_t iAddExplosives;
+extern int32_t iAddMechanical;
 
 // pop up strings
-extern STR16 pImpPopUpStrings[];
+extern wchar_t* pImpPopUpStrings[];
 
 // extern BOOLEAN fIMPCompletedFlag;
 

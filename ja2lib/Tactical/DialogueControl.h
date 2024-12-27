@@ -217,64 +217,69 @@ enum {
   UPDATE_BOX_REASON_SHOW_BOX,
 };
 
-extern UINT32 uiExternalStaticNPCFaces[];
-extern UINT32 uiExternalFaceProfileIds[];
+extern uint32_t uiExternalStaticNPCFaces[];
+extern uint32_t uiExternalFaceProfileIds[];
 
 // Functions for handling dialogue Q
 BOOLEAN InitalizeDialogueControl();
 void ShutdownDialogueControl();
 void EmptyDialogueQueue();
 void HandleDialogue();
-void HandleImportantMercQuote(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNumber);
+void HandleImportantMercQuote(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNumber);
 
 // Send in a profile number to see if text dialog exists for this guy....
-BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, UINT16 usQuoteNum, BOOLEAN fWavFile,
-                                         CHAR8 **ppStr);
+BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuoteNum,
+                                         BOOLEAN fWavFile, char **ppStr);
 
 // Do special event as well as dialogue!
-BOOLEAN CharacterDialogueWithSpecialEvent(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
-                                          UINT8 bUIHandlerID, BOOLEAN fFromSoldier,
-                                          BOOLEAN fDelayed, UINT32 uiFlag, uintptr_t uiData1,
-                                          UINT32 uiData2);
+BOOLEAN CharacterDialogueWithSpecialEvent(uint8_t ubCharacterNum, uint16_t usQuoteNum,
+                                          int32_t iFaceIndex, uint8_t bUIHandlerID,
+                                          BOOLEAN fFromSoldier, BOOLEAN fDelayed, uint32_t uiFlag,
+                                          uintptr_t uiData1, uint32_t uiData2);
 
 // Do special event as well as dialogue!
-BOOLEAN CharacterDialogueWithSpecialEventEx(UINT8 ubCharacterNum, UINT16 usQuoteNum,
-                                            INT32 iFaceIndex, UINT8 bUIHandlerID,
-                                            BOOLEAN fFromSoldier, BOOLEAN fDelayed, UINT32 uiFlag,
-                                            UINT32 uiData1, UINT32 uiData2, UINT32 uiData3);
+BOOLEAN CharacterDialogueWithSpecialEventEx(uint8_t ubCharacterNum, uint16_t usQuoteNum,
+                                            int32_t iFaceIndex, uint8_t bUIHandlerID,
+                                            BOOLEAN fFromSoldier, BOOLEAN fDelayed, uint32_t uiFlag,
+                                            uint32_t uiData1, uint32_t uiData2, uint32_t uiData3);
 
 // A higher level function used for tactical quotes
-BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
-                                                  UINT32 uiFlag, uintptr_t uiData1, UINT32 uiData2);
+BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum,
+                                                  uint32_t uiFlag, uintptr_t uiData1,
+                                                  uint32_t uiData2);
 
 // A higher level function used for tactical quotes
-BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
-                                                    UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2,
-                                                    UINT32 uiData3);
+BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier,
+                                                    uint16_t usQuoteNum, uint32_t uiFlag,
+                                                    uint32_t uiData1, uint32_t uiData2,
+                                                    uint32_t uiData3);
 
 // A higher level function used for tactical quotes
-BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
+BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum);
 
 // A higher level function used for tactical quotes
-BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
+BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum);
 
 // A more general purpose function for processing quotes
-BOOLEAN CharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
-                          UINT8 bUIHandlerID, BOOLEAN fFromSoldier, BOOLEAN fDelayed);
+BOOLEAN CharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, int32_t iFaceIndex,
+                          uint8_t bUIHandlerID, BOOLEAN fFromSoldier, BOOLEAN fDelayed);
 
 // A special event can be setup which can be queued with other speech
 BOOLEAN SpecialCharacterDialogueEvent(uintptr_t uiSpecialEventFlag, uintptr_t uiSpecialEventData1,
-                                      uintptr_t uiSpecialEventData2, UINT32 uiSpecialEventData3,
-                                      INT32 iFaceIndex, UINT8 bUIHandlerID);
+                                      uintptr_t uiSpecialEventData2, uint32_t uiSpecialEventData3,
+                                      int32_t iFaceIndex, uint8_t bUIHandlerID);
 
 // Same as above, for triggers, with extra param to hold approach value
-BOOLEAN SpecialCharacterDialogueEventWithExtraParam(
-    UINT32 uiSpecialEventFlag, UINT32 uiSpecialEventData1, UINT32 uiSpecialEventData2,
-    UINT32 uiSpecialEventData3, UINT32 uiSpecialEventData4, INT32 iFaceIndex, UINT8 bUIHandlerID);
+BOOLEAN SpecialCharacterDialogueEventWithExtraParam(uint32_t uiSpecialEventFlag,
+                                                    uint32_t uiSpecialEventData1,
+                                                    uint32_t uiSpecialEventData2,
+                                                    uint32_t uiSpecialEventData3,
+                                                    uint32_t uiSpecialEventData4,
+                                                    int32_t iFaceIndex, uint8_t bUIHandlerID);
 
 // execute specific character dialogue
-BOOLEAN ExecuteCharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
-                                 UINT8 bUIHandlerID, BOOLEAN fSoldier);
+BOOLEAN ExecuteCharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, int32_t iFaceIndex,
+                                 uint8_t bUIHandlerID, BOOLEAN fSoldier);
 
 // Called when a face stops talking...
 void HandleDialogueEnd(FACETYPE *pFace);
@@ -300,37 +305,39 @@ void UnPauseGameDuringNextQuote(void);
 void InitalizeStaticExternalNPCFaces(void);
 void ShutdownStaticExternalNPCFaces(void);
 
-void SayQuoteFromAnyBodyInSector(UINT16 usQuoteNum);
-void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT16 usQuoteNum);
-void SayQuoteFromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, UINT16 usQuoteNum);
-void SayQuote58FromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, UINT16 usQuoteNum, INT8 bSex);
-void ExecuteTacticalTextBox(INT16 sLeftPosition, STR16 pString);
-void ExecuteTacticalTextBoxForLastQuote(INT16 sLeftPosition, STR16 pString);
-UINT32 FindDelayForString(STR16 sString);
+void SayQuoteFromAnyBodyInSector(uint16_t usQuoteNum);
+void SayQuoteFromAnyBodyInThisSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
+                                     uint16_t usQuoteNum);
+void SayQuoteFromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum);
+void SayQuote58FromNearbyMercInSector(int16_t sGridNo, int8_t bDistance, uint16_t usQuoteNum,
+                                      int8_t bSex);
+void ExecuteTacticalTextBox(int16_t sLeftPosition, wchar_t *pString);
+void ExecuteTacticalTextBoxForLastQuote(int16_t sLeftPosition, wchar_t *pString);
+uint32_t FindDelayForString(wchar_t *sString);
 void BeginLoggingForBleedMeToos(BOOLEAN fStart);
 
 void UnSetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier);
 void SetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier);
 
-extern UINT32 guiDialogueLastQuoteTime;
-extern UINT32 guiDialogueLastQuoteDelay;
+extern uint32_t guiDialogueLastQuoteTime;
+extern uint32_t guiDialogueLastQuoteDelay;
 
 void SetStopTimeQuoteCallback(MODAL_HOOK pCallBack);
 
 BOOLEAN DialogueActive();
 
-extern INT32 giNPCReferenceCount;
-extern INT32 giNPCSpecialReferenceCount;
+extern int32_t giNPCReferenceCount;
+extern int32_t giNPCSpecialReferenceCount;
 
 #define NUMBER_VALID_MERC_PRECEDENT_QUOTES 13
 
-extern UINT8 gubMercValidPrecedentQuoteID[NUMBER_VALID_MERC_PRECEDENT_QUOTES];
+extern uint8_t gubMercValidPrecedentQuoteID[NUMBER_VALID_MERC_PRECEDENT_QUOTES];
 
-BOOLEAN ShouldMercSayPrecedentToRepeatOneSelf(UINT8 ubMercID, UINT32 uiQuoteID);
-BOOLEAN GetMercPrecedentQuoteBitStatus(UINT8 ubMercID, UINT8 ubQuoteBit);
-BOOLEAN SetMercPrecedentQuoteBitStatus(UINT8 ubMercID, UINT8 ubBitToSet);
-BOOLEAN IsQuoteInPrecedentArray(UINT32 uiQuoteID);
-UINT8 GetQuoteBitNumberFromQuoteID(UINT32 uiQuoteID);
+BOOLEAN ShouldMercSayPrecedentToRepeatOneSelf(uint8_t ubMercID, uint32_t uiQuoteID);
+BOOLEAN GetMercPrecedentQuoteBitStatus(uint8_t ubMercID, uint8_t ubQuoteBit);
+BOOLEAN SetMercPrecedentQuoteBitStatus(uint8_t ubMercID, uint8_t ubBitToSet);
+BOOLEAN IsQuoteInPrecedentArray(uint32_t uiQuoteID);
+uint8_t GetQuoteBitNumberFromQuoteID(uint32_t uiQuoteID);
 void HandleShutDownOfMapScreenWhileExternfaceIsTalking(void);
 
 void StopAnyCurrentlyTalkingSpeech();
@@ -341,6 +348,6 @@ void PauseDialogueQueue(void);
 // unpause the dialogue queue
 void UnPauseDialogueQueue(void);
 
-void SetExternMapscreenSpeechPanelXY(INT16 sXPos, INT16 sYPos);
+void SetExternMapscreenSpeechPanelXY(int16_t sXPos, int16_t sYPos);
 
 #endif

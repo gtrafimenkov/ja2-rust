@@ -144,98 +144,102 @@
 BobbyRayPurchaseStruct BobbyRayPurchases[MAX_PURCHASE_AMOUNT];
 
 // BobbyRayOrderStruct *BobbyRayOrdersOnDeliveryArray=NULL;
-// UINT8	usNumberOfBobbyRayOrderItems = 0;
-// UINT8	usNumberOfBobbyRayOrderUsed = 0;
+// uint8_t	usNumberOfBobbyRayOrderItems = 0;
+// uint8_t	usNumberOfBobbyRayOrderUsed = 0;
 
 extern BOOLEAN fExitingLaptopFlag;
 
-UINT32 guiGunBackground;
-UINT32 guiGunsGrid;
-UINT32 guiBrTitle;
-UINT16 gusCurWeaponIndex;
-UINT8 gubCurPage;
-UINT8 ubCatalogueButtonValues[] = {LAPTOP_MODE_BOBBY_R_GUNS, LAPTOP_MODE_BOBBY_R_AMMO,
-                                   LAPTOP_MODE_BOBBY_R_ARMOR, LAPTOP_MODE_BOBBY_R_MISC,
-                                   LAPTOP_MODE_BOBBY_R_USED};
+uint32_t guiGunBackground;
+uint32_t guiGunsGrid;
+uint32_t guiBrTitle;
+uint16_t gusCurWeaponIndex;
+uint8_t gubCurPage;
+uint8_t ubCatalogueButtonValues[] = {LAPTOP_MODE_BOBBY_R_GUNS, LAPTOP_MODE_BOBBY_R_AMMO,
+                                     LAPTOP_MODE_BOBBY_R_ARMOR, LAPTOP_MODE_BOBBY_R_MISC,
+                                     LAPTOP_MODE_BOBBY_R_USED};
 
-UINT16 gusLastItemIndex = 0;
-UINT16 gusFirstItemIndex = 0;
-UINT8 gubNumItemsOnScreen;
-UINT8 gubNumPages;
+uint16_t gusLastItemIndex = 0;
+uint16_t gusFirstItemIndex = 0;
+uint8_t gubNumItemsOnScreen;
+uint8_t gubNumPages;
 
 BOOLEAN gfBigImageMouseRegionCreated;
-UINT16 gusItemNumberForItemsOnScreen[BOBBYR_NUM_WEAPONS_ON_PAGE];
+uint16_t gusItemNumberForItemsOnScreen[BOBBYR_NUM_WEAPONS_ON_PAGE];
 
 BOOLEAN gfOnUsedPage;
 
-UINT16 gusOldItemNumOnTopOfPage = 65535;
+uint16_t gusOldItemNumOnTopOfPage = 65535;
 
 // The menu bar at the bottom that changes to different pages
-void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRPageMenu[NUM_CATALOGUE_BUTTONS];
-INT32 guiBobbyRPageMenuImage;
+void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiBobbyRPageMenu[NUM_CATALOGUE_BUTTONS];
+int32_t guiBobbyRPageMenuImage;
 
 // The next and previous buttons
-void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRPreviousPage;
-INT32 guiBobbyRPreviousPageImage;
+void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiBobbyRPreviousPage;
+int32_t guiBobbyRPreviousPageImage;
 
-UINT32 guiBobbyRNextPage;
-INT32 guiBobbyRNextPageImage;
+uint32_t guiBobbyRNextPage;
+int32_t guiBobbyRNextPageImage;
 
 // Big Image Mouse region
 struct MOUSE_REGION gSelectedBigImageRegion[BOBBYR_NUM_WEAPONS_ON_PAGE];
-void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // The order form button
-void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyROrderForm;
-INT32 guiBobbyROrderFormImage;
+void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiBobbyROrderForm;
+int32_t guiBobbyROrderFormImage;
 
 // The Home button
-void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiBobbyRHome;
-INT32 guiBobbyRHomeImage;
+void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiBobbyRHome;
+int32_t guiBobbyRHomeImage;
 
 // Link from the title
 struct MOUSE_REGION gSelectedTitleImageLinkRegion;
-void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-UINT32 guiTempCurrentMode;
+uint32_t guiTempCurrentMode;
 
-BOOLEAN DisplayNonGunWeaponInfo(UINT16 usItemIndex, UINT16 usTextPosY, BOOLEAN fUsed,
-                                UINT16 usBobbyIndex);
-BOOLEAN DisplayArmourInfo(UINT16 usItemIndex, UINT16 usTextPosY, BOOLEAN fUsed,
-                          UINT16 usBobbyIndex);
-BOOLEAN DisplayMiscInfo(UINT16 usItemIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 usBobbyIndex);
-BOOLEAN DisplayGunInfo(UINT16 usItemIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 usBobbyIndex);
-BOOLEAN DisplayAmmoInfo(UINT16 usItemIndex, UINT16 usPosY, BOOLEAN fUsed, UINT16 usBobbyIndex);
+BOOLEAN DisplayNonGunWeaponInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                                uint16_t usBobbyIndex);
+BOOLEAN DisplayArmourInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                          uint16_t usBobbyIndex);
+BOOLEAN DisplayMiscInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex);
+BOOLEAN DisplayGunInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                       uint16_t usBobbyIndex);
+BOOLEAN DisplayAmmoInfo(uint16_t usItemIndex, uint16_t usPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex);
 
-BOOLEAN DisplayBigItemImage(UINT16 ubIndex, UINT16 usPosY);
-// void InitFirstAndLastGlobalIndex(UINT32 ubItemClassMask);
-UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UINT16 usBobbyIndex,
-                         BOOLEAN fUsed);
-UINT16 DisplayRof(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
-UINT16 DisplayDamage(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
-UINT16 DisplayRange(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
-UINT16 DisplayMagazine(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
-void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed);
-UINT16 DisplayWeight(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
-UINT16 DisplayCaliber(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight);
-void CreateMouseRegionForBigImage(UINT16 usPosY, UINT8 ubCount, INT16 *pItemNumbers);
-void PurchaseBobbyRayItem(UINT16 usItemNumber);
-UINT8 CheckIfItemIsPurchased(UINT16 usItemNumber);
-UINT8 GetNextPurchaseNumber();
-void UnPurchaseBobbyRayItem(UINT16 usItemNumber);
-UINT32 CalculateTotalPurchasePrice();
+BOOLEAN DisplayBigItemImage(uint16_t ubIndex, uint16_t usPosY);
+// void InitFirstAndLastGlobalIndex(uint32_t ubItemClassMask);
+uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight,
+                           uint16_t usBobbyIndex, BOOLEAN fUsed);
+uint16_t DisplayRof(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
+uint16_t DisplayDamage(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
+uint16_t DisplayRange(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
+uint16_t DisplayMagazine(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
+void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyIndex,
+                            BOOLEAN fUsed);
+uint16_t DisplayWeight(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
+uint16_t DisplayCaliber(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
+void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, int16_t *pItemNumbers);
+void PurchaseBobbyRayItem(uint16_t usItemNumber);
+uint8_t CheckIfItemIsPurchased(uint16_t usItemNumber);
+uint8_t GetNextPurchaseNumber();
+void UnPurchaseBobbyRayItem(uint16_t usItemNumber);
+uint32_t CalculateTotalPurchasePrice();
 void DisableBobbyRButtons();
-void CalcFirstIndexForPage(STORE_INVENTORY *pInv, UINT32 uiItemClass);
-void OutOfStockMessageBoxCallBack(UINT8 bExitValue);
-UINT8 CheckPlayersInventoryForGunMatchingGivenAmmoID(INT16 sItemID);
+void CalcFirstIndexForPage(STORE_INVENTORY *pInv, uint32_t uiItemClass);
+void OutOfStockMessageBoxCallBack(uint8_t bExitValue);
+uint8_t CheckPlayersInventoryForGunMatchingGivenAmmoID(int16_t sItemID);
 void BobbyrRGunsHelpTextDoneCallBack(void);
 #ifdef JA2BETAVERSION
-void ReportBobbyROrderError(UINT16 usItemNumber, UINT8 ubPurchaseNum, UINT8 ubQtyOnHand,
-                            UINT8 ubNumPurchasing);
+void ReportBobbyROrderError(uint16_t usItemNumber, uint8_t ubPurchaseNum, uint8_t ubQtyOnHand,
+                            uint8_t ubNumPurchasing);
 #endif
 
 // ppp
@@ -275,7 +279,7 @@ BOOLEAN EnterBobbyRGuns() {
           if(giCurrentSubPage == 0)
                   gusCurWeaponIndex = gusFirstGunIndex;
           else
-                  gusCurWeaponIndex = (UINT8)giCurrentSubPage;
+                  gusCurWeaponIndex = (uint8_t)giCurrentSubPage;
   */
   // Draw menu bar
   InitBobbyMenuBar();
@@ -361,7 +365,7 @@ BOOLEAN InitBobbyBrTitle() {
   // initialize the link to the homepage by clicking on the title
   MSYS_DefineRegion(&gSelectedTitleImageLinkRegion, BOBBYR_BRTITLE_X, BOBBYR_BRTITLE_Y,
                     (BOBBYR_BRTITLE_X + BOBBYR_BRTITLE_WIDTH),
-                    (UINT16)(BOBBYR_BRTITLE_Y + BOBBYR_BRTITLE_HEIGHT), MSYS_PRIORITY_HIGH,
+                    (uint16_t)(BOBBYR_BRTITLE_Y + BOBBYR_BRTITLE_HEIGHT), MSYS_PRIORITY_HIGH,
                     CURSOR_WWW, MSYS_NO_CALLBACK, SelectTitleImageLinkRegionCallBack);
   MSYS_AddRegion(&gSelectedTitleImageLinkRegion);
 
@@ -380,7 +384,7 @@ BOOLEAN DeleteBobbyBrTitle() {
   return (TRUE);
 }
 
-void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_BOBBY_R;
@@ -388,9 +392,9 @@ void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iRea
 }
 
 BOOLEAN InitBobbyMenuBar() {
-  UINT8 i;
-  UINT16 usPosX;
-  UINT8 bCurMode;
+  uint8_t i;
+  uint16_t usPosX;
+  uint8_t bCurMode;
 
   // Previous button
   guiBobbyRPreviousPageImage = LoadButtonImage("LAPTOP\\PreviousButton.sti", -1, 0, -1, 1, -1);
@@ -458,7 +462,7 @@ BOOLEAN InitBobbyMenuBar() {
 }
 
 BOOLEAN DeleteBobbyMenuBar() {
-  UINT8 i;
+  uint8_t i;
 
   UnloadButtonImage(guiBobbyRNextPageImage);
   UnloadButtonImage(guiBobbyRPreviousPageImage);
@@ -478,8 +482,8 @@ BOOLEAN DeleteBobbyMenuBar() {
   return (TRUE);
 }
 
-void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT32 bNewValue;
+void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, int32_t reason) {
+  uint32_t bNewValue;
   bNewValue = MSYS_GetBtnUserData(btn, 0);
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -507,8 +511,8 @@ void BtnBobbyRPageMenuCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT32 bNewValue;
+void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, int32_t reason) {
+  uint32_t bNewValue;
 
   bNewValue = MSYS_GetBtnUserData(btn, 0);
 
@@ -544,14 +548,14 @@ void BtnBobbyRNextPreviousPageCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-BOOLEAN DisplayItemInfo(UINT32 uiItemClass) {
-  UINT16 i;
-  UINT8 ubCount = 0;
-  UINT16 PosY, usTextPosY;
-  UINT16 usItemIndex;
+BOOLEAN DisplayItemInfo(uint32_t uiItemClass) {
+  uint16_t i;
+  uint8_t ubCount = 0;
+  uint16_t PosY, usTextPosY;
+  uint16_t usItemIndex;
   wchar_t sDollarTemp[60];
   wchar_t sTemp[60];
-  INT16 pItemNumbers[BOBBYR_NUM_WEAPONS_ON_PAGE];
+  int16_t pItemNumbers[BOBBYR_NUM_WEAPONS_ON_PAGE];
 
   PosY = BOBBYR_GRID_PIC_Y;
   usTextPosY = BOBBYR_ITEM_DESC_START_Y;
@@ -715,9 +719,10 @@ BOOLEAN DisplayItemInfo(UINT32 uiItemClass) {
   return (TRUE);
 }
 
-BOOLEAN DisplayGunInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 usBobbyIndex) {
-  UINT16 usHeight;
-  UINT16 usFontHeight;
+BOOLEAN DisplayGunInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                       uint16_t usBobbyIndex) {
+  uint16_t usHeight;
+  uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
 
   // Display Items Name
@@ -750,10 +755,10 @@ BOOLEAN DisplayGunInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 
   return (TRUE);
 }  // DisplayGunInfo
 
-BOOLEAN DisplayNonGunWeaponInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed,
-                                UINT16 usBobbyIndex) {
-  UINT16 usHeight;
-  UINT16 usFontHeight;
+BOOLEAN DisplayNonGunWeaponInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                                uint16_t usBobbyIndex) {
+  uint16_t usHeight;
+  uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
 
   // Display Items Name
@@ -774,9 +779,10 @@ BOOLEAN DisplayNonGunWeaponInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed
   return (TRUE);
 }  // DisplayNonGunWeaponInfo
 
-BOOLEAN DisplayAmmoInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 usBobbyIndex) {
-  UINT16 usHeight;
-  UINT16 usFontHeight;
+BOOLEAN DisplayAmmoInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex) {
+  uint16_t usHeight;
+  uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
 
   // Display Items Name
@@ -797,12 +803,12 @@ BOOLEAN DisplayAmmoInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16
   return (TRUE);
 }  // DisplayAmmoInfo
 
-BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
-  INT16 PosX, sCenX, sCenY;
-  UINT32 usWidth;
+BOOLEAN DisplayBigItemImage(uint16_t usIndex, uint16_t PosY) {
+  int16_t PosX, sCenX, sCenY;
+  uint32_t usWidth;
   ETRLEObject *pTrav;
   INVTYPE *pItem;
-  UINT32 uiImage;
+  uint32_t uiImage;
   struct VObject *hPixHandle;
 
   PosX = BOBBYR_GRID_PIC_X;
@@ -814,10 +820,10 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   pTrav = &(hPixHandle->pETRLEObject[0]);
 
   // center picture in frame
-  usWidth = (UINT32)pTrav->usWidth;
+  usWidth = (uint32_t)pTrav->usWidth;
   //	sCenX = PosX + ( abs( BOBBYR_GRID_PIC_WIDTH - usWidth ) / 2 );
   //	sCenY = PosY + 8;
-  sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+  sCenX = PosX + (abs((int32_t)((int32_t)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
   sCenY = PosY + 8;
 
   // blt the shadow of the item
@@ -830,9 +836,10 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   return (TRUE);
 }
 
-BOOLEAN DisplayArmourInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 usBobbyIndex) {
-  UINT16 usHeight;
-  UINT16 usFontHeight;
+BOOLEAN DisplayArmourInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                          uint16_t usBobbyIndex) {
+  uint16_t usHeight;
+  uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
 
   // Display Items Name
@@ -850,21 +857,22 @@ BOOLEAN DisplayArmourInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT
   return (TRUE);
 }  // DisplayArmourInfo
 
-BOOLEAN DisplayMiscInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16 usBobbyIndex) {
+BOOLEAN DisplayMiscInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex) {
   return (TRUE);
 }
 
-UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UINT16 usBobbyIndex,
-                         BOOLEAN fUsed) {
+uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight,
+                           uint16_t usBobbyIndex, BOOLEAN fUsed) {
   wchar_t sTemp[20];
-  //	UINT8	ubPurchaseNumber;
+  //	uint8_t	ubPurchaseNumber;
 
   //
   // Display the cost and the qty
   //
 
   // Display the cost
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_COST], BOBBYR_ITEM_COST_TEXT_X, (UINT16)usPosY,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_COST], BOBBYR_ITEM_COST_TEXT_X, (uint16_t)usPosY,
                    BOBBYR_ITEM_COST_TEXT_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT,
                    BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   usPosY += usFontHeight + 2;
@@ -873,7 +881,7 @@ UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UIN
   InsertCommasForDollarFigure(sTemp);
   InsertDollarSignInToString(sTemp);
 
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_COST_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_COST_TEXT_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_COST_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_COST_TEXT_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
@@ -881,7 +889,7 @@ UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UIN
   /*
           //Display the # bought
           DrawTextToScreen(BobbyRText[BOBBYR_GUNS_QTY_ON_ORDER], BOBBYR_ITEM_QTY_TEXT_X,
-     (UINT16)usPosY, BOBBYR_ITEM_COST_TEXT_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT,
+     (uint16_t)usPosY, BOBBYR_ITEM_COST_TEXT_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT,
      BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED); usPosY += usFontHeight +
      2;
 
@@ -892,26 +900,26 @@ UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UIN
                   swprintf(sTemp, ARR_SIZE(sTemp), L"% 4d", BobbyRayPurchases[ ubPurchaseNumber
      ].ubNumberPurchased);
 
-          DrawTextToScreen(sTemp, BOBBYR_ITEMS_BOUGHT_X, (UINT16)usPosY,
+          DrawTextToScreen(sTemp, BOBBYR_ITEMS_BOUGHT_X, (uint16_t)usPosY,
      BOBBYR_ITEM_COST_TEXT_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR,
      FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
   */
 
   // Display Weight Number
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_WGHT], BOBBYR_ITEM_STOCK_TEXT_X, (UINT16)(usPosY),
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_WGHT], BOBBYR_ITEM_STOCK_TEXT_X, (uint16_t)(usPosY),
                    BOBBYR_ITEM_COST_TEXT_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT,
                    BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   usPosY += usFontHeight + 2;
 
   swprintf(sTemp, ARR_SIZE(sTemp), L"%3.2f",
-           GetWeightBasedOnMetricOption(Item[usIndex].ubWeight) / (FLOAT)(10.0));
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_STOCK_TEXT_X, (UINT16)(usPosY), BOBBYR_ITEM_COST_TEXT_WIDTH,
+           GetWeightBasedOnMetricOption(Item[usIndex].ubWeight) / (float)(10.0));
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_STOCK_TEXT_X, (uint16_t)(usPosY), BOBBYR_ITEM_COST_TEXT_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
 
   // Display the # In Stock
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_IN_STOCK], BOBBYR_ITEM_STOCK_TEXT_X, (UINT16)usPosY,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_IN_STOCK], BOBBYR_ITEM_STOCK_TEXT_X, (uint16_t)usPosY,
                    BOBBYR_ITEM_COST_TEXT_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT,
                    BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   usPosY += usFontHeight + 2;
@@ -923,7 +931,7 @@ UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UIN
     swprintf(sTemp, ARR_SIZE(sTemp), L"% 4d",
              LaptopSaveInfo.BobbyRayInventory[usBobbyIndex].ubQtyOnHand);
 
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_STOCK_TEXT_X, (UINT16)usPosY, BOBBYR_ITEM_COST_TEXT_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_STOCK_TEXT_X, (uint16_t)usPosY, BOBBYR_ITEM_COST_TEXT_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
@@ -931,10 +939,10 @@ UINT16 DisplayCostAndQty(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight, UIN
   return (usPosY);
 }
 
-UINT16 DisplayRof(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
+uint16_t DisplayRof(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
   wchar_t sTemp[20];
 
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_ROF], BOBBYR_ITEM_WEIGHT_TEXT_X, (UINT16)usPosY, 0,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_ROF], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
 
@@ -944,60 +952,60 @@ UINT16 DisplayRof(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%3d/%s", WeaponROF[usIndex],
              pMessageStrings[MSG_MINUTE_ABBREVIATION]);
 
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
   return (usPosY);
 }
 
-UINT16 DisplayDamage(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
+uint16_t DisplayDamage(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
   wchar_t sTemp[20];
 
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_DAMAGE], BOBBYR_ITEM_WEIGHT_TEXT_X, (UINT16)usPosY, 0,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_DAMAGE], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
   swprintf(sTemp, ARR_SIZE(sTemp), L"%4d", Weapon[usIndex].ubImpact);
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
   return (usPosY);
 }
 
-UINT16 DisplayRange(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
+uint16_t DisplayRange(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
   wchar_t sTemp[20];
 
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_RANGE], BOBBYR_ITEM_WEIGHT_TEXT_X, (UINT16)usPosY, 0,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_RANGE], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
   swprintf(sTemp, ARR_SIZE(sTemp), L"%3d %s", Weapon[usIndex].usRange,
            pMessageStrings[MSG_METER_ABBREVIATION]);
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
   return (usPosY);
 }
 
-UINT16 DisplayMagazine(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
+uint16_t DisplayMagazine(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
   wchar_t sTemp[20];
 
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_MAGAZINE], BOBBYR_ITEM_WEIGHT_TEXT_X, (UINT16)usPosY, 0,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_MAGAZINE], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
   swprintf(sTemp, ARR_SIZE(sTemp), L"%3d %s", Weapon[usIndex].ubMagSize,
            pMessageStrings[MSG_ROUNDS_ABBREVIATION]);
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
   return (usPosY);
 }
 
-UINT16 DisplayCaliber(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
-  CHAR16 zTemp[128];
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_CALIBRE], BOBBYR_ITEM_WEIGHT_TEXT_X, (UINT16)usPosY, 0,
+uint16_t DisplayCaliber(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
+  wchar_t zTemp[128];
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_CALIBRE], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
 
@@ -1006,7 +1014,7 @@ UINT16 DisplayCaliber(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
     swprintf(zTemp, ARR_SIZE(zTemp), L"%s",
              BobbyRayAmmoCaliber[Magazine[Item[usIndex].ubClassIndex].ubCalibre]);
     //		DrawTextToScreen( AmmoCaliber[ Magazine[ Item[ usIndex ].ubClassIndex ].ubCalibre],
-    // BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+    // BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
     // BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
     // RIGHT_JUSTIFIED);
   } else {
@@ -1014,7 +1022,7 @@ UINT16 DisplayCaliber(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
     swprintf(zTemp, ARR_SIZE(zTemp), L"%s",
              BobbyRayAmmoCaliber[Weapon[Item[usIndex].ubClassIndex].ubCalibre]);
     //		DrawTextToScreen( AmmoCaliber[ Weapon[ Item[ usIndex ].ubClassIndex ].ubCalibre ],
-    // BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+    // BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
     // BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
     // RIGHT_JUSTIFIED);
   }
@@ -1022,7 +1030,7 @@ UINT16 DisplayCaliber(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
   if (StringPixLength(zTemp, BOBBYR_ITEM_DESC_TEXT_FONT) > BOBBYR_ITEM_WEIGHT_NUM_WIDTH)
     ReduceStringLength(zTemp, ARR_SIZE(zTemp), BOBBYR_GRID_PIC_WIDTH, BOBBYR_ITEM_NAME_TEXT_FONT);
 
-  DrawTextToScreen(zTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+  DrawTextToScreen(zTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
 
@@ -1030,29 +1038,30 @@ UINT16 DisplayCaliber(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
   return (usPosY);
 }
 
-UINT16 DisplayWeight(UINT16 usPosY, UINT16 usIndex, UINT16 usFontHeight) {
+uint16_t DisplayWeight(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight) {
   wchar_t sTemp[20];
 
   // display the 'weight' string
-  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_WEIGHT], BOBBYR_ITEM_WEIGHT_TEXT_X, (UINT16)usPosY, 0,
+  DrawTextToScreen(BobbyRText[BOBBYR_GUNS_WEIGHT], BOBBYR_ITEM_WEIGHT_TEXT_X, (uint16_t)usPosY, 0,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
                    LEFT_JUSTIFIED);
 
   swprintf(sTemp, ARR_SIZE(sTemp), L"%3.2f %s",
            GetWeightBasedOnMetricOption(Item[usIndex].ubWeight) / 10, GetWeightUnitString());
-  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (UINT16)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
+  DrawTextToScreen(sTemp, BOBBYR_ITEM_WEIGHT_NUM_X, (uint16_t)usPosY, BOBBYR_ITEM_WEIGHT_NUM_WIDTH,
                    BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, RIGHT_JUSTIFIED);
   usPosY += usFontHeight + 2;
   return (usPosY);
 }
 
-void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed) {
+void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyIndex,
+                            BOOLEAN fUsed) {
   wchar_t sText[400];
   wchar_t sTemp[20];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
-  UINT8 ubPurchaseNumber;
+  uint8_t ubPurchaseNumber;
 
   // Display Items Name
   uiStartLoc = BOBBYR_ITEM_DESC_FILE_SIZE * usIndex;
@@ -1062,7 +1071,7 @@ void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, 
     ReduceStringLength(sText, ARR_SIZE(sText), BOBBYR_GRID_PIC_WIDTH - 6,
                        BOBBYR_ITEM_NAME_TEXT_FONT);
 
-  DrawTextToScreen(sText, BOBBYR_ITEM_NAME_X, (UINT16)(usPosY + BOBBYR_ITEM_NAME_Y_OFFSET), 0,
+  DrawTextToScreen(sText, BOBBYR_ITEM_NAME_X, (uint16_t)(usPosY + BOBBYR_ITEM_NAME_Y_OFFSET), 0,
                    BOBBYR_ITEM_NAME_TEXT_FONT, BOBBYR_ITEM_NAME_TEXT_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, LEFT_JUSTIFIED);
 
@@ -1070,14 +1079,14 @@ void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, 
   // Display the # bought
   ubPurchaseNumber = CheckIfItemIsPurchased(usBobbyIndex);
   if (ubPurchaseNumber != BOBBY_RAY_NOT_PURCHASED) {
-    DrawTextToScreen(BobbyRText[BOBBYR_GUNS_QTY_ON_ORDER], BOBBYR_ITEM_QTY_TEXT_X, (UINT16)usPosY,
+    DrawTextToScreen(BobbyRText[BOBBYR_GUNS_QTY_ON_ORDER], BOBBYR_ITEM_QTY_TEXT_X, (uint16_t)usPosY,
                      BOBBYR_ITEM_QTY_WIDTH, BOBBYR_ITEM_DESC_TEXT_FONT, BOBBYR_STATIC_TEXT_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 
     if (ubPurchaseNumber != BOBBY_RAY_NOT_PURCHASED) {
       swprintf(sTemp, ARR_SIZE(sTemp), L"% 4d",
                BobbyRayPurchases[ubPurchaseNumber].ubNumberPurchased);
-      DrawTextToScreen(sTemp, BOBBYR_ITEMS_BOUGHT_X, (UINT16)usPosY, 0, FONT14ARIAL,
+      DrawTextToScreen(sTemp, BOBBYR_ITEMS_BOUGHT_X, (uint16_t)usPosY, 0, FONT14ARIAL,
                        BOBBYR_ITEM_DESC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
     }
   }
@@ -1086,8 +1095,8 @@ void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, 
   if (fUsed) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"*%3d%%%%",
              LaptopSaveInfo.BobbyRayUsedInventory[usBobbyIndex].ubItemQuality);
-    DrawTextToScreen(sTemp, (UINT16)(BOBBYR_ITEM_NAME_X - 2),
-                     (UINT16)(usPosY - BOBBYR_ORDER_NUM_Y_OFFSET), BOBBYR_ORDER_NUM_WIDTH,
+    DrawTextToScreen(sTemp, (uint16_t)(BOBBYR_ITEM_NAME_X - 2),
+                     (uint16_t)(usPosY - BOBBYR_ORDER_NUM_Y_OFFSET), BOBBYR_ORDER_NUM_WIDTH,
                      BOBBYR_ITEM_NAME_TEXT_FONT, BOBBYR_ITEM_NAME_TEXT_COLOR, FONT_MCOLOR_BLACK,
                      FALSE, LEFT_JUSTIFIED);
   }
@@ -1101,7 +1110,7 @@ void DisplayItemNameAndInfo(UINT16 usPosY, UINT16 usIndex, UINT16 usBobbyIndex, 
 }
 
 /*
-void InitFirstAndLastGlobalIndex(UINT32 uiItemClass)
+void InitFirstAndLastGlobalIndex(uint32_t uiItemClass)
 {
         switch(uiItemClass)
         {
@@ -1159,11 +1168,11 @@ void CalculateFirstAndLastIndexs()
 */
 
 // Loops through Bobby Rays Inventory to find the first and last index
-void SetFirstLastPagesForNew(UINT32 uiClassMask) {
-  UINT16 i;
-  INT16 sFirst = -1;
-  INT16 sLast = -1;
-  UINT8 ubNumItems = 0;
+void SetFirstLastPagesForNew(uint32_t uiClassMask) {
+  uint16_t i;
+  int16_t sFirst = -1;
+  int16_t sLast = -1;
+  uint8_t ubNumItems = 0;
 
   gubCurPage = 0;
 
@@ -1187,18 +1196,18 @@ void SetFirstLastPagesForNew(UINT32 uiClassMask) {
     return;
   }
 
-  gusFirstItemIndex = (UINT16)sFirst;
-  gusLastItemIndex = (UINT16)sLast;
-  gubNumPages = (UINT8)(ubNumItems / (FLOAT)BOBBYR_NUM_WEAPONS_ON_PAGE);
+  gusFirstItemIndex = (uint16_t)sFirst;
+  gusLastItemIndex = (uint16_t)sLast;
+  gubNumPages = (uint8_t)(ubNumItems / (float)BOBBYR_NUM_WEAPONS_ON_PAGE);
   if ((ubNumItems % BOBBYR_NUM_WEAPONS_ON_PAGE) != 0) gubNumPages += 1;
 }
 
 // Loops through Bobby Rays Used Inventory to find the first and last index
 void SetFirstLastPagesForUsed() {
-  UINT16 i;
-  INT16 sFirst = -1;
-  INT16 sLast = -1;
-  UINT8 ubNumItems = 0;
+  uint16_t i;
+  int16_t sFirst = -1;
+  int16_t sLast = -1;
+  uint8_t ubNumItems = 0;
 
   gubCurPage = 0;
 
@@ -1219,16 +1228,16 @@ void SetFirstLastPagesForUsed() {
     return;
   }
 
-  gusFirstItemIndex = (UINT16)sFirst;
-  gusLastItemIndex = (UINT16)sLast;
-  gubNumPages = (UINT8)(ubNumItems / (FLOAT)BOBBYR_NUM_WEAPONS_ON_PAGE);
+  gusFirstItemIndex = (uint16_t)sFirst;
+  gusLastItemIndex = (uint16_t)sLast;
+  gubNumPages = (uint8_t)(ubNumItems / (float)BOBBYR_NUM_WEAPONS_ON_PAGE);
   if ((ubNumItems % BOBBYR_NUM_WEAPONS_ON_PAGE) != 0) gubNumPages += 1;
 }
 
-void CreateMouseRegionForBigImage(UINT16 usPosY, UINT8 ubCount, INT16 *pItemNumbers) {
-  UINT8 i;
-  CHAR16 zItemName[SIZE_ITEM_NAME];
-  UINT8 ubItemCount = 0;
+void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, int16_t *pItemNumbers) {
+  uint8_t i;
+  wchar_t zItemName[SIZE_ITEM_NAME];
+  uint8_t ubItemCount = 0;
 
   if (gfBigImageMouseRegionCreated) return;
 
@@ -1236,7 +1245,7 @@ void CreateMouseRegionForBigImage(UINT16 usPosY, UINT8 ubCount, INT16 *pItemNumb
     // Mouse region for the Big Item Image
     MSYS_DefineRegion(&gSelectedBigImageRegion[i], BOBBYR_GRID_PIC_X, usPosY,
                       (BOBBYR_GRID_PIC_X + BOBBYR_GRID_PIC_WIDTH),
-                      (UINT16)(usPosY + BOBBYR_GRID_PIC_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      (uint16_t)(usPosY + BOBBYR_GRID_PIC_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                       MSYS_NO_CALLBACK, SelectBigImageRegionCallBack);
     MSYS_AddRegion(&gSelectedBigImageRegion[i]);
     MSYS_SetRegionUserData(&gSelectedBigImageRegion[i], 0, i);
@@ -1265,7 +1274,7 @@ void CreateMouseRegionForBigImage(UINT16 usPosY, UINT8 ubCount, INT16 *pItemNumb
 }
 
 void DeleteMouseRegionForBigImage() {
-  UINT8 i;
+  uint8_t i;
 
   if (!gfBigImageMouseRegionCreated) return;
 
@@ -1276,29 +1285,29 @@ void DeleteMouseRegionForBigImage() {
   gubNumItemsOnScreen = 0;
 }
 
-void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT16 usItemNum = (UINT16)MSYS_GetRegionUserData(pRegion, 0);
+    uint16_t usItemNum = (uint16_t)MSYS_GetRegionUserData(pRegion, 0);
 
     PurchaseBobbyRayItem(gusItemNumberForItemsOnScreen[usItemNum]);
 
     fReDrawScreenFlag = TRUE;
     fPausedReDrawScreenFlag = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
-    UINT16 usItemNum = (UINT16)MSYS_GetRegionUserData(pRegion, 0);
+    uint16_t usItemNum = (uint16_t)MSYS_GetRegionUserData(pRegion, 0);
 
     UnPurchaseBobbyRayItem(gusItemNumberForItemsOnScreen[usItemNum]);
     fReDrawScreenFlag = TRUE;
     fPausedReDrawScreenFlag = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT) {
-    UINT16 usItemNum = (UINT16)MSYS_GetRegionUserData(pRegion, 0);
+    uint16_t usItemNum = (uint16_t)MSYS_GetRegionUserData(pRegion, 0);
 
     PurchaseBobbyRayItem(gusItemNumberForItemsOnScreen[usItemNum]);
     fReDrawScreenFlag = TRUE;
     fPausedReDrawScreenFlag = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_REPEAT) {
-    UINT16 usItemNum = (UINT16)MSYS_GetRegionUserData(pRegion, 0);
+    uint16_t usItemNum = (uint16_t)MSYS_GetRegionUserData(pRegion, 0);
 
     UnPurchaseBobbyRayItem(gusItemNumberForItemsOnScreen[usItemNum]);
     fReDrawScreenFlag = TRUE;
@@ -1306,8 +1315,8 @@ void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void PurchaseBobbyRayItem(UINT16 usItemNumber) {
-  UINT8 ubPurchaseNumber;
+void PurchaseBobbyRayItem(uint16_t usItemNumber) {
+  uint8_t ubPurchaseNumber;
 
   ubPurchaseNumber = CheckIfItemIsPurchased(usItemNumber);
 
@@ -1397,8 +1406,8 @@ void PurchaseBobbyRayItem(UINT16 usItemNumber) {
 }
 
 // Checks to see if the clicked item is already bought or not.
-UINT8 CheckIfItemIsPurchased(UINT16 usItemNumber) {
-  UINT8 i;
+uint8_t CheckIfItemIsPurchased(uint16_t usItemNumber) {
+  uint8_t i;
 
   for (i = 0; i < MAX_PURCHASE_AMOUNT; i++) {
     if ((usItemNumber == BobbyRayPurchases[i].usBobbyItemIndex) &&
@@ -1409,8 +1418,8 @@ UINT8 CheckIfItemIsPurchased(UINT16 usItemNumber) {
   return (BOBBY_RAY_NOT_PURCHASED);
 }
 
-UINT8 GetNextPurchaseNumber() {
-  UINT8 i;
+uint8_t GetNextPurchaseNumber() {
+  uint8_t i;
 
   for (i = 0; i < MAX_PURCHASE_AMOUNT; i++) {
     if ((BobbyRayPurchases[i].usBobbyItemIndex == 0) &&
@@ -1420,8 +1429,8 @@ UINT8 GetNextPurchaseNumber() {
   return (BOBBY_RAY_NOT_PURCHASED);
 }
 
-void UnPurchaseBobbyRayItem(UINT16 usItemNumber) {
-  UINT8 ubPurchaseNumber;
+void UnPurchaseBobbyRayItem(uint16_t usItemNumber) {
+  uint8_t ubPurchaseNumber;
 
   ubPurchaseNumber = CheckIfItemIsPurchased(usItemNumber);
 
@@ -1435,7 +1444,7 @@ void UnPurchaseBobbyRayItem(UINT16 usItemNumber) {
   }
 }
 
-void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1454,7 +1463,7 @@ void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -1473,7 +1482,7 @@ void BtnBobbyRHomeButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void UpdateButtonText(UINT32 uiCurPage) {
+void UpdateButtonText(uint32_t uiCurPage) {
   switch (uiCurPage) {
     case LAPTOP_MODE_BOBBY_R_GUNS:
       DisableButton(guiBobbyRPageMenu[0]);
@@ -1497,8 +1506,8 @@ void UpdateButtonText(UINT32 uiCurPage) {
   }
 }
 
-UINT16 CalcBobbyRayCost(UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed) {
-  DOUBLE value;
+uint16_t CalcBobbyRayCost(uint16_t usIndex, uint16_t usBobbyIndex, BOOLEAN fUsed) {
+  double value;
   if (fUsed)
     value =
         Item[LaptopSaveInfo.BobbyRayUsedInventory[usBobbyIndex].usItemIndex].usPrice *
@@ -1507,12 +1516,12 @@ UINT16 CalcBobbyRayCost(UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed) {
   else
     value = Item[LaptopSaveInfo.BobbyRayInventory[usBobbyIndex].usItemIndex].usPrice;
 
-  return ((UINT16)value);
+  return ((uint16_t)value);
 }
 
-UINT32 CalculateTotalPurchasePrice() {
-  UINT16 i;
-  UINT32 uiTotal = 0;
+uint32_t CalculateTotalPurchasePrice() {
+  uint16_t i;
+  uint32_t uiTotal = 0;
 
   for (i = 0; i < MAX_PURCHASE_AMOUNT; i++) {
     // if the item was purchased
@@ -1560,9 +1569,9 @@ void DisableBobbyRButtons() {
   */
 }
 
-void CalcFirstIndexForPage(STORE_INVENTORY *pInv, UINT32 uiItemClass) {
-  UINT16 i;
-  UINT16 usNumItems = 0;
+void CalcFirstIndexForPage(STORE_INVENTORY *pInv, uint32_t uiItemClass) {
+  uint16_t i;
+  uint16_t usNumItems = 0;
 
   // Reset the Current weapon Index
   gusCurWeaponIndex = 0;
@@ -1602,20 +1611,20 @@ void CalcFirstIndexForPage(STORE_INVENTORY *pInv, UINT32 uiItemClass) {
   }
 }
 
-void OutOfStockMessageBoxCallBack(UINT8 bExitValue) {
+void OutOfStockMessageBoxCallBack(uint8_t bExitValue) {
   // yes, load the game
   if (bExitValue == MSG_BOX_RETURN_OK) {
     //		guiCurrentLaptopMode  = LAPTOP_MODE_BOBBY_R;
   }
 }
 
-UINT8 CheckPlayersInventoryForGunMatchingGivenAmmoID(INT16 sItemID) {
-  UINT8 ubItemCount = 0;
-  UINT8 ubMercCount;
-  UINT8 ubPocketCount;
+uint8_t CheckPlayersInventoryForGunMatchingGivenAmmoID(int16_t sItemID) {
+  uint8_t ubItemCount = 0;
+  uint8_t ubMercCount;
+  uint8_t ubPocketCount;
 
-  UINT8 ubFirstID = gTacticalStatus.Team[OUR_TEAM].bFirstID;
-  UINT8 ubLastID = gTacticalStatus.Team[OUR_TEAM].bLastID;
+  uint8_t ubFirstID = gTacticalStatus.Team[OUR_TEAM].bFirstID;
+  uint8_t ubLastID = gTacticalStatus.Team[OUR_TEAM].bLastID;
 
   // loop through all the mercs on the team
   for (ubMercCount = ubFirstID; ubMercCount <= ubLastID; ubMercCount++) {
@@ -1643,8 +1652,8 @@ void BobbyrRGunsHelpTextDoneCallBack(void) {
 }
 
 #ifdef JA2BETAVERSION
-void ReportBobbyROrderError(UINT16 usItemNumber, UINT8 ubPurchaseNum, UINT8 ubQtyOnHand,
-                            UINT8 ubNumPurchasing) {
+void ReportBobbyROrderError(uint16_t usItemNumber, uint8_t ubPurchaseNum, uint8_t ubQtyOnHand,
+                            uint8_t ubNumPurchasing) {
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("**** Bobby Rays Ordering Error ****"));
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("usItemNumber = %d", usItemNumber));
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("ubPurchaseNum = %d", ubPurchaseNum));

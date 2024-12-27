@@ -40,6 +40,6 @@ enum {
   MLG_YOURAD13,
 };
 
-BOOLEAN GetMLGFilename(SGPFILENAME filename, UINT16 usMLGGraphicID);
+BOOLEAN GetMLGFilename(SGPFILENAME filename, uint16_t usMLGGraphicID);
 
 #endif

@@ -7,33 +7,33 @@
 struct MOUSE_REGION;
 
 typedef void (*MOUSE_CALLBACK)(struct MOUSE_REGION *,
-                               INT32);           // Define MOUSE_CALLBACK type as pointer to void
+                               int32_t);         // Define MOUSE_CALLBACK type as pointer to void
 typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback
 
 struct MOUSE_REGION {
-  UINT16 IDNumber;       // Region's ID number, set by mouse system
-  INT8 PriorityLevel;    // Region's Priority, set by system and/or caller
-  UINT32 uiFlags;        // Region's state flags
-  INT16 RegionTopLeftX;  // Screen area affected by this region (absolute coordinates)
-  INT16 RegionTopLeftY;
-  INT16 RegionBottomRightX;
-  INT16 RegionBottomRightY;
-  INT16 MouseXPos;  // Mouse's Coordinates in absolute screen coordinates
-  INT16 MouseYPos;
-  INT16 RelativeXPos;  // Mouse's Coordinates relative to the Top-Left corner of the region
-  INT16 RelativeYPos;
-  UINT16 ButtonState;  // Current state of the mouse buttons
-  UINT16 Cursor;       // Cursor to use when mouse in this region (see flags)
+  uint16_t IDNumber;       // Region's ID number, set by mouse system
+  int8_t PriorityLevel;    // Region's Priority, set by system and/or caller
+  uint32_t uiFlags;        // Region's state flags
+  int16_t RegionTopLeftX;  // Screen area affected by this region (absolute coordinates)
+  int16_t RegionTopLeftY;
+  int16_t RegionBottomRightX;
+  int16_t RegionBottomRightY;
+  int16_t MouseXPos;  // Mouse's Coordinates in absolute screen coordinates
+  int16_t MouseYPos;
+  int16_t RelativeXPos;  // Mouse's Coordinates relative to the Top-Left corner of the region
+  int16_t RelativeYPos;
+  uint16_t ButtonState;  // Current state of the mouse buttons
+  uint16_t Cursor;       // Cursor to use when mouse in this region (see flags)
   MOUSE_CALLBACK
   MovementCallback;  // Pointer to callback function if movement occured in this region
   MOUSE_CALLBACK
-  ButtonCallback;     // Pointer to callback function if button action occured in this region
-  INT32 UserData[4];  // User Data, can be set to anything!
+  ButtonCallback;       // Pointer to callback function if button action occured in this region
+  int32_t UserData[4];  // User Data, can be set to anything!
 
   // Fast help vars.
-  INT16 FastHelpTimer;  // Countdown timer for FastHelp text
-  STR16 FastHelpText;   // Text string for the FastHelp (describes buttons if left there a while)
-  INT32 FastHelpRect;
+  int16_t FastHelpTimer;  // Countdown timer for FastHelp text
+  wchar_t *FastHelpText;  // Text string for the FastHelp (describes buttons if left there a while)
+  int32_t FastHelpRect;
   MOUSE_HELPTEXT_DONE_CALLBACK HelpDoneCallback;
 
   struct MOUSE_REGION *next;  // List maintenance, do NOT touch these entries
@@ -63,7 +63,7 @@ struct MOUSE_REGION {
 
 // Mouse region IDs
 #define MSYS_ID_BASE 1
-#define MSYS_ID_MAX 0xfffffff  // ( INT32 max )
+#define MSYS_ID_MAX 0xfffffff  // ( int32_t max )
 #define MSYS_ID_SYSTEM 0
 
 // Mouse region priorities
@@ -132,33 +132,33 @@ struct MOUSE_REGION {
 //		The prototype for MSYS_SGP_Mouse_Handler_Hook() is defined in mousesystem_macros.h
 
 // Internal Functions
-INT32 MSYS_GetNewID(void);
+int32_t MSYS_GetNewID(void);
 void MSYS_TrashRegList(void);
 void MSYS_AddRegionToList(struct MOUSE_REGION *region);
-INT32 MSYS_RegionInList(struct MOUSE_REGION *region);
+int32_t MSYS_RegionInList(struct MOUSE_REGION *region);
 void MSYS_DeleteRegionFromList(struct MOUSE_REGION *region);
 void MSYS_UpdateMouseRegion(void);
-void MSYS_SetCurrentCursor(UINT16 Cursor);
+void MSYS_SetCurrentCursor(uint16_t Cursor);
 
 // External
-INT32 MSYS_Init(void);
+int32_t MSYS_Init(void);
 void MSYS_Shutdown(void);
-void MSYS_DefineRegion(struct MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT16 brx, UINT16 bry,
-                       INT8 priority, UINT16 crsr, MOUSE_CALLBACK movecallback,
+void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
+                       uint16_t bry, int8_t priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback);
-void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, UINT16 crsr);
-INT32 MSYS_AddRegion(struct MOUSE_REGION *region);
+void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, uint16_t crsr);
+int32_t MSYS_AddRegion(struct MOUSE_REGION *region);
 void MSYS_RemoveRegion(struct MOUSE_REGION *region);
 void MSYS_EnableRegion(struct MOUSE_REGION *region);
 void MSYS_DisableRegion(struct MOUSE_REGION *region);
-void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, INT8 priority);
-void MSYS_SetRegionUserData(struct MOUSE_REGION *region, INT32 index, INT32 userdata);
-INT32 MSYS_GetRegionUserData(struct MOUSE_REGION *region, INT32 index);
+void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, int8_t priority);
+void MSYS_SetRegionUserData(struct MOUSE_REGION *region, int32_t index, int32_t userdata);
+int32_t MSYS_GetRegionUserData(struct MOUSE_REGION *region, int32_t index);
 
-INT32 MSYS_GrabMouse(struct MOUSE_REGION *region);
+int32_t MSYS_GrabMouse(struct MOUSE_REGION *region);
 void MSYS_ReleaseMouse(struct MOUSE_REGION *region);
-void MSYS_MoveMouseRegionBy(struct MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY);
-void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, INT16 sX, INT16 sY);
+void MSYS_MoveMouseRegionBy(struct MOUSE_REGION *region, int16_t sDeltaX, int16_t sDeltaY);
+void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, int16_t sX, int16_t sY);
 
 void MSYS_AllowDisabledRegionFastHelp(struct MOUSE_REGION *region, BOOLEAN fAllow);
 
@@ -166,7 +166,7 @@ void MSYS_AllowDisabledRegionFastHelp(struct MOUSE_REGION *region, BOOLEAN fAllo
 // Usually used to force change of mouse cursor if panels switch, etc
 void RefreshMouseRegions();
 
-void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText);
+void SetRegionFastHelpText(struct MOUSE_REGION *region, wchar_t *szText);
 
 void SetRegionHelpEndCallback(struct MOUSE_REGION *region,
                               MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn);
@@ -175,7 +175,7 @@ void SetRegionHelpEndCallback(struct MOUSE_REGION *region,
 void DisplayFastHelp(struct MOUSE_REGION *region);
 void RenderFastHelp();
 
-void SetFastHelpDelay(INT16 sFastHelpDelay);
+void SetFastHelpDelay(int16_t sFastHelpDelay);
 void EnableMouseFastHelp(void);
 void DisableMouseFastHelp(void);
 

@@ -14,11 +14,11 @@
 #include "Utils/SoundControl.h"
 
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
-INT16 gsNumAmbData = 0;
+int16_t gsNumAmbData = 0;
 
-UINT8 gubCurrentSteadyStateAmbience = SSA_NONE;
-UINT8 gubCurrentSteadyStateSound = 0;
-UINT32 guiCurrentSteadyStateSoundHandle = NO_SAMPLE;
+uint8_t gubCurrentSteadyStateAmbience = SSA_NONE;
+uint8_t gubCurrentSteadyStateSound = 0;
+uint32_t guiCurrentSteadyStateSoundHandle = NO_SAMPLE;
 STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
     // NONE
     {
@@ -186,10 +186,10 @@ STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
     },
 };
 
-BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
+BOOLEAN LoadAmbientControlFile(uint8_t ubAmbientID) {
   char zFilename[200];
   HWFILE hFile;
-  INT32 cnt;
+  int32_t cnt;
 
   // BUILD FILENAME
   sprintf(zFilename, "AMBIENT\\%d.bad", ubAmbientID);
@@ -201,7 +201,7 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
   }
 
   // READ #
-  if (!FileMan_Read(hFile, &gsNumAmbData, sizeof(INT16), NULL)) {
+  if (!FileMan_Read(hFile, &gsNumAmbData, sizeof(int16_t), NULL)) {
     return (FALSE);
   }
 
@@ -220,14 +220,14 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
   return (TRUE);
 }
 
-void GetAmbientDataPtr(AMBIENTDATA_STRUCT **ppAmbData, UINT16 *pusNumData) {
+void GetAmbientDataPtr(AMBIENTDATA_STRUCT **ppAmbData, uint16_t *pusNumData) {
   *ppAmbData = gAmbData;
   *pusNumData = gsNumAmbData;
 }
 
 void StopAmbients() { SoundStopAllRandom(); }
 
-void HandleNewSectorAmbience(UINT8 ubAmbientID) {
+void HandleNewSectorAmbience(uint8_t ubAmbientID) {
   // OK, we could have just loaded a sector, erase all ambient sounds from queue, shutdown all
   // ambient groupings
   SoundStopAllRandom();
@@ -250,7 +250,7 @@ void DeleteAllAmbients() {
   DeleteAllStrategicEventsOfType(EVENT_AMBIENT);
 }
 
-UINT32 SetupNewAmbientSound(UINT32 uiAmbientID) {
+uint32_t SetupNewAmbientSound(uint32_t uiAmbientID) {
   RANDOMPARMS rpParms;
 
   memset(&rpParms, 0xff, sizeof(RANDOMPARMS));
@@ -264,7 +264,7 @@ UINT32 SetupNewAmbientSound(UINT32 uiAmbientID) {
   return SoundPlayRandom(gAmbData[uiAmbientID].zFilename, &rpParms);
 }
 
-UINT32 StartSteadyStateAmbient(UINT32 ubVolume, UINT32 ubLoops) {
+uint32_t StartSteadyStateAmbient(uint32_t ubVolume, uint32_t ubLoops) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));
@@ -278,11 +278,11 @@ UINT32 StartSteadyStateAmbient(UINT32 ubVolume, UINT32 ubLoops) {
                     &spParms));
 }
 
-BOOLEAN SetSteadyStateAmbience(UINT8 ubAmbience) {
+BOOLEAN SetSteadyStateAmbience(uint8_t ubAmbience) {
   BOOLEAN fInNight = FALSE;
-  INT32 cnt;
-  UINT8 ubNumSounds = 0;
-  UINT8 ubChosenSound;
+  int32_t cnt;
+  uint8_t ubNumSounds = 0;
+  uint8_t ubChosenSound;
 
   // Stop all ambients...
   if (guiCurrentSteadyStateSoundHandle != NO_SAMPLE) {
@@ -309,7 +309,7 @@ BOOLEAN SetSteadyStateAmbience(UINT8 ubAmbience) {
   }
 
   // Pick one
-  ubChosenSound = (UINT8)Random(ubNumSounds);
+  ubChosenSound = (uint8_t)Random(ubNumSounds);
 
   // Set!
   gubCurrentSteadyStateAmbience = ubAmbience;

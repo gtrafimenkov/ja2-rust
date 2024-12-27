@@ -7,28 +7,28 @@
 // Valid indeces are [0..TOTAL_SOLDIERS).
 struct SOLDIERTYPE *GetSoldierByID(int index) { return &Menptr[index]; }
 
-u8 GetSolID(const struct SOLDIERTYPE *s) { return s->ubID; }
-u8 GetSolProfile(const struct SOLDIERTYPE *s) { return s->ubProfile; }
+uint8_t GetSolID(const struct SOLDIERTYPE *s) { return s->ubID; }
+uint8_t GetSolProfile(const struct SOLDIERTYPE *s) { return s->ubProfile; }
 
-u8 GetSolSectorX(const struct SOLDIERTYPE *s) { return (u8)s->sSectorX; }
-u8 GetSolSectorY(const struct SOLDIERTYPE *s) { return (u8)s->sSectorY; }
-i8 GetSolSectorZ(const struct SOLDIERTYPE *s) { return s->bSectorZ; }
+uint8_t GetSolSectorX(const struct SOLDIERTYPE *s) { return (uint8_t)s->sSectorX; }
+uint8_t GetSolSectorY(const struct SOLDIERTYPE *s) { return (uint8_t)s->sSectorY; }
+int8_t GetSolSectorZ(const struct SOLDIERTYPE *s) { return s->bSectorZ; }
 SectorID8 GetSolSectorID8(const struct SOLDIERTYPE *s) {
-  return GetSectorID8((u8)s->sSectorX, (u8)s->sSectorY);
+  return GetSectorID8((uint8_t)s->sSectorX, (uint8_t)s->sSectorY);
 }
 SectorID16 GetSolSectorID16(const struct SOLDIERTYPE *s) {
-  return GetSectorID16((u8)s->sSectorX, (u8)s->sSectorY);
+  return GetSectorID16((uint8_t)s->sSectorX, (uint8_t)s->sSectorY);
 }
 
-i8 GetSolAssignment(const struct SOLDIERTYPE *s) { return s->bAssignment; }
-u8 GetSolClass(const struct SOLDIERTYPE *s) { return s->ubSoldierClass; }
+int8_t GetSolAssignment(const struct SOLDIERTYPE *s) { return s->bAssignment; }
+uint8_t GetSolClass(const struct SOLDIERTYPE *s) { return s->ubSoldierClass; }
 
 bool IsSolActive(const struct SOLDIERTYPE *s) { return s->bActive; }
 bool IsSolAlive(const struct SOLDIERTYPE *s) { return s->bLife > 0; }
 bool IsSolInSector(const struct SOLDIERTYPE *s) { return s->bInSector; }
 
-u8 GetSolMilitiaKills(const struct SOLDIERTYPE *s) { return s->ubMilitiaKills; }
-void SetSolMilitiaKills(struct SOLDIERTYPE *s, u8 kills) { s->ubMilitiaKills = kills; };
+uint8_t GetSolMilitiaKills(const struct SOLDIERTYPE *s) { return s->ubMilitiaKills; }
+void SetSolMilitiaKills(struct SOLDIERTYPE *s, uint8_t kills) { s->ubMilitiaKills = kills; };
 
 void SetSolAssignmentDone(struct SOLDIERTYPE *s) {
   s->fDoneAssignmentAndNothingToDoFlag = FALSE;
@@ -36,8 +36,8 @@ void SetSolAssignmentDone(struct SOLDIERTYPE *s) {
 }
 
 // feed this a SOLDIER_CLASS_, it will return you a _MITILIA rank, or -1 if the guy's not militia
-INT8 SoldierClassToMilitiaRank(UINT8 ubSoldierClass) {
-  INT8 bRank = -1;
+int8_t SoldierClassToMilitiaRank(uint8_t ubSoldierClass) {
+  int8_t bRank = -1;
 
   switch (ubSoldierClass) {
     case SOLDIER_CLASS_GREEN_MILITIA:
@@ -55,8 +55,8 @@ INT8 SoldierClassToMilitiaRank(UINT8 ubSoldierClass) {
 }
 
 // feed this a _MITILIA rank, it will return you a SOLDIER_CLASS_, or -1 if the guy's not militia
-INT8 MilitiaRankToSoldierClass(UINT8 ubRank) {
-  INT8 bSoldierClass = -1;
+int8_t MilitiaRankToSoldierClass(uint8_t ubRank) {
+  int8_t bSoldierClass = -1;
 
   switch (ubRank) {
     case GREEN_MILITIA:

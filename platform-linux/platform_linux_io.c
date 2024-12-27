@@ -15,7 +15,7 @@
 BOOLEAN Plat_DeleteFile(const char *filename) { return unlink(filename) == 0; }
 
 // Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
+void Plat_FileBaseName(const char *path, char *outputBuf, uint32_t bufSize) {
   char *copy = strdup(path);
   if (copy == NULL) {
     outputBuf[0] = 0;
@@ -38,14 +38,15 @@ BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) {
   return *handle != NULL;
 }
 
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
+BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
+                      uint32_t *readBytes) {
   *readBytes = fread(buffer, 1, bytesToRead, handle);
   int error = ferror(handle);
   // TODO: log error
   return error == 0;
 }
 
-u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) {
+uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle) {
   struct stat st;
   int fd = ((FILE *)handle)->_fileno;
   int ret = fstat(fd, &st);
@@ -65,7 +66,7 @@ BOOLEAN Plat_FileEntityExists(const char *path) {
 
 // Change file pointer.
 // In case of an error returns 0xFFFFFFFF
-u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
+uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekType) {
   int whence;
   switch (seekType) {
     case FILE_SEEK_FROM_START:
@@ -84,7 +85,7 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
   return res;
 }
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
+BOOLEAN Plat_GetExecutableDirectory(char *buf, uint16_t bufSize) {
   char result[PATH_MAX];
   ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
 

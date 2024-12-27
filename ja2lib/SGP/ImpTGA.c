@@ -46,14 +46,14 @@
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompColMapImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                              UINT16 fContents);
-BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                           UINT16 fContents);
-BOOLEAN ReadRLEColMapImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                           UINT16 fContents);
-BOOLEAN ReadRLERGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                        UINT16 fContents);
+BOOLEAN ReadUncompColMapImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                              uint16_t fContents);
+BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                           uint16_t fContents);
+BOOLEAN ReadRLEColMapImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                           uint16_t fContents);
+BOOLEAN ReadRLERGBImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                        uint16_t fContents);
 // BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage );
 
 //**************************************************************************
@@ -62,10 +62,10 @@ BOOLEAN ReadRLERGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColM
 //
 //**************************************************************************
 
-BOOLEAN LoadTGAFileToImage(HIMAGE hImage, UINT16 fContents) {
+BOOLEAN LoadTGAFileToImage(HIMAGE hImage, uint16_t fContents) {
   HWFILE hFile;
-  UINT8 uiImgID, uiColMap, uiType;
-  UINT32 uiBytesRead;
+  uint8_t uiImgID, uiColMap, uiType;
+  uint32_t uiBytesRead;
   BOOLEAN fReturnVal = FALSE;
 
   Assert(hImage != NULL);
@@ -75,9 +75,9 @@ BOOLEAN LoadTGAFileToImage(HIMAGE hImage, UINT16 fContents) {
   hFile = FileMan_Open(hImage->ImageFile, FILE_ACCESS_READ, FALSE);
   CHECKF(hFile);
 
-  if (!FileMan_Read(hFile, &uiImgID, sizeof(UINT8), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiColMap, sizeof(UINT8), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiType, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiImgID, sizeof(uint8_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMap, sizeof(uint8_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiType, sizeof(uint8_t), &uiBytesRead)) goto end;
 
   switch (uiType) {
     case 1:
@@ -117,8 +117,8 @@ end:
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompColMapImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                              UINT16 fContents) {
+BOOLEAN ReadUncompColMapImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                              uint16_t fContents) {
   return (FALSE);
 }
 
@@ -136,39 +136,39 @@ BOOLEAN ReadUncompColMapImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                           UINT16 fContents) {
-  UINT8 *pBMData;
-  UINT8 *pBMPtr;
+BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                           uint16_t fContents) {
+  uint8_t *pBMData;
+  uint8_t *pBMPtr;
 
-  UINT16 uiColMapOrigin;
-  UINT16 uiColMapLength;
-  UINT8 uiColMapEntrySize;
-  UINT32 uiBytesRead;
-  UINT16 uiXOrg;
-  UINT16 uiYOrg;
-  UINT16 uiWidth;
-  UINT16 uiHeight;
-  UINT8 uiImagePixelSize;
-  UINT8 uiImageDescriptor;
-  UINT32 iNumValues;
-  UINT16 cnt;
+  uint16_t uiColMapOrigin;
+  uint16_t uiColMapLength;
+  uint8_t uiColMapEntrySize;
+  uint32_t uiBytesRead;
+  uint16_t uiXOrg;
+  uint16_t uiYOrg;
+  uint16_t uiWidth;
+  uint16_t uiHeight;
+  uint8_t uiImagePixelSize;
+  uint8_t uiImageDescriptor;
+  uint32_t iNumValues;
+  uint16_t cnt;
 
-  UINT32 i;
-  UINT8 r;
-  UINT8 g;
-  UINT8 b;
+  uint32_t i;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
 
-  if (!FileMan_Read(hFile, &uiColMapOrigin, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiColMapLength, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiColMapEntrySize, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMapOrigin, sizeof(uint16_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMapLength, sizeof(uint16_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMapEntrySize, sizeof(uint8_t), &uiBytesRead)) goto end;
 
-  if (!FileMan_Read(hFile, &uiXOrg, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiYOrg, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiWidth, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiHeight, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiImagePixelSize, sizeof(UINT8), &uiBytesRead)) goto end;
-  if (!FileMan_Read(hFile, &uiImageDescriptor, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiXOrg, sizeof(uint16_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiYOrg, sizeof(uint16_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiWidth, sizeof(uint16_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiHeight, sizeof(uint16_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiImagePixelSize, sizeof(uint8_t), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiImageDescriptor, sizeof(uint8_t), &uiBytesRead)) goto end;
 
   // skip the id
   FileMan_Seek(hFile, uiImgID, FILE_SEEK_FROM_CURRENT);
@@ -190,7 +190,7 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
     if (uiImagePixelSize == 16) {
       iNumValues = uiWidth * uiHeight;
 
-      hImage->p16BPPData = (UINT16 *)MemAlloc(iNumValues * (uiImagePixelSize / 8));
+      hImage->p16BPPData = (uint16_t *)MemAlloc(iNumValues * (uiImagePixelSize / 8));
 
       if (hImage->p16BPPData == NULL) goto end;
 
@@ -216,12 +216,12 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
     }
 
     if (uiImagePixelSize == 24) {
-      hImage->p8BPPData = (UINT8 *)MemAlloc(uiWidth * uiHeight * (uiImagePixelSize / 8));
+      hImage->p8BPPData = (uint8_t *)MemAlloc(uiWidth * uiHeight * (uiImagePixelSize / 8));
 
       if (hImage->p8BPPData == NULL) goto end;
 
       // Get data pointer
-      pBMData = (UINT8 *)hImage->p8BPPData;
+      pBMData = (uint8_t *)hImage->p8BPPData;
 
       // Start at end
       pBMPtr = pBMData + uiWidth * (uiHeight - 1) * 3;
@@ -230,9 +230,9 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
 
       for (cnt = 0; cnt < uiHeight; cnt++) {
         for (i = 0; i < uiWidth; i++) {
-          if (!FileMan_Read(hFile, &b, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
-          if (!FileMan_Read(hFile, &g, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
-          if (!FileMan_Read(hFile, &r, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
+          if (!FileMan_Read(hFile, &b, sizeof(uint8_t), &uiBytesRead)) goto freeEnd;
+          if (!FileMan_Read(hFile, &g, sizeof(uint8_t), &uiBytesRead)) goto freeEnd;
+          if (!FileMan_Read(hFile, &r, sizeof(uint8_t), &uiBytesRead)) goto freeEnd;
 
           pBMPtr[i * 3] = r;
           pBMPtr[i * 3 + 1] = g;
@@ -251,13 +251,13 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
 
 			for ( i=0 ; i<iNumValues; i++ )
 			{
-				if ( !FileMan_Read( hFile, &b, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &b, sizeof(uint8_t), &uiBytesRead ) )
 					goto freeEnd;
-				if ( !FileMan_Read( hFile, &g, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &g, sizeof(uint8_t), &uiBytesRead ) )
 					goto freeEnd;
-				if ( !FileMan_Read( hFile, &r, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &r, sizeof(uint8_t), &uiBytesRead ) )
 					goto freeEnd;
-				if ( !FileMan_Read( hFile, &a, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &a, sizeof(uint8_t), &uiBytesRead ) )
 					goto freeEnd;
 
 				pBMData[ i*3   ] = r;
@@ -291,8 +291,8 @@ freeEnd:
 //
 //**************************************************************************
 
-BOOLEAN ReadRLEColMapImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                           UINT16 fContents) {
+BOOLEAN ReadRLEColMapImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                           uint16_t fContents) {
   return (FALSE);
 }
 
@@ -310,28 +310,28 @@ BOOLEAN ReadRLEColMapImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
 //
 //**************************************************************************
 
-BOOLEAN ReadRLERGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiColMap,
-                        UINT16 fContents) {
+BOOLEAN ReadRLERGBImage(HIMAGE hImage, HWFILE hFile, uint8_t uiImgID, uint8_t uiColMap,
+                        uint16_t fContents) {
   return (FALSE);
 }
 
 /*
 BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage )
 {
-        UINT16		usX, usY;
-        UINT16		Old16BPPValue;
-        UINT16		*pData;
-        UINT16		usR, usG, usB;
+        uint16_t		usX, usY;
+        uint16_t		Old16BPPValue;
+        uint16_t		*pData;
+        uint16_t		usR, usG, usB;
         float			scale_val;
-        UINT32		uiRBitMask;
-        UINT32		uiGBitMask;
-        UINT32		uiBBitMask;
-        UINT8			ubRNewShift;
-        UINT8			ubGNewShift;
-        UINT8			ubBNewShift;
-        UINT8			ubScaleR;
-        UINT8			ubScaleB;
-        UINT8			ubScaleG;
+        uint32_t		uiRBitMask;
+        uint32_t		uiGBitMask;
+        uint32_t		uiBBitMask;
+        uint8_t			ubRNewShift;
+        uint8_t			ubGNewShift;
+        uint8_t			ubBNewShift;
+        uint8_t			ubScaleR;
+        uint8_t			ubScaleB;
+        uint8_t			ubScaleG;
 
         // Basic algorithm for coonverting to different rgb distributions
 
@@ -411,7 +411,7 @@ BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage )
                         usG = usG << ubScaleG;
                         usB = usB << ubScaleB;
 
-                        hImage->p16BPPData[ usX * hImage->usWidth + usY ] = ((UINT16) ( ( usR <<
+                        hImage->p16BPPData[ usX * hImage->usWidth + usY ] = ((uint16_t) ( ( usR <<
 ubRNewShift | usG << ubGNewShift ) | usB  ) );
 
                         usY++;

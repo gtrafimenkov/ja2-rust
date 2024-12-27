@@ -12,47 +12,49 @@
 
 // copied from wingdi.h
 typedef struct tagRGBQUAD {
-  BYTE rgbBlue;
-  BYTE rgbGreen;
-  BYTE rgbRed;
-  BYTE rgbReserved;
+  uint8_t rgbBlue;
+  uint8_t rgbGreen;
+  uint8_t rgbRed;
+  uint8_t rgbReserved;
 } RGBQUAD;
 
 typedef struct _NODE {
   BOOLEAN bIsLeaf;          // TRUE if node has no children
-  u32 nPixelCount;          // Number of pixels represented by this leaf
-  u32 nRedSum;              // Sum of red components
-  u32 nGreenSum;            // Sum of green components
-  u32 nBlueSum;             // Sum of blue components
+  uint32_t nPixelCount;     // Number of pixels represented by this leaf
+  uint32_t nRedSum;         // Sum of red components
+  uint32_t nGreenSum;       // Sum of green components
+  uint32_t nBlueSum;        // Sum of blue components
   struct _NODE* pChild[8];  // Pointers to child nodes
   struct _NODE* pNext;      // Pointer to next reducible node
 } NODE;
 
 struct CQuantizer {
   NODE* m_pTree;
-  u32 m_nLeafCount;
+  uint32_t m_nLeafCount;
   NODE* m_pReducibleNodes[9];
-  u32 m_nMaxColors;
-  u32 m_nColorBits;
+  uint32_t m_nMaxColors;
+  uint32_t m_nColorBits;
 };
 
-static void CQuantizer_CQuantizer(struct CQuantizer* cq, u32 nMaxColors, u32 nColorBits);
-static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, u8* pData, int iWidth, int iHeight);
-static u32 CQuantizer_GetColorCount(struct CQuantizer* cq);
+static void CQuantizer_CQuantizer(struct CQuantizer* cq, uint32_t nMaxColors, uint32_t nColorBits);
+static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, uint8_t* pData, int iWidth,
+                                       int iHeight);
+static uint32_t CQuantizer_GetColorCount(struct CQuantizer* cq);
 static void CQuantizer_GetColorTable(struct CQuantizer* cq, RGBQUAD* prgb);
 
-static void CQuantizer_AddColor(NODE** ppNode, u8 r, u8 g, u8 b, u32 nColorBits, u32 nLevel,
-                                u32* pLeafCount, NODE** pReducibleNodes);
-static NODE* CQuantizer_CreateNode(u32 nLevel, u32 nColorBits, u32* pLeafCount,
+static void CQuantizer_AddColor(NODE** ppNode, uint8_t r, uint8_t g, uint8_t b, uint32_t nColorBits,
+                                uint32_t nLevel, uint32_t* pLeafCount, NODE** pReducibleNodes);
+static NODE* CQuantizer_CreateNode(uint32_t nLevel, uint32_t nColorBits, uint32_t* pLeafCount,
                                    NODE** pReducibleNodes);
-static void CQuantizer_ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReducibleNodes);
-static void CQuantizer_GetPaletteColors(NODE* pTree, RGBQUAD* prgb, u32* pIndex);
+static void CQuantizer_ReduceTree(uint32_t nColorBits, uint32_t* pLeafCount,
+                                  NODE** pReducibleNodes);
+static void CQuantizer_GetPaletteColors(NODE* pTree, RGBQUAD* prgb, uint32_t* pIndex);
 
 ///////////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////////
 
-static void CQuantizer_CQuantizer(struct CQuantizer* cq, u32 nMaxColors, u32 nColorBits) {
+static void CQuantizer_CQuantizer(struct CQuantizer* cq, uint32_t nMaxColors, uint32_t nColorBits) {
   cq->m_pTree = NULL;
   cq->m_nLeafCount = 0;
   for (int i = 0; i <= (int)nColorBits; i++) cq->m_pReducibleNodes[i] = NULL;
@@ -60,12 +62,13 @@ static void CQuantizer_CQuantizer(struct CQuantizer* cq, u32 nMaxColors, u32 nCo
   cq->m_nColorBits = nColorBits;
 }
 
-static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, u8* pData, int iWidth, int iHeight) {
-  u8* pbBits;
-  u8 r, g, b;
+static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, uint8_t* pData, int iWidth,
+                                       int iHeight) {
+  uint8_t* pbBits;
+  uint8_t r, g, b;
   int i, j;
 
-  pbBits = (u8*)pData;
+  pbBits = (uint8_t*)pData;
   for (i = 0; i < iHeight; i++) {
     for (j = 0; j < iWidth; j++) {
       b = *pbBits++;
@@ -82,9 +85,9 @@ static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, u8* pData, int iWi
   return TRUE;
 }
 
-static void CQuantizer_AddColor(NODE** ppNode, u8 r, u8 g, u8 b, u32 nColorBits, u32 nLevel,
-                                u32* pLeafCount, NODE** pReducibleNodes) {
-  static u8 mask[8] = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
+static void CQuantizer_AddColor(NODE** ppNode, uint8_t r, uint8_t g, uint8_t b, uint32_t nColorBits,
+                                uint32_t nLevel, uint32_t* pLeafCount, NODE** pReducibleNodes) {
+  static uint8_t mask[8] = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
 
   //
   // If the node doesn't exist, create it.
@@ -114,7 +117,7 @@ static void CQuantizer_AddColor(NODE** ppNode, u8 r, u8 g, u8 b, u32 nColorBits,
   }
 }
 
-static NODE* CQuantizer_CreateNode(u32 nLevel, u32 nColorBits, u32* pLeafCount,
+static NODE* CQuantizer_CreateNode(uint32_t nLevel, uint32_t nColorBits, uint32_t* pLeafCount,
                                    NODE** pReducibleNodes) {
   NODE* pNode;
 
@@ -134,13 +137,13 @@ static NODE* CQuantizer_CreateNode(u32 nLevel, u32 nColorBits, u32* pLeafCount,
   return pNode;
 }
 
-static void CQuantizer_ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReducibleNodes) {
+static void CQuantizer_ReduceTree(uint32_t nColorBits, uint32_t* pLeafCount,
+                                  NODE** pReducibleNodes) {
   //
   // Find the deepest level containing at least one reducible node.
   //
   int i;
-  for (i = nColorBits - 1; (i > 0) && (pReducibleNodes[i] == NULL); i--)
-    ;
+  for (i = nColorBits - 1; (i > 0) && (pReducibleNodes[i] == NULL); i--);
 
   //
   // Reduce the node most recently added to the list at level i.
@@ -148,10 +151,10 @@ static void CQuantizer_ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReduc
   NODE* pNode = pReducibleNodes[i];
   pReducibleNodes[i] = pNode->pNext;
 
-  u32 nRedSum = 0;
-  u32 nGreenSum = 0;
-  u32 nBlueSum = 0;
-  u32 nChildren = 0;
+  uint32_t nRedSum = 0;
+  uint32_t nGreenSum = 0;
+  uint32_t nBlueSum = 0;
+  uint32_t nChildren = 0;
 
   for (i = 0; i < 8; i++) {
     if (pNode->pChild[i] != NULL) {
@@ -172,11 +175,11 @@ static void CQuantizer_ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReduc
   *pLeafCount -= (nChildren - 1);
 }
 
-static void CQuantizer_GetPaletteColors(NODE* pTree, RGBQUAD* prgb, u32* pIndex) {
+static void CQuantizer_GetPaletteColors(NODE* pTree, RGBQUAD* prgb, uint32_t* pIndex) {
   if (pTree->bIsLeaf) {
-    prgb[*pIndex].rgbRed = (u8)((pTree->nRedSum) / (pTree->nPixelCount));
-    prgb[*pIndex].rgbGreen = (u8)((pTree->nGreenSum) / (pTree->nPixelCount));
-    prgb[*pIndex].rgbBlue = (u8)((pTree->nBlueSum) / (pTree->nPixelCount));
+    prgb[*pIndex].rgbRed = (uint8_t)((pTree->nRedSum) / (pTree->nPixelCount));
+    prgb[*pIndex].rgbGreen = (uint8_t)((pTree->nGreenSum) / (pTree->nPixelCount));
+    prgb[*pIndex].rgbBlue = (uint8_t)((pTree->nBlueSum) / (pTree->nPixelCount));
     prgb[*pIndex].rgbReserved = 0;
     (*pIndex)++;
   } else {
@@ -186,10 +189,10 @@ static void CQuantizer_GetPaletteColors(NODE* pTree, RGBQUAD* prgb, u32* pIndex)
   }
 }
 
-static u32 CQuantizer_GetColorCount(struct CQuantizer* cq) { return cq->m_nLeafCount; }
+static uint32_t CQuantizer_GetColorCount(struct CQuantizer* cq) { return cq->m_nLeafCount; }
 
 static void CQuantizer_GetColorTable(struct CQuantizer* cq, RGBQUAD* prgb) {
-  u32 nIndex = 0;
+  uint32_t nIndex = 0;
   CQuantizer_GetPaletteColors(cq->m_pTree, prgb, &nIndex);
 }
 
@@ -198,15 +201,15 @@ static void CQuantizer_GetColorTable(struct CQuantizer* cq, RGBQUAD* prgb) {
 ///////////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
-  UINT8 r;
-  UINT8 g;
-  UINT8 b;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
 
 } RGBValues;
 
-BOOLEAN QuantizeImage(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight,
+BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight,
                       struct SGPPaletteEntry* pPalette) {
-  INT16 sNumColors;
+  int16_t sNumColors;
 
   // FIRST CREATE PALETTE
   struct CQuantizer q;
@@ -227,13 +230,13 @@ BOOLEAN QuantizeImage(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight,
   return (TRUE);
 }
 
-void MapPalette(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
+void MapPalette(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight, int16_t sNumColors,
                 struct SGPPaletteEntry* pTable) {
-  INT32 cX, cY, cnt, bBest;
+  int32_t cX, cY, cnt, bBest;
   real dLowestDist;
   real dCubeDist;
   vector_3 vTableVal, vSrcVal, vDiffVal;
-  UINT8* pData;
+  uint8_t* pData;
   RGBValues* pRGBData;
 
   pRGBData = (RGBValues*)pSrc;
@@ -271,7 +274,7 @@ void MapPalette(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight, INT16 sN
       pData = &(pDest[(cY * sWidth) + cX]);
 
       // Set!
-      *pData = (UINT8)bBest;
+      *pData = (uint8_t)bBest;
     }
   }
 }

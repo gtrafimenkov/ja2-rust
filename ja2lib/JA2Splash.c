@@ -11,8 +11,8 @@
 #include "Utils/TimerControl.h"
 #include "platform.h"
 
-UINT32 guiSplashFrameFade = 10;
-UINT32 guiSplashStartTime = 0;
+uint32_t guiSplashFrameFade = 10;
+uint32_t guiSplashStartTime = 0;
 
 // Simply create videosurface, load image, and draw it to the screen.
 void InitJA2SplashScreen() {
@@ -34,7 +34,7 @@ void InitJA2SplashScreen() {
   InitializeFileDatabase();
 
 #if !defined(ENGLISH) && defined(JA2TESTVERSION)
-  UINT32 uiLogoID = 0;
+  uint32_t uiLogoID = 0;
   VSURFACE_DESC VSurfaceDesc;
   struct VSurface* hVSurface;
   memset(&VSurfaceDesc, 0, sizeof(VSURFACE_DESC));

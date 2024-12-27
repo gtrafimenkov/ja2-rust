@@ -31,32 +31,32 @@
 #define MEDUNA_ITEM_DROP_OFF_SECTOR_Y 14
 #define MEDUNA_ITEM_DROP_OFF_SECTOR_Z 0
 
-extern INT16 gsRobotGridNo;
+extern int16_t gsRobotGridNo;
 
-UINT32 guiPabloExtraDaysBribed = 0;
+uint32_t guiPabloExtraDaysBribed = 0;
 
-UINT8 gubCambriaMedicalObjects;
+uint8_t gubCambriaMedicalObjects;
 
-void DropOffItemsInMeduna(UINT8 ubOrderNum);
+void DropOffItemsInMeduna(uint8_t ubOrderNum);
 
-void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
-  UINT8 i, j;
-  UINT16 usItem;
+void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
+  uint8_t i, j;
+  uint16_t usItem;
   struct OBJECTTYPE Object;
-  UINT16 usMapPos, usStandardMapPos;
-  UINT16 usNumberOfItems;
+  uint16_t usMapPos, usStandardMapPos;
+  uint16_t usNumberOfItems;
   BOOLEAN fSectorLoaded = FALSE;
-  UINT32 uiCount = 0, uiStolenCount = 0;
-  static UINT8 ubShipmentsSinceNoBribes = 0;
-  UINT32 uiChanceOfTheft;
+  uint32_t uiCount = 0, uiStolenCount = 0;
+  static uint8_t ubShipmentsSinceNoBribes = 0;
+  uint32_t uiChanceOfTheft;
   BOOLEAN fPablosStoleSomething = FALSE;
   BOOLEAN fPablosStoleLastItem = FALSE;
   struct OBJECTTYPE *pObject = NULL;
   struct OBJECTTYPE *pStolenObject = NULL;
   BOOLEAN fThisShipmentIsFromJohnKulba = FALSE;  // if it is, dont add an email
-  UINT8 ubItemsDelivered;
-  UINT8 ubTempNumItems;
-  UINT8 ubItemsPurchased;
+  uint8_t ubItemsDelivered;
+  uint8_t ubTempNumItems;
+  uint8_t ubItemsPurchased;
 
   usStandardMapPos = BOBBYR_SHIPPING_DEST_GRIDNO;
 
@@ -184,7 +184,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
 
           if (usStandardMapPos == LOST_SHIPMENT_GRIDNO) {
             // damage the item a random amount!
-            Object.bStatus[0] = (INT8)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
+            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (int32_t)Object.bStatus[0]) / 100);
             // make damn sure it can't hit 0
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
@@ -210,7 +210,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
 
           if (usStandardMapPos == LOST_SHIPMENT_GRIDNO) {
             // damage the item a random amount!
-            Object.bStatus[0] = (INT8)(((70 + Random(11)) * (INT32)Object.bStatus[0]) / 100);
+            Object.bStatus[0] = (int8_t)(((70 + Random(11)) * (int32_t)Object.bStatus[0]) / 100);
             // make damn sure it can't hit 0
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
@@ -329,14 +329,14 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   }
 }
 
-void HandleDelayedItemsArrival(UINT32 uiReason) {
+void HandleDelayedItemsArrival(uint32_t uiReason) {
   // This function moves all the items that Pablos has stolen
   // (or items that were delayed) to the arrival location for new shipments,
-  INT16 sStartGridNo;
-  UINT32 uiNumWorldItems, uiLoop;
+  int16_t sStartGridNo;
+  uint32_t uiNumWorldItems, uiLoop;
   BOOLEAN fOk;
   WORLDITEM *pTemp;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct OBJECTTYPE Object;
 
   if (uiReason == NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_RETURN_STOLEN_SHIPMENT_ITEMS) {
@@ -355,25 +355,25 @@ void HandleDelayedItemsArrival(UINT32 uiReason) {
       switch (Random(10)) {
         case 0:
           // 1 in 10 chance of a badly damaged gas mask
-          CreateItem(GASMASK, (INT8)(20 + Random(10)), &Object);
+          CreateItem(GASMASK, (int8_t)(20 + Random(10)), &Object);
           break;
         case 1:
         case 2:
           // 2 in 10 chance of a battered Desert Eagle
-          CreateItem(DESERTEAGLE, (INT8)(40 + Random(10)), &Object);
+          CreateItem(DESERTEAGLE, (int8_t)(40 + Random(10)), &Object);
           break;
         case 3:
         case 4:
         case 5:
           // 3 in 10 chance of a stun grenade
-          CreateItem(STUN_GRENADE, (INT8)(70 + Random(10)), &Object);
+          CreateItem(STUN_GRENADE, (int8_t)(70 + Random(10)), &Object);
           break;
         case 6:
         case 7:
         case 8:
         case 9:
           // 4 in 10 chance of two 38s!
-          CreateItems(SW38, (INT8)(90 + Random(10)), 2, &Object);
+          CreateItems(SW38, (int8_t)(90 + Random(10)), 2, &Object);
           break;
       }
       if ((gWorldSectorX == BOBBYR_SHIPPING_DEST_SECTOR_X) &&
@@ -457,8 +457,8 @@ void HandlePossiblyDamagedPackage(void) {
 }
 
 void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
-  UINT32 uiLoop;
-  UINT32 uiTotalCash = 0;
+  uint32_t uiLoop;
+  uint32_t uiTotalCash = 0;
   BOOLEAN fKingpinWillDiscover = FALSE, fKingpinDiscovers = FALSE;
 
   // money in D5b1 must be less than 30k
@@ -505,7 +505,7 @@ void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
                                1);
 
     // the sector is unloaded NOW so set Kingpin's balance and remove the cash
-    gMercProfiles[KINGPIN].iBalance = -(30000 - (INT32)uiTotalCash);
+    gMercProfiles[KINGPIN].iBalance = -(30000 - (int32_t)uiTotalCash);
     // remove all money from map
     for (uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++) {
       // loop through all items, look for ownership
@@ -525,7 +525,7 @@ void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
   }
 }
 
-void HandleNPCSystemEvent(UINT32 uiEvent) {
+void HandleNPCSystemEvent(uint32_t uiEvent) {
   if (uiEvent < NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS) {
     switch (uiEvent) {
       case FACT_PABLOS_BRIBED:
@@ -545,7 +545,7 @@ void HandleNPCSystemEvent(UINT32 uiEvent) {
       case FACT_SHIPMENT_DELAYED_24_HOURS:
       case FACT_24_HOURS_SINCE_DOCTOR_TALKED_TO:
       case FACT_24_HOURS_SINCE_JOEY_RESCUED:
-        SetFactTrue((UINT16)uiEvent);
+        SetFactTrue((uint16_t)uiEvent);
         break;
 
       case FACT_KINGPIN_KNOWS_MONEY_GONE:
@@ -658,8 +658,8 @@ void HandleNPCSystemEvent(UINT32 uiEvent) {
 }
 
 void HandleEarlyMorningEvents(void) {
-  UINT32 cnt;
-  UINT32 uiAmount;
+  uint32_t cnt;
+  uint32_t uiAmount;
 
   // loop through all *NPCs* and reset "default response used recently" flags
   for (cnt = FIRST_RPC; cnt < NUM_PROFILES; cnt++) {
@@ -669,7 +669,7 @@ void HandleEarlyMorningEvents(void) {
     gMercProfiles[cnt].ubMiscFlags2 &= (~PROFILE_MISC_FLAG2_BANDAGED_TODAY);
   }
   // reset Father Walker's drunkenness level!
-  gMercProfiles[FATHER].bNPCData = (INT8)Random(4);
+  gMercProfiles[FATHER].bNPCData = (int8_t)Random(4);
   // set Walker's location
   if (Random(2)) {
     // move the father to the other sector, provided neither are loaded
@@ -818,7 +818,7 @@ void HandleEarlyMorningEvents(void) {
       gMercProfiles[CARMEN].bNPCData2 = 0;
 
       for (cnt = HEAD_1; cnt <= HEAD_7; cnt++) {
-        RemoveObjectFromSoldierProfile(CARMEN, (UINT8)cnt);
+        RemoveObjectFromSoldierProfile(CARMEN, (uint8_t)cnt);
       }
     }
   } else {
@@ -859,7 +859,7 @@ void HandleEarlyMorningEvents(void) {
   }
 }
 
-void MakeCivGroupHostileOnNextSectorEntrance(UINT8 ubCivGroup) {
+void MakeCivGroupHostileOnNextSectorEntrance(uint8_t ubCivGroup) {
   // if it's the rebels that will become hostile, reduce town loyalties NOW, not later
   if (ubCivGroup == REBEL_CIV_GROUP &&
       gTacticalStatus.fCivGroupHostile[ubCivGroup] == CIV_GROUP_NEUTRAL) {
@@ -869,17 +869,17 @@ void MakeCivGroupHostileOnNextSectorEntrance(UINT8 ubCivGroup) {
   gTacticalStatus.fCivGroupHostile[ubCivGroup] = CIV_GROUP_WILL_BECOME_HOSTILE;
 }
 
-void RemoveAssassin(UINT8 ubProfile) {
+void RemoveAssassin(uint8_t ubProfile) {
   gMercProfiles[ubProfile].sSectorX = 0;
   gMercProfiles[ubProfile].sSectorY = 0;
   gMercProfiles[ubProfile].bLife = gMercProfiles[ubProfile].bLifeMax;
 }
 
 void CheckForMissingHospitalSupplies(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct ITEM_POOL *pItemPool;
   struct OBJECTTYPE *pObj;
-  UINT8 ubMedicalObjects = 0;
+  uint8_t ubMedicalObjects = 0;
 
   for (uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++) {
     // loop through all items, look for ownership
@@ -924,14 +924,14 @@ void CheckForMissingHospitalSupplies(void) {
   }
 }
 
-void DropOffItemsInMeduna(UINT8 ubOrderNum) {
+void DropOffItemsInMeduna(uint8_t ubOrderNum) {
   BOOLEAN fSectorLoaded = FALSE;
   struct OBJECTTYPE Object;
-  UINT32 uiCount = 0;
+  uint32_t uiCount = 0;
   struct OBJECTTYPE *pObject = NULL;
-  UINT16 usNumberOfItems = 0, usItem;
-  UINT8 ubItemsDelivered, ubTempNumItems;
-  UINT32 i;
+  uint16_t usNumberOfItems = 0, usItem;
+  uint8_t ubItemsDelivered, ubTempNumItems;
+  uint32_t i;
 
   // if the player doesnt "own" the sector,
   if (StrategicMap[GetSectorID16(MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y)]

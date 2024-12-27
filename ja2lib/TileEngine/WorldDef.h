@@ -105,23 +105,23 @@ struct VObject;
 
 struct LEVELNODE {
   struct LEVELNODE *pNext;
-  UINT32 uiFlags;  // flags struct
+  uint32_t uiFlags;  // flags struct
 
-  UINT8 ubSumLights;  // LIGHTING INFO
-  UINT8 ubMaxLights;  // MAX LIGHTING INFO
+  uint8_t ubSumLights;  // LIGHTING INFO
+  uint8_t ubMaxLights;  // MAX LIGHTING INFO
 
   union {
     struct LEVELNODE *pPrevNode;       // FOR LAND, GOING BACKWARDS POINTER
     struct STRUCTURE *pStructureData;  // struct STRUCTURE DATA
-    INT32 iPhysicsObjectID;            // ID FOR PHYSICS ITEM
-    INT32 uiAPCost;                    // FOR AP DISPLAY
-    INT32 iExitGridInfo;
+    int32_t iPhysicsObjectID;          // ID FOR PHYSICS ITEM
+    int32_t uiAPCost;                  // FOR AP DISPLAY
+    int32_t iExitGridInfo;
   };  // ( 4 byte union )
 
   union {
     struct {
-      UINT16 usIndex;       // TILE DATABASE INDEX
-      INT16 sCurrentFrame;  // Stuff for animated tiles for a given tile location ( doors, etc )
+      uint16_t usIndex;       // TILE DATABASE INDEX
+      int16_t sCurrentFrame;  // Stuff for animated tiles for a given tile location ( doors, etc )
     };
 
     struct SOLDIERTYPE *pSoldier;  // POINTER TO SOLDIER
@@ -131,18 +131,18 @@ struct LEVELNODE {
   union {
     // Some levelnodes can specify relative X and Y values!
     struct {
-      INT16 sRelativeX;  // Relative position values
-      INT16 sRelativeY;  // Relative position values
+      int16_t sRelativeX;  // Relative position values
+      int16_t sRelativeY;  // Relative position values
     };
 
     // Some can contains index values into dead corpses
     struct {
-      INT32 iCorpseID;  // Index into corpse ID
+      int32_t iCorpseID;  // Index into corpse ID
     };
 
     struct {
-      UINT32 uiAnimHitLocationFlags;  // Animation profile flags for soldier placeholders ( prone
-                                      // merc hit location values )
+      uint32_t uiAnimHitLocationFlags;  // Animation profile flags for soldier placeholders ( prone
+                                        // merc hit location values )
     };
 
     // Some can contains index values into animated tile data
@@ -156,10 +156,10 @@ struct LEVELNODE {
     };
   };
 
-  INT16 sRelativeZ;           // Relative position values
-  UINT8 ubShadeLevel;         // LIGHTING INFO
-  UINT8 ubNaturalShadeLevel;  // LIGHTING INFO
-  UINT8 ubFakeShadeLevel;     // LIGHTING INFO
+  int16_t sRelativeZ;           // Relative position values
+  uint8_t ubShadeLevel;         // LIGHTING INFO
+  uint8_t ubNaturalShadeLevel;  // LIGHTING INFO
+  uint8_t ubFakeShadeLevel;     // LIGHTING INFO
 };
 
 #define LAND_START_INDEX 1
@@ -198,36 +198,36 @@ typedef struct {
   struct STRUCTURE *pStructureHead;
   struct STRUCTURE *pStructureTail;
 
-  UINT16 uiFlags;
-  UINT8 ubExtFlags[2];
-  UINT16 sSumRealLights[1];
-  UINT8 sHeight;
-  UINT8 ubAdjacentSoldierCnt;
-  UINT8 ubTerrainID;
+  uint16_t uiFlags;
+  uint8_t ubExtFlags[2];
+  uint16_t sSumRealLights[1];
+  uint8_t sHeight;
+  uint8_t ubAdjacentSoldierCnt;
+  uint8_t ubTerrainID;
 
-  UINT8 ubReservedSoldierID;
-  UINT8 ubBloodInfo;
-  UINT8 ubSmellInfo;
+  uint8_t ubReservedSoldierID;
+  uint8_t ubBloodInfo;
+  uint8_t ubSmellInfo;
 } MAP_ELEMENT;
 
 // World Data
 extern MAP_ELEMENT *gpWorldLevelData;
 
 // World Movement Costs
-extern UINT8 gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
+extern uint8_t gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 
-extern UINT8 gubCurrentLevel;
-extern INT32 giCurrentTilesetID;
+extern uint8_t gubCurrentLevel;
+extern int32_t giCurrentTilesetID;
 
 extern struct VObject *hRenderVObject;
-extern UINT32 gSurfaceMemUsage;
+extern uint32_t gSurfaceMemUsage;
 
-extern CHAR8 gzLastLoadedFile[260];
+extern char gzLastLoadedFile[260];
 
-extern INT16 gsRecompileAreaTop;
-extern INT16 gsRecompileAreaLeft;
-extern INT16 gsRecompileAreaRight;
-extern INT16 gsRecompileAreaBottom;
+extern int16_t gsRecompileAreaTop;
+extern int16_t gsRecompileAreaLeft;
+extern int16_t gsRecompileAreaRight;
+extern int16_t gsRecompileAreaBottom;
 
 // Functions
 BOOLEAN InitializeWorld();
@@ -237,36 +237,36 @@ void BuildTileShadeTables();
 void DestroyTileShadeTables();
 
 void TrashWorld(void);
-void TrashMapTile(INT16 MapTile);
+void TrashMapTile(int16_t MapTile);
 BOOLEAN NewWorld(void);
-BOOLEAN SaveWorld(STR8 puiFilename);
-BOOLEAN LoadWorld(STR8 puiFilename);
+BOOLEAN SaveWorld(char *puiFilename);
+BOOLEAN LoadWorld(char *puiFilename);
 void CompileWorldMovementCosts();
-void RecompileLocalMovementCosts(INT16 sCentreGridNo);
-void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, INT8 bRadius);
+void RecompileLocalMovementCosts(int16_t sCentreGridNo);
+void RecompileLocalMovementCostsFromRadius(int16_t sCentreGridNo, int8_t bRadius);
 
-BOOLEAN LoadMapTileset(INT32 iTilesetID);
-BOOLEAN SaveMapTileset(INT32 iTilesetID);
+BOOLEAN LoadMapTileset(int32_t iTilesetID);
+BOOLEAN SaveMapTileset(int32_t iTilesetID);
 
-void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadName);
+void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, char *zLoadName);
 
 void CalculateWorldWireFrameTiles(BOOLEAN fForce);
 void RemoveWorldWireFrameTiles();
-void RemoveWireFrameTiles(INT16 sGridNo);
+void RemoveWireFrameTiles(int16_t sGridNo);
 
-struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
+struct LEVELNODE *GetAnimProfileFlags(uint16_t sGridNo, uint16_t *usFlags,
                                       struct SOLDIERTYPE **ppTargSoldier,
                                       struct LEVELNODE *pGivenNode);
 
-void ReloadTileset(UINT8 ubID);
+void ReloadTileset(uint8_t ubID);
 
-BOOLEAN FloorAtGridNo(UINT32 iMapIndex);
-BOOLEAN DoorAtGridNo(UINT32 iMapIndex);
-BOOLEAN GridNoIndoors(UINT32 iMapIndex);
+BOOLEAN FloorAtGridNo(uint32_t iMapIndex);
+BOOLEAN DoorAtGridNo(uint32_t iMapIndex);
+BOOLEAN GridNoIndoors(uint32_t iMapIndex);
 
-BOOLEAN OpenableAtGridNo(UINT32 iMapIndex);
+BOOLEAN OpenableAtGridNo(uint32_t iMapIndex);
 
 void RecompileLocalMovementCostsInAreaWithFlags(void);
-void AddTileToRecompileArea(INT16 sGridNo);
+void AddTileToRecompileArea(int16_t sGridNo);
 
 #endif

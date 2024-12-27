@@ -19,23 +19,23 @@
 
 BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette);
 BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
-                               struct SGPPaletteEntry *pDestPalette, UINT16 usRed, UINT16 usGreen,
-                               UINT16 usBlue, BOOLEAN fMono);
+                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
+                               uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono);
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
-                  UINT8 *pTable);
-void FindMaskIndecies(UINT8 *, UINT8 *, UINT8 *);
+                  uint8_t *pTable);
+void FindMaskIndecies(uint8_t *, uint8_t *, uint8_t *);
 
 struct SGPPaletteEntry Shaded8BPPPalettes[HVOBJECT_SHADE_TABLES + 3][256];
-UINT8 ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
+uint8_t ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
 
-UINT16 IntensityTable[65536];
-UINT16 ShadeTable[65536];
-UINT16 White16BPPPalette[256];
-FLOAT guiShadePercent = (FLOAT)0.48;
-FLOAT guiBrightPercent = (FLOAT)1.1;
+uint16_t IntensityTable[65536];
+uint16_t ShadeTable[65536];
+uint16_t White16BPPPalette[256];
+float guiShadePercent = (float)0.48;
+float guiBrightPercent = (float)1.1;
 
 BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // Green palette
   ShadesCalculatePalette(p8BPPPalette, Shaded8BPPPalettes[0], 0, 255, 0, TRUE);
@@ -79,10 +79,10 @@ BOOLEAN ShadesCalculateTables(struct SGPPaletteEntry *p8BPPPalette) {
 }
 
 BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
-                               struct SGPPaletteEntry *pDestPalette, UINT16 usRed, UINT16 usGreen,
-                               UINT16 usBlue, BOOLEAN fMono) {
-  UINT32 cnt, lumin;
-  UINT32 rmod, gmod, bmod;
+                               struct SGPPaletteEntry *pDestPalette, uint16_t usRed,
+                               uint16_t usGreen, uint16_t usBlue, BOOLEAN fMono) {
+  uint32_t cnt, lumin;
+  uint32_t rmod, gmod, bmod;
 
   Assert(pSrcPalette != NULL);
   Assert(pDestPalette != NULL);
@@ -100,18 +100,18 @@ BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
       bmod = (usBlue * pSrcPalette[cnt].peBlue / 255);
     }
 
-    pDestPalette[cnt].peRed = (UINT8)min(rmod, 255);
-    pDestPalette[cnt].peGreen = (UINT8)min(gmod, 255);
-    pDestPalette[cnt].peBlue = (UINT8)min(bmod, 255);
+    pDestPalette[cnt].peRed = (uint8_t)min(rmod, 255);
+    pDestPalette[cnt].peGreen = (uint8_t)min(gmod, 255);
+    pDestPalette[cnt].peBlue = (uint8_t)min(bmod, 255);
   }
 
   return (TRUE);
 }
 
 void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *pMapPalette,
-                  UINT8 *pTable) {
-  UINT16 usCurIndex, usCurDelta, usCurCount;
-  UINT32 *pSavedPtr;
+                  uint8_t *pTable) {
+  uint16_t usCurIndex, usCurDelta, usCurCount;
+  uint32_t *pSavedPtr;
 
 #ifdef _WINDOWS
 __asm {
@@ -207,8 +207,8 @@ NotThisCol:
 
 **********************************************************************************************/
 void BuildShadeTable(void) {
-  UINT16 red, green, blue;
-  UINT16 index;
+  uint16_t red, green, blue;
+  uint16_t index;
 
   for (red = 0; red < 256; red += 4)
     for (green = 0; green < 256; green += 4)
@@ -233,14 +233,14 @@ void BuildShadeTable(void) {
 
 **********************************************************************************************/
 void BuildIntensityTable(void) {
-  UINT16 red, green, blue;
-  UINT16 index;
-  FLOAT dShadedPercent = (FLOAT)0.80;
+  uint16_t red, green, blue;
+  uint16_t index;
+  float dShadedPercent = (float)0.80;
 
 #if 0
 
-	UINT32 lumin;
-	UINT32 rmod, gmod, bmod;
+	uint32_t lumin;
+	uint32_t rmod, gmod, bmod;
 
 	for(red=0; red < 256; red+=4)
 		for(green=0; green < 256; green+=4)
@@ -270,20 +270,20 @@ void BuildIntensityTable(void) {
       }
 }
 
-void SetShadeTablePercent(FLOAT uiShadePercent) {
+void SetShadeTablePercent(float uiShadePercent) {
   guiShadePercent = uiShadePercent;
   BuildShadeTable();
 }
 
 void Init8BitTables(void) {
   struct SGPPaletteEntry Pal[256];
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // calculate a grey-scale table for the default palette
   for (uiCount = 0; uiCount < 256; uiCount++) {
-    Pal[uiCount].peRed = (UINT8)(uiCount % 128) + 128;
-    Pal[uiCount].peGreen = (UINT8)(uiCount % 128) + 128;
-    Pal[uiCount].peBlue = (UINT8)(uiCount % 128) + 128;
+    Pal[uiCount].peRed = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].peGreen = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].peBlue = (uint8_t)(uiCount % 128) + 128;
   }
 
   Pal[0].peRed = 0;

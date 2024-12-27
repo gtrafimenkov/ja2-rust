@@ -29,23 +29,23 @@
 #define ANIMATE_MIN_TIME 200
 
 // buttons
-INT32 giIMPFinishButton[6];
-INT32 giIMPFinishButtonImage[6];
+int32_t giIMPFinishButton[6];
+int32_t giIMPFinishButtonImage[6];
 
 // we are in fact done
 BOOLEAN fFinishedCharGeneration = FALSE;
 
 // portrait position
-INT16 sFaceX = 253;
-INT16 sFaceY = 245;
+int16_t sFaceX = 253;
+int16_t sFaceY = 245;
 
 // what voice are we playing?
-UINT32 uiVoiceSound = 0;
+uint32_t uiVoiceSound = 0;
 
 // image handle
-UINT32 guiCHARACTERPORTRAIT;
-extern INT32 iCurrentPortrait;
-extern INT32 iCurrentVoices;
+uint32_t guiCHARACTERPORTRAIT;
+extern int32_t iCurrentPortrait;
+extern int32_t iCurrentVoices;
 
 // function definitions
 void CreateIMPFinishButtons(void);
@@ -56,15 +56,15 @@ BOOLEAN LoadCharacterPortrait(void);
 void DestroyCharacterPortrait(void);
 
 // callbacks
-void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPFinishAttributesCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPFinishStartOverCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPFinishDoneCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPFinishPortraitCallback(GUI_BUTTON *btn, INT32 reason);
-void FinishMessageBoxCallBack(UINT8 bExitValue);
-extern void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, INT32 reason);
-extern void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPFinishAttributesCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPFinishStartOverCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPFinishDoneCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPFinishPortraitCallback(GUI_BUTTON *btn, int32_t reason);
+void FinishMessageBoxCallBack(uint8_t bExitValue);
+extern void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn, int32_t reason);
+extern void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPFinish(void) {
   // load graphic for portrait
@@ -109,7 +109,7 @@ void ExitIMPFinish(void) {
 void HandleIMPFinish(void) { return; }
 
 void CreateIMPFinishButtons(void) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
 
   // this function will create the buttons needed for th IMP about us page
   // the start over button button
@@ -241,7 +241,7 @@ void DeleteIMPFinishButtons(void) {
   return;
 }
 
-void BtnIMPFinishStartOverCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPFinishStartOverCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -256,7 +256,7 @@ void BtnIMPFinishStartOverCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPFinishDoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPFinishDoneCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -276,12 +276,12 @@ void BtnIMPFinishDoneCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
   static BOOLEAN fAnimateFlag = FALSE;
-  static UINT32 uiBaseTime = 0;
+  static uint32_t uiBaseTime = 0;
   static BOOLEAN fState = 0;
-  INT32 iDifference = 0;
+  int32_t iDifference = 0;
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -319,7 +319,7 @@ void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPFinishAttributesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPFinishAttributesCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -341,7 +341,7 @@ void BtnIMPFinishAttributesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPFinishPortraitCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPFinishPortraitCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -365,7 +365,7 @@ void BtnIMPFinishPortraitCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for Main Page Begin Profiling
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
@@ -395,7 +395,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
   // render the portrait of the current picture
   VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
-  UINT32 uiGraphicHandle;
+  uint32_t uiGraphicHandle;
 
   if (fCharacterIsMale == TRUE) {
     switch (LaptopSaveInfo.iVoiceId) {
@@ -519,8 +519,8 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 }
 
 void RenderCharFullName(void) {
-  CHAR16 sString[64];
-  INT16 sX, sY;
+  wchar_t sString[64];
+  int16_t sX, sY;
 
   // render the characters full name
   SetFont(FONT14ARIAL);
@@ -554,7 +554,7 @@ void DestroyCharacterPortrait(void) {
   return;
 }
 
-void FinishMessageBoxCallBack(UINT8 bExitValue) {
+void FinishMessageBoxCallBack(uint8_t bExitValue) {
   // yes, so start over, else stay here and do nothing for now
   if (bExitValue == MSG_BOX_RETURN_YES) {
     iCurrentImpPage = IMP_HOME_PAGE;

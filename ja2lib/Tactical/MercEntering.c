@@ -78,7 +78,7 @@ enum {
 
 } HeliCodes;
 
-UINT8 ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
+uint8_t ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
     // HELI_APPROACH
     HELI_REST,
     HELI_REST,
@@ -340,22 +340,22 @@ UINT8 ubHeliScripts[NUM_HELI_STATES][MAX_HELI_SCRIPT] = {
 };
 
 BOOLEAN gfHandleHeli = FALSE;
-UINT8 gusHeliSeats[MAX_MERC_IN_HELI];
-INT8 gbNumHeliSeatsOccupied = 0;
+uint8_t gusHeliSeats[MAX_MERC_IN_HELI];
+int8_t gbNumHeliSeatsOccupied = 0;
 
 BOOLEAN gfFirstGuyDown = FALSE;
 
-UINT32 uiSoundSample;
-INT16 gsGridNoSweetSpot;
-INT16 gsHeliXPos;
-INT16 gsHeliYPos;
-FLOAT gdHeliZPos;
-INT16 gsHeliScript;
-UINT8 gubHeliState;
-UINT32 guiHeliLastUpdate;
-INT8 gbCurDrop;
-INT8 gbExitCount;
-INT8 gbHeliRound;
+uint32_t uiSoundSample;
+int16_t gsGridNoSweetSpot;
+int16_t gsHeliXPos;
+int16_t gsHeliYPos;
+float gdHeliZPos;
+int16_t gsHeliScript;
+uint8_t gubHeliState;
+uint32_t guiHeliLastUpdate;
+int8_t gbCurDrop;
+int8_t gbExitCount;
+int8_t gbHeliRound;
 
 BOOLEAN fFadingHeliIn = FALSE;
 BOOLEAN fFadingHeliOut = FALSE;
@@ -369,8 +369,8 @@ void HandleFirstHeliDropOfGame();
 
 void ResetHeliSeats() { gbNumHeliSeatsOccupied = 0; }
 
-void AddMercToHeli(UINT8 ubID) {
-  INT32 cnt;
+void AddMercToHeli(uint8_t ubID) {
+  int32_t cnt;
 
   if (gbNumHeliSeatsOccupied < MAX_MERC_IN_HELI) {
     // Check if it already exists!
@@ -385,8 +385,8 @@ void AddMercToHeli(UINT8 ubID) {
   }
 }
 
-void StartHelicopterRun(INT16 sGridNoSweetSpot) {
-  INT16 sX, sY;
+void StartHelicopterRun(int16_t sGridNoSweetSpot) {
+  int16_t sX, sY;
 
   gsGridNoSweetSpot = sGridNoSweetSpot;
 
@@ -425,11 +425,11 @@ void StartHelicopterRun(INT16 sGridNoSweetSpot) {
 }
 
 void HandleHeliDrop() {
-  UINT8 ubScriptCode;
-  UINT32 uiClock;
-  // INT16 sWorldX, sWorldY;
-  INT32 iVol;
-  INT32 cnt;
+  uint8_t ubScriptCode;
+  uint32_t uiClock;
+  // int16_t sWorldX, sWorldY;
+  int32_t iVol;
+  int32_t cnt;
   ANITILE_PARAMS AniParams;
 
   if (gfHandleHeli) {
@@ -541,7 +541,7 @@ void HandleHeliDrop() {
       // Switch on mode...
       if (gubHeliState == HELI_DROP) {
         if (!gfIngagedInDrop) {
-          INT8 bEndVal;
+          int8_t bEndVal;
 
           bEndVal = (gbHeliRound * NUM_PER_HELI_RUN);
 
@@ -596,25 +596,25 @@ void HandleHeliDrop() {
         case HELI_MOVE_DOWN:
 
           gdHeliZPos -= 1;
-          gpHeli->pLevelNode->sRelativeZ = (INT16)gdHeliZPos;
+          gpHeli->pLevelNode->sRelativeZ = (int16_t)gdHeliZPos;
           break;
 
         case HELI_MOVE_UP:
 
           gdHeliZPos += 1;
-          gpHeli->pLevelNode->sRelativeZ = (INT16)gdHeliZPos;
+          gpHeli->pLevelNode->sRelativeZ = (int16_t)gdHeliZPos;
           break;
 
         case HELI_MOVESMALL_DOWN:
 
           gdHeliZPos -= 0.25;
-          gpHeli->pLevelNode->sRelativeZ = (INT16)gdHeliZPos;
+          gpHeli->pLevelNode->sRelativeZ = (int16_t)gdHeliZPos;
           break;
 
         case HELI_MOVESMALL_UP:
 
           gdHeliZPos += 0.25;
-          gpHeli->pLevelNode->sRelativeZ = (INT16)gdHeliZPos;
+          gpHeli->pLevelNode->sRelativeZ = (int16_t)gdHeliZPos;
           break;
 
         case HELI_MOVEY:
@@ -644,7 +644,7 @@ void HandleHeliDrop() {
           AniParams.uiFlags = ANITILE_CACHEDTILE | ANITILE_FORWARD | ANITILE_LOOPING;
           AniParams.sX = gsHeliXPos;
           AniParams.sY = gsHeliYPos;
-          AniParams.sZ = (INT16)gdHeliZPos;
+          AniParams.sZ = (int16_t)gdHeliZPos;
           strcpy(AniParams.zCachedFile, "TILECACHE\\HELI_SH.STI");
 
           gpHeli = CreateAnimationTile(&AniParams);
@@ -654,7 +654,7 @@ void HandleHeliDrop() {
 
           // Goto drop animation
           gdHeliZPos -= 0.25;
-          gpHeli->pLevelNode->sRelativeZ = (INT16)gdHeliZPos;
+          gpHeli->pLevelNode->sRelativeZ = (int16_t)gdHeliZPos;
           gsHeliScript = -1;
           gubHeliState = HELI_DROP;
           break;
@@ -677,7 +677,7 @@ void HandleHeliDrop() {
 
           if (gbCurDrop < gbNumHeliSeatsOccupied) {
             // Start another run......
-            INT16 sX, sY;
+            int16_t sX, sY;
 
             ConvertGridNoToCenterCellXY(gsGridNoSweetSpot, &sX, &sY);
 
@@ -719,7 +719,7 @@ void HandleHeliDrop() {
   }
 }
 
-void BeginMercEntering(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void BeginMercEntering(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
   ResetHeliSeats();
 
   AddMercToHeli(pSoldier->ubID);

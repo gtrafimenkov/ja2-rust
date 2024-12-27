@@ -36,10 +36,10 @@
 
 // Palette structure, mimics that of Win32
 struct SGPPaletteEntry {
-  UINT8 peRed;
-  UINT8 peGreen;
-  UINT8 peBlue;
-  UINT8 peFlags;
+  uint8_t peRed;
+  uint8_t peGreen;
+  uint8_t peBlue;
+  uint8_t peFlags;
 };
 
 #define AUX_FULL_TILE 0x01
@@ -50,83 +50,83 @@ struct SGPPaletteEntry {
 #define AUX_USES_LAND_Z 0x20
 
 struct AuxObjectData {
-  UINT8 ubWallOrientation;
-  UINT8 ubNumberOfTiles;
-  UINT16 usTileLocIndex;
-  UINT8 ubUnused1[3];
-  UINT8 ubCurrentFrame;
-  UINT8 ubNumberOfFrames;
-  UINT8 fFlags;
-  UINT8 ubUnused[6];
+  uint8_t ubWallOrientation;
+  uint8_t ubNumberOfTiles;
+  uint16_t usTileLocIndex;
+  uint8_t ubUnused1[3];
+  uint8_t ubCurrentFrame;
+  uint8_t ubNumberOfFrames;
+  uint8_t fFlags;
+  uint8_t ubUnused[6];
 };
 
 // relative tile location
 struct RelTileLoc {
-  INT8 bTileOffsetX;
-  INT8 bTileOffsetY;
+  int8_t bTileOffsetX;
+  int8_t bTileOffsetY;
 };
 
 // TRLE subimage structure, mirroring that of ST(C)I
 typedef struct tagETRLEObject {
-  UINT32 uiDataOffset;
-  UINT32 uiDataLength;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint32_t uiDataOffset;
+  uint32_t uiDataLength;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
+  uint16_t usHeight;
+  uint16_t usWidth;
 } ETRLEObject;
 
 typedef struct tagETRLEData {
-  PTR pPixData;
-  UINT32 uiSizePixData;
+  void *pPixData;
+  uint32_t uiSizePixData;
   ETRLEObject *pETRLEObject;
-  UINT16 usNumberOfObjects;
+  uint16_t usNumberOfObjects;
 } ETRLEData;
 
 // Image header structure
 typedef struct {
-  UINT16 usWidth;
-  UINT16 usHeight;
-  UINT8 ubBitDepth;
-  UINT16 fFlags;
+  uint16_t usWidth;
+  uint16_t usHeight;
+  uint8_t ubBitDepth;
+  uint16_t fFlags;
   SGPFILENAME ImageFile;
-  UINT32 iFileLoader;
+  uint32_t iFileLoader;
   struct SGPPaletteEntry *pPalette;
-  UINT16 *pui16BPPPalette;
-  UINT8 *pAppData;
-  UINT32 uiAppDataSize;
+  uint16_t *pui16BPPPalette;
+  uint8_t *pAppData;
+  uint32_t uiAppDataSize;
   // This union is used to describe each data type and is flexible to include the
   // data strucutre of the compresssed format, once developed.
   union {
     struct {
-      PTR pImageData;
+      void *pImageData;
     };
     struct {
-      PTR pCompressedImageData;
+      void *pCompressedImageData;
     };
     struct {
-      UINT8 *p8BPPData;
+      uint8_t *p8BPPData;
     };
     struct {
-      UINT16 *p16BPPData;
+      uint16_t *p16BPPData;
     };
     struct {
-      UINT8 *pPixData8;
-      UINT32 uiSizePixData;
+      uint8_t *pPixData8;
+      uint32_t uiSizePixData;
       ETRLEObject *pETRLEObject;
-      UINT16 usNumberOfObjects;
+      uint16_t usNumberOfObjects;
     };
   };
 
 } image_type, *HIMAGE;
 
-#define SGPGetRValue(rgb) ((BYTE)(rgb))
-#define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
-#define SGPGetGValue(rgb) ((BYTE)(((UINT16)(rgb)) >> 8))
+#define SGPGetRValue(rgb) ((uint8_t)(rgb))
+#define SGPGetBValue(rgb) ((uint8_t)((rgb) >> 16))
+#define SGPGetGValue(rgb) ((uint8_t)(((uint16_t)(rgb)) >> 8))
 
 // This function will return NULL if it fails, and call SetLastError() to set
 // error information
-HIMAGE CreateImage(const char *ImageFile, UINT16 fContents);
+HIMAGE CreateImage(const char *ImageFile, uint16_t fContents);
 
 // This function destroys the HIMAGE structure as well as its contents
 BOOLEAN DestroyImage(HIMAGE hImage);
@@ -134,24 +134,28 @@ BOOLEAN DestroyImage(HIMAGE hImage);
 // This function releases data allocated to various parts of the image based
 // on the contents flags passed as a parameter.  If a contents flag is given
 // and the image does not contain that data, no error is raised
-BOOLEAN ReleaseImageData(HIMAGE hImage, UINT16 fContents);
+BOOLEAN ReleaseImageData(HIMAGE hImage, uint16_t fContents);
 
 // This function will attept to Load data from an existing image object's filename
 // In this way, dynamic loading of image data can be done
-BOOLEAN LoadImageData(HIMAGE hImage, UINT16 fContents);
+BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents);
 
 // This function will run the appropriate copy function based on the type of HIMAGE object
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, UINT32 fBufferType, BYTE *pDestBuf, UINT16 usDestWidth,
-                          UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf,
+                          uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                          SGPRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
-BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
-BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+                                  uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                  SGPRect *srcRect);
+BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                   SGPRect *srcRect);
+BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                    SGPRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
 BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
@@ -159,25 +163,26 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
 // UTILITY FUNCTIONS
 
 // Used to create a 16BPP Palette from an 8 bit palette, found in himage.c
-UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                 UINT32 bscale, BOOLEAN mono);
-UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
-UINT16 Get16BPPColor(UINT32 RGBValue);
-UINT32 GetRGBColor(UINT16 Value16BPP);
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
+uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale,
+                                   uint32_t gscale, uint32_t bscale, BOOLEAN mono);
+uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
+uint16_t Get16BPPColor(uint32_t RGBValue);
+uint32_t GetRGBColor(uint16_t Value16BPP);
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
+                                                 uint8_t *pOldPalette);
 
-extern UINT16 gusAlphaMask;
-extern UINT16 gusRedMask;
-extern UINT16 gusGreenMask;
-extern UINT16 gusBlueMask;
-extern INT16 gusRedShift;
-extern INT16 gusBlueShift;
-extern INT16 gusGreenShift;
+extern uint16_t gusAlphaMask;
+extern uint16_t gusRedMask;
+extern uint16_t gusGreenMask;
+extern uint16_t gusBlueMask;
+extern int16_t gusRedShift;
+extern int16_t gusBlueShift;
+extern int16_t gusGreenShift;
 
 // used to convert 565 RGB data into different bit-formats
-void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-void ConvertRGBDistribution565To655(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-void ConvertRGBDistribution565To556(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
+void ConvertRGBDistribution565To555(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To655(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565To556(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
+void ConvertRGBDistribution565ToAny(uint16_t *p16BPPData, uint32_t uiNumberOfPixels);
 
 #endif

@@ -42,21 +42,21 @@
 #define AIM_LINK_LINK_TEXT_2_Y AIM_LINK_FUNERAL_LINK_Y + 36
 #define AIM_LINK_LINK_TEXT_3_Y AIM_LINK_INSURANCE_LINK_Y + 45
 
-UINT32 guiBobbyLink;
-UINT32 guiFuneralLink;
-UINT32 guiInsuranceLink;
-UINT8 gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK};
+uint32_t guiBobbyLink;
+uint32_t guiFuneralLink;
+uint32_t guiInsuranceLink;
+uint8_t gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK};
 
 // Clicking on guys Face
 struct MOUSE_REGION gSelectedLinkRegion[AIM_LINK_NUM_LINKS];
-void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 void GameInitAimLinks() {}
 
 BOOLEAN EnterAimLinks() {
   VOBJECT_DESC VObjectDesc;
-  UINT16 usPosY;
-  INT16 i;
+  uint16_t usPosY;
+  int16_t i;
 
   InitAimDefaults();
   InitAimMenuBar();
@@ -80,7 +80,7 @@ BOOLEAN EnterAimLinks() {
   for (i = 0; i < AIM_LINK_NUM_LINKS; i++) {
     MSYS_DefineRegion(&gSelectedLinkRegion[i], AIM_LINK_BOBBY_LINK_X, usPosY,
                       AIM_LINK_BOBBY_LINK_X + AIM_LINK_LINK_WIDTH,
-                      (UINT16)(usPosY + AIM_LINK_LINK_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      (uint16_t)(usPosY + AIM_LINK_LINK_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                       MSYS_NO_CALLBACK, SelectLinkRegionCallBack);
     MSYS_AddRegion(&gSelectedLinkRegion[i]);
     MSYS_SetRegionUserData(&gSelectedLinkRegion[i], 0, gubLinkPages[i]);
@@ -92,7 +92,7 @@ BOOLEAN EnterAimLinks() {
 }
 
 void ExitAimLinks() {
-  INT16 i;
+  int16_t i;
 
   RemoveAimDefaults();
 
@@ -142,11 +142,11 @@ void RenderAimLinks() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 gNextLaptopPage;
+    uint32_t gNextLaptopPage;
 
     gNextLaptopPage = MSYS_GetRegionUserData(pRegion, 0);
 

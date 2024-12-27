@@ -29,15 +29,16 @@
 #include "Utils/Message.h"
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
-    UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures);
+    uint8_t *pubNumElites, uint8_t *pubNumRegulars, uint8_t *pubNumAdmins,
+    uint8_t *pubNumCreatures);
 
 BOOLEAN gfRestoringEnemySoldiersFromTempFile = FALSE;
 BOOLEAN gfRestoringCiviliansFromTempFile = FALSE;
 
-void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void RemoveCivilianTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 
-void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  CHAR8 zMapName[128];
+void RemoveEnemySoldierTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
+  char zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
     ReSetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS);
@@ -53,9 +54,9 @@ void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   }
 }
 
-void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  // CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+void RemoveCivilianTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
+  // char		zTempName[ 128 ];
+  char zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
     ReSetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS);
@@ -72,21 +73,21 @@ void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
 BOOLEAN LoadEnemySoldiersFromTempFile() {
   SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
+  int32_t i;
+  int32_t slots = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum, usFileCheckSum;
-  CHAR8 zMapName[128];
+  int16_t sSectorX, sSectorY;
+  uint16_t usCheckSum, usFileCheckSum;
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
-  INT8 bSectorZ;
-  UINT8 ubSectorID;
-  UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
-  UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  int8_t bSectorZ;
+  uint8_t ubSectorID;
+  uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
+  uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   gfRestoringEnemySoldiersFromTempFile = TRUE;
 
@@ -267,7 +268,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
 
             curr->pBasicPlacement->bPatrolCnt = curr->pDetailedPlacement->bPatrolCnt;
             memcpy(curr->pBasicPlacement->sPatrolGrid, curr->pDetailedPlacement->sPatrolGrid,
-                   sizeof(INT16) * curr->pBasicPlacement->bPatrolCnt);
+                   sizeof(int16_t) * curr->pBasicPlacement->bPatrolCnt);
 
             FileMan_Read(hfile, &usCheckSum, 2, &uiNumBytesRead);
             if (uiNumBytesRead != 2) {
@@ -381,21 +382,21 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                    UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam,
+BOOLEAN SaveEnemySoldiersToTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
+                                    uint8_t ubFirstIdTeam, uint8_t ubLastIdTeam,
                                     BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
-  INT32 slots = 0;
-  INT32 iSlotsAlreadyInUse = 0;
-  UINT32 uiNumBytesWritten;
-  UINT32 uiTimeStamp;
+  int32_t i;
+  int32_t slots = 0;
+  int32_t iSlotsAlreadyInUse = 0;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
   SCHEDULENODE *pSchedule;
-  UINT16 usCheckSum;
-  CHAR8 zMapName[128];
-  UINT8 ubSectorID;
+  uint16_t usCheckSum;
+  char zMapName[128];
+  uint8_t ubSectorID;
 
   // STEP ONE:  Prep the soldiers for saving...
 
@@ -478,7 +479,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
           // Copy patrol points
           curr->pDetailedPlacement->bPatrolCnt = pSoldier->bPatrolCnt;
           memcpy(curr->pDetailedPlacement->sPatrolGrid, pSoldier->usPatrolGrid,
-                 sizeof(INT16) * MAXPATROLGRIDS);
+                 sizeof(int16_t) * MAXPATROLGRIDS);
 
           // copy colors for soldier based on the body type.
           memcpy(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
@@ -669,21 +670,21 @@ FAIL_SAVE:
 BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
+  int32_t i;
+  int32_t slots = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum, usFileCheckSum;
-  CHAR8 zMapName[128];
+  int16_t sSectorX, sSectorY;
+  uint16_t usCheckSum, usFileCheckSum;
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
-  INT8 bSectorZ;
-  UINT8 ubSectorID;
-  UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
-  UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  int8_t bSectorZ;
+  uint8_t ubSectorID;
+  uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
+  uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   gfRestoringEnemySoldiersFromTempFile = TRUE;
 
@@ -903,7 +904,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 
           curr->pBasicPlacement->bPatrolCnt = curr->pDetailedPlacement->bPatrolCnt;
           memcpy(curr->pBasicPlacement->sPatrolGrid, curr->pDetailedPlacement->sPatrolGrid,
-                 sizeof(INT16) * curr->pBasicPlacement->bPatrolCnt);
+                 sizeof(int16_t) * curr->pBasicPlacement->bPatrolCnt);
 
           FileMan_Read(hfile, &usCheckSum, 2, &uiNumBytesRead);
           if (uiNumBytesRead != 2) {
@@ -1036,23 +1037,23 @@ FAIL_LOAD:
 BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   SOLDIERINITNODE *curr, *temp;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
-  UINT32 uiTimeSinceLastLoaded;
+  int32_t i;
+  int32_t slots = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
+  uint32_t uiTimeSinceLastLoaded;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum, usFileCheckSum;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  int16_t sSectorX, sSectorY;
+  uint16_t usCheckSum, usFileCheckSum;
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
-  INT8 bSectorZ;
-  UINT8 ubSectorID;
+  int8_t bSectorZ;
+  uint8_t ubSectorID;
   BOOLEAN fDeleted;
-  //	UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  //	uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   gfRestoringCiviliansFromTempFile = TRUE;
 
@@ -1203,7 +1204,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 
             curr->pBasicPlacement->bPatrolCnt = curr->pDetailedPlacement->bPatrolCnt;
             memcpy(curr->pBasicPlacement->sPatrolGrid, curr->pDetailedPlacement->sPatrolGrid,
-                   sizeof(INT16) * curr->pBasicPlacement->bPatrolCnt);
+                   sizeof(int16_t) * curr->pBasicPlacement->bPatrolCnt);
 
             FileMan_Read(hfile, &usCheckSum, 2, &uiNumBytesRead);
             if (uiNumBytesRead != 2) {
@@ -1239,10 +1240,10 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 
             if (curr->pDetailedPlacement->bLife <
                 curr->pDetailedPlacement->bLifeMax) {  // Add 4 life for every hour that passes.
-              INT32 iNewLife;
+              int32_t iNewLife;
               iNewLife = curr->pDetailedPlacement->bLife + uiTimeSinceLastLoaded / 15;
               iNewLife = min(curr->pDetailedPlacement->bLifeMax, iNewLife);
-              curr->pDetailedPlacement->bLife = (INT8)iNewLife;
+              curr->pDetailedPlacement->bLife = (int8_t)iNewLife;
             }
 
             if (curr->pBasicPlacement->bTeam == CIV_TEAM) {
@@ -1316,22 +1317,23 @@ FAIL_LOAD:
 
 // If we are saving a game and we are in the sector, we will need to preserve the links between the
 // soldiers and the soldier init list.  Otherwise, the temp file will be deleted.
-BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                                 BOOLEAN fEnemy, BOOLEAN fValidateOnly) {
+BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(uint8_t sSectorX, uint8_t sSectorY,
+                                                 int8_t bSectorZ, BOOLEAN fEnemy,
+                                                 BOOLEAN fValidateOnly) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
-  INT32 slots = 0;
-  UINT32 uiNumBytesWritten;
-  UINT32 uiTimeStamp;
+  int32_t i;
+  int32_t slots = 0;
+  uint32_t uiNumBytesWritten;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
-  UINT8 ubSectorID;
-  UINT16 usCheckSum;
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
+  uint8_t ubSectorID;
+  uint16_t usCheckSum;
 
-  UINT8 ubStartID = 0;
-  UINT8 ubEndID = 0;
+  uint8_t ubStartID = 0;
+  uint8_t ubEndID = 0;
 
   // if we are saving the enemy info to the enemy temp file
   if (fEnemy) {
@@ -1418,7 +1420,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 
             // Copy patrol points
             curr->pDetailedPlacement->bPatrolCnt = pSoldier->bPatrolCnt;
             memcpy(curr->pDetailedPlacement->sPatrolGrid, pSoldier->usPatrolGrid,
-                   sizeof(INT16) * MAXPATROLGRIDS);
+                   sizeof(int16_t) * MAXPATROLGRIDS);
 
             // copy colors for soldier based on the body type.
             memcpy(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
@@ -1590,24 +1592,25 @@ FAIL_SAVE:
 }
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
-    UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures) {
+    uint8_t *pubNumElites, uint8_t *pubNumRegulars, uint8_t *pubNumAdmins,
+    uint8_t *pubNumCreatures) {
   //	SOLDIERINITNODE *curr;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  INT32 i;
-  INT32 slots = 0;
-  UINT32 uiNumBytesRead;
-  UINT32 uiTimeStamp;
+  int32_t i;
+  int32_t slots = 0;
+  uint32_t uiNumBytesRead;
+  uint32_t uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
-  UINT16 usCheckSum;
-  CHAR8 zMapName[128];
+  int16_t sSectorX, sSectorY;
+  uint16_t usCheckSum;
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
-  INT8 bSectorZ;
-  UINT8 ubSectorID;
-  //	UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
-  //	UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
+  int8_t bSectorZ;
+  uint8_t ubSectorID;
+  //	uint8_t ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
+  //	uint8_t ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
   // make sure the variables are initialized
   *pubNumElites = 0;
@@ -1804,7 +1807,8 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
 
                                             curr->pBasicPlacement->bPatrolCnt			=
        curr->pDetailedPlacement->bPatrolCnt; memcpy( curr->pBasicPlacement->sPatrolGrid,
-       curr->pDetailedPlacement->sPatrolGrid, sizeof( INT16 ) * curr->pBasicPlacement->bPatrolCnt );
+       curr->pDetailedPlacement->sPatrolGrid, sizeof( int16_t ) * curr->pBasicPlacement->bPatrolCnt
+       );
 
                                             FileMan_Read( hfile, &usCheckSum, 2, &uiNumBytesRead );
                                             if( uiNumBytesRead != 2 )

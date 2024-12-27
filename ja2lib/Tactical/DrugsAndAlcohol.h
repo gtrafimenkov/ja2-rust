@@ -21,17 +21,17 @@ struct OBJECTTYPE;
 #define REGEN_POINTS_PER_BOOSTER 4
 #define LIFE_GAIN_PER_REGEN_POINT 10
 
-UINT8 GetDrugType(UINT16 usItem);
+uint8_t GetDrugType(uint16_t usItem);
 BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject);
 
 void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier);
-void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints);
-void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPoints);
+void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, uint8_t *pubPoints);
+void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, int16_t *psPoints);
 
-INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType);
-INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType);
-INT8 GetDrunkLevel(struct SOLDIERTYPE *pSoldier);
-INT32 EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, INT32 iStat);
+int8_t GetDrugEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
+int8_t GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, uint8_t ubDrugType);
+int8_t GetDrunkLevel(struct SOLDIERTYPE *pSoldier);
+int32_t EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, int32_t iStat);
 BOOLEAN MercUnderTheInfluence(struct SOLDIERTYPE *pSoldier);
 
 #endif

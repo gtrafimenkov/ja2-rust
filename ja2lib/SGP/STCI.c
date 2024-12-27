@@ -8,14 +8,14 @@
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
-BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
-BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage);
+BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader);
+BOOLEAN STCISetPalette(void *pSTCIPalette, HIMAGE hImage);
 
-BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
+BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents) {
   HWFILE hFile;
   STCIHeader Header;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
   image_type TempImage;
 
   // Check that hImage is valid, and that the file in question exists
@@ -71,8 +71,8 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
   return (TRUE);
 }
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader) {
-  UINT32 uiBytesRead;
+BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader) {
+  uint32_t uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
       !(fContents & IMAGE_ALLIMAGEDATA)) {  // RGB doesn't have a palette!
@@ -95,9 +95,9 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *p
     if (pHeader->ubDepth == 16) {
       // ASSUMPTION: file data is 565 R,G,B
 
-      if (gusRedMask != (UINT16)pHeader->RGB.uiRedMask ||
-          gusGreenMask != (UINT16)pHeader->RGB.uiGreenMask ||
-          gusBlueMask != (UINT16)pHeader->RGB.uiBlueMask) {
+      if (gusRedMask != (uint16_t)pHeader->RGB.uiRedMask ||
+          gusGreenMask != (uint16_t)pHeader->RGB.uiGreenMask ||
+          gusBlueMask != (uint16_t)pHeader->RGB.uiBlueMask) {
         // colour distribution of the file is different from hardware!  We have to change it!
         DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Converting to current RGB distribution!");
         // Convert the image to the current hardware's specifications
@@ -133,10 +133,10 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *p
   return (TRUE);
 }
 
-BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader) {
-  UINT32 uiFileSectionSize;
-  UINT32 uiBytesRead;
-  PTR pSTCIPalette;
+BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader) {
+  uint32_t uiFileSectionSize;
+  uint32_t uiBytesRead;
+  void *pSTCIPalette;
 
   if (fContents & IMAGE_PALETTE) {  // Allocate memory for reading in the palette
     if (pHeader->Indexed.uiNumberOfColours != 256) {
@@ -243,7 +243,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeade
 
   if (fContents & IMAGE_APPDATA && pHeader->uiAppDataSize > 0) {
     // load application-specific data
-    hImage->pAppData = (UINT8 *)MemAlloc(pHeader->uiAppDataSize);
+    hImage->pAppData = (uint8_t *)MemAlloc(pHeader->uiAppDataSize);
     if (hImage->pAppData == NULL) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
       FileMan_Close(hFile);
@@ -285,8 +285,8 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeade
   return (TRUE);
 }
 
-BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage) {
-  UINT16 usIndex;
+BOOLEAN STCISetPalette(void *pSTCIPalette, HIMAGE hImage) {
+  uint16_t usIndex;
   STCIPaletteElement *pubPalette;
 
   pubPalette = (STCIPaletteElement *)pSTCIPalette;
@@ -310,10 +310,10 @@ BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage) {
   return TRUE;
 }
 
-BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
+BOOLEAN IsSTCIETRLEFile(char *ImageFile) {
   HWFILE hFile;
   STCIHeader Header;
-  UINT32 uiBytesRead;
+  uint32_t uiBytesRead;
 
   CHECKF(FileMan_Exists(ImageFile));
 

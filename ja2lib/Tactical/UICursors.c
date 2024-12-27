@@ -29,39 +29,41 @@
 #include "Utils/Text.h"
 
 // FUNCTIONS FOR ITEM CURSOR HANDLING
-UINT8 HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, BOOLEAN fShowAPs,
-                                  BOOLEAN fRecalc, UINT32 uiCursorFlags);
-UINT8 HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
-                                     BOOLEAN fShowAPs, BOOLEAN fRecalc, UINT32 uiCursorFlags);
-UINT8 HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                        UINT32 uiCursorFlags);
-UINT8 HandlePunchCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                        UINT32 uiCursorFlagsl);
-UINT8 HandleAidCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                      UINT32 uiCursorFlags);
-UINT8 HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT8 ubCursor);
-UINT8 HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, BOOLEAN fRecalc,
-                                   UINT32 uiCursorFlags, UINT8 ubCursor);
-UINT8 HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT32 uiCursorFlags);
-UINT8 HandleRepairCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT32 uiCursorFlags);
-UINT8 HandleRefuelCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT32 uiCursorFlags);
-UINT8 HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                         UINT32 uiCursorFlags);
-UINT8 HandleBombCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                       UINT32 uiCursorFlags);
-UINT8 HandleJarCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT32 uiCursorFlags);
-UINT8 HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT32 uiCursorFlags);
+uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                    BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags);
+uint8_t HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                       BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags);
+uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                          uint32_t uiCursorFlags);
+uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                          uint32_t uiCursorFlagsl);
+uint8_t HandleAidCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                        uint32_t uiCursorFlags);
+uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                  uint8_t ubCursor);
+uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                     BOOLEAN fRecalc, uint32_t uiCursorFlags, uint8_t ubCursor);
+uint8_t HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                               uint32_t uiCursorFlags);
+uint8_t HandleRepairCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
+uint8_t HandleRefuelCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
+uint8_t HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                           uint32_t uiCursorFlags);
+uint8_t HandleBombCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                         uint32_t uiCursorFlags);
+uint8_t HandleJarCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
+uint8_t HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
 
 extern BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
                                                    struct SOLDIERTYPE *pTargetSoldier,
-                                                   INT16 sTargetGridNo, INT8 bLevel);
+                                                   int16_t sTargetGridNo, int8_t bLevel);
 
 BOOLEAN gfCannotGetThrough = FALSE;
-extern UINT32 guiUITargetSoldierId;
+extern uint32_t guiUITargetSoldierId;
 BOOLEAN gfDisplayFullCountRing = FALSE;
 
-BOOLEAN GetMouseRecalcAndShowAPFlags(UINT32 *puiCursorFlags, BOOLEAN *pfShowAPs) {
-  UINT32 uiCursorFlags;
+BOOLEAN GetMouseRecalcAndShowAPFlags(uint32_t *puiCursorFlags, BOOLEAN *pfShowAPs) {
+  uint32_t uiCursorFlags;
   static BOOLEAN fDoNewTile = FALSE;
   BOOLEAN fRecalc = FALSE;
   BOOLEAN fShowAPs = FALSE;
@@ -112,15 +114,15 @@ BOOLEAN GetMouseRecalcAndShowAPFlags(UINT32 *puiCursorFlags, BOOLEAN *pfShowAPs)
 }
 
 // FUNCTIONS FOR CURSOR DETERMINATION!
-UINT8 GetProperItemCursor(UINT8 ubSoldierID, UINT16 ubItemIndex, UINT16 usMapPos,
-                          BOOLEAN fActivated) {
+uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t usMapPos,
+                            BOOLEAN fActivated) {
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiCursorFlags;
+  uint32_t uiCursorFlags;
   BOOLEAN fShowAPs = FALSE;
   BOOLEAN fRecalc = FALSE;
-  INT16 sTargetGridNo = usMapPos;
-  UINT8 ubCursorID = 0;
-  UINT8 ubItemCursor;
+  int16_t sTargetGridNo = usMapPos;
+  uint8_t ubCursorID = 0;
+  uint8_t ubItemCursor;
 
   pSoldier = MercPtrs[ubSoldierID];
 
@@ -178,7 +180,8 @@ UINT8 GetProperItemCursor(UINT8 ubSoldierID, UINT16 ubItemIndex, UINT16 usMapPos
         // Alrighty, let's change the cursor!
         if (fRecalc && gfUIFullTargetFound) {
           // ATE: Check for ammo
-          if (IsValidTargetMerc((UINT8)gusUIFullTargetID) && EnoughAmmo(pSoldier, FALSE, HANDPOS)) {
+          if (IsValidTargetMerc((uint8_t)gusUIFullTargetID) &&
+              EnoughAmmo(pSoldier, FALSE, HANDPOS)) {
             // IF it's an ememy, goto confirm action mode
             if ((guiUIFullTargetFlags & ENEMY_MERC) && (guiUIFullTargetFlags & VISIBLE_MERC) &&
                 !(guiUIFullTargetFlags & DEAD_MERC) && !gfCannotGetThrough) {
@@ -211,7 +214,7 @@ UINT8 GetProperItemCursor(UINT8 ubSoldierID, UINT16 ubItemIndex, UINT16 usMapPos
 				if ( fRecalc && gfUIFullTargetFound )
 				{
 						// ATE: Check for ammo
-						if ( IsValidTargetMerc( (UINT8)gusUIFullTargetID ) && EnoughAmmo( pSoldier, FALSE, HANDPOS ) )
+						if ( IsValidTargetMerc( (uint8_t)gusUIFullTargetID ) && EnoughAmmo( pSoldier, FALSE, HANDPOS ) )
 						{
 							 // IF it's an ememy, goto confirm action mode
 							 if ( ( guiUIFullTargetFlags & ENEMY_MERC ) && ( guiUIFullTargetFlags & VISIBLE_MERC ) && !( guiUIFullTargetFlags & DEAD_MERC ) && !gfCannotGetThrough )
@@ -277,15 +280,15 @@ UINT8 GetProperItemCursor(UINT8 ubSoldierID, UINT16 ubItemIndex, UINT16 usMapPos
   return (ubCursorID);
 }
 
-UINT8 HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos, BOOLEAN fShowAPs,
-                                  BOOLEAN fRecalc, UINT32 uiCursorFlags) {
-  UINT8 switchVal;
+uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                    BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags) {
+  uint8_t switchVal;
   BOOLEAN fEnoughPoints = TRUE;
-  UINT8 bFutureAim;
-  INT16 sAPCosts;
-  UINT16 usCursor = 0;
+  uint8_t bFutureAim;
+  int16_t sAPCosts;
+  uint16_t usCursor = 0;
   BOOLEAN fMaxPointLimitHit = FALSE;
-  UINT16 usInHand;
+  uint16_t usInHand;
 
   usInHand = pSoldier->inv[HANDPOS].usItem;
 
@@ -311,11 +314,11 @@ UINT8 HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
 
   // Determine where we are shooting / aiming
   // if ( fRecalc )
-  { DetermineCursorBodyLocation((UINT8)gusSelectedSoldier, TRUE, TRUE); }
+  { DetermineCursorBodyLocation((uint8_t)gusSelectedSoldier, TRUE, TRUE); }
 
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     gsCurrentActionPoints =
-        CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (INT8)(pSoldier->bShownAimTime / 2));
+        CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (int8_t)(pSoldier->bShownAimTime / 2));
     gfUIDisplayActionPoints = TRUE;
     gfUIDisplayActionPointsCenter = TRUE;
 
@@ -325,13 +328,13 @@ UINT8 HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
 
       fMaxPointLimitHit = TRUE;
     } else {
-      bFutureAim = (INT8)(pSoldier->bShownAimTime + 2);
+      bFutureAim = (int8_t)(pSoldier->bShownAimTime + 2);
 
       if (bFutureAim <= REFINE_AIM_5) {
         sAPCosts = MinAPsToAttack(pSoldier, usMapPos, TRUE) + (bFutureAim / 2);
 
         // Determine if we can afford!
-        if (!EnoughPoints(pSoldier, (INT16)sAPCosts, 0, FALSE)) {
+        if (!EnoughPoints(pSoldier, (int16_t)sAPCosts, 0, FALSE)) {
           fEnoughPoints = FALSE;
         }
       }
@@ -371,7 +374,7 @@ UINT8 HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
         gfCannotGetThrough = FALSE;
       }
     } else {
-      if (SoldierToLocationChanceToGetThrough(pSoldier, usMapPos, (INT8)gsInterfaceLevel,
+      if (SoldierToLocationChanceToGetThrough(pSoldier, usMapPos, (int8_t)gsInterfaceLevel,
                                               pSoldier->bTargetCubeLevel,
                                               NOBODY) < OK_CHANCE_TO_GET_THROUGH) {
         gfCannotGetThrough = TRUE;
@@ -553,19 +556,19 @@ UINT8 HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
       }
     }
   }
-  return ((UINT8)usCursor);
+  return ((uint8_t)usCursor);
 }
 
-UINT8 HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
-                                     BOOLEAN fShowAPs, BOOLEAN fRecalc, UINT32 uiCursorFlags) {
-  UINT16 usInHand;
+uint8_t HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                       BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags) {
+  uint16_t usInHand;
 
   usInHand = pSoldier->inv[HANDPOS].usItem;
 
   if (Item[usInHand].usItemClass != IC_THROWING_KNIFE) {
     if (((gTacticalStatus.uiFlags & REALTIME) || !(gTacticalStatus.uiFlags & INCOMBAT))) {
-      // DetermineCursorBodyLocation( (UINT8)gusSelectedSoldier, FALSE, fRecalc );
-      DetermineCursorBodyLocation((UINT8)gusSelectedSoldier, fShowAPs, fRecalc);
+      // DetermineCursorBodyLocation( (uint8_t)gusSelectedSoldier, FALSE, fRecalc );
+      DetermineCursorBodyLocation((uint8_t)gusSelectedSoldier, fShowAPs, fRecalc);
 
       if (pSoldier->fReloading || pSoldier->fPauseAim) {
         return (ACTION_TARGET_RELOADING);
@@ -593,10 +596,10 @@ UINT8 HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapP
   }
 
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
-    DetermineCursorBodyLocation((UINT8)gusSelectedSoldier, fShowAPs, fRecalc);
+    DetermineCursorBodyLocation((uint8_t)gusSelectedSoldier, fShowAPs, fRecalc);
 
     gsCurrentActionPoints =
-        CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (INT8)(pSoldier->bShownAimTime / 2));
+        CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (int8_t)(pSoldier->bShownAimTime / 2));
 
     gfUIDisplayActionPoints = TRUE;
     gfUIDisplayActionPointsCenter = TRUE;
@@ -614,7 +617,7 @@ UINT8 HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapP
   // if ( gTacticalStatus.uiFlags & TURNBASED && !(gTacticalStatus.uiFlags & INCOMBAT ) )
   {
     if (fRecalc) {
-      if (SoldierToLocationChanceToGetThrough(pSoldier, usMapPos, (INT8)gsInterfaceLevel,
+      if (SoldierToLocationChanceToGetThrough(pSoldier, usMapPos, (int8_t)gsInterfaceLevel,
                                               pSoldier->bTargetCubeLevel,
                                               NOBODY) < OK_CHANCE_TO_GET_THROUGH) {
         gfCannotGetThrough = TRUE;
@@ -666,11 +669,11 @@ UINT8 HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapP
   }
 }
 
-void DetermineCursorBodyLocation(UINT8 ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc) {
-  INT16 usMapPos;
+void DetermineCursorBodyLocation(uint8_t ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc) {
+  int16_t usMapPos;
   struct SOLDIERTYPE *pTargetSoldier = NULL, *pSoldier;
-  UINT16 usFlags;
-  INT16 sMouseX, sMouseY, sCellX, sCellY, sScreenX, sScreenY;
+  uint16_t usFlags;
+  int16_t sMouseX, sMouseY, sCellX, sCellY, sScreenX, sScreenY;
   BOOLEAN fOnGuy = FALSE;
   struct LEVELNODE *pNode;
 
@@ -842,10 +845,10 @@ void DetermineCursorBodyLocation(UINT8 ubSoldierID, BOOLEAN fDisplay, BOOLEAN fR
   }
 }
 
-UINT8 HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                        UINT32 uiCursorFlags) {
-  INT16 sAPCosts;
-  INT8 bFutureAim;
+uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                          uint32_t uiCursorFlags) {
+  int16_t sAPCosts;
+  int8_t bFutureAim;
   BOOLEAN fEnoughPoints = TRUE;
 
   // DRAW PATH TO GUY
@@ -861,7 +864,7 @@ UINT8 HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fA
     // Calculate action points
     if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
       gsCurrentActionPoints =
-          CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (INT8)(pSoldier->bShownAimTime / 2));
+          CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(pSoldier->bShownAimTime / 2));
       gfUIDisplayActionPoints = TRUE;
       gfUIDisplayActionPointsCenter = TRUE;
 
@@ -874,12 +877,12 @@ UINT8 HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fA
         }
       }
 
-      bFutureAim = (INT8)(REFINE_KNIFE_2);
+      bFutureAim = (int8_t)(REFINE_KNIFE_2);
 
-      sAPCosts = CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (INT8)(bFutureAim / 2));
+      sAPCosts = CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(bFutureAim / 2));
 
       // Determine if we can afford!
-      if (!EnoughPoints(pSoldier, (INT16)sAPCosts, 0, FALSE)) {
+      if (!EnoughPoints(pSoldier, (int16_t)sAPCosts, 0, FALSE)) {
         fEnoughPoints = FALSE;
       }
     }
@@ -941,10 +944,10 @@ UINT8 HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fA
   }
 }
 
-UINT8 HandlePunchCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                        UINT32 uiCursorFlags) {
-  INT16 sAPCosts;
-  INT8 bFutureAim;
+uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                          uint32_t uiCursorFlags) {
+  int16_t sAPCosts;
+  int8_t bFutureAim;
   BOOLEAN fEnoughPoints = TRUE;
 
   // DRAW PATH TO GUY
@@ -960,7 +963,7 @@ UINT8 HandlePunchCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fA
     // Calculate action points
     if (gTacticalStatus.uiFlags & TURNBASED) {
       gsCurrentActionPoints =
-          CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (INT8)(pSoldier->bShownAimTime / 2));
+          CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(pSoldier->bShownAimTime / 2));
       gfUIDisplayActionPoints = TRUE;
       gfUIDisplayActionPointsCenter = TRUE;
 
@@ -973,12 +976,12 @@ UINT8 HandlePunchCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fA
         }
       }
 
-      bFutureAim = (INT8)(REFINE_PUNCH_2);
+      bFutureAim = (int8_t)(REFINE_PUNCH_2);
 
-      sAPCosts = CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (INT8)(bFutureAim / 2));
+      sAPCosts = CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(bFutureAim / 2));
 
       // Determine if we can afford!
-      if (!EnoughPoints(pSoldier, (INT16)sAPCosts, 0, FALSE)) {
+      if (!EnoughPoints(pSoldier, (int16_t)sAPCosts, 0, FALSE)) {
         fEnoughPoints = FALSE;
       }
     }
@@ -1040,8 +1043,8 @@ UINT8 HandlePunchCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fA
   }
 }
 
-UINT8 HandleAidCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                      UINT32 uiCursorFlags) {
+uint8_t HandleAidCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                        uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_MERCSFORAID);
 
@@ -1058,20 +1061,22 @@ UINT8 HandleAidCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fAct
   }
 }
 
-UINT8 HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubItemCursor) {
+uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                                  uint8_t ubItemCursor) {
   return (ACTION_TOSS_UICURSOR);
 }
 
-UINT8 HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fRecalc,
-                                   UINT32 uiCursorFlags, UINT8 ubItemCursor) {
-  INT16 sFinalGridNo;
+uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                                     BOOLEAN fRecalc, uint32_t uiCursorFlags,
+                                     uint8_t ubItemCursor) {
+  int16_t sFinalGridNo;
   static BOOLEAN fBadCTGH = FALSE;
   BOOLEAN fArmed = FALSE;
-  INT8 bLevel;
+  int8_t bLevel;
   struct OBJECTTYPE TempObject;
-  INT8 bSlot;
+  int8_t bSlot;
   struct OBJECTTYPE *pObj;
-  INT8 bAttachPos;
+  int8_t bAttachPos;
 
   // Check for enough ammo...
   if (ubItemCursor == TRAJECTORYCURS) {
@@ -1100,7 +1105,7 @@ UINT8 HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo,
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     if (ubItemCursor == TRAJECTORYCURS) {
       gsCurrentActionPoints =
-          CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (INT8)(pSoldier->bShownAimTime / 2));
+          CalcTotalAPsToAttack(pSoldier, sGridNo, TRUE, (int8_t)(pSoldier->bShownAimTime / 2));
     } else {
       gsCurrentActionPoints = MinAPsToThrow(pSoldier, sGridNo, TRUE);
     }
@@ -1150,8 +1155,8 @@ UINT8 HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo,
           CreateItem(UNDER_GLAUNCHER, pSoldier->inv[HANDPOS].bAttachStatus[bSlot], &TempObject);
 
           if (!CalculateLaunchItemChanceToGetThrough(
-                  pSoldier, &TempObject, sGridNo, (INT8)gsInterfaceLevel,
-                  (INT16)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
+                  pSoldier, &TempObject, sGridNo, (int8_t)gsInterfaceLevel,
+                  (int16_t)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
             fBadCTGH = TRUE;
           } else {
             fBadCTGH = FALSE;
@@ -1160,8 +1165,8 @@ UINT8 HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo,
         }
       } else {
         if (!CalculateLaunchItemChanceToGetThrough(
-                pSoldier, &TempObject, sGridNo, (INT8)gsInterfaceLevel,
-                (INT16)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
+                pSoldier, &TempObject, sGridNo, (int8_t)gsInterfaceLevel,
+                (int16_t)(gsInterfaceLevel * 256), &sFinalGridNo, fArmed, &bLevel, TRUE)) {
           fBadCTGH = TRUE;
         } else {
           fBadCTGH = FALSE;
@@ -1177,7 +1182,8 @@ UINT8 HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo,
   return (GOOD_THROW_UICURSOR);
 }
 
-UINT8 HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 uiCursorFlags) {
+uint8_t HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                               uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_WIREFENCE);
 
@@ -1189,7 +1195,7 @@ UINT8 HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT3
   return (BAD_WIRECUTTER_UICURSOR);
 }
 
-UINT8 HandleRepairCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 uiCursorFlags) {
+uint8_t HandleRepairCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_REPAIR);
 
@@ -1201,7 +1207,7 @@ UINT8 HandleRepairCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 ui
   return (BAD_REPAIR_UICURSOR);
 }
 
-UINT8 HandleRefuelCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 uiCursorFlags) {
+uint8_t HandleRefuelCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_REFUEL);
 
@@ -1213,7 +1219,7 @@ UINT8 HandleRefuelCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 ui
   return (REFUEL_GREY_UICURSOR);
 }
 
-UINT8 HandleJarCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 uiCursorFlags) {
+uint8_t HandleJarCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_JAR);
 
@@ -1225,9 +1231,9 @@ UINT8 HandleJarCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 uiCur
   return (BAD_JAR_UICURSOR);
 }
 
-UINT8 HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 uiCursorFlags) {
+uint8_t HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t uiCursorFlags) {
   struct STRUCTURE *pStructure;
-  INT16 sIntTileGridNo;
+  int16_t sIntTileGridNo;
   struct LEVELNODE *pIntTile;
 
   // DRAW PATH TO GUY
@@ -1246,8 +1252,8 @@ UINT8 HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 ui
   return (PLACE_TINCAN_RED_UICURSOR);
 }
 
-UINT8 HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                         UINT32 uiCursorFlags) {
+uint8_t HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                           uint32_t uiCursorFlags) {
   // Calculate action points
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     gsCurrentActionPoints = GetAPsToUseRemote(pSoldier);
@@ -1267,8 +1273,8 @@ UINT8 HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN f
   }
 }
 
-UINT8 HandleBombCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
-                       UINT32 uiCursorFlags) {
+uint8_t HandleBombCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
+                         uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_BOMB);
 
@@ -1292,7 +1298,7 @@ UINT8 HandleBombCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fAc
 }
 
 void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubItemCursor;
+  uint8_t ubItemCursor;
 
   ubItemCursor = GetActionModeCursor(pSoldier);
 
@@ -1302,8 +1308,8 @@ void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubItemCursor;
-  INT16 sGridNo;
+  uint8_t ubItemCursor;
+  int16_t sGridNo;
 
   ubItemCursor = GetActionModeCursor(pSoldier);
 
@@ -1368,7 +1374,7 @@ void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
 
     case TOSSCURS:
 
-      // BeginAimCubeUI( pSoldier, sGridNo, (INT8)gsInterfaceLevel, 0, 0 );
+      // BeginAimCubeUI( pSoldier, sGridNo, (int8_t)gsInterfaceLevel, 0, 0 );
       // break;
 
     default:
@@ -1378,13 +1384,13 @@ void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) {
-  INT16 sAPCosts;
-  INT8 bFutureAim;
-  UINT8 ubCursor;
+void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, int16_t usMapPos) {
+  int16_t sAPCosts;
+  int8_t bFutureAim;
+  uint8_t ubCursor;
   struct SOLDIERTYPE *pTSoldier;
-  INT16 sGridNo;
-  INT8 bTargetLevel;
+  int16_t sGridNo;
+  int8_t bTargetLevel;
 
   ubCursor = GetActionModeCursor(pSoldier);
 
@@ -1402,7 +1408,7 @@ void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) 
         // pSoldier->bShownAimTime = REFINE_AIM_BURST;
       } else {
         sGridNo = usMapPos;
-        bTargetLevel = (INT8)gsInterfaceLevel;
+        bTargetLevel = (int8_t)gsInterfaceLevel;
 
         // Look for a target here...
         if (gfUIFullTargetFound) {
@@ -1416,10 +1422,10 @@ void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) 
           }
         }
 
-        bFutureAim = (INT8)(pSoldier->bShownAimTime + 2);
+        bFutureAim = (int8_t)(pSoldier->bShownAimTime + 2);
 
         if (bFutureAim <= REFINE_AIM_5) {
-          sAPCosts = CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (INT8)(bFutureAim / 2));
+          sAPCosts = CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (int8_t)(bFutureAim / 2));
 
           // Determine if we can afford!
           if (EnoughPoints(pSoldier, sAPCosts, 0, FALSE)) {
@@ -1450,10 +1456,10 @@ void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) 
 
     case PUNCHCURS:
 
-      bFutureAim = (INT8)(pSoldier->bShownAimTime + REFINE_PUNCH_2);
+      bFutureAim = (int8_t)(pSoldier->bShownAimTime + REFINE_PUNCH_2);
 
       if (bFutureAim <= REFINE_PUNCH_2) {
-        sAPCosts = CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (INT8)(bFutureAim / 2));
+        sAPCosts = CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (int8_t)(bFutureAim / 2));
 
         // Determine if we can afford!
         if (EnoughPoints(pSoldier, sAPCosts, 0, FALSE)) {
@@ -1484,10 +1490,10 @@ void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) 
 
     case KNIFECURS:
 
-      bFutureAim = (INT8)(pSoldier->bShownAimTime + REFINE_KNIFE_2);
+      bFutureAim = (int8_t)(pSoldier->bShownAimTime + REFINE_KNIFE_2);
 
       if (bFutureAim <= REFINE_KNIFE_2) {
-        sAPCosts = CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (INT8)(bFutureAim / 2));
+        sAPCosts = CalcTotalAPsToAttack(pSoldier, usMapPos, TRUE, (int8_t)(bFutureAim / 2));
 
         // Determine if we can afford!
         if (EnoughPoints(pSoldier, sAPCosts, 0, FALSE)) {
@@ -1527,9 +1533,9 @@ void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) 
   }
 }
 
-UINT8 GetActionModeCursor(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubCursor;
-  UINT16 usInHand;
+uint8_t GetActionModeCursor(struct SOLDIERTYPE *pSoldier) {
+  uint8_t ubCursor;
+  uint16_t usInHand;
 
   // If we are an EPC, do nothing....
   // if ( ( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) )
@@ -1590,7 +1596,7 @@ UINT8 GetActionModeCursor(struct SOLDIERTYPE *pSoldier) {
 
 // Switch on item, display appropriate feedback cursor for a click....
 void HandleUICursorRTFeedback(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubItemCursor;
+  uint8_t ubItemCursor;
 
   ubItemCursor = GetActionModeCursor(pSoldier);
 

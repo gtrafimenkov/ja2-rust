@@ -27,16 +27,16 @@
 #define VIDEO_OVERLAYS 100
 
 BACKGROUND_SAVE gBackSaves[BACKGROUND_BUFFERS];
-UINT32 guiNumBackSaves = 0;
+uint32_t guiNumBackSaves = 0;
 
 VIDEO_OVERLAY gVideoOverlays[VIDEO_OVERLAYS];
-UINT32 guiNumVideoOverlays = 0;
+uint32_t guiNumVideoOverlays = 0;
 
-void AllocateVideoOverlayArea(UINT32 uiCount);
-void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount);
+void AllocateVideoOverlayArea(uint32_t uiCount);
+void SaveVideoOverlayArea(uint32_t uiSrcBuffer, uint32_t uiCount);
 
 // BACKGROUND_SAVE	gTopmostSaves[BACKGROUND_BUFFERS];
-// UINT32 guiNumTopmostSaves=0;
+// uint32_t guiNumTopmostSaves=0;
 
 SGPRect gDirtyClipRect = {0, 0, 640, 480};
 
@@ -46,7 +46,7 @@ BOOLEAN InitializeBaseDirtyRectQueue() { return (TRUE); }
 
 void ShutdownBaseDirtyRectQueue() {}
 
-void AddBaseDirtyRect(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
+void AddBaseDirtyRect(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom) {
   SGPRect aRect;
 
   if (iLeft < 0) {
@@ -110,15 +110,15 @@ BOOLEAN ExecuteBaseDirtyRectQueue() {
 
 BOOLEAN EmptyDirtyRectQueue() { return (TRUE); }
 
-INT32 GetFreeBackgroundBuffer(void) {
-  UINT32 uiCount;
+int32_t GetFreeBackgroundBuffer(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if ((gBackSaves[uiCount].fAllocated == FALSE) && (gBackSaves[uiCount].fFilled == FALSE))
-      return ((INT32)uiCount);
+      return ((int32_t)uiCount);
   }
 
-  if (guiNumBackSaves < BACKGROUND_BUFFERS) return ((INT32)guiNumBackSaves++);
+  if (guiNumBackSaves < BACKGROUND_BUFFERS) return ((int32_t)guiNumBackSaves++);
 #ifdef JA2BETAVERSION
   else {
     // else display an error message
@@ -133,24 +133,24 @@ INT32 GetFreeBackgroundBuffer(void) {
 }
 
 void RecountBackgrounds(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumBackSaves - 1; (uiCount >= 0); uiCount--) {
     if ((gBackSaves[uiCount].fAllocated) || (gBackSaves[uiCount].fFilled)) {
-      guiNumBackSaves = (UINT32)(uiCount + 1);
+      guiNumBackSaves = (uint32_t)(uiCount + 1);
       break;
     }
   }
 }
 
-INT32 RegisterBackgroundRect(UINT32 uiFlags, INT16 *pSaveArea, INT16 sLeft, INT16 sTop,
-                             INT16 sRight, INT16 sBottom) {
-  UINT32 uiBufSize;
-  INT32 iBackIndex;
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
-  INT32 uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
-  UINT32 usHeight, usWidth;
-  INT32 iTempX, iTempY;
+int32_t RegisterBackgroundRect(uint32_t uiFlags, int16_t *pSaveArea, int16_t sLeft, int16_t sTop,
+                               int16_t sRight, int16_t sBottom) {
+  uint32_t uiBufSize;
+  int32_t iBackIndex;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
+  uint32_t usHeight, usWidth;
+  int32_t iTempX, iTempY;
 
   // Don't register if we are rendering and we are below the viewport
   // if ( sTop >= gsVIEWPORT_WINDOW_END_Y )
@@ -172,22 +172,22 @@ INT32 RegisterBackgroundRect(UINT32 uiFlags, INT16 *pSaveArea, INT16 sLeft, INT1
   iTempY = sTop;
 
   // Clip to rect
-  uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  uiRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-  uiBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+  uiRightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+  uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+  uiBottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
   // check if whole thing is clipped
-  if ((uiLeftSkip >= (INT32)usWidth) || (uiRightSkip >= (INT32)usWidth)) return (-1);
+  if ((uiLeftSkip >= (int32_t)usWidth) || (uiRightSkip >= (int32_t)usWidth)) return (-1);
 
   // check if whole thing is clipped
-  if ((uiTopSkip >= (INT32)usHeight) || (uiBottomSkip >= (INT32)usHeight)) return (-1);
+  if ((uiTopSkip >= (int32_t)usHeight) || (uiBottomSkip >= (int32_t)usHeight)) return (-1);
 
   // Set re-set values given based on clipping
-  sLeft = sLeft + (INT16)uiLeftSkip;
-  sRight = sRight - (INT16)uiRightSkip;
-  sTop = sTop + (INT16)uiTopSkip;
-  sBottom = sBottom - (INT16)uiBottomSkip;
+  sLeft = sLeft + (int16_t)uiLeftSkip;
+  sRight = sRight - (int16_t)uiRightSkip;
+  sTop = sTop + (int16_t)uiTopSkip;
+  sBottom = sBottom - (int16_t)uiBottomSkip;
 
   if ((iBackIndex = GetFreeBackgroundBuffer()) == (-1)) return (-1);
 
@@ -201,11 +201,12 @@ INT32 RegisterBackgroundRect(UINT32 uiFlags, INT16 *pSaveArea, INT16 sLeft, INT1
     if (uiBufSize == 0) return (-1);
 
     if (uiFlags & BGND_FLAG_SAVERECT) {
-      if ((gBackSaves[iBackIndex].pSaveArea = (UINT16 *)MemAlloc(uiBufSize)) == NULL) return (-1);
+      if ((gBackSaves[iBackIndex].pSaveArea = (uint16_t *)MemAlloc(uiBufSize)) == NULL) return (-1);
     }
 
     if (uiFlags & BGND_FLAG_SAVE_Z) {
-      if ((gBackSaves[iBackIndex].pZSaveArea = (UINT16 *)MemAlloc(uiBufSize)) == NULL) return (-1);
+      if ((gBackSaves[iBackIndex].pZSaveArea = (uint16_t *)MemAlloc(uiBufSize)) == NULL)
+        return (-1);
       gBackSaves[iBackIndex].fZBuffer = TRUE;
     }
 
@@ -228,7 +229,7 @@ INT32 RegisterBackgroundRect(UINT32 uiFlags, INT16 *pSaveArea, INT16 sLeft, INT1
   return (iBackIndex);
 }
 
-void SetBackgroundRectFilled(UINT32 uiBackgroundID) {
+void SetBackgroundRectFilled(uint32_t uiBackgroundID) {
   gBackSaves[uiBackgroundID].fFilled = TRUE;
 
   AddBaseDirtyRect(gBackSaves[uiBackgroundID].sLeft, gBackSaves[uiBackgroundID].sTop,
@@ -236,8 +237,8 @@ void SetBackgroundRectFilled(UINT32 uiBackgroundID) {
 }
 
 BOOLEAN RestoreBackgroundRects(void) {
-  UINT32 uiCount, uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  uint32_t uiCount, uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
@@ -246,8 +247,8 @@ BOOLEAN RestoreBackgroundRects(void) {
     if (gBackSaves[uiCount].fFilled && (!gBackSaves[uiCount].fDisabled)) {
       if (gBackSaves[uiCount].uiFlags & BGND_FLAG_SAVERECT) {
         if (gBackSaves[uiCount].pSaveArea != NULL) {
-          Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                          (UINT16 *)gBackSaves[uiCount].pSaveArea, gBackSaves[uiCount].sWidth * 2,
+          Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES,
+                          (uint16_t *)gBackSaves[uiCount].pSaveArea, gBackSaves[uiCount].sWidth * 2,
                           gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop, 0, 0,
                           gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
 
@@ -256,14 +257,14 @@ BOOLEAN RestoreBackgroundRects(void) {
         }
       } else if (gBackSaves[uiCount].uiFlags & BGND_FLAG_SAVE_Z) {
         if (gBackSaves[uiCount].fZBuffer) {
-          Blt16BPPTo16BPP((UINT16 *)gpZBuffer, uiDestPitchBYTES,
-                          (UINT16 *)gBackSaves[uiCount].pZSaveArea, gBackSaves[uiCount].sWidth * 2,
-                          gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop, 0, 0,
-                          gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
+          Blt16BPPTo16BPP(
+              (uint16_t *)gpZBuffer, uiDestPitchBYTES, (uint16_t *)gBackSaves[uiCount].pZSaveArea,
+              gBackSaves[uiCount].sWidth * 2, gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+              0, 0, gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
         }
       } else {
-        Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
-                        gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+        Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf,
+                        uiSrcPitchBYTES, gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                         gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                         gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
 
@@ -282,7 +283,7 @@ BOOLEAN RestoreBackgroundRects(void) {
 }
 
 BOOLEAN EmptyBackgroundRects(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if (gBackSaves[uiCount].fFilled) {
@@ -332,8 +333,8 @@ BOOLEAN EmptyBackgroundRects(void) {
 }
 
 BOOLEAN SaveBackgroundRects(void) {
-  UINT32 uiCount, uiDestPitchBYTES;
-  UINT8 *pSrcBuf;
+  uint32_t uiCount, uiDestPitchBYTES;
+  uint8_t *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 
@@ -341,15 +342,15 @@ BOOLEAN SaveBackgroundRects(void) {
     if (gBackSaves[uiCount].fAllocated && (!gBackSaves[uiCount].fDisabled)) {
       if (gBackSaves[uiCount].uiFlags & BGND_FLAG_SAVERECT) {
         if (gBackSaves[uiCount].pSaveArea != NULL) {
-          Blt16BPPTo16BPP((UINT16 *)gBackSaves[uiCount].pSaveArea, gBackSaves[uiCount].sWidth * 2,
-                          (UINT16 *)pSrcBuf, uiDestPitchBYTES, 0, 0, gBackSaves[uiCount].sLeft,
+          Blt16BPPTo16BPP((uint16_t *)gBackSaves[uiCount].pSaveArea, gBackSaves[uiCount].sWidth * 2,
+                          (uint16_t *)pSrcBuf, uiDestPitchBYTES, 0, 0, gBackSaves[uiCount].sLeft,
                           gBackSaves[uiCount].sTop, gBackSaves[uiCount].sWidth,
                           gBackSaves[uiCount].sHeight);
         }
 
       } else if (gBackSaves[uiCount].fZBuffer) {
         Blt16BPPTo16BPP(gBackSaves[uiCount].pZSaveArea, gBackSaves[uiCount].sWidth * 2,
-                        (UINT16 *)gpZBuffer, uiDestPitchBYTES, 0, 0, gBackSaves[uiCount].sLeft,
+                        (uint16_t *)gpZBuffer, uiDestPitchBYTES, 0, 0, gBackSaves[uiCount].sLeft,
                         gBackSaves[uiCount].sTop, gBackSaves[uiCount].sWidth,
                         gBackSaves[uiCount].sHeight);
       } else {
@@ -367,7 +368,7 @@ BOOLEAN SaveBackgroundRects(void) {
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRect(INT32 iIndex) {
+BOOLEAN FreeBackgroundRect(int32_t iIndex) {
   if (iIndex != -1) {
     gBackSaves[iIndex].fAllocated = FALSE;
 
@@ -377,13 +378,13 @@ BOOLEAN FreeBackgroundRect(INT32 iIndex) {
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRectPending(INT32 iIndex) {
+BOOLEAN FreeBackgroundRectPending(int32_t iIndex) {
   gBackSaves[iIndex].fPendingDelete = TRUE;
 
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRectNow(INT32 uiCount) {
+BOOLEAN FreeBackgroundRectNow(int32_t uiCount) {
   if (gBackSaves[uiCount].fFreeMemory == TRUE) {
     // MemFree(gBackSaves[uiCount].pSaveArea);
     if (gBackSaves[uiCount].fZBuffer) MemFree(gBackSaves[uiCount].pZSaveArea);
@@ -399,8 +400,8 @@ BOOLEAN FreeBackgroundRectNow(INT32 uiCount) {
   return (TRUE);
 }
 
-BOOLEAN FreeBackgroundRectType(UINT32 uiFlags) {
-  UINT32 uiCount;
+BOOLEAN FreeBackgroundRectType(uint32_t uiFlags) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if (gBackSaves[uiCount].uiFlags & uiFlags) {
@@ -428,7 +429,7 @@ BOOLEAN InitializeBackgroundRects(void) {
 }
 
 BOOLEAN InvalidateBackgroundRects(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) gBackSaves[uiCount].fFilled = FALSE;
 
@@ -436,24 +437,24 @@ BOOLEAN InvalidateBackgroundRects(void) {
 }
 
 BOOLEAN ShutdownBackgroundRects(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
-    if (gBackSaves[uiCount].fAllocated) FreeBackgroundRectNow((INT32)uiCount);
+    if (gBackSaves[uiCount].fAllocated) FreeBackgroundRectNow((int32_t)uiCount);
   }
 
   return (TRUE);
 }
 
-void DisableBackgroundRect(INT32 iIndex, BOOLEAN fDisabled) {
+void DisableBackgroundRect(int32_t iIndex, BOOLEAN fDisabled) {
   gBackSaves[iIndex].fDisabled = fDisabled;
 }
 
 BOOLEAN UpdateSaveBuffer(void) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
-  UINT16 usWidth, usHeight;
-  UINT8 ubBitDepth;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
+  uint16_t usWidth, usHeight;
+  uint8_t ubBitDepth;
 
   // Update saved buffer - do for the viewport size ony!
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
@@ -461,7 +462,7 @@ BOOLEAN UpdateSaveBuffer(void) {
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
   pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
                   gsVIEWPORT_WINDOW_START_Y, 0, gsVIEWPORT_WINDOW_START_Y, usWidth,
                   (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
 
@@ -471,17 +472,17 @@ BOOLEAN UpdateSaveBuffer(void) {
   return (TRUE);
 }
 
-BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+BOOLEAN RestoreExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight) {
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
   pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, sLeft, sTop, sWidth, sHeight);
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                  sLeft, sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(guiRENDERBUFFER);
   UnLockVideoSurface(guiSAVEBUFFER);
 
@@ -491,10 +492,10 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
   return (TRUE);
 }
 
-BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  INT16 sLeft, sTop, sWidth, sHeight;
-  UINT8 *pDestBuf, *pSrcBuf;
+BOOLEAN RestoreExternBackgroundRectGivenID(int32_t iBack) {
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  int16_t sLeft, sTop, sWidth, sHeight;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   if (!gBackSaves[iBack].fAllocated) {
     return (FALSE);
@@ -510,8 +511,8 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, sLeft, sTop, sWidth, sHeight);
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                  sLeft, sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(guiRENDERBUFFER);
   UnLockVideoSurface(guiSAVEBUFFER);
 
@@ -521,17 +522,17 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   return (TRUE);
 }
 
-BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+BOOLEAN CopyExternBackgroundRect(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight) {
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
   pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, sLeft, sTop, sWidth, sHeight);
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
+                  sLeft, sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(guiSAVEBUFFER);
   UnLockVideoSurface(guiRENDERBUFFER);
 
@@ -547,11 +548,11 @@ BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
 // to the video buffer.
 //
 //*****************************************************************************
-UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
+uint16_t gprintfdirty(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
-  UINT16 uiStringLength, uiStringHeight;
-  INT32 iBack;
+  uint16_t uiStringLength, uiStringHeight;
+  int32_t iBack;
 
   Assert(pFontString != NULL);
 
@@ -569,8 +570,8 @@ UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
   }
 
   if (uiStringLength > 0) {
-    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, x, y, (INT16)(x + uiStringLength),
-                                   (INT16)(y + uiStringHeight));
+    iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, x, y, (int16_t)(x + uiStringLength),
+                                   (int16_t)(y + uiStringHeight));
 
     if (iBack != -1) {
       SetBackgroundRectFilled(iBack);
@@ -580,10 +581,10 @@ UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
   return (uiStringLength);
 }
 
-UINT16 gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...) {
+uint16_t gprintfinvalidate(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
-  UINT16 uiStringLength, uiStringHeight;
+  uint16_t uiStringLength, uiStringHeight;
 
   Assert(pFontString != NULL);
 
@@ -596,15 +597,15 @@ UINT16 gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...) {
   uiStringHeight = GetFontHeight(FontDefault);
 
   if (uiStringLength > 0) {
-    InvalidateRegionEx(x, y, (INT16)(x + uiStringLength), (INT16)(y + uiStringHeight), 0);
+    InvalidateRegionEx(x, y, (int16_t)(x + uiStringLength), (int16_t)(y + uiStringHeight), 0);
   }
   return (uiStringLength);
 }
 
-UINT16 gprintfRestore(INT16 x, INT16 y, STR16 pFontString, ...) {
+uint16_t gprintfRestore(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
-  UINT16 uiStringLength, uiStringHeight;
+  uint16_t uiStringLength, uiStringHeight;
 
   Assert(pFontString != NULL);
 
@@ -624,33 +625,33 @@ UINT16 gprintfRestore(INT16 x, INT16 y, STR16 pFontString, ...) {
 }
 
 // OVERLAY STUFF
-INT32 GetFreeVideoOverlay(void) {
-  UINT32 uiCount;
+int32_t GetFreeVideoOverlay(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
-    if ((gVideoOverlays[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gVideoOverlays[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumVideoOverlays < BACKGROUND_BUFFERS) return ((INT32)guiNumVideoOverlays++);
+  if (guiNumVideoOverlays < BACKGROUND_BUFFERS) return ((int32_t)guiNumVideoOverlays++);
 
   return (-1);
 }
 
 void RecountVideoOverlays(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumVideoOverlays - 1; (uiCount >= 0); uiCount--) {
     if ((gVideoOverlays[uiCount].fAllocated)) {
-      guiNumVideoOverlays = (UINT32)(uiCount + 1);
+      guiNumVideoOverlays = (uint32_t)(uiCount + 1);
       break;
     }
   }
 }
 
-INT32 RegisterVideoOverlay(UINT32 uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
-  UINT32 iBlitterIndex;
-  UINT32 iBackIndex;
-  UINT16 uiStringLength, uiStringHeight;
+int32_t RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
+  uint32_t iBlitterIndex;
+  uint32_t iBackIndex;
+  uint16_t uiStringLength, uiStringHeight;
 
   if (uiFlags & VOVERLAY_DIRTYBYTEXT) {
     // Get dims by supplied text
@@ -663,8 +664,8 @@ INT32 RegisterVideoOverlay(UINT32 uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
 
     iBackIndex =
         RegisterBackgroundRect(BGND_FLAG_PERMANENT, NULL, pTopmostDesc->sLeft, pTopmostDesc->sTop,
-                               (INT16)(pTopmostDesc->sLeft + uiStringLength),
-                               (INT16)(pTopmostDesc->sTop + uiStringHeight));
+                               (int16_t)(pTopmostDesc->sLeft + uiStringLength),
+                               (int16_t)(pTopmostDesc->sTop + uiStringHeight));
 
   } else {
     // Register background
@@ -708,13 +709,13 @@ INT32 RegisterVideoOverlay(UINT32 uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc) {
   return (iBlitterIndex);
 }
 
-void SetVideoOverlayPendingDelete(INT32 iVideoOverlay) {
+void SetVideoOverlayPendingDelete(int32_t iVideoOverlay) {
   if (iVideoOverlay != -1) {
     gVideoOverlays[iVideoOverlay].fDeletionPending = TRUE;
   }
 }
 
-void RemoveVideoOverlay(INT32 iVideoOverlay) {
+void RemoveVideoOverlay(int32_t iVideoOverlay) {
   if (iVideoOverlay != -1 && gVideoOverlays[iVideoOverlay].fAllocated) {
     // Check if we are actively scrolling
     if (gVideoOverlays[iVideoOverlay].fActivelySaving) {
@@ -743,10 +744,10 @@ void RemoveVideoOverlay(INT32 iVideoOverlay) {
   }
 }
 
-BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, UINT32 iBlitterIndex,
+BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, uint32_t iBlitterIndex,
                            BOOLEAN fForceAll) {
-  UINT32 uiFlags;
-  UINT16 uiStringLength, uiStringHeight;
+  uint32_t uiFlags;
+  uint16_t uiStringLength, uiStringHeight;
 
   if (iBlitterIndex != -1) {
     if (!gVideoOverlays[iBlitterIndex].fAllocated) {
@@ -795,8 +796,8 @@ BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, UINT32 iBlitterInde
 
           gVideoOverlays[iBlitterIndex].uiBackground = RegisterBackgroundRect(
               BGND_FLAG_PERMANENT, NULL, pTopmostDesc->sLeft, pTopmostDesc->sTop,
-              (INT16)(pTopmostDesc->sLeft + uiStringLength),
-              (INT16)(pTopmostDesc->sTop + uiStringHeight));
+              (int16_t)(pTopmostDesc->sLeft + uiStringLength),
+              (int16_t)(pTopmostDesc->sTop + uiStringHeight));
           gVideoOverlays[iBlitterIndex].sX = pTopmostDesc->sX;
           gVideoOverlays[iBlitterIndex].sY = pTopmostDesc->sY;
         }
@@ -808,7 +809,7 @@ BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, UINT32 iBlitterInde
 
 // FUnctions for entrie array of blitters
 void ExecuteVideoOverlays() {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated) {
@@ -836,9 +837,9 @@ void ExecuteVideoOverlays() {
   }
 }
 
-void ExecuteVideoOverlaysToAlternateBuffer(UINT32 uiNewDestBuffer) {
-  UINT32 uiCount;
-  UINT32 uiOldDestBuffer;
+void ExecuteVideoOverlaysToAlternateBuffer(uint32_t uiNewDestBuffer) {
+  uint32_t uiCount;
+  uint32_t uiOldDestBuffer;
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -857,9 +858,9 @@ void ExecuteVideoOverlaysToAlternateBuffer(UINT32 uiNewDestBuffer) {
 }
 
 void AllocateVideoOverlaysArea() {
-  UINT32 uiCount;
-  UINT32 uiBufSize;
-  UINT32 iBackIndex;
+  uint32_t uiCount;
+  uint32_t uiBufSize;
+  uint32_t iBackIndex;
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -875,16 +876,16 @@ void AllocateVideoOverlaysArea() {
       // gVideoOverlays[ uiCount ].zText ) );
 
       // Allocate
-      if ((gVideoOverlays[uiCount].pSaveArea = (UINT16 *)MemAlloc(uiBufSize)) == NULL) {
+      if ((gVideoOverlays[uiCount].pSaveArea = (uint16_t *)MemAlloc(uiBufSize)) == NULL) {
         continue;
       }
     }
   }
 }
 
-void AllocateVideoOverlayArea(UINT32 uiCount) {
-  UINT32 uiBufSize;
-  UINT32 iBackIndex;
+void AllocateVideoOverlayArea(uint32_t uiCount) {
+  uint32_t uiBufSize;
+  uint32_t iBackIndex;
 
   if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
     iBackIndex = gVideoOverlays[uiCount].uiBackground;
@@ -899,16 +900,16 @@ void AllocateVideoOverlayArea(UINT32 uiCount) {
     // gVideoOverlays[ uiCount ].zText ) );
 
     // Allocate
-    if ((gVideoOverlays[uiCount].pSaveArea = (UINT16 *)MemAlloc(uiBufSize)) == NULL) {
+    if ((gVideoOverlays[uiCount].pSaveArea = (uint16_t *)MemAlloc(uiBufSize)) == NULL) {
     }
   }
 }
 
-void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
-  UINT32 uiCount;
-  UINT32 iBackIndex;
-  UINT32 uiSrcPitchBYTES;
-  UINT8 *pSrcBuf;
+void SaveVideoOverlaysArea(uint32_t uiSrcBuffer) {
+  uint32_t uiCount;
+  uint32_t iBackIndex;
+  uint32_t uiSrcPitchBYTES;
+  uint8_t *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
 
@@ -923,9 +924,9 @@ void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
         iBackIndex = gVideoOverlays[uiCount].uiBackground;
 
         // Save data from frame buffer!
-        Blt16BPPTo16BPP((UINT16 *)gVideoOverlays[uiCount].pSaveArea,
-                        gBackSaves[iBackIndex].sWidth * 2, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
-                        gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
+        Blt16BPPTo16BPP((uint16_t *)gVideoOverlays[uiCount].pSaveArea,
+                        gBackSaves[iBackIndex].sWidth * 2, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
+                        0, gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
                         gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight);
       }
     }
@@ -934,10 +935,10 @@ void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
   UnLockVideoSurface(uiSrcBuffer);
 }
 
-void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
-  UINT32 iBackIndex;
-  UINT32 uiSrcPitchBYTES;
-  UINT8 *pSrcBuf;
+void SaveVideoOverlayArea(uint32_t uiSrcBuffer, uint32_t uiCount) {
+  uint32_t iBackIndex;
+  uint32_t uiSrcPitchBYTES;
+  uint8_t *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
 
@@ -951,8 +952,8 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
       iBackIndex = gVideoOverlays[uiCount].uiBackground;
 
       // Save data from frame buffer!
-      Blt16BPPTo16BPP((UINT16 *)gVideoOverlays[uiCount].pSaveArea,
-                      gBackSaves[iBackIndex].sWidth * 2, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
+      Blt16BPPTo16BPP((uint16_t *)gVideoOverlays[uiCount].pSaveArea,
+                      gBackSaves[iBackIndex].sWidth * 2, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
                       gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
                       gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight);
     }
@@ -962,7 +963,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
 }
 
 void DeleteVideoOverlaysArea() {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -985,16 +986,16 @@ void DeleteVideoOverlaysArea() {
   }
 }
 
-BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
-  UINT32 uiCount, uiDestPitchBYTES;
-  UINT8 *pDestBuf;
-  UINT32 iBackIndex;
+BOOLEAN RestoreShiftedVideoOverlays(int16_t sShiftX, int16_t sShiftY) {
+  uint32_t uiCount, uiDestPitchBYTES;
+  uint8_t *pDestBuf;
+  uint32_t iBackIndex;
 
-  INT32 ClipX1, ClipY1, ClipX2, ClipY2;
-  INT32 uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
-  UINT32 usHeight, usWidth;
-  INT32 iTempX, iTempY;
-  INT16 sLeft, sTop, sRight, sBottom;
+  int32_t ClipX1, ClipY1, ClipX2, ClipY2;
+  int32_t uiLeftSkip, uiRightSkip, uiTopSkip, uiBottomSkip;
+  uint32_t usHeight, usWidth;
+  int32_t iTempX, iTempY;
+  int16_t sLeft, sTop, sRight, sBottom;
 
   ClipX1 = 0;
   ClipY1 = gsVIEWPORT_WINDOW_START_Y;
@@ -1021,28 +1022,28 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
         iTempY = sTop + sShiftY;
 
         // Clip to rect
-        uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-        uiRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-        uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
-        uiBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+        uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (int32_t)usWidth);
+        uiRightSkip = min(max(ClipX2, (iTempX + (int32_t)usWidth)) - ClipX2, (int32_t)usWidth);
+        uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (int32_t)usHeight);
+        uiBottomSkip = min(max(ClipY2, (iTempY + (int32_t)usHeight)) - ClipY2, (int32_t)usHeight);
 
         // check if whole thing is clipped
-        if ((uiLeftSkip >= (INT32)usWidth) || (uiRightSkip >= (INT32)usWidth)) continue;
+        if ((uiLeftSkip >= (int32_t)usWidth) || (uiRightSkip >= (int32_t)usWidth)) continue;
 
         // check if whole thing is clipped
-        if ((uiTopSkip >= (INT32)usHeight) || (uiBottomSkip >= (INT32)usHeight)) continue;
+        if ((uiTopSkip >= (int32_t)usHeight) || (uiBottomSkip >= (int32_t)usHeight)) continue;
 
         // Set re-set values given based on clipping
-        sLeft = iTempX + (INT16)uiLeftSkip;
-        sTop = iTempY + (INT16)uiTopSkip;
-        sRight = sRight + sShiftX - (INT16)uiRightSkip;
-        sBottom = sBottom + sShiftY - (INT16)uiBottomSkip;
+        sLeft = iTempX + (int16_t)uiLeftSkip;
+        sTop = iTempY + (int16_t)uiTopSkip;
+        sRight = sRight + sShiftX - (int16_t)uiRightSkip;
+        sBottom = sBottom + sShiftY - (int16_t)uiBottomSkip;
 
         usHeight = sBottom - sTop;
         usWidth = sRight - sLeft;
 
-        Blt16BPPTo16BPP((UINT16 *)(UINT16 *)pDestBuf, uiDestPitchBYTES,
-                        (UINT16 *)gVideoOverlays[uiCount].pSaveArea,
+        Blt16BPPTo16BPP((uint16_t *)(uint16_t *)pDestBuf, uiDestPitchBYTES,
+                        (uint16_t *)gVideoOverlays[uiCount].pSaveArea,
                         gBackSaves[iBackIndex].sWidth * 2, sLeft, sTop, uiLeftSkip, uiTopSkip,
                         usWidth, usHeight);
 
@@ -1059,7 +1060,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   return (TRUE);
 }
 
-BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, UINT8 ubNum, UINT32 uiData) {
+BOOLEAN SetOverlayUserData(int32_t iVideoOverlay, uint8_t ubNum, uint32_t uiData) {
   if (!gVideoOverlays[iVideoOverlay].fAllocated) {
     return (FALSE);
   }
@@ -1075,8 +1076,8 @@ BOOLEAN SetOverlayUserData(INT32 iVideoOverlay, UINT8 ubNum, UINT32 uiData) {
 
 // Common callbacks for topmost blitters
 void BlitMFont(VIDEO_OVERLAY *pBlitter) {
-  UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint8_t *pDestBuf;
+  uint32_t uiDestPitchBYTES;
 
   pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
 
@@ -1090,16 +1091,16 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   UnLockVideoSurface(pBlitter->uiDestBuff);
 }
 
-BOOLEAN BlitBufferToBuffer(UINT32 uiSrcBuffer, UINT32 uiDestBuffer, UINT16 usSrcX, UINT16 usSrcY,
-                           UINT16 usWidth, UINT16 usHeight) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+BOOLEAN BlitBufferToBuffer(uint32_t uiSrcBuffer, uint32_t uiDestBuffer, uint16_t usSrcX,
+                           uint16_t usSrcY, uint16_t usWidth, uint16_t usHeight) {
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
   BOOLEAN fRetVal;
 
   pDestBuf = LockVideoSurface(uiDestBuffer, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
 
-  fRetVal = Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf,
+  fRetVal = Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf,
                             uiSrcPitchBYTES, usSrcX, usSrcY, usSrcX, usSrcY, usWidth, usHeight);
 
   UnLockVideoSurface(uiDestBuffer);
@@ -1108,7 +1109,7 @@ BOOLEAN BlitBufferToBuffer(UINT32 uiSrcBuffer, UINT32 uiDestBuffer, UINT16 usSrc
   return (fRetVal);
 }
 
-void EnableVideoOverlay(BOOLEAN fEnable, INT32 iOverlayIndex) {
+void EnableVideoOverlay(BOOLEAN fEnable, int32_t iOverlayIndex) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   memset(&VideoOverlayDesc, 0, sizeof(VideoOverlayDesc));

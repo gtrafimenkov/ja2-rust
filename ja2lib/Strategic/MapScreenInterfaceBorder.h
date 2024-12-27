@@ -55,13 +55,13 @@ extern BOOLEAN fZoomFlag;
 // extern BOOLEAN fDisabledMapBorder;
 
 // scroll animation
-extern INT32 giScrollButtonState;
+extern int32_t giScrollButtonState;
 
 BOOLEAN LoadMapBorderGraphics(void);
 void DeleteMapBorderGraphics(void);
 void RenderMapBorder(void);
 // void RenderMapBorderCorner( void );
-// void ShowDestinationOfPlottedPath( STR16 pLoc );
+// void ShowDestinationOfPlottedPath( wchar_t* pLoc );
 // void ResetAircraftButton( void );
 // void HandleMapScrollButtonStates( void );
 
@@ -97,7 +97,7 @@ void DeleteMouseRegionsForLevelMarkers(void);
 
 void InitMapScreenFlags(void);
 
-void MapBorderButtonOff(UINT8 ubBorderButtonIndex);
-void MapBorderButtonOn(UINT8 ubBorderButtonIndex);
+void MapBorderButtonOff(uint8_t ubBorderButtonIndex);
+void MapBorderButtonOn(uint8_t ubBorderButtonIndex);
 
 #endif

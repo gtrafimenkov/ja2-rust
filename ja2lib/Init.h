@@ -3,7 +3,7 @@
 
 #include "SGP/Types.h"
 
-UINT32 InitializeJA2();
+uint32_t InitializeJA2();
 void ShutdownJA2();
 
 #endif

@@ -5,40 +5,40 @@
 #include "SGP/Types.h"
 #include "Utils/FontControl.h"
 
-extern UINT32 guiDropDownBorder;
+extern uint32_t guiDropDownBorder;
 extern struct MOUSE_REGION pScreenMask;
 
-INT32 EnterLaptop();
+int32_t EnterLaptop();
 void ExitLaptop();
 void RenderLaptop();
-UINT32 ExitLaptopMode(UINT32 uiMode);
+uint32_t ExitLaptopMode(uint32_t uiMode);
 void EnterNewLaptopMode();
-UINT32 DrawLapTopIcons();
-UINT32 DrawLapTopText();
+uint32_t DrawLapTopIcons();
+uint32_t DrawLapTopText();
 void ReDrawHighLight();
 void DrawButtonText();
 void InitBookMarkList();
-void SetBookMark(INT32 iBookId);
-void RemoveBookmark(INT32 iBookId);
+void SetBookMark(int32_t iBookId);
+void RemoveBookmark(int32_t iBookId);
 BOOLEAN LeaveLapTopScreen();
-void SetLaptopExitScreen(UINT32 uiExitScreen);
+void SetLaptopExitScreen(uint32_t uiExitScreen);
 void SetLaptopNewGameFlag();
-UINT32 DrawLapTopIcons();
-void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+uint32_t DrawLapTopIcons();
+void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 void HandleRightButtonUpEvent(void);
-BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT8 ubFlags,
-                           MSGBOX_CALLBACK ReturnCallback);
-void GoToWebPage(INT32 iPageId);
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight,
-                              UINT32 uiBackGround);
+BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+                           uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback);
+void GoToWebPage(int32_t iPageId);
+BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t usHeight,
+                              uint32_t uiBackGround);
 void BlitTitleBarIcons(void);
-void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usKeyState);
+void HandleKeyBoardShortCutsForLapTop(uint16_t usEvent, uint32_t usParam, uint16_t usKeyState);
 BOOLEAN RenderWWWProgramTitleBar(void);
 void DisplayProgramBoundingBox(BOOLEAN fMarkButtons);
-BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
-                                 UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback);
-BOOLEAN RemoveBookMark(INT32 iBookId);
-void CreateFileAndNewEmailIconFastHelpText(UINT32 uiHelpTextID, BOOLEAN fClearHelpText);
+BOOLEAN DoLapTopSystemMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+                                 uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
+BOOLEAN RemoveBookMark(int32_t iBookId);
+void CreateFileAndNewEmailIconFastHelpText(uint32_t uiHelpTextID, BOOLEAN fClearHelpText);
 BOOLEAN InitLaptopAndLaptopScreens();
 
 // clear out all tempf iles from laptop
@@ -46,11 +46,11 @@ void ClearOutTempLaptopFiles(void);
 
 void HaventMadeImpMercEmailCallBack();
 
-extern UINT32 guiCurrentLaptopMode;
-extern UINT32 guiPreviousLaptopMode;
-extern INT32 giCurrentSubPage;
-extern UINT32 guiCurrentLapTopCursor;
-extern UINT32 guiPreviousLapTopCursor;
+extern uint32_t guiCurrentLaptopMode;
+extern uint32_t guiPreviousLaptopMode;
+extern int32_t giCurrentSubPage;
+extern uint32_t guiCurrentLapTopCursor;
+extern uint32_t guiPreviousLapTopCursor;
 extern BOOLEAN fMarkButtonsDirtyFlag;
 extern BOOLEAN fNotVistedImpYet;
 extern BOOLEAN fReDrawScreenFlag;
@@ -61,8 +61,8 @@ extern BOOLEAN fEscKeyHandled;
 extern BOOLEAN fReDrawPostButtonRender;
 extern BOOLEAN fCurrentlyInLaptop;
 // extern BOOLEAN gfNewGameLaptop;
-extern UINT32 guiLaptopBACKGROUND;
-extern UINT32 guiTITLEBARICONS;
+extern uint32_t guiLaptopBACKGROUND;
+extern uint32_t guiTITLEBARICONS;
 extern BOOLEAN fDoneLoadPending;
 extern BOOLEAN fReConnectingFlag;
 extern BOOLEAN fConnectingToSubPage;
@@ -71,16 +71,16 @@ extern BOOLEAN gfShowBookmarks;
 extern BOOLEAN fShowBookmarkInfo;
 extern BOOLEAN fReDrawBookMarkInfo;
 
-extern UINT32 guiTITLE;
-extern UINT32 guiTOP;
-extern UINT32 guiLONGLINE;
-extern UINT32 guiSHADELINE;
+extern uint32_t guiTITLE;
+extern uint32_t guiTOP;
+extern uint32_t guiLONGLINE;
+extern uint32_t guiSHADELINE;
 
-extern UINT32 guiBottomButton;
-extern UINT32 guiBottomButton2;
-extern UINT8 gubCurPageNum;
+extern uint32_t guiBottomButton;
+extern uint32_t guiBottomButton2;
+extern uint8_t gubCurPageNum;
 
-extern UINT32 guiContentButton;
+extern uint32_t guiContentButton;
 
 enum {
   LAPTOP_MODE_NONE = 0,
@@ -181,7 +181,7 @@ enum {
   CANCEL_STRING,
 };
 
-extern UINT32 guiLaptopBACKGROUND;
+extern uint32_t guiLaptopBACKGROUND;
 
 #define DEAD_MERC_COLOR_RED 255
 #define DEAD_MERC_COLOR_GREEN 55

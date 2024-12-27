@@ -19,8 +19,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 guiMugShotBorder;
-UINT32 guiAimFiFace[MAX_NUMBER_MERCS];
+uint32_t guiMugShotBorder;
+uint32_t guiAimFiFace[MAX_NUMBER_MERCS];
 
 #define AIM_FI_NUM_MUHSHOTS_X 8
 #define AIM_FI_NUM_MUHSHOTS_Y 5
@@ -50,22 +50,22 @@ UINT32 guiAimFiFace[MAX_NUMBER_MERCS];
 
 // Face regions
 struct MOUSE_REGION gMercFaceMouseRegions[MAX_NUMBER_MERCS];
-void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Screen region, used to right click to go back to previous page
 struct MOUSE_REGION gScreenMouseRegions;
-void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage);
+BOOLEAN DrawMercsFaceToScreen(uint8_t ubMercID, uint16_t usPosX, uint16_t usPosY, uint8_t ubImage);
 
 void GameInitAimFacialIndex() {}
 
 BOOLEAN EnterAimFacialIndex() {
   VOBJECT_DESC VObjectDesc;
-  UINT8 i;
-  UINT16 usPosX, usPosY, x, y;
-  STR sFaceLoc = "FACES\\";
+  uint8_t i;
+  uint16_t usPosX, usPosY, x, y;
+  char *sFaceLoc = "FACES\\";
   char sTemp[100];
 
   // load the Portait graphic and add it
@@ -79,8 +79,8 @@ BOOLEAN EnterAimFacialIndex() {
   for (y = 0; y < AIM_FI_NUM_MUHSHOTS_Y; y++) {
     for (x = 0; x < AIM_FI_NUM_MUHSHOTS_X; x++) {
       MSYS_DefineRegion(&gMercFaceMouseRegions[i], usPosX, usPosY,
-                        (INT16)(usPosX + AIM_FI_PORTRAIT_WIDTH),
-                        (INT16)(usPosY + AIM_FI_PORTRAIT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                        (int16_t)(usPosX + AIM_FI_PORTRAIT_WIDTH),
+                        (int16_t)(usPosY + AIM_FI_PORTRAIT_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                         SelectMercFaceMoveRegionCallBack, SelectMercFaceRegionCallBack);
       // Add region
       MSYS_AddRegion(&gMercFaceMouseRegions[i]);
@@ -113,7 +113,7 @@ BOOLEAN EnterAimFacialIndex() {
 }
 
 void ExitAimFacialIndex() {
-  UINT8 i;
+  uint8_t i;
 
   RemoveAimDefaults();
 
@@ -134,9 +134,9 @@ void HandleAimFacialIndex() {
 }
 
 BOOLEAN RenderAimFacialIndex() {
-  UINT16 usPosX, usPosY, x, y;
+  uint16_t usPosX, usPosY, x, y;
   wchar_t sString[150];
-  UINT8 i;
+  uint8_t i;
 
   DrawAimDefaults();
 
@@ -161,8 +161,8 @@ BOOLEAN RenderAimFacialIndex() {
     for (x = 0; x < AIM_FI_NUM_MUHSHOTS_X; x++) {
       DrawMercsFaceToScreen(i, usPosX, usPosY, 1);
       DrawTextToScreen(
-          gMercProfiles[AimMercArray[i]].zNickname, (UINT16)(usPosX - AIM_FI_NNAME_OFFSET_X),
-          (UINT16)(usPosY + AIM_FI_NNAME_OFFSET_Y), AIM_FI_NNAME_WIDTH, AIM_FONT12ARIAL,
+          gMercProfiles[AimMercArray[i]].zNickname, (uint16_t)(usPosX - AIM_FI_NNAME_OFFSET_X),
+          (uint16_t)(usPosY + AIM_FI_NNAME_OFFSET_Y), AIM_FI_NNAME_WIDTH, AIM_FONT12ARIAL,
           AIM_FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
       usPosX += AIM_FI_PORTRAIT_WIDTH + AIM_FI_MUGSHOT_GAP_X;
@@ -200,28 +200,28 @@ BOOLEAN RenderAimFacialIndex() {
   return (TRUE);
 }
 
-void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS;
-    gbCurrentIndex = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gbCurrentIndex = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES;
   }
 }
 
-void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES;
   }
 }
 
-void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
-  UINT8 ubMercNum;
-  UINT16 usPosX, usPosY;
+void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
+  uint8_t ubMercNum;
+  uint16_t usPosX, usPosY;
 
-  ubMercNum = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+  ubMercNum = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   usPosY = ubMercNum / AIM_FI_NUM_MUHSHOTS_X;
   usPosY = AIM_FI_FIRST_MUGSHOT_Y + (AIM_FI_PORTRAIT_HEIGHT + AIM_FI_MUGSHOT_GAP_Y) * usPosY;
@@ -244,7 +244,7 @@ void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason
   }
 }
 
-BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage) {
+BOOLEAN DrawMercsFaceToScreen(uint8_t ubMercID, uint16_t usPosX, uint16_t usPosY, uint8_t ubImage) {
   struct VObject *hMugShotBorderHandle;
   struct VObject *hFaceHandle;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -278,8 +278,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
     BltVideoObject(FRAME_BUFFER, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET,
                    usPosY + AIM_FI_FACE_OFFSET, VO_BLT_SRCTRANSPARENCY, NULL);
 
-    DrawTextToScreen(AimFiText[AIM_FI_DEAD], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+    DrawTextToScreen(AimFiText[AIM_FI_DEAD], (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
@@ -288,8 +288,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
            (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
-    DrawTextToScreen(pPOWStrings[0], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+    DrawTextToScreen(pPOWStrings[0], (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
@@ -298,8 +298,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
     DrawTextToScreen(MercInfo[MERC_FILES_ALREADY_HIRED],
-                     (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+                     (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
@@ -307,8 +307,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
   else if (!IsMercHireable(AimMercArray[ubMercID])) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
-    DrawTextToScreen(AimFiText[AIM_FI_DEAD + 1], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
-                     (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
+    DrawTextToScreen(AimFiText[AIM_FI_DEAD + 1], (uint16_t)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
                      FONT10ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
     // if not enough room use this..
     // AimFiText[AIM_FI_AWAY]

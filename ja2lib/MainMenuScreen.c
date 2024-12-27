@@ -61,41 +61,41 @@ enum {
 #define MAINMENU_Y 277  // 200
 #define MAINMENU_Y_SPACE 37
 
-INT32 iMenuImages[NUM_MENU_ITEMS];
-INT32 iMenuButtons[NUM_MENU_ITEMS];
+int32_t iMenuImages[NUM_MENU_ITEMS];
+int32_t iMenuButtons[NUM_MENU_ITEMS];
 
-UINT16 gusMainMenuButtonWidths[NUM_MENU_ITEMS];
+uint16_t gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 
-UINT32 guiMainMenuBackGroundImage;
-UINT32 guiJa2LogoImage;
+uint32_t guiMainMenuBackGroundImage;
+uint32_t guiJa2LogoImage;
 
 struct MOUSE_REGION gBackRegion;
-INT8 gbHandledMainMenu = 0;
+int8_t gbHandledMainMenu = 0;
 BOOLEAN fInitialRender = FALSE;
 // BOOLEAN						gfDoHelpScreen = 0;
 
 BOOLEAN gfMainMenuScreenEntry = FALSE;
 BOOLEAN gfMainMenuScreenExit = FALSE;
 
-UINT32 guiMainMenuExitScreen = MAINMENU_SCREEN;
+uint32_t guiMainMenuExitScreen = MAINMENU_SCREEN;
 
 extern BOOLEAN gfLoadGameUponEntry;
 
 void ExitMainMenu();
-void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void MenuButtonCallback(GUI_BUTTON *btn, int32_t reason);
 void HandleMainMenuInput();
 void HandleMainMenuScreen();
 void DisplayAssignmentText();
 void ClearMainMenu();
 void HandleHelpScreenInput();
-void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SetMainMenuExitScreen(UINT32 uiNewScreen);
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SetMainMenuExitScreen(uint32_t uiNewScreen);
 void CreateDestroyBackGroundMouseMask(BOOLEAN fCreate);
 BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate);
 void RenderMainMenu();
 void RestoreButtonBackGrounds();
 
-UINT32 MainMenuScreenInit() {
+uint32_t MainMenuScreenInit() {
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Version Label: %S", zBuildInfo));
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Version #:     %s", czVersionNumber));
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Tracking #:    %S", zTrackingNumber));
@@ -103,8 +103,8 @@ UINT32 MainMenuScreenInit() {
   return (TRUE);
 }
 
-UINT32 MainMenuScreenHandle() {
-  UINT32 cnt;
+uint32_t MainMenuScreenHandle() {
+  uint32_t cnt;
 
   if (guiSplashStartTime + 4000 > GetJA2Clock()) {
     SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);
@@ -178,7 +178,7 @@ UINT32 MainMenuScreenHandle() {
   return (guiMainMenuExitScreen);
 }
 
-UINT32 MainMenuScreenShutdown() { return (FALSE); }
+uint32_t MainMenuScreenShutdown() { return (FALSE); }
 
 void HandleMainMenuScreen() {
   if (gbHandledMainMenu != 0) {
@@ -279,7 +279,7 @@ BOOLEAN InitMainMenu() {
 }
 
 void ExitMainMenu() {
-  //	UINT32 uiDestPitchBYTES; 	UINT8
+  //	uint32_t uiDestPitchBYTES; 	uint8_t
   //*pDestBuf;
 
   //	if( !gfDoHelpScreen )
@@ -300,10 +300,10 @@ void ExitMainMenu() {
   */
 }
 
-void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT8 bID;
+void MenuButtonCallback(GUI_BUTTON *btn, int32_t reason) {
+  int8_t bID;
 
-  bID = (UINT8)((uintptr_t)btn->UserData[0]);
+  bID = (uint8_t)((uintptr_t)btn->UserData[0]);
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -326,7 +326,7 @@ void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MenuButtonMoveCallback(GUI_BUTTON *btn, INT32 reason) {
+void MenuButtonMoveCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     //		btn->uiFlags &= (~BUTTON_CLICKED_ON );
     RenderMainMenu();
@@ -402,8 +402,8 @@ void HandleHelpScreenInput() {
 }
 
 void ClearMainMenu() {
-  UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint32_t uiDestPitchBYTES;
+  uint8_t *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
@@ -412,7 +412,7 @@ void ClearMainMenu() {
   InvalidateScreen();
 }
 
-void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     //		if( gfDoHelpScreen )
@@ -431,7 +431,7 @@ void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
   }
 }
 
-void SetMainMenuExitScreen(UINT32 uiNewScreen) {
+void SetMainMenuExitScreen(uint32_t uiNewScreen) {
   guiMainMenuExitScreen = uiNewScreen;
 
   // REmove the background region
@@ -463,12 +463,12 @@ void CreateDestroyBackGroundMouseMask(BOOLEAN fCreate) {
 
 BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
   static BOOLEAN fButtonsCreated = FALSE;
-  INT32 cnt;
+  int32_t cnt;
   SGPFILENAME filename;
-  INT16 sSlot;
-  INT32 iStartLoc = 0;
+  int16_t sSlot;
+  int32_t iStartLoc = 0;
 #ifndef _DEBUG
-  CHAR16 zText[512];
+  wchar_t zText[512];
 #endif
 
   if (fCreate) {
@@ -491,30 +491,30 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
     for (cnt = 0; cnt < NUM_MENU_ITEMS; cnt++) {
       switch (cnt) {
         case NEW_GAME:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], sSlot);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], sSlot);
           break;
         case LOAD_GAME:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 3);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 3);
           break;
         case PREFERENCES:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 7);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 7);
           break;
         case CREDITS:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 10);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 10);
           break;
         case QUIT:
-          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 15);
+          gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((uint16_t)iMenuImages[cnt], 15);
           break;
       }
 #ifdef TESTFOREIGNFONTS
       iMenuButtons[cnt] =
-          QuickCreateButton(iMenuImages[cnt], (INT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                            (INT16)(0 + (cnt * 18)), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
+          QuickCreateButton(iMenuImages[cnt], (int16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
+                            (int16_t)(0 + (cnt * 18)), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
                             DEFAULT_MOVE_CALLBACK, MenuButtonCallback);
 #else
       iMenuButtons[cnt] =
-          QuickCreateButton(iMenuImages[cnt], (INT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                            (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE)), BUTTON_TOGGLE,
+          QuickCreateButton(iMenuImages[cnt], (int16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
+                            (int16_t)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE)), BUTTON_TOGGLE,
                             MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, MenuButtonCallback);
 #endif
       if (iMenuButtons[cnt] == -1) {
@@ -637,16 +637,16 @@ void RenderMainMenu() {
 }
 
 void RestoreButtonBackGrounds() {
-  UINT8 cnt;
+  uint8_t cnt;
 
-  //	RestoreExternBackgroundRect( (UINT16)(320 - gusMainMenuButtonWidths[TITLE]/2),
+  //	RestoreExternBackgroundRect( (uint16_t)(320 - gusMainMenuButtonWidths[TITLE]/2),
   // MAINMENU_TITLE_Y, gusMainMenuButtonWidths[TITLE], 23 );
 
 #ifndef TESTFOREIGNFONTS
   for (cnt = 0; cnt < NUM_MENU_ITEMS; cnt++) {
-    RestoreExternBackgroundRect((UINT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                                (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE) - 1),
-                                (UINT16)(gusMainMenuButtonWidths[cnt] + 1), 23);
+    RestoreExternBackgroundRect((uint16_t)(320 - gusMainMenuButtonWidths[cnt] / 2),
+                                (int16_t)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE) - 1),
+                                (uint16_t)(gusMainMenuButtonWidths[cnt] + 1), 23);
   }
 #endif
 }

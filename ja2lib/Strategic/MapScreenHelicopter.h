@@ -66,19 +66,19 @@ enum {
 };
 
 // list of refueling site's sector locations
-extern UINT8 ubRefuelList[NUMBER_OF_REFUEL_SITES][2];
+extern uint8_t ubRefuelList[NUMBER_OF_REFUEL_SITES][2];
 
 // is the helicopter available to player?
 extern BOOLEAN fHelicopterAvailable;
 
 // helicopter vehicle id value
-extern INT32 iHelicopterVehicleId;
+extern int32_t iHelicopterVehicleId;
 
 // heli is hovering
 extern BOOLEAN fHoveringHelicopter;
 
 // helicopter icon
-extern UINT32 guiHelicopterIcon;
+extern uint32_t guiHelicopterIcon;
 
 // helicopter destroyed
 extern BOOLEAN fHelicopterDestroyed;
@@ -90,19 +90,19 @@ extern BOOLEAN fHeliReturnStraightToBase;
 extern BOOLEAN fHelicopterIsAirBorne;
 
 // total distance travelled
-// extern INT32 iTotalHeliDistanceSinceRefuel;
+// extern int32_t iTotalHeliDistanceSinceRefuel;
 
 // total owed to player
-// extern INT32 iTotalAccumlatedCostByPlayer;
+// extern int32_t iTotalAccumlatedCostByPlayer;
 
 // whether or not skyrider is alive and well? and on our side yet?
 extern BOOLEAN fSkyRiderAvailable;
 
 // time started hovering
-extern UINT32 uiStartHoverTime;
+extern uint32_t uiStartHoverTime;
 
 // what state is skyrider's dialogue in in?
-extern UINT32 guiHelicopterSkyriderTalkState;
+extern uint32_t guiHelicopterSkyriderTalkState;
 
 // plot for helicopter
 extern BOOLEAN fPlotForHelicopter;
@@ -113,14 +113,14 @@ extern BOOLEAN fShowOtherSAMHighLight;
 extern BOOLEAN fShowDrassenSAMHighLight;
 extern BOOLEAN fShowCambriaHospitalHighLight;
 
-extern INT32 iTotalAccumulatedCostByPlayer;
-extern UINT32 guiTimeOfLastSkyriderMonologue;
+extern int32_t iTotalAccumulatedCostByPlayer;
+extern uint32_t guiTimeOfLastSkyriderMonologue;
 extern BOOLEAN fSkyRiderSetUp;
 extern BOOLEAN fRefuelingSiteAvailable[NUMBER_OF_REFUEL_SITES];
 
-extern UINT8 gubHelicopterHitsTaken;
+extern uint8_t gubHelicopterHitsTaken;
 extern BOOLEAN gfSkyriderSaidCongratsOnTakingSAM;
-extern UINT8 gubPlayerProgressSkyriderLastCommentedOn;
+extern uint8_t gubPlayerProgressSkyriderLastCommentedOn;
 
 // add and remove grunts from the helicopter
 BOOLEAN AddSoldierToHelicopter(struct SOLDIERTYPE *pSoldier);
@@ -135,36 +135,36 @@ extern BOOLEAN fSAMSitesDisabledFromAttackingPlayer;
 void AddSectorToHelicopterDistanceTravelled( void );
 
 // total distance travelled since last refuel
-INT32 HowFarHelicopterhasTravelledSinceRefueling( void );
+int32_t HowFarHelicopterhasTravelledSinceRefueling( void );
 
 // get the total the heli can go
-INT32 GetTotalDistanceHelicopterCanTravel( void );
+int32_t GetTotalDistanceHelicopterCanTravel( void );
 
 // how far can helicopter can travel before refuel
-INT32 HowFurtherCanHelicopterTravel( void );
+int32_t HowFurtherCanHelicopterTravel( void );
 
 // check if this sector is out of the way
-BOOLEAN IsSectorOutOfTheWay( INT16 sX, INT16 sY );
+BOOLEAN IsSectorOutOfTheWay( int16_t sX, int16_t sY );
 
 */
 
 // how far to nearest refuel point from this sector?
-INT32 DistanceToNearestRefuelPoint(INT16 sX, INT16 sY);
+int32_t DistanceToNearestRefuelPoint(int16_t sX, int16_t sY);
 
 // location of closest
-INT32 LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
+int32_t LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
 
 // refuel helicopter
 void ReFuelHelicopter(void);
 
 // how much will it cost for helicopter to travel through this sector?
-INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY);
+int32_t GetCostOfPassageForHelicopter(int16_t sX, int16_t sY);
 
 // helicopter shot down, kill all on board
 void SkyriderDestroyed(void);
 
 // have pilot say different stuff
-void HelicopterDialogue(UINT8 ubDialogueCondition);
+void HelicopterDialogue(uint8_t ubDialogueCondition);
 
 // is the helicopter available for flight?
 BOOLEAN CanHelicopterFly(void);
@@ -179,16 +179,16 @@ void LandHelicopter(void);
 void TakeOffHelicopter(void);
 
 // test whether or not a sector contains a fuel site
-BOOLEAN IsRefuelSiteInSector(INT16 sMapX, INT16 sMapY);
+BOOLEAN IsRefuelSiteInSector(int16_t sMapX, int16_t sMapY);
 
 // update which refueling sites are controlled by player & therefore available
 void UpdateRefuelSiteAvailability(void);
 
 // setup helicopter for player
-void SetUpHelicopterForPlayer(INT16 sX, INT16 sY);
+void SetUpHelicopterForPlayer(int16_t sX, int16_t sY);
 
 // the intended path of the helicopter
-INT32 DistanceOfIntendedHelicopterPath(void);
+int32_t DistanceOfIntendedHelicopterPath(void);
 
 // handle a little wait for hover
 void HandleHeliHoverLong(void);
@@ -203,7 +203,7 @@ void StartHoverTime(void);
 void DropOffEveryOneInHelicopter(void);
 
 // handle heli entering this sector
-BOOLEAN HandleHeliEnteringSector(INT16 sX, INT16 sY);
+BOOLEAN HandleHeliEnteringSector(int16_t sX, int16_t sY);
 
 // check for arrival at refuel
 BOOLEAN CheckForArrivalAtRefuelPoint(void);
@@ -212,13 +212,13 @@ BOOLEAN CheckForArrivalAtRefuelPoint(void);
 void SetUpHelicopterForMovement(void);
 
 // number of passengers in helicopter
-INT32 GetNumberOfPassengersInHelicopter(void);
+int32_t GetNumberOfPassengersInHelicopter(void);
 
 // skyrider talking to player
-void SkyRiderTalk(UINT16 usQuoteNum);
+void SkyRiderTalk(uint16_t usQuoteNum);
 
 // sky rider monlogue events for mapscreen
-void HandleSkyRiderMonologueEvent(UINT32 uiEventCode, UINT32 uiSpecialCode);
+void HandleSkyRiderMonologueEvent(uint32_t uiEventCode, uint32_t uiSpecialCode);
 
 // handle animation of sectors for mapscreen
 void HandleAnimationOfSectors(void);
@@ -227,37 +227,37 @@ void HandleAnimationOfSectors(void);
 void CheckAndHandleSkyriderMonologues(void);
 
 // last sector value in helicopter's path
-INT16 LastSectorInHelicoptersPath(void);
+int16_t LastSectorInHelicoptersPath(void);
 
 // total cost of helicopter trip
-// INT32 GetTotalCostOfHelicopterTrip( void );
+// int32_t GetTotalCostOfHelicopterTrip( void );
 
 void HandleHelicopterOnGroundGraphic(void);
 
 void HandleHelicopterOnGroundSkyriderProfile(void);
 
-BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite);
+BOOLEAN IsHelicopterOnGroundAtRefuelingSite(uint8_t ubRefuelingSite);
 
-BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 // will a sam site under the players control shoot down an airraid?
-// BOOLEAN WillAirRaidBeStopped( u8 sSectorX, u8 sSectorY );
+// BOOLEAN WillAirRaidBeStopped( uint8_t sSectorX, uint8_t sSectorY );
 
 // is the helicopter capable of taking off for the player?
 BOOLEAN CanHelicopterTakeOff(void);
 
 void InitializeHelicopter(void);
 
-BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY);
+BOOLEAN IsSkyriderIsFlyingInSector(uint8_t sSectorX, uint8_t sSectorY);
 
 BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup);
 
-INT16 GetNumSafeSectorsInPath(void);
+int16_t GetNumSafeSectorsInPath(void);
 
-INT16 GetNumUnSafeSectorsInPath(void);
+int16_t GetNumUnSafeSectorsInPath(void);
 
 BOOLEAN SoldierAboardAirborneHeli(struct SOLDIERTYPE *pSoldier);
 
-UINT8 MoveAllInHelicopterToFootMovementGroup(void);
+uint8_t MoveAllInHelicopterToFootMovementGroup(void);
 
 #endif

@@ -31,7 +31,7 @@
 #define MAJOR_MAP_VERSION 5.00
 #endif
 
-FLOAT gdMajorMapVersion = MAJOR_MAP_VERSION;
+float gdMajorMapVersion = MAJOR_MAP_VERSION;
 
 BOOLEAN gfWorldLoaded;
 
@@ -39,7 +39,7 @@ MAPCREATE_STRUCT gMapInformation;
 
 // Current minor map version updater.
 #define MINOR_MAP_VERSION 25
-UINT8 gubMinorMapVersion = MINOR_MAP_VERSION;
+uint8_t gubMinorMapVersion = MINOR_MAP_VERSION;
 
 /*
 MINOR_MAP_VERSION Log -- Created by Kris Morness, November 14, 1997
@@ -68,19 +68,19 @@ existance.  So, all current detailed placements will also have priority existanc
 -- obsolete April 16, 1998 MAJOR CONFLICT RESULTING IN A MAJOR VERSION UPDATE 2.00! Bug 10) Padding
 on detailed placements is uninitialized.  Clear all data starting at fKillSlotIfOwnerDies. Version 9
 -- Kris -- obsolete April 26, 1998 This version requires no auto updating, but external code has
-adjusted the size of the mapedgepoint arraysize from UINT8 to UINT16.  See Map Edgepoints.c. Bug 11)
-Convert all wheelchaired placement bodytypes to cows.  Result of change in the animation database.
-Version 11 -- Kris -- obsolete May 2, 1998
-  Added new center entry point.  Need to initialize the original padding to -1.
+adjusted the size of the mapedgepoint arraysize from uint8_t to uint16_t.  See Map Edgepoints.c. Bug
+11) Convert all wheelchaired placement bodytypes to cows.  Result of change in the animation
+database. Version 11 -- Kris -- obsolete May 2, 1998 Added new center entry point.  Need to
+initialize the original padding to -1.
 */
 
 // EntryPoints can't be placed on the top two gridnos in a map.  So all we do in this case
 // is return the closest gridno.  Returns TRUE if the mapindex changes.
-BOOLEAN ValidateEntryPointGridNo(INT16 *sGridNo) {
-  INT16 sXMapPos, sYMapPos;
-  INT16 sWorldX, sWorldY;
-  INT32 iNewMapX, iNewMapY;
-  INT16 sTopLimit, sBottomLimit;
+BOOLEAN ValidateEntryPointGridNo(int16_t *sGridNo) {
+  int16_t sXMapPos, sYMapPos;
+  int16_t sWorldX, sWorldY;
+  int32_t iNewMapX, iNewMapY;
+  int16_t sTopLimit, sBottomLimit;
 
   if (*sGridNo < 0) return FALSE;  // entry point is non-existant
 
@@ -100,19 +100,19 @@ BOOLEAN ValidateEntryPointGridNo(INT16 *sGridNo) {
     return FALSE;  // already valid
   }
 
-  *sGridNo = (INT16)MAPROWCOLTOPOS(iNewMapY / 10, iNewMapX / 10);
+  *sGridNo = (int16_t)MAPROWCOLTOPOS(iNewMapY / 10, iNewMapX / 10);
 
   return TRUE;  // modified
 }
 
 void SaveMapInformation(HWFILE fp) {
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
 
   gMapInformation.ubMapVersion = MINOR_MAP_VERSION;
   FileMan_Write(fp, &gMapInformation, sizeof(MAPCREATE_STRUCT), &uiBytesWritten);
 }
 
-void LoadMapInformation(INT8 **hBuffer) {
+void LoadMapInformation(int8_t **hBuffer) {
   LOADDATA(&gMapInformation, *hBuffer, sizeof(MAPCREATE_STRUCT));
   // FileMan_Read( hfile, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesRead);
 
@@ -139,7 +139,7 @@ void UpdateOldVersionMap() {
   }
   if (gMapInformation.ubMapVersion < 18) {
     // replace useless crowbars with proper ones
-    UINT32 i;
+    uint32_t i;
     gMapInformation.ubMapVersion = 18;
     for (i = 0; i < guiNumWorldItems; i++) {
       if (gWorldItems[i].o.usItem == JAR_ELIXIR) {
@@ -170,7 +170,7 @@ void UpdateOldVersionMap() {
     curr = gSoldierInitHead;
     while (curr) {
       if (curr->pDetailedPlacement) {
-        INT32 i;
+        int32_t i;
         for (i = 0; i < NUM_INV_SLOTS; i++) {
           if (!curr->pDetailedPlacement->Inv[i].usItem) {
             if (curr->pDetailedPlacement->Inv[i].fFlags & OBJECT_UNDROPPABLE) {
@@ -214,7 +214,7 @@ void UpdateOldVersionMap() {
 
 void AutoCalculateItemNoOverwriteStatus() {
   SOLDIERINITNODE *curr;
-  INT32 i;
+  int32_t i;
   struct OBJECTTYPE *pItem;
 
   // Recalculate the "no overwrite" status flag on all items.  There are two different cases:

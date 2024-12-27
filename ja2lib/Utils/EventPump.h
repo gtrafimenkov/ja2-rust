@@ -46,179 +46,179 @@ typedef enum {
 
 // Enumerate all structures for events
 typedef struct {
-  UINT16 usIndex;
-  UINT16 usRate;
-  UINT8 ubVolume;
-  UINT8 ubLoops;
-  UINT32 uiPan;
+  uint16_t usIndex;
+  uint16_t usRate;
+  uint8_t ubVolume;
+  uint8_t ubLoops;
+  uint32_t uiPan;
 
 } EV_E_PLAYSOUND;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT16 usNewState;
-  INT16 sXPos;
-  INT16 sYPos;
-  UINT16 usStartingAniCode;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint16_t usNewState;
+  int16_t sXPos;
+  int16_t sYPos;
+  uint16_t usStartingAniCode;
   BOOLEAN fForce;
 
 } EV_S_CHANGESTATE;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT16 usNewDestination;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint16_t usNewDestination;
 
 } EV_S_CHANGEDEST;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  FLOAT dNewXPos;
-  FLOAT dNewYPos;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  float dNewXPos;
+  float dNewYPos;
 
 } EV_S_SETPOSITION;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  INT16 sDestGridNo;
-  UINT16 usMovementAnim;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  int16_t sDestGridNo;
+  uint16_t usMovementAnim;
 
 } EV_S_GETNEWPATH;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
 } EV_S_BEGINTURN;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT8 ubNewStance;
-  INT16 sXPos;
-  INT16 sYPos;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint8_t ubNewStance;
+  int16_t sXPos;
+  int16_t sYPos;
 
 } EV_S_CHANGESTANCE;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT16 usNewDirection;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint16_t usNewDirection;
 
 } EV_S_SETDIRECTION;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT16 usDesiredDirection;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint16_t usDesiredDirection;
 
 } EV_S_SETDESIREDDIRECTION;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  INT16 sTargetGridNo;
-  INT8 bTargetLevel;
-  INT8 bTargetCubeLevel;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  int16_t sTargetGridNo;
+  int8_t bTargetLevel;
+  int8_t bTargetCubeLevel;
 } EV_S_BEGINFIREWEAPON;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  INT16 sTargetGridNo;
-  INT8 bTargetLevel;
-  INT8 bTargetCubeLevel;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  int16_t sTargetGridNo;
+  int8_t bTargetLevel;
+  int8_t bTargetCubeLevel;
 } EV_S_FIREWEAPON;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT16 usWeaponIndex;
-  INT16 sDamage;
-  INT16 sBreathLoss;
-  UINT16 usDirection;
-  INT16 sXPos;
-  INT16 sYPos;
-  INT16 sZPos;
-  INT16 sRange;
-  UINT8 ubAttackerID;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint16_t usWeaponIndex;
+  int16_t sDamage;
+  int16_t sBreathLoss;
+  uint16_t usDirection;
+  int16_t sXPos;
+  int16_t sYPos;
+  int16_t sZPos;
+  int16_t sRange;
+  uint8_t ubAttackerID;
   BOOLEAN fHit;
-  UINT8 ubSpecial;
-  UINT8 ubLocation;
+  uint8_t ubSpecial;
+  uint8_t ubLocation;
 
 } EV_S_WEAPONHIT;
 
 typedef struct {
-  INT16 sXPos;
-  INT16 sYPos;
-  INT16 sZPos;
-  UINT16 usWeaponIndex;
-  INT8 bWeaponStatus;
-  UINT8 ubAttackerID;
-  UINT16 usStructureID;
-  INT32 iImpact;
-  INT32 iBullet;
+  int16_t sXPos;
+  int16_t sYPos;
+  int16_t sZPos;
+  uint16_t usWeaponIndex;
+  int8_t bWeaponStatus;
+  uint8_t ubAttackerID;
+  uint16_t usStructureID;
+  int32_t iImpact;
+  int32_t iBullet;
 
 } EV_S_STRUCTUREHIT;
 
 typedef struct {
-  INT16 sGridNo;
-  UINT16 usStructureID;
+  int16_t sGridNo;
+  uint16_t usStructureID;
   BOOLEAN fBlowWindowSouth;
   BOOLEAN fLargeForce;
 } EV_S_WINDOWHIT;
 
 typedef struct {
-  UINT8 ubAttackerID;
+  uint8_t ubAttackerID;
 } EV_S_MISS;
 
 typedef struct {
-  UINT8 ubNoiseMaker;
-  INT16 sGridNo;
-  UINT8 bLevel;
-  UINT8 ubTerrType;
-  UINT8 ubVolume;
-  UINT8 ubNoiseType;
+  uint8_t ubNoiseMaker;
+  int16_t sGridNo;
+  uint8_t bLevel;
+  uint8_t ubTerrType;
+  uint8_t ubVolume;
+  uint8_t ubNoiseType;
 } EV_S_NOISE;
 
 typedef struct {
-  UINT16 usSoldierID;
-  UINT32 uiUniqueId;
-  INT8 bDirection;
-  INT16 sGridNo;
-  INT16 sXPos;
-  INT16 sYPos;
+  uint16_t usSoldierID;
+  uint32_t uiUniqueId;
+  int8_t bDirection;
+  int16_t sGridNo;
+  int16_t sXPos;
+  int16_t sYPos;
 
 } EV_S_STOP_MERC;
 
 typedef struct {
-  UINT8 usSoldierID;
-  UINT32 uiUniqueId;
-  UINT8 usPathDataSize;      // Size of Path
-  INT16 sAtGridNo;           // Owner merc is at this tile when sending packet
-  UINT8 usCurrentPathIndex;  // Index the owner of the merc is at when sending packet
-  UINT8 usPathData[NETWORK_PATH_DATA_SIZE];  // make define  // Next X tile to go to
-  UINT8 ubNewState;                          // new movment Anim
-  //	INT8		bActionPoints;
-  //	INT8		bBreath;			// current breath value
-  //	INT8		bDesiredDirection;
+  uint8_t usSoldierID;
+  uint32_t uiUniqueId;
+  uint8_t usPathDataSize;      // Size of Path
+  int16_t sAtGridNo;           // Owner merc is at this tile when sending packet
+  uint8_t usCurrentPathIndex;  // Index the owner of the merc is at when sending packet
+  uint8_t usPathData[NETWORK_PATH_DATA_SIZE];  // make define  // Next X tile to go to
+  uint8_t ubNewState;                          // new movment Anim
+  //	int8_t		bActionPoints;
+  //	int8_t		bBreath;			// current breath value
+  //	int8_t		bDesiredDirection;
 
   // maybe send current action & breath points
 } EV_S_SENDPATHTONETWORK;
 
 typedef struct {
-  UINT8 usSoldierID;
-  UINT32 uiUniqueId;
-  INT16 sAtGridNo;     // Owner merc is at this tile when sending packet
-  INT8 bActionPoints;  // current A.P. value
-  INT8 bBreath;        // current breath value
+  uint8_t usSoldierID;
+  uint32_t uiUniqueId;
+  int16_t sAtGridNo;     // Owner merc is at this tile when sending packet
+  int8_t bActionPoints;  // current A.P. value
+  int8_t bBreath;        // current breath value
 } EV_S_UPDATENETWORKSOLDIER;
 
 // FUNCTIONS
-BOOLEAN AddGameEvent(UINT32 uiEvent, UINT16 usDelay, PTR pEventData);
-BOOLEAN AddGameEventFromNetwork(UINT32 uiEvent, UINT16 usDelay, PTR pEventData);
+BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, void* pEventData);
+BOOLEAN AddGameEventFromNetwork(uint32_t uiEvent, uint16_t usDelay, void* pEventData);
 BOOLEAN DequeAllGameEvents(BOOLEAN fExecute);
 BOOLEAN DequeueAllDemandGameEvents(BOOLEAN fExecute);
 

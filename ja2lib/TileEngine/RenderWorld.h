@@ -13,7 +13,7 @@ struct VObject;
 
 extern BOOLEAN gfDoVideoScroll;
 extern BOOLEAN gfDoSubtileScroll;
-extern UINT8 gubCurScrollSpeedID;
+extern uint8_t gubCurScrollSpeedID;
 
 // RENDERING FLAGS
 #define RENDER_FLAG_FULL 0x00000001
@@ -71,52 +71,52 @@ extern UINT8 gubCurScrollSpeedID;
 #define TILES_DYNAMIC_TOPMOST 0x00000001
 
 extern BOOLEAN gfRenderScroll;
-extern INT16 gsScrollXIncrement;
-extern INT16 gsScrollYIncrement;
-extern INT32 guiScrollDirection;
+extern int16_t gsScrollXIncrement;
+extern int16_t gsScrollYIncrement;
+extern int32_t guiScrollDirection;
 extern BOOLEAN gfScrollStart;
-extern INT16 gsRenderHeight;
+extern int16_t gsRenderHeight;
 
 // Distance around mercs to pixelate walls
 #define REVEAL_WALLS_RADIUS 3
 
 // GLOBAL VARIABLES
 extern SGPRect gOldClipRect;
-extern INT16 SCROLL_X_STEP;
-extern INT16 SCROLL_Y_STEP;
+extern int16_t SCROLL_X_STEP;
+extern int16_t SCROLL_Y_STEP;
 
-extern INT16 gsVIEWPORT_START_X;
-extern INT16 gsVIEWPORT_START_Y;
-extern INT16 gsVIEWPORT_WINDOW_START_Y;
-extern INT16 gsVIEWPORT_END_Y;
-extern INT16 gsVIEWPORT_WINDOW_END_Y;
-extern INT16 gsVIEWPORT_END_X;
+extern int16_t gsVIEWPORT_START_X;
+extern int16_t gsVIEWPORT_START_Y;
+extern int16_t gsVIEWPORT_WINDOW_START_Y;
+extern int16_t gsVIEWPORT_END_Y;
+extern int16_t gsVIEWPORT_WINDOW_END_Y;
+extern int16_t gsVIEWPORT_END_X;
 
-extern INT16 gsRenderCenterX;
-extern INT16 gsRenderCenterY;
-extern INT16 gsRenderWorldOffsetX;
-extern INT16 gsRenderWorldOffsetY;
+extern int16_t gsRenderCenterX;
+extern int16_t gsRenderCenterY;
+extern int16_t gsRenderWorldOffsetX;
+extern int16_t gsRenderWorldOffsetY;
 
 // CURRENT VIEWPORT IN WORLD COORDS
-extern INT16 gsTopLeftWorldX, gsTopLeftWorldY;
-extern INT16 gsTopRightWorldX, gsTopRightWorldY;
-extern INT16 gsBottomLeftWorldX, gsBottomLeftWorldY;
-extern INT16 gsBottomRightWorldX, gsBottomRightWorldY;
+extern int16_t gsTopLeftWorldX, gsTopLeftWorldY;
+extern int16_t gsTopRightWorldX, gsTopRightWorldY;
+extern int16_t gsBottomLeftWorldX, gsBottomLeftWorldY;
+extern int16_t gsBottomRightWorldX, gsBottomRightWorldY;
 
 extern SGPRect gSelectRegion;
 extern SGPPoint gSelectAnchor;
-extern UINT32 fSelectMode;
+extern uint32_t fSelectMode;
 
 // GLOBAL COORDINATES
-extern INT16 gTopLeftWorldLimitX, gTopLeftWorldLimitY;
-extern INT16 gTopRightWorldLimitX, gTopRightWorldLimitY;
-extern INT16 gBottomLeftWorldLimitX, gBottomLeftWorldLimitY;
-extern INT16 gBottomRightWorldLimitX, gBottomRightWorldLimitY;
-extern INT16 gCenterWorldX, gCenterWorldY;
-extern INT16 gsTLX, gsTLY, gsTRX, gsTRY;
-extern INT16 gsBLX, gsBLY, gsBRX, gsBRY;
-extern INT16 gsCX, gsCY;
-extern DOUBLE gdScaleX, gdScaleY;
+extern int16_t gTopLeftWorldLimitX, gTopLeftWorldLimitY;
+extern int16_t gTopRightWorldLimitX, gTopRightWorldLimitY;
+extern int16_t gBottomLeftWorldLimitX, gBottomLeftWorldLimitY;
+extern int16_t gBottomRightWorldLimitX, gBottomRightWorldLimitY;
+extern int16_t gCenterWorldX, gCenterWorldY;
+extern int16_t gsTLX, gsTLY, gsTRX, gsTRY;
+extern int16_t gsBLX, gsBLY, gsBRX, gsBRY;
+extern int16_t gsCX, gsCY;
+extern double gdScaleX, gdScaleY;
 
 extern BOOLEAN fLandLayerDirty;
 
@@ -124,60 +124,60 @@ extern BOOLEAN gfIgnoreScrollDueToCenterAdjust;
 
 // FUNCTIONS
 void ScrollWorld();
-void InitRenderParams(UINT8 ubRestrictionID);
+void InitRenderParams(uint8_t ubRestrictionID);
 void RenderWorld();
 
 void ResetLayerOptimizing(void);
-void ResetSpecificLayerOptimizing(UINT32 uiRowFlag);
+void ResetSpecificLayerOptimizing(uint32_t uiRowFlag);
 
 // Routines of RenderWorld
 extern void RenderStaticWorld();
 extern void RenderDynamicWorld();
 void CopyRenderBuffer();
 
-void SetRenderFlags(UINT32 uiFlags);
-UINT32 GetRenderFlags(void);
-void ClearRenderFlags(UINT32 uiFlags);
+void SetRenderFlags(uint32_t uiFlags);
+uint32_t GetRenderFlags(void);
+void ClearRenderFlags(uint32_t uiFlags);
 
 void RenderSetShadows(BOOLEAN fShadows);
 
-extern UINT16 *gpZBuffer;
-extern UINT32 gRenderFlags;
+extern uint16_t *gpZBuffer;
+extern uint32_t gRenderFlags;
 extern BOOLEAN gfIgnoreScrolling;
 
 extern BOOLEAN gfScrollInertia;
 extern BOOLEAN gfScrollPending;
 
 // Definitions for dirty rectangle uploads
-void ReRenderWorld(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void ReRenderWorld(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 
-BOOLEAN ConcealWalls(INT16 sX, INT16 sY, INT16 sRadius);
-BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius);
+BOOLEAN ConcealWalls(int16_t sX, int16_t sY, int16_t sRadius);
+BOOLEAN RevealWalls(int16_t sX, int16_t sY, int16_t sRadius);
 void ConcealAllWalls(void);
 
-BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLEAN fForceAdjust,
+BOOLEAN ApplyScrolling(int16_t sTempRenderCenterX, int16_t sTempRenderCenterY, BOOLEAN fForceAdjust,
                        BOOLEAN fCheckOnly);
 
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                              UINT16 *pZBuffer, UINT16 usZValue,
-                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                              UINT16 usIndex, SGPRect *clipregion);
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
+                                              uint16_t *pZBuffer, uint16_t usZValue,
+                                              struct VObject *hSrcVObject, int32_t iX, int32_t iY,
+                                              uint16_t usIndex, SGPRect *clipregion);
 
-void RenderStaticWorldRect(INT16, INT16, INT16, INT16, BOOLEAN);
+void RenderStaticWorldRect(int16_t, int16_t, int16_t, int16_t, BOOLEAN);
 void RenderMarkedWorld(void);
 void RenderDynamicMercWorld(void);
 
-void ExamineZBufferRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void ExamineZBufferRect(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 
 void InvalidateWorldRedundency(void);
-void InvalidateWorldRedundencyRadius(INT16 sX, INT16 sY, INT16 sRadius);
+void InvalidateWorldRedundencyRadius(int16_t sX, int16_t sY, int16_t sRadius);
 void DirtyWorldRender();
 
 // These two functions will setup the glow frame script to use then glowing enemy mercs....
 void SetMercGlowFast();
 void SetMercGlowNormal();
 
-void SetRenderCenter(INT16 sNewX, INT16 sNewY);
+void SetRenderCenter(int16_t sNewX, int16_t sNewY);
 
 #ifdef _DEBUG
 void RenderFOVDebug();

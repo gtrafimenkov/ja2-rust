@@ -12,11 +12,11 @@
 #define TERRAIN_TILES_BRETS_STRANGEMODE 3
 
 // Soon to be added to an editor struct
-extern UINT16 usTotalWeight;
+extern uint16_t usTotalWeight;
 extern BOOLEAN fPrevShowTerrainTileButtons;
 extern BOOLEAN fUseTerrainWeights;
-extern INT32 TerrainTileSelected, TerrainForegroundTile, TerrainBackgroundTile;
-extern INT32 TerrainTileDrawMode;
+extern int32_t TerrainTileSelected, TerrainForegroundTile, TerrainBackgroundTile;
+extern int32_t TerrainTileDrawMode;
 
 void EntryInitEditorTerrainInfo();
 void InitEditorTerrainToolbar();
@@ -30,6 +30,6 @@ void HideTerrainTileButtons();
 
 void ChooseWeightedTerrainTile();
 
-void TerrainFill(UINT32 iMapIndex);
+void TerrainFill(uint32_t iMapIndex);
 
 #endif

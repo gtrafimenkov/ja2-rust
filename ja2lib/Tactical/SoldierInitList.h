@@ -4,8 +4,8 @@
 #include "Tactical/SoldierCreate.h"
 
 typedef struct SOLDIERINITNODE {
-  UINT8 ubNodeID;
-  UINT8 ubSoldierID;
+  uint8_t ubNodeID;
+  uint8_t ubSoldierID;
   BASIC_SOLDIERCREATE_STRUCT *pBasicPlacement;
   SOLDIERCREATE_STRUCT *pDetailedPlacement;
   struct SOLDIERTYPE *pSoldier;
@@ -19,7 +19,7 @@ extern SOLDIERINITNODE *gSoldierInitTail;
 // These serialization functions are assuming the passing of a valid file
 // pointer to the beginning of the save/load area, at the correct part of the
 // map file.
-BOOLEAN LoadSoldiersFromMap(INT8 **hBuffer);
+BOOLEAN LoadSoldiersFromMap(int8_t **hBuffer);
 BOOLEAN SaveSoldiersToMap(HWFILE fp);
 
 // For the purpose of keeping track of which soldier belongs to which placement within the game,
@@ -35,25 +35,25 @@ void InitSoldierInitList();
 void KillSoldierInitList();
 SOLDIERINITNODE *AddBasicPlacementToSoldierInitList(BASIC_SOLDIERCREATE_STRUCT *pBasicPlacement);
 void RemoveSoldierNodeFromInitList(SOLDIERINITNODE *pNode);
-SOLDIERINITNODE *FindSoldierInitNodeWithID(UINT16 usID);
+SOLDIERINITNODE *FindSoldierInitNodeWithID(uint16_t usID);
 
-UINT8 AddSoldierInitListTeamToWorld(INT8 bTeam, UINT8 ubMaxNum);
-void AddSoldierInitListEnemyDefenceSoldiers(UINT8 ubTotalAdmin, UINT8 ubTotalTroops,
-                                            UINT8 ubTotalElite);
-void AddSoldierInitListCreatures(BOOLEAN fQueen, UINT8 ubNumLarvae, UINT8 ubNumInfants,
-                                 UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales,
-                                 UINT8 ubNumAdultMales, UINT8 ubNumAdultFemales);
-void AddSoldierInitListMilitia(UINT8 ubNumGreen, UINT8 ubNumReg, UINT8 ubNumElites);
+uint8_t AddSoldierInitListTeamToWorld(int8_t bTeam, uint8_t ubMaxNum);
+void AddSoldierInitListEnemyDefenceSoldiers(uint8_t ubTotalAdmin, uint8_t ubTotalTroops,
+                                            uint8_t ubTotalElite);
+void AddSoldierInitListCreatures(BOOLEAN fQueen, uint8_t ubNumLarvae, uint8_t ubNumInfants,
+                                 uint8_t ubNumYoungMales, uint8_t ubNumYoungFemales,
+                                 uint8_t ubNumAdultMales, uint8_t ubNumAdultFemales);
+void AddSoldierInitListMilitia(uint8_t ubNumGreen, uint8_t ubNumReg, uint8_t ubNumElites);
 
 void AddSoldierInitListBloodcats();
 
 void UseEditorOriginalList();
 void UseEditorAlternateList();
 BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *pNode);
-void AddPlacementToWorldByProfileID(UINT8 ubProfile);
+void AddPlacementToWorldByProfileID(uint8_t ubProfile);
 
 void EvaluateDeathEffectsToSoldierInitList(struct SOLDIERTYPE *pSoldier);
-void RemoveDetailedPlacementInfo(UINT8 ubNodeID);
+void RemoveDetailedPlacementInfo(uint8_t ubNodeID);
 
 void AddProfilesUsingProfileInsertionData();
 void AddProfilesNotUsingProfileInsertionData();

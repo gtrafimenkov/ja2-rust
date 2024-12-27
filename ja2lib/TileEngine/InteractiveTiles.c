@@ -51,23 +51,23 @@
 #define MAX_INTTILE_STACK 10
 
 typedef struct {
-  INT16 sGridNo;
-  UINT8 ubFlags;
-  INT16 sTileIndex;
-  INT16 sMaxScreenY;
-  INT16 sHeighestScreenY;
+  int16_t sGridNo;
+  uint8_t ubFlags;
+  int16_t sTileIndex;
+  int16_t sMaxScreenY;
+  int16_t sHeighestScreenY;
   BOOLEAN fFound;
   struct LEVELNODE *pFoundNode;
-  INT16 sFoundGridNo;
-  UINT16 usStructureID;
+  int16_t sFoundGridNo;
+  uint16_t usStructureID;
   BOOLEAN fStructure;
 
 } CUR_INTERACTIVE_TILE;
 
 typedef struct {
-  INT8 bNum;
+  int8_t bNum;
   CUR_INTERACTIVE_TILE bTiles[MAX_INTTILE_STACK];
-  INT8 bCur;
+  int8_t bCur;
 
 } INTERACTIVE_TILE_STACK_TYPE;
 
@@ -78,28 +78,28 @@ CUR_INTERACTIVE_TILE gCurIntTile;
 BOOLEAN gfOverIntTile = FALSE;
 
 // Values to determine if we should check or not
-INT16 gsINTOldRenderCenterX = 0;
-INT16 gsINTOldRenderCenterY = 0;
-UINT16 gusINTOldMousePosX = 0;
-UINT16 gusINTOldMousePosY = 0;
+int16_t gsINTOldRenderCenterX = 0;
+int16_t gsINTOldRenderCenterY = 0;
+uint16_t gusINTOldMousePosX = 0;
+uint16_t gusINTOldMousePosY = 0;
 
-BOOLEAN RefinePointCollisionOnStruct(INT16 sGridNo, INT16 sTestX, INT16 sTestY, INT16 sSrcX,
-                                     INT16 sSrcY, struct LEVELNODE *pNode);
-BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT16 usIndex,
-                                               INT32 iTextX, INT32 iTestY);
-BOOLEAN RefineLogicOnStruct(INT16 sGridNo, struct LEVELNODE *pNode);
+BOOLEAN RefinePointCollisionOnStruct(int16_t sGridNo, int16_t sTestX, int16_t sTestY, int16_t sSrcX,
+                                     int16_t sSrcY, struct LEVELNODE *pNode);
+BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
+                                               int32_t iTextX, int32_t iTestY);
+BOOLEAN RefineLogicOnStruct(int16_t sGridNo, struct LEVELNODE *pNode);
 
 BOOLEAN InitInteractiveTileManagement() { return (TRUE); }
 
 void ShutdownInteractiveTileManagement() {}
 
-BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, UINT32 uiFlags,
-                           UINT16 usType) {
+BOOLEAN AddInteractiveTile(int16_t sGridNo, struct LEVELNODE *pLevelNode, uint32_t uiFlags,
+                           uint16_t usType) {
   return (TRUE);
 }
 
-BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, struct SOLDIERTYPE *pSoldier,
-                               UINT8 ubDirection) {
+BOOLEAN StartInteractiveObject(int16_t sGridNo, uint16_t usStructureID,
+                               struct SOLDIERTYPE *pSoldier, uint8_t ubDirection) {
   struct STRUCTURE *pStructure;
 
   // ATE: Patch fix: Don't allow if alreay in animation
@@ -133,8 +133,8 @@ BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, struct SOLDI
   return (TRUE);
 }
 
-BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, struct STRUCTURE *pStructure, INT16 *psAPCost,
-                                 INT16 *psBPCost) {
+BOOLEAN CalcInteractiveObjectAPs(int16_t sGridNo, struct STRUCTURE *pStructure, int16_t *psAPCost,
+                                 int16_t *psBPCost) {
   if (pStructure == NULL) {
     return (FALSE);
   }
@@ -160,7 +160,7 @@ BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, struct STRUCTURE *pStructure, IN
 }
 
 BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                      UINT8 ubDirection) {
+                                      uint8_t ubDirection) {
   BOOLEAN fDoor = FALSE;
 
   if (pStructure == NULL) {
@@ -178,11 +178,11 @@ BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUC
 
 BOOLEAN SoldierHandleInteractiveObject(struct SOLDIERTYPE *pSoldier) {
   struct STRUCTURE *pStructure;
-  UINT16 usStructureID;
-  INT16 sGridNo;
+  uint16_t usStructureID;
+  int16_t sGridNo;
 
   sGridNo = pSoldier->sPendingActionData2;
-  usStructureID = (UINT16)pSoldier->uiPendingActionData1;
+  usStructureID = (uint16_t)pSoldier->uiPendingActionData1;
 
   // HANDLE SOLDIER ACTIONS
   pStructure = FindStructureByID(sGridNo, usStructureID);
@@ -194,9 +194,9 @@ BOOLEAN SoldierHandleInteractiveObject(struct SOLDIERTYPE *pSoldier) {
   return (HandleOpenableStruct(pSoldier, sGridNo, pStructure));
 }
 
-void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
   struct STRUCTURE *pStructure, *pNewStructure;
-  INT16 sAPCost = 0, sBPCost = 0;
+  int16_t sAPCost = 0, sBPCost = 0;
   struct ITEM_POOL *pItemPool;
   BOOLEAN fDidMissingQuote = FALSE;
 
@@ -240,7 +240,7 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
     }
 
     // LOOK for item pool here...
-    if (GetItemPool((INT16)sGridNo, &pItemPool, pSoldier->bLevel)) {
+    if (GetItemPool((int16_t)sGridNo, &pItemPool, pSoldier->bLevel)) {
       // Update visiblity....
       if (!(pStructure->fFlags & STRUCTURE_OPEN)) {
         BOOLEAN fDoHumm = TRUE;
@@ -262,8 +262,8 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
         SetItemPoolVisibilityOn(pItemPool, ANY_VISIBILITY_VALUE, fDoLocators);
 
         // Display quote!
-        // TacticalCharacterDialogue( pSoldier, (UINT16)( QUOTE_SPOTTED_SOMETHING_ONE + Random( 2 )
-        // ) );
+        // TacticalCharacterDialogue( pSoldier, (uint16_t)( QUOTE_SPOTTED_SOMETHING_ONE + Random( 2
+        // ) ) );
 
         // ATE: Check now many things in pool.....
         if (!fDidMissingQuote) {
@@ -307,10 +307,10 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 }
 
-UINT32 GetInteractiveTileCursor(UINT32 uiOldCursor, BOOLEAN fConfirm) {
+uint32_t GetInteractiveTileCursor(uint32_t uiOldCursor, BOOLEAN fConfirm) {
   struct LEVELNODE *pIntNode;
   struct STRUCTURE *pStructure;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   // OK, first see if we have an in tile...
   pIntNode = GetCurInteractiveTileGridNoAndStructure(&sGridNo, &pStructure);
@@ -345,7 +345,7 @@ UINT32 GetInteractiveTileCursor(UINT32 uiOldCursor, BOOLEAN fConfirm) {
 void SetActionModeDoorCursorText() {
   struct LEVELNODE *pIntNode;
   struct STRUCTURE *pStructure;
-  INT16 sGridNo;
+  int16_t sGridNo;
 
   // If we are over a merc, don't
   if (gfUIFullTargetFound) {
@@ -362,13 +362,13 @@ void SetActionModeDoorCursorText() {
   }
 }
 
-void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos, INT16 sYPos,
-                            INT16 sGridNo) {
-  INT16 sScreenX, sScreenY;
-  INT16 sOffsetX, sOffsetY;
-  INT16 sTempX_S, sTempY_S;
+void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXPos, int16_t sYPos,
+                            int16_t sGridNo) {
+  int16_t sScreenX, sScreenY;
+  int16_t sOffsetX, sOffsetY;
+  int16_t sTempX_S, sTempY_S;
   ETRLEObject *pTrav;
-  UINT32 usHeight, usWidth;
+  uint32_t usHeight, usWidth;
   TILE_ELEMENT *TileElem;
 
   // Get 'TRUE' merc position
@@ -397,8 +397,8 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
     pTrav = &(TileElem->hTileSurface->pETRLEObject[TileElem->usRegionIndex]);
   }
 
-  sScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)sTempX_S;
-  sScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (INT16)sTempY_S;
+  sScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)sTempX_S;
+  sScreenY = ((gsVIEWPORT_END_Y - gsVIEWPORT_START_Y) / 2) + (int16_t)sTempY_S;
 
   // Adjust for offset position on screen
   sScreenX -= gsRenderWorldOffsetX;
@@ -413,8 +413,8 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
   // Adjust for render height
   sScreenY += gsRenderHeight;
 
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
 
   // Add to start position of dest buffer
   sScreenX += (pTrav->sOffsetX - (WORLD_TILE_X / 2));
@@ -431,9 +431,9 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
 
 void CompileInteractiveTiles() {}
 
-void LogMouseOverInteractiveTile(INT16 sGridNo) {
+void LogMouseOverInteractiveTile(int16_t sGridNo) {
   SGPRect aRect;
-  INT16 sXMapPos, sYMapPos, sScreenX, sScreenY;
+  int16_t sXMapPos, sYMapPos, sScreenX, sScreenY;
   struct LEVELNODE *pNode;
 
   // OK, for now, don't allow any interactive tiles on higher interface level!
@@ -462,8 +462,8 @@ void LogMouseOverInteractiveTile(INT16 sGridNo) {
       // Make sure we are always on guy if we are on same gridno
       if (IsPointInScreenRect(sScreenX, sScreenY, &aRect)) {
         // OK refine it!
-        if (RefinePointCollisionOnStruct(sGridNo, sScreenX, sScreenY, (INT16)aRect.iLeft,
-                                         (INT16)aRect.iBottom, pNode)) {
+        if (RefinePointCollisionOnStruct(sGridNo, sScreenX, sScreenY, (int16_t)aRect.iLeft,
+                                         (int16_t)aRect.iBottom, pNode)) {
           // Do some additional checks here!
           if (RefineLogicOnStruct(sGridNo, pNode)) {
             gCurIntTile.fFound = TRUE;
@@ -477,7 +477,7 @@ void LogMouseOverInteractiveTile(INT16 sGridNo) {
 
               // Determine if it's the best one
               if (aRect.iBottom > gCurIntTile.sHeighestScreenY) {
-                gCurIntTile.sMaxScreenY = (UINT16)aRect.iBottom;
+                gCurIntTile.sMaxScreenY = (uint16_t)aRect.iBottom;
                 gCurIntTile.sHeighestScreenY = gCurIntTile.sMaxScreenY;
 
                 // Set it!
@@ -539,7 +539,7 @@ struct LEVELNODE *InternalGetCurInteractiveTile(BOOLEAN fRejectItemsOnTop) {
 
 struct LEVELNODE *GetCurInteractiveTile() { return (InternalGetCurInteractiveTile(TRUE)); }
 
-struct LEVELNODE *GetCurInteractiveTileGridNo(INT16 *psGridNo) {
+struct LEVELNODE *GetCurInteractiveTileGridNo(int16_t *psGridNo) {
   struct LEVELNODE *pNode;
 
   pNode = GetCurInteractiveTile();
@@ -553,7 +553,7 @@ struct LEVELNODE *GetCurInteractiveTileGridNo(INT16 *psGridNo) {
   return (pNode);
 }
 
-struct LEVELNODE *ConditionalGetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo,
+struct LEVELNODE *ConditionalGetCurInteractiveTileGridNoAndStructure(int16_t *psGridNo,
                                                                      struct STRUCTURE **ppStructure,
                                                                      BOOLEAN fRejectOnTopItems) {
   struct LEVELNODE *pNode;
@@ -584,12 +584,12 @@ struct LEVELNODE *ConditionalGetCurInteractiveTileGridNoAndStructure(INT16 *psGr
   return (pNode);
 }
 
-struct LEVELNODE *GetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo,
+struct LEVELNODE *GetCurInteractiveTileGridNoAndStructure(int16_t *psGridNo,
                                                           struct STRUCTURE **ppStructure) {
   return (ConditionalGetCurInteractiveTileGridNoAndStructure(psGridNo, ppStructure, TRUE));
 }
 
-void BeginCurInteractiveTileCheck(UINT8 bCheckFlags) {
+void BeginCurInteractiveTileCheck(uint8_t bCheckFlags) {
   gfOverIntTile = FALSE;
 
   // OK, release our stack, stuff could be different!
@@ -637,7 +637,7 @@ void EndCurInteractiveTileCheck() {
   }
 }
 
-BOOLEAN RefineLogicOnStruct(INT16 sGridNo, struct LEVELNODE *pNode) {
+BOOLEAN RefineLogicOnStruct(int16_t sGridNo, struct LEVELNODE *pNode) {
   TILE_ELEMENT *TileElem;
   struct STRUCTURE *pStructure;
 
@@ -689,7 +689,7 @@ BOOLEAN RefineLogicOnStruct(INT16 sGridNo, struct LEVELNODE *pNode) {
       // IF we are a switch, reject in another direction...
       if (pStructure->fFlags & STRUCTURE_SWITCH) {
         // Find a new gridno based on switch's orientation...
-        INT16 sNewGridNo = NOWHERE;
+        int16_t sNewGridNo = NOWHERE;
 
         switch (pStructure->pDBStructureRef->pDBStructure->ubWallOrientation) {
           case OUTSIDE_TOP_LEFT:
@@ -734,15 +734,15 @@ BOOLEAN RefineLogicOnStruct(INT16 sGridNo, struct LEVELNODE *pNode) {
   return (TRUE);
 }
 
-BOOLEAN RefinePointCollisionOnStruct(INT16 sGridNo, INT16 sTestX, INT16 sTestY, INT16 sSrcX,
-                                     INT16 sSrcY, struct LEVELNODE *pNode) {
+BOOLEAN RefinePointCollisionOnStruct(int16_t sGridNo, int16_t sTestX, int16_t sTestY, int16_t sSrcX,
+                                     int16_t sSrcY, struct LEVELNODE *pNode) {
   TILE_ELEMENT *TileElem;
 
   if (pNode->uiFlags & LEVELNODE_CACHEDANITILE) {
     // Check it!
     return (CheckVideoObjectScreenCoordinateInData(
         gpTileCache[pNode->pAniTile->sCachedTileID].pImagery->vo, pNode->pAniTile->sCurrentFrame,
-        (INT32)(sTestX - sSrcX), (INT32)(-1 * (sTestY - sSrcY))));
+        (int32_t)(sTestX - sSrcX), (int32_t)(-1 * (sTestY - sSrcY))));
 
   } else {
     TileElem = &(gTileDatabase[pNode->usIndex]);
@@ -760,30 +760,30 @@ BOOLEAN RefinePointCollisionOnStruct(INT16 sGridNo, INT16 sTestX, INT16 sTestY, 
 
     // Check it!
     return (CheckVideoObjectScreenCoordinateInData(TileElem->hTileSurface, TileElem->usRegionIndex,
-                                                   (INT32)(sTestX - sSrcX),
-                                                   (INT32)(-1 * (sTestY - sSrcY))));
+                                                   (int32_t)(sTestX - sSrcX),
+                                                   (int32_t)(-1 * (sTestY - sSrcY))));
   }
 }
 
 // This function will check the video object at SrcX and SrcY for the lack of transparency
 // will return true if data found, else false
-BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT16 usIndex,
-                                               INT32 iTestX, INT32 iTestY) {
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth;
-  UINT8 *SrcPtr;
-  UINT32 LineSkip;
+BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint16_t usIndex,
+                                               int32_t iTestX, int32_t iTestY) {
+  uint32_t uiOffset;
+  uint32_t usHeight, usWidth;
+  uint8_t *SrcPtr;
+  uint32_t LineSkip;
   ETRLEObject *pTrav;
   BOOLEAN fDataFound = FALSE;
-  INT32 iTestPos, iStartPos;
+  int32_t iTestPos, iStartPos;
 
   // Assertions
   Assert(hSrcVObject != NULL);
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->usHeight;
+  usWidth = (uint32_t)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
 
   // Calculate test position we are looking for!
@@ -792,7 +792,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
   iStartPos = 0;
   LineSkip = usWidth;
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (uint8_t *)hSrcVObject->pPixData + uiOffset;
 
 #ifdef _WINDOWS
   __asm {
@@ -930,7 +930,7 @@ BOOLEAN ShouldCheckForMouseDetections() {
   return (fOK);
 }
 
-void CycleIntTileFindStack(UINT16 usMapPos) {
+void CycleIntTileFindStack(uint16_t usMapPos) {
   gfCycleIntTile = TRUE;
 
   // Cycle around!

@@ -10,8 +10,8 @@
 const wchar_t* zBuildInfo = L"JA2 Vanilla (" BUILD_INFO ")";
 
 // RELEASE BUILD VERSION
-CHAR8 czVersionNumber[16] = {"Build 04.12.02"};
-CHAR16 zTrackingNumber[16] = {L"Z"};
+char czVersionNumber[16] = {"Build 04.12.02"};
+wchar_t zTrackingNumber[16] = {L"Z"};
 
 //
 //		Keeps track of the saved game version.  Increment the saved game version whenever
@@ -19,4 +19,4 @@ CHAR16 zTrackingNumber[16] = {L"Z"};
 
 #define SAVE_GAME_VERSION 99
 
-const UINT32 guiSavedGameVersion = SAVE_GAME_VERSION;
+const uint32_t guiSavedGameVersion = SAVE_GAME_VERSION;

@@ -3,7 +3,7 @@
 
 #include "SGP/Types.h"
 
-extern STR16 QuestDescText[];
-extern STR16 FactDescText[];
+extern wchar_t* QuestDescText[];
+extern wchar_t* FactDescText[];
 
 #endif

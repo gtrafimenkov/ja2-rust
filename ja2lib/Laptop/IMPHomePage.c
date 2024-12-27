@@ -27,18 +27,18 @@ void GetPlayerKeyBoardInputForIMPHomePage(void);
 void DisplayPlayerActivationString(void);
 void ProcessPlayerInputActivationString(void);
 void GetPlayerKeyBoardInputForIMPHomePage(void);
-void HandleTextEvent(UINT32 uiKey);
+void HandleTextEvent(uint32_t uiKey);
 void CreateIMPHomePageButtons(void);
 void RemoveIMPHomePageButtons(void);
 void DisplayActivationStringCursor(void);
 
-INT32 GlowColorsList[][3] = {
+int32_t GlowColorsList[][3] = {
     {0, 0, 0},   {0, 25, 0},  {0, 50, 0},  {0, 75, 0},  {0, 100, 0}, {0, 125, 0},
     {0, 150, 0}, {0, 175, 0}, {0, 200, 0}, {0, 225, 0}, {0, 255, 0},
 };
 
 // btn callbacks
-void BtnIMPAboutUsCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPAboutUsCallback(GUI_BUTTON *btn, int32_t reason);
 
 // position defines
 #define IMP_PLAYER_ACTIVATION_STRING_X LAPTOP_SCREEN_UL_X + 261
@@ -47,15 +47,15 @@ void BtnIMPAboutUsCallback(GUI_BUTTON *btn, INT32 reason);
 #define CURSOR_HEIGHT GetFontHeight(FONT14ARIAL) + 6
 
 // IMP homepage buttons
-INT32 giIMPHomePageButton[1];
-INT32 giIMPHomePageButtonImage[1];
+int32_t giIMPHomePageButton[1];
+int32_t giIMPHomePageButtonImage[1];
 
 // the player activation string
-CHAR16 pPlayerActivationString[32];
+wchar_t pPlayerActivationString[32];
 
 // position within player activation string
-INT32 iStringPos = 0;
-UINT16 uiCursorPosition = IMP_PLAYER_ACTIVATION_STRING_X;
+int32_t iStringPos = 0;
+uint16_t uiCursorPosition = IMP_PLAYER_ACTIVATION_STRING_X;
 
 // has a new char been added or deleted?
 BOOLEAN fNewCharInActivationString = FALSE;
@@ -156,11 +156,11 @@ void DisplayPlayerActivationString(void) {
 
 void DisplayActivationStringCursor(void) {
   // this procdure will draw the activation string cursor on the screen at position cursorx cursory
-  UINT32 uiDestPitchBYTES;
-  static UINT32 uiBaseTime = 0;
-  UINT32 uiDeltaTime = 0;
-  UINT8 *pDestBuf;
-  static UINT32 iCurrentState = 0;
+  uint32_t uiDestPitchBYTES;
+  static uint32_t uiBaseTime = 0;
+  uint32_t uiDeltaTime = 0;
+  uint8_t *pDestBuf;
+  static uint32_t iCurrentState = 0;
   static BOOLEAN fIncrement = TRUE;
 
   if (uiBaseTime == 0) {
@@ -195,7 +195,7 @@ void DisplayActivationStringCursor(void) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // draw line in current state
-  LineDraw(TRUE, (UINT16)uiCursorPosition, CURSOR_Y, (UINT16)uiCursorPosition,
+  LineDraw(TRUE, (uint16_t)uiCursorPosition, CURSOR_Y, (uint16_t)uiCursorPosition,
            CURSOR_Y + CURSOR_HEIGHT,
            Get16BPPColor(FROMRGB(GlowColorsList[iCurrentState][0], GlowColorsList[iCurrentState][1],
                                  GlowColorsList[iCurrentState][2])),
@@ -204,7 +204,7 @@ void DisplayActivationStringCursor(void) {
   // unlock frame buffer
   UnLockVideoSurface(FRAME_BUFFER);
 
-  InvalidateRegion((UINT16)uiCursorPosition, CURSOR_Y, (UINT16)uiCursorPosition + 1,
+  InvalidateRegion((uint16_t)uiCursorPosition, CURSOR_Y, (uint16_t)uiCursorPosition + 1,
                    CURSOR_Y + CURSOR_HEIGHT + 1);
 
   return;
@@ -219,14 +219,14 @@ void GetPlayerKeyBoardInputForIMPHomePage(void) {
     switch(InputEvent.usEvent)
 {
             case LEFT_BUTTON_DOWN:
-                    MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x,
-(INT16)MousePos.y,_LeftButtonDown, _RightButtonDown); break; case LEFT_BUTTON_UP:
-                    MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y
+                    MouseSystemHook(LEFT_BUTTON_DOWN, (int16_t)MousePos.x,
+(int16_t)MousePos.y,_LeftButtonDown, _RightButtonDown); break; case LEFT_BUTTON_UP:
+                    MouseSystemHook(LEFT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y
 ,_LeftButtonDown, _RightButtonDown); break; case RIGHT_BUTTON_DOWN:
-                    MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x,
-(INT16)MousePos.y,_LeftButtonDown, _RightButtonDown); break; case RIGHT_BUTTON_UP:
-                    MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x,
-(INT16)MousePos.y,_LeftButtonDown, _RightButtonDown); break;
+                    MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x,
+(int16_t)MousePos.y,_LeftButtonDown, _RightButtonDown); break; case RIGHT_BUTTON_UP:
+                    MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x,
+(int16_t)MousePos.y,_LeftButtonDown, _RightButtonDown); break;
 }
 */
     if (!HandleTextInput(&InputEvent) &&
@@ -256,7 +256,7 @@ void GetPlayerKeyBoardInputForIMPHomePage(void) {
   return;
 }
 
-void HandleTextEvent(UINT32 uiKey) {
+void HandleTextEvent(uint32_t uiKey) {
   // this function checks to see if a letter or a backspace was pressed, if so, either put char to
   // screen or delete it
 
@@ -292,8 +292,8 @@ void HandleTextEvent(UINT32 uiKey) {
           if (iStringPos < 0) {
             iStringPos = 0;
           }
-          // valid char, capture and convert to CHAR16
-          pPlayerActivationString[iStringPos] = (CHAR16)uiKey;
+          // valid char, capture and convert to wchar_t
+          pPlayerActivationString[iStringPos] = (wchar_t)uiKey;
 
           // null out next char position
           pPlayerActivationString[iStringPos + 1] = 0;
@@ -376,7 +376,7 @@ void RemoveIMPHomePageButtons(void) {
   return;
 }
 
-void BtnIMPAboutUsCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAboutUsCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

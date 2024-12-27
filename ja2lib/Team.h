@@ -15,8 +15,8 @@ typedef enum {
   PLAYER_PLAN = 5,
 } TeamID;
 
-u8 GetTeamSide(u8 teamID);
-void SetTeamSide(u8 teamID, u8 side);
+uint8_t GetTeamSide(uint8_t teamID);
+void SetTeamSide(uint8_t teamID, uint8_t side);
 
 #define MAX_SOLDIER_LIST_SIZE 200
 

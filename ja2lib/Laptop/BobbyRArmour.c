@@ -13,8 +13,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 guiArmourBackground;
-UINT32 guiArmourGrid;
+uint32_t guiArmourBackground;
+uint32_t guiArmourGrid;
 
 void GameInitBobbyRArmour() {}
 

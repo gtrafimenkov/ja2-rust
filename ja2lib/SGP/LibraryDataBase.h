@@ -23,7 +23,7 @@
 #define DB_ADD_FILE_ID(exp) (exp & 0xC00000)
 
 typedef struct {
-  CHAR8 sLibraryName[FILENAME_SIZE];  // The name of the library file on the disk
+  char sLibraryName[FILENAME_SIZE];  // The name of the library file on the disk
   BOOLEAN fOnCDrom;  // A flag specifying if its a cdrom library ( not implemented yet )
   BOOLEAN
   fInitOnStart;  // Flag specifying if the library is to Initialized at the begining of the game
@@ -35,38 +35,39 @@ typedef struct {
 extern LibraryInitHeader gGameLibaries[];
 
 typedef struct {
-  UINT32 uiFileID;                  // id of the file ( they start at 1 )
+  uint32_t uiFileID;                // id of the file ( they start at 1 )
   SYS_FILE_HANDLE hRealFileHandle;  // if the file is a Real File, this its handle
 } RealFileOpenStruct;
 
 typedef struct {
-  STR pFileName;
-  UINT32 uiFileLength;
-  UINT32 uiFileOffset;
+  char *pFileName;
+  uint32_t uiFileLength;
+  uint32_t uiFileOffset;
 } FileHeaderStruct;
 
 typedef struct {
-  UINT32 uiFileID;                   // id of the file ( they start at 1 )
-  UINT32 uiFilePosInFile;            // current position in the file
-  UINT32 uiActualPositionInLibrary;  // Current File pointer position in actuall library
+  uint32_t uiFileID;                   // id of the file ( they start at 1 )
+  uint32_t uiFilePosInFile;            // current position in the file
+  uint32_t uiActualPositionInLibrary;  // Current File pointer position in actuall library
   FileHeaderStruct *pFileHeader;
 } FileOpenStruct;
 
 typedef struct {
-  STR sLibraryPath;
+  char *sLibraryPath;
   SYS_FILE_HANDLE hLibraryHandle;
-  UINT16 usNumberOfEntries;
+  uint16_t usNumberOfEntries;
   BOOLEAN fLibraryOpen;
   //	BOOLEAN	fAnotherFileAlreadyOpenedLibrary;				//this variable is
   // set when a file is opened from the library and reset when the file is close.  No 2 files can
   // have
   // access
   // to the library at 1 time.
-  UINT32 uiIdOfOtherFileAlreadyOpenedLibrary;  // this variable is set when a file is opened from
-                                               // the library and reset when the file is close.  No
-                                               // 2 files can have access to the library at 1 time.
-  INT32 iNumFilesOpen;
-  INT32 iSizeOfOpenFileArray;
+  uint32_t
+      uiIdOfOtherFileAlreadyOpenedLibrary;  // this variable is set when a file is opened from
+                                            // the library and reset when the file is close.  No
+                                            // 2 files can have access to the library at 1 time.
+  int32_t iNumFilesOpen;
+  int32_t iSizeOfOpenFileArray;
   FileHeaderStruct *pFileHeader;
   FileOpenStruct *pOpenFiles;
 
@@ -74,22 +75,22 @@ typedef struct {
   //	Temp:	Total memory used for each library ( all memory allocated
   //
 #ifdef JA2TESTVERSION
-  UINT32 uiTotalMemoryAllocatedForLibrary;
+  uint32_t uiTotalMemoryAllocatedForLibrary;
 #endif
 
 } LibraryHeaderStruct;
 
 typedef struct {
-  INT32 iNumFilesOpen;
-  INT32 iSizeOfOpenFileArray;
+  int32_t iNumFilesOpen;
+  int32_t iSizeOfOpenFileArray;
   RealFileOpenStruct *pRealFilesOpen;
 
 } RealFileHeaderStruct;
 
 typedef struct {
-  STR sManagerName;
+  char *sManagerName;
   LibraryHeaderStruct *pLibraries;
-  UINT16 usNumberOfLibraries;
+  uint16_t usNumberOfLibraries;
   BOOLEAN fInitialized;
   RealFileHeaderStruct RealFiles;
 } DatabaseManagerHeaderStruct;
@@ -106,14 +107,14 @@ typedef struct {
 #define FILE_DOESNT_EXIST 0xfe
 
 typedef struct {
-  CHAR8 sLibName[FILENAME_SIZE];
-  CHAR8 sPathToLibrary[FILENAME_SIZE];
-  INT32 iEntries;
-  INT32 iUsed;
-  UINT16 iSort;
-  UINT16 iVersion;
+  char sLibName[FILENAME_SIZE];
+  char sPathToLibrary[FILENAME_SIZE];
+  int32_t iEntries;
+  int32_t iUsed;
+  uint16_t iSort;
+  uint16_t iVersion;
   BOOLEAN fContainsSubDirectories;
-  INT32 iReserved;
+  int32_t iReserved;
 } LIBHEADER;
 
 // The FileDatabaseHeader
@@ -121,22 +122,24 @@ extern DatabaseManagerHeaderStruct gFileDataBase;
 
 // Function Prototypes
 
-BOOLEAN CheckForLibraryExistence(STR pLibraryName);
-BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibheader, BOOLEAN fCanBeOnCDrom);
+BOOLEAN CheckForLibraryExistence(char *pLibraryName);
+BOOLEAN InitializeLibrary(char *pLibraryName, LibraryHeaderStruct *pLibheader,
+                          BOOLEAN fCanBeOnCDrom);
 
-BOOLEAN CheckIfFileExistInLibrary(STR pFileName);
-INT16 GetLibraryIDFromFileName(STR pFileName);
-HWFILE OpenFileFromLibrary(STR pName);
+BOOLEAN CheckIfFileExistInLibrary(char *pFileName);
+int16_t GetLibraryIDFromFileName(char *pFileName);
+HWFILE OpenFileFromLibrary(char *pName);
 HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile);
-BOOLEAN CloseLibraryFile(INT16 sLibraryID, UINT32 uiFileID);
-BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
-                                                 UINT32 *pFileNum);
-BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, UINT32 uiFileIndex, PTR pData, UINT32 uiBytesToRead,
-                            UINT32 *pBytesRead);
-BOOLEAN LibraryFileSeek(INT16 sLibraryID, UINT32 uiFileNum, UINT32 uiDistance, UINT8 uiHowToSeek);
+BOOLEAN CloseLibraryFile(int16_t sLibraryID, uint32_t uiFileID);
+BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, int16_t *pLibraryID,
+                                                 uint32_t *pFileNum);
+BOOLEAN LoadDataFromLibrary(int16_t sLibraryID, uint32_t uiFileIndex, void *pData,
+                            uint32_t uiBytesToRead, uint32_t *pBytesRead);
+BOOLEAN LibraryFileSeek(int16_t sLibraryID, uint32_t uiFileNum, uint32_t uiDistance,
+                        uint8_t uiHowToSeek);
 
 // used to open and close libraries during the game
-BOOLEAN CloseLibrary(INT16 sLibraryID);
-BOOLEAN OpenLibrary(INT16 sLibraryID);
+BOOLEAN CloseLibrary(int16_t sLibraryID);
+BOOLEAN OpenLibrary(int16_t sLibraryID);
 
 #endif

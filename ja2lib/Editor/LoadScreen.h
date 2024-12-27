@@ -5,18 +5,18 @@
 #include "Editor/LoadScreenPub.h"
 #include "SGP/Types.h"
 
-extern INT32 iFDlgState;
-extern INT32 iFDlgSelectedSlot;
+extern int32_t iFDlgState;
+extern int32_t iFDlgSelectedSlot;
 
 extern BOOLEAN gfAskForName;
 extern BOOLEAN gfCreatedFDlg;
 extern BOOLEAN gfDestroyFDlg;
 
-UINT32 WaitForFileName(void);
+uint32_t WaitForFileName(void);
 void RemoveFileDialog(void);
-void CreateFileDialog(CHAR16 *zTitle);
+void CreateFileDialog(wchar_t* zTitle);
 
-void SelectFileDialogYPos(UINT16 usRelativeYPos);
+void SelectFileDialogYPos(uint16_t usRelativeYPos);
 
 void BuildFilenameWithCoordinate();
 void BuildCoordinateWithFilename();
@@ -24,10 +24,10 @@ BOOLEAN ExtractFilenameFromFields();
 BOOLEAN ValidCoordinate();
 BOOLEAN ValidFilename();
 
-BOOLEAN ExternalLoadMap(STR16 szFilename);
-BOOLEAN ExternalSaveMap(STR16 szFilename);
+BOOLEAN ExternalLoadMap(wchar_t* szFilename);
+BOOLEAN ExternalSaveMap(wchar_t* szFilename);
 
 extern BOOLEAN gfErrorCatch;
-extern CHAR16 gzErrorCatchString[256];
+extern wchar_t gzErrorCatchString[256];
 
 #endif

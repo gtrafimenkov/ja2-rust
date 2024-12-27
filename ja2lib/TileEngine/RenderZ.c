@@ -1,7 +1,7 @@
 #include "TileEngine/IsometricUtils.h"
 
-INT16 gsRScreenCenterX, gsRScreenCenterY;
-INT16 gsRDistToCenterY, gsRDistToCenterX;
+int16_t gsRScreenCenterX, gsRScreenCenterY;
+int16_t gsRDistToCenterY, gsRDistToCenterX;
 
 #define GetMapXYWorldY(sWorldCellX, sWorldCellY, sWorldY)           \
   {                                                                 \
@@ -33,7 +33,7 @@ INT16 gsRDistToCenterY, gsRDistToCenterX;
     if (uiTileElemFlags & CLIFFHANG_TILE) {                \
       sZLevel = LAND_Z_LEVEL;                              \
     } else if (uiTileElemFlags & OBJECTLAYER_USEZHEIGHT) { \
-      sZLevel = ((sWorldY)*Z_SUBLAYERS) + LAND_Z_LEVEL;    \
+      sZLevel = ((sWorldY) * Z_SUBLAYERS) + LAND_Z_LEVEL;  \
     } else {                                               \
       sZLevel = OBJECT_Z_LEVEL;                            \
     }                                                      \
@@ -54,7 +54,7 @@ INT16 gsRDistToCenterY, gsRDistToCenterX;
                                                                                            \
         GetMapXYWorldY((sMapX + sZOffsetX), (sMapY + sZOffsetY), sWorldY);                 \
                                                                                            \
-        sZLevel = ((sWorldY)*Z_SUBLAYERS) + STRUCT_Z_LEVEL;                                \
+        sZLevel = ((sWorldY) * Z_SUBLAYERS) + STRUCT_Z_LEVEL;                              \
                                                                                            \
       } else {                                                                             \
         sZOffsetX = -1;                                                                    \
@@ -63,7 +63,7 @@ INT16 gsRDistToCenterY, gsRDistToCenterX;
                                                                                            \
         sWorldY += 20;                                                                     \
                                                                                            \
-        sZLevel = ((sWorldY)*Z_SUBLAYERS) + LAND_Z_LEVEL;                                  \
+        sZLevel = ((sWorldY) * Z_SUBLAYERS) + LAND_Z_LEVEL;                                \
       }                                                                                    \
     } else if (uiLevelNodeFlags & LEVELNODE_PHYSICSOBJECT) {                               \
       sWorldY += pNode->sRelativeZ;                                                        \

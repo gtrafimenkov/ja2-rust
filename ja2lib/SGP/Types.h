@@ -15,37 +15,18 @@
 
 // HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
 
-typedef uint32_t UINT32;
-typedef int32_t INT32;
-
-// integers
-typedef unsigned char UINT8;
-typedef signed char INT8;
-typedef uint16_t UINT16;
-typedef int16_t INT16;
-// floats
-typedef float FLOAT;
-typedef double DOUBLE;
-// strings
-typedef char CHAR8;
-typedef wchar_t CHAR16;
-typedef char* STR;
-typedef char* STR8;
-typedef wchar_t* STR16;
 // flags (individual bits used)
 typedef unsigned char FLAGS8;
 typedef uint16_t FLAGS16;
 typedef unsigned long FLAGS32;
 // other
 typedef unsigned char BOOLEAN;
-typedef void* PTR;
 typedef uint16_t HNDL;
-typedef UINT8 BYTE;
-typedef CHAR8 STRING512[512];
-typedef UINT32 HWFILE;
+typedef char STRING512[512];
+typedef uint32_t HWFILE;
 
 #define SGPFILENAME_LEN 100
-typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
+typedef char SGPFILENAME[SGPFILENAME_LEN];
 
 #ifndef TRUE
 #define TRUE 1
@@ -68,31 +49,31 @@ typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
 #endif
 
 typedef struct {
-  INT32 iLeft;
-  INT32 iTop;
-  INT32 iRight;
-  INT32 iBottom;
+  int32_t iLeft;
+  int32_t iTop;
+  int32_t iRight;
+  int32_t iBottom;
 } SGPRect;
 
 typedef struct {
-  INT32 iX;
-  INT32 iY;
+  int32_t iX;
+  int32_t iY;
 
 } SGPPoint;
 
 typedef struct {
-  INT32 Min;
-  INT32 Max;
+  int32_t Min;
+  int32_t Max;
 
 } SGPRange;
 
-typedef FLOAT VECTOR2[2];  // 2d vector (2x1 matrix)
-typedef FLOAT VECTOR3[3];  // 3d vector (3x1 matrix)
-typedef FLOAT VECTOR4[4];  // 4d vector (4x1 matrix)
+typedef float VECTOR2[2];  // 2d vector (2x1 matrix)
+typedef float VECTOR3[3];  // 3d vector (3x1 matrix)
+typedef float VECTOR4[4];  // 4d vector (4x1 matrix)
 
-typedef INT32 IVECTOR2[2];  // 2d vector (2x1 matrix)
-typedef INT32 IVECTOR3[3];  // 3d vector (3x1 matrix)
-typedef INT32 IVECTOR4[4];  // 4d vector (4x1 matrix)
+typedef int32_t IVECTOR2[2];  // 2d vector (2x1 matrix)
+typedef int32_t IVECTOR3[3];  // 3d vector (3x1 matrix)
+typedef int32_t IVECTOR4[4];  // 4d vector (4x1 matrix)
 
 typedef VECTOR3 MATRIX3[3];  // 3x3 matrix
 typedef VECTOR4 MATRIX4[4];  // 4x4 matrix
@@ -109,16 +90,7 @@ typedef VECTOR4 COLOR;  // rgba color array
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif
 
-typedef uint8_t u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
-
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
-typedef UINT32 COLORVAL;
+typedef uint32_t COLORVAL;
 
 #endif

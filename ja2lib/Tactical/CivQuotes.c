@@ -37,8 +37,8 @@
 #define CIV_QUOTE_HINT 99
 
 typedef struct {
-  UINT8 ubNumEntries;
-  UINT8 ubUnusedCurrentEntry;
+  uint8_t ubNumEntries;
+  uint8_t ubUnusedCurrentEntry;
 
 } CIV_QUOTE;
 
@@ -48,42 +48,42 @@ BOOLEAN gfSurrendered = FALSE;
 
 CIV_QUOTE gCivQuotes[NUM_CIV_QUOTES];
 
-UINT8 gubNumEntries[NUM_CIV_QUOTES] = {15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+uint8_t gubNumEntries[NUM_CIV_QUOTES] = {15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 
-                                       15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+                                         15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 
-                                       5,  5,  15, 15, 15, 15, 15, 15, 15, 15,
+                                         5,  5,  15, 15, 15, 15, 15, 15, 15, 15,
 
-                                       15, 15, 2,  15, 15, 10, 10, 5,  3,  10,
+                                         15, 15, 2,  15, 15, 10, 10, 5,  3,  10,
 
-                                       3,  3,  3,  3,  3,  3,  3,  3,  3,  3};
+                                         3,  3,  3,  3,  3,  3,  3,  3,  3,  3};
 
 typedef struct {
   BOOLEAN bActive;
   struct MOUSE_REGION MouseRegion;
-  INT32 iVideoOverlay;
-  INT32 iDialogueBox;
-  UINT32 uiTimeOfCreation;
-  UINT32 uiDelayTime;
+  int32_t iVideoOverlay;
+  int32_t iDialogueBox;
+  uint32_t uiTimeOfCreation;
+  uint32_t uiDelayTime;
   struct SOLDIERTYPE *pCiv;
 } QUOTE_SYSTEM_STRUCT;
 
 QUOTE_SYSTEM_STRUCT gCivQuoteData;
 
-CHAR16 gzCivQuote[320];
-UINT16 gusCivQuoteBoxWidth;
-UINT16 gusCivQuoteBoxHeight;
+wchar_t gzCivQuote[320];
+uint16_t gusCivQuoteBoxWidth;
+uint16_t gusCivQuoteBoxHeight;
 
 void CopyNumEntriesIntoQuoteStruct() {
-  INT32 cnt;
+  int32_t cnt;
 
   for (cnt = 0; cnt < NUM_CIV_QUOTES; cnt++) {
     gCivQuotes[cnt].ubNumEntries = gubNumEntries[cnt];
   }
 }
 
-BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
-  CHAR8 zFileName[164];
+BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, wchar_t *zQuote) {
+  char zFileName[164];
 
   // Build filename....
   if (ubCivQuoteID == CIV_QUOTE_HINT) {
@@ -109,9 +109,9 @@ BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
   return (TRUE);
 }
 
-void SurrenderMessageBoxCallBack(UINT8 ubExitValue) {
+void SurrenderMessageBoxCallBack(uint8_t ubExitValue) {
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt = 0;
+  int32_t cnt = 0;
 
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     // CJC Dec 1 2002: fix multiple captures
@@ -163,7 +163,7 @@ void ShutDownQuoteBox(BOOLEAN fForce) {
     // do we need to do anything at the end of the civ quote?
     if (gCivQuoteData.pCiv && gCivQuoteData.pCiv->bAction == AI_ACTION_OFFER_SURRENDER) {
       DoMessageBox(MSG_BOX_BASIC_STYLE, Message[STR_SURRENDER], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, SurrenderMessageBoxCallBack, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, SurrenderMessageBoxCallBack, NULL);
     }
   }
 }
@@ -178,7 +178,7 @@ BOOLEAN ShutDownQuoteBoxIfActive() {
   return (FALSE);
 }
 
-INT8 GetCivType(struct SOLDIERTYPE *pCiv) {
+int8_t GetCivType(struct SOLDIERTYPE *pCiv) {
   if (pCiv->ubProfile != NO_PROFILE) {
     return (CIV_TYPE_NA);
   }
@@ -249,7 +249,7 @@ void RenderCivQuoteBoxOverlay(VIDEO_OVERLAY *pBlitter) {
   }
 }
 
-void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -264,10 +264,10 @@ void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX,
-                   INT16 sY) {
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, int16_t sX,
+                   int16_t sY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
-  CHAR16 zQuote[320];
+  wchar_t zQuote[320];
 
   // OK, do we have another on?
   if (gCivQuoteData.bActive) {
@@ -353,14 +353,14 @@ void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID
   gCivQuoteData.pCiv = pCiv;
 }
 
-UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
-                             BOOLEAN fCanUseHints) {
-  UINT8 ubCivType;
+uint8_t DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, uint8_t *pubCivHintToUse,
+                               BOOLEAN fCanUseHints) {
+  uint8_t ubCivType;
   TownID bTownId;
   BOOLEAN bCivLowLoyalty = FALSE;
   BOOLEAN bCivHighLoyalty = FALSE;
-  INT8 bCivHint;
-  INT8 bMineId;
+  int8_t bCivHint;
+  int8_t bMineId;
   BOOLEAN bMiners = FALSE;
 
   (*pubCivHintToUse) = 0;
@@ -587,11 +587,11 @@ void HandleCivQuote() {
 }
 
 void StartCivQuote(struct SOLDIERTYPE *pCiv) {
-  UINT8 ubCivQuoteID;
-  INT16 sX, sY;
-  UINT8 ubEntryID = 0;
-  INT16 sScreenX, sScreenY;
-  UINT8 ubCivHintToUse;
+  uint8_t ubCivQuoteID;
+  int16_t sX, sY;
+  uint8_t ubEntryID = 0;
+  int16_t sScreenX, sScreenY;
+  uint8_t ubCivHintToUse;
 
   // ATE: Check for old quote.....
   // This could have been stored on last attempt...
@@ -611,7 +611,7 @@ void StartCivQuote(struct SOLDIERTYPE *pCiv) {
   if (ubCivQuoteID != CIV_QUOTE_HINT) {
     if (pCiv->bCurrentCivQuote == -1) {
       // Pick random one
-      pCiv->bCurrentCivQuote = (INT8)Random(gCivQuotes[ubCivQuoteID].ubNumEntries - 2);
+      pCiv->bCurrentCivQuote = (int8_t)Random(gCivQuotes[ubCivQuoteID].ubNumEntries - 2);
       pCiv->bCurrentCivQuoteDelta = 0;
     }
 
@@ -654,7 +654,7 @@ void InitCivQuoteSystem() {
 }
 
 BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   FileMan_Write(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gCivQuotes)) {
@@ -665,7 +665,7 @@ BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadCivQuotesFromLoadGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   FileMan_Read(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gCivQuotes)) {

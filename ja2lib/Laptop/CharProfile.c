@@ -31,62 +31,62 @@ BOOLEAN fButtonPendingFlag = FALSE;
 BOOLEAN fAddCreatedCharToPlayersTeam = FALSE;
 BOOLEAN fReEnterIMP = FALSE;
 
-INT32 iCurrentImpPage = IMP_HOME_PAGE;
-INT32 iPreviousImpPage = -1;
+int32_t iCurrentImpPage = IMP_HOME_PAGE;
+int32_t iPreviousImpPage = -1;
 
 // attributes
-INT32 iStrength = 55;
-INT32 iDexterity = 55;
-INT32 iAgility = 55;
-INT32 iWisdom = 55;
-INT32 iLeadership = 55;
-INT32 iHealth = 55;
+int32_t iStrength = 55;
+int32_t iDexterity = 55;
+int32_t iAgility = 55;
+int32_t iWisdom = 55;
+int32_t iLeadership = 55;
+int32_t iHealth = 55;
 
 // skills
-INT32 iMarksmanship = 55;
-INT32 iMedical = 55;
-INT32 iExplosives = 55;
-INT32 iMechanical = 55;
+int32_t iMarksmanship = 55;
+int32_t iMedical = 55;
+int32_t iExplosives = 55;
+int32_t iMechanical = 55;
 
 // gender
 BOOLEAN fCharacterIsMale = TRUE;
 
 // name and nick name
-CHAR16 pFullName[32];
-CHAR16 pNickName[32];
+wchar_t pFullName[32];
+wchar_t pNickName[32];
 
 // skills
-INT32 iSkillA = 0;
-INT32 iSkillB = 0;
+int32_t iSkillA = 0;
+int32_t iSkillB = 0;
 
 // personality
-INT32 iPersonality = 0;
+int32_t iPersonality = 0;
 
 // attitude
-INT32 iAttitude = 0;
+int32_t iAttitude = 0;
 
 // additives, but no preservatives
-INT32 iAddStrength = 0;
-INT32 iAddDexterity = 0;
-INT32 iAddAgility = 0;
-INT32 iAddWisdom = 0;
-INT32 iAddHealth = 0;
-INT32 iAddLeadership = 0;
+int32_t iAddStrength = 0;
+int32_t iAddDexterity = 0;
+int32_t iAddAgility = 0;
+int32_t iAddWisdom = 0;
+int32_t iAddHealth = 0;
+int32_t iAddLeadership = 0;
 
-INT32 iAddMarksmanship = 0;
-INT32 iAddMedical = 0;
-INT32 iAddExplosives = 0;
-INT32 iAddMechanical = 0;
+int32_t iAddMarksmanship = 0;
+int32_t iAddMedical = 0;
+int32_t iAddExplosives = 0;
+int32_t iAddMechanical = 0;
 
 // IMP global buttons
-INT32 giIMPButton[1];
-INT32 giIMPButtonImage[1];
+int32_t giIMPButton[1];
+int32_t giIMPButtonImage[1];
 
 // visted subpages
 BOOLEAN fVisitedIMPSubPages[IMP_NUM_PAGES];
-extern INT32 iCurrentPortrait;
-extern INT32 iCurrentVoices;
-extern INT32 giMaxPersonalityQuizQuestion;
+extern int32_t iCurrentPortrait;
+extern int32_t iCurrentVoices;
+extern int32_t giMaxPersonalityQuizQuestion;
 extern BOOLEAN fStartOverFlag;
 
 void ExitOldIMPMode(void);
@@ -95,7 +95,7 @@ void LoadImpGraphics(void);
 void RemoveImpGraphics(void);
 void CreateIMPButtons(void);
 void DestroyIMPButtons(void);
-void BtnIMPCancelCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPCancelCallback(GUI_BUTTON *btn, int32_t reason);
 BOOLEAN HasTheCurrentIMPPageBeenVisited(void);
 extern void SetAttributes(void);
 
@@ -575,7 +575,7 @@ void DestroyIMPButtons(void) {
   return;
 }
 
-void BtnIMPCancelCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPCancelCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP cancel button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -628,7 +628,7 @@ void BtnIMPCancelCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void InitIMPSubPageList(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < IMP_CONFIRM; iCounter++) {
     fVisitedIMPSubPages[iCounter] = FALSE;

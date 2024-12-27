@@ -13,14 +13,14 @@
 #include "Utils/WordWrap.h"
 
 // IMP AboutUs buttons
-INT32 giIMPAboutUsButton[1];
-INT32 giIMPAboutUsButtonImage[1];
+int32_t giIMPAboutUsButton[1];
+int32_t giIMPAboutUsButtonImage[1];
 void CreateIMPAboutUsButtons(void);
 void DeleteIMPAboutUsButtons(void);
 ;
 
 // fucntions
-void BtnIMPBackCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPBackCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPAboutUs(void) {
   // create buttons
@@ -94,7 +94,7 @@ void DeleteIMPAboutUsButtons(void) {
   return;
 }
 
-void BtnIMPBackCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPBackCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

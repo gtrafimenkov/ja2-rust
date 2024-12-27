@@ -30,12 +30,12 @@ BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier);
 // c an this grunt help anyone else out?
 BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN FindAutobandageClimbPoint(INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
+BOOLEAN FindAutobandageClimbPoint(int16_t sDesiredGridNo, BOOLEAN fClimbUp) {
   // checks for existance of location to climb up to building, not occupied by a medic
   BUILDING *pBuilding;
-  UINT8 ubNumClimbSpots;
-  UINT8 ubLoop;
-  UINT8 ubWhoIsThere;
+  uint8_t ubNumClimbSpots;
+  uint8_t ubLoop;
+  uint8_t ubWhoIsThere;
 
   pBuilding = FindBuilding(sDesiredGridNo);
   if (!pBuilding) {
@@ -60,7 +60,7 @@ BOOLEAN FindAutobandageClimbPoint(INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
 }
 
 BOOLEAN FullPatientCheck(struct SOLDIERTYPE *pPatient) {
-  UINT8 cnt;
+  uint8_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   if (CanCharacterAutoBandageTeammate(pPatient)) {
@@ -98,10 +98,10 @@ BOOLEAN FullPatientCheck(struct SOLDIERTYPE *pPatient) {
 
 BOOLEAN CanAutoBandage(BOOLEAN fDoFullCheck) {
   // returns false if we should stop being in auto-bandage mode
-  UINT8 cnt;
-  UINT8 ubMedics = 0, ubPatients = 0;
+  uint8_t cnt;
+  uint8_t ubMedics = 0, ubPatients = 0;
   struct SOLDIERTYPE *pSoldier;
-  static UINT8 ubIDForFullCheck = NOBODY;
+  static uint8_t ubIDForFullCheck = NOBODY;
 
   // run though the list of chars on team
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -190,18 +190,18 @@ BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
-  UINT8 cnt, cnt2;
-  INT16 bBestPriority = 0, sBestAdjGridNo;
-  INT16 sPatientGridNo, sBestPatientGridNo;
-  INT16 sShortestPath = 1000, sPathCost, sOtherMedicPathCost;
+int8_t FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
+  uint8_t cnt, cnt2;
+  int16_t bBestPriority = 0, sBestAdjGridNo;
+  int16_t sPatientGridNo, sBestPatientGridNo;
+  int16_t sShortestPath = 1000, sPathCost, sOtherMedicPathCost;
   struct SOLDIERTYPE *pPatient;
   struct SOLDIERTYPE *pBestPatient = NULL;
   struct SOLDIERTYPE *pOtherMedic;
-  INT8 bPatientPriority;
-  UINT8 ubDirection;
-  INT16 sAdjustedGridNo, sAdjacentGridNo, sOtherAdjacentGridNo;
-  INT16 sClimbGridNo, sBestClimbGridNo = NOWHERE, sShortestClimbPath = 1000;
+  int8_t bPatientPriority;
+  uint8_t ubDirection;
+  int16_t sAdjustedGridNo, sAdjacentGridNo, sOtherAdjacentGridNo;
+  int16_t sClimbGridNo, sBestClimbGridNo = NOWHERE, sShortestClimbPath = 1000;
   BOOLEAN fClimbingNecessary;
 
   gubGlobalPathFlags = PATH_THROUGH_PEOPLE;
@@ -331,8 +331,8 @@ INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
   }
 }
 
-INT8 DecideAutoBandage(struct SOLDIERTYPE *pSoldier) {
-  INT8 bSlot;
+int8_t DecideAutoBandage(struct SOLDIERTYPE *pSoldier) {
+  int8_t bSlot;
   BOOLEAN fDoClimb;
 
   if (pSoldier->bMedical == 0 || pSoldier->ubServicePartner != NOBODY) {

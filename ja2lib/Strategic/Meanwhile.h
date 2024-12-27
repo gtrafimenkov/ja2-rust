@@ -25,54 +25,54 @@ enum {
 };
 
 typedef struct {
-  INT16 sSectorX;
-  INT16 sSectorY;
-  UINT16 usTriggerEvent;
+  int16_t sSectorX;
+  int16_t sSectorY;
+  uint16_t usTriggerEvent;
 
-  UINT8 ubMeanwhileID;
-  UINT8 ubNPCNumber;
+  uint8_t ubMeanwhileID;
+  uint8_t ubNPCNumber;
 
 } MEANWHILE_DEFINITION;
 
-void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, UINT32 uiTime);
+void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, uint32_t uiTime);
 void HandleFirstBattleVictory(void);
 
-BOOLEAN BeginMeanwhile(UINT8 ubMeanwhileID);
+BOOLEAN BeginMeanwhile(uint8_t ubMeanwhileID);
 
 void CheckForMeanwhileOKStart();
 void EndMeanwhile();
 
 BOOLEAN AreInMeanwhile();
-UINT8 GetMeanwhileID();
+uint8_t GetMeanwhileID();
 BOOLEAN AreReloadingFromMeanwhile();
 
 void LocateToMeanwhileCharacter();
 
 // post meanwhile event for town liberation
-void HandleMeanWhileEventPostingForTownLiberation(UINT8 bTownId);
+void HandleMeanWhileEventPostingForTownLiberation(uint8_t bTownId);
 
 // post meanwhile event for SAM liberation
-void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSAMId);
+void HandleMeanWhileEventPostingForSAMLiberation(int8_t bSAMId);
 
 // trash world has been called, should we do the first meanwhile?
 void HandleFirstMeanWhileSetUpWithTrashWorld(void);
 
 // battle ended, check if we should set up a meanwhile?
-void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, INT16 bSectorZ,
+void HandleFirstBattleEndingWhileInTown(uint8_t sSectorX, uint8_t sSectorY, int16_t bSectorZ,
                                         BOOLEAN fFromAutoResolve);
 
 // lost an entire town to the enemy!
-void HandleMeanWhileEventPostingForTownLoss(UINT8 bTownId);
+void HandleMeanWhileEventPostingForTownLoss(uint8_t bTownId);
 
 // handle short cutting past a meanwhilescene while it is being handled
-void HandleShortCuttingOfMeanwhileSceneByPlayer(UINT8 ubMeanwhileID, INT32 iLastProfileId,
-                                                INT32 iLastProfileAction);
+void HandleShortCuttingOfMeanwhileSceneByPlayer(uint8_t ubMeanwhileID, int32_t iLastProfileId,
+                                                int32_t iLastProfileAction);
 
 // handle release of creatures meanwhile
 void HandleCreatureRelease(void);
 
 // handle sending flowers to the queen
-void HandleFlowersMeanwhileScene(INT8 bTimeCode);
+void HandleFlowersMeanwhileScene(int8_t bTimeCode);
 
 // player reaches the outskirts of Meduna
 void HandleOutskirtsOfMedunaMeanwhileScene(void);
@@ -91,6 +91,6 @@ extern MEANWHILE_DEFINITION gMeanwhileDef[NUM_MEANWHILES];
 extern BOOLEAN gfMeanwhileScheduled;
 extern BOOLEAN gfMeanwhileTryingToStart;
 extern BOOLEAN gfInMeanwhile;
-extern UINT32 uiMeanWhileFlags;
+extern uint32_t uiMeanWhileFlags;
 
 #endif

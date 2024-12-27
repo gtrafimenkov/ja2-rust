@@ -16,7 +16,7 @@
 //
 //**************************************************************************
 
-STR16 gzJA2ScreenNames[] = {
+wchar_t* gzJA2ScreenNames[] = {
     L"EDIT_SCREEN",        L"SAVING_SCREEN",
     L"LOADING_SCREEN",     L"ERROR_SCREEN",
     L"INIT_SCREEN",        L"GAME_SCREEN",

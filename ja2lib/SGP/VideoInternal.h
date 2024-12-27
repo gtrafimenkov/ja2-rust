@@ -1,4 +1,4 @@
 #include "SGP/Types.h"
 
-extern UINT16 gusScreenWidth;
-extern UINT16 gusScreenHeight;
+extern uint16_t gusScreenWidth;
+extern uint16_t gusScreenHeight;

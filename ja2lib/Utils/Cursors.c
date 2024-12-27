@@ -25,9 +25,9 @@
 
 #define NUM_MOUSE_LEVELS 2
 
-INT16 gsMouseGlobalYOffsets[NUM_MOUSE_LEVELS] = {0, 50};
+int16_t gsMouseGlobalYOffsets[NUM_MOUSE_LEVELS] = {0, 50};
 
-void UpdateFlashingCursorFrames(UINT32 uiCursorIndex);
+void UpdateFlashingCursorFrames(uint32_t uiCursorIndex);
 
 extern struct MOUSE_REGION gDisableRegion;
 extern struct MOUSE_REGION gUserTurnRegion;
@@ -113,7 +113,7 @@ struct CursorFileData CursorFileDatabase[] = {
 
 };
 
-void RaiseMouseToLevel(INT8 bLevel) { gsGlobalCursorYOffset = gsMouseGlobalYOffsets[bLevel]; }
+void RaiseMouseToLevel(int8_t bLevel) { gsGlobalCursorYOffset = gsMouseGlobalYOffsets[bLevel]; }
 
 CursorData CursorDatabase[] = {
     {C_MISC, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -4700,8 +4700,8 @@ void BltJA2CursorData() {
 }
 
 void DrawMouseText() {
-  CHAR16 pStr[512];
-  INT16 sX, sY;
+  wchar_t pStr[512];
+  int16_t sX, sY;
   static BOOLEAN fShow = FALSE;
   static BOOLEAN fHoldInvalid = TRUE;
 
@@ -4854,10 +4854,10 @@ void DrawMouseText() {
 #endif
 }
 
-void UpdateAnimatedCursorFrames(UINT32 uiCursorIndex) {
+void UpdateAnimatedCursorFrames(uint32_t uiCursorIndex) {
   CursorData *pCurData;
   CursorImage *pCurImage;
-  UINT32 cnt;
+  uint32_t cnt;
 
   if (uiCursorIndex != VIDEO_NO_CURSOR) {
     pCurData = &(CursorDatabase[uiCursorIndex]);
@@ -4877,7 +4877,7 @@ void UpdateAnimatedCursorFrames(UINT32 uiCursorIndex) {
   }
 }
 
-void UpdateFlashingCursorFrames(UINT32 uiCursorIndex) {
+void UpdateFlashingCursorFrames(uint32_t uiCursorIndex) {
   CursorData *pCurData;
 
   if (uiCursorIndex != VIDEO_NO_CURSOR) {
@@ -4896,26 +4896,28 @@ void UpdateFlashingCursorFrames(UINT32 uiCursorIndex) {
   }
 }
 
-void SetCursorSpecialFrame(UINT32 uiCursor, UINT8 ubFrame) {
+void SetCursorSpecialFrame(uint32_t uiCursor, uint8_t ubFrame) {
   CursorDatabase[uiCursor].bFlashIndex = ubFrame;
 }
 
-void SetCursorFlags(UINT32 uiCursor, UINT8 ubFlags) { CursorDatabase[uiCursor].bFlags |= ubFlags; }
+void SetCursorFlags(uint32_t uiCursor, uint8_t ubFlags) {
+  CursorDatabase[uiCursor].bFlags |= ubFlags;
+}
 
-void RemoveCursorFlags(UINT32 uiCursor, UINT8 ubFlags) {
+void RemoveCursorFlags(uint32_t uiCursor, uint8_t ubFlags) {
   CursorDatabase[uiCursor].bFlags &= (~ubFlags);
 }
 
-struct VObject *GetCursorFileVideoObject(UINT32 uiCursorFile) {
+struct VObject *GetCursorFileVideoObject(uint32_t uiCursorFile) {
   return (CursorFileDatabase[uiCursorFile].hVObject);
 }
 
-void SyncPairedCursorFrames(UINT32 uiSrcIndex, UINT32 uiDestIndex) {
+void SyncPairedCursorFrames(uint32_t uiSrcIndex, uint32_t uiDestIndex) {
 #if 0
 	CursorData		*pSrcCurData, *pDestCurData;
 	CursorImage		*pSrcCurImage, *pDestCurImage;
-	UINT32				cnt;
-	INT32				iCurFrame = -1;
+	uint32_t				cnt;
+	int32_t				iCurFrame = -1;
 
 	if ( uiSrcIndex == VIDEO_NO_CURSOR || uiDestIndex == VIDEO_NO_CURSOR )
 	{

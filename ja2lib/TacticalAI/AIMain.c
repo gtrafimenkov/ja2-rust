@@ -58,11 +58,11 @@ extern void AdjustNoAPToFinishMove(struct SOLDIERTYPE *pSoldier, BOOLEAN fSet);
 void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier);
 void HandleAITacticalTraversal(struct SOLDIERTYPE *pSoldier);
 
-extern UINT8 gubElementsOnExplosionQueue;
+extern uint8_t gubElementsOnExplosionQueue;
 
 extern BOOLEAN gfWaitingForTriggerTimer;
 
-UINT8 gubAICounter;
+uint8_t gubAICounter;
 
 //
 // Commented out/ to fix:
@@ -72,17 +72,17 @@ UINT8 gubAICounter;
 #define DEADLOCK_DELAY 15000
 
 // Very representing if this computer is the host, therefore controlling the ai
-extern BYTE gfAmIHost;
+extern uint8_t gfAmIHost;
 
 // #define TESTAI
 
-INT8 GameOption[MAXGAMEOPTIONS] = {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0};
+int8_t GameOption[MAXGAMEOPTIONS] = {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0};
 
 #define AI_LIMIT_PER_UPDATE 1
 
 BOOLEAN gfTurnBasedAI;
 
-INT8 gbDiff[MAX_DIFF_PARMS][5] = {
+int8_t gbDiff[MAX_DIFF_PARMS][5] = {
     //       AI DIFFICULTY SETTING
     // WIMPY  EASY  NORMAL  TOUGH  ELITE
     {-20, -10, 0, 10, 20},  // DIFF_ENEMY_EQUIP_MOD
@@ -94,7 +94,7 @@ INT8 gbDiff[MAX_DIFF_PARMS][5] = {
 
 void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier);
 
-void DebugAI(STR szOutput) {
+void DebugAI(char *szOutput) {
 #ifdef JA2BETAVERSION
   // Send regular debug msg AND AI debug message
   FILE *DebugFile;
@@ -111,7 +111,7 @@ void DebugAI(STR szOutput) {
 BOOLEAN InitAI(void) {
 #ifdef _DEBUG
   if (gfDisplayCoverValues) {
-    memset(gsCoverValue, 0x7F, sizeof(INT16) * WORLD_MAX);
+    memset(gsCoverValue, 0x7F, sizeof(int16_t) * WORLD_MAX);
   }
 #endif
 
@@ -567,7 +567,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 #define NOSCORE 99
 
 void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubID;
+  uint8_t ubID;
 
   if (gfTurnBasedAI) {
     if (gTacticalStatus.uiFlags & PLAYER_TEAM_DEAD) {
@@ -597,7 +597,7 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->ubCivilianGroup != NON_CIV_GROUP && !pSoldier->bNeutral) {
       if (!(pSoldier->uiStatusFlags & SOLDIER_BOXER) ||
           !(gTacticalStatus.bBoxingState == PRE_BOXING || gTacticalStatus.bBoxingState == BOXING)) {
-        UINT8 ubFirstProfile;
+        uint8_t ubFirstProfile;
 
         ubFirstProfile = CivilianGroupMembersChangeSidesWithinProximity(pSoldier);
         if (ubFirstProfile != NO_PROFILE) {
@@ -641,9 +641,9 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
 }
 
 void EndAIDeadlock(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  INT8 bFound = FALSE;
+  int8_t bFound = FALSE;
 
   // ESCAPE ENEMY'S TURN
 
@@ -751,8 +751,8 @@ void StartNPCAI(struct SOLDIERTYPE *pSoldier) {
   DecideAlertStatus(pSoldier);
 }
 
-BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
-  INT32 cnt;
+BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
+  int32_t cnt;
   struct SOLDIERTYPE *pOurTeam;
 
   cnt = gTacticalStatus.Team[pSoldier->bTeam].bFirstID;
@@ -768,10 +768,10 @@ BOOLEAN DestNotSpokenFor(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   return (TRUE);  // dest is free to go to...
 }
 
-INT16 FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
-  INT32 cnt;
-  INT16 mods[4] = {-1, -MAPWIDTH, 1, MAPWIDTH};
-  INT16 sTempGridno, sCheapestCost = 500, sMovementCost, sCheapestDest = NOWHERE;
+int16_t FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, int16_t sGridno) {
+  int32_t cnt;
+  int16_t mods[4] = {-1, -MAPWIDTH, 1, MAPWIDTH};
+  int16_t sTempGridno, sCheapestCost = 500, sMovementCost, sCheapestDest = NOWHERE;
 
   for (cnt = 0; cnt < 4; cnt++) {
     sTempGridno = sGridno + mods[cnt];
@@ -791,11 +791,11 @@ INT16 FindAdjacentSpotBeside(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   return (sCheapestDest);
 }
 
-UINT8 GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiLoop;
-  INT32 iThreatVal, iMinThreat = 30000;
+uint8_t GetMostThreateningOpponent(struct SOLDIERTYPE *pSoldier) {
+  uint32_t uiLoop;
+  int32_t iThreatVal, iMinThreat = 30000;
   struct SOLDIERTYPE *pTargetSoldier;
-  UINT8 ubTargetSoldier = NO_SOLDIER;
+  uint8_t ubTargetSoldier = NO_SOLDIER;
 
   // Loop through all mercs
 
@@ -861,7 +861,7 @@ void FreeUpNPCFromPendingAction(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void FreeUpNPCFromAttacking(UINT8 ubID) {
+void FreeUpNPCFromAttacking(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = MercPtrs[ubID];
@@ -934,7 +934,7 @@ void FreeUpNPCFromLoweringGun(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, INT8 bLook) {
+void FreeUpNPCFromTurning(struct SOLDIERTYPE *pSoldier, int8_t bLook) {
   // if NPC is in the process of changing facing, mark him as being done!
   if ((pSoldier->bAction == AI_ACTION_CHANGE_FACING) && pSoldier->bActionInProgress) {
 #ifdef TESTAI
@@ -1051,7 +1051,7 @@ void ActionDone(struct SOLDIERTYPE *pSoldier) {
 
 // GLOBALS:
 
-UINT8 SkipCoverCheck = FALSE;
+uint8_t SkipCoverCheck = FALSE;
 THREATTYPE Threat[MAXMERCS];
 
 // threat percentage is based on the certainty of opponent knowledge:
@@ -1095,7 +1095,7 @@ void NPCDoesNothing(struct SOLDIERTYPE *pSoldier) {
   // *** IAN deleted lots of interrupt related code here to simplify JA2	development
 }
 
-void CancelAIAction(struct SOLDIERTYPE *pSoldier, UINT8 ubForce) {
+void CancelAIAction(struct SOLDIERTYPE *pSoldier, uint8_t ubForce) {
 #ifdef DEBUGDECISIONS
   if (SkipCoverCheck) DebugAI(String("CancelAIAction: SkipCoverCheck turned OFF\n"));
 #endif
@@ -1243,7 +1243,7 @@ void ActionTimeoutExceeded(struct SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
 }
 */
 
-INT16 ActionInProgress(struct SOLDIERTYPE *pSoldier) {
+int16_t ActionInProgress(struct SOLDIERTYPE *pSoldier) {
   // if NPC has a desired destination, but isn't currently going there
   if ((pSoldier->sFinalDestination != NOWHERE) &&
       (pSoldier->sDestination != pSoldier->sFinalDestination)) {
@@ -1260,7 +1260,7 @@ INT16 ActionInProgress(struct SOLDIERTYPE *pSoldier) {
 
     // don't try to pay any more APs for this, it was paid for once already!
     pSoldier->bDesiredDirection =
-        (INT8)pSoldier->usActionData;  // turn to face direction in actionData
+        (int8_t)pSoldier->usActionData;  // turn to face direction in actionData
     return (TRUE);
   }
 
@@ -1674,8 +1674,8 @@ void AIDecideRadioAnimation(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
-  INT32 iRetCode;
+int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
+  int32_t iRetCode;
   // NumMessage("ExecuteAction - Guy#",pSoldier->ubID);
 
   // in most cases, merc will change location, or may cause damage to opponents,
@@ -1724,7 +1724,8 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       DebugAI(String("ExecuteAction: SkipCoverCheck ON\n"));
 #endif
 
-      //			pSoldier->bDesiredDirection = (UINT8) ;   // turn to face direction
+      //			pSoldier->bDesiredDirection = (uint8_t) ;   // turn to face
+      // direction
       // in actionData
       SendSoldierSetDesiredDirectionEvent(pSoldier, pSoldier->usActionData);
       // now we'll have to wait for the turning to finish; no need to call TurnSoldier here
@@ -1864,7 +1865,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
               ReplaceLocationInNPCDataFromProfileID(
                   GetSolProfile(pSoldier), pSoldier->sAbsoluteFinalDestination, pSoldier->sGridNo);
               NPCGotoGridNo(GetSolProfile(pSoldier), pSoldier->sGridNo,
-                            (UINT8)(pSoldier->ubQuoteRecord - 1));
+                            (uint8_t)(pSoldier->ubQuoteRecord - 1));
             } else {
               // This is important, so try taking a path through people (and bumping them aside)
               if (LegalNPCDestination(pSoldier, pSoldier->usActionData, ENSURE_PATH, WATEROK,
@@ -1874,7 +1875,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
               } else {
                 // Have buddy wait a while...
                 pSoldier->bNextAction = AI_ACTION_WAIT;
-                pSoldier->usNextActionData = (UINT16)REALTIME_AI_DELAY;
+                pSoldier->usNextActionData = (uint16_t)REALTIME_AI_DELAY;
               }
             }
 
@@ -1934,7 +1935,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
         SaveGame(ERROR_SAVE);
 #endif
         // temporarily black list this gridno to stop enemy from going there
-        pSoldier->sBlackList = (INT16)pSoldier->usActionData;
+        pSoldier->sBlackList = (int16_t)pSoldier->usActionData;
 
         DebugAI(String("Setting blacklist for %d to %d", GetSolID(pSoldier), pSoldier->sBlackList));
 
@@ -2027,7 +2028,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
     case AI_ACTION_PULL_TRIGGER:  // activate an adjacent panic trigger
 
       // turn to face trigger first
-      if (FindStructure((INT16)(pSoldier->sGridNo + DirectionInc(NORTH)), STRUCTURE_SWITCH)) {
+      if (FindStructure((int16_t)(pSoldier->sGridNo + DirectionInc(NORTH)), STRUCTURE_SWITCH)) {
         SendSoldierSetDesiredDirectionEvent(pSoldier, NORTH);
       } else {
         SendSoldierSetDesiredDirectionEvent(pSoldier, WEST);
@@ -2104,7 +2105,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
 #ifdef DEBUGDECISIONS
       DebugAI(String("ExecuteAction: SkipCoverCheck ON\n"));
 #endif
-      SendChangeSoldierStanceEvent(pSoldier, (UINT8)pSoldier->usActionData);
+      SendChangeSoldierStanceEvent(pSoldier, (uint8_t)pSoldier->usActionData);
       break;
 
     case AI_ACTION_COWER:
@@ -2157,10 +2158,10 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
     case AI_ACTION_UNLOCK_DOOR:
     case AI_ACTION_LOCK_DOOR: {
       struct STRUCTURE *pStructure;
-      INT8 bDirection;
-      INT16 sDoorGridNo;
+      int8_t bDirection;
+      int16_t sDoorGridNo;
 
-      bDirection = (INT8)GetDirectionFromGridNo(pSoldier->usActionData, pSoldier);
+      bDirection = (int8_t)GetDirectionFromGridNo(pSoldier->usActionData, pSoldier);
       if (bDirection == EAST || bDirection == SOUTH) {
         sDoorGridNo = pSoldier->sGridNo;
       } else {
@@ -2291,7 +2292,7 @@ void InitAttackType(ATTACKTYPE *pAttack) {
   pAttack->ubAPCost = 0;
 }
 
-void HandleInitialRedAlert(INT8 bTeam, UINT8 ubCommunicate) {
+void HandleInitialRedAlert(int8_t bTeam, uint8_t ubCommunicate) {
   /*
    if (ubCommunicate)
     {
@@ -2337,9 +2338,9 @@ void HandleInitialRedAlert(INT8 bTeam, UINT8 ubCommunicate) {
 }
 
 void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE *pFriend;
-  INT16 sDistVisible;
+  int16_t sDistVisible;
 
   // THIS ROUTINE SHOULD ONLY BE CALLED FOR SOLDIERS ON STATUS GREEN or YELLOW
 
@@ -2363,7 +2364,7 @@ void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier) {
     if (PythSpacesAway(pSoldier->sGridNo, pFriend->sGridNo) <= sDistVisible) {
       // and can trace a line of sight to his x,y coordinates
       // if (1) //*** SoldierToSoldierLineOfSightTest(pSoldier,pFriend,STRAIGHT,TRUE))
-      if (SoldierToSoldierLineOfSightTest(pSoldier, pFriend, (UINT8)sDistVisible, TRUE)) {
+      if (SoldierToSoldierLineOfSightTest(pSoldier, pFriend, (uint8_t)sDistVisible, TRUE)) {
         // if my friend is in battle or something is clearly happening there
         if ((pFriend->bAlertStatus >= STATUS_RED) || pFriend->bUnderFire ||
             (pFriend->bLife < OKLIFE)) {

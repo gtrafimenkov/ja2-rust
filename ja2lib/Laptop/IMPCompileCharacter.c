@@ -31,33 +31,33 @@
 
 #define HOW_MANY_ROLLS_FOR_SAME_SKILL_CHECK 20
 
-INT32 AttitudeList[ATTITUDE_LIST_SIZE];
-INT32 iLastElementInAttitudeList = 0;
+int32_t AttitudeList[ATTITUDE_LIST_SIZE];
+int32_t iLastElementInAttitudeList = 0;
 
-INT32 SkillsList[ATTITUDE_LIST_SIZE];
-INT32 BackupSkillsList[ATTITUDE_LIST_SIZE];
-INT32 iLastElementInSkillsList = 0;
+int32_t SkillsList[ATTITUDE_LIST_SIZE];
+int32_t BackupSkillsList[ATTITUDE_LIST_SIZE];
+int32_t iLastElementInSkillsList = 0;
 
-INT32 PersonalityList[ATTITUDE_LIST_SIZE];
-INT32 iLastElementInPersonalityList = 0;
+int32_t PersonalityList[ATTITUDE_LIST_SIZE];
+int32_t iLastElementInPersonalityList = 0;
 
 extern BOOLEAN fLoadingCharacterForPreviousImpProfile;
 
 // positions of the face x and y for eyes and mouth for the 10 portraits
-INT16 sFacePositions[NUMBER_OF_PLAYER_PORTRAITS][4] = {
+int16_t sFacePositions[NUMBER_OF_PLAYER_PORTRAITS][4] = {
     {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
     {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
     {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
 };
 
-STR8 pPlayerSelectedFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS] = {
+char* pPlayerSelectedFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS] = {
     "Faces\\200.sti", "Faces\\201.sti", "Faces\\202.sti", "Faces\\203.sti",
     "Faces\\204.sti", "Faces\\205.sti", "Faces\\206.sti", "Faces\\207.sti",
     "Faces\\208.sti", "Faces\\209.sti", "Faces\\210.sti", "Faces\\211.sti",
     "Faces\\212.sti", "Faces\\213.sti", "Faces\\214.sti", "Faces\\215.sti",
 };
 
-STR8 pPlayerSelectedBigFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS] = {
+char* pPlayerSelectedBigFaceFileNames[NUMBER_OF_PLAYER_PORTRAITS] = {
     "Faces\\BigFaces\\200.sti", "Faces\\BigFaces\\201.sti", "Faces\\BigFaces\\202.sti",
     "Faces\\BigFaces\\203.sti", "Faces\\BigFaces\\204.sti", "Faces\\BigFaces\\205.sti",
     "Faces\\BigFaces\\206.sti", "Faces\\BigFaces\\207.sti", "Faces\\BigFaces\\208.sti",
@@ -89,33 +89,35 @@ void CreateACharacterFromPlayerEnteredStats(void) {
   }
 
   // attributes
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLifeMax = (INT8)iHealth;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLife = (INT8)iHealth;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bAgility = (INT8)iAgility;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLifeMax = (int8_t)iHealth;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLife = (int8_t)iHealth;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bAgility =
+      (int8_t)iAgility;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bStrength =
-      (INT8)iStrength;
+      (int8_t)iStrength;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bDexterity =
-      (INT8)iDexterity;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bWisdom = (INT8)iWisdom;
+      (int8_t)iDexterity;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bWisdom = (int8_t)iWisdom;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bLeadership =
-      (INT8)iLeadership;
+      (int8_t)iLeadership;
 
   // skills
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMarksmanship =
-      (INT8)iMarksmanship;
-  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMedical = (INT8)iMedical;
+      (int8_t)iMarksmanship;
+  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMedical =
+      (int8_t)iMedical;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bMechanical =
-      (INT8)iMechanical;
+      (int8_t)iMechanical;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bExplosive =
-      (INT8)iExplosives;
+      (int8_t)iExplosives;
 
   // personality
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bPersonalityTrait =
-      (INT8)iPersonality;
+      (int8_t)iPersonality;
 
   // attitude
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bAttitude =
-      (INT8)iAttitude;
+      (int8_t)iAttitude;
 
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bExpLevel = 1;
 
@@ -163,12 +165,12 @@ if( iPersonality != NO_PERSONALITYTRAIT )
 
 void CreatePlayerAttitude(void) {
   // this function will 'roll a die' and decide if any attitude does exists
-  INT32 iDiceValue = 0;
-  INT32 iCounter = 0, iCounter2 = 0;
+  int32_t iDiceValue = 0;
+  int32_t iCounter = 0, iCounter2 = 0;
 
-  INT32 iAttitudeHits[NUM_ATTITUDES] = {0};
-  INT32 iHighestHits = 0;
-  INT32 iNumAttitudesWithHighestHits = 0;
+  int32_t iAttitudeHits[NUM_ATTITUDES] = {0};
+  int32_t iHighestHits = 0;
+  int32_t iNumAttitudesWithHighestHits = 0;
 
   iAttitude = ATT_NORMAL;
 
@@ -234,12 +236,12 @@ void CreatePlayerAttitude(void) {
           */
 }
 
-void AddAnAttitudeToAttitudeList(INT8 bAttitude) {
+void AddAnAttitudeToAttitudeList(int8_t bAttitude) {
   // adds an attitude to attitude list
 
   if (iLastElementInAttitudeList < ATTITUDE_LIST_SIZE) {
     // add element
-    AttitudeList[iLastElementInAttitudeList] = (INT32)bAttitude;
+    AttitudeList[iLastElementInAttitudeList] = (int32_t)bAttitude;
 
     // increment attitude list counter
     iLastElementInAttitudeList++;
@@ -248,12 +250,12 @@ void AddAnAttitudeToAttitudeList(INT8 bAttitude) {
   return;
 }
 
-void AddSkillToSkillList(INT8 bSkill) {
+void AddSkillToSkillList(int8_t bSkill) {
   // adds a skill to skills list
 
   if (iLastElementInSkillsList < ATTITUDE_LIST_SIZE) {
     // add element
-    SkillsList[iLastElementInSkillsList] = (INT32)bSkill;
+    SkillsList[iLastElementInSkillsList] = (int32_t)bSkill;
 
     // increment attitude list counter
     iLastElementInSkillsList++;
@@ -262,12 +264,12 @@ void AddSkillToSkillList(INT8 bSkill) {
   return;
 }
 
-void RemoveSkillFromSkillsList(INT32 iIndex) {
-  INT32 iLoop;
+void RemoveSkillFromSkillsList(int32_t iIndex) {
+  int32_t iLoop;
 
   // remove a skill from the index given and shorten the list
   if (iIndex < iLastElementInSkillsList) {
-    memset(BackupSkillsList, 0, ATTITUDE_LIST_SIZE * sizeof(INT32));
+    memset(BackupSkillsList, 0, ATTITUDE_LIST_SIZE * sizeof(int32_t));
 
     // use the backup array to create a version of the array without
     // this index
@@ -278,15 +280,15 @@ void RemoveSkillFromSkillsList(INT32 iIndex) {
       BackupSkillsList[iLoop - 1] = SkillsList[iLoop];
     }
     // now copy this over to the skills list
-    memcpy(SkillsList, BackupSkillsList, ATTITUDE_LIST_SIZE * sizeof(INT32));
+    memcpy(SkillsList, BackupSkillsList, ATTITUDE_LIST_SIZE * sizeof(int32_t));
 
     // reduce recorded size by 1
     iLastElementInSkillsList--;
   }
 }
 
-INT32 FindSkillInSkillsList(INT32 iSkill) {
-  INT32 iLoop;
+int32_t FindSkillInSkillsList(int32_t iSkill) {
+  int32_t iLoop;
 
   for (iLoop = 0; iLoop < iLastElementInSkillsList; iLoop++) {
     if (SkillsList[iLoop] == iSkill) {
@@ -298,7 +300,7 @@ INT32 FindSkillInSkillsList(INT32 iSkill) {
 }
 
 void ValidateSkillsList(void) {
-  INT32 iIndex, iValue;
+  int32_t iIndex, iValue;
   MERCPROFILESTRUCT* pProfile;
 
   // remove from the generated traits list any traits that don't match
@@ -347,7 +349,7 @@ void ValidateSkillsList(void) {
 
 void CreatePlayerSkills(void) {
   // this function will 'roll a die' and decide if any attitude does exists
-  INT32 iDiceValue = 0;
+  int32_t iDiceValue = 0;
 
   ValidateSkillsList();
 
@@ -402,7 +404,7 @@ iSkillB = NO_SKILLTRAIT;
   */
 }
 
-void AddAPersonalityToPersonalityList(INT8 bPersonlity) {
+void AddAPersonalityToPersonalityList(int8_t bPersonlity) {
   // CJC, Oct 26 98: prevent personality list from being generated
   // because no dialogue was written to support PC personality quotes
 
@@ -415,7 +417,7 @@ void AddAPersonalityToPersonalityList(INT8 bPersonlity) {
   // will add a persoanlity to persoanlity list
   if (iLastElementInPersonalityList < ATTITUDE_LIST_SIZE) {
     // add element
-    PersonalityList[iLastElementInPersonalityList] = (INT32)bPersonlity;
+    PersonalityList[iLastElementInPersonalityList] = (int32_t)bPersonlity;
 
     // increment attitude list counter
     iLastElementInPersonalityList++;
@@ -435,9 +437,9 @@ void CreatePlayerPersonality(void) {
 
   /*
     // this function will 'roll a die' and decide if any Personality does exists
-    INT32 iDiceValue = 0;
-    INT32 iCounter = 0;
-          INT32 iSecondAttempt = -1;
+    int32_t iDiceValue = 0;
+    int32_t iCounter = 0;
+          int32_t iSecondAttempt = -1;
 
           // roll dice
           iDiceValue = Random( iLastElementInPersonalityList + 1 );
@@ -525,7 +527,7 @@ void SelectMercFace(void) {
 
   // now the offsets
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].ubFaceIndex =
-      200 + (UINT8)iPortraitNumber;
+      200 + (uint8_t)iPortraitNumber;
 
   // eyes
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].usEyesX =
@@ -556,7 +558,7 @@ void SetMercSkinAndHairColors(void) {
   };
 
   // skin strings
-  STR sSkinStrings[] = {
+  char* sSkinStrings[] = {
       "PINKSKIN",
       "TANSKIN",
       "DARKSKIN",
@@ -564,12 +566,12 @@ void SetMercSkinAndHairColors(void) {
   };
 
   // the hair colors
-  STR sHairStrings[] = {
+  char* sHairStrings[] = {
       "BROWNHEAD", "BLACKHEAD", "WHITEHEAD", "BLONDHEAD", "REDHEAD",
   };
 
   // given the portrait number, set the merc's skin and hair color
-  INT16 sSkinColor = 0, sHairColor = 0;
+  int16_t sSkinColor = 0, sHairColor = 0;
 
   switch (iPortraitNumber) {
     case (0):
@@ -683,9 +685,9 @@ void HandleMercStatsForChangesInFace() {
 
   // skill trait
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bSkillTrait =
-      (INT8)iSkillA;
+      (int8_t)iSkillA;
   gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].bSkillTrait2 =
-      (INT8)iSkillB;
+      (int8_t)iSkillB;
 }
 
 BOOLEAN ShouldThisMercHaveABigBody(void) {

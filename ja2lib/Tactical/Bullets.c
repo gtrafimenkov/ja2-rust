@@ -29,34 +29,34 @@
 
 // GLOBAL FOR FACES LISTING
 BULLET gBullets[NUM_BULLET_SLOTS];
-UINT32 guiNumBullets = 0;
+uint32_t guiNumBullets = 0;
 
-INT32 GetFreeBullet(void) {
-  UINT32 uiCount;
+int32_t GetFreeBullet(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBullets; uiCount++) {
-    if ((gBullets[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gBullets[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumBullets < NUM_BULLET_SLOTS) return ((INT32)guiNumBullets++);
+  if (guiNumBullets < NUM_BULLET_SLOTS) return ((int32_t)guiNumBullets++);
 
   return (-1);
 }
 
 void RecountBullets(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumBullets - 1; (uiCount >= 0); uiCount--) {
     if ((gBullets[uiCount].fAllocated)) {
-      guiNumBullets = (UINT32)(uiCount + 1);
+      guiNumBullets = (uint32_t)(uiCount + 1);
       return;
     }
   }
   guiNumBullets = 0;
 }
 
-INT32 CreateBullet(UINT8 ubFirerID, BOOLEAN fFake, UINT16 usFlags) {
-  INT32 iBulletIndex;
+int32_t CreateBullet(uint8_t ubFirerID, BOOLEAN fFake, uint16_t usFlags) {
+  int32_t iBulletIndex;
   BULLET *pBullet;
 
   if ((iBulletIndex = GetFreeBullet()) == (-1)) return (-1);
@@ -81,11 +81,11 @@ INT32 CreateBullet(UINT8 ubFirerID, BOOLEAN fFake, UINT16 usFlags) {
   return (iBulletIndex);
 }
 
-void HandleBulletSpecialFlags(INT32 iBulletIndex) {
+void HandleBulletSpecialFlags(int32_t iBulletIndex) {
   BULLET *pBullet;
   ANITILE_PARAMS AniParams;
-  FLOAT dX, dY;
-  UINT8 ubDirection;
+  float dX, dY;
+  uint8_t ubDirection;
 
   pBullet = &(gBullets[iBulletIndex]);
 
@@ -94,7 +94,7 @@ void HandleBulletSpecialFlags(INT32 iBulletIndex) {
   if (pBullet->fReal) {
     // Create ani tile if this is a spit!
     if (pBullet->usFlags & (BULLET_FLAG_KNIFE)) {
-      AniParams.sGridNo = (INT16)pBullet->sGridNo;
+      AniParams.sGridNo = (int16_t)pBullet->sGridNo;
       AniParams.ubLevelID = ANI_STRUCT_LEVEL;
       AniParams.sDelay = 100;
       AniParams.sStartFrame = 3;
@@ -112,10 +112,10 @@ void HandleBulletSpecialFlags(INT32 iBulletIndex) {
       }
 
       // Get direction to use for this guy....
-      dX = ((FLOAT)(pBullet->qIncrX) / FIXEDPT_FRACTIONAL_RESOLUTION);
-      dY = ((FLOAT)(pBullet->qIncrY) / FIXEDPT_FRACTIONAL_RESOLUTION);
+      dX = ((float)(pBullet->qIncrX) / FIXEDPT_FRACTIONAL_RESOLUTION);
+      dY = ((float)(pBullet->qIncrY) / FIXEDPT_FRACTIONAL_RESOLUTION);
 
-      ubDirection = atan8(0, 0, (INT16)(dX * 100), (INT16)(dY * 100));
+      ubDirection = atan8(0, 0, (int16_t)(dX * 100), (int16_t)(dY * 100));
 
       AniParams.uiUserData3 = ubDirection;
 
@@ -131,7 +131,7 @@ void HandleBulletSpecialFlags(INT32 iBulletIndex) {
   }
 }
 
-void RemoveBullet(INT32 iBullet) {
+void RemoveBullet(int32_t iBullet) {
   CHECKV(iBullet < NUM_BULLET_SLOTS);
 
   // decrease soldier's bullet count
@@ -168,7 +168,7 @@ void RemoveBullet(INT32 iBullet) {
   }
 }
 
-void LocateBullet(INT32 iBulletIndex) {
+void LocateBullet(int32_t iBulletIndex) {
   if (gGameSettings.fOptions[TOPTION_SHOW_MISSES]) {
     // Check if a bad guy fired!
     if (gBullets[iBulletIndex].ubFirerID != NOBODY) {
@@ -178,7 +178,7 @@ void LocateBullet(INT32 iBulletIndex) {
 
           // Only if we are in turnbased and noncombat
           if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
-            LocateGridNo((INT16)gBullets[iBulletIndex].sGridNo);
+            LocateGridNo((int16_t)gBullets[iBulletIndex].sGridNo);
           }
         }
       }
@@ -187,7 +187,7 @@ void LocateBullet(INT32 iBulletIndex) {
 }
 
 void UpdateBullets() {
-  UINT32 uiCount;
+  uint32_t uiCount;
   struct LEVELNODE *pNode;
   BOOLEAN fDeletedSome = FALSE;
 
@@ -234,17 +234,18 @@ void UpdateBullets() {
           if (gBullets[uiCount].usFlags & (BULLET_FLAG_KNIFE)) {
             if (gBullets[uiCount].pAniTile != NULL) {
               gBullets[uiCount].pAniTile->sRelativeX =
-                  (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
+                  (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
               gBullets[uiCount].pAniTile->sRelativeY =
-                  (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
+                  (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
               gBullets[uiCount].pAniTile->pLevelNode->sRelativeZ =
-                  (INT16)CONVERT_HEIGHTUNITS_TO_PIXELS(FIXEDPT_TO_INT32(gBullets[uiCount].qCurrZ));
+                  (int16_t)CONVERT_HEIGHTUNITS_TO_PIXELS(
+                      FIXEDPT_TO_INT32(gBullets[uiCount].qCurrZ));
 
               if (gBullets[uiCount].usFlags & (BULLET_FLAG_KNIFE)) {
                 gBullets[uiCount].pShadowAniTile->sRelativeX =
-                    (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
+                    (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
                 gBullets[uiCount].pShadowAniTile->sRelativeY =
-                    (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
+                    (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
               }
             }
           }
@@ -257,19 +258,19 @@ void UpdateBullets() {
             pNode->ubShadeLevel = DEFAULT_SHADE_LEVEL;
             pNode->ubNaturalShadeLevel = DEFAULT_SHADE_LEVEL;
             pNode->uiFlags |= (LEVELNODE_USEABSOLUTEPOS | LEVELNODE_IGNOREHEIGHT);
-            pNode->sRelativeX = (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
-            pNode->sRelativeY = (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
+            pNode->sRelativeX = (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
+            pNode->sRelativeY = (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
             pNode->sRelativeZ =
-                (INT16)CONVERT_HEIGHTUNITS_TO_PIXELS(FIXEDPT_TO_INT32(gBullets[uiCount].qCurrZ));
+                (int16_t)CONVERT_HEIGHTUNITS_TO_PIXELS(FIXEDPT_TO_INT32(gBullets[uiCount].qCurrZ));
 
             // Display shadow
             pNode = AddStructToTail(gBullets[uiCount].sGridNo, BULLETTILE2);
             pNode->ubShadeLevel = DEFAULT_SHADE_LEVEL;
             pNode->ubNaturalShadeLevel = DEFAULT_SHADE_LEVEL;
             pNode->uiFlags |= (LEVELNODE_USEABSOLUTEPOS | LEVELNODE_IGNOREHEIGHT);
-            pNode->sRelativeX = (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
-            pNode->sRelativeY = (INT16)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
-            pNode->sRelativeZ = (INT16)gpWorldLevelData[gBullets[uiCount].sGridNo].sHeight;
+            pNode->sRelativeX = (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrX);
+            pNode->sRelativeY = (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
+            pNode->sRelativeZ = (int16_t)gpWorldLevelData[gBullets[uiCount].sGridNo].sHeight;
           }
         }
       } else {
@@ -286,7 +287,7 @@ void UpdateBullets() {
   }
 }
 
-BULLET *GetBulletPtr(INT32 iBullet) {
+BULLET *GetBulletPtr(int32_t iBullet) {
   BULLET *pBullet;
 
   CHECKN(iBullet < NUM_BULLET_SLOTS);
@@ -316,9 +317,9 @@ void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qC
   }
 
   memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
-  AniParams.sGridNo = (INT16)pBullet->sGridNo;
+  AniParams.sGridNo = (int16_t)pBullet->sGridNo;
   AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-  AniParams.sDelay = (INT16)(100 + Random(100));
+  AniParams.sDelay = (int16_t)(100 + Random(100));
   AniParams.sStartFrame = 0;
   AniParams.uiFlags = ANITILE_CACHEDTILE | ANITILE_FORWARD | ANITILE_ALWAYS_TRANSLUCENT;
   AniParams.sX = FIXEDPT_TO_INT32(qCurrX);
@@ -333,16 +334,16 @@ void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qC
     strcpy(AniParams.zCachedFile, "TILECACHE\\MSLE_SPT.STI");
   } else if (pBullet->usFlags & (BULLET_FLAG_FLAME)) {
     strcpy(AniParams.zCachedFile, "TILECACHE\\FLMTHR2.STI");
-    AniParams.sDelay = (INT16)(100);
+    AniParams.sDelay = (int16_t)(100);
   }
 
   CreateAnimationTile(&AniParams);
 }
 
 BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
-  UINT16 usCnt;
-  UINT32 uiBulletCount = 0;
+  uint32_t uiNumBytesWritten;
+  uint16_t usCnt;
+  uint32_t uiBulletCount = 0;
 
   // loop through and count the number of bullets
   for (usCnt = 0; usCnt < NUM_BULLET_SLOTS; usCnt++) {
@@ -353,8 +354,8 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of Bullets in the array
-  FileMan_Write(hFile, &uiBulletCount, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiBulletCount, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -375,15 +376,15 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
-  UINT16 usCnt;
+  uint32_t uiNumBytesRead;
+  uint16_t usCnt;
 
   // make sure the bullets are not allocated
   memset(gBullets, 0, NUM_BULLET_SLOTS * sizeof(BULLET));
 
   // Load the number of Bullets in the array
-  FileMan_Read(hFile, &guiNumBullets, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &guiNumBullets, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -411,7 +412,7 @@ BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-void StopBullet(INT32 iBullet) {
+void StopBullet(int32_t iBullet) {
   gBullets[iBullet].usFlags |= BULLET_STOPPED;
 
   RemoveStruct(gBullets[iBullet].sGridNo, BULLETTILE1);
@@ -419,7 +420,7 @@ void StopBullet(INT32 iBullet) {
 }
 
 void DeleteAllBullets() {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumBullets; uiCount++) {
     if (gBullets[uiCount].fAllocated) {

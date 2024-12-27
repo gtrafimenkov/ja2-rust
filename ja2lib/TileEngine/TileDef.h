@@ -34,7 +34,7 @@ struct VObject;
 
 // Kris:  Added the last two bottom corner orientation values.  This won't effect
 // current code, but there is new code that makes use of this.  A function called
-// UINT8 CalculateWallOrientationsAtGridNo( INT32 iMapIndex ) that will look at all
+// uint8_t CalculateWallOrientationsAtGridNo( int32_t iMapIndex ) that will look at all
 // of the walls and return the last two wall orientations for tiles with two proper
 // wall pieces.
 enum WallOrientationDefines {
@@ -67,46 +67,46 @@ typedef enum {
 // These structures are placed in a list and used for all tile imagery
 struct TILE_IMAGERY {
   struct VObject *vo;
-  UINT32 fType;
+  uint32_t fType;
   struct AuxObjectData *pAuxData;
   struct RelTileLoc *pTileLocData;
   struct STRUCTURE_FILE_REF *pStructureFileRef;
-  UINT8 ubTerrainID;
-  BYTE bRaisedObjectType;
+  uint8_t ubTerrainID;
+  uint8_t bRaisedObjectType;
 
   // Reserved for added room and 32-byte boundaries
-  BYTE bReserved[2];
+  uint8_t bReserved[2];
 };
 
 typedef struct {
-  UINT16 *pusFrames;
-  INT8 bCurrentFrame;
-  UINT8 ubNumFrames;
+  uint16_t *pusFrames;
+  int8_t bCurrentFrame;
+  uint8_t ubNumFrames;
 
 } TILE_ANIMATION_DATA;
 
 // Tile data element
 typedef struct {
-  UINT16 fType;
+  uint16_t fType;
   struct VObject *hTileSurface;
   struct DB_STRUCTURE_REF *pDBStructureRef;
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   struct RelTileLoc *pTileLocData;
-  UINT16 usRegionIndex;
-  INT16 sBuddyNum;
-  UINT8 ubTerrainID;
-  UINT8 ubNumberOfTiles;
+  uint16_t usRegionIndex;
+  int16_t sBuddyNum;
+  uint8_t ubTerrainID;
+  uint8_t ubNumberOfTiles;
 
-  UINT8 bZOffsetX;
-  UINT8 bZOffsetY;
+  uint8_t bZOffsetX;
+  uint8_t bZOffsetY;
 
   // This union contains different data based on tile type
   union {
     // Land and overlay type
     struct {
-      INT16 sOffsetHeight;
-      UINT16 usWallOrientation;
-      UINT8 ubFullTile;
+      int16_t sOffsetHeight;
+      uint16_t usWallOrientation;
+      uint8_t ubFullTile;
 
       // For animated tiles
       TILE_ANIMATION_DATA *pAnimData;
@@ -114,67 +114,69 @@ typedef struct {
   };
 
   // Reserved for added room and 32-byte boundaries
-  BYTE bReserved[3];
+  uint8_t bReserved[3];
 
 } TILE_ELEMENT, *PTILE_ELEMENT;
 
 typedef struct {
-  INT32 iMapIndex;
-  UINT8 ubNumLayers;
-  UINT16 *pIndexValues;
+  int32_t iMapIndex;
+  uint8_t ubNumLayers;
+  uint16_t *pIndexValues;
 
 } land_undo_struct;
 
 // Globals used
 extern TILE_ELEMENT gTileDatabase[NUMBEROFTILES];
-extern UINT16 gTileDatabaseSize;
-extern UINT8 gFullBaseTileValues[];
-extern UINT16 gNumTilesPerType[NUMBEROFTILETYPES];
-extern UINT16 gTileTypeStartIndex[NUMBEROFTILETYPES];
-extern STR gTileSurfaceName[NUMBEROFTILETYPES];
-extern UINT8 gTileTypeLogicalHeight[NUMBEROFTILETYPES];
+extern uint16_t gTileDatabaseSize;
+extern uint8_t gFullBaseTileValues[];
+extern uint16_t gNumTilesPerType[NUMBEROFTILETYPES];
+extern uint16_t gTileTypeStartIndex[NUMBEROFTILETYPES];
+extern char *gTileSurfaceName[NUMBEROFTILETYPES];
+extern uint8_t gTileTypeLogicalHeight[NUMBEROFTILETYPES];
 
-extern UINT16 gusNumAnimatedTiles;
-extern UINT16 gusAnimatedTiles[MAX_ANIMATED_TILES];
-extern UINT8 gTileTypeMovementCost[NUM_TERRAIN_TYPES];
+extern uint16_t gusNumAnimatedTiles;
+extern uint16_t gusAnimatedTiles[MAX_ANIMATED_TILES];
+extern uint8_t gTileTypeMovementCost[NUM_TERRAIN_TYPES];
 
 void CreateTileDatabase();
 
 // Land level manipulation functions
-BOOLEAN GetLandHeadType(INT32 iMapIndex, UINT32 *puiType);
+BOOLEAN GetLandHeadType(int32_t iMapIndex, uint32_t *puiType);
 
-BOOLEAN SetLandIndex(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, BOOLEAN fDelete);
+BOOLEAN SetLandIndex(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType, BOOLEAN fDelete);
 
-BOOLEAN GetTypeLandLevel(UINT32 iMapIndex, UINT32 uiNewType, UINT8 *pubLevel);
-UINT8 GetLandLevelDepth(UINT32 iMapIndex);
+BOOLEAN GetTypeLandLevel(uint32_t iMapIndex, uint32_t uiNewType, uint8_t *pubLevel);
+uint8_t GetLandLevelDepth(uint32_t iMapIndex);
 
-BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType, UINT8 ubRadius,
-                               BOOLEAN fReplace);
+BOOLEAN SetLandIndexWithRadius(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType,
+                               uint8_t ubRadius, BOOLEAN fReplace);
 
-BOOLEAN LandTypeHeigher(UINT32 uiDestType, UINT32 uiSrcType);
+BOOLEAN LandTypeHeigher(uint32_t uiDestType, uint32_t uiSrcType);
 
-BOOLEAN MoveLandIndexToTop(UINT32 iMapIndex, UINT16 usIndex);
+BOOLEAN MoveLandIndexToTop(uint32_t iMapIndex, uint16_t usIndex);
 
 // Database access functions
-BOOLEAN GetSubIndexFromTileIndex(UINT16 usIndex, UINT16 *pusSubIndex);
-BOOLEAN GetTypeSubIndexFromTileIndex(UINT32 uiCheckType, UINT16 usIndex, UINT16 *pusSubIndex);
-BOOLEAN GetTypeSubIndexFromTileIndexChar(UINT32 uiCheckType, UINT16 usIndex, UINT8 *pusSubIndex);
-BOOLEAN GetTileIndexFromTypeSubIndex(UINT32 uiCheckType, UINT16 usSubIndex, UINT16 *pusTileIndex);
-BOOLEAN GetTileType(UINT16 usIndex, UINT32 *puiType);
-BOOLEAN GetTileFlags(UINT16 usIndex, UINT32 *puiFlags);
+BOOLEAN GetSubIndexFromTileIndex(uint16_t usIndex, uint16_t *pusSubIndex);
+BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, uint16_t usIndex, uint16_t *pusSubIndex);
+BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, uint16_t usIndex,
+                                         uint8_t *pusSubIndex);
+BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, uint16_t usSubIndex,
+                                     uint16_t *pusTileIndex);
+BOOLEAN GetTileType(uint16_t usIndex, uint32_t *puiType);
+BOOLEAN GetTileFlags(uint16_t usIndex, uint32_t *puiFlags);
 
-BOOLEAN GetTileTypeLogicalHeight(UINT32 fType, UINT8 *pubLogHeight);
-BOOLEAN AnyHeigherLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel);
-BOOLEAN AnyLowerLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel);
-BOOLEAN GetWallOrientation(UINT16 usIndex, UINT16 *pusWallOrientation);
-BOOLEAN ContainsWallOrientation(INT32 iMapIndex, UINT32 uiType, UINT16 usWallOrientation,
-                                UINT8 *pubLevel);
-UINT8 CalculateWallOrientationsAtGridNo(INT32 iMapIndex);
+BOOLEAN GetTileTypeLogicalHeight(uint32_t fType, uint8_t *pubLogHeight);
+BOOLEAN AnyHeigherLand(uint32_t iMapIndex, uint32_t uiSrcType, uint8_t *pubLastLevel);
+BOOLEAN AnyLowerLand(uint32_t iMapIndex, uint32_t uiSrcType, uint8_t *pubLastLevel);
+BOOLEAN GetWallOrientation(uint16_t usIndex, uint16_t *pusWallOrientation);
+BOOLEAN ContainsWallOrientation(int32_t iMapIndex, uint32_t uiType, uint16_t usWallOrientation,
+                                uint8_t *pubLevel);
+uint8_t CalculateWallOrientationsAtGridNo(int32_t iMapIndex);
 
-void SetSpecificDatabaseValues(UINT16 usType, UINT16 uiDatabaseElem, TILE_ELEMENT *TileElement,
+void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT *TileElement,
                                BOOLEAN fUseRaisedObjectType);
 
-BOOLEAN AllocateAnimTileData(TILE_ELEMENT *pTileElem, UINT8 ubNumFrames);
+BOOLEAN AllocateAnimTileData(TILE_ELEMENT *pTileElem, uint8_t ubNumFrames);
 void FreeAnimTileData(TILE_ELEMENT *pTileElem);
 void DeallocateTileDatabase();
 

@@ -13,8 +13,8 @@ BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
 
-BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
-                        INT8 bTestDirection, UINT16 usAnimState);
+BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel,
+                        int8_t bTestDirection, uint16_t usAnimState);
 
 BOOLEAN HandleCheckForDeathCommonCode(struct SOLDIERTYPE *pSoldier);
 

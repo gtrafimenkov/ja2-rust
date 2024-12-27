@@ -13,13 +13,13 @@
 #define SOUND_FAR_VOLUME_MOD 25
 
 /*
-UINT32 LOWVOLUME								START_LOWVOLUME;
-UINT32 MIDVOLUME								START_MIDVOLUME;
-UINT32 HIGHVOLUME								START_HIGHVOLUME;
+uint32_t LOWVOLUME								START_LOWVOLUME;
+uint32_t MIDVOLUME								START_MIDVOLUME;
+uint32_t HIGHVOLUME								START_HIGHVOLUME;
 */
 
-UINT32 guiSpeechVolume = MIDVOLUME;
-UINT32 guiSoundEffectsVolume = MIDVOLUME;
+uint32_t guiSpeechVolume = MIDVOLUME;
+uint32_t guiSoundEffectsVolume = MIDVOLUME;
 
 char szSoundEffects[NUM_SAMPLES][255] = {
     "SOUNDS\\RICOCHET 01.WAV",
@@ -164,51 +164,78 @@ char szSoundEffects[NUM_SAMPLES][255] = {
     "SOUNDS\\WEAPONS\\MORTAR FIRE 01.WAV",
 
     // FIREARMS
-    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_GLOCK17				9mm
-    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_GLOCK18				9mm
-    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_BERETTA92			9mm
-    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_BERETTA93			9mm
+    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_GLOCK17
+                                                    // 9mm
+    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_GLOCK18
+                                                    // 9mm
+    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_BERETTA92
+                                                    // 9mm
+    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_BERETTA93
+                                                    // 9mm
     "SOUNDS\\WEAPONS\\38 CALIBER.WAV",              //	S_SWSPECIAL			.38
-    "SOUNDS\\WEAPONS\\357 SINGLE SHOT.WAV",         //	S_BARRACUDA			.357
+    "SOUNDS\\WEAPONS\\357 SINGLE SHOT.WAV",         //	S_BARRACUDA
+                                                    //.357
     "SOUNDS\\WEAPONS\\357 SINGLE SHOT.WAV",         //	S_DESERTEAGLE		.357
-    "SOUNDS\\WEAPONS\\45 CALIBER SINGLE SHOT.WAV",  //	S_M1911					.45
-    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_MP5K					9mm
-    "SOUNDS\\WEAPONS\\45 CALIBER SINGLE SHOT.WAV",  //	S_MAC10					.45
-    "SOUNDS\\WEAPONS\\45 CALIBER SINGLE SHOT.WAV",  //	S_THOMPSON			.45
+    "SOUNDS\\WEAPONS\\45 CALIBER SINGLE SHOT.WAV",  //	S_M1911
+                                                    //.45
+    "SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",         //	S_MP5K
+                                                    // 9mm
+    "SOUNDS\\WEAPONS\\45 CALIBER SINGLE SHOT.WAV",  //	S_MAC10
+                                                    //.45
+    "SOUNDS\\WEAPONS\\45 CALIBER SINGLE SHOT.WAV",  //	S_THOMPSON
+                                                    //.45
     "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_COMMANDO			5.56
-    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_MP53					5.56?
-    "SOUNDS\\WEAPONS\\5,45 SINGLE SHOT.WAV",        //	S_AKSU74				5.45
-    "SOUNDS\\WEAPONS\\5,7 SINGLE SHOT.WAV",         //	S_P90						5.7
-    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_TYPE85				7.62
+    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_MP53
+                                                    // 5.56?
+    "SOUNDS\\WEAPONS\\5,45 SINGLE SHOT.WAV",        //	S_AKSU74
+                                                    // 5.45
+    "SOUNDS\\WEAPONS\\5,7 SINGLE SHOT.WAV",         //	S_P90
+                                                    // 5.7
+    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_TYPE85
+                                                    // 7.62
                                                     // WP
-    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_SKS						7.62
+    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_SKS
+                                                    // 7.62
                                                     // WP
-    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_DRAGUNOV			7.62 WP
-    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_M24						7.62
+    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_DRAGUNOV			7.62
+                                                    // WP
+    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_M24
+                                                    // 7.62
                                                     // NATO
     "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_AUG
                                                     // 5.56mm
     "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_G41
                                                     // 5.56mm
     "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_RUGERMINI			5.56mm
-    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_C7						5.56mm
-    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_FAMAS					5.56mm
-    "SOUNDS\\WEAPONS\\5,45 SINGLE SHOT.WAV",        //	S_AK74					5.45mm
-    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_AKM						7.62mm
+    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_C7
+                                                    // 5.56mm
+    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_FAMAS
+                                                    // 5.56mm
+    "SOUNDS\\WEAPONS\\5,45 SINGLE SHOT.WAV",        //	S_AK74
+                                                    // 5.45mm
+    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_AKM
+                                                    // 7.62mm
                                                     // WP
-    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_M14						7.62mm
+    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_M14
+                                                    // 7.62mm
                                                     // NATO
-    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_FNFAL					7.62mm
+    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_FNFAL
+                                                    // 7.62mm
                                                     // NATO
-    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_G3A3					7.62mm
+    "SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",   //	S_G3A3
+                                                    // 7.62mm
                                                     // NATO
-    "SOUNDS\\WEAPONS\\4,7 SINGLE SHOT.WAV",         //	S_G11						4.7mm
+    "SOUNDS\\WEAPONS\\4,7 SINGLE SHOT.WAV",         //	S_G11
+                                                    // 4.7mm
     "SOUNDS\\WEAPONS\\SHOTGUN SINGLE SHOT.WAV",     //	S_M870 SHOTGUN
     "SOUNDS\\WEAPONS\\SHOTGUN SINGLE SHOT.WAV",     //	S_SPAS SHOTGUN
     "SOUNDS\\WEAPONS\\SHOTGUN SINGLE SHOT.WAV",     //	S_CAWS SHOTGUN
-    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_FNMINI				5.56mm
-    "SOUNDS\\WEAPONS\\5,45 SINGLE SHOT.WAV",        //	S_RPK74					5.45mm
-    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_21E						7.62mm
+    "SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",        //	S_FNMINI
+                                                    // 5.56mm
+    "SOUNDS\\WEAPONS\\5,45 SINGLE SHOT.WAV",        //	S_RPK74
+                                                    // 5.45mm
+    "SOUNDS\\WEAPONS\\7,62 WP SINGLE SHOT.WAV",     //	S_21E
+                                                    // 7.62mm
     "SOUNDS\\WEAPONS\\KNIFE THROW SWOOSH.WAV",      //	KNIFE THROW
     "SOUNDS\\WEAPONS\\TANK_CANNON.WAV",
     "SOUNDS\\WEAPONS\\BURSTTYPE1.WAV",
@@ -264,7 +291,8 @@ char szSoundEffects[NUM_SAMPLES][255] = {
     "SOUNDS\\ARMPIT.WAV",
     "SOUNDS\\CRACKING BACK.WAV",
 
-    "SOUNDS\\WEAPONS\\Auto Resolve Composite 02 (8-22).wav",  //  The FF sound in autoresolve
+    "SOUNDS\\WEAPONS\\Auto Resolve Composite 02 (8-22).wav",  //  The FF sound in
+                                                              //  autoresolve
                                                               //  interface
 
     "SOUNDS\\Email Alert 01.wav",
@@ -374,7 +402,7 @@ char szAmbientEffects[NUM_AMBIENTS][255] = {
     "SOUNDS\\owl1.wav",           "SOUNDS\\owl2.wav",       "SOUNDS\\owl3.wav",
     "SOUNDS\\night_bird1.wav",    "SOUNDS\\night_bird3.wav"};
 
-UINT8 AmbientVols[NUM_AMBIENTS] = {
+uint8_t AmbientVols[NUM_AMBIENTS] = {
     25,  // lightning 1
     25,  // lightning 2
     10,  // rain 1
@@ -392,11 +420,11 @@ UINT8 AmbientVols[NUM_AMBIENTS] = {
 };
 
 SOUNDPARMS gDelayedSoundParms;
-UINT32 guiDelayedSoundNum;
+uint32_t guiDelayedSoundNum;
 void DelayedSoundTimerCallback(void);
 
 BOOLEAN InitJA2Sound() {
-  // UINT32 uiCount;
+  // uint32_t uiCount;
 
   // for(uiCount=0; uiCount < NUM_SAMPLES; uiCount++)
   //{
@@ -407,7 +435,7 @@ BOOLEAN InitJA2Sound() {
 }
 
 BOOLEAN ShutdownJA2Sound() {
-  // UINT32 uiCount;
+  // uint32_t uiCount;
 
   SoundStopAll();
 
@@ -420,7 +448,8 @@ BOOLEAN ShutdownJA2Sound() {
   return (TRUE);
 }
 
-UINT32 PlayJA2Sample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops, UINT32 uiPan) {
+uint32_t PlayJA2Sample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                       uint32_t uiPan) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));
@@ -434,8 +463,8 @@ UINT32 PlayJA2Sample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoop
   return (SoundPlay(szSoundEffects[usNum], &spParms));
 }
 
-UINT32 PlayJA2StreamingSample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                              UINT32 uiPan) {
+uint32_t PlayJA2StreamingSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                                uint32_t ubLoops, uint32_t uiPan) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));
@@ -449,8 +478,8 @@ UINT32 PlayJA2StreamingSample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT
   return (SoundPlayStreamedFile(szSoundEffects[usNum], &spParms));
 }
 
-UINT32 PlayJA2SampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                             UINT32 uiPan) {
+uint32_t PlayJA2SampleFromFile(char *szFileName, uint32_t usRate, uint32_t ubVolume,
+                               uint32_t ubLoops, uint32_t uiPan) {
   // does the same thing as PlayJA2Sound, but one only has to pass the filename, not the index of
   // the sound array
 
@@ -467,9 +496,9 @@ UINT32 PlayJA2SampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume, UI
   return (SoundPlay(szFileName, &spParms));
 }
 
-UINT32 PlayJA2StreamingSampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume,
-                                      UINT32 ubLoops, UINT32 uiPan,
-                                      SOUND_STOP_CALLBACK EndsCallback) {
+uint32_t PlayJA2StreamingSampleFromFile(char *szFileName, uint32_t usRate, uint32_t ubVolume,
+                                        uint32_t ubLoops, uint32_t uiPan,
+                                        SOUND_STOP_CALLBACK EndsCallback) {
   // does the same thing as PlayJA2Sound, but one only has to pass the filename, not the index of
   // the sound array
 
@@ -487,7 +516,7 @@ UINT32 PlayJA2StreamingSampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubV
   return (SoundPlayStreamedFile(szFileName, &spParms));
 }
 
-UINT32 PlayJA2Ambient(UINT32 usNum, UINT32 ubVolume, UINT32 ubLoops) {
+uint32_t PlayJA2Ambient(uint32_t usNum, uint32_t ubVolume, uint32_t ubLoops) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));
@@ -499,7 +528,7 @@ UINT32 PlayJA2Ambient(UINT32 usNum, UINT32 ubVolume, UINT32 ubLoops) {
   return (SoundPlay(szAmbientEffects[usNum], &spParms));
 }
 
-UINT32 PlayJA2AmbientRandom(UINT32 usNum, UINT32 uiTimeMin, UINT32 uiTimeMax) {
+uint32_t PlayJA2AmbientRandom(uint32_t usNum, uint32_t uiTimeMin, uint32_t uiTimeMax) {
   RANDOMPARMS rpParms;
 
   memset(&rpParms, 0xff, sizeof(RANDOMPARMS));
@@ -513,8 +542,8 @@ UINT32 PlayJA2AmbientRandom(UINT32 usNum, UINT32 uiTimeMin, UINT32 uiTimeMax) {
   return (SoundPlayRandom(szAmbientEffects[usNum], &rpParms));
 }
 
-UINT32 PlaySoldierJA2Sample(UINT16 usID, UINT32 usNum, UINT32 usRate, UINT32 ubVolume,
-                            UINT32 ubLoops, UINT32 uiPan, BOOLEAN fCheck) {
+uint32_t PlaySoldierJA2Sample(uint16_t usID, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                              uint32_t ubLoops, uint32_t uiPan, BOOLEAN fCheck) {
   if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
     // CHECK IF GUY IS ON SCREEN BEFORE PLAYING!
     if ((MercPtrs[usID]->bVisible != -1) || !fCheck) {
@@ -525,20 +554,20 @@ UINT32 PlaySoldierJA2Sample(UINT16 usID, UINT32 usNum, UINT32 usRate, UINT32 ubV
   return (0);
 }
 
-void SetSpeechVolume(UINT32 uiNewVolume) { guiSpeechVolume = min(uiNewVolume, 127); }
+void SetSpeechVolume(uint32_t uiNewVolume) { guiSpeechVolume = min(uiNewVolume, 127); }
 
-UINT32 GetSpeechVolume() { return (guiSpeechVolume); }
+uint32_t GetSpeechVolume() { return (guiSpeechVolume); }
 
-void SetSoundEffectsVolume(UINT32 uiNewVolume) { guiSoundEffectsVolume = min(uiNewVolume, 127); }
+void SetSoundEffectsVolume(uint32_t uiNewVolume) { guiSoundEffectsVolume = min(uiNewVolume, 127); }
 
-UINT32 GetSoundEffectsVolume() { return (guiSoundEffectsVolume); }
+uint32_t GetSoundEffectsVolume() { return (guiSoundEffectsVolume); }
 
-UINT32 CalculateSpeechVolume(UINT32 uiVolume) {
-  return ((UINT32)((uiVolume / (FLOAT)HIGHVOLUME) * guiSpeechVolume + .5));
+uint32_t CalculateSpeechVolume(uint32_t uiVolume) {
+  return ((uint32_t)((uiVolume / (float)HIGHVOLUME) * guiSpeechVolume + .5));
 }
 
-UINT32 CalculateSoundEffectsVolume(UINT32 uiVolume) {
-  return ((UINT32)((uiVolume / (FLOAT)HIGHVOLUME) * guiSoundEffectsVolume + .5));
+uint32_t CalculateSoundEffectsVolume(uint32_t uiVolume) {
+  return ((uint32_t)((uiVolume / (float)HIGHVOLUME) * guiSoundEffectsVolume + .5));
 }
 
 #if 0
@@ -576,11 +605,11 @@ int x,dif,absDif;
 }
 #endif
 
-INT8 SoundDir(INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX;
-  INT16 sDif, sAbsDif;
+int8_t SoundDir(int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX;
+  int16_t sDif, sAbsDif;
 
   if (sGridNo == NOWHERE) {
     return (MIDDLEPAN);
@@ -590,7 +619,7 @@ INT8 SoundDir(INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -621,12 +650,12 @@ INT8 SoundDir(INT16 sGridNo) {
     return (MIDDLE);
 }
 
-INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX, sMiddleY;
-  INT16 sDifX, sAbsDifX;
-  INT16 sDifY, sAbsDifY;
+int8_t SoundVolume(int8_t bInitialVolume, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX, sMiddleY;
+  int16_t sDifX, sAbsDifX;
+  int16_t sDifY, sAbsDifY;
 
   if (sGridNo == NOWHERE) {
     return (bInitialVolume);
@@ -636,7 +665,7 @@ INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -661,8 +690,8 @@ INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
   return (bInitialVolume);
 }
 
-void PlayDelayedJA2Sample(UINT32 uiDelay, UINT32 usNum, UINT32 usRate, UINT32 ubVolume,
-                          UINT32 ubLoops, UINT32 uiPan) {
+void PlayDelayedJA2Sample(uint32_t uiDelay, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                          uint32_t ubLoops, uint32_t uiPan) {
   memset(&gDelayedSoundParms, 0xff, sizeof(SOUNDPARMS));
 
   gDelayedSoundParms.uiSpeed = usRate;
@@ -692,10 +721,10 @@ void DelayedSoundTimerCallback(void) {
 #define NUM_POSITION_SOUND_EFFECT_SLOTS 10
 
 typedef struct {
-  UINT32 uiFlags;
-  INT16 sGridNo;
-  INT32 iSoundSampleID;
-  INT32 iSoundToPlay;
+  uint32_t uiFlags;
+  int16_t sGridNo;
+  int32_t iSoundSampleID;
+  int32_t iSoundToPlay;
   void *uiData;
   BOOLEAN fAllocated;
   BOOLEAN fInActive;
@@ -703,38 +732,38 @@ typedef struct {
 
 // GLOBAL FOR SMOKE LISTING
 POSITIONSND gPositionSndData[NUM_POSITION_SOUND_EFFECT_SLOTS];
-UINT32 guiNumPositionSnds = 0;
+uint32_t guiNumPositionSnds = 0;
 BOOLEAN gfPositionSoundsActive = FALSE;
 
-INT32 GetFreePositionSnd(void);
+int32_t GetFreePositionSnd(void);
 void RecountPositionSnds(void);
 
-INT32 GetFreePositionSnd(void) {
-  UINT32 uiCount;
+int32_t GetFreePositionSnd(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumPositionSnds; uiCount++) {
-    if ((gPositionSndData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gPositionSndData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumPositionSnds < NUM_POSITION_SOUND_EFFECT_SLOTS) return ((INT32)guiNumPositionSnds++);
+  if (guiNumPositionSnds < NUM_POSITION_SOUND_EFFECT_SLOTS) return ((int32_t)guiNumPositionSnds++);
 
   return (-1);
 }
 
 void RecountPositionSnds(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumPositionSnds - 1; (uiCount >= 0); uiCount--) {
     if ((gPositionSndData[uiCount].fAllocated)) {
-      guiNumPositionSnds = (UINT32)(uiCount + 1);
+      guiNumPositionSnds = (uint32_t)(uiCount + 1);
       break;
     }
   }
 }
 
-INT32 NewPositionSnd(INT16 sGridNo, UINT32 uiFlags, void *uiData, UINT32 iSoundToPlay) {
+int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay) {
   POSITIONSND *pPositionSnd;
-  INT32 iPositionSndIndex;
+  int32_t iPositionSndIndex;
 
   if ((iPositionSndIndex = GetFreePositionSnd()) == (-1)) return (-1);
 
@@ -761,7 +790,7 @@ INT32 NewPositionSnd(INT16 sGridNo, UINT32 uiFlags, void *uiData, UINT32 iSoundT
   return (iPositionSndIndex);
 }
 
-void DeletePositionSnd(INT32 iPositionSndIndex) {
+void DeletePositionSnd(int32_t iPositionSndIndex) {
   POSITIONSND *pPositionSnd;
 
   pPositionSnd = &gPositionSndData[iPositionSndIndex];
@@ -781,7 +810,7 @@ void DeletePositionSnd(INT32 iPositionSndIndex) {
   }
 }
 
-void SetPositionSndGridNo(INT32 iPositionSndIndex, INT16 sGridNo) {
+void SetPositionSndGridNo(int32_t iPositionSndIndex, int16_t sGridNo) {
   POSITIONSND *pPositionSnd;
 
   pPositionSnd = &gPositionSndData[iPositionSndIndex];
@@ -794,7 +823,7 @@ void SetPositionSndGridNo(INT32 iPositionSndIndex, INT16 sGridNo) {
 }
 
 void SetPositionSndsActive() {
-  UINT32 cnt;
+  uint32_t cnt;
   POSITIONSND *pPositionSnd;
 
   gfPositionSoundsActive = TRUE;
@@ -816,7 +845,7 @@ void SetPositionSndsActive() {
 }
 
 void SetPositionSndsInActive() {
-  UINT32 cnt;
+  uint32_t cnt;
   POSITIONSND *pPositionSnd;
 
   gfPositionSoundsActive = FALSE;
@@ -836,11 +865,11 @@ void SetPositionSndsInActive() {
   }
 }
 
-INT8 PositionSoundDir(INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX;
-  INT16 sDif, sAbsDif;
+int8_t PositionSoundDir(int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX;
+  int16_t sDif, sAbsDif;
 
   if (sGridNo == NOWHERE) {
     return (MIDDLEPAN);
@@ -850,7 +879,7 @@ INT8 PositionSoundDir(INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -881,13 +910,13 @@ INT8 PositionSoundDir(INT16 sGridNo) {
     return (MIDDLE);
 }
 
-INT8 PositionSoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
-  INT16 sWorldX, sWorldY;
-  INT16 sScreenX, sScreenY;
-  INT16 sMiddleX, sMiddleY;
-  INT16 sDifX, sAbsDifX;
-  INT16 sDifY, sAbsDifY;
-  INT16 sMaxDistX, sMaxDistY;
+int8_t PositionSoundVolume(int8_t bInitialVolume, int16_t sGridNo) {
+  int16_t sWorldX, sWorldY;
+  int16_t sScreenX, sScreenY;
+  int16_t sMiddleX, sMiddleY;
+  int16_t sDifX, sAbsDifX;
+  int16_t sDifY, sAbsDifY;
+  int16_t sMaxDistX, sMaxDistY;
   double sMaxSoundDist, sSoundDist;
 
   if (sGridNo == NOWHERE) {
@@ -898,7 +927,7 @@ INT8 PositionSoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
   ConvertGridNoToXY(sGridNo, &sWorldX, &sWorldY);
 
   // Get screen coordinates for current position of soldier
-  GetWorldXYAbsoluteScreenXY((INT16)(sWorldX), (INT16)(sWorldY), &sScreenX, &sScreenY);
+  GetWorldXYAbsoluteScreenXY((int16_t)(sWorldX), (int16_t)(sWorldY), &sScreenX, &sScreenY);
 
   // Get middle of where we are now....
   sMiddleX = gsTopLeftWorldX + (gsBottomRightWorldX - gsTopLeftWorldX) / 2;
@@ -910,8 +939,8 @@ INT8 PositionSoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
   sAbsDifX = abs(sDifX);
   sAbsDifY = abs(sDifY);
 
-  sMaxDistX = (INT16)((gsBottomRightWorldX - gsTopLeftWorldX) * 1.5);
-  sMaxDistY = (INT16)((gsBottomRightWorldY - gsTopLeftWorldY) * 1.5);
+  sMaxDistX = (int16_t)((gsBottomRightWorldX - gsTopLeftWorldX) * 1.5);
+  sMaxDistY = (int16_t)((gsBottomRightWorldY - gsTopLeftWorldY) * 1.5);
 
   sMaxSoundDist = sqrt((double)(sMaxDistX * sMaxDistX) + (sMaxDistY * sMaxDistY));
   sSoundDist = sqrt((double)(sAbsDifX * sAbsDifX) + (sAbsDifY * sAbsDifY));
@@ -925,13 +954,13 @@ INT8 PositionSoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
   }
 
   // Scale
-  return ((INT8)(bInitialVolume * ((sMaxSoundDist - sSoundDist) / sMaxSoundDist)));
+  return ((int8_t)(bInitialVolume * ((sMaxSoundDist - sSoundDist) / sMaxSoundDist)));
 }
 
 void SetPositionSndsVolumeAndPanning() {
-  UINT32 cnt;
+  uint32_t cnt;
   POSITIONSND *pPositionSnd;
-  INT8 bVolume, bPan;
+  int8_t bVolume, bPan;
   struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumPositionSnds; cnt++) {

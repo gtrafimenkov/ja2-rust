@@ -27,11 +27,11 @@ enum {
   TCTL_MSG__CANT_EDIT_DEFAULT,
 
 };
-extern STR16 zNewTacticalMessages[];
+extern wchar_t* zNewTacticalMessages[];
 
 enum {
   IMM__IRON_MAN_MODE_WARNING_TEXT,
 };
-extern STR16 gzIronManModeWarningText[];
+extern wchar_t* gzIronManModeWarningText[];
 
 #endif

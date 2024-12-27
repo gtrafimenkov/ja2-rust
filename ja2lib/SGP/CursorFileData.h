@@ -4,11 +4,11 @@
 #include "SGP/Types.h"
 
 struct CursorFileData {
-  CHAR8 ubFilename[48];
+  char ubFilename[48];
   BOOLEAN fLoaded;
-  UINT32 uiIndex;
-  UINT8 ubFlags;
-  UINT8 ubNumberOfFrames;
+  uint32_t uiIndex;
+  uint8_t ubFlags;
+  uint8_t ubNumberOfFrames;
   struct VObject* hVObject;
 };
 

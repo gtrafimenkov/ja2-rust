@@ -5,14 +5,14 @@
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Overhead.h"
 
-SectorID8 GetSectorID8(u8 x, u8 y) { return (y - 1) * 16 + x - 1; }
-SectorID16 GetSectorID16(u8 x, u8 y) { return x + y * MAP_WORLD_X; }
+SectorID8 GetSectorID8(uint8_t x, uint8_t y) { return (y - 1) * 16 + x - 1; }
+SectorID16 GetSectorID16(uint8_t x, uint8_t y) { return x + y * MAP_WORLD_X; }
 
-u8 SectorID8_X(SectorID8 sectorID) { return (sectorID % 16) + 1; }
-u8 SectorID8_Y(SectorID8 sectorID) { return (sectorID / 16) + 1; }
+uint8_t SectorID8_X(SectorID8 sectorID) { return (sectorID % 16) + 1; }
+uint8_t SectorID8_Y(SectorID8 sectorID) { return (sectorID / 16) + 1; }
 
-u8 SectorID16_X(SectorID16 sectorID) { return sectorID % MAP_WORLD_X; };
-u8 SectorID16_Y(SectorID16 sectorID) { return sectorID / MAP_WORLD_X; };
+uint8_t SectorID16_X(SectorID16 sectorID) { return sectorID % MAP_WORLD_X; };
+uint8_t SectorID16_Y(SectorID16 sectorID) { return sectorID / MAP_WORLD_X; };
 
 SectorID16 SectorID8To16(SectorID8 sectorID) {
   return GetSectorID16(SectorID8_X(sectorID), SectorID8_Y(sectorID));
@@ -22,9 +22,11 @@ SectorID8 SectorID16To8(SectorID16 sectorID) {
 }
 
 struct SectorInfo* GetSectorInfoByID8(SectorID8 sectorID) { return &SectorInfo[sectorID]; }
-struct SectorInfo* GetSectorInfoByXY(u8 x, u8 y) { return &SectorInfo[GetSectorID8(x, y)]; }
+struct SectorInfo* GetSectorInfoByXY(uint8_t x, uint8_t y) {
+  return &SectorInfo[GetSectorID8(x, y)];
+}
 
-BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN SectorOursAndPeaceful(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   // if this sector is currently loaded
   if ((sMapX == gWorldSectorX) && (sMapY == gWorldSectorY) && (bMapZ == gbWorldSectorZ)) {
     // and either there are enemies prowling this sector, or combat is in progress
@@ -46,7 +48,7 @@ BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN IsThisSectorASAMSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
+BOOLEAN IsThisSectorASAMSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   // is the sector above ground?
   if (bSectorZ != 0) {
     return (FALSE);
@@ -65,10 +67,10 @@ BOOLEAN IsThisSectorASAMSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   return (FALSE);
 }
 
-i16 GetLoadedSectorX() { return gWorldSectorX; }
-i16 GetLoadedSectorY() { return gWorldSectorY; }
+int16_t GetLoadedSectorX() { return gWorldSectorX; }
+int16_t GetLoadedSectorY() { return gWorldSectorY; }
 
-bool IsSectorEnemyControlled(i8 sMapX, i8 sMapY) {
+bool IsSectorEnemyControlled(int8_t sMapX, int8_t sMapY) {
   return StrategicMap[GetSectorID16(sMapX, sMapY)].fEnemyControlled;
 }
 

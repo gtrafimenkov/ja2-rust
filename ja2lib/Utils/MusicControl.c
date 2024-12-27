@@ -15,27 +15,27 @@
 #include "UI.h"
 #include "Utils/TimerControl.h"
 
-UINT32 uiMusicHandle = NO_SAMPLE;
-UINT32 uiMusicVolume = 50;
+uint32_t uiMusicHandle = NO_SAMPLE;
+uint32_t uiMusicVolume = 50;
 BOOLEAN fMusicPlaying = FALSE;
 BOOLEAN fMusicFadingOut = FALSE;
 BOOLEAN fMusicFadingIn = FALSE;
 
 BOOLEAN gfMusicEnded = FALSE;
 
-UINT8 gubMusicMode = 0;
-UINT8 gubOldMusicMode = 0;
+uint8_t gubMusicMode = 0;
+uint8_t gubOldMusicMode = 0;
 
-INT8 gbVictorySongCount = 0;
-INT8 gbDeathSongCount = 0;
+int8_t gbVictorySongCount = 0;
+int8_t gbDeathSongCount = 0;
 
-INT8 bNothingModeSong;
-INT8 bEnemyModeSong;
-INT8 bBattleModeSong;
+int8_t bNothingModeSong;
+int8_t bEnemyModeSong;
+int8_t bBattleModeSong;
 
-INT8 gbFadeSpeed = 1;
+int8_t gbFadeSpeed = 1;
 
-CHAR8 *szMusicList[NUM_MUSIC] = {
+char *szMusicList[NUM_MUSIC] = {
     "MUSIC\\marimbad 2.wav", "MUSIC\\menumix1.wav",  "MUSIC\\nothing A.wav",
     "MUSIC\\nothing B.wav",  "MUSIC\\nothing C.wav", "MUSIC\\nothing D.wav",
     "MUSIC\\tensor A.wav",   "MUSIC\\tensor B.wav",  "MUSIC\\tensor C.wav",
@@ -52,7 +52,7 @@ extern void HandleEndDemoInCreatureLevel();
 
 BOOLEAN NoEnemiesInSight() {
   struct SOLDIERTYPE *pSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Loop through our guys
   // End the turn of player charactors
@@ -81,7 +81,7 @@ void MusicStopCallback(void *pData);
 //	Returns:	TRUE if the music was started, FALSE if an error occurred
 //
 //********************************************************************************
-BOOLEAN MusicPlay(UINT32 uiNum) {
+BOOLEAN MusicPlay(uint32_t uiNum) {
 #ifndef WINDOWED_MODE
 
   SOUNDPARMS spParms;
@@ -120,8 +120,8 @@ BOOLEAN MusicPlay(UINT32 uiNum) {
 //	Returns:	TRUE if the volume was set, FALSE if an error occurred
 //
 //********************************************************************************
-BOOLEAN MusicSetVolume(UINT32 uiVolume) {
-  INT32 uiOldMusicVolume = uiMusicVolume;
+BOOLEAN MusicSetVolume(uint32_t uiVolume) {
+  int32_t uiOldMusicVolume = uiMusicVolume;
 
 #ifndef WINDOWED_MODE
 
@@ -159,7 +159,7 @@ BOOLEAN MusicSetVolume(UINT32 uiVolume) {
 //	Returns:	TRUE if the volume was set, FALSE if an error occurred
 //
 //********************************************************************************
-UINT32 MusicGetVolume(void) { return (uiMusicVolume); }
+uint32_t MusicGetVolume(void) { return (uiMusicVolume); }
 
 //********************************************************************************
 // MusicStop
@@ -231,7 +231,7 @@ BOOLEAN MusicFadeIn(void) {
 //********************************************************************************
 BOOLEAN MusicPoll(BOOLEAN fForce) {
 #ifndef WINDOWED_MODE
-  INT32 iVol;
+  int32_t iVol;
 
   SoundServiceStreams();
   SoundServiceRandom();
@@ -244,9 +244,9 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
     if (fMusicFadingIn) {
       if (uiMusicHandle != NO_SAMPLE) {
         iVol = SoundGetVolume(uiMusicHandle);
-        iVol = min((INT32)uiMusicVolume, iVol + gbFadeSpeed);
+        iVol = min((int32_t)uiMusicVolume, iVol + gbFadeSpeed);
         SoundSetVolume(uiMusicHandle, iVol);
-        if (iVol == (INT32)uiMusicVolume) {
+        if (iVol == (int32_t)uiMusicVolume) {
           fMusicFadingIn = FALSE;
           gbFadeSpeed = 1;
         }
@@ -256,7 +256,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
         iVol = SoundGetVolume(uiMusicHandle);
         iVol = (iVol >= 1) ? iVol - gbFadeSpeed : 0;
 
-        iVol = max((INT32)iVol, 0);
+        iVol = max((int32_t)iVol, 0);
 
         SoundSetVolume(uiMusicHandle, iVol);
         if (iVol == 0) {
@@ -297,8 +297,8 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
   return (TRUE);
 }
 
-BOOLEAN SetMusicMode(UINT8 ubMusicMode) {
-  static INT8 bPreviousMode = 0;
+BOOLEAN SetMusicMode(uint8_t ubMusicMode) {
+  static int8_t bPreviousMode = 0;
 
   // OK, check if we want to restore
   if (ubMusicMode == MUSIC_RESTORE) {
@@ -341,11 +341,11 @@ BOOLEAN StartMusicBasedOnMode() {
   if (fFirstTime) {
     fFirstTime = FALSE;
 
-    bNothingModeSong = NOTHING_A_MUSIC + (INT8)Random(4);
+    bNothingModeSong = NOTHING_A_MUSIC + (int8_t)Random(4);
 
-    bEnemyModeSong = TENSOR_A_MUSIC + (INT8)Random(3);
+    bEnemyModeSong = TENSOR_A_MUSIC + (int8_t)Random(3);
 
-    bBattleModeSong = BATTLE_A_MUSIC + (INT8)Random(2);
+    bBattleModeSong = BATTLE_A_MUSIC + (int8_t)Random(2);
   }
 
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -355,52 +355,52 @@ BOOLEAN StartMusicBasedOnMode() {
   switch (gubMusicMode) {
     case MUSIC_MAIN_MENU:
       // ATE: Don't fade in
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(MENUMIX_MUSIC);
       break;
 
     case MUSIC_LAPTOP:
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(MARIMBAD2_MUSIC);
       break;
 
     case MUSIC_TACTICAL_NOTHING:
       // ATE: Don't fade in
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       if (gfUseCreatureMusic) {
         MusicPlay(CREEPY_MUSIC);
       } else {
         MusicPlay(bNothingModeSong);
-        bNothingModeSong = NOTHING_A_MUSIC + (INT8)Random(4);
+        bNothingModeSong = NOTHING_A_MUSIC + (int8_t)Random(4);
       }
       break;
 
     case MUSIC_TACTICAL_ENEMYPRESENT:
       // ATE: Don't fade in EnemyPresent...
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       if (gfUseCreatureMusic) {
         MusicPlay(CREEPY_MUSIC);
       } else {
         MusicPlay(bEnemyModeSong);
-        bEnemyModeSong = TENSOR_A_MUSIC + (INT8)Random(3);
+        bEnemyModeSong = TENSOR_A_MUSIC + (int8_t)Random(3);
       }
       break;
 
     case MUSIC_TACTICAL_BATTLE:
       // ATE: Don't fade in
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       if (gfUseCreatureMusic) {
         MusicPlay(CREATURE_BATTLE_MUSIC);
       } else {
         MusicPlay(bBattleModeSong);
       }
-      bBattleModeSong = BATTLE_A_MUSIC + (INT8)Random(2);
+      bBattleModeSong = BATTLE_A_MUSIC + (int8_t)Random(2);
       break;
 
     case MUSIC_TACTICAL_VICTORY:
 
       // ATE: Don't fade in EnemyPresent...
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(TRIUMPH_MUSIC);
       gbVictorySongCount++;
 
@@ -413,7 +413,7 @@ BOOLEAN StartMusicBasedOnMode() {
     case MUSIC_TACTICAL_DEATH:
 
       // ATE: Don't fade in EnemyPresent...
-      gbFadeSpeed = (INT8)uiMusicVolume;
+      gbFadeSpeed = (int8_t)uiMusicVolume;
       MusicPlay(DEATH_MUSIC);
       gbDeathSongCount++;
       break;
@@ -433,19 +433,19 @@ void MusicStopCallback(void *pData) {
   uiMusicHandle = NO_SAMPLE;
 }
 
-void SetMusicFadeSpeed(INT8 bFadeSpeed) { gbFadeSpeed = bFadeSpeed; }
+void SetMusicFadeSpeed(int8_t bFadeSpeed) { gbFadeSpeed = bFadeSpeed; }
 
-void FadeMusicForXSeconds(UINT32 uiDelay) {
-  INT16 sNumTimeSteps, sNumVolumeSteps;
+void FadeMusicForXSeconds(uint32_t uiDelay) {
+  int16_t sNumTimeSteps, sNumVolumeSteps;
 
   // get # time steps in delay....
-  sNumTimeSteps = (INT16)(uiDelay / 10);
+  sNumTimeSteps = (int16_t)(uiDelay / 10);
 
   // Devide this by music volume...
-  sNumVolumeSteps = (INT16)(uiMusicVolume / sNumTimeSteps);
+  sNumVolumeSteps = (int16_t)(uiMusicVolume / sNumTimeSteps);
 
   // Set fade delay...
-  SetMusicFadeSpeed((INT8)sNumVolumeSteps);
+  SetMusicFadeSpeed((int8_t)sNumVolumeSteps);
 }
 
 void DoneFadeOutDueToEndMusic(void) {

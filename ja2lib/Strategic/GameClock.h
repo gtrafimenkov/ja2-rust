@@ -37,17 +37,17 @@ extern void PauseGame();
 extern void UnPauseGame();
 extern void TogglePause();
 extern BOOLEAN GamePaused();
-extern void LockPauseState(UINT32 uiUniqueReasonId);
+extern void LockPauseState(uint32_t uiUniqueReasonId);
 extern void UnLockPauseState();
 extern BOOLEAN PauseStateLocked();
 
 // USING HIGH RESOLUTION TIME RATE MANIPULATION/ACCESS
 // Allows external code to change the time rate.
-void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond);
-void SetGameMinutesPerSecond(UINT32 uiGameMinutesPerSecond);
-void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond);
+void SetGameHoursPerSecond(uint32_t uiGameHoursPerSecond);
+void SetGameMinutesPerSecond(uint32_t uiGameMinutesPerSecond);
+void SetGameSecondsPerSecond(uint32_t uiGameSecondsPerSecond);
 // Allows access to the current time rate.
-UINT32 GetGameSecondsPerFrame();
+uint32_t GetGameSecondsPerFrame();
 void RenderPausedGameBox(void);
 
 void StopTimeCompression(void);
@@ -63,7 +63,7 @@ BOOLEAN IsTimeCompressionOn(
 // particular mathematical pattern.  The higher the index, the faster the time is processed
 // per frame.  These functions have their limits, so game time will also be between
 // TIME_COMPRESS_X1 to TIME_COMPRESS_X8 based in the laptop time compression.
-void SetGameTimeCompressionLevel(UINT32 uiCompressionRate);
+void SetGameTimeCompressionLevel(uint32_t uiCompressionRate);
 void DecreaseGameTimeCompressionRate();
 void IncreaseGameTimeCompressionRate();
 
@@ -74,9 +74,9 @@ void IncreaseGameTimeCompressionRate();
 // movement under fast time compression, so objects don't warp around.
 void SetClockResolutionToDefault();  // 1 time per second
 // Valid range is 1 - 60 times per second.
-void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond);
+void SetClockResolutionPerSecond(uint8_t ubNumTimesPerSecond);
 // Function for accessing the current rate
-UINT8 ClockResolution();
+uint8_t ClockResolution();
 
 // time compression defines
 enum {
@@ -91,7 +91,7 @@ enum {
 };
 
 // dereferenced with the above enumerations to provide the actual time compression rate.
-extern INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
+extern int32_t giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
 
 #define STARTING_TIME ((1 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN) + NUM_SEC_IN_DAY)  // 1am
 #define FIRST_ARRIVAL_DELAY ((6 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN))  // 7am ( 6hours later)
@@ -99,14 +99,14 @@ extern INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
 #define WORLDTIMESTR gswzWorldTimeStr
 
 // compress mode now in use
-extern INT32 giTimeCompressMode;
+extern int32_t giTimeCompressMode;
 
 enum {
   WARPTIME_NO_PROCESSING_OF_EVENTS,
   WARPTIME_PROCESS_EVENTS_NORMALLY,
   WARPTIME_PROCESS_TARGET_TIME_FIRST,
 };
-void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode);
+void WarpGameTime(uint32_t uiAdjustment, uint8_t ubWarpCode);
 
 void AdvanceToNextDay();
 
@@ -114,21 +114,21 @@ void AdvanceToNextDay();
 // should be as well as how much to update the clock by.
 void UpdateClock();
 
-extern CHAR16 gswzWorldTimeStr[20];  // Day 99, 23:55
+extern wchar_t gswzWorldTimeStr[20];  // Day 99, 23:55
 
-extern UINT32 guiDay;
-extern UINT32 guiHour;
-extern UINT32 guiMin;
+extern uint32_t guiDay;
+extern uint32_t guiHour;
+extern uint32_t guiMin;
 
 // Advanced function used by certain event callbacks.  In the case where time is warped, certain
 // event need to know how much time was warped since the last query to the event list. This function
 // returns that value
-extern UINT32 guiTimeOfLastEventQuery;
+extern uint32_t guiTimeOfLastEventQuery;
 
 // This value represents the time that the sector was loaded.  If you are in sector A9, and leave
 // the game clock at that moment will get saved into the temp file associated with it.  The next
 // time you enter A9, this value will contain that time.  Used for scheduling purposes.
-extern UINT32 guiTimeCurrentSectorWasLastLoaded;
+extern uint32_t guiTimeCurrentSectorWasLastLoaded;
 
 // is the current pause state due to the player?
 extern BOOLEAN gfPauseDueToPlayerGamePause;
@@ -139,26 +139,26 @@ extern BOOLEAN gfJustFinishedAPause;
 
 extern BOOLEAN gfResetAllPlayerKnowsEnemiesFlags;
 
-extern UINT32 guiLockPauseStateLastReasonId;
+extern uint32_t guiLockPauseStateLastReasonId;
 
-UINT32 GetWorldTotalMin();
-UINT32 GetWorldTotalSeconds();
-UINT32 GetWorldHour();
-UINT32 GetWorldDay();
-UINT32 GetWorldMinutesInDay();
-UINT32 GetWorldDayInSeconds();
-UINT32 GetWorldDayInMinutes();
-UINT32 GetFutureDayInMinutes(UINT32 uiDay);
-UINT32 GetMidnightOfFutureDayInMinutes(UINT32 uiDay);
+uint32_t GetWorldTotalMin();
+uint32_t GetWorldTotalSeconds();
+uint32_t GetWorldHour();
+uint32_t GetWorldDay();
+uint32_t GetWorldMinutesInDay();
+uint32_t GetWorldDayInSeconds();
+uint32_t GetWorldDayInMinutes();
+uint32_t GetFutureDayInMinutes(uint32_t uiDay);
+uint32_t GetMidnightOfFutureDayInMinutes(uint32_t uiDay);
 
 BOOLEAN DayTime();
 BOOLEAN NightTime();
 
 void InitNewGameClock();
 
-void GotoNextTimeOfDay(UINT32 uiTOD);
+void GotoNextTimeOfDay(uint32_t uiTOD);
 
-void RenderClock(INT16 sX, INT16 sY);
+void RenderClock(int16_t sX, int16_t sY);
 
 void ToggleSuperCompression();
 
@@ -182,7 +182,7 @@ void ResetTimeCompressHasOccured(void);
 void SetFactTimeCompressHasOccured(void);
 
 // create mouse region to pause game
-void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY);
+void CreateMouseRegionForPauseOfClock(int16_t sX, int16_t sY);
 
 // remove mouse region for pause game
 void RemoveMouseRegionForPauseOfClock(void);

@@ -59,16 +59,16 @@ typedef enum {
 
 } UI_MODE;
 
-typedef UINT32 (*UI_HANDLEFNC)(struct TAG_UI_EVENT *);
+typedef uint32_t (*UI_HANDLEFNC)(struct TAG_UI_EVENT *);
 
 typedef struct TAG_UI_EVENT {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
   UI_MODE ChangeToUIMode;
   UI_HANDLEFNC HandleEvent;
   BOOLEAN fFirstTime;
   BOOLEAN fDoneMenu;
   UI_MODE uiMenuPreviousMode;
-  UINT32 uiParams[3];
+  uint32_t uiParams[3];
 
 } UI_EVENT;
 
@@ -168,51 +168,51 @@ extern UI_EVENT gEvents[NUM_UI_EVENTS];
 // GLOBAL STATUS VARS
 extern UI_MODE gCurrentUIMode;
 extern UI_MODE gOldUIMode;
-extern UINT32 guiCurrentEvent;
-extern INT16 gsSelectedLevel;
+extern uint32_t guiCurrentEvent;
+extern int16_t gsSelectedLevel;
 extern BOOLEAN gfPlotNewMovement;
-extern UINT32 guiPendingOverrideEvent;
+extern uint32_t guiPendingOverrideEvent;
 
 // GLOBALS
 extern BOOLEAN gfUIDisplayActionPoints;
 extern BOOLEAN gfUIDisplayActionPointsInvalid;
 extern BOOLEAN gfUIDisplayActionPointsBlack;
 extern BOOLEAN gfUIDisplayActionPointsCenter;
-extern INT16 gUIDisplayActionPointsOffY;
-extern INT16 gUIDisplayActionPointsOffX;
+extern int16_t gUIDisplayActionPointsOffY;
+extern int16_t gUIDisplayActionPointsOffX;
 extern BOOLEAN gfUIDoNotHighlightSelMerc;
-extern UINT32 guiShowUPDownArrows;
+extern uint32_t guiShowUPDownArrows;
 extern BOOLEAN gfUIHandleSelection;
 extern BOOLEAN gfUIHandleSelectionAboveGuy;
-extern INT16 gsSelectedGridNo;
-extern INT16 gsSelectedGuy;
+extern int16_t gsSelectedGridNo;
+extern int16_t gsSelectedGuy;
 extern BOOLEAN gfUIInDeadlock;
-extern UINT8 gUIDeadlockedSoldier;
+extern uint8_t gUIDeadlockedSoldier;
 
 extern BOOLEAN gfUIMouseOnValidCatcher;
-extern UINT8 gubUIValidCatcherID;
+extern uint8_t gubUIValidCatcherID;
 extern BOOLEAN gUIUseReverse;
 
 extern BOOLEAN gfUIHandleShowMoveGrid;
-extern UINT16 gsUIHandleShowMoveGridLocation;
+extern uint16_t gsUIHandleShowMoveGridLocation;
 
 extern BOOLEAN gfUIDisplayDamage;
-extern INT8 gbDamage;
-extern UINT16 gsDamageGridNo;
+extern int8_t gbDamage;
+extern uint16_t gsDamageGridNo;
 
 extern BOOLEAN gfFontPopupDo;
 
 extern BOOLEAN gUITargetReady;
 extern BOOLEAN gUITargetShotWaiting;
-extern UINT16 gsUITargetShotGridNo;
+extern uint16_t gsUITargetShotGridNo;
 
-extern CHAR16 gzLocation[20];
+extern wchar_t gzLocation[20];
 extern BOOLEAN gfUIBodyHitLocation;
 
-extern CHAR16 gzIntTileLocation[20];
+extern wchar_t gzIntTileLocation[20];
 extern BOOLEAN gfUIIntTileLocation;
 
-extern CHAR16 gzIntTileLocation2[20];
+extern wchar_t gzIntTileLocation2[20];
 extern BOOLEAN gfUIIntTileLocation2;
 
 extern BOOLEAN gfUIWaitingForUserSpeechAdvance;
@@ -227,93 +227,93 @@ extern BOOLEAN gfUIHandlePhysicsTrajectory;
 
 // GLOBALS FOR FAST LOOKUP FOR FINDING MERCS FROM THE MOUSE
 extern BOOLEAN gfUISelectiveTargetFound;
-extern UINT16 gusUISelectiveTargetID;
-extern UINT32 guiUISelectiveTargetFlags;
+extern uint16_t gusUISelectiveTargetID;
+extern uint32_t guiUISelectiveTargetFlags;
 
 extern BOOLEAN gfUIFullTargetFound;
-extern UINT16 gusUIFullTargetID;
-extern UINT32 guiUIFullTargetFlags;
+extern uint16_t gusUIFullTargetID;
+extern uint32_t guiUIFullTargetFlags;
 
 extern BOOLEAN gfUIConfirmExitArrows;
-extern INT16 gsJumpOverGridNo;
+extern int16_t gsJumpOverGridNo;
 
-UINT32 HandleTacticalUI(void);
-UINT32 UIHandleEndTurn(UI_EVENT *pUIEvent);
+uint32_t HandleTacticalUI(void);
+uint32_t UIHandleEndTurn(UI_EVENT *pUIEvent);
 
 extern BOOLEAN gfUIShowCurIntTile;
 
 extern SGPRect gRubberBandRect;
 extern BOOLEAN gRubberBandActive;
 
-void EndMenuEvent(UINT32 uiEvent);
+void EndMenuEvent(uint32_t uiEvent);
 void SetUIKeyboardHook(UIKEYBOARD_HOOK KeyboardHookFnc);
 void HandleObjectHighlighting();
 
 extern BOOLEAN gfUIForceReExamineCursorData;
 
-extern INT16 guiCreateGuyIndex;
-extern INT16 guiCreateBadGuyIndex;
+extern int16_t guiCreateGuyIndex;
+extern int16_t guiCreateBadGuyIndex;
 
 // FUNCTIONS IN INPUT MODULES
-void GetKeyboardInput(UINT32 *puiNewEvent);
-void GetPolledKeyboardInput(UINT32 *puiNewEvent);
+void GetKeyboardInput(uint32_t *puiNewEvent);
+void GetPolledKeyboardInput(uint32_t *puiNewEvent);
 
-void GetTBMouseButtonInput(UINT32 *puiNewEvent);
-void GetTBMousePositionInput(UINT32 *puiNewEvent);
-void QueryTBLeftButton(UINT32 *puiNewEvent);
-void QueryTBRightButton(UINT32 *puiNewEvent);
-void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight);
+void GetTBMouseButtonInput(uint32_t *puiNewEvent);
+void GetTBMousePositionInput(uint32_t *puiNewEvent);
+void QueryTBLeftButton(uint32_t *puiNewEvent);
+void QueryTBRightButton(uint32_t *puiNewEvent);
+void HandleStanceChangeFromUIKeys(uint8_t ubAnimHeight);
 void HandleKeyInputOnEnemyTurn();
 
-void GetRTMouseButtonInput(UINT32 *puiNewEvent);
-void GetRTMousePositionInput(UINT32 *puiNewEvent);
-void QueryRTLeftButton(UINT32 *puiNewEvent);
-void QueryRTRightButton(UINT32 *puiNewEvent);
+void GetRTMouseButtonInput(uint32_t *puiNewEvent);
+void GetRTMousePositionInput(uint32_t *puiNewEvent);
+void QueryRTLeftButton(uint32_t *puiNewEvent);
+void QueryRTRightButton(uint32_t *puiNewEvent);
 
 void AdjustSoldierCreationStartValues();
 
 BOOLEAN SelectedMercCanAffordAttack();
 BOOLEAN SelectedMercCanAffordMove();
-void GetMercClimbDirection(UINT8 ubSoldierID, BOOLEAN *pfGoDown, BOOLEAN *pfGoUp);
+void GetMercClimbDirection(uint8_t ubSoldierID, BOOLEAN *pfGoDown, BOOLEAN *pfGoUp);
 
-void ToggleHandCursorMode(UINT32 *puiNewEvent);
-void ToggleTalkCursorMode(UINT32 *puiNewEvent);
-void ToggleLookCursorMode(UINT32 *puiNewEvent);
+void ToggleHandCursorMode(uint32_t *puiNewEvent);
+void ToggleTalkCursorMode(uint32_t *puiNewEvent);
+void ToggleLookCursorMode(uint32_t *puiNewEvent);
 
-void UIHandleSoldierStanceChange(UINT8 ubSoldierID, INT8 bNewStance);
-void GetCursorMovementFlags(UINT32 *puiCursorFlags);
+void UIHandleSoldierStanceChange(uint8_t ubSoldierID, int8_t bNewStance);
+void GetCursorMovementFlags(uint32_t *puiCursorFlags);
 
-BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, UINT32 uiCursorFlags, UINT16 usMapPos,
-                               UINT32 uiFlags);
+BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, uint32_t uiCursorFlags,
+                               uint16_t usMapPos, uint32_t uiFlags);
 BOOLEAN UIMouseOnValidAttackLocation(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
+BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, int16_t sGridNo);
 
-BOOLEAN IsValidTalkableNPCFromMouse(UINT8 *pubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs,
+BOOLEAN IsValidTalkableNPCFromMouse(uint8_t *pubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs,
                                     BOOLEAN fCheckCollapsed);
-BOOLEAN IsValidTalkableNPC(UINT8 ubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs,
+BOOLEAN IsValidTalkableNPC(uint8_t ubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs,
                            BOOLEAN fCheckCollapsed);
 
 BOOLEAN HandleTalkInit();
 
 BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustForConfirm);
 
-void SetUIBusy(UINT8 ubID);
-void UnSetUIBusy(UINT8 ubID);
+void SetUIBusy(uint8_t ubID);
+void UnSetUIBusy(uint8_t ubID);
 
-UINT32 UIHandleLUIEndLock(UI_EVENT *pUIEvent);
+uint32_t UIHandleLUIEndLock(UI_EVENT *pUIEvent);
 
-void BeginDisplayTimedCursor(UINT32 uiCursorID, UINT32 uiDelay);
+void BeginDisplayTimedCursor(uint32_t uiCursorID, uint32_t uiDelay);
 
-void HandleHandCursorClick(UINT16 usMapPos, UINT32 *puiNewEvent);
-INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, UINT32 *puiNewEvent);
+void HandleHandCursorClick(uint16_t usMapPos, uint32_t *puiNewEvent);
+int8_t HandleMoveModeInteractiveClick(uint16_t usMapPos, uint32_t *puiNewEvent);
 
 BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 
-UINT32 UIHandleChangeLevel(UI_EVENT *pUIEvent);
+uint32_t UIHandleChangeLevel(UI_EVENT *pUIEvent);
 BOOLEAN UIHandleOnMerc(BOOLEAN fMovementMode);
 
-void ChangeInterfaceLevel(INT16 sLevel);
+void ChangeInterfaceLevel(int16_t sLevel);
 
 void EndRubberBanding();
 void ResetMultiSelection();
@@ -325,7 +325,7 @@ BOOLEAN SelectedGuyInBusyAnimation();
 void GotoLowerStance(struct SOLDIERTYPE *pSoldier);
 void GotoHeigherStance(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fCheckForPath);
+BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fCheckForPath);
 
 void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier);
 

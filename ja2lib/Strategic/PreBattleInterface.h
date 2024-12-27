@@ -61,7 +61,7 @@ extern BOOLEAN gfPersistantPBI;
 // Contains general information about the type of encounter the player is faced with.  This
 // determines whether or not you can autoresolve the battle or even retreat.  This code
 // dictates the header that is used at the top of the PBI.
-extern UINT8 gubEnemyEncounterCode;
+extern uint8_t gubEnemyEncounterCode;
 
 // The autoresolve during tactical battle option needs more detailed information than the
 // gubEnemyEncounterCode can provide.  The explicit version contains possibly unique codes
@@ -74,9 +74,9 @@ extern BOOLEAN gubExplicitEnemyEncounterCode;
 // icon is to be blitted.
 extern BOOLEAN gfBlitBattleSectorLocator;
 
-extern UINT8 gubPBSectorX;
-extern UINT8 gubPBSectorY;
-extern UINT8 gubPBSectorZ;
+extern uint8_t gubPBSectorX;
+extern uint8_t gubPBSectorY;
+extern uint8_t gubPBSectorZ;
 
 extern BOOLEAN gfCantRetreatInPBI;
 // SAVE END
@@ -89,12 +89,12 @@ void RetreatAllInvolvedPlayerGroups(void);
 BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup);
 BOOLEAN PlayerMercInvolvedInThisCombat(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+BOOLEAN CurrentBattleSectorIs(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ);
 
 enum {
   LOG_DEFEAT,
   LOG_VICTORY,
 };
-void LogBattleResults(UINT8 ubVictoryCode);
+void LogBattleResults(uint8_t ubVictoryCode);
 
 #endif

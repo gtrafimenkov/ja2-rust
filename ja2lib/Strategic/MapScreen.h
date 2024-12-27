@@ -16,37 +16,37 @@ extern BOOLEAN gfInChangeArrivalSectorMode;
 
 extern BOOLEAN gfSkyriderEmptyHelpGiven;
 
-BOOLEAN SetInfoChar(UINT8 ubSolId);
+BOOLEAN SetInfoChar(uint8_t ubSolId);
 void EndMapScreen(BOOLEAN fDuringFade);
 void ReBuildCharactersList(void);
 
 BOOLEAN HandlePreloadOfMapGraphics(void);
 void HandleRemovalOfPreLoadedMapGraphics(void);
 
-void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+void ChangeSelectedMapSector(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
 
 BOOLEAN CanToggleSelectedCharInventory(void);
 
-BOOLEAN CanExtendContractForCharSlot(INT8 bCharNumber);
+BOOLEAN CanExtendContractForCharSlot(int8_t bCharNumber);
 
 void TellPlayerWhyHeCantCompressTime(void);
 
-void ChangeSelectedInfoChar(INT8 bCharNumber, BOOLEAN fResetSelectedList);
+void ChangeSelectedInfoChar(int8_t bCharNumber, BOOLEAN fResetSelectedList);
 
 void MAPEndItemPointer();
 
 void CopyPathToAllSelectedCharacters(struct path* pPath);
 void CancelPathsOfAllSelectedCharacters();
 
-INT32 GetPathTravelTimeDuringPlotting(struct path* pPath);
+int32_t GetPathTravelTimeDuringPlotting(struct path* pPath);
 
 void AbortMovementPlottingMode(void);
 
 void ExplainWhySkyriderCantFly(void);
 
-BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber);
+BOOLEAN CanChangeSleepStatusForCharSlot(int8_t bCharNumber);
 BOOLEAN CanChangeSleepStatusForSoldier(struct SOLDIERTYPE* pSoldier);
 
-BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber);
+BOOLEAN MapCharacterHasAccessibleInventory(int8_t bCharNumber);
 
 #endif

@@ -86,21 +86,21 @@
 
 #ifdef JA2EDITOR
 extern BOOLEAN gfErrorCatch;
-extern CHAR16 gzErrorCatchString[256];
+extern wchar_t gzErrorCatchString[256];
 #endif
 
 // TEMP
 BOOLEAN gfForceLoadPlayers = FALSE;
-CHAR8 gzForceLoadFile[100];
+char gzForceLoadFile[100];
 BOOLEAN gfForceLoad = FALSE;
 
-UINT8 gubCurrentLevel;
-INT32 giCurrentTilesetID = 0;
-CHAR8 gzLastLoadedFile[260];
+uint8_t gubCurrentLevel;
+int32_t giCurrentTilesetID = 0;
+char gzLastLoadedFile[260];
 
-UINT32 gCurrentBackground = FIRSTTEXTURE;
+uint32_t gCurrentBackground = FIRSTTEXTURE;
 
-INT8 gbNewTileSurfaceLoaded[NUMBEROFTILETYPES];
+int8_t gbNewTileSurfaceLoaded[NUMBEROFTILETYPES];
 
 void SetAllNewTileSurfacesLoaded(BOOLEAN fNew) {
   memset(gbNewTileSurfaceLoaded, fNew, sizeof(gbNewTileSurfaceLoaded));
@@ -109,44 +109,44 @@ void SetAllNewTileSurfacesLoaded(BOOLEAN fNew) {
 BOOLEAN gfInitAnimateLoading = FALSE;
 
 // Local Functions
-BOOLEAN LoadTileSurfaces(char pTileSurfaceFilenames[][32], UINT8 ubTilesetID);
-BOOLEAN AddTileSurface(SGPFILENAME cFilename, UINT32 ubType, UINT8 ubTilesetID,
+BOOLEAN LoadTileSurfaces(char pTileSurfaceFilenames[][32], uint8_t ubTilesetID);
+BOOLEAN AddTileSurface(SGPFILENAME cFilename, uint32_t ubType, uint8_t ubTilesetID,
                        BOOLEAN fGetFromRoot);
 void DestroyTileSurfaces(void);
 void ProcessTilesetNamesForBPP(void);
-BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos);
+BOOLEAN IsRoofVisibleForWireframe(int16_t sMapPos);
 
-INT8 IsHiddenTileMarkerThere(INT16 sGridNo);
+int8_t IsHiddenTileMarkerThere(int16_t sGridNo);
 extern void SetInterfaceHeightLevel();
 
 void SaveMapLights(HWFILE hfile);
-void LoadMapLights(INT8 **hBuffer);
+void LoadMapLights(int8_t **hBuffer);
 
 // Global Variables
 MAP_ELEMENT *gpWorldLevelData;
-INT32 *gpDirtyData;
-UINT32 gSurfaceMemUsage;
-UINT8 gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
+int32_t *gpDirtyData;
+uint32_t gSurfaceMemUsage;
+uint8_t gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 
 // set to nonzero (locs of base gridno of structure are good) to have it defined by structure code
-INT16 gsRecompileAreaTop = 0;
-INT16 gsRecompileAreaLeft = 0;
-INT16 gsRecompileAreaRight = 0;
-INT16 gsRecompileAreaBottom = 0;
+int16_t gsRecompileAreaTop = 0;
+int16_t gsRecompileAreaLeft = 0;
+int16_t gsRecompileAreaRight = 0;
+int16_t gsRecompileAreaBottom = 0;
 
 // TIMER TESTING STUFF
 #ifdef JA2TESTVERSION
-extern UINT32 uiLoadWorldTime;
-extern UINT32 uiTrashWorldTime;
-extern UINT32 uiLoadMapTilesetTime;
-extern UINT32 uiLoadMapLightsTime;
-extern UINT32 uiBuildShadeTableTime;
-extern UINT32 uiNumTablesLoaded;
-extern UINT32 uiNumTablesSaved;
-extern UINT32 uiNumImagesReloaded;
+extern uint32_t uiLoadWorldTime;
+extern uint32_t uiTrashWorldTime;
+extern uint32_t uiLoadMapTilesetTime;
+extern uint32_t uiLoadMapLightsTime;
+extern uint32_t uiBuildShadeTableTime;
+extern uint32_t uiNumTablesLoaded;
+extern uint32_t uiNumTablesSaved;
+extern uint32_t uiNumImagesReloaded;
 #endif
 
-BOOLEAN DoorAtGridNo(UINT32 iMapIndex) {
+BOOLEAN DoorAtGridNo(uint32_t iMapIndex) {
   struct STRUCTURE *pStruct;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
@@ -156,7 +156,7 @@ BOOLEAN DoorAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN OpenableAtGridNo(UINT32 iMapIndex) {
+BOOLEAN OpenableAtGridNo(uint32_t iMapIndex) {
   struct STRUCTURE *pStruct;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
@@ -166,9 +166,9 @@ BOOLEAN OpenableAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN FloorAtGridNo(UINT32 iMapIndex) {
+BOOLEAN FloorAtGridNo(uint32_t iMapIndex) {
   struct LEVELNODE *pLand;
-  UINT32 uiTileType;
+  uint32_t uiTileType;
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
   // Look through all objects and Search for type
   while (pLand) {
@@ -183,7 +183,7 @@ BOOLEAN FloorAtGridNo(UINT32 iMapIndex) {
   return FALSE;
 }
 
-BOOLEAN GridNoIndoors(UINT32 iMapIndex) {
+BOOLEAN GridNoIndoors(uint32_t iMapIndex) {
   if (gfBasement || gfCaves) return TRUE;
   if (FloorAtGridNo(iMapIndex)) return TRUE;
   return FALSE;
@@ -194,7 +194,7 @@ void DOIT() {
   // struct LEVELNODE *			pObject;
   struct LEVELNODE *pStruct, *pNewStruct;
   // struct LEVELNODE	*			pShadow;
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   // first level
   for (uiLoop = 0; uiLoop < WORLD_MAX; uiLoop++) {
@@ -277,11 +277,11 @@ void DeinitializeWorld() {
   ShutdownRoomDatabase();
 }
 
-BOOLEAN ReloadTilesetSlot(INT32 iSlot) { return (TRUE); }
+BOOLEAN ReloadTilesetSlot(int32_t iSlot) { return (TRUE); }
 
-BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
-  UINT32 uiLoop;
-  UINT32 uiPercentage;
+BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], uint8_t ubTilesetID) {
+  uint32_t uiLoop;
+  uint32_t uiPercentage;
 
   // If no Tileset filenames are given, return error
   if (ppTileSurfaceFilenames == NULL) {
@@ -332,11 +332,12 @@ BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
   return (TRUE);
 }
 
-BOOLEAN AddTileSurface(char *cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOLEAN fGetFromRoot) {
+BOOLEAN AddTileSurface(char *cFilename, uint32_t ubType, uint8_t ubTilesetID,
+                       BOOLEAN fGetFromRoot) {
   // Add tile surface
   struct TILE_IMAGERY *TileSurf;
-  CHAR8 cFileBPP[128];
-  CHAR8 cAdjustedFile[200];
+  char cFileBPP[128];
+  char cAdjustedFile[200];
 
   // Delete the surface first!
   if (gTileSurfaceArray[ubType] != NULL) {
@@ -385,14 +386,14 @@ void BuildTileShadeTables() {
   HWFILE hfile;
   char DataDir[256];
   char ShadeTableDir[300];
-  UINT32 uiLoop;
-  CHAR8 cRootFile[128];
+  uint32_t uiLoop;
+  char cRootFile[128];
   BOOLEAN fForceRebuildForSlot = FALSE;
 
 #ifdef JA2TESTVERSION
-  UINT32 uiStartTime;
+  uint32_t uiStartTime;
 #endif
-  static UINT8 ubLastRed = 255, ubLastGreen = 255, ubLastBlue = 255;
+  static uint8_t ubLastRed = 255, ubLastGreen = 255, ubLastBlue = 255;
 
 #ifdef JA2TESTVERSION
   uiNumTablesLoaded = 0;
@@ -473,7 +474,7 @@ void BuildTileShadeTables() {
 }
 
 void DestroyTileShadeTables() {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     if (gTileSurfaceArray[uiLoop] != NULL) {
@@ -492,7 +493,7 @@ void DestroyTileShadeTables() {
 }
 
 void DestroyTileSurfaces() {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     if (gTileSurfaceArray[uiLoop] != NULL) {
@@ -503,11 +504,11 @@ void DestroyTileSurfaces() {
 }
 
 void CompileWorldTerrainIDs(void) {
-  INT16 sGridNo;
-  INT16 sTempGridNo;
+  int16_t sGridNo;
+  int16_t sTempGridNo;
   struct LEVELNODE *pNode;
   TILE_ELEMENT *pTileElement;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   for (sGridNo = 0; sGridNo < WORLD_MAX; sGridNo++) {
     if (GridNoOnVisibleWorldTile(sGridNo)) {
@@ -544,14 +545,14 @@ void CompileWorldTerrainIDs(void) {
   }
 }
 
-void CompileTileMovementCosts(UINT16 usGridNo) {
-  UINT8 ubTerrainID;
+void CompileTileMovementCosts(uint16_t usGridNo) {
+  uint8_t ubTerrainID;
   struct LEVELNODE *pLand;
 
   struct STRUCTURE *pStructure;
   BOOLEAN fStructuresOnRoof;
 
-  UINT8 ubDirLoop;
+  uint8_t ubDirLoop;
 
   /*
    */
@@ -588,7 +589,8 @@ void CompileTileMovementCosts(UINT16 usGridNo) {
     pLand = gpWorldLevelData[usGridNo].pLandHead;
     if (pLand != NULL) {
       // Get terrain type
-      ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (INT16)usGridNo );
+      ubTerrainID =
+          gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (int16_t)usGridNo );
 
       for (ubDirLoop = 0; ubDirLoop < NUM_WORLD_DIRECTIONS; ubDirLoop++) {
         SET_CURRMOVEMENTCOST(ubDirLoop, gTileTypeMovementCost[ubTerrainID]);
@@ -696,14 +698,14 @@ void CompileTileMovementCosts(UINT16 usGridNo) {
               SET_CURRMOVEMENTCOST(ubDirLoop, TRAVELCOST_OBSTACLE);
             }
 
-            if (FindStructure((UINT16)(usGridNo - WORLD_COLS), STRUCTURE_OBSTACLE) == FALSE &&
-                FindStructure((UINT16)(usGridNo + WORLD_COLS), STRUCTURE_OBSTACLE) == FALSE) {
+            if (FindStructure((uint16_t)(usGridNo - WORLD_COLS), STRUCTURE_OBSTACLE) == FALSE &&
+                FindStructure((uint16_t)(usGridNo + WORLD_COLS), STRUCTURE_OBSTACLE) == FALSE) {
               FORCE_SET_MOVEMENTCOST(usGridNo, NORTH, 0, TRAVELCOST_FENCE);
               FORCE_SET_MOVEMENTCOST(usGridNo, SOUTH, 0, TRAVELCOST_FENCE);
             }
 
-            if (FindStructure((UINT16)(usGridNo - 1), STRUCTURE_OBSTACLE) == FALSE &&
-                FindStructure((UINT16)(usGridNo + 1), STRUCTURE_OBSTACLE) == FALSE) {
+            if (FindStructure((uint16_t)(usGridNo - 1), STRUCTURE_OBSTACLE) == FALSE &&
+                FindStructure((uint16_t)(usGridNo + 1), STRUCTURE_OBSTACLE) == FALSE) {
               FORCE_SET_MOVEMENTCOST(usGridNo, EAST, 0, TRAVELCOST_FENCE);
               FORCE_SET_MOVEMENTCOST(usGridNo, WEST, 0, TRAVELCOST_FENCE);
             }
@@ -1112,7 +1114,7 @@ void CompileTileMovementCosts(UINT16 usGridNo) {
     // consider just the land
 
     // Get terrain type
-    ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (INT16)usGridNo );
+    ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (int16_t)usGridNo );
     for (ubDirLoop = 0; ubDirLoop < 8; ubDirLoop++) {
       SET_MOVEMENTCOST(usGridNo, ubDirLoop, 0, gTileTypeMovementCost[ubTerrainID]);
     }
@@ -1126,7 +1128,7 @@ void CompileTileMovementCosts(UINT16 usGridNo) {
                             TileElem = gTileDatabase[ pLand->usIndex ];
 
                             // Get terrain type
-                            ubTerrainID =	GetTerrainType( (INT16)usGridNo );
+                            ubTerrainID =	GetTerrainType( (int16_t)usGridNo );
 
                             for (ubDirLoop=0; ubDirLoop < 8; ubDirLoop++)
                             {
@@ -1150,11 +1152,11 @@ void CompileTileMovementCosts(UINT16 usGridNo) {
 
 #define LOCAL_RADIUS 4
 
-void RecompileLocalMovementCosts(INT16 sCentreGridNo) {
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
-  INT16 sCentreGridX, sCentreGridY;
-  INT8 bDirLoop;
+void RecompileLocalMovementCosts(int16_t sCentreGridNo) {
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
+  int16_t sCentreGridX, sCentreGridY;
+  int8_t bDirLoop;
 
   ConvertGridNoToXY(sCentreGridNo, &sCentreGridX, &sCentreGridY);
   for (sGridY = sCentreGridY - LOCAL_RADIUS; sGridY < sCentreGridY + LOCAL_RADIUS; sGridY++) {
@@ -1185,11 +1187,11 @@ void RecompileLocalMovementCosts(INT16 sCentreGridNo) {
   }
 }
 
-void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, INT8 bRadius) {
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
-  INT16 sCentreGridX, sCentreGridY;
-  INT8 bDirLoop;
+void RecompileLocalMovementCostsFromRadius(int16_t sCentreGridNo, int8_t bRadius) {
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
+  int16_t sCentreGridX, sCentreGridY;
+  int8_t bDirLoop;
 
   ConvertGridNoToXY(sCentreGridNo, &sCentreGridX, &sCentreGridY);
   if (bRadius == 0) {
@@ -1227,10 +1229,10 @@ void RecompileLocalMovementCostsFromRadius(INT16 sCentreGridNo, INT8 bRadius) {
   }
 }
 
-void AddTileToRecompileArea(INT16 sGridNo) {
-  INT16 sCheckGridNo;
-  INT16 sCheckX;
-  INT16 sCheckY;
+void AddTileToRecompileArea(int16_t sGridNo) {
+  int16_t sCheckGridNo;
+  int16_t sCheckX;
+  int16_t sCheckY;
 
   // Set flag to wipe and recompile MPs in this tile
   if (sGridNo < 0 || sGridNo >= WORLD_MAX) {
@@ -1263,9 +1265,9 @@ void AddTileToRecompileArea(INT16 sGridNo) {
 }
 
 void RecompileLocalMovementCostsInAreaWithFlags(void) {
-  INT16 usGridNo;
-  INT16 sGridX, sGridY;
-  INT8 bDirLoop;
+  int16_t usGridNo;
+  int16_t sGridX, sGridY;
+  int8_t bDirLoop;
 
   for (sGridY = gsRecompileAreaTop; sGridY <= gsRecompileAreaBottom; sGridY++) {
     for (sGridX = gsRecompileAreaLeft; sGridX < gsRecompileAreaRight; sGridX++) {
@@ -1293,10 +1295,10 @@ void RecompileLocalMovementCostsInAreaWithFlags(void) {
   }
 }
 
-void RecompileLocalMovementCostsForWall(INT16 sGridNo, UINT8 ubOrientation) {
-  INT8 bDirLoop;
-  INT16 sUp, sDown, sLeft, sRight;
-  INT16 sX, sY, sTempGridNo;
+void RecompileLocalMovementCostsForWall(int16_t sGridNo, uint8_t ubOrientation) {
+  int8_t bDirLoop;
+  int16_t sUp, sDown, sLeft, sRight;
+  int16_t sX, sY, sTempGridNo;
 
   switch (ubOrientation) {
     case OUTSIDE_TOP_RIGHT:
@@ -1332,7 +1334,7 @@ void RecompileLocalMovementCostsForWall(INT16 sGridNo, UINT8 ubOrientation) {
 
 // GLOBAL WORLD MANIPULATION FUNCTIONS
 void CompileWorldMovementCosts() {
-  UINT16 usGridNo;
+  uint16_t usGridNo;
 
   memset(gubWorldMovementCosts, 0, sizeof(gubWorldMovementCosts));
 
@@ -1343,14 +1345,14 @@ void CompileWorldMovementCosts() {
 }
 
 // SAVING CODE
-BOOLEAN SaveWorld(STR8 puiFilename) {
+BOOLEAN SaveWorld(char *puiFilename) {
 #ifdef JA2EDITOR
-  INT32 cnt;
-  UINT32 uiSoldierSize;
-  UINT32 uiType;
-  UINT32 uiFlags;
-  UINT32 uiBytesWritten;
-  UINT32 uiNumWarningsCaught = 0;
+  int32_t cnt;
+  uint32_t uiSoldierSize;
+  uint32_t uiType;
+  uint32_t uiFlags;
+  uint32_t uiBytesWritten;
+  uint32_t uiNumWarningsCaught = 0;
   HWFILE hfile;
   struct LEVELNODE *pLand;
   struct LEVELNODE *pObject;
@@ -1359,20 +1361,20 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   struct LEVELNODE *pRoof;
   struct LEVELNODE *pOnRoof;
   struct LEVELNODE *pTailLand = NULL;
-  UINT16 usNumExitGrids = 0;
-  UINT16 usTypeSubIndex;
-  UINT8 LayerCount;
-  UINT8 ObjectCount;
-  UINT8 StructCount;
-  UINT8 ShadowCount;
-  UINT8 RoofCount;
-  UINT8 OnRoofCount;
-  UINT8 ubType;
-  UINT8 ubTypeSubIndex;
-  UINT8 ubTest = 1;
-  CHAR8 aFilename[255];
-  UINT8 ubCombine;
-  UINT8 bCounts[WORLD_MAX][8];
+  uint16_t usNumExitGrids = 0;
+  uint16_t usTypeSubIndex;
+  uint8_t LayerCount;
+  uint8_t ObjectCount;
+  uint8_t StructCount;
+  uint8_t ShadowCount;
+  uint8_t RoofCount;
+  uint8_t OnRoofCount;
+  uint8_t ubType;
+  uint8_t ubTypeSubIndex;
+  uint8_t ubTest = 1;
+  char aFilename[255];
+  uint8_t ubCombine;
+  uint8_t bCounts[WORLD_MAX][8];
 
   sprintf(aFilename, "MAPS\\%s", puiFilename);
 
@@ -1384,9 +1386,9 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   }
 
   // Write JA2 Version ID
-  FileMan_Write(hfile, &gdMajorMapVersion, sizeof(FLOAT), &uiBytesWritten);
+  FileMan_Write(hfile, &gdMajorMapVersion, sizeof(float), &uiBytesWritten);
   if (gdMajorMapVersion >= 4.00) {
-    FileMan_Write(hfile, &gubMinorMapVersion, sizeof(UINT8), &uiBytesWritten);
+    FileMan_Write(hfile, &gubMinorMapVersion, sizeof(uint8_t), &uiBytesWritten);
   }
 
   // Write FLAGS FOR WORLD
@@ -1401,21 +1403,21 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   if (gfBasement || gfCaves) uiFlags |= MAP_AMBIENTLIGHTLEVEL_SAVED;
   uiFlags |= MAP_NPCSCHEDULES_SAVED;
 
-  FileMan_Write(hfile, &uiFlags, sizeof(INT32), &uiBytesWritten);
+  FileMan_Write(hfile, &uiFlags, sizeof(int32_t), &uiBytesWritten);
 
   // Write tileset ID
-  FileMan_Write(hfile, &giCurrentTilesetID, sizeof(INT32), &uiBytesWritten);
+  FileMan_Write(hfile, &giCurrentTilesetID, sizeof(int32_t), &uiBytesWritten);
 
   // Write SOLDIER CONTROL SIZE
   uiSoldierSize = sizeof(struct SOLDIERTYPE);
-  FileMan_Write(hfile, &uiSoldierSize, sizeof(INT32), &uiBytesWritten);
+  FileMan_Write(hfile, &uiSoldierSize, sizeof(int32_t), &uiBytesWritten);
 
   // REMOVE WORLD VISIBILITY TILES
   RemoveWorldWireFrameTiles();
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Write out height values
-    FileMan_Write(hfile, &gpWorldLevelData[cnt].sHeight, sizeof(INT16), &uiBytesWritten);
+    FileMan_Write(hfile, &gpWorldLevelData[cnt].sHeight, sizeof(int16_t), &uiBytesWritten);
   }
 
   // Write out # values - we'll have no more than 15 per level!
@@ -1447,7 +1449,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     bCounts[cnt][0] = LayerCount;
 
     // Combine # of land layers with worlddef flags ( first 4 bits )
-    ubCombine = (UINT8)((LayerCount & 0xf) | ((gpWorldLevelData[cnt].uiFlags & 0xf) << 4));
+    ubCombine = (uint8_t)((LayerCount & 0xf) | ((gpWorldLevelData[cnt].uiFlags & 0xf) << 4));
     // Write combination
     FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
 
@@ -1457,7 +1459,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     while (pObject != NULL) {
       // DON'T WRITE ANY ITEMS
       if (!(pObject->uiFlags & (LEVELNODE_ITEM))) {
-        UINT32 uiTileType;
+        uint32_t uiTileType;
         // Make sure this isn't a UI Element
         GetTileType(pObject->usIndex, &uiTileType);
         if (uiTileType < FIRSTPOINTERS) ObjectCount++;
@@ -1510,7 +1512,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     }
     bCounts[cnt][2] = StructCount;
 
-    ubCombine = (UINT8)((ObjectCount & 0xf) | ((StructCount & 0xf) << 4));
+    ubCombine = (uint8_t)((ObjectCount & 0xf) | ((StructCount & 0xf) << 4));
     // Write combination
     FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
 
@@ -1570,7 +1572,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     }
     bCounts[cnt][4] = RoofCount;
 
-    ubCombine = (UINT8)((ShadowCount & 0xf) | ((RoofCount & 0xf) << 4));
+    ubCombine = (uint8_t)((ShadowCount & 0xf) | ((RoofCount & 0xf) << 4));
     // Write combination
     FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
 
@@ -1602,15 +1604,15 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     bCounts[cnt][5] = RoofCount;
 
     // Write combination of onroof and nothing...
-    ubCombine = (UINT8)((OnRoofCount & 0xf));
+    ubCombine = (uint8_t)((OnRoofCount & 0xf));
     // Write combination
     FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
   }
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (bCounts[cnt][0] == 0) {
-      FileMan_Write(hfile, &ubTest, sizeof(UINT8), &uiBytesWritten);
-      FileMan_Write(hfile, &ubTest, sizeof(UINT8), &uiBytesWritten);
+      FileMan_Write(hfile, &ubTest, sizeof(uint8_t), &uiBytesWritten);
+      FileMan_Write(hfile, &ubTest, sizeof(uint8_t), &uiBytesWritten);
     } else {
       // Write land layers
       // Write out land peices backwards so that they are loaded properly
@@ -1624,10 +1626,10 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       while (pTailLand != NULL) {
         // Write out object type and sub-index
         GetTileType(pTailLand->usIndex, &uiType);
-        ubType = (UINT8)uiType;
+        ubType = (uint8_t)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pTailLand->usIndex, &ubTypeSubIndex);
-        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(uint8_t), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(uint8_t), &uiBytesWritten);
 
         pTailLand = pTailLand->pPrevNode;
       }
@@ -1646,10 +1648,10 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
         if (uiType < FIRSTPOINTERS) {
           // We are writing 2 bytes for the type subindex in the object layer because the
           // ROADPIECES slot contains more than 256 subindices.
-          ubType = (UINT8)uiType;
+          ubType = (uint8_t)uiType;
           GetTypeSubIndexFromTileIndex(uiType, pObject->usIndex, &usTypeSubIndex);
-          FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-          FileMan_Write(hfile, &usTypeSubIndex, sizeof(UINT16), &uiBytesWritten);
+          FileMan_Write(hfile, &ubType, sizeof(uint8_t), &uiBytesWritten);
+          FileMan_Write(hfile, &usTypeSubIndex, sizeof(uint16_t), &uiBytesWritten);
         }
       }
       pObject = pObject->pNext;
@@ -1664,10 +1666,10 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       if (!(pStruct->uiFlags & (LEVELNODE_ITEM))) {
         // Write out object type and sub-index
         GetTileType(pStruct->usIndex, &uiType);
-        ubType = (UINT8)uiType;
+        ubType = (uint8_t)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pStruct->usIndex, &ubTypeSubIndex);
-        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(uint8_t), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(uint8_t), &uiBytesWritten);
       }
 
       pStruct = pStruct->pNext;
@@ -1683,10 +1685,10 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
         // Write out object type and sub-index
         // Write out object type and sub-index
         GetTileType(pShadow->usIndex, &uiType);
-        ubType = (UINT8)uiType;
+        ubType = (uint8_t)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pShadow->usIndex, &ubTypeSubIndex);
-        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(uint8_t), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(uint8_t), &uiBytesWritten);
 
       } else if (pShadow->uiFlags & LEVELNODE_EXITGRID) {  // count the number of exitgrids
         usNumExitGrids++;
@@ -1703,10 +1705,10 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       if (pRoof->usIndex != SLANTROOFCEILING1) {
         // Write out object type and sub-index
         GetTileType(pRoof->usIndex, &uiType);
-        ubType = (UINT8)uiType;
+        ubType = (uint8_t)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pRoof->usIndex, &ubTypeSubIndex);
-        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(uint8_t), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(uint8_t), &uiBytesWritten);
       }
 
       pRoof = pRoof->pNext;
@@ -1719,10 +1721,10 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     while (pOnRoof != NULL) {
       // Write out object type and sub-index
       GetTileType(pOnRoof->usIndex, &uiType);
-      ubType = (UINT8)uiType;
+      ubType = (uint8_t)uiType;
       GetTypeSubIndexFromTileIndexChar(uiType, pOnRoof->usIndex, &ubTypeSubIndex);
-      FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-      FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+      FileMan_Write(hfile, &ubType, sizeof(uint8_t), &uiBytesWritten);
+      FileMan_Write(hfile, &ubTypeSubIndex, sizeof(uint8_t), &uiBytesWritten);
 
       pOnRoof = pOnRoof->pNext;
     }
@@ -1730,7 +1732,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Write out room information
-    FileMan_Write(hfile, &gubWorldRoomInfo[cnt], sizeof(INT8), &uiBytesWritten);
+    FileMan_Write(hfile, &gubWorldRoomInfo[cnt], sizeof(int8_t), &uiBytesWritten);
   }
 
   if (uiFlags & MAP_WORLDITEMS_SAVED) {
@@ -1777,17 +1779,18 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 }
 
 #define NUM_DIR_SEARCHES 5
-INT8 bDirectionsForShadowSearch[NUM_DIR_SEARCHES] = {WEST, SOUTHWEST, SOUTH, SOUTHEAST, EAST};
+int8_t bDirectionsForShadowSearch[NUM_DIR_SEARCHES] = {WEST, SOUTHWEST, SOUTH, SOUTHEAST, EAST};
 
 void OptimizeMapForShadows() {
-  INT32 cnt, dir;
-  INT16 sNewGridNo;
+  int32_t cnt, dir;
+  int16_t sNewGridNo;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // CHECK IF WE ARE A TREE HERE
-    if (IsTreePresentAtGridno((INT16)cnt)) {
+    if (IsTreePresentAtGridno((int16_t)cnt)) {
       // CHECK FOR A struct STRUCTURE A FOOTPRINT AWAY
       for (dir = 0; dir < NUM_DIR_SEARCHES; dir++) {
-        sNewGridNo = NewGridNo((INT16)cnt, (UINT16)DirectionInc(bDirectionsForShadowSearch[dir]));
+        sNewGridNo =
+            NewGridNo((int16_t)cnt, (uint16_t)DirectionInc(bDirectionsForShadowSearch[dir]));
 
         if (gpWorldLevelData[sNewGridNo].pStructureHead == NULL) {
           break;
@@ -1804,7 +1807,7 @@ void OptimizeMapForShadows() {
 }
 
 void SetBlueFlagFlags(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct LEVELNODE *pNode;
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
@@ -1854,29 +1857,29 @@ void InitLoadedWorld() {
 extern double MasterStart, MasterEnd;
 extern BOOLEAN gfUpdatingNow;
 
-BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
-  FLOAT dMajorMapVersion;
+BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel) {
+  float dMajorMapVersion;
   SUMMARYFILE *pSummary;
   HWFILE hfile;
   MAPCREATE_STRUCT mapInfo;
-  INT8 *pBuffer, *pBufferHead;
-  UINT32 uiFileSize;
-  UINT32 uiFlags;
-  UINT32 uiBytesRead;
-  INT32 cnt;
-  INT32 i;
-  INT32 iTilesetID;
-  CHAR16 str[40];
-  UINT8 bCounts[WORLD_MAX][8];
-  UINT8 ubCombine;
-  CHAR8 szDirFilename[50];
-  CHAR8 szFilename[40];
-  UINT8 ubMinorMapVersion;
+  int8_t *pBuffer, *pBufferHead;
+  uint32_t uiFileSize;
+  uint32_t uiFlags;
+  uint32_t uiBytesRead;
+  int32_t cnt;
+  int32_t i;
+  int32_t iTilesetID;
+  wchar_t str[40];
+  uint8_t bCounts[WORLD_MAX][8];
+  uint8_t ubCombine;
+  char szDirFilename[50];
+  char szFilename[40];
+  uint8_t ubMinorMapVersion;
 
   // Make sure the file exists... if not, then return false
   strcpy(szFilename, pSector);
   if (ubLevel % 4) {
-    CHAR8 str[4];
+    char str[4];
     sprintf(str, "_b%d", ubLevel % 4);
     strcat(szFilename, str);
   }
@@ -1897,7 +1900,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   if (!hfile) return FALSE;
 
   uiFileSize = FileMan_GetSize(hfile);
-  pBuffer = (INT8 *)MemAlloc(uiFileSize);
+  pBuffer = (int8_t *)MemAlloc(uiFileSize);
   pBufferHead = pBuffer;
   FileMan_Read(hfile, pBuffer, uiFileSize, &uiBytesRead);
   FileMan_Close(hfile);
@@ -1906,7 +1909,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   if (!gfUpdatingNow)
     SetRelativeStartAndEndPercentage(0, 0, 100, str);
   else
-    SetRelativeStartAndEndPercentage(0, (UINT16)MasterStart, (UINT16)MasterEnd, str);
+    SetRelativeStartAndEndPercentage(0, (uint16_t)MasterStart, (uint16_t)MasterEnd, str);
 
   RenderProgressBar(0, 0);
   // RenderProgressBar( 1, 0 );
@@ -1919,23 +1922,23 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   pSummary->dMajorMapVersion = gdMajorMapVersion;
 
   // skip JA2 Version ID
-  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(FLOAT));
+  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(float));
   if (dMajorMapVersion >= 4.00) {
-    LOADDATA(&ubMinorMapVersion, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubMinorMapVersion, pBuffer, sizeof(uint8_t));
   }
 
   // Read FLAGS FOR WORLD
-  LOADDATA(&uiFlags, pBuffer, sizeof(INT32));
+  LOADDATA(&uiFlags, pBuffer, sizeof(int32_t));
 
   // Read tilesetID
-  LOADDATA(&iTilesetID, pBuffer, sizeof(INT32));
-  pSummary->ubTilesetID = (UINT8)iTilesetID;
+  LOADDATA(&iTilesetID, pBuffer, sizeof(int32_t));
+  pSummary->ubTilesetID = (uint8_t)iTilesetID;
 
   // skip soldier size
-  pBuffer += sizeof(INT32);
+  pBuffer += sizeof(int32_t);
 
   // skip height values
-  pBuffer += sizeof(INT16) * WORLD_MAX;
+  pBuffer += sizeof(int16_t) * WORLD_MAX;
 
   // read layer counts
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
@@ -1944,25 +1947,25 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
       // RenderProgressBar( 1, (cnt / 2560)+1 ); //1 - 10
     }
     // Read combination of land/world flags
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
     // split
-    bCounts[cnt][0] = (UINT8)(ubCombine & 0xf);
-    gpWorldLevelData[cnt].uiFlags |= (UINT8)((ubCombine & 0xf0) >> 4);
+    bCounts[cnt][0] = (uint8_t)(ubCombine & 0xf);
+    gpWorldLevelData[cnt].uiFlags |= (uint8_t)((ubCombine & 0xf0) >> 4);
     // Read #objects, structs
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
     // split
-    bCounts[cnt][1] = (UINT8)(ubCombine & 0xf);
-    bCounts[cnt][2] = (UINT8)((ubCombine & 0xf0) >> 4);
+    bCounts[cnt][1] = (uint8_t)(ubCombine & 0xf);
+    bCounts[cnt][2] = (uint8_t)((ubCombine & 0xf0) >> 4);
     // Read shadows, roof
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
     // split
-    bCounts[cnt][3] = (UINT8)(ubCombine & 0xf);
-    bCounts[cnt][4] = (UINT8)((ubCombine & 0xf0) >> 4);
+    bCounts[cnt][3] = (uint8_t)(ubCombine & 0xf);
+    bCounts[cnt][4] = (uint8_t)((ubCombine & 0xf0) >> 4);
     // Read OnRoof, nothing
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
     // split
-    bCounts[cnt][5] = (UINT8)(ubCombine & 0xf);
-    // bCounts[ cnt ][4] = (UINT8)((ubCombine&0xf0)>>4);
+    bCounts[cnt][5] = (uint8_t)(ubCombine & 0xf);
+    // bCounts[ cnt ][4] = (uint8_t)((ubCombine&0xf0)>>4);
     bCounts[cnt][6] = bCounts[cnt][0] + bCounts[cnt][1] + bCounts[cnt][2] + bCounts[cnt][3] +
                       bCounts[cnt][4] + bCounts[cnt][5];
   }
@@ -1972,13 +1975,13 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
       RenderProgressBar(0, (cnt / 320) + 11);  // 11 - 90
       // RenderProgressBar( 1, (cnt / 320)+11 ); //11 - 90
     }
-    pBuffer += sizeof(UINT16) * bCounts[cnt][6];
+    pBuffer += sizeof(uint16_t) * bCounts[cnt][6];
     pBuffer += bCounts[cnt][1];
   }
 
   // extract highest room number
   {
-    UINT8 ubRoomNum;
+    uint8_t ubRoomNum;
     for (cnt = 0; cnt < WORLD_MAX; cnt++) {
       LOADDATA(&ubRoomNum, pBuffer, 1);
       if (ubRoomNum > pSummary->ubNumRooms) {
@@ -1988,12 +1991,12 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   }
 
   if (uiFlags & MAP_WORLDITEMS_SAVED) {
-    UINT32 temp;
+    uint32_t temp;
     RenderProgressBar(0, 91);
     // RenderProgressBar( 1, 91 );
     // get number of items (for now)
     LOADDATA(&temp, pBuffer, 4);
-    pSummary->usNumItems = (UINT16)temp;
+    pSummary->usNumItems = (uint16_t)temp;
     // Important:  Saves the file position (byte offset) of the position where the numitems
     //            resides.  Checking this value and comparing to usNumItems will ensure validity.
     if (pSummary->usNumItems) {
@@ -2008,7 +2011,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   }
 
   if (uiFlags & MAP_WORLDLIGHTS_SAVED) {
-    UINT8 ubTemp;
+    uint8_t ubTemp;
     RenderProgressBar(0, 92);
     // RenderProgressBar( 1, 92 );
     // skip number of light palette entries
@@ -2018,7 +2021,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
     LOADDATA(&pSummary->usNumLights, pBuffer, 2);
     // skip the light loading
     for (cnt = 0; cnt < pSummary->usNumLights; cnt++) {
-      UINT8 ubStrLen;
+      uint8_t ubStrLen;
       pBuffer += sizeof(LIGHT_SPRITE);
       LOADDATA(&ubStrLen, pBuffer, 1);
       if (ubStrLen) {
@@ -2159,8 +2162,8 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
 
   if (uiFlags & MAP_EXITGRIDS_SAVED) {
     EXITGRID exitGrid;
-    INT32 loop;
-    UINT16 usMapIndex;
+    int32_t loop;
+    uint16_t usMapIndex;
     BOOLEAN fExitGridFound;
     RenderProgressBar(0, 98);
     // RenderProgressBar( 1, 98 );
@@ -2227,34 +2230,34 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   return TRUE;
 }
 
-extern UINT8 GetCurrentSummaryVersion();
+extern uint8_t GetCurrentSummaryVersion();
 extern void LoadShadeTablesFromTextFile();
 
-BOOLEAN LoadWorld(STR8 puiFilename) {
+BOOLEAN LoadWorld(char *puiFilename) {
   HWFILE hfile;
-  FLOAT dMajorMapVersion;
-  UINT32 uiFlags;
-  UINT32 uiBytesRead;
-  UINT32 uiSoldierSize;
-  UINT32 uiFileSize;
-  UINT32 fp, offset;
+  float dMajorMapVersion;
+  uint32_t uiFlags;
+  uint32_t uiBytesRead;
+  uint32_t uiSoldierSize;
+  uint32_t uiFileSize;
+  uint32_t fp, offset;
 #ifdef JA2TESTVERSION
-  UINT32 uiStartTime;
-  UINT32 uiLoadWorldStartTime;
+  uint32_t uiStartTime;
+  uint32_t uiLoadWorldStartTime;
 #endif
-  INT32 cnt, cnt2;
-  INT32 iTilesetID;
-  UINT16 usTileIndex;
-  UINT16 usTypeSubIndex;
-  UINT8 ubType;
-  UINT8 ubSubIndex;
-  CHAR8 aFilename[256];
-  UINT8 ubCombine;
-  UINT8 bCounts[WORLD_MAX][8];
-  INT8 *pBuffer;
-  INT8 *pBufferHead;
+  int32_t cnt, cnt2;
+  int32_t iTilesetID;
+  uint16_t usTileIndex;
+  uint16_t usTypeSubIndex;
+  uint8_t ubType;
+  uint8_t ubSubIndex;
+  char aFilename[256];
+  uint8_t ubCombine;
+  uint8_t bCounts[WORLD_MAX][8];
+  int8_t *pBuffer;
+  int8_t *pBufferHead;
   BOOLEAN fGenerateEdgePoints = FALSE;
-  UINT8 ubMinorMapVersion;
+  uint8_t ubMinorMapVersion;
 #ifdef JA2TESTVERSION
   uiLoadWorldStartTime = GetJA2Clock();
 #endif
@@ -2296,13 +2299,13 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   // Get the file size and alloc one huge buffer for it.
   // We will use this buffer to transfer all of the data from.
   uiFileSize = FileMan_GetSize(hfile);
-  pBuffer = (INT8 *)MemAlloc(uiFileSize);
+  pBuffer = (int8_t *)MemAlloc(uiFileSize);
   pBufferHead = pBuffer;
   FileMan_Read(hfile, pBuffer, uiFileSize, &uiBytesRead);
   FileMan_Close(hfile);
 
   // Read JA2 Version ID
-  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(FLOAT));
+  LOADDATA(&dMajorMapVersion, pBuffer, sizeof(float));
 
 #ifdef RUSSIAN
   if (dMajorMapVersion != 6.00) {
@@ -2310,7 +2313,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   }
 #endif
 
-  LOADDATA(&ubMinorMapVersion, pBuffer, sizeof(UINT8));
+  LOADDATA(&ubMinorMapVersion, pBuffer, sizeof(uint8_t));
 
   // CHECK FOR NON-COMPATIBLE VERSIONS!
   // CHECK FOR MAJOR MAP VERSION INCOMPATIBLITIES
@@ -2322,9 +2325,9 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   //}
 
   // Read FLAGS FOR WORLD
-  LOADDATA(&uiFlags, pBuffer, sizeof(INT32));
+  LOADDATA(&uiFlags, pBuffer, sizeof(int32_t));
 
-  LOADDATA(&iTilesetID, pBuffer, sizeof(INT32));
+  LOADDATA(&iTilesetID, pBuffer, sizeof(int32_t));
 
 #ifdef JA2TESTVERSION
   uiStartTime = GetJA2Clock();
@@ -2335,13 +2338,13 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 #endif
 
   // Load soldier size
-  LOADDATA(&uiSoldierSize, pBuffer, sizeof(INT32));
+  LOADDATA(&uiSoldierSize, pBuffer, sizeof(int32_t));
 
   // FP 0x000010
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Read height values
-    LOADDATA(&gpWorldLevelData[cnt].sHeight, pBuffer, sizeof(INT16));
+    LOADDATA(&gpWorldLevelData[cnt].sHeight, pBuffer, sizeof(int16_t));
   }
 
   // FP 0x00c810
@@ -2352,31 +2355,31 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   // Read layer counts
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Read combination of land/world flags
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
 
     // split
-    bCounts[cnt][0] = (UINT8)(ubCombine & 0xf);
-    gpWorldLevelData[cnt].uiFlags |= (UINT8)((ubCombine & 0xf0) >> 4);
+    bCounts[cnt][0] = (uint8_t)(ubCombine & 0xf);
+    gpWorldLevelData[cnt].uiFlags |= (uint8_t)((ubCombine & 0xf0) >> 4);
 
     // Read #objects, structs
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
 
     // split
-    bCounts[cnt][1] = (UINT8)(ubCombine & 0xf);
-    bCounts[cnt][2] = (UINT8)((ubCombine & 0xf0) >> 4);
+    bCounts[cnt][1] = (uint8_t)(ubCombine & 0xf);
+    bCounts[cnt][2] = (uint8_t)((ubCombine & 0xf0) >> 4);
 
     // Read shadows, roof
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
 
     // split
-    bCounts[cnt][3] = (UINT8)(ubCombine & 0xf);
-    bCounts[cnt][4] = (UINT8)((ubCombine & 0xf0) >> 4);
+    bCounts[cnt][3] = (uint8_t)(ubCombine & 0xf);
+    bCounts[cnt][4] = (uint8_t)((ubCombine & 0xf0) >> 4);
 
     // Read OnRoof, nothing
-    LOADDATA(&ubCombine, pBuffer, sizeof(UINT8));
+    LOADDATA(&ubCombine, pBuffer, sizeof(uint8_t));
 
     // split
-    bCounts[cnt][5] = (UINT8)(ubCombine & 0xf);
+    bCounts[cnt][5] = (uint8_t)(ubCombine & 0xf);
   }
 
   // FP 0x025810
@@ -2392,8 +2395,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
       cnt = cnt;
     }
     for (cnt2 = 0; cnt2 < bCounts[cnt][0]; cnt2++) {
-      LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-      LOADDATA(&ubSubIndex, pBuffer, sizeof(UINT8));
+      LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+      LOADDATA(&ubSubIndex, pBuffer, sizeof(uint8_t));
 
       // Get tile index
       GetTileIndexFromTypeSubIndex(ubType, ubSubIndex, &usTileIndex);
@@ -2415,8 +2418,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
     for (cnt = 0; cnt < WORLD_MAX; cnt++) {
       // Set objects
       for (cnt2 = 0; cnt2 < bCounts[cnt][1]; cnt2++) {
-        LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-        LOADDATA(&ubSubIndex, pBuffer, sizeof(UINT8));
+        LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+        LOADDATA(&ubSubIndex, pBuffer, sizeof(uint8_t));
         if (ubType >= FIRSTPOINTERS) {
           continue;
         }
@@ -2426,7 +2429,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
         AddObjectToTail(cnt, usTileIndex);
       }
     }
-  } else {  // New load require UINT16 for the type subindex due to the fact that ROADPIECES
+  } else {  // New load require uint16_t for the type subindex due to the fact that ROADPIECES
     // contain over 300 type subindices.
     for (cnt = 0; cnt < WORLD_MAX; cnt++) {
       // Set objects
@@ -2434,8 +2437,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
         cnt = cnt;
       }
       for (cnt2 = 0; cnt2 < bCounts[cnt][1]; cnt2++) {
-        LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-        LOADDATA(&usTypeSubIndex, pBuffer, sizeof(UINT16));
+        LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+        LOADDATA(&usTypeSubIndex, pBuffer, sizeof(uint16_t));
         if (ubType >= FIRSTPOINTERS) {
           continue;
         }
@@ -2461,8 +2464,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
       cnt = cnt;
     }
     for (cnt2 = 0; cnt2 < bCounts[cnt][2]; cnt2++) {
-      LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-      LOADDATA(&ubSubIndex, pBuffer, sizeof(UINT8));
+      LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+      LOADDATA(&ubSubIndex, pBuffer, sizeof(uint8_t));
 
       // Get tile index
       GetTileIndexFromTypeSubIndex(ubType, ubSubIndex, &usTileIndex);
@@ -2492,8 +2495,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
       cnt = cnt;
     }
     for (cnt2 = 0; cnt2 < bCounts[cnt][3]; cnt2++) {
-      LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-      LOADDATA(&ubSubIndex, pBuffer, sizeof(UINT8));
+      LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+      LOADDATA(&ubSubIndex, pBuffer, sizeof(uint8_t));
 
       // Get tile index
       GetTileIndexFromTypeSubIndex(ubType, ubSubIndex, &usTileIndex);
@@ -2516,8 +2519,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
       cnt = cnt;
     }
     for (cnt2 = 0; cnt2 < bCounts[cnt][4]; cnt2++) {
-      LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-      LOADDATA(&ubSubIndex, pBuffer, sizeof(UINT8));
+      LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+      LOADDATA(&ubSubIndex, pBuffer, sizeof(uint8_t));
 
       // Get tile index
       GetTileIndexFromTypeSubIndex(ubType, ubSubIndex, &usTileIndex);
@@ -2540,8 +2543,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
       cnt = cnt;
     }
     for (cnt2 = 0; cnt2 < bCounts[cnt][5]; cnt2++) {
-      LOADDATA(&ubType, pBuffer, sizeof(UINT8));
-      LOADDATA(&ubSubIndex, pBuffer, sizeof(UINT8));
+      LOADDATA(&ubType, pBuffer, sizeof(uint8_t));
+      LOADDATA(&ubSubIndex, pBuffer, sizeof(uint8_t));
 
       // Get tile index
       GetTileIndexFromTypeSubIndex(ubType, ubSubIndex, &usTileIndex);
@@ -2558,8 +2561,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 
 #ifdef RUSSIAN
   {
-    UINT32 uiNums[37];
-    LOADDATA(uiNums, pBuffer, 37 * sizeof(INT32));
+    uint32_t uiNums[37];
+    LOADDATA(uiNums, pBuffer, 37 * sizeof(int32_t));
   }
 #endif
 
@@ -2570,13 +2573,13 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   gubMaxRoomNumber = 0;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Read room information
-    LOADDATA(&gubWorldRoomInfo[cnt], pBuffer, sizeof(INT8));
+    LOADDATA(&gubWorldRoomInfo[cnt], pBuffer, sizeof(int8_t));
     // Got to set the max room number
     if (gubWorldRoomInfo[cnt] > gubMaxRoomNumber) gubMaxRoomNumber = gubWorldRoomInfo[cnt];
   }
   if (gubMaxRoomNumber < 255) gubMaxRoomNumber++;
 #else
-  LOADDATA(gubWorldRoomInfo, pBuffer, sizeof(INT8) * WORLD_MAX);
+  LOADDATA(gubWorldRoomInfo, pBuffer, sizeof(int8_t) * WORLD_MAX);
 #endif
 
   // ATE; Memset this array!
@@ -2746,8 +2749,8 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 //
 //****************************************************************************************
 BOOLEAN NewWorld(void) {
-  UINT16 NewIndex;
-  INT32 cnt;
+  uint16_t NewIndex;
+  int32_t cnt;
 
   gusSelectedSoldier = gusOldSelectedSoldier = NO_SOLDIER;
 
@@ -2758,7 +2761,7 @@ BOOLEAN NewWorld(void) {
   // Create world randomly from tiles
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Set land index
-    NewIndex = (UINT16)(rand() % 10);
+    NewIndex = (uint16_t)(rand() % 10);
     AddLandToHead(cnt, NewIndex);
   }
 
@@ -2780,7 +2783,7 @@ void TrashWorld(void) {
   struct LEVELNODE *pOnRoofNode;
   struct LEVELNODE *pTopmostNode;
   //	struct STRUCTURE			*pStructureNode;
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   if (!gfWorldLoaded) return;
@@ -2809,7 +2812,7 @@ void TrashWorld(void) {
         pSoldier->pLevelNode = NULL;
       } else {
         // Delete from world
-        TacticalRemoveSoldier((UINT16)cnt);
+        TacticalRemoveSoldier((uint16_t)cnt);
       }
     }
   }
@@ -2917,7 +2920,7 @@ void TrashWorld(void) {
   sprintf(gubFilename, "none");
 }
 
-void TrashMapTile(INT16 MapTile) {
+void TrashMapTile(int16_t MapTile) {
   MAP_ELEMENT *pMapTile;
   struct LEVELNODE *pLandNode;
   struct LEVELNODE *pObjectNode;
@@ -3001,7 +3004,7 @@ void TrashMapTile(INT16 MapTile) {
   pMapTile->pStructureHead = pMapTile->pStructureTail = NULL;
 }
 
-BOOLEAN LoadMapTileset(INT32 iTilesetID) {
+BOOLEAN LoadMapTileset(int32_t iTilesetID) {
   if (iTilesetID >= NUM_TILESETS) {
     return (FALSE);
   }
@@ -3014,7 +3017,7 @@ BOOLEAN LoadMapTileset(INT32 iTilesetID) {
   }
 
   // LOAD SURFACES
-  CHECKF(LoadTileSurfaces(&(gTilesets[iTilesetID].TileSurfaceFilenames[0]), (UINT8)iTilesetID) !=
+  CHECKF(LoadTileSurfaces(&(gTilesets[iTilesetID].TileSurfaceFilenames[0]), (uint8_t)iTilesetID) !=
          FALSE);
 
   // SET TERRAIN COSTS
@@ -3038,12 +3041,12 @@ BOOLEAN LoadMapTileset(INT32 iTilesetID) {
   return (TRUE);
 }
 
-BOOLEAN SaveMapTileset(INT32 iTilesetID) {
+BOOLEAN SaveMapTileset(int32_t iTilesetID) {
   //	FILE *hTSet;
   HWFILE hTSet;
   char zTilesetName[65];
   int cnt;
-  UINT32 uiBytesWritten;
+  uint32_t uiBytesWritten;
 
   // Are we trying to save the default tileset?
   if (iTilesetID == 0) return (TRUE);
@@ -3065,7 +3068,7 @@ BOOLEAN SaveMapTileset(INT32 iTilesetID) {
   return (TRUE);
 }
 
-void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadName) {
+void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, char *zLoadName) {
   gfForceLoadPlayers = fForceLoad;
   gfForceLoad = fForceFile;
 
@@ -3074,7 +3077,7 @@ void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadN
   }
 }
 
-void AddWireFrame(INT16 sGridNo, UINT16 usIndex, BOOLEAN fForced) {
+void AddWireFrame(int16_t sGridNo, uint16_t usIndex, BOOLEAN fForced) {
   struct LEVELNODE *pTopmost, *pTopmostTail;
 
   pTopmost = gpWorldLevelData[sGridNo].pTopmostHead;
@@ -3094,11 +3097,11 @@ void AddWireFrame(INT16 sGridNo, UINT16 usIndex, BOOLEAN fForced) {
   }
 }
 
-UINT16 GetWireframeGraphicNumToUseForWall(INT16 sGridNo, struct STRUCTURE *pStructure) {
+uint16_t GetWireframeGraphicNumToUseForWall(int16_t sGridNo, struct STRUCTURE *pStructure) {
   struct LEVELNODE *pNode = NULL;
-  UINT8 ubWallOrientation;
-  UINT16 usValue = 0;
-  UINT16 usSubIndex;
+  uint8_t ubWallOrientation;
+  uint16_t usValue = 0;
+  uint16_t usSubIndex;
   struct STRUCTURE *pBaseStructure;
 
   ubWallOrientation = pStructure->ubWallOrientation;
@@ -3149,13 +3152,13 @@ UINT16 GetWireframeGraphicNumToUseForWall(INT16 sGridNo, struct STRUCTURE *pStru
 }
 
 void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
-  INT32 cnt;
+  int32_t cnt;
   struct STRUCTURE *pStructure;
-  INT16 sGridNo;
-  UINT8 ubWallOrientation;
-  INT8 bHiddenVal;
-  INT8 bNumWallsSameGridNo;
-  UINT16 usWireFrameIndex;
+  int16_t sGridNo;
+  uint8_t ubWallOrientation;
+  int8_t bHiddenVal;
+  int8_t bNumWallsSameGridNo;
+  uint16_t usWireFrameIndex;
 
   // Create world randomly from tiles
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
@@ -3164,13 +3167,13 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
       gpWorldLevelData[cnt].uiFlags &= (~MAPELEMENT_RECALCULATE_WIREFRAMES);
 
       // Remove old ones
-      RemoveWireFrameTiles((INT16)cnt);
+      RemoveWireFrameTiles((int16_t)cnt);
 
       bNumWallsSameGridNo = 0;
 
       // Check our gridno, if we have a roof over us that has not beenr evealed, no need for a
       // wiereframe
-      if (IsRoofVisibleForWireframe((UINT16)cnt) &&
+      if (IsRoofVisibleForWireframe((uint16_t)cnt) &&
           !(gpWorldLevelData[cnt].uiFlags & MAPELEMENT_REVEALED)) {
         continue;
       }
@@ -3191,12 +3194,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_LEFT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(SOUTH));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(SOUTH));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES4,
+                      (int16_t)cnt, WIREFRAMES4,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3205,12 +3208,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_RIGHT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES3,
+                      (int16_t)cnt, WIREFRAMES3,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3229,12 +3232,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_LEFT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(SOUTH));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(SOUTH));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES2,
+                      (int16_t)cnt, WIREFRAMES2,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3243,12 +3246,12 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_RIGHT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
 
                 if (IsRoofVisibleForWireframe(sGridNo) &&
                     !(gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED)) {
                   AddWireFrame(
-                      (INT16)cnt, WIREFRAMES1,
+                      (int16_t)cnt, WIREFRAMES1,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                 }
                 break;
@@ -3261,31 +3264,31 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
             // Based on orientation
             ubWallOrientation = pStructure->ubWallOrientation;
 
-            usWireFrameIndex = GetWireframeGraphicNumToUseForWall((UINT16)cnt, pStructure);
+            usWireFrameIndex = GetWireframeGraphicNumToUseForWall((uint16_t)cnt, pStructure);
 
             switch (ubWallOrientation) {
               case OUTSIDE_TOP_LEFT:
               case INSIDE_TOP_LEFT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(SOUTH));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(SOUTH));
 
                 if (IsRoofVisibleForWireframe(sGridNo)) {
                   bNumWallsSameGridNo++;
 
                   AddWireFrame(
-                      (INT16)cnt, usWireFrameIndex,
+                      (int16_t)cnt, usWireFrameIndex,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
 
                   // Check along our direction to see if we are a corner
-                  sGridNo = NewGridNo((INT16)cnt, DirectionInc(WEST));
+                  sGridNo = NewGridNo((int16_t)cnt, DirectionInc(WEST));
                   sGridNo = NewGridNo(sGridNo, DirectionInc(SOUTH));
                   bHiddenVal = IsHiddenTileMarkerThere(sGridNo);
                   // If we do not exist ( -1 ) or are revealed ( 1 )
                   if (bHiddenVal == -1 || bHiddenVal == 1) {
                     // Place corner!
                     AddWireFrame(
-                        (INT16)cnt, WIREFRAMES9,
+                        (int16_t)cnt, WIREFRAMES9,
                         (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                   }
                 }
@@ -3295,24 +3298,24 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
               case INSIDE_TOP_RIGHT:
 
                 // Get gridno
-                sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+                sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
 
                 if (IsRoofVisibleForWireframe(sGridNo)) {
                   bNumWallsSameGridNo++;
 
                   AddWireFrame(
-                      (INT16)cnt, usWireFrameIndex,
+                      (int16_t)cnt, usWireFrameIndex,
                       (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
 
                   // Check along our direction to see if we are a corner
-                  sGridNo = NewGridNo((INT16)cnt, DirectionInc(NORTH));
+                  sGridNo = NewGridNo((int16_t)cnt, DirectionInc(NORTH));
                   sGridNo = NewGridNo(sGridNo, DirectionInc(EAST));
                   bHiddenVal = IsHiddenTileMarkerThere(sGridNo);
                   // If we do not exist ( -1 ) or are revealed ( 1 )
                   if (bHiddenVal == -1 || bHiddenVal == 1) {
                     // Place corner!
                     AddWireFrame(
-                        (INT16)cnt, WIREFRAMES8,
+                        (int16_t)cnt, WIREFRAMES8,
                         (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
                   }
                 }
@@ -3321,10 +3324,10 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
 
             // Check for both walls
             if (bNumWallsSameGridNo == 2) {
-              sGridNo = NewGridNo((INT16)cnt, DirectionInc(EAST));
+              sGridNo = NewGridNo((int16_t)cnt, DirectionInc(EAST));
               sGridNo = NewGridNo(sGridNo, DirectionInc(SOUTH));
               AddWireFrame(
-                  (INT16)cnt, WIREFRAMES7,
+                  (int16_t)cnt, WIREFRAMES7,
                   (BOOLEAN)((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_REVEALED) != 0));
             }
           }
@@ -3337,15 +3340,15 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
 }
 
 void RemoveWorldWireFrameTiles() {
-  INT32 cnt;
+  int32_t cnt;
 
   // Create world randomly from tiles
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
-    RemoveWireFrameTiles((INT16)cnt);
+    RemoveWireFrameTiles((int16_t)cnt);
   }
 }
 
-void RemoveWireFrameTiles(INT16 sGridNo) {
+void RemoveWireFrameTiles(int16_t sGridNo) {
   struct LEVELNODE *pTopmost, *pNewTopmost;
   TILE_ELEMENT *pTileElement;
 
@@ -3366,7 +3369,7 @@ void RemoveWireFrameTiles(INT16 sGridNo) {
   }
 }
 
-INT8 IsHiddenTileMarkerThere(INT16 sGridNo) {
+int8_t IsHiddenTileMarkerThere(int16_t sGridNo) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
@@ -3392,9 +3395,9 @@ INT8 IsHiddenTileMarkerThere(INT16 sGridNo) {
   return (-1);
 }
 
-void ReloadTileset(UINT8 ubID) {
-  CHAR8 aFilename[255];
-  INT32 iCurrTilesetID = giCurrentTilesetID;
+void ReloadTileset(uint8_t ubID) {
+  char aFilename[255];
+  int32_t iCurrTilesetID = giCurrentTilesetID;
 
   // Set gloabal
   giCurrentTilesetID = ubID;
@@ -3418,12 +3421,12 @@ void ReloadTileset(UINT8 ubID) {
 void SaveMapLights(HWFILE hfile) {
   struct SOLDIERTYPE *pSoldier;
   struct SGPPaletteEntry LColors[3];
-  UINT8 ubNumColors;
+  uint8_t ubNumColors;
   BOOLEAN fSoldierLight;
-  UINT16 usNumLights = 0;
-  UINT16 cnt, cnt2;
-  UINT8 ubStrLen;
-  UINT32 uiBytesWritten;
+  uint16_t usNumLights = 0;
+  uint16_t cnt, cnt2;
+  uint8_t ubStrLen;
+  uint32_t uiBytesWritten;
 
   ubNumColors = LightGetColors(LColors);
 
@@ -3438,7 +3441,7 @@ void SaveMapLights(HWFILE hfile) {
       fSoldierLight = FALSE;
       for (cnt2 = 0; cnt2 < MAX_NUM_SOLDIERS && !fSoldierLight; cnt2++) {
         if (GetSoldier(&pSoldier, cnt2)) {
-          if (pSoldier->iLight == (INT32)cnt) fSoldierLight = TRUE;
+          if (pSoldier->iLight == (int32_t)cnt) fSoldierLight = TRUE;
         }
       }
       if (!fSoldierLight) usNumLights++;
@@ -3454,13 +3457,13 @@ void SaveMapLights(HWFILE hfile) {
       fSoldierLight = FALSE;
       for (cnt2 = 0; cnt2 < MAX_NUM_SOLDIERS && !fSoldierLight; cnt2++) {
         if (GetSoldier(&pSoldier, cnt2)) {
-          if (pSoldier->iLight == (INT32)cnt) fSoldierLight = TRUE;
+          if (pSoldier->iLight == (int32_t)cnt) fSoldierLight = TRUE;
         }
       }
       if (!fSoldierLight) {  // save the light
         FileMan_Write(hfile, &LightSprites[cnt], sizeof(LIGHT_SPRITE), &uiBytesWritten);
 
-        ubStrLen = (UINT8)(strlen(pLightNames[LightSprites[cnt].iTemplate]) + 1);
+        ubStrLen = (uint8_t)(strlen(pLightNames[LightSprites[cnt].iTemplate]) + 1);
         FileMan_Write(hfile, &ubStrLen, 1, &uiBytesWritten);
         FileMan_Write(hfile, pLightNames[LightSprites[cnt].iTemplate], ubStrLen, &uiBytesWritten);
       }
@@ -3468,16 +3471,16 @@ void SaveMapLights(HWFILE hfile) {
   }
 }
 
-void LoadMapLights(INT8 **hBuffer) {
+void LoadMapLights(int8_t **hBuffer) {
   struct SGPPaletteEntry LColors[3];
-  UINT8 ubNumColors;
-  UINT16 usNumLights;
-  INT32 cnt;
-  CHAR8 str[30];
-  UINT8 ubStrLen;
+  uint8_t ubNumColors;
+  uint16_t usNumLights;
+  int32_t cnt;
+  char str[30];
+  uint8_t ubStrLen;
   LIGHT_SPRITE TmpLight;
-  INT32 iLSprite;
-  UINT32 uiHour;
+  int32_t iLSprite;
+  uint32_t uiHour;
   BOOLEAN fPrimeTime = FALSE, fNightTime = FALSE;
 
   // reset the lighting system, so that any current lights are toasted.
@@ -3539,7 +3542,7 @@ void LoadMapLights(INT8 **hBuffer) {
   }
 }
 
-BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos) {
+BOOLEAN IsRoofVisibleForWireframe(int16_t sMapPos) {
   struct STRUCTURE *pStructure;
 
   if (!gfBasement) {

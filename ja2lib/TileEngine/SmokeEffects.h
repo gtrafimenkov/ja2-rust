@@ -17,40 +17,40 @@ enum {
 #define SMOKE_EFFECT_MARK_FOR_UPDATE 0x04
 
 typedef struct TAG_SMOKE_EFFECT {
-  INT16 sGridNo;  // gridno at which the tear gas cloud is centered
+  int16_t sGridNo;  // gridno at which the tear gas cloud is centered
 
-  UINT8 ubDuration;  // the number of turns gas will remain effective
-  UINT8 ubRadius;    // the current radius of the cloud in map tiles
-  UINT8 bFlags;      // 0 - outdoors (fast spread), 1 - indoors (slow)
-  INT8 bAge;         // the number of turns gas has been around
+  uint8_t ubDuration;  // the number of turns gas will remain effective
+  uint8_t ubRadius;    // the current radius of the cloud in map tiles
+  uint8_t bFlags;      // 0 - outdoors (fast spread), 1 - indoors (slow)
+  int8_t bAge;         // the number of turns gas has been around
   BOOLEAN fAllocated;
-  INT8 bType;
-  UINT16 usItem;
-  UINT8 ubOwner;
-  UINT8 ubPadding;
-  UINT32 uiTimeOfLastUpdate;
+  int8_t bType;
+  uint16_t usItem;
+  uint8_t ubOwner;
+  uint8_t ubPadding;
+  uint32_t uiTimeOfLastUpdate;
 
 } SMOKEEFFECT;
 
 // Returns NO_SMOKE_EFFECT if none there...
-INT8 GetSmokeEffectOnTile(INT16 sGridNo, INT8 bLevel);
+int8_t GetSmokeEffectOnTile(int16_t sGridNo, int8_t bLevel);
 
 // Decays all smoke effects...
-void DecaySmokeEffects(UINT32 uiTime);
+void DecaySmokeEffects(uint32_t uiTime);
 
 // Add smoke to gridno
 // ( Replacement algorithm uses distance away )
-void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 bLevel);
+void AddSmokeEffectToTile(int32_t iSmokeEffectID, int8_t bType, int16_t sGridNo, int8_t bLevel);
 
-void RemoveSmokeEffectFromTile(INT16 sGridNo, INT8 bLevel);
+void RemoveSmokeEffectFromTile(int16_t sGridNo, int8_t bLevel);
 
-INT32 NewSmokeEffect(INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner);
+int32_t NewSmokeEffect(int16_t sGridNo, uint16_t usItem, int8_t bLevel, uint8_t ubOwner);
 
 BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile);
 
-BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
-BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN SaveSmokeEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
+BOOLEAN LoadSmokeEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
 
 void ResetSmokeEffects();
 

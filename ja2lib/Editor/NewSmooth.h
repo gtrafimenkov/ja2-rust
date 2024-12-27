@@ -10,11 +10,11 @@ void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion);
 void AddCaveSectionToWorld(SGPRect *pSelectRegion);
 void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion);
 
-void EraseBuilding(UINT32 iMapIndex);
-void RebuildRoof(UINT32 iMapIndex, UINT16 usRoofType);
-void RebuildRoofUsingFloorInfo(INT32 iMapIndex, UINT16 usRoofType);
+void EraseBuilding(uint32_t iMapIndex);
+void RebuildRoof(uint32_t iMapIndex, uint16_t usRoofType);
+void RebuildRoofUsingFloorInfo(int32_t iMapIndex, uint16_t usRoofType);
 
-void AddCave(INT32 iMapIndex, UINT16 usIndex);
+void AddCave(int32_t iMapIndex, uint16_t usIndex);
 
 void AnalyseCaveMapForStructureInfo();
 

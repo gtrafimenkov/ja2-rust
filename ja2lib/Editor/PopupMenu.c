@@ -35,14 +35,14 @@ CurrentPopupMenuInformation gPopup;
 
 struct MOUSE_REGION popupRegion;
 
-UINT16 gusEntryHeight;
+uint16_t gusEntryHeight;
 BOOLEAN fWaitingForLButtonRelease = FALSE;
 
-extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
+extern wchar_t gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
 
 // Finds the string for any popup menu in JA2 -- the strings are stored
 // in different ways in each instance.
-CHAR16 *GetPopupMenuString(UINT8 ubIndex) {
+wchar_t *GetPopupMenuString(uint8_t ubIndex) {
   switch (gPopup.ubPopupMenuID) {
     case CHANGETSET_POPUP:  // tile sets
       return gTilesets[ubIndex].zName;
@@ -79,18 +79,18 @@ Returns 0 if nothing in menu was selected, else
 returns the menu entry number starting from 1.
 */
 
-void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
-  UINT16 usX, usY;
-  UINT16 usMenuHeight;
-  UINT16 usMenuWidth = 0;
-  UINT16 usCurrStrWidth;
-  UINT8 ubColumn, ubEntry;
-  UINT8 ubCounter;
+void InitPopupMenu(int32_t iButtonID, uint8_t ubPopupMenuID, uint8_t ubDirection) {
+  uint16_t usX, usY;
+  uint16_t usMenuHeight;
+  uint16_t usMenuWidth = 0;
+  uint16_t usCurrStrWidth;
+  uint8_t ubColumn, ubEntry;
+  uint8_t ubCounter;
   GUI_BUTTON *button;
   // calculate the location of the menu based on the button position.
   // This also calculates the menu's direction based on position.
 
-  gPopup.usFont = (UINT16)SMALLFONT1;
+  gPopup.usFont = (uint16_t)SMALLFONT1;
   gusEntryHeight = GetFontHeight(gPopup.usFont);
 
   button = ButtonList[iButtonID];
@@ -134,7 +134,7 @@ void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
       return;
   }
 
-  gPopup.usFont = (UINT16)SMALLFONT1;
+  gPopup.usFont = (uint16_t)SMALLFONT1;
   gusEntryHeight = GetFontHeight(gPopup.usFont);
 
   button = ButtonList[iButtonID];
@@ -179,7 +179,7 @@ void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
         break;  // done (don't want to process undefined entries...)
       usCurrStrWidth = 16 + StringPixLength(GetPopupMenuString(ubCounter), gPopup.usFont);
       if (usCurrStrWidth > gPopup.ubColumnWidth[ubColumn]) {
-        gPopup.ubColumnWidth[ubColumn] = (UINT8)usCurrStrWidth;
+        gPopup.ubColumnWidth[ubColumn] = (uint8_t)usCurrStrWidth;
       }
       ubCounter++;
     }
@@ -220,13 +220,13 @@ void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
 }
 
 void RenderPopupMenu() {
-  UINT16 usX, usY;
-  UINT8 ubColumn, ubEntry, ubCounter;
-  UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
-  UINT16 usLineColor;
-  UINT16 usStringWidth;
-  UINT16 usStart;
+  uint16_t usX, usY;
+  uint8_t ubColumn, ubEntry, ubCounter;
+  uint8_t *pDestBuf;
+  uint32_t uiDestPitchBYTES;
+  uint16_t usLineColor;
+  uint16_t usStringWidth;
+  uint16_t usStart;
 
   // Draw the menu
   ColorFillVideoSurfaceArea(FRAME_BUFFER, gPopup.usLeft, gPopup.usTop, gPopup.usRight,
@@ -241,7 +241,7 @@ void RenderPopupMenu() {
     for (ubColumn = 1; ubColumn < gPopup.ubColumns; ubColumn++) {
       LineDraw(TRUE, usStart, gPopup.usTop, usStart, gPopup.usBottom, usLineColor, pDestBuf);
     }
-    usStart += (UINT16)gPopup.ubColumnWidth[ubColumn];
+    usStart += (uint16_t)gPopup.ubColumnWidth[ubColumn];
   }
   UnLockVideoSurface(FRAME_BUFFER);
 
@@ -279,10 +279,10 @@ void RenderPopupMenu() {
 // This private function of PopupMenuHandle determines which menu entry
 // is highlighted based on the mouse cursor position.  Returns 0 if the
 // mouse is out of the menu region.
-UINT8 GetPopupIndexFromMousePosition() {
-  UINT8 ubNumEntriesDown;
-  UINT16 usRelX;
-  UINT8 ubCount;
+uint8_t GetPopupIndexFromMousePosition() {
+  uint8_t ubNumEntriesDown;
+  uint16_t usRelX;
+  uint8_t ubCount;
   if (gusMouseXPos >= gPopup.usLeft && gusMouseXPos <= gPopup.usRight &&
       gusMouseYPos > gPopup.usTop             // one pixel gap on top ignored
       && gusMouseYPos < gPopup.usBottom - 2)  // two pixel gap on bottom ignored
@@ -404,20 +404,20 @@ void ProcessPopupMenuSelection() {
   switch (gPopup.ubPopupMenuID) {
     case CHANGETSET_POPUP:
       // change the tileset here.
-      ReloadTileset((UINT8)(gPopup.ubSelectedIndex - 1));
+      ReloadTileset((uint8_t)(gPopup.ubSelectedIndex - 1));
       InitJA2SelectionWindow();
       break;
     case CHANGECIVGROUP_POPUP:
-      ChangeCivGroup((UINT8)(gPopup.ubSelectedIndex - 1));
+      ChangeCivGroup((uint8_t)(gPopup.ubSelectedIndex - 1));
       break;
     case SCHEDULEACTION_POPUP:
-      UpdateScheduleAction((UINT8)(gPopup.ubSelectedIndex - 1));
+      UpdateScheduleAction((uint8_t)(gPopup.ubSelectedIndex - 1));
       break;
     case ACTIONITEM_POPUP:
-      UpdateActionItem((UINT8)(gPopup.ubSelectedIndex - 1));
+      UpdateActionItem((uint8_t)(gPopup.ubSelectedIndex - 1));
       break;
     case OWNERSHIPGROUP_POPUP:
-      SetOwnershipGroup((UINT8)(gPopup.ubSelectedIndex - 1));
+      SetOwnershipGroup((uint8_t)(gPopup.ubSelectedIndex - 1));
       break;
   }
 }

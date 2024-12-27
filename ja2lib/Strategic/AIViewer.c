@@ -132,44 +132,44 @@ enum {
   NUM_ICON_COLORS
 };
 
-void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
+void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
 void HandleViewerInput();
 void RenderViewer();
-void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
-void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason);
-void ViewerExitCallback(GUI_BUTTON *btn, INT32 reason);
-void Compression0Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression5Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression15Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression60Callback(GUI_BUTTON *btn, INT32 reason);
-void Compression6HCallback(GUI_BUTTON *btn, INT32 reason);
-void EasyCallback(GUI_BUTTON *btn, INT32 reason);
-void NormalCallback(GUI_BUTTON *btn, INT32 reason);
-void HardCallback(GUI_BUTTON *btn, INT32 reason);
-void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason);
-void StartCreatureQuestCallback(GUI_BUTTON *btn, INT32 reason);
-void SpreadCreaturesCallback(GUI_BUTTON *btn, INT32 reason);
-void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason);
-void B1Callback(GUI_BUTTON *btn, INT32 reason);
-void B2Callback(GUI_BUTTON *btn, INT32 reason);
-void B3Callback(GUI_BUTTON *btn, INT32 reason);
-void ReloadSectorCallback(GUI_BUTTON *btn, INT32 reason);
-void ToggleQueenAwake(GUI_BUTTON *btn, INT32 reason);
-void ViewEnemiesCallback(GUI_BUTTON *btn, INT32 reason);
-void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason);
+void ViewerMapMoveCallback(struct MOUSE_REGION *reg, int32_t reason);
+void ViewerMapClickCallback(struct MOUSE_REGION *reg, int32_t reason);
+void ViewerExitCallback(GUI_BUTTON *btn, int32_t reason);
+void Compression0Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression5Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression15Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression60Callback(GUI_BUTTON *btn, int32_t reason);
+void Compression6HCallback(GUI_BUTTON *btn, int32_t reason);
+void EasyCallback(GUI_BUTTON *btn, int32_t reason);
+void NormalCallback(GUI_BUTTON *btn, int32_t reason);
+void HardCallback(GUI_BUTTON *btn, int32_t reason);
+void TestIncoming4SidesCallback(GUI_BUTTON *btn, int32_t reason);
+void StartCreatureQuestCallback(GUI_BUTTON *btn, int32_t reason);
+void SpreadCreaturesCallback(GUI_BUTTON *btn, int32_t reason);
+void CreatureAttackCallback(GUI_BUTTON *btn, int32_t reason);
+void B1Callback(GUI_BUTTON *btn, int32_t reason);
+void B2Callback(GUI_BUTTON *btn, int32_t reason);
+void B3Callback(GUI_BUTTON *btn, int32_t reason);
+void ReloadSectorCallback(GUI_BUTTON *btn, int32_t reason);
+void ToggleQueenAwake(GUI_BUTTON *btn, int32_t reason);
+void ViewEnemiesCallback(GUI_BUTTON *btn, int32_t reason);
+void ViewCreaturesCallback(GUI_BUTTON *btn, int32_t reason);
 void ExtractAndUpdatePopulations();
 void PrintEnemyPopTable();
 void PrintEnemiesKilledTable();
-UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites);
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
+uint8_t ChooseEnemyIconColor(uint8_t ubAdmins, uint8_t ubTroops, uint8_t ubElites);
+void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject);
-void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
-                                      UINT8 ubSectorY);
+void PrintDetailedEnemiesInSectorInfo(int32_t iScreenX, int32_t iScreenY, uint8_t ubSectorX,
+                                      uint8_t ubSectorY);
 
 struct MOUSE_REGION ViewerRegion;
 
-UINT32 guiMapGraphicID;
-UINT32 guiMapIconsID;
+uint32_t guiMapGraphicID;
+uint32_t guiMapIconsID;
 
 BOOLEAN gfViewerEntry;
 BOOLEAN gfExitViewer;
@@ -178,44 +178,44 @@ BOOLEAN gfRenderViewer;
 extern BOOLEAN gfRenderMap;
 
 BOOLEAN gfViewEnemies = TRUE;
-INT8 gbViewLevel = 0;
+int8_t gbViewLevel = 0;
 
-UINT16 gusBlue;
-UINT16 gusLtBlue;
-UINT16 gusDkBlue;
+uint16_t gusBlue;
+uint16_t gusLtBlue;
+uint16_t gusDkBlue;
 
-INT16 gsAINumAdmins = -1;
-INT16 gsAINumTroops = -1;
-INT16 gsAINumElites = -1;
-INT16 gsAINumCreatures = -1;
+int16_t gsAINumAdmins = -1;
+int16_t gsAINumTroops = -1;
+int16_t gsAINumElites = -1;
+int16_t gsAINumCreatures = -1;
 BOOLEAN gfOverrideSector = FALSE;
 
-UINT32 guiLastTime;
+uint32_t guiLastTime;
 
-INT32 giSaveTCMode;  // time compression mode;
+int32_t giSaveTCMode;  // time compression mode;
 
 // The sector coordinates of the mouse position (yellow)
-extern INT16 gsHiSectorX, gsHiSectorY;
+extern int16_t gsHiSectorX, gsHiSectorY;
 // The sector coordinates of the selected sector (red)
-extern INT16 gsSelSectorX, gsSelSectorY;
+extern int16_t gsSelSectorX, gsSelSectorY;
 
-INT32 iViewerButton[NUM_VIEWER_BUTTONS];
+int32_t iViewerButton[NUM_VIEWER_BUTTONS];
 
 extern BOOLEAN gfQueenAIAwake;
-extern INT32 giReinforcementPool;
-extern UINT32 guiEventListCurrNodes, guiEventListPeekNodes;
-extern INT32 giReinforcementPoints, giRequestPoints;
+extern int32_t giReinforcementPool;
+extern uint32_t guiEventListCurrNodes, guiEventListPeekNodes;
+extern int32_t giReinforcementPoints, giRequestPoints;
 extern ARMY_COMPOSITION gArmyComp[NUM_ARMY_COMPOSITIONS];
 extern GARRISON_GROUP *gGarrisonGroup;
-extern INT32 giGarrisonArraySize;
+extern int32_t giGarrisonArraySize;
 
-CHAR16 gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING", L"PATROL",
-                                                      L"REINFORCE"};
+wchar_t gwGroupTypeString[NUM_ENEMY_INTENTIONS][20] = {L"RETREAT", L"ASSAULT", L"STAGING",
+                                                       L"PATROL", L"REINFORCE"};
 
-void StringFromValue(STR16 str, INT32 iValue, UINT32 uiMax) {
+void StringFromValue(wchar_t *str, int32_t iValue, uint32_t uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
-  else if ((UINT32)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
+  else if ((uint32_t)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
     swprintf(str, ARR_SIZE(str), L"%d", uiMax);
   else  // this is a valid static value, so convert it to a string.
     swprintf(str, ARR_SIZE(str), L"%d", iValue);
@@ -223,7 +223,7 @@ void StringFromValue(STR16 str, INT32 iValue, UINT32 uiMax) {
 
 BOOLEAN CreateAIViewer() {
   VOBJECT_DESC VObjectDesc;
-  CHAR16 str[6];
+  wchar_t str[6];
 
   // Check to see if data exists.
   if (!FileMan_Exists("DevTools\\arulco.sti") || !FileMan_Exists("DevTools\\icons.sti") ||
@@ -372,7 +372,7 @@ BOOLEAN CreateAIViewer() {
 }
 
 void DestroyAIViewer() {
-  INT32 i;
+  int32_t i;
   gfExitViewer = FALSE;
   gfViewerEntry = TRUE;
   for (i = 0; i < NUM_VIEWER_BUTTONS; i++) {
@@ -388,7 +388,7 @@ void DestroyAIViewer() {
   EnableScrollMessages();
 }
 
-void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
+void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
   ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusBlue);
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 
@@ -408,11 +408,11 @@ void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
 
 void RenderStationaryGroups() {
   struct VObject *hVObject;
-  INT32 x, y, xp, yp;
-  CHAR16 str[20];
-  INT32 iSector = 0;
-  UINT8 ubIconColor;
-  UINT8 ubGroupSize = 0;
+  int32_t x, y, xp, yp;
+  wchar_t str[20];
+  int32_t iSector = 0;
+  uint8_t ubIconColor;
+  uint8_t ubGroupSize = 0;
 
   SetFont(FONT10ARIAL);
   SetFontShadow(FONT_NEARBLACK);
@@ -426,7 +426,7 @@ void RenderStationaryGroups() {
       SetFontForeground(FONT_YELLOW);
       xp = VIEWER_LEFT + VIEWER_CELLW * x + 1;
       SECTORINFO *pSector = &SectorInfo[iSector];
-      u8 allMilCount = CountAllMilitiaInSectorID8(iSector);
+      uint8_t allMilCount = CountAllMilitiaInSectorID8(iSector);
 
       if (pSector->uiFlags & SF_MINING_SITE)
         BltVideoObject(FRAME_BUFFER, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY,
@@ -477,14 +477,14 @@ void RenderStationaryGroups() {
 void RenderMovingGroupsAndMercs() {
   struct GROUP *pGroup;
   struct VObject *hVObject;
-  INT32 x, y;
-  UINT8 ubNumTroops, ubNumAdmins, ubNumElites;
+  int32_t x, y;
+  uint8_t ubNumTroops, ubNumAdmins, ubNumElites;
   float ratio;
-  INT32 minX, maxX, minY, maxY;
-  INT32 iSector = 0;
-  UINT8 ubIconType;
-  UINT8 ubIconColor;
-  UINT8 ubFontColor;
+  int32_t minX, maxX, minY, maxY;
+  int32_t iSector = 0;
+  uint8_t ubIconType;
+  uint8_t ubIconColor;
+  uint8_t ubFontColor;
 
   SetFont(FONT10ARIAL);
   SetFontShadow(FONT_NEARBLACK);
@@ -501,10 +501,10 @@ void RenderMovingGroupsAndMercs() {
                 (float)pGroup->uiTraverseTime;
         minX = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1);
         maxX = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubNextX - 1);
-        x = (UINT32)(minX + ratio * (maxX - minX));
+        x = (uint32_t)(minX + ratio * (maxX - minX));
         minY = VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1);
         maxY = VIEWER_TOP + VIEWER_CELLH * (pGroup->ubNextY - 1);
-        y = (UINT32)(minY + ratio * (maxY - minY));
+        y = (uint32_t)(minY + ratio * (maxY - minY));
       } else {
         x = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1);
         y = VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1);
@@ -592,9 +592,9 @@ void RenderMovingGroupsAndMercs() {
 }
 
 void RenderInfoInSector() {
-  UINT8 ubSectorX, ubSectorY;
-  UINT8 ubMercs = 0, ubActive = 0, ubUnconcious = 0, ubCollapsed = 0;
-  INT32 i, yp;
+  uint8_t ubSectorX, ubSectorY;
+  uint8_t ubMercs = 0, ubActive = 0, ubUnconcious = 0, ubCollapsed = 0;
+  int32_t i, yp;
 
   if (gfViewEnemies && !gbViewLevel) {
     RenderStationaryGroups();
@@ -621,12 +621,12 @@ void RenderInfoInSector() {
       (gsHiSectorX != gsSelSectorX ||
        gsHiSectorY != gsSelSectorY)) {  // Render sector info for the hilighted sector
     SetFontForeground(FONT_YELLOW);
-    ubSectorX = (UINT8)gsHiSectorX;
-    ubSectorY = (UINT8)gsHiSectorY;
+    ubSectorX = (uint8_t)gsHiSectorX;
+    ubSectorY = (uint8_t)gsHiSectorY;
   } else if (gsSelSectorX && gsSelSectorY) {  // Render sector info for the selected sector
     SetFontForeground(FONT_RED);
-    ubSectorX = (UINT8)gsSelSectorX;
-    ubSectorY = (UINT8)gsSelSectorY;
+    ubSectorX = (uint8_t)gsSelSectorX;
+    ubSectorY = (uint8_t)gsSelSectorY;
   } else {
     return;
   }
@@ -655,8 +655,8 @@ void RenderInfoInSector() {
   yp = 375;
   if (!gbViewLevel) {
     struct GROUP *pGroup;
-    UINT8 ubNumAdmins = 0, ubNumTroops = 0, ubNumElites = 0, ubAdminsInBattle = 0,
-          ubTroopsInBattle = 0, ubElitesInBattle = 0, ubNumGroups = 0;
+    uint8_t ubNumAdmins = 0, ubNumTroops = 0, ubNumElites = 0, ubAdminsInBattle = 0,
+            ubTroopsInBattle = 0, ubElitesInBattle = 0, ubNumGroups = 0;
 
     SECTORINFO *pSector = &SectorInfo[GetSectorID8(ubSectorX, ubSectorY)];
 
@@ -738,10 +738,10 @@ void RenderInfoInSector() {
 }
 
 void RenderViewer() {
-  UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
+  uint8_t *pDestBuf;
+  uint32_t uiDestPitchBYTES;
   SGPRect ClipRect;
-  INT32 i, x, y, xp, yp;
+  int32_t i, x, y, xp, yp;
   if (gfRenderViewer) {
     ClearViewerRegion(VIEWER_LEFT, VIEWER_TOP, VIEWER_RIGHT, VIEWER_BOTTOM);
 
@@ -781,7 +781,7 @@ void RenderViewer() {
       mprintf(VIEWER_LEFT - 10, VIEWER_TOP + 7 + y * 22, L"%c", 'A' + y);
     }
     for (x = 1; x <= 16; x++) {
-      CHAR16 str[3];
+      wchar_t str[3];
       if (x == gsSelSectorX)
         SetFontForeground(FONT_RED);
       else if (x == gsHiSectorX)
@@ -801,7 +801,7 @@ void RenderViewer() {
         ClipRect.iTop = VIEWER_TOP + y * VIEWER_CELLH;
         ClipRect.iBottom = ClipRect.iTop + VIEWER_CELLH - 1;
         for (x = 0; x < 16; x++) {
-          pUnder = FindUnderGroundSector((INT16)(x + 1), (INT16)(y + 1), gbViewLevel);
+          pUnder = FindUnderGroundSector((int16_t)(x + 1), (int16_t)(y + 1), gbViewLevel);
           if (pUnder) {
             xp = VIEWER_LEFT + x * VIEWER_CELLW + 2;
             yp = VIEWER_TOP + y * VIEWER_CELLH + 2;
@@ -810,8 +810,8 @@ void RenderViewer() {
             pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
             ClipRect.iLeft = VIEWER_LEFT + x * VIEWER_CELLW;
             ClipRect.iRight = ClipRect.iLeft + VIEWER_CELLW - 1;
-            Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-            Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+            Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+            Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
             UnLockVideoSurface(FRAME_BUFFER);
           }
         }
@@ -837,7 +837,7 @@ void RenderViewer() {
   UnLockVideoSurface(FRAME_BUFFER);
 }
 
-void ViewerExitCallback(GUI_BUTTON *btn, INT32 reason) {
+void ViewerExitCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfExitViewer = TRUE;
   }
@@ -870,12 +870,12 @@ void HandleViewerInput() {
               struct MilitiaCount newCount = {15, 4, 1};
               SetMilitiaInSector(gsSelSectorX, gsSelSectorY, newCount);
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsSelSectorX, (UINT8)gsSelSectorY);
+              EliminateAllEnemies((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY);
             } else if (gsHiSectorX && gsHiSectorY) {
               struct MilitiaCount newCount = {15, 4, 1};
               SetMilitiaInSector(gsHiSectorX, gsHiSectorY, newCount);
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsHiSectorX, (UINT8)gsHiSectorY);
+              EliminateAllEnemies((uint8_t)gsHiSectorX, (uint8_t)gsHiSectorY);
             }
           }
           break;
@@ -885,10 +885,10 @@ void HandleViewerInput() {
             pSector = NULL;
             if (gsSelSectorX && gsSelSectorY) {
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsSelSectorX, (UINT8)gsSelSectorY);
+              EliminateAllEnemies((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY);
             } else if (gsHiSectorX && gsHiSectorY) {
               gfRenderMap = TRUE;
-              EliminateAllEnemies((UINT8)gsHiSectorX, (UINT8)gsHiSectorY);
+              EliminateAllEnemies((uint8_t)gsHiSectorX, (uint8_t)gsHiSectorY);
             }
           }
           break;
@@ -919,7 +919,7 @@ void HandleViewerInput() {
   }
 }
 
-void EasyCallback(GUI_BUTTON *btn, INT32 reason) {
+void EasyCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[RESET_EASY]]->uiFlags |= BUTTON_CLICKED_ON;
     ButtonList[iViewerButton[RESET_NORMAL]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -935,7 +935,7 @@ void EasyCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void NormalCallback(GUI_BUTTON *btn, INT32 reason) {
+void NormalCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[RESET_EASY]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[RESET_NORMAL]]->uiFlags |= BUTTON_CLICKED_ON;
@@ -951,7 +951,7 @@ void NormalCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void HardCallback(GUI_BUTTON *btn, INT32 reason) {
+void HardCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[RESET_EASY]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[RESET_NORMAL]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -967,8 +967,8 @@ void HardCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  static INT16 gsPrevX = 0, gsPrevY = 0;
+void ViewerMapMoveCallback(struct MOUSE_REGION *reg, int32_t reason) {
+  static int16_t gsPrevX = 0, gsPrevY = 0;
   // calc current sector highlighted.
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gsPrevX = gsHiSectorX = 0;
@@ -985,8 +985,8 @@ void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  static INT16 sLastX = -1, sLastY = -1;
+void ViewerMapClickCallback(struct MOUSE_REGION *reg, int32_t reason) {
+  static int16_t sLastX = -1, sLastY = -1;
   // calc current sector selected.
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gsSelSectorX = min((reg->RelativeXPos / 26) + 1, 16);
@@ -999,7 +999,7 @@ void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-UINT32 AIViewerScreenInit() {
+uint32_t AIViewerScreenInit() {
   gfViewerEntry = TRUE;
   gusBlue = Get16BPPColor(FROMRGB(65, 79, 94));
   gusLtBlue = Get16BPPColor(FROMRGB(122, 124, 121));
@@ -1007,7 +1007,7 @@ UINT32 AIViewerScreenInit() {
   return TRUE;
 }
 
-UINT32 AIViewerScreenHandle() {
+uint32_t AIViewerScreenHandle() {
   StartFrameBufferRender();
 
   RestoreBackgroundRects();
@@ -1045,9 +1045,9 @@ UINT32 AIViewerScreenHandle() {
   return AIVIEWER_SCREEN;
 }
 
-UINT32 AIViewerScreenShutdown() { return TRUE; }
+uint32_t AIViewerScreenShutdown() { return TRUE; }
 
-void Compression0Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression0Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags |= BUTTON_CLICKED_ON;
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1058,7 +1058,7 @@ void Compression0Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression5Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression5Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags |= BUTTON_CLICKED_ON;
@@ -1070,7 +1070,7 @@ void Compression5Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression15Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression15Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1082,7 +1082,7 @@ void Compression15Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression60Callback(GUI_BUTTON *btn, INT32 reason) {
+void Compression60Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1094,7 +1094,7 @@ void Compression60Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void Compression6HCallback(GUI_BUTTON *btn, INT32 reason) {
+void Compression6HCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[iViewerButton[COMPRESSION0]]->uiFlags &= (~BUTTON_CLICKED_ON);
     ButtonList[iViewerButton[COMPRESSION5]]->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1106,11 +1106,11 @@ void Compression6HCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
+void TestIncoming4SidesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     struct GROUP *pGroup;
-    UINT8 ubSector;
-    UINT32 uiWorldMin;
+    uint8_t ubSector;
+    uint32_t uiWorldMin;
     Compression0Callback(ButtonList[iViewerButton[COMPRESSION0]], MSYS_CALLBACK_REASON_LBUTTON_UP);
     if ((gsSelSectorX == 0) || (gsSelSectorY == 0)) gsSelSectorX = 9, gsSelSectorY = 1;
 
@@ -1119,8 +1119,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     gfRenderViewer = TRUE;
     if (gsSelSectorY > 1) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector - 16, 0, 11, 5);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 10;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 10);
@@ -1130,8 +1130,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gsSelSectorY < 16) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector + 16, 0, 8, 8);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 12;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 12);
@@ -1141,8 +1141,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gsSelSectorX > 1) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector - 1, 0, 11, 5);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 11;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 11);
@@ -1152,8 +1152,8 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gsSelSectorX < 16) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector + 1, 0, 14, 0);
-      pGroup->ubNextX = (UINT8)gsSelSectorX;
-      pGroup->ubNextY = (UINT8)gsSelSectorY;
+      pGroup->ubNextX = (uint8_t)gsSelSectorX;
+      pGroup->ubNextY = (uint8_t)gsSelSectorY;
       pGroup->uiTraverseTime = 13;
       pGroup->pEnemyGroup->ubIntention = ASSAULT;
       SetGroupArrivalTime(pGroup, uiWorldMin + 13);
@@ -1164,7 +1164,7 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void StartCreatureQuestCallback(GUI_BUTTON *btn, INT32 reason) {
+void StartCreatureQuestCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gGameOptions.fSciFi = TRUE;
     gfRenderMap = TRUE;
@@ -1173,11 +1173,11 @@ void StartCreatureQuestCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SpreadCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
+void SpreadCreaturesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     if (_KeyDown(ALT)) {
-      INT32 i;
+      int32_t i;
       // spread 10 times
       for (i = 0; i < 10; i++) {
         SpreadCreatures();
@@ -1187,20 +1187,20 @@ void SpreadCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason) {
+void CreatureAttackCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if ((gsSelSectorX != 0) && (gsSelSectorX != 0)) {
       if (_KeyDown(ALT)) {
         AddStrategicEventUsingSeconds(EVENT_CREATURE_ATTACK, GetWorldTotalSeconds() + 4,
                                       GetSectorID8(gsSelSectorX, gsSelSectorY));
       } else {
-        CreatureAttackTown((UINT8)GetSectorID8(gsSelSectorX, gsSelSectorY), TRUE);
+        CreatureAttackTown((uint8_t)GetSectorID8(gsSelSectorX, gsSelSectorY), TRUE);
       }
     }
   }
 }
 
-void ViewEnemiesCallback(GUI_BUTTON *btn, INT32 reason) {
+void ViewEnemiesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfViewEnemies = TRUE;
     gfRenderMap = TRUE;
@@ -1212,7 +1212,7 @@ void ViewEnemiesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
+void ViewCreaturesCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfViewEnemies = FALSE;
     gfRenderMap = TRUE;
@@ -1226,7 +1226,7 @@ void ViewCreaturesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void B1Callback(GUI_BUTTON *btn, INT32 reason) {
+void B1Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     gbViewLevel = 1;
@@ -1235,7 +1235,7 @@ void B1Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void B2Callback(GUI_BUTTON *btn, INT32 reason) {
+void B2Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     gbViewLevel = 2;
@@ -1244,7 +1244,7 @@ void B2Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void B3Callback(GUI_BUTTON *btn, INT32 reason) {
+void B3Callback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderMap = TRUE;
     gbViewLevel = 3;
@@ -1253,7 +1253,7 @@ void B3Callback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ReloadSectorCallback(GUI_BUTTON *btn, INT32 reason) {
+void ReloadSectorCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfOverrideSector = TRUE;
     ExtractAndUpdatePopulations();
@@ -1277,7 +1277,7 @@ void ExtractAndUpdatePopulations() {
   SetInputFieldStringWithNumericStrictValue(3, gsAINumCreatures);
 }
 
-void ToggleQueenAwake(GUI_BUTTON *btn, INT32 reason) {
+void ToggleQueenAwake(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       WakeUpQueen();
@@ -1289,7 +1289,7 @@ void ToggleQueenAwake(GUI_BUTTON *btn, INT32 reason) {
 
 enum { ENEMY_RANK_TOTAL = NUM_ENEMY_RANKS, ENEMY_RANK_PERCENT, TABLE_ENEMY_RANKS };
 
-CHAR16 EnemyRankString[TABLE_ENEMY_RANKS][10] = {
+wchar_t EnemyRankString[TABLE_ENEMY_RANKS][10] = {
     L"Adm", L"Trp", L"Elt", L"TOT", L"%%",
 };
 
@@ -1306,7 +1306,7 @@ enum {
   POP_TABLE_ENEMY_TYPES
 };
 
-CHAR16 EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
+wchar_t EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
     L"Pool", L"Garr", L"Ptrl", L"Rein", L"Aslt", L"Stag", L"Rtrt", L" TOT", L"   %%",
 };
 
@@ -1315,22 +1315,22 @@ CHAR16 EnemyTypeString[POP_TABLE_ENEMY_TYPES][10] = {
 #define POP_TABLE_Y_GAP 10
 
 void PrintEnemyPopTable() {
-  UINT16 usX, usY;
-  UINT16 usEnemyPopTable[TABLE_ENEMY_RANKS][POP_TABLE_ENEMY_TYPES];
-  UINT32 uiSector = 0;
-  UINT8 ubEnemyRank;
-  UINT8 ubEnemyType;
+  uint16_t usX, usY;
+  uint16_t usEnemyPopTable[TABLE_ENEMY_RANKS][POP_TABLE_ENEMY_TYPES];
+  uint32_t uiSector = 0;
+  uint8_t ubEnemyRank;
+  uint8_t ubEnemyType;
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  CHAR16 wPrintSpec[10];
-  CHAR16 wTempString[10];
+  wchar_t wPrintSpec[10];
+  wchar_t wTempString[10];
 
   memset(&usEnemyPopTable, 0, sizeof(usEnemyPopTable));
 
   // count how many enemies of each type & rank there are
 
   // this is quite inaccurate, since elites can also come from the pool
-  usEnemyPopTable[ENEMY_RANK_TROOP][ENEMY_TYPE_POOL] += (UINT16)giReinforcementPool;
+  usEnemyPopTable[ENEMY_RANK_TROOP][ENEMY_TYPE_POOL] += (uint16_t)giReinforcementPool;
 
   // count stationary enemies (garrisons)
   for (uiSector = 0; uiSector < 256; uiSector++) {
@@ -1414,7 +1414,7 @@ void PrintEnemyPopTable() {
 
   // titles and headings mean 2 extra rows
   ClearViewerRegion(usX, usY, 640,
-                    (INT16)(usY + (POP_TABLE_Y_GAP * (POP_TABLE_ENEMY_TYPES + 2)) + 11));
+                    (int16_t)(usY + (POP_TABLE_Y_GAP * (POP_TABLE_ENEMY_TYPES + 2)) + 11));
 
   // print table title
   SetFontForeground(FONT_RED);
@@ -1424,14 +1424,14 @@ void PrintEnemyPopTable() {
   // print horizontal labels
   for (ubEnemyRank = 0; ubEnemyRank < TABLE_ENEMY_RANKS; ubEnemyRank++) {
     DrawTextToScreen(EnemyRankString[ubEnemyRank],
-                     (UINT16)(usX + POP_TABLE_X_OFFSET + (POP_TABLE_X_GAP * ubEnemyRank)), usY,
+                     (uint16_t)(usX + POP_TABLE_X_OFFSET + (POP_TABLE_X_GAP * ubEnemyRank)), usY,
                      POP_TABLE_X_GAP, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
   // print vertical labels
   for (ubEnemyType = 0; ubEnemyType < POP_TABLE_ENEMY_TYPES; ubEnemyType++) {
     DrawTextToScreen(EnemyTypeString[ubEnemyType], usX,
-                     (UINT16)(usY + POP_TABLE_Y_GAP + (POP_TABLE_Y_GAP * ubEnemyType)),
+                     (uint16_t)(usY + POP_TABLE_Y_GAP + (POP_TABLE_Y_GAP * ubEnemyType)),
                      POP_TABLE_X_OFFSET, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
@@ -1455,8 +1455,8 @@ void PrintEnemyPopTable() {
 
       swprintf(wTempString, ARR_SIZE(wTempString), wPrintSpec,
                usEnemyPopTable[ubEnemyRank][ubEnemyType]);
-      DrawTextToScreen(wTempString, (UINT16)(usX + (POP_TABLE_X_GAP * ubEnemyRank)),
-                       (UINT16)(usY + (POP_TABLE_Y_GAP * ubEnemyType)), POP_TABLE_X_GAP,
+      DrawTextToScreen(wTempString, (uint16_t)(usX + (POP_TABLE_X_GAP * ubEnemyRank)),
+                       (uint16_t)(usY + (POP_TABLE_Y_GAP * ubEnemyType)), POP_TABLE_X_GAP,
                        FONT10ARIAL, FONT_YELLOW, 0, FALSE, RIGHT_JUSTIFIED);
     }
   }
@@ -1470,7 +1470,7 @@ enum {
   KILLED_TABLE_ROWS
 };
 
-CHAR16 EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
+wchar_t EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
     L"Tact",
     L"Auto",
     L" TOT",
@@ -1482,12 +1482,12 @@ CHAR16 EnemiesKilledString[KILLED_TABLE_ROWS][10] = {
 #define KILLED_TABLE_Y_GAP 10
 
 void PrintEnemiesKilledTable() {
-  UINT16 usX, usY;
-  UINT16 usEnemiesKilledTable[TABLE_ENEMY_RANKS][KILLED_TABLE_ROWS];
-  UINT8 ubEnemyRank;
-  UINT8 ubKillType;
-  CHAR16 wPrintSpec[10];
-  CHAR16 wTempString[10];
+  uint16_t usX, usY;
+  uint16_t usEnemiesKilledTable[TABLE_ENEMY_RANKS][KILLED_TABLE_ROWS];
+  uint8_t ubEnemyRank;
+  uint8_t ubKillType;
+  wchar_t wPrintSpec[10];
+  wchar_t wTempString[10];
 
   memset(&usEnemiesKilledTable, 0, sizeof(usEnemiesKilledTable));
 
@@ -1539,7 +1539,7 @@ void PrintEnemiesKilledTable() {
 
   // titles and headings mean 2 extra rows
   ClearViewerRegion(usX, usY, 640,
-                    (INT16)(usY + (KILLED_TABLE_Y_GAP * (KILLED_TABLE_ROWS + 2)) + 11));
+                    (int16_t)(usY + (KILLED_TABLE_Y_GAP * (KILLED_TABLE_ROWS + 2)) + 11));
 
   // print table title
   SetFontForeground(FONT_RED);
@@ -1549,14 +1549,14 @@ void PrintEnemiesKilledTable() {
   // print horizontal labels
   for (ubEnemyRank = 0; ubEnemyRank < TABLE_ENEMY_RANKS; ubEnemyRank++) {
     DrawTextToScreen(EnemyRankString[ubEnemyRank],
-                     (UINT16)(usX + KILLED_TABLE_X_OFFSET + (KILLED_TABLE_X_GAP * ubEnemyRank)),
+                     (uint16_t)(usX + KILLED_TABLE_X_OFFSET + (KILLED_TABLE_X_GAP * ubEnemyRank)),
                      usY, KILLED_TABLE_X_GAP, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
   // print vertical labels
   for (ubKillType = 0; ubKillType < KILLED_TABLE_ROWS; ubKillType++) {
     DrawTextToScreen(EnemiesKilledString[ubKillType], usX,
-                     (UINT16)(usY + KILLED_TABLE_Y_GAP + (KILLED_TABLE_Y_GAP * ubKillType)),
+                     (uint16_t)(usY + KILLED_TABLE_Y_GAP + (KILLED_TABLE_Y_GAP * ubKillType)),
                      KILLED_TABLE_X_OFFSET, FONT10ARIAL, FONT_LTBLUE, 0, FALSE, RIGHT_JUSTIFIED);
   }
 
@@ -1580,15 +1580,15 @@ void PrintEnemiesKilledTable() {
 
       swprintf(wTempString, ARR_SIZE(wTempString), wPrintSpec,
                usEnemiesKilledTable[ubEnemyRank][ubKillType]);
-      DrawTextToScreen(wTempString, (UINT16)(usX + (KILLED_TABLE_X_GAP * ubEnemyRank)),
-                       (UINT16)(usY + (KILLED_TABLE_Y_GAP * ubKillType)), KILLED_TABLE_X_GAP,
+      DrawTextToScreen(wTempString, (uint16_t)(usX + (KILLED_TABLE_X_GAP * ubEnemyRank)),
+                       (uint16_t)(usY + (KILLED_TABLE_Y_GAP * ubKillType)), KILLED_TABLE_X_GAP,
                        FONT10ARIAL, FONT_YELLOW, 0, FALSE, RIGHT_JUSTIFIED);
     }
   }
 }
 
-UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites) {
-  UINT8 ubIconColor;
+uint8_t ChooseEnemyIconColor(uint8_t ubAdmins, uint8_t ubTroops, uint8_t ubElites) {
+  uint8_t ubIconColor;
 
   // The colors are:
   //	Yellow		Admins only
@@ -1620,9 +1620,9 @@ UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites) {
   return (ubIconColor);
 }
 
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
+void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32_t uiY,
                    struct VObject *hVObject) {
-  UINT8 ubObjectIndex;
+  uint8_t ubObjectIndex;
 
   Assert(ubIconType < NUM_ICON_TYPES);
   Assert(ubIconColor < NUM_ICON_COLORS);
@@ -1631,17 +1631,17 @@ void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
   BltVideoObject(FRAME_BUFFER, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
-void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
-                                      UINT8 ubSectorY) {
+void PrintDetailedEnemiesInSectorInfo(int32_t iScreenX, int32_t iScreenY, uint8_t ubSectorX,
+                                      uint8_t ubSectorY) {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  INT32 iDesired, iSurplus;
-  UINT8 ubGroupCnt = 0;
-  UINT8 ubSectorID;
-  CHAR16 wString[120];
-  CHAR16 wSubString[120];
-  INT16 iGarrisonIndex;
-  INT16 iPatrolIndex;
+  int32_t iDesired, iSurplus;
+  uint8_t ubGroupCnt = 0;
+  uint8_t ubSectorID;
+  wchar_t wString[120];
+  wchar_t wSubString[120];
+  int16_t iGarrisonIndex;
+  int16_t iPatrolIndex;
   WAYPOINT *pFinalWaypoint;
 
   pSector = &SectorInfo[GetSectorID8(ubSectorX, ubSectorY)];

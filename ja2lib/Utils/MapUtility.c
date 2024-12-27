@@ -30,8 +30,8 @@
 
 #define WINDOW_SIZE 2
 
-FLOAT gdXStep, gdYStep;
-UINT32 giMiniMap, gi8BitMiniMap;
+float gdXStep, gdYStep;
+uint32_t giMiniMap, gi8BitMiniMap;
 struct VSurface *ghvSurface;
 
 extern BOOLEAN gfOverheadMapDirty;
@@ -41,51 +41,51 @@ extern BOOLEAN gfOverheadMapDirty;
 // quantizes it into an 8-bit image ans writes it to an sti file in radarmaps.
 
 typedef struct {
-  INT8 r;
-  INT8 g;
-  INT8 b;
+  int8_t r;
+  int8_t g;
+  int8_t b;
 
 } RGBValues;
 
-UINT32 MapUtilScreenInit() { return (TRUE); }
+uint32_t MapUtilScreenInit() { return (TRUE); }
 
-UINT32 MapUtilScreenHandle() {
-  static INT16 fNewMap = TRUE;
-  static INT16 sFileNum = 0;
+uint32_t MapUtilScreenHandle() {
+  static int16_t fNewMap = TRUE;
+  static int16_t sFileNum = 0;
   InputAtom InputEvent;
   struct GetFile FileInfo;
   static struct FileDialogList *FListNode;
-  static INT16 sFiles = 0, sCurFile = 0;
+  static int16_t sFiles = 0, sCurFile = 0;
   static struct FileDialogList *FileList = NULL;
-  CHAR8 zFilename[260], zFilename2[260];
+  char zFilename[260], zFilename2[260];
   VSURFACE_DESC vs_desc;
-  UINT16 usWidth;
-  UINT16 usHeight;
-  UINT8 ubBitDepth;
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT16 *pDestBuf, *pSrcBuf;
-  UINT8 *pDataPtr;
+  uint16_t usWidth;
+  uint16_t usHeight;
+  uint8_t ubBitDepth;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint16_t *pDestBuf, *pSrcBuf;
+  uint8_t *pDataPtr;
 
-  static UINT8 *p24BitDest = NULL;
+  static uint8_t *p24BitDest = NULL;
   static RGBValues *p24BitValues = NULL;
 
-  UINT32 uiRGBColor;
+  uint32_t uiRGBColor;
 
-  UINT32 bR, bG, bB, bAvR, bAvG, bAvB;
-  INT16 s16BPPSrc, sDest16BPPColor;
-  INT32 cnt;
+  uint32_t bR, bG, bB, bAvR, bAvG, bAvB;
+  int16_t s16BPPSrc, sDest16BPPColor;
+  int32_t cnt;
 
-  INT16 sX1, sX2, sY1, sY2, sTop, sBottom, sLeft, sRight;
+  int16_t sX1, sX2, sY1, sY2, sTop, sBottom, sLeft, sRight;
 
-  FLOAT dX, dY, dStartX, dStartY;
-  INT32 iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
+  float dX, dY, dStartX, dStartY;
+  int32_t iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
   struct SGPPaletteEntry pPalette[256];
 
   sDest16BPPColor = -1;
   bAvR = bAvG = bAvB = 0;
 
   // Zero out area!
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, (INT16)(640), (INT16)(480),
+  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, (int16_t)(640), (int16_t)(480),
                             Get16BPPColor(FROMRGB(0, 0, 0)));
 
   if (fNewMap) {
@@ -117,7 +117,7 @@ UINT32 MapUtilScreenHandle() {
 
     // Allocate 24 bit Surface
     p24BitValues = (RGBValues *)MemAlloc(MINIMAP_X_SIZE * MINIMAP_Y_SIZE * sizeof(RGBValues));
-    p24BitDest = (UINT8 *)p24BitValues;
+    p24BitDest = (uint8_t *)p24BitValues;
 
     // Allocate 8-bit surface
     vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
@@ -145,7 +145,7 @@ UINT32 MapUtilScreenHandle() {
   }
 
   // Render small map
-  InitNewOverheadDB((UINT8)giCurrentTilesetID);
+  InitNewOverheadDB((uint8_t)giCurrentTilesetID);
 
   gfOverheadMapDirty = TRUE;
 
@@ -177,21 +177,21 @@ UINT32 MapUtilScreenHandle() {
   dX = dStartX;
   dY = dStartY;
 
-  pDestBuf = (UINT16 *)LockVideoSurface(giMiniMap, &uiDestPitchBYTES);
-  pSrcBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(giMiniMap, &uiDestPitchBYTES);
+  pSrcBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
 
   for (iX = 0; iX < 88; iX++) {
     dY = dStartY;
 
     for (iY = 0; iY < 44; iY++) {
       // OK, AVERAGE PIXELS
-      iSubX1 = (INT32)dX - WINDOW_SIZE;
+      iSubX1 = (int32_t)dX - WINDOW_SIZE;
 
-      iSubX2 = (INT32)dX + WINDOW_SIZE;
+      iSubX2 = (int32_t)dX + WINDOW_SIZE;
 
-      iSubY1 = (INT32)dY - WINDOW_SIZE;
+      iSubY1 = (int32_t)dY - WINDOW_SIZE;
 
-      iSubY2 = (INT32)dY + WINDOW_SIZE;
+      iSubY2 = (int32_t)dY + WINDOW_SIZE;
 
       iCount = 0;
       bR = bG = bB = 0;
@@ -214,9 +214,9 @@ UINT32 MapUtilScreenHandle() {
       }
 
       if (iCount > 0) {
-        bAvR = bR / (UINT8)iCount;
-        bAvG = bG / (UINT8)iCount;
-        bAvB = bB / (UINT8)iCount;
+        bAvR = bR / (uint8_t)iCount;
+        bAvG = bG / (uint8_t)iCount;
+        bAvB = bB / (uint8_t)iCount;
 
         sDest16BPPColor = Get16BPPColor(FROMRGB(bAvR, bAvG, bAvB));
       }
@@ -224,9 +224,9 @@ UINT32 MapUtilScreenHandle() {
       // Write into dest!
       pDestBuf[(iY * (uiDestPitchBYTES / 2)) + iX] = sDest16BPPColor;
 
-      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].r = (UINT8)bAvR;
-      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].g = (UINT8)bAvG;
-      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].b = (UINT8)bAvB;
+      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].r = (uint8_t)bAvR;
+      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].g = (uint8_t)bAvG;
+      p24BitValues[(iY * (uiDestPitchBYTES / 2)) + iX].b = (uint8_t)bAvB;
 
       // Increment
       dY += gdYStep;
@@ -243,8 +243,8 @@ UINT32 MapUtilScreenHandle() {
   BltVideoSurface(FRAME_BUFFER, giMiniMap, 0, 20, 360, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
 
   // QUantize!
-  pDataPtr = (UINT8 *)LockVideoSurface(gi8BitMiniMap, &uiSrcPitchBYTES);
-  pDestBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDataPtr = (uint8_t *)LockVideoSurface(gi8BitMiniMap, &uiSrcPitchBYTES);
+  pDestBuf = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   QuantizeImage(pDataPtr, p24BitDest, MINIMAP_X_SIZE, MINIMAP_Y_SIZE, pPalette);
   SetVideoSurfacePalette(ghvSurface, pPalette);
   // Blit!
@@ -252,18 +252,18 @@ UINT32 MapUtilScreenHandle() {
 
   // Write palette!
   {
-    INT32 cnt;
-    INT32 sX = 0, sY = 420;
-    UINT16 usLineColor;
+    int32_t cnt;
+    int32_t sX = 0, sY = 420;
+    uint16_t usLineColor;
 
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
     for (cnt = 0; cnt < 256; cnt++) {
       usLineColor =
           Get16BPPColor(FROMRGB(pPalette[cnt].peRed, pPalette[cnt].peGreen, pPalette[cnt].peBlue));
-      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (UINT8 *)pDestBuf);
+      RectangleDraw(TRUE, sX, sY, sX, (int16_t)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
       sX++;
-      RectangleDraw(TRUE, sX, sY, sX, (INT16)(sY + 10), usLineColor, (UINT8 *)pDestBuf);
+      RectangleDraw(TRUE, sX, sY, sX, (int16_t)(sY + 10), usLineColor, (uint8_t *)pDestBuf);
       sX++;
     }
   }
@@ -305,20 +305,20 @@ UINT32 MapUtilScreenHandle() {
   return (MAPUTILITY_SCREEN);
 }
 
-UINT32 MapUtilScreenShutdown() { return (TRUE); }
+uint32_t MapUtilScreenShutdown() { return (TRUE); }
 
 #else  // non-editor version
 
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
 
-UINT32 MapUtilScreenInit() { return (TRUE); }
+uint32_t MapUtilScreenInit() { return (TRUE); }
 
-UINT32 MapUtilScreenHandle() {
+uint32_t MapUtilScreenHandle() {
   // If this screen ever gets set, then this is a bad thing -- endless loop
   return (ERROR_SCREEN);
 }
 
-UINT32 MapUtilScreenShutdown() { return (TRUE); }
+uint32_t MapUtilScreenShutdown() { return (TRUE); }
 
 #endif

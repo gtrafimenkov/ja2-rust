@@ -11,8 +11,8 @@ BOOLEAN gfRecordToFile = FALSE;
 BOOLEAN gfRecordToDebugger = TRUE;
 
 // moved from header file: 24mar98:HJH
-UINT32 guiProfileStart, guiExecutions, guiProfileTime;
-INT32 giProfileCount;
+uint32_t guiProfileStart, guiExecutions, guiProfileTime;
+int32_t giProfileCount;
 
 // Had to move these outside the ifdef SGP_DEBUG below, because
 // they are required for the String() function, which is NOT a
@@ -22,7 +22,7 @@ char gubAssertString[128];
 
 #define MAX_MSG_LENGTH2 512
 char gbTmpDebugString[8][MAX_MSG_LENGTH2];
-UINT8 gubStringIndex = 0;
+uint8_t gubStringIndex = 0;
 
 // #ifdef SGP_DEBUG
 
@@ -41,36 +41,36 @@ UINT8 gubStringIndex = 0;
 // //
 // //**************************************************************************
 
-UINT16 TOPIC_MEMORY_MANAGER = INVALID_TOPIC;
-UINT16 TOPIC_FILE_MANAGER = INVALID_TOPIC;
-UINT16 TOPIC_DATABASE_MANAGER = INVALID_TOPIC;
-UINT16 TOPIC_GAME = INVALID_TOPIC;
-UINT16 TOPIC_SGP = INVALID_TOPIC;
-UINT16 TOPIC_VIDEO = INVALID_TOPIC;
-UINT16 TOPIC_INPUT = INVALID_TOPIC;
-UINT16 TOPIC_STACK_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_LIST_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_QUEUE_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_PRILIST_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_HIMAGE = INVALID_TOPIC;
-UINT16 TOPIC_ORDLIST_CONTAINERS = INVALID_TOPIC;
-UINT16 TOPIC_3DENGINE = INVALID_TOPIC;
-UINT16 TOPIC_VIDEOOBJECT = INVALID_TOPIC;
-UINT16 TOPIC_FONT_HANDLER = INVALID_TOPIC;
-UINT16 TOPIC_VIDEOSURFACE = INVALID_TOPIC;
-UINT16 TOPIC_MOUSE_SYSTEM = INVALID_TOPIC;
-UINT16 TOPIC_BUTTON_HANDLER = INVALID_TOPIC;
-UINT16 TOPIC_MUTEX = INVALID_TOPIC;
-UINT16 TOPIC_JA2 = INVALID_TOPIC;
-UINT16 TOPIC_BLIT_QUEUE = INVALID_TOPIC;
-UINT16 TOPIC_JA2OPPLIST = INVALID_TOPIC;
-UINT16 TOPIC_JA2AI = INVALID_TOPIC;
+uint16_t TOPIC_MEMORY_MANAGER = INVALID_TOPIC;
+uint16_t TOPIC_FILE_MANAGER = INVALID_TOPIC;
+uint16_t TOPIC_DATABASE_MANAGER = INVALID_TOPIC;
+uint16_t TOPIC_GAME = INVALID_TOPIC;
+uint16_t TOPIC_SGP = INVALID_TOPIC;
+uint16_t TOPIC_VIDEO = INVALID_TOPIC;
+uint16_t TOPIC_INPUT = INVALID_TOPIC;
+uint16_t TOPIC_STACK_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_LIST_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_QUEUE_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_PRILIST_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_HIMAGE = INVALID_TOPIC;
+uint16_t TOPIC_ORDLIST_CONTAINERS = INVALID_TOPIC;
+uint16_t TOPIC_3DENGINE = INVALID_TOPIC;
+uint16_t TOPIC_VIDEOOBJECT = INVALID_TOPIC;
+uint16_t TOPIC_FONT_HANDLER = INVALID_TOPIC;
+uint16_t TOPIC_VIDEOSURFACE = INVALID_TOPIC;
+uint16_t TOPIC_MOUSE_SYSTEM = INVALID_TOPIC;
+uint16_t TOPIC_BUTTON_HANDLER = INVALID_TOPIC;
+uint16_t TOPIC_MUTEX = INVALID_TOPIC;
+uint16_t TOPIC_JA2 = INVALID_TOPIC;
+uint16_t TOPIC_BLIT_QUEUE = INVALID_TOPIC;
+uint16_t TOPIC_JA2OPPLIST = INVALID_TOPIC;
+uint16_t TOPIC_JA2AI = INVALID_TOPIC;
 
-// UINT32 guiTimerID = 0;
-// UINT8 guiDebugLevels[NUM_TOPIC_IDS];  // don't change this, Luis!!!!
+// uint32_t guiTimerID = 0;
+// uint8_t guiDebugLevels[NUM_TOPIC_IDS];  // don't change this, Luis!!!!
 
 // BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
-// UINT16 *gpDbgTopicPtrs[MAX_TOPICS_ALLOTED];
+// uint16_t *gpDbgTopicPtrs[MAX_TOPICS_ALLOTED];
 
 // // remove debug .txt file
 // void RemoveDebugText(void);
@@ -116,7 +116,7 @@ UINT16 TOPIC_JA2AI = INVALID_TOPIC;
 // }
 
 BOOLEAN DbgInitialize(void) {
-  //   INT32 iX;
+  //   int32_t iX;
 
   //   for (iX = 0; iX < MAX_TOPICS_ALLOTED; iX++) {
   //     gpDbgTopicPtrs[iX] = NULL;
@@ -139,14 +139,14 @@ BOOLEAN DbgInitialize(void) {
   return (TRUE);
 }
 
-void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage);
+void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char *strMessage);
 
-void DbgShutdown(void) { DbgMessageReal((UINT16)(-1), CLIENT_SHUTDOWN, 0, "SGP Going Down"); }
+void DbgShutdown(void) { DbgMessageReal((uint16_t)(-1), CLIENT_SHUTDOWN, 0, "SGP Going Down"); }
 
 #ifdef SGP_DEBUG
 
-void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage) {
-  //   UINT16 usIndex, usUse;
+void DbgTopicRegistration(uint8_t ubCmd, uint16_t *usTopicID, char *zMessage) {
+  //   uint16_t usIndex, usUse;
   //   BOOLEAN fFound;
 
   //   if (usTopicID == NULL) return;
@@ -203,7 +203,7 @@ void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage) {
 // //**************************************************************************
 
 void DbgClearAllTopics(void) {
-  //   UINT16 usIndex;
+  //   uint16_t usIndex;
 
   //   for (usIndex = 0; usIndex < MAX_TOPICS_ALLOTED; usIndex++) {
   //     gfDebugTopics[usIndex] = FALSE;
@@ -214,12 +214,12 @@ void DbgClearAllTopics(void) {
   //   }
 }
 
-void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
+void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char *strMessage) {
   printf("%4d / %4d / %4d / %s\n", uiTopicId, uiCommand, uiDebugLevel, strMessage);
 }
 
-// void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
-// #ifndef _NO_DEBUG_TXT
+// void DbgMessageReal(uint16_t uiTopicId, uint8_t uiCommand, uint8_t uiDebugLevel, char
+// *strMessage) { #ifndef _NO_DEBUG_TXT
 //   FILE *OutFile;
 // #endif
 
@@ -253,7 +253,7 @@ void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char 
 // //
 // //**************************************************************************
 
-// BOOLEAN DbgSetDebugLevel(UINT16 uiTopicId, UINT8 uiDebugLevel) { return (TRUE); }
+// BOOLEAN DbgSetDebugLevel(uint16_t uiTopicId, uint8_t uiDebugLevel) { return (TRUE); }
 
 // //**************************************************************************
 // //
@@ -293,11 +293,11 @@ void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char 
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 // // Wiz8 compatible debug messaging
 
-void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+void _DebugMessage(char *pString, uint32_t uiLineNum, char *pSourceFile) {
   printf("%s [Line %d in %s]\n", pString, uiLineNum, pSourceFile);
 }
 
-// void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+// void _DebugMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) {
 //   char ubOutputString[512];
 // #ifndef _NO_DEBUG_TXT
 //   FILE *DebugFile;
@@ -335,11 +335,11 @@ void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 
 // extern struct VObject* FontObjs[25];
 
-void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+void _FailMessage(char *pString, uint32_t uiLineNum, char *pSourceFile) {
   printf("Assertion Failure [Line %d in %s]\n", uiLineNum, pSourceFile);
 }
 
-// void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+// void _FailMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) {
 //   MSG Message;
 //   char ubOutputString[512];
 // #ifndef _NO_DEBUG_TXT
@@ -407,7 +407,7 @@ void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 // release mode builds. -- DB
 char *String(const char *string, ...) {
   va_list ArgPtr;
-  UINT8 usIndex;
+  uint8_t usIndex;
 
   // Record string index. This index is used since we live in a multitasking environment.
   // It is still not bulletproof, but it's better than a single string

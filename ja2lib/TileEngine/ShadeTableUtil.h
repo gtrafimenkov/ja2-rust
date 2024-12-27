@@ -6,10 +6,10 @@
 struct VObject;
 
 void DetermineRGBDistributionSettings();
-BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex);
-BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex);
+BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex);
+BOOLEAN SaveShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex);
 
-extern CHAR8 TileSurfaceFilenames[NUMBEROFTILETYPES][32];
+extern char TileSurfaceFilenames[NUMBEROFTILETYPES][32];
 extern BOOLEAN gfForceBuildShadeTables;
 
 BOOLEAN DeleteShadeTableDir();

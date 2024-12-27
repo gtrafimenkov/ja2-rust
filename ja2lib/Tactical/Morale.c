@@ -81,7 +81,7 @@ MoraleEvent gbMoraleEvent[NUM_MORALE_EVENTS] = {
 
 BOOLEAN gfSomeoneSaidMoraleQuote = FALSE;
 
-INT8 GetMoraleModifier(struct SOLDIERTYPE *pSoldier) {
+int8_t GetMoraleModifier(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->uiStatusFlags & SOLDIER_PC) {
     if (pSoldier->bMorale > 50) {
       // give +1 at 55, +3 at 65, up to +5 at 95 and above
@@ -134,7 +134,7 @@ void DecayStrategicMorale(struct SOLDIERTYPE *pSoldier) {
 
 void DecayTacticalMoraleModifiers(void) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubLoop, ubLoop2;
+  uint8_t ubLoop, ubLoop2;
   BOOLEAN fHandleNervous;
 
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -217,7 +217,7 @@ void DecayTacticalMoraleModifiers(void) {
 
 void DecayStrategicMoraleModifiers(void) {
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[ubLoop]; ubLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -239,7 +239,7 @@ void DecayStrategicMoraleModifiers(void) {
 }
 
 void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
-  INT32 iActualMorale;
+  int32_t iActualMorale;
 
   if (pSoldier->fMercAsleep) {
     // delay this till later!
@@ -247,9 +247,9 @@ void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
   }
 
   // CJC, April 19, 1999: added up to 20% morale boost according to progress
-  iActualMorale = DEFAULT_MORALE + (INT32)pSoldier->bTeamMoraleMod +
-                  (INT32)pSoldier->bTacticalMoraleMod + (INT32)pSoldier->bStrategicMoraleMod +
-                  (INT32)(CurrentPlayerProgressPercentage() / 5);
+  iActualMorale = DEFAULT_MORALE + (int32_t)pSoldier->bTeamMoraleMod +
+                  (int32_t)pSoldier->bTacticalMoraleMod + (int32_t)pSoldier->bStrategicMoraleMod +
+                  (int32_t)(CurrentPlayerProgressPercentage() / 5);
 
   // ATE: Modify morale based on drugs....
   iActualMorale += ((pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE] * DRUG_EFFECT_MORALE_MOD) / 100);
@@ -257,15 +257,15 @@ void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
 
   iActualMorale = min(100, iActualMorale);
   iActualMorale = max(0, iActualMorale);
-  pSoldier->bMorale = (INT8)iActualMorale;
+  pSoldier->bMorale = (int8_t)iActualMorale;
 
   // update mapscreen as needed
   fCharacterInfoPanelDirty = TRUE;
 }
 
-void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoraleMod) {
+void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, uint8_t ubType, int8_t bMoraleMod) {
   MERCPROFILESTRUCT *pProfile;
-  INT32 iMoraleModTotal;
+  int32_t iMoraleModTotal;
 
   if (!IsSolActive(pSoldier) || (pSoldier->bLife < CONSCIOUSNESS) ||
       (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || AM_A_ROBOT(pSoldier) || AM_AN_EPC(pSoldier)) {
@@ -325,22 +325,22 @@ void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoral
   }
   // apply change!
   if (ubType == TACTICAL_MORALE_EVENT) {
-    iMoraleModTotal = (INT32)pSoldier->bTacticalMoraleMod + (INT32)bMoraleMod;
+    iMoraleModTotal = (int32_t)pSoldier->bTacticalMoraleMod + (int32_t)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
-    pSoldier->bTacticalMoraleMod = (INT8)iMoraleModTotal;
+    pSoldier->bTacticalMoraleMod = (int8_t)iMoraleModTotal;
   } else if (gTacticalStatus.fEnemyInSector && !pSoldier->bInSector)  // delayed strategic
   {
-    iMoraleModTotal = (INT32)pSoldier->bDelayedStrategicMoraleMod + (INT32)bMoraleMod;
+    iMoraleModTotal = (int32_t)pSoldier->bDelayedStrategicMoraleMod + (int32_t)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
-    pSoldier->bDelayedStrategicMoraleMod = (INT8)iMoraleModTotal;
+    pSoldier->bDelayedStrategicMoraleMod = (int8_t)iMoraleModTotal;
   } else  // strategic
   {
-    iMoraleModTotal = (INT32)pSoldier->bStrategicMoraleMod + (INT32)bMoraleMod;
+    iMoraleModTotal = (int32_t)pSoldier->bStrategicMoraleMod + (int32_t)bMoraleMod;
     iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
     iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
-    pSoldier->bStrategicMoraleMod = (INT8)iMoraleModTotal;
+    pSoldier->bStrategicMoraleMod = (int8_t)iMoraleModTotal;
   }
 
   RefreshSoldierMorale(pSoldier);
@@ -367,14 +367,14 @@ void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoral
   }
 }
 
-void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent) {
+void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent) {
   UpdateSoldierMorale(pSoldier, gbMoraleEvent[bMoraleEvent].ubType,
                       gbMoraleEvent[bMoraleEvent].bChange);
 }
 
-void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX, INT16 sMapY,
-                       INT8 bMapZ) {
-  UINT8 ubLoop;
+void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent, int16_t sMapX,
+                       int16_t sMapY, int8_t bMapZ) {
+  uint8_t ubLoop;
   struct SOLDIERTYPE *pTeamSoldier;
   MERCPROFILESTRUCT *pProfile;
 
@@ -622,11 +622,11 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
       break;
     case MORALE_TEAMMATE_DIED:
       // impact depends on that dude's level of experience
-      ModifyPlayerReputation((UINT8)(pSoldier->bExpLevel * REPUTATION_SOLDIER_DIED));
+      ModifyPlayerReputation((uint8_t)(pSoldier->bExpLevel * REPUTATION_SOLDIER_DIED));
       break;
     case MORALE_MERC_CAPTURED:
       // impact depends on that dude's level of experience
-      ModifyPlayerReputation((UINT8)(pSoldier->bExpLevel * REPUTATION_SOLDIER_CAPTURED));
+      ModifyPlayerReputation((uint8_t)(pSoldier->bExpLevel * REPUTATION_SOLDIER_CAPTURED));
       break;
     case MORALE_KILLED_CIVILIAN:
       ModifyPlayerReputation(REPUTATION_KILLED_CIVILIAN);
@@ -645,21 +645,21 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
 }
 
 void HourlyMoraleUpdate(void) {
-  INT8 bMercID, bOtherID;
-  INT8 bActualTeamOpinion;
-  INT8 bTeamMoraleModChange, bTeamMoraleModDiff;
-  INT8 bOpinion = -1;
-  INT32 iTotalOpinions;
-  INT8 bNumTeamMembers;
-  INT8 bHighestTeamLeadership = 0;
-  INT8 bLastTeamID;
+  int8_t bMercID, bOtherID;
+  int8_t bActualTeamOpinion;
+  int8_t bTeamMoraleModChange, bTeamMoraleModDiff;
+  int8_t bOpinion = -1;
+  int32_t iTotalOpinions;
+  int8_t bNumTeamMembers;
+  int8_t bHighestTeamLeadership = 0;
+  int8_t bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pOtherSoldier;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fSameGroupOnly;
-  static INT8 bStrategicMoraleUpdateCounter = 0;
+  static int8_t bStrategicMoraleUpdateCounter = 0;
   BOOLEAN fFoundHated = FALSE;
-  INT8 bHated;
+  int8_t bHated;
 
   bMercID = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   bLastTeamID = gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -729,7 +729,7 @@ void HourlyMoraleUpdate(void) {
               // scale according to how close to we are to snapping
               // KM : Divide by 0 error found.  Wrapped into an if statement.
               if (pProfile->bHatedTime[bHated]) {
-                bOpinion = ((INT32)bOpinion) *
+                bOpinion = ((int32_t)bOpinion) *
                            (pProfile->bHatedTime[bHated] - pProfile->bHatedCount[bHated]) /
                            pProfile->bHatedTime[bHated];
               }
@@ -754,7 +754,7 @@ void HourlyMoraleUpdate(void) {
         // If teamed with someone we hated, team opinion is automatically minimum
         bActualTeamOpinion = HATED_OPINION;
       } else if (bNumTeamMembers > 0) {
-        bActualTeamOpinion = (INT8)(iTotalOpinions / bNumTeamMembers);
+        bActualTeamOpinion = (int8_t)(iTotalOpinions / bNumTeamMembers);
         // give bonus/penalty for highest leadership value on team
         bActualTeamOpinion += (bHighestTeamLeadership - 50) / 10;
       } else  // alone

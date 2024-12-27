@@ -10,6 +10,6 @@ void HandleIMPMainPage(void);
 void NextProfilingMode(void);
 void ShadeUnSelectableButtons(void);
 
-extern INT32 iCurrentProfileMode;
+extern int32_t iCurrentProfileMode;
 
 #endif

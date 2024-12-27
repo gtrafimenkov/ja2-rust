@@ -36,22 +36,22 @@ struct VObject;
 // what is used to define these values.
 typedef struct {
   BOOLEAN fDetailedPlacement;  // Specialized information.  Has a counterpart containing all info.
-  UINT16 usStartingGridNo;     // Where the placement position is.
-  INT8 bTeam;                  // The team this individual is part of.
-  INT8 bRelativeAttributeLevel;
-  INT8 bRelativeEquipmentLevel;
-  INT8 bDirection;  // 1 of 8 values (always mandatory)
-  INT8 bOrders;
-  INT8 bAttitude;
-  INT8 bBodyType;                     // up to 128 body types, -1 means random
-  INT16 sPatrolGrid[MAXPATROLGRIDS];  // possible locations to visit, patrol, etc.
-  INT8 bPatrolCnt;
+  uint16_t usStartingGridNo;   // Where the placement position is.
+  int8_t bTeam;                // The team this individual is part of.
+  int8_t bRelativeAttributeLevel;
+  int8_t bRelativeEquipmentLevel;
+  int8_t bDirection;  // 1 of 8 values (always mandatory)
+  int8_t bOrders;
+  int8_t bAttitude;
+  int8_t bBodyType;                     // up to 128 body types, -1 means random
+  int16_t sPatrolGrid[MAXPATROLGRIDS];  // possible locations to visit, patrol, etc.
+  int8_t bPatrolCnt;
   BOOLEAN fOnRoof;
-  UINT8 ubSoldierClass;  // army, administrator, elite
-  UINT8 ubCivilianGroup;
+  uint8_t ubSoldierClass;  // army, administrator, elite
+  uint8_t ubCivilianGroup;
   BOOLEAN fPriorityExistance;  // These slots are used first
   BOOLEAN fHasKeys;
-  INT8 PADDINGSLOTS[14];
+  int8_t PADDINGSLOTS[14];
 } BASIC_SOLDIERCREATE_STRUCT;  // 50 bytes
 
 typedef struct {
@@ -60,40 +60,40 @@ typedef struct {
   BOOLEAN fStatic;
 
   // Profile information used for special NPCs and player mercs.
-  UINT8 ubProfile;
+  uint8_t ubProfile;
   BOOLEAN fPlayerMerc;
   BOOLEAN fPlayerPlan;
   BOOLEAN fCopyProfileItemsOver;
 
   // Location information
-  INT16 sSectorX;
-  INT16 sSectorY;
-  INT8 bDirection;
-  INT16 sInsertionGridNo;
+  int16_t sSectorX;
+  int16_t sSectorY;
+  int8_t bDirection;
+  int16_t sInsertionGridNo;
 
   // Can force a team, but needs flag set
-  INT8 bTeam;
-  INT8 bBodyType;
+  int8_t bTeam;
+  int8_t bBodyType;
 
   // Orders and attitude settings
-  INT8 bAttitude;
-  INT8 bOrders;
+  int8_t bAttitude;
+  int8_t bOrders;
 
   // Attributes
-  INT8 bLifeMax;
-  INT8 bLife;
-  INT8 bAgility;
-  INT8 bDexterity;
-  INT8 bExpLevel;
-  INT8 bMarksmanship;
-  INT8 bMedical;
-  INT8 bMechanical;
-  INT8 bExplosive;
-  INT8 bLeadership;
-  INT8 bStrength;
-  INT8 bWisdom;
-  INT8 bMorale;
-  INT8 bAIMorale;
+  int8_t bLifeMax;
+  int8_t bLife;
+  int8_t bAgility;
+  int8_t bDexterity;
+  int8_t bExpLevel;
+  int8_t bMarksmanship;
+  int8_t bMedical;
+  int8_t bMechanical;
+  int8_t bExplosive;
+  int8_t bLeadership;
+  int8_t bStrength;
+  int8_t bWisdom;
+  int8_t bMorale;
+  int8_t bAIMorale;
 
   // Inventory
   struct OBJECTTYPE Inv[NUM_INV_SLOTS];
@@ -106,58 +106,58 @@ typedef struct {
   PaletteRepID MiscPal;
 
   // Waypoint information for patrolling
-  INT16 sPatrolGrid[MAXPATROLGRIDS];
-  INT8 bPatrolCnt;
+  int16_t sPatrolGrid[MAXPATROLGRIDS];
+  int8_t bPatrolCnt;
 
   // Kris:  Additions November 16, 1997 (padding down to 129 from 150)
   BOOLEAN fVisible;
-  CHAR16 name[10];
+  wchar_t name[10];
 
-  UINT8 ubSoldierClass;  // army, administrator, elite
+  uint8_t ubSoldierClass;  // army, administrator, elite
 
   BOOLEAN fOnRoof;
 
-  INT8 bSectorZ;
+  int8_t bSectorZ;
 
   struct SOLDIERTYPE *pExistingSoldier;
   BOOLEAN fUseExistingSoldier;
-  UINT8 ubCivilianGroup;
+  uint8_t ubCivilianGroup;
 
   BOOLEAN fKillSlotIfOwnerDies;
-  UINT8 ubScheduleID;
+  uint8_t ubScheduleID;
 
   BOOLEAN fUseGivenVehicle;
-  INT8 bUseGivenVehicleID;
+  int8_t bUseGivenVehicleID;
   BOOLEAN fHasKeys;
 
-  INT8 bPadding[115];
+  int8_t bPadding[115];
 
 } SOLDIERCREATE_STRUCT;
 
 // Original functions currently used throughout the game.
-BOOLEAN TacticalRemoveSoldier(UINT16 usSoldierIndex);
+BOOLEAN TacticalRemoveSoldier(uint16_t usSoldierIndex);
 BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle);
 
-INT8 CalcDifficultyModifier(UINT8 ubSoldierClass);
+int8_t CalcDifficultyModifier(uint8_t ubSoldierClass);
 
 void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct);
 
 // Kris:
 // Modified return type from BOOLEAN to struct SOLDIERTYPE*
-struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *pubID);
+struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, uint8_t *pubID);
 
 // Randomly generated enemies used by strategic AI.
 struct SOLDIERTYPE *TacticalCreateAdministrator();
 struct SOLDIERTYPE *TacticalCreateEliteEnemy();
 struct SOLDIERTYPE *TacticalCreateArmyTroop();
-struct SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass);
-struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType);
+struct SOLDIERTYPE *TacticalCreateMilitia(uint8_t ubMilitiaClass);
+struct SOLDIERTYPE *TacticalCreateCreature(int8_t bCreatureBodyType);
 
 // randomly generates a relative level rating (attributes or equipment)
-void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass);
+void RandomizeRelativeLevel(int8_t *pbRelLevel, uint8_t ubSoldierClass);
 
 // get the pythag. distance from the passed sector to the palace..
-UINT8 GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY);
+uint8_t GetPythDistanceFromPalace(uint8_t sSectorX, uint8_t sSectorY);
 
 // These following functions are currently used exclusively by the editor.
 // Now, this will be useful for the strategic AI.
@@ -220,20 +220,20 @@ void UpdateSoldierWithStaticDetailedInformation(struct SOLDIERTYPE *s, SOLDIERCR
 // In the case of setting a profile ID in order to extract a soldier from the profile array, we
 // also want to copy that information to the static detailed placement, for editor viewing purposes.
 void UpdateStaticDetailedPlacementWithProfileInformation(SOLDIERCREATE_STRUCT *spp,
-                                                         UINT8 ubProfile);
+                                                         uint8_t ubProfile);
 
 // When the editor modifies the soldier's relative attribute level,
 // this function is called to update that information.
-void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s, INT8 bLevel);
+void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s, int8_t bLevel);
 
 // Force the soldier to be a different ID
-void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, UINT8 ubProfileID);
+void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, uint8_t ubProfileID);
 
-void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubSoldierClass);
+void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubSoldierClass);
 
-void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID);
+void QuickCreateProfileMerc(int8_t bTeam, uint8_t ubProfileID);
 
-BOOLEAN InternalTacticalRemoveSoldier(UINT16 usSoldierIndex, BOOLEAN fRemoveVehicle);
+BOOLEAN InternalTacticalRemoveSoldier(uint16_t usSoldierIndex, BOOLEAN fRemoveVehicle);
 
 // SPECIAL!  Certain events in the game can cause profiled NPCs to become enemies.  The two cases
 // are adding Mike and Iggy.  We will only add one NPC in any given combat and the conditions for

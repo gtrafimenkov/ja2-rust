@@ -44,33 +44,33 @@
 #endif
 
 typedef struct StackHeaderTag {
-  UINT32 uiTotal_items;
-  UINT32 uiSiz_of_elem;
-  UINT32 uiMax_size;
+  uint32_t uiTotal_items;
+  uint32_t uiSiz_of_elem;
+  uint32_t uiMax_size;
 
 } StackHeader;
 
 typedef struct HeaderTag {
-  UINT32 uiTotal_items;
-  UINT32 uiSiz_of_elem;
-  UINT32 uiMax_size;
-  UINT32 uiHead;
-  UINT32 uiTail;
+  uint32_t uiTotal_items;
+  uint32_t uiSiz_of_elem;
+  uint32_t uiMax_size;
+  uint32_t uiHead;
+  uint32_t uiTail;
 
 } QueueHeader, ListHeader;
 
 typedef struct OrdHeaderTag {
-  UINT32 uiTotal_items;
-  UINT32 uiSiz_of_elem;
-  UINT32 uiMax_size;
-  UINT32 uiHead;
-  UINT32 uiTail;
-  INT8 (*pCompare)(void *, void *, UINT32);
+  uint32_t uiTotal_items;
+  uint32_t uiSiz_of_elem;
+  uint32_t uiMax_size;
+  uint32_t uiHead;
+  uint32_t uiTail;
+  int8_t (*pCompare)(void *, void *, uint32_t);
 
 } OrdListHeader;
 
 typedef struct test {
-  UINT32 me;
+  uint32_t me;
   long you;
   char *k;
   char *p;
@@ -91,8 +91,8 @@ typedef struct test {
 //
 //*****************************************************************************
 
-HSTACK CreateStack(UINT32 uiNum_items, UINT32 uiSiz_each) {
-  UINT32 uiAmount;
+HSTACK CreateStack(uint32_t uiNum_items, uint32_t uiSiz_each) {
+  uint32_t uiAmount;
   HSTACK hStack;
   StackHeader *pStack;
 
@@ -132,8 +132,8 @@ HSTACK CreateStack(UINT32 uiNum_items, UINT32 uiSiz_each) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-HQUEUE CreateQueue(UINT32 uiNum_items, UINT32 uiSiz_each) {
-  UINT32 uiAmount;
+HQUEUE CreateQueue(uint32_t uiNum_items, uint32_t uiSiz_each) {
+  uint32_t uiAmount;
   HQUEUE hQueue;
   QueueHeader *pQueue;
 
@@ -177,8 +177,8 @@ HQUEUE CreateQueue(UINT32 uiNum_items, UINT32 uiSiz_each) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-HLIST CreateList(UINT32 uiNum_items, UINT32 uiSiz_each) {
-  UINT32 uiAmount;
+HLIST CreateList(uint32_t uiNum_items, uint32_t uiSiz_each) {
+  uint32_t uiAmount;
   HLIST hList;
   ListHeader *pList;
 
@@ -224,9 +224,9 @@ HLIST CreateList(UINT32 uiNum_items, UINT32 uiSiz_each) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-HORDLIST CreateOrdList(UINT32 uiNum_items, UINT32 uiSiz_each,
-                       INT8 (*compare)(void *, void *, UINT32)) {
-  UINT32 uiAmount;
+HORDLIST CreateOrdList(uint32_t uiNum_items, uint32_t uiSiz_each,
+                       int8_t (*compare)(void *, void *, uint32_t)) {
+  uint32_t uiAmount;
   HLIST hOrdList;
   OrdListHeader *pOrdList;
 
@@ -278,10 +278,10 @@ HORDLIST CreateOrdList(UINT32 uiNum_items, UINT32 uiSiz_each,
 //*****************************************************************************
 HSTACK Push(HSTACK hStack, void *pdata) {
   StackHeader *pTemp_cont;
-  UINT32 uiOffset;
-  UINT32 uiNew_size;
+  uint32_t uiOffset;
+  uint32_t uiNew_size;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // check for a NULL pointer
 
@@ -309,7 +309,7 @@ HSTACK Push(HSTACK hStack, void *pdata) {
     }
     pTemp_cont = (StackHeader *)hStack;
   }
-  pbyte = (BYTE *)hStack;
+  pbyte = (uint8_t *)hStack;
   pbyte += uiOffset;
   pvoid = (void *)pbyte;
   // copy data from pdata to pvoid - the stack
@@ -335,11 +335,11 @@ HSTACK Push(HSTACK hStack, void *pdata) {
 //*****************************************************************************
 BOOLEAN Pop(HSTACK hStack, void *pdata) {
   StackHeader *pTemp_cont;
-  UINT32 uiOffset;
-  UINT32 uiSize_of_each;
-  UINT32 uiTotal;
+  uint32_t uiOffset;
+  uint32_t uiSize_of_each;
+  uint32_t uiTotal;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // check for a NULL queue
 
@@ -362,7 +362,7 @@ BOOLEAN Pop(HSTACK hStack, void *pdata) {
   // calculate offsets to decide if the page should be rezied
   uiOffset = (uiSize_of_each * uiTotal) + sizeof(StackHeader);
   uiOffset -= uiSize_of_each;
-  pbyte = (BYTE *)hStack;
+  pbyte = (uint8_t *)hStack;
   pbyte += uiOffset;
   pvoid = (void *)pbyte;
   // get the data from pvoid and store in pdata
@@ -385,11 +385,11 @@ BOOLEAN Pop(HSTACK hStack, void *pdata) {
 //*****************************************************************************
 BOOLEAN PeekStack(HSTACK hStack, void *pdata) {
   StackHeader *pTemp_cont;
-  UINT32 uiOffset;
-  UINT32 uiSize_of_each;
-  UINT32 uiTotal;
+  uint32_t uiOffset;
+  uint32_t uiSize_of_each;
+  uint32_t uiTotal;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // check for a NULL queue
 
@@ -412,7 +412,7 @@ BOOLEAN PeekStack(HSTACK hStack, void *pdata) {
   // calculate offsets to decide if the page should be rezied
   uiOffset = (uiSize_of_each * uiTotal) + sizeof(StackHeader);
   uiOffset -= uiSize_of_each;
-  pbyte = (BYTE *)hStack;
+  pbyte = (uint8_t *)hStack;
   pbyte += uiOffset;
   pvoid = (void *)pbyte;
   // get the data from pvoid and store in pdata
@@ -564,7 +564,7 @@ void ShutdownContainers(void) {
 BOOLEAN PeekQueue(HQUEUE hQueue, void *pdata) {
   QueueHeader *pTemp_cont;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hQueue == NULL) {
@@ -588,7 +588,7 @@ BOOLEAN PeekQueue(HQUEUE hQueue, void *pdata) {
 
   // copy the element pointed to by uiHead
 
-  pbyte = (BYTE *)hQueue;
+  pbyte = (uint8_t *)hQueue;
   pbyte += pTemp_cont->uiHead;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -612,11 +612,11 @@ BOOLEAN PeekQueue(HQUEUE hQueue, void *pdata) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-BOOLEAN PeekList(HLIST hList, void *pdata, UINT32 uiPos) {
+BOOLEAN PeekList(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
   void *pvoid;
-  UINT32 uiOffsetSrc;
-  BYTE *pbyte;
+  uint32_t uiOffsetSrc;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hList == NULL) {
@@ -647,7 +647,7 @@ BOOLEAN PeekList(HLIST hList, void *pdata, UINT32 uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(ListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   pbyte += uiOffsetSrc;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -679,11 +679,11 @@ BOOLEAN PeekList(HLIST hList, void *pdata, UINT32 uiPos) {
 //		- This function was based on the PeekList function.
 //
 //*****************************************************************************
-BOOLEAN SwapListNode(HLIST hList, void *pdata, UINT32 uiPos) {
+BOOLEAN SwapListNode(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
-  BYTE *pvoid;
-  UINT32 uiOffsetSrc;
-  BYTE *pbyte;
+  uint8_t *pvoid;
+  uint32_t uiOffsetSrc;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle, only 0
   if (hList == NULL) {
@@ -714,7 +714,7 @@ BOOLEAN SwapListNode(HLIST hList, void *pdata, UINT32 uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(ListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   pbyte += uiOffsetSrc;
   pvoid = pbyte;
 
@@ -747,10 +747,10 @@ BOOLEAN SwapListNode(HLIST hList, void *pdata, UINT32 uiPos) {
 //		- This function is nearly identical to the SwapListNode() function.
 //
 //*****************************************************************************
-BOOLEAN StoreListNode(HLIST hList, void *pdata, UINT32 uiPos) {
+BOOLEAN StoreListNode(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
-  UINT32 uiOffsetSrc;
-  BYTE *pbyte;
+  uint32_t uiOffsetSrc;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hList == NULL) {
@@ -781,7 +781,7 @@ BOOLEAN StoreListNode(HLIST hList, void *pdata, UINT32 uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(ListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   pbyte += uiOffsetSrc;
 
   memmove(pbyte, pdata, pTemp_cont->uiSiz_of_elem);
@@ -806,11 +806,11 @@ BOOLEAN StoreListNode(HLIST hList, void *pdata, UINT32 uiPos) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
+BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   OrdListHeader *pTemp_cont;
   void *pvoid;
-  UINT32 uiOffsetSrc;
-  BYTE *pbyte;
+  uint32_t uiOffsetSrc;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hOrdList == NULL) {
@@ -842,7 +842,7 @@ BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
   if (uiOffsetSrc >= pTemp_cont->uiMax_size)
     uiOffsetSrc = sizeof(OrdListHeader) + (uiOffsetSrc - pTemp_cont->uiMax_size);
 
-  pbyte = (BYTE *)hOrdList;
+  pbyte = (uint8_t *)hOrdList;
   pbyte += uiOffsetSrc;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -868,7 +868,7 @@ BOOLEAN PeekOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
 BOOLEAN RemfromQueue(HQUEUE hQueue, void *pdata) {
   QueueHeader *pTemp_cont;
   void *pvoid;
-  BYTE *pbyte;
+  uint8_t *pbyte;
 
   // cannot check for invalid handle , only 0
   if (hQueue == NULL) {
@@ -892,7 +892,7 @@ BOOLEAN RemfromQueue(HQUEUE hQueue, void *pdata) {
 
   // remove the element pointed to by uiHead
 
-  pbyte = (BYTE *)hQueue;
+  pbyte = (uint8_t *)hQueue;
   pbyte += pTemp_cont->uiHead;
   pvoid = (void *)pbyte;
   memmove(pdata, pvoid, pTemp_cont->uiSiz_of_elem);
@@ -931,15 +931,15 @@ BOOLEAN RemfromQueue(HQUEUE hQueue, void *pdata) {
 //*****************************************************************************
 HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
   QueueHeader *pTemp_cont;
-  UINT32 uiMax_size;
-  UINT32 uiSize_of_each;
-  UINT32 uiNew_size;
-  UINT32 uiHead;
-  UINT32 uiTail;
+  uint32_t uiMax_size;
+  uint32_t uiSize_of_each;
+  uint32_t uiNew_size;
+  uint32_t uiHead;
+  uint32_t uiTail;
   void *pvoid;
-  BYTE *pbyte;
-  BYTE *pmaxsize;
-  BYTE *presize;
+  uint8_t *pbyte;
+  uint8_t *pmaxsize;
+  uint8_t *presize;
   BOOLEAN fresize;
 
   // check for invalid handle = 0
@@ -977,14 +977,14 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
     // so that all the data is in one continuous block
 
     pTemp_cont = (QueueHeader *)hQueue;
-    presize = (BYTE *)hQueue;
-    pmaxsize = (BYTE *)hQueue;
+    presize = (uint8_t *)hQueue;
+    pmaxsize = (uint8_t *)hQueue;
     presize += sizeof(QueueHeader);
     pmaxsize += uiMax_size;
     if (uiHead > sizeof(QueueHeader)) memmove(pmaxsize, presize, uiHead - sizeof(QueueHeader));
     pTemp_cont->uiTail = uiMax_size + (uiHead - sizeof(QueueHeader));
   }
-  pbyte = (BYTE *)hQueue;
+  pbyte = (uint8_t *)hQueue;
   pbyte += pTemp_cont->uiTail;
   pvoid = (void *)pbyte;
   memmove(pvoid, pdata, uiSize_of_each);
@@ -1006,9 +1006,9 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-BOOLEAN do_copy(void *pmem_void, UINT32 uiSourceOfst, UINT32 uiDestOfst, UINT32 uiSize) {
-  BYTE *pOffsetSrc;
-  BYTE *pOffsetDst;
+BOOLEAN do_copy(void *pmem_void, uint32_t uiSourceOfst, uint32_t uiDestOfst, uint32_t uiSize) {
+  uint8_t *pOffsetSrc;
+  uint8_t *pOffsetDst;
   void *pvoid_src;
   void *pvoid_dest;
 
@@ -1021,9 +1021,9 @@ BOOLEAN do_copy(void *pmem_void, UINT32 uiSourceOfst, UINT32 uiDestOfst, UINT32 
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Invalid pointer passed to do_copy");
     return FALSE;
   }
-  pOffsetSrc = (BYTE *)pmem_void;
+  pOffsetSrc = (uint8_t *)pmem_void;
   pOffsetSrc += uiSourceOfst;
-  pOffsetDst = (BYTE *)pmem_void;
+  pOffsetDst = (uint8_t *)pmem_void;
   pOffsetDst += uiDestOfst;
   pvoid_src = (void *)pOffsetSrc;
   pvoid_dest = (void *)pOffsetDst;
@@ -1043,8 +1043,8 @@ BOOLEAN do_copy(void *pmem_void, UINT32 uiSourceOfst, UINT32 uiDestOfst, UINT32 
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-BOOLEAN do_copy_data(void *pmem_void, void *data, UINT32 uiSrcOfst, UINT32 uiSize) {
-  BYTE *pOffsetSrc;
+BOOLEAN do_copy_data(void *pmem_void, void *data, uint32_t uiSrcOfst, uint32_t uiSize) {
+  uint8_t *pOffsetSrc;
   void *pvoid_src;
 
   if ((uiSrcOfst < 0) || (uiSize < 0)) {
@@ -1056,7 +1056,7 @@ BOOLEAN do_copy_data(void *pmem_void, void *data, UINT32 uiSrcOfst, UINT32 uiSiz
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Invalid pointer passed to do_copy_data");
     return FALSE;
   }
-  pOffsetSrc = (BYTE *)pmem_void;
+  pOffsetSrc = (uint8_t *)pmem_void;
   pOffsetSrc += uiSrcOfst;
   pvoid_src = (void *)pOffsetSrc;
   memmove(data, pvoid_src, uiSize);
@@ -1068,14 +1068,14 @@ BOOLEAN do_copy_data(void *pmem_void, void *data, UINT32 uiSrcOfst, UINT32 uiSiz
 //
 // Parameter List : pointer to stack
 //
-// Return Value	UINT32 stack size
+// Return Value	uint32_t stack size
 //
 //
 // Modification History :
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-UINT32 StackSize(HSTACK hStack) {
+uint32_t StackSize(HSTACK hStack) {
   StackHeader *pTemp_cont;
   if (hStack == NULL) {
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Stack pointer is NULL");
@@ -1090,14 +1090,14 @@ UINT32 StackSize(HSTACK hStack) {
 //
 // Parameter List : pointer to queue
 //
-// Return Value	UINT32 queue size
+// Return Value	uint32_t queue size
 //
 //
 // Modification History :
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-UINT32 QueueSize(HQUEUE hQueue) {
+uint32_t QueueSize(HQUEUE hQueue) {
   QueueHeader *pTemp_cont;
   if (hQueue == NULL) {
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Queue pointer is NULL");
@@ -1112,14 +1112,14 @@ UINT32 QueueSize(HQUEUE hQueue) {
 //
 // Parameter List : pointer to queue
 //
-// Return Value	UINT32 list size
+// Return Value	uint32_t list size
 //
 //
 // Modification History :
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-UINT32 ListSize(HLIST hList) {
+uint32_t ListSize(HLIST hList) {
   ListHeader *pTemp_cont;
   if (hList == NULL) {
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "List pointer is NULL");
@@ -1134,14 +1134,14 @@ UINT32 ListSize(HLIST hList) {
 //
 // Parameter List : pointer to list
 //
-// Return Value	UINT32 Ordlist size
+// Return Value	uint32_t Ordlist size
 //
 //
 // Modification History :
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-UINT32 OrdListSize(HORDLIST hOrdList) {
+uint32_t OrdListSize(HORDLIST hOrdList) {
   OrdListHeader *pTemp_cont;
   if (hOrdList == NULL) {
     DbgMessage(TOPIC_ORDLIST_CONTAINERS, DBG_LEVEL_0, "Ordered List pointer is NULL");
@@ -1167,18 +1167,18 @@ UINT32 OrdListSize(HORDLIST hOrdList) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-HLIST AddtoList(HLIST hList, void *pdata, UINT32 uiPos) {
+HLIST AddtoList(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
-  UINT32 uiMax_size;
-  UINT32 uiSize_of_each;
-  UINT32 uiNew_size;
-  UINT32 uiHead;
-  UINT32 uiTail;
+  uint32_t uiMax_size;
+  uint32_t uiSize_of_each;
+  uint32_t uiNew_size;
+  uint32_t uiHead;
+  uint32_t uiTail;
   void *pvoid;
-  BYTE *pbyte;
-  UINT32 uiOffsetSrc;
-  UINT32 uiOffsetDst;
-  UINT32 uiFinalLoc = 0;
+  uint8_t *pbyte;
+  uint32_t uiOffsetSrc;
+  uint32_t uiOffsetDst;
+  uint32_t uiFinalLoc = 0;
   BOOLEAN fTail_check = FALSE;
 
   // check for invalid handle = 0
@@ -1297,7 +1297,7 @@ HLIST AddtoList(HLIST hList, void *pdata, UINT32 uiPos) {
 
   // finally insert data at position uiFinalLoc
 
-  pbyte = (BYTE *)hList;
+  pbyte = (uint8_t *)hList;
   if (uiFinalLoc == 0) {
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0,
                "This should never happen! report this problem!");
@@ -1329,14 +1329,14 @@ HLIST AddtoList(HLIST hList, void *pdata, UINT32 uiPos) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-BOOLEAN RemfromList(HLIST hList, void *pdata, UINT32 uiPos) {
+BOOLEAN RemfromList(HLIST hList, void *pdata, uint32_t uiPos) {
   ListHeader *pTemp_cont;
-  UINT32 uiMax_size;
-  UINT32 uiSize_of_each;
-  UINT32 uiHead;
-  UINT32 uiTail;
-  UINT32 uiOffsetSrc;
-  UINT32 uiOffsetDst;
+  uint32_t uiMax_size;
+  uint32_t uiSize_of_each;
+  uint32_t uiHead;
+  uint32_t uiTail;
+  uint32_t uiOffsetSrc;
+  uint32_t uiOffsetDst;
 
   // check for invalid handle = 0
   if (hList == NULL) {
@@ -1454,14 +1454,14 @@ BOOLEAN RemfromList(HLIST hList, void *pdata, UINT32 uiPos) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-BOOLEAN RemfromOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
+BOOLEAN RemfromOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   OrdListHeader *pTemp_cont;
-  UINT32 uiMax_size;
-  UINT32 uiSize_of_each;
-  UINT32 uiHead;
-  UINT32 uiTail;
-  UINT32 uiOffsetSrc;
-  UINT32 uiOffsetDst;
+  uint32_t uiMax_size;
+  uint32_t uiSize_of_each;
+  uint32_t uiHead;
+  uint32_t uiTail;
+  uint32_t uiOffsetSrc;
+  uint32_t uiOffsetDst;
 
   // check for invalid handle = 0
   if (hOrdList == NULL) {
@@ -1594,18 +1594,18 @@ BOOLEAN RemfromOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
 // Nov 26th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
-HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
+HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, uint32_t uiPos) {
   OrdListHeader *pTemp_cont;
-  UINT32 uiMax_size;
-  UINT32 uiSize_of_each;
-  UINT32 uiNew_size;
-  UINT32 uiHead;
-  UINT32 uiTail;
+  uint32_t uiMax_size;
+  uint32_t uiSize_of_each;
+  uint32_t uiNew_size;
+  uint32_t uiHead;
+  uint32_t uiTail;
   void *pvoid;
-  BYTE *pbyte;
-  UINT32 uiOffsetSrc;
-  UINT32 uiOffsetDst;
-  UINT32 uiFinalLoc = 0;
+  uint8_t *pbyte;
+  uint32_t uiOffsetSrc;
+  uint32_t uiOffsetDst;
+  uint32_t uiFinalLoc = 0;
   BOOLEAN fTail_check = FALSE;
 
   // check for invalid handle = 0
@@ -1752,7 +1752,7 @@ HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
   }
 
   // finally insert data at position uiFinalLoc
-  pbyte = (BYTE *)hOrdList;
+  pbyte = (uint8_t *)hOrdList;
   pbyte += uiFinalLoc;
   pvoid = (void *)pbyte;
   memmove(pvoid, pdata, pTemp_cont->uiSiz_of_elem);
@@ -1782,10 +1782,10 @@ HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
 HORDLIST AddtoOrdList(HORDLIST hOrdList, void *pdata) {
   OrdListHeader *pOrdList;
   void *pTemp_data;
-  UINT32 uiOffset;
+  uint32_t uiOffset;
   BOOLEAN fContinue = FALSE;
-  INT8 sbResult;
-  UINT32 uiPosition;
+  int8_t sbResult;
+  uint32_t uiPosition;
 
   // get a pointer into the list header
   pOrdList = (OrdListHeader *)hOrdList;
@@ -1900,7 +1900,7 @@ HORDLIST AddtoOrdList(HORDLIST hOrdList, void *pdata) {
   return hOrdList;
 }
 
-INT8 Compare(void *p, void *q, UINT32 size) {
+int8_t Compare(void *p, void *q, uint32_t size) {
   TEST *temp1;
   TEST *temp2;
 

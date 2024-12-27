@@ -25,7 +25,7 @@ void InitStrategicStatus(void) {
 }
 
 BOOLEAN SaveStrategicStatusToSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // Save the Strategic Status structure to the saved game file
   FileMan_Write(hFile, &gStrategicStatus, sizeof(STRATEGIC_STATUS), &uiNumBytesWritten);
@@ -37,7 +37,7 @@ BOOLEAN SaveStrategicStatusToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Load the Strategic Status structure from the saved game file
   FileMan_Read(hFile, &gStrategicStatus, sizeof(STRATEGIC_STATUS), &uiNumBytesRead);
@@ -50,34 +50,34 @@ BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile) {
 
 #define DEATH_RATE_SEVERITY 1.0f  // increase to make death rates higher for same # of deaths/time
 
-UINT8 CalcDeathRate(void) {
-  UINT32 uiDeathRate = 0;
+uint8_t CalcDeathRate(void) {
+  uint32_t uiDeathRate = 0;
 
   // give the player a grace period of 1 day
   if (gStrategicStatus.uiManDaysPlayed > 0) {
     // calculates the player's current death rate
-    uiDeathRate = (UINT32)((gStrategicStatus.ubMercDeaths * DEATH_RATE_SEVERITY * 100) /
-                           gStrategicStatus.uiManDaysPlayed);
+    uiDeathRate = (uint32_t)((gStrategicStatus.ubMercDeaths * DEATH_RATE_SEVERITY * 100) /
+                             gStrategicStatus.uiManDaysPlayed);
   }
 
-  return ((UINT8)uiDeathRate);
+  return ((uint8_t)uiDeathRate);
 }
 
-void ModifyPlayerReputation(INT8 bRepChange) {
-  INT32 iNewBadRep;
+void ModifyPlayerReputation(int8_t bRepChange) {
+  int32_t iNewBadRep;
 
   // subtract, so that a negative reputation change results in an increase in bad reputation
-  iNewBadRep = (INT32)gStrategicStatus.ubBadReputation - bRepChange;
+  iNewBadRep = (int32_t)gStrategicStatus.ubBadReputation - bRepChange;
 
   // keep within a 0-100 range (0 = Saint, 100 = Satan)
   iNewBadRep = max(0, iNewBadRep);
   iNewBadRep = min(100, iNewBadRep);
 
-  gStrategicStatus.ubBadReputation = (UINT8)iNewBadRep;
+  gStrategicStatus.ubBadReputation = (uint8_t)iNewBadRep;
 }
 
-BOOLEAN MercThinksDeathRateTooHigh(UINT8 ubProfileID) {
-  INT8 bDeathRateTolerance;
+BOOLEAN MercThinksDeathRateTooHigh(uint8_t ubProfileID) {
+  int8_t bDeathRateTolerance;
 
   bDeathRateTolerance = gMercProfiles[ubProfileID].bDeathRate;
 
@@ -96,8 +96,8 @@ BOOLEAN MercThinksDeathRateTooHigh(UINT8 ubProfileID) {
   }
 }
 
-BOOLEAN MercThinksBadReputationTooHigh(UINT8 ubProfileID) {
-  INT8 bRepTolerance;
+BOOLEAN MercThinksBadReputationTooHigh(uint8_t ubProfileID) {
+  int8_t bRepTolerance;
 
   bRepTolerance = gMercProfiles[ubProfileID].bReputationTolerance;
 
@@ -118,8 +118,8 @@ BOOLEAN MercThinksBadReputationTooHigh(UINT8 ubProfileID) {
 
 // only meaningful for already hired mercs
 BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier) {
-  INT8 bRepTolerance;
-  INT8 bMoraleTolerance;
+  int8_t bRepTolerance;
+  int8_t bMoraleTolerance;
 
   bRepTolerance = gMercProfiles[GetSolProfile(pSoldier)].bReputationTolerance;
 
@@ -142,14 +142,14 @@ BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void UpdateLastDayOfPlayerActivity(UINT16 usDay) {
+void UpdateLastDayOfPlayerActivity(uint16_t usDay) {
   if (usDay > gStrategicStatus.usLastDayOfPlayerActivity) {
     gStrategicStatus.usLastDayOfPlayerActivity = usDay;
     gStrategicStatus.ubNumberOfDaysOfInactivity = 0;
   }
 }
 
-UINT8 LackOfProgressTolerance(void) {
+uint8_t LackOfProgressTolerance(void) {
   if (gGameOptions.ubDifficultyLevel >= DIF_LEVEL_HARD) {
     // give an EXTRA day over normal
     return (7 - DIF_LEVEL_MEDIUM + gStrategicStatus.ubHighestProgress / 42);
@@ -161,8 +161,8 @@ UINT8 LackOfProgressTolerance(void) {
 // called once per day in the morning, decides whether Enrico should send any new E-mails to the
 // player
 void HandleEnricoEmail(void) {
-  UINT8 ubCurrentProgress = CurrentPlayerProgressPercentage();
-  UINT8 ubHighestProgress = HighestPlayerProgressPercentage();
+  uint8_t ubCurrentProgress = CurrentPlayerProgressPercentage();
+  uint8_t ubHighestProgress = HighestPlayerProgressPercentage();
 
   // if creatures have attacked a mine (doesn't care if they're still there or not at the moment)
   if (HasAnyMineBeenAttackedByMonsters() &&
@@ -214,9 +214,9 @@ void HandleEnricoEmail(void) {
         // remember that the original setback has been overcome, so another one can generate another
         // E-mail
         gStrategicStatus.usEnricoEmailFlags |= ENRICO_EMAIL_FLAG_SETBACK_OVER;
-      } else if (GetWorldDay() > (UINT32)(gStrategicStatus.usLastDayOfPlayerActivity)) {
-        INT8 bComplaint = 0;
-        UINT8 ubTolerance;
+      } else if (GetWorldDay() > (uint32_t)(gStrategicStatus.usLastDayOfPlayerActivity)) {
+        int8_t bComplaint = 0;
+        uint8_t ubTolerance;
 
         gStrategicStatus.ubNumberOfDaysOfInactivity++;
         ubTolerance = LackOfProgressTolerance();
@@ -231,7 +231,7 @@ void HandleEnricoEmail(void) {
             } else if (!(gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_LACK_PROGRESS3)) {
               bComplaint = 3;
             }
-          } else if (gStrategicStatus.ubNumberOfDaysOfInactivity == (UINT32)ubTolerance * 2) {
+          } else if (gStrategicStatus.ubNumberOfDaysOfInactivity == (uint32_t)ubTolerance * 2) {
             // six days? send 2nd or 3rd message possibly
             if (!(gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_LACK_PROGRESS2)) {
               bComplaint = 2;
@@ -289,8 +289,8 @@ void HandleEnricoEmail(void) {
       min(gStrategicStatus.ubNumNewSectorsVisitedToday, NEW_SECTORS_EQUAL_TO_ACTIVITY) / 3;
 }
 
-void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass) {
-  INT8 bRankIndex;
+void TrackEnemiesKilled(uint8_t ubKilledHow, uint8_t ubSoldierClass) {
+  int8_t bRankIndex;
 
   bRankIndex = SoldierClassToRankIndex(ubSoldierClass);
 
@@ -307,8 +307,8 @@ void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass) {
   }
 }
 
-INT8 SoldierClassToRankIndex(UINT8 ubSoldierClass) {
-  INT8 bRankIndex = -1;
+int8_t SoldierClassToRankIndex(uint8_t ubSoldierClass) {
+  int8_t bRankIndex = -1;
 
   // the soldier class defines are not in natural ascending order, elite comes before army!
   switch (ubSoldierClass) {
@@ -330,8 +330,8 @@ INT8 SoldierClassToRankIndex(UINT8 ubSoldierClass) {
   return (bRankIndex);
 }
 
-UINT8 RankIndexToSoldierClass(UINT8 ubRankIndex) {
-  UINT8 ubSoldierClass = 0;
+uint8_t RankIndexToSoldierClass(uint8_t ubRankIndex) {
+  uint8_t ubSoldierClass = 0;
 
   Assert(ubRankIndex < NUM_ENEMY_RANKS);
 

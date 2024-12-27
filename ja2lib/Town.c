@@ -11,10 +11,10 @@ void BuildListOfTownSectors(void) {
     allTownSectors[i].townID = BLANK_SECTOR;
   }
 
-  INT32 iCounter = 0;
-  for (INT32 iCounterX = 0; iCounterX < MAP_WORLD_X; iCounterX++) {
-    for (INT32 iCounterY = 0; iCounterY < MAP_WORLD_Y; iCounterY++) {
-      UINT16 usSector = GetSectorID16(iCounterX, iCounterY);
+  int32_t iCounter = 0;
+  for (int32_t iCounterX = 0; iCounterX < MAP_WORLD_X; iCounterX++) {
+    for (int32_t iCounterY = 0; iCounterY < MAP_WORLD_Y; iCounterY++) {
+      uint16_t usSector = GetSectorID16(iCounterX, iCounterY);
 
       if ((StrategicMap[usSector].townID >= FIRST_TOWN) &&
           (StrategicMap[usSector].townID < NUM_TOWNS)) {

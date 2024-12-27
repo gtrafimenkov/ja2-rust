@@ -6,7 +6,7 @@
 #define CONVERT_ETRLE_COMPRESS 0x0020
 #define CONVERT_TO_8_BIT 0x1000
 
-void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,
-                  STR cOutputName, UINT32 fFlags, UINT32 uiAppDataSize);
+void WriteSTIFile(uint8_t *pData, struct SGPPaletteEntry *pPalette, int16_t sWidth, int16_t sHeight,
+                  char *cOutputName, uint32_t fFlags, uint32_t uiAppDataSize);
 
 #endif

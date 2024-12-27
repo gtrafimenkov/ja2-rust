@@ -19,19 +19,19 @@ void CreateEditorTaskbar();
 void DeleteEditorTaskbar();
 
 // Button manipulation functions
-void ClickEditorButton(INT32 iEditorButtonID);
-void UnclickEditorButton(INT32 iEditorButtonID);
-void HideEditorButton(INT32 iEditorButtonID);
-void ShowEditorButton(INT32 iEditorButtonID);
-void DisableEditorButton(INT32 iEditorButtonID);
-void EnableEditorButton(INT32 iEditorButtonID);
+void ClickEditorButton(int32_t iEditorButtonID);
+void UnclickEditorButton(int32_t iEditorButtonID);
+void HideEditorButton(int32_t iEditorButtonID);
+void ShowEditorButton(int32_t iEditorButtonID);
+void DisableEditorButton(int32_t iEditorButtonID);
+void EnableEditorButton(int32_t iEditorButtonID);
 
-void ClickEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID);
-void UnclickEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID);
-void HideEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID);
-void ShowEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID);
-void DisableEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID);
-void EnableEditorButtons(INT32 iFirstEditorButtonID, INT32 iLastEditorButtonID);
+void ClickEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID);
+void UnclickEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID);
+void HideEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID);
+void ShowEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID);
+void DisableEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID);
+void EnableEditorButtons(int32_t iFirstEditorButtonID, int32_t iLastEditorButtonID);
 
 // Region Utils
 #define NUM_TERRAIN_TILE_REGIONS 9
@@ -41,21 +41,22 @@ enum {
   MERC_REGION_ID,
 };
 
-void EnableEditorRegion(INT8 bRegionID);
-void DisableEditorRegion(INT8 bRegionID);
+void EnableEditorRegion(int8_t bRegionID);
+void DisableEditorRegion(int8_t bRegionID);
 
 // Rendering Utils
-void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...);
-void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
-void DrawEditorInfoBox(STR16 str, UINT32 uiFont, UINT16 x, UINT16 y, UINT16 w, UINT16 h);
+void mprintfEditor(int16_t x, int16_t y, wchar_t* pFontString, ...);
+void ClearTaskbarRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom);
+void DrawEditorInfoBox(wchar_t* str, uint32_t uiFont, uint16_t x, uint16_t y, uint16_t w,
+                       uint16_t h);
 
-extern INT32 giEditMercDirectionIcons[2];
-extern UINT32 guiMercInventoryPanel;
-extern UINT32 guiOmertaMap;
-extern UINT32 guiExclamation;
-extern UINT32 guiKeyImage;
-extern UINT32 guiMercInvPanelBuffers[9];
-extern UINT32 guiMercTempBuffer;
-extern INT32 giEditMercImage[2];
+extern int32_t giEditMercDirectionIcons[2];
+extern uint32_t guiMercInventoryPanel;
+extern uint32_t guiOmertaMap;
+extern uint32_t guiExclamation;
+extern uint32_t guiKeyImage;
+extern uint32_t guiMercInvPanelBuffers[9];
+extern uint32_t guiMercTempBuffer;
+extern int32_t giEditMercImage[2];
 
 #endif

@@ -32,7 +32,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern STR16 gzIntroScreen[];
+extern wchar_t *gzIntroScreen[];
 
 enum {
   INTRO_TXT__CANT_FIND_INTRO,
@@ -44,7 +44,7 @@ enum {
 BOOLEAN gfIntroScreenEntry;
 BOOLEAN gfIntroScreenExit;
 
-UINT32 guiIntroExitScreen = INTRO_SCREEN;
+uint32_t guiIntroExitScreen = INTRO_SCREEN;
 
 extern BOOLEAN gfDoneWithSplashScreen;
 
@@ -75,7 +75,7 @@ enum {
   SMKINTRO_LAST_END_GAME,
 };
 
-INT32 giCurrentIntroBeingPlayed = SMKINTRO_NO_VIDEO;
+int32_t giCurrentIntroBeingPlayed = SMKINTRO_NO_VIDEO;
 
 char *gpzSmackerFileNames[] = {
     // begining of the game
@@ -97,7 +97,7 @@ char *gpzSmackerFileNames[] = {
 
 // enums used for when the intro screen can come up, either begining game intro, or end game
 // cinematic
-INT8 gbIntroScreenMode = -1;
+int8_t gbIntroScreenMode = -1;
 
 void GetIntroScreenUserInput();
 BOOLEAN EnterIntroScreen();
@@ -105,22 +105,22 @@ void RenderIntroScreen();
 void ExitIntroScreen();
 void HandleIntroScreen();
 void PrepareToExitIntroScreen();
-INT32 GetNextIntroVideo(UINT32 uiCurrentVideo);
-void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay);
+int32_t GetNextIntroVideo(uint32_t uiCurrentVideo);
+void StartPlayingIntroFlic(int32_t iIndexOfFlicToPlay);
 void DisplaySirtechSplashScreen();
 
 // ppp
 
-UINT32 IntroScreenInit(void) {
+uint32_t IntroScreenInit(void) {
   // Set so next time we come in, we can set up
   gfIntroScreenEntry = TRUE;
 
   return (1);
 }
 
-UINT32 IntroScreenShutdown(void) { return (1); }
+uint32_t IntroScreenShutdown(void) { return (1); }
 
-UINT32 IntroScreenHandle(void) {
+uint32_t IntroScreenHandle(void) {
   if (gfIntroScreenEntry) {
     EnterIntroScreen();
     gfIntroScreenEntry = FALSE;
@@ -148,7 +148,7 @@ UINT32 IntroScreenHandle(void) {
 }
 
 BOOLEAN EnterIntroScreen() {
-  INT32 iFirstVideoID = -1;
+  int32_t iFirstVideoID = -1;
 
   ClearMainMenu();
 
@@ -208,7 +208,7 @@ void HandleIntroScreen() {
 
   // if the flic is not playing
   if (!fFlicStillPlaying) {
-    INT32 iNextVideoToPlay = -1;
+    int32_t iNextVideoToPlay = -1;
 
     iNextVideoToPlay = GetNextIntroVideo(giCurrentIntroBeingPlayed);
 
@@ -231,28 +231,28 @@ void GetIntroScreenUserInput() {
     // HOOK INTO MOUSE HOOKS
     switch (Event.usEvent) {
       case LEFT_BUTTON_DOWN:
-        MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_UP:
-        MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
-        MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
 
@@ -308,8 +308,8 @@ void PrepareToExitIntroScreen() {
   gfIntroScreenExit = TRUE;
 }
 
-INT32 GetNextIntroVideo(UINT32 uiCurrentVideo) {
-  INT32 iStringToUse = -1;
+int32_t GetNextIntroVideo(uint32_t uiCurrentVideo) {
+  int32_t iStringToUse = -1;
 
   // switch on whether it is the beginging or the end game video
   switch (gbIntroScreenMode) {
@@ -378,7 +378,7 @@ INT32 GetNextIntroVideo(UINT32 uiCurrentVideo) {
   return (iStringToUse);
 }
 
-void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay) {
+void StartPlayingIntroFlic(int32_t iIndexOfFlicToPlay) {
   if (iIndexOfFlicToPlay != -1) {
     // start playing a flic
     gpSmackFlic = SmkPlayFlic(gpzSmackerFileNames[iIndexOfFlicToPlay], 0, 0, TRUE);
@@ -391,7 +391,7 @@ void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay) {
   }
 }
 
-void SetIntroType(INT8 bIntroType) {
+void SetIntroType(int8_t bIntroType) {
   if (bIntroType == INTRO_BEGINING) {
     gbIntroScreenMode = INTRO_BEGINING;
   } else if (bIntroType == INTRO_ENDING) {
@@ -404,10 +404,10 @@ void SetIntroType(INT8 bIntroType) {
 void DisplaySirtechSplashScreen() {
   struct VObject *hPixHandle;
   VOBJECT_DESC VObjectDesc;
-  UINT32 uiLogoID;
+  uint32_t uiLogoID;
 
-  UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint32_t uiDestPitchBYTES;
+  uint8_t *pDestBuf;
 
   // JA3Gold: do nothing until we have a graphic to replace Talonsoft's
   // return;

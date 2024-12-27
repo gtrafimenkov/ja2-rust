@@ -12,7 +12,7 @@ typedef void (*MODAL_HOOK)(void);
 
 extern BOOLEAN gfGameScreenLocateToSoldier;
 extern BOOLEAN gfEnteringMapScreen;
-extern UINT8 gubPreferredInitialSelectedGuy;
+extern uint8_t gubPreferredInitialSelectedGuy;
 
 void EnterMapScreen();
 
@@ -23,13 +23,13 @@ void UpdateTeamPanelAssignments();
 
 extern MODAL_HOOK gModalDoneCallback;
 
-void EnterModalTactical(INT8 bMode);
+void EnterModalTactical(int8_t bMode);
 void EndModalTactical();
 
 // handle the entrance of the mercs at the beginning of the game
 void InitHelicopterEntranceByMercs(void);
 
-void LeaveTacticalScreen(UINT32 uiNewScreen);
-void InternalLeaveTacticalScreen(UINT32 uiNewScreen);
+void LeaveTacticalScreen(uint32_t uiNewScreen);
+void InternalLeaveTacticalScreen(uint32_t uiNewScreen);
 
 #endif

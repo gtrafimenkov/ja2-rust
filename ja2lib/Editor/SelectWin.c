@@ -16,18 +16,18 @@
 
 extern BOOLEAN gfOverheadMapDirty;
 
-extern INT32 iEditorToolbar;
+extern int32_t iEditorToolbar;
 
 extern BOOLEAN fDontUseRandom;
 
-extern UINT16 GenericButtonFillColors[40];
+extern uint16_t GenericButtonFillColors[40];
 
 BOOLEAN gfRenderSquareArea = FALSE;
-INT16 iStartClickX, iStartClickY;
-INT16 iEndClickX, iEndClickY;
+int16_t iStartClickX, iStartClickY;
+int16_t iEndClickX, iEndClickY;
 
-INT32 iButtonIcons[4];
-INT32 iSelectWin, iCancelWin, iScrollUp, iScrollDown, iOkWin;
+int32_t iButtonIcons[4];
+int32_t iSelectWin, iCancelWin, iScrollUp, iScrollDown, iOkWin;
 
 BOOLEAN fAllDone = FALSE;
 BOOLEAN fButtonsPresent = FALSE;
@@ -78,7 +78,7 @@ SGPPoint SelWinSpacing, SelWinStartPoint, SelWinEndPoint;
 // in which we loaded a new tileset which had one less tree in it.  When we called
 // BuildSelectionWindow(), it would crash because it thought there was an extra tree which was now
 // invalid.
-UINT16 gusNumOStructs = 0;
+uint16_t gusNumOStructs = 0;
 
 // List of objects to display in the selection window
 DisplaySpec OStructs[OSTRUCTS_NUMELEMENTS];
@@ -121,52 +121,52 @@ Selections SelSingleToilet[MAX_SELECTIONS] = {{FIFTHISTRUCT, 0, 1}};
 Selections SelRoom[MAX_SELECTIONS] = {{FIRSTWALL, 0, 1}};
 
 // Number of objects currently in the selection list
-INT32 iNumOStructsSelected = 1;
-INT32 iNumOStructs1Selected = 1;
-INT32 iNumOStructs2Selected = 1;
-INT32 iNumBanksSelected = 1;
-INT32 iNumRoadsSelected = 1;
-INT32 iNumDebrisSelected = 1;
+int32_t iNumOStructsSelected = 1;
+int32_t iNumOStructs1Selected = 1;
+int32_t iNumOStructs2Selected = 1;
+int32_t iNumBanksSelected = 1;
+int32_t iNumRoadsSelected = 1;
+int32_t iNumDebrisSelected = 1;
 
-INT32 iNumWallsSelected = 1;
-INT32 iNumDoorsSelected = 1;
-INT32 iNumWindowsSelected = 1;
-INT32 iNumDecorSelected = 1;
-INT32 iNumDecalsSelected = 1;
-INT32 iNumBrokenWallsSelected = 1;
-INT32 iNumFloorsSelected = 1;
-INT32 iNumToiletsSelected = 1;
-INT32 iNumRoofsSelected = 1;
-INT32 iNumNewRoofsSelected = 1;
-INT32 iNumRoomsSelected = 1;
+int32_t iNumWallsSelected = 1;
+int32_t iNumDoorsSelected = 1;
+int32_t iNumWindowsSelected = 1;
+int32_t iNumDecorSelected = 1;
+int32_t iNumDecalsSelected = 1;
+int32_t iNumBrokenWallsSelected = 1;
+int32_t iNumFloorsSelected = 1;
+int32_t iNumToiletsSelected = 1;
+int32_t iNumRoofsSelected = 1;
+int32_t iNumNewRoofsSelected = 1;
+int32_t iNumRoomsSelected = 1;
 
 // Holds the previous selection list when a selection window is up. Used for canceling the selection
 // window
 Selections OldSelList[MAX_SELECTIONS];
-INT32 iOldNumSelList;
+int32_t iOldNumSelList;
 
 // Global pointers for selection list
 Selections *pSelList;
-INT32 *pNumSelList;
+int32_t *pNumSelList;
 
 // Global used to indicate which selection to use (changes with the PGUP/PGDWN keys in editor)
-INT32 iCurBank = 0;
+int32_t iCurBank = 0;
 
 DisplayList *pDispList;
-INT16 iTopWinCutOff, iBotWinCutOff;
+int16_t iTopWinCutOff, iBotWinCutOff;
 DisplayList Selection;
 
-UINT16 SelWinFillColor = 0x0000;         // Black
-UINT16 SelWinHilightFillColor = 0x000d;  // a kind of medium dark blue
+uint16_t SelWinFillColor = 0x0000;         // Black
+uint16_t SelWinHilightFillColor = 0x000d;  // a kind of medium dark blue
 
 //----------------------------------------------------------------------------------------------
 //	CreateJA2SelectionWindow
 //
 //	Creates a selection window of the given type.
 //
-void CreateJA2SelectionWindow(INT16 sWhat) {
+void CreateJA2SelectionWindow(int16_t sWhat) {
   DisplaySpec *pDSpec;
-  UINT16 usNSpecs;
+  uint16_t usNSpecs;
 
   fAllDone = FALSE;
 
@@ -182,22 +182,22 @@ void CreateJA2SelectionWindow(INT16 sWhat) {
       CreateHotSpot(0, 0, 600, 360, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, SelWinClkCallback);
 
   iCancelWin =
-      CreateIconButton((INT16)iButtonIcons[CANCEL_ICON], 0, BUTTON_USE_DEFAULT, 600, 40, 40, 40,
+      CreateIconButton((int16_t)iButtonIcons[CANCEL_ICON], 0, BUTTON_USE_DEFAULT, 600, 40, 40, 40,
                        BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, CnclClkCallback);
   SetButtonFastHelpText(iCancelWin, L"Cancel selections");
 
   iOkWin =
-      CreateIconButton((INT16)iButtonIcons[OK_ICON], 0, BUTTON_USE_DEFAULT, 600, 0, 40, 40,
+      CreateIconButton((int16_t)iButtonIcons[OK_ICON], 0, BUTTON_USE_DEFAULT, 600, 0, 40, 40,
                        BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, OkClkCallback);
   SetButtonFastHelpText(iOkWin, L"Accept selections");
 
   iScrollUp =
-      CreateIconButton((INT16)iButtonIcons[UP_ICON], 0, BUTTON_USE_DEFAULT, 600, 80, 40, 160,
+      CreateIconButton((int16_t)iButtonIcons[UP_ICON], 0, BUTTON_USE_DEFAULT, 600, 80, 40, 160,
                        BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, UpClkCallback);
   SetButtonFastHelpText(iScrollUp, L"Scroll window up");
 
   iScrollDown =
-      CreateIconButton((INT16)iButtonIcons[DOWN_ICON], 0, BUTTON_USE_DEFAULT, 600, 240, 40, 160,
+      CreateIconButton((int16_t)iButtonIcons[DOWN_ICON], 0, BUTTON_USE_DEFAULT, 600, 240, 40, 160,
                        BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, DwnClkCallback);
   SetButtonFastHelpText(iScrollDown, L"Scroll window down");
 
@@ -336,11 +336,11 @@ void CreateJA2SelectionWindow(INT16 sWhat) {
 // where the initialization part is done.  I have also changed this from previously being loaded
 // every single time you go into a selection window which was redundant and CPU consuming.
 void InitJA2SelectionWindow(void) {
-  INT32 iCount;
-  INT32 iCount2;
-  INT32 iCount3;
+  int32_t iCount;
+  int32_t iCount2;
+  int32_t iCount3;
 
-  UINT16 usETRLEObjects;
+  uint16_t usETRLEObjects;
   struct VObject *hVObject;
 
   pDispList = NULL;
@@ -355,8 +355,8 @@ void InitJA2SelectionWindow(void) {
     for (iCount2 = 0; iCount2 < usETRLEObjects; iCount2 += 3, iCount3++) {
       OStructs[iCount3].ubType = DISPLAY_GRAPHIC;
       OStructs[iCount3].hVObject = hVObject;
-      OStructs[iCount3].usStart = (UINT16)iCount2;
-      OStructs[iCount3].usEnd = (UINT16)iCount2;
+      OStructs[iCount3].usStart = (uint16_t)iCount2;
+      OStructs[iCount3].usEnd = (uint16_t)iCount2;
       OStructs[iCount3].uiObjIndx = (FIRSTFULLSTRUCT + iCount);
     }
   }
@@ -367,7 +367,7 @@ void InitJA2SelectionWindow(void) {
   OStructs[iCount3].usEnd = 0;
   OStructs[iCount3].uiObjIndx = SIXTHOSTRUCT;
 
-  gusNumOStructs = (UINT16)iCount3 + 1;
+  gusNumOStructs = (uint16_t)iCount3 + 1;
 
   // Rocks & barrels! (the "1" button in the "terrain" toolbar)
   OStructs1[0].ubType = DISPLAY_GRAPHIC;
@@ -748,9 +748,9 @@ void InitJA2SelectionWindow(void) {
 // memory 	is removed.
 //
 void ShutdownJA2SelectionWindow(void) {
-  INT16 x;
+  int16_t x;
 
-  for (x = 0; x < 4; x++) UnloadGenericButtonIcon((INT16)iButtonIcons[x]);
+  for (x = 0; x < 4; x++) UnloadGenericButtonIcon((int16_t)iButtonIcons[x]);
 
   if (pDispList != NULL) {
     pDispList = TrashList(pDispList);
@@ -803,10 +803,10 @@ DisplayList *TrashList(DisplayList *pNode) {
 //
 void RenderSelectionWindow(void) {
   GUI_BUTTON *button;
-  INT32 iSX, iSY, iEX, iEY;
-  UINT16 usFillColor;
-  static UINT8 usFillGreen = 0;
-  static UINT8 usDir = 5;
+  int32_t iSX, iSY, iEX, iEY;
+  uint16_t usFillColor;
+  static uint8_t usFillGreen = 0;
+  static uint8_t usDir = 5;
 
   if (!fButtonsPresent) return;
 
@@ -820,13 +820,13 @@ void RenderSelectionWindow(void) {
     if (button == NULL) return;
 
     if ((abs(iStartClickX - button->Area.MouseXPos) > 9) ||
-        (abs(iStartClickY - (button->Area.MouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY)) >
-         9)) {
-      //			iSX = (INT32)iStartClickX;
-      //			iEX = (INT32)button->Area.MouseXPos;
-      //			iSY = (INT32)iStartClickY;
-      //			iEY = (INT32)(button->Area.MouseYPos + iTopWinCutOff -
-      //(INT16)SelWinStartPoint.iY);
+        (abs(iStartClickY -
+             (button->Area.MouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY)) > 9)) {
+      //			iSX = (int32_t)iStartClickX;
+      //			iEX = (int32_t)button->Area.MouseXPos;
+      //			iSY = (int32_t)iStartClickY;
+      //			iEY = (int32_t)(button->Area.MouseYPos + iTopWinCutOff -
+      //(int16_t)SelWinStartPoint.iY);
 
       iSX = iStartClickX;
       iSY = iStartClickY - iTopWinCutOff + SelWinStartPoint.iY;
@@ -872,15 +872,15 @@ void RenderSelectionWindow(void) {
 //	if so selects or de-selects that object. Also handles the multi-object selection (left-click
 //	and drag to get the selection rectangle)
 //
-void SelWinClkCallback(GUI_BUTTON *button, INT32 reason) {
+void SelWinClkCallback(GUI_BUTTON *button, int32_t reason) {
   DisplayList *pNode;
   BOOLEAN fDone;
-  INT16 iClickX, iClickY, iYInc, iXInc;
+  int16_t iClickX, iClickY, iYInc, iXInc;
 
   if (!(button->uiFlags & BUTTON_ENABLED)) return;
 
   iClickX = button->Area.MouseXPos;
-  iClickY = button->Area.MouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY;
+  iClickY = button->Area.MouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     button->uiFlags |= BUTTON_CLICKED_ON;
@@ -962,13 +962,13 @@ void SelWinClkCallback(GUI_BUTTON *button, INT32 reason) {
 void DisplaySelectionWindowGraphicalInformation() {
   DisplayList *pNode;
   BOOLEAN fDone;
-  // UINT16 usObjIndex, usIndex;
-  UINT16 y;
+  // uint16_t usObjIndex, usIndex;
+  uint16_t y;
   // Determine if there is a valid picture at cursor position.
   // iRelX = gusMouseXPos;
-  // iRelY = gusMouseYPos + iTopWinCutOff - (INT16)SelWinStartPoint.iY;
+  // iRelY = gusMouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY;
 
-  y = gusMouseYPos + iTopWinCutOff - (UINT16)SelWinStartPoint.iY;
+  y = gusMouseYPos + iTopWinCutOff - (uint16_t)SelWinStartPoint.iY;
   pNode = pDispList;
   fDone = FALSE;
   while ((pNode != NULL) && !fDone) {
@@ -985,7 +985,7 @@ void DisplaySelectionWindowGraphicalInformation() {
   SetFont(FONT12POINT1);
   SetFontForeground(FONT_WHITE);
   if (pNode) {
-    // usObjIndex = (UINT16)pNode->uiObjIndx;
+    // usObjIndex = (uint16_t)pNode->uiObjIndx;
     // usIndex = pNode->uiIndex;
     if (!gTilesets[giCurrentTilesetID].TileSurfaceFilenames[pNode->uiObjIndx][0]) {
       mprintf(2, 2, L"%S[%d] is from default tileset %s (%S)",
@@ -1007,7 +1007,7 @@ void DisplaySelectionWindowGraphicalInformation() {
 //	selection list, then it's count is incremented.
 //
 void AddToSelectionList(DisplayList *pNode) {
-  INT32 iIndex, iUseIndex;
+  int32_t iIndex, iUseIndex;
   BOOLEAN fDone;
 
   fDone = FALSE;
@@ -1040,7 +1040,7 @@ void AddToSelectionList(DisplayList *pNode) {
 //	Removes everything from the current selection list
 //
 BOOLEAN ClearSelectionList(void) {
-  INT32 iIndex;
+  int32_t iIndex;
   DisplayList *pNode;
 
   if (pNumSelList == NULL) return (FALSE);
@@ -1064,7 +1064,7 @@ BOOLEAN ClearSelectionList(void) {
 //	greater than one, then the count is decremented and the object remains in the list.
 //
 BOOLEAN RemoveFromSelectionList(DisplayList *pNode) {
-  INT32 iIndex, iUseIndex;
+  int32_t iIndex, iUseIndex;
   BOOLEAN fDone, fRemoved;
 
   // Abort if no entries in list (pretend we removed a node)
@@ -1103,9 +1103,9 @@ BOOLEAN RemoveFromSelectionList(DisplayList *pNode) {
 //	Randomly selects an item in the selection list. The object counts are taken into account so
 //	that objects with higher counts will be chosen more often.
 //
-INT32 GetRandomSelection(void) {
-  INT32 iRandNum, iTotalCounts;
-  INT32 iIndex, iSelectedIndex, iNextCount;
+int32_t GetRandomSelection(void) {
+  int32_t iRandNum, iTotalCounts;
+  int32_t iIndex, iSelectedIndex, iNextCount;
 
   if (fDontUseRandom) {
     fDontUseRandom = FALSE;
@@ -1114,14 +1114,14 @@ INT32 GetRandomSelection(void) {
 
   iTotalCounts = 0;
   for (iIndex = 0; iIndex < (*pNumSelList); iIndex++)
-    iTotalCounts += (INT32)pSelList[iIndex].sCount;
+    iTotalCounts += (int32_t)pSelList[iIndex].sCount;
 
   iRandNum = Random(iTotalCounts);
 
   iSelectedIndex = -1;
   iNextCount = 0;
   for (iIndex = 0; iIndex < (*pNumSelList) && iSelectedIndex == -1; iIndex++) {
-    iNextCount += (INT32)pSelList[iIndex].sCount;
+    iNextCount += (int32_t)pSelList[iIndex].sCount;
     if (iRandNum < iNextCount) iSelectedIndex = iIndex;
   }
 
@@ -1134,7 +1134,7 @@ INT32 GetRandomSelection(void) {
 //	Verifies if a particular display list object exists in the current selection list.
 //
 BOOLEAN IsInSelectionList(DisplayList *pNode) {
-  INT32 iIndex;
+  int32_t iIndex;
   BOOLEAN fFound;
 
   fFound = FALSE;
@@ -1155,8 +1155,8 @@ BOOLEAN IsInSelectionList(DisplayList *pNode) {
 //	if found, returns the selection list's index where it can be found. otherwise it
 //	returns -1
 //
-INT32 FindInSelectionList(DisplayList *pNode) {
-  INT32 iIndex, iUseIndex;
+int32_t FindInSelectionList(DisplayList *pNode) {
+  int32_t iIndex, iUseIndex;
   BOOLEAN fFound;
 
   fFound = FALSE;
@@ -1179,7 +1179,7 @@ INT32 FindInSelectionList(DisplayList *pNode) {
 //	selection window.
 //
 void SaveSelectionList(void) {
-  INT32 iIndex;
+  int32_t iIndex;
 
   for (iIndex = 0; iIndex < MAX_SELECTIONS; iIndex++) OldSelList[iIndex] = pSelList[iIndex];
 
@@ -1192,7 +1192,7 @@ void SaveSelectionList(void) {
 //	Copies the selection list in the save buffer back to the current selection list.
 //
 void RestoreSelectionList(void) {
-  INT32 iIndex;
+  int32_t iIndex;
 
   for (iIndex = 0; iIndex < MAX_SELECTIONS; iIndex++) pSelList[iIndex] = OldSelList[iIndex];
 
@@ -1203,7 +1203,7 @@ void RestoreSelectionList(void) {
 //	OkClkCallback
 //
 //	Button callback function for the selection window's OK button
-void OkClkCallback(GUI_BUTTON *button, INT32 reason) {
+void OkClkCallback(GUI_BUTTON *button, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     button->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1217,7 +1217,7 @@ void OkClkCallback(GUI_BUTTON *button, INT32 reason) {
 //
 //	Button callback function for the selection window's CANCEL button
 //
-void CnclClkCallback(GUI_BUTTON *button, INT32 reason) {
+void CnclClkCallback(GUI_BUTTON *button, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     button->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1232,7 +1232,7 @@ void CnclClkCallback(GUI_BUTTON *button, INT32 reason) {
 //
 //	Button callback function for scrolling the selection window up
 //
-void UpClkCallback(GUI_BUTTON *button, INT32 reason) {
+void UpClkCallback(GUI_BUTTON *button, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     button->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1248,7 +1248,7 @@ void UpClkCallback(GUI_BUTTON *button, INT32 reason) {
 //
 void ScrollSelWinUp(void) {
   DisplayList *pNode;
-  INT16 iCutOff;
+  int16_t iCutOff;
   BOOLEAN fDone;
 
   // Code to scroll window up!
@@ -1276,7 +1276,7 @@ void ScrollSelWinUp(void) {
 //
 void ScrollSelWinDown(void) {
   DisplayList *pNode;
-  INT16 iCutOff;
+  int16_t iCutOff;
   BOOLEAN fDone;
 
   pNode = pDispList;
@@ -1299,7 +1299,7 @@ void ScrollSelWinDown(void) {
 //
 //	Button callback function to scroll the selection window down.
 //
-void DwnClkCallback(GUI_BUTTON *button, INT32 reason) {
+void DwnClkCallback(GUI_BUTTON *button, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     button->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1342,16 +1342,16 @@ void DrawSelections(void) {
 //	Creates a display list from a display specification list. It also sets variables up for
 //	properly scrolling the window etc.
 //
-BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
+BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,
                            DisplayList **pDisplayList, SGPPoint *pUpperLeft, SGPPoint *pBottomRight,
-                           SGPPoint *pSpacing, UINT16 fFlags) {
-  INT32 iCurrX = pUpperLeft->iX;
-  INT32 iCurrY = pUpperLeft->iY;
-  UINT16 usGreatestHeightInRow = 0;
-  UINT16 usSpecLoop;
-  UINT16 usETRLELoop;
-  UINT16 usETRLEStart;
-  UINT16 usETRLEEnd;
+                           SGPPoint *pSpacing, uint16_t fFlags) {
+  int32_t iCurrX = pUpperLeft->iX;
+  int32_t iCurrY = pUpperLeft->iY;
+  uint16_t usGreatestHeightInRow = 0;
+  uint16_t usSpecLoop;
+  uint16_t usETRLELoop;
+  uint16_t usETRLEStart;
+  uint16_t usETRLEEnd;
   DisplaySpec *pDisplaySpec;
   ETRLEObject *pETRLEObject;
   DisplayList *pCurNode;
@@ -1388,8 +1388,8 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
         if ((pCurNode = (DisplayList *)MemAlloc(sizeof(DisplayList))) != FALSE) {
           pCurNode->hObj = pDisplaySpec->hVObject;
           pCurNode->uiIndex = usETRLELoop;
-          pCurNode->iX = (INT16)iCurrX;
-          pCurNode->iY = (INT16)iCurrY;
+          pCurNode->iX = (int16_t)iCurrX;
+          pCurNode->iY = (int16_t)iCurrY;
           pCurNode->iWidth = pETRLEObject->usWidth;
           pCurNode->iHeight = pETRLEObject->usHeight;
           pCurNode->pNext = *pDisplayList;
@@ -1423,15 +1423,15 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
 //	have been selected (in the selection list) are highlighted and the count placed in the upper
 //	left corner of the image.
 //
-BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCutOff,
-                          SGPPoint *pUpperLeft, UINT16 fFlags) {
-  INT16 iCurrY;
-  INT16 sTempOffsetX;
-  INT16 sTempOffsetY;
+BOOLEAN DisplayWindowFunc(DisplayList *pNode, int16_t iTopCutOff, int16_t iBottomCutOff,
+                          SGPPoint *pUpperLeft, uint16_t fFlags) {
+  int16_t iCurrY;
+  int16_t sTempOffsetX;
+  int16_t sTempOffsetY;
   BOOLEAN fReturnVal;
   ETRLEObject *pETRLEObject;
-  UINT16 usFillColor;
-  INT16 sCount;
+  uint16_t usFillColor;
+  int16_t sCount;
 
   if (pNode == NULL) return (TRUE);
 
@@ -1465,8 +1465,8 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
     if (pNode->fChosen) sCount = pSelList[FindInSelectionList(pNode)].sCount;
 
     SetObjectShade(pNode->hObj, DEFAULT_SHADE_LEVEL);
-    fReturnVal = BltVideoObject(FRAME_BUFFER, pNode->hObj, pNode->uiIndex, (UINT16)pNode->iX,
-                                (UINT16)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
+    fReturnVal = BltVideoObject(FRAME_BUFFER, pNode->hObj, pNode->uiIndex, (uint16_t)pNode->iX,
+                                (uint16_t)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
 
     if (sCount != 0) {
       gprintf(pNode->iX, iCurrY, L"%d", sCount);

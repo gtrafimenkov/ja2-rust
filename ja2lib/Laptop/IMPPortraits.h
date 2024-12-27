@@ -7,8 +7,8 @@ void EnterIMPPortraits(void);
 void RenderIMPPortraits(void);
 void ExitIMPPortraits(void);
 void HandleIMPPortraits(void);
-BOOLEAN RenderPortrait(INT16 sX, INT16 sY);
+BOOLEAN RenderPortrait(int16_t sX, int16_t sY);
 
-extern INT32 iPortraitNumber;
+extern int32_t iPortraitNumber;
 
 #endif

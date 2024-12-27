@@ -8,16 +8,16 @@
 struct SOLDIERTYPE;
 
 struct strategicmapelement {
-  UINT8 UNUSEDuiFootEta[4];     // eta/mvt costs for feet
-  UINT8 UNUSEDuiVehicleEta[4];  // eta/mvt costs for vehicles
-  UINT8 uiBadFootSector[4];     // blocking mvt for foot
-  UINT8 uiBadVehicleSector[4];  // blocking mvt from vehicles
-  INT8 townID;
+  uint8_t UNUSEDuiFootEta[4];     // eta/mvt costs for feet
+  uint8_t UNUSEDuiVehicleEta[4];  // eta/mvt costs for vehicles
+  uint8_t uiBadFootSector[4];     // blocking mvt for foot
+  uint8_t uiBadVehicleSector[4];  // blocking mvt from vehicles
+  int8_t townID;
   BOOLEAN fEnemyControlled;  // enemy controlled or not
   BOOLEAN fEnemyAirControlled;
   BOOLEAN UNUSEDfLostControlAtSomeTime;
-  INT8 bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status
-  INT8 bPadding[20];
+  int8_t bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status
+  int8_t bPadding[20];
 };
 
 enum {

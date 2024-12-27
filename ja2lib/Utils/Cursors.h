@@ -235,20 +235,20 @@ typedef enum {
 #define MOUSE_LEVEL_GROUND 0
 #define MOUSE_LEVEL_ROOF 1
 
-void RaiseMouseToLevel(INT8 bLevel);
+void RaiseMouseToLevel(int8_t bLevel);
 
 void InitCursors();
 void HandleAnimatedCursors();
 
 void DrawMouseActionPoints();
-void UpdateAnimatedCursorFrames(UINT32 uiCursorIndex);
+void UpdateAnimatedCursorFrames(uint32_t uiCursorIndex);
 
-void SyncPairedCursorFrames(UINT32 uiSrcCursor, UINT32 uiDestCursor);
+void SyncPairedCursorFrames(uint32_t uiSrcCursor, uint32_t uiDestCursor);
 
-void SetCursorSpecialFrame(UINT32 uiCursor, UINT8 ubFrame);
+void SetCursorSpecialFrame(uint32_t uiCursor, uint8_t ubFrame);
 
-void SetCursorFlags(UINT32 uiCursor, UINT8 ubFlags);
+void SetCursorFlags(uint32_t uiCursor, uint8_t ubFlags);
 
-void RemoveCursorFlags(UINT32 uiCursor, UINT8 ubFlags);
+void RemoveCursorFlags(uint32_t uiCursor, uint8_t ubFlags);
 
 #endif

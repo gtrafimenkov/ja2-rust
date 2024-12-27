@@ -17,16 +17,16 @@ struct SOLDIERTYPE;
 
 typedef enum { BOXER_OUT_OF_RING, NON_BOXER_IN_RING, BAD_ATTACK } DisqualificationReasons;
 
-extern INT16 gsBoxerGridNo[NUM_BOXERS];
-extern UINT8 gubBoxerID[NUM_BOXERS];
+extern int16_t gsBoxerGridNo[NUM_BOXERS];
+extern uint8_t gubBoxerID[NUM_BOXERS];
 extern BOOLEAN gfBoxerFought[NUM_BOXERS];
-extern INT8 gbBoxingState;
+extern int8_t gbBoxingState;
 extern BOOLEAN gfLastBoxingMatchWonByPlayer;
-extern UINT8 gubBoxingMatchesWon;
-extern UINT8 gubBoxersRests;
+extern uint8_t gubBoxingMatchesWon;
+extern uint8_t gubBoxersRests;
 extern BOOLEAN gfBoxersResting;
 
-extern void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, INT8 bReason);
+extern void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, int8_t bReason);
 extern BOOLEAN PickABoxer(void);
 extern BOOLEAN CheckOnBoxers(void);
 extern void EndBoxingMatch(struct SOLDIERTYPE* pLoser);
@@ -35,10 +35,10 @@ extern BOOLEAN AnotherFightPossible(void);
 extern void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSolier);
 extern void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier);
 extern void ExitBoxing(void);
-extern UINT8 BoxersAvailable(void);
-extern void SetBoxingState(INT8 bNewState);
+extern uint8_t BoxersAvailable(void);
+extern void SetBoxingState(int8_t bNewState);
 extern BOOLEAN BoxerExists(void);
-extern UINT8 CountPeopleInBoxingRing(void);
+extern uint8_t CountPeopleInBoxingRing(void);
 extern void ClearAllBoxerFlags(void);
 
 #endif

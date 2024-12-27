@@ -28,36 +28,36 @@
 
 // GLOBAL FOR LIGHT LISTING
 LIGHTEFFECT gLightEffectData[NUM_LIGHT_EFFECT_SLOTS];
-UINT32 guiNumLightEffects = 0;
+uint32_t guiNumLightEffects = 0;
 
-INT32 GetFreeLightEffect(void);
+int32_t GetFreeLightEffect(void);
 void RecountLightEffects(void);
 
-INT32 GetFreeLightEffect(void) {
-  UINT32 uiCount;
+int32_t GetFreeLightEffect(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumLightEffects; uiCount++) {
-    if ((gLightEffectData[uiCount].fAllocated == FALSE)) return ((INT32)uiCount);
+    if ((gLightEffectData[uiCount].fAllocated == FALSE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumLightEffects < NUM_LIGHT_EFFECT_SLOTS) return ((INT32)guiNumLightEffects++);
+  if (guiNumLightEffects < NUM_LIGHT_EFFECT_SLOTS) return ((int32_t)guiNumLightEffects++);
 
   return (-1);
 }
 
 void RecountLightEffects(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumLightEffects - 1; (uiCount >= 0); uiCount--) {
     if ((gLightEffectData[uiCount].fAllocated)) {
-      guiNumLightEffects = (UINT32)(uiCount + 1);
+      guiNumLightEffects = (uint32_t)(uiCount + 1);
       break;
     }
   }
 }
 
 void UpdateLightingSprite(LIGHTEFFECT *pLight) {
-  CHAR8 LightName[20];
+  char LightName[20];
   // Build light....
 
   sprintf(LightName, "Light%d", pLight->bRadius);
@@ -76,15 +76,15 @@ void UpdateLightingSprite(LIGHTEFFECT *pLight) {
 
   LightSpritePower(pLight->iLight, TRUE);
   //	LightSpriteFake( pLight->iLight );
-  LightSpritePosition(pLight->iLight, (INT16)(CenterX(pLight->sGridNo) / CELL_X_SIZE),
-                      (INT16)(CenterY(pLight->sGridNo) / CELL_Y_SIZE));
+  LightSpritePosition(pLight->iLight, (int16_t)(CenterX(pLight->sGridNo) / CELL_X_SIZE),
+                      (int16_t)(CenterY(pLight->sGridNo) / CELL_Y_SIZE));
 }
 
-INT32 NewLightEffect(INT16 sGridNo, INT8 bType) {
+int32_t NewLightEffect(int16_t sGridNo, int8_t bType) {
   LIGHTEFFECT *pLight;
-  INT32 iLightIndex;
-  UINT8 ubDuration = 0;
-  UINT8 ubStartRadius = 0;
+  int32_t iLightIndex;
+  uint8_t ubDuration = 0;
+  uint8_t ubStartRadius = 0;
 
   if ((iLightIndex = GetFreeLightEffect()) == (-1)) return (-1);
 
@@ -119,9 +119,9 @@ INT32 NewLightEffect(INT16 sGridNo, INT8 bType) {
   return (iLightIndex);
 }
 
-void RemoveLightEffectFromTile(INT16 sGridNo) {
+void RemoveLightEffectFromTile(int16_t sGridNo) {
   LIGHTEFFECT *pLight;
-  UINT32 cnt;
+  uint32_t cnt;
 
   // Set to unallocated....
   for (cnt = 0; cnt < guiNumLightEffects; cnt++) {
@@ -141,11 +141,11 @@ void RemoveLightEffectFromTile(INT16 sGridNo) {
   }
 }
 
-void DecayLightEffects(UINT32 uiTime) {
+void DecayLightEffects(uint32_t uiTime) {
   LIGHTEFFECT *pLight;
-  UINT32 cnt, cnt2;
+  uint32_t cnt, cnt2;
   BOOLEAN fDelete = FALSE;
-  UINT16 usNumUpdates = 1;
+  uint16_t usNumUpdates = 1;
 
   // age all active tear gas clouds, deactivate those that are just dispersing
   for (cnt = 0; cnt < guiNumLightEffects; cnt++) {
@@ -156,7 +156,7 @@ void DecayLightEffects(UINT32 uiTime) {
     if (pLight->fAllocated) {
       // ATE: Do this every so ofte, to acheive the effect we want...
       if ((uiTime - pLight->uiTimeOfLastUpdate) > 350) {
-        usNumUpdates = (UINT16)((uiTime - pLight->uiTimeOfLastUpdate) / 350);
+        usNumUpdates = (uint16_t)((uiTime - pLight->uiTimeOfLastUpdate) / 350);
 
         pLight->uiTimeOfLastUpdate = uiTime;
 
@@ -201,9 +201,9 @@ void DecayLightEffects(UINT32 uiTime) {
 
 BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
   /*
-  UINT32	uiNumBytesWritten;
-  UINT32	uiNumberOfLights=0;
-  UINT32	uiCnt;
+  uint32_t	uiNumBytesWritten;
+  uint32_t	uiNumberOfLights=0;
+  uint32_t	uiCnt;
 
   //loop through and count the number of active slots
   for( uiCnt=0; uiCnt<guiNumLightEffects; uiCnt++)
@@ -215,8 +215,8 @@ BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
   }
 
   //Save the Number of Light Effects
-  FileMan_Write( hFile, &uiNumberOfLights, sizeof( UINT32 ), &uiNumBytesWritten );
-  if( uiNumBytesWritten != sizeof( UINT32 ) )
+  FileMan_Write( hFile, &uiNumberOfLights, sizeof( uint32_t ), &uiNumBytesWritten );
+  if( uiNumBytesWritten != sizeof( uint32_t ) )
   {
           return( FALSE );
   }
@@ -244,16 +244,16 @@ BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
 }
 
 BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
-  UINT32 uiNumBytesRead;
-  UINT32 uiCount;
+  uint32_t uiNumBytesRead;
+  uint32_t uiCount;
 
   // no longer need to load Light effects.  They are now in temp files
   if (guiSaveGameVersion < 76) {
     memset(gLightEffectData, 0, sizeof(LIGHTEFFECT) * NUM_LIGHT_EFFECT_SLOTS);
 
     // Load the Number of Light Effects
-    FileMan_Read(hFile, &guiNumLightEffects, sizeof(UINT32), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(UINT32)) {
+    FileMan_Read(hFile, &guiNumLightEffects, sizeof(uint32_t), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(uint32_t)) {
       return (FALSE);
     }
 
@@ -278,12 +278,12 @@ BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
-  UINT32 uiNumLightEffects = 0;
+BOOLEAN SaveLightEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
+  uint32_t uiNumLightEffects = 0;
   HWFILE hFile;
-  UINT32 uiNumBytesWritten = 0;
-  CHAR8 zMapName[128];
-  UINT32 uiCnt;
+  uint32_t uiNumBytesWritten = 0;
+  char zMapName[128];
+  uint32_t uiCnt;
 
   // get the name of the map
   GetMapTempFileName(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
@@ -312,8 +312,8 @@ BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   }
 
   // Save the Number of Light Effects
-  FileMan_Write(hFile, &uiNumLightEffects, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  FileMan_Write(hFile, &uiNumLightEffects, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Close the file
     FileMan_Close(hFile);
 
@@ -343,12 +343,12 @@ BOOLEAN SaveLightEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadLightEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
-  UINT32 uiNumBytesRead;
-  UINT32 uiCount;
-  UINT32 uiCnt = 0;
+BOOLEAN LoadLightEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
+  uint32_t uiNumBytesRead;
+  uint32_t uiCount;
+  uint32_t uiCnt = 0;
   HWFILE hFile;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   GetMapTempFileName(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
@@ -363,8 +363,8 @@ BOOLEAN LoadLightEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   ResetLightEffects();
 
   // Load the Number of Light Effects
-  FileMan_Read(hFile, &guiNumLightEffects, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  FileMan_Read(hFile, &guiNumLightEffects, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     FileMan_Close(hFile);
     return (FALSE);
   }

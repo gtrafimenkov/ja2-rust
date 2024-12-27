@@ -2,14 +2,14 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 
-void MarkMapIndexDirty(INT32 iMapIndex) {
+void MarkMapIndexDirty(int32_t iMapIndex) {
   gpWorldLevelData[iMapIndex].uiFlags |= MAPELEMENT_REDRAW;
   SetRenderFlags(RENDER_FLAG_MARKED);
 }
 
-void CenterScreenAtMapIndex(INT32 iMapIndex) {
-  INT16 sWorldX, sWorldY;
-  INT16 sCellX, sCellY;
+void CenterScreenAtMapIndex(int32_t iMapIndex) {
+  int16_t sWorldX, sWorldY;
+  int16_t sCellX, sCellY;
 
   // Get X, Y world GRID Coordinates
   sWorldY = (iMapIndex / WORLD_COLS);

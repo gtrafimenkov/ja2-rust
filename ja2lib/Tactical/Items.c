@@ -46,8 +46,8 @@
 
 #define ANY_MAGSIZE 255
 
-void RemoveObjs(struct OBJECTTYPE *pObj, UINT8 ubNumberToRemove);
-void SetNewItem(struct SOLDIERTYPE *pSoldier, UINT8 ubInvPos, BOOLEAN fNewItem);
+void RemoveObjs(struct OBJECTTYPE *pObj, uint8_t ubNumberToRemove);
+void SetNewItem(struct SOLDIERTYPE *pSoldier, uint8_t ubInvPos, BOOLEAN fNewItem);
 
 extern struct SOLDIERTYPE *gpItemDescSoldier;
 
@@ -714,10 +714,10 @@ INVTYPE Item[MAXITEMS] = {
 };
 
 typedef struct {
-  UINT16 usItem;
-  UINT32 uiItemClass;
-  INT8 bAttachmentSkillCheck;
-  INT8 bAttachmentSkillCheckMod;
+  uint16_t usItem;
+  uint32_t uiItemClass;
+  int8_t bAttachmentSkillCheck;
+  int8_t bAttachmentSkillCheckMod;
 } AttachmentInfoStruct;
 
 // NB hack:  if an item appears in this array with an item class of IC_MISC,
@@ -740,241 +740,241 @@ AttachmentInfoStruct AttachmentInfo[] = {
     {CERAMIC_PLATES, IC_ARMOUR, NO_CHECK, 0},
     {0, 0}};
 
-UINT16 Attachment[][2] = {{SILENCER, GLOCK_17},
-                          {SILENCER, GLOCK_18},
-                          {SILENCER, BERETTA_92F},
-                          {SILENCER, BERETTA_93R},
-                          {SILENCER, SW38},
-                          {SILENCER, BARRACUDA},
-                          {SILENCER, DESERTEAGLE},
-                          {SILENCER, M1911},
-                          {SILENCER, MP5K},
-                          {SILENCER, MAC10},
-                          {SILENCER, THOMPSON},
-                          {SILENCER, P90},
+uint16_t Attachment[][2] = {{SILENCER, GLOCK_17},
+                            {SILENCER, GLOCK_18},
+                            {SILENCER, BERETTA_92F},
+                            {SILENCER, BERETTA_93R},
+                            {SILENCER, SW38},
+                            {SILENCER, BARRACUDA},
+                            {SILENCER, DESERTEAGLE},
+                            {SILENCER, M1911},
+                            {SILENCER, MP5K},
+                            {SILENCER, MAC10},
+                            {SILENCER, THOMPSON},
+                            {SILENCER, P90},
 
-                          {SNIPERSCOPE, COMMANDO},
-                          {SNIPERSCOPE, AKSU74},
-                          {SNIPERSCOPE, TYPE85},
-                          {SNIPERSCOPE, SKS},
-                          {SNIPERSCOPE, DRAGUNOV},
-                          {SNIPERSCOPE, M24},
-                          {SNIPERSCOPE, AUG},
-                          {SNIPERSCOPE, G41},
-                          {SNIPERSCOPE, MINI14},
-                          {SNIPERSCOPE, C7},
-                          {SNIPERSCOPE, FAMAS},
-                          {SNIPERSCOPE, AK74},
-                          {SNIPERSCOPE, AKM},
-                          {SNIPERSCOPE, M14},
-                          {SNIPERSCOPE, FNFAL},
-                          {SNIPERSCOPE, G3A3},
-                          {SNIPERSCOPE, G11},
-                          {SNIPERSCOPE, M870},
-                          {SNIPERSCOPE, SPAS15},
-                          {SNIPERSCOPE, CAWS},
-                          {SNIPERSCOPE, MINIMI},
-                          {SNIPERSCOPE, RPK74},
-                          {SNIPERSCOPE, HK21E},
+                            {SNIPERSCOPE, COMMANDO},
+                            {SNIPERSCOPE, AKSU74},
+                            {SNIPERSCOPE, TYPE85},
+                            {SNIPERSCOPE, SKS},
+                            {SNIPERSCOPE, DRAGUNOV},
+                            {SNIPERSCOPE, M24},
+                            {SNIPERSCOPE, AUG},
+                            {SNIPERSCOPE, G41},
+                            {SNIPERSCOPE, MINI14},
+                            {SNIPERSCOPE, C7},
+                            {SNIPERSCOPE, FAMAS},
+                            {SNIPERSCOPE, AK74},
+                            {SNIPERSCOPE, AKM},
+                            {SNIPERSCOPE, M14},
+                            {SNIPERSCOPE, FNFAL},
+                            {SNIPERSCOPE, G3A3},
+                            {SNIPERSCOPE, G11},
+                            {SNIPERSCOPE, M870},
+                            {SNIPERSCOPE, SPAS15},
+                            {SNIPERSCOPE, CAWS},
+                            {SNIPERSCOPE, MINIMI},
+                            {SNIPERSCOPE, RPK74},
+                            {SNIPERSCOPE, HK21E},
 
-                          {LASERSCOPE, GLOCK_17},
-                          {LASERSCOPE, GLOCK_18},
-                          {LASERSCOPE, BERETTA_92F},
-                          {LASERSCOPE, BERETTA_93R},
-                          {LASERSCOPE, SW38},
-                          {LASERSCOPE, BARRACUDA},
-                          {LASERSCOPE, DESERTEAGLE},
-                          {LASERSCOPE, M1911},
-                          {LASERSCOPE, MP5K},
-                          {LASERSCOPE, MAC10},
-                          {LASERSCOPE, THOMPSON},
-                          {LASERSCOPE, COMMANDO},
-                          {LASERSCOPE, MP53},
-                          {LASERSCOPE, AKSU74},
-                          {LASERSCOPE, P90},
-                          {LASERSCOPE, TYPE85},
-                          {LASERSCOPE, SKS},
-                          {LASERSCOPE, DRAGUNOV},
-                          {LASERSCOPE, M24},
-                          {LASERSCOPE, AUG},
-                          {LASERSCOPE, G41},
-                          {LASERSCOPE, MINI14},
-                          {LASERSCOPE, C7},
-                          {LASERSCOPE, FAMAS},
-                          {LASERSCOPE, AK74},
-                          {LASERSCOPE, AKM},
-                          {LASERSCOPE, M14},
-                          {LASERSCOPE, FNFAL},
-                          {LASERSCOPE, G3A3},
-                          {LASERSCOPE, G11},
-                          {LASERSCOPE, M870},
-                          {LASERSCOPE, SPAS15},
-                          {LASERSCOPE, CAWS},
-                          {LASERSCOPE, MINIMI},
-                          {LASERSCOPE, RPK74},
-                          {LASERSCOPE, HK21E},
-                          {LASERSCOPE, AUTOMAG_III},
+                            {LASERSCOPE, GLOCK_17},
+                            {LASERSCOPE, GLOCK_18},
+                            {LASERSCOPE, BERETTA_92F},
+                            {LASERSCOPE, BERETTA_93R},
+                            {LASERSCOPE, SW38},
+                            {LASERSCOPE, BARRACUDA},
+                            {LASERSCOPE, DESERTEAGLE},
+                            {LASERSCOPE, M1911},
+                            {LASERSCOPE, MP5K},
+                            {LASERSCOPE, MAC10},
+                            {LASERSCOPE, THOMPSON},
+                            {LASERSCOPE, COMMANDO},
+                            {LASERSCOPE, MP53},
+                            {LASERSCOPE, AKSU74},
+                            {LASERSCOPE, P90},
+                            {LASERSCOPE, TYPE85},
+                            {LASERSCOPE, SKS},
+                            {LASERSCOPE, DRAGUNOV},
+                            {LASERSCOPE, M24},
+                            {LASERSCOPE, AUG},
+                            {LASERSCOPE, G41},
+                            {LASERSCOPE, MINI14},
+                            {LASERSCOPE, C7},
+                            {LASERSCOPE, FAMAS},
+                            {LASERSCOPE, AK74},
+                            {LASERSCOPE, AKM},
+                            {LASERSCOPE, M14},
+                            {LASERSCOPE, FNFAL},
+                            {LASERSCOPE, G3A3},
+                            {LASERSCOPE, G11},
+                            {LASERSCOPE, M870},
+                            {LASERSCOPE, SPAS15},
+                            {LASERSCOPE, CAWS},
+                            {LASERSCOPE, MINIMI},
+                            {LASERSCOPE, RPK74},
+                            {LASERSCOPE, HK21E},
+                            {LASERSCOPE, AUTOMAG_III},
 
-                          {BIPOD, SKS},
-                          {BIPOD, DRAGUNOV},
-                          {BIPOD, M24},
-                          {BIPOD, AUG},
-                          {BIPOD, G41},
-                          {BIPOD, MINI14},
-                          {BIPOD, C7},
-                          {BIPOD, FAMAS},
-                          {BIPOD, AK74},
-                          {BIPOD, AKM},
-                          {BIPOD, M14},
-                          {BIPOD, FNFAL},
-                          {BIPOD, G3A3},
-                          {BIPOD, G11},
-                          {BIPOD, CAWS},
-                          {BIPOD, MINIMI},
-                          {BIPOD, RPK74},
-                          {BIPOD, HK21E},
+                            {BIPOD, SKS},
+                            {BIPOD, DRAGUNOV},
+                            {BIPOD, M24},
+                            {BIPOD, AUG},
+                            {BIPOD, G41},
+                            {BIPOD, MINI14},
+                            {BIPOD, C7},
+                            {BIPOD, FAMAS},
+                            {BIPOD, AK74},
+                            {BIPOD, AKM},
+                            {BIPOD, M14},
+                            {BIPOD, FNFAL},
+                            {BIPOD, G3A3},
+                            {BIPOD, G11},
+                            {BIPOD, CAWS},
+                            {BIPOD, MINIMI},
+                            {BIPOD, RPK74},
+                            {BIPOD, HK21E},
 
-                          {DUCKBILL, M870},
-                          {DUCKBILL, SPAS15},
-                          {DUCKBILL, CAWS},
+                            {DUCKBILL, M870},
+                            {DUCKBILL, SPAS15},
+                            {DUCKBILL, CAWS},
 
-                          {UNDER_GLAUNCHER, COMMANDO},
-                          {UNDER_GLAUNCHER, AKSU74},
-                          {UNDER_GLAUNCHER, AUG},
-                          {UNDER_GLAUNCHER, G41},
-                          {UNDER_GLAUNCHER, MINI14},
-                          {UNDER_GLAUNCHER, C7},
-                          {UNDER_GLAUNCHER, FAMAS},
-                          {UNDER_GLAUNCHER, AK74},
-                          {UNDER_GLAUNCHER, AKM},
-                          {UNDER_GLAUNCHER, M14},
-                          {UNDER_GLAUNCHER, FNFAL},
-                          {UNDER_GLAUNCHER, G3A3},
-                          {UNDER_GLAUNCHER, MINIMI},
-                          {UNDER_GLAUNCHER, RPK74},
-                          {UNDER_GLAUNCHER, HK21E},
+                            {UNDER_GLAUNCHER, COMMANDO},
+                            {UNDER_GLAUNCHER, AKSU74},
+                            {UNDER_GLAUNCHER, AUG},
+                            {UNDER_GLAUNCHER, G41},
+                            {UNDER_GLAUNCHER, MINI14},
+                            {UNDER_GLAUNCHER, C7},
+                            {UNDER_GLAUNCHER, FAMAS},
+                            {UNDER_GLAUNCHER, AK74},
+                            {UNDER_GLAUNCHER, AKM},
+                            {UNDER_GLAUNCHER, M14},
+                            {UNDER_GLAUNCHER, FNFAL},
+                            {UNDER_GLAUNCHER, G3A3},
+                            {UNDER_GLAUNCHER, MINIMI},
+                            {UNDER_GLAUNCHER, RPK74},
+                            {UNDER_GLAUNCHER, HK21E},
 
-                          {SPRING_AND_BOLT_UPGRADE, GLOCK_17},
-                          {SPRING_AND_BOLT_UPGRADE, GLOCK_18},
-                          {SPRING_AND_BOLT_UPGRADE, BERETTA_92F},
-                          {SPRING_AND_BOLT_UPGRADE, BERETTA_93R},
-                          {SPRING_AND_BOLT_UPGRADE, SW38},
-                          {SPRING_AND_BOLT_UPGRADE, BARRACUDA},
-                          {SPRING_AND_BOLT_UPGRADE, DESERTEAGLE},
-                          {SPRING_AND_BOLT_UPGRADE, M1911},
-                          {SPRING_AND_BOLT_UPGRADE, MP5K},
-                          {SPRING_AND_BOLT_UPGRADE, MAC10},
-                          {SPRING_AND_BOLT_UPGRADE, THOMPSON},
-                          {SPRING_AND_BOLT_UPGRADE, COMMANDO},
-                          {SPRING_AND_BOLT_UPGRADE, MP53},
-                          {SPRING_AND_BOLT_UPGRADE, AKSU74},
-                          {SPRING_AND_BOLT_UPGRADE, P90},
-                          {SPRING_AND_BOLT_UPGRADE, TYPE85},
-                          {SPRING_AND_BOLT_UPGRADE, SKS},
-                          {SPRING_AND_BOLT_UPGRADE, DRAGUNOV},
-                          {SPRING_AND_BOLT_UPGRADE, M24},
-                          {SPRING_AND_BOLT_UPGRADE, AUG},
-                          {SPRING_AND_BOLT_UPGRADE, G41},
-                          {SPRING_AND_BOLT_UPGRADE, MINI14},
-                          {SPRING_AND_BOLT_UPGRADE, C7},
-                          {SPRING_AND_BOLT_UPGRADE, FAMAS},
-                          {SPRING_AND_BOLT_UPGRADE, AK74},
-                          {SPRING_AND_BOLT_UPGRADE, AKM},
-                          {SPRING_AND_BOLT_UPGRADE, M14},
-                          {SPRING_AND_BOLT_UPGRADE, FNFAL},
-                          {SPRING_AND_BOLT_UPGRADE, G3A3},
-                          {SPRING_AND_BOLT_UPGRADE, G11},
-                          {SPRING_AND_BOLT_UPGRADE, M870},
-                          {SPRING_AND_BOLT_UPGRADE, SPAS15},
-                          {SPRING_AND_BOLT_UPGRADE, CAWS},
-                          {SPRING_AND_BOLT_UPGRADE, MINIMI},
-                          {SPRING_AND_BOLT_UPGRADE, RPK74},
-                          {SPRING_AND_BOLT_UPGRADE, HK21E},
-                          {SPRING_AND_BOLT_UPGRADE, AUTOMAG_III},
+                            {SPRING_AND_BOLT_UPGRADE, GLOCK_17},
+                            {SPRING_AND_BOLT_UPGRADE, GLOCK_18},
+                            {SPRING_AND_BOLT_UPGRADE, BERETTA_92F},
+                            {SPRING_AND_BOLT_UPGRADE, BERETTA_93R},
+                            {SPRING_AND_BOLT_UPGRADE, SW38},
+                            {SPRING_AND_BOLT_UPGRADE, BARRACUDA},
+                            {SPRING_AND_BOLT_UPGRADE, DESERTEAGLE},
+                            {SPRING_AND_BOLT_UPGRADE, M1911},
+                            {SPRING_AND_BOLT_UPGRADE, MP5K},
+                            {SPRING_AND_BOLT_UPGRADE, MAC10},
+                            {SPRING_AND_BOLT_UPGRADE, THOMPSON},
+                            {SPRING_AND_BOLT_UPGRADE, COMMANDO},
+                            {SPRING_AND_BOLT_UPGRADE, MP53},
+                            {SPRING_AND_BOLT_UPGRADE, AKSU74},
+                            {SPRING_AND_BOLT_UPGRADE, P90},
+                            {SPRING_AND_BOLT_UPGRADE, TYPE85},
+                            {SPRING_AND_BOLT_UPGRADE, SKS},
+                            {SPRING_AND_BOLT_UPGRADE, DRAGUNOV},
+                            {SPRING_AND_BOLT_UPGRADE, M24},
+                            {SPRING_AND_BOLT_UPGRADE, AUG},
+                            {SPRING_AND_BOLT_UPGRADE, G41},
+                            {SPRING_AND_BOLT_UPGRADE, MINI14},
+                            {SPRING_AND_BOLT_UPGRADE, C7},
+                            {SPRING_AND_BOLT_UPGRADE, FAMAS},
+                            {SPRING_AND_BOLT_UPGRADE, AK74},
+                            {SPRING_AND_BOLT_UPGRADE, AKM},
+                            {SPRING_AND_BOLT_UPGRADE, M14},
+                            {SPRING_AND_BOLT_UPGRADE, FNFAL},
+                            {SPRING_AND_BOLT_UPGRADE, G3A3},
+                            {SPRING_AND_BOLT_UPGRADE, G11},
+                            {SPRING_AND_BOLT_UPGRADE, M870},
+                            {SPRING_AND_BOLT_UPGRADE, SPAS15},
+                            {SPRING_AND_BOLT_UPGRADE, CAWS},
+                            {SPRING_AND_BOLT_UPGRADE, MINIMI},
+                            {SPRING_AND_BOLT_UPGRADE, RPK74},
+                            {SPRING_AND_BOLT_UPGRADE, HK21E},
+                            {SPRING_AND_BOLT_UPGRADE, AUTOMAG_III},
 
-                          {GUN_BARREL_EXTENDER, GLOCK_17},
-                          {GUN_BARREL_EXTENDER, GLOCK_18},
-                          {GUN_BARREL_EXTENDER, BERETTA_92F},
-                          {GUN_BARREL_EXTENDER, BERETTA_93R},
-                          {GUN_BARREL_EXTENDER, SW38},
-                          {GUN_BARREL_EXTENDER, BARRACUDA},
-                          {GUN_BARREL_EXTENDER, DESERTEAGLE},
-                          {GUN_BARREL_EXTENDER, M1911},
-                          {GUN_BARREL_EXTENDER, MP5K},
-                          {GUN_BARREL_EXTENDER, MAC10},
-                          {GUN_BARREL_EXTENDER, THOMPSON},
-                          {GUN_BARREL_EXTENDER, COMMANDO},
-                          {GUN_BARREL_EXTENDER, MP53},
-                          {GUN_BARREL_EXTENDER, AKSU74},
-                          {GUN_BARREL_EXTENDER, P90},
-                          {GUN_BARREL_EXTENDER, TYPE85},
-                          {GUN_BARREL_EXTENDER, SKS},
-                          {GUN_BARREL_EXTENDER, DRAGUNOV},
-                          {GUN_BARREL_EXTENDER, M24},
-                          {GUN_BARREL_EXTENDER, AUG},
-                          {GUN_BARREL_EXTENDER, G41},
-                          {GUN_BARREL_EXTENDER, MINI14},
-                          {GUN_BARREL_EXTENDER, C7},
-                          {GUN_BARREL_EXTENDER, FAMAS},
-                          {GUN_BARREL_EXTENDER, AK74},
-                          {GUN_BARREL_EXTENDER, AKM},
-                          {GUN_BARREL_EXTENDER, M14},
-                          {GUN_BARREL_EXTENDER, FNFAL},
-                          {GUN_BARREL_EXTENDER, G3A3},
-                          {GUN_BARREL_EXTENDER, G11},
-                          {GUN_BARREL_EXTENDER, M870},
-                          {GUN_BARREL_EXTENDER, SPAS15},
-                          {GUN_BARREL_EXTENDER, CAWS},
-                          {GUN_BARREL_EXTENDER, MINIMI},
-                          {GUN_BARREL_EXTENDER, RPK74},
-                          {GUN_BARREL_EXTENDER, HK21E},
-                          {GUN_BARREL_EXTENDER, AUTOMAG_III},
+                            {GUN_BARREL_EXTENDER, GLOCK_17},
+                            {GUN_BARREL_EXTENDER, GLOCK_18},
+                            {GUN_BARREL_EXTENDER, BERETTA_92F},
+                            {GUN_BARREL_EXTENDER, BERETTA_93R},
+                            {GUN_BARREL_EXTENDER, SW38},
+                            {GUN_BARREL_EXTENDER, BARRACUDA},
+                            {GUN_BARREL_EXTENDER, DESERTEAGLE},
+                            {GUN_BARREL_EXTENDER, M1911},
+                            {GUN_BARREL_EXTENDER, MP5K},
+                            {GUN_BARREL_EXTENDER, MAC10},
+                            {GUN_BARREL_EXTENDER, THOMPSON},
+                            {GUN_BARREL_EXTENDER, COMMANDO},
+                            {GUN_BARREL_EXTENDER, MP53},
+                            {GUN_BARREL_EXTENDER, AKSU74},
+                            {GUN_BARREL_EXTENDER, P90},
+                            {GUN_BARREL_EXTENDER, TYPE85},
+                            {GUN_BARREL_EXTENDER, SKS},
+                            {GUN_BARREL_EXTENDER, DRAGUNOV},
+                            {GUN_BARREL_EXTENDER, M24},
+                            {GUN_BARREL_EXTENDER, AUG},
+                            {GUN_BARREL_EXTENDER, G41},
+                            {GUN_BARREL_EXTENDER, MINI14},
+                            {GUN_BARREL_EXTENDER, C7},
+                            {GUN_BARREL_EXTENDER, FAMAS},
+                            {GUN_BARREL_EXTENDER, AK74},
+                            {GUN_BARREL_EXTENDER, AKM},
+                            {GUN_BARREL_EXTENDER, M14},
+                            {GUN_BARREL_EXTENDER, FNFAL},
+                            {GUN_BARREL_EXTENDER, G3A3},
+                            {GUN_BARREL_EXTENDER, G11},
+                            {GUN_BARREL_EXTENDER, M870},
+                            {GUN_BARREL_EXTENDER, SPAS15},
+                            {GUN_BARREL_EXTENDER, CAWS},
+                            {GUN_BARREL_EXTENDER, MINIMI},
+                            {GUN_BARREL_EXTENDER, RPK74},
+                            {GUN_BARREL_EXTENDER, HK21E},
+                            {GUN_BARREL_EXTENDER, AUTOMAG_III},
 
-                          {DETONATOR, TNT},
-                          {DETONATOR, HMX},
-                          {DETONATOR, C1},
-                          {DETONATOR, C4},
+                            {DETONATOR, TNT},
+                            {DETONATOR, HMX},
+                            {DETONATOR, C1},
+                            {DETONATOR, C4},
 
-                          {REMDETONATOR, TNT},
-                          {REMDETONATOR, HMX},
-                          {REMDETONATOR, C1},
-                          {REMDETONATOR, C4},
+                            {REMDETONATOR, TNT},
+                            {REMDETONATOR, HMX},
+                            {REMDETONATOR, C1},
+                            {REMDETONATOR, C4},
 
-                          {CERAMIC_PLATES, FLAK_JACKET},
-                          {CERAMIC_PLATES, FLAK_JACKET_18},
-                          {CERAMIC_PLATES, FLAK_JACKET_Y},
-                          {CERAMIC_PLATES, KEVLAR_VEST},
-                          {CERAMIC_PLATES, KEVLAR_VEST_18},
-                          {CERAMIC_PLATES, KEVLAR_VEST_Y},
-                          {CERAMIC_PLATES, SPECTRA_VEST},
-                          {CERAMIC_PLATES, SPECTRA_VEST_18},
-                          {CERAMIC_PLATES, SPECTRA_VEST_Y},
-                          {CERAMIC_PLATES, KEVLAR2_VEST},
-                          {CERAMIC_PLATES, KEVLAR2_VEST_18},
-                          {CERAMIC_PLATES, KEVLAR2_VEST_Y},
+                            {CERAMIC_PLATES, FLAK_JACKET},
+                            {CERAMIC_PLATES, FLAK_JACKET_18},
+                            {CERAMIC_PLATES, FLAK_JACKET_Y},
+                            {CERAMIC_PLATES, KEVLAR_VEST},
+                            {CERAMIC_PLATES, KEVLAR_VEST_18},
+                            {CERAMIC_PLATES, KEVLAR_VEST_Y},
+                            {CERAMIC_PLATES, SPECTRA_VEST},
+                            {CERAMIC_PLATES, SPECTRA_VEST_18},
+                            {CERAMIC_PLATES, SPECTRA_VEST_Y},
+                            {CERAMIC_PLATES, KEVLAR2_VEST},
+                            {CERAMIC_PLATES, KEVLAR2_VEST_18},
+                            {CERAMIC_PLATES, KEVLAR2_VEST_Y},
 
-                          {SPRING, ALUMINUM_ROD},
-                          {QUICK_GLUE, STEEL_ROD},
-                          {DUCT_TAPE, STEEL_ROD},
-                          {XRAY_BULB, FUMBLE_PAK},
-                          {CHEWING_GUM, FUMBLE_PAK},
-                          {BATTERIES, XRAY_DEVICE},
-                          {COPPER_WIRE, LAME_BOY},
-                          {0, 0}};
+                            {SPRING, ALUMINUM_ROD},
+                            {QUICK_GLUE, STEEL_ROD},
+                            {DUCT_TAPE, STEEL_ROD},
+                            {XRAY_BULB, FUMBLE_PAK},
+                            {CHEWING_GUM, FUMBLE_PAK},
+                            {BATTERIES, XRAY_DEVICE},
+                            {COPPER_WIRE, LAME_BOY},
+                            {0, 0}};
 
-UINT16 Launchable[][2] = {{GL_HE_GRENADE, GLAUNCHER},
-                          {GL_HE_GRENADE, UNDER_GLAUNCHER},
-                          {GL_TEARGAS_GRENADE, GLAUNCHER},
-                          {GL_TEARGAS_GRENADE, UNDER_GLAUNCHER},
-                          {GL_STUN_GRENADE, GLAUNCHER},
-                          {GL_STUN_GRENADE, UNDER_GLAUNCHER},
-                          {GL_SMOKE_GRENADE, GLAUNCHER},
-                          {GL_SMOKE_GRENADE, UNDER_GLAUNCHER},
-                          {MORTAR_SHELL, MORTAR},
-                          {TANK_SHELL, TANK_CANNON},
-                          {0, 0}};
+uint16_t Launchable[][2] = {{GL_HE_GRENADE, GLAUNCHER},
+                            {GL_HE_GRENADE, UNDER_GLAUNCHER},
+                            {GL_TEARGAS_GRENADE, GLAUNCHER},
+                            {GL_TEARGAS_GRENADE, UNDER_GLAUNCHER},
+                            {GL_STUN_GRENADE, GLAUNCHER},
+                            {GL_STUN_GRENADE, UNDER_GLAUNCHER},
+                            {GL_SMOKE_GRENADE, GLAUNCHER},
+                            {GL_SMOKE_GRENADE, UNDER_GLAUNCHER},
+                            {MORTAR_SHELL, MORTAR},
+                            {TANK_SHELL, TANK_CANNON},
+                            {0, 0}};
 
-UINT16 CompatibleFaceItems[][2] = {
+uint16_t CompatibleFaceItems[][2] = {
     {EXTENDEDEAR, NIGHTGOGGLES},
     {EXTENDEDEAR, UVGOGGLES},
     {EXTENDEDEAR, SUNGOGGLES},
@@ -1012,8 +1012,8 @@ typedef enum {
   ELECTRONIC_MERGE,
 } MergeType;
 
-UINT16 Merge[][4] = {  // first item			second item
-                       // resulting item,					merge type
+uint16_t Merge[][4] = {  // first item			second item
+                         // resulting item,					merge type
     {FIRSTAIDKIT, FIRSTAIDKIT, FIRSTAIDKIT, COMBINE_POINTS},
     {MEDICKIT, MEDICKIT, MEDICKIT, COMBINE_POINTS},
     {LOCKSMITHKIT, LOCKSMITHKIT, LOCKSMITHKIT, COMBINE_POINTS},
@@ -1075,9 +1075,9 @@ UINT16 Merge[][4] = {  // first item			second item
     {0, 0, 0, 0}};
 
 typedef struct {
-  UINT16 usItem;
-  UINT16 usAttachment[2];
-  UINT16 usResult;
+  uint16_t usItem;
+  uint16_t usAttachment[2];
+  uint16_t usResult;
 } ComboMergeInfoStruct;
 
 ComboMergeInfoStruct AttachmentComboMerge[] = {
@@ -1092,35 +1092,35 @@ ComboMergeInfoStruct AttachmentComboMerge[] = {
     {NOTHING, {NOTHING, NOTHING}, NOTHING},
 };
 
-UINT16 ReplacementGuns[][2] = {{BARRACUDA, DESERTEAGLE},
-                               {M1911, GLOCK_17},
-                               {GLOCK_18, BERETTA_93R},
-                               {BERETTA_92F, GLOCK_17},
-                               {TYPE85, BERETTA_93R},
-                               {THOMPSON, MP5K},
-                               {MP53, MP5K},
-                               {SPAS15, M870},
-                               {AKSU74, MAC10},
-                               {SKS, MINI14},
-                               {AKM, G41},
-                               {G3A3, G41},
-                               {AK74, G41},
-                               {DRAGUNOV, M24},
-                               {FAMAS, M14},
-                               {AUG, C7},
-                               {RPK74, MINIMI},
-                               {HK21E, MINIMI},
-                               {0, 0}};
+uint16_t ReplacementGuns[][2] = {{BARRACUDA, DESERTEAGLE},
+                                 {M1911, GLOCK_17},
+                                 {GLOCK_18, BERETTA_93R},
+                                 {BERETTA_92F, GLOCK_17},
+                                 {TYPE85, BERETTA_93R},
+                                 {THOMPSON, MP5K},
+                                 {MP53, MP5K},
+                                 {SPAS15, M870},
+                                 {AKSU74, MAC10},
+                                 {SKS, MINI14},
+                                 {AKM, G41},
+                                 {G3A3, G41},
+                                 {AK74, G41},
+                                 {DRAGUNOV, M24},
+                                 {FAMAS, M14},
+                                 {AUG, C7},
+                                 {RPK74, MINIMI},
+                                 {HK21E, MINIMI},
+                                 {0, 0}};
 
-UINT16 ReplacementAmmo[][2] = {{CLIP545_30_AP, CLIP556_30_AP},
-                               {CLIP545_30_HP, CLIP556_30_HP},
-                               {CLIP762W_10_AP, CLIP762N_5_AP},
-                               {CLIP762W_30_AP, CLIP762N_20_AP},
-                               {CLIP762W_10_HP, CLIP762N_5_HP},
-                               {CLIP762W_30_HP, CLIP762N_20_HP},
-                               {0, 0}};
+uint16_t ReplacementAmmo[][2] = {{CLIP545_30_AP, CLIP556_30_AP},
+                                 {CLIP545_30_HP, CLIP556_30_HP},
+                                 {CLIP762W_10_AP, CLIP762N_5_AP},
+                                 {CLIP762W_30_AP, CLIP762N_20_AP},
+                                 {CLIP762W_10_HP, CLIP762N_5_HP},
+                                 {CLIP762W_30_HP, CLIP762N_20_HP},
+                                 {0, 0}};
 
-BOOLEAN ItemIsLegal(UINT16 usItemIndex) {
+BOOLEAN ItemIsLegal(uint16_t usItemIndex) {
   // if the user has selected the reduced gun list
   if (!gGameOptions.fGunNut) {
     // if the item is a gun, or ammo
@@ -1136,10 +1136,10 @@ BOOLEAN ItemIsLegal(UINT16 usItemIndex) {
 }
 
 // also used for ammo
-BOOLEAN ExtendedGunListGun(UINT16 usGun) { return ((Item[usGun].fFlags & ITEM_BIGGUNLIST) != 0); }
+BOOLEAN ExtendedGunListGun(uint16_t usGun) { return ((Item[usGun].fFlags & ITEM_BIGGUNLIST) != 0); }
 
-UINT16 StandardGunListReplacement(UINT16 usGun) {
-  UINT8 ubLoop;
+uint16_t StandardGunListReplacement(uint16_t usGun) {
+  uint8_t ubLoop;
 
   if (ExtendedGunListGun(usGun)) {
     ubLoop = 0;
@@ -1157,8 +1157,8 @@ UINT16 StandardGunListReplacement(UINT16 usGun) {
   }
 }
 
-UINT16 StandardGunListAmmoReplacement(UINT16 usAmmo) {
-  UINT8 ubLoop;
+uint16_t StandardGunListAmmoReplacement(uint16_t usAmmo) {
+  uint8_t ubLoop;
 
   if (ExtendedGunListGun(usAmmo)) {
     ubLoop = 0;
@@ -1200,8 +1200,8 @@ BOOLEAN WeaponInHand(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-UINT8 ItemSlotLimit(UINT16 usItem, INT8 bSlot) {
-  UINT8 ubSlotLimit;
+uint8_t ItemSlotLimit(uint16_t usItem, int8_t bSlot) {
+  uint8_t ubSlotLimit;
 
   if (bSlot < BIGPOCK1POS) {
     return (1);
@@ -1214,7 +1214,7 @@ UINT8 ItemSlotLimit(UINT16 usItem, INT8 bSlot) {
   }
 }
 
-UINT32 MoneySlotLimit(INT8 bSlot) {
+uint32_t MoneySlotLimit(int8_t bSlot) {
   if (bSlot >= SMALLPOCK1POS) {
     return (MAX_MONEY_PER_SLOT / 2);
   } else {
@@ -1222,8 +1222,8 @@ UINT32 MoneySlotLimit(INT8 bSlot) {
   }
 }
 
-INT8 FindObj(struct SOLDIERTYPE *pSoldier, UINT16 usItem) {
-  INT8 bLoop;
+int8_t FindObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == usItem) {
@@ -1233,8 +1233,8 @@ INT8 FindObj(struct SOLDIERTYPE *pSoldier, UINT16 usItem) {
   return (NO_SLOT);
 }
 
-INT8 FindUsableObj(struct SOLDIERTYPE *pSoldier, UINT16 usItem) {
-  INT8 bLoop;
+int8_t FindUsableObj(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == usItem && pSoldier->inv[bLoop].bStatus[0] >= USABLE) {
@@ -1244,8 +1244,8 @@ INT8 FindUsableObj(struct SOLDIERTYPE *pSoldier, UINT16 usItem) {
   return (NO_SLOT);
 }
 
-INT8 FindObjExcludingSlot(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 bExcludeSlot) {
-  INT8 bLoop;
+int8_t FindObjExcludingSlot(struct SOLDIERTYPE *pSoldier, uint16_t usItem, int8_t bExcludeSlot) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (bLoop == bExcludeSlot) {
@@ -1258,8 +1258,8 @@ INT8 FindObjExcludingSlot(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 bExc
   return (NO_SLOT);
 }
 
-INT8 FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
-  INT8 bLoop;
+int8_t FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if ((pObj == &(pSoldier->inv[bLoop])) &&
@@ -1270,8 +1270,8 @@ INT8 FindExactObj(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
   return (NO_SLOT);
 }
 
-INT8 FindObjWithin(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 bLower, INT8 bUpper) {
-  INT8 bLoop;
+int8_t FindObjWithin(struct SOLDIERTYPE *pSoldier, uint16_t usItem, int8_t bLower, int8_t bUpper) {
+  int8_t bLoop;
 
   for (bLoop = bLower; bLoop <= bUpper; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == usItem) {
@@ -1281,9 +1281,9 @@ INT8 FindObjWithin(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 bLower, INT
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindObjInObjRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem1, UINT16 usItem2) {
-  INT8 bLoop;
-  UINT16 usTemp;
+int8_t FindObjInObjRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem1, uint16_t usItem2) {
+  int8_t bLoop;
+  uint16_t usTemp;
 
   if (usItem1 > usItem2) {
     // swap the two...
@@ -1302,8 +1302,8 @@ INT8 FindObjInObjRange(struct SOLDIERTYPE *pSoldier, UINT16 usItem1, UINT16 usIt
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
-  INT8 bLoop;
+int8_t FindObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (Item[pSoldier->inv[bLoop].usItem].usItemClass & usItemClass) {
@@ -1313,8 +1313,9 @@ INT8 FindObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
   return (NO_SLOT);
 }
 
-INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, UINT32 usItemClass) {
-  INT8 bLoop;
+int8_t FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, int8_t bStartAfter,
+                             uint32_t usItemClass) {
+  int8_t bLoop;
 
   for (bLoop = bStartAfter + 1; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (Item[pSoldier->inv[bLoop].usItem].usItemClass == usItemClass) {
@@ -1324,12 +1325,12 @@ INT8 FindObjClassAfterSlot(struct SOLDIERTYPE *pSoldier, INT8 bStartAfter, UINT3
   return (NO_SLOT);
 }
 
-INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
+int8_t FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass) {
   // finds the first object of the specified class which does NOT have
   // the "unusable by AI" flag set.
 
   // uses & rather than == so that this function can search for any weapon
-  INT8 bLoop;
+  int8_t bLoop;
 
   // This is for the AI only so:
 
@@ -1348,9 +1349,9 @@ INT8 FindAIUsableObjClass(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass) {
   return (NO_SLOT);
 }
 
-INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass, INT8 bLower,
-                                INT8 bUpper) {
-  INT8 bLoop;
+int8_t FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, uint32_t usItemClass, int8_t bLower,
+                                  int8_t bUpper) {
+  int8_t bLoop;
 
   // This is for the AI only so:
   // Do not consider tank cannons or rocket launchers to be "guns"
@@ -1368,8 +1369,8 @@ INT8 FindAIUsableObjClassWithin(struct SOLDIERTYPE *pSoldier, UINT32 usItemClass
   return (NO_SLOT);
 }
 
-INT8 FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, INT8 bLower, INT8 bUpper) {
-  INT8 bLoop;
+int8_t FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, int8_t bLower, int8_t bUpper) {
+  int8_t bLoop;
 
   for (bLoop = bLower; bLoop <= bUpper; bLoop++) {
     if (pSoldier->inv[bLoop].usItem == 0) {
@@ -1383,7 +1384,7 @@ INT8 FindEmptySlotWithin(struct SOLDIERTYPE *pSoldier, INT8 bLower, INT8 bUpper)
   return (ITEM_NOT_FOUND);
 }
 
-BOOLEAN GLGrenadeInSlot(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
+BOOLEAN GLGrenadeInSlot(struct SOLDIERTYPE *pSoldier, int8_t bSlot) {
   switch (pSoldier->inv[bSlot].usItem) {
     case GL_HE_GRENADE:
     case GL_TEARGAS_GRENADE:
@@ -1396,8 +1397,8 @@ BOOLEAN GLGrenadeInSlot(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
 }
 
 // for grenade launchers
-INT8 FindGLGrenade(struct SOLDIERTYPE *pSoldier) {
-  INT8 bLoop;
+int8_t FindGLGrenade(struct SOLDIERTYPE *pSoldier) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (GLGrenadeInSlot(pSoldier, bLoop)) {
@@ -1407,8 +1408,8 @@ INT8 FindGLGrenade(struct SOLDIERTYPE *pSoldier) {
   return (NO_SLOT);
 }
 
-INT8 FindThrowableGrenade(struct SOLDIERTYPE *pSoldier) {
-  INT8 bLoop;
+int8_t FindThrowableGrenade(struct SOLDIERTYPE *pSoldier) {
+  int8_t bLoop;
   BOOLEAN fCheckForFlares = FALSE;
 
   // JA2Gold: give some priority to looking for flares when at night
@@ -1436,8 +1437,8 @@ INT8 FindThrowableGrenade(struct SOLDIERTYPE *pSoldier) {
   return (NO_SLOT);
 }
 
-INT8 FindAttachment(struct OBJECTTYPE *pObj, UINT16 usItem) {
-  INT8 bLoop;
+int8_t FindAttachment(struct OBJECTTYPE *pObj, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
     if (pObj->usAttachItem[bLoop] == usItem) {
@@ -1447,8 +1448,8 @@ INT8 FindAttachment(struct OBJECTTYPE *pObj, UINT16 usItem) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, UINT32 uiItemClass) {
-  INT8 bLoop;
+int8_t FindAttachmentByClass(struct OBJECTTYPE *pObj, uint32_t uiItemClass) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
     if (Item[pObj->usAttachItem[bLoop]].usItemClass == uiItemClass) {
@@ -1458,8 +1459,8 @@ INT8 FindAttachmentByClass(struct OBJECTTYPE *pObj, UINT32 uiItemClass) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindLaunchable(struct SOLDIERTYPE *pSoldier, UINT16 usWeapon) {
-  INT8 bLoop;
+int8_t FindLaunchable(struct SOLDIERTYPE *pSoldier, uint16_t usWeapon) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
     if (ValidLaunchable(pSoldier->inv[bLoop].usItem, usWeapon)) {
@@ -1469,8 +1470,8 @@ INT8 FindLaunchable(struct SOLDIERTYPE *pSoldier, UINT16 usWeapon) {
   return (ITEM_NOT_FOUND);
 }
 
-INT8 FindLaunchableAttachment(struct OBJECTTYPE *pObj, UINT16 usWeapon) {
-  INT8 bLoop;
+int8_t FindLaunchableAttachment(struct OBJECTTYPE *pObj, uint16_t usWeapon) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_ATTACHMENTS; bLoop++) {
     if (pObj->usAttachItem[bLoop] != NOTHING &&
@@ -1493,8 +1494,8 @@ BOOLEAN ItemHasAttachments(struct OBJECTTYPE *pObj) {
 
 // Determine if it is possible to add this attachment to the CLASS of this item
 // (i.e. to any item in the class)
-BOOLEAN ValidAttachmentClass(UINT16 usAttachment, UINT16 usItem) {
-  INT32 iLoop = 0;
+BOOLEAN ValidAttachmentClass(uint16_t usAttachment, uint16_t usItem) {
+  int32_t iLoop = 0;
   while (1) {
     // see comment for AttachmentInfo array for why we skip IC_NONE
     if (AttachmentInfo[iLoop].uiItemClass != IC_NONE) {
@@ -1513,12 +1514,12 @@ BOOLEAN ValidAttachmentClass(UINT16 usAttachment, UINT16 usItem) {
   return (FALSE);
 }
 
-INT8 GetAttachmentInfoIndex(UINT16 usItem) {
-  INT32 iLoop = 0;
+int8_t GetAttachmentInfoIndex(uint16_t usItem) {
+  int32_t iLoop = 0;
 
   while (1) {
     if (AttachmentInfo[iLoop].usItem == usItem) {
-      return ((INT8)iLoop);
+      return ((int8_t)iLoop);
     }
     iLoop++;
     if (AttachmentInfo[iLoop].usItem == 0) {
@@ -1530,8 +1531,8 @@ INT8 GetAttachmentInfoIndex(UINT16 usItem) {
 }
 
 // Determine if it is possible to add this attachment to the item.
-BOOLEAN ValidAttachment(UINT16 usAttachment, UINT16 usItem) {
-  INT32 iLoop = 0;
+BOOLEAN ValidAttachment(uint16_t usAttachment, uint16_t usItem) {
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this attachment...
   while (1) {
@@ -1561,10 +1562,10 @@ BOOLEAN ValidAttachment(UINT16 usAttachment, UINT16 usItem) {
 // Determine if this item can receive this attachment.  This is different, in that it may
 // be possible to have this attachment on this item, but may already have an attachment on
 // it which doesn't work simultaneously with the new attachment (like a silencer and duckbill).
-BOOLEAN ValidItemAttachment(struct OBJECTTYPE *pObj, UINT16 usAttachment,
+BOOLEAN ValidItemAttachment(struct OBJECTTYPE *pObj, uint16_t usAttachment,
                             BOOLEAN fAttemptingAttachment) {
   BOOLEAN fSameItem = FALSE, fSimilarItems = FALSE;
-  UINT16 usSimilarItem = NOTHING;
+  uint16_t usSimilarItem = NOTHING;
 
   if (!ValidAttachment(usAttachment, pObj->usItem)) {
     // check for an underslung grenade launcher attached to the gun
@@ -1590,7 +1591,7 @@ BOOLEAN ValidItemAttachment(struct OBJECTTYPE *pObj, UINT16 usAttachment,
     } else {
       if (fAttemptingAttachment && ValidAttachmentClass(usAttachment, pObj->usItem)) {
         // well, maybe the player thought he could
-        CHAR16 zTemp[100];
+        wchar_t zTemp[100];
 
         swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_ATTACH], ItemNames[usAttachment],
                  ItemNames[pObj->usItem]);
@@ -1664,7 +1665,7 @@ BOOLEAN ValidItemAttachment(struct OBJECTTYPE *pObj, UINT16 usAttachment,
 }
 
 // Determines if it is possible to equip this weapon with this ammo.
-BOOLEAN ValidAmmoType(UINT16 usItem, UINT16 usAmmoType) {
+BOOLEAN ValidAmmoType(uint16_t usItem, uint16_t usAmmoType) {
   if (Item[usItem].usItemClass == IC_GUN && Item[usAmmoType].usItemClass == IC_AMMO) {
     if (Weapon[usItem].ubCalibre == Magazine[Item[usAmmoType].ubClassIndex].ubCalibre) {
       return (TRUE);
@@ -1673,8 +1674,8 @@ BOOLEAN ValidAmmoType(UINT16 usItem, UINT16 usAmmoType) {
   return (FALSE);
 }
 
-BOOLEAN CompatibleFaceItem(UINT16 usItem1, UINT16 usItem2) {
-  INT32 iLoop = 0;
+BOOLEAN CompatibleFaceItem(uint16_t usItem1, uint16_t usItem2) {
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this attachment...
   while (1) {
@@ -1702,15 +1703,15 @@ BOOLEAN CompatibleFaceItem(UINT16 usItem1, UINT16 usItem2) {
 }
 
 // Determines if this item is a two handed item.
-BOOLEAN TwoHandedItem(UINT16 usItem) {
+BOOLEAN TwoHandedItem(uint16_t usItem) {
   if (Item[usItem].fFlags & ITEM_TWO_HANDED) {
     return (TRUE);
   }
   return FALSE;
 }
 
-BOOLEAN ValidLaunchable(UINT16 usLaunchable, UINT16 usItem) {
-  INT32 iLoop = 0;
+BOOLEAN ValidLaunchable(uint16_t usLaunchable, uint16_t usItem) {
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this launchable item...
   while (1) {
@@ -1737,7 +1738,7 @@ BOOLEAN ValidLaunchable(UINT16 usLaunchable, UINT16 usItem) {
   return (TRUE);
 }
 
-BOOLEAN ValidItemLaunchable(struct OBJECTTYPE *pObj, UINT16 usAttachment) {
+BOOLEAN ValidItemLaunchable(struct OBJECTTYPE *pObj, uint16_t usAttachment) {
   if (!ValidLaunchable(usAttachment, pObj->usItem)) {
     return (FALSE);
   }
@@ -1748,8 +1749,8 @@ BOOLEAN ValidItemLaunchable(struct OBJECTTYPE *pObj, UINT16 usAttachment) {
   return (TRUE);
 }
 
-UINT16 GetLauncherFromLaunchable(UINT16 usLaunchable) {
-  INT32 iLoop = 0;
+uint16_t GetLauncherFromLaunchable(uint16_t usLaunchable) {
+  int32_t iLoop = 0;
 
   // look for the section of the array pertaining to this launchable item...
   while (1) {
@@ -1766,10 +1767,11 @@ UINT16 GetLauncherFromLaunchable(UINT16 usLaunchable) {
   return (Launchable[iLoop][1]);
 }
 
-BOOLEAN EvaluateValidMerge(UINT16 usMerge, UINT16 usItem, UINT16 *pusResult, UINT8 *pubType) {
+BOOLEAN EvaluateValidMerge(uint16_t usMerge, uint16_t usItem, uint16_t *pusResult,
+                           uint8_t *pubType) {
   // NB "usMerge" is the object being merged with (e.g. compound 18)
   // "usItem" is the item being merged "onto" (e.g. kevlar vest)
-  INT32 iLoop = 0;
+  int32_t iLoop = 0;
 
   if (usMerge == usItem && Item[usItem].usItemClass == IC_AMMO) {
     *pusResult = usItem;
@@ -1799,19 +1801,19 @@ BOOLEAN EvaluateValidMerge(UINT16 usMerge, UINT16 usItem, UINT16 *pusResult, UIN
     }
   }
   *pusResult = Merge[iLoop][2];
-  *pubType = (UINT8)Merge[iLoop][3];
+  *pubType = (uint8_t)Merge[iLoop][3];
   return (TRUE);
 }
 
-BOOLEAN ValidMerge(UINT16 usMerge, UINT16 usItem) {
-  UINT16 usIgnoreResult;
-  UINT8 ubIgnoreType;
+BOOLEAN ValidMerge(uint16_t usMerge, uint16_t usItem) {
+  uint16_t usIgnoreResult;
+  uint8_t ubIgnoreType;
   return (EvaluateValidMerge(usMerge, usItem, &usIgnoreResult, &ubIgnoreType));
 }
 
-UINT8 CalculateObjectWeight(struct OBJECTTYPE *pObject) {
-  INT32 cnt;
-  UINT16 usWeight;
+uint8_t CalculateObjectWeight(struct OBJECTTYPE *pObject) {
+  int32_t cnt;
+  uint16_t usWeight;
   INVTYPE *pItem;
 
   pItem = &(Item[pObject->usItem]);
@@ -1833,19 +1835,19 @@ UINT8 CalculateObjectWeight(struct OBJECTTYPE *pObject) {
     }
   }
 
-  // make sure it really fits into that UINT8, in case we ever add anything real heavy with
+  // make sure it really fits into that uint8_t, in case we ever add anything real heavy with
   // attachments/ammo
   Assert(usWeight <= 255);
 
-  return ((UINT8)usWeight);
+  return ((uint8_t)usWeight);
 }
 
-UINT32 CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiTotalWeight = 0;
-  UINT32 uiPercent;
-  UINT8 ubLoop;
-  UINT16 usWeight;
-  UINT8 ubStrengthForCarrying;
+uint32_t CalculateCarriedWeight(struct SOLDIERTYPE *pSoldier) {
+  uint32_t uiTotalWeight = 0;
+  uint32_t uiPercent;
+  uint8_t ubLoop;
+  uint16_t usWeight;
+  uint8_t ubStrengthForCarrying;
 
   for (ubLoop = 0; ubLoop < NUM_INV_SLOTS; ubLoop++) {
     usWeight = pSoldier->inv[ubLoop].ubWeight;
@@ -1896,9 +1898,9 @@ void SwapObjs(struct OBJECTTYPE *pObj1, struct OBJECTTYPE *pObj2) {
   */
 }
 
-void RemoveObjFrom(struct OBJECTTYPE *pObj, UINT8 ubRemoveIndex) {
+void RemoveObjFrom(struct OBJECTTYPE *pObj, uint8_t ubRemoveIndex) {
   // remove 1 object from an struct OBJECTTYPE, starting at index bRemoveIndex
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   if (pObj->ubNumberOfObjects < ubRemoveIndex) {
     // invalid index!
@@ -1918,9 +1920,9 @@ void RemoveObjFrom(struct OBJECTTYPE *pObj, UINT8 ubRemoveIndex) {
   }
 }
 
-void RemoveObjs(struct OBJECTTYPE *pObj, UINT8 ubNumberToRemove) {
+void RemoveObjs(struct OBJECTTYPE *pObj, uint8_t ubNumberToRemove) {
   // remove a certain number of objects from an struct OBJECTTYPE, starting at index 0
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   if (ubNumberToRemove == 0) {
     return;
@@ -1936,7 +1938,7 @@ void RemoveObjs(struct OBJECTTYPE *pObj, UINT8 ubNumberToRemove) {
   }
 }
 
-void GetObjFrom(struct OBJECTTYPE *pObj, UINT8 ubGetIndex, struct OBJECTTYPE *pDest) {
+void GetObjFrom(struct OBJECTTYPE *pObj, uint8_t ubGetIndex, struct OBJECTTYPE *pDest) {
   if (!pDest || ubGetIndex >= pObj->ubNumberOfObjects) {
     return;
   }
@@ -1953,8 +1955,8 @@ void GetObjFrom(struct OBJECTTYPE *pObj, UINT8 ubGetIndex, struct OBJECTTYPE *pD
   }
 }
 
-void SwapWithinObj(struct OBJECTTYPE *pObj, UINT8 ubIndex1, UINT8 ubIndex2) {
-  INT8 bTemp;
+void SwapWithinObj(struct OBJECTTYPE *pObj, uint8_t ubIndex1, uint8_t ubIndex2) {
+  int8_t bTemp;
 
   if (pObj->ubNumberOfObjects >= ubIndex1 || pObj->ubNumberOfObjects >= ubIndex1) {
     return;
@@ -1965,7 +1967,7 @@ void SwapWithinObj(struct OBJECTTYPE *pObj, UINT8 ubIndex1, UINT8 ubIndex2) {
   pObj->bStatus[ubIndex2] = bTemp;
 }
 
-void DamageObj(struct OBJECTTYPE *pObj, INT8 bAmount) {
+void DamageObj(struct OBJECTTYPE *pObj, int8_t bAmount) {
   if (bAmount >= pObj->bStatus[0]) {
     pObj->bStatus[0] = 1;
   } else {
@@ -1973,8 +1975,9 @@ void DamageObj(struct OBJECTTYPE *pObj, INT8 bAmount) {
   }
 }
 
-void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj, UINT8 ubNumberToCopy) {
-  UINT8 ubLoop;
+void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
+               uint8_t ubNumberToCopy) {
+  uint8_t ubLoop;
 
   // copy over N status values
   for (ubLoop = 0; ubLoop < ubNumberToCopy; ubLoop++) {
@@ -1993,8 +1996,8 @@ void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj, UIN
 }
 
 void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
-  INT8 bLoop, bLoop2;
-  INT8 bMaxPoints, bPointsToMove;
+  int8_t bLoop, bLoop2;
+  int8_t bMaxPoints, bPointsToMove;
 
   if (!(Item[pObj->usItem].usItemClass & IC_AMMO || Item[pObj->usItem].usItemClass & IC_KIT ||
         Item[pObj->usItem].usItemClass & IC_MEDKIT)) {
@@ -2008,7 +2011,7 @@ void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
   }
 
   if (pCursorObj && pCursorObj->usItem == pObj->usItem) {
-    for (bLoop = (INT8)pCursorObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
+    for (bLoop = (int8_t)pCursorObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
       if (pCursorObj->bStatus[bLoop] > 0) {
         // take the points here and distribute over the lower #d items
         for (bLoop2 = pObj->ubNumberOfObjects - 1; bLoop2 >= 0; bLoop2--) {
@@ -2030,7 +2033,7 @@ void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
     }
   }
 
-  for (bLoop = (INT8)pObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
+  for (bLoop = (int8_t)pObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
     if (pObj->bStatus[bLoop] > 0) {
       // take the points here and distribute over the lower #d items
       for (bLoop2 = bLoop - 1; bLoop2 >= 0; bLoop2--) {
@@ -2053,8 +2056,8 @@ void CleanUpStack(struct OBJECTTYPE *pObj, struct OBJECTTYPE *pCursorObj) {
 }
 
 BOOLEAN PlaceObjectAtObjectIndex(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
-                                 UINT8 ubIndex) {
-  INT8 bTemp;
+                                 uint8_t ubIndex) {
+  int8_t bTemp;
 
   if (pSourceObj->usItem != pTargetObj->usItem) {
     return (TRUE);
@@ -2080,15 +2083,15 @@ BOOLEAN PlaceObjectAtObjectIndex(struct OBJECTTYPE *pSourceObj, struct OBJECTTYP
 
 BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun, struct OBJECTTYPE *pAmmo) {
   struct OBJECTTYPE OldAmmo;
-  UINT8 ubBulletsToMove;
-  INT8 bAPs;
-  UINT16 usReloadSound;
+  uint8_t ubBulletsToMove;
+  int8_t bAPs;
+  uint16_t usReloadSound;
   BOOLEAN fSameAmmoType;
   BOOLEAN fSameMagazineSize;
   BOOLEAN fReloadingWithStack;
   BOOLEAN fEmptyGun;
-  INT8 bReloadType;
-  UINT16 usNewAmmoItem;
+  int8_t bReloadType;
+  uint16_t usNewAmmoItem;
 
   if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT)) {
     bAPs = GetAPsToReloadGunWithAmmo(pGun, pAmmo);
@@ -2192,7 +2195,7 @@ BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun, struct 
           // (suppose his inventory is full!)
 
           if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
-              !EnoughPoints(pSoldier, (INT8)(bAPs + AP_PICKUP_ITEM), 0, FALSE)) {
+              !EnoughPoints(pSoldier, (int8_t)(bAPs + AP_PICKUP_ITEM), 0, FALSE)) {
             // try autoplace
             if (!AutoPlaceObject(pSoldier, &OldAmmo, FALSE)) {
               // put it on the ground
@@ -2262,7 +2265,7 @@ BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun, struct 
 }
 
 BOOLEAN EmptyWeaponMagazine(struct OBJECTTYPE *pWeapon, struct OBJECTTYPE *pAmmo) {
-  UINT16 usReloadSound;
+  uint16_t usReloadSound;
 
   CHECKF(pAmmo != NULL);
 
@@ -2340,8 +2343,9 @@ BOOLEAN ReloadLauncher( struct OBJECTTYPE * pLauncher, struct OBJECTTYPE * pAmmo
 }
 */
 
-INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, UINT8 ubCalibre, UINT8 ubMagSize, INT8 bExcludeSlot) {
-  INT8 bLoop;
+int8_t FindAmmo(struct SOLDIERTYPE *pSoldier, uint8_t ubCalibre, uint8_t ubMagSize,
+                int8_t bExcludeSlot) {
+  int8_t bLoop;
   INVTYPE *pItem;
 
   for (bLoop = HANDPOS; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -2359,9 +2363,9 @@ INT8 FindAmmo(struct SOLDIERTYPE *pSoldier, UINT8 ubCalibre, UINT8 ubMagSize, IN
   return (NO_SLOT);
 }
 
-INT8 FindAmmoToReload(struct SOLDIERTYPE *pSoldier, INT8 bWeaponIn, INT8 bExcludeSlot) {
+int8_t FindAmmoToReload(struct SOLDIERTYPE *pSoldier, int8_t bWeaponIn, int8_t bExcludeSlot) {
   struct OBJECTTYPE *pObj;
-  INT8 bSlot;
+  int8_t bSlot;
 
   if (pSoldier == NULL) {
     return (NO_SLOT);
@@ -2400,7 +2404,7 @@ INT8 FindAmmoToReload(struct SOLDIERTYPE *pSoldier, INT8 bWeaponIn, INT8 bExclud
 
 BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
   struct OBJECTTYPE *pObj;
-  INT8 bSlot, bAPCost;
+  int8_t bSlot, bAPCost;
   BOOLEAN fRet;
 
   CHECKF(pSoldier);
@@ -2419,7 +2423,7 @@ BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
         if (bSlot != NO_SLOT) {
           // ce would reload using this ammo!
           bAPCost = GetAPsToReloadGunWithAmmo(pObj, &(pSoldier->inv[bSlot]));
-          if (EnoughPoints(pSoldier, (INT16)bAPCost, 0, FALSE)) {
+          if (EnoughPoints(pSoldier, (int16_t)bAPCost, 0, FALSE)) {
             // reload the 2nd gun too
             fRet = ReloadGun(pSoldier, pObj, &(pSoldier->inv[bSlot]));
           } else {
@@ -2438,9 +2442,9 @@ BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT8 GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
-  INT8 bIndex = 0;
-  INT8 bAttachLoop, bAttachPos;
+int8_t GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
+  int8_t bIndex = 0;
+  int8_t bAttachLoop, bAttachPos;
 
   while (AttachmentComboMerge[bIndex].usItem != NOTHING) {
     if (pObj->usItem == AttachmentComboMerge[bIndex].usItem) {
@@ -2466,10 +2470,10 @@ INT8 GetAttachmentComboMerge(struct OBJECTTYPE *pObj) {
   return (-1);
 }
 
-void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, INT8 bAttachmentComboMerge) {
-  INT8 bAttachLoop, bAttachPos;
-  UINT32 uiStatusTotal = 0;
-  INT8 bNumStatusContributors = 0;
+void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, int8_t bAttachmentComboMerge) {
+  int8_t bAttachLoop, bAttachPos;
+  uint32_t uiStatusTotal = 0;
+  int8_t bNumStatusContributors = 0;
 
   // This object has been validated as available for an attachment combo merge.
   // - find all attachments in list and destroy them
@@ -2497,17 +2501,17 @@ void PerformAttachmentComboMerge(struct OBJECTTYPE *pObj, INT8 bAttachmentComboM
   bNumStatusContributors++;
 
   pObj->usItem = AttachmentComboMerge[bAttachmentComboMerge].usResult;
-  pObj->bStatus[0] = (INT8)(uiStatusTotal / bNumStatusContributors);
+  pObj->bStatus[0] = (int8_t)(uiStatusTotal / bNumStatusContributors);
 }
 
 BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj,
                      struct OBJECTTYPE *pAttachment) {
-  INT8 bAttachPos, bSecondAttachPos;  //, bAbility, bSuccess;
-  UINT16 usResult;
-  INT8 bLoop;
-  UINT8 ubType, ubLimit;
-  INT32 iCheckResult;
-  INT8 bAttachInfoIndex = -1, bAttachComboMerge;
+  int8_t bAttachPos, bSecondAttachPos;  //, bAbility, bSuccess;
+  uint16_t usResult;
+  int8_t bLoop;
+  uint8_t ubType, ubLimit;
+  int32_t iCheckResult;
+  int8_t bAttachInfoIndex = -1, bAttachComboMerge;
   BOOLEAN fValidLaunchable = FALSE;
 
   fValidLaunchable = ValidLaunchable(pAttachment->usItem, pTargetObj->usItem);
@@ -2550,8 +2554,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
                          AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod);
           if (iCheckResult < 0) {
             // the attach failure damages both items
-            DamageObj(pTargetObj, (INT8)-iCheckResult);
-            DamageObj(pAttachment, (INT8)-iCheckResult);
+            DamageObj(pTargetObj, (int8_t)-iCheckResult);
+            DamageObj(pAttachment, (int8_t)-iCheckResult);
             // there should be a quote here!
             DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
             if (gfInItemDescBox) {
@@ -2618,7 +2622,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
         if (bAttachInfoIndex != -1 &&
             AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod < 20) {
           StatChange(pSoldier, MECHANAMT,
-                     (INT8)(20 - AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod), FALSE);
+                     (int8_t)(20 - AttachmentInfo[bAttachInfoIndex].bAttachmentSkillCheckMod),
+                     FALSE);
         }
       }
 
@@ -2672,8 +2677,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
         if (pSoldier) {
           iCheckResult = SkillCheck(pSoldier, ATTACHING_SPECIAL_ELECTRONIC_ITEM_CHECK, -30);
           if (iCheckResult < 0) {
-            DamageObj(pTargetObj, (INT8)-iCheckResult);
-            DamageObj(pAttachment, (INT8)-iCheckResult);
+            DamageObj(pTargetObj, (int8_t)-iCheckResult);
+            DamageObj(pAttachment, (int8_t)-iCheckResult);
             DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
             return (FALSE);
           }
@@ -2689,8 +2694,8 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
             if (iCheckResult < 0) {
               // could have a chance of detonation
               // for now, damage both objects
-              DamageObj(pTargetObj, (INT8)-iCheckResult);
-              DamageObj(pAttachment, (INT8)-iCheckResult);
+              DamageObj(pTargetObj, (int8_t)-iCheckResult);
+              DamageObj(pAttachment, (int8_t)-iCheckResult);
               DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
               return (FALSE);
             }
@@ -2716,10 +2721,10 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
   return (FALSE);
 }
 
-BOOLEAN CanItemFitInPosition(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, INT8 bPos,
+BOOLEAN CanItemFitInPosition(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, int8_t bPos,
                              BOOLEAN fDoingPlacement) {
-  UINT8 ubSlotLimit;
-  INT8 bNewPos;
+  uint8_t ubSlotLimit;
+  int8_t bNewPos;
 
   switch (bPos) {
     case SECONDHANDPOS:
@@ -2794,7 +2799,7 @@ BOOLEAN CanItemFitInPosition(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pO
   return (TRUE);
 }
 
-BOOLEAN DropObjIfThereIsRoom(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *pObj) {
+BOOLEAN DropObjIfThereIsRoom(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
   // try autoplacing item in bSlot elsewhere, then do a placement
   BOOLEAN fAutoPlacedOld;
 
@@ -2806,11 +2811,11 @@ BOOLEAN DropObjIfThereIsRoom(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJ
   }
 }
 
-BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *pObj) {
+BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
   // returns object to have in hand after placement... same as original in the
   // case of error
 
-  UINT8 ubSlotLimit, ubNumberToDrop, ubLoop;
+  uint8_t ubSlotLimit, ubNumberToDrop, ubLoop;
   struct OBJECTTYPE *pInSlot;
   BOOLEAN fObjectWasRobotRemote = FALSE;
 
@@ -2826,7 +2831,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
   // CanItemFitInPosition).
   if (bPos == HEAD1POS) {
     if (!CompatibleFaceItem(pObj->usItem, pSoldier->inv[HEAD2POS].usItem)) {
-      CHAR16 zTemp[150];
+      wchar_t zTemp[150];
 
       swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
                ItemNames[pSoldier->inv[HEAD2POS].usItem]);
@@ -2835,7 +2840,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
     }
   } else if (bPos == HEAD2POS) {
     if (!CompatibleFaceItem(pObj->usItem, pSoldier->inv[HEAD1POS].usItem)) {
-      CHAR16 zTemp[150];
+      wchar_t zTemp[150];
 
       swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
                ItemNames[pSoldier->inv[HEAD1POS].usItem]);
@@ -2846,7 +2851,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
 
   if (Item[pObj->usItem].usItemClass == IC_KEY && pSoldier->uiStatusFlags & SOLDIER_PC) {
     if (KeyTable[pObj->ubKeyID].usDateFound == 0) {
-      KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetWorldDay();
+      KeyTable[pObj->ubKeyID].usDateFound = (uint16_t)GetWorldDay();
       KeyTable[pObj->ubKeyID].usSectorFound = GetSolSectorID8(pSoldier);
     }
   }
@@ -2903,7 +2908,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
     if ((pObj->usItem == pInSlot->usItem) &&
         (Item[pObj->usItem].usItemClass != IC_KEY || pObj->ubKeyID == pInSlot->ubKeyID)) {
       if (Item[pObj->usItem].usItemClass == IC_MONEY) {
-        UINT32 uiMoneyMax = MoneySlotLimit(bPos);
+        uint32_t uiMoneyMax = MoneySlotLimit(bPos);
 
         // always allow money to be combined!
         // IGNORE STATUS!
@@ -2992,10 +2997,10 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
 }
 
 BOOLEAN InternalAutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj,
-                                BOOLEAN fNewItem, INT8 bExcludeSlot) {
-  INT8 bSlot;
+                                BOOLEAN fNewItem, int8_t bExcludeSlot) {
+  int8_t bSlot;
   INVTYPE *pItem;
-  UINT8 ubPerSlot;
+  uint8_t ubPerSlot;
 
   // statuses of extra objects would be 0 if the # exceeds the maximum
   Assert(pObj->ubNumberOfObjects <= MAX_OBJECTS_PER_SLOT);
@@ -3183,7 +3188,7 @@ BOOLEAN AutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, B
   return (InternalAutoPlaceObject(pSoldier, pObj, fNewItem, NO_SLOT));
 }
 
-BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *pObj) {
+BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
   CHECKF(pObj);
   if (pSoldier->inv[bPos].ubNumberOfObjects == 0) {
     return (FALSE);
@@ -3194,9 +3199,9 @@ BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJ
   }
 }
 
-BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
+BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
                           struct OBJECTTYPE *pObj) {
-  UINT8 ubItem = 0;
+  uint8_t ubItem = 0;
 
   CHECKF(pObj);
 
@@ -3222,9 +3227,9 @@ BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
   return (FALSE);
 }
 
-BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
-                           UINT8 ubNumberOfKeys, struct OBJECTTYPE *pObj) {
-  UINT8 ubItems = 0;
+BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
+                           uint8_t ubNumberOfKeys, struct OBJECTTYPE *pObj) {
+  uint8_t ubItems = 0;
 
   CHECKF(pObj);
 
@@ -3252,13 +3257,14 @@ BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition,
 }
 
 // return number added
-UINT8 AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct OBJECTTYPE *pObj) {
-  UINT8 ubNumberNotAdded = 0;
+uint8_t AddKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
+                      struct OBJECTTYPE *pObj) {
+  uint8_t ubNumberNotAdded = 0;
 
   if (pSoldier->uiStatusFlags & SOLDIER_PC)  // redundant but what the hey
   {
     if (KeyTable[pObj->ubKeyID].usDateFound == 0) {
-      KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetWorldDay();
+      KeyTable[pObj->ubKeyID].usDateFound = (uint16_t)GetWorldDay();
       KeyTable[pObj->ubKeyID].usSectorFound = GetSolSectorID8(pSoldier);
     }
   }
@@ -3291,7 +3297,8 @@ UINT8 AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct 
   return (pObj->ubNumberOfObjects);
 }
 
-UINT8 SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct OBJECTTYPE *pObj) {
+uint8_t SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
+                       struct OBJECTTYPE *pObj) {
   // swap keys in keyring slot and keys in pocket
   struct OBJECTTYPE TempObj;
 
@@ -3308,14 +3315,15 @@ UINT8 SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct
   return (1);
 }
 
-BOOLEAN CreateKeyObject(struct OBJECTTYPE *pObj, UINT8 ubNumberOfKeys, UINT8 ubKeyID) {
+BOOLEAN CreateKeyObject(struct OBJECTTYPE *pObj, uint8_t ubNumberOfKeys, uint8_t ubKeyID) {
   BOOLEAN fRet;
 
-  fRet = CreateItems((UINT16)(FIRST_KEY + LockTable[ubKeyID].usKeyItem), 100, ubNumberOfKeys, pObj);
+  fRet =
+      CreateItems((uint16_t)(FIRST_KEY + LockTable[ubKeyID].usKeyItem), 100, ubNumberOfKeys, pObj);
   if (fRet) {
     pObj->ubKeyID = ubKeyID;
   }
-  // fRet = CreateItems( (UINT16)(ubKeyIdValue + FIRST_KEY) , 100, ubNumberOfKeys, pObj )
+  // fRet = CreateItems( (uint16_t)(ubKeyIdValue + FIRST_KEY) , 100, ubNumberOfKeys, pObj )
   // return(  );
   return (fRet);
 }
@@ -3339,9 +3347,9 @@ BOOLEAN DeleteKeyObject(struct OBJECTTYPE *pObj) {
   return (TRUE);
 }
 
-UINT16 TotalPoints(struct OBJECTTYPE *pObj) {
-  UINT16 usPoints = 0;
-  UINT8 ubLoop;
+uint16_t TotalPoints(struct OBJECTTYPE *pObj) {
+  uint16_t usPoints = 0;
+  uint8_t ubLoop;
 
   for (ubLoop = 0; ubLoop < pObj->ubNumberOfObjects; ubLoop++) {
     usPoints += pObj->bStatus[ubLoop];
@@ -3349,15 +3357,15 @@ UINT16 TotalPoints(struct OBJECTTYPE *pObj) {
   return (usPoints);
 }
 
-UINT16 UseKitPoints(struct OBJECTTYPE *pObj, UINT16 usPoints, struct SOLDIERTYPE *pSoldier) {
+uint16_t UseKitPoints(struct OBJECTTYPE *pObj, uint16_t usPoints, struct SOLDIERTYPE *pSoldier) {
   // start consuming from the last kit in, so we end up with fewer fuller kits rather than
   // lots of half-empty ones.
-  INT8 bLoop;
-  UINT16 usOriginalPoints = usPoints;
+  int8_t bLoop;
+  uint16_t usOriginalPoints = usPoints;
 
   for (bLoop = pObj->ubNumberOfObjects - 1; bLoop >= 0; bLoop--) {
-    if (usPoints < (UINT16)pObj->bStatus[bLoop]) {
-      pObj->bStatus[bLoop] -= (INT8)usPoints;
+    if (usPoints < (uint16_t)pObj->bStatus[bLoop]) {
+      pObj->bStatus[bLoop] -= (int8_t)usPoints;
       return (usOriginalPoints);
     } else {
       // consume this kit totally
@@ -3397,16 +3405,16 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
 #else
 
 #ifdef AI_TIMING_TESTS
-extern UINT32 guiGreenTimeTotal, guiYellowTimeTotal, guiRedTimeTotal, guiBlackTimeTotal;
-extern UINT32 guiGreenCounter, guiYellowCounter, guiRedCounter, guiBlackCounter;
-extern UINT32 guiRedSeekTimeTotal, guiRedHelpTimeTotal, guiRedHideTimeTotal;
-extern UINT32 guiRedSeekCounter, guiRedHelpCounter;
+extern uint32_t guiGreenTimeTotal, guiYellowTimeTotal, guiRedTimeTotal, guiBlackTimeTotal;
+extern uint32_t guiGreenCounter, guiYellowCounter, guiRedCounter, guiBlackCounter;
+extern uint32_t guiRedSeekTimeTotal, guiRedHelpTimeTotal, guiRedHideTimeTotal;
+extern uint32_t guiRedSeekCounter, guiRedHelpCounter;
 guiRedHideCounter;
 #endif
 
 void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   /*
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for ( uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++ )
   {
@@ -3437,7 +3445,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   }
   */
 
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop <= HISTORY_MERC_KILLED_CHARACTER; uiLoop++) {
     switch (uiLoop) {
@@ -3486,7 +3494,8 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
       case HISTORY_SLAUGHTEREDBLOODCATS:
       case HISTORY_GAVE_CARMEN_HEAD:
       case HISTORY_SLAY_MYSTERIOUSLY_LEFT:
-        AddHistoryToPlayersLog((UINT8)uiLoop, 0, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY);
+        AddHistoryToPlayersLog((uint8_t)uiLoop, 0, GetWorldTotalMin(), gWorldSectorX,
+                               gWorldSectorY);
         break;
       default:
         break;
@@ -3494,8 +3503,8 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   }
 
   /*
-  UINT32		uiEntryTime, uiExitTime;
-  UINT32		uiLoop;
+  uint32_t		uiEntryTime, uiExitTime;
+  uint32_t		uiLoop;
 
   for ( uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++ )
   {
@@ -3511,7 +3520,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
   }
   */
   /*
-                  UINT32	 uiLoop;
+                  uint32_t	 uiLoop;
 
                   for ( uiLoop = 0; uiLoop <= 4; uiLoop++ )
                   {
@@ -3520,9 +3529,9 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
                   }
                   */
   /*
-          UINT32	uiLoop;
-          INT16		sGridNo;
-          UINT32	uiStartTime, uiEndTime;
+          uint32_t	uiLoop;
+          int16_t		sGridNo;
+          uint32_t	uiStartTime, uiEndTime;
 
           if (GetMouseMapPos( &sGridNo ))
           {
@@ -3539,8 +3548,8 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
 }
 #endif
 
-UINT16 MagazineClassIndexToItemType(UINT16 usMagIndex) {
-  UINT16 usLoop;
+uint16_t MagazineClassIndexToItemType(uint16_t usMagIndex) {
+  uint16_t usLoop;
 
   // Note: if any ammo items in the item table are separated from the main group,
   // this function will have to be rewritten to scan the item table for an item
@@ -3554,9 +3563,9 @@ UINT16 MagazineClassIndexToItemType(UINT16 usMagIndex) {
   return (NONE);
 }
 
-UINT16 DefaultMagazine(UINT16 usItem) {
+uint16_t DefaultMagazine(uint16_t usItem) {
   WEAPONTYPE *pWeapon;
-  UINT16 usLoop;
+  uint16_t usLoop;
 
   if (!(Item[usItem].usItemClass & IC_GUN)) {
     return (0);
@@ -3576,9 +3585,9 @@ UINT16 DefaultMagazine(UINT16 usItem) {
   return (0);
 }
 
-UINT16 FindReplacementMagazine(UINT8 ubCalibre, UINT8 ubMagSize, UINT8 ubAmmoType) {
-  UINT8 ubLoop;
-  UINT16 usDefault;
+uint16_t FindReplacementMagazine(uint8_t ubCalibre, uint8_t ubMagSize, uint8_t ubAmmoType) {
+  uint8_t ubLoop;
+  uint16_t usDefault;
 
   ubLoop = 0;
   usDefault = NOTHING;
@@ -3599,8 +3608,9 @@ UINT16 FindReplacementMagazine(UINT8 ubCalibre, UINT8 ubMagSize, UINT8 ubAmmoTyp
   return (usDefault);
 }
 
-UINT16 FindReplacementMagazineIfNecessary(UINT16 usOldGun, UINT16 usOldAmmo, UINT16 usNewGun) {
-  UINT16 usNewAmmo = NOTHING;
+uint16_t FindReplacementMagazineIfNecessary(uint16_t usOldGun, uint16_t usOldAmmo,
+                                            uint16_t usNewGun) {
+  uint16_t usNewAmmo = NOTHING;
 
   if ((Magazine[Item[usOldAmmo].ubClassIndex].ubCalibre == Weapon[usOldGun].ubCalibre) &&
       (Magazine[Item[usOldAmmo].ubClassIndex].ubMagSize == Weapon[usOldGun].ubMagSize)) {
@@ -3615,16 +3625,16 @@ UINT16 FindReplacementMagazineIfNecessary(UINT16 usOldGun, UINT16 usOldAmmo, UIN
 // increase this if any gun can have more types that this
 #define MAX_AMMO_TYPES_PER_GUN 3
 
-UINT16 RandomMagazine(UINT16 usItem, UINT8 ubPercentStandard) {
+uint16_t RandomMagazine(uint16_t usItem, uint8_t ubPercentStandard) {
   // Note: if any ammo items in the item table are separated from the main group,
   // this function will have to be rewritten to scan the item table for an item
   // with item class ammo, which has class index ubLoop
 
   WEAPONTYPE *pWeapon;
-  UINT16 usLoop;
-  UINT16 usPossibleMagIndex[MAX_AMMO_TYPES_PER_GUN];
-  UINT16 usPossibleMagCnt = 0;
-  UINT8 ubMagChosen;
+  uint16_t usLoop;
+  uint16_t usPossibleMagIndex[MAX_AMMO_TYPES_PER_GUN];
+  uint16_t usPossibleMagCnt = 0;
+  uint8_t ubMagChosen;
 
   if (!(Item[usItem].usItemClass & IC_GUN)) {
     return (0);
@@ -3660,15 +3670,15 @@ UINT16 RandomMagazine(UINT16 usItem, UINT8 ubPercentStandard) {
         ubMagChosen = 0;
       } else {
         // pick a non-standard type instead
-        ubMagChosen = (UINT8)(1 + Random((UINT32)(usPossibleMagCnt - 1)));
+        ubMagChosen = (uint8_t)(1 + Random((uint32_t)(usPossibleMagCnt - 1)));
       }
 
       return (MagazineClassIndexToItemType(usPossibleMagIndex[ubMagChosen]));
     }
 }
 
-BOOLEAN CreateGun(UINT16 usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
-  UINT16 usAmmo;
+BOOLEAN CreateGun(uint16_t usItem, int8_t bStatus, struct OBJECTTYPE *pObj) {
+  uint16_t usAmmo;
 
   Assert(pObj != NULL);
   if (pObj == NULL) {
@@ -3719,7 +3729,7 @@ BOOLEAN CreateGun(UINT16 usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
   return (TRUE);
 }
 
-BOOLEAN CreateMagazine(UINT16 usItem, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateMagazine(uint16_t usItem, struct OBJECTTYPE *pObj) {
   if (pObj == NULL) {
     return (FALSE);
   }
@@ -3731,7 +3741,7 @@ BOOLEAN CreateMagazine(UINT16 usItem, struct OBJECTTYPE *pObj) {
   return (TRUE);
 }
 
-BOOLEAN CreateItem(UINT16 usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateItem(uint16_t usItem, int8_t bStatus, struct OBJECTTYPE *pObj) {
   BOOLEAN fRet;
 
   memset(pObj, 0, sizeof(struct OBJECTTYPE));
@@ -3764,9 +3774,9 @@ BOOLEAN CreateItem(UINT16 usItem, INT8 bStatus, struct OBJECTTYPE *pObj) {
   return (fRet);
 }
 
-BOOLEAN CreateItems(UINT16 usItem, INT8 bStatus, UINT8 ubNumber, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateItems(uint16_t usItem, int8_t bStatus, uint8_t ubNumber, struct OBJECTTYPE *pObj) {
   BOOLEAN fOk;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   // can't create any more than this, the loop for setting the bStatus[] of others will overwrite
   // memory!
@@ -3793,7 +3803,7 @@ BOOLEAN CreateItems(UINT16 usItem, INT8 bStatus, UINT8 ubNumber, struct OBJECTTY
   return (FALSE);
 }
 
-BOOLEAN CreateMoney(UINT32 uiMoney, struct OBJECTTYPE *pObj) {
+BOOLEAN CreateMoney(uint32_t uiMoney, struct OBJECTTYPE *pObj) {
   BOOLEAN fOk;
 
   fOk = CreateItem(MONEY, 100, pObj);
@@ -3803,7 +3813,7 @@ BOOLEAN CreateMoney(UINT32 uiMoney, struct OBJECTTYPE *pObj) {
   return (fOk);
 }
 
-BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, INT8 bSetting) {
+BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, int8_t bSetting) {
   BOOLEAN fRemote = FALSE;
   BOOLEAN fPressure = FALSE;
   BOOLEAN fTimed = FALSE;
@@ -3871,8 +3881,8 @@ BOOLEAN ArmBomb(struct OBJECTTYPE *pObj, INT8 bSetting) {
 void RenumberAttachments(struct OBJECTTYPE *pObj) {
   // loop through attachment positions and make sure we don't have any empty
   // attachment slots before filled ones
-  INT8 bAttachPos;
-  INT8 bFirstSpace;
+  int8_t bAttachPos;
+  int8_t bFirstSpace;
   BOOLEAN fDone = FALSE;
 
   while (!fDone) {
@@ -3902,8 +3912,8 @@ void RenumberAttachments(struct OBJECTTYPE *pObj) {
   }
 }
 
-BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, INT8 bAttachPos, struct OBJECTTYPE *pNewObj) {
-  INT8 bGrenade;
+BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, int8_t bAttachPos, struct OBJECTTYPE *pNewObj) {
+  int8_t bGrenade;
 
   CHECKF(pObj);
 
@@ -3945,7 +3955,7 @@ BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, INT8 bAttachPos, struct OBJECT
   return (TRUE);
 }
 
-void SetNewItem(struct SOLDIERTYPE *pSoldier, UINT8 ubInvPos, BOOLEAN fNewItem) {
+void SetNewItem(struct SOLDIERTYPE *pSoldier, uint8_t ubInvPos, BOOLEAN fNewItem) {
   if (fNewItem) {
     pSoldier->bNewItemCount[ubInvPos] = -1;
     pSoldier->bNewItemCycleCount[ubInvPos] = NEW_ITEM_CYCLE_COUNT;
@@ -3953,11 +3963,11 @@ void SetNewItem(struct SOLDIERTYPE *pSoldier, UINT8 ubInvPos, BOOLEAN fNewItem) 
   }
 }
 
-BOOLEAN PlaceObjectInSoldierProfile(UINT8 ubProfile, struct OBJECTTYPE *pObject) {
-  INT8 bLoop, bLoop2;
+BOOLEAN PlaceObjectInSoldierProfile(uint8_t ubProfile, struct OBJECTTYPE *pObject) {
+  int8_t bLoop, bLoop2;
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usItem;
-  INT8 bStatus;
+  uint16_t usItem;
+  int8_t bStatus;
   BOOLEAN fReturnVal = FALSE;
 
   usItem = pObject->usItem;
@@ -4021,8 +4031,8 @@ BOOLEAN PlaceObjectInSoldierProfile(UINT8 ubProfile, struct OBJECTTYPE *pObject)
   return (fReturnVal);
 }
 
-BOOLEAN RemoveObjectFromSoldierProfile(UINT8 ubProfile, UINT16 usItem) {
-  INT8 bLoop;
+BOOLEAN RemoveObjectFromSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
+  int8_t bLoop;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fReturnVal = FALSE;
 
@@ -4053,8 +4063,8 @@ BOOLEAN RemoveObjectFromSoldierProfile(UINT8 ubProfile, UINT16 usItem) {
   return (fReturnVal);
 }
 
-void SetMoneyInSoldierProfile(UINT8 ubProfile, UINT32 uiMoney) {
-  // INT8						bSlot;
+void SetMoneyInSoldierProfile(uint8_t ubProfile, uint32_t uiMoney) {
+  // int8_t						bSlot;
   struct OBJECTTYPE Object;
   // struct SOLDIERTYPE *		pSoldier;
   BOOLEAN fRet;
@@ -4073,8 +4083,8 @@ void SetMoneyInSoldierProfile(UINT8 ubProfile, UINT32 uiMoney) {
   }
 }
 
-INT8 FindObjectInSoldierProfile(UINT8 ubProfile, UINT16 usItem) {
-  INT8 bLoop;
+int8_t FindObjectInSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < 19; bLoop++) {
     if (gMercProfiles[ubProfile].bInvNumber[bLoop] > 0) {
@@ -4086,15 +4096,15 @@ INT8 FindObjectInSoldierProfile(UINT8 ubProfile, UINT16 usItem) {
   return (NO_SLOT);
 }
 
-BOOLEAN ObjectExistsInSoldierProfile(UINT8 ubProfile, UINT16 usItem) {
-  INT8 bSlot;
+BOOLEAN ObjectExistsInSoldierProfile(uint8_t ubProfile, uint16_t usItem) {
+  int8_t bSlot;
 
   bSlot = FindObjectInSoldierProfile(ubProfile, usItem);
   return (bSlot != NO_SLOT);
 }
 
-void RemoveInvObject(struct SOLDIERTYPE *pSoldier, UINT16 usItem) {
-  INT8 bInvPos;
+void RemoveInvObject(struct SOLDIERTYPE *pSoldier, uint16_t usItem) {
+  int8_t bInvPos;
 
   // find object
   bInvPos = FindObj(pSoldier, usItem);
@@ -4107,8 +4117,8 @@ void RemoveInvObject(struct SOLDIERTYPE *pSoldier, UINT16 usItem) {
   }
 }
 
-INT8 CheckItemForDamage(UINT16 usItem, INT32 iMaxDamage) {
-  INT8 bDamage = 0;
+int8_t CheckItemForDamage(uint16_t usItem, int32_t iMaxDamage) {
+  int8_t bDamage = 0;
 
   // if the item is protective armour, reduce the amount of damage
   // by its armour value
@@ -4122,13 +4132,13 @@ INT8 CheckItemForDamage(UINT16 usItem, INT32 iMaxDamage) {
     iMaxDamage *= 2;
   }
   if (iMaxDamage > 0) {
-    bDamage = (INT8)PreRandom(iMaxDamage);
+    bDamage = (int8_t)PreRandom(iMaxDamage);
   }
   return (bDamage);
 }
 
-BOOLEAN CheckForChainReaction(UINT16 usItem, INT8 bStatus, INT8 bDamage, BOOLEAN fOnGround) {
-  INT32 iChance;
+BOOLEAN CheckForChainReaction(uint16_t usItem, int8_t bStatus, int8_t bDamage, BOOLEAN fOnGround) {
+  int32_t iChance;
 
   iChance = Explosive[Item[usItem].ubClassIndex].ubVolatility;
   if (iChance > 0) {
@@ -4141,16 +4151,16 @@ BOOLEAN CheckForChainReaction(UINT16 usItem, INT8 bStatus, INT8 bDamage, BOOLEAN
     }
 
     iChance = iChance * (100 + ((100 - bStatus) + bDamage) / 2) / 100;
-    if ((INT32)PreRandom(100) < iChance) {
+    if ((int32_t)PreRandom(100) < iChance) {
       return (TRUE);
     }
   }
   return (FALSE);
 }
 
-BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround) {
-  INT8 bLoop;
-  INT8 bDamage;
+BOOLEAN DamageItem(struct OBJECTTYPE *pObject, int32_t iDamage, BOOLEAN fOnGround) {
+  int8_t bLoop;
+  int8_t bDamage;
 
   if ((Item[pObject->usItem].fFlags & ITEM_DAMAGEABLE ||
        Item[pObject->usItem].usItemClass == IC_AMMO) &&
@@ -4174,7 +4184,7 @@ BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround)
             break;
         }
         if (Item[pObject->usItem].usItemClass == IC_AMMO) {
-          if (PreRandom(100) < (UINT32)bDamage) {
+          if (PreRandom(100) < (uint32_t)bDamage) {
             // destroy clip completely
             pObject->bStatus[bLoop] = 1;
           }
@@ -4217,10 +4227,10 @@ BOOLEAN DamageItem(struct OBJECTTYPE *pObject, INT32 iDamage, BOOLEAN fOnGround)
   return (FALSE);
 }
 
-void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
-  INT8 bSlot;
+void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, int32_t iDamage) {
+  int8_t bSlot;
   BOOLEAN fBlowsUp;
-  UINT8 ubNumberOfObjects;
+  uint8_t ubNumberOfObjects;
 
   if (TANK(pSoldier)) {
     return;
@@ -4250,10 +4260,10 @@ void CheckEquipmentForDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
   }
 }
 
-void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDamage) {
+void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, int32_t iDamage) {
   // glass jars etc can be damaged by falling over
-  INT8 bSlot;
-  UINT8 ubNumberOfObjects;
+  int8_t bSlot;
+  uint8_t ubNumberOfObjects;
   BOOLEAN fPlayedGlassBreak = FALSE;
 
   for (bSlot = 0; bSlot < NUM_INV_SLOTS; bSlot++) {
@@ -4278,8 +4288,8 @@ void CheckEquipmentForFragileItemDamage(struct SOLDIERTYPE *pSoldier, INT32 iDam
   }
 }
 
-BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, INT8 bLevel, INT32 iDamage,
-                           UINT8 ubOwner) {
+BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, int16_t sGridNo, int8_t bLevel,
+                           int32_t iDamage, uint8_t ubOwner) {
   BOOLEAN fBlowsUp;
 
   fBlowsUp = DamageItem(pObject, iDamage, TRUE);
@@ -4298,7 +4308,7 @@ BOOLEAN DamageItemOnGround(struct OBJECTTYPE *pObject, INT16 sGridNo, INT8 bLeve
 }
 
 // is the item a medical kit/first aid kit item?
-INT8 IsMedicalKitItem(struct OBJECTTYPE *pObject) {
+int8_t IsMedicalKitItem(struct OBJECTTYPE *pObject) {
   // check item id against current medical kits
   switch (pObject->usItem) {
     case (MEDICKIT):
@@ -4357,8 +4367,8 @@ void SwapOutHandItem(struct SOLDIERTYPE *pSoldier) {
 
 void WaterDamage(struct SOLDIERTYPE *pSoldier) {
   // damage guy's equipment and camouflage due to water
-  INT8 bLoop, bDamage, bDieSize;
-  UINT32 uiRoll;
+  int8_t bLoop, bDamage, bDieSize;
+  uint32_t uiRoll;
 
   if (pSoldier->bOverTerrainType == DEEP_WATER) {
     for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++) {
@@ -4371,7 +4381,7 @@ void WaterDamage(struct SOLDIERTYPE *pSoldier) {
         // 10% chance of getting damage!
         if (uiRoll < 10) {
           // lose between 1 and 10 status points each time
-          bDamage = (INT8)(10 - uiRoll);
+          bDamage = (int8_t)(10 - uiRoll);
 
           // but don't let anything drop lower than 1%
           pSoldier->inv[bLoop].bStatus[0] -= bDamage;
@@ -4413,8 +4423,8 @@ void WaterDamage(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) {
-  INT8 bPointsToUse;
-  UINT16 usTotalKitPoints;
+  int8_t bPointsToUse;
+  uint16_t usTotalKitPoints;
 
   (*pfGoodAPs) = TRUE;
 
@@ -4457,8 +4467,8 @@ BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEA
 }
 
 BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) {
-  INT16 sPointsToUse;
-  UINT16 usTotalKitPoints;
+  int16_t sPointsToUse;
+  uint16_t usTotalKitPoints;
 
   (*pfGoodAPs) = TRUE;
 
@@ -4488,7 +4498,7 @@ BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOL
   sPointsToUse = min(20, usTotalKitPoints);
 
   // CJC Feb 9.  Canteens don't seem effective enough, so doubled return from them
-  DeductPoints(pSoldier, AP_DRINK, (INT16)(2 * sPointsToUse * -(100 - pSoldier->bBreath)));
+  DeductPoints(pSoldier, AP_DRINK, (int16_t)(2 * sPointsToUse * -(100 - pSoldier->bBreath)));
 
   UseKitPoints(pObj, sPointsToUse, pSoldier);
 
@@ -4498,8 +4508,8 @@ BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOL
 #define MAX_HUMAN_CREATURE_SMELL (NORMAL_HUMAN_SMELL_STRENGTH - 1)
 
 BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) {
-  INT16 sPointsToUse;
-  UINT16 usTotalKitPoints;
+  int16_t sPointsToUse;
+  uint16_t usTotalKitPoints;
 
   (*pfGoodAPs) = TRUE;
 
@@ -4530,10 +4540,12 @@ BOOLEAN ApplyElixir(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLE
   return (TRUE);
 }
 
-UINT32 ConvertProfileMoneyValueToObjectTypeMoneyValue(UINT8 ubStatus) { return (ubStatus * 50); }
+uint32_t ConvertProfileMoneyValueToObjectTypeMoneyValue(uint8_t ubStatus) {
+  return (ubStatus * 50);
+}
 
-UINT8 ConvertObjectTypeMoneyValueToProfileMoneyValue(UINT32 uiMoneyAmount) {
-  return ((UINT8)(uiMoneyAmount / 50));
+uint8_t ConvertObjectTypeMoneyValueToProfileMoneyValue(uint32_t uiMoneyAmount) {
+  return ((uint8_t)(uiMoneyAmount / 50));
 }
 
 BOOLEAN ItemIsCool(struct OBJECTTYPE *pObj) {
@@ -4555,8 +4567,8 @@ BOOLEAN ItemIsCool(struct OBJECTTYPE *pObj) {
 
 void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2;
-  UINT32 uiSlot;
-  INT8 bBatteries;
+  uint32_t uiSlot;
+  int8_t bBatteries;
 
   // check for batteries
   bBatteries = FindAttachment(&(pSoldier->inv[HANDPOS]), BATTERIES);
@@ -4566,7 +4578,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
   }
 
   // use up 8-12 percent of batteries
-  pSoldier->inv[HANDPOS].bAttachStatus[bBatteries] -= (INT8)(8 + Random(5));
+  pSoldier->inv[HANDPOS].bAttachStatus[bBatteries] -= (int8_t)(8 + Random(5));
   if (pSoldier->inv[HANDPOS].bAttachStatus[bBatteries] <= 0) {
     // destroy batteries
     pSoldier->inv[HANDPOS].usAttachItem[bBatteries] = NOTHING;
@@ -4601,7 +4613,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
 
 void TurnOffXRayEffects(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2;
-  UINT32 uiSlot;
+  uint32_t uiSlot;
 
   if (!pSoldier->uiXRayActivatedTime) {
     return;
@@ -4624,9 +4636,9 @@ void TurnOffXRayEffects(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef JA2TESTVERSION
 void DumpItemsList(void) {
-  CHAR8 zPrintFileName[60];
+  char zPrintFileName[60];
   FILE *FDump;
-  UINT16 usItem;
+  uint16_t usItem;
   INVTYPE *pItem;
 
   // open output file
