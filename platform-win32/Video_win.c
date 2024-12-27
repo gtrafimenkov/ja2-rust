@@ -902,7 +902,7 @@ void printFramebuffer() {
   LPDIRECTDRAWSURFACE2 pTmpBuffer;
   DDSURFACEDESC SurfaceDescription;
   FILE *OutputFile;
-  char *FileName[64];
+  char FileName[64];
   struct Str512 ExecDir;
   uint16_t *p16BPPData;
 
