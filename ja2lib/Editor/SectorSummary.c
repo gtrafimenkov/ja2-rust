@@ -74,7 +74,7 @@ BOOLEAN gfMustForceUpdateAllMaps = FALSE;
 uint16_t gusNumberOfMapsToBeForceUpdated = 0;
 BOOLEAN gfMajorUpdate = FALSE;
 
-void LoadSummary(CHAR8 *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion);
+void LoadSummary(char *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion);
 void RegenerateSummaryInfoForAllOutdatedMaps();
 
 void SetupItemDetailsMode(BOOLEAN fAllowRecursion);
@@ -1424,7 +1424,7 @@ void RenderSummaryWindow() {
 
 void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate) {
   wchar_t str[50];
-  CHAR8 szCoord[40];
+  char szCoord[40];
   wchar_t *ptr;
   int16_t x, y;
 
@@ -1950,7 +1950,7 @@ void SummarySaveMapCallback(GUI_BUTTON *btn, int32_t reason) {
     gfRenderSummary = TRUE;
     if (gubOverrideStatus == INACTIVE || gfOverride == TRUE) {
       if (gubOverrideStatus == READONLY) {
-        CHAR8 filename[1024];
+        char filename[1024];
         snprintf(filename, ARR_SIZE(filename), "MAPS\\%S", gszDisplayName);
         Plat_ClearFileAttributes(filename);
       }
@@ -1979,11 +1979,11 @@ void SummaryOverrideCallback(GUI_BUTTON *btn, int32_t reason) {
 
 void CalculateOverrideStatus() {
   struct GetFile FileInfo;
-  CHAR8 szFilename[1024];
+  char szFilename[1024];
   gfOverrideDirty = FALSE;
   gfOverride = FALSE;
   if (gfTempFile) {
-    CHAR8 *ptr;
+    char *ptr;
     snprintf(szFilename, ARR_SIZE(szFilename), "MAPS\\%S", gszTempFilename);
     if (strlen(szFilename) == 5) strcat(szFilename, "test.dat");
     ptr = strstr(szFilename, ".");
@@ -2021,8 +2021,8 @@ void LoadGlobalSummary() {
   uint32_t uiNumBytesRead;
   FLOAT dMajorVersion;
   int32_t x, y;
-  CHAR8 szFilename[40];
-  CHAR8 szSector[6];
+  char szFilename[40];
+  char szSector[6];
 
   DebugPrint("Executing LoadGlobalSummary()...\n");
 
@@ -2209,11 +2209,11 @@ void GenerateSummaryList() {
   Plat_SetCurrentDirectory(Dir);
 }
 
-void WriteSectorSummaryUpdate(CHAR8 *puiFilename, uint8_t ubLevel, SUMMARYFILE *pSummaryFileInfo) {
+void WriteSectorSummaryUpdate(char *puiFilename, uint8_t ubLevel, SUMMARYFILE *pSummaryFileInfo) {
   FILE *fp;
   char ExecDir[256];
   char Dir[300];
-  CHAR8 *ptr;
+  char *ptr;
   int8_t x, y;
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
@@ -2274,14 +2274,14 @@ void SummaryNewCaveLevelCallback(GUI_BUTTON *btn, int32_t reason) {
   }
 }
 
-void LoadSummary(CHAR8 *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion) {
-  CHAR8 filename[40];
+void LoadSummary(char *pSector, uint8_t ubLevel, FLOAT dMajorMapVersion) {
+  char filename[40];
   SUMMARYFILE temp;
   int32_t x, y;
   FILE *fp;
   strcopy(filename, ARR_SIZE(filename), pSector);
   if (ubLevel % 4) {
-    CHAR8 str[4];
+    char str[4];
     sprintf(str, "_b%d", ubLevel % 4);
     strcat(filename, str);
   }
@@ -2337,7 +2337,7 @@ void UpdateMasterProgress() {
   }
 }
 
-void ReportError(CHAR8 *pSector, uint8_t ubLevel) {
+void ReportError(char *pSector, uint8_t ubLevel) {
   static int32_t yp = 180;
   wchar_t str[40];
   wchar_t temp[10];
@@ -2355,7 +2355,7 @@ void ReportError(CHAR8 *pSector, uint8_t ubLevel) {
 
 void RegenerateSummaryInfoForAllOutdatedMaps() {
   int32_t x, y;
-  CHAR8 str[40];
+  char str[40];
   SUMMARYFILE *pSF;
   // CreateProgressBar( 0, 20, 120, 300, 132 ); //slave (individual)
   // CreateProgressBar( 1, 20, 100, 300, 112 ); //master (total)
@@ -2421,7 +2421,7 @@ void RegenerateSummaryInfoForAllOutdatedMaps() {
 
 void SummaryUpdateCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    CHAR8 str[40];
+    char str[40];
     CreateProgressBar(0, 20, 100, 300, 112);  // slave (individual)
     DefineProgressBarPanel(0, 65, 79, 94, 10, 80, 310, 132);
     SetProgressBarTitle(0, L"Generating map summary", BLOCKFONT2, FONT_RED, FONT_NEARBLACK);
@@ -2457,7 +2457,7 @@ void ExtractTempFilename() {
 void ApologizeOverrideAndForceUpdateEverything() {
   int32_t x, y;
   wchar_t str[50];
-  CHAR8 name[50];
+  char name[50];
   SUMMARYFILE *pSF;
   // Create one huge assed button
   gfMajorUpdate = TRUE;
@@ -2575,7 +2575,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   HWFILE hfile;
   uint32_t uiNumBytesRead;
   uint32_t uiNumItems;
-  CHAR8 szFilename[1024];
+  char szFilename[1024];
   BASIC_SOLDIERCREATE_STRUCT basic;
   SOLDIERCREATE_STRUCT priority;
   int32_t i, j;

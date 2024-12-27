@@ -35,7 +35,7 @@ int8_t bBattleModeSong;
 
 int8_t gbFadeSpeed = 1;
 
-CHAR8 *szMusicList[NUM_MUSIC] = {
+char *szMusicList[NUM_MUSIC] = {
     "MUSIC\\marimbad 2.wav", "MUSIC\\menumix1.wav",  "MUSIC\\nothing A.wav",
     "MUSIC\\nothing B.wav",  "MUSIC\\nothing C.wav", "MUSIC\\nothing D.wav",
     "MUSIC\\tensor A.wav",   "MUSIC\\tensor B.wav",  "MUSIC\\tensor C.wav",

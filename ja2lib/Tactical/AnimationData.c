@@ -4166,7 +4166,7 @@ AnimationStructureType gAnimStructureDatabase[TOTALBODYTYPES][NUM_STRUCT_IDS] = 
 
 BOOLEAN InitAnimationSystem() {
   int32_t cnt1, cnt2;
-  CHAR8 sFilename[50];
+  char sFilename[50];
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
   CHECKF(LoadAnimationStateInstructions());
@@ -4277,7 +4277,7 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
     VOBJECT_DESC VObjectDesc;
     struct VObject *hVObject;
     HIMAGE hImage;
-    CHAR8 sFilename[48];
+    char sFilename[48];
     struct STRUCTURE_FILE_REF *pStructureFileRef;
 
     AnimDebugMsg(String("Surface Database: Loading %d", usSurfaceIndex));

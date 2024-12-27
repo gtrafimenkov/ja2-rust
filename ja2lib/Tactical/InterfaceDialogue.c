@@ -348,7 +348,7 @@ BOOLEAN InternalInitTalkingMenu(uint8_t ubCharacterNum, int16_t sX, int16_t sY) 
   uint16_t usHeight;
   VOBJECT_DESC VObjectDesc;
   int16_t sCenterYVal, sCenterXVal;
-  CHAR8 ubString[48];
+  char ubString[48];
 
   // disable scroll messages
   HideMessagesDuringNPCDialogue();

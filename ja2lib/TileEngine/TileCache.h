@@ -9,8 +9,8 @@ struct VObject;
 #define TILE_CACHE_START_INDEX 36000
 
 typedef struct {
-  CHAR8 zName[128];               // Name of tile ( filename and directory here )
-  CHAR8 zRootName[30];            // Root name
+  char zName[128];                // Name of tile ( filename and directory here )
+  char zRootName[30];             // Root name
   struct TILE_IMAGERY *pImagery;  // Tile imagery
   int16_t sHits;
   uint8_t ubNumFrames;
@@ -19,8 +19,8 @@ typedef struct {
 } TILE_CACHE_ELEMENT;
 
 typedef struct {
-  CHAR8 Filename[150];
-  CHAR8 zRootName[30];  // Root name
+  char Filename[150];
+  char zRootName[30];  // Root name
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
 } TILE_CACHE_STRUCT;

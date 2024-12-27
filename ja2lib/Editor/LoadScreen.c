@@ -107,7 +107,7 @@ BOOLEAN gfPassedSaveCheck = FALSE;
 
 struct MOUSE_REGION BlanketRegion;
 
-CHAR8 gszCurrFilename[1024];
+char gszCurrFilename[1024];
 
 enum { IOSTATUS_NONE, INITIATE_MAP_SAVE, SAVING_MAP, INITIATE_MAP_LOAD, LOADING_MAP };
 int8_t gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
@@ -761,7 +761,7 @@ void InitErrorCatchDialog() {
 // process takes two full screen cycles.
 uint32_t ProcessFileIO() {
   int16_t usStartX, usStartY;
-  CHAR8 ubNewFilename[1024];
+  char ubNewFilename[1024];
   switch (gbCurrentFileIOStatus) {
     case INITIATE_MAP_SAVE:  // draw save message
       StartFrameBufferRender();

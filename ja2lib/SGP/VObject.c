@@ -60,8 +60,8 @@ typedef struct VOBJECT_NODE {
   struct VOBJECT_NODE *next, *prev;
 
 #ifdef SGP_VIDEO_DEBUGGING
-  CHAR8 *pName;
-  CHAR8 *pCode;
+  char *pName;
+  char *pCode;
 #endif
 
 } VOBJECT_NODE;
@@ -1222,7 +1222,7 @@ void CheckValidVObjectIndex(uint32_t uiIndex) {
   }
 
   if (fAssertError) {
-    CHAR8 str[60];
+    char str[60];
     switch (gubVODebugCode) {
       case DEBUGSTR_SETVIDEOOBJECTTRANSPARENCY:
         sprintf(str, "SetVideoObjectTransparency");
@@ -1274,16 +1274,16 @@ void CheckValidVObjectIndex(uint32_t uiIndex) {
 #ifdef SGP_VIDEO_DEBUGGING
 
 typedef struct DUMPFILENAME {
-  CHAR8 str[256];
+  char str[256];
 } DUMPFILENAME;
 
-void DumpVObjectInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
+void DumpVObjectInfoIntoFile(char *filename, BOOLEAN fAppend) {
   VOBJECT_NODE *curr;
   FILE *fp;
   DUMPFILENAME *pName, *pCode;
   uint32_t *puiCounter;
-  CHAR8 tempName[256];
-  CHAR8 tempCode[256];
+  char tempName[256];
+  char tempCode[256];
   uint32_t i, uiUniqueID;
   BOOLEAN fFound;
   if (!guiVObjectSize) {
@@ -1348,30 +1348,30 @@ void DumpVObjectInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
 
 // Debug wrapper for adding vObjects
 BOOLEAN _AddAndRecordVObject(VOBJECT_DESC *VObjectDesc, uint32_t *uiIndex, uint32_t uiLineNum,
-                             CHAR8 *pSourceFile) {
+                             char *pSourceFile) {
   uint16_t usLength;
-  CHAR8 str[256];
+  char str[256];
   if (!AddStandardVideoObject(VObjectDesc, uiIndex)) {
     return FALSE;
   }
 
   // record the filename of the vObject (some are created via memory though)
   usLength = strlen(VObjectDesc->ImageFile) + 1;
-  gpVObjectTail->pName = (CHAR8 *)MemAlloc(usLength);
+  gpVObjectTail->pName = (char *)MemAlloc(usLength);
   memset(gpVObjectTail->pName, 0, usLength);
   strcpy(gpVObjectTail->pName, VObjectDesc->ImageFile);
 
   // record the code location of the calling creating function.
   sprintf(str, "%s -- line(%d)", pSourceFile, uiLineNum);
   usLength = strlen(str) + 1;
-  gpVObjectTail->pCode = (CHAR8 *)MemAlloc(usLength);
+  gpVObjectTail->pCode = (char *)MemAlloc(usLength);
   memset(gpVObjectTail->pCode, 0, usLength);
   strcpy(gpVObjectTail->pCode, str);
 
   return TRUE;
 }
 
-void PerformVideoInfoDumpIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
+void PerformVideoInfoDumpIntoFile(char *filename, BOOLEAN fAppend) {
   DumpVObjectInfoIntoFile(filename, fAppend);
   DumpVSurfaceInfoIntoFile(filename, TRUE);
 }

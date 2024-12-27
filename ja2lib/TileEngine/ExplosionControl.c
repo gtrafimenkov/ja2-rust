@@ -88,7 +88,7 @@ uint32_t uiExplosionSoundID[NUM_EXP_TYPES] = {
     EXPLOSION_BLAST_2, EXPLOSION_1, AIR_ESCAPING_1, AIR_ESCAPING_1, AIR_ESCAPING_1, AIR_ESCAPING_1,
 };
 
-CHAR8 zBlastFilenames[][70] = {
+char zBlastFilenames[][70] = {
     "",
     "TILECACHE\\ZGRAV_D.STI",
     "TILECACHE\\ZGRAV_C.STI",
@@ -100,7 +100,7 @@ CHAR8 zBlastFilenames[][70] = {
     "TILECACHE\\MUST_EXP.STI",
 };
 
-CHAR8 sBlastSpeeds[] = {
+char sBlastSpeeds[] = {
     0, 80, 80, 80, 20, 80, 80, 80, 80,
 };
 

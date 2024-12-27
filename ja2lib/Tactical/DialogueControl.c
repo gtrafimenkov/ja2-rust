@@ -1026,7 +1026,7 @@ void HandleDialogue() {
 
 BOOLEAN GetDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, uint32_t iDataSize,
                     wchar_t *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
-                    CHAR8 *zSoundString);
+                    char *zSoundString);
 
 BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNum) {
   if (GetSolProfile(pSoldier) == NO_PROFILE) {
@@ -1337,7 +1337,7 @@ BOOLEAN SpecialCharacterDialogueEventWithExtraParam(uint32_t uiSpecialEventFlag,
 
 BOOLEAN ExecuteCharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, int32_t iFaceIndex,
                                  uint8_t bUIHandlerID, BOOLEAN fFromSoldier) {
-  CHAR8 zSoundString[164];
+  char zSoundString[164];
   uint32_t uiSoundID;
   struct SOLDIERTYPE *pSoldier;
 
@@ -1463,8 +1463,8 @@ void CreateTalkingUI(int8_t bUIHandlerID, int32_t iFaceIndex, uint8_t ubCharacte
   }
 }
 
-CHAR8 *GetDialogueDataFilename(uint8_t ubCharacterNum, uint16_t usQuoteNum, BOOLEAN fWavFile) {
-  static CHAR8 zFileName[164];
+char *GetDialogueDataFilename(uint8_t ubCharacterNum, uint16_t usQuoteNum, BOOLEAN fWavFile) {
+  static char zFileName[164];
   uint8_t ubFileNumID;
 
   // Are we an NPC OR an RPC that has not been recruited?
@@ -1526,8 +1526,8 @@ CHAR8 *GetDialogueDataFilename(uint8_t ubCharacterNum, uint16_t usQuoteNum, BOOL
 
 // Used to see if the dialog text file exists
 BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuoteNum,
-                                         BOOLEAN fWavFile, CHAR8 **ppStr) {
-  CHAR8 *pFilename;
+                                         BOOLEAN fWavFile, char **ppStr) {
+  char *pFilename;
 
   pFilename = GetDialogueDataFilename(ubCharacterNum, usQuoteNum, fWavFile);
 
@@ -1540,8 +1540,8 @@ BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuot
 
 BOOLEAN GetDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, uint32_t iDataSize,
                     wchar_t *zDialogueText, int zDialogueTextSize, uint32_t *puiSoundID,
-                    CHAR8 *zSoundString) {
-  CHAR8 *pFilename;
+                    char *zSoundString) {
+  char *pFilename;
 
   // first things first  - grab the text (if player has SUBTITLE PREFERENCE ON)
   // if ( gGameSettings.fOptions[ TOPTION_SUBTITLES ] )

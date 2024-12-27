@@ -5441,7 +5441,7 @@ BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTes
 }
 
 int8_t GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
-                                          CHAR8 *zColFilename) {
+                                          char *zColFilename) {
   switch (ubBodyType) {
     case REGMALE:
     case BIGMALE:

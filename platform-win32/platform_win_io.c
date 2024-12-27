@@ -717,11 +717,11 @@ BOOLEAN Plat_DirectoryExists(const char *pcDirectory) {
 BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) {
   WIN32_FIND_DATA sFindData;
   HANDLE SearchHandle;
-  const CHAR8 *pFileSpec = "*.*";
+  const char *pFileSpec = "*.*";
   BOOLEAN fDone = FALSE;
   BOOLEAN fRetval = FALSE;
-  CHAR8 zOldDir[512];
-  CHAR8 zSubdirectory[512];
+  char zOldDir[512];
+  char zSubdirectory[512];
 
   Plat_GetCurrentDirectory(zOldDir);
 
@@ -794,9 +794,9 @@ BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) {
 BOOLEAN Plat_EraseDirectory(const char *pcDirectory) {
   WIN32_FIND_DATA sFindData;
   HANDLE SearchHandle;
-  const CHAR8 *pFileSpec = "*.*";
+  const char *pFileSpec = "*.*";
   BOOLEAN fDone = FALSE;
-  CHAR8 zOldDir[512];
+  char zOldDir[512];
 
   Plat_GetCurrentDirectory(zOldDir);
 
@@ -837,7 +837,7 @@ BOOLEAN Plat_EraseDirectory(const char *pcDirectory) {
   return (TRUE);
 }
 
-BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
+BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) {
   int32_t x, iWhich = 0;
   BOOLEAN fFound;
 
@@ -1079,10 +1079,10 @@ HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
 
 // Given a path, fill outputBuf with the file name.
 void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
-  CHAR8 sName[_MAX_FNAME];
-  CHAR8 sPath[_MAX_DIR];
-  CHAR8 sDrive[_MAX_DRIVE];
-  CHAR8 sExt[_MAX_EXT];
+  char sName[_MAX_FNAME];
+  char sPath[_MAX_DIR];
+  char sDrive[_MAX_DRIVE];
+  char sExt[_MAX_EXT];
 
   _splitpath(path, sDrive, sPath, sName, sExt);
 

@@ -1415,8 +1415,8 @@ void ReinitializeUnvisitedGarrisons();
 // called "Strategic Decisions.txt" in the JA2\Data directory.  This also records the time that each
 // log entry was made.
 #ifdef JA2BETAVERSION
-void LogStrategicEvent(CHAR8 *str, ...);  // adds a timestamp.
-void LogStrategicMsg(CHAR8 *str, ...);    // doesn't use the time stamp
+void LogStrategicEvent(char *str, ...);  // adds a timestamp.
+void LogStrategicMsg(char *str, ...);    // doesn't use the time stamp
 void ClearStrategicLog();
 #endif
 
@@ -1979,7 +1979,7 @@ void SAIReportError(STR16 wErrorString) {
       ScreenMsg(FONT_LTBLUE, MSG_BETAVERSION, wErrorString);
     }
     if (guiCurrentScreen == AIVIEWER_SCREEN) {
-      CHAR8 str[512];
+      char str[512];
       sprintf(str, "%S\n", wErrorString);
       DebugPrint(str);
     }
@@ -4411,9 +4411,9 @@ void ExecuteStrategicAIAction(uint16_t usActionCode, u8 sSectorX, u8 sSectorY) {
 
 #ifdef JA2BETAVERSION
 
-void LogStrategicMsg(CHAR8 *str, ...) {
+void LogStrategicMsg(char *str, ...) {
   va_list argptr;
-  CHAR8 string[512];
+  char string[512];
 
   FILE *fp;
 
@@ -4436,9 +4436,9 @@ void LogStrategicMsg(CHAR8 *str, ...) {
   fclose(fp);
 }
 
-void LogStrategicEvent(CHAR8 *str, ...) {
+void LogStrategicEvent(char *str, ...) {
   va_list argptr;
-  CHAR8 string[512];
+  char string[512];
 
   FILE *fp;
 

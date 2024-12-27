@@ -14,8 +14,8 @@ void GetClippingRect(SGPRect *clip);
 
 BOOLEAN BltIsClipped(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
                      SGPRect *clipregion);
-CHAR8 BltIsClippedOrOffScreen(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
-                              SGPRect *clipregion);
+char BltIsClippedOrOffScreen(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
+                             SGPRect *clipregion);
 
 uint16_t *InitZBuffer(uint32_t uiPitch, uint32_t uiHeight);
 BOOLEAN ShutdownZBuffer(uint16_t *pBuffer);

@@ -42,7 +42,7 @@ void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap) { gfApplyChangesToTempFile 
 
 BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
                                            int8_t bSectorZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;
 
@@ -79,7 +79,7 @@ BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSe
 }
 
 BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;
   uint32_t uiFileSize;
@@ -487,7 +487,7 @@ void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
 }
 
 BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;
 
@@ -527,7 +527,7 @@ BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, int8
 }
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;
 
@@ -762,7 +762,7 @@ void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, u8 sSector
 
 BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, u8 sSectorX, u8 sSectorY,
                                   uint8_t ubSectorZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;
   MODIFY_MAP *pTempArrayOfMaps = NULL;
@@ -931,7 +931,7 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(uint16_t usSectorX, uint16_
                                                      BOOLEAN fChangeToOpen) {
   //	struct STRUCTURE * pStructure;
   //	MODIFY_MAP Map;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;
   uint32_t uiNumBytesWritten;

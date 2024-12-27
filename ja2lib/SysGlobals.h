@@ -6,13 +6,13 @@
 #define SHOW_MIN_FPS 0
 #define SHOW_FULL_FPS 1
 
-extern CHAR8 gubErrorText[200];
+extern char gubErrorText[200];
 extern BOOLEAN gfAniEditMode;
 extern BOOLEAN gfEditMode;
 extern BOOLEAN fFirstTimeInGameScreen;
 extern BOOLEAN fDirtyRectangleMode;
-extern CHAR8 gDebugStr[128];
-extern CHAR8 gSystemDebugStr[128];
+extern char gDebugStr[128];
+extern char gSystemDebugStr[128];
 
 extern uint32_t guiDoneButton;
 

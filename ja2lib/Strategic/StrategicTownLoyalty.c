@@ -809,7 +809,7 @@ void WriteOutDistancesBetweenTowns(void) {
 }
 
 void DumpDistancesBetweenTowns(void) {
-  CHAR8 zPrintFileName[60];
+  char zPrintFileName[60];
   FILE *FDump;
   uint8_t ubTownA, ubTownB;
   wchar_t wHeading[4];

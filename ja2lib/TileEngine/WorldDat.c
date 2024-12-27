@@ -21,7 +21,7 @@ void InitEngineTilesets() {
   uint32_t cnt, cnt2, uiNumFiles;
   //	FILE					*hfile;
   HWFILE hfile;
-  CHAR8 zName[32];
+  char zName[32];
   uint32_t uiNumBytesRead;
 
   // OPEN FILE

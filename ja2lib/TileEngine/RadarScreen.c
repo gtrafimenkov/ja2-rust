@@ -87,9 +87,9 @@ BOOLEAN InitRadarScreen() {
   return (TRUE);
 }
 
-BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
+BOOLEAN LoadRadarScreenBitmap(char *aFilename) {
   VOBJECT_DESC VObjectDesc;
-  CHAR8 zFilename[90];
+  char zFilename[90];
   int32_t cnt;
   struct VObject *hVObject;
 

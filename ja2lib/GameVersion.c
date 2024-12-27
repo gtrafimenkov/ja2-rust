@@ -10,7 +10,7 @@
 const wchar_t* zBuildInfo = L"JA2 Vanilla (" BUILD_INFO ")";
 
 // RELEASE BUILD VERSION
-CHAR8 czVersionNumber[16] = {"Build 04.12.02"};
+char czVersionNumber[16] = {"Build 04.12.02"};
 wchar_t zTrackingNumber[16] = {L"Z"};
 
 //

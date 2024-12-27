@@ -91,12 +91,12 @@ extern wchar_t gzErrorCatchString[256];
 
 // TEMP
 BOOLEAN gfForceLoadPlayers = FALSE;
-CHAR8 gzForceLoadFile[100];
+char gzForceLoadFile[100];
 BOOLEAN gfForceLoad = FALSE;
 
 uint8_t gubCurrentLevel;
 int32_t giCurrentTilesetID = 0;
-CHAR8 gzLastLoadedFile[260];
+char gzLastLoadedFile[260];
 
 uint32_t gCurrentBackground = FIRSTTEXTURE;
 
@@ -336,8 +336,8 @@ BOOLEAN AddTileSurface(char *cFilename, uint32_t ubType, uint8_t ubTilesetID,
                        BOOLEAN fGetFromRoot) {
   // Add tile surface
   struct TILE_IMAGERY *TileSurf;
-  CHAR8 cFileBPP[128];
-  CHAR8 cAdjustedFile[200];
+  char cFileBPP[128];
+  char cAdjustedFile[200];
 
   // Delete the surface first!
   if (gTileSurfaceArray[ubType] != NULL) {
@@ -387,7 +387,7 @@ void BuildTileShadeTables() {
   char DataDir[256];
   char ShadeTableDir[300];
   uint32_t uiLoop;
-  CHAR8 cRootFile[128];
+  char cRootFile[128];
   BOOLEAN fForceRebuildForSlot = FALSE;
 
 #ifdef JA2TESTVERSION
@@ -1372,7 +1372,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   uint8_t ubType;
   uint8_t ubTypeSubIndex;
   uint8_t ubTest = 1;
-  CHAR8 aFilename[255];
+  char aFilename[255];
   uint8_t ubCombine;
   uint8_t bCounts[WORLD_MAX][8];
 
@@ -1857,7 +1857,7 @@ void InitLoadedWorld() {
 extern double MasterStart, MasterEnd;
 extern BOOLEAN gfUpdatingNow;
 
-BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel) {
+BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel) {
   FLOAT dMajorMapVersion;
   SUMMARYFILE *pSummary;
   HWFILE hfile;
@@ -1872,14 +1872,14 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel) {
   wchar_t str[40];
   uint8_t bCounts[WORLD_MAX][8];
   uint8_t ubCombine;
-  CHAR8 szDirFilename[50];
-  CHAR8 szFilename[40];
+  char szDirFilename[50];
+  char szFilename[40];
   uint8_t ubMinorMapVersion;
 
   // Make sure the file exists... if not, then return false
   strcpy(szFilename, pSector);
   if (ubLevel % 4) {
-    CHAR8 str[4];
+    char str[4];
     sprintf(str, "_b%d", ubLevel % 4);
     strcat(szFilename, str);
   }
@@ -2251,7 +2251,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   uint16_t usTypeSubIndex;
   uint8_t ubType;
   uint8_t ubSubIndex;
-  CHAR8 aFilename[256];
+  char aFilename[256];
   uint8_t ubCombine;
   uint8_t bCounts[WORLD_MAX][8];
   int8_t *pBuffer;
@@ -3068,7 +3068,7 @@ BOOLEAN SaveMapTileset(int32_t iTilesetID) {
   return (TRUE);
 }
 
-void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadName) {
+void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, char *zLoadName) {
   gfForceLoadPlayers = fForceLoad;
   gfForceLoad = fForceFile;
 
@@ -3396,7 +3396,7 @@ int8_t IsHiddenTileMarkerThere(int16_t sGridNo) {
 }
 
 void ReloadTileset(uint8_t ubID) {
-  CHAR8 aFilename[255];
+  char aFilename[255];
   int32_t iCurrTilesetID = giCurrentTilesetID;
 
   // Set gloabal
@@ -3476,7 +3476,7 @@ void LoadMapLights(int8_t **hBuffer) {
   uint8_t ubNumColors;
   uint16_t usNumLights;
   int32_t cnt;
-  CHAR8 str[30];
+  char str[30];
   uint8_t ubStrLen;
   LIGHT_SPRITE TmpLight;
   int32_t iLSprite;

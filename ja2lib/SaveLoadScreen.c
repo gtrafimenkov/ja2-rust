@@ -1003,7 +1003,7 @@ BOOLEAN DoSaveLoadMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitS
 
 BOOLEAN InitSaveGameArray() {
   int8_t cnt;
-  CHAR8 zSaveGameName[512];
+  char zSaveGameName[512];
   SAVED_GAME_HEADER SaveGameHeader;
 
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {
@@ -1296,7 +1296,7 @@ BOOLEAN DisplaySaveGameEntry(int8_t bEntryID)  //, uint16_t usPosY )
 
 BOOLEAN LoadSavedGameHeader(int8_t bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
   HWFILE hFile;
-  CHAR8 zSavedGameName[512];
+  char zSavedGameName[512];
   uint32_t uiNumBytesRead;
 
   // make sure the entry is valid
@@ -1814,7 +1814,7 @@ void DeleteAllSaveGameFile() {
 }
 
 void DeleteSaveGameNumber(uint8_t ubSaveGameSlotID) {
-  CHAR8 zSaveGameName[512];
+  char zSaveGameName[512];
 
   // Create the name of the file
   CreateSavedGameFileNameFromNumber(ubSaveGameSlotID, zSaveGameName);
@@ -2097,7 +2097,7 @@ BOOLEAN DoQuickLoad() {
 
 BOOLEAN IsThereAnySavedGameFiles() {
   int8_t cnt;
-  CHAR8 zSaveGameName[512];
+  char zSaveGameName[512];
 
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {
     CreateSavedGameFileNameFromNumber(cnt, zSaveGameName);

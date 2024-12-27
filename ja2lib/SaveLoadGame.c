@@ -364,7 +364,7 @@ uint32_t guiSaveGameVersion = 0;
 //
 /////////////////////////////////////////////////////
 
-// CHAR8		gsSaveGameNameWithPath[ 512 ];
+// char		gsSaveGameNameWithPath[ 512 ];
 
 uint8_t gubSaveGameLoc = 0;
 
@@ -443,8 +443,8 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   uint32_t uiNumBytesWritten = 0;
   HWFILE hFile = 0;
   SAVED_GAME_HEADER SaveGameHeader;
-  CHAR8 zSaveGameName[512];
-  CHAR8 saveDir[100];
+  char zSaveGameName[512];
+  char saveDir[100];
   BOOLEAN fPausedStateBeforeSaving = gfGamePaused;
   BOOLEAN fLockPauseStateBeforeSaving = gfLockPauseState;
   int32_t iSaveLoadGameMessageBoxID = -1;
@@ -1087,7 +1087,7 @@ BOOLEAN LoadSavedGame(uint8_t ubSavedGameID) {
   int16_t sLoadSectorX;
   int16_t sLoadSectorY;
   int8_t bLoadSectorZ;
-  CHAR8 zSaveGameName[512];
+  char zSaveGameName[512];
   uint32_t uiRelStartPerc;
   uint32_t uiRelEndPerc;
 
@@ -3237,7 +3237,7 @@ BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, uint8_t ubID) {
 
 #ifdef JA2BETAVERSION
 void InitSaveGameFilePosition() {
-  CHAR8 zFileName[128];
+  char zFileName[128];
 
   sprintf(zFileName, "%S\\SaveGameFilePos%2d.txt", pMessageStrings[MSG_SAVEDIRECTORY],
           gubSaveGameLoc);
@@ -3247,10 +3247,10 @@ void InitSaveGameFilePosition() {
 
 void SaveGameFilePosition(int32_t iPos, STR pMsg) {
   HWFILE hFile;
-  CHAR8 zTempString[512];
+  char zTempString[512];
   uint32_t uiNumBytesWritten;
   uint32_t uiStrLen = 0;
-  CHAR8 zFileName[128];
+  char zFileName[128];
 
   sprintf(zFileName, "%S\\SaveGameFilePos%2d.txt", pMessageStrings[MSG_SAVEDIRECTORY],
           gubSaveGameLoc);
@@ -3277,7 +3277,7 @@ void SaveGameFilePosition(int32_t iPos, STR pMsg) {
 }
 
 void InitLoadGameFilePosition() {
-  CHAR8 zFileName[128];
+  char zFileName[128];
 
   sprintf(zFileName, "%S\\LoadGameFilePos%2d.txt", pMessageStrings[MSG_SAVEDIRECTORY],
           gubSaveGameLoc);
@@ -3286,11 +3286,11 @@ void InitLoadGameFilePosition() {
 }
 void LoadGameFilePosition(int32_t iPos, STR pMsg) {
   HWFILE hFile;
-  CHAR8 zTempString[512];
+  char zTempString[512];
   uint32_t uiNumBytesWritten;
   uint32_t uiStrLen = 0;
 
-  CHAR8 zFileName[128];
+  char zFileName[128];
 
   sprintf(zFileName, "%S\\LoadGameFilePos%2d.txt", pMessageStrings[MSG_SAVEDIRECTORY],
           gubSaveGameLoc);
@@ -3867,9 +3867,9 @@ BOOLEAN DoesUserHaveEnoughHardDriveSpace() {
 #ifdef JA2BETAVERSION
 
 void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, uint8_t ubSaveGameID) {
-  CHAR8 zFileName[128];
+  char zFileName[128];
   HWFILE hFile;
-  CHAR8 zTempString[512];
+  char zTempString[512];
   uint32_t uiStrLen;
   uint32_t uiNumBytesWritten;
 

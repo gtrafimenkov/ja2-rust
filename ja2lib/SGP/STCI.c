@@ -310,7 +310,7 @@ BOOLEAN STCISetPalette(void *pSTCIPalette, HIMAGE hImage) {
   return TRUE;
 }
 
-BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
+BOOLEAN IsSTCIETRLEFile(char *ImageFile) {
   HWFILE hFile;
   STCIHeader Header;
   uint32_t uiBytesRead;

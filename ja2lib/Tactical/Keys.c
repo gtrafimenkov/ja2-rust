@@ -128,7 +128,7 @@ DOOR *DoorTable = NULL;
 BOOLEAN LoadLockTable(void) {
   uint32_t uiNumBytesRead = 0;
   uint32_t uiBytesToRead;
-  CHAR8 *pFileName = "BINARYDATA\\Locks.bin";
+  char *pFileName = "BINARYDATA\\Locks.bin";
   HWFILE hFile;
 
   // Load the Lock Table
@@ -808,7 +808,7 @@ void UpdateDoorPerceivedValue(DOOR *pDoor) {
 BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   uint32_t uiNumBytesWritten;
   uint32_t uiSizeToSave = 0;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
 
   //	return( TRUE );
@@ -866,7 +866,7 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSecto
 BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   uint32_t uiNumBytesRead;
   HWFILE hFile;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   //	return( TRUE );
 
@@ -1544,7 +1544,7 @@ BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen) {
 }
 
 BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesWritten;
   uint8_t ubCnt;
@@ -1598,7 +1598,7 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t
 }
 
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   HWFILE hFile;
   uint32_t uiNumBytesRead;
   uint8_t ubLoop;

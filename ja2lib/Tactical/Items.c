@@ -4636,7 +4636,7 @@ void TurnOffXRayEffects(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef JA2TESTVERSION
 void DumpItemsList(void) {
-  CHAR8 zPrintFileName[60];
+  char zPrintFileName[60];
   FILE *FDump;
   uint16_t usItem;
   INVTYPE *pItem;

@@ -57,7 +57,7 @@ uint32_t MapUtilScreenHandle() {
   static struct FileDialogList *FListNode;
   static int16_t sFiles = 0, sCurFile = 0;
   static struct FileDialogList *FileList = NULL;
-  CHAR8 zFilename[260], zFilename2[260];
+  char zFilename[260], zFilename2[260];
   VSURFACE_DESC vs_desc;
   uint16_t usWidth;
   uint16_t usHeight;

@@ -222,7 +222,7 @@ extern int32_t giCurrentTilesetID;
 extern struct VObject *hRenderVObject;
 extern uint32_t gSurfaceMemUsage;
 
-extern CHAR8 gzLastLoadedFile[260];
+extern char gzLastLoadedFile[260];
 
 extern int16_t gsRecompileAreaTop;
 extern int16_t gsRecompileAreaLeft;
@@ -248,7 +248,7 @@ void RecompileLocalMovementCostsFromRadius(int16_t sCentreGridNo, int8_t bRadius
 BOOLEAN LoadMapTileset(int32_t iTilesetID);
 BOOLEAN SaveMapTileset(int32_t iTilesetID);
 
-void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadName);
+void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, char *zLoadName);
 
 void CalculateWorldWireFrameTiles(BOOLEAN fForce);
 void RemoveWorldWireFrameTiles();

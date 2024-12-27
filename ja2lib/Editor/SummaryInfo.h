@@ -96,8 +96,8 @@ typedef struct SUMMARYFILE {
 
 extern BOOLEAN gfAutoLoadA9;
 
-extern BOOLEAN EvaluateWorld(CHAR8 *pSector, uint8_t ubLevel);
-extern void WriteSectorSummaryUpdate(CHAR8 *puiFilename, uint8_t ubLevel,
+extern BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel);
+extern void WriteSectorSummaryUpdate(char *puiFilename, uint8_t ubLevel,
                                      SUMMARYFILE *pSummaryFileInfo);
 
 extern BOOLEAN gfMustForceUpdateAllMaps;

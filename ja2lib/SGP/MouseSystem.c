@@ -884,7 +884,7 @@ void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, int8_t priority) {
 //
 void MSYS_SetRegionUserData(struct MOUSE_REGION *region, int32_t index, int32_t userdata) {
   if (index < 0 || index > 3) {
-    CHAR8 str[80];
+    char str[80];
 #ifdef MOUSESYSTEM_DEBUGGING
     if (gfIgnoreShutdownAssertions)
 #endif
@@ -902,7 +902,7 @@ void MSYS_SetRegionUserData(struct MOUSE_REGION *region, int32_t index, int32_t 
 //
 int32_t MSYS_GetRegionUserData(struct MOUSE_REGION *region, int32_t index) {
   if (index < 0 || index > 3) {
-    CHAR8 str[80];
+    char str[80];
 #ifdef MOUSESYSTEM_DEBUGGING
     if (gfIgnoreShutdownAssertions)
 #endif

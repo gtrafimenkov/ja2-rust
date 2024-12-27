@@ -38,7 +38,7 @@ BOOLEAN gfRestoringCiviliansFromTempFile = FALSE;
 void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
     ReSetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS);
@@ -55,8 +55,8 @@ void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
 }
 
 void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
-  // CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  // char		zTempName[ 128 ];
+  char zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
     ReSetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS);
@@ -80,9 +80,9 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   HWFILE hfile;
   int16_t sSectorX, sSectorY;
   uint16_t usCheckSum, usFileCheckSum;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
   int8_t bSectorZ;
   uint8_t ubSectorID;
@@ -395,7 +395,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
   HWFILE hfile;
   SCHEDULENODE *pSchedule;
   uint16_t usCheckSum;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   uint8_t ubSectorID;
 
   // STEP ONE:  Prep the soldiers for saving...
@@ -677,9 +677,9 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   HWFILE hfile;
   int16_t sSectorX, sSectorY;
   uint16_t usCheckSum, usFileCheckSum;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
   int8_t bSectorZ;
   uint8_t ubSectorID;
@@ -1045,10 +1045,10 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   HWFILE hfile;
   int16_t sSectorX, sSectorY;
   uint16_t usCheckSum, usFileCheckSum;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
   int8_t bSectorZ;
   uint8_t ubSectorID;
@@ -1326,8 +1326,8 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, int8_
   uint32_t uiNumBytesWritten;
   uint32_t uiTimeStamp;
   HWFILE hfile;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
   uint8_t ubSectorID;
   uint16_t usCheckSum;
 
@@ -1602,9 +1602,9 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   HWFILE hfile;
   int16_t sSectorX, sSectorY;
   uint16_t usCheckSum;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 #ifdef JA2TESTVERSION
-  CHAR8 zReason[256];
+  char zReason[256];
 #endif
   int8_t bSectorZ;
   uint8_t ubSectorID;

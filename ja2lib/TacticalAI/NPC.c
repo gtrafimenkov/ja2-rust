@@ -105,7 +105,7 @@ extern void PayOffSkyriderDebtIfAny();
 //
 
 NPCQuoteInfo *LoadQuoteFile(uint8_t ubNPC) {
-  CHAR8 zFileName[255];
+  char zFileName[255];
   HWFILE hFile;
   NPCQuoteInfo *pFileData;
   uint32_t uiBytesRead;
@@ -300,7 +300,7 @@ BOOLEAN RefreshNPCScriptRecord(uint8_t ubNPC, uint8_t ubRecord) {
 //
 
 NPCQuoteInfo *LoadCivQuoteFile(uint8_t ubIndex) {
-  CHAR8 zFileName[255];
+  char zFileName[255];
   HWFILE hFile;
   NPCQuoteInfo *pFileData;
   uint32_t uiBytesRead;

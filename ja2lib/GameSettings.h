@@ -61,7 +61,7 @@ typedef struct {
   // The following are set from the status of the toggle boxes in the Options Screen
   uint8_t fOptions[NUM_ALL_GAME_OPTIONS];
 
-  CHAR8 zVersionNumber[14];
+  char zVersionNumber[14];
 
   uint32_t uiSettingsVersionNumber;
   uint32_t uiMeanwhileScenesSeenFlags;

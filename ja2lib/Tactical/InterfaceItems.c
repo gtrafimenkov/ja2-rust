@@ -2012,7 +2012,7 @@ BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, uint8_t ubPositi
 BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, int16_t sX, int16_t sY,
                                        uint8_t ubStatusIndex, struct SOLDIERTYPE *pSoldier) {
   VOBJECT_DESC VObjectDesc;
-  CHAR8 ubString[48];
+  char ubString[48];
   int32_t cnt;
   wchar_t pStr[10];
   int16_t usX, usY;
@@ -5073,7 +5073,7 @@ uint16_t GetTileGraphicForItem(INVTYPE *pItem) {
 }
 
 BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo) {
-  CHAR8 zName[100];
+  char zName[100];
   uint32_t uiVo;
   VOBJECT_DESC VObjectDesc;
   uint8_t ubGraphic;
@@ -5384,7 +5384,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                  struct ITEM_POOL *pItemPool, int16_t sScreenX, int16_t sScreenY,
                                  int8_t bZLevel) {
   VOBJECT_DESC VObjectDesc;
-  CHAR8 ubString[48];
+  char ubString[48];
   struct ITEM_POOL *pTempItemPool;
   int32_t cnt;
   int16_t sCenX, sCenY, sX, sY, sCenterYVal;

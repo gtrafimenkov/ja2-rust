@@ -41,7 +41,7 @@
 #define GUI_BTN_DUPLICATE_VOBJ 1
 #define GUI_BTN_EXTERNAL_VOBJ 2
 
-CHAR8 str[128];
+char str[128];
 
 // Kris:  December 2, 1997
 // Special internal debugging utilities that will ensure that you don't attempt to delete
@@ -3301,7 +3301,7 @@ typedef struct _CreateDlgInfo {
 
 //------------------------------------------------------------------------------------------------------
 
-int32_t CreateCheckBoxButton(int16_t x, int16_t y, CHAR8 *filename, int16_t Priority,
+int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Priority,
                              GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t ButPic, iButtonID;

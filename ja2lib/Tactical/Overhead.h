@@ -164,13 +164,13 @@ extern int8_t gbShowEnemies;
 extern uint16_t gusSelectedSoldier;
 extern uint16_t gusOldSelectedSoldier;
 
-extern CHAR8 gzAlertStr[][30];
-extern CHAR8 gzActionStr[][30];
-extern CHAR8 gzDirectionStr[][30];
+extern char gzAlertStr[][30];
+extern char gzActionStr[][30];
+extern char gzDirectionStr[][30];
 
 // TEMP FOR E3
 extern uint8_t gubCurrentScene;
-extern CHAR8 *GetSceneFilename();
+extern char *GetSceneFilename();
 extern int8_t ubLevelMoveLink[10];
 
 // Soldier List used for all soldier overhead interaction

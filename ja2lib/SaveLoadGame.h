@@ -18,7 +18,7 @@ struct SOLDIERTYPE;
 
 typedef struct {
   uint32_t uiSavedGameVersion;
-  CHAR8 zGameVersionNumber[GAME_VERSION_LENGTH];
+  char zGameVersionNumber[GAME_VERSION_LENGTH];
 
   wchar_t sSavedGameDesc[SIZE_OF_SAVE_GAME_DESC];
 

@@ -144,7 +144,7 @@ uint8_t gExtOneCDirection[EX_NUM_WORLD_DIRECTIONS] = {
 };
 
 typedef struct {
-  CHAR8 zName[20];
+  char zName[20];
   uint8_t ubRandomVal;
   BOOLEAN fPreload;
   BOOLEAN fBadGuy;
@@ -4554,7 +4554,7 @@ uint8_t gOrangeGlowG[] = {
 
 BOOLEAN CreateSoldierPalettes(struct SOLDIERTYPE *pSoldier) {
   uint16_t usAnimSurface, usPaletteAnimSurface;
-  CHAR8 zColFilename[100];
+  char zColFilename[100];
   int32_t iWhich;
   int32_t cnt;
   int8_t bBodyTypePalette;

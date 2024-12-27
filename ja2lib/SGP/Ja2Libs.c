@@ -13,8 +13,8 @@ STR8 LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
 
 int8_t DetectLocale() {
   int8_t bLoc;
-  CHAR8 zPath[_MAX_PATH];
-  CHAR8 zLocalePath[_MAX_PATH];
+  char zPath[_MAX_PATH];
+  char zLocalePath[_MAX_PATH];
 
   if (!Plat_GetExecutableDirectory(zPath, sizeof(zPath))) {
     return ENGLISH_LANG;

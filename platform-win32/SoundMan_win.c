@@ -33,7 +33,7 @@
 //		data for the random samples
 
 typedef struct {
-  CHAR8 pName[128];      // Path to sample data
+  char pName[128];       // Path to sample data
   uint32_t uiSize;       // Size of sample data
   uint32_t uiSoundSize;  // Playable sound size
   uint32_t uiFlags;      // Status flags
@@ -92,20 +92,20 @@ typedef struct {
 // WAV file chunk definitions
 typedef struct {
   // General chunk header
-  CHAR8 cTag[4];
+  char cTag[4];
   uint32_t uiChunkSize;
 } WAVCHUNK;
 
 typedef struct {
   // WAV header
-  CHAR8 cRiff[4];        // "RIFF"
+  char cRiff[4];         // "RIFF"
   uint32_t uiChunkSize;  // Chunk length
-  CHAR8 cFileType[4];    // "WAVE"
+  char cFileType[4];     // "WAVE"
 } WAVRIFF;
 
 typedef struct {
   // FMT chunk
-  CHAR8 cFormat[4];        // "FMT "
+  char cFormat[4];         // "FMT "
   uint32_t uiChunkSize;    // Chunk length
   uint16_t uiStereo;       // 1 if stereo, 0 if mono (Not reliable, use channels instead)
   uint16_t uiChannels;     // number of channels used 1=mono, 2=stereo, etc.
@@ -118,7 +118,7 @@ typedef struct {
 
 typedef struct {
   // Data chunk
-  CHAR8 cName[4];        // "DATA"
+  char cName[4];         // "DATA"
   uint32_t uiChunkSize;  // Chunk length
 } WAVDATA;
 
@@ -130,7 +130,7 @@ typedef struct {
 
 #define NUM_WAV_CHUNKS 3
 
-CHAR8 *cWAVChunks[3] = {"RIFF", "FMT ", "DATA"};
+char *cWAVChunks[3] = {"RIFF", "FMT ", "DATA"};
 
 // global settings
 #define SOUND_MAX_CACHED 128  // number of cache slots
@@ -165,7 +165,7 @@ extern uint32_t SoundStartRandom(uint32_t uiSample);
 extern BOOLEAN SoundStopMusic(void);
 
 // New 3D sound priovider
-extern BOOLEAN Sound3DInitProvider(CHAR8 *pProviderName);
+extern BOOLEAN Sound3DInitProvider(char *pProviderName);
 extern void Sound3DShutdownProvider(void);
 
 // 3D sound control
@@ -187,7 +187,7 @@ uint32_t SoundFreeSampleIndex(uint32_t uiSample);
 uint32_t SoundGetIndexByID(uint32_t uiSoundID);
 static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiChans);
 BOOLEAN SoundInitHardware(void);
-BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, CHAR8 *cBuf);
+BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, char *cBuf);
 BOOLEAN SoundShutdownHardware(void);
 uint32_t SoundGetFreeChannel(void);
 uint32_t SoundStartSample(uint32_t uiSample, uint32_t uiChannel, SOUNDPARMS *pParms);
@@ -220,7 +220,7 @@ SAMPLETAG pSampleList[SOUND_MAX_CACHED];
 SOUNDTAG pSoundList[SOUND_MAX_CHANNELS];
 
 // 3D sound globals
-CHAR8 *gpProviderName = NULL;
+char *gpProviderName = NULL;
 HPROVIDER gh3DProvider = 0;
 H3DPOBJECT gh3DListener = 0;
 BOOLEAN gfUsingEAX = TRUE;
@@ -353,7 +353,7 @@ uint32_t SoundPlay(STR pFilename, SOUNDPARMS *pParms) {
 uint32_t SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
   uint32_t uiChannel;
   HANDLE hRealFileHandle;
-  CHAR8 pFileHandlefileName[128];
+  char pFileHandlefileName[128];
   HWFILE hFile;
   uint32_t uiRetVal = FALSE;
 
@@ -1258,10 +1258,10 @@ uint32_t SoundGetEmptySample(void) {
 //
 //*******************************************************************************
 BOOLEAN SoundProcessWAVHeader(uint32_t uiSample) {
-  CHAR8 *pChunk;
+  char *pChunk;
   AILSOUNDINFO ailInfo;
 
-  pChunk = (CHAR8 *)pSampleList[uiSample].pData;
+  pChunk = (char *)pSampleList[uiSample].pData;
   if (!AIL_WAV_info((void *)pChunk, &ailInfo)) return (FALSE);
 
   pSampleList[uiSample].uiSpeed = ailInfo.rate;
@@ -1328,7 +1328,7 @@ uint32_t SoundGetIndexByID(uint32_t uiSoundID) {
 //*******************************************************************************
 BOOLEAN SoundInitHardware(void) {
   uint32_t uiCount;
-  CHAR8 cDriverName[128];
+  char cDriverName[128];
 
   // Try to start up the Miles Sound System
   if (!AIL_startup()) return (FALSE);
@@ -1427,7 +1427,7 @@ BOOLEAN SoundShutdownHardware(void) {
 static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiChans) {
   static PCMWAVEFORMAT sPCMWF;
   HDIGDRIVER DIG;
-  CHAR8 cBuf[128];
+  char cBuf[128];
 
   memset(&sPCMWF, 0, sizeof(PCMWAVEFORMAT));
   sPCMWF.wf.wFormatTag = WAVE_FORMAT_PCM;
@@ -1455,7 +1455,7 @@ static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiC
 //	Returns:	TRUE or FALSE if the string was filled.
 //
 //*******************************************************************************
-BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, CHAR8 *cBuf) {
+BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, char *cBuf) {
   if (DIG) {
     cBuf[0] = '\0';
     AIL_digital_configuration(DIG, NULL, NULL, cBuf);
@@ -1500,7 +1500,7 @@ uint32_t SoundGetFreeChannel(void) {
 //*******************************************************************************
 uint32_t SoundStartSample(uint32_t uiSample, uint32_t uiChannel, SOUNDPARMS *pParms) {
   uint32_t uiSoundID;
-  CHAR8 AILString[200];
+  char AILString[200];
 
   if (!fSoundSystemInit) return (SOUND_ERROR);
 
@@ -1605,7 +1605,7 @@ uint32_t SoundStartSample(uint32_t uiSample, uint32_t uiChannel, SOUNDPARMS *pPa
 //*******************************************************************************
 uint32_t SoundStartStream(STR pFilename, uint32_t uiChannel, SOUNDPARMS *pParms) {
   uint32_t uiSoundID, uiSpeed;
-  CHAR8 AILString[200];
+  char AILString[200];
 
   if (!fSoundSystemInit) return (SOUND_ERROR);
 
@@ -1862,15 +1862,15 @@ BOOLEAN SoundStopMusic(void) {
 //
 // Returns BOOLEAN            -
 //
-// CHAR8 *pProviderName       -
+// char *pProviderName       -
 //
 // Created:  8/17/99 Derek Beland
 //*****************************************************************************************
-BOOLEAN Sound3DInitProvider(CHAR8 *pProviderName) {
+BOOLEAN Sound3DInitProvider(char *pProviderName) {
   HPROENUM hEnum = HPROENUM_FIRST;
   HPROVIDER hProvider = 0;
   BOOLEAN fDone = FALSE;
-  CHAR8 *pName;
+  char *pName;
   int32_t iResult;
 
   // 3D sound providers depend on the 2D sound system being initialized first

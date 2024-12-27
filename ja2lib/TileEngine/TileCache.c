@@ -300,7 +300,7 @@ void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, uint16_t usIn
 
 void GetRootName(STR8 pDestStr, STR8 pSrcStr) {
   // Remove path and extension
-  CHAR8 cTempFilename[120];
+  char cTempFilename[120];
   STR cEndOfName;
 
   // Remove path

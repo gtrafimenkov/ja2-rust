@@ -7386,8 +7386,8 @@ FillLineEnd:
         Determines whether a given blit will need clipping or not. Returns TRUE/FALSE.
 
 **********************************************************************************************/
-CHAR8 BltIsClippedOrOffScreen(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
-                              SGPRect *clipregion) {
+char BltIsClippedOrOffScreen(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
+                             SGPRect *clipregion) {
   uint32_t usHeight, usWidth;
   ETRLEObject *pTrav;
   int32_t iTempX, iTempY;

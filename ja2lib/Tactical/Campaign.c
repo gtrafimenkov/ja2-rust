@@ -1188,11 +1188,11 @@ void HourlyProgressUpdate(void) {
 void TestDumpStatChanges(void) {
   uint32_t uiProfileId;
   uint8_t ubStat;
-  CHAR8 zPrintFileName[60];
+  char zPrintFileName[60];
   FILE *FDump;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fMercUsed;
-  CHAR8 cEvolutionChars[3] = {'+', '=', '-'};
+  char cEvolutionChars[3] = {'+', '=', '-'};
   uint32_t uiTotalSuccesses[12];
   uint32_t uiTotalChances[12];
 

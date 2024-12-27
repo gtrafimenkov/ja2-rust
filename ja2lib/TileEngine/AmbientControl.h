@@ -36,7 +36,7 @@ enum {
 };
 
 typedef struct {
-  CHAR8 zSoundNames[NUM_SOUNDS_PER_TIMEFRAME][SOUND_NAME_SIZE];
+  char zSoundNames[NUM_SOUNDS_PER_TIMEFRAME][SOUND_NAME_SIZE];
 
 } STEADY_STATE_AMBIENCE;
 

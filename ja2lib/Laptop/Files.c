@@ -438,8 +438,8 @@ void OpenAndReadFilesFile(void) {
   uint32_t uiDate;
   uint32_t iBytesRead = 0;
   uint32_t uiByteCount = 0;
-  CHAR8 pFirstFilePath[128];
-  CHAR8 pSecondFilePath[128];
+  char pFirstFilePath[128];
+  char pSecondFilePath[128];
   uint8_t ubFormat;
   BOOLEAN fRead;
 
@@ -495,8 +495,8 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   // this procedure will open and write out data from the finance list
   HWFILE hFileHandle;
   FilesUnitPtr pFilesList = pFilesListHead;
-  CHAR8 pFirstFilePath[128];
-  CHAR8 pSecondFilePath[128];
+  char pFirstFilePath[128];
+  char pSecondFilePath[128];
 
   memset(&pFirstFilePath, 0, sizeof(pFirstFilePath));
   memset(&pSecondFilePath, 0, sizeof(pSecondFilePath));

@@ -603,8 +603,8 @@ void GetShortSectorString(int16_t sMapX, int16_t sMapY, STR16 sString, size_t bu
 
 void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, STR8 bString,
                     BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter) {
-  CHAR8 bTestString[150];
-  CHAR8 bExtensionString[15];
+  char bTestString[150];
+  char bExtensionString[15];
 
   if (bSectorZ != 0) {
     sprintf(bExtensionString, "_b%d", bSectorZ);
@@ -944,8 +944,8 @@ BOOLEAN SetCurrentWorldSector(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN MapExists(CHAR8 *szFilename) {
-  CHAR8 str[50];
+BOOLEAN MapExists(char *szFilename) {
+  char str[50];
   HWFILE fp;
   sprintf(str, "MAPS\\%s", szFilename);
   fp = FileMan_Open(str, FILE_ACCESS_READ, FALSE);
@@ -1259,7 +1259,7 @@ void HandleQuestCodeOnSectorExit(int16_t sOldSectorX, int16_t sOldSectorY, int8_
 BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
   int32_t i;
   UNDERGROUND_SECTORINFO *pNode = NULL;
-  CHAR8 bFilename[50];
+  char bFilename[50];
 
   // pause game
   PauseGame();
@@ -1530,7 +1530,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
               pSoldier->sPendingActionData2, (uint8_t)pSoldier->usStrategicInsertionData);
 #ifdef JA2BETAVERSION
           {
-            CHAR8 str[256];
+            char str[256];
             sprintf(str,
                     "%S's primary insertion gridno is %d using %d as initial search gridno and %d "
                     "insertion code.",
@@ -1552,7 +1552,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
               pSoldier->sPendingActionData2, (uint8_t)pSoldier->usStrategicInsertionData);
 #ifdef JA2BETAVERSION
           {
-            CHAR8 str[256];
+            char str[256];
             sprintf(str,
                     "%S's isolated insertion gridno is %d using %d as initial search gridno and %d "
                     "insertion code.",
@@ -2546,7 +2546,7 @@ void DoneFadeOutAdjacentSector() {
           }
         } else {
 #ifdef JA2BETAVERSION
-          CHAR8 str[256];
+          char str[256];
           sprintf(str, "%S's gridno is NOWHERE, and is attempting to walk into sector.",
                   curr->pSoldier->name);
           DebugMsg(TOPIC_JA2, DBG_LEVEL_3, str);

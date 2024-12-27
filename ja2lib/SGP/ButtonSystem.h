@@ -247,7 +247,7 @@ int32_t CreateEasyButton(int32_t x, int32_t y, STR8 filename, int32_t Type,
 int32_t CreateSimpleButton(int32_t x, int32_t y, STR8 filename, int32_t Type, int16_t Priority,
                            GUI_CALLBACK ClickCallback);
 
-int32_t CreateCheckBoxButton(int16_t x, int16_t y, CHAR8 *filename, int16_t Priority,
+int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Priority,
                              GUI_CALLBACK ClickCallback);
 int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_t xloc,
                          int16_t yloc, int16_t w, int16_t h, int32_t Type, int16_t Priority,

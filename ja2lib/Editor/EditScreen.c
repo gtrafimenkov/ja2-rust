@@ -74,7 +74,7 @@
 extern void CopyMercPlacement(int32_t iMapIndex);
 extern void PasteMercPlacement(int32_t iMapIndex);
 
-extern CHAR8 *szMusicList[NUM_MUSIC];
+extern char *szMusicList[NUM_MUSIC];
 
 BOOLEAN gfCorruptMap = FALSE;
 BOOLEAN gfCorruptSchedules = FALSE;
@@ -2566,7 +2566,7 @@ BOOLEAN RemoveLight(int16_t iMapX, int16_t iMapY) {
   BOOLEAN fRemovedLight;
   int32_t iMapIndex;
   uint32_t uiLastLightType;
-  CHAR8 *pLastLightName;
+  char *pLastLightName;
 
   fRemovedLight = FALSE;
 

@@ -292,7 +292,7 @@ typedef struct {
 
 } PaletteSubRangeType;
 
-typedef CHAR8 PaletteRepID[30];
+typedef char PaletteRepID[30];
 
 typedef struct {
   uint8_t ubType;

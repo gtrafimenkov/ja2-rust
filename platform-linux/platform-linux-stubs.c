@@ -14,7 +14,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-CHAR8 gzCommandLine[100];
+char gzCommandLine[100];
 
 void DebugPrint(const char *message) {}
 
@@ -75,7 +75,7 @@ BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) { retu
 
 BOOLEAN Plat_EraseDirectory(const char *pcDirectory) { return FALSE; }
 
-BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }
+BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
@@ -296,10 +296,10 @@ BOOLEAN ShadowVideoSurfaceImage(uint32_t uiDestVSurface, struct VObject *hImageH
   return FALSE;
 }
 
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {}
+void DumpVSurfaceInfoIntoFile(char *filename, BOOLEAN fAppend) {}
 
 BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex, uint32_t uiLineNum,
-                              CHAR8 *pSourceFile) {
+                              char *pSourceFile) {
   return FALSE;
 }
 
@@ -309,7 +309,7 @@ void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight) {}
 
 void SmkShutdown(void) {}
 
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
   return NULL;
 }
 

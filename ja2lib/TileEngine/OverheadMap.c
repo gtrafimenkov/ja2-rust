@@ -109,8 +109,8 @@ void InitNewOverheadDB(uint8_t ubTilesetID) {
   uint32_t uiLoop;
   VOBJECT_DESC VObjectDesc;
   struct VObject *hVObject;
-  CHAR8 cFileBPP[128];
-  CHAR8 cAdjustedFile[200];
+  char cFileBPP[128];
+  char cAdjustedFile[200];
   uint32_t cnt1, cnt2;
   SMALL_TILE_SURF s;
   uint32_t NumRegions;

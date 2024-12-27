@@ -165,7 +165,7 @@ extern BOOLEAN gfAmINetworked;
 
 // ATE: GLOBALS FOR E3
 uint8_t gubCurrentScene = 0;
-CHAR8 gzLevelFilenames[][50] = {
+char gzLevelFilenames[][50] = {
     "A9.dat",         "ScotTBMines.dat",  "LindaTBCaves.dat", "LindaRTDesert.dat",
     "IanRTNight.dat", "LindaRTCave1.dat", "LindaRTCave2.dat"
 
@@ -194,9 +194,9 @@ int8_t gbShowEnemies = FALSE;
 
 BOOLEAN gfMovingAnimation = FALSE;
 
-CHAR8 gzAlertStr[][30] = {"GREEN", "YELLOW", "RED", "BLACK"};
+char gzAlertStr[][30] = {"GREEN", "YELLOW", "RED", "BLACK"};
 
-CHAR8 gzActionStr[][30] = {
+char gzActionStr[][30] = {
     "NONE",
 
     "RANDOM PATROL",
@@ -255,8 +255,8 @@ CHAR8 gzActionStr[][30] = {
     "OFFER SURRENDER",
 };
 
-CHAR8 gzDirectionStr[][30] = {"NORTHEAST", "EAST", "SOUTHEAST", "SOUTH",
-                              "SOUTHWEST", "WEST", "NORTHWEST", "NORTH"};
+char gzDirectionStr[][30] = {"NORTHEAST", "EAST", "SOUTHEAST", "SOUTH",
+                             "SOUTHWEST", "WEST", "NORTHWEST", "NORTH"};
 
 // TEMP VALUES FOR TEAM DEAFULT POSITIONS
 uint8_t bDefaultTeamRanges[MAXTEAMS][2] = {
@@ -3522,7 +3522,7 @@ uint32_t EnterTacticalDemoMode() {
   return (INIT_SCREEN);
 }
 
-CHAR8 *GetSceneFilename() { return (gzLevelFilenames[gubCurrentScene]); }
+char *GetSceneFilename() { return (gzLevelFilenames[gubCurrentScene]); }
 
 extern BOOLEAN InternalOkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
                                                  struct DB_STRUCTURE_REF *pDBStructureRef,

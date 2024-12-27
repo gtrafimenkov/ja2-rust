@@ -58,12 +58,12 @@ BOOLEAN Plat_DeleteFile(const char *filename);
 
 struct GetFile {
   int32_t iFindHandle;
-  CHAR8 zFileName[260];  // changed from uint16_t, Alex Meduna, Mar-20'98
+  char zFileName[260];  // changed from uint16_t, Alex Meduna, Mar-20'98
   uint32_t uiFileSize;
   uint32_t uiFileAttribs;
 };
 
-BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct);
+BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct);
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct);
 void Plat_GetFileClose(struct GetFile *pGFStruct);
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs);

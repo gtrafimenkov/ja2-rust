@@ -18,8 +18,6 @@
 typedef float FLOAT;
 typedef double DOUBLE;
 // strings
-typedef char CHAR8;
-typedef wchar_t wchar_t;
 typedef char* STR;
 typedef char* STR8;
 typedef wchar_t* STR16;
@@ -30,11 +28,11 @@ typedef unsigned long FLAGS32;
 // other
 typedef unsigned char BOOLEAN;
 typedef uint16_t HNDL;
-typedef CHAR8 STRING512[512];
+typedef char STRING512[512];
 typedef uint32_t HWFILE;
 
 #define SGPFILENAME_LEN 100
-typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
+typedef char SGPFILENAME[SGPFILENAME_LEN];
 
 #ifndef TRUE
 #define TRUE 1

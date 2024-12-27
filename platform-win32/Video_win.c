@@ -243,7 +243,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   HRESULT ReturnCode;
   HWND hWindow;
   WNDCLASS WindowClass;
-  CHAR8 ClassName[] = APPLICATION_NAME;
+  char ClassName[] = APPLICATION_NAME;
   DDSURFACEDESC SurfaceDescription;
   DDCOLORKEY ColorKey;
   void *pTmpPointer;
@@ -1476,7 +1476,7 @@ void RefreshScreen(void *DummyVariable) {
     LPDIRECTDRAWSURFACE2 pTmpBuffer;
     DDSURFACEDESC SurfaceDescription;
     FILE *OutputFile;
-    CHAR8 FileName[64];
+    char FileName[64];
     int32_t iIndex;
     STRING512 ExecDir;
     uint16_t *p16BPPData;
@@ -2470,7 +2470,7 @@ void RefreshMovieCache() {
   TARGA_HEADER Header;
   int32_t iCountX, iCountY;
   FILE *disk;
-  CHAR8 cFilename[_MAX_PATH];
+  char cFilename[_MAX_PATH];
   static uint32_t uiPicNum = 0;
   uint16_t *pDest;
   int32_t cnt;
@@ -2647,8 +2647,8 @@ typedef struct VSURFACE_NODE {
   struct VSURFACE_NODE *next, *prev;
 
 #ifdef SGP_VIDEO_DEBUGGING
-  CHAR8 *pName;
-  CHAR8 *pCode;
+  char *pName;
+  char *pCode;
 #endif
 
 } VSURFACE_NODE;
@@ -4676,7 +4676,7 @@ void CheckValidVSurfaceIndex(uint32_t uiIndex) {
   }
 
   if (fAssertError) {
-    CHAR8 str[60];
+    char str[60];
     switch (gubVSDebugCode) {
       case DEBUGSTR_SETVIDEOSURFACETRANSPARENCY:
         sprintf(str, "SetVideoSurfaceTransparency");
@@ -4724,15 +4724,15 @@ void CheckValidVSurfaceIndex(uint32_t uiIndex) {
 
 #ifdef SGP_VIDEO_DEBUGGING
 typedef struct DUMPFILENAME {
-  CHAR8 str[256];
+  char str[256];
 } DUMPFILENAME;
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
+void DumpVSurfaceInfoIntoFile(char *filename, BOOLEAN fAppend) {
   VSURFACE_NODE *curr;
   FILE *fp;
   DUMPFILENAME *pName, *pCode;
   uint32_t *puiCounter;
-  CHAR8 tempName[256];
-  CHAR8 tempCode[256];
+  char tempName[256];
+  char tempCode[256];
   uint32_t i, uiUniqueID;
   BOOLEAN fFound;
   if (!guiVSurfaceSize) {
@@ -4797,23 +4797,23 @@ void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
 
 // Debug wrapper for adding vsurfaces
 BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex, uint32_t uiLineNum,
-                              CHAR8 *pSourceFile) {
+                              char *pSourceFile) {
   uint16_t usLength;
-  CHAR8 str[256];
+  char str[256];
   if (!AddStandardVideoSurface(VSurfaceDesc, uiIndex)) {
     return FALSE;
   }
 
   // record the filename of the vsurface (some are created via memory though)
   usLength = strlen(VSurfaceDesc->ImageFile) + 1;
-  gpVSurfaceTail->pName = (CHAR8 *)MemAlloc(usLength);
+  gpVSurfaceTail->pName = (char *)MemAlloc(usLength);
   memset(gpVSurfaceTail->pName, 0, usLength);
   strcpy(gpVSurfaceTail->pName, VSurfaceDesc->ImageFile);
 
   // record the code location of the calling creating function.
   sprintf(str, "%s -- line(%d)", pSourceFile, uiLineNum);
   usLength = strlen(str) + 1;
-  gpVSurfaceTail->pCode = (CHAR8 *)MemAlloc(usLength);
+  gpVSurfaceTail->pCode = (char *)MemAlloc(usLength);
   memset(gpVSurfaceTail->pCode, 0, usLength);
   strcpy(gpVSurfaceTail->pCode, str);
 
@@ -4861,7 +4861,7 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex, ui
 #define SMK_FLIC_AUTOCLOSE 0x00000008  // Close when done
 
 struct SmkFlic {
-  CHAR8 *cFilename;
+  char *cFilename;
   HWFILE hFileHandle;
   struct SmackTag *SmackHandle;
   struct SmackBufTag *SmackBuffer;
@@ -4886,9 +4886,9 @@ LPDIRECTDRAWSURFACE2 lpVideoPlayback2 = NULL;
 //-Function-Prototypes-------------------------------------------------------------
 void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight);
 void SmkShutdown(void);
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fAutoClose);
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fAutoClose);
 BOOLEAN SmkPollFlics(void);
-struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename);
+struct SmkFlic *SmkOpenFlic(char *cFilename);
 void SmkSetBlitPosition(struct SmkFlic *pSmack, uint32_t uiLeft, uint32_t uiTop);
 void SmkCloseFlic(struct SmkFlic *pSmack);
 struct SmkFlic *SmkGetFreeFlic(void);
@@ -4964,7 +4964,7 @@ void SmkShutdown(void) {
   }
 }
 
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
   struct SmkFlic *pSmack;
 
   // Open the flic
@@ -4980,7 +4980,7 @@ struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, uint32_t uiLeft, uint32_t uiTop, B
   return (pSmack);
 }
 
-struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
+struct SmkFlic *SmkOpenFlic(char *cFilename) {
   struct SmkFlic *pSmack;
   HANDLE hFile;
 
@@ -5007,7 +5007,7 @@ struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
   }
 
   if (!(pSmack->SmackHandle =
-            SmackOpen((CHAR8 *)hFile, SMACKFILEHANDLE | SMACKTRACKS, SMACKAUTOEXTRA)))
+            SmackOpen((char *)hFile, SMACKFILEHANDLE | SMACKTRACKS, SMACKAUTOEXTRA)))
   //	if(!(pSmack->SmackHandle=SmackOpen(cFilename, SMACKTRACKS, SMACKAUTOEXTRA)))
   {
     ErrorMsg("SMK ERROR: Smacker won't open the SMK file");
@@ -5245,7 +5245,7 @@ int CALLBACK EnumFontFamProc(CONST LOGFONT *lplf, CONST TEXTMETRIC *lptm, DWORD 
 
 int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType,
                                LPARAM lParam) {
-  CHAR8 szFontName[32];
+  char szFontName[32];
 
   sprintf(szFontName, "%S", gzFontName);
   if (!strcmp(szFontName, (STR8)lpelfe->elfFullName)) {

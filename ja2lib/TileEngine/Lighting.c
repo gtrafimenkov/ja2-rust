@@ -202,7 +202,7 @@ void LoadShadeTablesFromTextFile() {
   FILE *fp;
   int32_t i, j;
   int32_t num;
-  CHAR8 str[10];
+  char str[10];
 
   if (gfLoadShadeTablesFromTextFile) {
     fp = fopen("ShadeTables.txt", "r");
@@ -1783,7 +1783,7 @@ BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, uint8_t iIntensity) {
 ***************************************************************************************/
 int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius) {
   int32_t iLight;
-  CHAR8 usName[14];
+  char usName[14];
 
   iLight = LightGetFree();
   if (iLight != (-1)) {
@@ -1806,7 +1806,7 @@ int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius) {
 ***************************************************************************************/
 int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2) {
   int32_t iLight;
-  CHAR8 usName[14];
+  char usName[14];
 
   iLight = LightGetFree();
   if (iLight != (-1)) {
@@ -1829,7 +1829,7 @@ int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius
 ***************************************************************************************/
 int32_t LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2) {
   int32_t iLight;
-  CHAR8 usName[14];
+  char usName[14];
 
   iLight = LightGetFree();
   if (iLight != (-1))

@@ -57,7 +57,7 @@ void RecountLightEffects(void) {
 }
 
 void UpdateLightingSprite(LIGHTEFFECT *pLight) {
-  CHAR8 LightName[20];
+  char LightName[20];
   // Build light....
 
   sprintf(LightName, "Light%d", pLight->bRadius);
@@ -282,7 +282,7 @@ BOOLEAN SaveLightEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ
   uint32_t uiNumLightEffects = 0;
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   uint32_t uiCnt;
 
   // get the name of the map
@@ -348,7 +348,7 @@ BOOLEAN LoadLightEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMa
   uint32_t uiCount;
   uint32_t uiCnt = 0;
   HWFILE hFile;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   GetMapTempFileName(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 

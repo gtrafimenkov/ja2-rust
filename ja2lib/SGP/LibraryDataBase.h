@@ -23,7 +23,7 @@
 #define DB_ADD_FILE_ID(exp) (exp & 0xC00000)
 
 typedef struct {
-  CHAR8 sLibraryName[FILENAME_SIZE];  // The name of the library file on the disk
+  char sLibraryName[FILENAME_SIZE];  // The name of the library file on the disk
   BOOLEAN fOnCDrom;  // A flag specifying if its a cdrom library ( not implemented yet )
   BOOLEAN
   fInitOnStart;  // Flag specifying if the library is to Initialized at the begining of the game
@@ -107,8 +107,8 @@ typedef struct {
 #define FILE_DOESNT_EXIST 0xfe
 
 typedef struct {
-  CHAR8 sLibName[FILENAME_SIZE];
-  CHAR8 sPathToLibrary[FILENAME_SIZE];
+  char sLibName[FILENAME_SIZE];
+  char sPathToLibrary[FILENAME_SIZE];
   int32_t iEntries;
   int32_t iUsed;
   uint16_t iSort;

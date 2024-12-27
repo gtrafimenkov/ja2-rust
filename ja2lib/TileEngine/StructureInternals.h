@@ -206,7 +206,7 @@ struct STRUCTURE_FILE_REF {
 // filled regardless of whether there is non-zero data defined for
 // that graphic!
 typedef struct TAG_STRUCTURE_FILE_HEADER {
-  CHAR8 szId[4];
+  char szId[4];
   union {
     struct {
       uint16_t usNumberOfStructures;

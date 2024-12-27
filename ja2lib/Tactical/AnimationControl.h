@@ -82,7 +82,7 @@ struct SOLDIERTYPE;
 // ###################################################################
 
 typedef struct {
-  CHAR8 zAnimStr[MAX_ANIM_STR_SIZE + 1];
+  char zAnimStr[MAX_ANIM_STR_SIZE + 1];
   int16_t sAP;
   int16_t sSpeed;
   FLOAT dMovementChange;
@@ -106,7 +106,7 @@ typedef struct {
   uint8_t ubEndRoll;
   uint8_t ubFlags;
   uint8_t ubAnimHeight;
-  CHAR8 zSoundFile[30];
+  char zSoundFile[30];
 
 } RANDOM_ANI_DEF;
 
@@ -542,7 +542,7 @@ BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNew
 BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
                                     uint16_t *pusSubState);
 int8_t GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
-                                          CHAR8 *zColFilename);
+                                          char *zColFilename);
 
 BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);

@@ -138,9 +138,9 @@ void DeleteTileSurface(struct TILE_IMAGERY *pTileSurf) {
 
 void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf) {
   int32_t cnt = 0;
-  CHAR8 cRootFile[128];
-  CHAR8 ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",
-                                     "miniweed", "sblast", "sweeds", "twigs",  "wing",    "1"};
+  char cRootFile[128];
+  char ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",
+                                    "miniweed", "sblast", "sweeds", "twigs",  "wing",    "1"};
 
   // Loop through array of RAISED objecttype imagery and
   // set global value...

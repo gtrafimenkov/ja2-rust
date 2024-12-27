@@ -14,7 +14,7 @@
 
 #define SHADE_TABLE_DIR "ShadeTables"
 
-CHAR8 TileSurfaceFilenames[NUMBEROFTILETYPES][32];
+char TileSurfaceFilenames[NUMBEROFTILETYPES][32];
 BOOLEAN gfForceBuildShadeTables = FALSE;
 
 #ifdef JA2TESTVERSION
@@ -114,7 +114,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   HWFILE hfile;
   int32_t i;
   uint32_t uiNumBytesRead;
-  CHAR8 ShadeFileName[100];
+  char ShadeFileName[100];
   STR8 ptr;
   // ASSUMPTIONS:
   // We are assuming that the uiTileTypeIndex is referring to the correct file
@@ -154,7 +154,7 @@ BOOLEAN SaveShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   HWFILE hfile;
   int32_t i;
   uint32_t uiNumBytesWritten;
-  CHAR8 ShadeFileName[100];
+  char ShadeFileName[100];
   STR8 ptr;
 #ifdef JA2TESTVERSION
   uiNumTablesSaved++;

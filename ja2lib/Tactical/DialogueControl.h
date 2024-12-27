@@ -229,7 +229,7 @@ void HandleImportantMercQuote(struct SOLDIERTYPE *pSoldier, uint16_t usQuoteNumb
 
 // Send in a profile number to see if text dialog exists for this guy....
 BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuoteNum,
-                                         BOOLEAN fWavFile, CHAR8 **ppStr);
+                                         BOOLEAN fWavFile, char **ppStr);
 
 // Do special event as well as dialogue!
 BOOLEAN CharacterDialogueWithSpecialEvent(uint8_t ubCharacterNum, uint16_t usQuoteNum,

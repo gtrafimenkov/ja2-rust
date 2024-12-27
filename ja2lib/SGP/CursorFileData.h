@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 
 struct CursorFileData {
-  CHAR8 ubFilename[48];
+  char ubFilename[48];
   BOOLEAN fLoaded;
   uint32_t uiIndex;
   uint8_t ubFlags;

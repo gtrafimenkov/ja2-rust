@@ -763,7 +763,7 @@ uint32_t ShopKeeperScreenShutdown() {
 BOOLEAN EnterShopKeeperInterface() {
   VOBJECT_DESC VObjectDesc;
   uint8_t ubCnt;
-  CHAR8 zTemp[32];
+  char zTemp[32];
   VSURFACE_DESC vs_desc;
   struct SOLDIERTYPE *pSoldier;
 

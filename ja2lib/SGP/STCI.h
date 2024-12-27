@@ -2,4 +2,4 @@
 
 BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents);
 
-BOOLEAN IsSTCIETRLEFile(CHAR8* ImageFile);
+BOOLEAN IsSTCIETRLEFile(char* ImageFile);

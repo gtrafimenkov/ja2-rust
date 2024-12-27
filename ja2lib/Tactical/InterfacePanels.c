@@ -1170,7 +1170,7 @@ BOOLEAN InitializeSMPanel() {
 }
 
 BOOLEAN CreateSMPanelButtons() {
-  CHAR8 ubString[48];
+  char ubString[48];
 
   giSMStealthImages = -1;
   giSMStealthButton = -1;
@@ -3173,7 +3173,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
 }
 
 BOOLEAN CreateTEAMPanelButtons() {
-  CHAR8 ubString[48];
+  char ubString[48];
 
   FilenameForBPP("INTERFACE\\bottom_bar_buttons.sti", ubString);
 

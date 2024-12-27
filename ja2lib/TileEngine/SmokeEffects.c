@@ -579,7 +579,7 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ
   uint32_t uiNumSmokeEffects = 0;
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   uint32_t uiCnt;
 
   // get the name of the map
@@ -645,7 +645,7 @@ BOOLEAN LoadSmokeEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMa
   uint32_t uiCount;
   uint32_t uiCnt = 0;
   HWFILE hFile;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   int8_t bLevel;
 
   GetMapTempFileName(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);

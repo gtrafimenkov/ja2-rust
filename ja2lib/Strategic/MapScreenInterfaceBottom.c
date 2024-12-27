@@ -245,7 +245,7 @@ void DeleteMapScreenInterfaceBottom(void) {
 void RenderMapScreenInterfaceBottom(void) {
   // will render the map screen bottom interface
   struct VObject *hHandle;
-  CHAR8 bFilename[32];
+  char bFilename[32];
 
   // render whole panel
   if (fMapScreenBottomDirty == TRUE) {

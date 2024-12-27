@@ -41,7 +41,7 @@ static void AILCALLBACK timer_func( uint32_t user )
 }
 #endif
 
-void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
+void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
   // This procedure will load in the appropriate .gap file, corresponding
   // to the .wav file in szSoundEffects indexed by uiSampleNum
   // The procedure will then allocate and load in the AUDIO_GAP information,
@@ -214,7 +214,7 @@ void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList) {
   }
 }
 
-uint32_t PlayJA2GapSample(CHAR8 *zSoundFile, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+uint32_t PlayJA2GapSample(char *zSoundFile, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
                           uint32_t uiPan, AudioGapList *pData) {
   SOUNDPARMS spParms;
 

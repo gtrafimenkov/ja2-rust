@@ -89,18 +89,18 @@ typedef struct {
 //
 
 struct VSurface {
-  uint16_t usHeight;         // Height of Video Surface
-  uint16_t usWidth;          // Width of Video Surface
-  uint8_t ubBitDepth;        // BPP ALWAYS 16!
-  void *pSurfaceData;        // A void pointer, but for this implementation, is really a
-                             // lpDirectDrawSurface;
-  void *pSurfaceData1;       // Direct Draw One Interface
-  void *pSavedSurfaceData1;  // A void pointer, but for this implementation, is really a
-                             // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
-                             // memory Surfaces so that they my be restored
-  void *pSavedSurfaceData;   // A void pointer, but for this implementation, is really a
-                             // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
-                            // memory Surfaces so that they my be restored
+  uint16_t usHeight;          // Height of Video Surface
+  uint16_t usWidth;           // Width of Video Surface
+  uint8_t ubBitDepth;         // BPP ALWAYS 16!
+  void *pSurfaceData;         // A void pointer, but for this implementation, is really a
+                              // lpDirectDrawSurface;
+  void *pSurfaceData1;        // Direct Draw One Interface
+  void *pSavedSurfaceData1;   // A void pointer, but for this implementation, is really a
+                              // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
+                              // memory Surfaces so that they my be restored
+  void *pSavedSurfaceData;    // A void pointer, but for this implementation, is really a
+                              // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
+                              // memory Surfaces so that they my be restored
   uint32_t fFlags;            // Used to describe memory usage, etc
   void *pPalette;             // A void pointer, but for this implementation a DDPalette
   uint16_t *p16BPPPalette;    // A 16BPP palette used for 8->16 blits
@@ -141,9 +141,9 @@ BOOLEAN RestoreVideoSurfaces();
 
 // Creates and adds a video Surface to list
 #ifdef SGP_VIDEO_DEBUGGING
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend);
+void DumpVSurfaceInfoIntoFile(char *filename, BOOLEAN fAppend);
 extern BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex,
-                                     uint32_t uiLineNum, CHAR8 *pSourceFile);
+                                     uint32_t uiLineNum, char *pSourceFile);
 #define AddVideoSurface(a, b) _AddAndRecordVSurface(a, b, __LINE__, __FILE__)
 #else
 #define AddVideoSurface(a, b) AddStandardVideoSurface(a, b)

@@ -52,7 +52,7 @@ int PASCAL HandledWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pC
 
 HINSTANCE ghInstance;
 
-void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine);
+void ProcessJa2CommandLineBeforeInitialization(char *pCommandLine);
 
 // Global Variable Declarations
 #ifdef WINDOWED_MODE
@@ -66,8 +66,8 @@ BOOLEAN gfProgramIsRunning;
 BOOLEAN gfGameInitialized = FALSE;
 
 // There were TWO of them??!?! -- DB
-// CHAR8		gzCommandLine[ 100 ];
-CHAR8 gzCommandLine[100];  // Command line given
+// char		gzCommandLine[ 100 ];
+char gzCommandLine[100];  // Command line given
 
 BOOLEAN gfIgnoreMessages = FALSE;
 
@@ -273,11 +273,11 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandL
   return Message.wParam;
 }
 
-void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine) {
-  CHAR8 cSeparators[] = "\t =";
-  CHAR8 *pCopy = NULL, *pToken;
+void ProcessJa2CommandLineBeforeInitialization(char *pCommandLine) {
+  char cSeparators[] = "\t =";
+  char *pCopy = NULL, *pToken;
 
-  pCopy = (CHAR8 *)MemAlloc(strlen(pCommandLine) + 1);
+  pCopy = (char *)MemAlloc(strlen(pCommandLine) + 1);
 
   Assert(pCopy);
   if (!pCopy) return;

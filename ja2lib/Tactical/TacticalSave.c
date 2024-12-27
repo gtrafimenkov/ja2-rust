@@ -353,7 +353,7 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
       if (SectorInfo[GetSectorID8(sMapX, sMapY)].uiFlags & SF_CIV_PRESERVED_TEMP_FILE_EXISTS) {
         RetrieveTempFileFromSavedGame(hFile, SF_CIV_PRESERVED_TEMP_FILE_EXISTS, sMapX, sMapY, 0);
         if ((gTacticalStatus.uiFlags & LOADING_SAVED_GAME) && guiSaveGameVersion < 78) {
-          CHAR8 pMapName[128];
+          char pMapName[128];
 
           // KILL IT!!! KILL KIT!!!! IT IS CORRUPTED!!!
           GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, pMapName, sMapX, sMapY, 0);
@@ -430,7 +430,7 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
       RetrieveTempFileFromSavedGame(hFile, SF_CIV_PRESERVED_TEMP_FILE_EXISTS, TempNode->ubSectorX,
                                     TempNode->ubSectorY, TempNode->ubSectorZ);
       if ((gTacticalStatus.uiFlags & LOADING_SAVED_GAME) && guiSaveGameVersion < 78) {
-        CHAR8 pMapName[128];
+        char pMapName[128];
 
         // KILL IT!!! KILL KIT!!!! IT IS CORRUPTED!!!
         GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, pMapName, TempNode->ubSectorX,
@@ -462,7 +462,7 @@ BOOLEAN SaveWorldItemsToTempItemFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ,
                                      uint32_t uiNumberOfItems, WORLDITEM *pData) {
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
@@ -505,7 +505,7 @@ BOOLEAN LoadWorldItemsFromTempItemFile(int16_t sMapX, int16_t sMapY, int8_t bMap
                                        WORLDITEM *pData) {
   uint32_t uiNumBytesRead = 0;
   HWFILE hFile;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   uint32_t uiNumberOfItems = 0;
 
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
@@ -548,7 +548,7 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(int16_t sMapX, int16_t sMapY, int8
                                               uint32_t *pSizeOfData, BOOLEAN fIfEmptyCreate) {
   uint32_t uiNumBytesRead = 0;
   HWFILE hFile;
-  CHAR8 zMapName[128];
+  char zMapName[128];
   uint32_t uiNumberOfItems = 0;
 
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
@@ -1220,7 +1220,7 @@ BOOLEAN LoadAndAddWorldItemsFromTempFile(int16_t sMapX, int16_t sMapY, int8_t bM
 
 BOOLEAN AddTempFileToSavedGame(HWFILE hFile, uint32_t uiType, int16_t sMapX, int16_t sMapY,
                                int8_t bMapZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   GetMapTempFileName(uiType, zMapName, sMapX, sMapY, bMapZ);
 
@@ -1232,7 +1232,7 @@ BOOLEAN AddTempFileToSavedGame(HWFILE hFile, uint32_t uiType, int16_t sMapX, int
 
 BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, uint32_t uiType, int16_t sMapX, int16_t sMapY,
                                       int8_t bMapZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   GetMapTempFileName(uiType, zMapName, sMapX, sMapY, bMapZ);
 
@@ -1267,8 +1267,8 @@ BOOLEAN InitTacticalSave(BOOLEAN fCreateTempDir) {
 BOOLEAN SaveRottingCorpsesToTempCorpseFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   HWFILE hFile;
   uint32_t uiNumBytesWritten = 0;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
   uint32_t uiNumberOfCorpses = 0;
   int32_t iCount;
 
@@ -1326,7 +1326,7 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(int16_t sMapX, int16_t sMapY, int8_t 
 }
 
 BOOLEAN DeleteTempItemMapFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
@@ -1345,8 +1345,8 @@ BOOLEAN DeleteTempItemMapFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
 BOOLEAN LoadRottingCorpsesFromTempCorpseFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
   HWFILE hFile;
   uint32_t uiNumBytesRead = 0;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
   uint32_t uiNumberOfCorpses = 0;
   uint32_t cnt;
   ROTTING_CORPSE_DEFINITION def;
@@ -1943,8 +1943,8 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
     int16_t sMapX, int16_t sMapY, int8_t bMapZ, ROTTING_CORPSE_DEFINITION *pRottingCorpseDef) {
   HWFILE hFile;
   uint32_t uiNumberOfCorpses;
-  //	CHAR8		zTempName[ 128 ];
-  CHAR8 zMapName[128];
+  //	char		zTempName[ 128 ];
+  char zMapName[128];
   uint32_t uiNumBytesRead;
   uint32_t uiNumBytesWritten;
 

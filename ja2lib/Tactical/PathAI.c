@@ -512,7 +512,7 @@ int32_t FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel
   int16_t sClosePathLimit;
 
 #ifdef PATHAI_SKIPLIST_DEBUG
-  CHAR8 zTempString[1000], zTS[50];
+  char zTempString[1000], zTS[50];
 #endif
 
 #ifdef PATHAI_VISIBLE_DEBUG

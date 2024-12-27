@@ -62,7 +62,7 @@ extern uint16_t gusShadeLevels[16][3];
 void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);
 
 // When adding a corpse, add struct data...
-CHAR8 zCorpseFilenames[NUM_CORPSES][70] = {
+char zCorpseFilenames[NUM_CORPSES][70] = {
     "",
     "ANIMS\\CORPSES\\S_D_JFK.STI",
     "ANIMS\\CORPSES\\S_D_BCK.STI",
@@ -125,7 +125,7 @@ CHAR8 zCorpseFilenames[NUM_CORPSES][70] = {
 };
 
 // When adding a corpse, add struct data...
-CHAR8 zNoBloodCorpseFilenames[NUM_CORPSES][70] = {
+char zNoBloodCorpseFilenames[NUM_CORPSES][70] = {
     "",
     "ANIMS\\CORPSES\\M_D_JFK_NB.STI",
     "ANIMS\\CORPSES\\S_D_BCK_NB.STI",
@@ -423,7 +423,7 @@ int32_t AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   ANITILE_PARAMS AniParams;
   uint8_t ubLevelID;
   struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
-  CHAR8 zFilename[150];
+  char zFilename[150];
   struct DB_STRUCTURE_REF *pDBStructureRef;
   uint8_t ubLoop;
   int16_t sTileGridNo;
@@ -627,7 +627,7 @@ void RemoveCorpse(int32_t iCorpseID) {
 }
 
 BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
-  CHAR8 zColFilename[100];
+  char zColFilename[100];
   int8_t bBodyTypePalette;
   struct SGPPaletteEntry Temp8BPPPalette[256];
 
@@ -1342,7 +1342,7 @@ int16_t FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, int
   uint8_t ubSaveNPCAPBudget;
   uint8_t ubSaveNPCDistLimit;
   struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
-  CHAR8 zFilename[150];
+  char zFilename[150];
   uint8_t ubBestDirection = 0;
   BOOLEAN fSetDirection = FALSE;
 

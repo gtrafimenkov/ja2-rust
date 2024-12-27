@@ -515,8 +515,8 @@ enum {
 // Struct for animation 'surface' information
 typedef struct {
   uint16_t ubName;
-  CHAR8 Filename[50];
-  CHAR8 bStructDataType;
+  char Filename[50];
+  char bStructDataType;
   uint8_t ubFlags;
   uint32_t uiNumDirections;
   uint32_t uiNumFramesPerDir;
@@ -528,7 +528,7 @@ typedef struct {
 } AnimationSurfaceType;
 
 typedef struct {
-  CHAR8 Filename[50];
+  char Filename[50];
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
 } AnimationStructureType;

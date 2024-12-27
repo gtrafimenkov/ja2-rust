@@ -264,7 +264,7 @@ BOOLEAN LoadSoldiersFromMap(int8_t **hBuffer) {
     }
   }
   if (fCowInSector) {
-    CHAR8 str[40];
+    char str[40];
     sprintf(str, "Sounds\\\\cowmoo%d.wav", Random(3) + 1);
     PlayJA2SampleFromFile(str, RATE_11025, MIDVOLUME, 1, MIDDLEPAN);
   }

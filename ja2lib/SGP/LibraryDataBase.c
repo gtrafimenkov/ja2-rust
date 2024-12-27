@@ -20,7 +20,7 @@ struct _FILETIME {
 };
 
 typedef struct {
-  CHAR8 sFileName[FILENAME_SIZE];
+  char sFileName[FILENAME_SIZE];
   uint32_t uiOffset;
   uint32_t uiLength;
   uint8_t ubState;
@@ -36,14 +36,14 @@ BOOLEAN IsLibraryRealFile(HWFILE hFile) {
 // used when doing the binary search of the libraries
 int16_t gsCurrentLibrary = -1;
 
-static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2);
+static int CompareFileNames(char *arg1, FileHeaderStruct *arg2);
 BOOLEAN GetFileHeaderFromLibrary(int16_t sLibraryID, STR pstrFileName,
                                  FileHeaderStruct **pFileHeader);
 void AddSlashToPath(STR pName);
 HWFILE CreateLibraryFileHandle(int16_t sLibraryID, uint32_t uiFileNum);
 BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, int16_t sLibraryID);
 
-int32_t CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2);
+int32_t CompareDirEntryFileNames(char *arg1, DIRENTRY *arg2);
 
 //************************************************************************
 //
@@ -404,7 +404,7 @@ int16_t GetLibraryIDFromFileName(STR pFileName) {
 BOOLEAN GetFileHeaderFromLibrary(int16_t sLibraryID, STR pstrFileName,
                                  FileHeaderStruct **pFileHeader) {
   FileHeaderStruct **ppFileHeader;
-  CHAR8 sFileNameWithPath[FILENAME_SIZE];
+  char sFileNameWithPath[FILENAME_SIZE];
 
   // combine the library path to the file name (need it for the search of the library )
   strcpy(sFileNameWithPath, pstrFileName);
@@ -427,9 +427,9 @@ BOOLEAN GetFileHeaderFromLibrary(int16_t sLibraryID, STR pstrFileName,
   }
 }
 
-static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2) {
-  CHAR8 sSearchKey[FILENAME_SIZE];
-  CHAR8 sFileNameWithPath[FILENAME_SIZE];
+static int CompareFileNames(char *arg1, FileHeaderStruct *arg2) {
+  char sSearchKey[FILENAME_SIZE];
+  char sFileNameWithPath[FILENAME_SIZE];
 
   sprintf(sSearchKey, "%s", arg1);
 
@@ -443,7 +443,7 @@ static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2) {
 void AddSlashToPath(STR pName) {
   uint32_t uiLoop, uiCounter;
   BOOLEAN fDone = FALSE;
-  CHAR8 sNewName[FILENAME_SIZE];
+  char sNewName[FILENAME_SIZE];
 
   // find out if there is a '\' in the file name
 
@@ -824,9 +824,9 @@ BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, int16_t sLibraryID) {
 //
 //************************************************************************
 
-int32_t CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2) {
-  CHAR8 sSearchKey[FILENAME_SIZE];
-  CHAR8 sFileNameWithPath[FILENAME_SIZE];
+int32_t CompareDirEntryFileNames(char *arg1, DIRENTRY *arg2) {
+  char sSearchKey[FILENAME_SIZE];
+  char sFileNameWithPath[FILENAME_SIZE];
 
   sprintf(sSearchKey, "%s", arg1);
 

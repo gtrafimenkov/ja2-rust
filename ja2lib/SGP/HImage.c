@@ -40,7 +40,7 @@ typedef union {
 HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
   HIMAGE hImage = NULL;
   SGPFILENAME Extension;
-  CHAR8 ExtensionSep[] = ".";
+  char ExtensionSep[] = ".";
   STR StrPtr;
   uint32_t iFileLoader;
   SGPFILENAME imageFileCopy;

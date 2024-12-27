@@ -9,11 +9,11 @@
 #include "ScreenIDs.h"
 
 // External globals
-CHAR8 gubErrorText[200];
-CHAR8 gubFilename[200];
+char gubErrorText[200];
+char gubFilename[200];
 BOOLEAN gfEditMode = FALSE;
-CHAR8 gDebugStr[128];
-CHAR8 gSystemDebugStr[128];
+char gDebugStr[128];
+char gSystemDebugStr[128];
 int8_t gbFPSDisplay = SHOW_MIN_FPS;
 BOOLEAN gfResetInputCheck = FALSE;
 BOOLEAN gfGlobalError = FALSE;
