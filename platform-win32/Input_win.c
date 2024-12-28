@@ -200,7 +200,7 @@ BOOLEAN InitializeInputManager(void) {
   gfShiftState = FALSE;
   gfAltState = FALSE;
   gfCtrlState = FALSE;
-  // Initialize variables pertaining to double CLIK stuff
+  // Initialize variables pertaining to DOUBLE CLIK stuff
   gfTrackDblClick = TRUE;
   guiDoubleClkDelay = DBL_CLK_TIME;
   guiSingleClickTimer = 0;

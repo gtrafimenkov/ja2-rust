@@ -1008,8 +1008,8 @@ void HandleQuestCodeOnSectorEntry(uint8_t sNewSectorX, uint8_t sNewSectorY, int8
         ubMinersPlaced = 0;
 
         if (ubThisMine != MINE_ALMA) {
-          // Fred Morris is always in the first mine sector we enter, unless that's Alma (then
-          // he's randomized, too)
+          // Fred Morris is always in the first mine sector we enter, unless that's Alma (then he's
+          // randomized, too)
           gMercProfiles[106].sSectorX = sNewSectorX;
           gMercProfiles[106].sSectorY = sNewSectorY;
           gMercProfiles[106].bSectorZ = 0;
@@ -1214,9 +1214,8 @@ BOOLEAN EnterSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
     // Load the current sectors Information From the temporary files
     if (!LoadCurrentSectorsInformationFromTempItemsFile()) {  // The integrity of the temp files
-                                                              // have been compromised.  Boot out
-                                                              // of the game after warning
-                                                              // message.
+                                                              // have been compromised.  Boot out of
+                                                              // the game after warning message.
       InitExitGameDialogBecauseFileHackDetected();
       return TRUE;
     }
@@ -1508,28 +1507,28 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
         pSoldier->sInsertionGridNo = sGridNo;
         switch (pSoldier->ubStrategicInsertionCode) {
           case INSERTION_CODE_NORTH:
-            ScreenMsg(FONT_RED, MSG_BETAVERSION,
-                      L"Sector %s doesn't have a north entrypoint -- substituting  %s entrypoint "
-                      L"for %s.",
-                      szSector, szEntry, pSoldier->name);
+            ScreenMsg(
+                FONT_RED, MSG_BETAVERSION,
+                L"Sector %s doesn't have a north entrypoint -- substituting  %s entrypoint for %s.",
+                szSector, szEntry, pSoldier->name);
             break;
           case INSERTION_CODE_EAST:
-            ScreenMsg(FONT_RED, MSG_BETAVERSION,
-                      L"Sector %s doesn't have a east entrypoint -- substituting  %s entrypoint "
-                      L"for %s.",
-                      szSector, szEntry, pSoldier->name);
+            ScreenMsg(
+                FONT_RED, MSG_BETAVERSION,
+                L"Sector %s doesn't have a east entrypoint -- substituting  %s entrypoint for %s.",
+                szSector, szEntry, pSoldier->name);
             break;
           case INSERTION_CODE_SOUTH:
-            ScreenMsg(FONT_RED, MSG_BETAVERSION,
-                      L"Sector %s doesn't have a south entrypoint -- substituting  %s entrypoint "
-                      L"for %s.",
-                      szSector, szEntry, pSoldier->name);
+            ScreenMsg(
+                FONT_RED, MSG_BETAVERSION,
+                L"Sector %s doesn't have a south entrypoint -- substituting  %s entrypoint for %s.",
+                szSector, szEntry, pSoldier->name);
             break;
           case INSERTION_CODE_WEST:
-            ScreenMsg(FONT_RED, MSG_BETAVERSION,
-                      L"Sector %s doesn't have a west entrypoint -- substituting  %s entrypoint "
-                      L"for %s.",
-                      szSector, szEntry, pSoldier->name);
+            ScreenMsg(
+                FONT_RED, MSG_BETAVERSION,
+                L"Sector %s doesn't have a west entrypoint -- substituting  %s entrypoint for %s.",
+                szSector, szEntry, pSoldier->name);
             break;
           case INSERTION_CODE_CENTER:
             ScreenMsg(FONT_RED, MSG_BETAVERSION,
@@ -2117,9 +2116,9 @@ void AllMercsWalkedToExitGrid() {
     SetDefaultSquadOnSectorEntry(TRUE);
 
   } else {
-    // Because we are actually loading the new map, and we are physically traversing, we don't
-    // want to bring up the prebattle interface when we arrive if there are enemies there.  This
-    // flag ignores the initialization of the prebattle interface and clears the flag.
+    // Because we are actually loading the new map, and we are physically traversing, we don't want
+    // to bring up the prebattle interface when we arrive if there are enemies there.  This flag
+    // ignores the initialization of the prebattle interface and clears the flag.
     gfTacticalTraversal = TRUE;
     gpTacticalTraversalGroup = gpAdjacentGroup;
 
@@ -2525,8 +2524,8 @@ BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,
   }
 
   /*
-  //Exception code for the two sectors in San Mona that are separated by a cliff.  We want to
-  allow strategic
+  //Exception code for the two sectors in San Mona that are separated by a cliff.  We want to allow
+  strategic
   //traversal, but NOT tactical traversal.  The only way to tactically go from D4 to D5 (or
   viceversa) is to enter
   //the cave entrance.
@@ -2619,8 +2618,8 @@ BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,
     ubPlayerControllableMercsInSquad =
         (uint8_t)NumberOfPlayerControllableMercsInSquad(MercPtrs[gusSelectedSoldier]->bAssignment);
     if (fAtLeastOneMercControllable <=
-        ubPlayerControllableMercsInSquad) {  // if the selected merc is an EPC and we can only
-                                             // leave with that merc, then prevent it
+        ubPlayerControllableMercsInSquad) {  // if the selected merc is an EPC and we can only leave
+                                             // with that merc, then prevent it
       // as EPCs aren't allowed to leave by themselves.  Instead of restricting this in the
       // exiting sector gui, we restrict it by explaining it with a message box.
       if (AM_AN_EPC(MercPtrs[gusSelectedSoldier])) {

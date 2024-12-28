@@ -2787,8 +2787,8 @@ void DisplayDistancesForHelicopter(void) {
   // get travel time for the last path segment
   iTime = GetPathTravelTimeDuringPlotting(pTempHelicopterPath);
 
-  // add travel time for any prior path segments (stored in the helicopter's mercpath, but
-  // waypoints aren't built)
+  // add travel time for any prior path segments (stored in the helicopter's mercpath, but waypoints
+  // aren't built)
   iTime += GetPathTravelTimeDuringPlotting(pVehicleList[iHelicopterVehicleId].pMercPath);
 
   swprintf(sString, ARR_SIZE(sString), L"%d%s %d%s", iTime / 60, gsTimeStrings[0], iTime % 60,

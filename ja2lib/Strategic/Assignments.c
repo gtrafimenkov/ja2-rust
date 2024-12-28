@@ -1811,8 +1811,8 @@ uint16_t CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pDoctor, uint16_t *
        (100 + (5 * EffectiveExpLevel(pDoctor)))) /
       DOCTORING_RATE_DIVISOR;
 
-  // calculate normal doctoring rate - what it would be if his stats were "normal" (ignoring
-  // drugs, fatigue, equipment condition) and equipment was not a hindrance
+  // calculate normal doctoring rate - what it would be if his stats were "normal" (ignoring drugs,
+  // fatigue, equipment condition) and equipment was not a hindrance
   *pusMaxPts = (pDoctor->bMedical * ((pDoctor->bDexterity + pDoctor->bWisdom) / 2) *
                 (100 + (5 * pDoctor->bExpLevel))) /
                DOCTORING_RATE_DIVISOR;
@@ -1834,8 +1834,8 @@ uint16_t CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pDoctor, uint16_t *
   if (bMedFactor != 0) {
     // no med kit left?
     // if he's working with only a first aid kit, the doctoring rate is halved!
-    // for simplicity, we're ignoring the situation where a nearly empty medical bag in is hand
-    // and the rest are just first aid kits
+    // for simplicity, we're ignoring the situation where a nearly empty medical bag in is hand and
+    // the rest are just first aid kits
     usHealPts /= bMedFactor;
   } else {
     usHealPts = 0;
@@ -2105,8 +2105,8 @@ BOOLEAN IsSoldierCloseEnoughToADoctor( struct SOLDIERTYPE *pPatient )
         int32_t iCounter = 0;
         wchar_t sString[ 128 ];
 
-        if( ( pPatient->sSectorX != gWorldSectorX ) || ( pPatient->sSectorY != gWorldSectorY ) ||
-( pPatient->bSectorZ != gbWorldSectorZ ) )
+        if( ( pPatient->sSectorX != gWorldSectorX ) || ( pPatient->sSectorY != gWorldSectorY ) || (
+pPatient->bSectorZ != gbWorldSectorZ ) )
         {
                 // not currently loaded
                 return( TRUE );
@@ -2121,8 +2121,7 @@ BOOLEAN IsSoldierCloseEnoughToADoctor( struct SOLDIERTYPE *pPatient )
 
                         // are they two of these guys in the same sector?
                         if( ( GetSolSectorX(pSoldier) == pPatient->sSectorX ) && (
-GetSolSectorY(pSoldier) == pPatient->sSectorY ) && ( GetSolSectorZ(pSoldier) == pPatient->bSectorZ
-)
+GetSolSectorY(pSoldier) == pPatient->sSectorY ) && ( GetSolSectorZ(pSoldier) == pPatient->bSectorZ )
 )
                         {
 
@@ -2249,8 +2248,8 @@ uint16_t HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
   bleeding,
   // using the correct kits points instead of this 1 pt. "special"
 
-          // stop all bleeding of patient..for 1 pt (it's fast).  But still use up normal kit pts
-  to do it if (pPatient -> bBleeding > 0)
+          // stop all bleeding of patient..for 1 pt (it's fast).  But still use up normal kit pts to
+  do it if (pPatient -> bBleeding > 0)
           {
                   usHealingPtsLeft--;
                   usTotalFullPtsUsed++;
@@ -2259,16 +2258,16 @@ uint16_t HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
                   bPointsToUse = pPatient -> bBleeding;
 
                   // go through doctor's pockets and heal, starting at with his in-hand item
-                  // the healing pts are based on what type of medkit is in his hand, so we HAVE
-  to start there first! for (bPocket = HANDPOS; bPocket <= SMALLPOCK8POS; bPocket++)
+                  // the healing pts are based on what type of medkit is in his hand, so we HAVE to
+  start there first! for (bPocket = HANDPOS; bPocket <= SMALLPOCK8POS; bPocket++)
                   {
                           bMedFactor = IsMedicalKitItem( &( pDoctor -> inv[ bPocket ] ) );
                           if ( bMedFactor > 0 )
                           {
                                   // ok, we have med kit in this pocket, use it
 
-                                  // The medFactor here doesn't affect how much the doctor can
-  heal (that's already factored into lower healing pts)
+                                  // The medFactor here doesn't affect how much the doctor can heal
+  (that's already factored into lower healing pts)
                                   // but it does effect how fast the medkit is used up!  First aid
   kits disappear at double their doctoring rate! bPointsUsed = (int8_t) UseKitPoints( &( pDoctor ->
   inv[ bPocket ] ), (uint16_t) (bPointsToUse * bMedFactor), pDoctor ); bPointsHealed = bPointsUsed /
@@ -2422,8 +2421,8 @@ void HealHospitalPatient(struct SOLDIERTYPE *pPatient, uint16_t usHealingPtsLeft
     return;
   }
 
-  /*  Stopping hospital patients' bleeding must be handled immediately, not during a regular
-     hourly check
+  /*  Stopping hospital patients' bleeding must be handled immediately, not during a regular hourly
+     check
           // stop all bleeding of patient..for 1 pt.
           if (pPatient -> bBleeding > 0)
           {
@@ -2836,8 +2835,8 @@ void RestCharacter(struct SOLDIERTYPE *pSoldier) {
 
   // if breath max is below the "really tired" threshold
   if (pSoldier->bBreathMax < BREATHMAX_PRETTY_TIRED) {
-    // real tired, rest rate is 50% higher (this is to prevent absurdly long sleep times for
-    // totally exhausted mercs)
+    // real tired, rest rate is 50% higher (this is to prevent absurdly long sleep times for totally
+    // exhausted mercs)
     bMaxBreathRegain = (bMaxBreathRegain * 3 / 2);
   }
 
@@ -2968,8 +2967,8 @@ void HandleTrainingInSector(uint8_t sMapX, uint8_t sMapY, int8_t bZ) {
   // build list of teammate trainers in this sector.
 
   // Only the trainer with the HIGHEST training ability in each stat is effective.  This is mainly
-  // to avoid having to sort them from highest to lowest if some form of trainer degradation
-  // formula was to be used for multiple trainers.
+  // to avoid having to sort them from highest to lowest if some form of trainer degradation formula
+  // was to be used for multiple trainers.
 
   // for each trainable stat
   for (ubStat = 0; ubStat < NUM_TRAINABLE_STATS; ubStat++) {
@@ -3018,12 +3017,11 @@ void HandleTrainingInSector(uint8_t sMapX, uint8_t sMapY, int8_t bZ) {
             // if this stat HAS a trainer in sector at all
             if (pTrainer != NULL) {
               /* Assignment distance limits removed.  Sep/11/98.  ARM
-                                                                      // if this sector either
-                 ISN'T currently loaded, or it is but the trainer is close enough to the student
-                 if ( ( sMapX != gWorldSectorX ) || ( sMapY != gWorldSectorY ) || ( pStudent ->
-                 bSectorZ != gbWorldSectorZ ) || ( PythSpacesAway( pStudent -> sGridNo, pTrainer
-                 -> sGridNo ) < MAX_DISTANCE_FOR_TRAINING ) && ( EnoughTimeOnAssignment( pTrainer
-                 ) ) )
+                                                                      // if this sector either ISN'T
+                 currently loaded, or it is but the trainer is close enough to the student if ( (
+                 sMapX != gWorldSectorX ) || ( sMapY != gWorldSectorY ) || ( pStudent -> bSectorZ !=
+                 gbWorldSectorZ ) || ( PythSpacesAway( pStudent -> sGridNo, pTrainer -> sGridNo ) <
+                 MAX_DISTANCE_FOR_TRAINING ) && ( EnoughTimeOnAssignment( pTrainer ) ) )
               */
               // NB this EnoughTimeOnAssignment() call is redundent since it is called up above
               // if ( EnoughTimeOnAssignment( pTrainer ) )
@@ -3090,8 +3088,8 @@ void HandleTrainingInSector(uint8_t sMapX, uint8_t sMapY, int8_t bZ) {
             TrainTownInSector(TownTrainer[uiCnt].pSoldier, sMapX, sMapY, sTownTrainingPts);
 
         if (fTrainingCompleted) {
-          // there's no carryover into next session for extra training (cause player might
-          // cancel), so break out of loop
+          // there's no carryover into next session for extra training (cause player might cancel),
+          // so break out of loop
           break;
         }
       }
@@ -3191,8 +3189,8 @@ int16_t GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
     bTraineeEffWisdom = EffectiveWisdom(pStudent);
     bTraineeNatWisdom = pStudent->bWisdom;
 
-    // for trainee's stat skill, must use the natural value, not the effective one, to avoid
-    // drunks training beyond cap
+    // for trainee's stat skill, must use the natural value, not the effective one, to avoid drunks
+    // training beyond cap
     switch (bTrainStat) {
       case (STRENGTH):
         bTraineeSkill = pStudent->bStrength;
@@ -3460,8 +3458,8 @@ int16_t GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, int8_t bTrainStat, BO
         (pTrainer->sSectorY == GetSolSectorY(pSoldier)) &&
         (pTrainer->bSectorZ == GetSolSectorZ(pSoldier))) {
       // if he's training teammates in this stat
-      // NB skip the EnoughTime requirement to display what the value should be even if haven't
-      // been training long yet...
+      // NB skip the EnoughTime requirement to display what the value should be even if haven't been
+      // training long yet...
       if ((pTrainer->bAssignment == TRAIN_TEAMMATE) && (pTrainer->bTrainStat == bTrainStat) &&
           (pTrainer->fMercAsleep == FALSE)) {
         sTrainingPtsDueToInstructor = GetBonusTrainingPtsDueToInstructor(
@@ -3611,8 +3609,8 @@ int16_t GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, uint16_t *pusM
     bTrainingBonus += TEACH_BONUS_TO_TRAIN;
   }
 
-  // RPCs get a small training bonus for being more familiar with the locals and their
-  // customs/needs than outsiders
+  // RPCs get a small training bonus for being more familiar with the locals and their customs/needs
+  // than outsiders
   if (pTrainer->ubProfile >= FIRST_RPC) {
     bTrainingBonus += RPC_BONUS_TO_TRAIN;
   }
@@ -6241,8 +6239,8 @@ void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
         /* ARM: Squad menu is now disabled for anyone between sectors
                                         if( fCharacterWasBetweenSectors )
                                         {
-                                                // grab location of old squad and set this value
-           for new squad if( iOldSquadValue != -1 )
+                                                // grab location of old squad and set this value for
+           new squad if( iOldSquadValue != -1 )
                                                 {
                                                         GetSquadPosition( &ubNextX, &ubNextY,
            &ubPrevX, &ubPrevY, &uiTraverseTime, &uiArriveTime,  ( uint8_t )iOldSquadValue );
@@ -7112,8 +7110,8 @@ void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
                                            swprintf( sDollarString, L"%d",
              LaptopMoneyGetBalance()); InsertCommasForDollarFigure( sDollarString );
                                            InsertDollarSignInToString( sDollarString );
-                                           swprintf( sString, L"%s %s",
-             pContractStrings[uiCounter], sDollarString ); AddMonoString(&hStringHandle, sString);
+                                           swprintf( sString, L"%s %s", pContractStrings[uiCounter],
+             sDollarString ); AddMonoString(&hStringHandle, sString);
           */
           AddMonoString(&hStringHandle, pContractStrings[uiCounter]);
           break;
@@ -7838,8 +7836,8 @@ void HandleRestFatigueAndSleepStatus(void) {
       if (!pSoldier->fMercAsleep) {
         // if dead tired
         if (pSoldier->bBreathMax <= BREATHMAX_ABSOLUTE_MINIMUM) {
-          // if between sectors, don't put tired mercs to sleep...  will be handled when they
-          // arrive at the next sector
+          // if between sectors, don't put tired mercs to sleep...  will be handled when they arrive
+          // at the next sector
           if (pSoldier->fBetweenSectors) {
             continue;
           }
@@ -8067,8 +8065,7 @@ BOOLEAN CanCharacterRepairRobot(struct SOLDIERTYPE *pSoldier) {
 
   /* Assignment distance limits removed.  Sep/11/98.  ARM
           // if that sector is currently loaded, check distance to robot
-          if( ( pSoldier -> sSectorX == gWorldSectorX ) && ( pSoldier -> sSectorY == gWorldSectorY
-     )
+          if( ( pSoldier -> sSectorX == gWorldSectorX ) && ( pSoldier -> sSectorY == gWorldSectorY )
      && ( pSoldier -> bSectorZ == gbWorldSectorZ ) )
           {
                   if( PythSpacesAway( pSoldier -> sGridNo, pRobot -> sGridNo ) >
@@ -8747,8 +8744,8 @@ void SetTimeOfAssignmentChangeForMerc(struct SOLDIERTYPE *pSoldier) {
   pSoldier->uiLastAssignmentChangeMin = GetGameTimeInMin();
 
   // assigning new PATIENTs gives a DOCTOR something to do, etc., so set flag to recheck them all.
-  // CAN'T DO IT RIGHT AWAY IN HERE 'CAUSE WE TYPICALLY GET CALLED *BEFORE* bAssignment GETS SET
-  // TO NEW VALUE!!
+  // CAN'T DO IT RIGHT AWAY IN HERE 'CAUSE WE TYPICALLY GET CALLED *BEFORE* bAssignment GETS SET TO
+  // NEW VALUE!!
   gfReEvaluateEveryonesNothingToDo = TRUE;
 
   return;
@@ -9188,8 +9185,7 @@ void SetAssignmentForList(int8_t bAssignment, int8_t bParam) {
           break;
         case (VEHICLE):
           if (CanCharacterVehicle(pSoldier) && IsThisVehicleAccessibleToSoldier(pSoldier, bParam)) {
-            //						if ( IsEnoughSpaceInVehicle( bParam
-            //) )
+            //						if ( IsEnoughSpaceInVehicle( bParam ) )
             {
               // if the vehicle is FULL, then this will return FALSE!
               fItWorked = PutSoldierInVehicle(pSoldier, bParam);
@@ -9202,12 +9198,11 @@ void SetAssignmentForList(int8_t bAssignment, int8_t bParam) {
           if (CanCharacterRepair(pSoldier)) {
             BOOLEAN fCanFixSpecificTarget = TRUE;
 
-            // make sure he can repair the SPECIFIC thing being repaired too (must be in its
-            // sector, for example)
+            // make sure he can repair the SPECIFIC thing being repaired too (must be in its sector,
+            // for example)
 
             /*
-                                                            if ( pSelectedSoldier->fFixingSAMSite
-               )
+                                                            if ( pSelectedSoldier->fFixingSAMSite )
                                                             {
                                                                     fCanFixSpecificTarget =
                CanSoldierRepairSAM( pSoldier, SAM_SITE_REPAIR_DIVISOR );
@@ -9375,16 +9370,16 @@ BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(struct SOLDIERTYPE *pT
   BOOLEAN fAtGunRange = FALSE;
   uint16_t usMaxPts;
 
-  // this function only makes sense for training teammates or by others, not for self training
-  // which doesn't require partners
+  // this function only makes sense for training teammates or by others, not for self training which
+  // doesn't require partners
   Assert((bTargetAssignment == TRAIN_TEAMMATE) || (bTargetAssignment == TRAIN_BY_OTHER));
 
   for (iCounter = 0; iCounter <= gTacticalStatus.Team[OUR_TEAM].bLastID; iCounter++) {
     pSoldier = GetSoldierByID(iCounter);
 
     if (IsSolActive(pSoldier)) {
-      // if the guy is not the target, has the assignment we want, is training the same stat, and
-      // is in our sector, alive and is training the stat we want
+      // if the guy is not the target, has the assignment we want, is training the same stat, and is
+      // in our sector, alive and is training the stat we want
       if ((pSoldier != pTargetSoldier) && (GetSolAssignment(pSoldier) == bTargetAssignment) &&
           // CJC: this seems incorrect in light of the check for bTargetStat and in any case would
           // cause a problem if the trainer was assigned and we weren't!
@@ -9637,8 +9632,8 @@ void ResumeOldAssignment(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fOldAssignmentInvalid = FALSE;
 
   // ARM: I don't think the whole "old assignment" idea is a very good one, and I doubt the code
-  // that maintains that variable is very foolproof, plus what meaning does the old assignemnt
-  // have later, anyway? so I'd rather just settle for putting him into any squad:
+  // that maintains that variable is very foolproof, plus what meaning does the old assignemnt have
+  // later, anyway? so I'd rather just settle for putting him into any squad:
   fOldAssignmentInvalid = TRUE;
 
   if (fOldAssignmentInvalid) {

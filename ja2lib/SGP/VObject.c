@@ -125,6 +125,7 @@ typedef struct {
     };
   };
 } VOBJECT_INFO;
+
 #define VOBJECT_CREATE_FROMFILE \
   0x00000040  // Creates a video object from a file ( using struct Image* )
 #define VOBJECT_CREATE_FROMHIMAGE 0x00000080  // Creates a video object from a pre-loaded hImage

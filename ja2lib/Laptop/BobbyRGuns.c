@@ -278,6 +278,7 @@ BOOLEAN EnterBobbyRGuns() {
   InitBobbyBrTitle();
 
   SetFirstLastPagesForNew(IC_BOBBY_GUN);
+
   // Draw menu bar
   InitBobbyMenuBar();
 
