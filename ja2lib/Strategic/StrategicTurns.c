@@ -62,8 +62,8 @@ void HandleStrategicTurn() {
         uiCheckTime = NUM_REAL_SEC_PER_TACTICAL_TURN;
       } else {
         // OK, if we have compressed time...., adjust our check value to be faster....
-        uiCheckTime = NUM_REAL_SEC_PER_TACTICAL_TURN / (GetTimeCompressSpeed() *
-                                                        RT_COMPRESSION_TACTICAL_TURN_MODIFIER);
+        uiCheckTime = NUM_REAL_SEC_PER_TACTICAL_TURN /
+                      (GetTimeCompressSpeed() * RT_COMPRESSION_TACTICAL_TURN_MODIFIER);
       }
 
       if ((uiTime - guiLastTacticalRealTime) > uiCheckTime) {

@@ -7,7 +7,7 @@
 
 #include "SGP/Types.h"
 
-//#define VISIBLE_AUTO_BANDAGE
+// #define VISIBLE_AUTO_BANDAGE
 
 void AutoBandage(BOOLEAN fStart);
 void BeginAutoBandage();
