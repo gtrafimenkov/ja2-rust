@@ -5,7 +5,6 @@
 #ifndef __TEAM_H
 #define __TEAM_H
 
-#include "LeanTypes.h"
 #include "Soldier.h"
 
 // DEFINE TEAMS

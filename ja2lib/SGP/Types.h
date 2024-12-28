@@ -10,7 +10,6 @@
 #include <wchar.h>
 
 #include "BuildDefines.h"
-#include "LeanTypes.h"
 
 // flags (individual bits used)
 typedef uint8_t FLAGS8;

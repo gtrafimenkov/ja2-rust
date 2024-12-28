@@ -5,7 +5,8 @@
 #ifndef __CHAR_LIST_H
 #define __CHAR_LIST_H
 
-#include "LeanTypes.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 struct SOLDIERTYPE;
 
