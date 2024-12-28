@@ -93,8 +93,9 @@ uint16_t GetTextInputCursor();
 // of calls to this function dictate the TAB order from traversing from one field to the next.  This
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
-void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight, int8_t bPriority,
-                       wchar_t* szInitText, uint8_t ubMaxChars, uint16_t usInputType);
+void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                       int8_t bPriority, wchar_t* szInitText, uint8_t ubMaxChars,
+                       uint16_t usInputType);
 
 // This allows you to insert special processing functions and modes that can't be determined here.
 // An example would be a file dialog where there would be a file list.  This file list would be
@@ -154,7 +155,8 @@ void Set16BPPTextFieldColor(uint16_t usTextFieldColor);
 void SetTextInputRegularColors(uint8_t ubForeColor, uint8_t ubShadowColor);
 void SetTextInputHilitedColors(uint8_t ubForeColor, uint8_t ubShadowColor, uint8_t ubBackColor);
 // optional color setups
-void SetDisabledTextFieldColors(uint8_t ubForeColor, uint8_t ubShadowColor, uint16_t usTextFieldColor);
+void SetDisabledTextFieldColors(uint8_t ubForeColor, uint8_t ubShadowColor,
+                                uint16_t usTextFieldColor);
 void SetBevelColors(uint16_t usBrighterColor, uint16_t usDarkerColor);
 void SetCursorColor(uint16_t usCursorColor);
 
@@ -173,7 +175,7 @@ void SetCursorColor(uint16_t usCursorColor);
 //	}
 //}
 // It is only necessary for event loops that contain text input fields.
-BOOLEAN HandleTextInput(InputAtom *Event);
+BOOLEAN HandleTextInput(InputAtom* Event);
 
 // Required in your screen loop to update the values, as well as blinking the cursor.
 void RenderActiveTextField();

@@ -166,7 +166,8 @@ extern BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObjec
                                                       int32_t iTextX, int32_t iTestY);
 
 // THIS FUNCTION IS CALLED FAIRLY REGULARLY
-BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags, uint32_t uiFlags) {
+BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
+                    uint32_t uiFlags) {
   uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
   struct GRect aRect;

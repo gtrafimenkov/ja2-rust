@@ -35,7 +35,8 @@ extern BOOLEAN IsValidSecondHandShot(struct SOLDIERTYPE *pSoldier);
 
 int16_t GetBreathPerAP(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
-int16_t TerrainActionPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir, int8_t bLevel) {
+int16_t TerrainActionPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir,
+                            int8_t bLevel) {
   int16_t sAPCost = 0;
   int16_t sSwitchValue;
   BOOLEAN fHiddenStructVisible;  // Used for hidden struct visiblity
@@ -157,7 +158,7 @@ int16_t BreathPointAdjustmentForCarriedWeight(struct SOLDIERTYPE *pSoldier) {
 }
 
 int16_t TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir,
-                          uint16_t usMovementMode) {
+                            uint16_t usMovementMode) {
   int32_t iPoints = 0;
   uint8_t ubMovementCost;
 
@@ -250,7 +251,7 @@ int16_t TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_
 }
 
 int16_t ActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bDir,
-                      uint16_t usMovementMode) {
+                        uint16_t usMovementMode) {
   int16_t sTileCost, sPoints, sSwitchValue;
 
   sPoints = 0;
@@ -331,7 +332,7 @@ int16_t ActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bD
 }
 
 int16_t EstimateActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bDir,
-                              uint16_t usMovementMode, int8_t bPathIndex, int8_t bPathLength) {
+                                uint16_t usMovementMode, int8_t bPathIndex, int8_t bPathLength) {
   // This action point cost code includes the penalty for having to change
   // stance after jumping a fence IF our path continues...
   int16_t sTileCost, sPoints, sSwitchValue;
@@ -792,8 +793,8 @@ uint8_t CalcAPsToBurst(int8_t bBaseActionPoints, struct OBJECTTYPE *pObj) {
   }
 }
 
-uint8_t CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubAddTurningCost,
-                           int8_t bAimTime) {
+uint8_t CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                             uint8_t ubAddTurningCost, int8_t bAimTime) {
   uint16_t sAPCost = 0;
   uint16_t usItemNum;
   int16_t sActionGridNo;
@@ -873,9 +874,10 @@ uint8_t CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint
             pSoldier->sWalkToAttackWalkToCost = 0;
           } else {
             // Save for next time...
-            pSoldier->sWalkToAttackWalkToCost = PlotPath(
-                pSoldier, sGotLocation, NO_COPYROUTE, NO_PLOT, TEMPORARY,
-                (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
+            pSoldier->sWalkToAttackWalkToCost =
+                PlotPath(pSoldier, sGotLocation, NO_COPYROUTE, NO_PLOT, TEMPORARY,
+                         (uint16_t)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                         pSoldier->bActionPoints);
 
             if (pSoldier->sWalkToAttackWalkToCost == 0) {
               return (99);
@@ -1024,7 +1026,8 @@ void GetAPChargeForShootOrStabWRTGunRaises(struct SOLDIERTYPE *pSoldier, int16_t
   (*pfChargeRaise) = fAddingRaiseGunCost;
 }
 
-uint8_t MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubAddTurningCost) {
+uint8_t MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                            uint8_t ubAddTurningCost) {
   uint32_t uiMercFlags;
   uint16_t usTargID;
   int8_t bFullAPs;

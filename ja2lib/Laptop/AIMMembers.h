@@ -15,8 +15,8 @@ BOOLEAN RenderAIMMembers();
 
 BOOLEAN DrawNumeralsToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
                              uint32_t ulFont, uint8_t ubColor);
-BOOLEAN DrawMoneyToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY, uint32_t ulFont,
-                          uint8_t ubColor);
+BOOLEAN DrawMoneyToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
+                          uint32_t ulFont, uint8_t ubColor);
 
 void DisplayTextForMercFaceVideoPopUp(wchar_t* pString);
 BOOLEAN DisplayTalkingMercFaceForVideoPopUp(int32_t iFaceIndex);

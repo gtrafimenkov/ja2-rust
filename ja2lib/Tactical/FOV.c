@@ -538,9 +538,9 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
           // GET INDEX FOR ITEM HERE
           // if there IS a direction after this one, nextdir WILL NOT be 99
           if (nextDir != 99) {
-            Blocking =
-                GetBlockingStructureInfo((int16_t)marker, (int8_t)Dir[markerDir], (int8_t)Dir[nextDir],
-                                         ubLevel, &bStructHeight, &pDummy, FALSE);
+            Blocking = GetBlockingStructureInfo((int16_t)marker, (int8_t)Dir[markerDir],
+                                                (int8_t)Dir[nextDir], ubLevel, &bStructHeight,
+                                                &pDummy, FALSE);
           } else  // no "next" direction, so pass in a NOWHERE so that
           // "SpecialViewObstruction" will know not to take it UINT32o consideration
           {
@@ -631,7 +631,8 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
                         if (!AM_AN_EPC(pSoldier)) {
                           TacticalCharacterDialogueWithSpecialEvent(
                               pSoldier, (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)),
-                              DIALOGUE_SPECIAL_EVENT_SIGNAL_ITEM_LOCATOR_START, (int16_t)(marker), 0);
+                              DIALOGUE_SPECIAL_EVENT_SIGNAL_ITEM_LOCATOR_START, (int16_t)(marker),
+                              0);
                         } else {
                           // Turn off item lock for locators...
                           gTacticalStatus.fLockItemLocators = FALSE;

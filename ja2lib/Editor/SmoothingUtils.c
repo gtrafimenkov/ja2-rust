@@ -356,10 +356,10 @@ void RestoreWalls(uint32_t iMapIndex) {
     if (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)
       usWallType = SearchForWallType(iMapIndex);
     if (usWallType != 0xffff) {
-      ubSaveWallUIValue = gubWallUIValue;  // save the wall UI value.
+      ubSaveWallUIValue = gubWallUIValue;    // save the wall UI value.
       gubWallUIValue = (uint8_t)usWallType;  // trick the UI value
-      PasteSmartWall(iMapIndex);           // paste smart wall with fake UI value
-      gubWallUIValue = ubSaveWallUIValue;  // restore the real UI value.
+      PasteSmartWall(iMapIndex);             // paste smart wall with fake UI value
+      gubWallUIValue = ubSaveWallUIValue;    // restore the real UI value.
     }
   }
 }

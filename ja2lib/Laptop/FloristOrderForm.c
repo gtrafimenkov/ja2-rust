@@ -232,7 +232,8 @@ void SelectFlowerDropDownMovementCallBack(struct MOUSE_REGION *pRegion, int32_t 
 
 // to select typing in the personal sentiment box
 // struct MOUSE_REGION    gSelectedFloristPersonalSentimentBoxRegion;
-// void SelectFloristPersonalSentimentBoxRegionCallBack(struct MOUSE_REGION * pRegion, int32_t iReason
+// void SelectFloristPersonalSentimentBoxRegionCallBack(struct MOUSE_REGION * pRegion, int32_t
+// iReason
 // );
 
 void DisplayFloristCheckBox();
@@ -423,8 +424,8 @@ BOOLEAN EnterFloristOrderForm() {
   //	MSYS_DefineRegion( &gSelectedFloristPersonalSentimentBoxRegion,
   // FLOWER_ORDER_SENTIMENT_BOX_X, FLOWER_ORDER_SENTIMENT_BOX_Y,
   //(uint16_t)(FLOWER_ORDER_SENTIMENT_BOX_X + FLOWER_ORDER_SENTIMENT_BOX_WIDTH),
-  //(uint16_t)(FLOWER_ORDER_SENTIMENT_BOX_Y + FLOWER_ORDER_SENTIMENT_BOX_HEIGHT), MSYS_PRIORITY_HIGH,
-  //					 CURSOR_WWW, MSYS_NO_CALLBACK,
+  //(uint16_t)(FLOWER_ORDER_SENTIMENT_BOX_Y + FLOWER_ORDER_SENTIMENT_BOX_HEIGHT),
+  //MSYS_PRIORITY_HIGH, 					 CURSOR_WWW, MSYS_NO_CALLBACK,
   // SelectFloristPersonalSentimentBoxRegionCallBack); 	MSYS_AddRegion(
   //&gSelectedFloristPersonalSentimentBoxRegion );
 

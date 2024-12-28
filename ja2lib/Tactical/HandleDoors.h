@@ -32,6 +32,7 @@ void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, uint8_t ubHandleCode);
 
 void SetDoorString(int16_t sGridNo);
 
-void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fNoAnimations);
+void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                BOOLEAN fNoAnimations);
 
 #endif

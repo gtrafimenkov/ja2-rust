@@ -33,14 +33,14 @@ enum DebugLevel {
   DBG_INFO,
 };
 
-void DebugMsg(enum DebugTopic topic, enum DebugLevel level, const char *message);
+void DebugMsg(enum DebugTopic topic, enum DebugLevel level, const char* message);
 
-extern void PrintToDebuggerConsole(const char *message);
+extern void PrintToDebuggerConsole(const char* message);
 extern void _DebugMessage(char* pString, uint32_t uiLineNum, char* pSourceFile);
 extern void _AssertFailedMessage(char* pString, uint32_t uiLineNum, char* pSourceFile);
 
 extern void _Null(void);
-extern char *String(const char *String, ...);
+extern char* String(const char* String, ...);
 
 extern BOOLEAN InitializeDebugManager(void);
 extern void ShutdownDebugManager(void);

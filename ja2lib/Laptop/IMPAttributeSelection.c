@@ -952,18 +952,18 @@ void CreateAttributeSliderButtons(void) {
 
   for (iCounter = 0; iCounter < 20; iCounter += 2) {
     // left button - decrement stat
-    giIMPAttributeSelectionSliderButton[iCounter] =
-        QuickCreateButton(giIMPAttributeSelectionSliderButtonImage[0], LAPTOP_SCREEN_UL_X + (163),
-                          (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
-                          MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
-                          (GUI_CALLBACK)BtnIMPAttributeSliderLeftCallback);
+    giIMPAttributeSelectionSliderButton[iCounter] = QuickCreateButton(
+        giIMPAttributeSelectionSliderButtonImage[0], LAPTOP_SCREEN_UL_X + (163),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
+        MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
+        (GUI_CALLBACK)BtnIMPAttributeSliderLeftCallback);
 
     // right button - increment stat
-    giIMPAttributeSelectionSliderButton[iCounter + 1] =
-        QuickCreateButton(giIMPAttributeSelectionSliderButtonImage[1], LAPTOP_SCREEN_UL_X + (419),
-                          (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
-                          MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
-                          (GUI_CALLBACK)BtnIMPAttributeSliderRightCallback);
+    giIMPAttributeSelectionSliderButton[iCounter + 1] = QuickCreateButton(
+        giIMPAttributeSelectionSliderButtonImage[1], LAPTOP_SCREEN_UL_X + (419),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
+        MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
+        (GUI_CALLBACK)BtnIMPAttributeSliderRightCallback);
 
     SetButtonCursor(giIMPAttributeSelectionSliderButton[iCounter], CURSOR_WWW);
     SetButtonCursor(giIMPAttributeSelectionSliderButton[iCounter + 1], CURSOR_WWW);
@@ -1057,7 +1057,8 @@ void CreateSlideRegionMouseRegions(void) {
         &pSliderRegions[iCounter], (int16_t)(SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X),
         (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT),
         (int16_t)(LAPTOP_SCREEN_UL_X + SKILL_SLIDE_START_X + BAR_WIDTH),
-        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT + 15),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT +
+                  15),
         MSYS_PRIORITY_HIGH + 2, CURSOR_WWW, MSYS_NO_CALLBACK, SliderRegionButtonCallback);
 
     // define user data
@@ -1084,7 +1085,8 @@ void CreateSliderBarMouseRegions(void) {
         &pSliderBarRegions[iCounter], (int16_t)(sX),
         (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT),
         (int16_t)(sX + SLIDER_BAR_WIDTH),
-        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT + 15),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT +
+                  15),
         MSYS_PRIORITY_HIGH + 2, CURSOR_WWW, MSYS_NO_CALLBACK, SliderBarRegionButtonCallback);
 
     // define user data

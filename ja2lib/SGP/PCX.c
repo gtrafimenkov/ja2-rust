@@ -45,8 +45,9 @@ typedef struct {
 } PcxObject;
 
 static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
-static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
-                               uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp);
+static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer,
+                               uint16_t usBufferWidth, uint16_t usBufferHeight, uint16_t usX,
+                               uint16_t usY, BOOLEAN fTransp);
 static PcxObject *LoadPcx(const char *pFilename);
 
 BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
@@ -66,8 +67,8 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
 
   hImage->image_data = MemAlloc(hImage->width * hImage->height);
 
-  if (!BlitPcxToBuffer(pPcxObject, (uint8_t *)hImage->image_data, hImage->width, hImage->height,
-                       0, 0, FALSE)) {
+  if (!BlitPcxToBuffer(pPcxObject, (uint8_t *)hImage->image_data, hImage->width, hImage->height, 0,
+                       0, FALSE)) {
     MemFree(hImage->image_data);
     return (FALSE);
   }
@@ -152,8 +153,9 @@ PcxObject *LoadPcx(const char *pFilename) {
   return pCurrentPcxObject;
 }
 
-static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
-                               uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp) {
+static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer,
+                               uint16_t usBufferWidth, uint16_t usBufferHeight, uint16_t usX,
+                               uint16_t usY, BOOLEAN fTransp) {
   uint8_t *pPcxBuffer;
   uint8_t ubRepCount;
   uint16_t usMaxX, usMaxY;

@@ -37,13 +37,13 @@ void RemoveLoadingScreenProgressBar();
 
 // This creates a single progress bar given the coordinates without a panel (containing a title and
 // background). A panel is automatically created if you specify a title using SetProgressBarTitle
-BOOLEAN CreateProgressBar(uint8_t ubProgressBarID, uint16_t usLeft, uint16_t usTop, uint16_t usRight,
-                          uint16_t usBottom);
+BOOLEAN CreateProgressBar(uint8_t ubProgressBarID, uint16_t usLeft, uint16_t usTop,
+                          uint16_t usRight, uint16_t usBottom);
 
 // You may also define a panel to go in behind the progress bar.  You can now assign a title to go
 // with the panel.
-void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint16_t usLeft, uint16_t usTop,
-                            uint16_t usRight, uint16_t usBottom);
+void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint16_t usLeft,
+                            uint16_t usTop, uint16_t usRight, uint16_t usBottom);
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
 // panel and vertically centered from the top of the panel, to the top of the progress bar.

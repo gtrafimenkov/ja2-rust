@@ -37,7 +37,7 @@
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
 
-extern wchar_t* gzIntroScreen[];
+extern wchar_t *gzIntroScreen[];
 
 enum {
   INTRO_TXT__CANT_FIND_INTRO,
@@ -238,20 +238,20 @@ void GetIntroScreenUserInput() {
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
         MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
 

@@ -82,7 +82,8 @@ BOOLEAN WaterTooDeepForAttacks(int16_t sGridNo);
 // Structure manipulation routines
 BOOLEAN RemoveStruct(uint32_t iMapIndex, uint16_t usIndex);
 struct LEVELNODE *AddStructToTail(uint32_t iMapIndex, uint16_t usIndex);
-struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex, BOOLEAN fAddStructDBInfo);
+struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex,
+                                        BOOLEAN fAddStructDBInfo);
 struct LEVELNODE *ForceStructToTail(uint32_t iMapIndex, uint16_t usIndex);
 
 BOOLEAN AddStructToHead(uint32_t iMapIndex, uint16_t usIndex);
@@ -156,8 +157,8 @@ struct LEVELNODE *FindShadow(int16_t sGridNo, uint16_t usStructIndex);
 void WorldHideTrees();
 void WorldShowTrees();
 
-BOOLEAN IsTileRedundent(uint16_t *pZBuffer, uint16_t usZValue, struct VObject *hSrcVObject, int32_t iX,
-                        int32_t iY, uint16_t usIndex);
+BOOLEAN IsTileRedundent(uint16_t *pZBuffer, uint16_t usZValue, struct VObject *hSrcVObject,
+                        int32_t iX, int32_t iY, uint16_t usIndex);
 
 // this is found in editscreen.c
 // Andrew, you had worldman.c checked out at the time, so I stuck it here.

@@ -51,10 +51,12 @@ void InitArmyGunTypes(void);
 
 // Chooses equipment based on the equipment level (1-11) with best being 11.  It allocates a range
 // of equipment to choose from.
-void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass, int8_t bEquipmentRating);
+void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass,
+                             int8_t bEquipmentRating);
 
 void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bWeaponClass,
-                                        int8_t bAmmoClips, int8_t bAttachClass, BOOLEAN fAttachment);
+                                        int8_t bAmmoClips, int8_t bAttachClass,
+                                        BOOLEAN fAttachment);
 
 void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bGrenades,
                                           int8_t bGrenadeClass, BOOLEAN fGrenadeLauncher);

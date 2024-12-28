@@ -268,7 +268,8 @@ BOOLEAN DisplayMercVideoIntro(uint16_t usTimeTillFinish);
 void HandleCurrentMercDistortion();
 void HandleTalkingSpeck();
 // BOOLEAN DistortVideoMercImage();
-BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth, uint16_t usHeight);
+BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                              uint16_t usHeight);
 BOOLEAN IsAnyMercMercsHired();
 BOOLEAN IsAnyMercMercsDead();
 uint8_t CountNumberOfMercMercsHired();
@@ -1159,7 +1160,8 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, uint16_t usPosX, uint16_t usPosY, ui
   return (fReturnStatus);
 }
 
-BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth, uint16_t usHeight) {
+BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                              uint16_t usHeight) {
   uint32_t uiPitch;
   uint16_t i, j;
   uint16_t *pBuffer = NULL, DestColor;
@@ -1390,7 +1392,7 @@ void HandleTalkingSpeck() {
   }
 }
 
-void DisplayTextForSpeckVideoPopUp(wchar_t* pString) {
+void DisplayTextForSpeckVideoPopUp(wchar_t *pString) {
   uint16_t usActualHeight;
   int32_t iOldMercPopUpBoxId = iMercPopUpBox;
 

@@ -43,8 +43,8 @@ uint32_t guiPreviousScreen = NO_PENDING_SCREEN;
 #define DONT_CHECK_FOR_FREE_SPACE 255
 uint8_t gubCheckForFreeSpaceOnHardDriveCount = DONT_CHECK_FOR_FREE_SPACE;
 
-extern BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen, uint8_t ubFlags,
-                               MSGBOX_CALLBACK ReturnCallback);
+extern BOOLEAN DoSkiMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen,
+                               uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback);
 extern void NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack(uint8_t bExitValue);
 extern BOOLEAN gfTacticalPlacementGUIActive;
 extern BOOLEAN gfTacticalPlacementGUIDirty;
@@ -172,20 +172,20 @@ void GameLoop(void) {
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
         MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
   }

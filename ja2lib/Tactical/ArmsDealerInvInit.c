@@ -891,7 +891,7 @@ uint8_t GetCurrentSuitabilityForItem(int8_t bArmsDealer, uint16_t usItemIndex) {
 }
 
 uint8_t ChanceOfItemTransaction(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerIsSelling,
-                              BOOLEAN fUsed) {
+                                BOOLEAN fUsed) {
   uint8_t ubItemCoolness;
   uint8_t ubChance = 0;
   BOOLEAN fBobbyRay = FALSE;
@@ -999,7 +999,7 @@ BOOLEAN ItemTransactionOccurs(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN 
 }
 
 uint8_t DetermineInitialInvItems(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
-                               BOOLEAN fUsed) {
+                                 BOOLEAN fUsed) {
   uint8_t ubNumBought;
   uint8_t ubCnt;
 
@@ -1016,7 +1016,7 @@ uint8_t DetermineInitialInvItems(int8_t bArmsDealerID, uint16_t usItemIndex, uin
 }
 
 uint8_t HowManyItemsAreSold(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
-                          BOOLEAN fUsed) {
+                            BOOLEAN fUsed) {
   uint8_t ubNumSold;
   uint8_t ubCnt;
 

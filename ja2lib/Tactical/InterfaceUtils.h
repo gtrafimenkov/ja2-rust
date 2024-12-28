@@ -23,10 +23,11 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos,
                      int16_t sHeight, BOOLEAN fErase, uint32_t uiBuffer);
 
 void DrawItemUIBarEx(struct OBJECTTYPE *pObject, uint8_t ubStatus, int16_t sXPos, int16_t sYPos,
-                     int16_t sWidth, int16_t sHeight, int16_t sColor1, int16_t sColor2, BOOLEAN fErase,
-                     uint32_t uiBuffer);
+                     int16_t sWidth, int16_t sHeight, int16_t sColor1, int16_t sColor2,
+                     BOOLEAN fErase, uint32_t uiBuffer);
 
-void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFaceY, BOOLEAN fAutoFace);
+void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFaceY,
+                       BOOLEAN fAutoFace);
 
 // load portraits for cars
 BOOLEAN LoadCarPortraitValues(void);

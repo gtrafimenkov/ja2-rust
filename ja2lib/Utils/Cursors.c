@@ -4876,7 +4876,9 @@ void SetCursorSpecialFrame(uint32_t uiCursor, uint8_t ubFrame) {
   CursorDatabase[uiCursor].bFlashIndex = ubFrame;
 }
 
-void SetCursorFlags(uint32_t uiCursor, uint8_t ubFlags) { CursorDatabase[uiCursor].bFlags |= ubFlags; }
+void SetCursorFlags(uint32_t uiCursor, uint8_t ubFlags) {
+  CursorDatabase[uiCursor].bFlags |= ubFlags;
+}
 
 void RemoveCursorFlags(uint32_t uiCursor, uint8_t ubFlags) {
   CursorDatabase[uiCursor].bFlags &= (~ubFlags);

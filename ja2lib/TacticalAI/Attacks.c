@@ -872,13 +872,13 @@ void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
 
         if (EXPLOSIVE_GUN(usInHand)) {
           ubRawAPCost = MinAPsToShootOrStab(pSoldier, sGridNo, FALSE);
-          ubChanceToHit =
-              (uint8_t)AICalcChanceToHitGun(pSoldier, sGridNo, ubMaxPossibleAimTime, AIM_SHOT_TORSO);
+          ubChanceToHit = (uint8_t)AICalcChanceToHitGun(pSoldier, sGridNo, ubMaxPossibleAimTime,
+                                                        AIM_SHOT_TORSO);
         } else {
           // NB grenade launcher is NOT a direct fire weapon!
           ubRawAPCost = (uint8_t)MinAPsToThrow(pSoldier, sGridNo, FALSE);
-          ubChanceToHit =
-              (uint8_t)CalcThrownChanceToHit(pSoldier, sGridNo, ubMaxPossibleAimTime, AIM_SHOT_TORSO);
+          ubChanceToHit = (uint8_t)CalcThrownChanceToHit(pSoldier, sGridNo, ubMaxPossibleAimTime,
+                                                         AIM_SHOT_TORSO);
         }
 
         // mortars are inherently quite inaccurate, don't get proximity bonus
@@ -1298,7 +1298,7 @@ uint8_t NumMercsCloseTo(int16_t sGridNo, uint8_t ubMaxDist) {
 }
 
 int32_t EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         uint8_t ubChanceToHit) {
+                           uint8_t ubChanceToHit) {
   int32_t iRange, iMaxRange, iPowerLost;
   int32_t iDamage;
   uint8_t ubBonus;
@@ -1346,17 +1346,19 @@ int32_t EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOp
   if (ubAmmoType != AMMO_MONSTER && ubAmmoType != AMMO_KNIFE) {
     // monster spit and knives ignore kevlar vests
     if (pOpponent->inv[VESTPOS].usItem) {
-      iTorsoProt += (int32_t)Armour[Item[pOpponent->inv[VESTPOS].usItem].ubClassIndex].ubProtection *
-                    (int32_t)pOpponent->inv[VESTPOS].bStatus[0] / 100;
+      iTorsoProt +=
+          (int32_t)Armour[Item[pOpponent->inv[VESTPOS].usItem].ubClassIndex].ubProtection *
+          (int32_t)pOpponent->inv[VESTPOS].bStatus[0] / 100;
     }
   }
 
   // check for ceramic plates; these do affect monster spit
   bPlatePos = FindAttachment(&(pOpponent->inv[VESTPOS]), CERAMIC_PLATES);
   if (bPlatePos != -1) {
-    iTorsoProt += (int32_t)Armour[Item[pOpponent->inv[VESTPOS].usAttachItem[bPlatePos]].ubClassIndex]
-                      .ubProtection *
-                  (int32_t)pOpponent->inv[VESTPOS].bAttachStatus[bPlatePos] / 100;
+    iTorsoProt +=
+        (int32_t)Armour[Item[pOpponent->inv[VESTPOS].usAttachItem[bPlatePos]].ubClassIndex]
+            .ubProtection *
+        (int32_t)pOpponent->inv[VESTPOS].bAttachStatus[bPlatePos] / 100;
   }
 
   // if opponent is wearing armoured leggings (LEGPOS)
@@ -1427,7 +1429,7 @@ int32_t EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOp
 }
 
 int32_t EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
-                          struct SOLDIERTYPE *pOpponent, int16_t sGridno) {
+                            struct SOLDIERTYPE *pOpponent, int16_t sGridno) {
   uint8_t ubExplosiveIndex;
   int32_t iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
   int8_t bSlot;
@@ -1504,7 +1506,7 @@ int32_t EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, uint8_t ubItemPos,
 }
 
 int32_t EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
-                         uint8_t ubChanceToHit, BOOLEAN fBladeAttack) {
+                           uint8_t ubChanceToHit, BOOLEAN fBladeAttack) {
   int32_t iImpact, iFluke, iBonus;
 
   if (fBladeAttack) {
@@ -1689,7 +1691,7 @@ void CheckIfTossPossible(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
 }
 
 int8_t CountAdjacentSpreadTargets(struct SOLDIERTYPE *pSoldier, int16_t sFirstTarget,
-                                int8_t bTargetLevel) {
+                                  int8_t bTargetLevel) {
   // return the number of people next to this guy for burst-spread purposes
 
   int8_t bDirLoop, bDir, bCheckDir, bTargetIndex, bTargets;

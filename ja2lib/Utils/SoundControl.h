@@ -389,7 +389,7 @@ enum AmbientDefines {
   NUM_AMBIENTS
 };
 
-typedef void (*SOUND_STOP_CALLBACK)(void *pData);
+typedef void (*SOUND_STOP_CALLBACK)(void* pData);
 
 extern uint8_t AmbientVols[NUM_AMBIENTS];
 
@@ -397,21 +397,22 @@ extern char szSoundEffects[NUM_SAMPLES][255];
 
 BOOLEAN InitJA2Sound();
 BOOLEAN ShutdownJA2Sound();
-uint32_t PlayJA2Sample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops, uint32_t uiPan);
-uint32_t PlayJA2StreamingSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
-                              uint32_t uiPan);
+uint32_t PlayJA2Sample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                       uint32_t uiPan);
+uint32_t PlayJA2StreamingSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
+                                uint32_t ubLoops, uint32_t uiPan);
 
-uint32_t PlayJA2SampleFromFile(char* szFileName, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
-                             uint32_t uiPan);
+uint32_t PlayJA2SampleFromFile(char* szFileName, uint32_t usRate, uint32_t ubVolume,
+                               uint32_t ubLoops, uint32_t uiPan);
 uint32_t PlayJA2StreamingSampleFromFile(char* szFileName, uint32_t usRate, uint32_t ubVolume,
-                                      uint32_t ubLoops, uint32_t uiPan,
-                                      SOUND_STOP_CALLBACK EndsCallback);
+                                        uint32_t ubLoops, uint32_t uiPan,
+                                        SOUND_STOP_CALLBACK EndsCallback);
 
 uint32_t PlayJA2Ambient(uint32_t usNum, uint32_t ubVolume, uint32_t ubLoops);
 uint32_t PlayJA2AmbientRandom(uint32_t usNum, uint32_t uiTimeMin, uint32_t uiTimeMax);
 
 uint32_t PlaySoldierJA2Sample(uint16_t usID, uint32_t usNum, uint32_t usRate, uint32_t ubVolume,
-                            uint32_t ubLoops, uint32_t uiPan, BOOLEAN fCheck);
+                              uint32_t ubLoops, uint32_t uiPan, BOOLEAN fCheck);
 
 uint32_t GetSoundEffectsVolume();
 void SetSoundEffectsVolume(uint32_t uiNewVolume);
@@ -436,7 +437,7 @@ void PlayDelayedJA2Sample(uint32_t uiDelay, uint32_t usNum, uint32_t usRate, uin
 
 #define POSITION_SOUND_FROM_SOLDIER 0x00000001
 
-int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void *uiData, uint32_t iSoundToPlay);
+int32_t NewPositionSnd(int16_t sGridNo, uint32_t uiFlags, void* uiData, uint32_t iSoundToPlay);
 void DeletePositionSnd(int32_t iPositionSndIndex);
 void SetPositionSndsActive();
 void SetPositionSndsInActive();

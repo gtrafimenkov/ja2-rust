@@ -361,7 +361,7 @@ BOOLEAN InitTocMenu() {
   uint32_t uiStartLoc = 0;
   wchar_t sText[400];
   uint8_t ubLocInFile[] = {IN_THE_BEGINNING, THE_ISLAND_METAVIRA, GUS_TARBALLS, WORD_FROM_FOUNDER,
-                         INCORPORATION};
+                           INCORPORATION};
 
   struct VObject *hContentButtonHandle;
 
@@ -377,8 +377,8 @@ BOOLEAN InitTocMenu() {
       // Mouse region for the history toc buttons
       MSYS_DefineRegion(&gSelectedHistoryTocMenuRegion[i], AIM_HISTORY_TOC_X, usPosY,
                         (uint16_t)(AIM_HISTORY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
-                        (uint16_t)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
-                        MSYS_NO_CALLBACK, SelectHistoryTocMenuRegionCallBack);
+                        (uint16_t)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH,
+                        CURSOR_WWW, MSYS_NO_CALLBACK, SelectHistoryTocMenuRegionCallBack);
       MSYS_AddRegion(&gSelectedHistoryTocMenuRegion[i]);
       MSYS_SetRegionUserData(&gSelectedHistoryTocMenuRegion[i], 0, i + 1);
     }

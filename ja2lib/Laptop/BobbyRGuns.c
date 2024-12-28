@@ -161,8 +161,8 @@ uint32_t guiBrTitle;
 uint16_t gusCurWeaponIndex;
 uint8_t gubCurPage;
 uint8_t ubCatalogueButtonValues[] = {LAPTOP_MODE_BOBBY_R_GUNS, LAPTOP_MODE_BOBBY_R_AMMO,
-                                   LAPTOP_MODE_BOBBY_R_ARMOR, LAPTOP_MODE_BOBBY_R_MISC,
-                                   LAPTOP_MODE_BOBBY_R_USED};
+                                     LAPTOP_MODE_BOBBY_R_ARMOR, LAPTOP_MODE_BOBBY_R_MISC,
+                                     LAPTOP_MODE_BOBBY_R_USED};
 
 uint16_t gusLastItemIndex = 0;
 uint16_t gusFirstItemIndex = 0;
@@ -213,19 +213,23 @@ BOOLEAN DisplayNonGunWeaponInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLE
                                 uint16_t usBobbyIndex);
 BOOLEAN DisplayArmourInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
                           uint16_t usBobbyIndex);
-BOOLEAN DisplayMiscInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed, uint16_t usBobbyIndex);
-BOOLEAN DisplayGunInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed, uint16_t usBobbyIndex);
-BOOLEAN DisplayAmmoInfo(uint16_t usItemIndex, uint16_t usPosY, BOOLEAN fUsed, uint16_t usBobbyIndex);
+BOOLEAN DisplayMiscInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex);
+BOOLEAN DisplayGunInfo(uint16_t usItemIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                       uint16_t usBobbyIndex);
+BOOLEAN DisplayAmmoInfo(uint16_t usItemIndex, uint16_t usPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex);
 
 BOOLEAN DisplayBigItemImage(uint16_t ubIndex, uint16_t usPosY);
 // void InitFirstAndLastGlobalIndex(uint32_t ubItemClassMask);
-uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight, uint16_t usBobbyIndex,
-                         BOOLEAN fUsed);
+uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight,
+                           uint16_t usBobbyIndex, BOOLEAN fUsed);
 uint16_t DisplayRof(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
 uint16_t DisplayDamage(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
 uint16_t DisplayRange(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
 uint16_t DisplayMagazine(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
-void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyIndex, BOOLEAN fUsed);
+void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyIndex,
+                            BOOLEAN fUsed);
 uint16_t DisplayWeight(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
 uint16_t DisplayCaliber(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight);
 void CreateMouseRegionForBigImage(uint16_t usPosY, uint8_t ubCount, int16_t *pItemNumbers);
@@ -709,7 +713,8 @@ BOOLEAN DisplayItemInfo(uint32_t uiItemClass) {
   return (TRUE);
 }
 
-BOOLEAN DisplayGunInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed, uint16_t usBobbyIndex) {
+BOOLEAN DisplayGunInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                       uint16_t usBobbyIndex) {
   uint16_t usHeight;
   uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
@@ -768,7 +773,8 @@ BOOLEAN DisplayNonGunWeaponInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN f
   return (TRUE);
 }  // DisplayNonGunWeaponInfo
 
-BOOLEAN DisplayAmmoInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed, uint16_t usBobbyIndex) {
+BOOLEAN DisplayAmmoInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex) {
   uint16_t usHeight;
   uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
@@ -824,7 +830,8 @@ BOOLEAN DisplayBigItemImage(uint16_t usIndex, uint16_t PosY) {
   return (TRUE);
 }
 
-BOOLEAN DisplayArmourInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed, uint16_t usBobbyIndex) {
+BOOLEAN DisplayArmourInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                          uint16_t usBobbyIndex) {
   uint16_t usHeight;
   uint16_t usFontHeight;
   usFontHeight = GetFontHeight(BOBBYR_ITEM_DESC_TEXT_FONT);
@@ -844,12 +851,13 @@ BOOLEAN DisplayArmourInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed, 
   return (TRUE);
 }  // DisplayArmourInfo
 
-BOOLEAN DisplayMiscInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed, uint16_t usBobbyIndex) {
+BOOLEAN DisplayMiscInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
+                        uint16_t usBobbyIndex) {
   return (TRUE);
 }
 
-uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight, uint16_t usBobbyIndex,
-                         BOOLEAN fUsed) {
+uint16_t DisplayCostAndQty(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight,
+                           uint16_t usBobbyIndex, BOOLEAN fUsed) {
   wchar_t sTemp[20];
   //	uint8_t	ubPurchaseNumber;
 
@@ -1041,7 +1049,8 @@ uint16_t DisplayWeight(uint16_t usPosY, uint16_t usIndex, uint16_t usFontHeight)
   return (usPosY);
 }
 
-void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyIndex, BOOLEAN fUsed) {
+void DisplayItemNameAndInfo(uint16_t usPosY, uint16_t usIndex, uint16_t usBobbyIndex,
+                            BOOLEAN fUsed) {
   wchar_t sText[400];
   wchar_t sTemp[20];
   uint32_t uiStartLoc = 0;

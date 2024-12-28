@@ -10,22 +10,22 @@ int16_t gOpenDoorList[20] = {
     FIRSTDOOR16, SECONDDOOR16, THIRDDOOR16, FOURTHDOOR16, -1};
 
 int16_t gOpenDoorShadowList[20] = {FIRSTDOORSH1,
-                                 SECONDDOORSH1,
-                                 THIRDDOORSH1,
-                                 FOURTHDOORSH1,
-                                 FIRSTDOORSH6,
-                                 SECONDDOORSH6,
-                                 THIRDDOORSH6,
-                                 FOURTHDOORSH6,
-                                 FIRSTDOORSH11,
-                                 SECONDDOORSH11,
-                                 THIRDDOORSH11,
-                                 FOURTHDOORSH11,
-                                 FIRSTDOORSH16,
-                                 SECONDDOORSH16,
-                                 THIRDDOORSH16,
-                                 FOURTHDOORSH16,
-                                 -1};
+                                   SECONDDOORSH1,
+                                   THIRDDOORSH1,
+                                   FOURTHDOORSH1,
+                                   FIRSTDOORSH6,
+                                   SECONDDOORSH6,
+                                   THIRDDOORSH6,
+                                   FOURTHDOORSH6,
+                                   FIRSTDOORSH11,
+                                   SECONDDOORSH11,
+                                   THIRDDOORSH11,
+                                   FOURTHDOORSH11,
+                                   FIRSTDOORSH16,
+                                   SECONDDOORSH16,
+                                   THIRDDOORSH16,
+                                   FOURTHDOORSH16,
+                                   -1};
 
 int16_t gClosedDoorList[20] = {
     FIRSTDOOR5,  SECONDDOOR5,  THIRDDOOR5,  FOURTHDOOR5,  FIRSTDOOR10, SECONDDOOR10,
@@ -33,22 +33,22 @@ int16_t gClosedDoorList[20] = {
     FIRSTDOOR20, SECONDDOOR20, THIRDDOOR20, FOURTHDOOR20, -1};
 
 int16_t gClosedDoorShadowList[20] = {FIRSTDOORSH5,
-                                   SECONDDOORSH5,
-                                   THIRDDOORSH5,
-                                   FOURTHDOORSH5,
-                                   FIRSTDOORSH10,
-                                   SECONDDOORSH10,
-                                   THIRDDOORSH10,
-                                   FOURTHDOORSH10,
-                                   FIRSTDOORSH15,
-                                   SECONDDOORSH15,
-                                   THIRDDOORSH15,
-                                   FOURTHDOORSH15,
-                                   FIRSTDOORSH20,
-                                   SECONDDOORSH20,
-                                   THIRDDOORSH20,
-                                   FOURTHDOORSH20,
-                                   -1};
+                                     SECONDDOORSH5,
+                                     THIRDDOORSH5,
+                                     FOURTHDOORSH5,
+                                     FIRSTDOORSH10,
+                                     SECONDDOORSH10,
+                                     THIRDDOORSH10,
+                                     FOURTHDOORSH10,
+                                     FIRSTDOORSH15,
+                                     SECONDDOORSH15,
+                                     THIRDDOORSH15,
+                                     FOURTHDOORSH15,
+                                     FIRSTDOORSH20,
+                                     SECONDDOORSH20,
+                                     THIRDDOORSH20,
+                                     FOURTHDOORSH20,
+                                     -1};
 
 // REVERSE BUDDIES FROM SHADOW BACK TO STRUCT
 int16_t gReverseShadowBuddys[] = {
@@ -335,7 +335,7 @@ uint8_t gTileTypeLogicalHeight[NUMBEROFTILETYPES] = {
     10   // Second water
 };
 
-void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT *TileElement,
+void SetSpecificDatabaseValues(uint16_t usType, uint16_t uiDatabaseElem, TILE_ELEMENT* TileElement,
                                BOOLEAN fUseRaisedObjectType) {
   uint8_t ubLoop;
   int16_t sIndexDiff;

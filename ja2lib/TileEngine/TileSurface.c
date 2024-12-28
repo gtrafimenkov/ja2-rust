@@ -36,7 +36,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   struct VObject *hVObject;
   struct Image *hImage;
   SGPFILENAME cStructureFilename;
-  char* cEndOfName;
+  char *cEndOfName;
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   BOOLEAN fOk;
 
@@ -142,7 +142,7 @@ void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf) {
   int32_t cnt = 0;
   char cRootFile[128];
   char ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",
-                                     "miniweed", "sblast", "sweeds", "twigs",  "wing",    "1"};
+                                    "miniweed", "sblast", "sweeds", "twigs",  "wing",    "1"};
 
   // Loop through array of RAISED objecttype imagery and
   // set global value...

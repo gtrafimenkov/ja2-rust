@@ -420,7 +420,7 @@ void EnableEditorTaskbar(void) {
 // A specialized mprint function that'll restore the editor panel underneath the
 // string before rendering the string.  This is obviously only useful for drawing text
 // in the editor taskbar.
-void mprintfEditor(int16_t x, int16_t y, wchar_t* pFontString, ...) {
+void mprintfEditor(int16_t x, int16_t y, wchar_t *pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
   uint16_t uiStringLength, uiStringHeight;
@@ -460,7 +460,8 @@ void ClearTaskbarRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBo
 // This is a new function which duplicates the older "yellow info boxes" that
 // are common throughout the editor.  This draws the yellow box with the indentation
 // look.
-void DrawEditorInfoBox(wchar_t* str, uint32_t uiFont, uint16_t x, uint16_t y, uint16_t w, uint16_t h) {
+void DrawEditorInfoBox(wchar_t *str, uint32_t uiFont, uint16_t x, uint16_t y, uint16_t w,
+                       uint16_t h) {
   uint16_t usFillColorDark, usFillColorLight, usFillColorBack;
   uint16_t x2, y2;
   uint16_t usStrWidth;
@@ -636,7 +637,7 @@ void RenderMapEntryPointsAndLights() {
   }
 }
 
-void BuildTriggerName(struct OBJECTTYPE *pItem, wchar_t* szItemName, int bufSize) {
+void BuildTriggerName(struct OBJECTTYPE *pItem, wchar_t *szItemName, int bufSize) {
   if (pItem->usItem == SWITCH) {
     if (pItem->bFrequency == PANIC_FREQUENCY)
       swprintf(szItemName, bufSize, L"Panic Trigger1");

@@ -1446,8 +1446,7 @@ wchar_t* pEtaString[] = {
     L"ETA:",  // eta is an acronym for Estimated Time of Arrival
 };
 
-wchar_t*
-pTrashItemText[] = {
+wchar_t* pTrashItemText[] = {
     L"You'll never see it again. You sure?",  // do you want to continue and lose the
                                               // item forever
     L"This item looks REALLY important. Are you REALLY REALLY sure you want to trash "

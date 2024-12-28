@@ -76,7 +76,7 @@ struct SOLDIERTYPE;
 #define AP_READY_RIFLE 2
 #define AP_READY_SAW 0
 // JA2Gold: reduced dual AP cost from 3 to 1
-//#define AP_READY_DUAL           3
+// #define AP_READY_DUAL           3
 #define AP_READY_DUAL 1
 
 #define AP_MIN_AIM_ATTACK 0  // minimum permitted extra aiming
@@ -275,11 +275,12 @@ struct SOLDIERTYPE;
 
 uint8_t BaseAPsToShootOrStab(int8_t bAPs, int8_t bAimSkill, struct OBJECTTYPE *pObj);
 
-int16_t TerrainActionPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir, int8_t bLevel);
+int16_t TerrainActionPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir,
+                            int8_t bLevel);
 int16_t ActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bDir,
-                      uint16_t usMovementMode);
+                        uint16_t usMovementMode);
 int16_t EstimateActionPointCost(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bDir,
-                              uint16_t usMovementMode, int8_t bPathIndex, int8_t bPathLength);
+                                uint16_t usMovementMode, int8_t bPathIndex, int8_t bPathLength);
 BOOLEAN SelectedMercCanAffordMove();
 
 BOOLEAN EnoughPoints(struct SOLDIERTYPE *pSoldier, int16_t sAPCost, int16_t sBPCost,
@@ -288,19 +289,20 @@ void DeductPoints(struct SOLDIERTYPE *pSoldier, int16_t sAPCost, int16_t sBPCost
 int16_t AdjustBreathPts(struct SOLDIERTYPE *pSold, int16_t sBPCost);
 void UnusedAPsToBreath(struct SOLDIERTYPE *pSold);
 int16_t TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, int16_t sGridno, int8_t bDir,
-                          uint16_t usMovementMode);
+                            uint16_t usMovementMode);
 uint8_t MinAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridno, uint8_t ubAddTurningCost);
 int8_t MinPtsToMove(struct SOLDIERTYPE *pSoldier);
 int8_t MinAPsToStartMovement(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMode);
 int8_t PtsToMoveDirection(struct SOLDIERTYPE *pSoldier, int8_t bDirection);
-uint8_t MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, int16_t sGridno, uint8_t ubAddTurningCost);
+uint8_t MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, int16_t sGridno,
+                            uint8_t ubAddTurningCost);
 BOOLEAN EnoughAmmo(struct SOLDIERTYPE *pSoldier, BOOLEAN fDisplay, int8_t bInvPos);
 void DeductAmmo(struct SOLDIERTYPE *pSoldier, int8_t bInvPos);
 
 uint16_t GetAPsToPickupItem(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos);
 uint8_t MinAPsToPunch(struct SOLDIERTYPE *pSoldier, int16_t sGridno, uint8_t ubAddTurningCost);
-uint8_t CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridno, uint8_t ubAddTurningCost,
-                           int8_t bAimTime);
+uint8_t CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, int16_t sGridno,
+                             uint8_t ubAddTurningCost, int8_t bAimTime);
 uint8_t CalcAPsToBurst(int8_t bBaseActionPoints, struct OBJECTTYPE *pObj);
 uint16_t GetAPsToChangeStance(struct SOLDIERTYPE *pSoldier, int8_t bDesiredHeight);
 uint16_t GetBPsToChangeStance(struct SOLDIERTYPE *pSoldier, int8_t bDesiredHeight);

@@ -38,7 +38,7 @@ void InitEditorItemStatsButtons() {
 void InitEditorMercsToolbar() {
   wchar_t TempString[30];
   wchar_t *FaceDirs[8] = {L"north", L"northeast", L"east", L"southeast",
-                         L"south", L"southwest", L"west", L"northwest"};
+                          L"south", L"southwest", L"west", L"northwest"};
   int32_t x;
 
   iEditorButton[MERCS_PLAYERTOGGLE] = CreateCheckBoxButton(
@@ -124,8 +124,8 @@ void InitEditorMercsToolbar() {
       20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsDeleteCallback);
   SetButtonFastHelpText(iEditorButton[MERCS_DELETE], L"Delete currently selected merc (DEL).");
   iEditorButton[MERCS_NEXT] = CreateTextButton(
-      L"NEXT", (uint16_t)SMALLCOMPFONT, FONT_DKBLUE, FONT_BLACK, BUTTON_USE_DEFAULT, 600, 382, 40, 20,
-      BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsNextCallback);
+      L"NEXT", (uint16_t)SMALLCOMPFONT, FONT_DKBLUE, FONT_BLACK, BUTTON_USE_DEFAULT, 600, 382, 40,
+      20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsNextCallback);
   SetButtonFastHelpText(iEditorButton[MERCS_NEXT], L"Find next merc (SPACE).");
 
   // Priority Existance
@@ -145,46 +145,50 @@ void InitEditorMercsToolbar() {
       L"STATIONARY", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 368,
       70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
   iEditorButton[MERCS_ORDERS_ONGUARD] = CreateTextButton(
-      L"ON GUARD", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 380, 70,
-      12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
+      L"ON GUARD", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 380,
+      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
   iEditorButton[MERCS_ORDERS_ONCALL] = CreateTextButton(
       L"ON CALL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 392, 70,
       12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
   iEditorButton[MERCS_ORDERS_SEEKENEMY] = CreateTextButton(
       L"SEEK ENEMY", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 404,
       70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
-  iEditorButton[MERCS_ORDERS_CLOSEPATROL] = CreateTextButton(
-      L"CLOSE PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 368,
-      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
+  iEditorButton[MERCS_ORDERS_CLOSEPATROL] =
+      CreateTextButton(L"CLOSE PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 270, 368, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
   iEditorButton[MERCS_ORDERS_FARPATROL] = CreateTextButton(
       L"FAR PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 380,
       70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
-  iEditorButton[MERCS_ORDERS_POINTPATROL] = CreateTextButton(
-      L"POINT PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 392,
-      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
-  iEditorButton[MERCS_ORDERS_RNDPTPATROL] = CreateTextButton(
-      L"RND PT PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 404,
-      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
+  iEditorButton[MERCS_ORDERS_POINTPATROL] =
+      CreateTextButton(L"POINT PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 270, 392, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
+  iEditorButton[MERCS_ORDERS_RNDPTPATROL] =
+      CreateTextButton(L"RND PT PATROL", (uint16_t)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 270, 404, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, MercsSetOrdersCallback);
   for (x = 0; x < 8; x++) {
     MSYS_SetBtnUserData(iEditorButton[FIRST_MERCS_ORDERS_BUTTON + x], 0, x);
   }
 
   // Attitudes
   iEditorButton[MERCS_ATTITUDE_DEFENSIVE] = CreateTextButton(
-      L"DEFENSIVE", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 424, 70,
-      12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
+      L"DEFENSIVE", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 424,
+      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
   iEditorButton[MERCS_ATTITUDE_BRAVESOLO] = CreateTextButton(
       L"BRAVE SOLO", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 436,
       70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
   iEditorButton[MERCS_ATTITUDE_BRAVEAID] = CreateTextButton(
-      L"BRAVE AID", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 448, 70,
-      12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
+      L"BRAVE AID", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 200, 448,
+      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
   iEditorButton[MERCS_ATTITUDE_AGGRESSIVE] = CreateTextButton(
       L"AGGRESSIVE", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 424,
       70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
-  iEditorButton[MERCS_ATTITUDE_CUNNINGSOLO] = CreateTextButton(
-      L"CUNNING SOLO", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 436,
-      70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
+  iEditorButton[MERCS_ATTITUDE_CUNNINGSOLO] =
+      CreateTextButton(L"CUNNING SOLO", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 270, 436, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
   iEditorButton[MERCS_ATTITUDE_CUNNINGAID] = CreateTextButton(
       L"CUNNING AID", (uint16_t)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 270, 448,
       70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsSetAttitudeCallback);
@@ -223,8 +227,8 @@ void InitEditorMercsToolbar() {
   }
 
   iEditorButton[MERCS_DIRECTION_FIND] = CreateTextButton(
-      L"Find", (int16_t)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT, 390, 395, 30,
-      30, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK,
+      L"Find", (int16_t)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT, 390, 395,
+      30, 30, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK,
       MercsFindSelectedMercCallback);
   SetButtonFastHelpText(iEditorButton[MERCS_DIRECTION_FIND], L"Find selected merc");
 
@@ -239,9 +243,9 @@ void InitEditorMercsToolbar() {
                        MercsSetRelativeEquipmentCallback);
   SpecifyButtonDownTextColors(iEditorButton[MERCS_EQUIPMENT_POOR], FONT_ORANGE, FONT_BLACK);
   iEditorButton[MERCS_EQUIPMENT_AVERAGE] =
-      CreateTextButton(L"AVERAGE", (int16_t)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK, BUTTON_USE_DEFAULT,
-                       480, 415, 40, 15, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK,
-                       MercsSetRelativeEquipmentCallback);
+      CreateTextButton(L"AVERAGE", (int16_t)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 480, 415, 40, 15, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, MercsSetRelativeEquipmentCallback);
   SpecifyButtonDownTextColors(iEditorButton[MERCS_EQUIPMENT_AVERAGE], FONT_YELLOW, FONT_BLACK);
   iEditorButton[MERCS_EQUIPMENT_GOOD] =
       CreateTextButton(L"GOOD", (int16_t)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK, BUTTON_USE_DEFAULT,
@@ -268,9 +272,9 @@ void InitEditorMercsToolbar() {
                        MercsSetRelativeAttributesCallback);
   SpecifyButtonDownTextColors(iEditorButton[MERCS_ATTRIBUTES_POOR], FONT_ORANGE, FONT_BLACK);
   iEditorButton[MERCS_ATTRIBUTES_AVERAGE] =
-      CreateTextButton(L"AVERAGE", (int16_t)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK, BUTTON_USE_DEFAULT,
-                       530, 415, 40, 15, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK,
-                       MercsSetRelativeAttributesCallback);
+      CreateTextButton(L"AVERAGE", (int16_t)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 530, 415, 40, 15, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, MercsSetRelativeAttributesCallback);
   SpecifyButtonDownTextColors(iEditorButton[MERCS_ATTRIBUTES_AVERAGE], FONT_YELLOW, FONT_BLACK);
   iEditorButton[MERCS_ATTRIBUTES_GOOD] =
       CreateTextButton(L"GOOD", (int16_t)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK, BUTTON_USE_DEFAULT,
@@ -551,12 +555,13 @@ void InitEditorBuildingsToolbar() {
 
 void InitEditorItemsToolbar() {
   SetFontForeground(FONT_MCOLOR_LTRED);
-  iEditorButton[ITEMS_WEAPONS] = CreateTextButton(
-      L"Weapons", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 100, 440,
-      59, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsWeaponsCallback);
+  iEditorButton[ITEMS_WEAPONS] =
+      CreateTextButton(L"Weapons", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 100, 440, 59, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, ItemsWeaponsCallback);
   iEditorButton[ITEMS_AMMO] = CreateTextButton(
-      L"Ammo", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 159, 440, 40,
-      20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsAmmoCallback);
+      L"Ammo", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 159, 440,
+      40, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsAmmoCallback);
   iEditorButton[ITEMS_ARMOUR] = CreateTextButton(
       L"Armour", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 199, 440,
       52, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsArmourCallback);
@@ -573,12 +578,13 @@ void InitEditorItemsToolbar() {
   iEditorButton[ITEMS_EQUIPMENT3] = CreateTextButton(
       L"E3", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 362, 440, 21,
       20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsEquipment3Callback);
-  iEditorButton[ITEMS_TRIGGERS] = CreateTextButton(
-      L"Triggers", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 383, 440,
-      59, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsTriggersCallback);
+  iEditorButton[ITEMS_TRIGGERS] =
+      CreateTextButton(L"Triggers", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK,
+                       BUTTON_USE_DEFAULT, 383, 440, 59, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL,
+                       DEFAULT_MOVE_CALLBACK, ItemsTriggersCallback);
   iEditorButton[ITEMS_KEYS] = CreateTextButton(
-      L"Keys", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 442, 440, 38,
-      20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsKeysCallback);
+      L"Keys", (uint16_t)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT, 442, 440,
+      38, 20, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ItemsKeysCallback);
 
   iEditorButton[ITEMS_LEFTSCROLL] =
       CreateEasyNoToggleButton(1, 361, "EDITOR//leftscroll.sti", ItemsLeftScrollCallback);
@@ -760,8 +766,8 @@ void InitEditorTerrainToolbar() {
 void CreateEditorTaskbarInternal() {
   // Create the tabs for the editor taskbar
   iEditorButton[TAB_TERRAIN] = CreateTextButton(
-      L"Terrain", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 100, 460, 90,
-      20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskTerrainCallback);
+      L"Terrain", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 100, 460,
+      90, 20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskTerrainCallback);
   SpecifyButtonDownTextColors(iEditorButton[TAB_TERRAIN], FONT_YELLOW, FONT_ORANGE);
   iEditorButton[TAB_BUILDINGS] = CreateTextButton(
       L"Buildings", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 190, 460,
@@ -776,12 +782,12 @@ void CreateEditorTaskbarInternal() {
       20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskMercsCallback);
   SpecifyButtonDownTextColors(iEditorButton[TAB_MERCS], FONT_YELLOW, FONT_ORANGE);
   iEditorButton[TAB_MAPINFO] = CreateTextButton(
-      L"Map Info", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 460, 460, 90,
-      20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskMapInfoCallback);
+      L"Map Info", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 460, 460,
+      90, 20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskMapInfoCallback);
   SpecifyButtonDownTextColors(iEditorButton[TAB_MAPINFO], FONT_YELLOW, FONT_ORANGE);
   iEditorButton[TAB_OPTIONS] = CreateTextButton(
-      L"Options", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 550, 460, 90,
-      20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskOptionsCallback);
+      L"Options", (uint16_t)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT, 550, 460,
+      90, 20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, TaskOptionsCallback);
   SpecifyButtonDownTextColors(iEditorButton[TAB_OPTIONS], FONT_YELLOW, FONT_ORANGE);
 
   // Create the buttons within each tab.

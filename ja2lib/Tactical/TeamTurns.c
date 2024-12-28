@@ -1171,7 +1171,7 @@ BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, uint8_t ubO
 }
 
 int8_t CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, uint8_t ubOpponentID,
-                          BOOLEAN fUseWatchSpots) {
+                            BOOLEAN fUseWatchSpots) {
   int8_t bPoints;
   int8_t bLightLevel;
   uint8_t ubDistance;

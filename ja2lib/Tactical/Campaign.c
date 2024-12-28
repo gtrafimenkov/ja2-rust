@@ -45,7 +45,7 @@ extern uint8_t gbPlayerNum;
 #endif
 
 #ifdef STAT_CHANGE_DEBUG
-wchar_t* wDebugStatStrings[] = {
+wchar_t *wDebugStatStrings[] = {
     L"",           L"Life (Max)", L"Agility",      L"Dexterity",        L"Wisdom",   L"Medical",
     L"Explosives", L"Mechanical", L"Marksmanship", L"Experience Level", L"Strength", L"Leadership",
 };
@@ -56,7 +56,8 @@ uint8_t CalcImportantSectorControl(void);
 
 // give pSoldier usNumChances to improve ubStat.  If it's from training, it doesn't count towards
 // experience level gain
-void StatChange(struct SOLDIERTYPE *pSoldier, uint8_t ubStat, uint16_t usNumChances, uint8_t ubReason) {
+void StatChange(struct SOLDIERTYPE *pSoldier, uint8_t ubStat, uint16_t usNumChances,
+                uint8_t ubReason) {
   Assert(pSoldier != NULL);
   Assert(IsSolActive(pSoldier));
 
@@ -1308,7 +1309,7 @@ void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType) {
   }
 }
 
-void BuildStatChangeString(wchar_t* wString, size_t bufSize, wchar_t* wName, BOOLEAN fIncrease,
+void BuildStatChangeString(wchar_t *wString, size_t bufSize, wchar_t *wName, BOOLEAN fIncrease,
                            int16_t sPtsChanged, uint8_t ubStat) {
   uint8_t ubStringIndex;
 

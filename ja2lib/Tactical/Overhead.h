@@ -196,7 +196,7 @@ BOOLEAN ShutdownOverhead();
 BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, uint16_t usSoldierIndex);
 
 int16_t NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, int16_t sGridNo, BOOLEAN fPeopleToo,
-                       int8_t bLevel);
+                         int8_t bLevel);
 
 // Simple check to see if a (one-tiled) soldier can occupy a given location on the ground or roof.
 extern BOOLEAN IsLocationSittable(int32_t iMapIndex, BOOLEAN fOnRoof);
@@ -225,9 +225,9 @@ uint8_t LastActiveTeamMember(uint8_t ubTeam);
 BOOLEAN SoldierOnVisibleWorldTile(struct SOLDIERTYPE *pSoldier);
 
 uint8_t FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                                 BOOLEAN fOnlyRegularMercs);
+                                   BOOLEAN fOnlyRegularMercs);
 uint8_t FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                                 BOOLEAN fOnlyRegularMercs);
+                                   BOOLEAN fOnlyRegularMercs);
 
 BOOLEAN CheckForPlayerTeamInMissionExit();
 void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldier);
@@ -239,9 +239,10 @@ uint32_t EnterTacticalDemoMode();
 BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos);
 
 int16_t FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
-                         int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
-int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t *pubDirection,
-                               int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
+                           int16_t *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
+int16_t FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                 uint8_t *pubDirection, int16_t *psAdjustedGridNo,
+                                 BOOLEAN fForceToPerson, BOOLEAN fDoor);
 
 void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier);
 BOOLEAN TeamMemberNear(int8_t bTeam, int16_t sGridNo, int32_t iRange);
@@ -274,8 +275,8 @@ struct SOLDIERTYPE *FreeUpAttacker(uint8_t ubID);
 
 BOOLEAN PlayerTeamFull();
 
-void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, int8_t bNumMercsWaiting, uint32_t uiData1,
-                                         uint32_t uiData2, uint32_t uiData3);
+void SetActionToDoOnceMercsGetToLocation(uint8_t ubActionCode, int8_t bNumMercsWaiting,
+                                         uint32_t uiData1, uint32_t uiData2, uint32_t uiData3);
 
 void ResetAllMercSpeeds();
 
@@ -307,7 +308,7 @@ BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDI
                                       int8_t bReason);
 
 int16_t FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
-                              int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection);
+                                int16_t *psAdjustedTargetGridNo, uint8_t *pubDirection);
 
 struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacked);
 void CivilianGroupChangesSides(uint8_t ubCivilianGroup);

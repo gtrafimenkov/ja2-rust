@@ -59,7 +59,8 @@ enum {
   NUM_EXP_BONUS_TYPES,
 };
 
-void StatChange(struct SOLDIERTYPE *pSoldier, uint8_t ubStat, uint16_t usNumChances, uint8_t ubReason);
+void StatChange(struct SOLDIERTYPE *pSoldier, uint8_t ubStat, uint16_t usNumChances,
+                uint8_t ubReason);
 void ProfileStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
                        uint8_t ubReason);
 void ProcessStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
@@ -85,7 +86,7 @@ void HandleAnyStatChangesAfterAttack(void);
 
 void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType);
 
-void BuildStatChangeString(wchar_t* wString, size_t bufSize, wchar_t* wName, BOOLEAN fIncrease,
+void BuildStatChangeString(wchar_t *wString, size_t bufSize, wchar_t *wName, BOOLEAN fIncrease,
                            int16_t sPtsChanged, uint8_t ubStat);
 
 void MERCMercWentUpALevelSendEmail(uint8_t ubMercMercIdValue);

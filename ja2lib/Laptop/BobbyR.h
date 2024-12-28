@@ -47,8 +47,8 @@ extern	uint8_t		gubNumUsedPages;
 
 extern uint32_t guiLastBobbyRayPage;
 
-// BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t usHeight, uint32_t
-// uiBackGround);
+// BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t
+// usHeight, uint32_t uiBackGround);
 BOOLEAN DrawBobbyRWoodBackground();
 BOOLEAN DeleteBobbyRWoodBackground();
 BOOLEAN InitBobbyRWoodBackground();
@@ -59,8 +59,10 @@ void AddFreshBobbyRayInventory(uint16_t usItemIndex);
 void InitBobbyRayInventory();
 BOOLEAN InitBobbyRayNewInventory();
 BOOLEAN InitBobbyRayUsedInventory();
-uint8_t HowManyBRItemsToOrder(uint16_t usItemIndex, uint8_t ubCurrentlyOnHand, uint8_t ubBobbyRayNewUsed);
+uint8_t HowManyBRItemsToOrder(uint16_t usItemIndex, uint8_t ubCurrentlyOnHand,
+                              uint8_t ubBobbyRayNewUsed);
 void CancelAllPendingBRPurchaseOrders(void);
-int16_t GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex, BOOLEAN fUsed);
+int16_t GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex,
+                                BOOLEAN fUsed);
 
 #endif

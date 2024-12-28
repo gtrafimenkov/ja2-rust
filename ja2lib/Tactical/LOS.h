@@ -49,43 +49,44 @@ typedef enum {
 } CollisionEnums;
 
 int32_t CheckForCollision(float dX, float dY, float dZ, float dDeltaX, float dDeltaY, float dDeltaZ,
-                        uint16_t *pusStructureID, float *pdNormalX, float *pdNormalY,
-                        float *pdNormalZ);
+                          uint16_t *pusStructureID, float *pdNormalX, float *pdNormalY,
+                          float *pdNormalZ);
 
 int8_t ChanceToGetThrough(struct SOLDIERTYPE *pFirer, float dEndX, float dEndY, float dEndZ);
 int8_t FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, float dEndX, float dEndY, float dEndZ,
-                           uint16_t usHandItem, int16_t sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake);
+                             uint16_t usHandItem, int16_t sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake);
 
 int32_t SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
-                                      struct SOLDIERTYPE *pEndSoldier, uint8_t ubSightLimit,
-                                      int8_t bAware);
+                                        struct SOLDIERTYPE *pEndSoldier, uint8_t ubSightLimit,
+                                        int8_t bAware);
 int32_t SoldierToLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                       uint8_t ubSightLimit, int8_t bAware);
+                                         uint8_t ubSightLimit, int8_t bAware);
 int32_t SoldierTo3DLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                         int8_t bLevel, int8_t bCubeLevel, uint8_t ubSightLimit,
-                                         int8_t bAware);
+                                           int8_t bLevel, int8_t bCubeLevel, uint8_t ubSightLimit,
+                                           int8_t bAware);
 int32_t SoldierToBodyPartLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                       int8_t bLevel, uint8_t ubAimLocation, uint8_t ubTileSightLimit,
-                                       int8_t bAware);
+                                         int8_t bLevel, uint8_t ubAimLocation,
+                                         uint8_t ubTileSightLimit, int8_t bAware);
 int32_t SoldierToVirtualSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                             int8_t bLevel, int8_t bStance, uint8_t ubTileSightLimit,
-                                             int8_t bAware);
+                                               int8_t bLevel, int8_t bStance,
+                                               uint8_t ubTileSightLimit, int8_t bAware);
 uint8_t SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
-                                         struct SOLDIERTYPE *pEndSoldier);
-uint8_t SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
-                                                 struct SOLDIERTYPE *pEndSoldier,
-                                                 uint8_t ubAimLocation);
-uint8_t AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
                                            struct SOLDIERTYPE *pEndSoldier);
+uint8_t SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                                   struct SOLDIERTYPE *pEndSoldier,
+                                                   uint8_t ubAimLocation);
+uint8_t AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                             struct SOLDIERTYPE *pEndSoldier);
 uint8_t AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                            int8_t bLevel, int8_t bCubeLevel);
+                                              int8_t bLevel, int8_t bCubeLevel);
 uint8_t SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                          int8_t bLevel, int8_t bCubeLevel, uint8_t ubTargetID);
+                                            int8_t bLevel, int8_t bCubeLevel, uint8_t ubTargetID);
 int32_t SoldierToLocationVisibleDistance(struct SOLDIERTYPE *pStartSoldier, int16_t sGridNo,
-                                       uint8_t ubTileSightLimit, int8_t bAware);
+                                         uint8_t ubTileSightLimit, int8_t bAware);
 int16_t SoldierToLocationWindowTest(struct SOLDIERTYPE *pStartSoldier, int16_t sEndGridNo);
-int32_t LocationToLocationLineOfSightTest(int16_t sStartGridNo, int8_t bStartLevel, int16_t sEndGridNo,
-                                        int8_t bEndLevel, uint8_t ubTileSightLimit, int8_t bAware);
+int32_t LocationToLocationLineOfSightTest(int16_t sStartGridNo, int8_t bStartLevel,
+                                          int16_t sEndGridNo, int8_t bEndLevel,
+                                          uint8_t ubTileSightLimit, int8_t bAware);
 
 BOOLEAN CalculateSoldierZPos(struct SOLDIERTYPE *pSoldier, uint8_t ubPosType, float *pdZPos);
 
@@ -99,16 +100,16 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier);
 #define HEIGHT_UNITS_PER_INDEX (HEIGHT_UNITS / PROFILE_Z_SIZE)
 #define MAX_STRUCTURE_HEIGHT 50
 // 5.12 == HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT
-#define CONVERT_PIXELS_TO_HEIGHTUNITS(n) ((n)*HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT)
+#define CONVERT_PIXELS_TO_HEIGHTUNITS(n) ((n) * HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT)
 #define CONVERT_PIXELS_TO_INDEX(n) \
-  ((n)*HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS_PER_INDEX)
+  ((n) * HEIGHT_UNITS / MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS_PER_INDEX)
 #define CONVERT_HEIGHTUNITS_TO_INDEX(n) ((n) / HEIGHT_UNITS_PER_INDEX)
 #define CONVERT_HEIGHTUNITS_TO_DISTANCE(n) ((n) / (HEIGHT_UNITS / CELL_X_SIZE))
-#define CONVERT_HEIGHTUNITS_TO_PIXELS(n) ((n)*MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS)
+#define CONVERT_HEIGHTUNITS_TO_PIXELS(n) ((n) * MAX_STRUCTURE_HEIGHT / HEIGHT_UNITS)
 #define CONVERT_WITHINTILE_TO_INDEX(n) ((n) >> 1)
 #define CONVERT_INDEX_TO_WITHINTILE(n) ((n) << 1)
 #define CONVERT_INDEX_TO_PIXELS(n) \
-  ((n)*MAX_STRUCTURE_HEIGHT * HEIGHT_UNITS_PER_INDEX / HEIGHT_UNITS)
+  ((n) * MAX_STRUCTURE_HEIGHT * HEIGHT_UNITS_PER_INDEX / HEIGHT_UNITS)
 
 #define TREE_SIGHT_REDUCTION 6
 #define NORMAL_TREES 10

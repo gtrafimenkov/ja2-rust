@@ -73,8 +73,8 @@ int16_t gsLastVisibleToSoldierGridNo = NOWHERE;
 
 //*******  Function Prototypes ***************************************
 
-int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridno,
-                                               int8_t bStance);
+int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier,
+                                                 int16_t sTargetGridno, int8_t bStance);
 void CalculateCoverInRadiusAroundGridno(int16_t sTargetGridNo, int8_t bSearchRange);
 void AddCoverTileToEachGridNo();
 void AddCoverObjectToWorld(int16_t sGridNo, uint16_t usGraphic, BOOLEAN fRoof);
@@ -84,7 +84,8 @@ struct SOLDIERTYPE *GetCurrentMercForDisplayCover();
 
 void CalculateVisibleToSoldierAroundGridno(int16_t sGridNo, int8_t bSearchRange);
 void AddVisibleToSoldierToEachGridNo();
-int8_t CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, BOOLEAN fRoof);
+int8_t CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo,
+                                 BOOLEAN fRoof);
 BOOLEAN IsTheRoofVisible(int16_t sGridNo);
 
 // ppp
@@ -364,8 +365,8 @@ void CalculateCoverInRadiusAroundGridno(int16_t sTargetGridNo, int8_t bSearchRan
   }
 }
 
-int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo,
-                                               int8_t bStance) {
+int8_t CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier,
+                                                 int16_t sTargetGridNo, int8_t bStance) {
   int32_t iTotalCoverPoints = 0;
   int8_t bNumEnemies = 0;
   int8_t bPercentCoverForGridno = 0;
@@ -811,7 +812,8 @@ void RemoveVisibleGridNoAtSelectedGridNo() {
   gsLastSoldierGridNo = NOWHERE;
 }
 
-int8_t CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo, BOOLEAN fRoof) {
+int8_t CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo,
+                                 BOOLEAN fRoof) {
   int8_t bRetVal = 0;
   int32_t iLosForGridNo = 0;
   uint16_t usSightLimit = 0;
@@ -850,8 +852,8 @@ int8_t CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, int16_t sTargetGr
   //
   // Crouch
   //
-  iLosForGridNo = SoldierToVirtualSoldierLineOfSightTest(pSoldier, sTargetGridNo, fRoof,
-                                                         ANIM_CROUCH, (uint8_t)usSightLimit, bAware);
+  iLosForGridNo = SoldierToVirtualSoldierLineOfSightTest(
+      pSoldier, sTargetGridNo, fRoof, ANIM_CROUCH, (uint8_t)usSightLimit, bAware);
   if (iLosForGridNo != 0) {
     bRetVal++;
   }

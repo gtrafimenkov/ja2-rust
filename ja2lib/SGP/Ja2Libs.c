@@ -12,7 +12,7 @@
 int8_t gbLocale = ENGLISH_LANG;
 
 char* LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
-                                 "polish",  "french",  "italian"};
+                                  "polish",  "french",  "italian"};
 
 #define _MAX_PATH 260
 

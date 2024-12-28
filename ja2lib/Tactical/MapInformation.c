@@ -73,10 +73,10 @@ existance.  So, all current detailed placements will also have priority existanc
 -- obsolete April 16, 1998 MAJOR CONFLICT RESULTING IN A MAJOR VERSION UPDATE 2.00! Bug 10) Padding
 on detailed placements is uninitialized.  Clear all data starting at fKillSlotIfOwnerDies. Version 9
 -- Kris -- obsolete April 26, 1998 This version requires no auto updating, but external code has
-adjusted the size of the mapedgepoint arraysize from uint8_t to uint16_t.  See Map Edgepoints.c. Bug 11)
-Convert all wheelchaired placement bodytypes to cows.  Result of change in the animation database.
-Version 11 -- Kris -- obsolete May 2, 1998
-  Added new center entry point.  Need to initialize the original padding to -1.
+adjusted the size of the mapedgepoint arraysize from uint8_t to uint16_t.  See Map Edgepoints.c. Bug
+11) Convert all wheelchaired placement bodytypes to cows.  Result of change in the animation
+database. Version 11 -- Kris -- obsolete May 2, 1998 Added new center entry point.  Need to
+initialize the original padding to -1.
 */
 
 // EntryPoints can't be placed on the top two gridnos in a map.  So all we do in this case

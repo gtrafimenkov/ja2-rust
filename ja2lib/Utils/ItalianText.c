@@ -1533,8 +1533,7 @@ wchar_t* pTrashItemText[] = {
     L"via?",  // does the user REALLY want to trash this item
 };
 
-wchar_t*
-pMapErrorString[] = {
+wchar_t* pMapErrorString[] = {
     L"La squadra non può muoversi, se un mercenario dorme.",
 
     // 1-5

@@ -117,7 +117,8 @@ BOOLEAN AddSameDayStrategicEvent(uint8_t ubCallbackID, uint32_t uiMinStamp, uint
 BOOLEAN AddFutureDayStrategicEvent(uint8_t ubCallbackID, uint32_t uiMinStamp, uint32_t uiParam,
                                    uint32_t uiNumDaysFromPresent);
 // Same but uses seconds instead of minutes.
-BOOLEAN AddStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp, uint32_t uiParam);
+BOOLEAN AddStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp,
+                                      uint32_t uiParam);
 BOOLEAN AddSameDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp,
                                              uint32_t uiParam);
 BOOLEAN AddFutureDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp,
@@ -133,10 +134,11 @@ BOOLEAN AddFutureDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t ui
 // time would be used to remove the sound from the system.
 BOOLEAN AddRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiLengthMin,
                                 uint32_t uiParam);
-BOOLEAN AddSameDayRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiLengthMin,
-                                       uint32_t uiParam);
-BOOLEAN AddFutureDayRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiLengthMin,
-                                         uint32_t uiParam, uint32_t uiNumDaysFromPresent);
+BOOLEAN AddSameDayRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin,
+                                       uint32_t uiLengthMin, uint32_t uiParam);
+BOOLEAN AddFutureDayRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin,
+                                         uint32_t uiLengthMin, uint32_t uiParam,
+                                         uint32_t uiNumDaysFromPresent);
 BOOLEAN AddRangedStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiStartSeconds,
                                             uint32_t uiLengthSeconds, uint32_t uiParam);
 BOOLEAN AddSameDayRangedStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiStartSeconds,
@@ -157,7 +159,8 @@ BOOLEAN AddEveryDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiS
 // Periodic Events
 // Event will get processed automatically once every X minutes.  The period is added to the current
 // time for the time stamp.
-BOOLEAN AddPeriodStrategicEvent(uint8_t ubCallbackID, uint32_t uiOnceEveryXMinutes, uint32_t uiParam);
+BOOLEAN AddPeriodStrategicEvent(uint8_t ubCallbackID, uint32_t uiOnceEveryXMinutes,
+                                uint32_t uiParam);
 BOOLEAN AddPeriodStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiOnceEveryXSeconds,
                                             uint32_t uiParam);
 // Hybrids that aren't based from the current time.  They are offsetted from the current time first.
@@ -165,7 +168,8 @@ BOOLEAN AddPeriodStrategicEventWithOffset(uint8_t ubCallbackID, uint32_t uiOnceE
                                           uint32_t uiOffsetFromCurrent, uint32_t uiParam);
 BOOLEAN AddPeriodStrategicEventUsingSecondsWithOffset(uint8_t ubCallbackID,
                                                       uint32_t uiOnceEveryXSeconds,
-                                                      uint32_t uiOffsetFromCurrent, uint32_t uiParam);
+                                                      uint32_t uiOffsetFromCurrent,
+                                                      uint32_t uiParam);
 
 // Searches for and removes the first event matching the supplied information.  There may very well
 // be a need for more specific event removal, so let me know (Kris), of any support needs.  Function

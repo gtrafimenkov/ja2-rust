@@ -7,8 +7,8 @@
 
 #include "SGP/Types.h"
 
-//#define		_PHYSICSSUBSYSTEM_DEBUG
-//#define		_AISUBSYSTEM_DEBUG
+// #define		_PHYSICSSUBSYSTEM_DEBUG
+// #define		_AISUBSYSTEM_DEBUG
 
 #ifdef JA2BETAVERSION
 //  #define			_ANIMSUBSYSTEM_DEBUG

@@ -353,7 +353,7 @@ void PasteSingleWallCommon(uint32_t iMapIndex) {
       if (!gfBasement)
         AddExclusiveShadow(
             iMapIndex, (uint16_t)(gTileTypeStartIndex[usUseObjIndex - FIRSTDOOR + FIRSTDOORSHADOW] +
-                                usUseIndex));
+                                  usUseIndex));
     }
 
     // Is it a wall?
@@ -361,7 +361,8 @@ void PasteSingleWallCommon(uint32_t iMapIndex) {
       // ATE		If it is a wall shadow, place differenty!
       if (usUseIndex == 29 || usUseIndex == 30) {
         if (!gfBasement)
-          AddExclusiveShadow(iMapIndex, (uint16_t)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
+          AddExclusiveShadow(iMapIndex,
+                             (uint16_t)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
       } else {
         // Slap down wall/window/door/decoration (no smoothing)
         AddWallToStructLayer(iMapIndex, (uint16_t)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex),
@@ -569,12 +570,13 @@ void PasteBanks(uint32_t iMapIndex, uint16_t usStructIndex, BOOLEAN fReplace) {
           AddStructToHead(iMapIndex, (uint16_t)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
           // Add shadows
           if (!gfBasement && usUseObjIndex == FIRSTCLIFF) {
-            // AddShadowToHead( iMapIndex, (uint16_t)( gTileTypeStartIndex[ usUseObjIndex - FIRSTCLIFF
+            // AddShadowToHead( iMapIndex, (uint16_t)( gTileTypeStartIndex[ usUseObjIndex -
+            // FIRSTCLIFF
             // + FIRSTCLIFFSHADOW ] + usUseIndex ) );
             AddObjectToHead(
                 iMapIndex,
                 (uint16_t)(gTileTypeStartIndex[usUseObjIndex - FIRSTCLIFF + FIRSTCLIFFHANG] +
-                         usUseIndex));
+                           usUseIndex));
           }
         }
       }
@@ -900,7 +902,8 @@ BOOLEAN SetLowerLandIndexWithRadius(int32_t iMapIndex, uint32_t uiNewType, uint8
 
             // If we are top-most, add to smooth list
             sNumSmoothTiles++;
-            puiSmoothTiles = (uint32_t *)MemRealloc(puiSmoothTiles, sNumSmoothTiles * sizeof(uint32_t));
+            puiSmoothTiles =
+                (uint32_t *)MemRealloc(puiSmoothTiles, sNumSmoothTiles * sizeof(uint32_t));
             puiSmoothTiles[sNumSmoothTiles - 1] = iNewIndex;
           }
         }

@@ -188,7 +188,8 @@ void UnMarkMovementReserved(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-int8_t TileIsClear(struct SOLDIERTYPE *pSoldier, int8_t bDirection, int16_t sGridNo, int8_t bLevel) {
+int8_t TileIsClear(struct SOLDIERTYPE *pSoldier, int8_t bDirection, int16_t sGridNo,
+                   int8_t bLevel) {
   uint8_t ubPerson;
   int16_t sTempDestGridNo;
   int16_t sNewGridNo;
@@ -457,8 +458,8 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
       RESETTIMECOUNTER(pSoldier->NextTileCounter, NEXT_TILE_CHECK_DELAY);
 
       // Get direction from gridno...
-      bCauseDirection = (int8_t)GetDirectionToGridNoFromGridNo(pSoldier->sGridNo,
-                                                             pSoldier->sDelayedMovementCauseGridNo);
+      bCauseDirection = (int8_t)GetDirectionToGridNoFromGridNo(
+          pSoldier->sGridNo, pSoldier->sDelayedMovementCauseGridNo);
 
       bBlocked = TileIsClear(pSoldier, bCauseDirection, pSoldier->sDelayedMovementCauseGridNo,
                              pSoldier->bLevel);
@@ -536,13 +537,14 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
         }
 
         sCost = (int16_t)FindBestPath(pSoldier, sCheckGridNo, pSoldier->bLevel,
-                                    pSoldier->usUIMovementMode, NO_COPYROUTE, fFlags);
+                                      pSoldier->usUIMovementMode, NO_COPYROUTE, fFlags);
         gfPlotPathToExitGrid = FALSE;
 
         // Can we get there
         if (sCost > 0) {
           // Is the next tile blocked too?
-          sNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((uint8_t)guiPathingData[0]));
+          sNewGridNo =
+              NewGridNo((uint16_t)pSoldier->sGridNo, DirectionInc((uint8_t)guiPathingData[0]));
 
           bPathBlocked =
               TileIsClear(pSoldier, (uint8_t)guiPathingData[0], sNewGridNo, pSoldier->bLevel);
@@ -556,8 +558,8 @@ BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
             }
 
             sCost = (int16_t)FindBestPath(pSoldier, sCheckGridNo, pSoldier->bLevel,
-                                        pSoldier->usUIMovementMode, NO_COPYROUTE,
-                                        PATH_IGNORE_PERSON_AT_DEST);
+                                          pSoldier->usUIMovementMode, NO_COPYROUTE,
+                                          PATH_IGNORE_PERSON_AT_DEST);
 
             gfPlotPathToExitGrid = FALSE;
 

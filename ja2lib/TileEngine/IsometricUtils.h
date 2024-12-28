@@ -41,7 +41,7 @@ extern uint8_t gPurpendicularDirection[NUM_WORLD_DIRECTIONS][NUM_WORLD_DIRECTION
 //                                                |Invalid-|   |Valid-------------------|
 #define MAPROWCOLTOPOS(r, c)                                                 \
   (((r < 0) || (r >= WORLD_ROWS) || (c < 0) || (c >= WORLD_COLS)) ? (0xffff) \
-                                                                  : ((r)*WORLD_COLS + (c)))
+                                                                  : ((r) * WORLD_COLS + (c)))
 
 #define GETWORLDINDEXFROMWORLDCOORDS(r, c) \
   ((int16_t)(r / CELL_X_SIZE)) * WORLD_COLS + ((int16_t)(c / CELL_Y_SIZE))
@@ -61,18 +61,23 @@ BOOLEAN GetMouseXY(int16_t *psMouseX, int16_t *psMouseY);
 BOOLEAN GetMouseWorldCoords(int16_t *psMouseX, int16_t *psMouseY);
 BOOLEAN GetMouseMapPos(int16_t *psMapPos);
 BOOLEAN GetMouseWorldCoordsInCenter(int16_t *psMouseX, int16_t *psMouseY);
-BOOLEAN GetMouseXYWithRemainder(int16_t *psMouseX, int16_t *psMouseY, int16_t *psCellX, int16_t *psCellY);
+BOOLEAN GetMouseXYWithRemainder(int16_t *psMouseX, int16_t *psMouseY, int16_t *psCellX,
+                                int16_t *psCellY);
 
-void GetScreenXYWorldCoords(int16_t sScreenX, int16_t sScreenY, int16_t *pWorldX, int16_t *psWorldY);
-void GetScreenXYWorldCell(int16_t sScreenX, int16_t sScreenY, int16_t *psWorldCellX, int16_t *psWorldCellY);
+void GetScreenXYWorldCoords(int16_t sScreenX, int16_t sScreenY, int16_t *pWorldX,
+                            int16_t *psWorldY);
+void GetScreenXYWorldCell(int16_t sScreenX, int16_t sScreenY, int16_t *psWorldCellX,
+                          int16_t *psWorldCellY);
 void GetScreenXYGridNo(int16_t sScreenX, int16_t sScreenY, int16_t *psMapPos);
 void GetWorldXYAbsoluteScreenXY(int32_t sWorldCellX, int32_t sWorldCellY, int16_t *psWorldScreenX,
                                 int16_t *psWorldScreenY);
-void GetFromAbsoluteScreenXYWorldXY(int32_t *psWorldCellX, int32_t *psWorldCellY, int16_t sWorldScreenX,
-                                    int16_t sWorldScreenY);
+void GetFromAbsoluteScreenXYWorldXY(int32_t *psWorldCellX, int32_t *psWorldCellY,
+                                    int16_t sWorldScreenX, int16_t sWorldScreenY);
 
-void FromCellToScreenCoordinates(int16_t sCellX, int16_t sCellY, int16_t *psScreenX, int16_t *psScreenY);
-void FromScreenToCellCoordinates(int16_t sScreenX, int16_t sScreenY, int16_t *psCellX, int16_t *psCellY);
+void FromCellToScreenCoordinates(int16_t sCellX, int16_t sCellY, int16_t *psScreenX,
+                                 int16_t *psScreenY);
+void FromScreenToCellCoordinates(int16_t sScreenX, int16_t sScreenY, int16_t *psCellX,
+                                 int16_t *psCellY);
 
 // Higher resolution convertion functions
 void FloatFromCellToScreenCoordinates(float dCellX, float dCellY, float *pdScreenX,
@@ -92,8 +97,8 @@ int32_t GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
 int32_t GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
 
 BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, struct GRect *pRect);
-BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, struct GRect *pRect, int16_t *sXRel,
-                                        int16_t *sRelY);
+BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, struct GRect *pRect,
+                                        int16_t *sXRel, int16_t *sRelY);
 
 int16_t PythSpacesAway(int16_t sOrigin, int16_t sDest);
 int16_t SpacesAway(int16_t sOrigin, int16_t sDest);

@@ -4451,7 +4451,8 @@ BOOLEAN LoadAnimationProfiles() {
       pProfileDirs = &(gpAnimProfiles[iProfileCount].Dirs[iDirectionCount]);
 
       // Read # tiles
-      //			if ( fread( &pProfileDirs->ubNumTiles, sizeof( uint8_t ), 1, pInput )
+      //			if ( fread( &pProfileDirs->ubNumTiles, sizeof( uint8_t ), 1, pInput
+      //)
       //!= 1 )
       if (File_Read(pInput, &pProfileDirs->ubNumTiles, sizeof(uint8_t), &uiBytesRead) != 1) {
         return (FALSE);

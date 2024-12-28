@@ -21,7 +21,7 @@ typedef struct TEAMSUMMARY {
   uint8_t ubNumAnimals;
   uint8_t ubBadA, ubPoorA, ubAvgA, ubGoodA, ubGreatA;  // attributes
   uint8_t ubBadE, ubPoorE, ubAvgE, ubGoodE, ubGreatE;  // equipment
-} TEAMSUMMARY;                                       // 15 bytes
+} TEAMSUMMARY;                                         // 15 bytes
 
 typedef struct SUMMARYFILE {
   // start version 1
@@ -68,9 +68,9 @@ typedef struct SUMMARYFILE {
   //	190
   // start version 10
   EXITGRID ExitGrid[4];           // 5*4 //	 20
-  uint16_t usExitGridSize[4];       // 2*4 //    8
+  uint16_t usExitGridSize[4];     // 2*4 //    8
   BOOLEAN fInvalidDest[4];        //    4
-  uint8_t ubNumExitGridDests;       //		1
+  uint8_t ubNumExitGridDests;     //		1
   BOOLEAN fTooManyExitGridDests;  //		1
   //																//-----
   //																//
@@ -80,16 +80,16 @@ typedef struct SUMMARYFILE {
   //																		225
   // start version 12
   uint16_t usWarningRoomNums;  //    2
-                             //	227
+                               //	227
   // start version 13
   uint8_t ubEnemiesHaveWaypoints;  //		1
   uint32_t uiNumItemsPosition;     //		4
-                                 //-----
-                                 //	232
+                                   //-----
+                                   //	232
   // start version 14
   uint32_t uiEnemyPlacementPosition;  //		4
-                                    //-----
-                                    //	236
+                                      //-----
+                                      //	236
 
   uint8_t ubPadding
       [164];  //	164

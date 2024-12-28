@@ -1729,7 +1729,7 @@ int8_t ExecuteAction(struct SOLDIERTYPE *pSoldier) {
 #endif
 
       //			pSoldier->bDesiredDirection = (uint8_t) ;   // turn to face
-      //direction
+      // direction
       // in actionData
       SendSoldierSetDesiredDirectionEvent(pSoldier, pSoldier->usActionData);
       // now we'll have to wait for the turning to finish; no need to call TurnSoldier here

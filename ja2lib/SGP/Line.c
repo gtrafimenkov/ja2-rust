@@ -29,7 +29,8 @@ int giClipXMax = 0;
 int giClipYMin = 0;
 int giClipYMax = 0;
 
-void DrawHorizontalRun(uint8_t **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
+void DrawHorizontalRun(uint8_t **ScreenPtr, int XAdvance, int RunLength, int Color,
+                       int ScreenWidth);
 void DrawVerticalRun(uint8_t **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
 
 void DrawHorizontalRun8(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
@@ -318,7 +319,8 @@ void PixelDraw(BOOLEAN fClip, int32_t xp, int32_t yp, int16_t sColor, uint8_t *p
 
 /* Draws a horizontal run of pixels, then advances the bitmap pointer to
    the first pixel of the next run. */
-void DrawHorizontalRun(uint8_t **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
+void DrawHorizontalRun(uint8_t **ScreenPtr, int XAdvance, int RunLength, int Color,
+                       int ScreenWidth) {
   int i;
   uint8_t *WorkingScreenPtr = *ScreenPtr;
   char col2 = Color >> 8;

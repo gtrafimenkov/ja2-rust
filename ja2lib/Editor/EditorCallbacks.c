@@ -942,7 +942,8 @@ void MercsSetOrdersCallback(GUI_BUTTON *btn, int32_t reason) {
 
 // multiple attitude buttons
 void MercsSetAttitudeCallback(GUI_BUTTON *btn, int32_t reason) {
-  if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) SetMercAttitude((uint8_t)MSYS_GetBtnUserData(btn, 0));
+  if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
+    SetMercAttitude((uint8_t)MSYS_GetBtnUserData(btn, 0));
 }
 
 // multiple direction buttons

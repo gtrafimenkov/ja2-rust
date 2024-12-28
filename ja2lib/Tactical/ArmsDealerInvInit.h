@@ -39,13 +39,13 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory(uint8_t ubArmsDealerID
 
 uint8_t GetCurrentSuitabilityForItem(int8_t bArmsDealer, uint16_t usItemIndex);
 uint8_t ChanceOfItemTransaction(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
-                              BOOLEAN fUsed);
+                                BOOLEAN fUsed);
 BOOLEAN ItemTransactionOccurs(int8_t bArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling,
                               BOOLEAN fUsed);
 uint8_t DetermineInitialInvItems(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubChances,
-                               BOOLEAN fUsed);
+                                 BOOLEAN fUsed);
 uint8_t HowManyItemsAreSold(int8_t bArmsDealerID, uint16_t usItemIndex, uint8_t ubNumInStock,
-                          BOOLEAN fUsed);
+                            BOOLEAN fUsed);
 uint8_t HowManyItemsToReorder(uint8_t ubWanted, uint8_t ubStillHave);
 
 int BobbyRayItemQsortCompare(const void *pArg1, const void *pArg2);

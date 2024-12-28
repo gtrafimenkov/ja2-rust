@@ -1542,8 +1542,7 @@ wchar_t* pEtaString[] = {
     L"aank:",  // eta is an acronym for Estimated Time of Arrival
 };
 
-wchar_t*
-pTrashItemText[] = {
+wchar_t* pTrashItemText[] = {
     L"Je bent het voor altijd kwijt. Zeker weten?",  // do you want to continue and lose the
                                                      // item forever
     L"Dit item ziet er HEEL belangrijk uit. Weet je HEEL, HEEL zeker dat je het wil "

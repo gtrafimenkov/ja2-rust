@@ -11,8 +11,8 @@
 typedef struct {
   uint16_t usItemIndex;  // Index into the item table
   uint8_t ubQtyOnHand;
-  uint8_t ubQtyOnOrder;           // The number of items on order
-  uint8_t ubItemQuality;          // the % damaged listed from 0 to 100
+  uint8_t ubQtyOnOrder;         // The number of items on order
+  uint8_t ubItemQuality;        // the % damaged listed from 0 to 100
   BOOLEAN fPreviouslyEligible;  // whether or not dealer has been eligible to sell this item in days
                                 // prior to today
 

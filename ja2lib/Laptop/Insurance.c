@@ -111,10 +111,11 @@ BOOLEAN EnterInsurance() {
 
   usPosX = INSURANCE_BOTTOM_LINK_RED_BAR_X;
   for (i = 0; i < 3; i++) {
-    MSYS_DefineRegion(
-        &gSelectedInsuranceLinkRegion[i], usPosX, INSURANCE_BOTTOM_LINK_RED_BAR_Y - 37,
-        (uint16_t)(usPosX + INSURANCE_BOTTOM_LINK_RED_BAR_WIDTH), INSURANCE_BOTTOM_LINK_RED_BAR_Y + 2,
-        MSYS_PRIORITY_HIGH, CURSOR_WWW, MSYS_NO_CALLBACK, SelectInsuranceRegionCallBack);
+    MSYS_DefineRegion(&gSelectedInsuranceLinkRegion[i], usPosX,
+                      INSURANCE_BOTTOM_LINK_RED_BAR_Y - 37,
+                      (uint16_t)(usPosX + INSURANCE_BOTTOM_LINK_RED_BAR_WIDTH),
+                      INSURANCE_BOTTOM_LINK_RED_BAR_Y + 2, MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      MSYS_NO_CALLBACK, SelectInsuranceRegionCallBack);
     MSYS_AddRegion(&gSelectedInsuranceLinkRegion[i]);
     MSYS_SetRegionUserData(&gSelectedInsuranceLinkRegion[i], 0, i);
 
@@ -328,7 +329,8 @@ void RemoveInsuranceDefaults() {
   }
 }
 
-void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY) {
+void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX,
+                                   uint16_t EndY) {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 
@@ -347,7 +349,7 @@ void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_
   VSurfaceUnlock(vsFB);
 }
 
-void GetInsuranceText(uint8_t ubNumber, wchar_t* pString) {
+void GetInsuranceText(uint8_t ubNumber, wchar_t *pString) {
   uint32_t uiStartLoc = 0;
 
   if (ubNumber < INS_MULTI_LINE_BEGINS) {

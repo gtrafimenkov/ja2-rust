@@ -200,7 +200,8 @@ void DisplayActivationStringCursor(void) {
 
   // draw line in current state
   LineDraw(
-      TRUE, (uint16_t)uiCursorPosition, CURSOR_Y, (uint16_t)uiCursorPosition, CURSOR_Y + CURSOR_HEIGHT,
+      TRUE, (uint16_t)uiCursorPosition, CURSOR_Y, (uint16_t)uiCursorPosition,
+      CURSOR_Y + CURSOR_HEIGHT,
       rgb32_to_rgb565(FROMRGB(GlowColorsList[iCurrentState][0], GlowColorsList[iCurrentState][1],
                               GlowColorsList[iCurrentState][2])),
       pDestBuf);

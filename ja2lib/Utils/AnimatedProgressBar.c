@@ -42,8 +42,8 @@ void RemoveLoadingScreenProgressBar() {
 
 // This creates a single progress bar given the coordinates without a panel (containing a title and
 // background). A panel is automatically created if you specify a title using SetProgressBarTitle
-BOOLEAN CreateProgressBar(uint8_t ubProgressBarID, uint16_t usLeft, uint16_t usTop, uint16_t usRight,
-                          uint16_t usBottom) {
+BOOLEAN CreateProgressBar(uint8_t ubProgressBarID, uint16_t usLeft, uint16_t usTop,
+                          uint16_t usRight, uint16_t usBottom) {
   PROGRESSBAR *pNew;
   // Allocate new progress bar
   pNew = (PROGRESSBAR *)MemAlloc(sizeof(PROGRESSBAR));
@@ -80,8 +80,8 @@ BOOLEAN CreateProgressBar(uint8_t ubProgressBarID, uint16_t usLeft, uint16_t usT
 
 // You may also define a panel to go in behind the progress bar.  You can now assign a title to go
 // with the panel.
-void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint16_t usLeft, uint16_t usTop,
-                            uint16_t usRight, uint16_t usBottom) {
+void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint16_t usLeft,
+                            uint16_t usTop, uint16_t usRight, uint16_t usBottom) {
   PROGRESSBAR *pCurr;
   Assert(ubID < MAX_PROGRESSBARS);
   pCurr = pBar[ubID];
@@ -103,7 +103,7 @@ void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
 // panel and vertically centered from the top of the panel, to the top of the progress bar.
-void SetProgressBarTitle(uint32_t ubID, wchar_t* pString, uint32_t usFont, uint8_t ubForeColor,
+void SetProgressBarTitle(uint32_t ubID, wchar_t *pString, uint32_t usFont, uint8_t ubForeColor,
                          uint8_t ubShadowColor) {
   PROGRESSBAR *pCurr;
   Assert(ubID < MAX_PROGRESSBARS);
@@ -115,7 +115,7 @@ void SetProgressBarTitle(uint32_t ubID, wchar_t* pString, uint32_t usFont, uint8
   }
   if (pString && wcslen(pString)) {
     int bufSize = wcslen(pString) + 1;
-    pCurr->swzTitle = (wchar_t*)MemAlloc(sizeof(wchar_t) * bufSize);
+    pCurr->swzTitle = (wchar_t *)MemAlloc(sizeof(wchar_t) * bufSize);
     swprintf(pCurr->swzTitle, bufSize, pString);
   }
   pCurr->usTitleFont = (uint16_t)usFont;
@@ -156,7 +156,7 @@ void RemoveProgressBar(uint8_t ubID) {
 // you would go onto the next step, resetting the relative start and end percentage from 30 to
 // whatever, until your done.
 void SetRelativeStartAndEndPercentage(uint8_t ubID, uint32_t uiRelStartPerc, uint32_t uiRelEndPerc,
-                                      wchar_t* str) {
+                                      wchar_t *str) {
   PROGRESSBAR *pCurr;
   uint16_t usStartX, usStartY;
 

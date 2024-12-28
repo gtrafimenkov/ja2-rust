@@ -35,7 +35,8 @@ void RenderInsurance();
 BOOLEAN InitInsuranceDefaults();
 void DisplayInsuranceDefaults();
 void RemoveInsuranceDefaults();
-void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY);
+void DisplaySmallRedLineWithShadow(uint16_t usStartX, uint16_t usStartY, uint16_t EndX,
+                                   uint16_t EndY);
 void GetInsuranceText(uint8_t ubNumber, wchar_t* pString);
 
 #endif

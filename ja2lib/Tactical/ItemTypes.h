@@ -87,7 +87,7 @@ struct OBJECTTYPE {
       uint32_t uiMoneyAmount;
       uint8_t ubMoneyUnused[MAX_OBJECTS_PER_SLOT - 5];
     };
-    struct {                // this is used by placed bombs, switches, and the action item
+    struct {                  // this is used by placed bombs, switches, and the action item
       int8_t bBombStatus;     // % status
       int8_t bDetonatorType;  // timed, remote, or pressure-activated
       uint16_t usBombItem;    // the usItem of the bomb.

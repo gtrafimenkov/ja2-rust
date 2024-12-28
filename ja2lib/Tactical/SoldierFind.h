@@ -33,7 +33,8 @@ struct SOLDIERTYPE;
 
 BOOLEAN FindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags);
 BOOLEAN SelectiveFindSoldierFromMouse(uint16_t *pusSoldierIndex, uint32_t *pMercFlags);
-BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags, uint32_t uiFlags);
+BOOLEAN FindSoldier(int16_t sGridNo, uint16_t *pusSoldierIndex, uint32_t *pMercFlags,
+                    uint32_t uiFlags);
 struct SOLDIERTYPE *SimpleFindSoldier(int16_t sGridNo, int8_t bLevel);
 
 BOOLEAN CycleSoldierFindStack(uint16_t usMapPos);

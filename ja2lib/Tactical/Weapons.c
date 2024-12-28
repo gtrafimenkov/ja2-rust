@@ -82,7 +82,7 @@
 #define HTH_MODE_STEAL 3
 
 // JA2 GOLD: for weapons and attachments, give penalties only for status values below 85
-#define WEAPON_STATUS_MOD(x) ((x) >= 85 ? 100 : (((x)*100) / 85))
+#define WEAPON_STATUS_MOD(x) ((x) >= 85 ? 100 : (((x) * 100) / 85))
 
 extern void TeamChangesSides(uint8_t ubTeam, int8_t bSide);
 
@@ -96,7 +96,7 @@ BOOLEAN UseThrown(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, int16_t sTargetGridNo);
 
 int32_t HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, int32_t iHitBy,
-                BOOLEAN fBladeAttack);
+                  BOOLEAN fBladeAttack);
 
 BOOLEAN gfNextShotKills = FALSE;
 BOOLEAN gfReportHitChances = FALSE;
@@ -105,88 +105,261 @@ BOOLEAN gfReportHitChances = FALSE;
 
 // TODO: Move strings to extern file
 
-#define PISTOL(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av,   \
-               hv, sd, bsd)                                                                        \
-  {                                                                                                \
-    HANDGUNCLASS, GUN_PISTOL, ammo, rt, rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl, \
-        acc, clip, range, 200, av, hv, sd, bsd, S_RELOAD_PISTOL, S_LNL_PISTOL                      \
-  }
+#define PISTOL(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
+               hv, sd, bsd)                                                                      \
+  {                                                                                              \
+      HANDGUNCLASS,                                                                              \
+      GUN_PISTOL,                                                                                \
+      ammo,                                                                                      \
+      rt,                                                                                        \
+      rof,                                                                                       \
+      burstrof,                                                                                  \
+      burstpenal,                                                                                \
+      update,                                                                                    \
+      (uint8_t)(impact),                                                                         \
+      deadl,                                                                                     \
+      acc,                                                                                       \
+      clip,                                                                                      \
+      range,                                                                                     \
+      200,                                                                                       \
+      av,                                                                                        \
+      hv,                                                                                        \
+      sd,                                                                                        \
+      bsd,                                                                                       \
+      S_RELOAD_PISTOL,                                                                           \
+      S_LNL_PISTOL}
 #define M_PISTOL(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
                  hv, sd, bsd)                                                                      \
   {                                                                                                \
-    HANDGUNCLASS, GUN_M_PISTOL, ammo, rt, rof, burstrof, burstpenal, update, (uint8_t)(impact),      \
-        deadl, acc, clip, range, 200, av, hv, sd, bsd, S_RELOAD_PISTOL, S_LNL_PISTOL               \
-  }
+      HANDGUNCLASS,                                                                                \
+      GUN_M_PISTOL,                                                                                \
+      ammo,                                                                                        \
+      rt,                                                                                          \
+      rof,                                                                                         \
+      burstrof,                                                                                    \
+      burstpenal,                                                                                  \
+      update,                                                                                      \
+      (uint8_t)(impact),                                                                           \
+      deadl,                                                                                       \
+      acc,                                                                                         \
+      clip,                                                                                        \
+      range,                                                                                       \
+      200,                                                                                         \
+      av,                                                                                          \
+      hv,                                                                                          \
+      sd,                                                                                          \
+      bsd,                                                                                         \
+      S_RELOAD_PISTOL,                                                                             \
+      S_LNL_PISTOL}
 #define SMG(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, hv, \
             sd, bsd)                                                                              \
-  {                                                                                               \
-    SMGCLASS, GUN_SMG, ammo, rt, rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl, acc,  \
-        clip, range, 200, av, hv, sd, bsd, S_RELOAD_SMG, S_LNL_SMG                                \
-  }
+  {SMGCLASS, GUN_SMG, ammo,  rt,  rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl,    \
+   acc,      clip,    range, 200, av,  hv,       sd,         bsd,    S_RELOAD_SMG,      S_LNL_SMG}
 #define SN_RIFLE(ammo, update, impact, rt, rof, burstrof, deadl, acc, clip, range, av, hv, sd, \
                  bsd)                                                                          \
   {                                                                                            \
-    RIFLECLASS, GUN_SN_RIFLE, ammo, rt, rof, burstrof, 0, update, (uint8_t)(impact), deadl, acc, \
-        clip, range, 200, av, hv, sd, bsd, S_RELOAD_RIFLE, S_LNL_RIFLE                         \
-  }
-#define RIFLE(ammo, update, impact, rt, rof, burstrof, deadl, acc, clip, range, av, hv, sd, bsd)  \
-  {                                                                                               \
-    RIFLECLASS, GUN_RIFLE, ammo, rt, rof, burstrof, 0, update, (uint8_t)(impact), deadl, acc, clip, \
-        range, 200, av, hv, sd, bsd, S_RELOAD_RIFLE, S_LNL_RIFLE                                  \
-  }
-#define ASRIFLE(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av,  \
-                hv, sd, bsd)                                                                       \
-  {                                                                                                \
-    RIFLECLASS, GUN_AS_RIFLE, ammo, rt, rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl, \
-        acc, clip, range, 200, av, hv, sd, bsd, S_RELOAD_RIFLE, S_LNL_RIFLE                        \
-  }
-#define SHOTGUN(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
+      RIFLECLASS,     GUN_SN_RIFLE, ammo, rt,    rof, burstrof, 0,  update, (uint8_t)(impact), \
+      deadl,          acc,          clip, range, 200, av,       hv, sd,     bsd,               \
+      S_RELOAD_RIFLE, S_LNL_RIFLE}
+#define RIFLE(ammo, update, impact, rt, rof, burstrof, deadl, acc, clip, range, av, hv, sd, bsd) \
+  {RIFLECLASS, GUN_RIFLE, ammo,  rt,  rof, burstrof, 0,  update, (uint8_t)(impact), deadl,       \
+   acc,        clip,      range, 200, av,  hv,       sd, bsd,    S_RELOAD_RIFLE,    S_LNL_RIFLE}
+#define ASRIFLE(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
                 hv, sd, bsd)                                                                      \
   {                                                                                               \
-    SHOTGUNCLASS, GUN_SHOTGUN, ammo, rt, rof, burstrof, burstpenal, update, (uint8_t)(impact),      \
-        deadl, acc, clip, range, 200, av, hv, sd, bsd, S_RELOAD_SHOTGUN, S_LNL_SHOTGUN            \
-  }
+      RIFLECLASS,                                                                                 \
+      GUN_AS_RIFLE,                                                                               \
+      ammo,                                                                                       \
+      rt,                                                                                         \
+      rof,                                                                                        \
+      burstrof,                                                                                   \
+      burstpenal,                                                                                 \
+      update,                                                                                     \
+      (uint8_t)(impact),                                                                          \
+      deadl,                                                                                      \
+      acc,                                                                                        \
+      clip,                                                                                       \
+      range,                                                                                      \
+      200,                                                                                        \
+      av,                                                                                         \
+      hv,                                                                                         \
+      sd,                                                                                         \
+      bsd,                                                                                        \
+      S_RELOAD_RIFLE,                                                                             \
+      S_LNL_RIFLE}
+#define SHOTGUN(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, \
+                hv, sd, bsd)                                                                      \
+  {SHOTGUNCLASS,                                                                                  \
+   GUN_SHOTGUN,                                                                                   \
+   ammo,                                                                                          \
+   rt,                                                                                            \
+   rof,                                                                                           \
+   burstrof,                                                                                      \
+   burstpenal,                                                                                    \
+   update,                                                                                        \
+   (uint8_t)(impact),                                                                             \
+   deadl,                                                                                         \
+   acc,                                                                                           \
+   clip,                                                                                          \
+   range,                                                                                         \
+   200,                                                                                           \
+   av,                                                                                            \
+   hv,                                                                                            \
+   sd,                                                                                            \
+   bsd,                                                                                           \
+   S_RELOAD_SHOTGUN,                                                                              \
+   S_LNL_SHOTGUN}
 #define LMG(ammo, update, impact, rt, rof, burstrof, burstpenal, deadl, acc, clip, range, av, hv, \
             sd, bsd)                                                                              \
-  {                                                                                               \
-    MGCLASS, GUN_LMG, ammo, rt, rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl, acc,   \
-        clip, range, 200, av, hv, sd, bsd, S_RELOAD_LMG, S_LNL_LMG                                \
-  }
-#define BLADE(impact, rof, deadl, range, av, sd)                                               \
-  {                                                                                            \
-    KNIFECLASS, NOT_GUN, 0, AP_READY_KNIFE, rof, 0, 0, 0, (uint8_t)(impact), deadl, 0, 0, range, \
-        200, av, 0, sd, NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND                      \
-  }
-#define THROWINGBLADE(impact, rof, deadl, range, av, sd)                                       \
-  {                                                                                            \
-    KNIFECLASS, NOT_GUN, 0, AP_READY_KNIFE, rof, 0, 0, 0, (uint8_t)(impact), deadl, 0, 0, range, \
-        200, av, 0, sd, NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND                      \
-  }
-#define PUNCHWEAPON(impact, rof, deadl, av, sd)                                                \
-  {                                                                                            \
-    KNIFECLASS, NOT_GUN, 0, 0, rof, 0, 0, 0, (uint8_t)(impact), deadl, 0, 0, 10, 200, av, 0, sd, \
-        NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND                                      \
-  }
-#define LAUNCHER(update, rt, rof, deadl, acc, range, av, hv, sd)                                  \
-  {                                                                                               \
-    RIFLECLASS, NOT_GUN, NOAMMO, rt, rof, 0, 0, update, 1, deadl, acc, 0, range, 200, av, hv, sd, \
-        NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND                                         \
-  }
-#define LAW(update, rt, rof, deadl, acc, range, av, hv, sd)                                        \
-  {                                                                                                \
-    RIFLECLASS, NOT_GUN, NOAMMO, rt, rof, 0, 0, update, 80, deadl, acc, 1, range, 200, av, hv, sd, \
-        NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND                                          \
-  }
-#define CANNON(update, rt, rof, deadl, acc, range, av, hv, sd)                                     \
-  {                                                                                                \
-    RIFLECLASS, NOT_GUN, NOAMMO, rt, rof, 0, 0, update, 80, deadl, acc, 1, range, 200, av, hv, sd, \
-        NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND                                          \
-  }
-#define MONSTSPIT(impact, rof, deadl, clip, range, av, hv, sd)                                   \
-  {                                                                                              \
-    MONSTERCLASS, NOT_GUN, AMMOMONST, AP_READY_KNIFE, rof, 0, 0, 250, (uint8_t)(impact), deadl, 0, \
-        clip, range, 200, av, hv, sd, NO_WEAPON_SOUND, NO_WEAPON_SOUND, NO_WEAPON_SOUND          \
-  }
+  {MGCLASS, GUN_LMG, ammo,  rt,  rof, burstrof, burstpenal, update, (uint8_t)(impact), deadl,     \
+   acc,     clip,    range, 200, av,  hv,       sd,         bsd,    S_RELOAD_LMG,      S_LNL_LMG}
+#define BLADE(impact, rof, deadl, range, av, sd) \
+  {KNIFECLASS,                                   \
+   NOT_GUN,                                      \
+   0,                                            \
+   AP_READY_KNIFE,                               \
+   rof,                                          \
+   0,                                            \
+   0,                                            \
+   0,                                            \
+   (uint8_t)(impact),                            \
+   deadl,                                        \
+   0,                                            \
+   0,                                            \
+   range,                                        \
+   200,                                          \
+   av,                                           \
+   0,                                            \
+   sd,                                           \
+   NO_WEAPON_SOUND,                              \
+   NO_WEAPON_SOUND,                              \
+   NO_WEAPON_SOUND}
+#define THROWINGBLADE(impact, rof, deadl, range, av, sd) \
+  {KNIFECLASS,                                           \
+   NOT_GUN,                                              \
+   0,                                                    \
+   AP_READY_KNIFE,                                       \
+   rof,                                                  \
+   0,                                                    \
+   0,                                                    \
+   0,                                                    \
+   (uint8_t)(impact),                                    \
+   deadl,                                                \
+   0,                                                    \
+   0,                                                    \
+   range,                                                \
+   200,                                                  \
+   av,                                                   \
+   0,                                                    \
+   sd,                                                   \
+   NO_WEAPON_SOUND,                                      \
+   NO_WEAPON_SOUND,                                      \
+   NO_WEAPON_SOUND}
+#define PUNCHWEAPON(impact, rof, deadl, av, sd) \
+  {KNIFECLASS,                                  \
+   NOT_GUN,                                     \
+   0,                                           \
+   0,                                           \
+   rof,                                         \
+   0,                                           \
+   0,                                           \
+   0,                                           \
+   (uint8_t)(impact),                           \
+   deadl,                                       \
+   0,                                           \
+   0,                                           \
+   10,                                          \
+   200,                                         \
+   av,                                          \
+   0,                                           \
+   sd,                                          \
+   NO_WEAPON_SOUND,                             \
+   NO_WEAPON_SOUND,                             \
+   NO_WEAPON_SOUND}
+#define LAUNCHER(update, rt, rof, deadl, acc, range, av, hv, sd) \
+  {RIFLECLASS,                                                   \
+   NOT_GUN,                                                      \
+   NOAMMO,                                                       \
+   rt,                                                           \
+   rof,                                                          \
+   0,                                                            \
+   0,                                                            \
+   update,                                                       \
+   1,                                                            \
+   deadl,                                                        \
+   acc,                                                          \
+   0,                                                            \
+   range,                                                        \
+   200,                                                          \
+   av,                                                           \
+   hv,                                                           \
+   sd,                                                           \
+   NO_WEAPON_SOUND,                                              \
+   NO_WEAPON_SOUND,                                              \
+   NO_WEAPON_SOUND}
+#define LAW(update, rt, rof, deadl, acc, range, av, hv, sd) \
+  {RIFLECLASS,                                              \
+   NOT_GUN,                                                 \
+   NOAMMO,                                                  \
+   rt,                                                      \
+   rof,                                                     \
+   0,                                                       \
+   0,                                                       \
+   update,                                                  \
+   80,                                                      \
+   deadl,                                                   \
+   acc,                                                     \
+   1,                                                       \
+   range,                                                   \
+   200,                                                     \
+   av,                                                      \
+   hv,                                                      \
+   sd,                                                      \
+   NO_WEAPON_SOUND,                                         \
+   NO_WEAPON_SOUND,                                         \
+   NO_WEAPON_SOUND}
+#define CANNON(update, rt, rof, deadl, acc, range, av, hv, sd) \
+  {RIFLECLASS,                                                 \
+   NOT_GUN,                                                    \
+   NOAMMO,                                                     \
+   rt,                                                         \
+   rof,                                                        \
+   0,                                                          \
+   0,                                                          \
+   update,                                                     \
+   80,                                                         \
+   deadl,                                                      \
+   acc,                                                        \
+   1,                                                          \
+   range,                                                      \
+   200,                                                        \
+   av,                                                         \
+   hv,                                                         \
+   sd,                                                         \
+   NO_WEAPON_SOUND,                                            \
+   NO_WEAPON_SOUND,                                            \
+   NO_WEAPON_SOUND}
+#define MONSTSPIT(impact, rof, deadl, clip, range, av, hv, sd) \
+  {MONSTERCLASS,                                               \
+   NOT_GUN,                                                    \
+   AMMOMONST,                                                  \
+   AP_READY_KNIFE,                                             \
+   rof,                                                        \
+   0,                                                          \
+   0,                                                          \
+   250,                                                        \
+   (uint8_t)(impact),                                          \
+   deadl,                                                      \
+   0,                                                          \
+   clip,                                                       \
+   range,                                                      \
+   200,                                                        \
+   av,                                                         \
+   hv,                                                         \
+   sd,                                                         \
+   NO_WEAPON_SOUND,                                            \
+   NO_WEAPON_SOUND,                                            \
+   NO_WEAPON_SOUND}
 
 // ranges are in world units, calculated by:
 // 100 + real-range-in-metres/10
@@ -1891,9 +2064,9 @@ void WeaponHit(uint16_t usSoldierID, uint16_t usWeaponIndex, int16_t sDamage, in
   }
 }
 
-void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus, uint8_t ubAttackerID,
-                  uint16_t sXPos, int16_t sYPos, int16_t sZPos, uint16_t usStructureID, int32_t iImpact,
-                  BOOLEAN fStopped) {
+void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
+                  uint8_t ubAttackerID, uint16_t sXPos, int16_t sYPos, int16_t sZPos,
+                  uint16_t usStructureID, int32_t iImpact, BOOLEAN fStopped) {
   BOOLEAN fDoMissForGun = FALSE;
   ANITILE *pNode;
   int16_t sGridNo;
@@ -1948,8 +2121,8 @@ void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
       DebugMsg(TOPIC_JA2, DBG_INFO, String("@@@@@@@ Freeing up attacker - end of LAW fire"));
       FreeUpAttacker(ubAttackerID);
 
-      IgniteExplosion(ubAttackerID, (int16_t)CenterX(sGridNo), (int16_t)CenterY(sGridNo), 0, sGridNo,
-                      C1, (int8_t)(sZPos >= WALL_HEIGHT));
+      IgniteExplosion(ubAttackerID, (int16_t)CenterX(sGridNo), (int16_t)CenterY(sGridNo), 0,
+                      sGridNo, C1, (int8_t)(sZPos >= WALL_HEIGHT));
       // FreeUpAttacker( (uint8_t) ubAttackerID );
 
       return;
@@ -1962,8 +2135,8 @@ void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
       DebugMsg(TOPIC_JA2, DBG_INFO, String("@@@@@@@ Freeing up attacker - end of TANK fire"));
       FreeUpAttacker(ubAttackerID);
 
-      IgniteExplosion(ubAttackerID, (int16_t)CenterX(sGridNo), (int16_t)CenterY(sGridNo), 0, sGridNo,
-                      TANK_SHELL, (int8_t)(sZPos >= WALL_HEIGHT));
+      IgniteExplosion(ubAttackerID, (int16_t)CenterX(sGridNo), (int16_t)CenterY(sGridNo), 0,
+                      sGridNo, TANK_SHELL, (int8_t)(sZPos >= WALL_HEIGHT));
       // FreeUpAttacker( (uint8_t) ubAttackerID );
 
       return;
@@ -2139,7 +2312,8 @@ void StructureHit(int32_t iBullet, uint16_t usWeaponIndex, int8_t bWeaponStatus,
   }
 }
 
-void WindowHit(int16_t sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth, BOOLEAN fLargeForce) {
+void WindowHit(int16_t sGridNo, uint16_t usStructureID, BOOLEAN fBlowWindowSouth,
+               BOOLEAN fLargeForce) {
   struct STRUCTURE *pWallAndWindow;
   struct DB_STRUCTURE *pWallAndWindowInDB;
   int16_t sShatterGridNo;
@@ -2274,7 +2448,7 @@ BOOLEAN InRange(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
 }
 
 uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint8_t ubAimTime,
-                          uint8_t ubAimPos) {
+                            uint8_t ubAimPos) {
   // struct SOLDIERTYPE *vicpSoldier;
   struct SOLDIERTYPE *pTarget;
   int32_t iChance, iRange, iSightRange, iMaxRange, iScopeBonus, iBonus;  //, minRange;
@@ -2806,7 +2980,7 @@ uint32_t CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint
 }
 
 uint32_t AICalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint8_t ubAimTime,
-                            uint8_t ubAimPos) {
+                              uint8_t ubAimPos) {
   uint16_t usTrueState;
   uint32_t uiChance;
 
@@ -2840,7 +3014,7 @@ int32_t CalcBodyImpactReduction(uint8_t ubAmmoType, uint8_t ubHitLocation) {
 }
 
 int32_t ArmourProtection(struct SOLDIERTYPE *pTarget, uint8_t ubArmourType, int8_t *pbStatus,
-                       int32_t iImpact, uint8_t ubAmmoType) {
+                         int32_t iImpact, uint8_t ubAmmoType) {
   int32_t iProtection, iAppliedProtection, iFailure;
 
   iProtection = Armour[ubArmourType].ubProtection;
@@ -2906,7 +3080,7 @@ int32_t ArmourProtection(struct SOLDIERTYPE *pTarget, uint8_t ubArmourType, int8
 }
 
 int32_t TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget,
-                            uint8_t ubHitLocation, int32_t iImpact, uint8_t ubAmmoType) {
+                              uint8_t ubHitLocation, int32_t iImpact, uint8_t ubAmmoType) {
   int32_t iTotalProtection = 0, iSlot;
   struct OBJECTTYPE *pArmour;
   int8_t bPlatePos = -1;
@@ -2982,7 +3156,7 @@ int32_t TotalArmourProtection(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pT
 }
 
 int32_t BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, uint8_t ubHitLocation,
-                   int32_t iOrigImpact, int16_t sHitBy, uint8_t *pubSpecial) {
+                     int32_t iOrigImpact, int16_t sHitBy, uint8_t *pubSpecial) {
   int32_t iImpact, iFluke, iBonus, iImpactForCrits = 0;
   int8_t bStatLoss;
   uint8_t ubAmmoType;
@@ -3284,7 +3458,7 @@ int32_t BulletImpact(struct SOLDIERTYPE *pFirer, struct SOLDIERTYPE *pTarget, ui
 }
 
 int32_t HTHImpact(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget, int32_t iHitBy,
-                BOOLEAN fBladeAttack) {
+                  BOOLEAN fBladeAttack) {
   int32_t iImpact, iFluke, iBonus;
 
   if (fBladeAttack) {
@@ -3403,8 +3577,8 @@ void ShotMiss(uint8_t ubAttackerID, int32_t iBullet) {
   FreeUpAttacker(ubAttackerID);
 }
 
-uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender, uint8_t ubAimTime,
-                     uint8_t ubMode) {
+uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
+                       uint8_t ubAimTime, uint8_t ubMode) {
   uint16_t usInHand;
   uint8_t ubBandaged;
   int32_t iAttRating, iDefRating;
@@ -3667,17 +3841,17 @@ uint32_t CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefen
 }
 
 uint32_t CalcChanceToStab(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                        uint8_t ubAimTime) {
+                          uint8_t ubAimTime) {
   return (CalcChanceHTH(pAttacker, pDefender, ubAimTime, HTH_MODE_STAB));
 }
 
 uint32_t CalcChanceToPunch(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                         uint8_t ubAimTime) {
+                           uint8_t ubAimTime) {
   return (CalcChanceHTH(pAttacker, pDefender, ubAimTime, HTH_MODE_PUNCH));
 }
 
 uint32_t CalcChanceToSteal(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefender,
-                         uint8_t ubAimTime) {
+                           uint8_t ubAimTime) {
   return (CalcChanceHTH(pAttacker, pDefender, ubAimTime, HTH_MODE_STEAL));
 }
 
@@ -3762,7 +3936,7 @@ int32_t CalcMaxTossRange(struct SOLDIERTYPE *pSoldier, uint16_t usItem, BOOLEAN 
 }
 
 uint32_t CalcThrownChanceToHit(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubAimTime,
-                             uint8_t ubAimPos) {
+                               uint8_t ubAimPos) {
   int32_t iChance, iMaxRange, iRange;
   uint16_t usHandItem;
   int8_t bPenalty, bBandaged;

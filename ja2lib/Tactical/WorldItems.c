@@ -239,8 +239,8 @@ uint32_t GetNumUsedWorldItems(void) {
   return (uiNumItems);
 }
 
-int32_t AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel, uint16_t usFlags,
-                     int8_t bRenderZHeightAboveLevel, int8_t bVisible) {
+int32_t AddItemToWorld(int16_t sGridNo, struct OBJECTTYPE *pObject, uint8_t ubLevel,
+                       uint16_t usFlags, int8_t bRenderZHeightAboveLevel, int8_t bVisible) {
   uint32_t iItemIndex;
   int32_t iReturn;
 

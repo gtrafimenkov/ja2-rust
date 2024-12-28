@@ -22,7 +22,7 @@ BOOLEAN InitializeDebugManager(void) { return (TRUE); }
 
 void ShutdownDebugManager(void) { DebugMsg(0, DBG_ERROR, "SGP Going Down"); }
 
-void DebugMsg(enum DebugTopic topic, enum DebugLevel level, const char *message) {
+void DebugMsg(enum DebugTopic topic, enum DebugLevel level, const char* message) {
   char buf[300];
   snprintf(buf, ARR_SIZE(buf), "%02d/%02d %s", topic, level, message);
   DebugLogWrite(buf);
@@ -42,7 +42,7 @@ void _AssertFailedMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) 
 
 // This is NOT a _DEBUG only function! It is also needed in
 // release mode builds. -- DB
-char *String(const char *string, ...) {
+char* String(const char* string, ...) {
   va_list ArgPtr;
   uint8_t usIndex;
 

@@ -196,8 +196,8 @@ void ResetAimCubeAI();
 void SetupAimCubeAI();
 void IncrementAimCubeUI();
 void EndAimCubeUI();
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel, uint8_t bStartPower,
-                    int8_t bStartHeight);
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel,
+                    uint8_t bStartPower, int8_t bStartHeight);
 BOOLEAN AimCubeUIClick();
 
 void ResetPhysicsTrajectoryUI();

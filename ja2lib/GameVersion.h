@@ -15,7 +15,7 @@ extern const wchar_t* zBuildInfo;
 extern char czVersionNumber[16];
 extern wchar_t zTrackingNumber[16];
 
-//#define RUSSIANGOLD
+// #define RUSSIANGOLD
 
 //
 //		Keeps track of the saved game version.  Increment the saved game version whenever

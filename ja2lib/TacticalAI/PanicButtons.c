@@ -182,8 +182,8 @@ void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
   sPanicTriggerGridNo = gTacticalStatus.sPanicTriggerGridNo[bPanicTrigger];
 
   uiPercentEnemiesKilled = (uint32_t)(100 * (uint32_t)(gTacticalStatus.ubArmyGuysKilled) /
-                                    (uint32_t)(gTacticalStatus.Team[ENEMY_TEAM].bMenInSector +
-                                             gTacticalStatus.ubArmyGuysKilled));
+                                      (uint32_t)(gTacticalStatus.Team[ENEMY_TEAM].bMenInSector +
+                                                 gTacticalStatus.ubArmyGuysKilled));
   if (gTacticalStatus.ubPanicTolerance[bPanicTrigger] > uiPercentEnemiesKilled) {
     // not yet... not yet
     return;
@@ -372,8 +372,8 @@ int8_t ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiPercentEnemiesKilled;
 
   uiPercentEnemiesKilled = (uint32_t)(100 * (uint32_t)(gTacticalStatus.ubArmyGuysKilled) /
-                                    (uint32_t)(gTacticalStatus.Team[ENEMY_TEAM].bMenInSector +
-                                             gTacticalStatus.ubArmyGuysKilled));
+                                      (uint32_t)(gTacticalStatus.Team[ENEMY_TEAM].bMenInSector +
+                                                 gTacticalStatus.ubArmyGuysKilled));
 
   for (bLoop = 0; bLoop < NUM_PANIC_TRIGGERS; bLoop++) {
     if (gTacticalStatus.sPanicTriggerGridNo[bLoop] != NOWHERE) {
@@ -429,8 +429,8 @@ BOOLEAN NeedToRadioAboutPanicTrigger(void) {
   }
 
   uiPercentEnemiesKilled = (uint32_t)(100 * (uint32_t)(gTacticalStatus.ubArmyGuysKilled) /
-                                    (uint32_t)(gTacticalStatus.Team[ENEMY_TEAM].bMenInSector +
-                                             gTacticalStatus.ubArmyGuysKilled));
+                                      (uint32_t)(gTacticalStatus.Team[ENEMY_TEAM].bMenInSector +
+                                                 gTacticalStatus.ubArmyGuysKilled));
 
   for (bLoop = 0; bLoop < NUM_PANIC_TRIGGERS; bLoop++) {
     // if the bomb exists and its tolerance has been exceeded

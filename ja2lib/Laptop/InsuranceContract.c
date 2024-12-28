@@ -1270,7 +1270,7 @@ void StartInsuranceInvestigation(uint8_t ubPayoutID) {
   } else {
     // calculate how many days the investigation will take
     ubDays = (uint8_t)(2 + gStrategicStatus.ubInsuranceInvestigationsCnt +
-                     Random(3));  // 2-4 days, +1 for every previous investigation
+                       Random(3));  // 2-4 days, +1 for every previous investigation
   }
 
   // post an event to end the investigation that many days in the future (at 4pm)

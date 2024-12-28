@@ -265,7 +265,7 @@ typedef struct {
   int8_t bAgility;  // agility (speed) value
 
   BOOLEAN fUseProfileInsertionInfo;  // Set to various flags, ( contained in TacticalSave.h )
-  int16_t sGridNo;                     // The Gridno the NPC was in before leaving the sector
+  int16_t sGridNo;                   // The Gridno the NPC was in before leaving the sector
   uint8_t ubQuoteActionID;
   int8_t bMechanical;
 
@@ -310,8 +310,8 @@ typedef struct {
   int8_t bMercOpinion[75];
   int8_t bApproached;
   int8_t bMercStatus;  // The status of the merc.  If negative, see flags at the top of this file.
-                     // Positive:  The number of days the merc is away for.  0:  Not hired but ready
-                     // to be.
+                       // Positive:  The number of days the merc is away for.  0:  Not hired but
+                       // ready to be.
   int8_t bHatedTime[5];
   int8_t bLearnToLikeTime;
   int8_t bLearnToHateTime;
@@ -328,7 +328,7 @@ typedef struct {
   int8_t bNPCData;  // NPC specific
   int32_t iBalance;
   int16_t sTrueSalary;  // for use when the person is working for us for free but has a positive
-                      // salary value
+                        // salary value
   uint8_t ubCivilianGroup;
   uint8_t ubNeedForSleep;
   uint32_t uiMoney;
@@ -338,7 +338,7 @@ typedef struct {
 
   uint8_t ubDaysOfMoraleHangover;  // used only when merc leaves team while having poor morale
   uint8_t
-  ubNumTimesDrugUseInLifetime;  // The # times a drug has been used in the player's lifetime...
+      ubNumTimesDrugUseInLifetime;  // The # times a drug has been used in the player's lifetime...
 
   // Flags used for the precedent to repeating oneself in Contract negotiations.  Used for quote 80
   // -  ~107.  Gets reset every day
@@ -348,11 +348,11 @@ typedef struct {
   uint8_t ubTimeTillNextHatedComplaint;
   uint8_t ubSuspiciousDeath;
 
-  int32_t iMercMercContractLength;  // Used for MERC mercs, specifies how many days the merc has gone
-                                  // since last page
+  int32_t iMercMercContractLength;  // Used for MERC mercs, specifies how many days the merc has
+                                    // gone since last page
 
   uint32_t uiTotalCostToDate;  // The total amount of money that has been paid to the merc for their
-                             // salary
+                               // salary
   uint8_t ubBuffer[4];
 } MERCPROFILESTRUCT;
 

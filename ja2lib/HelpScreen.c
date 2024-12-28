@@ -407,8 +407,9 @@ uint16_t RenderMapScreenSectorInventoryHelpScreen();
 
 void GetHelpScreenTextPositions(uint16_t *pusPosX, uint16_t *pusPosY, uint16_t *pusWidth);
 void DisplayCurrentScreenTitleAndFooter();
-void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t* pText);
-uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth);
+void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t *pText);
+uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY,
+                                     uint16_t usWidth);
 void CreateHelpScreenButtons();
 void RefreshAllHelpScreenButtons();
 
@@ -950,20 +951,20 @@ void GetHelpScreenUserInput() {
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
         MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
 
@@ -1246,10 +1247,10 @@ void DisplayCurrentScreenTitleAndFooter() {
     // HELP_SCREEN_TITLE_BODY_COLOR, HELP_SCREEN_TEXT_BACKGROUND, FALSE, CENTER_JUSTIFIED );
 
     // Display the Title
-    IanDisplayWrappedString(usPosX, (uint16_t)(gHelpScreen.usScreenLocY + HELP_SCREEN_TITLE_OFFSET_Y),
-                            usWidth, HELP_SCREEN_GAP_BTN_LINES, HELP_SCREEN_TITLE_BODY_FONT,
-                            HELP_SCREEN_TITLE_BODY_COLOR, zText, HELP_SCREEN_TEXT_BACKGROUND, FALSE,
-                            0);
+    IanDisplayWrappedString(
+        usPosX, (uint16_t)(gHelpScreen.usScreenLocY + HELP_SCREEN_TITLE_OFFSET_Y), usWidth,
+        HELP_SCREEN_GAP_BTN_LINES, HELP_SCREEN_TITLE_BODY_FONT, HELP_SCREEN_TITLE_BODY_COLOR, zText,
+        HELP_SCREEN_TEXT_BACKGROUND, FALSE, 0);
   }
 
   // Display the '( press H to get help... )'
@@ -1364,7 +1365,7 @@ void ChangeToHelpScreenSubPage(int8_t bNewPage) {
   ChangeHelpScreenSubPage();
 }
 
-void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t* pText) {
+void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t *pText) {
   int32_t iStartLoc = -1;
 
   iStartLoc = HELPSCREEN_RECORD_SIZE * uiRecordToGet;
@@ -1372,7 +1373,8 @@ void GetHelpScreenText(uint32_t uiRecordToGet, wchar_t* pText) {
 }
 
 // returns the number of vertical pixels printed
-uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth) {
+uint16_t GetAndDisplayHelpScreenText(uint32_t uiRecord, uint16_t usPosX, uint16_t usPosY,
+                                     uint16_t usWidth) {
   wchar_t zText[1024];
   uint16_t usNumVertPixels = 0;
   uint32_t uiStartLoc;

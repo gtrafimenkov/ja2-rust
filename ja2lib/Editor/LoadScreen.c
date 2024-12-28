@@ -119,7 +119,7 @@ char gszCurrFilename[1024];
 
 enum { IOSTATUS_NONE, INITIATE_MAP_SAVE, SAVING_MAP, INITIATE_MAP_LOAD, LOADING_MAP };
 int8_t gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
-                             // none
+                               // none
 uint32_t ProcessFileIO();
 
 // BOOLEAN fSavingFile;
@@ -726,8 +726,8 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
 }
 
 // editor doesn't care about the z value.  It uses it's own methods.
-void SetGlobalSectorValues(wchar_t* szFilename) {
-  wchar_t* pStr;
+void SetGlobalSectorValues(wchar_t *szFilename) {
+  wchar_t *pStr;
   if (ValidCoordinate()) {
     // convert the coordinate string into into the actual global sector coordinates.
     if (gzFilename[0] >= 'A' && gzFilename[0] <= 'P')
@@ -968,7 +968,7 @@ BOOLEAN ValidFilename() {
   return FALSE;
 }
 
-BOOLEAN ExternalLoadMap(wchar_t* szFilename) {
+BOOLEAN ExternalLoadMap(wchar_t *szFilename) {
   Assert(szFilename);
   if (!wcslen(szFilename)) return FALSE;
   wcscpy(gzFilename, szFilename);
@@ -982,7 +982,7 @@ BOOLEAN ExternalLoadMap(wchar_t* szFilename) {
   return FALSE;
 }
 
-BOOLEAN ExternalSaveMap(wchar_t* szFilename) {
+BOOLEAN ExternalSaveMap(wchar_t *szFilename) {
   Assert(szFilename);
   if (!wcslen(szFilename)) return FALSE;
   wcscpy(gzFilename, szFilename);

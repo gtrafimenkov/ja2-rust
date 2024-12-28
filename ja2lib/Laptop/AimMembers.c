@@ -410,7 +410,7 @@ BOOLEAN gfFirstTimeInContactScreen;
 uint8_t gubCurrentCount;
 uint8_t gubCurrentStaticMode;
 uint32_t guiMercAttitudeTime;  // retains the amount of time the user is in a screen, if over a
-                             // certain time, the merc gets miffed
+                               // certain time, the merc gets miffed
 uint8_t gubMercAttitudeLevel;  // retains the current level the merc is  P.O.'ed at the caller.
 BOOLEAN
 gfHangUpMerc;  // if we have to cancel the video conferencing after the merc is finsihed talking
@@ -508,7 +508,7 @@ void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReaso
 //*******************************************
 
 BOOLEAN UpdateMercInfo(void);
-BOOLEAN LoadMercBioInfo(uint8_t ubIndex, wchar_t* pInfoString, wchar_t* pAddInfo);
+BOOLEAN LoadMercBioInfo(uint8_t ubIndex, wchar_t *pInfoString, wchar_t *pAddInfo);
 BOOLEAN DisplayMercsInventory(uint8_t ubMercID);
 BOOLEAN DisplayMercsFace();
 void DisplayMercStats();
@@ -517,8 +517,8 @@ BOOLEAN DisplayVideoConferencingDisplay();
 BOOLEAN DisplayMercsVideoFace();
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown);
 uint32_t DisplayMercChargeAmount();
-BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t* sString1, wchar_t* sString2, uint16_t usPosX,
-                                    uint16_t usPosY, uint8_t ubData);
+BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t *sString1, wchar_t *sString2,
+                                    uint16_t usPosX, uint16_t usPosY, uint8_t ubData);
 BOOLEAN InitVideoFaceTalking(uint8_t ubMercID, uint16_t usQuoteNum);
 BOOLEAN InitVideoFace(uint8_t ubMercID);
 BOOLEAN DisplaySnowBackground();
@@ -529,7 +529,7 @@ uint8_t DisplayPixelatedImage(uint8_t ubMaxImages);
 void HandleMercAttitude();
 void StopMercTalking();
 uint8_t DisplayTransparentSnow(uint8_t ubMode, uint32_t uiImageIdentifier, uint8_t ubMaxImages,
-                             BOOLEAN bForward);
+                               BOOLEAN bForward);
 
 BOOLEAN InitDeleteVideoConferencePopUp();
 BOOLEAN DeleteVideoConfPopUp();
@@ -543,7 +543,7 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons(BOOLEAN fEnable);
 BOOLEAN CanMercBeHired();
 BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit);
 BOOLEAN DisplayBlackBackground(uint8_t ubMaxNumOfLoops);
-void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, wchar_t* pString);
+void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, wchar_t *pString);
 
 void DelayMercSpeech(uint8_t ubMercID, uint16_t usQuoteNum, uint16_t usDelay, BOOLEAN fNewQuote,
                      BOOLEAN fReset);
@@ -965,8 +965,8 @@ BOOLEAN DrawNumeralsToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, ui
   return (TRUE);
 }
 
-BOOLEAN DrawMoneyToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY, uint32_t ulFont,
-                          uint8_t ubColor) {
+BOOLEAN DrawMoneyToScreen(int32_t iNumber, int8_t bWidth, uint16_t usLocX, uint16_t usLocY,
+                          uint32_t ulFont, uint8_t ubColor) {
   wchar_t sStr[10];
 
   swprintf(sStr, ARR_SIZE(sStr), L"%d", iNumber);
@@ -1063,7 +1063,7 @@ BOOLEAN UpdateMercInfo(void) {
   return (TRUE);
 }
 
-BOOLEAN LoadMercBioInfo(uint8_t ubIndex, wchar_t* pInfoString, wchar_t* pAddInfo) {
+BOOLEAN LoadMercBioInfo(uint8_t ubIndex, wchar_t *pInfoString, wchar_t *pAddInfo) {
   FileID hFile = FILE_ID_ERR;
   uint32_t uiBytesRead;
   uint16_t i;
@@ -1263,7 +1263,8 @@ BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
       usHeight = (uint32_t)pTrav->height;
       usWidth = (uint32_t)pTrav->width;
 
-      sCenX = PosX + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->x_offset;
+      sCenX =
+          PosX + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->x_offset;
       sCenY = PosY + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->y_offset;
 
       // blt the shadow of the item
@@ -1411,7 +1412,7 @@ void BtnNextButtonCallback(GUI_BUTTON *btn, int32_t reason) {
 BOOLEAN DisplayMercsFace() {
   struct VObject *hFaceHandle;
   struct VObject *hPortraitHandle;
-  char* sFaceLoc = "FACES\\BIGFACES\\";
+  char *sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -1615,7 +1616,7 @@ uint8_t GetStatColor(int8_t bStat) {
 }
 
 // displays the dots between the stats and the stat name
-void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, wchar_t* pString) {
+void DisplayDots(uint16_t usNameX, uint16_t usNameY, uint16_t usStatX, wchar_t *pString) {
   uint16_t usStringLength = StringPixLength(pString, AIM_M_FONT_STATIC_TEXT);
   int16_t i;
   uint16_t usPosX;
@@ -2046,8 +2047,8 @@ uint32_t DisplayMercChargeAmount() {
   return (giContractAmount);
 }
 
-BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t* sString1, wchar_t* sString2, uint16_t usPosX,
-                                    uint16_t usPosY, uint8_t ubData) {
+BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t *sString1, wchar_t *sString2,
+                                    uint16_t usPosX, uint16_t usPosY, uint8_t ubData) {
   struct VObject *hPopupBoxHandle;
   static uint16_t usPopUpBoxPosX, usPopUpBoxPosY;
   static wchar_t sPopUpString1[400], sPopUpString2[400];
@@ -2418,7 +2419,7 @@ BOOLEAN DisplayTalkingMercFaceForVideoPopUp(int32_t iFaceIndex) {
   return (fIsTheMercTalking);
 }
 
-void DisplayTextForMercFaceVideoPopUp(wchar_t* pString) {
+void DisplayTextForMercFaceVideoPopUp(wchar_t *pString) {
 #ifdef TAIWANESE
   swprintf(gsTalkingMercText, ARR_SIZE(gsTalkingMercText), L"%s", pString);
 #else
@@ -2766,7 +2767,7 @@ void HandleVideoDistortion() {
 
 // returns true when done. else false
 uint8_t DisplayTransparentSnow(uint8_t ubMode, uint32_t uiImageIdentifier, uint8_t ubMaxImages,
-                             BOOLEAN bForward) {
+                               BOOLEAN bForward) {
   struct VObject *hFuzzLineHandle;
   static int8_t bCount = 0;
   uint32_t uiCurrentTime = 0;
@@ -3689,7 +3690,8 @@ void TempHiringOfMercs(uint8_t ubNumberOfMercs, BOOLEAN fReset) {
     HireMerc(&HireMercStruct);
 
     // add an entry in the finacial page for the hiring of the merc
-    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], -(int32_t)(gMercProfiles[MercID[i]].sSalary));
+    AddTransactionToPlayersBook(HIRED_MERC, MercID[i],
+                                -(int32_t)(gMercProfiles[MercID[i]].sSalary));
 
     if (gMercProfiles[MercID[i]].bMedicalDeposit) {
       // add an entry in the finacial page for the medical deposit
@@ -3892,7 +3894,8 @@ void DemoHiringOfMercs() {
     HireMerc(&HireMercStruct);
 
     // add an entry in the finacial page for the hiring of the merc
-    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], -(int32_t)(gMercProfiles[MercID[i]].sSalary));
+    AddTransactionToPlayersBook(HIRED_MERC, MercID[i],
+                                -(int32_t)(gMercProfiles[MercID[i]].sSalary));
 
     if (gMercProfiles[MercID[i]].bMedicalDeposit) {
       // add an entry in the finacial page for the medical deposit

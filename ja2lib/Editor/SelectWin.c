@@ -828,8 +828,8 @@ void RenderSelectionWindow(void) {
     if (button == NULL) return;
 
     if ((abs(iStartClickX - button->Area.MouseXPos) > 9) ||
-        (abs(iStartClickY - (button->Area.MouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY)) >
-         9)) {
+        (abs(iStartClickY -
+             (button->Area.MouseYPos + iTopWinCutOff - (int16_t)SelWinStartPoint.iY)) > 9)) {
       //			iSX = (int32_t)iStartClickX;
       //			iEX = (int32_t)button->Area.MouseXPos;
       //			iSY = (int32_t)iStartClickY;
@@ -1473,7 +1473,8 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, int16_t iTopCutOff, int16_t iBotto
     if (pNode->fChosen) sCount = pSelList[FindInSelectionList(pNode)].sCount;
 
     SetObjectShade(pNode->hObj, DEFAULT_SHADE_LEVEL);
-    fReturnVal = BltVObject(vsFB, pNode->hObj, pNode->uiIndex, (uint16_t)pNode->iX, (uint16_t)iCurrY);
+    fReturnVal =
+        BltVObject(vsFB, pNode->hObj, pNode->uiIndex, (uint16_t)pNode->iX, (uint16_t)iCurrY);
 
     if (sCount != 0) {
       gprintf(pNode->iX, iCurrY, L"%d", sCount);

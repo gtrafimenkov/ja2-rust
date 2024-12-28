@@ -33,26 +33,28 @@
 #include "Utils/Text.h"
 
 // FUNCTIONS FOR ITEM CURSOR HANDLING
-uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, BOOLEAN fShowAPs,
-                                  BOOLEAN fRecalc, uint32_t uiCursorFlags);
+uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                    BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags);
 uint8_t HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
-                                     BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags);
+                                       BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags);
 uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                        uint32_t uiCursorFlags);
+                          uint32_t uiCursorFlags);
 uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                        uint32_t uiCursorFlagsl);
+                          uint32_t uiCursorFlagsl);
 uint8_t HandleAidCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                      uint32_t uiCursorFlags);
-uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint8_t ubCursor);
-uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, BOOLEAN fRecalc,
-                                   uint32_t uiCursorFlags, uint8_t ubCursor);
-uint8_t HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
+                        uint32_t uiCursorFlags);
+uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                  uint8_t ubCursor);
+uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                     BOOLEAN fRecalc, uint32_t uiCursorFlags, uint8_t ubCursor);
+uint8_t HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                               uint32_t uiCursorFlags);
 uint8_t HandleRepairCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
 uint8_t HandleRefuelCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
 uint8_t HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                         uint32_t uiCursorFlags);
+                           uint32_t uiCursorFlags);
 uint8_t HandleBombCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                       uint32_t uiCursorFlags);
+                         uint32_t uiCursorFlags);
 uint8_t HandleJarCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
 uint8_t HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, uint32_t uiCursorFlags);
 
@@ -117,7 +119,7 @@ BOOLEAN GetMouseRecalcAndShowAPFlags(uint32_t *puiCursorFlags, BOOLEAN *pfShowAP
 
 // FUNCTIONS FOR CURSOR DETERMINATION!
 uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t usMapPos,
-                          BOOLEAN fActivated) {
+                            BOOLEAN fActivated) {
   struct SOLDIERTYPE *pSoldier;
   uint32_t uiCursorFlags;
   BOOLEAN fShowAPs = FALSE;
@@ -182,7 +184,8 @@ uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t 
         // Alrighty, let's change the cursor!
         if (fRecalc && gfUIFullTargetFound) {
           // ATE: Check for ammo
-          if (IsValidTargetMerc((uint8_t)gusUIFullTargetID) && EnoughAmmo(pSoldier, FALSE, HANDPOS)) {
+          if (IsValidTargetMerc((uint8_t)gusUIFullTargetID) &&
+              EnoughAmmo(pSoldier, FALSE, HANDPOS)) {
             // IF it's an ememy, goto confirm action mode
             if ((guiUIFullTargetFlags & ENEMY_MERC) && (guiUIFullTargetFlags & VISIBLE_MERC) &&
                 !(guiUIFullTargetFlags & DEAD_MERC) && !gfCannotGetThrough) {
@@ -281,8 +284,8 @@ uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t 
   return (ubCursorID);
 }
 
-uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos, BOOLEAN fShowAPs,
-                                  BOOLEAN fRecalc, uint32_t uiCursorFlags) {
+uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
+                                    BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags) {
   uint8_t switchVal;
   BOOLEAN fEnoughPoints = TRUE;
   uint8_t bFutureAim;
@@ -561,7 +564,7 @@ uint8_t HandleActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMap
 }
 
 uint8_t HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, uint16_t usMapPos,
-                                     BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags) {
+                                       BOOLEAN fShowAPs, BOOLEAN fRecalc, uint32_t uiCursorFlags) {
   uint16_t usInHand;
 
   usInHand = pSoldier->inv[HANDPOS].usItem;
@@ -847,7 +850,7 @@ void DetermineCursorBodyLocation(uint8_t ubSoldierID, BOOLEAN fDisplay, BOOLEAN 
 }
 
 uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                        uint32_t uiCursorFlags) {
+                          uint32_t uiCursorFlags) {
   int16_t sAPCosts;
   int8_t bFutureAim;
   BOOLEAN fEnoughPoints = TRUE;
@@ -946,7 +949,7 @@ uint8_t HandleKnifeCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEA
 }
 
 uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                        uint32_t uiCursorFlags) {
+                          uint32_t uiCursorFlags) {
   int16_t sAPCosts;
   int8_t bFutureAim;
   BOOLEAN fEnoughPoints = TRUE;
@@ -1045,7 +1048,7 @@ uint8_t HandlePunchCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEA
 }
 
 uint8_t HandleAidCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                      uint32_t uiCursorFlags) {
+                        uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_MERCSFORAID);
 
@@ -1062,12 +1065,14 @@ uint8_t HandleAidCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN 
   }
 }
 
-uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint8_t ubItemCursor) {
+uint8_t HandleActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                                  uint8_t ubItemCursor) {
   return (ACTION_TOSS_UICURSOR);
 }
 
-uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fRecalc,
-                                   uint32_t uiCursorFlags, uint8_t ubItemCursor) {
+uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                                     BOOLEAN fRecalc, uint32_t uiCursorFlags,
+                                     uint8_t ubItemCursor) {
   int16_t sFinalGridNo;
   static BOOLEAN fBadCTGH = FALSE;
   BOOLEAN fArmed = FALSE;
@@ -1181,7 +1186,8 @@ uint8_t HandleNonActivatedTossCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGri
   return (GOOD_THROW_UICURSOR);
 }
 
-uint8_t HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint32_t uiCursorFlags) {
+uint8_t HandleWirecutterCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo,
+                               uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_WIREFENCE);
 
@@ -1251,7 +1257,7 @@ uint8_t HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, uint3
 }
 
 uint8_t HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                         uint32_t uiCursorFlags) {
+                           uint32_t uiCursorFlags) {
   // Calculate action points
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     gsCurrentActionPoints = GetAPsToUseRemote(pSoldier);
@@ -1272,7 +1278,7 @@ uint8_t HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLE
 }
 
 uint8_t HandleBombCursor(struct SOLDIERTYPE *pSoldier, uint16_t sGridNo, BOOLEAN fActivated,
-                       uint32_t uiCursorFlags) {
+                         uint32_t uiCursorFlags) {
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_BOMB);
 

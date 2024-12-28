@@ -605,8 +605,8 @@ int32_t QsortCompare(const void *pNum1, const void *pNum2) {
       break;
     // Experience			int16_t	bExpLevel
     case 1:
-      return (
-          CompareValue((int32_t)gMercProfiles[Num1].bExpLevel, (int32_t)gMercProfiles[Num2].bExpLevel));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bExpLevel,
+                           (int32_t)gMercProfiles[Num2].bExpLevel));
       break;
     // Marksmanship		int16_t	bMarksmanship
     case 2:
@@ -615,8 +615,8 @@ int32_t QsortCompare(const void *pNum1, const void *pNum2) {
       break;
     // Medical					int16_t	bMedical
     case 3:
-      return (
-          CompareValue((int32_t)gMercProfiles[Num1].bMedical, (int32_t)gMercProfiles[Num2].bMedical));
+      return (CompareValue((int32_t)gMercProfiles[Num1].bMedical,
+                           (int32_t)gMercProfiles[Num2].bMedical));
       break;
     // Explosives			int16_t	bExplosive
     case 4:

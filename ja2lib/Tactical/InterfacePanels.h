@@ -114,6 +114,6 @@ void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, uint32
 void FinishAnySkullPanelAnimations();
 
 uint8_t FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
-                              BOOLEAN fOnlyRegularMercs);
+                                BOOLEAN fOnlyRegularMercs);
 
 #endif

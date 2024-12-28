@@ -206,8 +206,8 @@ typedef struct {
   uint8_t ubStrayAmmo;     // partially-depleted ammo mags are stored here as #bullets, and can be
                            // converted to full packs
 
-  uint8_t ubElementsAlloced;  // number of DEALER_SPECIAL_ITEM array elements alloced for the
-                              // special item array
+  uint8_t ubElementsAlloced;         // number of DEALER_SPECIAL_ITEM array elements alloced for the
+                                     // special item array
   DEALER_SPECIAL_ITEM *SpecialItem;  // dynamic array of special items with this same item index
 
   uint32_t uiOrderArrivalTime;  // Day the items ordered will arrive on.  It's uint32_t in case we

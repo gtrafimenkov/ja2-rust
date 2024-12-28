@@ -92,15 +92,15 @@ extern BOOLEAN gfGeneratingMapEdgepoints;
 // OLD PATHAI STUFF
 /////////////////////////////////////////////////
 struct path_s {
-  int32_t iLocation;                              // 4
+  int32_t iLocation;                            // 4
   struct path_s *pNext[ABSMAX_SKIPLIST_LEVEL];  // 4 * MAX_SKIPLIST_LEVEL (5) = 20
-  int16_t sPathNdx;                               // 2
+  int16_t sPathNdx;                             // 2
   TRAILCELLTYPE usCostSoFar;                    // 2
   TRAILCELLTYPE usCostToGo;                     // 2
   TRAILCELLTYPE usTotalCost;                    // 2
-  int8_t bLevel;                                  // 1
-  uint8_t ubTotalAPCost;                          // 1
-  uint8_t ubLegDistance;                          // 1
+  int8_t bLevel;                                // 1
+  uint8_t ubTotalAPCost;                        // 1
+  uint8_t ubLegDistance;                        // 1
 };
 
 typedef struct path_s path_t;
@@ -426,7 +426,8 @@ void ShutDownPathAI(void) {
   MemFree(trailTree);
 }
 
-void ReconfigurePathAI(int32_t iNewMaxSkipListLevel, int32_t iNewMaxTrailTree, int32_t iNewMaxPathQ) {
+void ReconfigurePathAI(int32_t iNewMaxSkipListLevel, int32_t iNewMaxTrailTree,
+                       int32_t iNewMaxPathQ) {
   // make sure the specified parameters are reasonable
   iNewMaxSkipListLevel = max(iNewMaxSkipListLevel, ABSMAX_SKIPLIST_LEVEL);
   iNewMaxTrailTree = max(iNewMaxTrailTree, ABSMAX_TRAIL_TREE);
@@ -452,8 +453,8 @@ void RestorePathAIToDefaults(void) {
 ///////////////////////////////////////////////////////////////////////
 //	FINDBESTPATH                                                   /
 ////////////////////////////////////////////////////////////////////////
-int32_t FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel, int16_t usMovementMode,
-                   int8_t bCopy, uint8_t fFlags) {
+int32_t FindBestPath(struct SOLDIERTYPE *s, int16_t sDestination, int8_t ubLevel,
+                     int16_t usMovementMode, int8_t bCopy, uint8_t fFlags) {
   int32_t iDestination = sDestination, iOrigination;
   int32_t iCnt = -1, iStructIndex;
   int32_t iLoopStart = 0, iLoopEnd = 0;
@@ -1914,7 +1915,8 @@ void ErasePath(char bEraseOldOne) {
 }
 
 int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute, int8_t bPlot,
-               int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse, int16_t sAPBudget) {
+                 int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
+                 int16_t sAPBudget) {
   int16_t sTileCost, sPoints = 0, sTempGrid, sAnimCost = 0;
   int16_t sPointsWalk = 0, sPointsCrawl = 0, sPointsRun = 0, sPointsSwat = 0;
   int16_t sExtraCostStand, sExtraCostSwat, sExtraCostCrawl;
@@ -1923,7 +1925,7 @@ int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRou
   int16_t sFootOrderIndex;
   int16_t sSwitchValue;
   int16_t sFootOrder[5] = {GREENSTEPSTART, PURPLESTEPSTART, BLUESTEPSTART, ORANGESTEPSTART,
-                         REDSTEPSTART};
+                           REDSTEPSTART};
   uint16_t usTileIndex;
   uint16_t usTileNum;
   struct LEVELNODE *pNode;
@@ -2003,7 +2005,8 @@ int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRou
       sSwitchValue = gubWorldMovementCosts[sTempGrid][(int8_t)guiPathingData[iCnt]][pSold->bLevel];
 
       // get the tile cost for that tile based on WALKING
-      sTileCost = TerrainActionPoints(pSold, sTempGrid, (int8_t)guiPathingData[iCnt], pSold->bLevel);
+      sTileCost =
+          TerrainActionPoints(pSold, sTempGrid, (int8_t)guiPathingData[iCnt], pSold->bLevel);
 
       usMovementModeToUseForAPs = usMovementMode;
 
@@ -2248,8 +2251,8 @@ int16_t PlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRou
 }
 
 int16_t UIPlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute, int8_t bPlot,
-                 int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
-                 int16_t sAPBudget) {
+                   int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
+                   int16_t sAPBudget) {
   // This function is specifically for UI calls to the pathing routine, to
   // check whether the shift key is pressed, etc.
   int16_t sRet;
@@ -2289,9 +2292,9 @@ int16_t RecalculatePathCost(struct SOLDIERTYPE *pSoldier, uint16_t usMovementMod
   return (sRet);
 }
 
-int16_t EstimatePlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute, int8_t bPlot,
-                       int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth, int8_t bReverse,
-                       int16_t sAPBudget) {
+int16_t EstimatePlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t bCopyRoute,
+                         int8_t bPlot, int8_t bStayOn, uint16_t usMovementMode, int8_t bStealth,
+                         int8_t bReverse, int16_t sAPBudget) {
   // This function is specifically for AI calls to estimate path cost to a location
   // It sets stuff up to ignore all people
   int16_t sRet;
@@ -2306,9 +2309,9 @@ int16_t EstimatePlotPath(struct SOLDIERTYPE *pSold, int16_t sDestGridno, int8_t 
   return (sRet);
 }
 
-uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo, uint8_t ubMovementCost,
-                             BOOLEAN fReturnPerceivedValue, int32_t *piDoorGridNo,
-                             BOOLEAN fReturnDoorCost) {
+uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo,
+                               uint8_t ubMovementCost, BOOLEAN fReturnPerceivedValue,
+                               int32_t *piDoorGridNo, BOOLEAN fReturnDoorCost) {
   // This function will return either TRAVELCOST_DOOR (in place of closed door cost),
   // TRAVELCOST_OBSTACLE, or the base ground terrain
   // travel cost, depending on whether or not the door is open or closed etc.
@@ -2472,7 +2475,7 @@ uint8_t InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo, ui
 }
 
 uint8_t DoorTravelCost(struct SOLDIERTYPE *pSoldier, int32_t iGridNo, uint8_t ubMovementCost,
-                     BOOLEAN fReturnPerceivedValue, int32_t *piDoorGridNo) {
+                       BOOLEAN fReturnPerceivedValue, int32_t *piDoorGridNo) {
   return (InternalDoorTravelCost(pSoldier, iGridNo, ubMovementCost, fReturnPerceivedValue,
                                  piDoorGridNo, FALSE));
 }

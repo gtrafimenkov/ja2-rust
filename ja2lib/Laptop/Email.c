@@ -297,7 +297,7 @@ void BtnPreviousEmailPageCallback(GUI_BUTTON *btn, int32_t reason);
 void BtnNextEmailPageCallback(GUI_BUTTON *btn, int32_t reason);
 void DisplayEmailList();
 void ClearOutEmailMessageRecordsList(void);
-void AddEmailRecordToList(wchar_t* pString);
+void AddEmailRecordToList(wchar_t *pString);
 void UpDateMessageRecordList(void);
 void HandleAnySpecialEmailMessageEvents(int32_t iMessageId);
 BOOLEAN HandleMailSpecialMessages(uint16_t usMessageId, int32_t *iResults, EmailPtr pMail);
@@ -648,7 +648,8 @@ void AddEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender, 
   return;
 }
 
-void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender, int32_t iDate) {
+void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender,
+                     int32_t iDate) {
   wchar_t pSubject[320];
 
   // starts at iSubjectOffset amd goes iSubjectLength, reading in string
@@ -667,8 +668,9 @@ void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubS
   return;
 }
 
-void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, wchar_t* pSubject, int32_t iDate,
-                     uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t iFirstData, uint32_t uiSecondData) {
+void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, wchar_t *pSubject,
+                     int32_t iDate, uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t iFirstData,
+                     uint32_t uiSecondData) {
   // will add a message to the list of messages
   EmailPtr pEmail = pEmailList;
   EmailPtr pTempEmail = NULL;
@@ -703,7 +705,7 @@ void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, wchar_t* pS
   // pTempEmail->pText[iCounter]=NULL;
 
   // copy subject
-  pTempEmail->pSubject = (wchar_t*)MemAlloc(128 * 2);
+  pTempEmail->pSubject = (wchar_t *)MemAlloc(128 * 2);
   memset(pTempEmail->pSubject, 0, sizeof(wchar_t) * 128);
   wcscpy(pTempEmail->pSubject, pSubject);
 
@@ -1050,7 +1052,7 @@ void SwapMessages(int32_t iIdA, int32_t iIdB) {
   EmailPtr pA = pEmailList;
   EmailPtr pB = pEmailList;
   EmailPtr pTemp = (EmailPtr)MemAlloc(sizeof(Email));
-  pTemp->pSubject = (wchar_t*)MemAlloc(128 * 2);
+  pTemp->pSubject = (wchar_t *)MemAlloc(128 * 2);
 
   memset(pTemp->pSubject, 0, sizeof(wchar_t) * 128);
 
@@ -1156,7 +1158,7 @@ void DrawLetterIcon(int32_t iCounter, BOOLEAN fRead) {
   return;
 }
 
-void DrawSubject(int32_t iCounter, wchar_t* pSubject, BOOLEAN fRead) {
+void DrawSubject(int32_t iCounter, wchar_t *pSubject, BOOLEAN fRead) {
   wchar_t pTempSubject[320];
 
   // draw subject line of mail being viewed in viewer
@@ -1213,7 +1215,8 @@ void DrawSender(int32_t iCounter, uint8_t ubSender, BOOLEAN fRead) {
     SetFont(FONT10ARIALBOLD);
   }
 
-  mprintf(SENDER_X, ((uint16_t)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)), pSenderNameList[ubSender]);
+  mprintf(SENDER_X, ((uint16_t)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
+          pSenderNameList[ubSender]);
 
   SetFont(MESSAGE_FONT);
   SetFontShadow(DEFAULT_SHADOW);
@@ -1705,16 +1708,17 @@ void AddDeleteRegionsToMessageRegion(int32_t iViewerY) {
           LoadButtonImage("LAPTOP\\NewMailButtons.sti", -1, 0, -1, 3, -1);
       giMailMessageButtons[0] = QuickCreateButton(
           giMailMessageButtonsImage[0], PREVIOUS_PAGE_BUTTON_X,
-          (int16_t)(LOWER_BUTTON_Y + (int16_t)iViewerY + 2), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-          (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
+          (int16_t)(LOWER_BUTTON_Y + (int16_t)iViewerY + 2), BUTTON_TOGGLE,
+          MSYS_PRIORITY_HIGHEST - 1, (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
           (GUI_CALLBACK)BtnPreviousEmailPageCallback);
 
       giMailMessageButtonsImage[1] =
           LoadButtonImage("LAPTOP\\NewMailButtons.sti", -1, 1, -1, 4, -1);
-      giMailMessageButtons[1] = QuickCreateButton(
-          giMailMessageButtonsImage[1], NEXT_PAGE_BUTTON_X,
-          (int16_t)(LOWER_BUTTON_Y + (int16_t)iViewerY + 2), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-          (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnNextEmailPageCallback);
+      giMailMessageButtons[1] = QuickCreateButton(giMailMessageButtonsImage[1], NEXT_PAGE_BUTTON_X,
+                                                  (int16_t)(LOWER_BUTTON_Y + (int16_t)iViewerY + 2),
+                                                  BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                                                  (GUI_CALLBACK)BtnGenericMouseMoveButtonCallback,
+                                                  (GUI_CALLBACK)BtnNextEmailPageCallback);
 
       gfPageButtonsWereCreated = TRUE;
     }
@@ -2476,8 +2480,8 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, int32_t iViewerY) {
   // print from
   FindFontRightCoordinates(MESSAGE_HEADER_X - 20, (int16_t)(MESSAGE_FROM_Y + (int16_t)iViewerY),
                            MESSAGE_HEADER_WIDTH,
-                           (int16_t)(MESSAGE_FROM_Y + GetFontHeight(MESSAGE_FONT)), pEmailHeaders[0],
-                           MESSAGE_FONT, &usX, &usY);
+                           (int16_t)(MESSAGE_FROM_Y + GetFontHeight(MESSAGE_FONT)),
+                           pEmailHeaders[0], MESSAGE_FONT, &usX, &usY);
   mprintf(usX, MESSAGE_FROM_Y + (uint16_t)iViewerY, pEmailHeaders[0]);
 
   // the actual from info
@@ -2487,8 +2491,8 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, int32_t iViewerY) {
   // print date
   FindFontRightCoordinates(MESSAGE_HEADER_X + 168, (int16_t)(MESSAGE_DATE_Y + (uint16_t)iViewerY),
                            MESSAGE_HEADER_WIDTH,
-                           (int16_t)(MESSAGE_DATE_Y + GetFontHeight(MESSAGE_FONT)), pEmailHeaders[2],
-                           MESSAGE_FONT, &usX, &usY);
+                           (int16_t)(MESSAGE_DATE_Y + GetFontHeight(MESSAGE_FONT)),
+                           pEmailHeaders[2], MESSAGE_FONT, &usX, &usY);
   mprintf(usX, MESSAGE_DATE_Y + (uint16_t)iViewerY, pEmailHeaders[2]);
 
   // the actual date info
@@ -2566,7 +2570,7 @@ void ClearOutEmailMessageRecordsList(void) {
   return;
 }
 
-void AddEmailRecordToList(wchar_t* pString) {
+void AddEmailRecordToList(wchar_t *pString) {
   RecordPtr pTempRecord;
 
   // set to head of list
@@ -4441,9 +4445,9 @@ BOOLEAN ReplaceMercNameAndAmountWithProperData(wchar_t *pFinishedString, EmailPt
   BOOLEAN fReplacingMercName = TRUE;
 
   wchar_t sMercName[32] = L"$MERCNAME$";  // Doesnt need to be translated, inside Email.txt and will
-                                         // be replaced by the mercs name
+                                          // be replaced by the mercs name
   wchar_t sAmount[32] = L"$AMOUN$";  // Doesnt need to be translated, inside Email.txt and will be
-                                    // replaced by a dollar amount
+                                     // replaced by a dollar amount
   wchar_t sSearchString[32];
 
   // Copy the original string over to the temp string

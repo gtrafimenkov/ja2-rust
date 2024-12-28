@@ -366,7 +366,7 @@ void ToggleShowMilitiaMode(void) {
 
     // check if player has any militia
     if (DoesPlayerHaveAnyMilitia() == FALSE) {
-      wchar_t* pwString = NULL;
+      wchar_t *pwString = NULL;
 
       // no - so put up a message explaining how it works
 

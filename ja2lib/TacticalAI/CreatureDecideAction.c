@@ -825,8 +825,8 @@ int8_t CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconscio
 
           if (pSoldier->bAttitude == DEFENSIVE) iChance += 25;
 
-          // if ( (int16_t)PreRandom(100) < iChance && InternalIsValidStance( pSoldier, ubOpponentDir,
-          // ANIM_STAND ) )
+          // if ( (int16_t)PreRandom(100) < iChance && InternalIsValidStance( pSoldier,
+          // ubOpponentDir, ANIM_STAND ) )
           if ((int16_t)PreRandom(100) < iChance && ValidCreatureTurn(pSoldier, ubOpponentDir)) {
             pSoldier->usActionData = ubOpponentDir;
 

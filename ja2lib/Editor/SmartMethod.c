@@ -108,11 +108,13 @@ void IncSmartBrokenWallUIValue() { gubBrokenWallUIValue += gubBrokenWallUIValue 
 
 void DecSmartBrokenWallUIValue() { gubBrokenWallUIValue -= gubBrokenWallUIValue > 0 ? 1 : -4; }
 
-BOOLEAN CalcWallInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType, uint16_t *pusIndex) {
+BOOLEAN CalcWallInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType,
+                                     uint16_t *pusIndex) {
   return FALSE;
 }
 
-BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusDoorType, uint16_t *pusIndex) {
+BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusDoorType,
+                                     uint16_t *pusIndex) {
   struct LEVELNODE *pWall = NULL;
   uint16_t usWallOrientation;
   pWall = GetVerticalWall(iMapIndex);
@@ -132,7 +134,8 @@ BOOLEAN CalcDoorInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusDoorType, 
   return FALSE;
 }
 
-BOOLEAN CalcWindowInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType, uint16_t *pusIndex) {
+BOOLEAN CalcWindowInfoUsingSmartMethod(uint32_t iMapIndex, uint16_t *pusWallType,
+                                       uint16_t *pusIndex) {
   struct LEVELNODE *pWall = NULL;
   uint32_t uiTileType;
   uint16_t usWallOrientation;

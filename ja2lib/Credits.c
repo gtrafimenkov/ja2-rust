@@ -308,17 +308,17 @@ BOOLEAN RenderCreditScreen();
 void GetCreditScreenUserInput();
 void SetCreditsExitScreen(uint32_t uiScreenToGoTo);
 BOOLEAN ShutDownCreditList();
-BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, wchar_t* pString);
+BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, wchar_t *pString);
 BOOLEAN InitCreditNode();
 BOOLEAN DisplayCreditNode(CRDT_NODE *pCurrent);
 void HandleCreditNodes();
 void HandleNode_Default(CRDT_NODE *pCurrent);
 void HandleCurrentCreditNode(CRDT_NODE *pCurrent);
 BOOLEAN DeleteNode(CRDT_NODE *pNodeToDelete);
-uint32_t GetAndHandleCreditCodeFromCodeString(wchar_t* pzCode);
+uint32_t GetAndHandleCreditCodeFromCodeString(wchar_t *pzCode);
 BOOLEAN GetNextCreditFromTextFile();
 uint32_t CountNumberOfCreditNodes();
-wchar_t* GetNextCreditCode(wchar_t* pString, uint32_t *pSizeOfCode);
+wchar_t *GetNextCreditCode(wchar_t *pString, uint32_t *pSizeOfCode);
 void HandleCreditFlags(uint32_t uiFlags);
 void HandleCreditEyeBlinking();
 void InitCreditEyeBlinking();
@@ -622,7 +622,7 @@ BOOLEAN DeleteNode(CRDT_NODE *pNodeToDelete) {
 }
 
 // aaa
-BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, wchar_t* pString) {
+BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, wchar_t *pString) {
   CRDT_NODE *pNodeToAdd = NULL;
   CRDT_NODE *pTemp = NULL;
   uint32_t uiSizeOfString = (wcslen(pString) + 2) * 2;
@@ -677,7 +677,7 @@ BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, wchar_t* pString) {
   pNodeToAdd->sPosX = CRDT_TEXT_START_LOC;
 
   // Allocate memory for the string
-  pNodeToAdd->pString = (wchar_t*)MemAlloc(uiSizeOfString);
+  pNodeToAdd->pString = (wchar_t *)MemAlloc(uiSizeOfString);
   if (pNodeToAdd->pString == NULL) return (FALSE);
 
   // copy the string into the node
@@ -880,7 +880,7 @@ BOOLEAN GetNextCreditFromTextFile() {
   wchar_t zOriginalString[512];
   wchar_t zString[512];
   wchar_t zCodes[512];
-  wchar_t* pzNewCode = NULL;
+  wchar_t *pzNewCode = NULL;
   uint32_t uiNodeType = 0;
   uint32_t uiStartLoc = 0;
   uint32_t uiFlags = 0;
@@ -904,7 +904,7 @@ BOOLEAN GetNextCreditFromTextFile() {
   } else {
     uint32_t uiSizeOfCodes = 0;
     uint32_t uiSizeOfSubCode = 0;
-    wchar_t* pzEndCode = NULL;
+    wchar_t *pzEndCode = NULL;
     uint32_t uiDistanceIntoCodes = 0;
 
     // Retrive all the codes from the string
@@ -972,7 +972,7 @@ BOOLEAN GetNextCreditFromTextFile() {
 }
 
 // return any flags that need to be set in the node
-uint32_t GetAndHandleCreditCodeFromCodeString(wchar_t* pzCode) {
+uint32_t GetAndHandleCreditCodeFromCodeString(wchar_t *pzCode) {
   // new codes:
 
   // if the code is to change the delay between strings
@@ -1090,8 +1090,8 @@ uint32_t CountNumberOfCreditNodes() {
   return (uiNumNodes);
 }
 
-wchar_t* GetNextCreditCode(wchar_t* pString, uint32_t *pSizeOfCode) {
-  wchar_t* pzNewCode = NULL;
+wchar_t *GetNextCreditCode(wchar_t *pString, uint32_t *pSizeOfCode) {
+  wchar_t *pzNewCode = NULL;
   uint32_t uiSizeOfCode = 0;
 
   // get the new subcode out

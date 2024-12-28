@@ -38,26 +38,27 @@ int16_t DirIncrementer[8] = {
 };
 
 // Opposite directions
-uint8_t gOppositeDirection[NUM_WORLD_DIRECTIONS] = {SOUTH,     SOUTHWEST, WEST,     NORTHWEST, NORTH,
-                                                  NORTHEAST, EAST,      SOUTHEAST
+uint8_t gOppositeDirection[NUM_WORLD_DIRECTIONS] = {SOUTH,     SOUTHWEST, WEST,
+                                                    NORTHWEST, NORTH,     NORTHEAST,
+                                                    EAST,      SOUTHEAST
 
 };
 
 uint8_t gTwoCCDirection[NUM_WORLD_DIRECTIONS] = {WEST,      NORTHWEST, NORTH,    NORTHEAST, EAST,
-                                               SOUTHEAST, SOUTH,     SOUTHWEST
+                                                 SOUTHEAST, SOUTH,     SOUTHWEST
 
 };
 
 uint8_t gTwoCDirection[NUM_WORLD_DIRECTIONS] = {EAST,      SOUTHEAST, SOUTH,    SOUTHWEST, WEST,
-                                              NORTHWEST, NORTH,     NORTHEAST
+                                                NORTHWEST, NORTH,     NORTHEAST
 
 };
 
 uint8_t gOneCDirection[NUM_WORLD_DIRECTIONS] = {NORTHEAST, EAST, SOUTHEAST, SOUTH,
-                                              SOUTHWEST, WEST, NORTHWEST, NORTH};
+                                                SOUTHWEST, WEST, NORTHWEST, NORTH};
 
 uint8_t gOneCCDirection[NUM_WORLD_DIRECTIONS] = {NORTHWEST, NORTH, NORTHEAST, EAST,
-                                               SOUTHEAST, SOUTH, SOUTHWEST, WEST};
+                                                 SOUTHEAST, SOUTH, SOUTHWEST, WEST};
 
 //														DIRECTION
 // FACING			 DIRECTION WE WANT TO GOTO
@@ -144,12 +145,14 @@ uint8_t gPurpendicularDirection[NUM_WORLD_DIRECTIONS][NUM_WORLD_DIRECTIONS] = {
     },
 };
 
-void FromCellToScreenCoordinates(int16_t sCellX, int16_t sCellY, int16_t *psScreenX, int16_t *psScreenY) {
+void FromCellToScreenCoordinates(int16_t sCellX, int16_t sCellY, int16_t *psScreenX,
+                                 int16_t *psScreenY) {
   *psScreenX = (2 * sCellX) - (2 * sCellY);
   *psScreenY = sCellX + sCellY;
 }
 
-void FromScreenToCellCoordinates(int16_t sScreenX, int16_t sScreenY, int16_t *psCellX, int16_t *psCellY) {
+void FromScreenToCellCoordinates(int16_t sScreenX, int16_t sScreenY, int16_t *psCellX,
+                                 int16_t *psCellY) {
   *psCellX = ((sScreenX + (2 * sScreenY)) / 4);
   *psCellY = ((2 * sScreenY) - sScreenX) / 4;
 }
@@ -196,7 +199,8 @@ BOOLEAN GetMouseXY(int16_t *psMouseX, int16_t *psMouseY) {
   return (TRUE);
 }
 
-BOOLEAN GetMouseXYWithRemainder(int16_t *psMouseX, int16_t *psMouseY, int16_t *psCellX, int16_t *psCellY) {
+BOOLEAN GetMouseXYWithRemainder(int16_t *psMouseX, int16_t *psMouseY, int16_t *psCellX,
+                                int16_t *psCellY) {
   int16_t sWorldX, sWorldY;
 
   if (!GetMouseWorldCoords(&sWorldX, &sWorldY)) {
@@ -321,7 +325,8 @@ BOOLEAN ConvertMapPosToWorldTileCenter(uint16_t usMapPos, int16_t *psXPos, int16
   return (TRUE);
 }
 
-void GetScreenXYWorldCoords(int16_t sScreenX, int16_t sScreenY, int16_t *psWorldX, int16_t *psWorldY) {
+void GetScreenXYWorldCoords(int16_t sScreenX, int16_t sScreenY, int16_t *psWorldX,
+                            int16_t *psWorldY) {
   int16_t sOffsetX, sOffsetY;
   int16_t sTempPosX_W, sTempPosY_W;
   int16_t sStartPointX_W, sStartPointY_W;
@@ -384,8 +389,8 @@ void GetWorldXYAbsoluteScreenXY(int32_t sWorldCellX, int32_t sWorldCellY, int16_
   *psWorldScreenY = sScreenCenterY + gsCY - gsTLY;
 }
 
-void GetFromAbsoluteScreenXYWorldXY(int32_t *psWorldCellX, int32_t *psWorldCellY, int16_t sWorldScreenX,
-                                    int16_t sWorldScreenY) {
+void GetFromAbsoluteScreenXYWorldXY(int32_t *psWorldCellX, int32_t *psWorldCellY,
+                                    int16_t sWorldScreenX, int16_t sWorldScreenY) {
   int16_t sWorldCenterX, sWorldCenterY;
   int16_t sDistToCenterY, sDistToCenterX;
 
@@ -507,8 +512,8 @@ int32_t GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
   // Convert our grid-not into an XY
   ConvertGridNoToXY(sGridNo2, &sXPos2, &sYPos2);
 
-  uiDist =
-      (int16_t)sqrt((float)(sXPos2 - sXPos) * (sXPos2 - sXPos) + (sYPos2 - sYPos) * (sYPos2 - sYPos));
+  uiDist = (int16_t)sqrt((float)(sXPos2 - sXPos) * (sXPos2 - sXPos) +
+                         (sYPos2 - sYPos) * (sYPos2 - sYPos));
 
   return (uiDist);
 }
@@ -523,8 +528,8 @@ int32_t GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
   ConvertGridNoToXY(sGridNo2, &sXPos2, &sYPos2);
 
   return ((int32_t)(sqrt((float)(sXPos2 - sXPos) * (sXPos2 - sXPos) +
-                       (sYPos2 - sYPos) * (sYPos2 - sYPos)) *
-                  CELL_X_SIZE));
+                         (sYPos2 - sYPos) * (sYPos2 - sYPos)) *
+                    CELL_X_SIZE));
 }
 
 BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, struct GRect *pRect) {
@@ -536,8 +541,8 @@ BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, struct GRect *pRect) {
   }
 }
 
-BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, struct GRect *pRect, int16_t *sXRel,
-                                        int16_t *sYRel) {
+BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, struct GRect *pRect,
+                                        int16_t *sXRel, int16_t *sYRel) {
   if ((sXPos >= pRect->iLeft) && (sXPos <= pRect->iRight) && (sYPos >= pRect->iTop) &&
       (sYPos <= pRect->iBottom)) {
     (*sXRel) = pRect->iLeft - sXPos;

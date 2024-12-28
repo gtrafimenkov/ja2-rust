@@ -61,7 +61,7 @@ uint8_t CalcDeathRate(void) {
   if (gStrategicStatus.uiManDaysPlayed > 0) {
     // calculates the player's current death rate
     uiDeathRate = (uint32_t)((gStrategicStatus.ubMercDeaths * DEATH_RATE_SEVERITY * 100) /
-                           gStrategicStatus.uiManDaysPlayed);
+                             gStrategicStatus.uiManDaysPlayed);
   }
 
   return ((uint8_t)uiDeathRate);

@@ -94,7 +94,8 @@ void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason
 //
 ///////////////////////////////////////////////////
 
-void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY, int16_t iColor);
+void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY,
+                    int16_t iColor);
 
 void RenderSelectedSliderBar(SLIDER *pSlider);
 void CalculateNewSliderBoxPosition(SLIDER *pSlider);
@@ -142,9 +143,9 @@ void ShutDownSlider() {
   DeleteVideoObjectFromIndex(guiSliderBoxImage);
 }
 
-int32_t AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
-                uint16_t usNumberOfIncrements, int8_t sPriority,
-                SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags) {
+int32_t AddSlider(uint8_t ubStyle, uint16_t usCursor, uint16_t usPosX, uint16_t usPosY,
+                  uint16_t usWidth, uint16_t usNumberOfIncrements, int8_t sPriority,
+                  SLIDER_CHANGE_CALLBACK SliderChangeCallback, uint32_t uiFlags) {
   SLIDER *pTemp = NULL;
   SLIDER *pNewSlider = NULL;
 
@@ -277,13 +278,13 @@ void RenderSelectedSliderBar(SLIDER *pSlider) {
   } else {
     // display the background ( the bar )
     OptDisplayLine((uint16_t)(pSlider->usPosX + 1), (uint16_t)(pSlider->usPosY - 1),
-                   (uint16_t)(pSlider->usPosX + pSlider->usWidth - 1), (uint16_t)(pSlider->usPosY - 1),
-                   pSlider->usBackGroundColor);
+                   (uint16_t)(pSlider->usPosX + pSlider->usWidth - 1),
+                   (uint16_t)(pSlider->usPosY - 1), pSlider->usBackGroundColor);
     OptDisplayLine(pSlider->usPosX, pSlider->usPosY, (uint16_t)(pSlider->usPosX + pSlider->usWidth),
                    pSlider->usPosY, pSlider->usBackGroundColor);
     OptDisplayLine((uint16_t)(pSlider->usPosX + 1), (uint16_t)(pSlider->usPosY + 1),
-                   (uint16_t)(pSlider->usPosX + pSlider->usWidth - 1), (uint16_t)(pSlider->usPosY + 1),
-                   pSlider->usBackGroundColor);
+                   (uint16_t)(pSlider->usPosX + pSlider->usWidth - 1),
+                   (uint16_t)(pSlider->usPosY + 1), pSlider->usBackGroundColor);
 
     // invalidate the area
     InvalidateRegion(pSlider->usPosX, pSlider->usPosY - 2, pSlider->usPosX + pSlider->usWidth + 1,
@@ -558,7 +559,8 @@ void CalculateNewSliderIncrement(uint32_t uiSliderID, uint16_t usPos) {
   }
 }
 
-void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY, int16_t iColor) {
+void OptDisplayLine(uint16_t usStartX, uint16_t usStartY, uint16_t EndX, uint16_t EndY,
+                    int16_t iColor) {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
 
@@ -590,7 +592,7 @@ void CalculateNewSliderBoxPosition(SLIDER *pSlider) {
     } else {
       pSlider->usCurrentSliderBoxPosition =
           pSlider->usPosY + (uint16_t)((pSlider->usHeight / (float)pSlider->usNumberOfIncrements) *
-                                     pSlider->usCurrentIncrement);
+                                       pSlider->usCurrentIncrement);
     }
 
     usMaxPos = pSlider->usPosY + pSlider->usHeight;  // - pSlider->ubSliderHeight//2 + 1;
@@ -606,7 +608,7 @@ void CalculateNewSliderBoxPosition(SLIDER *pSlider) {
     } else {
       pSlider->usCurrentSliderBoxPosition =
           pSlider->usPosX + (uint16_t)((pSlider->usWidth / (float)pSlider->usNumberOfIncrements) *
-                                     pSlider->usCurrentIncrement);
+                                       pSlider->usCurrentIncrement);
     }
     usMaxPos = pSlider->usPosX + pSlider->usWidth - 8 + 1;
 

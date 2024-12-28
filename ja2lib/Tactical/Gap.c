@@ -53,8 +53,8 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
 
   //	FILE *pFile;
   FileID pFile = FILE_ID_ERR;
-  char* pSourceFileName;
-  char* pDestFileName;
+  char *pSourceFileName;
+  char *pDestFileName;
   char sFileName[256];
   uint8_t counter = 0;
   AUDIO_GAP *pCurrentGap, *pPreviousGap;
@@ -211,7 +211,7 @@ void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList) {
 }
 
 uint32_t PlayJA2GapSample(char *zSoundFile, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
-                        uint32_t uiPan, AudioGapList *pData) {
+                          uint32_t uiPan, AudioGapList *pData) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));

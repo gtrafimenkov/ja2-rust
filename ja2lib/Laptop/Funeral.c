@@ -227,11 +227,11 @@ void RenderFuneral() {
     // Calculate the height of the string, as it needs to be vertically centered.
     usStringHeight = IanWrappedStringHeight(0, 0, FUNERAL_LINK_TEXT_WIDTH, 2, FUNERAL_SENTENCE_FONT,
                                             0, sFuneralString[i + FUNERAL_SEND_FLOWERS], 0, 0, 0);
-    DisplayWrappedString((uint16_t)(usPosX + FUNERAL_LINK_TEXT_OFFSET_X),
-                         (uint16_t)(FUNERAL_LINK_1_Y + (FUNERAL_LINK_1_HEIGHT - usStringHeight) / 2),
-                         FUNERAL_LINK_TEXT_WIDTH, 2, FUNERAL_SENTENCE_FONT, FUNERAL_TITLE_COLOR,
-                         sFuneralString[i + FUNERAL_SEND_FLOWERS], FONT_MCOLOR_BLACK, FALSE,
-                         CENTER_JUSTIFIED);
+    DisplayWrappedString(
+        (uint16_t)(usPosX + FUNERAL_LINK_TEXT_OFFSET_X),
+        (uint16_t)(FUNERAL_LINK_1_Y + (FUNERAL_LINK_1_HEIGHT - usStringHeight) / 2),
+        FUNERAL_LINK_TEXT_WIDTH, 2, FUNERAL_SENTENCE_FONT, FUNERAL_TITLE_COLOR,
+        sFuneralString[i + FUNERAL_SEND_FLOWERS], FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
     usPosX += FUNERAL_LINK_OFFSET_X;
   }

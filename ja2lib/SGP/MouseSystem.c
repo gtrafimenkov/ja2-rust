@@ -43,9 +43,9 @@ uint32_t guiRegionLastLButtonDownTime = 0;
 extern void ReleaseAnchorMode();  // private function used here (implemented in Button System.c)
 
 // number of lines in height help text will be
-int16_t GetNumberOfLinesInHeight(wchar_t* pStringA);
-int16_t GetWidthOfString(wchar_t* pStringA);
-void DisplayHelpTokenizedString(wchar_t* pStringA, int16_t sX, int16_t sY);
+int16_t GetNumberOfLinesInHeight(wchar_t *pStringA);
+int16_t GetWidthOfString(wchar_t *pStringA);
+void DisplayHelpTokenizedString(wchar_t *pStringA, int16_t sX, int16_t sY);
 
 int32_t MSYS_ScanForID = FALSE;
 int32_t MSYS_CurrentID = MSYS_ID_SYSTEM;
@@ -198,8 +198,8 @@ void MSYS_Shutdown(void) {
 //
 //	Hook to the SGP's mouse handler
 //
-void MSYS_SGP_Mouse_Handler_Hook(uint16_t Type, uint16_t Xcoord, uint16_t Ycoord, BOOLEAN LeftButton,
-                                 BOOLEAN RightButton) {
+void MSYS_SGP_Mouse_Handler_Hook(uint16_t Type, uint16_t Xcoord, uint16_t Ycoord,
+                                 BOOLEAN LeftButton, BOOLEAN RightButton) {
   // If the mouse system isn't initialized, get out o' here
   if (!MSYS_SystemInitialized) return;
 
@@ -711,8 +711,8 @@ void MSYS_UpdateMouseRegion(void) {
 //
 //	Inits a struct MOUSE_REGION structure for use with the mouse system
 //
-void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx, uint16_t bry,
-                       int8_t priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
+void MSYS_DefineRegion(struct MOUSE_REGION *region, uint16_t tlx, uint16_t tly, uint16_t brx,
+                       uint16_t bry, int8_t priority, uint16_t crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback) {
 #ifdef MOUSESYSTEM_DEBUGGING
   if (region->uiFlags & MSYS_REGION_EXISTS)
@@ -998,7 +998,7 @@ void RefreshMouseRegions() {
   MSYS_UpdateMouseRegion();
 }
 
-void SetRegionFastHelpText(struct MOUSE_REGION *region, wchar_t* szText) {
+void SetRegionFastHelpText(struct MOUSE_REGION *region, wchar_t *szText) {
   Assert(region);
 
   if (region->FastHelpText) MemFree(region->FastHelpText);
@@ -1014,7 +1014,7 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, wchar_t* szText) {
   if (!szText || !wcslen(szText)) return;  // blank (or clear)
 
   // Allocate memory for the button's FastHelp text string...
-  region->FastHelpText = (wchar_t*)MemAlloc((wcslen(szText) + 1) * sizeof(wchar_t));
+  region->FastHelpText = (wchar_t *)MemAlloc((wcslen(szText) + 1) * sizeof(wchar_t));
   Assert(region->FastHelpText);
 
   wcscpy(region->FastHelpText, szText);
@@ -1031,8 +1031,8 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, wchar_t* szText) {
   // region->FastHelpTimer = gsFastHelpDelay;
 }
 
-int16_t GetNumberOfLinesInHeight(wchar_t* pStringA) {
-  wchar_t* pToken;
+int16_t GetNumberOfLinesInHeight(wchar_t *pStringA) {
+  wchar_t *pToken;
   int16_t sCounter = 0;
   wchar_t pString[512];
 
@@ -1059,8 +1059,9 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
 
   if (region->uiFlags & MSYS_FASTHELP) {
     iW = (int32_t)GetWidthOfString(region->FastHelpText) + 10;
-    iH = (int32_t)(GetNumberOfLinesInHeight(region->FastHelpText) * (GetFontHeight(FONT10ARIAL) + 1) +
-                 8);
+    iH = (int32_t)(GetNumberOfLinesInHeight(region->FastHelpText) *
+                       (GetFontHeight(FONT10ARIAL) + 1) +
+                   8);
 
     iX = (int32_t)region->RegionTopLeftX + 10;
 
@@ -1100,9 +1101,9 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
   }
 }
 
-int16_t GetWidthOfString(wchar_t* pStringA) {
+int16_t GetWidthOfString(wchar_t *pStringA) {
   wchar_t pString[512];
-  wchar_t* pToken;
+  wchar_t *pToken;
   int16_t sWidth = 0;
   wcscpy(pString, pStringA);
 
@@ -1121,8 +1122,8 @@ int16_t GetWidthOfString(wchar_t* pStringA) {
   return (sWidth);
 }
 
-void DisplayHelpTokenizedString(wchar_t* pStringA, int16_t sX, int16_t sY) {
-  wchar_t* pToken;
+void DisplayHelpTokenizedString(wchar_t *pStringA, int16_t sX, int16_t sY) {
+  wchar_t *pToken;
   int32_t iCounter = 0, i;
   uint32_t uiCursorXPos;
   wchar_t pString[512];

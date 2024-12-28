@@ -536,24 +536,24 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
         MSYS_DefineRegion(
             &gRadarRegionSquadList[sCounter], RADAR_WINDOW_X,
             (int16_t)(SQUAD_WINDOW_TM_Y +
-                    (sCounter *
-                     ((SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / (NUMBER_OF_SQUADS / 2)))),
+                      (sCounter * ((SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) /
+                                   (NUMBER_OF_SQUADS / 2)))),
             RADAR_WINDOW_X + RADAR_WINDOW_WIDTH / 2 - 1,
             (int16_t)(SQUAD_WINDOW_TM_Y +
-                    ((sCounter + 1) *
-                     ((SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / (NUMBER_OF_SQUADS / 2)))),
+                      ((sCounter + 1) * ((SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) /
+                                         (NUMBER_OF_SQUADS / 2)))),
             MSYS_PRIORITY_HIGHEST, 0, TacticalSquadListMvtCallback, TacticalSquadListBtnCallBack);
       } else {
         // right half of list
         MSYS_DefineRegion(
             &gRadarRegionSquadList[sCounter], RADAR_WINDOW_X + RADAR_WINDOW_WIDTH / 2,
             (int16_t)(SQUAD_WINDOW_TM_Y +
-                    ((sCounter - (NUMBER_OF_SQUADS / 2)) *
-                     (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
+                      ((sCounter - (NUMBER_OF_SQUADS / 2)) *
+                       (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
             RADAR_WINDOW_X + RADAR_WINDOW_WIDTH - 1,
             (int16_t)(SQUAD_WINDOW_TM_Y +
-                    (((sCounter + 1) - (NUMBER_OF_SQUADS / 2)) *
-                     (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
+                      (((sCounter + 1) - (NUMBER_OF_SQUADS / 2)) *
+                       (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
             MSYS_PRIORITY_HIGHEST, 0, TacticalSquadListMvtCallback, TacticalSquadListBtnCallBack);
       }
 
@@ -618,8 +618,8 @@ void RenderSquadList(void) {
       FindFontCenterCoordinates(
           RADAR_WINDOW_X,
           (int16_t)(SQUAD_WINDOW_TM_Y +
-                  (sCounter *
-                   (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
+                    (sCounter *
+                     (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
           RADAR_WINDOW_WIDTH / 2 - 1,
           (int16_t)(((2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
           pSquadMenuStrings[sCounter], SQUAD_FONT, &sX, &sY);
@@ -627,8 +627,8 @@ void RenderSquadList(void) {
       FindFontCenterCoordinates(
           RADAR_WINDOW_X + RADAR_WINDOW_WIDTH / 2,
           (int16_t)(SQUAD_WINDOW_TM_Y +
-                  ((sCounter - (NUMBER_OF_SQUADS / 2)) *
-                   (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
+                    ((sCounter - (NUMBER_OF_SQUADS / 2)) *
+                     (2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
           RADAR_WINDOW_WIDTH / 2 - 1,
           (int16_t)(((2 * (SQUAD_REGION_HEIGHT - SUBTRACTOR_FOR_SQUAD_LIST) / NUMBER_OF_SQUADS))),
           pSquadMenuStrings[sCounter], SQUAD_FONT, &sX, &sY);

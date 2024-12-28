@@ -9,10 +9,10 @@
 #include "SGP/Types.h"
 
 typedef struct {
-  BOOLEAN fGameInit;      // Used for initializing save variables the first time.
-                          // This flag is initialize at
-  BOOLEAN fKill;          // flagged for deallocation.
-  BOOLEAN fActive;        // currently active
+  BOOLEAN fGameInit;        // Used for initializing save variables the first time.
+                            // This flag is initialize at
+  BOOLEAN fKill;            // flagged for deallocation.
+  BOOLEAN fActive;          // currently active
   uint16_t *pusItemIndex;   // a dynamic array of Item indices
   uint32_t uiBuffer;        // index of buffer
   uint32_t uiItemType;      // Weapons, ammo, armour, explosives, equipment

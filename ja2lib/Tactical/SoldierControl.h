@@ -709,7 +709,7 @@ struct SOLDIERTYPE {
   uint32_t uiStartMovementTime;    // the time since the merc first started moving
   uint32_t uiOptimumMovementTime;  // everytime in ececute overhead the time for the current ani
                                    // will be added to this total
-  uint32_t usLastUpdateTime;  // The last time the soldier was in ExecuteOverhead
+  uint32_t usLastUpdateTime;       // The last time the soldier was in ExecuteOverhead
 
   BOOLEAN fIsSoldierMoving;   // ie.  Record time is on
   BOOLEAN fIsSoldierDelayed;  // Is the soldier delayed Soldier

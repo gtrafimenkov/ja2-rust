@@ -25,7 +25,8 @@ void InitKnowFacilitiesFlags();
 
 UNDERGROUND_SECTORINFO *gpUndergroundSectorInfoTail = NULL;
 
-UNDERGROUND_SECTORINFO *NewUndergroundNode(uint8_t ubSectorX, uint8_t ubSectorY, uint8_t ubSectorZ) {
+UNDERGROUND_SECTORINFO *NewUndergroundNode(uint8_t ubSectorX, uint8_t ubSectorY,
+                                           uint8_t ubSectorZ) {
   UNDERGROUND_SECTORINFO *curr;
   curr = (UNDERGROUND_SECTORINFO *)MemAlloc(sizeof(UNDERGROUND_SECTORINFO));
   AssertMsg(curr, "Failed to create an underground sector info node.");

@@ -509,8 +509,8 @@ int8_t gbWallTileLUT[NUM_WALL_TYPES][7] = {
 // These construction functions do all the smoothing.
 // NOTE:  passing null for wall/roof type will force the function to search for the nearest
 //  existing respective type.
-void BuildSlantRoof(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint16_t usWallType,
-                    uint16_t usRoofType, BOOLEAN fVertical);
+void BuildSlantRoof(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                    uint16_t usWallType, uint16_t usRoofType, BOOLEAN fVertical);
 
 void BulldozeNature(uint32_t iMapIndex);
 void EraseRoof(uint32_t iMapIndex);
@@ -523,8 +523,8 @@ void ConsiderEffectsOfNewWallPiece(uint32_t iMapIndex, uint8_t usWallOrientation
 // BEGIN IMPLEMENTATION OF PRIVATE FUNCTIONS
 //----------------------------------------------------------------------------------------------------
 
-void BuildSlantRoof(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint16_t usWallType,
-                    uint16_t usRoofType, BOOLEAN fVertical) {
+void BuildSlantRoof(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
+                    uint16_t usWallType, uint16_t usRoofType, BOOLEAN fVertical) {
   int32_t i;
   uint16_t usTileIndex;
   int32_t iMapIndex;

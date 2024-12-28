@@ -450,9 +450,9 @@ void ShadeUnSelectableButtons(void) {
   // should be shaded ( unselectable )
 
   for (iCounter = iCurrentProfileMode; iCounter < 5; iCounter++) {
-    ShadowVideoSurfaceRect(vsFB, 13 + (iCounter)*120 + 114, 245, 13 + (iCounter + 1) * 120 + 90,
+    ShadowVideoSurfaceRect(vsFB, 13 + (iCounter) * 120 + 114, 245, 13 + (iCounter + 1) * 120 + 90,
                            245 + 92);
-    InvalidateRegion(13 + (iCounter)*120 + 114, 245, 13 + (iCounter)*120 + 114, 245 + 92);
+    InvalidateRegion(13 + (iCounter) * 120 + 114, 245, 13 + (iCounter) * 120 + 114, 245 + 92);
   }
 
   fMarkButtonsDirtyFlag = FALSE;

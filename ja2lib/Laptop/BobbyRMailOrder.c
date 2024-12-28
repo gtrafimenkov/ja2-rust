@@ -220,8 +220,8 @@ enum {
 #define BOBBYR_PACKAXGE_WEIGHT_WIDTH 188
 
 uint16_t gShippingSpeedAreas[] = {585, 218 + LAPTOP_SCREEN_WEB_DELTA_Y,
-                                585, 238 + LAPTOP_SCREEN_WEB_DELTA_Y,
-                                585, 258 + LAPTOP_SCREEN_WEB_DELTA_Y};
+                                  585, 238 + LAPTOP_SCREEN_WEB_DELTA_Y,
+                                  585, 258 + LAPTOP_SCREEN_WEB_DELTA_Y};
 
 // Identifier for the images
 uint32_t guiBobbyRayTitle;
@@ -719,9 +719,9 @@ void RenderBobbyRMailOrder() {
   usHeight = GetFontHeight(BOBBYR_DISCLAIMER_FONT) + 2;
   swprintf(sTemp, ARR_SIZE(sTemp), L"%s %2.1f %s.", BobbyROrderFormText[BOBBYR_MINIMUM_WEIGHT],
            GetWeightBasedOnMetricOption(MIN_SHIPPING_WEIGHT) / 10.0, GetWeightUnitString());
-  DrawTextToScreen(sTemp, BOBBYR_USED_WARNING_X, (uint16_t)(BOBBYR_USED_WARNING_Y + usHeight + 1), 0,
-                   BOBBYR_DISCLAIMER_FONT, BOBBYR_ORDER_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED | TEXT_SHADOWED);
+  DrawTextToScreen(sTemp, BOBBYR_USED_WARNING_X, (uint16_t)(BOBBYR_USED_WARNING_Y + usHeight + 1),
+                   0, BOBBYR_DISCLAIMER_FONT, BOBBYR_ORDER_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK,
+                   FALSE, LEFT_JUSTIFIED | TEXT_SHADOWED);
 
   // Calculate and display the total package weight
   DisplayPackageWeight();
@@ -821,7 +821,8 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint1
   int32_t iSubTotal;
 
   // Output the qty
-  DrawTextToScreen(BobbyROrderFormText[BOBBYR_QTY], (uint16_t)(usGridX + BOBBYR_GRID_FIRST_COLUMN_X),
+  DrawTextToScreen(BobbyROrderFormText[BOBBYR_QTY],
+                   (uint16_t)(usGridX + BOBBYR_GRID_FIRST_COLUMN_X),
                    (uint16_t)(usGridY + BOBBYR_GRID_FIRST_COLUMN_Y - BOBBYR_GRID_TITLE_OFFSET),
                    BOBBYR_GRID_FIRST_COLUMN_WIDTH, BOBBYR_ORDER_STATIC_TEXT_FONT,
                    BOBBYR_ORDER_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
@@ -837,7 +838,8 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, uint16_t usGridX, uint1
                        CENTER_JUSTIFIED);
 
   // Output the name
-  DrawTextToScreen(BobbyROrderFormText[BOBBYR_NAME], (uint16_t)(usGridX + BOBBYR_GRID_THIRD_COLUMN_X),
+  DrawTextToScreen(BobbyROrderFormText[BOBBYR_NAME],
+                   (uint16_t)(usGridX + BOBBYR_GRID_THIRD_COLUMN_X),
                    (uint16_t)(usGridY + BOBBYR_GRID_THIRD_COLUMN_Y - BOBBYR_GRID_TITLE_OFFSET),
                    BOBBYR_GRID_THIRD_COLUMN_WIDTH, BOBBYR_ORDER_STATIC_TEXT_FONT,
                    BOBBYR_ORDER_STATIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
@@ -1026,7 +1028,7 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, int32_t iSubTotal, uint1
 
     iShippingCost =
         (int32_t)((gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (float)10) * usStandardCost +
-                .5);
+                  .5);
   }
 
   // erase the old area
@@ -1054,9 +1056,9 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, int32_t iSubTotal, uint1
     InsertDollarSignInToString(sTemp);
 
     DrawTextToScreen(sTemp, (uint16_t)(usGridX + BOBBYR_GRID_FIFTH_COLUMN_X - 2),
-                     (uint16_t)(usGridY + BOBBYR_SHIPPING_N_HANDLE_Y), BOBBYR_GRID_FIFTH_COLUMN_WIDTH,
-                     BOBBYR_ORDER_DYNAMIC_TEXT_FONT, BOBBYR_ORDER_DYNAMIC_TEXT_COLOR,
-                     FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
+                     (uint16_t)(usGridY + BOBBYR_SHIPPING_N_HANDLE_Y),
+                     BOBBYR_GRID_FIFTH_COLUMN_WIDTH, BOBBYR_ORDER_DYNAMIC_TEXT_FONT,
+                     BOBBYR_ORDER_DYNAMIC_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 
     // Display the grand total
     giGrandTotal = iSubTotal + iShippingCost;
@@ -1243,9 +1245,9 @@ BOOLEAN CreateDestroyBobbyRDropDown(uint8_t ubDropDownAction) {
       usHeight = BOBBYR_SCROLL_AREA_HEIGHT_MINUS_ARROWS / BOBBYR_ORDER_NUM_SHIPPING_CITIES;
       for (i = 0; i < BOBBYR_ORDER_NUM_SHIPPING_CITIES - 1; i++) {
         MSYS_DefineRegion(&gSelectedScrollAreaDropDownRegion[i], usPosX, usPosY,
-                          (uint16_t)(usPosX + BOBBYR_SCROLL_ARROW_WIDTH), (uint16_t)(usPosY + usHeight),
-                          MSYS_PRIORITY_HIGH + 1, CURSOR_LAPTOP_SCREEN,
-                          SelectScrollAreaDropDownMovementCallBack,
+                          (uint16_t)(usPosX + BOBBYR_SCROLL_ARROW_WIDTH),
+                          (uint16_t)(usPosY + usHeight), MSYS_PRIORITY_HIGH + 1,
+                          CURSOR_LAPTOP_SCREEN, SelectScrollAreaDropDownMovementCallBack,
                           SelectScrollAreaDropDownRegionCallBack);
         MSYS_AddRegion(&gSelectedScrollAreaDropDownRegion[i]);
         MSYS_SetRegionUserData(&gSelectedScrollAreaDropDownRegion[i], 0, i);
@@ -1557,7 +1559,7 @@ void DisplayShippingLocationCity() {
   if (gbSelectedCity != -1) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%d",
              (int32_t)(BobbyROrderLocations[gbSelectedCity].usOverNightExpress /
-                     GetWeightBasedOnMetricOption(1)));
+                       GetWeightBasedOnMetricOption(1)));
     InsertCommasForDollarFigure(sTemp);
     InsertDollarSignInToString(sTemp);
   }
@@ -1570,7 +1572,7 @@ void DisplayShippingLocationCity() {
   if (gbSelectedCity != -1) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%d",
              (int32_t)(BobbyROrderLocations[gbSelectedCity].us2DaysService /
-                     GetWeightBasedOnMetricOption(1)));
+                       GetWeightBasedOnMetricOption(1)));
     InsertCommasForDollarFigure(sTemp);
     InsertDollarSignInToString(sTemp);
   }
@@ -1583,7 +1585,7 @@ void DisplayShippingLocationCity() {
   if (gbSelectedCity != -1) {
     swprintf(sTemp, ARR_SIZE(sTemp), L"%d",
              (int32_t)(BobbyROrderLocations[gbSelectedCity].usStandardService /
-                     GetWeightBasedOnMetricOption(1)));
+                       GetWeightBasedOnMetricOption(1)));
     InsertCommasForDollarFigure(sTemp);
     InsertDollarSignInToString(sTemp);
   }
@@ -1769,8 +1771,8 @@ void DrawGoldRectangle(int8_t bCityNum) {
   usHeight = usTempHeight / (BOBBYR_ORDER_NUM_SHIPPING_CITIES + 1);
 
   usPosY = usTempPosY + (uint16_t)(((BOBBYR_SCROLL_AREA_HEIGHT - 2 * BOBBYR_SCROLL_ARROW_HEIGHT) /
-                                  (float)(BOBBYR_ORDER_NUM_SHIPPING_CITIES + 1)) *
-                                 bCityNum);
+                                    (float)(BOBBYR_ORDER_NUM_SHIPPING_CITIES + 1)) *
+                                   bCityNum);
 
   temp =
       BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT - BOBBYR_SCROLL_ARROW_HEIGHT - usHeight - 1;

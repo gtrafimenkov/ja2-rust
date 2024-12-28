@@ -11,29 +11,31 @@ struct SOLDIERTYPE;
 
 // Finds a gridno given a sweet spot
 // Returns a good direction too!
-uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo, int8_t ubRadius,
-                               uint8_t *pubDirection);
+uint16_t FindGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
+                                 int8_t ubRadius, uint8_t *pubDirection);
 
 // Ensures a good path.....
 uint16_t FindGridNoFromSweetSpotThroughPeople(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
-                                            int8_t ubRadius, uint8_t *pubDirection);
+                                              int8_t ubRadius, uint8_t *pubDirection);
 
 // Returns a good sweetspot but not the swetspot!
-uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
-                                                 int8_t ubRadius, uint8_t *pubDirection);
+uint16_t FindGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
+                                                   int16_t sSweetGridNo, int8_t ubRadius,
+                                                   uint8_t *pubDirection);
 
 uint16_t FindGridNoFromSweetSpotExcludingSweetSpotInQuardent(struct SOLDIERTYPE *pSoldier,
-                                                           int16_t sSweetGridNo, int8_t ubRadius,
-                                                           uint8_t *pubDirection, int8_t ubQuardentDir);
+                                                             int16_t sSweetGridNo, int8_t ubRadius,
+                                                             uint8_t *pubDirection,
+                                                             int8_t ubQuardentDir);
 
 // Finds a gridno near a sweetspot but a random one!
 uint16_t FindRandomGridNoFromSweetSpot(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
-                                     int8_t ubRadius, uint8_t *pubDirection);
+                                       int8_t ubRadius, uint8_t *pubDirection);
 
 // Finds a sweetspot but excluding this one!
 uint16_t FindRandomGridNoFromSweetSpotExcludingSweetSpot(struct SOLDIERTYPE *pSoldier,
-                                                       int16_t sSweetGridNo, int8_t ubRadius,
-                                                       uint8_t *pubDirection);
+                                                         int16_t sSweetGridNo, int8_t ubRadius,
+                                                         uint8_t *pubDirection);
 
 // Adds a soldier ( already created in mercptrs[] array )!
 // Finds a good placement based on data in the loaded sector and if they are enemy's or not, etc...
@@ -57,17 +59,18 @@ BOOLEAN IsMercOnTeamAndInOmertaAlreadyAndAlive(uint8_t ubMercID);
 int16_t GetSoldierIDFromMercID(uint8_t ubMercID);
 
 uint16_t FindGridNoFromSweetSpotWithStructData(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState,
-                                             int16_t sSweetGridNo, int8_t ubRadius, uint8_t *pubDirection,
-                                             BOOLEAN fClosestToMerc);
+                                               int16_t sSweetGridNo, int8_t ubRadius,
+                                               uint8_t *pubDirection, BOOLEAN fClosestToMerc);
 
 /*
 void SoldierInSectorSleep( struct SOLDIERTYPE *pSoldier, int16_t sGridNo );
 */
 
 uint16_t FindGridNoFromSweetSpotWithStructDataFromSoldier(struct SOLDIERTYPE *pSoldier,
-                                                        uint16_t usAnimState, int8_t ubRadius,
-                                                        uint8_t *pubDirection, BOOLEAN fClosestToMerc,
-                                                        struct SOLDIERTYPE *pSrcSoldier);
+                                                          uint16_t usAnimState, int8_t ubRadius,
+                                                          uint8_t *pubDirection,
+                                                          BOOLEAN fClosestToMerc,
+                                                          struct SOLDIERTYPE *pSrcSoldier);
 
 void SoldierInSectorPatient(struct SOLDIERTYPE *pSoldier, int16_t sGridNo);
 void SoldierInSectorDoctor(struct SOLDIERTYPE *pSoldier, int16_t sGridNo);

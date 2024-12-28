@@ -332,4 +332,6 @@ uint16_t CreateFontPaletteTables(struct VObject* pObj) {
 
 uint16_t WFGetFontHeight(int32_t FontNum) { return (GetFontHeight(FontNum)); }
 
-int16_t WFStringPixLength(wchar_t* string, int32_t UseFont) { return (StringPixLength(string, UseFont)); }
+int16_t WFStringPixLength(wchar_t* string, int32_t UseFont) {
+  return (StringPixLength(string, UseFont));
+}

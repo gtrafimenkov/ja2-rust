@@ -27,4 +27,5 @@ void DropSmell(struct SOLDIERTYPE* pSoldier);
 void DropBlood(struct SOLDIERTYPE* pSoldier, uint8_t ubStrength, int8_t bVisible);
 void UpdateBloodGraphics(int16_t sGridNo, int8_t bLevel);
 void RemoveBlood(int16_t sGridNo, int8_t bLevel);
-void InternalDropBlood(int16_t sGridNo, int8_t bLevel, uint8_t ubType, uint8_t ubStrength, int8_t bVisible);
+void InternalDropBlood(int16_t sGridNo, int8_t bLevel, uint8_t ubType, uint8_t ubStrength,
+                       int8_t bVisible);

@@ -146,7 +146,8 @@ void GuaranteeMinimumAlcohol(uint8_t ubArmsDealer);
 
 BOOLEAN ItemIsARocketRifle(int16_t sItemIndex);
 
-BOOLEAN GetArmsDealerShopHours(uint8_t ubArmsDealer, uint32_t *puiOpeningTime, uint32_t *puiClosingTime);
+BOOLEAN GetArmsDealerShopHours(uint8_t ubArmsDealer, uint32_t *puiOpeningTime,
+                               uint32_t *puiClosingTime);
 
 void InitAllArmsDealers() {
   uint8_t ubArmsDealer;
@@ -432,7 +433,8 @@ void DailyCheckOnItemQuantities() {
                 }
 
                 // Determine when the inventory should arrive
-                uiArrivalDay = GetGameTimeInDays() + ubReorderDays;  // consider changing this to minutes
+                uiArrivalDay =
+                    GetGameTimeInDays() + ubReorderDays;  // consider changing this to minutes
 
                 // post new order
                 gArmsDealersInventory[ubArmsDealer][usItemIndex].ubQtyOnOrder = ubNumItems;
@@ -981,7 +983,8 @@ BOOLEAN RepairmanIsFixingItemsButNoneAreDoneYet(uint8_t ubProfileID) {
   return (fHaveOnlyUnRepairedItems);
 }
 
-uint32_t GetTimeToFixItemBeingRepaired(uint8_t ubArmsDealer, uint16_t usItemIndex, uint8_t ubElement) {
+uint32_t GetTimeToFixItemBeingRepaired(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                       uint8_t ubElement) {
   // dealer must be a repair dealer
   Assert(DoesDealerDoRepairs(ubArmsDealer));
   // element index must be valid
@@ -1003,7 +1006,8 @@ uint32_t GetTimeToFixItemBeingRepaired(uint8_t ubArmsDealer, uint16_t usItemInde
           GetGameTimeInMin());
 }
 
-BOOLEAN CanDealerTransactItem(uint8_t ubArmsDealer, uint16_t usItemIndex, BOOLEAN fPurchaseFromPlayer) {
+BOOLEAN CanDealerTransactItem(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                              BOOLEAN fPurchaseFromPlayer) {
   switch (ArmsDealerInfo[ubArmsDealer].ubTypeOfArmsDealer) {
     case ARMS_DEALER_SELLS_ONLY:
       if (fPurchaseFromPlayer) {
@@ -1505,7 +1509,7 @@ void AddItemToArmsDealerInventory(uint8_t ubArmsDealer, uint16_t usItemIndex,
           fSuccess = ResizeSpecialItemArray(
               &gArmsDealersInventory[ubArmsDealer][usItemIndex],
               (uint8_t)(gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced +
-                      ubElementsToAdd));
+                        ubElementsToAdd));
         }
 
         if (!fSuccess) {
@@ -1956,7 +1960,7 @@ uint32_t WhenWillRepairmanBeAllDoneRepairing(uint8_t ubArmsDealer) {
 }
 
 uint32_t CalculateSpecialItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex,
-                                      SPECIAL_ITEM_INFO *pSpclItemInfo) {
+                                        SPECIAL_ITEM_INFO *pSpclItemInfo) {
   uint32_t uiRepairTime;
   uint8_t ubCnt;
 
@@ -2001,7 +2005,8 @@ uint32_t CalculateObjectItemRepairTime(uint8_t ubArmsDealer, struct OBJECTTYPE *
   return (uiRepairTime);
 }
 
-uint32_t CalculateSimpleItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex, int8_t bItemCondition) {
+uint32_t CalculateSimpleItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                       int8_t bItemCondition) {
   uint32_t uiTimeToRepair = 0;
   uint32_t uiRepairCost = 0;
 
@@ -2035,7 +2040,7 @@ uint32_t CalculateSimpleItemRepairTime(uint8_t ubArmsDealer, uint16_t usItemInde
 }
 
 uint32_t CalculateSpecialItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
-                                      SPECIAL_ITEM_INFO *pSpclItemInfo) {
+                                        SPECIAL_ITEM_INFO *pSpclItemInfo) {
   uint32_t uiRepairCost;
   uint8_t ubCnt;
 
@@ -2080,7 +2085,8 @@ uint32_t CalculateObjectItemRepairCost(uint8_t ubArmsDealer, struct OBJECTTYPE *
   return (uiRepairCost);
 }
 
-uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex, int8_t bItemCondition) {
+uint32_t CalculateSimpleItemRepairCost(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                       int8_t bItemCondition) {
   uint32_t uiItemCost = 0;
   uint32_t uiRepairCost = 0;
   int16_t sRepairCostAdj = 0;
@@ -2222,7 +2228,8 @@ BOOLEAN DoesItemAppearInDealerInventoryList(uint8_t ubArmsDealer, uint16_t usIte
   return (FALSE);
 }
 
-uint16_t CalcValueOfItemToDealer(uint8_t ubArmsDealer, uint16_t usItemIndex, BOOLEAN fDealerSelling) {
+uint16_t CalcValueOfItemToDealer(uint8_t ubArmsDealer, uint16_t usItemIndex,
+                                 BOOLEAN fDealerSelling) {
   uint16_t usBasePrice;
   uint8_t ubItemPriceClass;
   uint8_t ubDealerPriceClass;
@@ -2394,7 +2401,8 @@ BOOLEAN ItemIsARocketRifle(int16_t sItemIndex) {
   }
 }
 
-BOOLEAN GetArmsDealerShopHours(uint8_t ubArmsDealer, uint32_t *puiOpeningTime, uint32_t *puiClosingTime) {
+BOOLEAN GetArmsDealerShopHours(uint8_t ubArmsDealer, uint32_t *puiOpeningTime,
+                               uint32_t *puiClosingTime) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ArmsDealerInfo[ubArmsDealer].ubShopKeeperID, FALSE);
@@ -2412,7 +2420,7 @@ BOOLEAN GetArmsDealerShopHours(uint8_t ubArmsDealer, uint32_t *puiOpeningTime, u
 }
 
 uint32_t CalculateOvernightRepairDelay(uint8_t ubArmsDealer, uint32_t uiTimeWhenFreeToStartIt,
-                                     uint32_t uiMinutesToFix) {
+                                       uint32_t uiMinutesToFix) {
   uint32_t uiOpeningTime, uiClosingTime;
   uint32_t uiMinutesClosedOvernight;
   uint32_t uiDelayInDays = 0;
@@ -2448,7 +2456,8 @@ uint32_t CalculateOvernightRepairDelay(uint8_t ubArmsDealer, uint32_t uiTimeWhen
   return (uiDelayInDays * uiMinutesClosedOvernight);
 }
 
-uint32_t CalculateMinutesClosedBetween(uint8_t ubArmsDealer, uint32_t uiStartTime, uint32_t uiEndTime) {
+uint32_t CalculateMinutesClosedBetween(uint8_t ubArmsDealer, uint32_t uiStartTime,
+                                       uint32_t uiEndTime) {
   uint32_t uiOpeningTime, uiClosingTime;
   uint32_t uiMinutesClosedOvernight;
   uint32_t uiDaysDifference = 0;

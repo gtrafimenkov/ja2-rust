@@ -86,8 +86,7 @@ BOOLEAN CreatePopUpBox(int32_t *phBoxHandle, struct GRect Dimensions, SGPPoint P
 
   // find first free box
   for (iCounter = 0; (iCounter < MAX_POPUP_BOX_COUNT) && (PopUpBoxList[iCounter] != NULL);
-       iCounter++)
-    ;
+       iCounter++);
 
   if (iCounter >= MAX_POPUP_BOX_COUNT) {
     // ran out of available popup boxes - probably not freeing them up right!
@@ -135,7 +134,8 @@ void SetBoxFlags(int32_t hBoxHandle, uint32_t uiFlags) {
   return;
 }
 
-void SetMargins(int32_t hBoxHandle, uint32_t uiLeft, uint32_t uiTop, uint32_t uiBottom, uint32_t uiRight) {
+void SetMargins(int32_t hBoxHandle, uint32_t uiLeft, uint32_t uiTop, uint32_t uiBottom,
+                uint32_t uiRight) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
@@ -313,8 +313,8 @@ void SetBackGroundSurface(int32_t hBoxHandle, struct Image *image) {
 }
 
 // adds a FIRST column string to the CURRENT popup box
-void AddMonoString(uint32_t *hStringHandle, wchar_t* pString) {
-  wchar_t* pLocalString = NULL;
+void AddMonoString(uint32_t *hStringHandle, wchar_t *pString) {
+  wchar_t *pLocalString = NULL;
   POPUPSTRINGPTR pStringSt = NULL;
   uint32_t iCounter = 0;
 
@@ -325,8 +325,7 @@ void AddMonoString(uint32_t *hStringHandle, wchar_t* pString) {
   // find first free slot in list
   for (iCounter = 0; (iCounter < MAX_POPUP_BOX_STRING_COUNT) &&
                      (PopUpBoxList[guiCurrentBox]->Text[iCounter] != NULL);
-       iCounter++)
-    ;
+       iCounter++);
 
   if (iCounter >= MAX_POPUP_BOX_STRING_COUNT) {
     // using too many text lines, or not freeing them up properly
@@ -337,7 +336,7 @@ void AddMonoString(uint32_t *hStringHandle, wchar_t* pString) {
   pStringSt = (POPUPSTRING *)(MemAlloc(sizeof(POPUPSTRING)));
   if (pStringSt == NULL) return;
 
-  pLocalString = (wchar_t*)(MemAlloc(wcslen(pString) * 2 + 2));
+  pLocalString = (wchar_t *)(MemAlloc(wcslen(pString) * 2 + 2));
   if (pLocalString == NULL) return;
 
   wcscpy(pLocalString, pString);
@@ -359,8 +358,8 @@ void AddMonoString(uint32_t *hStringHandle, wchar_t* pString) {
 }
 
 // adds a SECOND column string to the CURRENT popup box
-void AddSecondColumnMonoString(uint32_t *hStringHandle, wchar_t* pString) {
-  wchar_t* pLocalString = NULL;
+void AddSecondColumnMonoString(uint32_t *hStringHandle, wchar_t *pString) {
+  wchar_t *pLocalString = NULL;
   POPUPSTRINGPTR pStringSt = NULL;
   uint32_t iCounter = 0;
 
@@ -371,8 +370,7 @@ void AddSecondColumnMonoString(uint32_t *hStringHandle, wchar_t* pString) {
   // find the LAST USED text string index
   for (iCounter = 0; (iCounter + 1 < MAX_POPUP_BOX_STRING_COUNT) &&
                      (PopUpBoxList[guiCurrentBox]->Text[iCounter + 1] != NULL);
-       iCounter++)
-    ;
+       iCounter++);
 
   if (iCounter >= MAX_POPUP_BOX_STRING_COUNT) {
     // using too many text lines, or not freeing them up properly
@@ -383,7 +381,7 @@ void AddSecondColumnMonoString(uint32_t *hStringHandle, wchar_t* pString) {
   pStringSt = (POPUPSTRING *)(MemAlloc(sizeof(POPUPSTRING)));
   if (pStringSt == NULL) return;
 
-  pLocalString = (wchar_t*)(MemAlloc(wcslen(pString) * 2 + 2));
+  pLocalString = (wchar_t *)(MemAlloc(wcslen(pString) * 2 + 2));
   if (pLocalString == NULL) return;
 
   wcscpy(pLocalString, pString);
@@ -402,8 +400,8 @@ void AddSecondColumnMonoString(uint32_t *hStringHandle, wchar_t* pString) {
 }
 
 // Adds a COLORED first column string to the CURRENT box
-void AddColorString(int32_t *hStringHandle, wchar_t* pString) {
-  wchar_t* pLocalString;
+void AddColorString(int32_t *hStringHandle, wchar_t *pString) {
+  wchar_t *pLocalString;
   POPUPSTRINGPTR pStringSt = NULL;
   int32_t iCounter = 0;
 
@@ -414,8 +412,7 @@ void AddColorString(int32_t *hStringHandle, wchar_t* pString) {
   // find first free slot in list
   for (iCounter = 0; (iCounter < MAX_POPUP_BOX_STRING_COUNT) &&
                      (PopUpBoxList[guiCurrentBox]->Text[iCounter] != NULL);
-       iCounter++)
-    ;
+       iCounter++);
 
   if (iCounter >= MAX_POPUP_BOX_STRING_COUNT) {
     // using too many text lines, or not freeing them up properly
@@ -426,7 +423,7 @@ void AddColorString(int32_t *hStringHandle, wchar_t* pString) {
   pStringSt = (POPUPSTRING *)(MemAlloc(sizeof(POPUPSTRING)));
   if (pStringSt == NULL) return;
 
-  pLocalString = (wchar_t*)(MemAlloc(wcslen(pString) * 2 + 2));
+  pLocalString = (wchar_t *)(MemAlloc(wcslen(pString) * 2 + 2));
   if (pLocalString == NULL) return;
 
   wcscpy(pLocalString, pString);
@@ -1057,9 +1054,9 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   usTopX = (uint16_t)PopUpBoxList[uiCounter]->Position.iX;
   usTopY = (uint16_t)PopUpBoxList[uiCounter]->Position.iY;
   usWidth = ((uint16_t)(PopUpBoxList[uiCounter]->Dimensions.iRight -
-                      PopUpBoxList[uiCounter]->Dimensions.iLeft));
+                        PopUpBoxList[uiCounter]->Dimensions.iLeft));
   usHeight = ((uint16_t)(PopUpBoxList[uiCounter]->Dimensions.iBottom -
-                       PopUpBoxList[uiCounter]->Dimensions.iTop));
+                         PopUpBoxList[uiCounter]->Dimensions.iTop));
 
   // check if we have a min width, if so then update box for such
   if ((PopUpBoxList[uiCounter]->uiBoxMinWidth) &&
@@ -1187,23 +1184,24 @@ BOOLEAN DrawBoxText(uint32_t uiCounter) {
       // cnetering?
       if (PopUpBoxList[uiCounter]->uiFlags & POPUP_BOX_FLAG_CENTER_TEXT) {
         FindFontCenterCoordinates(
-            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                       PopUpBoxList[uiCounter]->uiLeftMargin)),
             ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
-                     uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
-                     PopUpBoxList[uiCounter]->uiTopMargin +
-                     uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
+                       uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
+                       PopUpBoxList[uiCounter]->uiTopMargin +
+                       uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
             ((int16_t)(PopUpBoxList[uiCounter]->Dimensions.iRight -
-                     (PopUpBoxList[uiCounter]->uiRightMargin +
-                      PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
+                       (PopUpBoxList[uiCounter]->uiRightMargin +
+                        PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
             ((int16_t)GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont)), (sString),
             ((int32_t)PopUpBoxList[uiCounter]->Text[uiCount]->uiFont), &uX, &uY);
       } else {
-        uX =
-            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin));
+        uX = ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                        PopUpBoxList[uiCounter]->uiLeftMargin));
         uY = ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
-                      uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
-                      PopUpBoxList[uiCounter]->uiTopMargin +
-                      uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
+                        uiCount * GetFontHeight(PopUpBoxList[uiCounter]->Text[uiCount]->uiFont) +
+                        PopUpBoxList[uiCounter]->uiTopMargin +
+                        uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
       }
 
       // print
@@ -1239,26 +1237,30 @@ BOOLEAN DrawBoxText(uint32_t uiCounter) {
       // cnetering?
       if (PopUpBoxList[uiCounter]->uiFlags & POPUP_BOX_FLAG_CENTER_TEXT) {
         FindFontCenterCoordinates(
-            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin)),
+            ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                       PopUpBoxList[uiCounter]->uiLeftMargin)),
             ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
-                     uiCount * GetFontHeight(
-                                   PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
-                     PopUpBoxList[uiCounter]->uiTopMargin +
-                     uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
+                       uiCount *
+                           GetFontHeight(
+                               PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
+                       PopUpBoxList[uiCounter]->uiTopMargin +
+                       uiCount * PopUpBoxList[uiCounter]->uiLineSpace)),
             ((int16_t)(PopUpBoxList[uiCounter]->Dimensions.iRight -
-                     (PopUpBoxList[uiCounter]->uiRightMargin +
-                      PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
+                       (PopUpBoxList[uiCounter]->uiRightMargin +
+                        PopUpBoxList[uiCounter]->uiLeftMargin + 2))),
             ((int16_t)GetFontHeight(PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont)),
-            (sString), ((int32_t)PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont), &uX,
-            &uY);
+            (sString), ((int32_t)PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont),
+            &uX, &uY);
       } else {
-        uX = ((int16_t)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin +
-                      PopUpBoxList[uiCounter]->uiSecondColumnCurrentOffset));
+        uX = ((int16_t)(PopUpBoxList[uiCounter]->Position.iX +
+                        PopUpBoxList[uiCounter]->uiLeftMargin +
+                        PopUpBoxList[uiCounter]->uiSecondColumnCurrentOffset));
         uY = ((int16_t)(PopUpBoxList[uiCounter]->Position.iY +
-                      uiCount * GetFontHeight(
-                                    PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
-                      PopUpBoxList[uiCounter]->uiTopMargin +
-                      uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
+                        uiCount *
+                            GetFontHeight(
+                                PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
+                        PopUpBoxList[uiCounter]->uiTopMargin +
+                        uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
       }
 
       // print

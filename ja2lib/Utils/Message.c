@@ -106,23 +106,23 @@ void AlignString(ScrollStringStPtr pPermStringSt);
 
 int32_t GetMessageQueueSize(void);
 
-ScrollStringStPtr AddString(wchar_t* string, uint16_t usColor, uint32_t uiFont, BOOLEAN fStartOfNewString,
-                            uint8_t ubPriority);
-void SetString(ScrollStringStPtr pStringSt, wchar_t* String);
+ScrollStringStPtr AddString(wchar_t *string, uint16_t usColor, uint32_t uiFont,
+                            BOOLEAN fStartOfNewString, uint8_t ubPriority);
+void SetString(ScrollStringStPtr pStringSt, wchar_t *String);
 
 void SetStringPosition(ScrollStringStPtr pStringSt, uint16_t x, uint16_t y);
 void SetStringColor(ScrollStringStPtr pStringSt, uint16_t color);
 ScrollStringStPtr SetStringNext(ScrollStringStPtr pStringSt, ScrollStringStPtr pNext);
 ScrollStringStPtr SetStringPrev(ScrollStringStPtr pStringSt, ScrollStringStPtr pPrev);
-void AddStringToMapScreenMessageList(wchar_t* pString, uint16_t usColor, uint32_t uiFont,
+void AddStringToMapScreenMessageList(wchar_t *pString, uint16_t usColor, uint32_t uiFont,
                                      BOOLEAN fStartOfNewString, uint8_t ubPriority);
 
 // clear up a linked list of wrapped strings
 void ClearWrappedStrings(WRAPPED_STRING *pStringWrapperHead);
-void WriteMessageToFile(wchar_t* pString);
+void WriteMessageToFile(wchar_t *pString);
 
 // tactical screen message
-void TacticalScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, ...);
+void TacticalScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t *pStringA, ...);
 
 // play bee when new message is added
 void PlayNewMessageSound(void);
@@ -135,8 +135,8 @@ void SetStringFont(ScrollStringStPtr pStringSt, uint32_t uiFont) { pStringSt->ui
 
 uint32_t GetStringFont(ScrollStringStPtr pStringSt) { return pStringSt->uiFont; }
 
-ScrollStringStPtr AddString(wchar_t* pString, uint16_t usColor, uint32_t uiFont, BOOLEAN fStartOfNewString,
-                            uint8_t ubPriority) {
+ScrollStringStPtr AddString(wchar_t *pString, uint16_t usColor, uint32_t uiFont,
+                            BOOLEAN fStartOfNewString, uint8_t ubPriority) {
   // add a new string to the list of strings
   ScrollStringStPtr pStringSt = NULL;
   pStringSt = (ScrollStringSt *)MemAlloc(sizeof(ScrollStringSt));
@@ -157,9 +157,9 @@ ScrollStringStPtr AddString(wchar_t* pString, uint16_t usColor, uint32_t uiFont,
   return (pStringSt);
 }
 
-void SetString(ScrollStringStPtr pStringSt, wchar_t* pString) {
+void SetString(ScrollStringStPtr pStringSt, wchar_t *pString) {
   // ARM: Why x2 + 4 ???
-  pStringSt->pString16 = (wchar_t*)MemAlloc((wcslen(pString) * 2) + 4);
+  pStringSt->pString16 = (wchar_t *)MemAlloc((wcslen(pString) * 2) + 4);
   wcsncpy(pStringSt->pString16, pString, wcslen(pString));
   pStringSt->pString16[wcslen(pString)] = 0;
 }
@@ -305,7 +305,7 @@ void ScrollString() {
   uint32_t suiTimer = 0;
   uint32_t cnt;
   int32_t iNumberOfNewStrings = 0;  // the count of new strings, so we can update position by
-                                  // WIDTH_BETWEEN_NEW_STRINGS pixels in the y
+                                    // WIDTH_BETWEEN_NEW_STRINGS pixels in the y
   int32_t iNumberOfMessagesOnQueue = 0;
   int32_t iMaxAge = 0;
   BOOLEAN fDitchLastMessage = FALSE;
@@ -397,7 +397,7 @@ void ScrollString() {
           SetStringVideoOverlayPosition(
               gpDisplayList[cnt], X_START,
               (int16_t)((Y_START - ((cnt)*GetFontHeight(SMALLFONT1))) -
-                      (int16_t)(WIDTH_BETWEEN_NEW_STRINGS * (iNumberOfNewStrings))));
+                        (int16_t)(WIDTH_BETWEEN_NEW_STRINGS * (iNumberOfNewStrings))));
 
           // start of new string, increment count of new strings, for spacing purposes
           if (gpDisplayList[cnt]->fBeginningOfNewString == TRUE) {
@@ -481,7 +481,7 @@ void UnHideMessagesDuringNPCDialogue(void) {
 }
 
 // new screen message
-void ScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, ...) {
+void ScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t *pStringA, ...) {
   wchar_t DestString[512];
   va_list argptr;
 
@@ -572,7 +572,7 @@ void ClearWrappedStrings(WRAPPED_STRING *pStringWrapperHead) {
 }
 
 // new tactical and mapscreen message system
-void TacticalScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, ...) {
+void TacticalScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t *pStringA, ...) {
   // this function sets up the string into several single line structures
 
   ScrollStringStPtr pStringSt;
@@ -687,7 +687,7 @@ void TacticalScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, 
   return;
 }
 
-void MapScreenMessage(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, ...) {
+void MapScreenMessage(uint16_t usColor, uint8_t ubPriority, wchar_t *pStringA, ...) {
   // this function sets up the string into several single line structures
 
   ScrollStringStPtr pStringSt;
@@ -834,7 +834,7 @@ void MapScreenMessage(uint16_t usColor, uint8_t ubPriority, wchar_t* pStringA, .
 }
 
 // add string to the map screen message list
-void AddStringToMapScreenMessageList(wchar_t* pString, uint16_t usColor, uint32_t uiFont,
+void AddStringToMapScreenMessageList(wchar_t *pString, uint16_t usColor, uint32_t uiFont,
                                      BOOLEAN fStartOfNewString, uint8_t ubPriority) {
   ScrollStringStPtr pStringSt = NULL;
 
@@ -1082,7 +1082,7 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(FileID hFile) {
       }
 
       // allocate space for the new string
-      gMapScreenMessageList[uiCount]->pString16 = (wchar_t*)MemAlloc(uiSizeOfString);
+      gMapScreenMessageList[uiCount]->pString16 = (wchar_t *)MemAlloc(uiSizeOfString);
       if (gMapScreenMessageList[uiCount]->pString16 == NULL) return (FALSE);
 
       memset(gMapScreenMessageList[uiCount]->pString16, 0, uiSizeOfString);
@@ -1172,7 +1172,7 @@ void ClearTacticalMessageQueue(void) {
   return;
 }
 
-void WriteMessageToFile(wchar_t* pString) {
+void WriteMessageToFile(wchar_t *pString) {
 #ifdef JA2BETAVERSION
 
   FILE *fp;
@@ -1335,7 +1335,8 @@ void MoveCurrentMessagePointerDownList( void )
         // check to see if we can move 'down' to newer messages?
         if( gMapScreenMessageList[ ( uint8_t )( gubCurrentMapMessageString  + 1 )  ] != NULL )
         {
-                if(  ( uint8_t ) ( gubCurrentMapMessageString + 1 ) != gubEndOfMapScreenMessageList )
+                if(  ( uint8_t ) ( gubCurrentMapMessageString + 1 ) != gubEndOfMapScreenMessageList
+)
                 {
                         if( ( AreThereASetOfStringsAfterThisIndex( gubCurrentMapMessageString,
 MAX_MESSAGES_ON_MAP_BOTTOM ) == TRUE ) )
@@ -1376,8 +1377,8 @@ void ScrollToHereInMapScreenMessageList( uint8_t ubPosition )
                 ubRange += 9;
         }
 
-        ubTestPosition = ( uint8_t )( gubEndOfMapScreenMessageList - ( uint8_t )(  ubRange  ) + (  ( (
-uint8_t )( ubRange )  * ubPosition ) / 256 ) );
+        ubTestPosition = ( uint8_t )( gubEndOfMapScreenMessageList - ( uint8_t )(  ubRange  ) + (  (
+( uint8_t )( ubRange )  * ubPosition ) / 256 ) );
 
         if( AreThereASetOfStringsAfterThisIndex( ubTestPosition, MAX_MESSAGES_ON_MAP_BOTTOM ) ==
 TRUE )
@@ -1457,8 +1458,9 @@ uint8_t GetNewMessageValueGivenPosition( uint8_t ubPosition )
 {
         // if we were to scroll to this position, what would current message index value be?
 
-        return( ( uint8_t )( ( gubEndOfMapScreenMessageList - ( uint8_t )( GetRangeOfMapScreenMessages(
-) ) ) + ( uint8_t )( ( GetRangeOfMapScreenMessages( ) * ubPosition ) / 255 ) ) );
+        return( ( uint8_t )( ( gubEndOfMapScreenMessageList - ( uint8_t )(
+GetRangeOfMapScreenMessages( ) ) ) + ( uint8_t )( ( GetRangeOfMapScreenMessages( ) * ubPosition ) /
+255 ) ) );
 
 }
 
@@ -1467,8 +1469,8 @@ BOOLEAN IsThisTheLastMessageInTheList( void )
 {
         // is the current message the last message in the list?
 
-        if( ( ( uint8_t )( gubCurrentMapMessageString + 1 ) ) == ( gubEndOfMapScreenMessageList ) && (
-GetRangeOfMapScreenMessages( ) < 255 ) )
+        if( ( ( uint8_t )( gubCurrentMapMessageString + 1 ) ) == ( gubEndOfMapScreenMessageList ) &&
+( GetRangeOfMapScreenMessages( ) < 255 ) )
         {
                 return( TRUE );
         }
@@ -1519,8 +1521,8 @@ void DisplayLastMessage( void )
 
 
         // set counter to end of list
-        while( ( gMapScreenMessageList[ ( uint8_t )( ubCounter  + 1 )  ] != NULL ) && ( ( uint8_t ) (
-ubCounter + 1 ) != gubEndOfMapScreenMessageList ) )
+        while( ( gMapScreenMessageList[ ( uint8_t )( ubCounter  + 1 )  ] != NULL ) && ( ( uint8_t )
+( ubCounter + 1 ) != gubEndOfMapScreenMessageList ) )
         {
                 ubCounter++;
         }
@@ -1593,8 +1595,8 @@ fBeginningOfNewString ) )
                         ubCounter++;
                 }
                 // execute text box
-                ExecuteTacticalTextBoxForLastQuote( ( int16_t )( ( 640 - gusSubtitleBoxWidth ) / 2 ),
-sString );
+                ExecuteTacticalTextBoxForLastQuote( ( int16_t )( ( 640 - gusSubtitleBoxWidth ) / 2
+), sString );
         }
 
         return;

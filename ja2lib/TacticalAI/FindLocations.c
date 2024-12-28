@@ -53,7 +53,8 @@ int8_t gubAIPathCosts[19][19];
 extern uint8_t gubAICounter;
 extern BOOLEAN gfTurnBasedAI;
 
-int32_t CalcPercentBetter(int32_t iOldValue, int32_t iNewValue, int32_t iOldScale, int32_t iNewScale) {
+int32_t CalcPercentBetter(int32_t iOldValue, int32_t iNewValue, int32_t iOldScale,
+                          int32_t iNewScale) {
   int32_t iValueChange, iScaleSum, iPercentBetter;  //,loopCnt,tempInt;
 
   // calcalate how much better the new cover would be than the current cover
@@ -114,7 +115,7 @@ void AICenterXY(int16_t sGridNo, float *pdX, float *pdY) {
 }
 
 int8_t CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo,
-                              int8_t bLevel, int32_t iMyAPsLeft) {
+                                int8_t bLevel, int32_t iMyAPsLeft) {
   // When considering a gridno for cover, we want to take into account cover if we
   // lie down, so we return the LOWEST chance to get through for that location.
   int8_t bCubeLevel, bThisCTGT, bWorstCTGT = 100;
@@ -149,7 +150,7 @@ int8_t CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, i
 }
 
 int8_t CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo,
-                                int8_t bLevel, int32_t iMyAPsLeft) {
+                                  int8_t bLevel, int32_t iMyAPsLeft) {
   // When considering a gridno for cover, we want to take into account cover if we
   // lie down, so we return the LOWEST chance to get through for that location.
   int8_t bCubeLevel;
@@ -179,8 +180,8 @@ int8_t CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID,
   return ((int8_t)iTotalCTGT);
 }
 
-int8_t CalcBestCTGT(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo, int8_t bLevel,
-                  int32_t iMyAPsLeft) {
+int8_t CalcBestCTGT(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo,
+                    int8_t bLevel, int32_t iMyAPsLeft) {
   // NOTE: CTGT stands for "ChanceToGetThrough..."
 
   // using only ints for maximum execution speed here
@@ -252,8 +253,9 @@ int8_t CalcBestCTGT(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppG
   return (bBestCTGT);
 }
 
-int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyThreat, int32_t iMyAPsLeft,
-                     uint32_t uiThreatIndex, int32_t iRange, int32_t morale, int32_t *iTotalScale) {
+int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyThreat,
+                       int32_t iMyAPsLeft, uint32_t uiThreatIndex, int32_t iRange, int32_t morale,
+                       int32_t *iTotalScale) {
   // all 32-bit integers for max. speed
   int32_t iMyPosValue, iHisPosValue, iCoverValue;
   int32_t iReductionFactor, iThisScale;
@@ -485,7 +487,8 @@ uint8_t NumberOfTeamMatesAdjacent(struct SOLDIERTYPE *pSoldier, int16_t sGridNo)
   return (ubCount);
 }
 
-int16_t FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, int32_t morale, int32_t *piPercentBetter) {
+int16_t FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, int32_t morale,
+                            int32_t *piPercentBetter) {
   // all 32-bit integers for max. speed
   uint32_t uiLoop;
   int32_t iCurrentCoverValue, iCoverValue, iBestCoverValue;

@@ -16,7 +16,7 @@ struct SOLDIERTYPE;
 #define REFINE_KNIFE_2 6
 
 uint8_t GetProperItemCursor(uint8_t ubSoldierID, uint16_t ubItemIndex, uint16_t usMapPos,
-                          BOOLEAN fActivated);
+                            BOOLEAN fActivated);
 void DetermineCursorBodyLocation(uint8_t ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc);
 
 void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier);

@@ -886,8 +886,8 @@ void GetSquadPosition(uint8_t *ubNextX, uint8_t *ubNextY, uint8_t *ubPrevX, uint
   return;
 }
 
-void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX, uint8_t ubPrevY,
-                                    uint32_t uiTraverseTime, uint32_t uiArriveTime,
+void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX,
+                                    uint8_t ubPrevY, uint32_t uiTraverseTime, uint32_t uiArriveTime,
                                     uint8_t ubSquadValue) {
   // set mvt group position for squad for
 
@@ -1163,7 +1163,8 @@ BOOLEAN IsDeadGuyOnAnySquad(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue, int8_t *bNumberOfDeadGuysSoFar) {
+BOOLEAN IsDeadGuyInThisSquadSlot(int8_t bSlotId, int8_t bSquadValue,
+                                 int8_t *bNumberOfDeadGuysSoFar) {
   int32_t iCounter = 0, iCount = 0;
 
   // see if we have gone too far?

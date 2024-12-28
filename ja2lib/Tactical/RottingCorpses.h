@@ -175,7 +175,8 @@ void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier);
 
 uint16_t GetCorpseStructIndex(ROTTING_CORPSE_DEFINITION *pCorpseDef, BOOLEAN fForImage);
 
-void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubLevel);
+void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
+                                        uint8_t ubLevel);
 
 int16_t GetGridNoOfCorpseGivenProfileID(uint8_t ubProfileID);
 

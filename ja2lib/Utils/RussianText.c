@@ -140,8 +140,8 @@ uint16_t BobbyRayAmmoCaliber[][20] = {
 };
 
 uint16_t WeaponType[][30] = {L"Другое",      L"Пистолет",       L"Автопистолет",
-                           L"Полуавтомат", L"Винтовка",       L"Снайп.винтовка",
-                           L"Базука",      L"Легкий автомат", L"Револьвер"};
+                             L"Полуавтомат", L"Винтовка",       L"Снайп.винтовка",
+                             L"Базука",      L"Легкий автомат", L"Револьвер"};
 
 uint16_t TeamTurnString[][STRING_LENGTH] = {
     L"Ход Игрока",  // player's turn
@@ -271,12 +271,12 @@ wchar_t* pAssignmentStrings[] = {
     L"Отряд15",   L"Отряд16", L"Отряд17", L"Отряд18", L"Отряд19", L"Отряд20",
     L"На службе",  // on active duty
     L"Доктор",     // оказывает медпомощь
-    L"Пациент",    //принимает медпомощь
+    L"Пациент",    // принимает медпомощь
     L"Машина",     // in a vehicle
-    L"В пути",     //транзитом - сокращение
+    L"В пути",     // транзитом - сокращение
     L"Ремонт",     // ремонтируются
     L"Практика",   // тренируются
-    L"Ополчение",  //готовят восстание среди горожан
+    L"Ополчение",  // готовят восстание среди горожан
     L"Тренер",     // training a teammate
     L"Студент",    // being trained by someone else
     L"Мертв",      // мертв
@@ -298,14 +298,14 @@ wchar_t* pMilitiaButtonString[] = {
 };
 
 wchar_t* pConditionStrings[] = {
-    L"Отлично",       //состояние солдата..отличное здоровье
-    L"Хорошо",        //хорошее здоровье
-    L"Прилично",      //нормальное здоровье
-    L"Ранен",         //раны
+    L"Отлично",       // состояние солдата..отличное здоровье
+    L"Хорошо",        // хорошее здоровье
+    L"Прилично",      // нормальное здоровье
+    L"Ранен",         // раны
     L"Устал",         // усталый
     L"Кровоточит",    // истекает кровью
     L"Без сознания",  // в обмороке
-    L"Умирает",       //умирает
+    L"Умирает",       // умирает
     L"Мертв",         // мертв
 };
 
@@ -508,8 +508,8 @@ wchar_t* pTacticalPopupButtonStrings[] = {
 
 // Door Traps. When we examine a door, it could have a particular trap on it. These are the traps.
 
-wchar_t* pDoorTrapStrings[] = {L"Ловушек нет", L"Бомба-Ловушка", L"Электроловушка", L"Ловушка-Сирена",
-                            L"Тихая сигнализация"};
+wchar_t* pDoorTrapStrings[] = {L"Ловушек нет", L"Бомба-Ловушка", L"Электроловушка",
+                               L"Ловушка-Сирена", L"Тихая сигнализация"};
 
 // Contract Extension. These are used for the contract extension with AIM mercenaries.
 
@@ -540,7 +540,7 @@ wchar_t* pNoiseTypeStr[] =  // OBSOLETE
 // Directions that are used to report noises
 
 wchar_t* pDirectionStr[] = {L"СЕВ-ВОСТОК", L"ВОСТОК", L"ЮГО-ВОСТОК", L"ЮГ",
-                         L"ЮГО-ЗАПАД",  L"ЗАПАД",  L"СЕВ-ЗАПАД",  L"СЕВЕР"};
+                            L"ЮГО-ЗАПАД",  L"ЗАПАД",  L"СЕВ-ЗАПАД",  L"СЕВЕР"};
 
 // These are the different terrain types.
 
@@ -1348,14 +1348,15 @@ wchar_t* pTransactionAlternateText[] = {
 
 // helicopter pilot payment
 
-wchar_t* pSkyriderText[] = {L"Всаднику заплачено $%d",    // skyrider was paid an amount of money
-                         L"Всаднику недоплачено $%d",  // skyrider is still owed an amount of money
-                         L"Всадник. Заправка завершена",  // skyrider has finished refueling
-                         L"",                             // unused
-                         L"",                             // unused
-                         L"Всадник готов к полету.",  // Skyrider was grounded but has been freed
-                         L"У Всадника нет пассажиров.Если вы хотите отправить наемников в этот "
-                         L"сектор, выберите ПРИНАДЛ. и МАШИНА"};
+wchar_t* pSkyriderText[] = {
+    L"Всаднику заплачено $%d",       // skyrider was paid an amount of money
+    L"Всаднику недоплачено $%d",     // skyrider is still owed an amount of money
+    L"Всадник. Заправка завершена",  // skyrider has finished refueling
+    L"",                             // unused
+    L"",                             // unused
+    L"Всадник готов к полету.",      // Skyrider was grounded but has been freed
+    L"У Всадника нет пассажиров.Если вы хотите отправить наемников в этот "
+    L"сектор, выберите ПРИНАДЛ. и МАШИНА"};
 
 // strings for different levels of merc morale
 
@@ -1562,9 +1563,9 @@ wchar_t* pImpButtonText[] = {
 };
 
 wchar_t* pExtraIMPStrings[] = {L"Чтобы начать профилирование, выберите Личность.",
-                            L"Когда Личность завершена, выберите ваши Свойства.",
-                            L"Свойства приписаны,переходите к Портрету.",
-                            L"Чтобы завершить процесс,выберите голос,который вам подходит."};
+                               L"Когда Личность завершена, выберите ваши Свойства.",
+                               L"Свойства приписаны,переходите к Портрету.",
+                               L"Чтобы завершить процесс,выберите голос,который вам подходит."};
 
 wchar_t* pFilesTitle[] = {
     L"Просмотр файлов",
@@ -2182,21 +2183,22 @@ wchar_t* BobbyRaysFrontText[] = {
 // shot page
 
 wchar_t* AimSortText[] = {L"Члены А.I.M.",  // Title
-                                         // Title for the way to sort
-                       L"Сортировка:",
+                                            // Title for the way to sort
+                          L"Сортировка:",
 
-                       // sort by...
+                          // sort by...
 
-                       L"Цена", L"Опытность", L"Меткость", L"Медицина", L"Взрывн.раб.", L"Механика",
+                          L"Цена", L"Опытность", L"Меткость", L"Медицина", L"Взрывн.раб.",
+                          L"Механика",
 
-                       // Text of the links to other AIM pages
+                          // Text of the links to other AIM pages
 
-                       L"Просмотреть Фото наемников", L"Просмотреть Статистику наемников",
-                       L"Просмотреть Историю А.I.M.",
+                          L"Просмотреть Фото наемников", L"Просмотреть Статистику наемников",
+                          L"Просмотреть Историю А.I.M.",
 
-                       // text to display how the entries will be sorted
+                          // text to display how the entries will be sorted
 
-                       L"По возраст.", L"По убыв."};
+                          L"По возраст.", L"По убыв."};
 
 // Aim Policies.c
 // The page in which the AIM policies and regulations are displayed
@@ -2312,11 +2314,11 @@ wchar_t* AimLinkText[] = {
 
 wchar_t* AimHistoryText[] = {L"Журнал A.I.M.",  // Title
 
-                          // Text on the buttons at the bottom of the page
+                             // Text on the buttons at the bottom of the page
 
-                          L"Пред.стр.", L"Гл.стр.",
-                          L"История A.I.M.",  //$$
-                          L"След.стр."};
+                             L"Пред.стр.", L"Гл.стр.",
+                             L"История A.I.M.",  //$$
+                             L"След.стр."};
 
 // Aim Mug Shot Index
 
@@ -2896,7 +2898,7 @@ wchar_t* pMessageStrings[] = {
 };
 
 uint16_t ItemPickupHelpPopup[][40] = {L"OK", L"Листать вверх", L"Выделить все", L"Листать вниз",
-                                    L"Отмена"};
+                                      L"Отмена"};
 
 wchar_t* pDoctorWarningString[] = {
     L"%s слишком далеко,чтобы его можно было лечить.",

@@ -226,8 +226,8 @@ void SetOptionsExitScreen(uint32_t uiExitScreen);
 void SoundFXSliderChangeCallBack(int32_t iNewValue);
 void SpeechSliderChangeCallBack(int32_t iNewValue);
 void MusicSliderChangeCallBack(int32_t iNewValue);
-// BOOLEAN		DoOptionsMessageBox( uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
-// uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback );
+// BOOLEAN		DoOptionsMessageBox( uint8_t ubStyle, wchar_t *zString, uint32_t
+// uiExitScreen, uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback );
 void ConfirmQuitToMainMenuMessageBoxCallBack(uint8_t bExitValue);
 void HandleSliderBarMovementSounds();
 void HandleOptionToggle(uint8_t ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound);
@@ -747,20 +747,20 @@ void GetOptionsScreenUserInput() {
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
         MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
-                        _RightButtonDown);
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y,
+                        _LeftButtonDown, _RightButtonDown);
         break;
     }
 
@@ -1013,8 +1013,8 @@ BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t 
   return ((giOptionsMessageBox != -1));
 }
 
-BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint16_t usFlags,
-                            MSGBOX_CALLBACK ReturnCallback) {
+BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+                            uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback) {
   struct GRect CenteringRect = {0, 0, 639, 479};
 
   // reset exit mode

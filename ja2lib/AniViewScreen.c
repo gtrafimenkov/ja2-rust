@@ -261,7 +261,7 @@ uint32_t AniEditScreenHandle(void) {
   return (ANIEDIT_SCREEN);
 }
 
-uint16_t GetAnimStateFromName(char* zName) {
+uint16_t GetAnimStateFromName(char *zName) {
   int32_t cnt;
 
   // FInd the next animation with start height the same...

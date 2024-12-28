@@ -25,7 +25,7 @@
 #include "Utils/TimerControl.h"
 #include "rust_colors.h"
 
-wchar_t* szClipboard;
+wchar_t *szClipboard;
 BOOLEAN gfNoScroll = FALSE;
 
 // The internal callback functions assigned to each text field.
@@ -37,7 +37,7 @@ void AddChar(uint32_t uiKey);
 void RemoveChar(uint8_t ubArrayIndex);
 void DeleteHilitedText();
 
-void DoublePercentileCharacterFromStringIntoString(wchar_t* pSrcString, wchar_t* pDstString);
+void DoublePercentileCharacterFromStringIntoString(wchar_t *pSrcString, wchar_t *pDstString);
 
 // All exclusive input types are handled in this function.
 void HandleExclusiveInput(uint32_t uiKey);
@@ -67,7 +67,7 @@ typedef struct TEXTINPUTNODE {
   uint8_t ubID;
   uint16_t usInputType;
   uint8_t ubMaxChars;
-  wchar_t* szString;
+  wchar_t *szString;
   size_t szStringBufSize;
   uint8_t ubStrLen;
   BOOLEAN fEnabled;
@@ -226,8 +226,9 @@ void KillAllTextInputModes() {
 // of calls to this function dictate the TAB order from traversing from one field to the next.  This
 // function adds mouse regions and processes them for you, as well as deleting them when you are
 // done.
-void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight, int8_t bPriority,
-                       wchar_t* szInitText, uint8_t ubMaxChars, uint16_t usInputType) {
+void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                       int8_t bPriority, wchar_t *szInitText, uint8_t ubMaxChars,
+                       uint16_t usInputType) {
   TEXTINPUTNODE *pNode;
   pNode = (TEXTINPUTNODE *)MemAlloc(sizeof(TEXTINPUTNODE));
   Assert(pNode);
@@ -253,7 +254,7 @@ void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHei
   if (usInputType == INPUTTYPE_EXCLUSIVE_24HOURCLOCK) ubMaxChars = 6;
   // Allocate and copy the string.
   size_t bufSize = (ubMaxChars + 1);
-  pNode->szString = (wchar_t*)MemAlloc(bufSize * sizeof(wchar_t));
+  pNode->szString = (wchar_t *)MemAlloc(bufSize * sizeof(wchar_t));
   pNode->szStringBufSize = bufSize;
   Assert(pNode->szString);
   if (szInitText) {
@@ -276,9 +277,9 @@ void AddTextInputField(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHei
   pNode->fUserField = FALSE;
   pNode->fEnabled = TRUE;
   // Setup the region.
-  MSYS_DefineRegion(&pNode->region, sLeft, sTop, (int16_t)(sLeft + sWidth), (int16_t)(sTop + sHeight),
-                    bPriority, gusTextInputCursor, MouseMovedInTextRegionCallback,
-                    MouseClickedInTextRegionCallback);
+  MSYS_DefineRegion(&pNode->region, sLeft, sTop, (int16_t)(sLeft + sWidth),
+                    (int16_t)(sTop + sHeight), bPriority, gusTextInputCursor,
+                    MouseMovedInTextRegionCallback, MouseClickedInTextRegionCallback);
   MSYS_SetRegionUserData(&pNode->region, 0, pNode->ubID);
 }
 
@@ -358,7 +359,7 @@ int16_t GetActiveFieldID() {
 // example, this call would be made when the user selected a different filename in the list via
 // clicking or scrolling with the arrows, or even using alpha chars to jump to the appropriate
 // filename.
-void SetInputFieldStringWith16BitString(uint8_t ubField, wchar_t* szNewText) {
+void SetInputFieldStringWith16BitString(uint8_t ubField, wchar_t *szNewText) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {
@@ -379,7 +380,7 @@ void SetInputFieldStringWith16BitString(uint8_t ubField, wchar_t* szNewText) {
   }
 }
 
-void SetInputFieldStringWith8BitString(char ubField, char* szNewText) {
+void SetInputFieldStringWith8BitString(char ubField, char *szNewText) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {
@@ -400,7 +401,7 @@ void SetInputFieldStringWith8BitString(char ubField, char* szNewText) {
   }
 }
 
-void Get16BitStringFromField(uint8_t ubField, wchar_t* szString, size_t bufSize) {
+void Get16BitStringFromField(uint8_t ubField, wchar_t *szString, size_t bufSize) {
   TEXTINPUTNODE *curr;
   curr = gpTextInputHead;
   while (curr) {
@@ -416,7 +417,7 @@ void Get16BitStringFromField(uint8_t ubField, wchar_t* szString, size_t bufSize)
 // Converts the field's string into a number, then returns that number
 // returns -1 if blank or invalid.  Only works for positive numbers.
 int32_t GetNumericStrictValueFromField(uint8_t ubField) {
-  wchar_t* ptr;
+  wchar_t *ptr;
   wchar_t str[20];
   int32_t total;
   Get16BitStringFromField(ubField, str, ARR_SIZE(str));
@@ -576,7 +577,8 @@ void SetTextInputHilitedColors(uint8_t ubForeColor, uint8_t ubShadowColor, uint8
   pColors->ubHiBackColor = ubBackColor;
 }
 
-void SetDisabledTextFieldColors(uint8_t ubForeColor, uint8_t ubShadowColor, uint16_t usTextFieldColor) {
+void SetDisabledTextFieldColors(uint8_t ubForeColor, uint8_t ubShadowColor,
+                                uint16_t usTextFieldColor) {
   pColors->fUseDisabledAutoShade = FALSE;
   pColors->ubDisabledForeColor = ubForeColor;
   pColors->ubDisabledShadowColor = ubShadowColor;
@@ -1054,8 +1056,8 @@ void RenderActiveTextField() {
   SaveFontSettings();
   SetFont(pColors->usFont);
   usOffset = (uint16_t)((gpActive->region.RegionBottomRightY - gpActive->region.RegionTopLeftY -
-                       GetFontHeight(pColors->usFont)) /
-                      2);
+                         GetFontHeight(pColors->usFont)) /
+                        2);
   RenderBackgroundField(gpActive);
   if (gfHiliteMode && gubStartHilite != gubEndHilite) {  // Some or all of the text is hilighted, so
                                                          // we will use a different method.
@@ -1127,8 +1129,8 @@ void RenderInactiveTextField(uint8_t ubID) {
   SaveFontSettings();
   SetFont(pColors->usFont);
   usOffset = (uint16_t)((pNode->region.RegionBottomRightY - pNode->region.RegionTopLeftY -
-                       GetFontHeight(pColors->usFont)) /
-                      2);
+                         GetFontHeight(pColors->usFont)) /
+                        2);
   SetFontForeground(pColors->ubForeColor);
   SetFontShadow(pColors->ubShadowColor);
   SetFontBackground(0);
@@ -1153,8 +1155,8 @@ void RenderInactiveTextFieldNode(TEXTINPUTNODE *pNode) {
     SetFontShadow(pColors->ubShadowColor);
   }
   usOffset = (uint16_t)((pNode->region.RegionBottomRightY - pNode->region.RegionTopLeftY -
-                       GetFontHeight(pColors->usFont)) /
-                      2);
+                         GetFontHeight(pColors->usFont)) /
+                        2);
   SetFontBackground(0);
   RenderBackgroundField(pNode);
   DoublePercentileCharacterFromStringIntoString(pNode->szString, str);
@@ -1318,7 +1320,7 @@ void ExecuteCopyCommand() {
       ubEnd = gubStartHilite;
     }
     ubCount = (uint8_t)(ubEnd - ubStart);
-    szClipboard = (wchar_t*)MemAlloc((ubCount + 1) * sizeof(wchar_t));
+    szClipboard = (wchar_t *)MemAlloc((ubCount + 1) * sizeof(wchar_t));
     Assert(szClipboard);
     for (ubCount = ubStart; ubCount < ubEnd; ubCount++) {
       szClipboard[ubCount - ubStart] = gpActive->szString[ubCount];
@@ -1460,7 +1462,7 @@ void SetExclusive24HourTimeValue(uint8_t ubField, uint16_t usTime) {
   }
 }
 
-void DoublePercentileCharacterFromStringIntoString(wchar_t* pSrcString, wchar_t* pDstString) {
+void DoublePercentileCharacterFromStringIntoString(wchar_t *pSrcString, wchar_t *pDstString) {
   int32_t iSrcIndex = 0, iDstIndex = 0;
   while (pSrcString[iSrcIndex] != 0) {
     if (pSrcString[iSrcIndex] == '%') {

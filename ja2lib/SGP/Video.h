@@ -40,7 +40,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);
 
 void RefreshScreen();
 
-void FatalError(char* pError, ...);
+void FatalError(char *pError, ...);
 
 void DirtyCursor();
 

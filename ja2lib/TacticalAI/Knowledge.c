@@ -109,7 +109,8 @@ void CallEldinTo(int16_t sGridNo) {
     if (pSoldier && IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
         (pSoldier->bAlertStatus == STATUS_GREEN ||
          pSoldier->ubNoiseVolume < (MAX_MISC_NOISE_DURATION / 2))) {
-      if (SoldierToLocationLineOfSightTest(pSoldier, sGridNo, (uint8_t)MaxDistanceVisible(), TRUE)) {
+      if (SoldierToLocationLineOfSightTest(pSoldier, sGridNo, (uint8_t)MaxDistanceVisible(),
+                                           TRUE)) {
         // sees the player now!
         TriggerNPCWithIHateYouQuote(ELDIN);
         SetNewSituation(pSoldier);
@@ -134,7 +135,7 @@ void CallEldinTo(int16_t sGridNo) {
 }
 
 int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, int32_t *piRetValue,
-                              BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
+                                BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
   uint32_t uiLoop;
   int8_t *pbPersOL, *pbPublOL;
   int16_t *psLastLoc, *psNoiseGridNo;

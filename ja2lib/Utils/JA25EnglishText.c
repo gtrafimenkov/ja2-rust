@@ -13,8 +13,7 @@
 
 // VERY TRUNCATED FILE COPIED FROM JA2.5 FOR ITS FEATURES FOR JA2 GOLD
 
-wchar_t*
-zNewTacticalMessages[] = {
+wchar_t* zNewTacticalMessages[] = {
     L"Range to target: %d tiles", L"Attaching the transmitter to your laptop computer.",
     L"You cannot afford to hire %s",
     L"For a limited time, the above fee covers the cost of the entire mission and includes "

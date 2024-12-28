@@ -127,9 +127,9 @@ BOOLEAN LightDraw(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, 
 // Reverts the tiles a light has affected back to normal
 BOOLEAN LightErase(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Save a light list into a file
-BOOLEAN LightSave(int32_t uiLight, char* pFilename);
+BOOLEAN LightSave(int32_t uiLight, char *pFilename);
 // Load a light list from a file
-int32_t LightLoad(char* pFilename);
+int32_t LightLoad(char *pFilename);
 
 // Sets the RGB values and number of light colors (1/2)
 BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, uint8_t ubNumColors);
@@ -139,7 +139,7 @@ uint8_t LightGetColors(struct SGPPaletteEntry *pPal);
 // High-Level Sprite Interface
 
 // Creates a new light sprite from a given filename/predefined symbol
-int32_t LightSpriteCreate(char* pName, uint32_t uiLightType);
+int32_t LightSpriteCreate(char *pName, uint32_t uiLightType);
 // Destroys the instance of that light
 BOOLEAN LightSpriteDestroy(int32_t iSprite);
 // Sets the tile position of the light instance
@@ -186,7 +186,7 @@ extern int16_t LightMapLeft[MAX_LIGHT_TEMPLATES];
 extern int16_t LightMapTop[MAX_LIGHT_TEMPLATES];
 extern int16_t LightMapRight[MAX_LIGHT_TEMPLATES];
 extern int16_t LightMapBottom[MAX_LIGHT_TEMPLATES];
-extern char* pLightNames[MAX_LIGHT_TEMPLATES];
+extern char *pLightNames[MAX_LIGHT_TEMPLATES];
 
 // Sprite data
 extern LIGHT_SPRITE LightSprites[MAX_LIGHT_SPRITES];

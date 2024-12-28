@@ -141,7 +141,7 @@
 #define BOBBY_R_MEDUNA_SHIPMENT_LENGTH 4
 
 struct message {
-  wchar_t* pString;
+  wchar_t *pString;
   struct message *Next;
   struct message *Prev;
 };
@@ -150,7 +150,7 @@ typedef struct message EmailMessage;
 typedef EmailMessage *MessagePtr;
 
 struct email {
-  wchar_t* pSubject;
+  wchar_t *pSubject;
   uint16_t usOffset;
   uint16_t usLength;
   uint8_t ubSender;
@@ -267,13 +267,15 @@ void RenderEmail();
 #define MAIL_STRING_SIZE 640
 
 // message manipulation
-void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, wchar_t* pSubject, int32_t iDate,
-                     uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t uiFirstData, uint32_t uiSecondData);
+void AddEmailMessage(int32_t iMessageOffset, int32_t iMessageLength, wchar_t *pSubject,
+                     int32_t iDate, uint8_t ubSender, BOOLEAN fAlreadyRead, int32_t uiFirstData,
+                     uint32_t uiSecondData);
 void RemoveEmailMessage(int32_t iId);
 EmailPtr GetEmailMessage(int32_t iId);
 void LookForUnread();
 void AddEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender, int32_t iDate);
-void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender, int32_t iDate);
+void AddPreReadEmail(int32_t iMessageOffset, int32_t iMessageLength, uint8_t ubSender,
+                     int32_t iDate);
 BOOLEAN DisplayNewMailBox();
 void CreateDestroyNewMailButton();
 void CreateDestroyDeleteNoticeMailButton();

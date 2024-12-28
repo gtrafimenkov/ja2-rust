@@ -106,8 +106,8 @@ BOOLEAN AddInteractiveTile(int16_t sGridNo, struct LEVELNODE *pLevelNode, uint32
   return (TRUE);
 }
 
-BOOLEAN StartInteractiveObject(int16_t sGridNo, uint16_t usStructureID, struct SOLDIERTYPE *pSoldier,
-                               uint8_t ubDirection) {
+BOOLEAN StartInteractiveObject(int16_t sGridNo, uint16_t usStructureID,
+                               struct SOLDIERTYPE *pSoldier, uint8_t ubDirection) {
   struct STRUCTURE *pStructure;
 
   // ATE: Patch fix: Don't allow if alreay in animation
@@ -270,8 +270,8 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo)
         SetItemPoolVisibilityOn(pItemPool, ANY_VISIBILITY_VALUE, fDoLocators);
 
         // Display quote!
-        // TacticalCharacterDialogue( pSoldier, (uint16_t)( QUOTE_SPOTTED_SOMETHING_ONE + Random( 2 )
-        // ) );
+        // TacticalCharacterDialogue( pSoldier, (uint16_t)( QUOTE_SPOTTED_SOMETHING_ONE + Random( 2
+        // ) ) );
 
         // ATE: Check now many things in pool.....
         if (!fDidMissingQuote) {
@@ -370,8 +370,8 @@ void SetActionModeDoorCursorText() {
   }
 }
 
-void GetLevelNodeScreenRect(struct LEVELNODE *pNode, struct GRect *pRect, int16_t sXPos, int16_t sYPos,
-                            int16_t sGridNo) {
+void GetLevelNodeScreenRect(struct LEVELNODE *pNode, struct GRect *pRect, int16_t sXPos,
+                            int16_t sYPos, int16_t sGridNo) {
   int16_t sScreenX, sScreenY;
   int16_t sOffsetX, sOffsetY;
   int16_t sTempX_S, sTempY_S;
@@ -545,9 +545,7 @@ struct LEVELNODE *InternalGetCurInteractiveTile(BOOLEAN fRejectItemsOnTop) {
   return (NULL);
 }
 
-struct LEVELNODE *GetCurInteractiveTile() {
-  return (InternalGetCurInteractiveTile(TRUE));
-}
+struct LEVELNODE *GetCurInteractiveTile() { return (InternalGetCurInteractiveTile(TRUE)); }
 
 struct LEVELNODE *GetCurInteractiveTileGridNo(int16_t *psGridNo) {
   struct LEVELNODE *pNode;

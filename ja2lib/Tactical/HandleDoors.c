@@ -83,7 +83,8 @@ void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
   }
 }
 
-uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor, uint16_t usAnimState) {
+uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
+                                    uint16_t usAnimState) {
   switch (usAnimState) {
     case OPEN_DOOR:
 
@@ -978,7 +979,8 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
 
   } else {
     // ATE, the last parameter is the perceived value, I dont know what it is so could you please
-    // add the value? ModifyDoorStatus( int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen
+    // add the value? ModifyDoorStatus( int16_t sGridNo, BOOLEAN fOpen, BOOLEAN
+    // fInitiallyPercieveOpen
     // )
 
     if (gfSetPerceivedDoorState) {

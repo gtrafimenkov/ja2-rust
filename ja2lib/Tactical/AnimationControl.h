@@ -546,7 +546,7 @@ BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNew
 BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
                                     uint16_t *pusSubState);
 int8_t GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
-                                        char *zColFilename);
+                                          char *zColFilename);
 
 BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);

@@ -164,8 +164,8 @@ int32_t FindFreeButtonSlot(void) {
 //
 //	Load images for use with QuickButtons.
 //
-int32_t LoadButtonImage(char* filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite, int32_t OnNormal,
-                      int32_t OnHilite) {
+int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
+                        int32_t OnNormal, int32_t OnHilite) {
   uint32_t UseSlot;
   struct Subimage *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
@@ -264,8 +264,8 @@ int32_t LoadButtonImage(char* filename, int32_t Grayed, int32_t OffNormal, int32
 //	Uses a previously loaded quick button image for use with QuickButtons.
 //	The function simply duplicates the vobj!
 //
-int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
-                           int32_t OnNormal, int32_t OnHilite) {
+int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNormal,
+                             int32_t OffHilite, int32_t OnNormal, int32_t OnHilite) {
   uint32_t UseSlot;
   struct Subimage *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
@@ -380,8 +380,8 @@ int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNorma
 //			structures are simply removed from the button image list. It's up to
 //			the user to actually unload the image.
 //
-int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
-                           int32_t OnNormal, int32_t OnHilite) {
+int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t OffNormal,
+                             int32_t OffHilite, int32_t OnNormal, int32_t OnHilite) {
   uint32_t UseSlot;
   struct Subimage *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
@@ -688,7 +688,7 @@ int16_t FindFreeIconSlot(void) {
 //
 //	Loads an image file for use as a button icon.
 //
-int16_t LoadGenericButtonIcon(char* filename) {
+int16_t LoadGenericButtonIcon(char *filename) {
   int16_t ImgSlot;
 
   AssertMsg(filename != BUTTON_NO_FILENAME,
@@ -794,9 +794,9 @@ BOOLEAN UnloadGenericButtonImage(int16_t GenImg) {
 //
 //	Loads the image files required for displaying a generic button.
 //
-int16_t LoadGenericButtonImages(char* GrayName, char* OffNormName, char* OffHiliteName, char* OnNormName,
-                              char* OnHiliteName, char* BkGrndName, int16_t Index, int16_t OffsetX,
-                              int16_t OffsetY) {
+int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHiliteName,
+                                char *OnNormName, char *OnHiliteName, char *BkGrndName,
+                                int16_t Index, int16_t OffsetX, int16_t OffsetY) {
   int16_t ImgSlot;
   uint8_t Pix;
 
@@ -1227,9 +1227,9 @@ int32_t SetButtonIcon(int32_t iButtonID, int16_t Icon, int16_t IconIndex) {
 //
 //	Creates an Iconic type button.
 //
-int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w,
-                       int16_t h, int32_t Type, int16_t Priority, GUI_CALLBACK MoveCallback,
-                       GUI_CALLBACK ClickCallback) {
+int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_t xloc,
+                         int16_t yloc, int16_t w, int16_t h, int32_t Type, int16_t Priority,
+                         GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t ButtonNum;
   int32_t BType, x;
@@ -1319,8 +1319,8 @@ int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
   // Define a mouse region for this button
-  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w), (uint16_t)(yloc + h),
-                    (int8_t)Priority, MSYS_STARTING_CURSORVAL,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w),
+                    (uint16_t)(yloc + h), (int8_t)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1345,9 +1345,10 @@ int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_
 }
 
 // Creates a generic button with text on it.
-int32_t CreateTextButton(wchar_t* string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
-                       int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w, int16_t h, int32_t Type,
-                       int16_t Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
+int32_t CreateTextButton(wchar_t *string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
+                         int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w, int16_t h,
+                         int32_t Type, int16_t Priority, GUI_CALLBACK MoveCallback,
+                         GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t ButtonNum;
   int32_t BType, x;
@@ -1384,7 +1385,7 @@ int32_t CreateTextButton(wchar_t* string, uint32_t uiFont, int16_t sForeColor, i
   // Allocate memory for the button's text string...
   b->string = NULL;
   if (string && wcslen(string)) {
-    b->string = (wchar_t*)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
+    b->string = (wchar_t *)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     AssertMsg(b->string, "Out of memory error:  Couldn't allocate string in CreateTextButton.");
     wcscpy(b->string, string);
   }
@@ -1443,8 +1444,8 @@ int32_t CreateTextButton(wchar_t* string, uint32_t uiFont, int16_t sForeColor, i
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
   // Define a struct MOUSE_REGION for this button
-  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w), (uint16_t)(yloc + h),
-                    (int8_t)Priority, MSYS_STARTING_CURSORVAL,
+  MSYS_DefineRegion(&b->Area, (uint16_t)xloc, (uint16_t)yloc, (uint16_t)(xloc + w),
+                    (uint16_t)(yloc + h), (int8_t)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
@@ -1475,7 +1476,7 @@ int32_t CreateTextButton(wchar_t* string, uint32_t uiFont, int16_t sForeColor, i
 //	them.
 //
 int32_t CreateHotSpot(int16_t xloc, int16_t yloc, int16_t Width, int16_t Height, int16_t Priority,
-                    GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
+                      GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t ButtonNum;
   int16_t BType, x;
@@ -1571,8 +1572,8 @@ BOOLEAN SetButtonCursor(int32_t iBtnId, uint16_t crsr) {
 //	Creates a QuickButton. QuickButtons only have graphics associated with
 //	them. They cannot be re-sized, nor can the graphic be changed.
 //
-int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Type, int16_t Priority,
-                        GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
+int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Type,
+                          int16_t Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t ButtonNum;
   int32_t BType, x;
@@ -1702,26 +1703,28 @@ int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Ty
 // button.  It also uses the default move callback which emulates Win95.  Finally, it sets the
 // priority to normal.  The function you choose also determines the type of button (toggle,
 // notoggle, or newtoggle)
-int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, char* filename, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
-int32_t CreateEasyToggleButton(int32_t x, int32_t y, char* filename, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyToggleButton(int32_t x, int32_t y, char *filename, GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
-int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, char* filename, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, char *filename,
+                                  GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, BUTTON_NEWTOGGLE, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
 // Same as above, but accepts specify toggle type
-int32_t CreateEasyButton(int32_t x, int32_t y, char* filename, int32_t Type, GUI_CALLBACK ClickCallback) {
+int32_t CreateEasyButton(int32_t x, int32_t y, char *filename, int32_t Type,
+                         GUI_CALLBACK ClickCallback) {
   return CreateSimpleButton(x, y, filename, Type, MSYS_PRIORITY_NORMAL, ClickCallback);
 }
 
 // Same as above, but accepts priority specification.
-int32_t CreateSimpleButton(int32_t x, int32_t y, char* filename, int32_t Type, int16_t Priority,
-                         GUI_CALLBACK ClickCallback) {
+int32_t CreateSimpleButton(int32_t x, int32_t y, char *filename, int32_t Type, int16_t Priority,
+                           GUI_CALLBACK ClickCallback) {
   int32_t ButPic, ButNum;
 
   if (!filename || !strlen(filename))
@@ -1733,7 +1736,7 @@ int32_t CreateSimpleButton(int32_t x, int32_t y, char* filename, int32_t Type, i
   }
 
   ButNum = (int16_t)QuickCreateButton(ButPic, (int16_t)x, (int16_t)y, Type, Priority,
-                                    DEFAULT_MOVE_CALLBACK, ClickCallback);
+                                      DEFAULT_MOVE_CALLBACK, ClickCallback);
 
   AssertMsg(ButNum != -1, "Failed to CreateSimpleButton.");
 
@@ -1744,11 +1747,11 @@ int32_t CreateSimpleButton(int32_t x, int32_t y, char* filename, int32_t Type, i
   return (ButNum);
 }
 
-int32_t CreateIconAndTextButton(int32_t Image, wchar_t* string, uint32_t uiFont, int16_t sForeColor,
-                              int16_t sShadowColor, int16_t sForeColorDown, int16_t sShadowColorDown,
-                              int8_t bJustification, int16_t xloc, int16_t yloc, int32_t Type,
-                              int16_t Priority, GUI_CALLBACK MoveCallback,
-                              GUI_CALLBACK ClickCallback) {
+int32_t CreateIconAndTextButton(int32_t Image, wchar_t *string, uint32_t uiFont, int16_t sForeColor,
+                                int16_t sShadowColor, int16_t sForeColorDown,
+                                int16_t sShadowColorDown, int8_t bJustification, int16_t xloc,
+                                int16_t yloc, int32_t Type, int16_t Priority,
+                                GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t iButtonID;
   int32_t BType, x;
@@ -1800,7 +1803,7 @@ int32_t CreateIconAndTextButton(int32_t Image, wchar_t* string, uint32_t uiFont,
   // Allocate memory for the button's text string...
   b->string = NULL;
   if (string) {
-    b->string = (wchar_t*)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
+    b->string = (wchar_t *)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     AssertMsg(b->string,
               "Out of memory error:  Couldn't allocate string in CreateIconAndTextButton.");
     wcscpy(b->string, string);
@@ -1867,7 +1870,7 @@ int32_t CreateIconAndTextButton(int32_t Image, wchar_t* string, uint32_t uiFont,
 }
 
 // New functions
-void SpecifyButtonText(int32_t iButtonID, wchar_t* string) {
+void SpecifyButtonText(int32_t iButtonID, wchar_t *string) {
   GUI_BUTTON *b;
 
   Assert(iButtonID >= 0);
@@ -1881,7 +1884,7 @@ void SpecifyButtonText(int32_t iButtonID, wchar_t* string) {
 
   if (string && wcslen(string)) {
     // allocate memory for the new string
-    b->string = (wchar_t*)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
+    b->string = (wchar_t *)MemAlloc((wcslen(string) + 1) * sizeof(wchar_t));
     Assert(b->string);
     // copy the string to the button
     wcscpy(b->string, string);
@@ -1920,7 +1923,8 @@ void SpecifyButtonUpTextColors(int32_t iButtonID, int16_t sForeColor, int16_t sS
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyButtonDownTextColors(int32_t iButtonID, int16_t sForeColorDown, int16_t sShadowColorDown) {
+void SpecifyButtonDownTextColors(int32_t iButtonID, int16_t sForeColorDown,
+                                 int16_t sShadowColorDown) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -1956,9 +1960,10 @@ void SpecifyButtonTextJustification(int32_t iButtonID, int8_t bJustification) {
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyFullButtonTextAttributes(int32_t iButtonID, wchar_t* string, int32_t uiFont, int16_t sForeColor,
-                                     int16_t sShadowColor, int16_t sForeColorDown,
-                                     int16_t sShadowColorDown, int8_t bJustification) {
+void SpecifyFullButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
+                                     int16_t sForeColor, int16_t sShadowColor,
+                                     int16_t sForeColorDown, int16_t sShadowColorDown,
+                                     int8_t bJustification) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
   Assert(iButtonID < MAX_BUTTONS);
@@ -1978,7 +1983,7 @@ void SpecifyFullButtonTextAttributes(int32_t iButtonID, wchar_t* string, int32_t
   b->uiFlags |= BUTTON_DIRTY;
 }
 
-void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t* string, int32_t uiFont,
+void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t *string, int32_t uiFont,
                                         int16_t sForeColor, int16_t sShadowColor) {
   GUI_BUTTON *b;
   Assert(iButtonID >= 0);
@@ -2124,7 +2129,7 @@ void AllowDisabledButtonFastHelp(int32_t iButtonID, BOOLEAN fAllow) {
 //
 //	Set the text that will be displayed as the FastHelp
 //
-void SetButtonFastHelpText(int32_t iButton, wchar_t* Text) {
+void SetButtonFastHelpText(int32_t iButton, wchar_t *Text) {
   GUI_BUTTON *b;
   if (iButton < 0 || iButton > MAX_BUTTONS) return;
   b = ButtonList[iButton];
@@ -2985,8 +2990,9 @@ void DrawTextOnButton(GUI_BUTTON *b) {
 }
 
 static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, int32_t iDestX1, int32_t iDestY1,
-                                         int32_t iDestX2, int32_t iDestY2, struct VObject *BkgrndImg,
-                                         uint16_t Index, int16_t Ox, int16_t Oy) {
+                                         int32_t iDestX2, int32_t iDestY2,
+                                         struct VObject *BkgrndImg, uint16_t Index, int16_t Ox,
+                                         int16_t Oy) {
   int16_t xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   struct Subimage *pTrav;
   struct GRect NewClip, OldClip;
@@ -3169,8 +3175,8 @@ void DrawGenericButton(GUI_BUTTON *b) {
       ImgNum = 1;
 
     Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic,
-                                            (int32_t)(b->XLoc + (q * iBorderWidth)), (int32_t)b->YLoc,
-                                            (uint16_t)ImgNum, &ClipRect);
+                                            (int32_t)(b->XLoc + (q * iBorderWidth)),
+                                            (int32_t)b->YLoc, (uint16_t)ImgNum, &ClipRect);
 
     if (q == 0)
       ImgNum = 5;
@@ -3202,8 +3208,8 @@ void DrawGenericButton(GUI_BUTTON *b) {
 
   for (q = 1; q < NumChunksHigh; q++) {
     Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic,
-                                            (int32_t)b->XLoc, (int32_t)(b->YLoc + (q * iBorderHeight)),
-                                            3, &ClipRect);
+                                            (int32_t)b->XLoc,
+                                            (int32_t)(b->YLoc + (q * iBorderHeight)), 3, &ClipRect);
     Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES, BPic, cx,
                                             (int32_t)(b->YLoc + (q * iBorderHeight)), 4, &ClipRect);
   }
@@ -3247,8 +3253,8 @@ typedef struct _CreateDlgInfo {
   int32_t iTextAreaHeight;
 
   struct VObject *hBackImg;  // Background pic for dialog box (if any)
-  int32_t iBackImgIndex;       // Sub-image index to use for image
-  int32_t iBackOffsetX;        // Offset on dialog box where to put image
+  int32_t iBackImgIndex;     // Sub-image index to use for image
+  int32_t iBackOffsetX;      // Offset on dialog box where to put image
   int32_t iBackOffsetY;
 
   struct VObject *hIconImg;  // Icon image pic and index.
@@ -3300,7 +3306,7 @@ typedef struct _CreateDlgInfo {
 //------------------------------------------------------------------------------------------------------
 
 int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Priority,
-                           GUI_CALLBACK ClickCallback) {
+                             GUI_CALLBACK ClickCallback) {
   GUI_BUTTON *b;
   int32_t ButPic, iButtonID;
   Assert(filename != NULL);
@@ -3310,7 +3316,7 @@ int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Prior
     return (-1);
   }
   iButtonID = (int16_t)QuickCreateButton((uint32_t)ButPic, x, y, BUTTON_CHECKBOX, Priority,
-                                       MSYS_NO_CALLBACK, ClickCallback);
+                                         MSYS_NO_CALLBACK, ClickCallback);
   if (iButtonID == -1) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateCheckBoxButton: Can't create button");
     return (-1);

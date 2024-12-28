@@ -104,7 +104,7 @@ BOOLEAN gfTopMessageDirty = FALSE;
 
 void CreateTopMessage(uint32_t uiSurface, uint8_t ubType, wchar_t *psString);
 extern uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
-                                         uint16_t usAnimState);
+                                           uint16_t usAnimState);
 
 struct MOUSE_REGION gMenuOverlayRegion;
 
@@ -238,7 +238,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn, int32_t reason);
 void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-uint32_t CalcUIMessageDuration(wchar_t* wString);
+uint32_t CalcUIMessageDuration(wchar_t *wString);
 
 BOOLEAN InitializeTacticalInterface() {
   // Load button Interfaces
@@ -561,9 +561,10 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   iMenuAnchorX = giMenuAnchorX + 9;
   iMenuAnchorY = giMenuAnchorY + 8;
 
-  iActionIcons[RUN_ICON] = QuickCreateButton(
-      iIconImages[RUN_IMAGES], (int16_t)(iMenuAnchorX + 20), (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
+  iActionIcons[RUN_ICON] =
+      QuickCreateButton(iIconImages[RUN_IMAGES], (int16_t)(iMenuAnchorX + 20),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[RUN_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
@@ -577,9 +578,10 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
     DisableButton(iActionIcons[RUN_ICON]);
   }
 
-  iActionIcons[WALK_ICON] = QuickCreateButton(
-      iIconImages[WALK_IMAGES], (int16_t)(iMenuAnchorX + 40), (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
+  iActionIcons[WALK_ICON] =
+      QuickCreateButton(iIconImages[WALK_IMAGES], (int16_t)(iMenuAnchorX + 40),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[WALK_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
@@ -731,9 +733,10 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
     DisableButton(iActionIcons[ACTIONC_ICON]);
   }
 
-  iActionIcons[TALK_ICON] = QuickCreateButton(
-      iIconImages[TALK_IMAGES], (int16_t)(iMenuAnchorX), (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
+  iActionIcons[TALK_ICON] =
+      QuickCreateButton(iIconImages[TALK_IMAGES], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[TALK_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
@@ -1267,7 +1270,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
         // sYPos += 21;
 
         // Add bars
-        // iBack = RegisterBackgroundRect( BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos + 55
+        // iBack = RegisterBackgroundRect( BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos +
+        // 55
         // ), (int16_t)(sYPos + 80 ) );
         iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, sXPos, sYPos, (int16_t)(sXPos + 40),
                                        (int16_t)(sYPos + 40));
@@ -1380,8 +1384,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
     if (fDoName) {
       if (fRaiseName) {
         swprintf(NameStr, ARR_SIZE(NameStr), L"%s", pSoldier->name);
-        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos - 10), (int16_t)(80), 1, NameStr, TINYFONT1,
-                                  &sX, &sY);
+        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos - 10), (int16_t)(80), 1, NameStr,
+                                  TINYFONT1, &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
       } else {
@@ -1428,8 +1432,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
         SetFontForeground(FONT_MCOLOR_WHITE);
 
         swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[GIVE_STR]);
-        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, NameStr, TINYFONT1,
-                                  &sX, &sY);
+        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, NameStr,
+                                  TINYFONT1, &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
       } else {
@@ -1439,8 +1443,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
 
         pStr = GetSoldierHealthString(pSoldier);
 
-        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, pStr, TINYFONT1, &sX,
-                                  &sY);
+        FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, pStr, TINYFONT1,
+                                  &sX, &sY);
         gprintfdirty(sX, sY, pStr);
         mprintf(sX, sY, pStr);
       }
@@ -1453,8 +1457,8 @@ void DrawSelectedUIAboveGuy(uint16_t usSoldierID) {
       SetFontForeground(FONT_YELLOW);
 
       swprintf(NameStr, ARR_SIZE(NameStr), gzLateLocalizedString[15]);
-      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, NameStr, TINYFONT1, &sX,
-                                &sY);
+      FindFontCenterCoordinates(sXPos, (int16_t)(sYPos + 10), (int16_t)(80), 1, NameStr, TINYFONT1,
+                                &sX, &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
     }
@@ -1826,9 +1830,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
     DisableButton(iActionIcons[EXPLOSIVE_DOOR_ICON]);
   }
 
-  iActionIcons[OPEN_DOOR_ICON] = QuickCreateButton(
-      iIconImages[OPEN_DOOR_IMAGES], (int16_t)(iMenuAnchorX), (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE,
-      MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
+  iActionIcons[OPEN_DOOR_ICON] =
+      QuickCreateButton(iIconImages[OPEN_DOOR_IMAGES], (int16_t)(iMenuAnchorX),
+                        (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                        DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[OPEN_DOOR_ICON] == -1) {
     DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
@@ -2853,8 +2858,8 @@ BOOLEAN AimCubeUIClick() {
   }
 }
 
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel, uint8_t bStartPower,
-                    int8_t bStartHeight) {
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel,
+                    uint8_t bStartPower, int8_t bStartHeight) {
   gfInAimCubeUI = TRUE;
 
   gCubeUIData.sGridNo = sGridNo;
@@ -3036,7 +3041,7 @@ void ResetPhysicsTrajectoryUI() {
 
 void DirtyTopMessage() { gTopMessage.fCreated = FALSE; }
 
-uint32_t CalcUIMessageDuration(wchar_t* wString) {
+uint32_t CalcUIMessageDuration(wchar_t *wString) {
   // base + X per letter
   return (1000 + 50 * wcslen(wString));
 }

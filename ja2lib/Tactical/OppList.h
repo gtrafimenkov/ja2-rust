@@ -91,8 +91,9 @@ extern BOOLEAN gfWatchedLocReset[TOTAL_SOLDIERS][NUM_WATCHED_LOCS];
 extern uint8_t gubBestToMakeSightingSize;
 
 int16_t AdjustMaxSightRangeForEnvEffects(struct SOLDIERTYPE *pSoldier, int8_t bLightLevel,
-                                       int16_t sDistVisible);
-int16_t ManLooksForMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent, uint8_t ubCaller);
+                                         int16_t sDistVisible);
+int16_t ManLooksForMan(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                       uint8_t ubCaller);
 void HandleSight(struct SOLDIERTYPE *pSoldier, uint8_t ubSightFlags);
 void AllTeamsLookForAll(uint8_t ubAllowInterrupts);
 void GloballyDecideWhoSeesWho(void);
@@ -108,7 +109,7 @@ void UpdatePersonal(struct SOLDIERTYPE *pSoldier, uint8_t ubID, int8_t bNewOppli
                     int8_t bLevel);
 int16_t MaxDistanceVisible(void);
 int16_t DistanceVisible(struct SOLDIERTYPE *pSoldier, int8_t bFacingDir, int8_t bSubjectDir,
-                      int16_t sSubjectGridNo, int8_t bLevel);
+                        int16_t sSubjectGridNo, int8_t bLevel);
 void ResetLastKnownLocs(struct SOLDIERTYPE *ptr);
 void RecalculateOppCntsDueToNoLongerNeutral(struct SOLDIERTYPE *pSoldier);
 
@@ -126,10 +127,10 @@ void DebugSoldierPage4();
 
 uint8_t MovementNoise(struct SOLDIERTYPE *pSoldier);
 uint8_t DoorOpeningNoise(struct SOLDIERTYPE *pSoldier);
-void MakeNoise(uint8_t ubNoiseMaker, int16_t sGridNo, int8_t bLevel, uint8_t ubTerrType, uint8_t ubVolume,
-               uint8_t ubNoiseType);
-void OurNoise(uint8_t ubNoiseMaker, int16_t sGridNo, int8_t bLevel, uint8_t ubTerrType, uint8_t ubVolume,
-              uint8_t ubNoiseType);
+void MakeNoise(uint8_t ubNoiseMaker, int16_t sGridNo, int8_t bLevel, uint8_t ubTerrType,
+               uint8_t ubVolume, uint8_t ubNoiseType);
+void OurNoise(uint8_t ubNoiseMaker, int16_t sGridNo, int8_t bLevel, uint8_t ubTerrType,
+              uint8_t ubVolume, uint8_t ubNoiseType);
 
 void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, uint8_t ubInterruptType);
 

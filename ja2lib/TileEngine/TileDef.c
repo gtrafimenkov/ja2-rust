@@ -485,8 +485,8 @@ BOOLEAN SetLandIndex(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType, BO
   }
 }
 
-BOOLEAN SetLandIndexWithRadius(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType, uint8_t ubRadius,
-                               BOOLEAN fReplace) {
+BOOLEAN SetLandIndexWithRadius(int32_t iMapIndex, uint16_t usIndex, uint32_t uiNewType,
+                               uint8_t ubRadius, BOOLEAN fReplace) {
   uint16_t usTempIndex;
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
@@ -580,7 +580,8 @@ BOOLEAN GetSubIndexFromTileIndex(uint16_t usTileIndex, uint16_t *pusSubIndex) {
   return FALSE;
 }
 
-BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, uint16_t usIndex, uint16_t *pusSubIndex) {
+BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, uint16_t usIndex,
+                                     uint16_t *pusSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   if (!(uiCheckType < NUMBEROFTILETYPES)) {
@@ -592,7 +593,8 @@ BOOLEAN GetTypeSubIndexFromTileIndex(uint32_t uiCheckType, uint16_t usIndex, uin
   return (TRUE);
 }
 
-BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, uint16_t usIndex, uint8_t *pubSubIndex) {
+BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, uint16_t usIndex,
+                                         uint8_t *pubSubIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   if (!(uiCheckType < NUMBEROFTILETYPES)) {
@@ -604,7 +606,8 @@ BOOLEAN GetTypeSubIndexFromTileIndexChar(uint32_t uiCheckType, uint16_t usIndex,
   return (TRUE);
 }
 
-BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, uint16_t usSubIndex, uint16_t *pusTileIndex) {
+BOOLEAN GetTileIndexFromTypeSubIndex(uint32_t uiCheckType, uint16_t usSubIndex,
+                                     uint16_t *pusTileIndex) {
   // Tile database is zero-based, Type indecies are 1-based!
 
   if (!(uiCheckType < NUMBEROFTILETYPES)) {

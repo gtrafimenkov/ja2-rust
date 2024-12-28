@@ -3497,7 +3497,7 @@ enum TileTypeDefines {
 #define LASTROAD (DEBRISROCKS - 1)
 #define LASTDEBRIS (ANIOSTRUCT - 1)
 #define LASTITEM (WINDOWSHATTER - 1)
-//#define LASTDEBRIS				(FOOTPRINTS - 1)
+// #define LASTDEBRIS				(FOOTPRINTS - 1)
 #define LASTFOOTPRINTS (FIRSTPOINTERS - 1)
 #define LASTPOINTERS (SELRING - 1)
 #define LASTUIELEM (WIREFRAMES - 1)  // Change this entry if adding new types to the end

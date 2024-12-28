@@ -545,8 +545,8 @@ wchar_t* pTacticalPopupButtonStrings[] = {
 // Door Traps. When we examine a door, it could have a particular trap on it. These are the traps.
 
 wchar_t* pDoorTrapStrings[] = {L"nie posiada żadnych pułapek", L"ma założony ładunek wybuchowy",
-                            L"jest pod napięciem", L"posiada syrenę alarmową",
-                            L"posiada dyskretny alarm"};
+                               L"jest pod napięciem", L"posiada syrenę alarmową",
+                               L"posiada dyskretny alarm"};
 
 // Contract Extension. These are used for the contract extension with AIM mercenaries.
 
@@ -588,7 +588,7 @@ wchar_t* pNoiseTypeStr[] =  // OBSOLETE
 // Directions that are used to report noises
 
 wchar_t* pDirectionStr[] = {L"PŁN-WSCH", L"WSCH", L"PŁD-WSCH", L"PŁD",
-                         L"PŁD-ZACH", L"ZACH", L"PŁN-ZACH", L"PŁN"};
+                            L"PŁD-ZACH", L"ZACH", L"PŁN-ZACH", L"PŁN"};
 
 // These are the different terrain types.
 
@@ -2427,10 +2427,10 @@ wchar_t* AimLinkText[] = {
 
 wchar_t* AimHistoryText[] = {L"A.I.M. Historia",  // Title
 
-                          // Text on the buttons at the bottom of the page
+                             // Text on the buttons at the bottom of the page
 
-                          L"Poprzednia str.", L"Strona główna", L"Byli członkowie",
-                          L"Następna str."};
+                             L"Poprzednia str.", L"Strona główna", L"Byli członkowie",
+                             L"Następna str."};
 
 // Aim Mug Shot Index
 
@@ -2886,8 +2886,7 @@ wchar_t* pPausedGameText[] = {
     L"Wstrzymaj grę (|P|a|u|s|e)",
 };
 
-wchar_t*
-pMessageStrings[] = {
+wchar_t* pMessageStrings[] = {
     L"Zakończyć grę?",
     L"OK",
     L"TAK",
@@ -3043,8 +3042,7 @@ wchar_t* pMilitiaButtonsHelpText[] = {
     L"Umieszcza jednakową ilość żołnierzy samoobrony w każdym sektorze.",
 };
 
-wchar_t*
-pMapScreenJustStartedHelpText[] = {
+wchar_t* pMapScreenJustStartedHelpText[] = {
     L"Zajrzyj do A.I.M. i zatrudnij kilku najemników (*Wskazówka* musisz otworzyć "
     L"laptopa)",  // to inform the player to hired some mercs to get things going
     L"Jeśli chcesz już udać się do Arulco, kliknij przycisk kompresji czasu, w prawym "

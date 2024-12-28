@@ -23,11 +23,11 @@
 uint8_t AimMercArray[MAX_NUMBER_MERCS];
 
 uint8_t gCurrentAimPage[NUM_AIM_SCREENS] = {LAPTOP_MODE_AIM,
-                                          LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES,
-                                          LAPTOP_MODE_AIM_MEMBERS_ARCHIVES,
-                                          LAPTOP_MODE_AIM_POLICIES,
-                                          LAPTOP_MODE_AIM_HISTORY,
-                                          LAPTOP_MODE_AIM_LINKS};
+                                            LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES,
+                                            LAPTOP_MODE_AIM_MEMBERS_ARCHIVES,
+                                            LAPTOP_MODE_AIM_POLICIES,
+                                            LAPTOP_MODE_AIM_HISTORY,
+                                            LAPTOP_MODE_AIM_LINKS};
 
 //
 //***  Defines **

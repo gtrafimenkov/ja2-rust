@@ -228,14 +228,15 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, int32_t reason) {
       LaptopSaveInfo.fIMPCompletedFlag = TRUE;
 
       // charge the player
-      AddTransactionToPlayersBook(IMP_PROFILE,
-                                  (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
-                                  -(COST_OF_PROFILE));
+      AddTransactionToPlayersBook(
+          IMP_PROFILE, (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
+          -(COST_OF_PROFILE));
       AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetGameTimeInMin(), -1, -1);
       AddCharacterToPlayersTeam();
 
       // write the created imp merc
-      WriteOutCurrentImpCharacter((uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId));
+      WriteOutCurrentImpCharacter(
+          (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId));
 
       fButtonPendingFlag = TRUE;
       iCurrentImpPage = IMP_HOME_PAGE;

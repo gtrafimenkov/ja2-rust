@@ -243,7 +243,8 @@ void UpdateBullets() {
               gBullets[uiCount].pAniTile->sRelativeY =
                   (int16_t)FIXEDPT_TO_INT32(gBullets[uiCount].qCurrY);
               gBullets[uiCount].pAniTile->pLevelNode->sRelativeZ =
-                  (int16_t)CONVERT_HEIGHTUNITS_TO_PIXELS(FIXEDPT_TO_INT32(gBullets[uiCount].qCurrZ));
+                  (int16_t)CONVERT_HEIGHTUNITS_TO_PIXELS(
+                      FIXEDPT_TO_INT32(gBullets[uiCount].qCurrZ));
 
               if (gBullets[uiCount].usFlags & (BULLET_FLAG_KNIFE)) {
                 gBullets[uiCount].pShadowAniTile->sRelativeX =

@@ -66,7 +66,7 @@ void DisableUndo() { gfUndoEnabled = FALSE; }
 typedef struct {
   int32_t iMapIndex;
   MAP_ELEMENT *pMapTile;
-  BOOLEAN fLightSaved;  // determines that a light has been saved
+  BOOLEAN fLightSaved;    // determines that a light has been saved
   uint8_t ubLightRadius;  // the radius of the light to build if undo is called
   uint8_t ubLightID;      // only applies if a light was saved.
   uint8_t ubRoomNum;
@@ -556,12 +556,12 @@ BOOLEAN ExecuteUndoList(void) {
     RemoveAllTopmostsOfTypeRange(iUndoMapIndex, FIRSTPOINTERS, FIRSTPOINTERS);
 
     if (fExitGrid &&
-        !ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been removed, so get rid of
-                                                     // the associated indicator.
+        !ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been removed, so get rid
+                                                       // of the associated indicator.
       RemoveTopmost((uint16_t)iUndoMapIndex, FIRSTPOINTERS8);
     } else if (!fExitGrid &&
-               ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been added, so add the
-                                                           // associated indicator
+               ExitGridAtGridNo((uint16_t)iUndoMapIndex)) {  // An exitgrid has been added, so add
+                                                             // the associated indicator
       AddTopmostToTail((uint16_t)iUndoMapIndex, FIRSTPOINTERS8);
     }
   }

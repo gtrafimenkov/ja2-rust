@@ -41,8 +41,8 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "rust_fileman.h"
-#include "rust_laptop.h"
 #include "rust_geometry.h"
+#include "rust_laptop.h"
 
 void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,
@@ -555,8 +555,8 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   if (fSayQuote) {
     if (fUnhappy) {
       if (fBuddyAround) {
-        if (GetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
-                                           GetQuoteBitNumberFromQuoteID((uint32_t)(usBuddyQuote))) ==
+        if (GetMercPrecedentQuoteBitStatus(
+                GetSolProfile(pSoldier), GetQuoteBitNumberFromQuoteID((uint32_t)(usBuddyQuote))) ==
             TRUE) {
           fSayPrecedent = TRUE;
         } else {
@@ -564,8 +564,8 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
                                          GetQuoteBitNumberFromQuoteID((uint32_t)(usBuddyQuote)));
         }
       } else {
-        if (GetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
-                                           GetQuoteBitNumberFromQuoteID((uint32_t)(usReasonQuote))) ==
+        if (GetMercPrecedentQuoteBitStatus(
+                GetSolProfile(pSoldier), GetQuoteBitNumberFromQuoteID((uint32_t)(usReasonQuote))) ==
             TRUE) {
           fSayPrecedent = TRUE;
         } else {
@@ -1008,12 +1008,12 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
       DoMessageBox(
           MSG_BOX_BASIC_STYLE, sString, guiCurrentScreen,
           (uint16_t)(MSG_BOX_FLAG_USE_CENTERING_RECT |
-                   (fAddRehireButton ? MSG_BOX_FLAG_GENERICCONTRACT : MSG_BOX_FLAG_GENERIC)),
+                     (fAddRehireButton ? MSG_BOX_FLAG_GENERICCONTRACT : MSG_BOX_FLAG_GENERIC)),
           MercDepartEquipmentBoxCallBack, &pCenteringRect);
     } else {
       DoMessageBox(MSG_BOX_BASIC_STYLE, sString, guiCurrentScreen,
                    (uint16_t)(MSG_BOX_FLAG_USE_CENTERING_RECT |
-                            (fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK)),
+                              (fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK)),
                    MercDepartEquipmentBoxCallBack, &pCenteringRect);
     }
   }

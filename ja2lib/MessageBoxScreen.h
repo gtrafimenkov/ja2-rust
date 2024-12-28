@@ -63,8 +63,9 @@ void DoScreenIndependantMessageBoxWithRect(wchar_t *zString, uint16_t usFlags,
 BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                          uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                          const struct GRect *pCenteringRect);
-int32_t DoMapMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint16_t usFlags,
-                              MSGBOX_CALLBACK ReturnCallback, const struct GRect *pCenteringRect);
+int32_t DoMapMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+                                uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
+                                const struct GRect *pCenteringRect);
 BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                     uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const struct GRect *pCenteringRect);
