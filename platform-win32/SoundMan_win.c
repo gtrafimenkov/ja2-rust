@@ -43,7 +43,7 @@ typedef struct {
   uint32_t uiFlags;      // Status flags
   uint32_t uiSpeed;      // Playback frequency
   BOOLEAN fStereo;       // Stereo/Mono
-  UINT8 ubBits;          // 8/16 bits
+  uint8_t ubBits;        // 8/16 bits
   void *pData;           // pointer to sample data memory
   void *pSoundStart;     // pointer to start of sound data
   uint32_t uiCacheHits;
@@ -74,7 +74,7 @@ typedef struct {
   uint32_t uiFlags;
   uint32_t uiSoundID;
   uint32_t uiPriority;
-  void (*pCallback)(UINT8 *, uint32_t, uint32_t, uint32_t, void *);
+  void (*pCallback)(uint8_t *, uint32_t, uint32_t, uint32_t, void *);
   void *pData;
   void (*EOSCallback)(void *);
   void *pCallbackData;
@@ -109,15 +109,15 @@ typedef struct {
 
 typedef struct {
   // FMT chunk
-  char cFormat[4];       // "FMT "
-  uint32_t uiChunkSize;  // Chunk length
-  UINT16 uiStereo;       // 1 if stereo, 0 if mono (Not reliable, use channels instead)
-  UINT16 uiChannels;     // number of channels used 1=mono, 2=stereo, etc.
-  uint32_t uiSpeed;      // Sampling Rate (speed)
-  uint32_t uiBytesSec;   // Number of bytes per sec
-  UINT16 uiBytesSample;  // Number of bytes per sample (1 = 8 bit mono,
-                         // 2 = 8 bit stereo or 16 bit mono, 4 = 16 bit stereo
-  UINT16 uiBitsSample;   // bits per sample
+  char cFormat[4];         // "FMT "
+  uint32_t uiChunkSize;    // Chunk length
+  uint16_t uiStereo;       // 1 if stereo, 0 if mono (Not reliable, use channels instead)
+  uint16_t uiChannels;     // number of channels used 1=mono, 2=stereo, etc.
+  uint32_t uiSpeed;        // Sampling Rate (speed)
+  uint32_t uiBytesSec;     // Number of bytes per sec
+  uint16_t uiBytesSample;  // Number of bytes per sample (1 = 8 bit mono,
+                           // 2 = 8 bit stereo or 16 bit mono, 4 = 16 bit stereo
+  uint16_t uiBitsSample;   // bits per sample
 } WAVFMT;
 
 typedef struct {
@@ -173,7 +173,7 @@ extern BOOLEAN Sound3DInitProvider(char *pProviderName);
 extern void Sound3DShutdownProvider(void);
 
 // 3D sound control
-extern void Sound3DSetListener(FLOAT flX, FLOAT flY, FLOAT flZ);
+extern void Sound3DSetListener(float flX, float flY, float flZ);
 extern void Sound3DStopAll(void);
 
 // Local Function Prototypes
@@ -189,7 +189,7 @@ uint32_t SoundGetEmptySample(void);
 BOOLEAN SoundProcessWAVHeader(uint32_t uiSample);
 uint32_t SoundFreeSampleIndex(uint32_t uiSample);
 uint32_t SoundGetIndexByID(uint32_t uiSoundID);
-static HDIGDRIVER SoundInitDriver(uint32_t uiRate, UINT16 uiBits, UINT16 uiChans);
+static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiChans);
 BOOLEAN SoundInitHardware(void);
 BOOLEAN SoundGetDriverName(HDIGDRIVER DIG, char *cBuf);
 BOOLEAN SoundShutdownHardware(void);
@@ -843,7 +843,7 @@ BOOLEAN SoundStopAllRandom(void) {
 //*******************************************************************************
 BOOLEAN SoundServiceStreams(void) {
   uint32_t uiCount, uiSpeed, uiBuffLen, uiBytesPerSample;
-  UINT8 *pBuffer;
+  uint8_t *pBuffer;
   void *pData;
 
   if (fSoundSystemInit) {
@@ -1268,7 +1268,7 @@ BOOLEAN SoundProcessWAVHeader(uint32_t uiSample) {
 
   pSampleList[uiSample].uiSpeed = ailInfo.rate;
   pSampleList[uiSample].fStereo = (BOOLEAN)(ailInfo.channels == 2);
-  pSampleList[uiSample].ubBits = (UINT8)ailInfo.bits;
+  pSampleList[uiSample].ubBits = (uint8_t)ailInfo.bits;
 
   pSampleList[uiSample].pSoundStart = (void *)ailInfo.data_ptr;
   pSampleList[uiSample].uiSoundSize = ailInfo.data_len;
@@ -1426,7 +1426,7 @@ BOOLEAN SoundShutdownHardware(void) {
 //	Returns:	Pointer to the driver if successful, NULL otherwise.
 //
 //*******************************************************************************
-static HDIGDRIVER SoundInitDriver(uint32_t uiRate, UINT16 uiBits, UINT16 uiChans) {
+static HDIGDRIVER SoundInitDriver(uint32_t uiRate, uint16_t uiBits, uint16_t uiChans) {
   static PCMWAVEFORMAT sPCMWF;
   HDIGDRIVER DIG;
   char cBuf[128];
@@ -1941,13 +1941,13 @@ void Sound3DShutdownProvider(void) {
 //
 // Returns nothing.
 //
-// FLOAT flX                  - X coordinate
-// FLOAT flY                  - Y coordinate
-// FLOAT flZ                  - Z coordinate
+// float flX                  - X coordinate
+// float flY                  - Y coordinate
+// float flZ                  - Z coordinate
 //
 // Created:  8/17/99 Derek Beland
 //*****************************************************************************************
-void Sound3DSetListener(FLOAT flX, FLOAT flY, FLOAT flZ) {
+void Sound3DSetListener(float flX, float flY, float flZ) {
   if (fSoundSystemInit && gh3DListener) AIL_set_3D_position(gh3DListener, flX, flY, flZ);
 }
 

@@ -102,8 +102,8 @@ void DirectXZeroMem(void *pMemory, int nSize);
 
 typedef struct {
   BOOLEAN fRestore;
-  UINT16 usMouseXPos, usMouseYPos;
-  UINT16 usLeft, usTop, usRight, usBottom;
+  uint16_t usMouseXPos, usMouseYPos;
+  uint16_t usLeft, usTop, usRight, usBottom;
   RECT Region;
   LPDIRECTDRAWSURFACE _pSurface;
   LPDIRECTDRAWSURFACE2 pSurface;
@@ -117,7 +117,7 @@ typedef struct {
 
 uint32_t guiFramePeriod = (1000 / 15);
 uint32_t guiLastFrame;
-UINT16 *gpFrameData[MAX_NUM_FRAMES];
+uint16_t *gpFrameData[MAX_NUM_FRAMES];
 
 //
 // Direct Draw objects for both the Primary and Backbuffer surfaces
@@ -587,16 +587,16 @@ BOOLEAN RestoreVideoManager(void) {
   }
 }
 
-void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
+void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_t sScrollYIncrement,
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
                          BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
-  UINT16 usWidth, usHeight;
+  uint16_t usWidth, usHeight;
   static RECT Region;
-  static UINT16 usMouseXPos, usMouseYPos;
+  static uint16_t usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
-  UINT16 usNumStrips = 0;
+  uint16_t usNumStrips = 0;
   int32_t cnt;
-  INT16 sShiftX, sShiftY;
+  int16_t sShiftX, sShiftY;
   int32_t uiCountY;
 
   GetCurrentVideoSettings(&usWidth, &usHeight);
@@ -631,10 +631,10 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usMouseXPos += sScrollXIncrement;
 
       usNumStrips = 1;
@@ -651,11 +651,11 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset(
-            (UINT8 *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
+            (uint8_t *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
             0, sScrollXIncrement * 2);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usMouseXPos -= sScrollXIncrement;
 
       usNumStrips = 1;
@@ -672,10 +672,10 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
 
       for (uiCountY = sScrollYIncrement - 1 + gsVIEWPORT_WINDOW_START_Y;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[0].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
       usNumStrips = 1;
 
       usMouseYPos += sScrollYIncrement;
@@ -693,10 +693,10 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       // Zero out z
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[0].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
       usNumStrips = 1;
 
       usMouseYPos -= sScrollYIncrement;
@@ -714,16 +714,16 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement - 1;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
-      StripRegions[1].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
-      StripRegions[1].left = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[1].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[1].left = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos += sScrollYIncrement;
@@ -743,17 +743,17 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset(
-            (UINT8 *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
+            (uint8_t *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
             0, sScrollXIncrement * 2);
       }
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement - 1;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
-      StripRegions[1].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
-      StripRegions[1].right = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[1].bottom = (int16_t)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
+      StripRegions[1].right = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos += sScrollYIncrement;
@@ -772,17 +772,17 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, sScrollXIncrement * 2);
       }
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].right = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[0].right = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
 
-      StripRegions[1].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
-      StripRegions[1].left = (INT16)(gsVIEWPORT_START_X + sScrollXIncrement);
+      StripRegions[1].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[1].left = (int16_t)(gsVIEWPORT_START_X + sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos -= sScrollYIncrement;
@@ -801,17 +801,17 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset(
-            (UINT8 *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
+            (uint8_t *)gpZBuffer + (uiCountY * 1280) + ((gsVIEWPORT_END_X - sScrollXIncrement) * 2),
             0, sScrollXIncrement * 2);
       }
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
-        memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
+        memset((uint8_t *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
-      StripRegions[1].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
-      StripRegions[1].right = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[0].left = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
+      StripRegions[1].top = (int16_t)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
+      StripRegions[1].right = (int16_t)(gsVIEWPORT_END_X - sScrollXIncrement);
       usNumStrips = 2;
 
       usMouseYPos -= sScrollYIncrement;
@@ -824,8 +824,9 @@ void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sS
     // Memset to 0
 
     for (cnt = 0; cnt < usNumStrips; cnt++) {
-      RenderStaticWorldRect((INT16)StripRegions[cnt].left, (INT16)StripRegions[cnt].top,
-                            (INT16)StripRegions[cnt].right, (INT16)StripRegions[cnt].bottom, TRUE);
+      RenderStaticWorldRect((int16_t)StripRegions[cnt].left, (int16_t)StripRegions[cnt].top,
+                            (int16_t)StripRegions[cnt].right, (int16_t)StripRegions[cnt].bottom,
+                            TRUE);
       DDBltFastSurface(pDest, StripRegions[cnt].left, StripRegions[cnt].top, gpFrameBuffer,
                        (LPRECT) & (StripRegions[cnt]));
     }
@@ -952,7 +953,7 @@ void printFramebuffer() {
 
 void RefreshScreen() {
   static uint32_t uiRefreshThreadState, uiIndex;
-  UINT16 usScreenWidth, usScreenHeight;
+  uint16_t usScreenWidth, usScreenHeight;
   static BOOLEAN fShowMouse;
   HRESULT ReturnCode;
   static RECT Region;
@@ -1129,25 +1130,25 @@ void RefreshScreen() {
 
       gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore = TRUE;
       gMouseCursorBackground[CURRENT_MOUSE_DATA].usRight =
-          (UINT16)Region.right - (UINT16)Region.left;
+          (uint16_t)Region.right - (uint16_t)Region.left;
       gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom =
-          (UINT16)Region.bottom - (UINT16)Region.top;
+          (uint16_t)Region.bottom - (uint16_t)Region.top;
       if (Region.left < 0) {
-        gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = (UINT16)(0 - Region.left);
+        gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = (uint16_t)(0 - Region.left);
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos = 0;
         Region.left = 0;
       } else {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos =
-            (UINT16)MousePos.x - gsMouseCursorXOffset;
+            (uint16_t)MousePos.x - gsMouseCursorXOffset;
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft = 0;
       }
       if (Region.top < 0) {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos = 0;
-        gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = (UINT16)(0 - Region.top);
+        gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = (uint16_t)(0 - Region.top);
         Region.top = 0;
       } else {
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos =
-            (UINT16)MousePos.y - gsMouseCursorYOffset;
+            (uint16_t)MousePos.y - gsMouseCursorYOffset;
         gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop = 0;
       }
 
@@ -1338,9 +1339,9 @@ static BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  uint16_t usRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  uint16_t usGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  uint16_t usBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  uint16_t usRedMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  uint16_t usGreenMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  uint16_t usBlueMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   if ((usRedMask != 0xf800) || (usGreenMask != 0x07e0) || (usBlueMask != 0x001f)) {
     char buf[200];
@@ -1529,8 +1530,8 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   }
 
   struct VSurface *hVSurface = VSurfaceNew();
-  hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
-  hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
+  hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
+  hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
   hVSurface->_platformData2 = (void *)lpDDSurface;
 
   // Get and Set palette, if attached, allow to fail
@@ -1930,7 +1931,7 @@ struct SmkFlic *SmkGetFreeFlic(void) {
 void SmkSetupVideo(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
-  UINT16 usRed, usGreen, usBlue;
+  uint16_t usRed, usGreen, usBlue;
   struct VSurface *hVSurface;
 
   GetVideoSurface(&hVSurface, FRAME_BUFFER);
@@ -1943,9 +1944,9 @@ void SmkSetupVideo(void) {
     return;
   }
 
-  usRed = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  usGreen = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  usBlue = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  usRed = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  usGreen = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  usBlue = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   if ((usRed == 0xf800) && (usGreen == 0x07e0) && (usBlue == 0x001f))
     guiSmackPixelFormat = SMACKBUFFER565;
@@ -1981,7 +1982,7 @@ LOGFONT gLogFont;
 
 struct HWINFONT WinFonts[MAX_WIN_FONTS];
 
-void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, UINT16 *src) {
+void Convert16BitStringTo8BitChineseBig5String(uint8_t *dst, uint16_t *src) {
   int32_t i, j;
   char *ptr;
 

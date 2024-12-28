@@ -25,7 +25,7 @@
 // Make sure to refer to the translation table which is within one of the following files (depending
 // on the language used). ENGLISH.C, JAPANESE.C, FRENCH.C, GERMAN.C, SPANISH.C, etc...
 
-extern UINT16 gsKeyTranslationTable[1024];
+extern uint16_t gsKeyTranslationTable[1024];
 
 extern BOOLEAN gfApplicationActive;
 
@@ -40,9 +40,9 @@ static struct Rect gCursorClipRect;
 // note that the table is 2 bytes wide per entry. This will be used since we will use 2 byte
 // characters for translation purposes.
 
-UINT16 gfShiftState;  // TRUE = Pressed, FALSE = Not Pressed
-UINT16 gfAltState;    // TRUE = Pressed, FALSE = Not Pressed
-UINT16 gfCtrlState;   // TRUE = Pressed, FALSE = Not Pressed
+uint16_t gfShiftState;  // TRUE = Pressed, FALSE = Not Pressed
+uint16_t gfAltState;    // TRUE = Pressed, FALSE = Not Pressed
+uint16_t gfCtrlState;   // TRUE = Pressed, FALSE = Not Pressed
 
 // These data structure are used to track the mouse while polling
 
@@ -51,7 +51,7 @@ uint32_t guiDoubleClkDelay;  // Current delay in milliseconds for a delay
 uint32_t guiSingleClickTimer;
 uint32_t guiRecordedWParam;
 uint32_t guiRecordedLParam;
-UINT16 gusRecordedKeyState;
+uint16_t gusRecordedKeyState;
 BOOLEAN gfRecordedLeftButtonUp;
 
 uint32_t guiLeftButtonRepeatTimer;
@@ -60,15 +60,15 @@ uint32_t guiRightButtonRepeatTimer;
 BOOLEAN gfTrackMousePos;     // TRUE = queue mouse movement events, FALSE = don't
 BOOLEAN gfLeftButtonState;   // TRUE = Pressed, FALSE = Not Pressed
 BOOLEAN gfRightButtonState;  // TRUE = Pressed, FALSE = Not Pressed
-UINT16 gusMouseXPos;         // X position of the mouse on screen
-UINT16 gusMouseYPos;         // y position of the mouse on screen
+uint16_t gusMouseXPos;       // X position of the mouse on screen
+uint16_t gusMouseYPos;       // y position of the mouse on screen
 
 // The queue structures are used to track input events using queued events
 
 InputAtom gEventQueue[256];
-UINT16 gusQueueCount;
-UINT16 gusHeadIndex;
-UINT16 gusTailIndex;
+uint16_t gusQueueCount;
+uint16_t gusHeadIndex;
+uint16_t gusTailIndex;
 
 // ATE: Added to signal if we have had input this frame - cleared by the SGP main loop
 BOOLEAN gfSGPInputReceived = FALSE;
@@ -87,8 +87,8 @@ StringInput *gpCurrentStringDescriptor;
 
 // Local function headers
 
-void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam);
-void RedirectToString(UINT16 uiInputCharacter);
+void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam);
+void RedirectToString(uint16_t uiInputCharacter);
 void HandleSingleClicksAndButtonRepeats(void);
 void AdjustMouseForWindowOrigin(void);
 
@@ -119,8 +119,8 @@ LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
 
   switch (wParam) {
     case WM_LBUTTONDOWN:  // Update the current mouse position
-      gusMouseXPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
-      gusMouseYPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
+      gusMouseXPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
+      gusMouseYPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
       uiParam = gusMouseYPos;
       uiParam = uiParam << 16;
       uiParam = uiParam | gusMouseXPos;
@@ -132,8 +132,8 @@ LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
       QueueEvent(LEFT_BUTTON_DOWN, 0, uiParam);
       break;
     case WM_LBUTTONUP:  // Update the current mouse position
-      gusMouseXPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
-      gusMouseYPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
+      gusMouseXPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
+      gusMouseYPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
       uiParam = gusMouseYPos;
       uiParam = uiParam << 16;
       uiParam = uiParam | gusMouseXPos;
@@ -145,8 +145,8 @@ LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
       QueueEvent(LEFT_BUTTON_UP, 0, uiParam);
       break;
     case WM_RBUTTONDOWN:  // Update the current mouse position
-      gusMouseXPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
-      gusMouseYPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
+      gusMouseXPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
+      gusMouseYPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
       uiParam = gusMouseYPos;
       uiParam = uiParam << 16;
       uiParam = uiParam | gusMouseXPos;
@@ -158,8 +158,8 @@ LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
       QueueEvent(RIGHT_BUTTON_DOWN, 0, uiParam);
       break;
     case WM_RBUTTONUP:  // Update the current mouse position
-      gusMouseXPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
-      gusMouseYPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
+      gusMouseXPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
+      gusMouseYPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
       uiParam = gusMouseYPos;
       uiParam = uiParam << 16;
       uiParam = uiParam | gusMouseXPos;
@@ -171,8 +171,8 @@ LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
       QueueEvent(RIGHT_BUTTON_UP, 0, uiParam);
       break;
     case WM_MOUSEMOVE:  // Update the current mouse position
-      gusMouseXPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
-      gusMouseYPos = (UINT16)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
+      gusMouseXPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).x;
+      gusMouseYPos = (uint16_t)(((MOUSEHOOKSTRUCT *)lParam)->pt).y;
       uiParam = gusMouseYPos;
       uiParam = uiParam << 16;
       uiParam = uiParam | gusMouseXPos;
@@ -235,9 +235,9 @@ void ShutdownInputManager(void) {
   UnhookWindowsHookEx(ghMouseHook);
 }
 
-void QueuePureEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
+void QueuePureEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam) {
   uint32_t uiTimer;
-  UINT16 usKeyState;
+  uint16_t usKeyState;
 
   uiTimer = Plat_GetTickCount();
   usKeyState = gfShiftState | gfCtrlState | gfAltState;
@@ -265,9 +265,9 @@ void QueuePureEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
   }
 }
 
-void QueueEvent(UINT16 ubInputEvent, uint32_t usParam, uint32_t uiParam) {
+void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam) {
   uint32_t uiTimer;
-  UINT16 usKeyState;
+  uint16_t usKeyState;
 
   uiTimer = Plat_GetTickCount();
   usKeyState = gfShiftState | gfCtrlState | gfAltState;
@@ -396,9 +396,9 @@ BOOLEAN DequeueEvent(InputAtom *Event) {
   }
 }
 
-void KeyChange(uint32_t usParam, uint32_t uiParam, UINT8 ufKeyState) {
+void KeyChange(uint32_t usParam, uint32_t uiParam, uint8_t ufKeyState) {
   uint32_t ubKey;
-  UINT16 ubChar;
+  uint16_t ubChar;
   uint32_t uiTmpLParam;
 
   if ((usParam >= 96) &&
@@ -787,7 +787,7 @@ void GetMousePos(SGPPoint *Point) {
   return;
 }
 
-BOOLEAN CharacterIsValid(UINT16 usCharacter, UINT16 *pFilter) {
+BOOLEAN CharacterIsValid(uint16_t usCharacter, uint16_t *pFilter) {
   uint32_t uiIndex, uiEndIndex;
 
   if (pFilter != NULL) {
@@ -803,8 +803,8 @@ BOOLEAN CharacterIsValid(UINT16 usCharacter, UINT16 *pFilter) {
   return TRUE;
 }
 
-void RedirectToString(UINT16 usInputCharacter) {
-  UINT16 usIndex;
+void RedirectToString(uint16_t usInputCharacter) {
+  uint16_t usIndex;
 
   if (gpCurrentStringDescriptor != NULL) {
     // Handle the new character input
@@ -996,7 +996,7 @@ void RestoreString(StringInput *pStringDescriptor) {
 // Miscellaneous input-related utility functions:
 //
 
-void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {
+void RestrictMouseToXYXY(uint16_t usX1, uint16_t usY1, uint16_t usX2, uint16_t usY2) {
   struct GRect TempRect;
 
   TempRect.iLeft = usX1;
@@ -1033,7 +1033,7 @@ void GetRestrictedClipCursor(struct GRect *pRectangle) { GetClipCursor((RECT *)p
 BOOLEAN IsCursorRestricted(void) { return (fCursorWasClipped); }
 
 void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {
-  FLOAT flNewXPos, flNewYPos;
+  float flNewXPos, flNewYPos;
 
   // Wizardry NOTE: This function currently doesn't quite work right for in any Windows resolution
   // other than 640x480. mouse_event() uses your current Windows resolution to calculate the
@@ -1048,8 +1048,8 @@ void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {
   // Alex Meduna, Dec. 3, 1997
 
   // Adjust coords based on our resolution
-  flNewXPos = ((FLOAT)uiNewXPos / SCREEN_WIDTH) * 65536;
-  flNewYPos = ((FLOAT)uiNewYPos / SCREEN_HEIGHT) * 65536;
+  flNewXPos = ((float)uiNewXPos / SCREEN_WIDTH) * 65536;
+  flNewYPos = ((float)uiNewYPos / SCREEN_HEIGHT) * 65536;
 
   mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, (uint32_t)flNewXPos, (uint32_t)flNewYPos, 0,
               0);
