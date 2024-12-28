@@ -117,7 +117,7 @@ typedef struct {
 
 uint32_t guiFramePeriod = (1000 / 15);
 uint32_t guiLastFrame;
-UINT16 *gpFrameData[MAX_NUM_FRAMES];
+uint16_t *gpFrameData[MAX_NUM_FRAMES];
 
 //
 // Direct Draw objects for both the Primary and Backbuffer surfaces
@@ -587,16 +587,16 @@ BOOLEAN RestoreVideoManager(void) {
   }
 }
 
-void ScrollJA2Background(uint32_t uiDirection, INT16 sScrollXIncrement, INT16 sScrollYIncrement,
+void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_t sScrollYIncrement,
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
                          BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
-  UINT16 usWidth, usHeight;
+  uint16_t usWidth, usHeight;
   static RECT Region;
   static uint16_t usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
   uint16_t usNumStrips = 0;
   int32_t cnt;
-  INT16 sShiftX, sShiftY;
+  int16_t sShiftX, sShiftY;
   int32_t uiCountY;
 
   GetCurrentVideoSettings(&usWidth, &usHeight);
@@ -953,7 +953,7 @@ void printFramebuffer() {
 
 void RefreshScreen() {
   static uint32_t uiRefreshThreadState, uiIndex;
-  UINT16 usScreenWidth, usScreenHeight;
+  uint16_t usScreenWidth, usScreenHeight;
   static BOOLEAN fShowMouse;
   HRESULT ReturnCode;
   static RECT Region;
@@ -1339,9 +1339,9 @@ static BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  uint16_t usRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  uint16_t usGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  uint16_t usBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  uint16_t usRedMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  uint16_t usGreenMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  uint16_t usBlueMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
   if ((usRedMask != 0xf800) || (usGreenMask != 0x07e0) || (usBlueMask != 0x001f)) {
     char buf[200];
@@ -1530,8 +1530,8 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   }
 
   struct VSurface *hVSurface = VSurfaceNew();
-  hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
-  hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
+  hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
+  hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
   hVSurface->_platformData2 = (void *)lpDDSurface;
 
   // Get and Set palette, if attached, allow to fail

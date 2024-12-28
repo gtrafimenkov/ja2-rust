@@ -43,7 +43,7 @@ typedef struct {
   uint32_t uiFlags;      // Status flags
   uint32_t uiSpeed;      // Playback frequency
   BOOLEAN fStereo;       // Stereo/Mono
-  UINT8 ubBits;          // 8/16 bits
+  uint8_t ubBits;        // 8/16 bits
   void *pData;           // pointer to sample data memory
   void *pSoundStart;     // pointer to start of sound data
   uint32_t uiCacheHits;
